@@ -8,13 +8,17 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
+import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.helpers.PurchaseTypes
+import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
 import com.habitrpg.android.habitica.ui.GemPurchaseOptionsView
 import com.habitrpg.android.habitica.ui.activities.GemPurchaseActivity
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
+import com.habitrpg.android.habitica.ui.views.promo.SubscriptionBuyGemsPromoView
+import io.reactivex.functions.Consumer
 import org.solovyev.android.checkout.BillingRequests
 import org.solovyev.android.checkout.Inventory
 import org.solovyev.android.checkout.ProductTypes
@@ -26,10 +30,13 @@ class GemsPurchaseFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
     private val gems21View: GemPurchaseOptionsView? by bindView(R.id.gems_21_view)
     private val gems42View: GemPurchaseOptionsView? by bindView(R.id.gems_42_view)
     private val gems84View: GemPurchaseOptionsView? by bindView(R.id.gems_84_view)
+    private val subscriptionPromoView: SubscriptionBuyGemsPromoView? by bindView(R.id.subscription_promo)
     private val supportTextView: TextView? by bindView(R.id.supportTextView)
 
     @Inject
     lateinit var crashlyticsProxy: CrashlyticsProxy
+    @Inject
+    lateinit var userRepository: UserRepository
 
     private var listener: GemPurchaseActivity? = null
     private var billingRequests: BillingRequests? = null
@@ -56,6 +63,10 @@ class GemsPurchaseFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
 
         val heartDrawable = BitmapDrawable(resources, HabiticaIconsHelper.imageOfHeartLarge())
         supportTextView?.setCompoundDrawables(null, heartDrawable, null, null)
+
+        compositeSubscription.add(userRepository.getUser().subscribe(Consumer {
+            subscriptionPromoView?.visibility = if (it.isSubscribed) View.GONE else View.VISIBLE
+        }, RxErrorHandler.handleEmptyError()))
     }
 
     override fun setupCheckout() {

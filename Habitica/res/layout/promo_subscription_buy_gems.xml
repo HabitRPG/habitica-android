@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:parentTag="android.widget.RelativeLayout"
+    android:background="@color/blue_50">
+<LinearLayout
+    android:id="@+id/contentWrapper"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerHorizontal="true"
+    android:layout_centerVertical="true"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:paddingStart="@dimen/spacing_large"
+    android:paddingEnd="@dimen/spacing_large"
+    >
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/promo_subscription_buy_gems_prompt"
+        android:textColor="@color/white"
+        style="@style/Subheader1"/>
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:minWidth="100dp"
+        android:text="@string/subscribe"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:background="@drawable/white_rounded_border"
+        android:elevation="0dp"
+        android:shadowColor="@color/transparent"
+        android:layout_marginTop="19dp"/>
+</LinearLayout>
+</merge>

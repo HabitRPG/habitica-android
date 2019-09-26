@@ -241,13 +241,7 @@ class SubscriptionFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
 
     private fun updateSubscriptionInfo() {
         if (user != null) {
-            val plan = user?.purchased?.plan
-            var isSubscribed = false
-            if (plan != null) {
-                if (plan.isActive) {
-                    isSubscribed = true
-                }
-            }
+            val isSubscribed = user?.isSubscribed ?: false
 
             if (this.subscriptionDetailsView == null) {
                 return
@@ -255,7 +249,7 @@ class SubscriptionFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
 
             if (isSubscribed) {
                 this.subscriptionDetailsView?.visibility = View.VISIBLE
-                plan?.let { this.subscriptionDetailsView?.setPlan(it) }
+                user?.purchased?.plan?.let { this.subscriptionDetailsView?.setPlan(it) }
                 this.subscribeBenefitsTitle?.setText(R.string.subscribe_prompt_thanks)
                 this.subscriptionOptions?.visibility = View.GONE
             } else {

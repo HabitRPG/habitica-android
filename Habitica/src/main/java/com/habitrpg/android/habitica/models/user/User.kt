@@ -219,4 +219,16 @@ open class User : RealmObject(), Avatar, VersionedObject {
     fun hasParty(): Boolean {
         return this.party?.id?.length ?: 0 > 0
     }
+
+    val isSubscribed: Boolean
+        get() {
+            val plan = purchased?.plan
+            var isSubscribed = false
+            if (plan != null) {
+                if (plan.isActive) {
+                    isSubscribed = true
+                }
+            }
+            return isSubscribed
+        }
 }

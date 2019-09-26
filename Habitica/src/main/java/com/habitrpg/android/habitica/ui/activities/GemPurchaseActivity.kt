@@ -63,10 +63,17 @@ class GemPurchaseActivity : BaseActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setTitle(R.string.gem_purchase_toolbartitle)
-
-        viewPager.currentItem = 0
-
+        
         setViewPagerAdapter()
+        viewPager.currentItem = if (intent.extras?.containsKey("openSubscription") == true) {
+            if (intent.extras?.getBoolean("openSubscription") == false) {
+                1
+            } else {
+                0
+            }
+        } else {
+            0
+        }
     }
 
     override fun onStart() {

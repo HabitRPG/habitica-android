@@ -27,7 +27,7 @@ class NotificationOpenHandler {
         }
 
         private fun openSubscriptionScreen() {
-            MainNavigationController.navigate(R.id.gemPurchaseActivity)
+            MainNavigationController.navigate(R.id.gemPurchaseActivity, bundleOf(Pair("openSubscription", true)))
         }
 
         private fun openPrivateMessageScreen(userID: String?) {

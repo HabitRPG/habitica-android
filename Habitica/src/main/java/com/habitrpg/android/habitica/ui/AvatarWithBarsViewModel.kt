@@ -8,6 +8,7 @@ import android.os.Build
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.os.bundleOf
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.events.BoughtGemsEvent
@@ -102,7 +103,7 @@ class AvatarWithBarsViewModel(private val context: Context, view: View, userRepo
         }
 
         currencyView.setOnClickListener {
-            MainNavigationController.navigate(R.id.gemPurchaseActivity)
+            MainNavigationController.navigate(R.id.gemPurchaseActivity, bundleOf(Pair("openSubscription", false)))
         }
         avatarView.setOnClickListener {
             MainNavigationController.navigate(R.id.avatarOverviewFragment)

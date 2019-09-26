@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.helpers.MainNavigationController
@@ -13,8 +14,8 @@ import com.habitrpg.android.habitica.models.inventory.Customization
 import com.habitrpg.android.habitica.models.inventory.CustomizationSet
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.helpers.bindView
-import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
+import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import io.reactivex.subjects.PublishSubject
@@ -176,7 +177,7 @@ class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerVi
                 val dialog = HabiticaAlertDialog(itemView.context)
                 dialog.addButton(R.string.purchase_button, true) { _, _ ->
                             if (customization?.price ?: 0 > gemBalance) {
-                                MainNavigationController.navigate(R.id.gemPurchaseActivity)
+                                MainNavigationController.navigate(R.id.gemPurchaseActivity, bundleOf(Pair("openSubscription", false)))
                                 return@addButton
                             }
 
@@ -232,7 +233,7 @@ class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerVi
             val dialog = HabiticaAlertDialog(context)
             dialog.addButton(R.string.purchase_button, true) { _, _ ->
                         if (set?.price ?: 0 > gemBalance) {
-                            MainNavigationController.navigate(R.id.gemPurchaseActivity)
+                            MainNavigationController.navigate(R.id.gemPurchaseActivity, bundleOf(Pair("openSubscription", false)))
                             return@addButton
                         }
                         set?.customizations = ArrayList()

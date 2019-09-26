@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
@@ -263,7 +264,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
                             if (throwable.javaClass.isAssignableFrom(retrofit2.HttpException::class.java)) {
                                 val error = throwable as retrofit2.HttpException
                                 if (error.code() == 401 && shopItem.currency == "gems") {
-                                    MainNavigationController.navigate(R.id.gemPurchaseActivity)
+                                    MainNavigationController.navigate(R.id.gemPurchaseActivity, bundleOf(Pair("openSubscription", false)))
                                 }
                             }
                         }

@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.text.InputType
 import android.widget.EditText
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.preference.Preference
 import com.google.android.material.textfield.TextInputLayout
 import com.habitrpg.android.habitica.HabiticaBaseApplication
@@ -80,7 +81,7 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
                     showSubscriptionStatusDialog()
                     return super.onPreferenceTreeClick(preference)
                 }
-                MainNavigationController.navigate(R.id.gemPurchaseActivity)
+                MainNavigationController.navigate(R.id.gemPurchaseActivity, bundleOf(Pair("openSubscription", true)))
             }
             "reset_account" -> showAccountResetConfirmation()
             "delete_account" -> showAccountDeleteConfirmation()
