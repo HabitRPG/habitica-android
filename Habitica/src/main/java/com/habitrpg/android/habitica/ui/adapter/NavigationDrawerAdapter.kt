@@ -6,9 +6,12 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.ui.helpers.bindOptionalView
 import com.habitrpg.android.habitica.ui.menu.HabiticaDrawerItem
+import com.habitrpg.android.habitica.ui.views.promo.SubscriptionBuyGemsPromoView
+import com.habitrpg.android.habitica.ui.views.promo.SubscriptionBuyGemsPromoViewHolder
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import io.reactivex.subjects.PublishSubject
@@ -71,7 +74,7 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int): Recycle
             itemHolder?.backgroundTintColor = backgroundTintColor
             itemHolder?.bind(drawerItem, drawerItem.transitionId == selectedItem)
             itemHolder?.itemView?.setOnClickListener { itemSelectedEvents.onNext(drawerItem.transitionId) }
-        } else {
+        } else if (getItemViewType(position) == 1) {
             (holder as? SectionHeaderViewHolder)?.backgroundTintColor = backgroundTintColor
             (holder as? SectionHeaderViewHolder)?.bind(drawerItem)
         }
@@ -81,13 +84,30 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int): Recycle
 
     override fun getItemCount(): Int = items.count { it.isVisible }
 
-    override fun getItemViewType(position: Int): Int = if (getItem(position).isHeader) 1 else 0
+    override fun getItemViewType(position: Int): Int {
+        return if (getItem(position).isHeader) {
+            1
+        } else {
+            if (getItem(position).isPromo) {
+                2
+            } else {
+                0
+            }
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return if (viewType == 0) {
-            DrawerItemViewHolder(parent.inflate(R.layout.drawer_main_item))
-        } else {
-            SectionHeaderViewHolder(parent.inflate(R.layout.drawer_main_section_header))
+        return when (viewType) {
+            0 -> DrawerItemViewHolder(parent.inflate(R.layout.drawer_main_item))
+            1 -> SectionHeaderViewHolder(parent.inflate(R.layout.drawer_main_section_header))
+            else -> {
+                val itemView = SubscriptionBuyGemsPromoView(parent.context)
+                itemView.layoutParams = ViewGroup.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        148.dpToPx(parent.context)
+                )
+                SubscriptionBuyGemsPromoViewHolder(itemView)
+            }
         }
     }
 

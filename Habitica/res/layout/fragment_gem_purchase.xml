@@ -135,6 +135,6 @@
         <com.habitrpg.android.habitica.ui.views.promo.SubscriptionBuyGemsPromoView
             android:id="@+id/subscription_promo"
             android:layout_width="match_parent"
-            android:layout_height="139dp" />
+            android:layout_height="148dp" />
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

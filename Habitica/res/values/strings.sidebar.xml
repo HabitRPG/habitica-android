@@ -6,14 +6,14 @@
     <string name="sidebar_inbox">Messages</string>
     <string name="sidebar_tavern">Tavern</string>
     <string name="sidebar_party">Party</string>
-    <string name="sidebar_gems">Gems</string>
+    <string name="sidebar_gems">Purchase Gems</string>
     <string name="sidebar_subscription">Subscription</string>
     <string name="sidebar_guilds">Guilds</string>
     <string name="sidebar_challenges">Challenges</string>
     <string name="sidebar_section_inventory">Inventory</string>
     <string name="sidebar_avatar">Avatar</string>
     <string name="sidebar_equipment">Equipment</string>
-    <string name="sidebar_stable">Stable</string>
+    <string name="sidebar_stable">Pets &amp; Mounts</string>
     <string name="sidebar_news">News</string>
     <string name="sidebar_about">About</string>
     <string name="sidebar_shops">Shops</string>

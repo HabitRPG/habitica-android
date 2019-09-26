@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:parentTag="android.widget.RelativeLayout"
-    android:background="@color/blue_50">
+    android:background="@color/gray_700">
 <LinearLayout
     android:id="@+id/contentWrapper"
     android:layout_width="wrap_content"
@@ -18,23 +18,39 @@
     android:paddingEnd="@dimen/spacing_large"
     >
     <TextView
-        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/promo_subscription_buy_gems_prompt"
-        android:textColor="@color/white"
-        style="@style/Subheader1"/>
+        android:textColor="@color/gray_100"
+        android:textSize="14sp"
+        android:textStyle="bold"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/promo_subscription_buy_gems_description"
+        android:textColor="@color/gray_100"
+        android:textSize="12sp"
+        android:textAlignment="center"
+        android:maxWidth="240dp"/>
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:minWidth="100dp"
+        android:layout_height="32dp"
+        android:minWidth="110dp"
         android:text="@string/subscribe"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:background="@drawable/white_rounded_border"
-        android:elevation="0dp"
-        android:shadowColor="@color/transparent"
-        android:layout_marginTop="19dp"/>
+        style="@style/HabiticaButton.Purple"
+        android:layout_marginTop="14dp"/>
 </LinearLayout>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/subscription_promo_gems"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true" />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/subscription_promo_gold"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true" />
 </merge>

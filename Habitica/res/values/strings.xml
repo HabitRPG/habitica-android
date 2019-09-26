@@ -845,5 +845,6 @@
     <string name="search">Search</string>
     <string name="search_hint">Search tasks</string>
     <string name="preference_push_party_activity">Party Activity</string>
-    <string name="promo_subscription_buy_gems_prompt">Want to buy gems with gold?</string>
+    <string name="promo_subscription_buy_gems_prompt">Need Gems?</string>
+    <string name="promo_subscription_buy_gems_description">Become a Subscriber to buy Gems with gold, get monthly mystery items, increased drop caps and more!</string>
 </resources>

@@ -228,6 +228,12 @@ class NavigationDrawerFragment : DialogFragment() {
             }
             updateItem(statsItem)
         }
+
+        val promoItem = getItemWithIdentifier(SIDEBAR_SUBSCRIPTION_PROMO)
+        if (promoItem != null) {
+            promoItem.isVisible = !user.isSubscribed
+            updateItem(promoItem)
+        }
         getItemWithIdentifier(SIDEBAR_NEWS)?.let {
             it.showBubble = user.flags?.newStuff ?: false
         }
@@ -265,7 +271,9 @@ class NavigationDrawerFragment : DialogFragment() {
             items.add(HabiticaDrawerItem(R.id.newsFragment, SIDEBAR_NEWS, context.getString(R.string.sidebar_news)))
             items.add(HabiticaDrawerItem(R.id.FAQOverviewFragment, SIDEBAR_HELP, context.getString(R.string.sidebar_help)))
             items.add(HabiticaDrawerItem(R.id.aboutFragment, SIDEBAR_ABOUT, context.getString(R.string.sidebar_about)))
+            items.add(HabiticaDrawerItem(R.id.subscriptionPurchaseActivity, SIDEBAR_SUBSCRIPTION_PROMO))
         }
+        items.last().isPromo = true
         adapter.updateItems(items)
     }
 
@@ -427,6 +435,7 @@ class NavigationDrawerFragment : DialogFragment() {
         const val SIDEBAR_STABLE = "stable"
         const val SIDEBAR_GEMS = "gems"
         const val SIDEBAR_SUBSCRIPTION = "subscription"
+        const val SIDEBAR_SUBSCRIPTION_PROMO = "subscriptionpromo"
         const val SIDEBAR_ABOUT_HEADER = "about_header"
         const val SIDEBAR_NEWS = "news"
         const val SIDEBAR_HELP = "help"
