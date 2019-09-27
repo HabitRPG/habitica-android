@@ -115,7 +115,7 @@ dependencies {
     //Push Notifications
     implementation 'com.google.firebase:firebase-core:17.2.0'
     implementation 'com.google.firebase:firebase-messaging:20.0.0'
-    implementation 'com.google.firebase:firebase-config:19.0.1'
+    implementation 'com.google.firebase:firebase-config:19.0.2'
     implementation 'com.google.firebase:firebase-perf:19.0.0'
     implementation 'com.google.android.gms:play-services-auth:17.0.0'
     implementation 'io.realm:android-adapters:3.1.0'
@@ -149,7 +149,7 @@ android {
         multiDexEnabled true
         resConfigs "en", "bg", "de", "en-rGB", "es", "fr", "hr-rHR", "in", "it", "iw", "ja", "ko", "lt", "nl", "pl", "pt-rBR", "pt-rPT", "ru", "tr", "zh", "zh-rTW"
 
-        versionCode 2244
+        versionCode 2248
         versionName "2.1.1"
     }
 

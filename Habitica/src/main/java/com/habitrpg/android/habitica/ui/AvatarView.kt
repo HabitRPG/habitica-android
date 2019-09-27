@@ -540,6 +540,16 @@ class AvatarView : View {
             tempMap["weapon_special_0"] = "gif"
             tempMap["shield_special_0"] = "gif"
             tempMap["Pet-Wolf-Cerberus"] = "gif"
+            tempMap["armor_special_ks2019"] = "gif"
+            tempMap["slim_armor_special_ks2019"] = "gif"
+            tempMap["broad_armor_special_ks2019"] = "gif"
+            tempMap["eyewear_special_ks2019"] = "gif"
+            tempMap["head_special_ks2019"] = "gif"
+            tempMap["shield_special_ks2019"] = "gif"
+            tempMap["weapon_special_ks2019"] = "gif"
+            tempMap["Pet-Gryphon-Gryphatrice"] = "gif"
+            tempMap["Mount_Head_Gryphon-Gryphatrice"] = "gif"
+            tempMap["Mount_Body_Gryphon-Gryphatrice"] = "gif"
             FILEFORMAT_MAP = Collections.unmodifiableMap(tempMap)
 
 
