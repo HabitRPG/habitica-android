@@ -5,7 +5,7 @@ import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.local.SocialLocalRepository
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.android.habitica.models.Achievement
+import com.habitrpg.shared.habitica.data.models.Achievement
 import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.responses.PostChatMessageResult

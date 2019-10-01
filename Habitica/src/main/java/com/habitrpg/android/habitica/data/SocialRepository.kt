@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.data
 
-import com.habitrpg.android.habitica.models.Achievement
+import com.habitrpg.shared.habitica.data.models.Achievement
 import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.responses.PostChatMessageResult

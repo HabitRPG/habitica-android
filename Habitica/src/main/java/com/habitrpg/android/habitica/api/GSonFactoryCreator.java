@@ -3,7 +3,7 @@ package com.habitrpg.android.habitica.api;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import com.habitrpg.android.habitica.models.Achievement;
+import com.habitrpg.shared.habitica.data.models.Achievement;
 import com.habitrpg.android.habitica.models.ContentResult;
 import com.habitrpg.android.habitica.models.FAQArticle;
 import com.habitrpg.android.habitica.models.Notification;

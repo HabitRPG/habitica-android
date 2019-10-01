@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-multiplatform'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'realm-android'
 
 android {
     compileSdkVersion 29

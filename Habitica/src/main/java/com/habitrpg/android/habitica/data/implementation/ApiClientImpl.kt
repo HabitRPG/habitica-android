@@ -31,6 +31,7 @@ import com.habitrpg.android.habitica.models.user.Items
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
+import com.habitrpg.shared.habitica.data.models.Achievement
 import io.reactivex.Flowable
 import io.reactivex.FlowableTransformer
 import io.reactivex.android.schedulers.AndroidSchedulers
