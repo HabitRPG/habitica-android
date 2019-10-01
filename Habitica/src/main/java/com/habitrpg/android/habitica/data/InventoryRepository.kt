@@ -40,8 +40,8 @@ interface InventoryRepository : BaseRepository {
     fun openMysteryItem(user: User?): Flowable<Equipment>
 
     fun saveEquipment(equipment: Equipment)
-    fun getMounts(type: String, group: String): Flowable<RealmResults<Mount>>
-    fun getPets(type: String, group: String): Flowable<RealmResults<Pet>>
+    fun getMounts(type: String, group: String, color: String?): Flowable<RealmResults<Mount>>
+    fun getPets(type: String, group: String, color: String?): Flowable<RealmResults<Pet>>
 
     fun updateOwnedEquipment(user: User)
 

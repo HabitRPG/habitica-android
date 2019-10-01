@@ -95,10 +95,10 @@ class PetDetailRecyclerAdapter(data: OrderedRealmCollection<Pet>?, autoUpdate: B
         fun bind(item: Pet, ownedPet: OwnedPet?) {
             this.animal = item
             this.ownedPet = ownedPet
-            if (item.color == "Veggie") {
-                this.titleView.text = context?.getString(R.string.garden)
-            } else {
-                this.titleView.text = item.color
+            titleView.text = when {
+                item.color == "Veggie" -> context?.getString(R.string.garden)
+                item.type == "special" ->item.text
+                else -> item.color
             }
             this.imageView.alpha = 1.0f
             val imageName = "Pet-$itemType-${item.color}"

@@ -77,7 +77,11 @@ class StableRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<
 
         fun bind(item: Animal) {
             this.animal = item
-            titleView.text = item.animal
+            titleView.text = if (item.type == "special") {
+                item.text
+            } else {
+                item.animal
+            }
             ownedTextView.visibility = View.VISIBLE
             this.imageView.alpha = 1.0f
             val imageName = if (itemType == "pets") {
@@ -104,11 +108,12 @@ class StableRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<
         override fun onClick(v: View) {
             val animal = this.animal
             if (animal != null) {
+                val color = if (animal.type == "special") animal.color else null
                 if (animal.numberOwned > 0) {
                     if (itemType == "pets") {
-                        MainNavigationController.navigate(StableFragmentDirections.openPetDetail(animal.animal, animal.type))
+                        MainNavigationController.navigate(StableFragmentDirections.openPetDetail(animal.animal, animal.type, color))
                     } else {
-                        MainNavigationController.navigate(StableFragmentDirections.openMountDetail(animal.animal, animal.type))
+                        MainNavigationController.navigate(StableFragmentDirections.openMountDetail(animal.animal, animal.type, color))
                     }
                 }
             }

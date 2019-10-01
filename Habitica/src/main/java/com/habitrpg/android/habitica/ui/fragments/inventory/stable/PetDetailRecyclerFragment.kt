@@ -36,6 +36,7 @@ class PetDetailRecyclerFragment : BaseMainFragment() {
     var adapter: PetDetailRecyclerAdapter = PetDetailRecyclerAdapter(null, true)
     var animalType: String = ""
     var animalGroup: String = ""
+    var animalColor: String? = null
     internal var layoutManager: androidx.recyclerview.widget.GridLayoutManager? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -64,6 +65,7 @@ class PetDetailRecyclerFragment : BaseMainFragment() {
             val args = MountDetailRecyclerFragmentArgs.fromBundle(it)
             animalGroup = args.group
             animalType = args.type
+            animalColor = args.color
         }
 
         resetViews()
@@ -120,8 +122,8 @@ class PetDetailRecyclerFragment : BaseMainFragment() {
                         return@map mountMap
                     }
                     .subscribe(Consumer { adapter.setOwnedMounts(it) }, RxErrorHandler.handleEmptyError()))
-            compositeSubscription.add(inventoryRepository.getPets(animalType, animalGroup).firstElement().subscribe(Consumer<RealmResults<Pet>> { adapter.updateData(it) }, RxErrorHandler.handleEmptyError()))
-            compositeSubscription.add(inventoryRepository.getMounts(animalType, animalGroup).subscribe(Consumer<RealmResults<Mount>> { adapter.setExistingMounts(it) }, RxErrorHandler.handleEmptyError()))
+            compositeSubscription.add(inventoryRepository.getPets(animalType, animalGroup, animalColor).firstElement().subscribe(Consumer<RealmResults<Pet>> { adapter.updateData(it) }, RxErrorHandler.handleEmptyError()))
+            compositeSubscription.add(inventoryRepository.getMounts(animalType, animalGroup, animalColor).subscribe(Consumer<RealmResults<Mount>> { adapter.setExistingMounts(it) }, RxErrorHandler.handleEmptyError()))
         }
     }
 

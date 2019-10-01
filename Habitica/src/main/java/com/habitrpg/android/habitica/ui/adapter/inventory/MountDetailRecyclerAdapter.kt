@@ -68,7 +68,11 @@ class MountDetailRecyclerAdapter(data: OrderedRealmCollection<Mount>?, autoUpdat
         fun bind(item: Mount, ownedMount: OwnedMount?) {
             animal = item
             this.ownedMount = ownedMount
-            titleView.text = item.color
+            titleView.text = when {
+                item.color == "Veggie" -> context?.getString(R.string.garden)
+                item.type == "special" ->item.text
+                else -> item.color
+            }
             ownedTextView.visibility = View.GONE
             val imageName = "Mount_Icon_" + itemType + "-" + item.color
             this.imageView.alpha = 1.0f

@@ -28,6 +28,7 @@ class MountDetailRecyclerFragment : BaseMainFragment() {
     var adapter: MountDetailRecyclerAdapter? = null
     var animalType: String? = null
     var animalGroup: String? = null
+    var animalColor: String? = null
     internal var layoutManager: androidx.recyclerview.widget.GridLayoutManager? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -52,6 +53,7 @@ class MountDetailRecyclerFragment : BaseMainFragment() {
             val args = MountDetailRecyclerFragmentArgs.fromBundle(it)
             animalGroup = args.group
             animalType = args.type
+            animalColor = args.color
         }
 
         layoutManager = androidx.recyclerview.widget.GridLayoutManager(activity, 2)
@@ -107,7 +109,7 @@ class MountDetailRecyclerFragment : BaseMainFragment() {
                         return@map mountMap
                     }
                     .subscribe(Consumer { adapter?.setOwnedMounts(it) }, RxErrorHandler.handleEmptyError()))
-            compositeSubscription.add(inventoryRepository.getMounts(animalType!!, animalGroup!!).firstElement().subscribe(Consumer { adapter?.updateData(it) }, RxErrorHandler.handleEmptyError()))
+            compositeSubscription.add(inventoryRepository.getMounts(animalType!!, animalGroup!!, animalColor).firstElement().subscribe(Consumer { adapter?.updateData(it) }, RxErrorHandler.handleEmptyError()))
         }
     }
 

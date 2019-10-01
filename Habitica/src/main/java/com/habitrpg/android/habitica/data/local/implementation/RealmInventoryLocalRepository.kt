@@ -119,12 +119,15 @@ class RealmInventoryLocalRepository(realm: Realm, private val context: Context) 
                 .filter { it.isLoaded }
     }
 
-    override fun getMounts(type: String, group: String): Flowable<RealmResults<Mount>> {
-        return realm.where(Mount::class.java)
+    override fun getMounts(type: String, group: String, color: String?): Flowable<RealmResults<Mount>> {
+        var query = realm.where(Mount::class.java)
                 .sort("color", Sort.ASCENDING)
                 .equalTo("type", group)
                 .equalTo("animal", type)
-                .findAll()
+        if (color != null) {
+            query = query.equalTo("color", color)
+        }
+        return query.findAll()
                 .asFlowable()
                 .filter { it.isLoaded }
     }
@@ -146,12 +149,15 @@ class RealmInventoryLocalRepository(realm: Realm, private val context: Context) 
                 .filter { it.isLoaded }
     }
 
-    override fun getPets(type: String, group: String): Flowable<RealmResults<Pet>> {
-        return realm.where(Pet::class.java)
+    override fun getPets(type: String, group: String, color: String?): Flowable<RealmResults<Pet>> {
+        var query = realm.where(Pet::class.java)
                 .sort("color", Sort.ASCENDING)
                 .equalTo("type", group)
                 .equalTo("animal", type)
-                .findAll()
+        if (color != null) {
+            query = query.equalTo("color", color)
+        }
+        return query.findAll()
                 .asFlowable()
                 .filter { it.isLoaded }
     }
