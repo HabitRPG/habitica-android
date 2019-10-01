@@ -18,6 +18,7 @@ import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
+import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.inventory.QuestContent
@@ -50,6 +51,8 @@ class NavigationDrawerFragment : DialogFragment() {
     lateinit var inventoryRepository: InventoryRepository
     @Inject
     lateinit var userRepository: UserRepository
+    @Inject
+    lateinit var configManager: AppConfigManager
 
     private var drawerLayout: androidx.drawerlayout.widget.DrawerLayout? = null
     private var fragmentContainerView: View? = null
@@ -271,9 +274,12 @@ class NavigationDrawerFragment : DialogFragment() {
             items.add(HabiticaDrawerItem(R.id.newsFragment, SIDEBAR_NEWS, context.getString(R.string.sidebar_news)))
             items.add(HabiticaDrawerItem(R.id.FAQOverviewFragment, SIDEBAR_HELP, context.getString(R.string.sidebar_help)))
             items.add(HabiticaDrawerItem(R.id.aboutFragment, SIDEBAR_ABOUT, context.getString(R.string.sidebar_about)))
-            items.add(HabiticaDrawerItem(R.id.subscriptionPurchaseActivity, SIDEBAR_SUBSCRIPTION_PROMO))
         }
-        items.last().isPromo = true
+        if (configManager.showSubscriptionBanner()) {
+            val item = HabiticaDrawerItem(R.id.subscriptionPurchaseActivity, SIDEBAR_SUBSCRIPTION_PROMO)
+            item.isPromo = true
+            items.add(item)
+        }
         adapter.updateItems(items)
     }
 

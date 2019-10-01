@@ -52,5 +52,9 @@
         <key>insufficientGemPurchase</key>
         <value>false</value>
     </entry>
+    <entry>
+        <key>showSubscriptionBanner</key>
+        <value>false</value>
+    </entry>
 </defaultsMap>
     <!-- END xml_defaults -->

@@ -251,6 +251,10 @@
         <argument
             android:name="group"
             app:argType="string" />
+        <argument
+            android:name="color"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/mountDetailRecyclerFragment"
@@ -262,6 +266,10 @@
         <argument
             android:name="group"
             app:argType="string" />
+        <argument
+            android:name="color"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/challengeDetailFragment"
