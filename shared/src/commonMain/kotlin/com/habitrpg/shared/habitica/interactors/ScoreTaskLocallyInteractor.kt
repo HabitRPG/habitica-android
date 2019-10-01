@@ -3,6 +3,7 @@ package com.habitrpg.shared.habitica.interactors
 import com.habitrpg.shared.habitica.models.responses.TaskDirection
 import com.habitrpg.shared.habitica.models.responses.TaskDirectionData
 import com.habitrpg.shared.habitica.models.tasks.Task
+import com.habitrpg.shared.habitica.models.tasks.TaskType
 import com.habitrpg.shared.habitica.models.user.Stats
 import com.habitrpg.shared.habitica.models.user.User
 import kotlin.math.min
@@ -25,7 +26,7 @@ class ScoreTaskLocallyInteractor {
             var nextDelta = 0.9747.pow(currentValue) * if (direction == TaskDirection.DOWN) -1 else 1
 
             if (task.checklist?.size ?: 0 > 0) {
-                if (task.type == Task.TYPE_TODO) {
+                if (task.type == TaskType.TYPE_TODO) {
                     nextDelta *= 1 + (task.checklist?.map { if (it.completed) 1 else 0 }?.reduce { _, _ -> 0 }
                             ?: 0)
                 }

@@ -5,10 +5,10 @@ import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
-open class SpecialItems : RealmObject() {
+actual open class SpecialItems : RealmObject() {
 
     @PrimaryKey
-    var userId: String? = null
+    actual var userId: String? = null
         set(userId) {
             field = userId
             ownedItems?.forEach {
@@ -18,13 +18,13 @@ open class SpecialItems : RealmObject() {
                 }
             }
         }
-    var ownedItems: RealmList<OwnedItem>? = null
-    var seafoam: Int = 0
-    var shinySeed: Int = 0
-    var snowball: Int = 0
-    var spookySparkles: Int = 0
+    actual var ownedItems: RealmList<OwnedItem>? = null
+    actual var seafoam: Int = 0
+    actual var shinySeed: Int = 0
+    actual var snowball: Int = 0
+    actual var spookySparkles: Int = 0
 
-    fun hasSpecialItems(): Boolean {
+    actual fun hasSpecialItems(): Boolean {
         return seafoam > 0 || shinySeed > 0 || snowball > 0 || spookySparkles > 0
     }
 }
