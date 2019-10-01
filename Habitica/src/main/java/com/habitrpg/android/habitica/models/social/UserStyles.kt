@@ -1,7 +1,7 @@
 package com.habitrpg.android.habitica.models.social
 
 import com.habitrpg.android.habitica.models.Avatar
-import com.habitrpg.android.habitica.models.AvatarPreferences
+import com.habitrpg.shared.habitica.models.user.AvatarPreferences
 import com.habitrpg.android.habitica.models.user.Items
 import com.habitrpg.android.habitica.models.user.Outfit
 import com.habitrpg.android.habitica.models.user.Preferences
@@ -34,7 +34,7 @@ open class UserStyles : RealmObject(), Avatar {
         return stats
     }
 
-    override fun getPreferences(): AvatarPreferences? {
+    override fun getPreferences(): com.habitrpg.shared.habitica.models.user.AvatarPreferences? {
         return preferences
     }
 

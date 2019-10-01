@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
-actual class Buffs : RealmObject {
+actual class Buffs actual constructor(snowball: Boolean, streaks: Boolean, seaform: Boolean, spookySparkles: Boolean, shinySeed: Boolean) : RealmObject() {
 
     @PrimaryKey
     actual var userId: String? = null
@@ -15,40 +15,30 @@ actual class Buffs : RealmObject {
     actual var per: Float? = null
     @SerializedName("int")
     actual var _int: Float? = null
-    actual var snowball: Boolean? = null
+    actual var snowball: Boolean? = snowball
         get(): Boolean? {
-            return if (snowball != null) snowball else java.lang.Boolean.FALSE
+            return if (field != null) field else false
         }
 
-    actual var streaks: Boolean? = null
+    actual var streaks: Boolean? = streaks
         get(): Boolean? {
-            return if (streaks != null) streaks else java.lang.Boolean.FALSE
+            return if (field != null) field else false
         }
 
     actual var seafoam: Boolean? = null
         get(): Boolean? {
-            return if (seafoam != null) seafoam else java.lang.Boolean.FALSE
+            return if (field != null) field else false
         }
 
     actual var spookySparkles: Boolean? = null
         get(): Boolean? {
-            return if (spookySparkles != null) spookySparkles else java.lang.Boolean.FALSE
+            return if (field != null) field else false
         }
 
     actual var shinySeed: Boolean? = null
         get(): Boolean? {
-            return if (shinySeed != null) shinySeed else java.lang.Boolean.FALSE
+            return if (field != null) field else false
         }
-
-    actual constructor() {
-        this.snowball = false
-        this.streaks = false
-    }
-
-    actual constructor(snowball: Boolean, streaks: Boolean) {
-        this.snowball = snowball
-        this.streaks = streaks
-    }
 
 
     actual fun merge(stats: Buffs?) {

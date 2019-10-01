@@ -2,8 +2,8 @@ package com.habitrpg.android.habitica.models;
 
 import com.habitrpg.android.habitica.BuildConfig;
 import com.habitrpg.android.habitica.models.user.Items;
-import com.habitrpg.android.habitica.models.user.OwnedMount;
-import com.habitrpg.android.habitica.models.user.OwnedPet;
+import com.habitrpg.shared.habitica.models.user.OwnedMount;
+import com.habitrpg.shared.habitica.models.user.OwnedPet;
 import com.habitrpg.shared.habitica.models.user.User;
 
 import org.junit.Before;

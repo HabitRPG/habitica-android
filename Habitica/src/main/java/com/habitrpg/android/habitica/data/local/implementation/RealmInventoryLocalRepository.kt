@@ -5,9 +5,10 @@ import com.habitrpg.android.habitica.data.local.InventoryLocalRepository
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.*
 import com.habitrpg.android.habitica.models.shops.ShopItem
-import com.habitrpg.android.habitica.models.user.OwnedItem
-import com.habitrpg.android.habitica.models.user.OwnedMount
-import com.habitrpg.android.habitica.models.user.OwnedPet
+import com.habitrpg.shared.habitica.models.user.OwnedItem
+import com.habitrpg.shared.habitica.models.user.OwnedMount
+import com.habitrpg.shared.habitica.models.user.OwnedPet
+import com.habitrpg.shared.habitica.models.inventory.Equipment
 import com.habitrpg.shared.habitica.models.user.User
 import io.reactivex.Flowable
 import io.reactivex.functions.Consumer

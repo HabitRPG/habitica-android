@@ -1,8 +1,8 @@
 package com.habitrpg.shared.habitica.models.tasks
 
-expect class TasksOrder {
-    internal var habits: List<String>?
-    internal var dailys: List<String>?
-    internal var todos: List<String>?
-    internal var rewards: List<String>?
+class TasksOrder {
+    internal var habits: List<String>? = null
+    internal var dailys: List<String>? = null
+    internal var todos: List<String>? = null
+    internal var rewards: List<String>? = null
 }

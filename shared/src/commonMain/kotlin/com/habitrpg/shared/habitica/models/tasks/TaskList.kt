@@ -1,5 +1,5 @@
 package com.habitrpg.shared.habitica.models.tasks
 
-expect class TaskList {
-    var tasks: Map<String, Task>?
+class TaskList {
+    var tasks: Map<String, Task>? = null
 }

@@ -1,6 +1,7 @@
 package com.habitrpg.shared.habitica.models.tasks
 
 import com.habitrpg.shared.habitica.models.Tag
+import com.habitrpg.shared.habitica.models.tasks.TaskType
 import com.habitrpg.shared.habitica.nativeLibraries.NativeDate
 import com.habitrpg.shared.habitica.nativeLibraries.NativeList
 import com.habitrpg.shared.habitica.nativeLibraries.NativeParcel
@@ -99,22 +100,5 @@ expect open class Task {
         fun createFromParcel(source: NativeParcel): Task
 
         fun newArray(size: Int): Array<Task?>
-
-        val TYPE_HABIT: String
-        val TYPE_TODO: String
-        val TYPE_DAILY: String
-        val TYPE_REWARD: String
-
-        val FILTER_ALL: String
-        val FILTER_WEAK: String
-        val FILTER_STRONG: String
-        val FILTER_ACTIVE: String
-        val FILTER_GRAY: String
-        val FILTER_DATED: String
-        val FILTER_COMPLETED: String
-        val FREQUENCY_WEEKLY: String
-        val FREQUENCY_DAILY: String
-        val FREQUENCY_MONTHLY: String
-        val FREQUENCY_YEARLY: String
     }
 }

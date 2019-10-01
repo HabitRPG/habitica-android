@@ -11,7 +11,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.inflate
-import com.habitrpg.android.habitica.models.user.SubscriptionPlan
+import com.habitrpg.shared.habitica.models.user.SubscriptionPlan
 import com.habitrpg.android.habitica.ui.helpers.bindView
 
 class SubscriptionDetailsView : LinearLayout {

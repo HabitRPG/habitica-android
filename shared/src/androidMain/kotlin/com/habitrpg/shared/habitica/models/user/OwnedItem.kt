@@ -1,27 +1,27 @@
-package com.habitrpg.android.habitica.models.user
+package com.habitrpg.shared.habitica.models.user
 
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
-open class OwnedItem : RealmObject(), OwnedObject {
+actual open class OwnedItem : RealmObject(), OwnedObject {
 
     @PrimaryKey
-    override var combinedKey: String? = null
-    override var userID: String? = null
+    actual override var combinedKey: String? = null
+    actual override var userID: String? = null
     set(value) {
         field = value
         combinedKey = field + itemType + key
     }
-    override var key: String? = null
+    actual override var key: String? = null
     set(value) {
         field = value
         combinedKey = userID + itemType + field
     }
 
-    var itemType: String? = null
+    actual var itemType: String? = null
         set(value) {
             field = value
             combinedKey = userID + field + key
         }
-    var numberOwned = 0
+    actual var numberOwned = 0
 }

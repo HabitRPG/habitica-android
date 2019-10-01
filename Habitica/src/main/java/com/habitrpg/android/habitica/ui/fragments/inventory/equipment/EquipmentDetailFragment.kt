@@ -10,7 +10,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.android.habitica.models.inventory.Equipment
+import com.habitrpg.shared.habitica.models.inventory.Equipment
 import com.habitrpg.android.habitica.models.user.Items
 import com.habitrpg.android.habitica.ui.adapter.inventory.EquipmentRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment

@@ -9,7 +9,7 @@ import androidx.core.content.ContextCompat
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.helpers.MainNavigationController
-import com.habitrpg.android.habitica.models.inventory.Customization
+import com.habitrpg.shared.habitica.models.inventory.Customization
 import com.habitrpg.android.habitica.models.inventory.CustomizationSet
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.helpers.bindView
@@ -44,7 +44,8 @@ class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerVi
     fun updateOwnership(ownedCustomizations: List<String>) {
         for ((position, obj) in customizationList.withIndex()) {
             if (obj.javaClass == Customization::class.java) {
-                val customization = obj as? Customization ?: return
+                val customization = obj as? Customization
+                        ?: return
                 if (customization.purchased != ownedCustomizations.contains(customization.id)) {
                     customization.purchased = ownedCustomizations.contains(customization.id)
                     notifyItemChanged(position)

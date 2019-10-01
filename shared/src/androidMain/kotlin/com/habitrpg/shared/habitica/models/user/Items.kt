@@ -5,10 +5,10 @@ import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 import java.util.*
 
-open class Items : RealmObject {
+actual open class Items : RealmObject {
 
     @PrimaryKey
-    var userId: String? = null
+    actual var userId: String? = null
         set(userId) {
             field = userId
             if (gear != null && gear?.isManaged == false) {
@@ -52,27 +52,27 @@ open class Items : RealmObject {
                 }
             }
         }
-    var eggs: RealmList<OwnedItem>? = null
-    var food: RealmList<OwnedItem>? = null
-    var hatchingPotions: RealmList<OwnedItem>? = null
-    var quests: RealmList<OwnedItem>? = null
-    var pets: RealmList<OwnedPet>? = null
-    var mounts: RealmList<OwnedMount>? = null
-    var currentMount: String? = null
-    var currentPet: String? = null
-    var lastDrop_count: Int = 0
-    var lastDrop_date: Date? = null
+    actual var eggs: RealmList<OwnedItem>? = null
+    actual var food: RealmList<OwnedItem>? = null
+    actual var hatchingPotions: RealmList<OwnedItem>? = null
+    actual var quests: RealmList<OwnedItem>? = null
+    actual var pets: RealmList<OwnedPet>? = null
+    actual var mounts: RealmList<OwnedMount>? = null
+    actual var currentMount: String? = null
+    actual var currentPet: String? = null
+    actual var lastDrop_count: Int = 0
+    actual var lastDrop_date: Date? = null
 
     //private QuestContent quest;
-    var gear: Gear? = null
-    var special: SpecialItems? = null
+    actual var gear: Gear? = null
+    actual var special: SpecialItems? = null
 
-    constructor(currentMount: String, currentPet: String, lastDrop_count: Int, lastDrop_date: Date) {
+    actual constructor(currentMount: String, currentPet: String, lastDrop_count: Int, lastDrop_date: Date) {
         this.currentMount = currentMount
         this.currentPet = currentPet
         this.lastDrop_count = lastDrop_count
         this.lastDrop_date = lastDrop_date
     }
 
-    constructor()
+    actual constructor()
 }

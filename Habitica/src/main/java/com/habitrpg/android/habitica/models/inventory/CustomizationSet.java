@@ -1,5 +1,7 @@
 package com.habitrpg.android.habitica.models.inventory;
 
+import com.habitrpg.shared.habitica.models.inventory.Customization;
+
 import java.util.List;
 
 /**

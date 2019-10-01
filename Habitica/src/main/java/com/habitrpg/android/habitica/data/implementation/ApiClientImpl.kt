@@ -18,7 +18,7 @@ import com.habitrpg.android.habitica.models.auth.UserAuth
 import com.habitrpg.android.habitica.models.auth.UserAuthResponse
 import com.habitrpg.android.habitica.models.auth.UserAuthSocial
 import com.habitrpg.android.habitica.models.auth.UserAuthSocialTokens
-import com.habitrpg.android.habitica.models.inventory.Equipment
+import com.habitrpg.shared.habitica.models.inventory.Equipment
 import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.responses.*

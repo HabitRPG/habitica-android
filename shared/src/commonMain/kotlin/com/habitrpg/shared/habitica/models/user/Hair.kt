@@ -1,33 +1,19 @@
 package com.habitrpg.shared.habitica.models.user
 
-import io.realm.RealmObject
-import io.realm.annotations.PrimaryKey
+expect open class Hair {
+    var userId: String?
 
-open class Hair : RealmObject {
-
-    @PrimaryKey
-    var userId: String? = null
-
-    var preferences: Preferences? = null
-    var mustache: Int = 0
-    var beard: Int = 0
-    var bangs: Int = 0
-    var base: Int = 0
-    var flower: Int = 0
-    var color: String? = null
+    var preferences: Preferences?
+    var mustache: Int
+    var beard: Int
+    var bangs: Int
+    var base: Int
+    var flower: Int
+    var color: String?
 
     constructor()
 
-    constructor(mustache: Int, beard: Int, bangs: Int, base: Int, color: String, flower: Int) {
-        this.mustache = mustache
-        this.beard = beard
-        this.bangs = bangs
-        this.base = base
-        this.color = color
-        this.flower = flower
-    }
+    constructor(mustache: Int, beard: Int, bangs: Int, base: Int, color: String, flower: Int)
 
-    fun isAvailable(hairId: Int): Boolean {
-        return hairId > 0
-    }
+    fun isAvailable(hairId: Int): Boolean
 }

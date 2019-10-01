@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica.models.inventory;
+package com.habitrpg.shared.habitica.models.inventory;
 
 import androidx.annotation.Nullable;
 

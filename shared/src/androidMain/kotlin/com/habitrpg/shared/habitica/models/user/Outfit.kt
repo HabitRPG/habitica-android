@@ -7,27 +7,27 @@ import com.google.gson.annotations.SerializedName
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
-open class Outfit : RealmObject() {
+actual open class Outfit : RealmObject() {
 
     @PrimaryKey
-    var userId: String? = null
+    actual var userId: String? = null
 
-    internal var gear: Gear? = null
-    var armor: String = ""
-    var back: String = ""
-    var body: String = ""
-    var head: String = ""
-    var shield: String = ""
-    var weapon: String = ""
+    internal actual var gear: Gear? = null
+    actual var armor: String = ""
+    actual var back: String = ""
+    actual var body: String = ""
+    actual var head: String = ""
+    actual var shield: String = ""
+    actual var weapon: String = ""
     @SerializedName("eyewear")
-    var eyeWear: String = ""
-    var headAccessory: String = ""
+    actual var eyeWear: String = ""
+    actual var headAccessory: String = ""
 
-    fun isAvailable(outfit: String): Boolean {
+    actual fun isAvailable(outfit: String): Boolean {
         return !TextUtils.isEmpty(outfit) && !outfit.endsWith("base_0")
     }
 
-    fun updateWith(newOutfit: Outfit) {
+    actual fun updateWith(newOutfit: Outfit) {
         this.armor = newOutfit.armor
         this.back = newOutfit.back
         this.body = newOutfit.body

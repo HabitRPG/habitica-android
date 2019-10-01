@@ -1,13 +1,13 @@
 package com.habitrpg.android.habitica.models.members
 
 
-import com.habitrpg.android.habitica.models.AvatarPreferences
+import com.habitrpg.shared.habitica.models.user.AvatarPreferences
 import com.habitrpg.android.habitica.models.user.Hair
 
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
-open class MemberPreferences : RealmObject(), AvatarPreferences {
+open class MemberPreferences : RealmObject(), com.habitrpg.shared.habitica.models.user.AvatarPreferences {
 
     @PrimaryKey
     private var userId: String? = null

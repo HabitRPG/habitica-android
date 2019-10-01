@@ -1,6 +1,6 @@
 package com.habitrpg.shared.habitica.models.user
 
-expect class Buffs {
+expect class Buffs actual constructor(snowball: Boolean, streaks: Boolean, seaform: Boolean, spookySparkles: Boolean, shinySeed: Boolean) {
     var userId: String?
 
     var con: Float?
@@ -15,7 +15,4 @@ expect class Buffs {
     var streaks: Boolean?
 
     fun merge(stats: Buffs?)
-
-    constructor()
-    constructor(snowball: Boolean, streaks: Boolean)
 }

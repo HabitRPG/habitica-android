@@ -5,6 +5,11 @@ import android.os.Parcelable
 import androidx.annotation.StringDef
 import com.google.gson.annotations.SerializedName
 import com.habitrpg.shared.habitica.models.Tag
+import com.habitrpg.shared.habitica.models.tasks.TaskType
+import com.habitrpg.shared.habitica.models.tasks.TaskType.Companion.TYPE_DAILY
+import com.habitrpg.shared.habitica.models.tasks.TaskType.Companion.TYPE_HABIT
+import com.habitrpg.shared.habitica.models.tasks.TaskType.Companion.TYPE_REWARD
+import com.habitrpg.shared.habitica.models.tasks.TaskType.Companion.TYPE_TODO
 import com.habitrpg.shared.habitica.models.user.Stats
 import com.habitrpg.shared.habitica.ui.helpers.MarkdownParser
 import io.realm.RealmList
@@ -367,22 +372,6 @@ actual open class Task : RealmObject, Parcelable {
 
         actual override fun newArray(size: Int): Array<Task?> = arrayOfNulls(size)
 
-        actual val TYPE_HABIT = "habit"
-        actual val TYPE_TODO = "todo"
-        actual val TYPE_DAILY = "daily"
-        actual val TYPE_REWARD = "reward"
-
-        actual val FILTER_ALL = "all"
-        actual val FILTER_WEAK = "weak"
-        actual val FILTER_STRONG = "strong"
-        actual val FILTER_ACTIVE = "active"
-        actual val FILTER_GRAY = "gray"
-        actual val FILTER_DATED = "dated"
-        actual val FILTER_COMPLETED = "completed"
-        actual val FREQUENCY_WEEKLY = "weekly"
-        actual val FREQUENCY_DAILY = "daily"
-        actual val FREQUENCY_MONTHLY = "monthly"
-        actual val FREQUENCY_YEARLY = "yearly"
 
         @JvmField
         val CREATOR: Parcelable.Creator<Task> = object : Parcelable.Creator<Task> {

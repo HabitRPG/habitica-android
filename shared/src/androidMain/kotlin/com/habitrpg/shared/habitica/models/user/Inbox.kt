@@ -1,24 +1,23 @@
 package com.habitrpg.shared.habitica.models.user
 
-import com.habitrpg.shared.habitica.models.user.User
 import io.realm.RealmObject
 import io.realm.annotations.Ignore
 import io.realm.annotations.PrimaryKey
 import java.util.*
 
-open class Inbox : RealmObject() {
+actual open class Inbox : RealmObject() {
 
     @PrimaryKey
-    var userId: String? = null
+    actual var userId: String? = null
 
-    internal var user: User? = null
+    internal actual var user: User? = null
     /**
      * @return The optOut
      */
     /**
      * @param optOut The optOut
      */
-    var optOut: Boolean = false
+    actual var optOut: Boolean = false
     /**
      * @return The blocks
      */
@@ -26,12 +25,12 @@ open class Inbox : RealmObject() {
      * @param blocks The blocks
      */
     @Ignore
-    var blocks: List<Any> = ArrayList()
+    actual var blocks: List<Any> = ArrayList()
     /**
      * @return The newMessages
      */
     /**
      * @param newMessages The newMessages
      */
-    var newMessages: Int = 0
+    actual var newMessages: Int = 0
 }

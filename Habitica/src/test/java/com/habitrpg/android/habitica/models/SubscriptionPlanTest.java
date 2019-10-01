@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.models;
 
-import com.habitrpg.android.habitica.models.user.SubscriptionPlan;
+import com.habitrpg.shared.habitica.models.user.SubscriptionPlan;
 
 import org.junit.Before;
 import org.junit.Test;

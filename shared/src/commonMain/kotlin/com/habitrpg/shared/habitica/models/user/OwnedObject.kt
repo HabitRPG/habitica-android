@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica.models.user
+package com.habitrpg.shared.habitica.models.user
 
 interface OwnedObject {
     var combinedKey: String?

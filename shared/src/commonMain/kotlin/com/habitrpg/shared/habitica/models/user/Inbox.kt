@@ -1,37 +1,29 @@
 package com.habitrpg.shared.habitica.models.user
 
-import com.habitrpg.shared.habitica.models.user.User
-import io.realm.RealmObject
-import io.realm.annotations.Ignore
-import io.realm.annotations.PrimaryKey
-import java.util.*
+expect open class Inbox {
 
-open class Inbox : RealmObject() {
+    var userId: String?
 
-    @PrimaryKey
-    var userId: String? = null
-
-    internal var user: User? = null
+    internal var user: User?
     /**
      * @return The optOut
      */
     /**
      * @param optOut The optOut
      */
-    var optOut: Boolean = false
+    var optOut: Boolean
     /**
      * @return The blocks
      */
     /**
      * @param blocks The blocks
      */
-    @Ignore
-    var blocks: List<Any> = ArrayList()
+    var blocks: List<Any>
     /**
      * @return The newMessages
      */
     /**
      * @param newMessages The newMessages
      */
-    var newMessages: Int = 0
+    var newMessages: Int
 }
