@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.models.responses.TaskDirection
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.models.tasks.ChecklistItem
@@ -18,7 +19,7 @@ import io.reactivex.Flowable
 import io.reactivex.subjects.PublishSubject
 import io.realm.OrderedRealmCollection
 
-class RewardsRecyclerViewAdapter(private var customRewards: OrderedRealmCollection<Task>?, private val layoutResource: Int, private val user: User?) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), TaskRecyclerViewAdapter {
+class RewardsRecyclerViewAdapter(private var customRewards: OrderedRealmCollection<Task>?, private val layoutResource: Int, private val user: User?, private val configManager: AppConfigManager) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), TaskRecyclerViewAdapter {
     private var inAppRewards: OrderedRealmCollection<ShopItem>? = null
 
     val errorButtonEventsSubject = PublishSubject.create<String>()
@@ -74,7 +75,7 @@ class RewardsRecyclerViewAdapter(private var customRewards: OrderedRealmCollecti
         } else if (inAppRewards != null) {
             val item = inAppRewards?.get(position - customRewardCount) ?: return
             if (holder is ShopItemViewHolder) {
-                holder.bind(item, item.canAfford(user))
+                holder.bind(item, item.canAfford(user, configManager.insufficientGemPurchase()))
                 holder.isPinned = true
                 holder.hidePinIndicator()
             }

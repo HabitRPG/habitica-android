@@ -63,7 +63,7 @@ class ShopFragment : BaseFragment() {
 
         adapter = recyclerView.adapter as? ShopRecyclerAdapter
         if (adapter == null) {
-            adapter = ShopRecyclerAdapter()
+            adapter = ShopRecyclerAdapter(configManager)
             adapter?.context = context
             recyclerView.adapter = adapter
             recyclerView.itemAnimator = SafeDefaultItemAnimator()

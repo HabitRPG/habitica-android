@@ -54,24 +54,28 @@ open class ShopItem : RealmObject() {
     val isTypeAnimal: Boolean
         get() = "pets" == purchaseType || "mounts" == purchaseType
 
-    fun canAfford(user: User?): Boolean = when(currency) {
+    fun canAfford(user: User?, canAlwaysAffordSpecial: Boolean): Boolean = when(currency) {
         "gold" -> value <= user?.stats?.gp ?: 0.0
-        "gems" -> value <= user?.gemCount ?: 0
-        "hourglasses" -> value <= user?.purchased?.plan?.consecutive?.trinkets ?: 0
+        "gems" -> if (canAlwaysAffordSpecial) true else value <= user?.gemCount ?: 0
+        "hourglasses" -> if (canAlwaysAffordSpecial) true else value <= user?.purchased?.plan?.consecutive?.trinkets ?: 0
         else -> false
     }
 
     override fun equals(other: Any?): Boolean {
-        if (ShopItem::class.java.isAssignableFrom(other!!.javaClass)) {
-            val otherItem = other as ShopItem?
-            return this.key == otherItem!!.key
+        if (other != null && ShopItem::class.java.isAssignableFrom(other.javaClass)) {
+            val otherItem = other as? ShopItem
+            return this.key == otherItem?.key
         }
         return super.equals(other)
     }
 
+    override fun hashCode(): Int {
+        return this.key.hashCode()
+    }
+
     companion object {
 
-        const val GEM_FOR_GOLD = "gem"
+        private const val GEM_FOR_GOLD = "gem"
 
         fun makeGemItem(res: Resources?): ShopItem {
             val item = ShopItem()

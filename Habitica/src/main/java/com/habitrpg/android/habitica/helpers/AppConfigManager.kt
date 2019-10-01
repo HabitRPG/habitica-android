@@ -66,4 +66,8 @@ class AppConfigManager {
     fun flipAddTaskBehaviour(): Boolean {
         return remoteConfig.getBoolean("flipAddTaskBehaviour")
     }
+
+    fun insufficientGemPurchase(): Boolean {
+        return remoteConfig.getBoolean("insufficientGemPurchase")
+    }
 }

@@ -177,7 +177,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
         }
 
         buyButton.elevation = 0f
-        if (shopItem.canAfford(user)) {
+        if (shopItem.canAfford(user, configManager.insufficientGemPurchase())) {
             buyButton.background = context.getDrawable(R.drawable.button_background_primary)
             priceLabel.setTextColor(ContextCompat.getColor(context, R.color.white))
             buyLabel.setTextColor(ContextCompat.getColor(context, R.color.white))
@@ -208,7 +208,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
                 return
             }
             val gemsLeft = if (shopItem.limitedNumberLeft != null) shopItem.limitedNumberLeft else 0
-            if ((gemsLeft == 0 && shopItem.purchaseType == "gems") || shopItem.canAfford(user)) {
+            if ((gemsLeft == 0 && shopItem.purchaseType == "gems") || shopItem.canAfford(user, false)) {
                 val observable: Flowable<Any>
                 if (shopIdentifier != null && shopIdentifier == Shop.TIME_TRAVELERS_SHOP || "mystery_set" == shopItem.purchaseType) {
                     observable = if (shopItem.purchaseType == "gear") {

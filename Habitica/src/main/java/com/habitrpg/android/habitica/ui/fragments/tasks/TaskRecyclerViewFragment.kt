@@ -19,6 +19,7 @@ import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.setScaledPadding
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
+import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.SoundManager
 import com.habitrpg.android.habitica.helpers.TaskFilterHelper
@@ -60,6 +61,8 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
     lateinit var taskRepository: TaskRepository
     @Inject
     lateinit var soundManager: SoundManager
+    @Inject
+    lateinit var configManager: AppConfigManager
 
     internal var layoutManager: androidx.recyclerview.widget.RecyclerView.LayoutManager? = null
 
@@ -83,7 +86,7 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
                 TodosRecyclerViewAdapter(null, true, R.layout.todo_item_card, taskFilterHelper)
             }
             Task.TYPE_REWARD -> {
-                RewardsRecyclerViewAdapter(null, R.layout.reward_item_card, user)
+                RewardsRecyclerViewAdapter(null, R.layout.reward_item_card, user, configManager)
             }
             else -> null
         }

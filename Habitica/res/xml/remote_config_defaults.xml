@@ -48,5 +48,9 @@
         <key>flipAddTaskBehaviour</key>
         <value>true</value>
     </entry>
+    <entry>
+        <key>insufficientGemPurchase</key>
+        <value>false</value>
+    </entry>
 </defaultsMap>
     <!-- END xml_defaults -->

@@ -8,21 +8,21 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.extensions.inflate
+import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
-import com.habitrpg.android.habitica.models.inventory.Item
 import com.habitrpg.android.habitica.models.shops.Shop
 import com.habitrpg.android.habitica.models.shops.ShopCategory
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.viewHolders.SectionViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.ShopItemViewHolder
 import com.habitrpg.android.habitica.ui.views.NPCBannerView
 
 
-class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
+class ShopRecyclerAdapter(private val configManager: AppConfigManager) : androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
 
     private val items: MutableList<Any> = ArrayList()
     private var shopIdentifier: String? = null
@@ -138,7 +138,7 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<an
                 ShopItem::class.java -> {
                     val item = obj as? ShopItem ?: return
                     val itemHolder = holder as? ShopItemViewHolder ?: return
-                    itemHolder.bind(item, item.canAfford(user))
+                    itemHolder.bind(item, item.canAfford(user, configManager.insufficientGemPurchase()))
                     if (ownedItems.containsKey(item.key+"-"+item.pinType)) {
                         itemHolder.itemCount = ownedItems[item.key+"-"+item.pinType]?.numberOwned ?: 0
                     }
