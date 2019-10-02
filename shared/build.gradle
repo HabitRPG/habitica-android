@@ -57,6 +57,10 @@ kotlin {
     }
 }
 
+dependencies {
+    kapt 'io.realm:realm-annotations-processor:5.14.0'
+}
+
 // workaround for https://youtrack.jetbrains.com/issue/KT-27170
 configurations {
     compileClasspath
