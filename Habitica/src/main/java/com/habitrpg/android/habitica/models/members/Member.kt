@@ -3,7 +3,8 @@ package com.habitrpg.android.habitica.models.members
 import com.google.gson.annotations.SerializedName
 import com.habitrpg.android.habitica.models.Avatar
 import com.habitrpg.android.habitica.models.social.UserParty
-import com.habitrpg.android.habitica.models.user.*
+import com.habitrpg.shared.habitica.models.user.ContributorInfo
+import com.habitrpg.shared.habitica.models.user.Profile
 
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey

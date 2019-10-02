@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.models;
 
-import com.habitrpg.android.habitica.models.user.SubscriptionPlan;
+import com.habitrpg.shared.habitica.models.user.SubscriptionPlan;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -16,12 +16,12 @@ public class SubscriptionPlanTest {
     @Before
     public void setUp() throws Exception {
         this.plan = new SubscriptionPlan();
-        this.plan.planId = "test";
+        this.plan.setPlanId("test");
     }
 
     @Test
     public void isInactiveForNoPlanId() throws Exception {
-        this.plan.planId = null;
+        this.plan.setPlanId(null);
         assertFalse(this.plan.isActive());
     }
 
@@ -35,7 +35,7 @@ public class SubscriptionPlanTest {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
         calendar.add(Calendar.DATE, 1);
-        this.plan.dateTerminated = calendar.getTime();
+        this.plan.setDateTerminated(calendar.getTime());
         assertTrue(this.plan.isActive());
     }
 
@@ -44,7 +44,7 @@ public class SubscriptionPlanTest {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
         calendar.add(Calendar.DATE, -1);
-        this.plan.dateTerminated = calendar.getTime();
+        this.plan.setDateTerminated(calendar.getTime());
         assertFalse(this.plan.isActive());
     }
 }

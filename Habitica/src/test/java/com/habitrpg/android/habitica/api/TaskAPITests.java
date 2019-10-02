@@ -2,7 +2,7 @@
 //
 //
 //import com.habitrpg.android.habitica.BuildConfig;
-//import com.habitrpg.android.habitica.models.responses.TaskDirectionData;
+//import com.habitrpg.shared.habitica.models.responses.TaskDirectionData;
 //import com.habitrpg.android.habitica.models.tasks.Task;
 //import com.habitrpg.android.habitica.models.tasks.TaskList;
 //

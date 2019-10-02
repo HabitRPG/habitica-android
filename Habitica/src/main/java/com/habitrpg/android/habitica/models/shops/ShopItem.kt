@@ -4,7 +4,7 @@ import android.content.res.Resources
 
 import com.google.gson.annotations.SerializedName
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.shared.habitica.models.user.User
 
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey

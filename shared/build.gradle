@@ -17,7 +17,7 @@ android {
         release {
         }
     }
-    sourceSets{
+    sourceSets {
         main.java.srcDirs += 'src/androidMain/kotlin'
     }
     compileOptions {
@@ -27,11 +27,11 @@ android {
 
 kotlin {
     targets {
-        final def iOSTarget = System.getenv('SDK_NAME')?.startsWith("iphoneos") \
-                              ? presets.iosArm64 : presets.iosX64
+        final def iOSTarget = System.getenv('SDK_NAME')?.startsWith("iphoneos")   \
+                                ? presets.iosArm64 : presets.iosX64
 
         fromPreset(iOSTarget, 'ios') {
-             binaries {
+            binaries {
                 framework('shared')
             }
         }
@@ -42,12 +42,27 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             api 'org.jetbrains.kotlin:kotlin-stdlib-common'
+            compileOnly 'javax.annotation:javax.annotation-api:1.3.2'
+            api "io.realm:realm-gradle-plugin:5.14.0"
         }
 
         commonMain.kotlin.srcDirs += 'src/commonMain/kotlin'
 
         androidMain.dependencies {
             api 'org.jetbrains.kotlin:kotlin-stdlib'
+
+
+            api 'com.android.tools.build:gradle:3.5.0'
+
+            api 'io.realm:android-adapters:3.1.0'
+
+            //RxJava
+            implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+            implementation 'io.reactivex.rxjava2:rxjava:2.2.8'
+            implementation 'io.reactivex.rxjava2:rxkotlin:2.3.0'
+
+            //Push Notifications
+            api 'androidx.core:core-ktx:1.0.2'
         }
 
         iosMain.dependencies {

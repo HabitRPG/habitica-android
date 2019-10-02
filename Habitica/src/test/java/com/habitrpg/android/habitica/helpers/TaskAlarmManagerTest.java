@@ -3,7 +3,7 @@
 //import com.habitrpg.android.habitica.BuildConfig;
 //import com.habitrpg.android.habitica.receivers.TaskReceiver;
 //import com.habitrpg.android.habitica.models.tasks.Days;
-//import com.habitrpg.android.habitica.models.tasks.RemindersItem;
+//import com.habitrpg.shared.habitica.models.tasks.RemindersItem;
 //import com.habitrpg.android.habitica.models.tasks.Task;
 //
 //import org.junit.After;

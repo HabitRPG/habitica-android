@@ -1,5 +1,7 @@
 package com.habitrpg.android.habitica.models.responses
 
+import com.habitrpg.shared.habitica.models.responses.TaskDirectionDataTemp
+
 /**
  * This class represent the data sent back from the API when calling /user/tasks/{id}/{direction}.
  * It holds almost the same thing as Stats, except toNextLevel & maxHealth & maxHP.

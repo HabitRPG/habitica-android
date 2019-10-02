@@ -1,8 +1,8 @@
 package com.habitrpg.android.habitica.helpers;
 
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.models.HabitRpgClass;
-import com.habitrpg.android.habitica.models.inventory.Equipment;
+import com.habitrpg.shared.habitica.models.HabitRpgClass;
+import com.habitrpg.shared.habitica.models.inventory.Equipment;
 import com.habitrpg.android.habitica.models.members.Member;
 import com.habitrpg.android.habitica.models.user.Stats;
 

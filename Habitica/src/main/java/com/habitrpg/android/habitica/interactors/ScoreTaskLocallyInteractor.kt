@@ -1,10 +1,10 @@
 package com.habitrpg.android.habitica.interactors
 
-import com.habitrpg.android.habitica.models.responses.TaskDirection
-import com.habitrpg.android.habitica.models.responses.TaskDirectionData
+import com.habitrpg.shared.habitica.models.responses.TaskDirection
+import com.habitrpg.shared.habitica.models.responses.TaskDirectionData
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.user.Stats
-import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.shared.habitica.models.user.User
 import java.util.*
 import kotlin.math.min
 import kotlin.math.pow
@@ -123,10 +123,10 @@ class ScoreTaskLocallyInteractor {
             var totalConstitution = levelStat
             var totalPerception = levelStat
 
-            totalStrength += user.stats?.buffs?.getStr()?.toInt() ?: 0
-            totalIntelligence += user.stats?.buffs?.get_int()?.toInt() ?: 0
-            totalConstitution += user.stats?.buffs?.getCon()?.toInt() ?: 0
-            totalPerception += user.stats?.buffs?.getPer()?.toInt() ?: 0
+            totalStrength += user.stats?.buffs?.str?.toInt() ?: 0
+            totalIntelligence += user.stats?.buffs?._int?.toInt() ?: 0
+            totalConstitution += user.stats?.buffs?.con?.toInt() ?: 0
+            totalPerception += user.stats?.buffs?.per?.toInt() ?: 0
 
             totalStrength += user.stats?.strength ?: 0
             totalIntelligence += user.stats?.intelligence ?: 0

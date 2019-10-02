@@ -15,7 +15,7 @@ import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.extensions.inflate
-import com.habitrpg.android.habitica.models.tasks.Days
+import com.habitrpg.shared.habitica.models.tasks.Days
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.adapter.SimpleSpinnerAdapter
 import com.habitrpg.android.habitica.ui.helpers.bindView

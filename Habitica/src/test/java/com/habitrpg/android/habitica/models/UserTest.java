@@ -1,17 +1,13 @@
 package com.habitrpg.android.habitica.models;
 
 import com.habitrpg.android.habitica.BuildConfig;
-import com.habitrpg.android.habitica.models.inventory.Mount;
-import com.habitrpg.android.habitica.models.inventory.Pet;
 import com.habitrpg.android.habitica.models.user.Items;
-import com.habitrpg.android.habitica.models.user.OwnedMount;
-import com.habitrpg.android.habitica.models.user.OwnedPet;
-import com.habitrpg.android.habitica.models.user.User;
+import com.habitrpg.shared.habitica.models.user.OwnedMount;
+import com.habitrpg.shared.habitica.models.user.OwnedPet;
+import com.habitrpg.shared.habitica.models.user.User;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
 import io.realm.RealmList;

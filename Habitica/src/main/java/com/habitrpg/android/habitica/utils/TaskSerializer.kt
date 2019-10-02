@@ -1,8 +1,8 @@
 package com.habitrpg.android.habitica.utils
 
 import com.google.gson.*
-import com.habitrpg.android.habitica.models.tasks.ChecklistItem
-import com.habitrpg.android.habitica.models.tasks.RemindersItem
+import com.habitrpg.shared.habitica.models.tasks.ChecklistItem
+import com.habitrpg.shared.habitica.models.tasks.RemindersItem
 import com.habitrpg.android.habitica.models.tasks.Task
 import java.lang.reflect.Type
 import java.util.*
