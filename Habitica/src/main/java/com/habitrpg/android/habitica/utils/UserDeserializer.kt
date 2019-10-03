@@ -7,13 +7,13 @@ import com.google.gson.JsonElement
 import com.google.gson.JsonParseException
 import com.google.gson.reflect.TypeToken
 import com.habitrpg.android.habitica.extensions.getAsString
-import com.habitrpg.android.habitica.models.PushDevice
-import com.habitrpg.android.habitica.models.QuestAchievement
+import com.habitrpg.shared.habitica.models.PushDevice
+import com.habitrpg.shared.habitica.models.QuestAchievement
 import com.habitrpg.android.habitica.models.Tag
 import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.invitations.Invitations
-import com.habitrpg.android.habitica.models.social.ChallengeMembership
-import com.habitrpg.android.habitica.models.social.UserParty
+import com.habitrpg.shared.habitica.models.social.ChallengeMembership
+import com.habitrpg.shared.habitica.models.social.UserParty
 import com.habitrpg.shared.habitica.models.tasks.TasksOrder
 import com.habitrpg.shared.habitica.models.user.ContributorInfo
 import com.habitrpg.shared.habitica.models.user.OwnedItem
@@ -111,7 +111,8 @@ class UserDeserializer : JsonDeserializer<User> {
         if (obj.has("challenges")) {
             user.challenges = RealmList()
             obj.getAsJsonArray("challenges").forEach {
-                user.challenges?.add(ChallengeMembership(user.id ?: "", it.asString))
+                user.challenges?.add(ChallengeMembership(user.id
+                        ?: "", it.asString))
             }
         }
 

@@ -1,25 +1,25 @@
-package com.habitrpg.android.habitica.models
+package com.habitrpg.shared.habitica.models
 
 import io.realm.RealmObject
 import io.realm.annotations.Ignore
 import io.realm.annotations.PrimaryKey
 
-open class QuestAchievement: RealmObject() {
+actual open class QuestAchievement: RealmObject() {
     @PrimaryKey
-    var combinedKey: String? = null
+    actual var combinedKey: String? = null
 
-    var questKey: String? = null
+    actual var questKey: String? = null
     set(value) {
         field = value
         combinedKey = userID + questKey
     }
-    var userID: String? = null
+    actual var userID: String? = null
         set(value) {
             field = value
             combinedKey = userID + questKey
         }
-    var count: Int = 0
+    actual var count: Int = 0
 
     @Ignore
-    var title: String? = null
+    actual var title: String? = null
 }

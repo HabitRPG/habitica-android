@@ -1,6 +1,7 @@
 package com.habitrpg.shared.habitica.models.user
 
 import com.google.gson.annotations.SerializedName
+import com.habitrpg.shared.habitica.models.Tag
 import com.habitrpg.shared.habitica.models.invitations.Invitations
 import com.habitrpg.shared.habitica.models.social.ChallengeMembership
 import com.habitrpg.shared.habitica.models.social.UserParty
@@ -15,11 +16,11 @@ import java.util.*
 actual open class User : RealmObject(), Avatar, VersionedObject {
 
     @Ignore
-    var tasks: TaskList? = null
+    actual var tasks: TaskList? = null
 
     @PrimaryKey
     @SerializedName("_id")
-    var id: String? = null
+    actual var id: String? = null
         set(id) {
             field = id
             if (stats?.isManaged != true) {
@@ -57,17 +58,29 @@ actual open class User : RealmObject(), Avatar, VersionedObject {
     @SerializedName("_v")
     override var versionNumber: Int = 0
 
-    var balance: Double = 0.toDouble()
-    private var stats: Stats? = null
-    var inbox: Inbox? = null
+    actual var balance: Double = 0.toDouble()
+    actual var stats: Stats? = null
+        set(stats) {
+            field = stats
+            if (stats != null && this.id != null && !stats.isManaged) {
+                stats.userId = this.id
+            }
+        }
+    actual var inbox: Inbox? = null
         set(inbox) {
             field = inbox
             if (inbox != null && this.id != null && !inbox.isManaged) {
                 inbox.userId = this.id
             }
         }
-    private var preferences: Preferences? = null
-    var profile: Profile? = null
+    actual var preferences: Preferences? = null
+        set(preferences) {
+            field = preferences
+            if (preferences != null && this.id != null && !preferences.isManaged) {
+                preferences.userId = this.id
+            }
+        }
+    actual var profile: Profile? = null
         set(profile) {
             field = profile
             if (profile != null && this.id != null && !profile.isManaged) {
@@ -81,7 +94,7 @@ actual open class User : RealmObject(), Avatar, VersionedObject {
                 party.userId = this.id
             }
         }
-    var items: Items? = null
+    actual var items: Items? = null
         set(items) {
             field = items
             if (items != null && this.id != null && !items.isManaged) {
@@ -89,28 +102,28 @@ actual open class User : RealmObject(), Avatar, VersionedObject {
             }
         }
     @SerializedName("auth")
-    var authentication: Authentication? = null
+    actual var authentication: Authentication? = null
         set(authentication) {
             field = authentication
             if (authentication != null && this.id != null) {
                 authentication.userId = this.id
             }
         }
-    var flags: Flags? = null
+    actual var flags: Flags? = null
         set(flags) {
             field = flags
             if (flags != null && this.id != null) {
                 flags.userId = this.id
             }
         }
-    var contributor: ContributorInfo? = null
+    actual var contributor: ContributorInfo? = null
         set(contributor) {
             field = contributor
             if (contributor != null && this.id != null && !contributor.isManaged) {
                 contributor.userId = this.id
             }
         }
-    var invitations: Invitations? = null
+    actual var invitations: Invitations? = null
         set(invitations) {
             field = invitations
             if (invitations != null && this.id != null && !invitations.isManaged) {
@@ -118,17 +131,17 @@ actual open class User : RealmObject(), Avatar, VersionedObject {
             }
         }
 
-    var tags = RealmList<Tag>()
-    var questAchievements = RealmList<QuestAchievement>()
+    actual var tags = RealmList<Tag>()
+    actual var questAchievements = RealmList<QuestAchievement>()
         set(value) {
             field = value
             field.forEach { it.userID = id }
         }
 
     @Ignore
-    var pushDevices: List<PushDevice>? = null
+    actual var pushDevices: List<PushDevice>? = null
 
-    var purchased: Purchases? = null
+    actual var purchased: Purchases? = null
         set(purchased) {
             field = purchased
             if (purchased != null && this.id != null) {
@@ -137,51 +150,29 @@ actual open class User : RealmObject(), Avatar, VersionedObject {
         }
 
     @Ignore
-    var tasksOrder: TasksOrder? = null
+    actual var tasksOrder: TasksOrder? = null
 
-    var challenges: RealmList<ChallengeMembership>? = null
+    actual var challenges: RealmList<ChallengeMembership>? = null
 
-    var abTests: RealmList<ABTest>? = null
+    actual var abTests: RealmList<ABTest>? = null
 
-    var lastCron: Date? = null
-    var needsCron: Boolean = false
-    var loginIncentives: Int = 0
-    var streakCount: Int = 0
+    actual var lastCron: Date? = null
+    actual var needsCron: Boolean = false
+    actual var loginIncentives: Int = 0
+    actual var streakCount: Int = 0
 
-    val petsFoundCount: Int
+    actual val petsFoundCount: Int
         get() = this.items?.pets?.size ?: 0
 
-    val mountsTamedCount: Int
+    actual val mountsTamedCount: Int
         get() = this.items?.mounts?.size ?: 0
 
-    val contributorColor: Int
+    actual val contributorColor: Int
         get() = this.contributor?.contributorColor ?: android.R.color.black
-    val username: String?
+    actual val username: String?
         get() = authentication?.localAuthentication?.username
-    val formattedUsername: String?
+    actual val formattedUsername: String?
         get() = if (username != null) "@$username" else null
-
-    override fun getPreferences(): Preferences? {
-        return preferences
-    }
-
-    fun setPreferences(preferences: Preferences?) {
-        this.preferences = preferences
-        if (preferences != null && this.id != null && !preferences.isManaged) {
-            preferences.userId = this.id
-        }
-    }
-
-    override fun getStats(): Stats? {
-        return stats
-    }
-
-    fun setStats(stats: Stats?) {
-        this.stats = stats
-        if (stats != null && this.id != null && !stats.isManaged) {
-            stats.userId = this.id
-        }
-    }
 
     override fun getGemCount(): Int {
         return (this.balance * 4).toInt()
@@ -215,7 +206,7 @@ actual open class User : RealmObject(), Avatar, VersionedObject {
         return preferences?.sleep ?: false
     }
 
-    fun hasParty(): Boolean {
+    actual fun hasParty(): Boolean {
         return this.party?.id?.length ?: 0 > 0
     }
 }

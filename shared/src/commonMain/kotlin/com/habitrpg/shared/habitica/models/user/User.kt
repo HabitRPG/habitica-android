@@ -1,5 +1,7 @@
 package com.habitrpg.shared.habitica.models.user
 
+import com.habitrpg.shared.habitica.models.PushDevice
+import com.habitrpg.shared.habitica.models.QuestAchievement
 import com.habitrpg.shared.habitica.models.Tag
 import com.habitrpg.shared.habitica.models.tasks.TaskList
 import com.habitrpg.shared.habitica.models.tasks.TasksOrder

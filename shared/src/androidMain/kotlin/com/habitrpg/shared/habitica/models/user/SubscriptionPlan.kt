@@ -5,7 +5,7 @@ import java.util.Date
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
-actual open class SubscriptionPlan : SubscriptionPlanConsts, RealmObject() {
+actual open class SubscriptionPlan : RealmObject() {
 
     @PrimaryKey
     actual var customerId: String? = null

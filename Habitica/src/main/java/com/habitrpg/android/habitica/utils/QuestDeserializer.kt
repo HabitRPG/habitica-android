@@ -7,7 +7,7 @@ import com.google.gson.JsonParseException
 import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.inventory.QuestMember
 import com.habitrpg.android.habitica.models.inventory.QuestProgress
-import com.habitrpg.android.habitica.models.inventory.QuestProgressCollect
+import com.habitrpg.shared.habitica.models.inventory.QuestProgressCollect
 import io.realm.RealmList
 import java.lang.reflect.Type
 

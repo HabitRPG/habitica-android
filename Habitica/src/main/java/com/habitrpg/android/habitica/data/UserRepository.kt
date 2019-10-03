@@ -1,7 +1,7 @@
 package com.habitrpg.android.habitica.data
 
 import com.habitrpg.shared.habitica.data.models.Achievement
-import com.habitrpg.android.habitica.models.QuestAchievement
+import com.habitrpg.shared.habitica.models.QuestAchievement
 import com.habitrpg.android.habitica.models.Skill
 import com.habitrpg.shared.habitica.models.inventory.Customization
 import com.habitrpg.android.habitica.models.inventory.CustomizationSet

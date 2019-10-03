@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.models.social
 
-import com.habitrpg.android.habitica.models.Avatar
-import com.habitrpg.shared.habitica.models.user.AvatarPreferences
+import com.habitrpg.shared.habitica.Avatar
 import com.habitrpg.android.habitica.models.user.Items
 import com.habitrpg.android.habitica.models.user.Outfit
 import com.habitrpg.android.habitica.models.user.Preferences
@@ -9,7 +8,7 @@ import com.habitrpg.android.habitica.models.user.Stats
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
-open class UserStyles : RealmObject(), Avatar {
+open class UserStyles : RealmObject(), com.habitrpg.shared.habitica.Avatar {
     @PrimaryKey
     var id: String? = null
         set(value) {

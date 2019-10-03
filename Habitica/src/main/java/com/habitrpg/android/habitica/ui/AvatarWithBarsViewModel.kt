@@ -12,7 +12,7 @@ import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.events.BoughtGemsEvent
 import com.habitrpg.android.habitica.helpers.HealthFormatter
 import com.habitrpg.android.habitica.helpers.MainNavigationController
-import com.habitrpg.android.habitica.models.Avatar
+import com.habitrpg.shared.habitica.Avatar
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.shared.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.helpers.bindView
@@ -32,7 +32,7 @@ class AvatarWithBarsViewModel(private val context: Context, view: View, userRepo
     private val lvlText: TextView by bindView(view, R.id.lvl_tv)
     private val currencyView: CurrencyViews by bindView(view, R.id.currencyView)
 
-    private var userObject: Avatar? = null
+    private var userObject: com.habitrpg.shared.habitica.Avatar? = null
 
     private var cachedMaxHealth: Int = 0
     private var cachedMaxExp: Int = 0
@@ -55,7 +55,7 @@ class AvatarWithBarsViewModel(private val context: Context, view: View, userRepo
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
-    fun updateData(user: Avatar) {
+    fun updateData(user: com.habitrpg.shared.habitica.Avatar) {
         userObject = user
 
         val stats = user.stats ?: return
