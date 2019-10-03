@@ -27,7 +27,7 @@ interface Avatar {
     val costume: Outfit?
     val equipped: Outfit?
 
-    var isValid: Boolean
+    var valid: Boolean
 
     fun hasClass(): Boolean
 }

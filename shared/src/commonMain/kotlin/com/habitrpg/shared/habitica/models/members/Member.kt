@@ -25,6 +25,7 @@ expect open class Member : Avatar {
 
     override var costume: Outfit?
     override var equipped: Outfit?
+    override var valid: Boolean
 
     var participatesInQuest: Boolean?
     var loginIncentives: Int

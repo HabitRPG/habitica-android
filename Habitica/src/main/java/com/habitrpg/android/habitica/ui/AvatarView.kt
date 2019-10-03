@@ -17,7 +17,6 @@ import com.facebook.drawee.view.MultiDraweeHolder
 import com.facebook.imagepipeline.image.ImageInfo
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.helpers.AppConfigManager
-import com.habitrpg.shared.habitica.Avatar
 import io.reactivex.functions.Consumer
 import java.util.*
 import java.util.concurrent.atomic.AtomicInteger
@@ -199,7 +198,7 @@ class AvatarView : View {
     private fun getAvatarLayerMap(avatar: com.habitrpg.shared.habitica.Avatar, substitutions: Map<String, Map<String, String>>): EnumMap<LayerType, String> {
         val layerMap = EnumMap<LayerType, String>(LayerType::class.java)
 
-        if (!avatar.isValid) {
+        if (!avatar.valid) {
             return layerMap
         }
 
@@ -452,7 +451,7 @@ class AvatarView : View {
         initAvatarRectMatrix()
 
         // draw only when user is set
-        if (avatar?.isValid != true) return
+        if (avatar?.valid != true) return
 
         // request image layers if not yet processed
         if (multiDraweeHolder.size() == 0) {

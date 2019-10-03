@@ -124,7 +124,8 @@ actual open class Member : RealmObject(), Avatar {
                 equipped.userId = this.id + "equipped"
             }
         }
-    actual override var isValid: Boolean = isValid() // REALM IS VALID
+    actual override var valid: Boolean = false // TODO Tyler
+
 
     actual var participatesInQuest: Boolean? = null
     actual var loginIncentives: Int = 0
