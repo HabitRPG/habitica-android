@@ -1,12 +1,12 @@
 package com.habitrpg.shared.habitica.models.user
 
-import com.habitrpg.shared.habitica.nativeLibraries.NativeList
+import com.habitrpg.shared.habitica.nativeLibraries.RealmListWrapper
 
 actual open class SpecialItems {
     actual var userId: String?
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
-    actual var ownedItems: NativeList<OwnedItem>?
+    actual var ownedItems: RealmListWrapper<OwnedItem>?
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
     actual var seafoam: Int

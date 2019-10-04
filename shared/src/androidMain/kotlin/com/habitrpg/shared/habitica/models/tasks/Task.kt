@@ -5,14 +5,13 @@ import android.os.Parcelable
 import androidx.annotation.StringDef
 import com.google.gson.annotations.SerializedName
 import com.habitrpg.shared.habitica.models.Tag
-import com.habitrpg.shared.habitica.models.tasks.TaskType
 import com.habitrpg.shared.habitica.models.tasks.TaskType.Companion.TYPE_DAILY
 import com.habitrpg.shared.habitica.models.tasks.TaskType.Companion.TYPE_HABIT
 import com.habitrpg.shared.habitica.models.tasks.TaskType.Companion.TYPE_REWARD
 import com.habitrpg.shared.habitica.models.tasks.TaskType.Companion.TYPE_TODO
 import com.habitrpg.shared.habitica.models.user.Stats
+import com.habitrpg.shared.habitica.nativeLibraries.RealmListWrapper
 import com.habitrpg.shared.habitica.ui.helpers.MarkdownParser
-import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.Ignore
 import io.realm.annotations.PrimaryKey
@@ -38,7 +37,7 @@ actual open class Task : RealmObject, Parcelable {
     actual var type: String = ""
     actual var attribute: String? = Stats.STRENGTH
     actual var value: Double = 0.0
-    actual var tags: RealmList<Tag>? = RealmList()
+    actual var tags: RealmListWrapper<Tag>? = RealmListWrapper()
     actual var dateCreated: Date? = null
     actual var position: Int = 0
     actual var group: TaskGroupPlan? = null
@@ -49,8 +48,8 @@ actual open class Task : RealmObject, Parcelable {
     actual var counterDown: Int? = 0
     //todos/dailies
     actual var completed: Boolean = false
-    actual var checklist: RealmList<ChecklistItem>? = RealmList()
-    actual var reminders: RealmList<RemindersItem>? = RealmList()
+    actual var checklist: RealmListWrapper<ChecklistItem>? = RealmListWrapper()
+    actual var reminders: RealmListWrapper<RemindersItem>? = RealmListWrapper()
     //dailies
     actual var frequency: String? = null
     actual var everyX: Int? = 0
@@ -74,7 +73,7 @@ actual open class Task : RealmObject, Parcelable {
 
     actual var isDue: Boolean? = null
 
-    actual var nextDue: RealmList<Date>? = null
+    actual var nextDue: RealmListWrapper<Date>? = null
 
     //Needed for offline creating/updating
     actual var isSaving: Boolean = false
@@ -287,7 +286,7 @@ actual open class Task : RealmObject, Parcelable {
         this.attribute = `in`.readString()
         this.type = `in`.readString() ?: ""
         this.value = `in`.readDouble()
-        this.tags = RealmList()
+        this.tags = RealmListWrapper()
         `in`.readList(this.tags as List<*>, TaskTag::class.java.classLoader)
         val tmpDateCreated = `in`.readLong()
         this.dateCreated = if (tmpDateCreated == -1L) null else Date(tmpDateCreated)
@@ -295,9 +294,9 @@ actual open class Task : RealmObject, Parcelable {
         this.up = `in`.readValue(Boolean::class.java.classLoader) as? Boolean ?: false
         this.down = `in`.readValue(Boolean::class.java.classLoader) as? Boolean ?: false
         this.completed = `in`.readByte().toInt() != 0
-        this.checklist = RealmList()
+        this.checklist = RealmListWrapper()
         `in`.readList(this.checklist as List<*>, ChecklistItem::class.java.classLoader)
-        this.reminders = RealmList()
+        this.reminders = RealmListWrapper()
         `in`.readList(this.reminders as List<*>, RemindersItem::class.java.classLoader)
         this.frequency = `in`.readString()
         this.everyX = `in`.readValue(Int::class.java.classLoader) as? Int ?: 1

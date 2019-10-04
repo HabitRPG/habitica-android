@@ -1,3 +1,3 @@
 package com.habitrpg.shared.habitica.nativeLibraries
 
-expect abstract class NativeContext
+actual class RealmListWrapper<E> : MutableList<E>

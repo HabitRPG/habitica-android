@@ -1,8 +1,9 @@
 package com.habitrpg.shared.habitica.models
 
 import com.habitrpg.shared.habitica.models.tasks.Task
+import com.habitrpg.shared.habitica.nativeLibraries.RealmListWrapper
 
-import io.realm.RealmList
+
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
@@ -12,7 +13,7 @@ actual open class Tag : RealmObject() {
     actual var id: String = ""
 
     actual var userId: String? = null
-    actual var tasks: RealmList<Task>? = null
+    actual var tasks: RealmListWrapper<Task>? = null
     actual var name: String = ""
     internal actual var challenge: Boolean = false
 

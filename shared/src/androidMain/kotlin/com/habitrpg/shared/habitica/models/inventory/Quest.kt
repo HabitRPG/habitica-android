@@ -1,8 +1,8 @@
 package com.habitrpg.shared.habitica.models.inventory
 
 import com.habitrpg.shared.habitica.models.members.Member
+import com.habitrpg.shared.habitica.nativeLibraries.RealmListWrapper
 
-import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
@@ -22,11 +22,11 @@ actual open class Quest : RealmObject() {
     actual var leader: String? = null
     actual var RSVPNeeded: Boolean = false
 
-    actual var members: RealmList<QuestMember>? = null
+    actual var members: RealmListWrapper<QuestMember>? = null
     actual var progress: QuestProgress? = null
 
-    actual var participants: RealmList<Member>? = null
-    actual var rageStrikes: RealmList<QuestRageStrike>? = null
+    actual var participants: RealmListWrapper<Member>? = null
+    actual var rageStrikes: RealmListWrapper<QuestRageStrike>? = null
 
     actual fun hasRageStrikes(): Boolean {
         return rageStrikes?.isNotEmpty() ?: false
@@ -34,7 +34,7 @@ actual open class Quest : RealmObject() {
 
     actual fun addRageStrike(rageStrike: QuestRageStrike) {
         if (rageStrikes == null) {
-            rageStrikes = RealmList()
+            rageStrikes = RealmListWrapper()
         }
         rageStrikes?.add(rageStrike)
     }

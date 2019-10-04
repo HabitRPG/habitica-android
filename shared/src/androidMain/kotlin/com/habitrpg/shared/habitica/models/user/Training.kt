@@ -13,23 +13,23 @@ actual class Training : RealmObject() {
     internal actual var stats: Stats? = null
     actual var con: Float? = null
         get(): Float? {
-            return if (con != null) con else java.lang.Float.valueOf(0f)
+            return if (field != null) field else java.lang.Float.valueOf(0f)
         }
 
     actual var str: Float? = null
         get(): Float? {
-            return if (str != null) str else java.lang.Float.valueOf(0f)
+            return if (field != null) field else java.lang.Float.valueOf(0f)
         }
 
     actual var per: Float? = null
         get(): Float? {
-            return if (per != null) per else java.lang.Float.valueOf(0f)
+            return if (field != null) field else java.lang.Float.valueOf(0f)
         }
 
     @SerializedName("int")
     actual var _int: Float? = null
         get(): Float? {
-            return if (_int != null) _int else java.lang.Float.valueOf(0f)
+            return if (field != null) field else java.lang.Float.valueOf(0f)
         }
 
     actual fun merge(stats: Training?) {

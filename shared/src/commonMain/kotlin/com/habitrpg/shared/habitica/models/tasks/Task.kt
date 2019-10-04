@@ -1,10 +1,7 @@
 package com.habitrpg.shared.habitica.models.tasks
 
 import com.habitrpg.shared.habitica.models.Tag
-import com.habitrpg.shared.habitica.models.tasks.TaskType
-import com.habitrpg.shared.habitica.nativeLibraries.NativeDate
-import com.habitrpg.shared.habitica.nativeLibraries.NativeList
-import com.habitrpg.shared.habitica.nativeLibraries.NativeParcel
+import com.habitrpg.shared.habitica.nativeLibraries.*
 
 expect open class Task {
     var id: String?
@@ -15,7 +12,7 @@ expect open class Task {
     var type: String
     var attribute: String?
     var value: Double
-    var tags: NativeList<Tag>?
+    var tags: RealmListWrapper<Tag>?
     var dateCreated: NativeDate?
     var position: Int
     var group: TaskGroupPlan?
@@ -26,8 +23,8 @@ expect open class Task {
     var counterDown: Int?
     //todos/dailies
     var completed: Boolean
-    var checklist: NativeList<ChecklistItem>?
-    var reminders: NativeList<RemindersItem>?
+    var checklist: RealmListWrapper<ChecklistItem>?
+    var reminders: RealmListWrapper<RemindersItem>?
 
     //dailies
     var frequency: String?
@@ -40,7 +37,7 @@ expect open class Task {
     var parsedText: CharSequence?
     var parsedNotes: CharSequence?
     var isDue: Boolean?
-    var nextDue: NativeList<NativeDate>?
+    var nextDue: RealmListWrapper<NativeDate>?
 
     //Needed for offline creating/updating
     var isSaving: Boolean

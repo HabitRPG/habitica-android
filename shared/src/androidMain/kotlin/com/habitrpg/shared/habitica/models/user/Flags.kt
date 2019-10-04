@@ -1,8 +1,9 @@
 package com.habitrpg.shared.habitica.models.user
 
 import com.habitrpg.shared.habitica.models.TutorialStep
+import com.habitrpg.shared.habitica.nativeLibraries.RealmListWrapper
 
-import io.realm.RealmList
+
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
@@ -11,7 +12,7 @@ actual class Flags : RealmObject() {
     @PrimaryKey
     actual var userId: String? = null
 
-    internal actual var tutorial: RealmList<TutorialStep>? = null
+    internal actual var tutorial: RealmListWrapper<TutorialStep>? = null
     actual var showTour: Boolean = false
     actual var dropsEnabled: Boolean = false
     actual var itemsEnabled: Boolean = false

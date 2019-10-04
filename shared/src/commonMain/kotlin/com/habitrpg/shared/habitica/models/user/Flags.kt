@@ -1,12 +1,12 @@
 package com.habitrpg.shared.habitica.models.user
 
 import com.habitrpg.shared.habitica.models.TutorialStep
-import com.habitrpg.shared.habitica.nativeLibraries.NativeList
+import com.habitrpg.shared.habitica.nativeLibraries.RealmListWrapper
 
 expect class Flags  {
     var userId: String?
 
-    internal var tutorial: NativeList<TutorialStep>?
+    internal var tutorial: RealmListWrapper<TutorialStep>?
     var showTour: Boolean
     var dropsEnabled: Boolean
     var itemsEnabled: Boolean

@@ -1,6 +1,7 @@
 package com.habitrpg.shared.habitica.models.inventory
 
-import io.realm.RealmList
+import com.habitrpg.shared.habitica.nativeLibraries.RealmListWrapper
+
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
@@ -11,7 +12,7 @@ actual open class QuestProgress : RealmObject() {
     actual var key: String? = null
     actual var hp: Double = 0.0
     actual var rage: Double = 0.0
-    actual var collect: RealmList<QuestProgressCollect>? = null
+    actual var collect: RealmListWrapper<QuestProgressCollect>? = null
     actual var down: Float = 0.0f
     actual var up: Float = 0.0f
 }

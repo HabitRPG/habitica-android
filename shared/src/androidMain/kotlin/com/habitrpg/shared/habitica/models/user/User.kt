@@ -11,7 +11,8 @@ import com.habitrpg.shared.habitica.models.social.ChallengeMembership
 import com.habitrpg.shared.habitica.models.social.UserParty
 import com.habitrpg.shared.habitica.models.tasks.TasksOrder
 import com.habitrpg.shared.habitica.models.tasks.TaskList
-import io.realm.RealmList
+import com.habitrpg.shared.habitica.nativeLibraries.RealmListWrapper
+
 import io.realm.RealmObject
 import io.realm.annotations.Ignore
 import io.realm.annotations.PrimaryKey
@@ -63,7 +64,7 @@ actual open class User : RealmObject(), Avatar, VersionedObject {
     actual override var versionNumber: Int = 0
 
     actual var balance: Double = 0.toDouble()
-    actual var stats: Stats? = null
+    actual override var stats: Stats? = null
         set(stats) {
             field = stats
             if (stats != null && this.id != null && !stats.isManaged) {
@@ -77,7 +78,7 @@ actual open class User : RealmObject(), Avatar, VersionedObject {
                 inbox.userId = this.id
             }
         }
-    actual var preferences: Preferences? = null
+    actual override var preferences: Preferences? = null
         set(preferences) {
             field = preferences
             if (preferences != null && this.id != null && !preferences.isManaged) {
@@ -135,8 +136,8 @@ actual open class User : RealmObject(), Avatar, VersionedObject {
             }
         }
 
-    actual var tags = RealmList<Tag>()
-    actual var questAchievements = RealmList<QuestAchievement>()
+    actual var tags = RealmListWrapper<Tag>()
+    actual var questAchievements = RealmListWrapper<QuestAchievement>()
         set(value) {
             field = value
             field.forEach { it.userID = id }
@@ -156,9 +157,9 @@ actual open class User : RealmObject(), Avatar, VersionedObject {
     @Ignore
     actual var tasksOrder: TasksOrder? = null
 
-    actual var challenges: RealmList<ChallengeMembership>? = null
+    actual var challenges: RealmListWrapper<ChallengeMembership>? = null
 
-    actual var abTests: RealmList<ABTest>? = null
+    actual var abTests: RealmListWrapper<ABTest>? = null
 
     actual var lastCron: Date? = null
     actual var needsCron: Boolean = false
@@ -182,15 +183,15 @@ actual open class User : RealmObject(), Avatar, VersionedObject {
         return (this.balance * 4).toInt()
     }
 
-    override fun getHourglassCount(): Int {
+    actual fun getHourglassCount(): Int {
         return purchased?.plan?.consecutive?.trinkets ?: 0
     }
 
-    override fun getCostume(): Outfit? {
+    actual fun getCostume(): Outfit? {
         return items?.gear?.costume
     }
 
-    override fun getEquipped(): Outfit? {
+    actual fun getEquipped(): Outfit? {
         return items?.gear?.equipped
     }
 

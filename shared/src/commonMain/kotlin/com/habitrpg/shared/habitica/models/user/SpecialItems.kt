@@ -1,12 +1,12 @@
 package com.habitrpg.shared.habitica.models.user
 
-import com.habitrpg.shared.habitica.nativeLibraries.NativeList
+import com.habitrpg.shared.habitica.nativeLibraries.RealmListWrapper
 
 
 expect open class SpecialItems {
 
     var userId: String?
-    var ownedItems: NativeList<OwnedItem>?
+    var ownedItems: RealmListWrapper<OwnedItem>?
     var seafoam: Int
     var shinySeed: Int
     var snowball: Int

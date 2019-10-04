@@ -1,7 +1,8 @@
 package com.habitrpg.shared.habitica.models.user
 
 
-import io.realm.RealmList
+
+import com.habitrpg.shared.habitica.nativeLibraries.RealmListWrapper
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
@@ -18,7 +19,7 @@ actual open class SpecialItems : RealmObject() {
                 }
             }
         }
-    actual var ownedItems: RealmList<OwnedItem>? = null
+    actual var ownedItems: RealmListWrapper<OwnedItem>? = null
     actual var seafoam: Int = 0
     actual var shinySeed: Int = 0
     actual var snowball: Int = 0

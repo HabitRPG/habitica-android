@@ -3,7 +3,6 @@ package com.habitrpg.shared.habitica.models.user
 import android.util.SparseIntArray
 
 import com.habitrpg.android.habitica.R
-import com.habitrpg.shared.habitica.models.user.User
 
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
