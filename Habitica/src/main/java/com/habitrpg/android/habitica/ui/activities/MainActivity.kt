@@ -406,6 +406,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                     data.getStringExtra("notificationId")
             )
         }
+        PurchaseHandler.findForActivity(this)?.onResult(requestCode, resultCode, data)
     }
 
     // region Events
@@ -738,6 +739,11 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
             }
             dialog.enqueue()
         }.subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+    }
+
+    @Subscribe
+    fun onConsumablePurchased(event: ConsumablePurchasedEvent) {
+        userRepository.retrieveUser(false, true).subscribe(Consumer {}, RxErrorHandler.handleEmptyError())
     }
 
     companion object {

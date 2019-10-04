@@ -55,7 +55,7 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int): Recycle
             items.indexOfFirst { it.identifier == identifier }
 
     fun updateItem(item: HabiticaDrawerItem) {
-        val position = getItemPosition(item.transitionId)
+        val position = getItemPosition(item.identifier)
         items[position] = item
         notifyDataSetChanged()
     }

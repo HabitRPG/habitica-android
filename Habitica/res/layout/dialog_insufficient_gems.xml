@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_vertical">
-
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
@@ -14,5 +15,33 @@
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"/>
+        android:gravity="center_horizontal" />
+    <LinearLayout
+        android:id="@+id/purchase_wrapper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/layout_rounded_bg_brand_700"
+        android:layout_marginTop="@dimen/spacing_medium"
+        android:padding="@dimen/spacing_medium"
+        android:gravity="center">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/gems_4" />
+        <TextView
+            android:id="@+id/purchase_textview"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            style="@style/Subheader1"
+            tools:text="4 Gems"
+            android:gravity="center"/>
+        <Button
+            android:id="@+id/purchase_button"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            style="@style/HabiticaButton.Purple"
+            android:minWidth="40dp"
+            tools:text="$0.99" />
+    </LinearLayout>
 </LinearLayout>

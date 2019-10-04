@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.ui.views.dialogs
 
 import android.app.Activity
 import android.content.Context
+import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -206,6 +207,14 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
     override fun dismiss() {
         showNextInQueue(this)
         super.dismiss()
+    }
+
+    fun getActivity(): Activity? {
+        var thisContext = context
+        while (thisContext as? ContextThemeWrapper != null && thisContext as? Activity == null) {
+            thisContext = thisContext.baseContext
+        }
+        return thisContext as? Activity
     }
 
     companion object {

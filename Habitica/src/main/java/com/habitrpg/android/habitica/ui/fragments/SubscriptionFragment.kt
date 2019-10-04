@@ -14,6 +14,7 @@ import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.events.UserSubscribedEvent
 import com.habitrpg.android.habitica.extensions.addCancelButton
 import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.PurchaseHandler
 import com.habitrpg.android.habitica.helpers.PurchaseTypes
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.User
@@ -30,7 +31,8 @@ import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionVi
 import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.fragment_subscription.*
 import org.greenrobot.eventbus.Subscribe
-import org.solovyev.android.checkout.*
+import org.solovyev.android.checkout.Inventory
+import org.solovyev.android.checkout.Sku
 import javax.inject.Inject
 
 class SubscriptionFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragment {
@@ -77,8 +79,7 @@ class SubscriptionFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
     private var selectedSubscriptionSku: Sku? = null
     private var skus: List<Sku> = emptyList()
 
-    private var listener: GemPurchaseActivity? = null
-    private var billingRequests: BillingRequests? = null
+    private var purchaseHandler: PurchaseHandler? = null
 
     private var user: User? = null
     private var hasLoadedSubscriptionOptions: Boolean = false
@@ -140,24 +141,13 @@ class SubscriptionFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
     }
 
     override fun setupCheckout() {
-        val checkout = listener?.activityCheckout
-        if (checkout != null) {
-            val inventory = checkout.makeInventory()
-
-            inventory.load(Inventory.Request.create()
-                    .loadAllPurchases().loadSkus(ProductTypes.SUBSCRIPTION, PurchaseTypes.allSubscriptionTypes)
-            ) { products ->
-                val subscriptions = products.get(ProductTypes.SUBSCRIPTION)
-
-                skus = subscriptions.skus
-
-                for (sku in skus) {
-                    updateButtonLabel(sku, sku.price, subscriptions)
-                }
-                selectSubscription(PurchaseTypes.Subscription1Month)
-                hasLoadedSubscriptionOptions = true
-                updateSubscriptionInfo()
+        purchaseHandler?.getAllSubscriptionProducts {subscriptions ->
+            for (sku in skus) {
+                updateButtonLabel(sku, sku.price, subscriptions)
             }
+            selectSubscription(PurchaseTypes.Subscription1Month)
+            hasLoadedSubscriptionOptions = true
+            updateSubscriptionInfo()
         }
     }
 
@@ -206,31 +196,13 @@ class SubscriptionFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
         }
     }
 
-    override fun setListener(listener: GemPurchaseActivity) {
-        this.listener = listener
-    }
-
-    override fun setBillingRequests(billingRequests: BillingRequests?) {
-        this.billingRequests = billingRequests
+    override fun setPurchaseHandler(handler: PurchaseHandler?) {
+        this.purchaseHandler = handler
     }
 
     private fun purchaseSubscription() {
-        selectedSubscriptionSku?.id?.code?.let { code ->
-            billingRequests?.isPurchased(ProductTypes.SUBSCRIPTION, code, object : RequestListener<Boolean> {
-                override fun onSuccess(aBoolean: Boolean) {
-                    if (!aBoolean) {
-                        // no current product exist
-                        val checkout = listener?.activityCheckout
-                        checkout?.let {
-                            billingRequests?.purchase(ProductTypes.SUBSCRIPTION, code, null, it.purchaseFlow)
-                        }
-                    }
-                }
-
-                override fun onError(i: Int, e: Exception) {
-                    crashlyticsProxy.fabricLogE("Purchase", "Error", e)
-                }
-            })
+        selectedSubscriptionSku?.let { sku ->
+            purchaseHandler?.purchaseSubscription(sku)
         }
     }
 

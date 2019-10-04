@@ -94,6 +94,7 @@ import com.habitrpg.android.habitica.ui.fragments.tasks.TasksFragment;
 import com.habitrpg.android.habitica.ui.viewmodels.GroupViewModel;
 import com.habitrpg.android.habitica.ui.viewmodels.InboxViewModel;
 import com.habitrpg.android.habitica.ui.viewmodels.NotificationsViewModel;
+import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientGemsDialog;
 import com.habitrpg.android.habitica.ui.views.shops.PurchaseDialog;
 import com.habitrpg.android.habitica.ui.views.social.ChatBarView;
 import com.habitrpg.android.habitica.ui.views.stats.BulkAllocateStatsDialog;
@@ -316,4 +317,6 @@ public interface UserComponent {
     void inject(@NotNull AchievementsFragment achievementsFragment);
 
     void inject(@NotNull InboxViewModel inboxViewModel);
+
+    void inject(@NotNull InsufficientGemsDialog insufficientGemsDialog);
 }

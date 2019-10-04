@@ -9,14 +9,13 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.isVisible
-import com.habitrpg.android.habitica.HabiticaBaseApplication
-import com.habitrpg.android.habitica.HabiticaPurchaseVerifier
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.events.ConsumablePurchasedEvent
 import com.habitrpg.android.habitica.extensions.addOkButton
 import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.PurchaseHandler
 import com.habitrpg.android.habitica.helpers.PurchaseTypes
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
@@ -28,7 +27,8 @@ import com.habitrpg.android.habitica.ui.views.social.UsernameLabel
 import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView
 import io.reactivex.functions.Consumer
 import org.greenrobot.eventbus.Subscribe
-import org.solovyev.android.checkout.*
+import org.solovyev.android.checkout.Inventory
+import org.solovyev.android.checkout.Sku
 import javax.inject.Inject
 
 
@@ -41,9 +41,7 @@ class GiftIAPActivity: BaseActivity() {
     @Inject
     lateinit var appConfigManager: AppConfigManager
 
-    var activityCheckout: ActivityCheckout? = null
-        private set
-    private var billingRequests: BillingRequests? = null
+    private var purchaseHandler: PurchaseHandler? = null
 
     private val toolbar: Toolbar by bindView(R.id.toolbar)
 
@@ -102,38 +100,8 @@ class GiftIAPActivity: BaseActivity() {
 
     override fun onStart() {
         super.onStart()
-        setupCheckout()
-
-        activityCheckout?.destroyPurchaseFlow()
-
-        activityCheckout?.createPurchaseFlow(object : RequestListener<Purchase> {
-            override fun onSuccess(purchase: Purchase) {
-                if (PurchaseTypes.allSubscriptionNoRenewTypes.contains(purchase.sku)) {
-                    billingRequests?.consume(purchase.token, object : RequestListener<Any> {
-                        override fun onSuccess(o: Any) {
-                            finish()
-                        }
-
-                        override fun onError(i: Int, e: Exception) {
-                            crashlyticsProxy.fabricLogE("PurchaseConsumeException", "Consume", e)
-                        }
-                    })
-                }
-            }
-
-            override fun onError(i: Int, e: Exception) {
-                crashlyticsProxy.fabricLogE("PurchaseFlowException", "Error", e)
-            }
-        })
-
-
-        activityCheckout?.whenReady(object : Checkout.Listener {
-            override fun onReady(billingRequests: BillingRequests) {
-                this@GiftIAPActivity.billingRequests = billingRequests
-            }
-
-            override fun onReady(billingRequests: BillingRequests, s: String, b: Boolean) {}
-        })
+        purchaseHandler = PurchaseHandler(this, crashlyticsProxy)
+        purchaseHandler?.startListening()
     }
 
     override fun onResume() {
@@ -146,13 +114,13 @@ class GiftIAPActivity: BaseActivity() {
     }
 
     override fun onStop() {
-        activityCheckout?.stop()
+        purchaseHandler?.stopListening()
         super.onStop()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        activityCheckout?.onActivityResult(requestCode, resultCode, data)
+        purchaseHandler?.onResult(requestCode, resultCode, data)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -169,30 +137,6 @@ class GiftIAPActivity: BaseActivity() {
             matchingView.setPriceText(price)
             matchingView.sku = sku.id.code
             matchingView.setIsPurchased(subscriptions.isPurchased(sku))
-        }
-    }
-
-    private fun setupCheckout() {
-        HabiticaBaseApplication.getInstance(this)?.billing?.let {
-            activityCheckout = Checkout.forActivity(this, it)
-            activityCheckout?.start()
-        }
-        val checkout = activityCheckout
-        if (checkout != null) {
-            val inventory = checkout.makeInventory()
-
-            inventory.load(Inventory.Request.create()
-                    .loadAllPurchases().loadSkus(ProductTypes.IN_APP, PurchaseTypes.allSubscriptionNoRenewTypes)
-            ) { products ->
-                val subscriptions = products.get(ProductTypes.IN_APP)
-
-                skus = subscriptions.skus
-
-                for (sku in skus) {
-                    updateButtonLabel(sku, sku.price, subscriptions)
-                }
-                selectSubscription(PurchaseTypes.Subscription1MonthNoRenew)
-            }
         }
     }
 
@@ -235,16 +179,13 @@ class GiftIAPActivity: BaseActivity() {
         if (giftedUserID?.isNotEmpty() != true) {
             return
         }
-        activityCheckout?.let {
-            HabiticaPurchaseVerifier.pendingGifts[sku.id.code] = giftedUserID
-            billingRequests?.purchase(ProductTypes.IN_APP, sku.id.code, null, it.purchaseFlow)
-        }
+        purchaseHandler?.purchaseGiftedSubscription(sku, giftedUserID)
     }
 
 
     @Subscribe
     fun onConsumablePurchased(event: ConsumablePurchasedEvent) {
-        consumePurchase(event.purchase)
+        purchaseHandler?.consumePurchase(event.purchase)
         runOnUiThread {
             displayConfirmationDialog()
         }
@@ -274,19 +215,5 @@ class GiftIAPActivity: BaseActivity() {
                     finish()
                 }
         alert.enqueue()
-    }
-
-    private fun consumePurchase(purchase: Purchase) {
-        if (PurchaseTypes.allGemTypes.contains(purchase.sku) || PurchaseTypes.allSubscriptionNoRenewTypes.contains(purchase.sku)) {
-            billingRequests?.consume(purchase.token, object : RequestListener<Any> {
-
-                override fun onSuccess(result: Any) {
-                }
-
-                override fun onError(response: Int, e: Exception) {
-                    crashlyticsProxy.fabricLogE("PurchaseConsumeException", "Consume", e)
-                }
-            })
-        }
     }
 }

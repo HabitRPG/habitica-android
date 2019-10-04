@@ -847,4 +847,5 @@
     <string name="preference_push_party_activity">Party Activity</string>
     <string name="promo_subscription_buy_gems_prompt">Need Gems?</string>
     <string name="promo_subscription_buy_gems_description">Become a Subscriber to buy Gems with gold, get monthly mystery items, increased drop caps and more!</string>
+    <string name="see_other_options">See other Options</string>
 </resources>

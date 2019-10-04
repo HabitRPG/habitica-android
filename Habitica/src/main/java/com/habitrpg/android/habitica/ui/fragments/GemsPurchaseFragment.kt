@@ -10,6 +10,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.inflate
+import com.habitrpg.android.habitica.helpers.PurchaseHandler
 import com.habitrpg.android.habitica.helpers.PurchaseTypes
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
@@ -19,9 +20,6 @@ import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.promo.SubscriptionBuyGemsPromoView
 import io.reactivex.functions.Consumer
-import org.solovyev.android.checkout.BillingRequests
-import org.solovyev.android.checkout.Inventory
-import org.solovyev.android.checkout.ProductTypes
 import javax.inject.Inject
 
 class GemsPurchaseFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragment {
@@ -38,8 +36,7 @@ class GemsPurchaseFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
     @Inject
     lateinit var userRepository: UserRepository
 
-    private var listener: GemPurchaseActivity? = null
-    private var billingRequests: BillingRequests? = null
+    private var purchaseHandler: PurchaseHandler? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -70,32 +67,15 @@ class GemsPurchaseFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
     }
 
     override fun setupCheckout() {
-        val checkout = listener?.activityCheckout
-        if (checkout != null) {
-            val inventory = checkout.makeInventory()
-
-            inventory.load(Inventory.Request.create()
-                    .loadAllPurchases().loadSkus(ProductTypes.IN_APP, PurchaseTypes.allGemTypes)
-            ) { products ->
-                val gems = products.get(ProductTypes.IN_APP)
-                if (!gems.supported) {
-                    // billing is not supported, user can't purchase anything
-                    return@load
-                }
-                val skus = gems.skus
-                for (sku in skus) {
-                    updateButtonLabel(sku.id.code, sku.price)
-                }
+        purchaseHandler?.getAllGemSKUs { skus ->
+            for (sku in skus) {
+                updateButtonLabel(sku.id.code, sku.price)
             }
         }
     }
 
-    override fun setListener(listener: GemPurchaseActivity) {
-        this.listener = listener
-    }
-
-    override fun setBillingRequests(billingRequests: BillingRequests?) {
-        this.billingRequests = billingRequests
+    override fun setPurchaseHandler(handler: PurchaseHandler?) {
+        this.purchaseHandler = handler
     }
 
     private fun updateButtonLabel(sku: String, price: String) {
@@ -112,9 +92,7 @@ class GemsPurchaseFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
         }
     }
 
-    fun purchaseGems(sku: String) {
-        listener?.activityCheckout?.let {
-            billingRequests?.purchase(ProductTypes.IN_APP, sku, null, it.purchaseFlow)
-        }
+    fun purchaseGems(identifier: String) {
+        purchaseHandler?.purchaseGems(identifier)
     }
 }
