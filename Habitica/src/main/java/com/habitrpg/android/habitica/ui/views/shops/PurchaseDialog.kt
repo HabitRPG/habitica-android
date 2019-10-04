@@ -4,7 +4,6 @@ import android.content.Context
 import android.graphics.drawable.BitmapDrawable
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -55,7 +54,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
     }
     private val currencyView: CurrencyViews by bindView(customHeader, R.id.currencyView)
     private val limitedTextView: TextView by bindView(customHeader, R.id.limitedTextView)
-    private val buyButton: ViewGroup
+    private val buyButton: View
     private val priceLabel: CurrencyView
     private val buyLabel: TextView
     private val pinButton: Button by bindView(customHeader, R.id.pin_button)
@@ -142,9 +141,9 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
         setCustomHeaderView(customHeader)
 
         addCloseButton()
-        buyButton = addButton(layoutInflater.inflate(R.layout.dialog_purchase_shopitem_button, null)) { _, _ ->
+        buyButton = addButton(layoutInflater.inflate(R.layout.dialog_purchase_shopitem_button, null), autoDismiss = false) { _, _ ->
             onBuyButtonClicked()
-        } as ViewGroup
+        }
         priceLabel = buyButton.findViewById(R.id.priceLabel)
         buyLabel = buyButton.findViewById(R.id.buy_label)
         pinButton.setOnClickListener { inventoryRepository.togglePinnedItem(shopItem).subscribe(Consumer { isPinned = !this.isPinned }, RxErrorHandler.handleEmptyError()) }
@@ -276,6 +275,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
                     "hourglasses" == shopItem.currency -> InsufficientHourglassesDialog(context)
                     else -> null
                 }?.show()
+                return
             }
         }
         dismiss()

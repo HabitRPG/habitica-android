@@ -168,11 +168,11 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
         button.text = string
         button.minWidth = 147.dpToPx(context)
         button.setScaledPadding(context, 20, 0, 20, 0)
-        return addButton(button, function) as Button
+        return addButton(button, true, function) as Button
     }
 
 
-    fun addButton(buttonView: View, function: ((HabiticaAlertDialog, Int) -> Unit)? = null): View {
+    fun addButton(buttonView: View, autoDismiss: Boolean = true, function: ((HabiticaAlertDialog, Int) -> Unit)? = null): View {
         val weakThis = WeakReference<HabiticaAlertDialog>(this)
         val buttonIndex = buttonsWrapper.childCount
         buttonView.setOnClickListener {
@@ -180,7 +180,9 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
                 if (function != null) {
                     function(it1, buttonIndex)
                 }
-                dismiss()
+                if (autoDismiss) {
+                    dismiss()
+                }
             }
         }
         configureButtonLayoutParams(buttonView)
