@@ -1,12 +1,14 @@
 package com.habitrpg.shared.habitica.models.members
 
 import android.content.Context
+import androidx.core.content.ContextCompat
+import space.thelen.shared.cluetective.R
 
 
-class PlayerTier(val title: String, val id: Int) {
+actual class PlayerTier actual constructor(actual var title: String, actual var id: Int) {
 
-    companion object {
-        fun getTiers(): List<PlayerTier> {
+    actual companion object {
+        actual fun getTiers(): List<PlayerTier> {
             return arrayListOf(
                     PlayerTier("Tier 1 (Friend)", 1),
                     PlayerTier("Tier 2 (Friend)", 2),
@@ -20,7 +22,7 @@ class PlayerTier(val title: String, val id: Int) {
             )
         }
 
-        fun getColorForTier(context: Context, value: Int): Int {
+        actual fun getColorForTier(context: Context, value: Int): Int {
             return when (value) {
                 1 -> ContextCompat.getColor(context, R.color.contributor_1)
                 2 -> ContextCompat.getColor(context, R.color.contributor_2)

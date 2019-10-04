@@ -1,7 +1,11 @@
 package com.habitrpg.shared.habitica.models.user
 
 import com.google.gson.annotations.SerializedName
+import com.habitrpg.shared.habitica.Avatar
+import com.habitrpg.shared.habitica.models.PushDevice
+import com.habitrpg.shared.habitica.models.QuestAchievement
 import com.habitrpg.shared.habitica.models.Tag
+import com.habitrpg.shared.habitica.models.VersionedObject
 import com.habitrpg.shared.habitica.models.invitations.Invitations
 import com.habitrpg.shared.habitica.models.social.ChallengeMembership
 import com.habitrpg.shared.habitica.models.social.UserParty
@@ -56,7 +60,7 @@ actual open class User : RealmObject(), Avatar, VersionedObject {
         }
 
     @SerializedName("_v")
-    override var versionNumber: Int = 0
+    actual override var versionNumber: Int = 0
 
     actual var balance: Double = 0.toDouble()
     actual var stats: Stats? = null
@@ -87,7 +91,7 @@ actual open class User : RealmObject(), Avatar, VersionedObject {
                 profile.userId = this.id
             }
         }
-    var party: UserParty? = null
+    actual var party: UserParty? = null
         set(party) {
             field = party
             if (party != null && this.id != null && !party.isManaged) {
@@ -174,7 +178,7 @@ actual open class User : RealmObject(), Avatar, VersionedObject {
     actual val formattedUsername: String?
         get() = if (username != null) "@$username" else null
 
-    override fun getGemCount(): Int {
+    actual fun getGemCount(): Int {
         return (this.balance * 4).toInt()
     }
 

@@ -3,6 +3,9 @@ package com.habitrpg.shared.habitica.models.user
 import com.habitrpg.shared.habitica.models.PushDevice
 import com.habitrpg.shared.habitica.models.QuestAchievement
 import com.habitrpg.shared.habitica.models.Tag
+import com.habitrpg.shared.habitica.models.invitations.Invitations
+import com.habitrpg.shared.habitica.models.social.ChallengeMembership
+import com.habitrpg.shared.habitica.models.social.UserParty
 import com.habitrpg.shared.habitica.models.tasks.TaskList
 import com.habitrpg.shared.habitica.models.tasks.TasksOrder
 import com.habitrpg.shared.habitica.nativeLibraries.NativeDate
@@ -27,8 +30,8 @@ expect open class User {
     var flags: Flags?
     var contributor: ContributorInfo?
     var invitations: Invitations?
-    var tags: List<Tag>
-    var questAchievements: List<QuestAchievement>
+    var tags: NativeList<Tag>
+    var questAchievements: NativeList<QuestAchievement>
     var pushDevices: List<PushDevice>?
     var purchased: Purchases?
     var tasksOrder: TasksOrder?

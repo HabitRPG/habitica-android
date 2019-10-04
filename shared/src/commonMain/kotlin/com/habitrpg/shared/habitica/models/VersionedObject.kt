@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica.models
+package com.habitrpg.shared.habitica.models
 
 interface VersionedObject {
 

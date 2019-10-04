@@ -11,7 +11,7 @@ import com.habitrpg.shared.habitica.models.PushDevice
 import com.habitrpg.shared.habitica.models.QuestAchievement
 import com.habitrpg.android.habitica.models.Tag
 import com.habitrpg.android.habitica.models.inventory.Quest
-import com.habitrpg.android.habitica.models.invitations.Invitations
+import com.habitrpg.shared.habitica.models.invitations.Invitations
 import com.habitrpg.shared.habitica.models.social.ChallengeMembership
 import com.habitrpg.shared.habitica.models.social.UserParty
 import com.habitrpg.shared.habitica.models.tasks.TasksOrder

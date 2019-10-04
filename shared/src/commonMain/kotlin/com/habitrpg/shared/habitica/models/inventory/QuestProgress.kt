@@ -4,7 +4,6 @@ import com.habitrpg.shared.habitica.nativeLibraries.NativeList
 
 
 expect open class QuestProgress {
-
     var id: String?
     var key: String?
     var hp: Double

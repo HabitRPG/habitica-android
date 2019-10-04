@@ -38,3 +38,5 @@ actual open class ContributorInfo {
     }
 
 }
+
+typealias NativeSparseIntArray

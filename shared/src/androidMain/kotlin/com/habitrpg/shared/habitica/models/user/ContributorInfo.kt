@@ -7,19 +7,20 @@ import com.habitrpg.shared.habitica.models.user.User
 
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
+import space.thelen.shared.cluetective.R
 
-open class ContributorInfo : RealmObject() {
+actual open class ContributorInfo : RealmObject() {
 
     @PrimaryKey
-    var userId: String? = null
+    actual var userId: String? = null
 
-    var user: User? = null
-    private var admin: Boolean = false
-    var contributions: String? = null
-    var level: Int = 0
-    var text: String? = null
+    actual var user: User? = null
+    actual var admin: Boolean = false
+    actual var contributions: String? = null
+    actual var level: Int = 0
+    actual var text: String? = null
 
-    val contributorColor: Int
+    actual val contributorColor: Int
         get() {
             var rColor = android.R.color.black
 
@@ -31,23 +32,14 @@ open class ContributorInfo : RealmObject() {
             return rColor
         }
 
-    val contributorForegroundColor: Int
+    actual val contributorForegroundColor: Int
         get() = android.R.color.white
 
-    fun getAdmin(): Boolean? {
-        return this.admin
-    }
+    actual companion object {
 
-    fun setAdmin(admin: Boolean?) {
-        this.admin = admin!!
-    }
-
-    companion object {
-
-        val CONTRIBUTOR_COLOR_DICT: SparseIntArray
+        actual val CONTRIBUTOR_COLOR_DICT: SparseIntArray = SparseIntArray()
 
         init {
-            CONTRIBUTOR_COLOR_DICT = SparseIntArray()
             CONTRIBUTOR_COLOR_DICT.put(0, R.color.contributor_0)
             CONTRIBUTOR_COLOR_DICT.put(1, R.color.contributor_1)
             CONTRIBUTOR_COLOR_DICT.put(2, R.color.contributor_2)

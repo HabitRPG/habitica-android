@@ -12,10 +12,8 @@ class TaskDirectionDataQuest {
 }
 
 class TaskDirectionDataDrop {
-
     var value: Int = 0
     var key: String? = null
     var type: String? = null
     var dialog: String? = null
-
 }

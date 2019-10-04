@@ -13,4 +13,5 @@ actual open class PushNotificationsPreference : RealmObject() {
     actual var questStarted: Boolean = false
     actual var giftedGems: Boolean = false
     actual var giftedSubscription: Boolean = false
+    actual var partyActivity: Boolean = false
 }

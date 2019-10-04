@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica.models.invitations;
+package com.habitrpg.shared.habitica.models.invitations;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
