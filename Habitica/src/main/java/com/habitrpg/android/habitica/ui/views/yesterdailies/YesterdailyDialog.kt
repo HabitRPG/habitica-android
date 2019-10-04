@@ -160,7 +160,7 @@ class YesterdailyDialog private constructor(context: Context, private val userRe
                         }
                         .map {
                             it.tasks.values.filter { task ->
-                                return@filter task.type == Task.TYPE_DAILY && task.isDue == true && !task.completed && task.yesterDaily
+                                return@filter task.type == TaskType.TYPE_DAILY && task.isDue == true && !task.completed && task.yesterDaily
                             }
                         }
                         .retry(1)

@@ -32,14 +32,14 @@ class ReminderItemFormView @JvmOverloads constructor(
 
     private val formatter: DateFormat
         get() {
-            return if (taskType == Task.TYPE_DAILY) {
+            return if (taskType == TaskType.TYPE_DAILY) {
                 DateFormat.getTimeInstance(DateFormat.SHORT)
             } else {
                 DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT)
             }
         }
 
-    var taskType = Task.TYPE_DAILY
+    var taskType = TaskType.TYPE_DAILY
     var item: RemindersItem = RemindersItem()
         set(value) {
             field = value
@@ -85,7 +85,7 @@ class ReminderItemFormView @JvmOverloads constructor(
         textView.setOnClickListener {
             val calendar = Calendar.getInstance()
             item.time?.let { calendar.time = it }
-            if (taskType == Task.TYPE_DAILY) {
+            if (taskType == TaskType.TYPE_DAILY) {
                 val timePickerDialog = TimePickerDialog(context, this,
                         calendar.get(Calendar.HOUR_OF_DAY),
                         calendar.get(Calendar.MINUTE),

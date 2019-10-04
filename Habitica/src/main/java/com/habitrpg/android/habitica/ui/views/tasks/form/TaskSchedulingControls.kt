@@ -45,11 +45,11 @@ class TaskSchedulingControls @JvmOverloads constructor(
     private val dateFormatter = DateFormat.getDateInstance(DateFormat.MEDIUM)
     private val frequencyAdapter = SimpleSpinnerAdapter(context, R.array.repeatables_frequencies)
 
-    var taskType = Task.TYPE_DAILY
+    var taskType = TaskType.TYPE_DAILY
     set(value) {
         field = value
         configureViewsForType()
-        if (value == Task.TYPE_TODO) {
+        if (value == TaskType.TYPE_TODO) {
             dueDate = null
         }
     }
@@ -151,13 +151,13 @@ class TaskSchedulingControls @JvmOverloads constructor(
                     startDateCalendar.get(Calendar.MONTH),
                     startDateCalendar.get(Calendar.DAY_OF_MONTH))
             datePickerDialog.setButton(DialogInterface.BUTTON_NEUTRAL, resources.getString(R.string.today)) { _, _ ->
-                if (taskType == Task.TYPE_TODO) {
+                if (taskType == TaskType.TYPE_TODO) {
                     dueDate = Date()
                 } else {
                     startDate = Date()
                 }
             }
-            if (taskType == Task.TYPE_TODO) {
+            if (taskType == TaskType.TYPE_TODO) {
                 datePickerDialog.setButton(DialogInterface.BUTTON_NEUTRAL, resources.getString(R.string.clear)) { _, _ ->
                     dueDate = null
                 }
@@ -182,15 +182,15 @@ class TaskSchedulingControls @JvmOverloads constructor(
     }
 
     private fun configureViewsForType() {
-        startDateTitleView.text = context.getString(if (taskType == Task.TYPE_DAILY) R.string.start_date else R.string.due_date)
-        repeatsEveryWrapper.visibility = if (taskType == Task.TYPE_DAILY) View.VISIBLE else View.GONE
-        summaryTextView.visibility =  if (taskType == Task.TYPE_DAILY) View.VISIBLE else View.GONE
-        weeklyRepeatWrapper.visibility = if (taskType == Task.TYPE_DAILY) View.VISIBLE else View.GONE
+        startDateTitleView.text = context.getString(if (taskType == TaskType.TYPE_DAILY) R.string.start_date else R.string.due_date)
+        repeatsEveryWrapper.visibility = if (taskType == TaskType.TYPE_DAILY) View.VISIBLE else View.GONE
+        summaryTextView.visibility =  if (taskType == TaskType.TYPE_DAILY) View.VISIBLE else View.GONE
+        weeklyRepeatWrapper.visibility = if (taskType == TaskType.TYPE_DAILY) View.VISIBLE else View.GONE
     }
 
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
         startDateCalendar.set(year, month, dayOfMonth)
-        if (taskType == Task.TYPE_TODO) {
+        if (taskType == TaskType.TYPE_TODO) {
             dueDate = startDateCalendar.time
         } else {
             startDate = startDateCalendar.time
@@ -204,8 +204,8 @@ class TaskSchedulingControls @JvmOverloads constructor(
             Task.FREQUENCY_YEARLY -> R.string.years
             else -> R.string.days
         })
-        weeklyRepeatWrapper.visibility = if (frequency == Task.FREQUENCY_WEEKLY && taskType == Task.TYPE_DAILY) View.VISIBLE else View.GONE
-        monthlyRepeatWrapper.visibility = if (frequency == Task.FREQUENCY_MONTHLY && taskType == Task.TYPE_DAILY) View.VISIBLE else View.GONE
+        weeklyRepeatWrapper.visibility = if (frequency == Task.FREQUENCY_WEEKLY && taskType == TaskType.TYPE_DAILY) View.VISIBLE else View.GONE
+        monthlyRepeatWrapper.visibility = if (frequency == Task.FREQUENCY_MONTHLY && taskType == TaskType.TYPE_DAILY) View.VISIBLE else View.GONE
         if (frequency == Task.FREQUENCY_WEEKLY) {
             createWeeklyRepeatViews()
         } else if (frequency == Task.FREQUENCY_MONTHLY) {

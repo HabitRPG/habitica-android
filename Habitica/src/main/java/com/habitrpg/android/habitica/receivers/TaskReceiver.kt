@@ -71,7 +71,7 @@ class TaskReceiver : BroadcastReceiver() {
                 .setAutoCancel(true)
                 .setContentIntent(pendingIntent)
 
-        if (task.type == Task.TYPE_DAILY || task.type == Task.TYPE_TODO) {
+        if (task.type == TaskType.TYPE_DAILY || task.type == TaskType.TYPE_TODO) {
             val completeIntent = Intent(context, LocalNotificationActionReceiver::class.java)
             completeIntent.action = context.getString(R.string.complete_task_action)
             completeIntent.putExtra("taskID", task.id)

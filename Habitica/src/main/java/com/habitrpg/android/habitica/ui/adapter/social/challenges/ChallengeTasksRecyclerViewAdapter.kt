@@ -40,10 +40,10 @@ class ChallengeTasksRecyclerViewAdapter(taskFilterHelper: TaskFilterHelper?, lay
         val task = this.filteredContent?.get(position)
 
         return when (task?.type) {
-            Task.TYPE_HABIT -> TYPE_HABIT
-            Task.TYPE_DAILY -> TYPE_DAILY
-            Task.TYPE_TODO -> TYPE_TODO
-            Task.TYPE_REWARD -> TYPE_REWARD
+            TaskType.TYPE_HABIT -> TYPE_HABIT
+            TaskType.TYPE_DAILY -> TYPE_DAILY
+            TaskType.TYPE_TODO -> TYPE_TODO
+            TaskType.TYPE_REWARD -> TYPE_REWARD
             else -> if (addItemSubject.hasObservers() && task?.type == TASK_TYPE_ADD_ITEM) TYPE_ADD_ITEM else TYPE_HEADER
         }
     }

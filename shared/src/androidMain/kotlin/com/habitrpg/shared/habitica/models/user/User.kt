@@ -64,6 +64,7 @@ actual open class User : RealmObject(), Avatar, VersionedObject {
     actual override var versionNumber: Int = 0
 
     actual var balance: Double = 0.toDouble()
+
     actual override var stats: Stats? = null
         set(stats) {
             field = stats
@@ -71,6 +72,7 @@ actual open class User : RealmObject(), Avatar, VersionedObject {
                 stats.userId = this.id
             }
         }
+
     actual var inbox: Inbox? = null
         set(inbox) {
             field = inbox
@@ -135,7 +137,6 @@ actual open class User : RealmObject(), Avatar, VersionedObject {
                 invitations.userId = this.id
             }
         }
-
     actual var tags = RealmListWrapper<Tag>()
     actual var questAchievements = RealmListWrapper<QuestAchievement>()
         set(value) {
@@ -174,42 +175,40 @@ actual open class User : RealmObject(), Avatar, VersionedObject {
 
     actual val contributorColor: Int
         get() = this.contributor?.contributorColor ?: android.R.color.black
+
     actual val username: String?
         get() = authentication?.localAuthentication?.username
+
     actual val formattedUsername: String?
         get() = if (username != null) "@$username" else null
 
-    actual fun getGemCount(): Int {
-        return (this.balance * 4).toInt()
+
+    override val currentPet: String?
+        get() = items?.currentPet ?: ""
+
+    override val currentMount: String?
+        get() = items?.currentMount ?: ""
+
+    override val sleep: Boolean
+        get() = preferences?.isSleep ?: false
+
+    override val gemCount: Int?
+        get() = (this.balance * 4).toInt()
+
+    override val hourglassCount: Int?
+        get() = purchased?.plan?.consecutive?.trinkets ?: 0
+
+    override val costume: Outfit?
+        get() = items?.gear?.costume
+
+    override val equipped: Outfit?
+        get() = items?.gear?.equipped
+
+    actual override fun hasClass(): Boolean {
+        return preferences?.isDisableClasses != true && flags?.classSelected == true && stats?.habitClass?.isNotEmpty() == true
     }
 
-    actual fun getHourglassCount(): Int {
-        return purchased?.plan?.consecutive?.trinkets ?: 0
-    }
-
-    actual fun getCostume(): Outfit? {
-        return items?.gear?.costume
-    }
-
-    actual fun getEquipped(): Outfit? {
-        return items?.gear?.equipped
-    }
-
-    override fun hasClass(): Boolean {
-        return preferences?.disableClasses != true && flags?.classSelected == true && stats?.habitClass?.isNotEmpty() == true
-    }
-
-    override fun getCurrentMount(): String? {
-        return items?.currentMount ?: ""
-    }
-
-    override fun getCurrentPet(): String? {
-        return items?.currentPet ?: ""
-    }
-
-    override fun getSleep(): Boolean {
-        return preferences?.sleep ?: false
-    }
+    override var valid: Boolean = true
 
     actual fun hasParty(): Boolean {
         return this.party?.id?.length ?: 0 > 0

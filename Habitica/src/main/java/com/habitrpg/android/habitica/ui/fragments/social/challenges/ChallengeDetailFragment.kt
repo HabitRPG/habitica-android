@@ -114,10 +114,10 @@ class ChallengeDetailFragment: BaseMainFragment() {
 
                 for (entry in taskList) {
                     when (entry.type) {
-                        Task.TYPE_TODO -> todos.add(entry)
-                        Task.TYPE_HABIT -> habits.add(entry)
-                        Task.TYPE_DAILY -> dailies.add(entry)
-                        Task.TYPE_REWARD -> rewards.add(entry)
+                        TaskType.TYPE_TODO -> todos.add(entry)
+                        TaskType.TYPE_HABIT -> habits.add(entry)
+                        TaskType.TYPE_DAILY -> dailies.add(entry)
+                        TaskType.TYPE_REWARD -> rewards.add(entry)
                     }
                 }
 

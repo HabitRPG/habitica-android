@@ -32,23 +32,23 @@ class HabiticaBottomNavigationView @JvmOverloads constructor(
     var selectedPosition: Int
     get() {
         return when (activeTaskType) {
-            Task.TYPE_DAILY -> 1
-            Task.TYPE_REWARD -> 2
-            Task.TYPE_TODO -> 3
+            TaskType.TYPE_DAILY -> 1
+            TaskType.TYPE_REWARD -> 2
+            TaskType.TYPE_TODO -> 3
             else -> 0
         }
     }
     set(value) {
         activeTaskType = when (value) {
-            1 -> Task.TYPE_DAILY
-            2 -> Task.TYPE_TODO
-            3 -> Task.TYPE_REWARD
-            else -> Task.TYPE_HABIT
+            1 -> TaskType.TYPE_DAILY
+            2 -> TaskType.TYPE_TODO
+            3 -> TaskType.TYPE_REWARD
+            else -> TaskType.TYPE_HABIT
         }
     }
     var onTabSelectedListener: ((String) -> Unit)? = null
     var onAddListener:  ((String) -> Unit)? = null
-    var activeTaskType: String = Task.TYPE_HABIT
+    var activeTaskType: String = TaskType.TYPE_HABIT
     set(value) {
         field = value
         updateItemSelection()
@@ -70,10 +70,10 @@ class HabiticaBottomNavigationView @JvmOverloads constructor(
 
     init {
         inflate(R.layout.main_navigation_view, true)
-        habitsTab.setOnClickListener { activeTaskType = Task.TYPE_HABIT }
-        dailiesTab.setOnClickListener { activeTaskType = Task.TYPE_DAILY }
-        todosTab.setOnClickListener { activeTaskType = Task.TYPE_TODO }
-        rewardsTab.setOnClickListener { activeTaskType = Task.TYPE_REWARD }
+        habitsTab.setOnClickListener { activeTaskType = TaskType.TYPE_HABIT }
+        dailiesTab.setOnClickListener { activeTaskType = TaskType.TYPE_DAILY }
+        todosTab.setOnClickListener { activeTaskType = TaskType.TYPE_TODO }
+        rewardsTab.setOnClickListener { activeTaskType = TaskType.TYPE_REWARD }
         addButton.setOnClickListener {
             if (flipAddBehaviour) {
                 if (isShowingSubmenu) {
@@ -158,22 +158,22 @@ class HabiticaBottomNavigationView @JvmOverloads constructor(
 
         var pos = 4
         submenuWrapper.removeAllViews()
-        for (taskType in listOf(Task.TYPE_HABIT, Task.TYPE_DAILY, Task.TYPE_TODO, Task.TYPE_REWARD)) {
+        for (taskType in listOf(TaskType.TYPE_HABIT, TaskType.TYPE_DAILY, TaskType.TYPE_TODO, TaskType.TYPE_REWARD)) {
             val view = BottomNavigationSubmenuItem(context)
             when (taskType) {
-                Task.TYPE_HABIT -> {
+                TaskType.TYPE_HABIT -> {
                     view.icon = context.getDrawable(R.drawable.add_habit)
                     view.title = context.getString(R.string.habit)
                 }
-                Task.TYPE_DAILY -> {
+                TaskType.TYPE_DAILY -> {
                     view.icon = context.getDrawable(R.drawable.add_daily)
                     view.title = context.getString(R.string.daily)
                 }
-                Task.TYPE_TODO -> {
+                TaskType.TYPE_TODO -> {
                     view.icon = context.getDrawable(R.drawable.add_todo)
                     view.title = context.getString(R.string.todo)
                 }
-                Task.TYPE_REWARD -> {
+                TaskType.TYPE_REWARD -> {
                     view.icon = context.getDrawable(R.drawable.add_rewards)
                     view.title = context.getString(R.string.reward)
                 }
@@ -235,9 +235,9 @@ class HabiticaBottomNavigationView @JvmOverloads constructor(
     }
 
     private fun updateItemSelection() {
-        habitsTab.isActive = activeTaskType == Task.TYPE_HABIT
-        dailiesTab.isActive = activeTaskType == Task.TYPE_DAILY
-        todosTab.isActive = activeTaskType == Task.TYPE_TODO
-        rewardsTab.isActive = activeTaskType == Task.TYPE_REWARD
+        habitsTab.isActive = activeTaskType == TaskType.TYPE_HABIT
+        dailiesTab.isActive = activeTaskType == TaskType.TYPE_DAILY
+        todosTab.isActive = activeTaskType == TaskType.TYPE_TODO
+        rewardsTab.isActive = activeTaskType == TaskType.TYPE_REWARD
     }
 }

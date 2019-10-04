@@ -7,4 +7,4 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.models.tasks.Task
 
 
-class DailiesListFactory(context: Context, intent: Intent) : TaskListFactory(context, intent, Task.TYPE_DAILY, R.layout.widget_dailies_list_row, R.id.dailies_text)
+class DailiesListFactory(context: Context, intent: Intent) : TaskListFactory(context, intent, TaskType.TYPE_DAILY, R.layout.widget_dailies_list_row, R.id.dailies_text)

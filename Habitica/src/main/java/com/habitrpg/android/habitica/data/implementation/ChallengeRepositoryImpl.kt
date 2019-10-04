@@ -60,10 +60,10 @@ class ChallengeRepositoryImpl(localRepository: ChallengeLocalRepository, apiClie
             val taskIdList = value.map { t -> t.id ?: "" }
 
             when (key) {
-                Task.TYPE_HABIT -> tasksOrder.habits = taskIdList
-                Task.TYPE_DAILY -> tasksOrder.dailys = taskIdList
-                Task.TYPE_TODO -> tasksOrder.todos = taskIdList
-                Task.TYPE_REWARD -> tasksOrder.rewards = taskIdList
+                TaskType.TYPE_HABIT -> tasksOrder.habits = taskIdList
+                TaskType.TYPE_DAILY -> tasksOrder.dailys = taskIdList
+                TaskType.TYPE_TODO -> tasksOrder.todos = taskIdList
+                TaskType.TYPE_REWARD -> tasksOrder.rewards = taskIdList
             }
         }
 

@@ -128,12 +128,12 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
             val bgUser = it.where(User::class.java).equalTo("id", userID).findFirst() ?: return@executeTransactionAsync
             if (bgTask.type != "reward" && (bgTask.value - localDelta) + res.delta != bgTask.value) {
                 bgTask.value = (bgTask.value - localDelta) + res.delta
-                if (Task.TYPE_DAILY == bgTask.type || Task.TYPE_TODO == bgTask.type) {
+                if (TaskType.TYPE_DAILY == bgTask.type || TaskType.TYPE_TODO == bgTask.type) {
                     bgTask.completed = up
-                    if (Task.TYPE_DAILY == bgTask.type && up) {
+                    if (TaskType.TYPE_DAILY == bgTask.type && up) {
                         bgTask.streak = (bgTask.streak ?: 0) + 1
                     }
-                } else if (Task.TYPE_HABIT == bgTask.type) {
+                } else if (TaskType.TYPE_HABIT == bgTask.type) {
                     if (up) {
                         bgTask.counterUp = (bgTask.counterUp ?: 0) + 1
                     } else {

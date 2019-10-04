@@ -51,7 +51,7 @@
 //    @Test
 //    public void testItSchedulesAlarmsForTodosWithMultipleReminders() {
 //        Task task = new Task();
-//        task.setType(Task.TYPE_TODO);
+//        task.setType(TaskType.TYPE_TODO);
 //
 //        RealmList<RemindersItem> reminders = new RealmList<>();
 //        RemindersItem remindersItem1 = new RemindersItem();
@@ -81,7 +81,7 @@
 //    @Test
 //    public void itUpdatesScheduledAlarmsForTodosWithMultipleReminders() {
 //        Task task = new Task();
-//        task.setType(Task.TYPE_TODO);
+//        task.setType(TaskType.TYPE_TODO);
 //
 //        RealmList<RemindersItem> reminders = new RealmList<>();
 //        RemindersItem remindersItem1 = new RemindersItem();
@@ -128,7 +128,7 @@
 //    //@TODO: Pending
 //    public void itRemovesAlarmsWhenRemindersAreRemovedFromTodo() {
 //        Task task = new Task();
-//        task.setType(Task.TYPE_TODO);
+//        task.setType(TaskType.TYPE_TODO);
 //
 //        RealmList<RemindersItem> reminders = new RealmList<>();
 //        RemindersItem remindersItem1 = new RemindersItem();
@@ -168,7 +168,7 @@
 //    @Test
 //    public void itScheduledAlarmForTheNextAvailableDayForRegularDaily() {
 //        Task task = new Task();
-//        task.setType(Task.TYPE_DAILY);
+//        task.setType(TaskType.TYPE_DAILY);
 //        task.setFrequency(Task.FREQUENCY_WEEKLY);
 //
 //        Days taskRepeatDays = new Days();
@@ -213,7 +213,7 @@
 //    //This also tests for when the receiver tries to schedule the next daily available
 //    public void itScheduledAlarmForTheNextAvailableDayForRegularDailyWhenUserTriesToSetAlarmForNow() {
 //        Task task = new Task();
-//        task.setType(Task.TYPE_DAILY);
+//        task.setType(TaskType.TYPE_DAILY);
 //        task.setFrequency(Task.FREQUENCY_WEEKLY);
 //
 //        Days taskRepeatDays = new Days();
@@ -259,7 +259,7 @@
 //    @Test
 //    public void itScheduledAlarmForTheNextAvailableDayForEveryXDayDaily() {
 //        Task task = new Task();
-//        task.setType(Task.TYPE_DAILY);
+//        task.setType(TaskType.TYPE_DAILY);
 //        task.setFrequency(Task.FREQUENCY_DAILY);
 //
 //        int everyXDay = 2;
@@ -310,7 +310,7 @@
 //    //This also tests for when the receiver tries to schedule the next daily available
 //    public void itScheduledAlarmForTheNextAvailableDayForEveryXDayDailyWhenUserTriesToSetAlarmForNow() {
 //        Task task = new Task();
-//        task.setType(Task.TYPE_DAILY);
+//        task.setType(TaskType.TYPE_DAILY);
 //        task.setFrequency(Task.FREQUENCY_DAILY);
 //
 //        int everyXDay = 2;

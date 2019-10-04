@@ -63,7 +63,7 @@ class NotificationPublisher : BroadcastReceiver() {
         }
         val checkDailies = intent.getBooleanExtra(CHECK_DAILIES, false)
         if (checkDailies) {
-            taskRepository.getTasks(Task.TYPE_DAILY).firstElement().zipWith(userRepository.getUser().firstElement(), BiFunction<RealmResults<Task>, User, Pair<RealmResults<Task>, User>> { tasks, user ->
+            taskRepository.getTasks(TaskType.TYPE_DAILY).firstElement().zipWith(userRepository.getUser().firstElement(), BiFunction<RealmResults<Task>, User, Pair<RealmResults<Task>, User>> { tasks, user ->
                 return@BiFunction Pair(tasks, user)
             }).subscribe(Consumer { pair ->
                 var showNotifications = false

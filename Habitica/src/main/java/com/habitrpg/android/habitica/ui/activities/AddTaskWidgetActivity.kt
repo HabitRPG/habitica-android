@@ -46,19 +46,19 @@ class AddTaskWidgetActivity : AppCompatActivity() {
     }
 
     private fun addHabitSelected() {
-        finishWithSelection(Task.TYPE_HABIT)
+        finishWithSelection(TaskType.TYPE_HABIT)
     }
 
     private fun addDailySelected() {
-        finishWithSelection(Task.TYPE_DAILY)
+        finishWithSelection(TaskType.TYPE_DAILY)
     }
 
     private fun addToDoSelected() {
-        finishWithSelection(Task.TYPE_TODO)
+        finishWithSelection(TaskType.TYPE_TODO)
     }
 
     private fun addRewardSelected() {
-        finishWithSelection(Task.TYPE_REWARD)
+        finishWithSelection(TaskType.TYPE_REWARD)
     }
 
     private fun finishWithSelection(selectedTaskType: String) {

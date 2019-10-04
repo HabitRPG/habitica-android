@@ -1,5 +1,6 @@
 package com.habitrpg.shared.habitica.models.user
 
+import com.habitrpg.shared.habitica.Avatar
 import com.habitrpg.shared.habitica.models.PushDevice
 import com.habitrpg.shared.habitica.models.QuestAchievement
 import com.habitrpg.shared.habitica.models.Tag
@@ -11,7 +12,7 @@ import com.habitrpg.shared.habitica.models.tasks.TasksOrder
 import com.habitrpg.shared.habitica.nativeLibraries.NativeDate
 import com.habitrpg.shared.habitica.nativeLibraries.RealmListWrapper
 
-expect open class User {
+expect open class User: Avatar {
 
     var tasks: TaskList?
 
@@ -20,9 +21,9 @@ expect open class User {
     var versionNumber: Int
 
     var balance: Double
-    var stats: Stats?
+    override var stats: Stats?
     var inbox: Inbox?
-    var preferences: Preferences?
+    override var preferences: Preferences?
     var profile: Profile?
     var party: UserParty?
     var items: Items?
@@ -47,27 +48,7 @@ expect open class User {
     val username: String?
     val formattedUsername: String?
 
-    fun getPreferences(): Preferences?
-    fun setPreferences(preferences: Preferences?)
-
-    fun getStats(): Stats?
-    fun setStats(stats: Stats?)
-
-    fun getGemCount(): Int
-
-    fun getHourglassCount(): Int
-
-    fun getCostume(): Outfit?
-
-    fun getEquipped(): Outfit?
-
-    fun hasClass(): Boolean
-
-    fun getCurrentMount(): String?
-
-    fun getCurrentPet(): String?
-
-    fun getSleep(): Boolean
+    override fun hasClass(): Boolean
 
     fun hasParty(): Boolean
 }

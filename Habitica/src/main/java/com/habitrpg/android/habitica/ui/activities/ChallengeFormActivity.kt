@@ -359,10 +359,10 @@ class ChallengeFormActivity : BaseActivity() {
         challengeTasks.setTasks(taskList)
         compositeSubscription.add(challengeTasks.addItemObservable().subscribe(Consumer { t ->
             when (t) {
-                addHabit -> openNewTaskActivity(Task.TYPE_HABIT, null)
-                addDaily -> openNewTaskActivity(Task.TYPE_DAILY, null)
-                addTodo -> openNewTaskActivity(Task.TYPE_TODO, null)
-                addReward -> openNewTaskActivity(Task.TYPE_REWARD, null)
+                addHabit -> openNewTaskActivity(TaskType.TYPE_HABIT, null)
+                addDaily -> openNewTaskActivity(TaskType.TYPE_DAILY, null)
+                addTodo -> openNewTaskActivity(TaskType.TYPE_TODO, null)
+                addReward -> openNewTaskActivity(TaskType.TYPE_REWARD, null)
             }
         }, RxErrorHandler.handleEmptyError()))
 
@@ -453,9 +453,9 @@ class ChallengeFormActivity : BaseActivity() {
     private fun addOrUpdateTaskInList(task: Task, isExistingTask: Boolean = false) {
         if (!challengeTasks.replaceTask(task)) {
             val taskAbove: Task? = when (task.type) {
-                Task.TYPE_HABIT -> addHabit
-                Task.TYPE_DAILY -> addDaily
-                Task.TYPE_TODO -> addTodo
+                TaskType.TYPE_HABIT -> addHabit
+                TaskType.TYPE_DAILY -> addDaily
+                TaskType.TYPE_TODO -> addTodo
                 else -> addReward
             }
 
@@ -501,7 +501,7 @@ class ChallengeFormActivity : BaseActivity() {
             t.type = taskType
             t.text = taskName
 
-            if (taskType == Task.TYPE_HABIT) {
+            if (taskType == TaskType.TYPE_HABIT) {
                 t.up = true
                 t.down = false
             }

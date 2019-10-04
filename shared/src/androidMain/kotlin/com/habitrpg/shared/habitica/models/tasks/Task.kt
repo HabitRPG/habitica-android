@@ -313,13 +313,13 @@ actual open class Task : RealmObject, Parcelable {
     }
 
 
-    actual var weeksOfMonth: List<Int>?
+    actual var weeksOfMonth: List<Int>? = null
         set(weeksOfMonth: List<Int>?) {
             this.weeksOfMonth = weeksOfMonth
             this.weeksOfMonthString = this.weeksOfMonth?.toString()
         }
         get(): List<Int>? {
-            if (weeksOfMonth == null) {
+            if (field == null) {
                 val weeksOfMonth = mutableListOf<Int>()
                 if (weeksOfMonthString != null) {
                     try {
@@ -336,16 +336,16 @@ actual open class Task : RealmObject, Parcelable {
                 }
                 this.weeksOfMonth = weeksOfMonth.toList()
             }
-            return weeksOfMonth
+            return field
         }
 
-    actual var daysOfMonth: List<Int>?
-        set(daysOfMonth: List<Int>?) {
-            this.daysOfMonth = daysOfMonth
+    actual var daysOfMonth: List<Int>? = null
+        set(daysOfMonth) {
+            field = daysOfMonth
             this.daysOfMonthString = daysOfMonth.toString()
         }
         get(): List<Int>? {
-            if (daysOfMonth == null) {
+            if (field == null) {
                 val daysOfMonth = mutableListOf<Int>()
                 if (daysOfMonthString != null) {
                     try {
@@ -360,10 +360,9 @@ actual open class Task : RealmObject, Parcelable {
                     }
 
                 }
-                this.daysOfMonth = daysOfMonth
+                field = daysOfMonth
             }
-
-            return daysOfMonth
+            return field
         }
 
     actual companion object CREATOR : Parcelable.Creator<Task> {

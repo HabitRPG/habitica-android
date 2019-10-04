@@ -50,7 +50,7 @@ class SkillTasksRecyclerViewFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         var tasks = taskRepository.getTasks(taskType ?: "", userId)
-        if (taskType == Task.TYPE_TODO) {
+        if (taskType == TaskType.TYPE_TODO) {
             tasks = tasks.map { it.where().equalTo("completed", false).findAll() }
         }
         compositeSubscription.add(tasks.firstElement().subscribe(Consumer { adapter.updateData(it) }, RxErrorHandler.handleEmptyError()))

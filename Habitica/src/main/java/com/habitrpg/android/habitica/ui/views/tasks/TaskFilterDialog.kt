@@ -257,19 +257,19 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : AlertDialo
     fun setTaskType(taskType: String, activeFilter: String?) {
         this.taskType = taskType
         when (taskType) {
-            Task.TYPE_HABIT -> {
+            TaskType.TYPE_HABIT -> {
                 taskTypeTitle.setText(R.string.habits)
                 allTaskFilter.setText(R.string.all)
                 secondTaskFilter.setText(R.string.weak)
                 thirdTaskFilter.setText(R.string.strong)
             }
-            Task.TYPE_DAILY -> {
+            TaskType.TYPE_DAILY -> {
                 taskTypeTitle.setText(R.string.dailies)
                 allTaskFilter.setText(R.string.all)
                 secondTaskFilter.setText(R.string.due)
                 thirdTaskFilter.setText(R.string.gray)
             }
-            Task.TYPE_TODO -> {
+            TaskType.TYPE_TODO -> {
                 taskTypeTitle.setText(R.string.todos)
                 allTaskFilter.setText(R.string.active)
                 secondTaskFilter.setText(R.string.dated)
@@ -289,7 +289,7 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : AlertDialo
                 Task.FILTER_ALL -> checkedId = R.id.all_task_filter
                 Task.FILTER_WEAK, Task.FILTER_DATED -> checkedId = R.id.second_task_filter
                 Task.FILTER_STRONG, Task.FILTER_GRAY, Task.FILTER_COMPLETED -> checkedId = R.id.third_task_filter
-                Task.FILTER_ACTIVE -> checkedId = if (taskType == Task.TYPE_DAILY) {
+                Task.FILTER_ACTIVE -> checkedId = if (taskType == TaskType.TYPE_DAILY) {
                     R.id.second_task_filter
                 } else {
                     R.id.all_task_filter
@@ -305,20 +305,20 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : AlertDialo
             return
         }
         when (checkedId) {
-            R.id.all_task_filter -> filterType = if (taskType != Task.TYPE_TODO) {
+            R.id.all_task_filter -> filterType = if (taskType != TaskType.TYPE_TODO) {
                 Task.FILTER_ALL
             } else {
                 Task.FILTER_ACTIVE
             }
             R.id.second_task_filter -> when (taskType) {
-                Task.TYPE_HABIT -> filterType = Task.FILTER_WEAK
+                TaskType.TYPE_HABIT -> filterType = Task.FILTER_WEAK
                 Task.FREQUENCY_DAILY -> filterType = Task.FILTER_ACTIVE
-                Task.TYPE_TODO -> filterType = Task.FILTER_DATED
+                TaskType.TYPE_TODO -> filterType = Task.FILTER_DATED
             }
             R.id.third_task_filter -> when (taskType) {
-                Task.TYPE_HABIT -> filterType = Task.FILTER_STRONG
+                TaskType.TYPE_HABIT -> filterType = Task.FILTER_STRONG
                 Task.FREQUENCY_DAILY -> filterType = Task.FILTER_GRAY
-                Task.TYPE_TODO -> filterType = Task.FILTER_COMPLETED
+                TaskType.TYPE_TODO -> filterType = Task.FILTER_COMPLETED
             }
         }
         filtersChanged()

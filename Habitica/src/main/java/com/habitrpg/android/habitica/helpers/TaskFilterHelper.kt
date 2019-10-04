@@ -25,7 +25,7 @@ class TaskFilterHelper {
         if (activeFilters[type] == null) {
             return false
         }
-        return if (Task.TYPE_TODO == type) {
+        return if (TaskType.TYPE_TODO == type) {
             Task.FILTER_ACTIVE != activeFilters[type]
         } else {
             Task.FILTER_ALL != activeFilters[type]
@@ -60,7 +60,7 @@ class TaskFilterHelper {
         }
         return if (activeFilter != null && activeFilter != Task.FILTER_ALL) {
             when (activeFilter) {
-                Task.FILTER_ACTIVE -> if (task.type == Task.TYPE_DAILY) {
+                Task.FILTER_ACTIVE -> if (task.type == TaskType.TYPE_DAILY) {
                     task.isDisplayedActive
                 } else {
                     !task.completed
@@ -103,7 +103,7 @@ class TaskFilterHelper {
             }
             if (activeFilter != null && activeFilter != Task.FILTER_ALL) {
                 when (activeFilter) {
-                    Task.FILTER_ACTIVE -> query = if (Task.TYPE_DAILY == taskType) {
+                    Task.FILTER_ACTIVE -> query = if (TaskType.TYPE_DAILY == taskType) {
                         query.equalTo("completed", false).equalTo("isDue", true)
                     } else {
                         query.equalTo("completed", false)

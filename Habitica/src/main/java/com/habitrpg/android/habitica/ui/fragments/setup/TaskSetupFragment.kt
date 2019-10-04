@@ -85,13 +85,13 @@ class TaskSetupFragment : BaseFragment() {
     private fun setTasks() {
         this.taskGroups = listOf(listOf(getString(R.string.setup_group_work), "work"), listOf(getString(R.string.setup_group_exercise), "exercise"), listOf(getString(R.string.setup_group_health), "healthWellness"), listOf(getString(R.string.setup_group_school), "school"), listOf(getString(R.string.setup_group_teams), "teams"), listOf(getString(R.string.setup_group_chores), "chores"), listOf(getString(R.string.setup_group_creativity), "creativity"), listOf(getString(R.string.setuP_group_other), "other"))
 
-        this.tasks = listOf(listOf("work", Task.TYPE_HABIT, getString(R.string.setup_task_work_1), true, false), listOf("work", Task.TYPE_DAILY, getString(R.string.setup_task_work_2)), listOf("work", Task.TYPE_TODO, getString(R.string.setup_task_work_3)),
-                listOf("exercise", Task.TYPE_HABIT, getString(R.string.setup_task_exercise_1), true, false), listOf("exercise", Task.TYPE_DAILY, getString(R.string.setup_task_exercise_2)), listOf("exercise", Task.TYPE_TODO, getString(R.string.setup_task_exercise_3)),
-                listOf("healthWellness", Task.TYPE_HABIT, getString(R.string.setup_task_healthWellness_1), true, true), listOf("healthWellness", Task.TYPE_DAILY, getString(R.string.setup_task_healthWellness_2)), listOf("healthWellness", Task.TYPE_TODO, getString(R.string.setup_task_healthWellness_3)),
-                listOf("school", Task.TYPE_HABIT, getString(R.string.setup_task_school_1), true, true), listOf("school", Task.TYPE_DAILY, getString(R.string.setup_task_school_2)), listOf("school", Task.TYPE_TODO, getString(R.string.setup_task_school_3)),
-                listOf("teams", Task.TYPE_HABIT, getString(R.string.setup_task_teams_1), true, false), listOf("teams", Task.TYPE_DAILY, getString(R.string.setup_task_teams_2)), listOf("teams", Task.TYPE_TODO, getString(R.string.setup_task_teams_3)),
-                listOf("chores", Task.TYPE_HABIT, getString(R.string.setup_task_chores_1), true, false), listOf("chores", Task.TYPE_DAILY, getString(R.string.setup_task_chores_2)), listOf("chores", Task.TYPE_TODO, getString(R.string.setup_task_chores_3)),
-                listOf("creativity", Task.TYPE_HABIT, getString(R.string.setup_task_creativity_1), true, false), listOf("creativity", Task.TYPE_DAILY, getString(R.string.setup_task_creativity_2)), listOf("creativity", Task.TYPE_TODO, getString(R.string.setup_task_creativity_3)))
+        this.tasks = listOf(listOf("work", TaskType.TYPE_HABIT, getString(R.string.setup_task_work_1), true, false), listOf("work", TaskType.TYPE_DAILY, getString(R.string.setup_task_work_2)), listOf("work", TaskType.TYPE_TODO, getString(R.string.setup_task_work_3)),
+                listOf("exercise", TaskType.TYPE_HABIT, getString(R.string.setup_task_exercise_1), true, false), listOf("exercise", TaskType.TYPE_DAILY, getString(R.string.setup_task_exercise_2)), listOf("exercise", TaskType.TYPE_TODO, getString(R.string.setup_task_exercise_3)),
+                listOf("healthWellness", TaskType.TYPE_HABIT, getString(R.string.setup_task_healthWellness_1), true, true), listOf("healthWellness", TaskType.TYPE_DAILY, getString(R.string.setup_task_healthWellness_2)), listOf("healthWellness", TaskType.TYPE_TODO, getString(R.string.setup_task_healthWellness_3)),
+                listOf("school", TaskType.TYPE_HABIT, getString(R.string.setup_task_school_1), true, true), listOf("school", TaskType.TYPE_DAILY, getString(R.string.setup_task_school_2)), listOf("school", TaskType.TYPE_TODO, getString(R.string.setup_task_school_3)),
+                listOf("teams", TaskType.TYPE_HABIT, getString(R.string.setup_task_teams_1), true, false), listOf("teams", TaskType.TYPE_DAILY, getString(R.string.setup_task_teams_2)), listOf("teams", TaskType.TYPE_TODO, getString(R.string.setup_task_teams_3)),
+                listOf("chores", TaskType.TYPE_HABIT, getString(R.string.setup_task_chores_1), true, false), listOf("chores", TaskType.TYPE_DAILY, getString(R.string.setup_task_chores_2)), listOf("chores", TaskType.TYPE_TODO, getString(R.string.setup_task_chores_3)),
+                listOf("creativity", TaskType.TYPE_HABIT, getString(R.string.setup_task_creativity_1), true, false), listOf("creativity", TaskType.TYPE_DAILY, getString(R.string.setup_task_creativity_2)), listOf("creativity", TaskType.TYPE_TODO, getString(R.string.setup_task_creativity_3)))
     }
 
     fun createSampleTasks(): List<Task> {
@@ -113,10 +113,10 @@ class TaskSetupFragment : BaseFragment() {
                 tasks.add(taskObject)
             }
         }
-        tasks.add(makeTaskObject(Task.TYPE_HABIT, getString(R.string.setup_task_habit_1), true, false, getString(R.string.setup_task_habit_1_notes)))
-        tasks.add(makeTaskObject(Task.TYPE_HABIT, getString(R.string.setup_task_habit_2), false, true, getString(R.string.setup_task_habit_2_notes)))
-        tasks.add(makeTaskObject(Task.TYPE_REWARD, getString(R.string.setup_task_reward), null, null, getString(R.string.setup_task_reward_notes)))
-        tasks.add(makeTaskObject(Task.TYPE_TODO, getString(R.string.setup_task_join_habitica), null, null, getString(R.string.setup_task_join_habitica_notes)))
+        tasks.add(makeTaskObject(TaskType.TYPE_HABIT, getString(R.string.setup_task_habit_1), true, false, getString(R.string.setup_task_habit_1_notes)))
+        tasks.add(makeTaskObject(TaskType.TYPE_HABIT, getString(R.string.setup_task_habit_2), false, true, getString(R.string.setup_task_habit_2_notes)))
+        tasks.add(makeTaskObject(TaskType.TYPE_REWARD, getString(R.string.setup_task_reward), null, null, getString(R.string.setup_task_reward_notes)))
+        tasks.add(makeTaskObject(TaskType.TYPE_TODO, getString(R.string.setup_task_join_habitica), null, null, getString(R.string.setup_task_join_habitica_notes)))
         return tasks
     }
 
@@ -127,12 +127,12 @@ class TaskSetupFragment : BaseFragment() {
         task.priority = 1.0f
         task.type = type ?: ""
 
-        if (type == Task.TYPE_HABIT) {
+        if (type == TaskType.TYPE_HABIT) {
             task.up = up
             task.down = down
         }
 
-        if (type == Task.TYPE_DAILY) {
+        if (type == TaskType.TYPE_DAILY) {
             task.frequency = "weekly"
             task.startDate = Date()
             task.everyX = 1

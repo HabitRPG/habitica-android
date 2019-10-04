@@ -26,7 +26,7 @@ class ScoreTaskLocallyInteractor {
             var nextDelta = 0.9747.pow(currentValue) * if (direction == TaskDirection.DOWN) -1 else 1
 
             if (task.checklist?.size ?: 0 > 0) {
-                if (task.type == Task.TYPE_TODO) {
+                if (task.type == TaskType.TYPE_TODO) {
                     nextDelta *= 1 + (task.checklist?.map { if (it.completed) 1 else 0 }?.reduce { _, _ -> 0 }
                             ?: 0)
                 }
@@ -48,7 +48,7 @@ class ScoreTaskLocallyInteractor {
         }
 
         fun score(user: User, task: Task, direction: TaskDirection): TaskDirectionData? {
-            return if (task.type == Task.TYPE_HABIT || direction == TaskDirection.UP) {
+            return if (task.type == TaskType.TYPE_HABIT || direction == TaskDirection.UP) {
                 val stats = user.stats ?: return null
                 val computedStats = computeStats(user)
                 val result = TaskDirectionData()
@@ -65,9 +65,9 @@ class ScoreTaskLocallyInteractor {
                 }
 
                 when (task.type) {
-                    Task.TYPE_HABIT -> scoreHabit(user, task, direction)
-                    Task.TYPE_DAILY -> scoreDaily(user, task, direction)
-                    Task.TYPE_TODO -> scoreToDo(user, task, direction)
+                    TaskType.TYPE_HABIT -> scoreHabit(user, task, direction)
+                    TaskType.TYPE_DAILY -> scoreDaily(user, task, direction)
+                    TaskType.TYPE_TODO -> scoreToDo(user, task, direction)
                 }
 
                 if (result.hp <= 0.0) {

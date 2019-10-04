@@ -30,13 +30,16 @@ import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager
-import com.habitrpg.android.habitica.models.Tag
+import com.habitrpg.shared.habitica.models.Tag
 import com.habitrpg.android.habitica.models.tasks.HabitResetOption
-import com.habitrpg.android.habitica.models.tasks.Task
-import com.habitrpg.android.habitica.models.user.Stats
+import com.habitrpg.shared.habitica.models.tasks.Task
+import com.habitrpg.shared.habitica.models.user.Stats
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.tasks.form.*
+import com.habitrpg.shared.habitica.models.tasks.TaskFrequency
+import com.habitrpg.shared.habitica.models.tasks.TaskType
+import com.habitrpg.shared.habitica.nativeLibraries.RealmListWrapper
 import io.reactivex.functions.Consumer
 import io.realm.RealmList
 import java.util.*
@@ -153,7 +156,7 @@ class TaskFormActivity : BaseActivity() {
 
         isChallengeTask = bundle.getBoolean(IS_CHALLENGE_TASK, false)
 
-        taskType = bundle.getString(TASK_TYPE_KEY) ?: Task.TYPE_HABIT
+        taskType = bundle.getString(TASK_TYPE_KEY) ?: TaskType.TYPE_HABIT
         preselectedTags = bundle.getStringArrayList(SELECTED_TAGS_KEY)
 
         compositeSubscription.add(tagRepository.getTags()
@@ -201,9 +204,9 @@ class TaskFormActivity : BaseActivity() {
                 task?.let { fillForm(it) }
             }
             else -> title = getString(R.string.create_task, getString(when (taskType) {
-                Task.TYPE_DAILY -> R.string.daily
-                Task.TYPE_TODO -> R.string.todo
-                Task.TYPE_REWARD -> R.string.reward
+                TaskType.TYPE_DAILY -> R.string.daily
+                TaskType.TYPE_TODO -> R.string.todo
+                TaskType.TYPE_REWARD -> R.string.reward
                 else -> R.string.habit
             }))
         }
@@ -237,22 +240,22 @@ class TaskFormActivity : BaseActivity() {
     }
 
     private fun configureForm() {
-        val habitViewsVisibility = if (taskType == Task.TYPE_HABIT) View.VISIBLE else View.GONE
+        val habitViewsVisibility = if (taskType == TaskType.TYPE_HABIT) View.VISIBLE else View.GONE
         habitScoringButtons.visibility = habitViewsVisibility
         habitResetStreakTitleView.visibility = habitViewsVisibility
         habitResetStreakButtons.visibility = habitViewsVisibility
         habitAdjustNegativeStreakView.visibility = habitViewsVisibility
 
-        val habitDailyVisibility = if (taskType == Task.TYPE_DAILY || taskType == Task.TYPE_HABIT) View.VISIBLE else View.GONE
+        val habitDailyVisibility = if (taskType == TaskType.TYPE_DAILY || taskType == TaskType.TYPE_HABIT) View.VISIBLE else View.GONE
         adjustStreakTitleView.visibility = habitDailyVisibility
         adjustStreakWrapper.visibility = habitDailyVisibility
-        if (taskType == Task.TYPE_HABIT) {
+        if (taskType == TaskType.TYPE_HABIT) {
             habitAdjustPositiveStreakView.hint = getString(R.string.positive_habit_form)
         } else {
             habitAdjustPositiveStreakView.hint = getString(R.string.streak)
         }
 
-        val todoDailyViewsVisibility = if (taskType == Task.TYPE_DAILY || taskType == Task.TYPE_TODO) View.VISIBLE else View.GONE
+        val todoDailyViewsVisibility = if (taskType == TaskType.TYPE_DAILY || taskType == TaskType.TYPE_TODO) View.VISIBLE else View.GONE
 
         checklistTitleView.visibility = if (isChallengeTask) View.GONE else todoDailyViewsVisibility
         checklistContainer.visibility = if (isChallengeTask) View.GONE else todoDailyViewsVisibility
@@ -265,11 +268,11 @@ class TaskFormActivity : BaseActivity() {
         taskSchedulingControls.visibility = todoDailyViewsVisibility
         taskSchedulingControls.taskType = taskType
 
-        val rewardHideViews = if (taskType == Task.TYPE_REWARD) View.GONE else View.VISIBLE
+        val rewardHideViews = if (taskType == TaskType.TYPE_REWARD) View.GONE else View.VISIBLE
         taskDifficultyTitleView.visibility = rewardHideViews
         taskDifficultyButtons.visibility = rewardHideViews
 
-        val rewardViewsVisibility = if (taskType == Task.TYPE_REWARD) View.VISIBLE else View.GONE
+        val rewardViewsVisibility = if (taskType == TaskType.TYPE_REWARD) View.VISIBLE else View.GONE
         rewardValueTitleView.visibility = rewardViewsVisibility
         rewardValueFormView.visibility = rewardViewsVisibility
 
@@ -319,7 +322,7 @@ class TaskFormActivity : BaseActivity() {
         notesEditText.setText(task.notes)
         taskDifficultyButtons.selectedDifficulty = task.priority
         when (taskType) {
-            Task.TYPE_HABIT -> {
+            TaskType.TYPE_HABIT -> {
                 habitScoringButtons.isPositive = task.up ?: false
                 habitScoringButtons.isNegative = task.down ?: false
                 task.frequency?.let {
@@ -336,19 +339,19 @@ class TaskFormActivity : BaseActivity() {
                     adjustStreakWrapper.visibility = View.GONE
                 }
             }
-            Task.TYPE_DAILY -> {
+            TaskType.TYPE_DAILY -> {
                 taskSchedulingControls.startDate = task.startDate ?: Date()
                 taskSchedulingControls.everyX = task.everyX ?: 1
                 task.repeat?.let { taskSchedulingControls.weeklyRepeat = it }
-                taskSchedulingControls.daysOfMonth = task.getDaysOfMonth()
-                taskSchedulingControls.weeksOfMonth = task.getWeeksOfMonth()
+                taskSchedulingControls.daysOfMonth = task.daysOfMonth
+                taskSchedulingControls.weeksOfMonth = task.weeksOfMonth
                 habitAdjustPositiveStreakView.setText((task.streak ?: 0).toString())
-                taskSchedulingControls.frequency = task.frequency ?: Task.FREQUENCY_DAILY
+                taskSchedulingControls.frequency = task.frequency ?: TaskFrequency.FREQUENCY_DAILY
             }
-            Task.TYPE_TODO -> taskSchedulingControls.dueDate = task.dueDate
-            Task.TYPE_REWARD -> rewardValueFormView.value = task.value
+            TaskType.TYPE_TODO -> taskSchedulingControls.dueDate = task.dueDate
+            TaskType.TYPE_REWARD -> rewardValueFormView.value = task.value
         }
-        if (taskType == Task.TYPE_DAILY || taskType == Task.TYPE_TODO) {
+        if (taskType == TaskType.TYPE_DAILY || taskType == TaskType.TYPE_TODO) {
             task.checklist?.let { checklistContainer.checklistItems = it }
             remindersContainer.taskType = taskType
             task.reminders?.let { remindersContainer.reminders = it }
@@ -403,34 +406,34 @@ class TaskFormActivity : BaseActivity() {
         if (usesTaskAttributeStats) {
             thisTask.attribute = selectedStat
         }
-        if (taskType == Task.TYPE_HABIT) {
+        if (taskType == TaskType.TYPE_HABIT) {
             thisTask.up = habitScoringButtons.isPositive
             thisTask.down = habitScoringButtons.isNegative
             thisTask.frequency = habitResetStreakButtons.selectedResetOption.value
             if (habitAdjustPositiveStreakView.text.isNotEmpty()) thisTask.counterUp = habitAdjustPositiveStreakView.text.toString().toIntCatchOverflow()
             if (habitAdjustNegativeStreakView.text.isNotEmpty()) thisTask.counterDown = habitAdjustNegativeStreakView.text.toString().toIntCatchOverflow()
-        } else if (taskType == Task.TYPE_DAILY) {
+        } else if (taskType == TaskType.TYPE_DAILY) {
             thisTask.startDate = taskSchedulingControls.startDate
             thisTask.everyX = taskSchedulingControls.everyX
             thisTask.frequency = taskSchedulingControls.frequency
             thisTask.repeat = taskSchedulingControls.weeklyRepeat
-            thisTask.setDaysOfMonth(taskSchedulingControls.daysOfMonth)
-            thisTask.setWeeksOfMonth(taskSchedulingControls.weeksOfMonth)
+            thisTask.daysOfMonth = taskSchedulingControls.daysOfMonth
+            thisTask.weeksOfMonth = taskSchedulingControls.weeksOfMonth
             if (habitAdjustPositiveStreakView.text.isNotEmpty()) thisTask.streak = habitAdjustPositiveStreakView.text.toString().toIntCatchOverflow()
-        } else if (taskType == Task.TYPE_TODO) {
+        } else if (taskType == TaskType.TYPE_TODO) {
             thisTask.dueDate = taskSchedulingControls.dueDate
-        } else if (taskType == Task.TYPE_REWARD) {
+        } else if (taskType == TaskType.TYPE_REWARD) {
             thisTask.value = rewardValueFormView.value
         }
 
         val resultIntent = Intent()
         resultIntent.putExtra(TASK_TYPE_KEY, taskType)
         if (!isChallengeTask) {
-            if (taskType == Task.TYPE_DAILY || taskType == Task.TYPE_TODO) {
+            if (taskType == TaskType.TYPE_DAILY || taskType == TaskType.TYPE_TODO) {
                 thisTask.checklist = checklistContainer.checklistItems
                 thisTask.reminders = remindersContainer.reminders
             }
-            thisTask.tags = RealmList()
+            thisTask.tags = RealmListWrapper()
             tagsWrapper.forEachIndexed { index, view ->
                 val tagView = view as? CheckBox
                 if (tagView?.isChecked == true) {
@@ -444,7 +447,7 @@ class TaskFormActivity : BaseActivity() {
                 taskRepository.updateTaskInBackground(thisTask)
             }
 
-            if (thisTask.type == Task.TYPE_DAILY || thisTask.type == Task.TYPE_TODO) {
+            if (thisTask.type == TaskType.TYPE_DAILY || thisTask.type == TaskType.TYPE_TODO) {
                 taskAlarmManager.scheduleAlarmsForTask(thisTask)
             }
         } else {
