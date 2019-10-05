@@ -17,6 +17,8 @@ import io.realm.annotations.Ignore
 import io.realm.annotations.PrimaryKey
 import org.json.JSONArray
 import io.reactivex.functions.Consumer
+import io.realm.Realm
+import io.realm.RealmList
 import org.json.JSONException
 import space.thelen.shared.cluetective.R
 import java.util.*
@@ -48,7 +50,7 @@ actual open class Task : RealmObject, Parcelable {
     actual var counterDown: Int? = 0
     //todos/dailies
     actual var completed: Boolean = false
-    actual var checklist: RealmListWrapper<ChecklistItem>? = RealmListWrapper()
+    actual var checklist: RealmList<ChecklistItem>? = RealmList()
     actual var reminders: RealmListWrapper<RemindersItem>? = RealmListWrapper()
     //dailies
     actual var frequency: String? = null

@@ -1,7 +1,7 @@
 package com.habitrpg.shared.habitica.models.inventory
 
 import com.habitrpg.shared.habitica.models.members.Member
-import com.habitrpg.shared.habitica.nativeLibraries.RealmListWrapper
+import com.habitrpg.shared.habitica.nativeLibraries.NativeRealmList
 
 
 expect open class Quest {
@@ -11,11 +11,11 @@ expect open class Quest {
     var leader: String?
     var RSVPNeeded: Boolean
 
-    var members: RealmListWrapper<QuestMember>?
+    var members: NativeRealmList<QuestMember>?
     var progress: QuestProgress?
 
-    var participants: RealmListWrapper<Member>?
-    var rageStrikes: RealmListWrapper<QuestRageStrike>?
+    var participants: NativeRealmList<Member>?
+    var rageStrikes: NativeRealmList<QuestRageStrike>?
 
     fun hasRageStrikes(): Boolean
 

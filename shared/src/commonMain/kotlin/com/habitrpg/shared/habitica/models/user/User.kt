@@ -10,7 +10,7 @@ import com.habitrpg.shared.habitica.models.social.UserParty
 import com.habitrpg.shared.habitica.models.tasks.TaskList
 import com.habitrpg.shared.habitica.models.tasks.TasksOrder
 import com.habitrpg.shared.habitica.nativeLibraries.NativeDate
-import com.habitrpg.shared.habitica.nativeLibraries.RealmListWrapper
+import com.habitrpg.shared.habitica.nativeLibraries.NativeRealmList
 
 expect open class User: Avatar {
 
@@ -31,13 +31,13 @@ expect open class User: Avatar {
     var flags: Flags?
     var contributor: ContributorInfo?
     var invitations: Invitations?
-    var tags: RealmListWrapper<Tag>
-    var questAchievements: RealmListWrapper<QuestAchievement>
+    var tags: NativeRealmList<Tag>
+    var questAchievements: NativeRealmList<QuestAchievement>
     var pushDevices: List<PushDevice>?
     var purchased: Purchases?
     var tasksOrder: TasksOrder?
-    var challenges: RealmListWrapper<ChallengeMembership>?
-    var abTests: RealmListWrapper<ABTest>?
+    var challenges: NativeRealmList<ChallengeMembership>?
+    var abTests: NativeRealmList<ABTest>?
     var lastCron: NativeDate?
     var needsCron: Boolean
     var loginIncentives: Int

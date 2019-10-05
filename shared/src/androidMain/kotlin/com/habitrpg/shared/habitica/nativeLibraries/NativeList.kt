@@ -3,4 +3,7 @@ package com.habitrpg.shared.habitica.nativeLibraries
 import io.realm.RealmList
 
 
-actual class RealmListWrapper<E>: MutableList<E> by RealmList<E>()
+//class RealmListWrapper<E>: MutableList<E?>, RealmList<E>()
+
+actual typealias NativeAbstractList<E> = java.util.AbstractList<E>
+actual typealias NativeRealmList<E> = RealmList<E>

@@ -1,7 +1,7 @@
 package com.habitrpg.shared.habitica.models.invitations
 
 import com.habitrpg.shared.habitica.models.user.User
-import com.habitrpg.shared.habitica.nativeLibraries.RealmListWrapper
+import com.habitrpg.shared.habitica.nativeLibraries.NativeRealmList
 
 expect open class Invitations {
 
@@ -10,8 +10,8 @@ expect open class Invitations {
     internal var user: User?
 
     var party: PartyInvite?
-    var parties: RealmListWrapper<PartyInvite>?
-    var guilds: RealmListWrapper<GuildInvite>?
+    var parties: NativeRealmList<PartyInvite>?
+    var guilds: NativeRealmList<GuildInvite>?
 
     fun removeInvitation(groupID: String)
 }

@@ -1,6 +1,6 @@
 package com.habitrpg.shared.habitica.nativeLibraries
 
 
-// TODO: Kotlin MPP bug https://youtrack.jetbrains.com/issue/KT-20641
-
-expect class RealmListWrapper<E> : MutableList<E>
+// TODO: Kotlin Multiplatform Compiler bug https://youtrack.jetbrains.com/issue/KT-20641
+expect abstract class NativeAbstractList<E>: MutableList<E>
+expect class NativeRealmList<E>: NativeAbstractList<E>
