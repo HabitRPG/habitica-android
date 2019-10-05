@@ -118,6 +118,14 @@
                                 android:gravity="center"
                                 android:textSize="14sp" />
 
+                            <ImageView
+                                android:id="@+id/buffImageView"
+                                android:layout_width="15dp"
+                                android:layout_height="15dp"
+                                android:layout_gravity="center"
+                                android:layout_marginStart="8dp"
+                                tools:srcCompat="@tools:sample/avatars" />
+
                             <View
                                 android:layout_width="0dp"
                                 android:layout_height="0dp"
