@@ -11,7 +11,7 @@ import com.habitrpg.shared.habitica.models.social.ChallengeMembership
 import com.habitrpg.shared.habitica.models.social.UserParty
 import com.habitrpg.shared.habitica.models.tasks.TasksOrder
 import com.habitrpg.shared.habitica.models.tasks.TaskList
-import com.habitrpg.shared.habitica.nativeLibraries.RealmListWrapper
+import io.realm.RealmList
 
 import io.realm.RealmObject
 import io.realm.annotations.Ignore
@@ -137,8 +137,8 @@ actual open class User : RealmObject(), Avatar, VersionedObject {
                 invitations.userId = this.id
             }
         }
-    actual var tags = RealmListWrapper<Tag>()
-    actual var questAchievements = RealmListWrapper<QuestAchievement>()
+    actual var tags = RealmList<Tag>()
+    actual var questAchievements = RealmList<QuestAchievement>()
         set(value) {
             field = value
             field.forEach { it.userID = id }
@@ -158,9 +158,9 @@ actual open class User : RealmObject(), Avatar, VersionedObject {
     @Ignore
     actual var tasksOrder: TasksOrder? = null
 
-    actual var challenges: RealmListWrapper<ChallengeMembership>? = null
+    actual var challenges: RealmList<ChallengeMembership>? = null
 
-    actual var abTests: RealmListWrapper<ABTest>? = null
+    actual var abTests: RealmList<ABTest>? = null
 
     actual var lastCron: Date? = null
     actual var needsCron: Boolean = false

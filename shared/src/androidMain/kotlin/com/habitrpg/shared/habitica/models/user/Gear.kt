@@ -1,7 +1,7 @@
 package com.habitrpg.shared.habitica.models.user
 
 import com.habitrpg.shared.habitica.models.inventory.Equipment
-import com.habitrpg.shared.habitica.nativeLibraries.RealmListWrapper
+import io.realm.RealmList
 
 
 import io.realm.RealmObject
@@ -21,7 +21,7 @@ actual open class Gear : RealmObject() {
             }
         }
 
-    actual var owned: RealmListWrapper<Equipment>? = null
+    actual var owned: RealmList<Equipment>? = null
     internal actual var items: Items? = null
     actual var equipped: Outfit? = null
     actual var costume: Outfit? = null

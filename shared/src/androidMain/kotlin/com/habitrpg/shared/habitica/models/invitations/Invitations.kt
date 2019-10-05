@@ -1,7 +1,7 @@
 package com.habitrpg.shared.habitica.models.invitations
 
 import com.habitrpg.shared.habitica.models.user.User
-import com.habitrpg.shared.habitica.nativeLibraries.RealmListWrapper
+import io.realm.RealmList
 
 
 import io.realm.RealmObject
@@ -15,8 +15,8 @@ actual open class Invitations : RealmObject() {
     internal actual var user: User? = null
 
     actual var party: PartyInvite? = null
-    actual var parties: RealmListWrapper<PartyInvite>? = null
-    actual var guilds: RealmListWrapper<GuildInvite>? = null
+    actual var parties: RealmList<PartyInvite>? = null
+    actual var guilds: RealmList<GuildInvite>? = null
 
     actual fun removeInvitation(groupID: String) {
         if (party?.id == groupID) {

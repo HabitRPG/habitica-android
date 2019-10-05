@@ -1,7 +1,7 @@
 package com.habitrpg.shared.habitica.models.user
 
 
-import com.habitrpg.shared.habitica.nativeLibraries.RealmListWrapper
+import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 import java.util.*
@@ -53,12 +53,12 @@ actual open class Items : RealmObject {
                 }
             }
         }
-    actual var eggs: RealmListWrapper<OwnedItem>? = null
-    actual var food: RealmListWrapper<OwnedItem>? = null
-    actual var hatchingPotions: RealmListWrapper<OwnedItem>? = null
-    actual var quests: RealmListWrapper<OwnedItem>? = null
-    actual var pets: RealmListWrapper<OwnedPet>? = null
-    actual var mounts: RealmListWrapper<OwnedMount>? = null
+    actual var eggs: RealmList<OwnedItem>? = null
+    actual var food: RealmList<OwnedItem>? = null
+    actual var hatchingPotions: RealmList<OwnedItem>? = null
+    actual var quests: RealmList<OwnedItem>? = null
+    actual var pets: RealmList<OwnedPet>? = null
+    actual var mounts: RealmList<OwnedMount>? = null
     actual var currentMount: String? = null
     actual var currentPet: String? = null
     actual var lastDrop_count: Int = 0
