@@ -11895,8 +11895,8 @@ public class HabiticaIcons {
         Paint paint = CacheForBuffIcon.paint;
         
         // Local Colors
-        int fillColor18 = Color.argb(255, 154, 98, 255);
-        int fillColor85 = Color.argb(255, 237, 236, 238);
+        int fillColor18 = Color.argb(255, 185, 172, 252);
+        int fillColor85 = Color.argb(255, 37, 29, 60);
         
         // Resize to Target Frame
         canvas.save();
