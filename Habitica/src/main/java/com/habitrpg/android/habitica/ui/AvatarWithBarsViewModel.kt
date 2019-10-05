@@ -6,6 +6,7 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.UserRepository
@@ -31,7 +32,7 @@ class AvatarWithBarsViewModel(private val context: Context, view: View, userRepo
     private val avatarView: AvatarView by bindView(view, R.id.avatarView)
     private val lvlText: TextView by bindView(view, R.id.lvl_tv)
     private val currencyView: CurrencyViews by bindView(view, R.id.currencyView)
-
+    private val buffImageView: ImageView by bindView(view, R.id.buffImageView)
     private var userObject: Avatar? = null
 
     private var cachedMaxHealth: Int = 0
@@ -44,7 +45,7 @@ class AvatarWithBarsViewModel(private val context: Context, view: View, userRepo
         hpBar.setIcon(HabiticaIconsHelper.imageOfHeartLightBg())
         xpBar.setIcon(HabiticaIconsHelper.imageOfExperience())
         mpBar.setIcon(HabiticaIconsHelper.imageOfMagic())
-
+        buffImageView.setImageBitmap(HabiticaIconsHelper.imageOfBuffIcon())
         setHpBarData(0f, 50)
         setXpBarData(0f, 1)
         setMpBarData(0f, 1)
@@ -89,6 +90,10 @@ class AvatarWithBarsViewModel(private val context: Context, view: View, userRepo
         setHpBarData(stats.hp?.toFloat() ?: 0.toFloat(), stats.maxHealth ?: 0)
         setXpBarData(stats.exp?.toFloat() ?: 0.toFloat(), stats.toNextLevel ?: 0)
         setMpBarData(stats.mp?.toFloat() ?: 0.toFloat(), stats.maxMP ?: 0)
+
+        if (!stats.isBuffed) {
+            buffImageView.visibility = View.GONE
+        }
 
         currencyView.gold = stats.gp ?: 0.0
         if (user is User) {
