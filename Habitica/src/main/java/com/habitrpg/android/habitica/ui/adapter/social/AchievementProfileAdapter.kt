@@ -85,7 +85,7 @@ class AchievementProfileAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
             this.achievement = item
             titleView.text = item.title
 
-            if (item.optionalCount == null) {
+            if (item.optionalCount == null || item.optionalCount == 0) {
                 countText.visibility = View.GONE
             } else {
                 countText.visibility = View.VISIBLE
