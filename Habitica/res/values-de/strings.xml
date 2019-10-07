@@ -228,7 +228,7 @@
     <string name="hatch_with_potion">Mit Elixier ausbrüten</string>
     <string name="hatch_egg">Mit Ei ausbrüten</string>
     <string name="invite_party">Party einladen</string>
-    <string name="dialog_feeding">Füttere %1$s %2$s mit:</string>
+    <string name="dialog_feeding">Füttere %s mit:</string>
     <string name="use_animal">Nutzen</string>
     <string name="feed">Füttern</string>
     <string name="hatch_with">Haustier mit %s ausbrüten</string>

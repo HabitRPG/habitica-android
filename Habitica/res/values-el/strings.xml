@@ -251,7 +251,7 @@
   <string name="feed_to_pet">Τάισε σε κατοικίδιο</string>
   <string name="hatch_egg">Εκκόλαψη με αυγό</string>
   <string name="invite_party">Πρόσκληση συντροφιάς</string>
-  <string name="dialog_feeding">Τάισε %1$s %2$s με:</string>
+  <string name="dialog_feeding">Τάισε %s με:</string>
   <string name="use_animal">Χρήση</string>
   <string name="feed">Τάισε</string>
   <string name="hatch_with">Εκκόλαψη κατοικίδιου με %s</string>

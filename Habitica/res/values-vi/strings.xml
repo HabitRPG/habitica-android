@@ -230,7 +230,7 @@
   <string name="hatch_with_potion">Ấp bằng Thuốc</string>
   <string name="feed_to_pet">Cho thú cưng ăn</string>
   <string name="hatch_egg">Ấp bằng trứng</string>
-  <string name="dialog_feeding">Cho %2$s %1$s ăn:</string>
+  <string name="dialog_feeding">Cho %s ăn:</string>
   <string name="feed">Cho ăn</string>
   <string name="hatch_with">Ấp bằng %s</string>
   <string name="hatched_pet_title">Bạn đã ấp một con %2$s %1$s!</string>

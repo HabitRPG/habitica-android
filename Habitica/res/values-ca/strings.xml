@@ -253,7 +253,7 @@
   <string name="feed_to_pet">Alimenta la mascota</string>
   <string name="hatch_egg">Eclosione-ho amb un ou</string>
   <string name="invite_party">Invitar grup</string>
-  <string name="dialog_feeding">Alimenta el %1$s %2$s amb:</string>
+  <string name="dialog_feeding">Alimenta el %s amb:</string>
   <string name="use_animal">Utilitzar</string>
   <string name="feed">Alimenta</string>
   <string name="hatch_with">Fer sortir mascota de l\'ou amb %s</string>

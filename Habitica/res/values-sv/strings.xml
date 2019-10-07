@@ -286,7 +286,7 @@
   <string name="feed_to_pet">Mata husdjur med</string>
   <string name="hatch_egg">Kläck med ägg</string>
   <string name="invite_party">Bjud in sällskap</string>
-  <string name="dialog_feeding">Mata %1$s %2$s med:</string>
+  <string name="dialog_feeding">Mata %s med:</string>
   <string name="use_animal">Använd</string>
   <string name="feed">Mata</string>
   <string name="hatch_with">Kläck husdjur med %s</string>

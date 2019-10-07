@@ -286,7 +286,7 @@
   <string name="feed_to_pet">Beri makan peliharaan</string>
   <string name="hatch_egg">Tetaskan dengan telur</string>
   <string name="invite_party">Undang party</string>
-  <string name="dialog_feeding">Beri makan %2$s %1$s dengan:</string>
+  <string name="dialog_feeding">Beri makan %s dengan:</string>
   <string name="use_animal">Gunakan</string>
   <string name="feed">Beri makan</string>
   <string name="hatch_with">Tetaskan dengan %s</string>

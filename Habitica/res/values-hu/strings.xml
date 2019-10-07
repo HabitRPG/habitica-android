@@ -238,7 +238,7 @@
   <string name="sell">Eladás (%d arany)</string>
   <string name="hatch_with_potion">Kikeltetés főzettel</string>
   <string name="hatch_egg">Kikeltetés tojással</string>
-  <string name="dialog_feeding">%1$s %2$s megetetése:</string>
+  <string name="dialog_feeding">%s megetetése:</string>
   <string name="use_animal">Felhasználás</string>
   <string name="feed">Etetés</string>
   <string name="close">Bezárás</string>

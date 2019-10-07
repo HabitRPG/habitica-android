@@ -291,7 +291,7 @@
   <string name="feed_to_pet">Nakrmit mazlíčka</string>
   <string name="hatch_egg">Vylíhnout s vejcem</string>
   <string name="invite_party">Pozvat skupinu</string>
-  <string name="dialog_feeding">Nakrmit %1$s %2$s:</string>
+  <string name="dialog_feeding">Nakrmit %s:</string>
   <string name="use_animal">Použít</string>
   <string name="feed">Nakrmit</string>
   <string name="hatch_with">Vylíhnou vejce s %s</string>

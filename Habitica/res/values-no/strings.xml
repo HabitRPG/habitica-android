@@ -284,7 +284,7 @@
   <string name="feed_to_pet">Mat til kjæledyr</string>
   <string name="hatch_egg">Klekk med egg</string>
   <string name="invite_party">Inviter klan</string>
-  <string name="dialog_feeding">Mat %1$s %2$s med:</string>
+  <string name="dialog_feeding">Mat %s med:</string>
   <string name="use_animal">Bruk</string>
   <string name="feed">Mat</string>
   <string name="hatch_with">Klekk kjæledyr med %s</string>

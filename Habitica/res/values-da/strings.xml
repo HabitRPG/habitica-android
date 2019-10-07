@@ -253,7 +253,7 @@
   <string name="hatch_with_potion">Udrug med eliksir</string>
   <string name="hatch_egg">Udrug med æg</string>
   <string name="invite_party">Inviter gruppe</string>
-  <string name="dialog_feeding">Foder %1$s %2$s med:</string>
+  <string name="dialog_feeding">Foder %s med:</string>
   <string name="use_animal">Brug</string>
   <string name="feed">Foder</string>
   <string name="hatch_with">Udrug kæledyr med %s</string>

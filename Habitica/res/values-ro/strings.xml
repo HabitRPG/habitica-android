@@ -286,7 +286,7 @@
   <string name="feed_to_pet">Hrănește animalul de companie</string>
   <string name="hatch_egg">Eclozează cu un ou</string>
   <string name="invite_party">Invită ceata</string>
-  <string name="dialog_feeding">Hrănește %1$s %2$s cu:</string>
+  <string name="dialog_feeding">Hrănește %s cu:</string>
   <string name="use_animal">Utilizează</string>
   <string name="feed">Hrănește</string>
   <string name="hatch_with">Eclozează animalul de companie cu %s</string>
