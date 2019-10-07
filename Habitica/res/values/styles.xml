@@ -655,4 +655,8 @@
 
     <color name="taskform_gray">#99edecee</color>
 
+    <style name="PreferenceThemeOverlay.v14" tools:override="true">
+        <item name="android:background">@color/white</item>
+    </style>
+
 </resources>
