@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.inflate
-import com.habitrpg.shared.habitica.data.models.Achievement
+import com.habitrpg.shared.habitica.models.Achievement
 import com.habitrpg.shared.habitica.models.QuestAchievement
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.helpers.bindOptionalView

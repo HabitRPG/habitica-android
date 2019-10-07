@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.models
 
-import com.habitrpg.shared.habitica.data.models.Achievement
+import com.habitrpg.shared.habitica.models.Achievement
 import java.util.*
 
 class AchievementGroup {

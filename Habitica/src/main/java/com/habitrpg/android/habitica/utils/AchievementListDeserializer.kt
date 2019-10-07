@@ -4,7 +4,7 @@ import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
 import com.habitrpg.android.habitica.extensions.getAsString
-import com.habitrpg.shared.habitica.data.models.Achievement
+import com.habitrpg.shared.habitica.models.Achievement
 import java.lang.reflect.Type
 
 class AchievementListDeserializer: JsonDeserializer<List<Achievement>> {

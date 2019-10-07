@@ -13,7 +13,7 @@ import com.facebook.imagepipeline.image.ImageInfo
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.addOkButton
 import com.habitrpg.android.habitica.extensions.inflate
-import com.habitrpg.shared.habitica.data.models.Achievement
+import com.habitrpg.shared.habitica.models.Achievement
 import com.habitrpg.android.habitica.ui.AvatarView
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.helpers.bindView
