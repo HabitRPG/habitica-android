@@ -213,9 +213,9 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
         val navigationController = findNavController(R.id.nav_host_fragment)
         navigationController.addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.label.isNullOrEmpty() && user?.isValid == true) {
+            if (destination.label.isNullOrEmpty() ) {
                 toolbarTitleTextView.text = user?.profile?.name
-            } else if (user?.profile != null) {
+            } else if (user?.isValid == true && user?.profile != null) {
                 toolbarTitleTextView.text = destination.label
             }
             drawerFragment?.setSelection(destination.id, false)
