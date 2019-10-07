@@ -20,7 +20,7 @@ import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
 import com.habitrpg.android.habitica.ui.activities.GemPurchaseActivity
-import com.habitrpg.android.habitica.ui.activities.GiftIAPActivity
+import com.habitrpg.android.habitica.ui.activities.GiftSubscriptionActivity
 import com.habitrpg.android.habitica.ui.helpers.bindOptionalView
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
@@ -247,7 +247,7 @@ class SubscriptionFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
             alert.setTitle(getString(R.string.gift_title))
             alert.addButton(getString(R.string.action_continue), true) { _, _ ->
                         val usernameEditText = chooseRecipientDialogView?.findViewById<View>(R.id.uuidEditText) as? EditText
-                        val intent = Intent(thisActivity, GiftIAPActivity::class.java).apply {
+                        val intent = Intent(thisActivity, GiftSubscriptionActivity::class.java).apply {
                             putExtra("username", usernameEditText?.text.toString())
                         }
                         startActivity(intent)

@@ -149,6 +149,32 @@
             app:argType="boolean"
             android:defaultValue="false" />
     </activity>
+    <activity
+        android:id="@+id/giftGemsActivity"
+        android:name="com.habitrpg.android.habitica.ui.activities.GiftGemsActivity"
+        android:label="@string/gift_gems" >
+        <argument
+            android:name="userID"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="username"
+            app:argType="string"
+            app:nullable="true" />
+    </activity>
+    <activity
+        android:id="@+id/giftSubscriptionActivity"
+        android:name="com.habitrpg.android.habitica.ui.activities.GiftSubscriptionActivity"
+        android:label="@string/gift_subscription" >
+        <argument
+            android:name="userID"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="username"
+            app:argType="string"
+            app:nullable="true" />
+    </activity>
     <fragment
         android:id="@+id/newsFragment"
         android:name="com.habitrpg.android.habitica.ui.fragments.NewsFragment"

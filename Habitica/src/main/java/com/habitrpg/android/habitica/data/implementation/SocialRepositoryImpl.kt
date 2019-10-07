@@ -16,6 +16,8 @@ import io.reactivex.Single
 import io.reactivex.functions.BiFunction
 import io.reactivex.functions.Consumer
 import io.realm.RealmResults
+import java.util.*
+import kotlin.collections.HashMap
 
 class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: ApiClient, userID: String) : BaseRepositoryImpl<SocialLocalRepository>(localRepository, apiClient, userID), SocialRepository {
     override fun transferGroupOwnership(groupID: String, userID: String): Flowable<Group> {
@@ -247,13 +249,17 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
     override fun getMember(userId: String?): Flowable<Member> {
         return if (userId == null) {
             Flowable.empty()
-        } else apiClient.getMember(userId)
+        } else {
+            try {
+                apiClient.getMember(UUID.fromString(userId).toString())
+            } catch(_: IllegalArgumentException) {
+                apiClient.getMemberWithUsername(userId)
+            }
+        }
     }
 
     override fun getMemberWithUsername(username: String?): Flowable<Member> {
-        return if (username == null) {
-            Flowable.empty()
-        } else apiClient.getMemberWithUsername(username)
+        return getMember(username)
     }
 
     override fun findUsernames(username: String, context: String?, id: String?): Flowable<List<FindUsernameResult>> {

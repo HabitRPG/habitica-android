@@ -99,8 +99,12 @@
             android:label="@string/app_name">
         </activity>
         <activity
-            android:name=".ui.activities.GiftIAPActivity"
+            android:name=".ui.activities.GiftSubscriptionActivity"
             android:label="@string/gift_subscription">
+        </activity>
+        <activity
+            android:name=".ui.activities.GiftGemsActivity"
+            android:label="@string/gift_gems">
         </activity>
         <activity
             android:name=".ui.activities.GuidelinesActivity"

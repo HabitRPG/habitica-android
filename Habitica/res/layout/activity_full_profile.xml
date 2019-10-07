@@ -138,13 +138,12 @@
                         </LinearLayout>
                     </LinearLayout>
 
-
                     <TextView
                         android:id="@+id/profile_blurb"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textIsSelectable="true"
-                        android:text="Blurb" />
+                        tools:text="Blurb" />
 
                     <com.facebook.drawee.view.SimpleDraweeView
                         android:id="@+id/profile_image"
@@ -152,7 +151,8 @@
                         android:layout_height="match_parent"
                         android:layout_margin="5dp"
                         android:minHeight="200dp"
-                        fresco:actualImageScaleType="fitCenter" />
+                        fresco:actualImageScaleType="fitCenter"
+                        android:visibility="gone"/>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -204,6 +204,47 @@
                             android:layout_height="wrap_content"
                             tools:text="100"/>
                     </LinearLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                style="@style/CardView.Default"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="?android:attr/buttonBarStyle">
+                    <Button
+                        android:id="@+id/send_message_button"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="@string/profile_send_message"
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:textAllCaps="false"
+                        android:textSize="13sp"
+                        android:drawableTop="@drawable/icon_messages"/>
+                    <Button
+                        android:id="@+id/gift_gems_button"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="@string/profile_gift_gems"
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:textAllCaps="false"
+                        android:textSize="13sp"
+                        android:drawableTop="@drawable/icon_gift_gems"/>
+                    <Button
+                        android:id="@+id/gift_subscription_button"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="@string/profile_gift_subscription"
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:textAllCaps="false"
+                        android:textSize="13sp"
+                        android:drawableTop="@drawable/icon_gift_subscription"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 

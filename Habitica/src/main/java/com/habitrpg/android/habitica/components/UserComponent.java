@@ -18,7 +18,8 @@ import com.habitrpg.android.habitica.ui.activities.ClassSelectionActivity;
 import com.habitrpg.android.habitica.ui.activities.FixCharacterValuesActivity;
 import com.habitrpg.android.habitica.ui.activities.FullProfileActivity;
 import com.habitrpg.android.habitica.ui.activities.GemPurchaseActivity;
-import com.habitrpg.android.habitica.ui.activities.GiftIAPActivity;
+import com.habitrpg.android.habitica.ui.activities.GiftGemsActivity;
+import com.habitrpg.android.habitica.ui.activities.GiftSubscriptionActivity;
 import com.habitrpg.android.habitica.ui.activities.GroupFormActivity;
 import com.habitrpg.android.habitica.ui.activities.GroupInviteActivity;
 import com.habitrpg.android.habitica.ui.activities.HabitButtonWidgetActivity;
@@ -302,7 +303,7 @@ public interface UserComponent {
 
     void inject(@NotNull ChatFragment chatFragment);
 
-    void inject(@NotNull GiftIAPActivity giftIAPActivity);
+    void inject(@NotNull GiftSubscriptionActivity giftSubscriptionActivity);
 
     void inject(@NotNull AboutFragment aboutFragment);
 
@@ -319,4 +320,6 @@ public interface UserComponent {
     void inject(@NotNull InboxViewModel inboxViewModel);
 
     void inject(@NotNull InsufficientGemsDialog insufficientGemsDialog);
+
+    void inject(@NotNull GiftGemsActivity giftGemsActivity);
 }

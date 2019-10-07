@@ -3,11 +3,15 @@ package com.habitrpg.android.habitica.ui.activities
 import android.content.Context
 import android.graphics.Typeface
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import com.facebook.drawee.backends.pipeline.Fresco
 import com.facebook.drawee.controller.BaseControllerListener
 import com.facebook.drawee.view.SimpleDraweeView
@@ -77,6 +81,9 @@ class FullProfileActivity : BaseActivity() {
     private val joinedView: TextView by bindView(R.id.joined_view)
     private val lastLoginView: TextView by bindView(R.id.last_login_view)
     private val totalCheckinsView: TextView by bindView(R.id.total_checkins_view)
+    private val sendMessageButton: Button by bindView(R.id.send_message_button)
+    private val giftGemsButton: Button by bindView(R.id.gift_gems_button)
+    private val giftSubscriptionButton: Button by bindView(R.id.gift_subscription_button)
 
     private var userID = ""
     private var userName: String? = null
@@ -110,6 +117,10 @@ class FullProfileActivity : BaseActivity() {
         attributesCardView.setOnClickListener { toggleAttributeDetails() }
 
         avatarWithBars = AvatarWithBarsViewModel(this, avatarWithStatsView)
+
+        sendMessageButton.setOnClickListener { showSendMessageToUserDialog() }
+        giftGemsButton.setOnClickListener { MainNavigationController.navigate(R.id.giftGemsActivity, bundleOf(Pair("userID", userID), Pair("username", null))) }
+        giftSubscriptionButton.setOnClickListener { MainNavigationController.navigate(R.id.giftSubscriptionActivity, bundleOf(Pair("userID", userID), Pair("username", null))) }
     }
 
     override fun onDestroy() {
@@ -119,10 +130,6 @@ class FullProfileActivity : BaseActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.private_message -> {
-                showSendMessageToUserDialog()
-                true
-            }
             android.R.id.home -> {
                 // app icon in action bar clicked; goto parent activity.
                 this.finish()
@@ -450,12 +457,6 @@ class FullProfileActivity : BaseActivity() {
 
     override fun injectActivity(component: UserComponent?) {
         component?.inject(this)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_full_profile, menu)
-        return true
     }
 
     companion object {

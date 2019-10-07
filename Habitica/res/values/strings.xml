@@ -703,17 +703,19 @@
     <string name="equipment_per">PER:</string>
     <string name="visit_website">visit website</string>
     <string name="subscribe_gift_description">Want to give the benefits of a subscription to someone else?</string>
-    <string name="gift_subscription">Gift a Subscription</string>
+    <string name="gift_subscription">Gift Subscription</string>
     <string name="gift_one_get_one_description">Gift a sub and get a sub free event going on now!</string>
     <string name="gift_title">Who would you like to gift to?</string>
     <string name="gift_one_get_one">Gift one, Get one!</string>
     <string name="gift_one_get_one_detailed_description">While this promotion is active, you’ll receive a matching subscription automatically after sending your gift.</string>
     <string name="gift_subscription_subtitle">Choose the subscription you’d like to gift below! This purchase won’t automatically renew.</string>
+    <string name="gift_gems_subtitle">Choose the gem packet you’d like to gift below!</string>
     <string name="send_gift">Send Gift</string>
     <string name="server">Server</string>
     <string name="gift_confirmation_title">Your gift was sent!</string>
-    <string name="gift_confirmation_text_g1g1">You sent %s a %s-month Habitica subscription and the same subscription was applied to your account for our Gift One Get One promotion!</string>
-    <string name="gift_confirmation_text">You sent %s a %s-month Habitica subscription.</string>
+    <string name="gift_confirmation_text_sub_g1g1">You sent %s a %s-month Habitica subscription and the same subscription was applied to your account for our Gift One Get One promotion!</string>
+    <string name="gift_confirmation_text_sub">You sent %s a %s-month Habitica subscription.</string>
+    <string name="gift_confirmation_text_gems">You sent %s %s gems.</string>
     <string name="discover">Discover</string>
     <string name="damage_paused">Damage paused</string>
     <string name="preference_push_important_announcements">Important Announcements</string>
@@ -848,4 +850,8 @@
     <string name="promo_subscription_buy_gems_prompt">Need Gems?</string>
     <string name="promo_subscription_buy_gems_description">Become a Subscriber to buy Gems with gold, get monthly mystery items, increased drop caps and more!</string>
     <string name="see_other_options">See other Options</string>
+    <string name="gift_gems">Gift Gems</string>
+    <string name="profile_send_message">Send\nMessage</string>
+    <string name="profile_gift_gems">Gift\nGems</string>
+    <string name="profile_gift_subscription">Gift\nSubscription</string>
 </resources>

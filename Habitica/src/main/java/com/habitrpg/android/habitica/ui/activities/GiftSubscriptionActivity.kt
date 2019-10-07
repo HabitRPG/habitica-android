@@ -9,6 +9,8 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.isVisible
+import androidx.navigation.navArgs
+import com.habitrpg.android.habitica.HabiticaPurchaseVerifier
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
@@ -32,7 +34,7 @@ import org.solovyev.android.checkout.Sku
 import javax.inject.Inject
 
 
-class GiftIAPActivity: BaseActivity() {
+class GiftSubscriptionActivity : BaseActivity() {
 
     @Inject
     lateinit var crashlyticsProxy: CrashlyticsProxy
@@ -65,7 +67,7 @@ class GiftIAPActivity: BaseActivity() {
     private var skus: List<Sku> = emptyList()
 
     override fun getLayoutResId(): Int {
-        return R.layout.activity_gift_iap
+        return R.layout.activity_gift_subscription
     }
 
     override fun injectActivity(component: UserComponent?) {
@@ -81,7 +83,8 @@ class GiftIAPActivity: BaseActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
-        giftedUsername = intent.getStringExtra("username")
+        giftedUserID = intent.getStringExtra("userID") ?: navArgs<GiftSubscriptionActivityArgs>().value.userID
+        giftedUsername = intent.getStringExtra("username") ?: navArgs<GiftSubscriptionActivityArgs>().value.username
 
         subscriptionButton?.setOnClickListener {
             selectedSubscriptionSku?.let { sku -> purchaseSubscription(sku) }
@@ -89,12 +92,13 @@ class GiftIAPActivity: BaseActivity() {
 
         giftOneGetOneContainer?.isVisible = appConfigManager.enableGiftOneGetOne()
 
-        compositeSubscription.add(socialRepository.getMemberWithUsername(giftedUsername).subscribe(Consumer {
+        compositeSubscription.add(socialRepository.getMember(giftedUsername ?: giftedUserID).subscribe(Consumer {
             avatarView.setAvatar(it)
             displayNameTextView.username = it.profile?.name
             displayNameTextView.tier = it.contributor?.level ?: 0
             usernameTextView.text = "@${it.username}"
             giftedUserID = it.id
+            giftedUsername = it.username
         }, RxErrorHandler.handleEmptyError()))
     }
 
@@ -179,7 +183,8 @@ class GiftIAPActivity: BaseActivity() {
         if (giftedUserID?.isNotEmpty() != true) {
             return
         }
-        purchaseHandler?.purchaseGiftedSubscription(sku, giftedUserID)
+        HabiticaPurchaseVerifier.pendingGifts[sku.id.code] = giftedUserID
+        purchaseHandler?.purchaseNoRenewSubscription(sku)
     }
 
 
@@ -203,9 +208,9 @@ class GiftIAPActivity: BaseActivity() {
 
     private fun displayConfirmationDialog() {
         val message = getString(if (appConfigManager.enableGiftOneGetOne()){
-            R.string.gift_confirmation_text_g1g1
+            R.string.gift_confirmation_text_sub_g1g1
         } else {
-            R.string.gift_confirmation_text
+            R.string.gift_confirmation_text_sub
         }, giftedUsername, selectedDurationString())
         val alert = HabiticaAlertDialog(this)
         alert.setTitle(R.string.gift_confirmation_title)

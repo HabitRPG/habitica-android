@@ -162,9 +162,8 @@ class PurchaseHandler(activity: Activity, val crashlyticsProxy: CrashlyticsProxy
         }
     }
 
-    fun purchaseGiftedSubscription(sku: Sku, giftedUserID: String?) {
+    fun purchaseNoRenewSubscription(sku: Sku) {
         checkout?.let {
-            HabiticaPurchaseVerifier.pendingGifts[sku.id.code] = giftedUserID
             billingRequests?.purchase(ProductTypes.IN_APP, sku.id.code, null, it.createOneShotPurchaseFlow(object : RequestListener<Purchase> {
                 override fun onSuccess(result: Purchase) {
                     billingRequests?.consume(result.token, object : RequestListener<Any> {
