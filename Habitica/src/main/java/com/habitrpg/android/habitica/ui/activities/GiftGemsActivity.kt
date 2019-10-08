@@ -81,17 +81,18 @@ class GiftGemsActivity : BaseActivity() {
             giftedUsername = it.username
         }, RxErrorHandler.handleEmptyError()))
 
-        purchaseHandler?.getAllGemSKUs { skus ->
-            for (sku in skus) {
-                updateButtonLabel(sku.id.code, sku.price)
-            }
-        }
     }
 
     override fun onStart() {
         super.onStart()
         purchaseHandler = PurchaseHandler(this, crashlyticsProxy)
         purchaseHandler?.startListening()
+
+        purchaseHandler?.getAllGemSKUs { skus ->
+            for (sku in skus) {
+                updateButtonLabel(sku.id.code, sku.price)
+            }
+        }
     }
 
     override fun onResume() {

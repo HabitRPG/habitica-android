@@ -3,7 +3,6 @@ package com.habitrpg.android.habitica.helpers
 import android.app.Activity
 import android.content.Intent
 import com.habitrpg.android.habitica.HabiticaBaseApplication
-import com.habitrpg.android.habitica.HabiticaPurchaseVerifier
 import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
 import org.solovyev.android.checkout.*
 import java.util.*
@@ -62,8 +61,8 @@ class PurchaseHandler(activity: Activity, val crashlyticsProxy: CrashlyticsProxy
         getProduct(ProductTypes.SUBSCRIPTION, PurchaseTypes.allSubscriptionTypes, onSuccess)
     }
 
-    fun getAllGiftSubscriptionSKUs(onSuccess: ((List<Sku>) -> Unit)) {
-        getSKUs(ProductTypes.IN_APP, PurchaseTypes.allSubscriptionNoRenewTypes, onSuccess)
+    fun getAllGiftSubscriptionProducts(onSuccess: ((Inventory.Product) -> Unit)) {
+        getProduct(ProductTypes.IN_APP, PurchaseTypes.allSubscriptionNoRenewTypes, onSuccess)
     }
 
     fun getInAppPurchaseSKU(identifier: String, onSuccess: ((Sku) -> Unit)) {

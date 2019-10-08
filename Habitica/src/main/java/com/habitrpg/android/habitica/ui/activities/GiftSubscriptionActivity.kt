@@ -106,6 +106,12 @@ class GiftSubscriptionActivity : BaseActivity() {
         super.onStart()
         purchaseHandler = PurchaseHandler(this, crashlyticsProxy)
         purchaseHandler?.startListening()
+
+        purchaseHandler?.getAllGiftSubscriptionProducts {
+            for (sku in it.skus) {
+                updateButtonLabel(sku, sku.price, it)
+            }
+        }
     }
 
     override fun onResume() {
