@@ -360,7 +360,8 @@ class AvatarView : View {
 
         if (offset != null) {
             when (layerName) {
-                "head_special_0" -> offset = PointF(offset.x, offset.y+3)
+                "head_special_0" -> offset = PointF(offset.x-3, offset.y-18)
+                "weapon_special_0" -> offset = PointF(offset.x-3, offset.y-18)
                 "head_special_1" -> offset = PointF(offset.x, offset.y+3)
             }
 
@@ -556,6 +557,10 @@ class AvatarView : View {
             val tempNameMap = HashMap<String, String>()
             tempNameMap["head_special_1"] = "ContributorOnly-Equip-CrystalHelmet"
             tempNameMap["armor_special_1"] = "ContributorOnly-Equip-CrystalArmor"
+            tempNameMap["head_special_0"] = "BackerOnly-Equip-ShadeHelmet"
+            tempNameMap["armor_special_0"] = "BackerOnly-Equip-ShadeArmor"
+            tempNameMap["shield_special_0"] = "BackerOnly-Shield-TormentedSkull"
+            tempNameMap["weapon_special_0"] = "BackerOnly-Weapon-DarkSoulsBlade"
             tempNameMap["weapon_special_critical"] = "weapon_special_critical"
             tempNameMap["Pet-Wolf-Cerberus"] = "Pet-Wolf-Cerberus"
             FILENAME_MAP = Collections.unmodifiableMap(tempNameMap)
