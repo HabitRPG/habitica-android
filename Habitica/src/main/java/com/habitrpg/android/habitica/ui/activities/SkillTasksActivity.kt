@@ -50,7 +50,7 @@ class SkillTasksActivity : BaseActivity() {
     private fun loadTaskLists() {
         val fragmentManager = supportFragmentManager
 
-        viewPager.adapter = object : FragmentPagerAdapter(fragmentManager) {
+        viewPager.adapter = object : FragmentPagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
             override fun getItem(position: Int): Fragment {
                 val fragment = SkillTasksRecyclerViewFragment()

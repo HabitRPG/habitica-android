@@ -22,8 +22,8 @@ class SkillTasksRecyclerViewAdapter(data: OrderedRealmCollection<Task>?, autoUpd
 
     override fun getItemId(position: Int): Long {
         if (data != null) {
-            val task = data!![position]
-            if (task.id != null && task.id!!.length == 36) {
+            val task = data?.get(position)
+            if (task?.id?.length == 36) {
                 return UUID.fromString(task.id).mostSignificantBits
             }
         }

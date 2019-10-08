@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
@@ -15,8 +16,8 @@ import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.adapter.SkillTasksRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
-import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.helpers.bindView
+import com.habitrpg.android.habitica.ui.helpers.resetViews
 import io.reactivex.Flowable
 import io.reactivex.functions.Consumer
 import javax.inject.Inject
@@ -49,15 +50,25 @@ class SkillTasksRecyclerViewFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        resetViews()
+
         var tasks = taskRepository.getTasks(taskType ?: "", userId)
         if (taskType == Task.TYPE_TODO) {
             tasks = tasks.map { it.where().equalTo("completed", false).findAll() }
         }
-        compositeSubscription.add(tasks.firstElement().subscribe(Consumer { adapter.updateData(it) }, RxErrorHandler.handleEmptyError()))
-        recyclerView?.adapter = adapter
 
         val layoutManager = LinearLayoutManager(context)
         recyclerView?.layoutManager = layoutManager
-        recyclerView?.itemAnimator = SafeDefaultItemAnimator()
+
+        adapter = SkillTasksRecyclerViewAdapter(null, true)
+        recyclerView?.adapter = adapter
+
+        context?.let {
+            recyclerView?.setBackgroundColor(ContextCompat.getColor(it, R.color.blue_5))
+        }
+
+        compositeSubscription.add(tasks.firstElement().subscribe(Consumer {
+            adapter.updateData(it)
+        }, RxErrorHandler.handleEmptyError()))
     }
 }
