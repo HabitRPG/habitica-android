@@ -33,15 +33,12 @@ class StableRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder =
-            when (viewType) {
-                0 -> {
-                    val view = LayoutInflater.from(parent.context).inflate(R.layout.customization_section_header, parent, false)
-                    SectionViewHolder(view)
-                }
-                else -> {
-                    val view = LayoutInflater.from(parent.context).inflate(R.layout.animal_overview_item, parent, false)
-                    StableViewHolder(view)
-                }
+            if (viewType == 0) {
+                val view = LayoutInflater.from(parent.context).inflate(R.layout.customization_section_header, parent, false)
+                SectionViewHolder(view)
+            } else {
+                val view = LayoutInflater.from(parent.context).inflate(R.layout.animal_overview_item, parent, false)
+                StableViewHolder(view)
             }
 
     override fun onBindViewHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder, position: Int) {

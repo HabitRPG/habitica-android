@@ -29,12 +29,11 @@ class UsernameLabel(context: Context?, attrs: AttributeSet?) : LinearLayout(cont
     set(value) {
         field = value
         textView.setTextColor(PlayerTier.getColorForTier(context, value))
-        when (value) {
-            0 -> tierIconView.visibility = View.GONE
-            else -> {
-                tierIconView.visibility = View.VISIBLE
-                tierIconView.setImageBitmap(HabiticaIconsHelper.imageOfContributorBadge(value.toFloat(), false))
-            }
+        if (value == 0) {
+            tierIconView.visibility = View.GONE
+        } else {
+            tierIconView.visibility = View.VISIBLE
+            tierIconView.setImageBitmap(HabiticaIconsHelper.imageOfContributorBadge(value.toFloat(), false))
         }
     }
 

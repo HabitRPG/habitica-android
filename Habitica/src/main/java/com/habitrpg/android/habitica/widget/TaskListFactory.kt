@@ -60,7 +60,7 @@ abstract class TaskListFactory internal constructor(val context: Context, intent
         HabiticaBaseApplication.userComponent?.inject(this)
         this.loadData()
     }
-    override fun onDestroy() {}
+    override fun onDestroy() { /* no-op */ }
 
     override fun onDataSetChanged() {
         if (this.reloadData) {

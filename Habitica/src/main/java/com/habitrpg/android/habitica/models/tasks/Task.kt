@@ -59,7 +59,6 @@ open class Task : RealmObject, Parcelable {
     //todos
     @SerializedName("date")
     var dueDate: Date? = null
-    //TODO: private String lastCompleted;
     // used for buyable items
     var specialTag: String? = ""
     @Ignore
@@ -175,29 +174,21 @@ open class Task : RealmObject, Parcelable {
         }
 
         val nextDate = nextDue?.firstOrNull()
-        if (nextDate != null && !isDisplayedActive) {
+        return if (nextDate != null && !isDisplayedActive) {
             val nextDueCalendar = GregorianCalendar()
             nextDueCalendar.time = nextDate
             newTime.set(nextDueCalendar.get(Calendar.YEAR), nextDueCalendar.get(Calendar.MONTH), nextDueCalendar.get(Calendar.DAY_OF_MONTH))
-            return newTime.time
+            newTime.time
+        } else if (isDisplayedActive) {
+            newTime.time
+        } else {
+            null
         }
-
-        return if (isDisplayedActive) newTime.time else null
     }
 
     fun parseMarkdown() {
-        try {
-            this.parsedText = MarkdownParser.parseMarkdown(this.text)
-        } catch (e: NullPointerException) {
-            this.parsedText = this.text
-        }
-
-        try {
-            this.parsedNotes = MarkdownParser.parseMarkdown(this.notes)
-        } catch (e: NullPointerException) {
-            this.parsedNotes = this.notes
-        }
-
+        parsedText = MarkdownParser.parseMarkdown(text)
+        parsedNotes = MarkdownParser.parseMarkdown(notes)
     }
 
     fun markdownText(callback: (CharSequence) -> Unit): CharSequence {
@@ -214,20 +205,17 @@ open class Task : RealmObject, Parcelable {
     }
 
     fun markdownNotes(callback: (CharSequence) -> Unit): CharSequence? {
-        if (this.parsedNotes != null) {
-            return this.parsedNotes as CharSequence
+        if (parsedNotes != null) {
+            return parsedNotes
         }
 
-        if (this.notes?.isEmpty() == true) {
-            return null
+        if (notes?.isNotEmpty() == true) {
+            MarkdownParser.parseMarkdownAsync(notes, Consumer { parsedText ->
+                parsedNotes = parsedText
+                callback(parsedText)
+            })
         }
-
-        MarkdownParser.parseMarkdownAsync(this.notes, Consumer { parsedText ->
-            this.parsedNotes = parsedText
-            callback(parsedText)
-        })
-
-        return this.notes
+        return notes
     }
 
     override fun equals(other: Any?): Boolean {
@@ -236,10 +224,11 @@ open class Task : RealmObject, Parcelable {
         }
         return if (Task::class.java.isAssignableFrom(other.javaClass)) {
             val otherTask = other as? Task
-            if (!this.isValid || otherTask?.isValid != true) {
-                return false
+            if (this.isValid && otherTask?.isValid == true) {
+                this.id == otherTask.id
+            } else {
+                false
             }
-            this.id == otherTask.id
         } else {
             super.equals(other)
         }
@@ -259,14 +248,14 @@ open class Task : RealmObject, Parcelable {
         dest.writeString(this.attribute)
         dest.writeString(this.type)
         dest.writeDouble(this.value)
-        dest.writeList(this.tags as List<*>?)
+        dest.writeList(this.tags as? List<*>)
         dest.writeLong(this.dateCreated?.time ?: -1)
         dest.writeInt(this.position)
         dest.writeValue(this.up)
         dest.writeValue(this.down)
         dest.writeByte(if (this.completed) 1.toByte() else 0.toByte())
-        dest.writeList(this.checklist as List<*>?)
-        dest.writeList(this.reminders as List<*>?)
+        dest.writeList(this.checklist as? List<*>)
+        dest.writeList(this.reminders as? List<*>)
         dest.writeString(this.frequency)
         dest.writeValue(this.everyX)
         dest.writeValue(this.streak)
@@ -300,7 +289,7 @@ open class Task : RealmObject, Parcelable {
         this.checklist = RealmList()
         `in`.readList(this.checklist as List<*>, ChecklistItem::class.java.classLoader)
         this.reminders = RealmList()
-        `in`.readList(this.reminders as List<*>, RemindersItem::class.java.classLoader)
+        `in`.readList(this.reminders as MutableList<Any?>, RemindersItem::class.java.classLoader)
         this.frequency = `in`.readString()
         this.everyX = `in`.readValue(Int::class.java.classLoader) as? Int ?: 1
         this.streak = `in`.readValue(Int::class.java.classLoader) as? Int ?: 0
@@ -369,7 +358,7 @@ open class Task : RealmObject, Parcelable {
         return daysOfMonth
     }
 
-    companion object CREATOR: Parcelable.Creator<Task> {
+    companion object CREATOR : Parcelable.Creator<Task> {
         override fun createFromParcel(source: Parcel): Task = Task(source)
 
         override fun newArray(size: Int): Array<Task?> = arrayOfNulls(size)

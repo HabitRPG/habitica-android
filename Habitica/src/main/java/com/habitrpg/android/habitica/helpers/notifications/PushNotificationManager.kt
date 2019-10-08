@@ -31,7 +31,6 @@ class PushNotificationManager(var apiClient: ApiClient, private val sharedPrefer
         this.user = user
     }
 
-    //@TODO: Use preferences
     fun addPushDeviceUsingStoredToken() {
         if (this.refreshedToken.isEmpty()) {
             this.refreshedToken = FirebaseInstanceId.getInstance().token ?: ""
@@ -55,16 +54,12 @@ class PushNotificationManager(var apiClient: ApiClient, private val sharedPrefer
     }
 
     private fun userHasPushDevice(): Boolean {
-        if (this.user?.pushDevices == null) {
-            return true
-        }
-
         for (pushDevice in this.user?.pushDevices ?: emptyList()) {
             if (pushDevice.regId == this.refreshedToken) {
                 return true
             }
         }
-        return false
+        return this.user?.pushDevices == null
     }
 
     fun displayNotification(remoteMessage: RemoteMessage) {
@@ -88,8 +83,6 @@ class PushNotificationManager(var apiClient: ApiClient, private val sharedPrefer
 
     private fun userIsSubscribedToNotificationType(type: String?): Boolean {
         var key = ""
-
-        //@TODO: If user has push turned off to send
 
         if (type == null) {
             return true

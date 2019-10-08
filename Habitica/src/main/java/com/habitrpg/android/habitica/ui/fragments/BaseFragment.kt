@@ -110,8 +110,7 @@ abstract class BaseFragment : DialogFragment() {
     override fun onDestroy() {
         try {
             tutorialRepository.close()
-        } catch (exception: UninitializedPropertyAccessException) {
-        }
+        } catch (exception: UninitializedPropertyAccessException) {/* no-on */ }
         super.onDestroy()
     }
 

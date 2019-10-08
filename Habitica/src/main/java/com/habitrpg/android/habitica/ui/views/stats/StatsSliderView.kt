@@ -84,9 +84,9 @@ class StatsSliderView(context: Context, attrs: AttributeSet?) : LinearLayout(con
                 }
             }
 
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+            override fun onStartTrackingTouch(seekBar: SeekBar?) { /* no-on */ }
 
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {}
+            override fun onStopTrackingTouch(seekBar: SeekBar?) { /* no-on */ }
         })
 
         currentValue = 0

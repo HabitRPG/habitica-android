@@ -157,7 +157,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
         this.user = user
         currencyView.gold = user.stats?.gp ?: 0.0
         currencyView.gems = user.gemCount.toDouble()
-        currencyView.hourglasses = user.hourglassCount?.toDouble() ?: 0.0
+        currencyView.hourglasses = user.hourglassCount.toDouble()
 
         if ("gems" == shopItem.purchaseType) {
             val maxGems = user.purchased?.plan?.totalNumberOfGems() ?: 0
@@ -202,10 +202,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
 
     private fun onBuyButtonClicked() {
         val snackbarText = arrayOf("")
-        if (shopItem.isValid) {
-            if (shopItem.locked) {
-                return
-            }
+        if (shopItem.isValid && !shopItem.locked) {
             val gemsLeft = if (shopItem.limitedNumberLeft != null) shopItem.limitedNumberLeft else 0
             if ((gemsLeft == 0 && shopItem.purchaseType == "gems") || shopItem.canAfford(user, false)) {
                 val observable: Flowable<Any>

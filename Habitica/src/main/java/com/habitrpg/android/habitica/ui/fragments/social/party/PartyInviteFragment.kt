@@ -51,9 +51,10 @@ class PartyInviteFragment : BaseFragment() {
 
         resetViews()
 
-        when {
-            isEmailInvite -> inviteDescription?.text = getString(R.string.invite_email_description)
-            else -> inviteDescription?.text = getString(R.string.invite_username_description)
+        if (isEmailInvite) {
+            inviteDescription?.text = getString(R.string.invite_email_description)
+        } else {
+            inviteDescription?.text = getString(R.string.invite_username_description)
         }
 
         addInviteField()
@@ -68,12 +69,11 @@ class PartyInviteFragment : BaseFragment() {
     private fun addInviteField() {
         val editText = EditText(context)
 
-        when {
-            isEmailInvite -> {
-                editText.setHint(R.string.email)
-                editText.inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
-            }
-            else -> editText.setHint(R.string.username)
+        if (isEmailInvite) {
+            editText.setHint(R.string.email)
+            editText.inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
+        } else {
+            editText.setHint(R.string.username)
         }
         invitationWrapper?.addView(editText)
     }

@@ -83,15 +83,15 @@ class TaskSetupFragment : BaseFragment() {
     }
 
     private fun setTasks() {
-        this.taskGroups = listOf(listOf(getString(R.string.setup_group_work), "work"), listOf(getString(R.string.setup_group_exercise), "exercise"), listOf(getString(R.string.setup_group_health), "healthWellness"), listOf(getString(R.string.setup_group_school), "school"), listOf(getString(R.string.setup_group_teams), "teams"), listOf(getString(R.string.setup_group_chores), "chores"), listOf(getString(R.string.setup_group_creativity), "creativity"), listOf(getString(R.string.setuP_group_other), "other"))
+        this.taskGroups = listOf(listOf(getString(R.string.setup_group_work), TYPE_WORK), listOf(getString(R.string.setup_group_exercise), TYPE_EXERCISE), listOf(getString(R.string.setup_group_health), TYPE_HEALTH), listOf(getString(R.string.setup_group_school), TYPE_SCHOOL), listOf(getString(R.string.setup_group_teams), TYPE_TEAMS), listOf(getString(R.string.setup_group_chores), TYPE_CHORES), listOf(getString(R.string.setup_group_creativity), TYPE_CREATIVITY), listOf(getString(R.string.setuP_group_other), TYPE_OTHER))
 
-        this.tasks = listOf(listOf("work", Task.TYPE_HABIT, getString(R.string.setup_task_work_1), true, false), listOf("work", Task.TYPE_DAILY, getString(R.string.setup_task_work_2)), listOf("work", Task.TYPE_TODO, getString(R.string.setup_task_work_3)),
-                listOf("exercise", Task.TYPE_HABIT, getString(R.string.setup_task_exercise_1), true, false), listOf("exercise", Task.TYPE_DAILY, getString(R.string.setup_task_exercise_2)), listOf("exercise", Task.TYPE_TODO, getString(R.string.setup_task_exercise_3)),
-                listOf("healthWellness", Task.TYPE_HABIT, getString(R.string.setup_task_healthWellness_1), true, true), listOf("healthWellness", Task.TYPE_DAILY, getString(R.string.setup_task_healthWellness_2)), listOf("healthWellness", Task.TYPE_TODO, getString(R.string.setup_task_healthWellness_3)),
-                listOf("school", Task.TYPE_HABIT, getString(R.string.setup_task_school_1), true, true), listOf("school", Task.TYPE_DAILY, getString(R.string.setup_task_school_2)), listOf("school", Task.TYPE_TODO, getString(R.string.setup_task_school_3)),
-                listOf("teams", Task.TYPE_HABIT, getString(R.string.setup_task_teams_1), true, false), listOf("teams", Task.TYPE_DAILY, getString(R.string.setup_task_teams_2)), listOf("teams", Task.TYPE_TODO, getString(R.string.setup_task_teams_3)),
-                listOf("chores", Task.TYPE_HABIT, getString(R.string.setup_task_chores_1), true, false), listOf("chores", Task.TYPE_DAILY, getString(R.string.setup_task_chores_2)), listOf("chores", Task.TYPE_TODO, getString(R.string.setup_task_chores_3)),
-                listOf("creativity", Task.TYPE_HABIT, getString(R.string.setup_task_creativity_1), true, false), listOf("creativity", Task.TYPE_DAILY, getString(R.string.setup_task_creativity_2)), listOf("creativity", Task.TYPE_TODO, getString(R.string.setup_task_creativity_3)))
+        this.tasks = listOf(listOf(TYPE_WORK, Task.TYPE_HABIT, getString(R.string.setup_task_work_1), true, false), listOf(TYPE_WORK, Task.TYPE_DAILY, getString(R.string.setup_task_work_2)), listOf(TYPE_WORK, Task.TYPE_TODO, getString(R.string.setup_task_work_3)),
+                listOf(TYPE_EXERCISE, Task.TYPE_HABIT, getString(R.string.setup_task_exercise_1), true, false), listOf(TYPE_EXERCISE, Task.TYPE_DAILY, getString(R.string.setup_task_exercise_2)), listOf(TYPE_EXERCISE, Task.TYPE_TODO, getString(R.string.setup_task_exercise_3)),
+                listOf(TYPE_HEALTH, Task.TYPE_HABIT, getString(R.string.setup_task_healthWellness_1), true, true), listOf(TYPE_HEALTH, Task.TYPE_DAILY, getString(R.string.setup_task_healthWellness_2)), listOf(TYPE_HEALTH, Task.TYPE_TODO, getString(R.string.setup_task_healthWellness_3)),
+                listOf(TYPE_SCHOOL, Task.TYPE_HABIT, getString(R.string.setup_task_school_1), true, true), listOf(TYPE_SCHOOL, Task.TYPE_DAILY, getString(R.string.setup_task_school_2)), listOf(TYPE_SCHOOL, Task.TYPE_TODO, getString(R.string.setup_task_school_3)),
+                listOf(TYPE_TEAMS, Task.TYPE_HABIT, getString(R.string.setup_task_teams_1), true, false), listOf(TYPE_TEAMS, Task.TYPE_DAILY, getString(R.string.setup_task_teams_2)), listOf(TYPE_TEAMS, Task.TYPE_TODO, getString(R.string.setup_task_teams_3)),
+                listOf(TYPE_CHORES, Task.TYPE_HABIT, getString(R.string.setup_task_chores_1), true, false), listOf(TYPE_CHORES, Task.TYPE_DAILY, getString(R.string.setup_task_chores_2)), listOf(TYPE_CHORES, Task.TYPE_TODO, getString(R.string.setup_task_chores_3)),
+                listOf(TYPE_CREATIVITY, Task.TYPE_HABIT, getString(R.string.setup_task_creativity_1), true, false), listOf(TYPE_CREATIVITY, Task.TYPE_DAILY, getString(R.string.setup_task_creativity_2)), listOf(TYPE_CREATIVITY, Task.TYPE_TODO, getString(R.string.setup_task_creativity_3)))
     }
 
     fun createSampleTasks(): List<Task> {
@@ -148,6 +148,17 @@ class TaskSetupFragment : BaseFragment() {
         }
 
         return task
+    }
+
+    companion object {
+        const val TYPE_EXERCISE = "exercise"
+        const val TYPE_HEALTH = "healthWellness"
+        const val TYPE_WORK = "work"
+        const val TYPE_SCHOOL = "school"
+        const val TYPE_TEAMS = "teams"
+        const val TYPE_CHORES = "chores"
+        const val TYPE_CREATIVITY = "creativity"
+        const val TYPE_OTHER = "other"
     }
 
 }

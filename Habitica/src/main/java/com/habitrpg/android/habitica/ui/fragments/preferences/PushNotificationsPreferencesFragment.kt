@@ -28,9 +28,7 @@ class PushNotificationsPreferencesFragment : BasePreferencesFragment(), SharedPr
         preferenceScreen.sharedPreferences.unregisterOnSharedPreferenceChangeListener(this)
     }
 
-    override fun setupPreferences() {
-
-    }
+    override fun setupPreferences() { /* no-on */ }
 
     override fun setUser(user: User?) {
         super.setUser(user)

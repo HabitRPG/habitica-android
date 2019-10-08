@@ -334,9 +334,7 @@ class ChallengeFormActivity : BaseActivity() {
                 checkPrizeAndMinimumForTavern()
             }
 
-            override fun onNothingSelected(adapterView: AdapterView<*>) {
-
-            }
+            override fun onNothingSelected(adapterView: AdapterView<*>) { /* no-on */ }
         }
         createChallengePrize.setOnKeyListener { _, _, _ ->
             checkPrizeAndMinimumForTavern()

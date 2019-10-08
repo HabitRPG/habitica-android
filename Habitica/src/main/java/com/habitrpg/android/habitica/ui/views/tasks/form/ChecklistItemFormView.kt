@@ -56,7 +56,7 @@ class ChecklistItemFormView @JvmOverloads constructor(
         rotate.duration = animDuration
         rotate.interpolator = LinearInterpolator()
         rotate.setAnimationListener(object : Animation.AnimationListener {
-            override fun onAnimationRepeat(animation: Animation?) {}
+            override fun onAnimationRepeat(animation: Animation?) { /* no-on */ }
 
             override fun onAnimationEnd(animation: Animation?) {
                 button.rotation = if (value) {
@@ -66,7 +66,7 @@ class ChecklistItemFormView @JvmOverloads constructor(
                 }
             }
 
-            override fun onAnimationStart(animation: Animation?) {}
+            override fun onAnimationStart(animation: Animation?) { /* no-on */ }
         })
         button.startAnimation(rotate)
     }

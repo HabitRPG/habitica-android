@@ -85,9 +85,10 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
 
         notification_items.removeAllViewsInLayout()
 
-        when {
-            notifications.isEmpty() -> displayNoNotificationsView()
-            else -> displayNotificationsListView(notifications)
+        if (notifications.isEmpty()) {
+            displayNoNotificationsView()
+        } else {
+            displayNotificationsListView(notifications)
         }
     }
 

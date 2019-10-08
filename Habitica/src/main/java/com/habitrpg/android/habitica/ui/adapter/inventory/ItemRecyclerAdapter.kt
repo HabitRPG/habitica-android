@@ -201,18 +201,22 @@ class ItemRecyclerAdapter(data: OrderedRealmCollection<OwnedItem>?, autoUpdate: 
                 if (!this.canHatch) {
                     return
                 }
-                val firstItem = item ?: return
-                if (firstItem is Egg) {
-                    val potion = hatchingItem as HatchingPotion
-                    hatchPetSubject.onNext(Pair(potion, firstItem))
-                } else if (firstItem is HatchingPotion) {
-                    val egg = hatchingItem as Egg
-                    hatchPetSubject.onNext(Pair(firstItem, egg))
+                item?.let { firstItem ->
+                    if (firstItem is Egg) {
+                        (hatchingItem as? HatchingPotion)?.let {potion ->
+                            hatchPetSubject.onNext(Pair(potion, firstItem))
+                        }
+                    } else if (firstItem is HatchingPotion) {
+                        (hatchingItem as? Egg)?.let {egg ->
+                            hatchPetSubject.onNext(Pair(firstItem, egg))
+                        }
+                    }
+                    return@let
                 }
             } else if (isFeeding) {
                 val event = FeedCommand()
                 event.usingPet = feedingPet
-                event.usingFood = item as Food
+                event.usingFood = item as? Food
                 EventBus.getDefault().post(event)
                 fragment?.dismiss()
             }

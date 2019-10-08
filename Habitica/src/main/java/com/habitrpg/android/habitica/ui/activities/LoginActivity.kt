@@ -56,9 +56,6 @@ import io.reactivex.schedulers.Schedulers
 import java.io.IOException
 import javax.inject.Inject
 
-/**
- * @author Mickael Goubin
- */
 class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
 
     @Inject
@@ -171,12 +168,11 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
                 object : FacebookCallback<LoginResult> {
                     override fun onSuccess(loginResult: LoginResult) {
                         val accessToken = AccessToken.getCurrentAccessToken()
-                        apiClient.connectSocial("facebook", accessToken.userId, accessToken.token)
-                                .subscribe(this@LoginActivity, RxErrorHandler.handleEmptyError())
+                        compositeSubscription.add(apiClient.connectSocial("facebook", accessToken.userId, accessToken.token)
+                                .subscribe(this@LoginActivity, RxErrorHandler.handleEmptyError()))
                     }
 
-                    override fun onCancel() {
-                    }
+                    override fun onCancel() { /* no-on */ }
 
                     override fun onError(exception: FacebookException) {
                         exception.printStackTrace()
@@ -490,9 +486,9 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
         val showLoginAlphaAnimation = ObjectAnimator.ofFloat<View>(showLoginButton, View.ALPHA, 1.toFloat()).setDuration(700)
         val scaleLogoAnimation = ValueAnimator.ofInt(logoView.measuredHeight, (logoView.measuredHeight * 1.333333).toInt())
         scaleLogoAnimation.addUpdateListener { valueAnimator ->
-            val value = valueAnimator.animatedValue as Int
+            val value = valueAnimator.animatedValue as? Int
             val layoutParams = logoView.layoutParams
-            layoutParams.height = value
+            layoutParams.height = value ?: 0
             logoView.layoutParams = layoutParams
         }
         showLoginAlphaAnimation.startDelay = 300
@@ -543,9 +539,6 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
 
     companion object {
         internal const val REQUEST_CODE_PICK_ACCOUNT = 1000
-        private const val TAG_ADDRESS = "address"
-        private const val TAG_USERID = "user"
-        private const val TAG_APIKEY = "key"
         private const val REQUEST_CODE_RECOVER_FROM_PLAY_SERVICES_ERROR = 1001
         private const val PLAY_SERVICES_RESOLUTION_REQUEST = 9000
 

@@ -34,19 +34,19 @@ object MarkdownParser {
         if (input == null) {
             return ""
         }
-        val html = try {
-            processor.markdownToHtml(EmojiParser.parseEmojis(input.trim { it <= ' ' }))
+        val output: SpannableStringBuilder = try {
+            val html = processor.markdownToHtml(EmojiParser.parseEmojis(input.trim { it <= ' ' }))
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                Html.fromHtml(html, FROM_HTML_MODE_LEGACY) as? SpannableStringBuilder
+            } else {
+                @Suppress("DEPRECATION")
+                (Html.fromHtml(html) as? SpannableStringBuilder)
+            } ?: SpannableStringBuilder()
         } catch (e: UnsatisfiedLinkError) {
-            return input
+            SpannableStringBuilder(input)
         } catch (e: NoClassDefFoundError) {
-            return input
+            SpannableStringBuilder(input)
         }
-        val output: SpannableStringBuilder = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-            Html.fromHtml(html, FROM_HTML_MODE_LEGACY) as? SpannableStringBuilder
-        } else {
-            @Suppress("DEPRECATION")
-            (Html.fromHtml(html) as? SpannableStringBuilder)
-        } ?: SpannableStringBuilder()
 
         val matcher = regex.matcher(output)
         while (matcher.find()) {

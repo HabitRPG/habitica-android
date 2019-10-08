@@ -14,12 +14,10 @@ class LockableScrollView(context: Context, attrs: AttributeSet) : ScrollView(con
     }
 
     override fun onTouchEvent(ev: MotionEvent): Boolean {
-        return when (ev.action) {
-            MotionEvent.ACTION_DOWN -> {
-                if (isScrollable) super.onTouchEvent(ev) else isScrollable
-// mScrollable is always false at this point
-            }
-            else -> super.onTouchEvent(ev)
+        return if (ev.action == MotionEvent.ACTION_DOWN) {
+            if (isScrollable) super.onTouchEvent(ev) else isScrollable
+        } else {
+            super.onTouchEvent(ev)
         }
     }
 

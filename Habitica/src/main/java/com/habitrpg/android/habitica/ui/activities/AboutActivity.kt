@@ -1,12 +1,12 @@
 package com.habitrpg.android.habitica.ui.activities
 
 import android.os.Bundle
-import com.google.android.material.tabs.TabLayout
+import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.viewpager.widget.ViewPager
-import android.view.MenuItem
+import com.google.android.material.tabs.TabLayout
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.ui.fragments.AboutFragment
@@ -49,13 +49,9 @@ class AboutActivity : BaseActivity() {
                 pager.currentItem = tab.position
             }
 
-            override fun onTabUnselected(tab: TabLayout.Tab) {
+            override fun onTabUnselected(tab: TabLayout.Tab) { /* no-on */ }
 
-            }
-
-            override fun onTabReselected(tab: TabLayout.Tab) {
-
-            }
+            override fun onTabReselected(tab: TabLayout.Tab) { /* no-on */ }
         })
 
         tabLayout.setupWithViewPager(pager)
@@ -80,7 +76,7 @@ class AboutActivity : BaseActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    private inner class PagerAdapter(fm: FragmentManager, internal var mNumOfTabs: Int) : FragmentStatePagerAdapter(fm) {
+    private inner class PagerAdapter(fm: FragmentManager, internal var mNumOfTabs: Int) : FragmentStatePagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
         override fun getItem(position: Int): Fragment {
             return when (position) {

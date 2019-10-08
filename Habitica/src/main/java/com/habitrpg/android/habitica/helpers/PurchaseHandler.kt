@@ -33,7 +33,7 @@ class PurchaseHandler(activity: Activity, val crashlyticsProxy: CrashlyticsProxy
                     whenCheckoutReady?.invoke()
                 }
 
-                override fun onReady(requests: BillingRequests, product: String, billingSupported: Boolean) {}
+                override fun onReady(requests: BillingRequests, product: String, billingSupported: Boolean) { /* no-op */ }
             })
         }
     }
@@ -53,10 +53,6 @@ class PurchaseHandler(activity: Activity, val crashlyticsProxy: CrashlyticsProxy
         getSKUs(ProductTypes.IN_APP, PurchaseTypes.allGemTypes, onSuccess)
     }
 
-    fun getAllSubscriptionSKUs(onSuccess: ((List<Sku>) -> Unit)) {
-        getSKUs(ProductTypes.SUBSCRIPTION, PurchaseTypes.allSubscriptionTypes, onSuccess)
-    }
-
     fun getAllSubscriptionProducts(onSuccess: ((Inventory.Product) -> Unit)) {
         getProduct(ProductTypes.SUBSCRIPTION, PurchaseTypes.allSubscriptionTypes, onSuccess)
     }
@@ -67,10 +63,6 @@ class PurchaseHandler(activity: Activity, val crashlyticsProxy: CrashlyticsProxy
 
     fun getInAppPurchaseSKU(identifier: String, onSuccess: ((Sku) -> Unit)) {
         getSKU(ProductTypes.IN_APP, identifier, onSuccess)
-    }
-
-    fun getSubscriptionSKU(identifier: String, onSuccess: ((Sku) -> Unit)) {
-        getSKU(ProductTypes.SUBSCRIPTION, identifier, onSuccess)
     }
 
 
@@ -110,7 +102,7 @@ class PurchaseHandler(activity: Activity, val crashlyticsProxy: CrashlyticsProxy
                     }
                 }
 
-                override fun onError(i: Int, e: Exception) {}
+                override fun onError(i: Int, e: Exception) { crashlyticsProxy.fabricLogE("Purchase", "Consume", e) }
             })
         }
     }
@@ -145,8 +137,7 @@ class PurchaseHandler(activity: Activity, val crashlyticsProxy: CrashlyticsProxy
             billingRequests?.purchase(ProductTypes.IN_APP, identifier, null, it.createOneShotPurchaseFlow(object : RequestListener<Purchase> {
                 override fun onSuccess(result: Purchase) {
                     billingRequests?.consume(result.token, object : RequestListener<Any> {
-                        override fun onSuccess(o: Any) {
-                        }
+                        override fun onSuccess(o: Any) { /* no-op */ }
 
                         override fun onError(i: Int, e: Exception) {
                             crashlyticsProxy.fabricLogE("PurchaseConsumeException", "Consume", e)
@@ -166,8 +157,7 @@ class PurchaseHandler(activity: Activity, val crashlyticsProxy: CrashlyticsProxy
             billingRequests?.purchase(ProductTypes.IN_APP, sku.id.code, null, it.createOneShotPurchaseFlow(object : RequestListener<Purchase> {
                 override fun onSuccess(result: Purchase) {
                     billingRequests?.consume(result.token, object : RequestListener<Any> {
-                        override fun onSuccess(o: Any) {
-                        }
+                        override fun onSuccess(o: Any) { /* no-op */ }
 
                         override fun onError(i: Int, e: Exception) {
                             crashlyticsProxy.fabricLogE("PurchaseConsumeException", "Consume", e)
@@ -175,9 +165,7 @@ class PurchaseHandler(activity: Activity, val crashlyticsProxy: CrashlyticsProxy
                     })
                 }
 
-                override fun onError(response: Int, e: java.lang.Exception) {
-
-                }
+                override fun onError(response: Int, e: java.lang.Exception) { /* no-op */ }
             }))
         }
     }
@@ -185,7 +173,7 @@ class PurchaseHandler(activity: Activity, val crashlyticsProxy: CrashlyticsProxy
     fun consumePurchase(purchase: Purchase) {
         if (PurchaseTypes.allGemTypes.contains(purchase.sku) || PurchaseTypes.allSubscriptionNoRenewTypes.contains(purchase.sku)) {
             billingRequests?.consume(purchase.token, object : RequestListener<Any> {
-                override fun onSuccess(result: Any) {}
+                override fun onSuccess(result: Any) { /* no-op */ }
 
                 override fun onError(response: Int, e: Exception) {
                     crashlyticsProxy.fabricLogE("PurchaseConsumeException", "Consume", e)

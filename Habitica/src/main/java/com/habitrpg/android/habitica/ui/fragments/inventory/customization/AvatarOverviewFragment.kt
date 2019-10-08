@@ -100,7 +100,7 @@ class AvatarOverviewFragment : BaseMainFragment(), AdapterView.OnItemSelectedLis
         }
     }
 
-    override fun onNothingSelected(parent: AdapterView<*>) {}
+    override fun onNothingSelected(parent: AdapterView<*>) { /* no-on */ }
 
 
 }

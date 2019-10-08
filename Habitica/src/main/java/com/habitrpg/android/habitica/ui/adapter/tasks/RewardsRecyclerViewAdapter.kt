@@ -116,7 +116,7 @@ class RewardsRecyclerViewAdapter(private var customRewards: OrderedRealmCollecti
         notifyDataSetChanged()
     }
 
-    override fun filter() {}
+    override fun filter() { /* no-on */ }
 
     override fun getTaskIDAt(position: Int): String? {
         return customRewards?.get(position)?.id

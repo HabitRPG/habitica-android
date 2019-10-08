@@ -42,9 +42,9 @@ class AchievementProfileAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val obj = this.itemList[position]
         if (obj.javaClass == String::class.java) {
-            (holder as SectionViewHolder).bind(obj as String)
+            (holder as? SectionViewHolder)?.bind(obj as String)
         } else {
-            (holder as AchievementViewHolder).bind(itemList[position] as Achievement)
+            (holder as? AchievementViewHolder)?.bind(itemList[position] as Achievement)
         }
     }
 
@@ -78,7 +78,7 @@ class AchievementProfileAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
             draweeView.controller = Fresco.newDraweeControllerBuilder()
                     .setUri(iconUrl)
                     .setControllerListener(object : BaseControllerListener<ImageInfo>() {
-                        override fun onFailure(id: String?, throwable: Throwable?) {}
+                        override fun onFailure(id: String?, throwable: Throwable?) { /* no-on */ }
                     })
                     .build()
 
@@ -97,8 +97,7 @@ class AchievementProfileAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
             val context = itemView.context
             val alert = HabiticaAlertDialog(context)
 
-            val customView = LayoutInflater.from(context)
-                    .inflate(R.layout.dialog_achievement_details, null)
+            val customView = LayoutInflater.from(context).inflate(R.layout.dialog_achievement_details, null)
             val achievementImage = customView.findViewById<View>(R.id.achievement_image) as? ImageView
             achievementImage?.setImageDrawable(draweeView.drawable)
 

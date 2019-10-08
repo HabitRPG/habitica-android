@@ -126,7 +126,7 @@ class GuildFragment : BaseMainFragment() {
     private fun setViewPagerAdapter() {
         val fragmentManager = childFragmentManager
 
-        viewPager?.adapter = object : FragmentPagerAdapter(fragmentManager) {
+        viewPager?.adapter = object : FragmentPagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
             override fun getItem(position: Int): Fragment {
 
@@ -174,9 +174,7 @@ class GuildFragment : BaseMainFragment() {
                 }
             }
 
-            override fun onPageScrollStateChanged(state: Int) {
-
-            }
+            override fun onPageScrollStateChanged(state: Int) { /* no-on */ }
         })
 
         tabLayout?.setupWithViewPager(viewPager)

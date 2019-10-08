@@ -129,7 +129,7 @@ class GuildDetailFragment : BaseFragment() {
                     if (data?.getBooleanExtra(GroupInviteActivity.IS_EMAIL_KEY, false) == true) {
                         val emails = data.getStringArrayExtra(GroupInviteActivity.EMAILS_KEY)
                         val invites = ArrayList<HashMap<String, String>>()
-                        for (email in emails) {
+                        emails?.forEach { email ->
                             val invite = HashMap<String, String>()
                             invite["name"] = ""
                             invite["email"] = email
@@ -138,8 +138,8 @@ class GuildDetailFragment : BaseFragment() {
                         inviteData["emails"] = invites
                     } else {
                         val userIDs = data?.getStringArrayExtra(GroupInviteActivity.USER_IDS_KEY)
-                        val invites = ArrayList<String>()
-                        Collections.addAll(invites, *userIDs)
+                        val invites = mutableListOf<String>()
+                        userIDs?.forEach { invites.add(it) }
                         inviteData["usernames"] = invites
                     }
                     viewModel?.inviteToGroup(inviteData)

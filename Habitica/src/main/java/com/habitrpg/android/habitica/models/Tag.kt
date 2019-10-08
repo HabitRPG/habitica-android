@@ -28,4 +28,8 @@ open class Tag : RealmObject() {
         }
         return super.equals(o)
     }
+
+    override fun hashCode(): Int {
+        return id.hashCode()
+    }
 }

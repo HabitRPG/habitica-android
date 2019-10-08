@@ -152,7 +152,6 @@ class QuestDetailFragment : BaseMainFragment() {
             return
         }
         questTitleView?.text = questContent.text
-        //TODO: FIX
         questDescriptionView?.text = MarkdownParser.parseMarkdown(questContent.notes)
         DataBindingUtils.loadImage(questScrollImageView, "inventory_quest_scroll_" + questContent.key)
     }

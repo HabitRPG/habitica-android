@@ -220,18 +220,14 @@ class TasksFragment : BaseMainFragment(), SearchView.OnQueryTextListener {
         }
 
         viewPager?.addOnPageChangeListener(object : androidx.viewpager.widget.ViewPager.OnPageChangeListener {
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-
-            }
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) { /* no-op */ }
 
             override fun onPageSelected(position: Int) {
                 bottomNavigation?.selectedPosition = position
                 updateFilterIcon()
             }
 
-            override fun onPageScrollStateChanged(state: Int) {
-
-            }
+            override fun onPageScrollStateChanged(state: Int) { /* no-op */ }
         })
     }
 

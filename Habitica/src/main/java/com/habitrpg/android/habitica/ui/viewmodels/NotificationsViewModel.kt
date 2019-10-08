@@ -28,10 +28,6 @@ open class NotificationsViewModel : BaseViewModel() {
     @Inject
     lateinit var socialRepository: SocialRepository
 
-    /**
-     * A list of notification types handled by this component.
-     * NOTE: Those not listed here won't be shown in the notification panel (except the custom ones)
-     */
     private val supportedNotificationTypes = listOf(
             Notification.Type.NEW_STUFF.type,
             Notification.Type.NEW_CHAT_MESSAGE.type,
@@ -41,25 +37,14 @@ open class NotificationsViewModel : BaseViewModel() {
             Notification.Type.UNALLOCATED_STATS_POINTS.type
     )
 
-    /**
-     * A list of notification types that are "actionable" (ones that have accept/reject buttons).
-     */
     private val actionableNotificationTypes = listOf(
             Notification.Type.GUILD_INVITATION.type,
             Notification.Type.PARTY_INVITATION.type,
             Notification.Type.QUEST_INVITATION.type
     )
 
-    /**
-     * Keep track of users party so we can determine which chat notifications are party chat
-     * instead of guild chat notifications.
-     */
     private var party: UserParty? = null
 
-    /**
-     * Custom notification types created by this class (from user data).
-     * Will be combined with the notifications coming from server.
-     */
     private val customNotifications: BehaviorSubject<List<Notification>> = BehaviorSubject.create()
 
     override fun inject(component: UserComponent) {
@@ -326,7 +311,7 @@ open class NotificationsViewModel : BaseViewModel() {
         }
     }
 
-    fun acceptGroupInvitation(groupId: String?) {
+    private fun acceptGroupInvitation(groupId: String?) {
         groupId?.let {
             disposable.add(socialRepository.joinGroup(it)
                     .flatMap { userRepository.retrieveUser(false) }
@@ -367,10 +352,10 @@ open class NotificationsViewModel : BaseViewModel() {
     }
 
     private fun acceptTaskApproval(notification: Notification) {
-        val data = notification.data as? GroupTaskRequiresApprovalData
+        notification.data as? GroupTaskRequiresApprovalData
     }
 
     private fun rejectTaskApproval(notification: Notification) {
-        val data = notification.data as? GroupTaskRequiresApprovalData
+        notification.data as? GroupTaskRequiresApprovalData
     }
 }

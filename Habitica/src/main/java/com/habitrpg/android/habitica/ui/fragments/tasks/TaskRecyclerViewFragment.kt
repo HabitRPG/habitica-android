@@ -171,7 +171,7 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
                 return true
             }
 
-            override fun onSwiped(viewHolder: androidx.recyclerview.widget.RecyclerView.ViewHolder, direction: Int) {}
+            override fun onSwiped(viewHolder: androidx.recyclerview.widget.RecyclerView.ViewHolder, direction: Int) { /* no-on */ }
 
             //defines the enabled move directions in each state (idle, swiping, dragging).
             override fun getMovementFlags(recyclerView: androidx.recyclerview.widget.RecyclerView, viewHolder: androidx.recyclerview.widget.RecyclerView.ViewHolder): Int {

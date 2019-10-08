@@ -72,7 +72,7 @@ class IntroActivity : BaseActivity(), View.OnClickListener, ViewPager.OnPageChan
         finish()
     }
 
-    override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
+    override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) { /* no-on */ }
 
     override fun onPageSelected(position: Int) {
         if (position == 2) {
@@ -82,11 +82,9 @@ class IntroActivity : BaseActivity(), View.OnClickListener, ViewPager.OnPageChan
         }
     }
 
-    override fun onPageScrollStateChanged(state: Int) {
+    override fun onPageScrollStateChanged(state: Int) { /* no-on */ }
 
-    }
-
-    private inner class PagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm), IconPagerAdapter {
+    private inner class PagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT), IconPagerAdapter {
 
         override fun getItem(position: Int): Fragment {
             val fragment = IntroFragment()

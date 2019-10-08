@@ -191,7 +191,7 @@ class PartyFragment : BaseMainFragment() {
                     if (data?.getBooleanExtra(GroupInviteActivity.IS_EMAIL_KEY, false) == true) {
                         val emails = data.getStringArrayExtra(GroupInviteActivity.EMAILS_KEY)
                         val invites = ArrayList<HashMap<String, String>>()
-                        for (email in emails) {
+                        emails?.forEach { email ->
                             val invite = HashMap<String, String>()
                             invite["name"] = ""
                             invite["email"] = email
@@ -201,7 +201,7 @@ class PartyFragment : BaseMainFragment() {
                     } else {
                         val userIDs = data?.getStringArrayExtra(GroupInviteActivity.USER_IDS_KEY)
                         val invites = ArrayList<String>()
-                        Collections.addAll(invites, *userIDs)
+                        userIDs?.forEach { invites.add(it) }
                         inviteData["usernames"] = invites
                     }
                     viewModel.inviteToGroup(inviteData)
@@ -216,7 +216,7 @@ class PartyFragment : BaseMainFragment() {
             return
         }
 
-        viewPagerAdapter = object : FragmentPagerAdapter(fragmentManager) {
+        viewPagerAdapter = object : FragmentPagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
             override fun getItem(position: Int): Fragment {
                 return when (position) {
@@ -282,9 +282,7 @@ class PartyFragment : BaseMainFragment() {
                 }
             }
 
-            override fun onPageScrollStateChanged(state: Int) {
-
-            }
+            override fun onPageScrollStateChanged(state: Int) { /* no-op */ }
         })
         tabLayout?.setupWithViewPager(viewPager)
     }

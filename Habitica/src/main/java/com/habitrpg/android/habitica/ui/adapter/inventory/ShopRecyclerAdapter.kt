@@ -104,6 +104,7 @@ class ShopRecyclerAdapter(private val configManager: AppConfigManager) : android
                 }
             }
 
+    @Suppress("ReturnCount")
     override fun onBindViewHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder, position: Int) {
         val obj = getItem(position)
         if (obj != null) {
