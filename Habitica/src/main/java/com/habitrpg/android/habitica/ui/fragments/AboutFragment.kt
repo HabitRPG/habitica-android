@@ -18,10 +18,12 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.AppTestingLevel
+import com.habitrpg.android.habitica.helpers.DeviceName
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.plattysoft.leonids.ParticleSystem
+import io.reactivex.Completable
 import kotlinx.android.synthetic.main.fragment_about.*
 import javax.inject.Inject
 import javax.inject.Named
@@ -29,6 +31,7 @@ import javax.inject.Named
 
 class AboutFragment : BaseMainFragment() {
 
+    private var deviceInfo: DeviceName.DeviceInfo? = null
     @field:[Inject Named(AppModule.NAMED_USER_ID)]
     lateinit var userId: String
 
@@ -56,6 +59,11 @@ class AboutFragment : BaseMainFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         this.hidesToolbar = true
         super.onCreateView(inflater, container, savedInstanceState)
+
+        compositeSubscription.add(Completable.fromAction {
+            deviceInfo = DeviceName.getDeviceInfo(context)
+        }.subscribe())
+
         return inflater.inflate(R.layout.fragment_about, container, false)
     }
 
@@ -128,8 +136,9 @@ class AboutFragment : BaseMainFragment() {
 
     private fun sendEmail(subject: String) {
         val version = Build.VERSION.SDK_INT
-        val device = Build.DEVICE
-        var bodyOfEmail = "Device: $device" +
+        val deviceName = deviceInfo?.name ?: DeviceName.getDeviceName()
+        val manufacturer = deviceInfo?.manufacturer ?: Build.MANUFACTURER
+        var bodyOfEmail = "Device: $manufacturer $deviceName" +
                 " \nAndroid Version: $version"+
                 " \nAppVersion: " + getString(R.string.version_info, versionName, versionCode)
 
@@ -148,7 +157,7 @@ class AboutFragment : BaseMainFragment() {
                     " \nTimezone Offset: " + (user.preferences?.timezoneOffset ?: 0)
         }
 
-        bodyOfEmail += " \nDetails: "
+        bodyOfEmail += " \nDetails:\n"
 
         val emailIntent = Intent(Intent.ACTION_SENDTO, Uri.fromParts(
                 "mailto", appConfigManager.supportEmail(), null))
