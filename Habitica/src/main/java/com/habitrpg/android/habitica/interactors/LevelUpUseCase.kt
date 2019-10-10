@@ -48,6 +48,7 @@ constructor(private val soundManager: SoundManager, threadExecutor: ThreadExecut
                     showClassSelection(requestValues)
                 }
                 alert.addButton(R.string.not_now, false)
+                alert.isCelebratory = true
 
                 if (!requestValues.activity.isFinishing) {
                     alert.enqueue()

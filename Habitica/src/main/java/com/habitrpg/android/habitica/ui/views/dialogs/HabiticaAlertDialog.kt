@@ -2,14 +2,9 @@ package com.habitrpg.android.habitica.ui.views.dialogs
 
 import android.app.Activity
 import android.content.Context
-import android.view.ContextThemeWrapper
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.Button
-import android.widget.FrameLayout
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.view.*
+import android.view.animation.AccelerateInterpolator
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.view.children
@@ -18,11 +13,15 @@ import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.extensions.setScaledPadding
+import com.plattysoft.leonids.ParticleSystem
 import java.lang.ref.WeakReference
+
+
 
 open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.HabiticaAlertDialogTheme) {
 
-    private val view: LinearLayout = LayoutInflater.from(context).inflate(R.layout.dialog_habitica_base, null) as LinearLayout
+    var isCelebratory: Boolean = false
+    private val view: RelativeLayout = LayoutInflater.from(context).inflate(R.layout.dialog_habitica_base, null) as RelativeLayout
     private val dialogContainer: LinearLayout
     private var titleTextView: TextView
     private var messageTextView: TextView
@@ -217,6 +216,34 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
             thisContext = thisContext.baseContext
         }
         return thisContext as? Activity
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        if (isCelebratory) {
+            titleTextView.post {
+                val confettiContainer = view.findViewById<RelativeLayout>(R.id.confetti_container)
+                ParticleSystem(confettiContainer, 40, context.getDrawable(R.drawable.confetti_blue), 3000)
+                        .setAcceleration(0.00013f, 90)
+                        .setRotationSpeed(144f)
+                        .setSpeedByComponentsRange(-0.15f, 0.15f, -0.1f, -0.5f)
+                        .setFadeOut(200, AccelerateInterpolator())
+                        .emitWithGravity(titleTextView, Gravity.BOTTOM, 10, 2000)
+                ParticleSystem(confettiContainer, 40, context.getDrawable(R.drawable.confetti_red), 3000)
+                        .setAcceleration(0.00013f, 90)
+                        .setRotationSpeed(144f)
+                        .setSpeedByComponentsRange(-0.15f, 0.15f, -0.1f, -0.5f)
+                        .setFadeOut(200, AccelerateInterpolator())
+                        .emitWithGravity(titleTextView, Gravity.BOTTOM, 10, 2000)
+                ParticleSystem(confettiContainer, 40, context.getDrawable(R.drawable.confetti_green), 3000)
+                        .setAcceleration(0.00013f, 90)
+                        .setRotationSpeed(144f)
+                        .setSpeedByComponentsRange(-0.15f, 0.15f, -0.1f, -0.5f)
+                        .setFadeOut(200, AccelerateInterpolator())
+                        .emitWithGravity(titleTextView, Gravity.BOTTOM, 10, 2000)
+            }
+        }
     }
 
     companion object {
