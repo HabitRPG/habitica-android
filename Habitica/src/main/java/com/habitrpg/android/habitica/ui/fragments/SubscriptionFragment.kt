@@ -142,7 +142,8 @@ class SubscriptionFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
 
     override fun setupCheckout() {
         purchaseHandler?.getAllSubscriptionProducts {subscriptions ->
-            for (sku in skus) {
+            this.skus = subscriptions.skus
+            for (sku in subscriptions.skus) {
                 updateButtonLabel(sku, sku.price, subscriptions)
             }
             selectSubscription(PurchaseTypes.Subscription1Month)
