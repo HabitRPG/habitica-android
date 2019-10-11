@@ -2,7 +2,6 @@ package com.habitrpg.android.habitica.ui.fragments.tasks
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.util.TypedValue
@@ -150,7 +149,6 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
             override fun onSelectedChanged(viewHolder: androidx.recyclerview.widget.RecyclerView.ViewHolder?, actionState: Int) {
                 super.onSelectedChanged(viewHolder, actionState)
                 if (viewHolder != null) {
-                    viewHolder.itemView.setBackgroundColor(Color.LTGRAY)
                     if (fromPosition == null) {
                         fromPosition = viewHolder.adapterPosition
                     }
