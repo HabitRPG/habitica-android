@@ -91,10 +91,6 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
             else -> null
         }
 
-        if (classType != Task.TYPE_REWARD) {
-            allowReordering()
-        }
-
         recyclerAdapter = adapter as? TaskRecyclerViewAdapter
         recyclerView.adapter = adapter
 
@@ -216,6 +212,11 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
         return androidx.recyclerview.widget.LinearLayoutManager(context)
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        mItemTouchCallback = null
+    }
+
     override fun onDestroy() {
         userRepository.close()
         inventoryRepository.close()
@@ -239,6 +240,11 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
         if (recyclerView.adapter == null) {
             this.setInnerAdapter()
         }
+
+        if (classType != Task.TYPE_REWARD) {
+            allowReordering()
+        }
+
         if (this.classType != null) {
             recyclerAdapter?.errorButtonEvents?.subscribe(Consumer {
                 taskRepository.syncErroredTasks().subscribe(Consumer {}, RxErrorHandler.handleEmptyError())
