@@ -119,7 +119,7 @@ class SubscriptionFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
         this.subscribeListitem4Box?.setOnClickListener { toggleDescriptionView(this.subscribeListitem4Button, this.subscribeListItem4Description) }
 
         val heartDrawable = BitmapDrawable(resources, HabiticaIconsHelper.imageOfHeartLarge())
-        supportTextView?.setCompoundDrawables(null, heartDrawable, null, null)
+        supportTextView?.setCompoundDrawables(null, null, null, heartDrawable)
 
         subscribeButton.setOnClickListener { subscribeUser() }
 

@@ -69,8 +69,12 @@ class GiftGemsActivity : BaseActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
-        giftedUserID = intent.getStringExtra("userID") ?: navArgs<GiftGemsActivityArgs>().value.userID
-        giftedUsername = intent.getStringExtra("username") ?: navArgs<GiftGemsActivityArgs>().value.username
+        giftedUserID = intent.getStringExtra("userID")
+        giftedUsername = intent.getStringExtra("username")
+        if (giftedUserID == null && giftedUsername == null) {
+            giftedUserID = navArgs<GiftGemsActivityArgs>().value.userID
+            giftedUsername = navArgs<GiftGemsActivityArgs>().value.username
+        }
 
         compositeSubscription.add(socialRepository.getMember(giftedUsername ?: giftedUserID).subscribe(Consumer {
             avatarView.setAvatar(it)
@@ -144,7 +148,7 @@ class GiftGemsActivity : BaseActivity() {
     }
 
     private fun displayConfirmationDialog() {
-        val message = getString(R.string.gift_confirmation_text_gems, giftedUsername, "1")
+        val message = getString(R.string.gift_confirmation_text_gems, giftedUsername)
         val alert = HabiticaAlertDialog(this)
         alert.setTitle(R.string.gift_confirmation_title)
         alert.setMessage(message)

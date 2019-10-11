@@ -715,7 +715,7 @@
     <string name="gift_confirmation_title">Your gift was sent!</string>
     <string name="gift_confirmation_text_sub_g1g1">You sent %s a %s-month Habitica subscription and the same subscription was applied to your account for our Gift One Get One promotion!</string>
     <string name="gift_confirmation_text_sub">You sent %s a %s-month Habitica subscription.</string>
-    <string name="gift_confirmation_text_gems">You sent %s %s gems.</string>
+    <string name="gift_confirmation_text_gems">You sent %s some gems.</string>
     <string name="discover">Discover</string>
     <string name="damage_paused">Damage paused</string>
     <string name="preference_push_important_announcements">Important Announcements</string>
@@ -854,4 +854,5 @@
     <string name="profile_send_message">Send\nMessage</string>
     <string name="profile_gift_gems">Gift\nGems</string>
     <string name="profile_gift_subscription">Gift\nSubscription</string>
+    <string name="gems_gift_description">Want to bestow a shiny haul of Gems to someone else?</string>
 </resources>

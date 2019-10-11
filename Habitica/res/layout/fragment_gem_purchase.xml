@@ -118,12 +118,32 @@
                 </LinearLayout>
             </LinearLayout>
 
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/gray_300"
+                android:text="@string/gems_gift_description"
+                android:gravity="center_horizontal"
+                android:layout_marginLeft="@dimen/spacing_large"
+                android:layout_marginRight="@dimen/spacing_large"
+                android:layout_marginTop="@dimen/spacing_large"/>
+            <Button
+                android:id="@+id/gift_gems_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/gift_gems"
+                android:background="@color/transparent"
+                android:textColor="?colorAccent"
+                android:textAllCaps="false"/>
+
             <TextView android:id="@+id/supportTextView"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
                 android:paddingBottom="20dp"
+                android:layout_marginTop="16dp"
                 android:text="@string/gem_purchase_title"
                 android:layout_gravity="center_horizontal"
                 android:gravity="center"

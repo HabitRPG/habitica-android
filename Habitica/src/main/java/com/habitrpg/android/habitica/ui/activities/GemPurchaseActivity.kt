@@ -11,9 +11,11 @@ import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.events.ConsumablePurchasedEvent
 import com.habitrpg.android.habitica.helpers.PurchaseHandler
+import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
 import com.habitrpg.android.habitica.ui.fragments.GemsPurchaseFragment
 import com.habitrpg.android.habitica.ui.fragments.SubscriptionFragment
+import io.reactivex.functions.Consumer
 import org.greenrobot.eventbus.Subscribe
 import javax.inject.Inject
 
@@ -114,6 +116,7 @@ class GemPurchaseActivity : BaseActivity() {
     fun onConsumablePurchased(event: ConsumablePurchasedEvent) {
         if (isActive) {
             purchaseHandler?.consumePurchase(event.purchase)
+            compositeSubscription.add(userRepository.retrieveUser(false).subscribe(Consumer {}, RxErrorHandler.handleEmptyError()))
         }
     }
 

@@ -308,6 +308,7 @@
                 android:layout_width="wrap_content"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
+                android:paddingTop="16dp"
                 android:paddingBottom="20dp"
                 android:text="@string/subscribe_title"
                 android:layout_gravity="center_horizontal"
