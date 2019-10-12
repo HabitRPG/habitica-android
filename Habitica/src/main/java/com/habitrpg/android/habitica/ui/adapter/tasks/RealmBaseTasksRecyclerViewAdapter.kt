@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.ui.adapter.tasks
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.helpers.TaskFilterHelper
 import com.habitrpg.android.habitica.models.responses.TaskDirection
 import com.habitrpg.android.habitica.models.tasks.ChecklistItem
@@ -12,38 +13,86 @@ import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import io.reactivex.functions.Action
 import io.reactivex.subjects.PublishSubject
-import io.realm.OrderedRealmCollection
-import io.realm.OrderedRealmCollectionChangeListener
-import io.realm.RealmRecyclerViewAdapter
+import io.realm.*
 
-abstract class RealmBaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(private var unfilteredData: OrderedRealmCollection<Task>?, private val hasAutoUpdates: Boolean, private val layoutResource: Int, private val taskFilterHelper: TaskFilterHelper?) : RealmRecyclerViewAdapter<Task, VH>(null, true), TaskRecyclerViewAdapter {
+abstract class RealmBaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(
+        private var unfilteredData: OrderedRealmCollection<Task>?,
+        private val hasAutoUpdates: Boolean,
+        private val layoutResource: Int,
+        private val taskFilterHelper: TaskFilterHelper?
+) : RealmRecyclerViewAdapter<Task, VH>(null, false), TaskRecyclerViewAdapter {
     private var updateOnModification: Boolean = false
     override var ignoreUpdates: Boolean = false
-    private val listener: OrderedRealmCollectionChangeListener<OrderedRealmCollection<Task>> by lazy {
-        OrderedRealmCollectionChangeListener<OrderedRealmCollection<Task>> { _, changeSet ->
-            if (ignoreUpdates) {
-                return@OrderedRealmCollectionChangeListener
-            }
-            // null Changes means the async query returns the first time.
-            // For deletions, the adapter has to be notified in reverse order.
-            val deletions = changeSet.deletionRanges
-            deletions.indices.reversed()
-                    .map { deletions[it] }
-                    .forEach { notifyItemRangeRemoved(it.startIndex, it.length) }
 
-            val insertions = changeSet.insertionRanges
-            for (range in insertions) {
-                notifyItemRangeInserted(range.startIndex, range.length)
-            }
+    private val resultsListener: OrderedRealmCollectionChangeListener<RealmResults<Task>> by lazy {
+        OrderedRealmCollectionChangeListener<RealmResults<Task>> { _, changeSet ->
+            buildChangeSet(changeSet)
+        }
+    }
 
-            if (!updateOnModification) {
-                return@OrderedRealmCollectionChangeListener
-            }
+    private val listListener: OrderedRealmCollectionChangeListener<RealmList<Task>> by lazy {
+        OrderedRealmCollectionChangeListener<RealmList<Task>> { _, changeSet ->
+            buildChangeSet(changeSet)
+        }
+    }
 
-            val modifications = changeSet.changeRanges
-            for (range in modifications) {
-                notifyItemRangeChanged(range.startIndex, range.length)
-            }
+    private fun buildChangeSet(changeSet: OrderedCollectionChangeSet) {
+        if (ignoreUpdates) return
+        if (changeSet.state == OrderedCollectionChangeSet.State.INITIAL) {
+            notifyDataSetChanged()
+            return
+        }
+        // For deletions, the adapter has to be notified in reverse order.
+        val deletions = changeSet.deletionRanges
+        for (i in deletions.indices.reversed()) {
+            val range = deletions[i]
+            notifyItemRangeRemoved(range.startIndex + dataOffset(), range.length)
+        }
+
+        val insertions = changeSet.insertionRanges
+        for (range in insertions) {
+            notifyItemRangeInserted(range.startIndex + dataOffset(), range.length)
+        }
+
+        if (!updateOnModification) {
+            return
+        }
+
+        val modifications = changeSet.changeRanges
+        for (range in modifications) {
+            notifyItemRangeChanged(range.startIndex + dataOffset(), range.length)
+        }
+    }
+
+    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
+        super.onAttachedToRecyclerView(recyclerView)
+        data?.takeIf { it.isValid }?.addListener()
+    }
+
+    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView)
+        data?.takeIf { it.isValid }?.removeListener()
+    }
+
+    override fun updateData(tasks: OrderedRealmCollection<Task>?) {
+        data?.takeIf { it.isValid }?.removeListener()
+        tasks?.takeIf { it.isValid }?.addListener()
+        super.updateData(tasks)
+    }
+
+    private fun OrderedRealmCollection<Task>.addListener() {
+        when (this) {
+            is RealmResults<Task> -> addChangeListener(resultsListener)
+            is RealmList<Task> -> addChangeListener(listListener)
+            else -> throw IllegalArgumentException("RealmCollection not supported: $javaClass")
+        }
+    }
+
+    private fun OrderedRealmCollection<Task>.removeListener() {
+        when (this) {
+            is RealmResults<Task> -> removeChangeListener(resultsListener)
+            is RealmList<Task> -> removeChangeListener(listListener)
+            else -> throw IllegalArgumentException("RealmCollection not supported: $javaClass")
         }
     }
 
