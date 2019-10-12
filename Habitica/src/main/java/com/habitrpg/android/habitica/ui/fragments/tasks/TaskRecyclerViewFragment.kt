@@ -10,6 +10,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.NO_POSITION
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ApiClient
@@ -63,18 +65,18 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
     @Inject
     lateinit var configManager: AppConfigManager
 
-    internal var layoutManager: androidx.recyclerview.widget.RecyclerView.LayoutManager? = null
+    internal var layoutManager: RecyclerView.LayoutManager? = null
 
     internal var classType: String? = null
     internal var user: User? = null
-    private var mItemTouchCallback: ItemTouchHelper.Callback? = null
+    private var itemTouchCallback: ItemTouchHelper.Callback? = null
 
     internal val className: String
         get() = this.classType ?: ""
 
     // TODO needs a bit of cleanup
     private fun setInnerAdapter() {
-        val adapter: androidx.recyclerview.widget.RecyclerView.Adapter<*>? = when (this.classType) {
+        val adapter: RecyclerView.Adapter<*>? = when (this.classType) {
             Task.TYPE_HABIT -> {
                 HabitsRecyclerViewAdapter(null, true, R.layout.habit_item_card, taskFilterHelper)
             }
@@ -127,7 +129,7 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
     }
 
     private fun allowReordering() {
-        val itemTouchHelper = mItemTouchCallback?.let { ItemTouchHelper(it) }
+        val itemTouchHelper = itemTouchCallback?.let { ItemTouchHelper(it) }
         itemTouchHelper?.attachToRecyclerView(recyclerView)
     }
 
@@ -142,33 +144,27 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
             taskFilterHelper.setActiveFilter(Task.TYPE_TODO, Task.FILTER_ACTIVE)
         }
 
-        mItemTouchCallback = object : ItemTouchHelper.Callback() {
-            private var fromPosition: Int? = null
-            private var movingTaskID: String? = null
+        itemTouchCallback = object : ItemTouchHelper.Callback() {
 
-            override fun onSelectedChanged(viewHolder: androidx.recyclerview.widget.RecyclerView.ViewHolder?, actionState: Int) {
+            override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
                 super.onSelectedChanged(viewHolder, actionState)
-                if (viewHolder != null) {
-                    if (fromPosition == null) {
-                        fromPosition = viewHolder.adapterPosition
-                    }
-                    if (movingTaskID == null && (viewHolder as? BaseTaskViewHolder)?.task?.isValid == true) {
-                        movingTaskID = (viewHolder as? BaseTaskViewHolder)?.task?.id
-                    }
+                if (viewHolder == null || viewHolder.adapterPosition == NO_POSITION) return
+                val taskViewHolder = viewHolder as? BaseTaskViewHolder
+                if (taskViewHolder != null) {
+                    taskViewHolder.movingFromPosition = viewHolder.adapterPosition
                 }
                 refreshLayout.isEnabled = false
             }
 
-            override fun onMove(recyclerView: androidx.recyclerview.widget.RecyclerView, viewHolder: androidx.recyclerview.widget.RecyclerView.ViewHolder, target: androidx.recyclerview.widget.RecyclerView.ViewHolder): Boolean {
+            override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
                 recyclerAdapter?.notifyItemMoved(viewHolder.adapterPosition, target.adapterPosition)
-                //taskRepository.swapTaskPosition(viewHolder.getAdapterPosition(), target.getAdapterPosition());
                 return true
             }
 
-            override fun onSwiped(viewHolder: androidx.recyclerview.widget.RecyclerView.ViewHolder, direction: Int) { /* no-on */ }
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) { /* no-on */ }
 
             //defines the enabled move directions in each state (idle, swiping, dragging).
-            override fun getMovementFlags(recyclerView: androidx.recyclerview.widget.RecyclerView, viewHolder: androidx.recyclerview.widget.RecyclerView.ViewHolder): Int {
+            override fun getMovementFlags(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int {
                 return makeFlag(ItemTouchHelper.ACTION_STATE_DRAG,
                         ItemTouchHelper.DOWN or ItemTouchHelper.UP)
             }
@@ -177,26 +173,31 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
 
             override fun isLongPressDragEnabled(): Boolean = true
 
-            override fun clearView(recyclerView: androidx.recyclerview.widget.RecyclerView, viewHolder: androidx.recyclerview.widget.RecyclerView.ViewHolder) {
+            override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
                 super.clearView(recyclerView, viewHolder)
                 refreshLayout?.isEnabled = true
 
-                val fromPosition = fromPosition
-                val movingTaskID = movingTaskID
-                if (fromPosition != null && movingTaskID != null) {
+                if (viewHolder.adapterPosition == NO_POSITION) return
+                val taskViewHolder = viewHolder as? BaseTaskViewHolder
+                val validTaskId = taskViewHolder?.task?.takeIf { it.isValid }?.id
+                if (viewHolder.adapterPosition != taskViewHolder?.movingFromPosition) {
+                    taskViewHolder?.movingFromPosition = null
+                    updateTaskInRepository(validTaskId, viewHolder)
+                }
+            }
+
+            private fun updateTaskInRepository(validTaskId: String?, viewHolder: RecyclerView.ViewHolder) {
+                if (validTaskId != null) {
                     recyclerAdapter?.ignoreUpdates = true
-                    itemAnimator.skipAnimations = true
-                    compositeSubscription.add(taskRepository.updateTaskPosition(classType ?: "", movingTaskID, viewHolder.adapterPosition)
+                    compositeSubscription.add(taskRepository.updateTaskPosition(
+                            classType ?: "", validTaskId, viewHolder.adapterPosition
+                    )
                             .delay(1, TimeUnit.SECONDS)
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(Consumer {
                                 recyclerAdapter?.ignoreUpdates = false
-                                recyclerAdapter?.notifyDataSetChanged()
-                                itemAnimator.skipAnimations = false
                             }, RxErrorHandler.handleEmptyError()))
                 }
-                this.fromPosition = null
-                this.movingTaskID = null
             }
         }
         if (savedInstanceState != null) {
@@ -212,7 +213,7 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
 
     override fun onDestroyView() {
         super.onDestroyView()
-        mItemTouchCallback = null
+        itemTouchCallback = null
     }
 
     override fun onDestroy() {
@@ -228,7 +229,7 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         recyclerView.setScaledPadding(context, 0, 0, 0, 48)
-        recyclerView.adapter = recyclerAdapter as? androidx.recyclerview.widget.RecyclerView.Adapter<*>
+        recyclerView.adapter = recyclerAdapter as? RecyclerView.Adapter<*>
         recyclerAdapter?.filter()
 
         layoutManager = getLayoutManager(context)
@@ -264,10 +265,10 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
 
         refreshLayout.setOnRefreshListener(this)
 
-        recyclerView.addOnScrollListener(object : androidx.recyclerview.widget.RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(recyclerView: androidx.recyclerview.widget.RecyclerView, newState: Int) {
+        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
-                if (newState == androidx.recyclerview.widget.RecyclerView.SCROLL_STATE_IDLE) {
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                     refreshLayout?.isEnabled = (activity as? MainActivity)?.isAppBarExpanded ?: false
                 }
             }
