@@ -11,4 +11,3 @@ expect class Training {
 
     fun merge(stats: Training?)
 }
-
