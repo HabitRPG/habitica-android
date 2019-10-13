@@ -25,7 +25,7 @@ actual open class Task {
     actual var value: Double
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
-    actual var tags: [ERROR : RealmListWrapper]<com.habitrpg.shared.habitica.models.Tag>?
+    actual var tags: [ERROR : RealmList]<com.habitrpg.shared.habitica.models.Tag>?
     actual var dateCreated: Date?
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
@@ -50,8 +50,8 @@ actual open class Task {
     actual var completed: Boolean
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
-    actual var checklist: RealmListWrapper<ChecklistItem>?
-    actual var reminders: RealmListWrapper<RemindersItem>?
+    actual var checklist: RealmList<ChecklistItem>?
+    actual var reminders: RealmList<RemindersItem>?
     actual var frequency: String?
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
@@ -82,7 +82,7 @@ actual open class Task {
     actual var isDue: Boolean?
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
-    actual var nextDue: [ERROR : RealmListWrapper]<Date>?
+    actual var nextDue: [ERROR : RealmList]<Date>?
     actual var isSaving: Boolean
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
@@ -174,7 +174,7 @@ actual open class Task {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }
-actual class RealmListWrapper<T>
+actual class RealmList<T>
 actual class NativeDate
 actual annotation class StringDef
 actual class TYPE_HABIT

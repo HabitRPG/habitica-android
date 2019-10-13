@@ -16,6 +16,7 @@ import com.habitrpg.android.habitica.ui.adapter.inventory.StableRecyclerAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.helpers.*
 import com.habitrpg.shared.habitica.models.user.OwnedMount
+import com.habitrpg.shared.habitica.models.user.OwnedObject
 import com.habitrpg.shared.habitica.models.user.OwnedPet
 import com.habitrpg.shared.habitica.models.user.User
 import io.reactivex.Maybe

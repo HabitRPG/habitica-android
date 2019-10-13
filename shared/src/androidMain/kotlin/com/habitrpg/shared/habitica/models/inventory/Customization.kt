@@ -25,12 +25,12 @@ actual open class Customization : RealmObject() {
             this.updateID()
         }
     actual var notes: String? = null
-    actual var customizationSet: String? = null
+    actual var customizationSet: String = ""
     actual var customizationSetName: String? = null
     actual var text: String? = null
     actual var purchased: Boolean = false
     actual var isBuyable: Boolean = false
-    actual var price: Int? = null
+    actual var price: Int = 0
     actual var setPrice: Int? = null
     actual var availableFrom: Date? = null
     actual var availableUntil: Date? = null
@@ -68,7 +68,7 @@ actual open class Customization : RealmObject() {
         this.id = this.identifier + "_" + this.type + "_" + this.category
     }
 
-    actual fun getImageName(userSize: String, hairColor: String): String {
+    actual fun getImageName(userSize: String?, hairColor: String?): String {
         when (this.type) {
             "skin" -> return "skin_" + this.identifier!!
             "shirt" -> return userSize + "_shirt_" + this.identifier

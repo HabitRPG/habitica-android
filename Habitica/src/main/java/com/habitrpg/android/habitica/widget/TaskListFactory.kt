@@ -13,8 +13,9 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.android.habitica.models.tasks.Task
+import com.habitrpg.shared.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
+import com.habitrpg.shared.habitica.models.tasks.TaskType
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer

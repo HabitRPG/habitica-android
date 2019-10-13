@@ -141,8 +141,8 @@ class AboutFragment : BaseMainFragment() {
         val user = this.user
         if (user != null) {
             bodyOfEmail += " \nLevel: " + (user.stats?.lvl ?: 0) +
-                    " \nClass: " + (if (user.preferences?.disableClasses == true) "Disabled" else (user.stats?.habitClass ?: "None")) +
-                    " \nIs in Inn: " + (user.preferences?.sleep ?: false) +
+                    " \nClass: " + (if (user.preferences?.isDisableClasses == true) "Disabled" else (user.stats?.habitClass ?: "None")) +
+                    " \nIs in Inn: " + (user.preferences?.isSleep ?: false) +
                     " \nUses Costume: " + (user.preferences?.costume ?: false) +
                     " \nCustom Day Start: " + (user.preferences?.dayStart ?: 0) +
                     " \nTimezone Offset: " + (user.preferences?.timezoneOffset ?: 0)

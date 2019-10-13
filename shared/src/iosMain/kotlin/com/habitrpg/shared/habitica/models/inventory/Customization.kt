@@ -18,7 +18,7 @@ actual open class Customization {
     actual var notes: String?
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
-    actual var customizationSet: String?
+    actual var customizationSet: String
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
     actual var customizationSetName: String?
@@ -33,7 +33,7 @@ actual open class Customization {
     actual var isBuyable: Boolean
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
-    actual var price: Int?
+    actual var price: Int
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
     actual var setPrice: Int?

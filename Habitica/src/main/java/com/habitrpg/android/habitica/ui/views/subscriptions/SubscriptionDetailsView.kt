@@ -13,6 +13,8 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.shared.habitica.models.user.SubscriptionPlan
 import com.habitrpg.android.habitica.ui.helpers.bindView
+import com.habitrpg.shared.habitica.models.user.SubscriptionTypes
+import org.reactivestreams.Subscription
 
 class SubscriptionDetailsView : LinearLayout {
 
@@ -56,13 +58,13 @@ class SubscriptionDetailsView : LinearLayout {
         var duration: String? = null
 
         if (plan.planId != null) {
-            if (plan.planId == SubscriptionPlan.PLANID_BASIC || plan.planId == SubscriptionPlan.PLANID_BASICEARNED) {
+            if (plan.planId == SubscriptionTypes.PLANID_BASIC || plan.planId == SubscriptionTypes.PLANID_BASICEARNED) {
                 duration = resources.getString(R.string.month)
-            } else if (plan.planId == SubscriptionPlan.PLANID_BASIC3MONTH) {
+            } else if (plan.planId == SubscriptionTypes.PLANID_BASIC3MONTH) {
                 duration = resources.getString(R.string.three_months)
-            } else if (plan.planId == SubscriptionPlan.PLANID_BASIC6MONTH || plan.planId == SubscriptionPlan.PLANID_GOOGLE6MONTH) {
+            } else if (plan.planId == SubscriptionTypes.PLANID_BASIC6MONTH || plan.planId == SubscriptionTypes.PLANID_GOOGLE6MONTH) {
                 duration = resources.getString(R.string.six_months)
-            } else if (plan.planId == SubscriptionPlan.PLANID_BASIC12MONTH) {
+            } else if (plan.planId == SubscriptionTypes.PLANID_BASIC12MONTH) {
                 duration = resources.getString(R.string.twelve_months)
             }
         }

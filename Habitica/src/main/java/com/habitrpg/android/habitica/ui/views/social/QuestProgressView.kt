@@ -20,8 +20,8 @@ import androidx.core.content.edit
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.inventory.QuestContent
+import com.habitrpg.shared.habitica.models.inventory.Quest
 import com.habitrpg.shared.habitica.models.inventory.QuestProgressCollect
 import com.habitrpg.shared.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
@@ -263,7 +263,7 @@ class QuestProgressView : LinearLayout {
     private fun setCollectionViews(collection: RealmList<QuestProgressCollect>, quest: QuestContent) {
         val inflater = LayoutInflater.from(context)
         for (collect in collection) {
-            val contentCollect = quest.getCollectWithKey(collect.key) ?: continue
+            val contentCollect = quest.getCollectWithKey(collect.key ?: "") ?: continue
             val view = inflater.inflate(R.layout.quest_collect, collectionContainer, false)
             val iconView: SimpleDraweeView = view.findViewById(R.id.icon_view)
             val nameView: TextView = view.findViewById(R.id.name_view)

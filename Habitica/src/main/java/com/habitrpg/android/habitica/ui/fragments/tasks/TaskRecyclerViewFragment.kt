@@ -24,7 +24,7 @@ import com.habitrpg.android.habitica.helpers.SoundManager
 import com.habitrpg.android.habitica.helpers.TaskFilterHelper
 import com.habitrpg.shared.habitica.models.responses.TaskDirection
 import com.habitrpg.android.habitica.models.responses.TaskScoringResult
-import com.habitrpg.android.habitica.models.tasks.Task
+import com.habitrpg.shared.habitica.models.tasks.Task
 import com.habitrpg.shared.habitica.models.user.User
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.activities.MainActivity
@@ -35,6 +35,9 @@ import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.BaseTaskViewHolder
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
+import com.habitrpg.shared.habitica.models.tasks.TaskFilter
+import com.habitrpg.shared.habitica.models.tasks.TaskFrequency
+import com.habitrpg.shared.habitica.models.tasks.TaskType
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.fragment_refresh_recyclerview.*
@@ -138,10 +141,10 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
 
         if (TaskType.TYPE_DAILY == classType) {
             if (user?.isValid == true && user?.preferences?.dailyDueDefaultView == true) {
-                taskFilterHelper.setActiveFilter(TaskType.TYPE_DAILY, Task.FILTER_ACTIVE)
+                taskFilterHelper.setActiveFilter(TaskType.TYPE_DAILY, TaskFilter.FILTER_ACTIVE)
             }
         } else if (TaskType.TYPE_TODO == classType) {
-            taskFilterHelper.setActiveFilter(TaskType.TYPE_TODO, Task.FILTER_ACTIVE)
+            taskFilterHelper.setActiveFilter(TaskType.TYPE_TODO, TaskFilter.FILTER_ACTIVE)
         }
 
         mItemTouchCallback = object : ItemTouchHelper.Callback() {
@@ -318,7 +321,7 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
         taskFilterHelper.setActiveFilter(classType ?: "", activeFilter)
         recyclerAdapter?.filter()
 
-        if (activeFilter == Task.FILTER_COMPLETED) {
+        if (activeFilter == TaskFilter.FILTER_COMPLETED) {
             compositeSubscription.add(taskRepository.retrieveCompletedTodos(userID).subscribe(Consumer {}, RxErrorHandler.handleEmptyError()))
         }
     }
@@ -356,7 +359,7 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
                         fragment.tutorialStepIdentifier = "habits"
                         tutorialTexts = listOf(context.getString(R.string.tutorial_overview), context.getString(R.string.tutorial_habits_1), context.getString(R.string.tutorial_habits_2), context.getString(R.string.tutorial_habits_3), context.getString(R.string.tutorial_habits_4))
                     }
-                    Task.FREQUENCY_DAILY -> {
+                    TaskFrequency.FREQUENCY_DAILY -> {
                         fragment.tutorialStepIdentifier = "dailies"
                         tutorialTexts = listOf(context.getString(R.string.tutorial_dailies_1), context.getString(R.string.tutorial_dailies_2))
                     }

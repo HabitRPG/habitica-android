@@ -22,9 +22,9 @@ import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.UserStatComputer
 import com.habitrpg.android.habitica.models.Achievement
 import com.habitrpg.shared.habitica.models.inventory.Equipment
-import com.habitrpg.android.habitica.models.members.Member
+import com.habitrpg.shared.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.user.Outfit
-import com.habitrpg.android.habitica.models.user.Stats
+import com.habitrpg.shared.habitica.models.user.Stats
 import com.habitrpg.android.habitica.ui.AvatarView
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel
 import com.habitrpg.android.habitica.ui.adapter.social.AchievementProfileAdapter

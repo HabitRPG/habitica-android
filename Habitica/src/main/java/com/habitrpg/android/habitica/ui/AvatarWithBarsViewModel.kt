@@ -13,7 +13,7 @@ import com.habitrpg.android.habitica.events.BoughtGemsEvent
 import com.habitrpg.android.habitica.helpers.HealthFormatter
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.shared.habitica.Avatar
-import com.habitrpg.android.habitica.models.user.Stats
+import com.habitrpg.shared.habitica.models.user.Stats
 import com.habitrpg.shared.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.views.CurrencyViews
@@ -68,7 +68,7 @@ class AvatarWithBarsViewModel(private val context: Context, view: View, userRepo
             userClass = stats.getTranslatedClassName(context)
         }
 
-        mpBar.visibility = if (stats.habitClass == null || stats.lvl ?: 0 < 10 || user.preferences?.disableClasses == true) View.GONE else View.VISIBLE
+        mpBar.visibility = if (stats.habitClass == null || stats.lvl ?: 0 < 10 || user.preferences?.isDisableClasses == true) View.GONE else View.VISIBLE
 
         if (!user.hasClass()) {
             lvlText.text = context.getString(R.string.user_level, stats.lvl)
@@ -92,8 +92,8 @@ class AvatarWithBarsViewModel(private val context: Context, view: View, userRepo
 
         currencyView.gold = stats.gp ?: 0.0
         if (user is User) {
-            currencyView.hourglasses = user.getHourglassCount()?.toDouble() ?: 0.0
-            currencyView.gems = user.gemCount.toDouble()
+            currencyView.hourglasses = user.hourglassCount?.toDouble() ?: 0.0
+            currencyView.gems = user.gemCount?.toDouble() ?: 0.0
         }
 
         currencyView.setOnClickListener {

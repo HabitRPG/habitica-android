@@ -15,7 +15,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.extensions.setScaledPadding
 import com.habitrpg.android.habitica.models.inventory.QuestContent
-import com.habitrpg.android.habitica.models.inventory.QuestProgress
+import com.habitrpg.shared.habitica.models.inventory.QuestProgress
 import com.habitrpg.shared.habitica.models.inventory.QuestProgressCollect
 import com.habitrpg.shared.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
@@ -92,7 +92,7 @@ class OldQuestProgressView : LinearLayout {
             if (progress != null) {
                 val inflater = LayoutInflater.from(context)
                 for (collect in progress.collect ?: emptyList<QuestProgressCollect>()) {
-                    val contentCollect = quest.getCollectWithKey(collect.key) ?: continue
+                    val contentCollect = quest.getCollectWithKey(collect.key ?: "") ?: continue
                     val view = inflater.inflate(R.layout.quest_collect, collectionContainer, false)
                     val iconView = view.findViewById(R.id.icon_view) as? SimpleDraweeView
                     val nameView = view.findViewById(R.id.name_view) as? TextView

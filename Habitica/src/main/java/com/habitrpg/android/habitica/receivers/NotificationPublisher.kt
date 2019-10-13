@@ -18,9 +18,10 @@ import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager
-import com.habitrpg.android.habitica.models.tasks.Task
+import com.habitrpg.shared.habitica.models.tasks.Task
 import com.habitrpg.shared.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.MainActivity
+import com.habitrpg.shared.habitica.models.tasks.TaskType
 import io.reactivex.functions.BiFunction
 import io.reactivex.functions.Consumer
 import io.realm.RealmResults

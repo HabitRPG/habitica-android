@@ -99,7 +99,7 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                 val intent = Intent(activity, ClassSelectionActivity::class.java)
                 intent.putExtras(bundle)
 
-                if (user?.flags?.classSelected == true && user?.preferences?.disableClasses == false) {
+                if (user?.flags?.classSelected == true && user?.preferences?.isDisableClasses == false) {
                     context?.let { context ->
                         val builder = AlertDialog.Builder(context)
                                 .setMessage(getString(R.string.change_class_confirmation))
@@ -244,7 +244,7 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
         super.setUser(user)
         if (10 <= user?.stats?.lvl ?: 0) {
             if (user?.flags?.classSelected == true) {
-                if (user.preferences?.disableClasses == true) {
+                if (user.preferences?.isDisableClasses == true) {
                     classSelectionPreference?.title = getString(R.string.enable_class)
                 } else {
                     classSelectionPreference?.title = getString(R.string.change_class)

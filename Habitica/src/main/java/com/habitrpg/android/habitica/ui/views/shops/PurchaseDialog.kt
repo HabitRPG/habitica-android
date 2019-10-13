@@ -18,8 +18,8 @@ import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.shared.habitica.models.inventory.Equipment
 import com.habitrpg.android.habitica.models.inventory.QuestContent
+import com.habitrpg.shared.habitica.models.inventory.Equipment
 import com.habitrpg.android.habitica.models.shops.Shop
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.shared.habitica.models.user.User
@@ -156,7 +156,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
     private fun setUser(user: User) {
         this.user = user
         currencyView.gold = user.stats?.gp ?: 0.0
-        currencyView.gems = user.gemCount.toDouble()
+        currencyView.gems = user.gemCount?.toDouble() ?: 0.0
         currencyView.hourglasses = user.hourglassCount?.toDouble() ?: 0.0
 
         if ("gems" == shopItem.purchaseType) {

@@ -1,7 +1,7 @@
 package com.habitrpg.android.habitica.data.local.implementation
 
 import com.habitrpg.android.habitica.data.local.SocialLocalRepository
-import com.habitrpg.android.habitica.models.members.Member
+import com.habitrpg.shared.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.*
 import com.habitrpg.shared.habitica.models.user.ContributorInfo
 import com.habitrpg.shared.habitica.models.user.User

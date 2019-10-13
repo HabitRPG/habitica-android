@@ -20,13 +20,13 @@ import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.QuestContent
-import com.habitrpg.android.habitica.models.members.PlayerTier
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.shared.habitica.models.user.User
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.social.UsernameLabel
+import com.habitrpg.shared.habitica.models.members.PlayerTier
 import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.fragment_tavern_detail.*
 import kotlinx.android.synthetic.main.shop_header.*
@@ -135,7 +135,7 @@ class TavernDetailFragment : BaseFragment() {
         if (innButton == null) {
             return
         }
-        if (user?.preferences?.sleep == true) {
+        if (user?.preferences?.isSleep == true) {
             innButton .setText(R.string.tavern_inn_checkOut)
         } else {
             innButton.setText(R.string.tavern_inn_rest)

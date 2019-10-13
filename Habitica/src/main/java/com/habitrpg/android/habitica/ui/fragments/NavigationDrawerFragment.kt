@@ -19,8 +19,8 @@ import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.inventory.QuestContent
+import com.habitrpg.shared.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.shared.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.MainActivity
@@ -189,7 +189,7 @@ class NavigationDrawerFragment : DialogFragment() {
         questMenuView.configure(user)
 
         val tavernItem = getItemWithIdentifier(SIDEBAR_TAVERN)
-        if (user.preferences?.sleep == true) {
+        if (user.preferences?.isSleep == true) {
             tavernItem?.additionalInfo = context?.getString(R.string.damage_paused)
         } else {
             tavernItem?.additionalInfo = null
@@ -216,7 +216,7 @@ class NavigationDrawerFragment : DialogFragment() {
         }
         val statsItem = getItemWithIdentifier(SIDEBAR_STATS)
         if (statsItem != null) {
-            if (user.preferences?.disableClasses != true) {
+            if (user.preferences?.isDisableClasses != true) {
                 if (user.stats?.lvl ?: 0 >= 10 && user.stats?.points ?: 0 > 0) {
                     statsItem.additionalInfo = user.stats?.points.toString()
                 } else {

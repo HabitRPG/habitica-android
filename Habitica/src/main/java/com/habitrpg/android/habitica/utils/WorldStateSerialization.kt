@@ -4,8 +4,8 @@ import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
 import com.habitrpg.android.habitica.models.WorldState
-import com.habitrpg.android.habitica.models.inventory.QuestProgress
-import com.habitrpg.android.habitica.models.inventory.QuestRageStrike
+import com.habitrpg.shared.habitica.models.inventory.QuestProgress
+import com.habitrpg.shared.habitica.models.inventory.QuestRageStrike
 import java.lang.reflect.Type
 
 class WorldStateSerialization: JsonDeserializer<WorldState> {

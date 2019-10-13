@@ -4,9 +4,9 @@ import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
 import com.google.gson.JsonParseException
-import com.habitrpg.android.habitica.models.inventory.Quest
-import com.habitrpg.android.habitica.models.inventory.QuestMember
-import com.habitrpg.android.habitica.models.inventory.QuestProgress
+import com.habitrpg.shared.habitica.models.inventory.Quest
+import com.habitrpg.shared.habitica.models.inventory.QuestMember
+import com.habitrpg.shared.habitica.models.inventory.QuestProgress
 import com.habitrpg.shared.habitica.models.inventory.QuestProgressCollect
 import io.realm.RealmList
 import java.lang.reflect.Type

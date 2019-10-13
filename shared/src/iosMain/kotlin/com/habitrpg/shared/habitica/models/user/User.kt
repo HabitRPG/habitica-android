@@ -61,8 +61,8 @@ actual open class User {
     actual var tasksOrder: TasksOrder?
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
-    actual var challenges: RealmListWrapper<ChallengeMembership><ChallengeMembership>?
-    actual var abTests: RealmListWrapper<ABTest><ABTest>?
+    actual var challenges: RealmList<ChallengeMembership><ChallengeMembership>?
+    actual var abTests: RealmList<ABTest><ABTest>?
     actual var lastCron: Date?
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}

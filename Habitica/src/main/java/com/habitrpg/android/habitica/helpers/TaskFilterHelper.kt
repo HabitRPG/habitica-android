@@ -1,6 +1,8 @@
 package com.habitrpg.android.habitica.helpers
 
-import com.habitrpg.android.habitica.models.tasks.Task
+import com.habitrpg.shared.habitica.models.tasks.Task
+import com.habitrpg.shared.habitica.models.tasks.TaskFilter
+import com.habitrpg.shared.habitica.models.tasks.TaskType
 import io.realm.Case
 import io.realm.OrderedRealmCollection
 import io.realm.RealmQuery
@@ -26,9 +28,9 @@ class TaskFilterHelper {
             return false
         }
         return if (TaskType.TYPE_TODO == type) {
-            Task.FILTER_ACTIVE != activeFilters[type]
+            TaskFilter.FILTER_ACTIVE != activeFilters[type]
         } else {
-            Task.FILTER_ALL != activeFilters[type]
+            TaskFilter.FILTER_ALL != activeFilters[type]
         }
     }
 
@@ -58,18 +60,18 @@ class TaskFilterHelper {
         if (!task.containsAllTagIds(tagsId)) {
             return false
         }
-        return if (activeFilter != null && activeFilter != Task.FILTER_ALL) {
+        return if (activeFilter != null && activeFilter != TaskFilter.FILTER_ALL) {
             when (activeFilter) {
-                Task.FILTER_ACTIVE -> if (task.type == TaskType.TYPE_DAILY) {
+                TaskFilter.FILTER_ACTIVE -> if (task.type == TaskType.TYPE_DAILY) {
                     task.isDisplayedActive
                 } else {
                     !task.completed
                 }
-                Task.FILTER_GRAY -> task.completed || !task.isDisplayedActive
-                Task.FILTER_WEAK -> task.value < 1
-                Task.FILTER_STRONG -> task.value >= 1
-                Task.FILTER_DATED -> task.dueDate != null
-                Task.FILTER_COMPLETED -> task.completed
+                TaskFilter.FILTER_GRAY -> task.completed || !task.isDisplayedActive
+                TaskFilter.FILTER_WEAK -> task.value < 1
+                TaskFilter.FILTER_STRONG -> task.value >= 1
+                TaskFilter.FILTER_DATED -> task.dueDate != null
+                TaskFilter.FILTER_COMPLETED -> task.completed
                 else -> true
             }
         } else {
@@ -101,18 +103,18 @@ class TaskFilterHelper {
             if (searchQuery?.isNotEmpty() == true) {
                 query = query.beginsWith("text", searchQuery ?: "", Case.INSENSITIVE)
             }
-            if (activeFilter != null && activeFilter != Task.FILTER_ALL) {
+            if (activeFilter != null && activeFilter != TaskFilter.FILTER_ALL) {
                 when (activeFilter) {
-                    Task.FILTER_ACTIVE -> query = if (TaskType.TYPE_DAILY == taskType) {
+                    TaskFilter.FILTER_ACTIVE -> query = if (TaskType.TYPE_DAILY == taskType) {
                         query.equalTo("completed", false).equalTo("isDue", true)
                     } else {
                         query.equalTo("completed", false)
                     }
-                    Task.FILTER_GRAY -> query = query.equalTo("completed", true).or().equalTo("isDue", false)
-                    Task.FILTER_WEAK -> query = query.lessThan("value", 1.0)
-                    Task.FILTER_STRONG -> query = query.greaterThanOrEqualTo("value", 1.0)
-                    Task.FILTER_DATED -> query = query.isNotNull("dueDate").equalTo("completed", false)
-                    Task.FILTER_COMPLETED -> query = query.equalTo("completed", true)
+                    TaskFilter.FILTER_GRAY -> query = query.equalTo("completed", true).or().equalTo("isDue", false)
+                    TaskFilter.FILTER_WEAK -> query = query.lessThan("value", 1.0)
+                    TaskFilter.FILTER_STRONG -> query = query.greaterThanOrEqualTo("value", 1.0)
+                    TaskFilter.FILTER_DATED -> query = query.isNotNull("dueDate").equalTo("completed", false)
+                    TaskFilter.FILTER_COMPLETED -> query = query.equalTo("completed", true)
                 }
             }
         }

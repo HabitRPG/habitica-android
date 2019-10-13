@@ -15,11 +15,14 @@ import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
+import com.habitrpg.android.habitica.ui.helpers.TaskTextParser
 import com.habitrpg.shared.habitica.models.tasks.ChecklistItem
-import com.habitrpg.android.habitica.models.tasks.Task
+import com.habitrpg.shared.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.helpers.bindColor
 import com.habitrpg.android.habitica.ui.views.HabiticaEmojiTextView
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
+import com.habitrpg.shared.habitica.models.tasks.TaskType
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
@@ -132,7 +135,7 @@ class YesterdailyDialog private constructor(context: Context, private val userRe
         }
 
         val emojiView = taskView.findViewById<View>(R.id.text_view) as? HabiticaEmojiTextView
-        emojiView?.text = task.markdownText { emojiView?.text = it }
+        emojiView?.text = TaskTextParser.markdownText(task) { emojiView?.text = it }
 
     }
 

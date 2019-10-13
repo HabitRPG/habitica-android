@@ -5,7 +5,7 @@ package com.habitrpg.shared.habitica.models.user
  */
 
 interface AvatarPreferences {
-    val userId: String?
+    var userId: String?
 
     val hair: Hair?
 

@@ -97,7 +97,7 @@ class ShopsFragment : BaseMainFragment() {
 
     private fun updateCurrencyView(user: User) {
         currencyView.gold = user.stats?.gp ?: 0.0
-        currencyView.gems = user.gemCount.toDouble()
+        currencyView.gems = user.gemCount?.toDouble() ?: 0.0
         currencyView.hourglasses = user.hourglassCount?.toDouble() ?: 0.0
     }
 }

@@ -8,8 +8,8 @@ import android.widget.FrameLayout
 import android.widget.RelativeLayout
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.inflate
-import com.habitrpg.android.habitica.models.TutorialStep
 import com.habitrpg.android.habitica.ui.helpers.bindView
+import com.habitrpg.shared.habitica.models.TutorialStep
 
 class TutorialView(context: Context, var step: TutorialStep, var onReaction: OnTutorialReaction?) : FrameLayout(context) {
     private val speechBubbleView: SpeechBubbleView by bindView(R.id.speech_bubble)

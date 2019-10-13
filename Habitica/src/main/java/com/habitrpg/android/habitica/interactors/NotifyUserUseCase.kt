@@ -17,7 +17,7 @@ import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.executors.PostExecutionThread
 import com.habitrpg.android.habitica.executors.ThreadExecutor
 import com.habitrpg.android.habitica.extensions.round
-import com.habitrpg.android.habitica.models.user.Stats
+import com.habitrpg.shared.habitica.models.user.Stats
 import com.habitrpg.shared.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar

@@ -79,12 +79,6 @@ expect open class Task {
 
     fun getNextReminderOccurence(oldTime: NativeDate?): NativeDate?
 
-    fun parseMarkdown()
-
-    fun markdownText(callback: (CharSequence) -> Unit): CharSequence
-
-    fun markdownNotes(callback: (CharSequence) -> Unit): CharSequence?
-
     override fun equals(other: Any?): Boolean
 
     override fun hashCode(): Int

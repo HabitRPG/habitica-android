@@ -1,14 +1,11 @@
 package com.habitrpg.android.habitica.models.social
 
 import com.habitrpg.shared.habitica.Avatar
-import com.habitrpg.android.habitica.models.user.Items
-import com.habitrpg.android.habitica.models.user.Outfit
-import com.habitrpg.android.habitica.models.user.Preferences
-import com.habitrpg.android.habitica.models.user.Stats
+import com.habitrpg.shared.habitica.models.user.*
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
-open class UserStyles : RealmObject(), com.habitrpg.shared.habitica.Avatar {
+open class UserStyles : RealmObject(), Avatar {
     @PrimaryKey
     var id: String? = null
         set(value) {
@@ -17,47 +14,36 @@ open class UserStyles : RealmObject(), com.habitrpg.shared.habitica.Avatar {
             preferences?.userId = id
             items?.userId = id
         }
-    override fun getCurrentMount(): String? {
-        return items?.currentMount
-    }
 
-    override fun getCurrentPet(): String? {
-        return items?.currentPet
-    }
+    var items: Items? = null
 
-    override fun getSleep(): Boolean {
-        return false
-    }
+    override val currentMount: String?
+        get() = items?.currentMount
 
-    override fun getStats(): Stats? {
-        return stats
-    }
+    override val currentPet: String?
+        get() = items?.currentPet
 
-    override fun getPreferences(): com.habitrpg.shared.habitica.models.user.AvatarPreferences? {
-        return preferences
-    }
+    override val sleep: Boolean = false
 
-    override fun getGemCount(): Int {
-        return 0
-    }
+    override val stats: Stats? = null
 
-    override fun getHourglassCount(): Int {
-        return 0
-    }
+    override var preferences: AvatarPreferences? = null
 
-    override fun getCostume(): Outfit? {
-        return items?.gear?.costume
-    }
+    override val gemCount: Int?
+        get() = 0
 
-    override fun getEquipped(): Outfit? {
-        return items?.gear?.equipped
-    }
+    override val hourglassCount: Int?
+        get() = 0
+
+    override val costume: Outfit?
+        get() = items?.gear?.costume
+    override val equipped: Outfit?
+        get() = items?.gear?.equipped
+
+    override var valid: Boolean = true
 
     override fun hasClass(): Boolean {
         return false
     }
 
-    private var stats: Stats? = null
-    private var preferences: Preferences? = null
-    private var items: Items? = null
 }

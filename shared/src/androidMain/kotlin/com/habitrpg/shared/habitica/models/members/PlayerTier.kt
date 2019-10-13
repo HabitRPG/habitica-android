@@ -2,7 +2,7 @@ package com.habitrpg.shared.habitica.models.members
 
 import android.content.Context
 import androidx.core.content.ContextCompat
-import space.thelen.shared.cluetective.R
+import com.habitrpg.shared.habitica.R
 
 
 actual class PlayerTier actual constructor(actual var title: String, actual var id: Int) {

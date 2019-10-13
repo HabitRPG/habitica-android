@@ -4,7 +4,7 @@
 //import com.habitrpg.android.habitica.receivers.TaskReceiver;
 //import com.habitrpg.android.habitica.models.tasks.Days;
 //import com.habitrpg.shared.habitica.models.tasks.RemindersItem;
-//import com.habitrpg.android.habitica.models.tasks.Task;
+//import com.habitrpg.shared.habitica.models.tasks.Task;
 //
 //import org.junit.After;
 //import org.junit.Assert;
@@ -169,7 +169,7 @@
 //    public void itScheduledAlarmForTheNextAvailableDayForRegularDaily() {
 //        Task task = new Task();
 //        task.setType(TaskType.TYPE_DAILY);
-//        task.setFrequency(Task.FREQUENCY_WEEKLY);
+//        task.setFrequency(TaskFrequency.FREQUENCY_WEEKLY);
 //
 //        Days taskRepeatDays = new Days();
 //        taskRepeatDays.setM(true);
@@ -214,7 +214,7 @@
 //    public void itScheduledAlarmForTheNextAvailableDayForRegularDailyWhenUserTriesToSetAlarmForNow() {
 //        Task task = new Task();
 //        task.setType(TaskType.TYPE_DAILY);
-//        task.setFrequency(Task.FREQUENCY_WEEKLY);
+//        task.setFrequency(TaskFrequency.FREQUENCY_WEEKLY);
 //
 //        Days taskRepeatDays = new Days();
 //        taskRepeatDays.setM(true);
@@ -260,7 +260,7 @@
 //    public void itScheduledAlarmForTheNextAvailableDayForEveryXDayDaily() {
 //        Task task = new Task();
 //        task.setType(TaskType.TYPE_DAILY);
-//        task.setFrequency(Task.FREQUENCY_DAILY);
+//        task.setFrequency(TaskFrequency.FREQUENCY_DAILY);
 //
 //        int everyXDay = 2;
 //        task.setEveryX(everyXDay);
@@ -311,7 +311,7 @@
 //    public void itScheduledAlarmForTheNextAvailableDayForEveryXDayDailyWhenUserTriesToSetAlarmForNow() {
 //        Task task = new Task();
 //        task.setType(TaskType.TYPE_DAILY);
-//        task.setFrequency(Task.FREQUENCY_DAILY);
+//        task.setFrequency(TaskFrequency.FREQUENCY_DAILY);
 //
 //        int everyXDay = 2;
 //        task.setEveryX(everyXDay);

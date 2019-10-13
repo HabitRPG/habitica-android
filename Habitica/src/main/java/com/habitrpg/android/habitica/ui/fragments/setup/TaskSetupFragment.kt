@@ -10,7 +10,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.shared.habitica.models.tasks.Days
-import com.habitrpg.android.habitica.models.tasks.Task
+import com.habitrpg.shared.habitica.models.tasks.Task
 import com.habitrpg.shared.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.AvatarView
 import com.habitrpg.android.habitica.ui.SpeechBubbleView
@@ -19,6 +19,7 @@ import com.habitrpg.android.habitica.ui.adapter.setup.TaskSetupAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.helpers.bindOptionalView
 import com.habitrpg.android.habitica.ui.helpers.resetViews
+import com.habitrpg.shared.habitica.models.tasks.TaskType
 import java.util.*
 
 class TaskSetupFragment : BaseFragment() {

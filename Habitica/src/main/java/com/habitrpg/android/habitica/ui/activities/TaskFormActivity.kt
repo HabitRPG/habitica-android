@@ -39,7 +39,6 @@ import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.tasks.form.*
 import com.habitrpg.shared.habitica.models.tasks.TaskFrequency
 import com.habitrpg.shared.habitica.models.tasks.TaskType
-import com.habitrpg.shared.habitica.nativeLibraries.RealmListWrapper
 import io.reactivex.functions.Consumer
 import io.realm.RealmList
 import java.util.*
@@ -433,7 +432,7 @@ class TaskFormActivity : BaseActivity() {
                 thisTask.checklist = checklistContainer.checklistItems
                 thisTask.reminders = remindersContainer.reminders
             }
-            thisTask.tags = RealmListWrapper()
+            thisTask.tags = RealmList()
             tagsWrapper.forEachIndexed { index, view ->
                 val tagView = view as? CheckBox
                 if (tagView?.isChecked == true) {

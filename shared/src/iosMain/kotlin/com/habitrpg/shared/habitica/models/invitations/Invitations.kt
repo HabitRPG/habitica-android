@@ -1,7 +1,7 @@
 package com.habitrpg.shared.habitica.models.invitations
 
 import com.habitrpg.shared.habitica.models.user.User
-import com.habitrpg.shared.habitica.nativeLibraries.RealmListWrapper
+import com.habitrpg.shared.habitica.nativeLibraries.RealmList
 
 actual open class Invitations {
     actual var userId: String?
@@ -13,10 +13,10 @@ actual open class Invitations {
     actual var party: PartyInvite?
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
-    actual var parties: RealmListWrapper<PartyInvite>?
+    actual var parties: RealmList<PartyInvite>?
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
-    actual var guilds: RealmListWrapper<GuildInvite>?
+    actual var guilds: RealmList<GuildInvite>?
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
 

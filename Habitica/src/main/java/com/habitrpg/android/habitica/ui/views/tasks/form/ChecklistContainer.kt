@@ -9,14 +9,13 @@ import androidx.core.view.updateMargins
 import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.shared.habitica.models.tasks.ChecklistItem
 import com.habitrpg.android.habitica.ui.views.DragLinearLayout
-import com.habitrpg.shared.habitica.nativeLibraries.RealmListWrapper
 import io.realm.RealmList
 
 class ChecklistContainer @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null) : DragLinearLayout(context, attrs) {
-    var checklistItems: RealmListWrapper<ChecklistItem>
+    var checklistItems: RealmList<ChecklistItem>
         get() {
-            val list = RealmListWrapper<ChecklistItem>()
+            val list = RealmList<ChecklistItem>()
             for (child in children) {
                 val view = child as? ChecklistItemFormView ?: continue
                 if (view.item.text?.isNotEmpty() == true) {

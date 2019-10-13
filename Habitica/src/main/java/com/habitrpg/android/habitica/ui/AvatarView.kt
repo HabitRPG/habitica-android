@@ -203,7 +203,7 @@ class AvatarView : View {
         }
 
         val prefs = avatar.preferences ?: return layerMap
-        val outfit = if (prefs.costume) {
+        val outfit = if (prefs.costume == true) {
             avatar.costume
         } else {
             avatar.equipped
@@ -271,7 +271,7 @@ class AvatarView : View {
                 }
             }
 
-            layerMap[LayerType.SKIN] = "skin_" + prefs.skin + if (prefs.sleep) "_sleep" else ""
+            layerMap[LayerType.SKIN] = "skin_" + prefs.skin + if (prefs.isSleep) "_sleep" else ""
             layerMap[LayerType.SHIRT] = prefs.size + "_shirt_" + prefs.shirt
             layerMap[LayerType.HEAD_0] = "head_0"
 

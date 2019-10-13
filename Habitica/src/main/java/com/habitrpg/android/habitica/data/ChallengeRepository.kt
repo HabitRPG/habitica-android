@@ -2,7 +2,7 @@ package com.habitrpg.android.habitica.data
 
 import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.shared.habitica.models.social.ChallengeMembership
-import com.habitrpg.android.habitica.models.tasks.Task
+import com.habitrpg.shared.habitica.models.tasks.Task
 import com.habitrpg.shared.habitica.models.tasks.TaskList
 
 import io.reactivex.Flowable

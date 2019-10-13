@@ -5,7 +5,10 @@ import com.habitrpg.android.habitica.models.*
 import com.habitrpg.shared.habitica.models.social.ChallengeMembership
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.social.Group
+import com.habitrpg.shared.habitica.models.Achievement
 import com.habitrpg.shared.habitica.models.QuestAchievement
+import com.habitrpg.shared.habitica.models.Tag
+import com.habitrpg.shared.habitica.models.TutorialStep
 import com.habitrpg.shared.habitica.models.user.OwnedMount
 import com.habitrpg.shared.habitica.models.user.OwnedPet
 import com.habitrpg.shared.habitica.models.user.User
@@ -130,7 +133,7 @@ class RealmUserLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
     }
 
     override fun getSkills(user: User): Flowable<RealmResults<Skill>> {
-        val habitClass = if (user.preferences?.disableClasses == true) "none" else user.stats?.habitClass
+        val habitClass = if (user.preferences?.isDisableClasses == true) "none" else user.stats?.habitClass
         return realm.where(Skill::class.java)
                 .equalTo("habitClass", habitClass)
                 .lessThanOrEqualTo("lvl", user.stats?.lvl ?: 0)

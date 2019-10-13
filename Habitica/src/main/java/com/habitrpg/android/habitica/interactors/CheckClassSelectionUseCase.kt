@@ -24,7 +24,7 @@ constructor(threadExecutor: ThreadExecutor, postExecutionThread: PostExecutionTh
 
             if (requestValues.currentClass == null) {
                 if (user?.stats?.lvl ?: 0 >= 10 &&
-                        user?.preferences?.disableClasses == false &&
+                        user?.preferences?.isDisableClasses == false &&
                         user.flags?.classSelected == false) {
                     displayClassSelectionActivity(true, null, requestValues.activity)
                 }

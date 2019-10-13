@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.data.local
 
-import com.habitrpg.android.habitica.models.TutorialStep
+import com.habitrpg.shared.habitica.models.TutorialStep
 import io.reactivex.Flowable
 import io.realm.RealmResults
 

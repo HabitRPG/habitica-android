@@ -18,7 +18,7 @@ import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.QuestContent
-import com.habitrpg.android.habitica.models.members.Member
+import com.habitrpg.shared.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.shared.habitica.models.user.User
 import com.habitrpg.android.habitica.modules.AppModule

@@ -2,7 +2,6 @@ package com.habitrpg.shared.habitica.interactors
 
 import com.habitrpg.shared.habitica.models.responses.TaskDirection
 import com.habitrpg.shared.habitica.models.responses.TaskDirectionData
-import com.habitrpg.shared.habitica.models.tasks.ChecklistItem
 import com.habitrpg.shared.habitica.models.tasks.Task
 import com.habitrpg.shared.habitica.models.tasks.TaskType
 import com.habitrpg.shared.habitica.models.user.Stats

@@ -6,7 +6,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.habitrpg.shared.habitica.models.inventory.Customization;
-import com.habitrpg.android.habitica.models.user.Purchases;
+import com.habitrpg.shared.habitica.models.user.Purchases;
 import com.habitrpg.shared.habitica.models.user.SubscriptionPlan;
 
 import java.lang.reflect.Type;
@@ -68,7 +68,7 @@ public class PurchasedDeserializer implements JsonDeserializer<Purchases> {
             }
         }
 
-        purchases.customizations = customizations;
+        purchases.setCustomizations(customizations);
         purchases.setPlan(context.deserialize(object.get("plan"), SubscriptionPlan.class));
 
         return purchases;

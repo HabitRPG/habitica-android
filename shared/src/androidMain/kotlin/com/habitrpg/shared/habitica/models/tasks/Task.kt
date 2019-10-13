@@ -4,13 +4,13 @@ import android.os.Parcel
 import android.os.Parcelable
 import androidx.annotation.StringDef
 import com.google.gson.annotations.SerializedName
+import com.habitrpg.shared.habitica.R
 import com.habitrpg.shared.habitica.models.Tag
 import com.habitrpg.shared.habitica.models.tasks.TaskType.Companion.TYPE_DAILY
 import com.habitrpg.shared.habitica.models.tasks.TaskType.Companion.TYPE_HABIT
 import com.habitrpg.shared.habitica.models.tasks.TaskType.Companion.TYPE_REWARD
 import com.habitrpg.shared.habitica.models.tasks.TaskType.Companion.TYPE_TODO
 import com.habitrpg.shared.habitica.models.user.Stats
-import com.habitrpg.shared.habitica.ui.helpers.MarkdownParser
 import io.realm.RealmObject
 import io.realm.annotations.Ignore
 import io.realm.annotations.PrimaryKey
@@ -18,7 +18,6 @@ import org.json.JSONArray
 import io.reactivex.functions.Consumer
 import io.realm.RealmList
 import org.json.JSONException
-import space.thelen.shared.cluetective.R
 import java.util.*
 
 actual open class Task : RealmObject, Parcelable {
@@ -185,50 +184,7 @@ actual open class Task : RealmObject, Parcelable {
         return if (isDisplayedActive) newTime.time else null
     }
 
-    actual fun parseMarkdown() {
-        try {
-            this.parsedText = MarkdownParser.parseMarkdown(this.text)
-        } catch (e: NullPointerException) {
-            this.parsedText = this.text
-        }
 
-        try {
-            this.parsedNotes = MarkdownParser.parseMarkdown(this.notes)
-        } catch (e: NullPointerException) {
-            this.parsedNotes = this.notes
-        }
-
-    }
-
-    actual fun markdownText(callback: (CharSequence) -> Unit): CharSequence {
-        if (this.parsedText != null) {
-            return this.parsedText ?: ""
-        }
-
-        MarkdownParser.parseMarkdownAsync(this.text, Consumer { parsedText ->
-            this.parsedText = parsedText
-            callback(parsedText)
-        })
-
-        return this.text
-    }
-
-    actual fun markdownNotes(callback: (CharSequence) -> Unit): CharSequence? {
-        if (this.parsedNotes != null) {
-            return this.parsedNotes as CharSequence
-        }
-
-        if (this.notes?.isEmpty() == true) {
-            return null
-        }
-
-        MarkdownParser.parseMarkdownAsync(this.notes, Consumer { parsedText ->
-            this.parsedNotes = parsedText
-            callback(parsedText)
-        })
-
-        return this.notes
-    }
 
     actual override fun equals(other: Any?): Boolean {
         if (other == null) {

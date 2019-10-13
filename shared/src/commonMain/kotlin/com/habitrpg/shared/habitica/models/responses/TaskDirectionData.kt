@@ -13,5 +13,5 @@ class TaskDirectionData {
     var hp: Double = 0.0
     var gp: Double = 0.0
     var mp: Double = 0.0
-    var lvl: Int = 0
+    var lvl: Long = 0
 }

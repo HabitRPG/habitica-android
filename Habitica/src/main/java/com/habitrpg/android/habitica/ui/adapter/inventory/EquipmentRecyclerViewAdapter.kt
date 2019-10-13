@@ -90,7 +90,7 @@ class EquipmentRecyclerViewAdapter(data: OrderedRealmCollection<Equipment>?, aut
                 this.gearContainer.setBackgroundResource(R.drawable.selection_highlight)
                 imageViewWrapper.background = ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_gray_700)
             }
-            twoHandedView.visibility = if (gear.twoHanded) View.VISIBLE else View.GONE
+            twoHandedView.visibility = if (gear.twoHanded ?: false) View.VISIBLE else View.GONE
             DataBindingUtils.loadImage(imageView, "shop_"+gear.key)
 
             set(strLabel, strValue, gear.str)

@@ -102,7 +102,7 @@
     <color name="habit_inactive_gray">#F9F9F9</color>
 
     <!-- Preferences -->
-    <color name="preference_fallback_accent_color">@color/colorAccent</color>
+    <color name="preference_fallback_accent_color">#FF4081</color>
     <!-- buttons -->
     <color name="btn_success">@color/green_10</color>
     <color name="btn_danger">@color/red_10</color>

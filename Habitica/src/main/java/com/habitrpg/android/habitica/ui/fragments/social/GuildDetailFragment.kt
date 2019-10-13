@@ -17,7 +17,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
-import com.habitrpg.android.habitica.models.members.Member
+import com.habitrpg.shared.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.ui.AvatarView
 import com.habitrpg.android.habitica.ui.activities.GroupFormActivity

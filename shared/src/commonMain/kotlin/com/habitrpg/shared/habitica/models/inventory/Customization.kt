@@ -9,12 +9,12 @@ expect open class Customization {
     var category: String?
     var type: String?
     var notes: String?
-    var customizationSet: String?
+    var customizationSet: String
     var customizationSetName: String?
     var text: String?
     var purchased: Boolean
     var isBuyable: Boolean
-    var price: Int?
+    var price: Int
     var setPrice: Int?
     var availableFrom: NativeDate?
     var availableUntil: NativeDate?
@@ -29,5 +29,5 @@ expect open class Customization {
 
     fun updateID()
 
-    fun getImageName(userSize: String, hairColor: String): String
+    fun getImageName(userSize: String?, hairColor: String?): String
 }

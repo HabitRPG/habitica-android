@@ -5,7 +5,7 @@ import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
 import com.google.gson.JsonParseException
 import com.habitrpg.android.habitica.models.social.FindUsernameResult
-import com.habitrpg.android.habitica.models.user.Authentication
+import com.habitrpg.shared.habitica.models.user.Authentication
 import com.habitrpg.shared.habitica.models.user.ContributorInfo
 import java.lang.reflect.Type
 

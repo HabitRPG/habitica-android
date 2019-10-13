@@ -21,7 +21,7 @@ import com.habitrpg.android.habitica.ui.AvatarView
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
-import com.habitrpg.shared.habitica.models.user.User
+import com.habitrpg.shared.habitica.models.user.*
 import io.reactivex.functions.Consumer
 import javax.inject.Inject
 

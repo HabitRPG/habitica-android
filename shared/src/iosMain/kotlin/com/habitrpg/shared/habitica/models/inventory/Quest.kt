@@ -1,7 +1,7 @@
 package com.habitrpg.shared.habitica.models.inventory
 
 import com.habitrpg.shared.habitica.models.members.Member
-import com.habitrpg.shared.habitica.nativeLibraries.RealmListWrapper
+import com.habitrpg.shared.habitica.nativeLibraries.RealmList
 
 actual open class Quest {
     actual var id: String?
@@ -19,16 +19,16 @@ actual open class Quest {
     actual var RSVPNeeded: Boolean
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
-    actual var members: RealmListWrapper<QuestMember>?
+    actual var members: RealmList<QuestMember>?
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
     actual var progress: QuestProgress?
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
-    actual var participants: RealmListWrapper<Member>?
+    actual var participants: RealmList<Member>?
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
-    actual var rageStrikes: RealmListWrapper<QuestRageStrike>?
+    actual var rageStrikes: RealmList<QuestRageStrike>?
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
 

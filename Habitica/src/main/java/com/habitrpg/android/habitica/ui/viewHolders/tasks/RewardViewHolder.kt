@@ -8,7 +8,7 @@ import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.helpers.NumberAbbreviator
 import com.habitrpg.shared.habitica.models.responses.TaskDirection
-import com.habitrpg.android.habitica.models.tasks.Task
+import com.habitrpg.shared.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.ItemDetailDialog
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper

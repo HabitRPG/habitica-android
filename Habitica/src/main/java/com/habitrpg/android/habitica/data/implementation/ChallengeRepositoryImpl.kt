@@ -6,8 +6,9 @@ import com.habitrpg.android.habitica.data.local.ChallengeLocalRepository
 import com.habitrpg.android.habitica.models.LeaveChallengeBody
 import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.shared.habitica.models.social.ChallengeMembership
-import com.habitrpg.android.habitica.models.tasks.Task
+import com.habitrpg.shared.habitica.models.tasks.Task
 import com.habitrpg.shared.habitica.models.tasks.TaskList
+import com.habitrpg.shared.habitica.models.tasks.TaskType
 import com.habitrpg.shared.habitica.models.tasks.TasksOrder
 import io.reactivex.Flowable
 import io.realm.RealmResults
@@ -72,8 +73,10 @@ class ChallengeRepositoryImpl(localRepository: ChallengeLocalRepository, apiClie
 
     private fun addChallengeTasks(challenge: Challenge, addedTaskList: List<Task>): Flowable<Challenge> {
         return when {
-            addedTaskList.count() == 1 -> apiClient.createChallengeTask(challenge.id ?: "", addedTaskList[0]).map { challenge }
-            addedTaskList.count() > 1 -> apiClient.createChallengeTasks(challenge.id ?: "", addedTaskList).map { challenge }
+            addedTaskList.count() == 1 -> apiClient.createChallengeTask(challenge.id
+                    ?: "", addedTaskList[0]).map { challenge }
+            addedTaskList.count() > 1 -> apiClient.createChallengeTasks(challenge.id
+                    ?: "", addedTaskList).map { challenge }
             else -> Flowable.just(challenge)
         }
     }
@@ -94,8 +97,8 @@ class ChallengeRepositoryImpl(localRepository: ChallengeLocalRepository, apiClie
         updatedTaskList
                 .map { localRepository.getUnmanagedCopy(it) }
                 .forEach { task ->
-            flowable = flowable.flatMap { apiClient.updateTask(task.id ?: "", task) }
-        }
+                    flowable = flowable.flatMap { apiClient.updateTask(task.id ?: "", task) }
+                }
 
         removedTaskList.forEach { task ->
             flowable = flowable.flatMap { apiClient.deleteTask(task) }

@@ -74,5 +74,4 @@ object MarkdownParser {
     fun parseCompiled(input: CharSequence): String? {
         return EmojiParser.convertToCheatCode(input.toString())
     }
-
 }

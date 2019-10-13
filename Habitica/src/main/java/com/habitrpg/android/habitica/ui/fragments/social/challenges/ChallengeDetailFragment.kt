@@ -18,9 +18,9 @@ import com.habitrpg.android.habitica.data.ChallengeRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.android.habitica.models.members.Member
+import com.habitrpg.shared.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.Challenge
-import com.habitrpg.android.habitica.models.tasks.Task
+import com.habitrpg.shared.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.AvatarView
 import com.habitrpg.android.habitica.ui.activities.ChallengeFormActivity
 import com.habitrpg.android.habitica.ui.activities.FullProfileActivity
@@ -31,6 +31,7 @@ import com.habitrpg.android.habitica.ui.views.HabiticaEmojiTextView
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.social.UsernameLabel
+import com.habitrpg.shared.habitica.models.tasks.TaskType
 import io.reactivex.functions.Action
 import io.reactivex.functions.Consumer
 import net.pherth.android.emoji_library.EmojiParser
