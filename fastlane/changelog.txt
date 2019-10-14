@@ -1,4 +1,4 @@
-In this update we added managing party members to the party screen and in-app notifications for certain notifications.
-We also fixed some issues with notifications and improved the feedback when opening a mystery item
+In this update we added the option to gift gems to other users!
+We also fixed issues with feeding pets, gear display and using skills.
 
 Be sure to download this update now for a better Habitica experience!

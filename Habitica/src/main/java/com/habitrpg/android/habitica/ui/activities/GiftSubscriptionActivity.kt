@@ -86,8 +86,8 @@ class GiftSubscriptionActivity : BaseActivity() {
         giftedUserID = intent.getStringExtra("userID")
         giftedUsername = intent.getStringExtra("username")
         if (giftedUserID == null && giftedUsername == null) {
-            giftedUserID = navArgs<GiftGemsActivityArgs>().value.userID
-            giftedUsername = navArgs<GiftGemsActivityArgs>().value.username
+            giftedUserID = navArgs<GiftSubscriptionActivityArgs>().value.userID
+            giftedUsername = navArgs<GiftSubscriptionActivityArgs>().value.username
         }
 
         subscriptionButton?.setOnClickListener {
@@ -112,6 +112,7 @@ class GiftSubscriptionActivity : BaseActivity() {
         purchaseHandler?.startListening()
 
         purchaseHandler?.getAllGiftSubscriptionProducts {
+            //skus = it.skus
             for (sku in it.skus) {
                 updateButtonLabel(sku, sku.price, it)
             }
