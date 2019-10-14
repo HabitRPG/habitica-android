@@ -298,7 +298,7 @@
   <string name="hatched_pet_title">Vylíhnulo se ti %1$s %2$s!</string>
   <string name="close">Zavřít</string>
   <string name="share">Sdílet</string>
-  <string name="notification_pet_fed">Nakrmil jsi své zvíře %1$s %2$s</string>
+  <string name="notification_pet_fed">Nakrmil jsi své zvíře %s</string>
   <string name="notification_purchase">Koupil jsi %s</string>
   <string name="notification_purchase_reward">Koupil jsi odměnu</string>
   <string name="sectionpets">Standardní</string>
@@ -351,7 +351,7 @@
   <string name="share_using">Sdílet pomocí</string>
   <string name="share_levelup">Získal jsem úroveň %d v Habitice díky zlepšování mých zvyků v reálném životě!</string>
   <string name="share_hatched">Zrovna jsem vylíhl mazlíčka, %1$s %2$s , v Habitice pomocí dělání mých úkolů v reálném životě. </string>
-  <string name="share_raised">Zrovna jsem získal zvíře k osedlání, %1$s %2$s , v Habitice pomocí dělání mých úkolů v reálném životě!</string>
+  <string name="share_raised">Zrovna jsem získal zvíře k osedlání, %s , v Habitice pomocí dělání mých úkolů v reálném životě!</string>
   <string name="open_in_store">Otevřít v obchodě Play</string>
   <string name="change_class_confirmation">Jsi si jist, že chceš změnit povolání? Stojí to 3 diamanty.</string>
   <string name="change_class_equipment_warning">Varování: Nadále si nebudeš moct koupit výbavu z %s povolání.</string>

@@ -45,9 +45,6 @@ class InsufficientGemsDialog(context: Context) : InsufficientCurrencyDialog(cont
 
         addButton(R.string.see_other_options, false) { _, _ -> MainNavigationController.navigate(R.id.gemPurchaseActivity, bundleOf(Pair("openSubscription", false))) }
         addCloseButton()
-        if (!configManager.insufficientGemPurchase()) {
-            contentView.findViewWithTag<LinearLayout>(R.id.purchase_wrapper).visibility = View.GONE
-        }
     }
 
     override fun onAttachedToWindow() {
@@ -69,6 +66,8 @@ class InsufficientGemsDialog(context: Context) : InsufficientCurrencyDialog(cont
                     purchaseHandler?.purchaseGems(PurchaseTypes.Purchase4Gems)
                 }
             }
+        } else {
+            contentView.findViewWithTag<LinearLayout>(R.id.purchase_wrapper).visibility = View.GONE
         }
         EventBus.getDefault().register(this)
     }

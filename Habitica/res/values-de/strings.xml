@@ -233,10 +233,10 @@
     <string name="feed">Füttern</string>
     <string name="hatch_with">Haustier mit %s ausbrüten</string>
     <string name="hatched_pet_title">Du hast ein %1$s %2$s ausgebrütet!</string>
-    <string name="evolved_pet_title">Du hast %1$s%2$s gezähmt, auf geht\'s!</string>
+    <string name="evolved_pet_title">Du hast %s gezähmt, auf geht\'s!</string>
     <string name="close">Schließen</string>
     <string name="share">Teilen</string>
-    <string name="notification_pet_fed">Du hast Dein/e/n %1$s %2$s gefüttert!</string>
+    <string name="notification_pet_fed">Du hast Dein/e/n %s gefüttert!</string>
     <string name="notification_purchase_reward">Du hast eine Belohnung gekauft</string>
     <string name="world_quest">Weltenquest</string>
     <string name="inn_description">Brauchst Du eine Pause\? Kehre in Daniels Gasthaus ein, um ein paar von Habiticas schwierigeren Spielmechaniken zu pausieren:
@@ -279,7 +279,7 @@
     <string name="share_using">Teilen via</string>
     <string name="share_levelup">Ich habe durch das Verbessern meiner realen Lebensgewohnheiten Level %d in Habitica erreicht!</string>
     <string name="share_hatched">Durch das Erfüllen meiner Real-Life-Aufgaben habe ich ein %1$s %2$s Haustier in Habitica ausgebrütet!</string>
-    <string name="share_raised">Durch das Erfüllen meiner Real-Life-Aufgaben habe ich ein %1$s %2$s Reittier in Habitica erhalten!</string>
+    <string name="share_raised">Durch das Erfüllen meiner Real-Life-Aufgaben habe ich ein %s Reittier in Habitica erhalten!</string>
     <string name="open_in_store">Im Play Store öffnen</string>
     <string name="change_class_confirmation">Bist Du sicher, dass Du Deine Klasse ändern willst? Es kostet 3 Edelsteine.</string>
     <string name="change_class_equipment_warning">Warnung: Du wirst keine Ausrüstung für die %s-Klasse mehr kaufen können.</string>

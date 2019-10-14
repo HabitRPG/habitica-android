@@ -260,7 +260,7 @@
   <string name="hatched_pet_title">Has fet sortir de l\'ou a un %1$s %2$s!</string>
   <string name="close">Tanca</string>
   <string name="share">Comparteix</string>
-  <string name="notification_pet_fed">Has alimentat el teu %1$s %2$s!</string>
+  <string name="notification_pet_fed">Has alimentat el teu %s!</string>
   <string name="world_quest">Missió Mundial</string>
   <string name="empty_items">No tens cap %s</string>
   <string name="user_level">Nivell %d</string>
@@ -297,7 +297,7 @@
   <string name="share_using">Compartir ús</string>
   <string name="share_levelup">He arribat al nivell %d a Habitica millorant els meus hàbits de la vida real!</string>
   <string name="share_hatched">He fet sortir de l\'ou a una mascota %1$s %2$s  a Habitica completant les meves tasques de la vida real!</string>
-  <string name="share_raised">Acabo de guanyar una muntura %1$s %2$s a Habitica completant les meves tasques de la vida real!</string>
+  <string name="share_raised">Acabo de guanyar una muntura %s a Habitica completant les meves tasques de la vida real!</string>
   <string name="open_in_store">Obrir a la play store</string>
   <string name="change_class_confirmation">Estàs segur que vols canviar de classe? Això et costarà 3 gemmes.</string>
   <string name="change_class_equipment_warning">Advertència: Ja no podràs comprar més equip per a la classe %s.</string>

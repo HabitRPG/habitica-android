@@ -293,17 +293,8 @@
   <string name="hatched_pet_title">Kamu menetaskan seekor %2$s %1$s!</string>
   <string name="close">Tutup</string>
   <string name="share">Bagikan</string>
-  <string name="notification_pet_fed">Kamu memberi makan %2$s %1$s!</string>
-  <string name="notification_purchase">%s telah dibeli</string>
+  <string name="notification_pet_fed">Kamu memberi makan %s!</string>
   <string name="notification_purchase_reward">Kamu membeli sebuah hadiah</string>
-  <string name="sectionpets">Standard</string>
-  <string name="sectionpremiumPets">Ramuan Ajaib</string>
-  <string name="sectionquestPets">Misi</string>
-  <string name="sectionspecialPets">Langka</string>
-  <string name="sectionmounts">Standard</string>
-  <string name="sectionpremiumMounts">Ramuan Ajaib</string>
-  <string name="sectionquestMounts">Misi</string>
-  <string name="sectionspecialMounts">Langka</string>
   <string name="world_quest">Misi Dunia</string>
   <string name="inn_description">Perlu istirahat? Masuk ke dalam Penginapan Daniel untuk sementara menghentikan mekanika game Habitica yang lebih susah:\n\n
 • Keseharian yang terlewat tidak akan menyakitimu\n
@@ -346,7 +337,7 @@
   <string name="share_using">Bagikan dengan</string>
   <string name="share_levelup">Aku mencapai level %d di Habitica dengan memperbaiki kebiasaanku di kehidupan nyata!</string>
   <string name="share_hatched">Saya menetaskan peliharaan seekor %2$s %1$s di Habitica dengan menyelesaikan tugas kehidupan-nyata saya! </string>
-  <string name="share_raised">Saya baru mendapatkan tunggangan seekor %2$s %1$s di Habitica dengan menyelesaikan tugas kehidupan-nyata saya!</string>
+  <string name="share_raised">Saya baru mendapatkan tunggangan seekor %s di Habitica dengan menyelesaikan tugas kehidupan-nyata saya!</string>
   <string name="open_in_store">Buka di Play Store</string>
   <string name="change_class_confirmation">Apa kamu yakin untuk mengubah kelas? Ini akan membutuhkan 3 permata.</string>
   <string name="change_class_equipment_warning">Peringatan: Kamu tidak akan dapat membeli perlengkapan untuk profesi %s. </string>

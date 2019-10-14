@@ -293,7 +293,7 @@
   <string name="hatched_pet_title">Du kläckte en %1$s %2$s!</string>
   <string name="close">Stäng</string>
   <string name="share">Dela</string>
-  <string name="notification_pet_fed">Du matade din %1$s %2$s!</string>
+  <string name="notification_pet_fed">Du matade din %s!</string>
   <string name="notification_purchase">Du köpte %s</string>
   <string name="notification_purchase_reward">Du köpte en belöning</string>
   <string name="sectionpets">Standard</string>
@@ -341,7 +341,7 @@
   <string name="share_using">Dela användning</string>
   <string name="share_levelup">Jag kom till level %d i Habitica genom att förbättra mina vanor i verkliga livet!</string>
   <string name="share_hatched">Jag kläckte just ett %1$s %2$s husdjur i Habitica genom att slutföra mina uppgifter!</string>
-  <string name="share_raised">Jag fick just ett  %1$s %2$s riddjur i Habitica genom att slutföra mina uppgifter!</string>
+  <string name="share_raised">Jag fick just ett  %s riddjur i Habitica genom att slutföra mina uppgifter!</string>
   <string name="open_in_store">Öppna i Play Store</string>
   <string name="change_class_confirmation">Är du säker på att du vill ändra din klass? Det kommer kosta 3 juveler.</string>
   <string name="change_class_equipment_warning">Varning: Du kommer inte längre kunna köpa utrustning från %s klassen.</string>

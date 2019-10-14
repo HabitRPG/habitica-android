@@ -248,7 +248,6 @@
   <string name="mounts">Yποζύγια</string>
   <string name="sell">Πώληση (%d Χρυσό)</string>
   <string name="hatch_with_potion">Εκκόλαψη με φίλτρο</string>
-  <string name="feed_to_pet">Τάισε σε κατοικίδιο</string>
   <string name="hatch_egg">Εκκόλαψη με αυγό</string>
   <string name="invite_party">Πρόσκληση συντροφιάς</string>
   <string name="dialog_feeding">Τάισε %s με:</string>
@@ -256,18 +255,11 @@
   <string name="feed">Τάισε</string>
   <string name="hatch_with">Εκκόλαψη κατοικίδιου με %s</string>
   <string name="hatched_pet_title">Εκκόλαψες ένα %1$s %2$s!</string>
-  <string name="evolved_pet_title">Δάμασες το %1$s %2$s, πάμε μια βόλτα!</string>
+  <string name="evolved_pet_title">Δάμασες το %s, πάμε μια βόλτα!</string>
   <string name="close">Κλείσιμο</string>
   <string name="share">Κοινοποίησε</string>
-  <string name="notification_pet_fed">Τάισες το %1$s %2$s σου!</string>
-  <string name="notification_purchase">Αγόρασες %s</string>
+  <string name="notification_pet_fed">Τάισες το %s σου!</string>
   <string name="notification_purchase_reward">Αγόρασες μια ανταμοιβή</string>
-  <string name="sectionpremiumPets">Μαγικό Φίλτρο</string>
-  <string name="sectionquestPets">Αποστολή</string>
-  <string name="sectionspecialPets">Σπάνιο</string>
-  <string name="sectionpremiumMounts">Μαγικό Φίλτρο</string>
-  <string name="sectionquestMounts">Αποστολή</string>
-  <string name="sectionspecialMounts">Σπάνιο</string>
   <string name="empty_items">Δεν έχεις %s</string>
   <string name="user_level">Επίπεδο %d</string>
   <string name="user_level_with_class">Επίπεδο %1$d %2$s</string>
@@ -296,7 +288,7 @@
   <string name="share_using">Κοινή χρήση</string>
   <string name="share_levelup">Έφτασα στο επίπεδο %d στο Habitica βελτιώνοντας τις συνήθειες μου στην πραγματική ζωή!</string>
   <string name="share_hatched">Μόλις απέκτησα ένα %1$s %2$s στο Habitica με την ολοκλήρωση πραγματικών μου υποχρεώσεων!</string>
-  <string name="share_raised">Μόλις κέρδισα ένα υποζύγιο%1$s %2$s στο Habitica με την ολοκλήρωση πραγματικών μου υποχρεώσεων!</string>
+  <string name="share_raised">Μόλις κέρδισα ένα υποζύγιο%s στο Habitica με την ολοκλήρωση πραγματικών μου υποχρεώσεων!</string>
   <string name="open_in_store">Άνοιγμα στο play store</string>
   <string name="leaderMessage">Μήνυμα από τον %1$s</string>
   <string name="leaderName">Αρχηγός: %1$s</string>

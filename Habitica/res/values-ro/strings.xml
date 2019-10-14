@@ -291,10 +291,10 @@
   <string name="feed">Hrănește</string>
   <string name="hatch_with">Eclozează animalul de companie cu %s</string>
   <string name="hatched_pet_title">Ai eclozat un %1$s %2$s!</string>
-  <string name="evolved_pet_title">Ai domesticit %1$s %2$s, hai să mergem într-o călătorie!</string>
+  <string name="evolved_pet_title">Ai domesticit %s, hai să mergem într-o călătorie!</string>
   <string name="close">Închide</string>
   <string name="share">Distribuie</string>
-  <string name="notification_pet_fed">Ți-ai hrănit %1$s %2$s!</string>
+  <string name="notification_pet_fed">Ți-ai hrănit %s!</string>
   <string name="notification_purchase">Ai achiziționat %s</string>
   <string name="notification_purchase_reward">Ai achiziționat o recompensă</string>
   <string name="sectionpets">Standard</string>
@@ -347,7 +347,7 @@
   <string name="share_using">Distribuie utilizând</string>
   <string name="share_levelup">Am ajuns la nivelul %d în Habitica îmbunătățindu-mi obicieiurile din viața reală!</string>
   <string name="share_hatched">Tocmai am eclozat un %1$s%2$s ca animal de companie în Habitica, completându-mi sarcinile din viața reala!</string>
-  <string name="share_raised">Tocmai am obținut un %1$s %2$s ca animal de călărit în Habitica, completându-mi sarcinile din viața reală!</string>
+  <string name="share_raised">Tocmai am obținut un %s ca animal de călărit în Habitica, completându-mi sarcinile din viața reală!</string>
   <string name="open_in_store">Deschide Play Store</string>
   <string name="change_class_confirmation">Ești sigur că vrei să-ți schimbi clasa? Te va costa 3 nestemate.</string>
   <string name="change_class_equipment_warning">Atenție: Nu vei mai putea cumpăra echipament din clasa %s.</string>

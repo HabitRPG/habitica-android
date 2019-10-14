@@ -260,7 +260,7 @@
   <string name="hatched_pet_title">Du har udruget en/et %1$s %2$s!</string>
   <string name="close">Luk</string>
   <string name="share">Del</string>
-  <string name="notification_pet_fed">Du har fodret din %1$s %2$s!</string>
+  <string name="notification_pet_fed">Du har fodret din %s!</string>
   <string name="world_quest">Verdensquest</string>
   <string name="empty_items">Du have ingen %s</string>
   <string name="user_level">Niv. %d</string>
