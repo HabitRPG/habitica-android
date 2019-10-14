@@ -60,7 +60,7 @@ class SkillTasksActivity : BaseActivity() {
                     else -> fragment.taskType = Task.TYPE_TODO
                 }
 
-                compositeSubscription.add(fragment.taskSelectionEvents.subscribe(Consumer { task -> taskSelected(task) }, RxErrorHandler.handleEmptyError()))
+                compositeSubscription.add(fragment.getTaskSelectionEvents().subscribe(Consumer { task -> taskSelected(task) }, RxErrorHandler.handleEmptyError()))
 
                 viewFragmentsDictionary.put(position, fragment)
 

@@ -18,8 +18,10 @@ import com.habitrpg.android.habitica.ui.adapter.SkillTasksRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.helpers.resetViews
+import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import io.reactivex.functions.Consumer
+import io.reactivex.subjects.PublishSubject
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -35,8 +37,11 @@ class SkillTasksRecyclerViewFragment : BaseFragment() {
     internal var layoutManager: LinearLayoutManager? = null
     var taskType: String? = null
 
-    val taskSelectionEvents: Flowable<Task>
-        get() = adapter.getTaskSelectionEvents()
+    private val taskSelectionEvents = PublishSubject.create<Task>()
+
+    fun getTaskSelectionEvents(): Flowable<Task> {
+        return taskSelectionEvents.toFlowable(BackpressureStrategy.DROP)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
@@ -61,6 +66,9 @@ class SkillTasksRecyclerViewFragment : BaseFragment() {
         recyclerView?.layoutManager = layoutManager
 
         adapter = SkillTasksRecyclerViewAdapter(null, true)
+        compositeSubscription.add(adapter.getTaskSelectionEvents().subscribe(Consumer {
+            taskSelectionEvents.onNext(it)
+        }, RxErrorHandler.handleEmptyError()))
         recyclerView?.adapter = adapter
 
         context?.let {
