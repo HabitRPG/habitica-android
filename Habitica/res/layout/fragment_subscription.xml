@@ -309,14 +309,15 @@
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
                 android:paddingTop="16dp"
-                android:paddingBottom="20dp"
+                android:paddingBottom="16dp"
                 android:text="@string/subscribe_title"
                 android:layout_gravity="center_horizontal"
                 android:gravity="center"
                 android:textColor="@color/gray_300"
                 android:textSize="14sp"
                 android:lineSpacingExtra="4dp"
-                android:layout_marginTop="16dp"/>
+                android:layout_marginTop="16dp"
+                android:drawablePadding="@dimen/spacing_medium"/>
         </LinearLayout>
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

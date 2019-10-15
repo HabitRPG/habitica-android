@@ -67,7 +67,7 @@ class GemsPurchaseFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
         gems84View?.setOnPurchaseClickListener(View.OnClickListener { purchaseGems(PurchaseTypes.Purchase84Gems) })
 
         val heartDrawable = BitmapDrawable(resources, HabiticaIconsHelper.imageOfHeartLarge())
-        supportTextView?.setCompoundDrawables(null, null, null, heartDrawable)
+        supportTextView?.setCompoundDrawablesWithIntrinsicBounds(null, null, null, heartDrawable)
 
         compositeSubscription.add(userRepository.getUser().subscribe(Consumer {
             subscriptionPromoView?.visibility = if (it.isSubscribed) View.GONE else View.VISIBLE

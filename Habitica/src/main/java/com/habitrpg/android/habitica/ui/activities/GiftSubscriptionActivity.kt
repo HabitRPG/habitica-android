@@ -112,7 +112,7 @@ class GiftSubscriptionActivity : BaseActivity() {
         purchaseHandler?.startListening()
 
         purchaseHandler?.getAllGiftSubscriptionProducts {
-            //skus = it.skus
+            skus = it.skus
             for (sku in it.skus) {
                 updateButtonLabel(sku, sku.price, it)
             }

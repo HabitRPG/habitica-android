@@ -855,4 +855,5 @@
     <string name="profile_gift_gems">Gift\nGems</string>
     <string name="profile_gift_subscription">Gift\nSubscription</string>
     <string name="gems_gift_description">Want to bestow a shiny haul of Gems to someone else?</string>
+    <string name="gift_gems_disclaimer">Habitica will never require you to gift gems to other players. Begging people for gems is a violation of the Community Guidelines and should be reported to admin@habitica.com.</string>
 </resources>
