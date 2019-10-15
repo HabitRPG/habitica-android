@@ -2,10 +2,10 @@ package com.habitrpg.shared.habitica.models.user
 
 import android.content.Context
 import com.google.gson.annotations.SerializedName
+import com.habitrpg.shared.habitica.R
 import com.habitrpg.shared.habitica.models.HabitRpgClass
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
-import space.thelen.shared.cluetective.R
 
 actual open class Stats : RealmObject() {
 
@@ -33,7 +33,7 @@ actual open class Stats : RealmObject() {
     actual var training: Training? = null
     actual var buffs: Buffs? = null
     actual var points: Int? = null
-    actual var lvl: Int? = null
+    actual var lvl: Long? = null
     @SerializedName("class")
     actual var habitClass: String? = null
     actual var gp: Double? = null
@@ -69,15 +69,6 @@ actual open class Stats : RealmObject() {
                     buffs?.per ?: 0f > 0
         }
 
-    actual fun getTranslatedClassName(context: Context): String {
-        return when (habitClass) {
-            HEALER -> context.getString(R.string.healer)
-            ROGUE -> context.getString(R.string.rogue)
-            WARRIOR -> context.getString(R.string.warrior)
-            MAGE -> context.getString(R.string.mage)
-            else -> context.getString(R.string.warrior)
-        }
-    }
 
     actual fun merge(stats: Stats?) {
         if (stats == null) {

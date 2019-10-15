@@ -5,7 +5,22 @@ import com.google.gson.annotations.SerializedName
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
-actual class Buffs actual constructor(snowball: Boolean, streaks: Boolean, seaform: Boolean, spookySparkles: Boolean, shinySeed: Boolean) : RealmObject() {
+actual open class Buffs: RealmObject {
+    constructor() {
+        this.snowball = null
+        this.streaks = null
+        this.seafoam = null
+        this.spookySparkles = null
+        this.shinySeed = null
+    }
+
+    actual constructor(snowball: Boolean, streaks: Boolean, seaform: Boolean, spookySparkles: Boolean, shinySeed: Boolean) {
+        this.snowball = snowball
+        this.streaks = streaks
+        this.seafoam = seaform
+        this.spookySparkles = spookySparkles
+        this.shinySeed = shinySeed
+    }
 
     @PrimaryKey
     actual var userId: String? = null
@@ -15,12 +30,12 @@ actual class Buffs actual constructor(snowball: Boolean, streaks: Boolean, seafo
     actual var per: Float? = null
     @SerializedName("int")
     actual var _int: Float? = null
-    actual var snowball: Boolean? = snowball
+    actual var snowball: Boolean? = null
         get(): Boolean? {
             return if (field != null) field else false
         }
 
-    actual var streaks: Boolean? = streaks
+    actual var streaks: Boolean? = null
         get(): Boolean? {
             return if (field != null) field else false
         }

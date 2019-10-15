@@ -32,7 +32,7 @@ class AvatarWithBarsViewModel(private val context: Context, view: View, userRepo
     private val lvlText: TextView by bindView(view, R.id.lvl_tv)
     private val currencyView: CurrencyViews by bindView(view, R.id.currencyView)
 
-    private var userObject: com.habitrpg.shared.habitica.Avatar? = null
+    private var userObject: Avatar? = null
 
     private var cachedMaxHealth: Int = 0
     private var cachedMaxExp: Int = 0
@@ -55,7 +55,7 @@ class AvatarWithBarsViewModel(private val context: Context, view: View, userRepo
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
-    fun updateData(user: com.habitrpg.shared.habitica.Avatar) {
+    fun updateData(user: Avatar) {
         userObject = user
 
         val stats = user.stats ?: return

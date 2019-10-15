@@ -15,7 +15,7 @@ expect open class Stats() {
     var training: Training?
     var buffs: Buffs?
     var points: Int?
-    var lvl: Int?
+    var lvl: Long?
     var habitClass: String?
     var gp: Double?
     var exp: Double?
@@ -25,8 +25,6 @@ expect open class Stats() {
     var maxHealth: Int?
     var maxMP: Int?
     val isBuffed: Boolean
-
-    fun getTranslatedClassName(context: NativeContext): String
 
     fun merge(stats: Stats?)
 

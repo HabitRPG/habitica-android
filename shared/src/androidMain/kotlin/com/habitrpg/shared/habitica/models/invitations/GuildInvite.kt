@@ -3,7 +3,7 @@ package com.habitrpg.shared.habitica.models.invitations
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
-actual class GuildInvite : RealmObject() {
+actual open class GuildInvite : RealmObject() {
 
     @PrimaryKey
     actual var id: String? = null

@@ -23,9 +23,9 @@ open class UserStyles : RealmObject(), Avatar {
     override val currentPet: String?
         get() = items?.currentPet
 
-    override val sleep: Boolean = false
+    override var sleep: Boolean = false
 
-    override val stats: Stats? = null
+    override var stats: Stats? = null
 
     override var preferences: AvatarPreferences? = null
 

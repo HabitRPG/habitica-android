@@ -48,7 +48,7 @@ actual open class Customization : RealmObject() {
         }
 
     actual val isUsable: Boolean
-        get() = this.price == null || this.price == 0 || this.purchased
+        get() = this.price == 0 || this.purchased
 
     actual val path: String
         get() {

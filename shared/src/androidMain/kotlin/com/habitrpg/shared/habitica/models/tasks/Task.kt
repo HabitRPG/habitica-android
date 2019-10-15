@@ -10,15 +10,15 @@ import com.habitrpg.shared.habitica.models.tasks.TaskType.Companion.TYPE_DAILY
 import com.habitrpg.shared.habitica.models.tasks.TaskType.Companion.TYPE_HABIT
 import com.habitrpg.shared.habitica.models.tasks.TaskType.Companion.TYPE_REWARD
 import com.habitrpg.shared.habitica.models.tasks.TaskType.Companion.TYPE_TODO
-import com.habitrpg.shared.habitica.models.user.Stats
+import com.habitrpg.shared.habitica.models.user.StatsConsts
+import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.Ignore
 import io.realm.annotations.PrimaryKey
 import org.json.JSONArray
-import io.reactivex.functions.Consumer
-import io.realm.RealmList
 import org.json.JSONException
 import java.util.*
+import kotlin.collections.ArrayList
 
 actual open class Task : RealmObject, Parcelable {
     @PrimaryKey
@@ -34,7 +34,7 @@ actual open class Task : RealmObject, Parcelable {
     actual var notes: String? = null
     @TaskTypes
     actual var type: String = ""
-    actual var attribute: String? = Stats.STRENGTH
+    actual var attribute: String? = StatsConsts.STRENGTH
     actual var value: Double = 0.0
     actual var tags: RealmList<Tag>? = RealmList()
     actual var dateCreated: Date? = null
@@ -65,6 +65,7 @@ actual open class Task : RealmObject, Parcelable {
     //TODO: private String lastCompleted;
     // used for buyable items
     actual var specialTag: String? = ""
+
     @Ignore
     actual var parsedText: CharSequence? = null
     @Ignore
@@ -269,6 +270,7 @@ actual open class Task : RealmObject, Parcelable {
     }
 
 
+    @Ignore
     actual var weeksOfMonth: List<Int>? = null
         set(weeksOfMonth: List<Int>?) {
             this.weeksOfMonth = weeksOfMonth
@@ -290,11 +292,12 @@ actual open class Task : RealmObject, Parcelable {
                     }
 
                 }
-                this.weeksOfMonth = weeksOfMonth.toList()
+                field = weeksOfMonth.toList()
             }
             return field
         }
 
+    @Ignore
     actual var daysOfMonth: List<Int>? = null
         set(daysOfMonth) {
             field = daysOfMonth

@@ -1,6 +1,6 @@
 package com.habitrpg.shared.habitica.models.user
 
-class StatsConsts: Stats() {
+class StatsConsts {
     companion object {
         const val STRENGTH = "str"
         const val INTELLIGENCE = "int"

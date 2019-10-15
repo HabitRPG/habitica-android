@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.helpers
 
+import android.content.Context
 import com.habitrpg.android.habitica.R
 import com.habitrpg.shared.habitica.Avatar
 import com.habitrpg.shared.habitica.models.inventory.Equipment
@@ -140,5 +141,15 @@ class UserStatComputer {
         skillRows.add(attributeRow2)
 
         return skillRows
+    }
+
+    fun getTranslatedClassName(stats: Stats, context: Context): String {
+        return when (stats.habitClass) {
+            Stats.HEALER -> context.getString(R.string.healer)
+            Stats.ROGUE -> context.getString(R.string.rogue)
+            Stats.WARRIOR -> context.getString(R.string.warrior)
+            Stats.MAGE -> context.getString(R.string.mage)
+            else -> context.getString(R.string.warrior)
+        }
     }
 }

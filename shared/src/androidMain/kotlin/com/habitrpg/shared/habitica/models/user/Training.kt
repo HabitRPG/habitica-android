@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
-actual class Training : RealmObject() {
+actual open class Training : RealmObject() {
 
     @PrimaryKey
     actual var userId: String? = null

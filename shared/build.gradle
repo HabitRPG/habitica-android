@@ -18,6 +18,7 @@ android {
         }
     }
     sourceSets {
+        main.java.srcDirs += 'src/commonMain/kotlin'
         main.java.srcDirs += 'src/androidMain/kotlin'
     }
     compileOptions {
@@ -51,9 +52,6 @@ kotlin {
         androidMain.dependencies {
             api 'org.jetbrains.kotlin:kotlin-stdlib'
 
-
-            api 'com.android.tools.build:gradle:3.5.0'
-
             api 'io.realm:android-adapters:3.1.0'
 
             //RxJava
@@ -74,6 +72,8 @@ kotlin {
 
 dependencies {
     kapt 'io.realm:realm-annotations-processor:5.14.0'
+
+    implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
 }
 
 // workaround for https://youtrack.jetbrains.com/issue/KT-27170

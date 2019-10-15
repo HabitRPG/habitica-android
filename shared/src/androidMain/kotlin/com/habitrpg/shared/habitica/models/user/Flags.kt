@@ -7,7 +7,7 @@ import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
-actual class Flags : RealmObject() {
+actual open class Flags : RealmObject() {
 
     @PrimaryKey
     actual var userId: String? = null

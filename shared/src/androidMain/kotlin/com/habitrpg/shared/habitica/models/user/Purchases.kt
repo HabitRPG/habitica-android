@@ -7,7 +7,7 @@ import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
-actual class Purchases : RealmObject() {
+actual open class Purchases : RealmObject() {
 
     @PrimaryKey
     actual var userId: String? = null
