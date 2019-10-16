@@ -707,6 +707,20 @@ public class HabiticaIconsHelper {
         return imageOfBuffIcon;
     }
 
+    private static Bitmap imageOfBuffIconDark = null;
+    public static Bitmap imageOfBuffIconDark() {
+        if (imageOfBuffIconDark != null)
+            return imageOfBuffIconDark;
+
+        int size = scaleSize(15);
+        imageOfBuffIconDark = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(imageOfBuffIconDark);
+        canvas.scale(displayDensity, displayDensity);
+        HabiticaIcons.drawBuffIcon(canvas);
+
+        return imageOfBuffIconDark;
+    }
+
     public static Bitmap imageOfTaskDifficultyStars(int taskTintColor, float difficulty, boolean isActive) {
         int size = scaleSize(36);
         Bitmap imageOfTaskDifficultyStars = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);

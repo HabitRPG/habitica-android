@@ -109,9 +109,7 @@ abstract class RealmBaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(
         get() = data?.isValid ?: false
 
     init {
-        if (unfilteredData != null && unfilteredData?.isManaged == false) {
-            throw IllegalStateException("Only use this adapter with managed RealmCollection, " + "for un-managed lists you can just use the BaseRecyclerViewAdapter")
-        }
+        check(!(unfilteredData != null && unfilteredData?.isManaged == false)) { "Only use this adapter with managed RealmCollection, " + "for un-managed lists you can just use the BaseRecyclerViewAdapter" }
         this.updateOnModification = true
         filter()
     }

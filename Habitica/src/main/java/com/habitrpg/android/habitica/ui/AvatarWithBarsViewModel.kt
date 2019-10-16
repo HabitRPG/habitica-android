@@ -46,7 +46,7 @@ class AvatarWithBarsViewModel(private val context: Context, view: View, userRepo
         hpBar.setIcon(HabiticaIconsHelper.imageOfHeartLightBg())
         xpBar.setIcon(HabiticaIconsHelper.imageOfExperience())
         mpBar.setIcon(HabiticaIconsHelper.imageOfMagic())
-        buffImageView.setImageBitmap(HabiticaIconsHelper.imageOfBuffIcon())
+        buffImageView.setImageBitmap(HabiticaIconsHelper.imageOfBuffIconDark())
         setHpBarData(0f, 50)
         setXpBarData(0f, 1)
         setMpBarData(0f, 1)

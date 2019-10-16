@@ -11895,8 +11895,8 @@ public class HabiticaIcons {
         Paint paint = CacheForBuffIcon.paint;
         
         // Local Colors
-        int fillColor18 = Color.argb(255, 185, 172, 252);
-        int fillColor85 = Color.argb(255, 37, 29, 60);
+        int fillColor18 = Color.argb(255, 154, 98, 255);
+        int fillColor85 = Color.argb(255, 237, 236, 238);
         
         // Resize to Target Frame
         canvas.save();
@@ -11952,6 +11952,85 @@ public class HabiticaIcons {
         paint.setColor(fillColor18);
         canvas.drawPath(bezier2Path, paint);
         
+        canvas.restore();
+    }
+
+    private static class CacheForBuffIconDark {
+        private static Paint paint = new Paint();
+        private static RectF originalFrame = new RectF(0f, 0f, 15f, 15f);
+        private static RectF resizedFrame = new RectF();
+        private static RectF rectangleRect = new RectF();
+        private static Path rectanglePath = new Path();
+        private static RectF bezier2Rect = new RectF();
+        private static Path bezier2Path = new Path();
+    }
+
+    public static void drawBuffIconDark(Canvas canvas) {
+        HabiticaIcons.drawBuffIconDark(canvas, new RectF(0f, 0f, 15f, 15f), ResizingBehavior.AspectFit);
+    }
+
+    public static void drawBuffIconDark(Canvas canvas, RectF targetFrame, ResizingBehavior resizing) {
+        // General Declarations
+        Paint paint = CacheForBuffIcon.paint;
+
+        // Local Colors
+        int fillColor18 = Color.argb(255, 185, 172, 252);
+        int fillColor85 = Color.argb(255, 37, 29, 60);
+
+        // Resize to Target Frame
+        canvas.save();
+        RectF resizedFrame = CacheForBuffIcon.resizedFrame;
+        HabiticaIcons.resizingBehaviorApply(resizing, CacheForBuffIcon.originalFrame, targetFrame, resizedFrame);
+        canvas.translate(resizedFrame.left, resizedFrame.top);
+        canvas.scale(resizedFrame.width() / 15f, resizedFrame.height() / 15f);
+
+        // Rectangle
+        RectF rectangleRect = CacheForBuffIcon.rectangleRect;
+        rectangleRect.set(0f, 0f, 15f, 15f);
+        Path rectanglePath = CacheForBuffIcon.rectanglePath;
+        rectanglePath.reset();
+        rectanglePath.addRoundRect(rectangleRect, 2f, 2f, Path.Direction.CW);
+
+        paint.reset();
+        paint.setFlags(Paint.ANTI_ALIAS_FLAG);
+        paint.setStyle(Paint.Style.FILL);
+        paint.setColor(fillColor85);
+        canvas.drawPath(rectanglePath, paint);
+
+        // Bezier 2
+        RectF bezier2Rect = CacheForBuffIcon.bezier2Rect;
+        bezier2Rect.set(3.75f, 3f, 11.25f, 12f);
+        Path bezier2Path = CacheForBuffIcon.bezier2Path;
+        bezier2Path.reset();
+        bezier2Path.moveTo(7.5f, 3f);
+        bezier2Path.lineTo(11.25f, 7.5f);
+        bezier2Path.lineTo(9f, 7.5f);
+        bezier2Path.lineTo(9f, 9f);
+        bezier2Path.lineTo(6f, 9f);
+        bezier2Path.lineTo(6f, 7.5f);
+        bezier2Path.lineTo(3.75f, 7.5f);
+        bezier2Path.lineTo(7.5f, 3f);
+        bezier2Path.close();
+        bezier2Path.moveTo(6f, 9.75f);
+        bezier2Path.lineTo(9f, 9.75f);
+        bezier2Path.lineTo(9f, 10.5f);
+        bezier2Path.lineTo(6f, 10.5f);
+        bezier2Path.lineTo(6f, 9.75f);
+        bezier2Path.close();
+        bezier2Path.moveTo(6f, 11.25f);
+        bezier2Path.lineTo(9f, 11.25f);
+        bezier2Path.lineTo(9f, 12f);
+        bezier2Path.lineTo(6f, 12f);
+        bezier2Path.lineTo(6f, 11.25f);
+        bezier2Path.close();
+
+        paint.reset();
+        paint.setFlags(Paint.ANTI_ALIAS_FLAG);
+        bezier2Path.setFillType(Path.FillType.EVEN_ODD);
+        paint.setStyle(Paint.Style.FILL);
+        paint.setColor(fillColor18);
+        canvas.drawPath(bezier2Path, paint);
+
         canvas.restore();
     }
     
