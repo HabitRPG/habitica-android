@@ -244,6 +244,8 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
                         .emitWithGravity(titleTextView, Gravity.BOTTOM, 10, 2000)
             }
         }
+
+        window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
     }
 
     companion object {
