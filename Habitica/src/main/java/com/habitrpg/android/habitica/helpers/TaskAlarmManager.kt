@@ -13,6 +13,7 @@ import com.habitrpg.shared.habitica.models.tasks.RemindersItem
 import com.habitrpg.shared.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.receivers.NotificationPublisher
 import com.habitrpg.android.habitica.receivers.TaskReceiver
+import com.habitrpg.shared.habitica.models.tasks.TaskType
 import io.reactivex.Flowable
 import io.reactivex.functions.Consumer
 import java.util.*

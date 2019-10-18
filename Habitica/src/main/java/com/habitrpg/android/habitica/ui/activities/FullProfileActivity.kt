@@ -20,10 +20,10 @@ import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.UserStatComputer
-import com.habitrpg.android.habitica.models.Achievement
+import com.habitrpg.shared.habitica.models.Achievement
 import com.habitrpg.shared.habitica.models.inventory.Equipment
 import com.habitrpg.shared.habitica.models.members.Member
-import com.habitrpg.android.habitica.models.user.Outfit
+import com.habitrpg.shared.habitica.models.user.Outfit
 import com.habitrpg.shared.habitica.models.user.Stats
 import com.habitrpg.android.habitica.ui.AvatarView
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel
@@ -371,7 +371,7 @@ class FullProfileActivity : BaseActivity() {
         val buffs = stats.buffs
 
         addAttributeRow(getString(R.string.profile_allocated), stats.strength?.toFloat() ?: 0f, stats.intelligence?.toFloat() ?: 0f, stats.constitution?.toFloat() ?: 0f, stats.per?.toFloat() ?: 0f, true, false)
-        addAttributeRow(getString(R.string.buffs), buffs?.getStr() ?: 0f, buffs?.get_int() ?: 0f, buffs?.getCon() ?: 0f, buffs?.getPer() ?: 0f, roundDown = true, isSummary = false)
+        addAttributeRow(getString(R.string.buffs), buffs?.str ?: 0f, buffs?._int ?: 0f, buffs?.con ?: 0f, buffs?.per ?: 0f, roundDown = true, isSummary = false)
 
         // Summary row
         addAttributeRow("", attributeStrSum, attributeIntSum, attributeConSum, attributePerSum, roundDown = false, isSummary = true)

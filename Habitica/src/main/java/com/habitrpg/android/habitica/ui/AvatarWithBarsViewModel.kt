@@ -12,6 +12,7 @@ import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.events.BoughtGemsEvent
 import com.habitrpg.android.habitica.helpers.HealthFormatter
 import com.habitrpg.android.habitica.helpers.MainNavigationController
+import com.habitrpg.android.habitica.ui.helpers.StatsLanguages.getTranslatedClassName
 import com.habitrpg.shared.habitica.Avatar
 import com.habitrpg.shared.habitica.models.user.Stats
 import com.habitrpg.shared.habitica.models.user.User
@@ -65,7 +66,7 @@ class AvatarWithBarsViewModel(private val context: Context, view: View, userRepo
         avatarView.setAvatar(user)
 
         if (stats.habitClass != null) {
-            userClass = stats.getTranslatedClassName(context)
+            userClass = getTranslatedClassName(stats, context)
         }
 
         mpBar.visibility = if (stats.habitClass == null || stats.lvl ?: 0 < 10 || user.preferences?.isDisableClasses == true) View.GONE else View.VISIBLE

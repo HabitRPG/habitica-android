@@ -27,7 +27,7 @@ open class UserStyles : RealmObject(), Avatar {
 
     override var stats: Stats? = null
 
-    override var preferences: AvatarPreferences? = null
+    override var preferences: Preferences? = null
 
     override val gemCount: Int?
         get() = 0

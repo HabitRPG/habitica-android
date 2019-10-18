@@ -15,7 +15,7 @@ expect open class Stats() {
     var training: Training?
     var buffs: Buffs?
     var points: Int?
-    var lvl: Long?
+    var lvl: Int?
     var habitClass: String?
     var gp: Double?
     var exp: Double?
@@ -29,5 +29,12 @@ expect open class Stats() {
     fun merge(stats: Stats?)
 
     fun setHabitClass(habitRpgClass: HabitRpgClass)
+
+    companion object {
+        val STRENGTH: String
+        val INTELLIGENCE: String
+        val CONSTITUTION: String
+        val PERCEPTION: String
+    }
 }
 

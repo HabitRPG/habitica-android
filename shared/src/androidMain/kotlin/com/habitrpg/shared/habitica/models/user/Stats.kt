@@ -1,8 +1,6 @@
 package com.habitrpg.shared.habitica.models.user
 
-import android.content.Context
 import com.google.gson.annotations.SerializedName
-import com.habitrpg.shared.habitica.R
 import com.habitrpg.shared.habitica.models.HabitRpgClass
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
@@ -33,7 +31,7 @@ actual open class Stats : RealmObject() {
     actual var training: Training? = null
     actual var buffs: Buffs? = null
     actual var points: Int? = null
-    actual var lvl: Long? = null
+    actual var lvl: Int? = null
     @SerializedName("class")
     actual var habitClass: String? = null
     actual var gp: Double? = null
@@ -96,12 +94,11 @@ actual open class Stats : RealmObject() {
         habitClass = habitRpgClass.toString()
     }
 
-    companion object {
-        const val STRENGTH = "str"
-        const val INTELLIGENCE = "int"
-        const val CONSTITUTION = "con"
-        const val PERCEPTION = "per"
-
+    actual companion object {
+        actual val STRENGTH = "str"
+        actual val INTELLIGENCE = "int"
+        actual val CONSTITUTION = "con"
+        actual val PERCEPTION = "per"
 
         const val WARRIOR = "warrior"
         const val MAGE = "wizard"

@@ -27,6 +27,7 @@ import com.habitrpg.android.habitica.ui.adapter.social.challenges.ChallengeTasks
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
+import com.habitrpg.shared.habitica.models.tasks.TaskType
 import io.reactivex.Flowable
 import io.reactivex.functions.Consumer
 import java.util.*

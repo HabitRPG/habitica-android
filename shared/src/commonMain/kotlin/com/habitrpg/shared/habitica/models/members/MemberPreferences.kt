@@ -6,9 +6,7 @@ import com.habitrpg.shared.habitica.models.user.Hair
 
 
 expect open class MemberPreferences : AvatarPreferences {
-
     override var userId: String?
-
     override var hair: Hair?
     override var costume: Boolean
     override var isDisableClasses: Boolean
