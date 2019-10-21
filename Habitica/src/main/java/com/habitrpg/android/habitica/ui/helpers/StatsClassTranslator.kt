@@ -10,7 +10,7 @@ import com.habitrpg.shared.habitica.models.user.Stats.Companion.MAGE
 
 
 object StatsLanguages {
-    fun getTranslatedClassName(stats: Stats?, context: Context): String? {
+    fun getTranslatedClassName(stats: Stats?, context: Context): String {
         return when (stats?.habitClass) {
             HEALER -> context.getString(R.string.healer)
             ROGUE -> context.getString(R.string.rogue)

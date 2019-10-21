@@ -66,7 +66,7 @@ class AvatarWithBarsViewModel(private val context: Context, view: View, userRepo
         avatarView.setAvatar(user)
 
         if (stats.habitClass != null) {
-            userClass = getTranslatedClassName(stats, context)
+            userClass = getTranslatedClassName(stats, context)!!
         }
 
         mpBar.visibility = if (stats.habitClass == null || stats.lvl ?: 0 < 10 || user.preferences?.isDisableClasses == true) View.GONE else View.VISIBLE

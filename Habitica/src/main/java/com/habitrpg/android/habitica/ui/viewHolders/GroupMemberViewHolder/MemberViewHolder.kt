@@ -88,7 +88,7 @@ class GroupMemberViewHolder(itemView: View) : androidx.recyclerview.widget.Recyc
         displayNameTextView.tier = user.contributor?.level ?: 0
 
         if (user.hasClass()) {
-            sublineTextView.text = itemView.context.getString(R.string.user_level_with_class, user.stats?.lvl, getTranslatedClassName(user.stats?, itemView.context))
+            sublineTextView.text = itemView.context.getString(R.string.user_level_with_class, user.stats?.lvl, getTranslatedClassName(user.stats, itemView.context))
         } else {
             sublineTextView.text = itemView.context.getString(R.string.user_level, user.stats?.lvl)
         }
