@@ -37,11 +37,11 @@ actual open class Preferences : RealmObject(), AvatarPreferences {
     actual override var background: String? = null
     actual override var chair: String? = null
         get() {
-            return if (chair != null && chair != "none") {
-                if (chair!!.length > 5 && chair!!.substring(0, 6) != "chair_") {
-                    chair
+            return if (field != null && field != "none") {
+                if (field!!.length > 5 && field!!.substring(0, 6) != "chair_") {
+                    field
                 } else {
-                    "chair_" + chair!!
+                    "chair_" + field!!
                 }
             } else null
         }
