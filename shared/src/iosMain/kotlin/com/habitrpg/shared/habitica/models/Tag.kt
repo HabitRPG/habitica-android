@@ -1,3 +1,3 @@
 package com.habitrpg.shared.habitica.models
 
-actual open class Tag {}
+actual open class Tag

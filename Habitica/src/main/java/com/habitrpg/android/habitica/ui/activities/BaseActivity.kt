@@ -49,7 +49,7 @@ abstract class BaseActivity : AppCompatActivity() {
         resources.updateConfiguration(configuration, resources.displayMetrics)
         loadTheme(sharedPreferences)
 
-        delegate.setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        delegate.localNightMode = AppCompatDelegate.MODE_NIGHT_NO
         super.onCreate(savedInstanceState)
         habiticaApplication
         injectActivity(HabiticaBaseApplication.userComponent)

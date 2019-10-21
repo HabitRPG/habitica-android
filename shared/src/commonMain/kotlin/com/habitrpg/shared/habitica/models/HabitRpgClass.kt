@@ -1,4 +1,4 @@
-package com.habitrpg.shared.habitica.models;
+package com.habitrpg.shared.habitica.models
 
 /**
  * Created by MagicMicky on 16/03/14.

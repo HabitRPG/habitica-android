@@ -22,7 +22,7 @@ expect class ChecklistItem {
 
     fun writeToParcel(dest: NativeParcel, flags: Int)
 
-    companion object CREATOR {}
+    companion object CREATOR
 
     constructor(source: NativeParcel)
 }

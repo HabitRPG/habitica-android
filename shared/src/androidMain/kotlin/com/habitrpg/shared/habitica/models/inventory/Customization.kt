@@ -6,7 +6,6 @@ import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
 actual open class Customization : RealmObject() {
-
     @PrimaryKey
     actual var id: String? = null
     actual var identifier: String? = null

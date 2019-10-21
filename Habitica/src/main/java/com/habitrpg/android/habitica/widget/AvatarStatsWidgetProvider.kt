@@ -41,7 +41,7 @@ class AvatarStatsWidgetProvider : BaseWidgetProvider() {
         this.appWidgetManager = appWidgetManager
         this.context = context
 
-        userRepository?.getUser()?.firstElement()?.subscribe(Consumer<User> { this.updateData(it) }, RxErrorHandler.handleEmptyError())
+        userRepository.getUser().firstElement()?.subscribe(Consumer<User> { this.updateData(it) }, RxErrorHandler.handleEmptyError())
     }
 
     override fun configureRemoteViews(remoteViews: RemoteViews, widgetId: Int, columns: Int, rows: Int): RemoteViews {

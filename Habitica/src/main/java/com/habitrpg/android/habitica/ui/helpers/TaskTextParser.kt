@@ -34,7 +34,7 @@ object TaskTextParser {
 
     fun markdownNotes(task: Task?, callback: (CharSequence) -> Unit): CharSequence? {
         if (task?.parsedNotes != null) {
-            return task?.parsedNotes as CharSequence
+            return task.parsedNotes as CharSequence
         }
 
         if (task?.notes?.isEmpty() == true) {
