@@ -1,5 +1,7 @@
 package com.habitrpg.shared.habitica.models.user
 
+import com.habitrpg.shared.habitica.nativeLibraries.NativeSparseIntArray
+
 actual open class ContributorInfo {
     actual var userId: String?
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
@@ -24,19 +26,9 @@ actual open class ContributorInfo {
     actual val contributorForegroundColor: Int
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
 
-    actual fun getAdmin(): Boolean? {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    actual fun setAdmin(admin: Boolean?) {
-    }
-
     actual companion object {
-        actual val CONTRIBUTOR_COLOR_DICT: SparseIntArray
+        actual val CONTRIBUTOR_COLOR_DICT: NativeSparseIntArray
             get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
-
     }
 
 }
-
-typealias NativeSparseIntArray

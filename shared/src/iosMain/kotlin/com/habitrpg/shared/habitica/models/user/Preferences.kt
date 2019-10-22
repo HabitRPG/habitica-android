@@ -13,10 +13,10 @@ actual open class Preferences : AvatarPreferences {
     actual override var costume: Boolean
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
-    actual var isDisableClasses: Boolean
+    actual override var isDisableClasses: Boolean
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
-    actual var isSleep: Boolean
+    actual override var isSleep: Boolean
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
     actual var dailyDueDefaultView: Boolean
@@ -64,13 +64,6 @@ actual open class Preferences : AvatarPreferences {
     actual var autoEquip: Boolean
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
-
-    actual fun getUserId(): String? {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    actual fun setUserId(userId: String?) {
-    }
 
     actual fun hasTaskBasedAllocation(): Boolean {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.

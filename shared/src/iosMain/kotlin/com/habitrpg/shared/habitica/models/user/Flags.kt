@@ -1,12 +1,13 @@
 package com.habitrpg.shared.habitica.models.user
 
-import com.habitrpg.shared.habitica.nativeLibraries.RealmList
+import com.habitrpg.shared.habitica.models.TutorialStep
+import com.habitrpg.shared.habitica.nativeLibraries.NativeList
 
 actual class Flags {
     actual var userId: String?
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
-    internal actual var tutorial: RealmList<TutorialStep>
+    internal actual var tutorial: NativeList<TutorialStep>?
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
     actual var showTour: Boolean

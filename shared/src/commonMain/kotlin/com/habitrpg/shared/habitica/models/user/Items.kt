@@ -1,17 +1,17 @@
 package com.habitrpg.shared.habitica.models.user
 
 import com.habitrpg.shared.habitica.nativeLibraries.NativeDate
-import com.habitrpg.shared.habitica.nativeLibraries.NativeRealmList
+import com.habitrpg.shared.habitica.nativeLibraries.NativeList
 
 expect open class Items {
 
     var userId: String?
-    var eggs: NativeRealmList<OwnedItem>?
-    var food: NativeRealmList<OwnedItem>?
-    var hatchingPotions: NativeRealmList<OwnedItem>?
-    var quests: NativeRealmList<OwnedItem>?
-    var pets: NativeRealmList<OwnedPet>?
-    var mounts: NativeRealmList<OwnedMount>?
+    var eggs: NativeList<OwnedItem>?
+    var food: NativeList<OwnedItem>?
+    var hatchingPotions: NativeList<OwnedItem>?
+    var quests: NativeList<OwnedItem>?
+    var pets: NativeList<OwnedPet>?
+    var mounts: NativeList<OwnedMount>?
     var currentMount: String?
     var currentPet: String?
     var lastDrop_count: Int

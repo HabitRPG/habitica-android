@@ -1,13 +1,13 @@
 package com.habitrpg.shared.habitica.models.user
 
 import com.habitrpg.shared.habitica.models.inventory.Equipment
-import com.habitrpg.shared.habitica.nativeLibraries.RealmList
+import com.habitrpg.shared.habitica.nativeLibraries.NativeList
 
 actual open class Gear {
     actual var userId: String?
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
-    actual var owned: RealmList<Equipment>?
+    actual var owned: NativeList<Equipment>?
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
     internal actual var items: Items?

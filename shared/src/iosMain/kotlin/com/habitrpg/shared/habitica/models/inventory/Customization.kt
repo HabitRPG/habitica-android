@@ -55,7 +55,7 @@ actual open class Customization {
     actual fun updateID() {
     }
 
-    actual fun getImageName(userSize: String, hairColor: String): String {
+    actual fun getImageName(userSize: String?, hairColor: String?): String {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 

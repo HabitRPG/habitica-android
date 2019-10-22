@@ -1,5 +1,6 @@
 package com.habitrpg.shared.habitica.models.members
 
+import com.habitrpg.shared.habitica.Avatar
 import com.habitrpg.shared.habitica.models.social.UserParty
 import com.habitrpg.shared.habitica.models.user.*
 
@@ -7,13 +8,13 @@ actual open class Member : Avatar {
     actual var id: String?
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
-    actual final override var stats: Stats?
+    actual override var stats: Stats?
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
     actual var inbox: Inbox?
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
-    actual final override var preferences: MemberPreferences?
+    actual override var preferences: MemberPreferences?
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
     actual var profile: Profile?
@@ -31,16 +32,28 @@ actual open class Member : Avatar {
     actual var items: Items?
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
-    actual final override var costume: Outfit?
+    actual override var currentMount: String?
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
-    actual final override var equipped: Outfit?
+    actual override var currentPet: String?
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
-    actual final override var currentMount: String?
+    actual override var sleep: Boolean
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
-    actual final override var currentPet: String?
+    actual override var gemCount: Int?
+        get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
+        set(value) {}
+    actual override var hourglassCount: Int?
+        get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
+        set(value) {}
+    actual override var costume: Outfit?
+        get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
+        set(value) {}
+    actual override var equipped: Outfit?
+        get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
+        set(value) {}
+    actual override var valid: Boolean
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
     actual var participatesInQuest: Boolean?
@@ -60,61 +73,7 @@ actual open class Member : Avatar {
     actual val formattedUsername: String?
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
 
-    actual open fun getPreferences(): MemberPreferences? {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    actual fun setPreferences(preferences: MemberPreferences?) {
-    }
-
-    actual open fun getStats(): Stats? {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    actual fun setStats(stats: Stats?) {
-    }
-
-    actual open fun getGemCount(): Int? {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    actual open fun getHourglassCount(): Int? {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    actual open fun getCostume(): Outfit? {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    actual fun setCostume(costume: Outfit?) {
-    }
-
-    actual open fun getEquipped(): Outfit? {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
     actual override fun hasClass(): Boolean {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    actual fun setEquipped(equipped: Outfit?) {
-    }
-
-    actual open fun getCurrentMount(): String? {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    actual fun setCurrentMount(currentMount: String) {
-    }
-
-    actual open fun getCurrentPet(): String? {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    actual fun setCurrentPet(currentPet: String) {
-    }
-
-    actual open fun getSleep(): Boolean {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 

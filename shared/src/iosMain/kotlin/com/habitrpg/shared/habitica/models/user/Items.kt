@@ -1,28 +1,28 @@
 package com.habitrpg.shared.habitica.models.user
 
 import com.habitrpg.shared.habitica.nativeLibraries.NativeDate
-import com.habitrpg.shared.habitica.nativeLibraries.RealmList
+import com.habitrpg.shared.habitica.nativeLibraries.NativeList
 
 actual open class Items {
     actual var userId: String?
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
-    actual var eggs: RealmList<OwnedItem>?
+    actual var eggs: NativeList<OwnedItem>?
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
-    actual var food: RealmList<OwnedItem>?
+    actual var food: NativeList<OwnedItem>?
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
-    actual var hatchingPotions: RealmList<OwnedItem>?
+    actual var hatchingPotions: NativeList<OwnedItem>?
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
-    actual var quests: RealmList<OwnedItem>?
+    actual var quests: NativeList<OwnedItem>?
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
-    actual var pets: RealmList<OwnedPet>?
+    actual var pets: NativeList<OwnedPet>?
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
-    actual var mounts: RealmList<OwnedMount>?
+    actual var mounts: NativeList<OwnedMount>?
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
     actual var currentMount: String?

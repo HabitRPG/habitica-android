@@ -10,7 +10,7 @@ actual open class OwnedPet : OwnedObject {
     actual override var key: String?
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
-    actual var trained: Boolean
+    actual var trained: Int
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
 

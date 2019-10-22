@@ -40,8 +40,7 @@ actual open class Equipment {
     actual var owned: Boolean?
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
-    actual var twoHanded: Boolean
+    actual var twoHanded: Boolean?
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
-
 }

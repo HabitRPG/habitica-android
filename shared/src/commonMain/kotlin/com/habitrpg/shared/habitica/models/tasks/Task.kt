@@ -12,7 +12,7 @@ expect open class Task {
     var type: String
     var attribute: String?
     var value: Double
-    var tags: NativeRealmList<Tag>?
+    var tags: NativeList<Tag>?
     var dateCreated: NativeDate?
     var position: Int
     var group: TaskGroupPlan?
@@ -23,8 +23,8 @@ expect open class Task {
     var counterDown: Int?
     //todos/dailies
     var completed: Boolean
-    var checklist: NativeRealmList<ChecklistItem>?
-    var reminders: NativeRealmList<RemindersItem>?
+    var checklist: NativeList<ChecklistItem>?
+    var reminders: NativeList<RemindersItem>?
 
     //dailies
     var frequency: String?
@@ -37,7 +37,7 @@ expect open class Task {
     var parsedText: CharSequence?
     var parsedNotes: CharSequence?
     var isDue: Boolean?
-    var nextDue: NativeRealmList<NativeDate>?
+    var nextDue: NativeList<NativeDate>?
 
     //Needed for offline creating/updating
     var isSaving: Boolean

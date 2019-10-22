@@ -2,7 +2,7 @@ package com.habitrpg.shared.habitica.models.tasks
 
 import com.habitrpg.shared.habitica.nativeLibraries.NativeParcel
 
-actual class Days {
+actual open class Days {
     actual var taskId: String?
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
@@ -42,4 +42,5 @@ actual class Days {
     protected actual constructor(`in`: NativeParcel) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
+
 }

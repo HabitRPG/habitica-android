@@ -1,9 +1,17 @@
 package com.habitrpg.shared.habitica.models.user
 
+import com.habitrpg.shared.habitica.models.PushDevice
+import com.habitrpg.shared.habitica.models.QuestAchievement
 import com.habitrpg.shared.habitica.models.Tag
+import com.habitrpg.shared.habitica.models.invitations.Invitations
+import com.habitrpg.shared.habitica.models.social.ChallengeMembership
+import com.habitrpg.shared.habitica.models.social.UserParty
+import com.habitrpg.shared.habitica.models.tasks.TaskList
+import com.habitrpg.shared.habitica.models.tasks.TasksOrder
+import com.habitrpg.shared.habitica.nativeLibraries.NativeDate
+import com.habitrpg.shared.habitica.nativeLibraries.NativeList
 
-
-actual open class User {
+actual open class User : Avatar {
     actual var tasks: TaskList?
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
@@ -16,13 +24,13 @@ actual open class User {
     actual var balance: Double
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
-    actual var stats: Stats?
+    actual override var stats: Stats?
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
     actual var inbox: Inbox?
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
-    actual var preferences: Preferences?
+    actual override var preferences: Preferences?
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
     actual var profile: Profile?
@@ -46,10 +54,10 @@ actual open class User {
     actual var invitations: Invitations?
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
-    actual var tags: List<Tag>
+    actual var tags: NativeList<Tag>
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
-    actual var questAchievements: List<QuestAchievement>
+    actual var questAchievements: NativeList<QuestAchievement>
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
     actual var pushDevices: List<PushDevice>?
@@ -61,9 +69,13 @@ actual open class User {
     actual var tasksOrder: TasksOrder?
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
-    actual var challenges: RealmList<ChallengeMembership><ChallengeMembership>?
-    actual var abTests: RealmList<ABTest><ABTest>?
-    actual var lastCron: Date?
+    actual var challenges: NativeList<ChallengeMembership>?
+        get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
+        set(value) {}
+    actual var abTests: NativeList<ABTest>?
+        get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
+        set(value) {}
+    actual var lastCron: NativeDate?
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
     actual var needsCron: Boolean
@@ -86,53 +98,12 @@ actual open class User {
     actual val formattedUsername: String?
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
 
-    actual fun getPreferences(): Preferences? {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    actual fun setPreferences(preferences: Preferences?) {
-    }
-
-    actual fun getStats(): Stats? {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    actual fun setStats(stats: Stats?) {
-    }
-
-    actual fun getGemCount(): Int {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    actual fun getHourglassCount(): Int {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    actual fun getCostume(): Outfit? {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    actual fun getEquipped(): Outfit? {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
     actual fun hasClass(): Boolean {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    actual fun getCurrentMount(): String? {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    actual fun getCurrentPet(): String? {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    actual fun getSleep(): Boolean {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     actual fun hasParty(): Boolean {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
+
 }

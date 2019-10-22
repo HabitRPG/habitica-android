@@ -1,5 +1,7 @@
 package com.habitrpg.shared.habitica.models.social
 
+import com.habitrpg.shared.habitica.models.inventory.Quest
+
 actual open class UserParty {
     actual var userId: String?
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
@@ -16,5 +18,4 @@ actual open class UserParty {
     actual var orderAscending: String?
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
-
 }

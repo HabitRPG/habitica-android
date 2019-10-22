@@ -1,6 +1,6 @@
 package com.habitrpg.shared.habitica.models.inventory
 
-import com.habitrpg.shared.habitica.nativeLibraries.NativeRealmList
+import com.habitrpg.shared.habitica.nativeLibraries.NativeList
 
 
 expect open class QuestProgress {
@@ -8,7 +8,7 @@ expect open class QuestProgress {
     var key: String?
     var hp: Double
     var rage: Double
-    var collect: NativeRealmList<QuestProgressCollect>?
+    var collect: NativeList<QuestProgressCollect>?
     var down: Float
     var up: Float
 }

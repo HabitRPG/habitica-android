@@ -1,5 +1,10 @@
 package com.habitrpg.shared.habitica.models.tasks
 
+import com.habitrpg.shared.habitica.models.Tag
+import com.habitrpg.shared.habitica.nativeLibraries.NativeDate
+import com.habitrpg.shared.habitica.nativeLibraries.NativeList
+import com.habitrpg.shared.habitica.nativeLibraries.NativeParcel
+
 actual open class Task {
     actual var id: String?
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
@@ -25,8 +30,10 @@ actual open class Task {
     actual var value: Double
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
-    actual var tags: [ERROR : RealmList]<com.habitrpg.shared.habitica.models.Tag>?
-    actual var dateCreated: Date?
+    actual var tags: NativeList<Tag>?
+        get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
+        set(value) {}
+    actual var dateCreated: NativeDate?
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
     actual var position: Int
@@ -50,8 +57,12 @@ actual open class Task {
     actual var completed: Boolean
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
-    actual var checklist: RealmList<ChecklistItem>?
-    actual var reminders: RealmList<RemindersItem>?
+    actual var checklist: NativeList<ChecklistItem>?
+        get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
+        set(value) {}
+    actual var reminders: NativeList<RemindersItem>?
+        get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
+        set(value) {}
     actual var frequency: String?
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
@@ -61,13 +72,13 @@ actual open class Task {
     actual var streak: Int?
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
-    actual var startDate: Date?
+    actual var startDate: NativeDate?
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
     actual var repeat: Days?
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
-    actual var dueDate: Date?
+    actual var dueDate: NativeDate?
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
     actual var specialTag: String?
@@ -82,7 +93,9 @@ actual open class Task {
     actual var isDue: Boolean?
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
-    actual var nextDue: [ERROR : RealmList]<Date>?
+    actual var nextDue: NativeList<NativeDate>?
+        get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
+        set(value) {}
     actual var isSaving: Boolean
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
@@ -126,7 +139,6 @@ actual open class Task {
     actual val isPendingApproval: Boolean
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
 
-    @StringDef(TYPE_HABIT, TYPE_DAILY, TYPE_TODO, TYPE_REWARD)
     @Retention(AnnotationRetention.SOURCE)
     actual annotation class TaskTypes
 
@@ -138,18 +150,15 @@ actual open class Task {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    actual fun getNextReminderOccurence(oldTime: Date?): Date? {
+    actual fun getNextReminderOccurence(oldTime: NativeDate?): NativeDate? {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    actual fun parseMarkdown() {
-    }
-
-    actual fun markdownText(callback: (CharSequence) -> Unit): CharSequence {
+    actual override fun equals(other: Any?): Boolean {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    actual fun markdownNotes(callback: (CharSequence) -> Unit): CharSequence? {
+    actual override fun hashCode(): Int {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
@@ -157,30 +166,18 @@ actual open class Task {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    actual fun writeToParcel(dest: Parcel, flags: Int) {
+    actual fun writeToParcel(dest: NativeParcel, flags: Int) {
     }
 
-    actual fun setWeeksOfMonth(weeksOfMonth: List<Int>?) {
+    actual companion object CREATOR {
+        actual fun createFromParcel(source: NativeParcel): Task {
+            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        }
+
+        actual fun newArray(size: Int): Array<Task?> {
+            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        }
+
     }
 
-    actual fun getWeeksOfMonth(): List<Int>? {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    actual fun setDaysOfMonth(daysOfMonth: List<Int>?) {
-    }
-
-    actual fun getDaysOfMonth(): List<Int>? {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
 }
-actual class RealmList<T>
-actual class NativeDate
-actual annotation class StringDef
-actual class TYPE_HABIT
-actual class TYPE_TODO
-actual class TYPE_DAILY
-actual class TYPE_REWARD
-actual annotation class EnumDef actual constructor(actual val vararg types: String)
-
-actual class NativeParcel

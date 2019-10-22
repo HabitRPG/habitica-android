@@ -31,4 +31,7 @@ actual open class PushNotificationsPreference {
     actual var giftedSubscription: Boolean
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
+    actual var partyActivity: Boolean
+        get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
+        set(value) {}
 }

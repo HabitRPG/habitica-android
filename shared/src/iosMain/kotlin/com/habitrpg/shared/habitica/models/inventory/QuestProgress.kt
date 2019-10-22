@@ -1,6 +1,6 @@
 package com.habitrpg.shared.habitica.models.inventory
 
-import com.habitrpg.shared.habitica.nativeLibraries.RealmList
+import com.habitrpg.shared.habitica.nativeLibraries.NativeList
 
 actual open class QuestProgress {
     actual var id: String?
@@ -15,7 +15,7 @@ actual open class QuestProgress {
     actual var rage: Double
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
-    actual var collect: RealmList<QuestProgressCollect>?
+    actual var collect: NativeList<QuestProgressCollect>?
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
     actual var down: Float
@@ -24,5 +24,4 @@ actual open class QuestProgress {
     actual var up: Float
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
-
 }

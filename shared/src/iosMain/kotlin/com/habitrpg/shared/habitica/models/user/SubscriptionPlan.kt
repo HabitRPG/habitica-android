@@ -2,7 +2,7 @@ package com.habitrpg.shared.habitica.models.user
 
 import com.habitrpg.shared.habitica.nativeLibraries.NativeDate
 
-actual open class SubscriptionPlan : SubscriptionPlanConsts {
+actual open class SubscriptionPlan {
     actual var customerId: String?
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
@@ -46,9 +46,5 @@ actual open class SubscriptionPlan : SubscriptionPlanConsts {
     actual fun numberOfGemsLeft(): Int {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
-
-    actual fun setCustomerId(customerId: String) {
-    }
-
 
 }
