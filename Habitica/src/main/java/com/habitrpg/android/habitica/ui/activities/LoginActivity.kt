@@ -44,6 +44,7 @@ import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.KeyHelper
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.auth.UserAuthResponse
+import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
@@ -69,6 +70,8 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
     @Inject
     @JvmField
     var keyHelper: KeyHelper? = null
+    @Inject
+    lateinit var crashlyticsProxy: CrashlyticsProxy
 
     private var isRegistering: Boolean = false
     private var isShowingForm: Boolean = false
@@ -95,7 +98,7 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
     private var googleEmail: String? = null
     private var loginManager = LoginManager.getInstance()
 
-    private val mLoginNormalClick = View.OnClickListener {
+    private val loginClick = View.OnClickListener {
         mProgressBar.visibility = View.VISIBLE
         if (isRegistering) {
             val username: String = mUsernameET.text.toString().trim { it <= ' ' }
@@ -106,8 +109,7 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
                 showValidationError(R.string.login_validation_error_fieldsmissing)
                 return@OnClickListener
             }
-            apiClient.registerUser(username, email, password, confirmPassword)
-                    .subscribe(this@LoginActivity, RxErrorHandler.handleEmptyError())
+            apiClient.registerUser(username, email, password, confirmPassword).subscribe(this@LoginActivity, RxErrorHandler.handleEmptyError())
         } else {
             val username: String = mUsernameET.text.toString().trim { it <= ' ' }
             val password: String = mPasswordET.text.toString()
@@ -115,8 +117,7 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
                 showValidationError(R.string.login_validation_error_fieldsmissing)
                 return@OnClickListener
             }
-            apiClient.connectUser(username, password)
-                    .subscribe(this@LoginActivity, RxErrorHandler.handleEmptyError())
+            apiClient.connectUser(username, password).subscribe(this@LoginActivity, RxErrorHandler.handleEmptyError())
         }
     }
 
@@ -133,7 +134,7 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
 
         setupFacebookLogin()
 
-        mLoginNormalBtn.setOnClickListener(mLoginNormalClick)
+        mLoginNormalBtn.setOnClickListener(loginClick)
 
         val content = SpannableString(forgotPasswordButton.text)
         content.setSpan(UnderlineSpan(), 0, content.length, 0)
@@ -279,11 +280,20 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
         this.apiClient.updateAuthenticationCredentials(user, api)
         sharedPrefs.edit {
             putString(getString(R.string.SP_userID), user)
-            if (keyHelper != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                putString(user, keyHelper?.encrypt(api))
-            } else {
-                putString(getString(R.string.SP_APIToken), api)
-            }
+                val encryptedKey = if (keyHelper != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    try {
+                        keyHelper?.encrypt(api)
+                    } catch (e: Exception) {
+                        null
+                    }
+                } else null
+                if (encryptedKey?.length ?: 0 > 5) {
+                    putString(user, encryptedKey)
+                } else {
+                    //Something might have gone wrong with encryption, so fall back to this.
+                    putString(getString(R.string.SP_APIToken), api)
+                }
+
         }
     }
 
@@ -306,7 +316,7 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
         try {
             saveTokens(userAuthResponse.token, userAuthResponse.id)
         } catch (e: Exception) {
-            e.printStackTrace()
+            crashlyticsProxy.logException(e)
         }
 
         HabiticaBaseApplication.reloadUserComponent()
