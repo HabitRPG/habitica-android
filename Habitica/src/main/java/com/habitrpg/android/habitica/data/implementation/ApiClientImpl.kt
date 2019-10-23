@@ -219,6 +219,7 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
         return try {
             errorConverter?.convert(errorResponse) as ErrorResponse
         } catch (e: IOException) {
+            crashlyticsProxy.log("Json Error: " + lastAPICallURL + ",  " + e.message)
             ErrorResponse()
         }
 

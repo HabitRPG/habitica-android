@@ -334,7 +334,7 @@ class ChallengeFormActivity : BaseActivity() {
 
         challengeLocationSpinner.adapter = locationAdapter
         challengeLocationSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(adapterView: AdapterView<*>, view: View, i: Int, l: Long) {
+            override fun onItemSelected(adapterView: AdapterView<*>, view: View?, i: Int, l: Long) {
                 checkPrizeAndMinimumForTavern()
             }
 

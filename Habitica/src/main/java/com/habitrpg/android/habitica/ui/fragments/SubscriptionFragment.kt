@@ -96,7 +96,7 @@ class SubscriptionFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
 
     @Subscribe
     fun fetchUser(event: UserSubscribedEvent?) {
-        compositeSubscription.add(userRepository.retrieveUser(false).subscribe(Consumer { this.setUser(it) }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(userRepository.retrieveUser(false, true).subscribe(Consumer { this.setUser(it) }, RxErrorHandler.handleEmptyError()))
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -203,7 +203,9 @@ class SubscriptionFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
 
     private fun purchaseSubscription() {
         selectedSubscriptionSku?.let { sku ->
-            purchaseHandler?.purchaseSubscription(sku)
+            purchaseHandler?.purchaseSubscription(sku) {
+                fetchUser(null)
+            }
         }
     }
 

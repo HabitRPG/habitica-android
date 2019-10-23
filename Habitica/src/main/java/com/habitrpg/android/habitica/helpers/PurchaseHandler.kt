@@ -90,15 +90,23 @@ class PurchaseHandler(activity: Activity, val crashlyticsProxy: CrashlyticsProxy
         }
     }
 
-    fun purchaseSubscription(sku: Sku) {
+    fun purchaseSubscription(sku: Sku, onSuccess: (() -> Unit)) {
         sku.id.code?.let { code ->
             billingRequests?.isPurchased(ProductTypes.SUBSCRIPTION, code, object : RequestListener<Boolean> {
                 override fun onSuccess(aBoolean: Boolean) {
                     if (!aBoolean) {
                         // no current product exist
                         checkout?.let {
-                            billingRequests?.purchase(ProductTypes.SUBSCRIPTION, code, null, it.purchaseFlow)
+                            billingRequests?.purchase(ProductTypes.SUBSCRIPTION, code, null, it.createOneShotPurchaseFlow(object : RequestListener<Purchase> {
+                                override fun onSuccess(result: Purchase) {
+                                    onSuccess()
+                                }
+
+                                override fun onError(response: Int, e: java.lang.Exception) {}
+                            }))
                         }
+                    } else {
+                        onSuccess()
                     }
                 }
 
