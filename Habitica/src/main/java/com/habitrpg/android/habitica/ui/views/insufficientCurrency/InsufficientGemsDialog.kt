@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.views.insufficientCurrency
 
 import android.content.Context
+import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
@@ -37,25 +38,25 @@ class InsufficientGemsDialog(context: Context) : InsufficientCurrencyDialog(cont
         return R.layout.dialog_insufficient_gems
     }
 
-    init {
+    override fun onCreate(savedInstanceState: Bundle?) {
         HabiticaBaseApplication.userComponent?.inject(this)
+        super.onCreate(savedInstanceState)
         imageView.setImageResource(R.drawable.gems_84)
         textView.setText(R.string.insufficientGems)
 
 
-        addButton(R.string.see_other_options, false) { _, _ -> MainNavigationController.navigate(R.id.gemPurchaseActivity, bundleOf(Pair("openSubscription", false))) }
         addCloseButton()
     }
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
-        if (configManager.insufficientGemPurchase()) {
-            getActivity()?.let {
+        getActivity()?.let {
+            if (configManager.insufficientGemPurchase()) {
                 purchaseButton = contentView.findViewById(R.id.purchase_button)
                 purchaseHandler = PurchaseHandler(it, crashlyticsProxy)
                 purchaseHandler?.startListening()
                 purchaseHandler?.whenCheckoutReady = {
-                    purchaseHandler?.getInAppPurchaseSKU(PurchaseTypes.Purchase4Gems) {sku ->
+                    purchaseHandler?.getInAppPurchaseSKU(PurchaseTypes.Purchase4Gems) { sku ->
                         val purchaseTextView = contentView.findViewById<TextView>(R.id.purchase_textview)
                         purchaseTextView.text = sku.displayTitle
                         purchaseButton?.text = sku.price
@@ -65,9 +66,11 @@ class InsufficientGemsDialog(context: Context) : InsufficientCurrencyDialog(cont
                 purchaseButton?.setOnClickListener {
                     purchaseHandler?.purchaseGems(PurchaseTypes.Purchase4Gems)
                 }
+                addButton(R.string.see_other_options, false) { _, _ -> MainNavigationController.navigate(R.id.gemPurchaseActivity, bundleOf(Pair("openSubscription", false))) }
+            } else {
+                contentView.findViewById<LinearLayout>(R.id.purchase_wrapper).visibility = View.GONE
+                addButton(R.string.purchase_gems, false) { _, _ -> MainNavigationController.navigate(R.id.gemPurchaseActivity, bundleOf(Pair("openSubscription", false))) }
             }
-        } else {
-            contentView.findViewWithTag<LinearLayout>(R.id.purchase_wrapper).visibility = View.GONE
         }
         EventBus.getDefault().register(this)
     }
