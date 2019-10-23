@@ -149,8 +149,8 @@ android {
         multiDexEnabled true
         resConfigs "en", "bg", "de", "en-rGB", "es", "fr", "hr-rHR", "in", "it", "iw", "ja", "ko", "lt", "nl", "pl", "pt-rBR", "pt-rPT", "ru", "tr", "zh", "zh-rTW"
 
-        versionCode 2265
-        versionName "2.2"
+        versionCode 2271
+        versionName "2.2.1"
     }
 
     lintOptions {
