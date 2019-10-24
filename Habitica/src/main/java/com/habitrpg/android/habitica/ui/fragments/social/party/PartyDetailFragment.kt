@@ -191,7 +191,6 @@ class PartyDetailFragment : BaseFragment() {
     }
 
     private fun updateMembersList(members: RealmResults<Member>?) {
-        membersWrapper?.removeAllViews()
         val leaderID = viewModel?.leaderID
         members?.forEachIndexed { index, member ->
             val memberView = (if (membersWrapper?.childCount ?: 0 > index) {

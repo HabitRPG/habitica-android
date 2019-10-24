@@ -125,13 +125,7 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
 
     override fun retrieveGroup(id: String): Flowable<Group> {
         return Flowable.zip(apiClient.getGroup(id).doOnNext { localRepository.save(it) }, retrieveGroupChat(id)
-                .map { message ->
-                    message.forEach {
-                        it.groupId = id
-                    }
-                    message
-                }
-                .doOnSuccess { localRepository.save(it) }.toFlowable(),
+                .toFlowable(),
                 BiFunction<Group, List<ChatMessage>, Group> { group, _ ->
                     group
                 }

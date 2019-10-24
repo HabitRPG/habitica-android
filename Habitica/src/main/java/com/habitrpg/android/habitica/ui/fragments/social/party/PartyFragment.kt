@@ -58,26 +58,22 @@ class PartyFragment : BaseMainFragment() {
 
         viewModel.loadPartyID()
 
-        compositeSubscription.add(userRepository.getUser()
-                .map {
-                    it.hasParty()
-                }
+        compositeSubscription.add(viewModel.groupIDFlowable.map { it.value != null }
                 .distinctUntilChanged()
                 .subscribe(Consumer {
-                    val fragment = firstFragment
-                    if (fragment != null) {
-                        childFragmentManager.beginTransaction().remove(fragment).commit()
-                    }
-                    viewPager?.adapter?.notifyDataSetChanged()
+            val fragment = firstFragment
+            if (fragment != null) {
+                childFragmentManager.beginTransaction().remove(fragment).commit()
+            }
+            viewPager?.adapter?.notifyDataSetChanged()
 
-                    if (it) {
-                        viewModel.retrieveGroup {}
-                        tabLayout?.visibility = View.VISIBLE
-                    } else {
-                        tabLayout?.visibility = View.GONE
-                    }
-
-                }, RxErrorHandler.handleEmptyError()))
+            if (it) {
+                viewModel.retrieveGroup {}
+                tabLayout?.visibility = View.VISIBLE
+            } else {
+                tabLayout?.visibility = View.GONE
+            }
+        }, RxErrorHandler.handleEmptyError()))
 
         viewPager?.currentItem = 0
 

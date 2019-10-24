@@ -93,8 +93,6 @@ class ChatFragment : BaseFragment() {
             }
         })
 
-        refresh()
-
         viewModel?.getChatMessages()?.subscribe(Consumer<RealmResults<ChatMessage>> { this.setChatMessages(it) }, RxErrorHandler.handleEmptyError())?.let { compositeSubscription.add(it) }
 
         communityGuidelinesReviewView.setOnClickListener {
