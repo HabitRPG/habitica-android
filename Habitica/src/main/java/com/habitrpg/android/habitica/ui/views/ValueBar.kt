@@ -30,21 +30,14 @@ class ValueBar(context: Context, attrs: AttributeSet?) : FrameLayout(context, at
     private val formatter = NumberFormat.getInstance()
 
     private var currentValue: Double = 0.0
-    set(value) {
-        field = value
-        updateBar()
-    }
+    private var maxValue: Double = 0.0
 
     var pendingValue: Double = 0.0
         set(value) {
-            field = value
-            updateBar()
-        }
-
-    private var maxValue: Double = 0.0
-        set(value) {
-            field = value
-            updateBar()
+            if (field != value) {
+                field = value
+                updateBar()
+            }
         }
 
     var barHeight: Int? = null
@@ -157,8 +150,11 @@ class ValueBar(context: Context, attrs: AttributeSet?) : FrameLayout(context, at
     }
 
     fun set(value: Double, valueMax: Double) {
-        currentValue = value
-        maxValue = valueMax
+        if (currentValue != value || maxValue != valueMax) {
+            currentValue = value
+            maxValue = valueMax
+            updateBar()
+        }
     }
 
     fun setLabelVisibility(visibility: Int) {

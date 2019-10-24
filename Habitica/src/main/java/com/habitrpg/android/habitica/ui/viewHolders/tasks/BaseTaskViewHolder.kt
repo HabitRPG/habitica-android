@@ -18,6 +18,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Action
 import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc: ((Task, TaskDirection) -> Unit), var openTaskFunc: ((Task) -> Unit)) : BindableViewHolder<Task>(itemView), View.OnClickListener {
 
@@ -67,7 +70,6 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
         }
 
     init {
-
         itemView.setOnClickListener { onClick(it) }
         itemView.isClickable = true
 
@@ -80,13 +82,9 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
         expandNotesButton?.setOnClickListener { expandTask() }
         notesTextView?.addEllipsesListener(object : EllipsisTextView.EllipsisListener {
             override fun ellipsisStateChanged(ellipses: Boolean) {
-                Single.just(ellipses)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(Consumer{ hasEllipses ->
-                            expandNotesButton?.visibility = if (hasEllipses || notesExpanded) View.VISIBLE else View.GONE
-                        }, RxErrorHandler.handleEmptyError())
-
+                GlobalScope.launch(Dispatchers.Main.immediate) {
+                    expandNotesButton?.visibility = if (ellipses || notesExpanded) View.VISIBLE else View.GONE
+                }
             }
         })
         context = itemView.context
