@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments.social.party
 
 import android.os.Bundle
-import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,6 +33,9 @@ import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.social.OldQuestProgressView
 import io.reactivex.functions.Consumer
 import io.realm.RealmResults
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import net.pherth.android.emoji_library.EmojiEditText
 import javax.inject.Inject
 import javax.inject.Named
@@ -124,12 +126,12 @@ class PartyDetailFragment : BaseFragment() {
             newQuestButton?.visibility = View.GONE
             questDetailButton?.visibility = View.VISIBLE
             questImageWrapper?.visibility = View.VISIBLE
-            val mainHandler = Handler(context?.mainLooper)
-            mainHandler.postDelayed({
+            GlobalScope.launch {
+                delay(500)
                 inventoryRepository.getQuestContent(party.quest?.key ?: "")
                         .firstElement()
                         .subscribe(Consumer<QuestContent> { this@PartyDetailFragment.updateQuestContent(it) }, RxErrorHandler.handleEmptyError())
-            }, 500)
+            }
         } else {
             newQuestButton?.visibility = View.VISIBLE
             questDetailButton?.visibility = View.GONE
@@ -191,24 +193,27 @@ class PartyDetailFragment : BaseFragment() {
     private fun updateMembersList(members: RealmResults<Member>?) {
         membersWrapper?.removeAllViews()
         val leaderID = viewModel?.leaderID
-        if (members != null) {
-            for (member in members) {
-                val memberView = membersWrapper?.inflate(R.layout.party_member, false) ?: continue
-                val viewHolder = GroupMemberViewHolder(memberView)
-                viewHolder.bind(member, leaderID ?: "", viewModel?.getUserData()?.value?.id)
-                viewHolder.onClickEvent = {
-                    FullProfileActivity.open(member.id ?: "")
-                }
-                viewHolder.sendMessageEvent = {
-                    member.id?.let { showSendMessageToUserDialog(it, member.displayName) }
-                }
-                viewHolder.transferOwnershipEvent = {
-                    member.id?.let { showTransferOwnerShipDialog(it, member.displayName) }
-                }
-                viewHolder.removeMemberEvent = {
-                    member.id?.let { showRemoveMemberDialog(it, member.displayName) }
-                }
-                membersWrapper?.addView(memberView)
+        members?.forEachIndexed { index, member ->
+            val memberView = (if (membersWrapper?.childCount ?: 0 > index) {
+                membersWrapper?.getChildAt(index)
+            } else {
+                val view = membersWrapper?.inflate(R.layout.party_member, false)
+                membersWrapper?.addView(view)
+                view
+            }) ?: return@forEachIndexed
+            val viewHolder = GroupMemberViewHolder(memberView)
+            viewHolder.bind(member, leaderID ?: "", viewModel?.getUserData()?.value?.id)
+            viewHolder.onClickEvent = {
+                FullProfileActivity.open(member.id ?: "")
+            }
+            viewHolder.sendMessageEvent = {
+                member.id?.let { showSendMessageToUserDialog(it, member.displayName) }
+            }
+            viewHolder.transferOwnershipEvent = {
+                member.id?.let { showTransferOwnerShipDialog(it, member.displayName) }
+            }
+            viewHolder.removeMemberEvent = {
+                member.id?.let { showRemoveMemberDialog(it, member.displayName) }
             }
         }
     }

@@ -55,9 +55,8 @@ class ValueBar(context: Context, attrs: AttributeSet?) : FrameLayout(context, at
     }
 
     private fun updateBar() {
+        progressBar.set(currentValue, maxValue)
         this.progressBar.pendingValue = pendingValue
-        this.progressBar.currentValue = currentValue
-        this.progressBar.maxValue = maxValue
         this.setValueText(formatter.format(currentValue) + " / " + formatter.format(maxValue.toInt()))
     }
 

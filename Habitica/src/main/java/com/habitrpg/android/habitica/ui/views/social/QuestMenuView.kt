@@ -63,12 +63,12 @@ class QuestMenuView : LinearLayout {
     }
 
     fun configure(quest: Quest) {
-        healthBarView.currentValue = quest.progress?.hp ?: 0.0
+        healthBarView.setCurrentValue(quest.progress?.hp ?: 0.0)
     }
 
     fun configure(questContent: QuestContent) {
         this.questContent = questContent
-        healthBarView.maxValue = questContent.boss?.hp?.toDouble() ?: 0.0
+        healthBarView.setMaxValue(questContent.boss?.hp?.toDouble() ?: 0.0)
         bottomView.setBackgroundColor(questContent.colors?.darkColor ?: 0)
         bossArtView.setBackgroundColor(questContent.colors?.mediumColor ?: 0)
         DataBindingUtils.loadImage(bossArtView, "quest_"+questContent.key)

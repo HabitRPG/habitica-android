@@ -98,6 +98,7 @@ open class GroupViewModel : BaseViewModel() {
         disposable.add(groupIDFlowable
                 .filterOptionalDoOnEmpty { group.value = null }
                 .flatMap { socialRepository.getGroup(it) }
+                .map { socialRepository.getUnmanagedCopy(it) }
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(Consumer { group.value = it }, RxErrorHandler.handleEmptyError()))
     }

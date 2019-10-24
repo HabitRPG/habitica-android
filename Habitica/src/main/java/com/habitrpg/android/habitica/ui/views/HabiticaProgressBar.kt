@@ -38,23 +38,17 @@ class HabiticaProgressBar(context: Context, attrs: AttributeSet?) : FrameLayout(
         }
     }
 
-    var currentValue: Double = 0.0
-        set(value) {
-            field = value
-            updateBar()
-        }
+    private var currentValue: Double = 0.0
+    private var maxValue: Double = 0.0
 
     var pendingValue: Double = 0.0
         set(value) {
-            field = value
-            updateBar()
+            if (field != value) {
+                field = value
+                updateBar()
+            }
         }
 
-    var maxValue: Double = 0.0
-        set(value) {
-            field = value
-            updateBar()
-        }
 
     private fun updateBar() {
         val remainingValue = currentValue - pendingValue
@@ -95,6 +89,17 @@ class HabiticaProgressBar(context: Context, attrs: AttributeSet?) : FrameLayout(
     fun set(value: Double, valueMax: Double) {
         currentValue = value
         maxValue = valueMax
+        updateBar()
+    }
+
+    fun setCurrentValue(value: Double) {
+        currentValue = value
+        updateBar()
+    }
+
+    fun setMaxValue(value: Double) {
+        maxValue = value
+        updateBar()
     }
 
     private fun setLayoutWeight(view: View, weight: Double) {
