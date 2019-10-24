@@ -11,7 +11,6 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.habitrpg.android.habitica.MainNavDirections
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
@@ -37,7 +36,7 @@ import kotlinx.android.synthetic.main.tavern_chat_new_entry_item.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class ChatFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
+class ChatFragment : BaseFragment() {
 
     var viewModel: GroupViewModel? = null
 
@@ -61,9 +60,10 @@ class ChatFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        refreshLayout.setOnRefreshListener(this)
 
         val layoutManager = LinearLayoutManager(context)
+        layoutManager.reverseLayout = true
+        layoutManager.stackFromEnd = true
         recyclerView.layoutManager = layoutManager
 
         chatAdapter = ChatRecyclerViewAdapter(null, true, null, true)
@@ -93,7 +93,7 @@ class ChatFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
             }
         })
 
-        refresh(false)
+        refresh()
 
         viewModel?.getChatMessages()?.subscribe(Consumer<RealmResults<ChatMessage>> { this.setChatMessages(it) }, RxErrorHandler.handleEmptyError())?.let { compositeSubscription.add(it) }
 
@@ -137,7 +137,7 @@ class ChatFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
         refreshDisposable = Observable.interval(30, TimeUnit.SECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(Consumer {
-            refresh(false)
+            refresh()
         }, RxErrorHandler.handleEmptyError())
     }
 
@@ -156,16 +156,8 @@ class ChatFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
         chatEditText.setText("@$username $previousText", TextView.BufferType.EDITABLE)
     }
 
-    override fun onRefresh() {
-        refresh(true)
-    }
-
-    private fun refresh(isUserInitiated: Boolean) {
-         if (isUserInitiated) {
-             refreshLayout.isRefreshing = true
-         }
+    private fun refresh() {
         viewModel?.retrieveGroupChat {
-            refreshLayout?.isRefreshing = false
             if (isScrolledToTop && recyclerView != null) {
                 recyclerView.scrollToPosition(0)
             }

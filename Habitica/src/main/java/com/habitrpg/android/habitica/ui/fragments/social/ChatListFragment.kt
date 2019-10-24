@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.habitrpg.android.habitica.MainNavDirections
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
@@ -38,7 +37,7 @@ import kotlinx.android.synthetic.main.tavern_chat_new_entry_item.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
+class ChatListFragment : BaseFragment() {
 
     @Inject
     lateinit var socialRepository: SocialRepository
@@ -108,9 +107,10 @@ class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        refreshLayout.setOnRefreshListener(this)
 
         val layoutManager = LinearLayoutManager(context)
+        layoutManager.reverseLayout = true
+        layoutManager.stackFromEnd = true
         recyclerView.layoutManager = layoutManager
 
         chatAdapter = ChatRecyclerViewAdapter(null, true, user, true)
@@ -163,7 +163,7 @@ class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
             }
         })
 
-        refresh(false)
+        refresh()
     }
 
     override fun onDestroyView() {
@@ -187,7 +187,7 @@ class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
         refreshDisposable = Observable.interval(30, TimeUnit.SECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(Consumer {
-            refresh(false)
+            refresh()
         }, RxErrorHandler.handleEmptyError())
     }
 
@@ -206,17 +206,9 @@ class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
         chatEditText.setText("@$username $previousText", TextView.BufferType.EDITABLE)
     }
 
-    override fun onRefresh() {
-        refresh(true)
-    }
-
-    private fun refresh(isUserInitiated: Boolean) {
-         if (isUserInitiated) {
-             refreshLayout.isRefreshing = true
-         }
+    private fun refresh() {
         groupId?.let {id ->
-            socialRepository.retrieveGroupChat(id)
-                    .doOnEvent { _, _ -> refreshLayout?.isRefreshing = false }.subscribe(Consumer {
+            socialRepository.retrieveGroupChat(id).subscribe(Consumer {
                         if (isScrolledToTop && recyclerView != null) {
                             recyclerView.scrollToPosition(0)
                         }
