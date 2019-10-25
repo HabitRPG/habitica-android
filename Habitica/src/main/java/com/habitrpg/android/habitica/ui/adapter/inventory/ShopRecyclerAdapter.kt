@@ -124,7 +124,7 @@ class ShopRecyclerAdapter(private val configManager: AppConfigManager) : android
                                     selectedGearCategory = gearCategories[holder.selectedItem].identifier
                                 }
                             }
-                            if (user?.stats?.habitClass != category?.identifier) {
+                            if (user?.stats?.habitClass != category?.identifier && category?.identifier != "none") {
                                 sectionHolder.notesView?.text = context.getString(R.string.class_gear_disclaimer)
                                 sectionHolder.notesView?.visibility = View.VISIBLE
                             } else {
