@@ -1,28 +1,38 @@
 package com.habitrpg.android.habitica.ui.helpers
 
-import android.graphics.Color
-import android.text.Html
-import android.text.Html.FROM_HTML_MODE_LEGACY
-import android.text.SpannableStringBuilder
+import android.content.Context
+import android.text.SpannableString
 import android.text.Spanned
-import android.text.style.ForegroundColorSpan
-import com.commonsware.cwac.anddown.AndDown
+import android.text.method.LinkMovementMethod
+import android.widget.TextView
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import io.noties.markwon.Markwon
+import io.noties.markwon.ext.strikethrough.StrikethroughPlugin
+import io.noties.markwon.image.ImagesPlugin
+import io.noties.markwon.image.file.FileSchemeHandler
+import io.noties.markwon.image.network.OkHttpNetworkSchemeHandler
+import io.noties.markwon.movement.MovementMethodPlugin
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
 import net.pherth.android.emoji_library.EmojiParser
-import java.util.regex.Pattern
 
-/**
- * @author data5tream
- */
+
 object MarkdownParser {
 
-    private val processor = AndDown()
+    internal var markwon: Markwon? = null
 
-    private val regex = Pattern.compile("\\B@[-\\w]+")
+    fun setup(context: Context) {
+        markwon = Markwon.builder(context)
+                .usePlugin(StrikethroughPlugin.create())
+                .usePlugin(ImagesPlugin.create {
+                    it.addSchemeHandler(OkHttpNetworkSchemeHandler.create())
+                            .addSchemeHandler(FileSchemeHandler.createWithAssets(context.assets))
+                })
+                .usePlugin(MovementMethodPlugin.create(LinkMovementMethod.getInstance()))
+                .build()
+    }
 
     /**
      * Parses formatted markdown and returns it as styled CharSequence
@@ -30,34 +40,15 @@ object MarkdownParser {
      * @param input Markdown formatted String
      * @return Stylized CharSequence
      */
-    fun parseMarkdown(input: String?): CharSequence {
+    fun parseMarkdown(input: String?): Spanned {
         if (input == null) {
-            return ""
+            return SpannableString("")
         }
-        val output: SpannableStringBuilder = try {
-            val html = processor.markdownToHtml(EmojiParser.parseEmojis(input.trim { it <= ' ' }))
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-                Html.fromHtml(html, FROM_HTML_MODE_LEGACY) as? SpannableStringBuilder
-            } else {
-                @Suppress("DEPRECATION")
-                (Html.fromHtml(html) as? SpannableStringBuilder)
-            } ?: SpannableStringBuilder()
-        } catch (e: UnsatisfiedLinkError) {
-            SpannableStringBuilder(input)
-        } catch (e: NoClassDefFoundError) {
-            SpannableStringBuilder(input)
-        }
-
-        val matcher = regex.matcher(output)
-        while (matcher.find()) {
-            val colorSpan = ForegroundColorSpan(Color.parseColor("#9A62FF"))
-            output.setSpan(colorSpan, matcher.start(), matcher.end(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-        }
-
-        return output.trimEnd('\n')
+        val text = EmojiParser.parseEmojis(input) ?: input
+        return markwon?.toMarkdown(text) ?: SpannableString(text)
     }
 
-    fun parseMarkdownAsync(input: String?, onSuccess: Consumer<CharSequence>) {
+    fun parseMarkdownAsync(input: String?, onSuccess: Consumer<Spanned>) {
         Single.just(input ?: "")
                 .map { this.parseMarkdown(it) }
                 .subscribeOn(Schedulers.io())
@@ -74,5 +65,17 @@ object MarkdownParser {
     fun parseCompiled(input: CharSequence): String? {
         return EmojiParser.convertToCheatCode(input.toString())
     }
+}
 
+
+fun TextView.setMarkdown(input: String?) {
+     MarkdownParser.markwon?.setParsedMarkdown(this, MarkdownParser.parseMarkdown(input))
+}
+
+fun TextView.setParsedMarkdown(input: Spanned?) {
+    if (input != null) {
+        MarkdownParser.markwon?.setParsedMarkdown(this, input)
+    } else {
+        text = null
+    }
 }

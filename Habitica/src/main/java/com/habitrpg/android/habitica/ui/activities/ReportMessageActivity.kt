@@ -23,9 +23,9 @@ import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.social.ChatMessage
-import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
+import com.habitrpg.android.habitica.ui.helpers.setMarkdown
 import io.reactivex.functions.Consumer
 import javax.inject.Inject
 
@@ -71,7 +71,7 @@ class ReportMessageActivity : BaseActivity() {
 
         contentContainer.setOnTouchListener { _, _ -> true }
         dismissTouchView.setOnClickListener { finish() }
-        reportExplanationTextView.text = MarkdownParser.parseMarkdown(getString(R.string.report_explanation))
+        reportExplanationTextView.setMarkdown(getString(R.string.report_explanation))
 
         BottomSheetBehavior.from<View>(bottomSheetView)
                 .setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {

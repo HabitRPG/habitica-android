@@ -120,7 +120,7 @@ class PartyDetailFragment : BaseFragment() {
             return
         }
         titleView?.text = party.name
-        descriptionView?.text = MarkdownParser.parseMarkdown(party.description)
+        descriptionView?.setMarkdown(party.description)
 
         if (party.quest?.key?.isEmpty() == false) {
             newQuestButton?.visibility = View.GONE

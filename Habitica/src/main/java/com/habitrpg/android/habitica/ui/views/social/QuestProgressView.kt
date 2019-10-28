@@ -25,8 +25,8 @@ import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.inventory.QuestProgressCollect
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
-import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
 import com.habitrpg.android.habitica.ui.helpers.bindView
+import com.habitrpg.android.habitica.ui.helpers.setMarkdown
 import com.habitrpg.android.habitica.ui.views.*
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import io.reactivex.Observable
@@ -165,7 +165,7 @@ class QuestProgressView : LinearLayout {
                 setCollectionViews(collection, quest)
             }
         }
-        questDescriptionView.text = MarkdownParser.parseMarkdown(quest.notes)
+        questDescriptionView.setMarkdown(quest.notes)
         DataBindingUtils.loadImage(questImageView, "quest_"+quest.key, "gif")
         DataBindingUtils.loadImage(questFlourishesImageView, "quest_"+quest.key+"_flourishes")
         val lightColor =  quest.colors?.lightColor

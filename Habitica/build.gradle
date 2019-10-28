@@ -37,8 +37,6 @@ repositories {
     // Material View Pager
     maven { url "http://dl.bintray.com/florent37/maven" }
 
-    // Markdown
-    maven { url "https://s3.amazonaws.com/repo.commonsware.com" }
 
     maven { url "https://jitpack.io" }
 }
@@ -70,7 +68,11 @@ dependencies {
     // Emojis
     implementation 'com.github.viirus:emoji-lib:0.0.5'
     // Markdown
-    implementation 'com.commonsware.cwac:anddown:0.4.0'
+    implementation "io.noties.markwon:core:4.1.2"
+    implementation "io.noties.markwon:ext-strikethrough:4.1.2"
+    implementation "io.noties.markwon:image:4.1.2"
+    implementation "io.noties.markwon:recycler:4.1.2"
+    implementation "io.noties.markwon:html:4.1.2"
     // About View for all dependent Libraries, we are using
     implementation('com.mikepenz:aboutlibraries:5.9.4@aar') {
         transitive = true
@@ -115,8 +117,8 @@ dependencies {
     //Push Notifications
     implementation 'com.google.firebase:firebase-core:17.2.0'
     implementation 'com.google.firebase:firebase-messaging:20.0.0'
-    implementation 'com.google.firebase:firebase-config:19.0.2'
-    implementation 'com.google.firebase:firebase-perf:19.0.0'
+    implementation 'com.google.firebase:firebase-config:19.0.3'
+    implementation 'com.google.firebase:firebase-perf:19.0.1'
     implementation 'com.google.android.gms:play-services-auth:17.0.0'
     implementation 'io.realm:android-adapters:3.1.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
@@ -150,7 +152,7 @@ android {
         resConfigs "en", "bg", "de", "en-rGB", "es", "fr", "hr-rHR", "in", "it", "iw", "ja", "ko", "lt", "nl", "pl", "pt-rBR", "pt-rPT", "ru", "tr", "zh", "zh-rTW"
 
         versionCode 2274
-        versionName "2.2.1"
+        versionName "2.3"
     }
 
     lintOptions {

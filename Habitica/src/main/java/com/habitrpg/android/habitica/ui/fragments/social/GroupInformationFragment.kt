@@ -30,7 +30,7 @@ import com.habitrpg.android.habitica.ui.activities.GroupFormActivity
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
-import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
+import com.habitrpg.android.habitica.ui.helpers.setMarkdown
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -137,7 +137,7 @@ class GroupInformationFragment : BaseFragment() {
         groupSummaryView.movementMethod = LinkMovementMethod.getInstance()
 
         if (configManager.noPartyLinkPartyGuild()) {
-            join_party_description_textview.text = MarkdownParser.parseMarkdown(getString(R.string.join_party_description_guild, "[Party Wanted Guild](https://habitica.com/groups/guild/f2db2a7f-13c5-454d-b3ee-ea1f5089e601)"))
+            join_party_description_textview.setMarkdown(getString(R.string.join_party_description_guild, "[Party Wanted Guild](https://habitica.com/groups/guild/f2db2a7f-13c5-454d-b3ee-ea1f5089e601)"))
             join_party_description_textview.setOnClickListener {
                 context?.let { FirebaseAnalytics.getInstance(it).logEvent("clicked_party_wanted", null) }
                 MainNavigationController.navigate(R.id.guildFragment, bundleOf("groupID" to "f2db2a7f-13c5-454d-b3ee-ea1f5089e601"))
@@ -225,8 +225,8 @@ class GroupInformationFragment : BaseFragment() {
         groupDescriptionWrapper.visibility = groupItemVisibility
 
         groupNameView.text = group?.name
-        groupDescriptionView.text = MarkdownParser.parseMarkdown(group?.description)
-        groupSummaryView.text = MarkdownParser.parseMarkdown(group?.summary)
+        groupDescriptionView.setMarkdown(group?.description)
+        groupSummaryView.setMarkdown(group?.summary)
         gemCountWrapper.visibility = if (group?.balance != null && group.balance > 0) View.VISIBLE else View.GONE
         gemCountTextView.text = (group?.balance ?: 0 * 4.0).toInt().toString()
     }

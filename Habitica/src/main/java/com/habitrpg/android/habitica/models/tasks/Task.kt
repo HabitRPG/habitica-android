@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.models.tasks
 
 import android.os.Parcel
 import android.os.Parcelable
+import android.text.Spanned
 import androidx.annotation.StringDef
 import com.google.gson.annotations.SerializedName
 import com.habitrpg.android.habitica.R
@@ -62,9 +63,9 @@ open class Task : RealmObject, Parcelable {
     // used for buyable items
     var specialTag: String? = ""
     @Ignore
-    var parsedText: CharSequence? = null
+    var parsedText: Spanned? = null
     @Ignore
-    var parsedNotes: CharSequence? = null
+    var parsedNotes: Spanned? = null
 
     var isDue: Boolean? = null
 

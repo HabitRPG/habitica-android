@@ -7,12 +7,10 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.responses.TaskDirection
 import com.habitrpg.android.habitica.models.tasks.Task
-import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
-import com.habitrpg.android.habitica.ui.helpers.bindColor
-import com.habitrpg.android.habitica.ui.helpers.bindOptionalView
-import com.habitrpg.android.habitica.ui.helpers.bindView
+import com.habitrpg.android.habitica.ui.helpers.*
 import com.habitrpg.android.habitica.ui.viewHolders.BindableViewHolder
 import com.habitrpg.android.habitica.ui.views.EllipsisTextView
+import io.noties.markwon.utils.NoCopySpannableFactory
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Action
@@ -73,6 +71,8 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
         itemView.setOnClickListener { onClick(it) }
         itemView.isClickable = true
 
+        titleTextView.setOnClickListener { onClick(it) }
+        notesTextView?.setOnClickListener { onClick(it) }
         errorIconView?.setOnClickListener { errorButtonClicked?.run()}
 
         //Re enable when we find a way to only react when a link is tapped.
@@ -115,9 +115,10 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
 
         if (canContainMarkdown()) {
             if (data.parsedText != null) {
-                titleTextView.text = data.parsedText
+                titleTextView.setParsedMarkdown(data.parsedText)
             } else {
                 titleTextView.text = data.text
+                titleTextView.setSpannableFactory(NoCopySpannableFactory.getInstance());
                 if (data.text.isNotEmpty()) {
                     Single.just(data.text)
                             .map { MarkdownParser.parseMarkdown(it) }
@@ -125,13 +126,14 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(Consumer{ parsedText ->
                                 data.parsedText = parsedText
-                                titleTextView.text = parsedText
+                                titleTextView.setParsedMarkdown(parsedText)
                             }, RxErrorHandler.handleEmptyError())
                 }
             if (data.parsedNotes != null) {
-                notesTextView?.text = data.parsedNotes
+                notesTextView?.setParsedMarkdown(data.parsedText)
             } else {
                 notesTextView?.text = data.notes
+                notesTextView?.setSpannableFactory(NoCopySpannableFactory.getInstance());
                 data.notes?.let {notes ->
                     if (notes.isEmpty()) {
                         return@let
@@ -141,8 +143,8 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(Consumer { parsedNotes ->
-                                data.parsedNotes = parsedNotes
                                 notesTextView?.text = parsedNotes
+                                notesTextView?.setParsedMarkdown(parsedNotes)
                             }, RxErrorHandler.handleEmptyError())
                 }
             }
@@ -178,10 +180,6 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
     }
 
     override fun onClick(v: View) {
-        if (v != itemView || openTaskDisabled) {
-            return
-        }
-
         task?.let { openTaskFunc(it) }
     }
 

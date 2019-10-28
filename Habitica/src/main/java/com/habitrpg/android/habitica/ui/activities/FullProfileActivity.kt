@@ -32,10 +32,10 @@ import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.ui.AvatarView
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel
 import com.habitrpg.android.habitica.ui.adapter.social.AchievementProfileAdapter
-import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
 import com.habitrpg.android.habitica.ui.helpers.loadImage
+import com.habitrpg.android.habitica.ui.helpers.setMarkdown
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.SnackbarDisplayType
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
@@ -184,8 +184,8 @@ class FullProfileActivity : BaseActivity() {
         }
 
         val blurbText = profile.blurb
-        if (blurbText != null && !blurbText.isEmpty()) {
-            blurbTextView.text = MarkdownParser.parseMarkdown(blurbText)
+        if (blurbText != null && blurbText.isNotEmpty()) {
+            blurbTextView.setMarkdown(blurbText)
         }
 
         user.authentication?.timestamps?.createdAt?.let { joinedView.text = dateFormatter.format(it) }

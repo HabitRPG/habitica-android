@@ -24,9 +24,9 @@ import com.habitrpg.android.habitica.ui.activities.GroupFormActivity
 import com.habitrpg.android.habitica.ui.activities.GroupInviteActivity
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
-import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.helpers.resetViews
+import com.habitrpg.android.habitica.ui.helpers.setMarkdown
 import com.habitrpg.android.habitica.ui.viewmodels.GroupViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaIcons
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
@@ -186,8 +186,8 @@ class GuildDetailFragment : BaseFragment() {
         guildMembersIconView.setImageBitmap(HabiticaIcons.imageOfGuildCrestMedium((guild?.memberCount ?: 0).toFloat()))
         guildMembersTextView.text = guild?.memberCount.toString()
         guildBankTextView.text = guild?.gemCount.toString()
-        guildSummaryView.text = MarkdownParser.parseMarkdown(guild?.summary)
-        guildDescriptionView.text = MarkdownParser.parseMarkdown(guild?.description)
+        guildSummaryView.setMarkdown(guild?.summary)
+        guildDescriptionView.setMarkdown(guild?.description)
     }
 
     companion object {

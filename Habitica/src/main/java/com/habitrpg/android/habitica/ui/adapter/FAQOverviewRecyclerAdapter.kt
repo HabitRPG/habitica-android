@@ -12,8 +12,8 @@ import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.FAQArticle
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.fragments.faq.FAQOverviewFragmentDirections
-import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
 import com.habitrpg.android.habitica.ui.helpers.bindView
+import com.habitrpg.android.habitica.ui.helpers.setMarkdown
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import io.reactivex.subjects.PublishSubject
@@ -105,7 +105,7 @@ class FAQOverviewRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Ada
 
         init {
             val textView = itemView.findViewById<TextView>(R.id.text_view)
-            textView.text =  MarkdownParser.parseMarkdown(itemView.context.getString(R.string.need_help_header_description, "[Habitica Help Guild](https://habitica.com/groups/guild/5481ccf3-5d2d-48a9-a871-70a7380cee5a)"))
+            textView.setMarkdown(itemView.context.getString(R.string.need_help_header_description, "[Habitica Help Guild](https://habitica.com/groups/guild/5481ccf3-5d2d-48a9-a871-70a7380cee5a)"))
             textView.setOnClickListener { MainNavigationController.navigate(R.id.guildFragment, bundleOf("groupID" to "5481ccf3-5d2d-48a9-a871-70a7380cee5a")) }
             textView.movementMethod = LinkMovementMethod.getInstance()
         }

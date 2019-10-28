@@ -13,8 +13,8 @@ import com.habitrpg.android.habitica.api.MaintenanceApiService
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
 import com.habitrpg.android.habitica.ui.helpers.bindView
+import com.habitrpg.android.habitica.ui.helpers.setMarkdown
 import com.habitrpg.android.habitica.ui.views.HabiticaEmojiTextView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
@@ -48,7 +48,7 @@ class MaintenanceActivity : BaseActivity() {
 
         @Suppress("DEPRECATION")
         imageView.setImageURI(data.getString("imageUrl")?.toUri())
-        this.descriptionTextView.text = MarkdownParser.parseMarkdown(data.getString("description"))
+        this.descriptionTextView.setMarkdown(data.getString("description"))
         this.descriptionTextView.movementMethod = LinkMovementMethod.getInstance()
 
         isDeprecationNotice = data.getBoolean("deprecationNotice")

@@ -31,6 +31,7 @@ import com.habitrpg.android.habitica.modules.UserRepositoryModule
 import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
 import com.habitrpg.android.habitica.ui.activities.IntroActivity
 import com.habitrpg.android.habitica.ui.activities.LoginActivity
+import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.squareup.leakcanary.LeakCanary
 import com.squareup.leakcanary.RefWatcher
@@ -80,6 +81,7 @@ abstract class HabiticaBaseApplication : MultiDexApplication() {
         refWatcher = LeakCanary.install(this)
         createBillingAndCheckout()
         HabiticaIconsHelper.init(this)
+        MarkdownParser.setup(this)
 
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
 

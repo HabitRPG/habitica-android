@@ -27,6 +27,7 @@ import com.habitrpg.android.habitica.ui.activities.FullProfileActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
 import com.habitrpg.android.habitica.ui.helpers.bindView
+import com.habitrpg.android.habitica.ui.helpers.setMarkdown
 import com.habitrpg.android.habitica.ui.views.HabiticaEmojiTextView
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
@@ -187,7 +188,7 @@ class ChallengeDetailFragment: BaseMainFragment() {
     private fun set(challenge: Challenge) {
         this.challenge = challenge
         challengeName?.text = EmojiParser.parseEmojis(challenge.name)
-        challengeDescription?.text = MarkdownParser.parseMarkdown(challenge.description)
+        challengeDescription?.setMarkdown(challenge.description)
         challengeLeaderLabel?.username = challenge.leaderName
 
         gemAmountView?.text = challenge.prize.toString()
