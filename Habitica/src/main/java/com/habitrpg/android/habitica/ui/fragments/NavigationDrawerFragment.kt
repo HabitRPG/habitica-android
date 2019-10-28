@@ -187,7 +187,7 @@ class NavigationDrawerFragment : DialogFragment() {
         setMessagesCount(user.inbox?.newMessages ?: 0)
         setSettingsCount(if (user.flags?.isVerifiedUsername != true) 1 else 0 )
         setDisplayName(user.profile?.name)
-        setUsername(user.username)
+        setUsername(user.formattedUsername)
         avatarView.setAvatar(user)
         questMenuView.configure(user)
 
@@ -369,12 +369,7 @@ class NavigationDrawerFragment : DialogFragment() {
     }
 
     private fun setUsername(name: String?) {
-        if (usernameTextView != null) {
-            usernameTextView.text = name
-            usernameTextView.visibility = View.VISIBLE
-        } else {
-            usernameTextView.visibility = View.GONE
-        }
+        usernameTextView.text = name
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
