@@ -1,4 +1,3 @@
-In this update we added the option to gift gems to other users!
-We also fixed issues with feeding pets, gear display and using skills.
+This update improves performance in some cases and has various improvements to how markdown is handled (Support for images and opening links from the task list)
 
 Be sure to download this update now for a better Habitica experience!

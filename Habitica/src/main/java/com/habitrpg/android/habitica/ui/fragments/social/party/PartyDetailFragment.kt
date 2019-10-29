@@ -33,6 +33,7 @@ import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.social.OldQuestProgressView
 import io.reactivex.functions.Consumer
 import io.realm.RealmResults
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -126,7 +127,7 @@ class PartyDetailFragment : BaseFragment() {
             newQuestButton?.visibility = View.GONE
             questDetailButton?.visibility = View.VISIBLE
             questImageWrapper?.visibility = View.VISIBLE
-            GlobalScope.launch {
+            GlobalScope.launch(Dispatchers.Main) {
                 delay(500)
                 inventoryRepository.getQuestContent(party.quest?.key ?: "")
                         .firstElement()
