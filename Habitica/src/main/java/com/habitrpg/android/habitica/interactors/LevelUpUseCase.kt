@@ -91,7 +91,6 @@ constructor(private val soundManager: SoundManager, threadExecutor: ThreadExecut
     }
 
     class RequestValues(val user: User, val activity: AppCompatActivity) : UseCase.RequestValues {
-        val newLevel: Int = user.stats?.lvl ?: 0
-
+        val newLevel: Int = (user.stats?.lvl ?: 0 ) + 1
     }
 }
