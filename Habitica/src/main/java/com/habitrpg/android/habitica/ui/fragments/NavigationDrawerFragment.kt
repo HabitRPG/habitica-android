@@ -16,6 +16,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
+import com.habitrpg.android.habitica.extensions.getRemainingString
 import com.habitrpg.android.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.AppConfigManager
@@ -232,6 +233,16 @@ class NavigationDrawerFragment : DialogFragment() {
             updateItem(statsItem)
         }
 
+        val subscriptionItem = getItemWithIdentifier(SIDEBAR_SUBSCRIPTION)
+        if (user.isSubscribed && user.purchased?.plan?.dateTerminated != null) {
+            context?.let {
+                subscriptionItem?.additionalInfo = user.purchased?.plan?.dateTerminated?.getRemainingString(it.resources)
+                subscriptionItem?.additionalInfoTextColor = it.getThemeColor(R.attr.textColorSecondary)
+            }
+        } else {
+            subscriptionItem?.additionalInfo = null
+        }
+
         val promoItem = getItemWithIdentifier(SIDEBAR_SUBSCRIPTION_PROMO)
         if (promoItem != null) {
             promoItem.isVisible = !user.isSubscribed
@@ -268,8 +279,8 @@ class NavigationDrawerFragment : DialogFragment() {
             items.add(HabiticaDrawerItem(R.id.equipmentOverviewFragment, SIDEBAR_EQUIPMENT, context.getString(R.string.sidebar_equipment)))
             items.add(HabiticaDrawerItem(R.id.itemsFragment, SIDEBAR_ITEMS, context.getString(R.string.sidebar_items)))
             items.add(HabiticaDrawerItem(R.id.stableFragment, SIDEBAR_STABLE, context.getString(R.string.sidebar_stable)))
-            items.add(HabiticaDrawerItem(R.id.subscriptionPurchaseActivity, SIDEBAR_SUBSCRIPTION, context.getString(R.string.sidebar_subscription)))
             items.add(HabiticaDrawerItem(R.id.gemPurchaseActivity, SIDEBAR_GEMS, context.getString(R.string.sidebar_gems)))
+            items.add(HabiticaDrawerItem(R.id.subscriptionPurchaseActivity, SIDEBAR_SUBSCRIPTION, context.getString(R.string.sidebar_subscription), isHeader = false, additionalInfoAsPill = false))
             items.add(HabiticaDrawerItem(0, SIDEBAR_ABOUT_HEADER, context.getString(R.string.sidebar_about), true))
             items.add(HabiticaDrawerItem(R.id.newsFragment, SIDEBAR_NEWS, context.getString(R.string.sidebar_news)))
             items.add(HabiticaDrawerItem(R.id.FAQOverviewFragment, SIDEBAR_HELP, context.getString(R.string.sidebar_help)))

@@ -158,7 +158,7 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int): Recycle
                     if (additionalInfoView != null) {
                         additionalInfoView.text = drawerItem.additionalInfo
                         additionalInfoView.visibility = View.VISIBLE
-                        additionalInfoView.setTextColor(tintColor)
+                        additionalInfoView.setTextColor(drawerItem.additionalInfoTextColor ?: tintColor)
                     }
                 }
             }
