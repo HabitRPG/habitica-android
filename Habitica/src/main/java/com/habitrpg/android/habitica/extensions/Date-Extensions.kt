@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.extensions
 import android.content.res.Resources
 import com.habitrpg.android.habitica.R
 import java.util.*
+import kotlin.math.round
 
 class DateUtils {
 
@@ -27,12 +28,16 @@ fun Long.getAgoString(res: Resources): String {
     val diffMinutes = diff / (60 * 1000) % 60
     val diffHours = diff / (60 * 60 * 1000) % 24
     val diffDays = diff / (24 * 60 * 60 * 1000)
+    val diffWeeks = diffDays / 7
     val diffMonths = diffDays / 30
 
     return when {
         diffMonths != 0L -> if (diffMonths == 1L) {
             res.getString(R.string.ago_1month)
         } else res.getString(R.string.ago_months, diffMonths)
+        diffWeeks != 0L -> if (diffWeeks == 1L) {
+            res.getString(R.string.ago_1week)
+        } else res.getString(R.string.ago_weeks, diffWeeks)
         diffDays != 0L -> if (diffDays == 1L) {
             res.getString(R.string.ago_1day)
         } else res.getString(R.string.ago_days, diffDays)
@@ -54,12 +59,16 @@ fun Long.getRemainingString(res: Resources): String {
     val diffMinutes = diff / (60 * 1000) % 60
     val diffHours = diff / (60 * 60 * 1000) % 24
     val diffDays = diff / (24 * 60 * 60 * 1000)
-    val diffMonths = diffDays / 30
+    val diffWeeks = diffDays / 7f
+    val diffMonths = diffDays / 30f
 
     return when {
-        diffMonths != 0L -> if (diffMonths == 1L) {
+        diffMonths != 0f -> if (round(diffMonths) == 1f) {
             res.getString(R.string.remaining_1month)
-        } else res.getString(R.string.remaining_months, diffMonths)
+        } else res.getString(R.string.remaining_months, round(diffMonths))
+        diffWeeks != 0f -> if (round(diffWeeks) == 1f) {
+            res.getString(R.string.remaining_1week)
+        } else res.getString(R.string.remaining_weeks, round(diffWeeks))
         diffDays != 0L -> if (diffDays == 1L) {
             res.getString(R.string.remaining_1day)
         } else res.getString(R.string.remaining_days, diffDays)

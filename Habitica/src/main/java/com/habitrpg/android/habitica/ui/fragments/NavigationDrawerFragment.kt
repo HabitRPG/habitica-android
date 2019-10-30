@@ -36,7 +36,10 @@ import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.drawer_main.*
+import java.util.*
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
 
 /**
@@ -235,12 +238,26 @@ class NavigationDrawerFragment : DialogFragment() {
 
         val subscriptionItem = getItemWithIdentifier(SIDEBAR_SUBSCRIPTION)
         if (user.isSubscribed && user.purchased?.plan?.dateTerminated != null) {
-            context?.let {
-                subscriptionItem?.additionalInfo = user.purchased?.plan?.dateTerminated?.getRemainingString(it.resources)
-                subscriptionItem?.additionalInfoTextColor = it.getThemeColor(R.attr.textColorSecondary)
+            val terminatedCalendar = Calendar.getInstance()
+            terminatedCalendar.time = user.purchased?.plan?.dateTerminated ?: Date()
+            val msDiff = Calendar.getInstance().timeInMillis - terminatedCalendar.timeInMillis
+            val daysDiff = TimeUnit.MILLISECONDS.toDays(msDiff)
+            if (daysDiff <= 30) {
+                context?.let {
+                    subscriptionItem?.additionalInfo = user.purchased?.plan?.dateTerminated?.getRemainingString(it.resources)
+                    subscriptionItem?.additionalInfoTextColor = when {
+                        daysDiff <= 2 -> ContextCompat.getColor(it, R.color.red_100)
+                        daysDiff <= 7 -> ContextCompat.getColor(it, R.color.brand_400)
+                        else -> it.getThemeColor(R.attr.textColorSecondary)
+                    }
+                }
             }
         } else {
-            subscriptionItem?.additionalInfo = null
+            subscriptionItem?.additionalInfo = if (configManager.showSubscriptionSubtitle()) {
+                context?.getString(R.string.more_out_of_habitica)
+            } else {
+                null
+            }
         }
 
         val promoItem = getItemWithIdentifier(SIDEBAR_SUBSCRIPTION_PROMO)
@@ -251,6 +268,7 @@ class NavigationDrawerFragment : DialogFragment() {
         getItemWithIdentifier(SIDEBAR_NEWS)?.let {
             it.showBubble = user.flags?.newStuff ?: false
         }
+
     }
 
     override fun onDestroy() {

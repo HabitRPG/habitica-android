@@ -74,4 +74,8 @@ class AppConfigManager {
     fun showSubscriptionBanner(): Boolean {
         return remoteConfig.getBoolean("showSubscriptionBanner")
     }
+
+    fun showSubscriptionSubtitle(): Boolean {
+        return remoteConfig.getBoolean("showSubscriptionSubtitle")
+    }
 }
