@@ -45,7 +45,7 @@ class ChatFragment : BaseFragment() {
 
     private var chatAdapter: ChatRecyclerViewAdapter? = null
     private var navigatedOnceToFragment = false
-    private var isScrolledToTop = true
+    private var isScrolledToBottom = true
     private var refreshDisposable: Disposable? = null
     var autocompleteContext: String = ""
 
@@ -63,7 +63,7 @@ class ChatFragment : BaseFragment() {
 
         val layoutManager = LinearLayoutManager(context)
         layoutManager.reverseLayout = true
-        layoutManager.stackFromEnd = true
+        layoutManager.stackFromEnd = false
         recyclerView.layoutManager = layoutManager
 
         chatAdapter = ChatRecyclerViewAdapter(null, true, null, true)
@@ -89,7 +89,7 @@ class ChatFragment : BaseFragment() {
         recyclerView.addOnScrollListener(object : androidx.recyclerview.widget.RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: androidx.recyclerview.widget.RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
-                isScrolledToTop = layoutManager.findFirstVisibleItemPosition() == 0
+                isScrolledToBottom = layoutManager.findFirstVisibleItemPosition() == 0
             }
         })
 
@@ -109,7 +109,6 @@ class ChatFragment : BaseFragment() {
                 chatBarContent.visibility = View.VISIBLE
             } else {
                 chatBarContent.visibility = View.GONE
-
             }
         })
     }
@@ -156,7 +155,7 @@ class ChatFragment : BaseFragment() {
 
     private fun refresh() {
         viewModel?.retrieveGroupChat {
-            if (isScrolledToTop && recyclerView != null) {
+            if (isScrolledToBottom && recyclerView != null) {
                 recyclerView.scrollToPosition(0)
             }
         }
@@ -203,7 +202,6 @@ class ChatFragment : BaseFragment() {
     private fun setChatMessages(chatMessages: RealmResults<ChatMessage>) {
         chatAdapter?.updateData(chatMessages)
         viewModel?.socialRepository?.getUnmanagedCopy(chatMessages)?.let { chatBarView.chatMessages = it }
-        recyclerView.scrollToPosition(0)
 
         viewModel?.gotNewMessages = true
 

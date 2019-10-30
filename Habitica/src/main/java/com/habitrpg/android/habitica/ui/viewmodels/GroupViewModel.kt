@@ -130,13 +130,15 @@ open class GroupViewModel : BaseViewModel() {
     }
 
     fun retrieveGroup(function: (() -> Unit)?) {
-        disposable.add(socialRepository.retrieveGroup(groupID ?: "")
-                .filter { groupViewType == GroupViewType.PARTY }
-                .flatMap { group1 ->
-                    socialRepository.retrieveGroupMembers(group1.id, true)
-                }
-                .doOnComplete { function?.invoke() }
-                .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+        if (groupID?.isNotEmpty() == true) {
+            disposable.add(socialRepository.retrieveGroup(groupID ?: "")
+                    .filter { groupViewType == GroupViewType.PARTY }
+                    .flatMap { group1 ->
+                        socialRepository.retrieveGroupMembers(group1.id, true)
+                    }
+                    .doOnComplete { function?.invoke() }
+                    .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+        }
     }
 
     fun inviteToGroup(inviteData: HashMap<String, Any>) {

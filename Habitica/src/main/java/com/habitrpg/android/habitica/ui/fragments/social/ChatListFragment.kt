@@ -110,7 +110,7 @@ class ChatListFragment : BaseFragment() {
 
         val layoutManager = LinearLayoutManager(context)
         layoutManager.reverseLayout = true
-        layoutManager.stackFromEnd = true
+        layoutManager.stackFromEnd = false
         recyclerView.layoutManager = layoutManager
 
         chatAdapter = ChatRecyclerViewAdapter(null, true, user, true)
