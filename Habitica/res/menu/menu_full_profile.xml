@@ -2,10 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-    <item android:id="@+id/private_message"
-        android:title="@string/profile_private_message"
-        android:icon="@drawable/ic_action_chat"
-        android:orderInCategory="100"
-        app:showAsAction="always"
-       />
+    <item android:id="@+id/copy_username"
+        android:title="@string/copy_username" />
+    <item android:id="@+id/copy_userid"
+        android:title="@string/copy_userid" />
 </menu>

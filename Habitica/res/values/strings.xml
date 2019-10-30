@@ -875,4 +875,7 @@
     <string name="gift_gems_balance_subtitle">Enter how many of your Gems you\'d like to send below or switch tabs to purchase Gems to gift</string>
     <string name="gems_to_gift">Gems to gift</string>
     <string name="send_gift">Send Gift</string>
+    <string name="copy_userid">Copy User ID</string>
+    <string name="id_copied">Copied User ID to clipboard</string>
+    <string name="copy_username">Copy Username</string>
 </resources>

@@ -3,15 +3,13 @@ package com.habitrpg.android.habitica.ui.activities
 import android.content.Context
 import android.graphics.Typeface
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.*
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
+import androidx.core.widget.NestedScrollView
 import com.facebook.drawee.backends.pipeline.Fresco
 import com.facebook.drawee.controller.BaseControllerListener
 import com.facebook.drawee.view.SimpleDraweeView
@@ -61,8 +59,6 @@ class FullProfileActivity : BaseActivity() {
     private val profileImage: SimpleDraweeView by bindView(R.id.profile_image)
     private val blurbTextView: TextView by bindView(R.id.profile_blurb)
     private val avatarView: AvatarView by bindView(R.id.avatarView)
-    private val copyUsernameButton: Button by bindView(R.id.copy_username)
-    private val usernameText: TextView by bindView(R.id.username)
     private val attributesCardView: androidx.cardview.widget.CardView by bindView(R.id.profile_attributes_card)
     private val attributesTableLayout: TableLayout by bindView(R.id.attributes_table)
     private val attributesCollapseIcon: AppCompatImageView by bindView(R.id.attributes_collapse_icon)
@@ -70,7 +66,7 @@ class FullProfileActivity : BaseActivity() {
     private val costumeTableLayout: TableLayout by bindView(R.id.costume_table)
     private val costumeCard: androidx.cardview.widget.CardView by bindView(R.id.profile_costume_card)
     private val avatarWithStatsView: View by bindView(R.id.avatar_with_bars)
-    private val scrollView: ScrollView by bindView(R.id.fullprofile_scrollview)
+    private val scrollView: NestedScrollView by bindView(R.id.fullprofile_scrollview)
     private val petsFoundCount: TextView by bindView(R.id.profile_pets_found_count)
     private val mountsTamedCount: TextView by bindView(R.id.profile_mounts_tamed_count)
     private val currentPetDrawee: SimpleDraweeView by bindView(R.id.current_pet_drawee)
@@ -86,7 +82,8 @@ class FullProfileActivity : BaseActivity() {
     private val giftSubscriptionButton: Button by bindView(R.id.gift_subscription_button)
 
     private var userID = ""
-    private var userName: String? = null
+    private var username: String? = null
+    private var userDisplayName: String? = null
     private var avatarWithBars: AvatarWithBarsViewModel? = null
     private var attributeStrSum = 0f
     private var attributeIntSum = 0f
@@ -128,12 +125,35 @@ class FullProfileActivity : BaseActivity() {
         super.onDestroy()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.menu_full_profile, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return if (item.itemId == android.R.id.home) {
-            finish()
-            true
-        } else {
-            super.onOptionsItemSelected(item)
+        return when {
+            item.itemId == android.R.id.home -> {
+                finish()
+                true
+            }
+            item.itemId == R.id.copy_username -> {
+                val clipboard = this.getSystemService(Context.CLIPBOARD_SERVICE) as? android.content.ClipboardManager
+                val clip = android.content.ClipData.newPlainText(username, username)
+                clipboard?.setPrimaryClip(clip)
+                HabiticaSnackbar.showSnackbar(this@FullProfileActivity.scrollView.getChildAt(0) as ViewGroup,
+                        String.format(getString(R.string.username_copied), userDisplayName), SnackbarDisplayType.NORMAL)
+                true
+            }
+            item.itemId == R.id.copy_userid -> {
+                val clipboard = this.getSystemService(Context.CLIPBOARD_SERVICE) as? android.content.ClipboardManager
+                val clip = android.content.ClipData.newPlainText(userID, userID)
+                clipboard?.setPrimaryClip(clip)
+                HabiticaSnackbar.showSnackbar(this@FullProfileActivity.scrollView.getChildAt(0) as ViewGroup,
+                        String.format(getString(R.string.id_copied), userDisplayName), SnackbarDisplayType.NORMAL)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 
@@ -144,14 +164,14 @@ class FullProfileActivity : BaseActivity() {
         val emojiEditText = newMessageView.findViewById<EmojiEditText>(R.id.edit_new_message_text)
 
         val newMessageTitle = newMessageView.findViewById<TextView>(R.id.new_message_title)
-        newMessageTitle.text = String.format(getString(R.string.profile_send_message_to), userName)
+        newMessageTitle.text = String.format(getString(R.string.profile_send_message_to), userDisplayName)
 
         val addMessageDialog = HabiticaAlertDialog(this)
         addMessageDialog.addButton(android.R.string.ok, true) { _, _ ->
                     socialRepository.postPrivateMessage(userID, emojiEditText.text.toString())
                             .subscribe(Consumer {
                                 HabiticaSnackbar.showSnackbar(this@FullProfileActivity.scrollView.getChildAt(0) as ViewGroup,
-                                        String.format(getString(R.string.profile_message_sent_to), userName), SnackbarDisplayType.NORMAL)
+                                        String.format(getString(R.string.profile_message_sent_to), userDisplayName), SnackbarDisplayType.NORMAL)
                             }, RxErrorHandler.handleEmptyError())
 
                     dismissKeyboard()
@@ -165,7 +185,8 @@ class FullProfileActivity : BaseActivity() {
         val profile = user.profile ?: return
 
         updatePetsMountsView(user)
-        userName = profile.name
+        userDisplayName = profile.name
+        username = user.username
 
         title = profile.name
 
@@ -191,15 +212,6 @@ class FullProfileActivity : BaseActivity() {
         user.authentication?.timestamps?.createdAt?.let { joinedView.text = dateFormatter.format(it) }
         user.authentication?.timestamps?.lastLoggedIn?.let { lastLoginView.text = dateFormatter.format(it) }
         totalCheckinsView.text = user.loginIncentives.toString()
-
-        usernameText.text = user.username
-        copyUsernameButton.visibility = View.VISIBLE
-        copyUsernameButton.setOnClickListener { view ->
-            val clipboard = view.context
-                    .getSystemService(Context.CLIPBOARD_SERVICE) as? android.content.ClipboardManager
-            val clip = android.content.ClipData.newPlainText(user.username, user.username)
-            clipboard?.setPrimaryClip(clip)
-        }
 
         avatarView.setAvatar(user)
         avatarWithBars?.updateData(user)

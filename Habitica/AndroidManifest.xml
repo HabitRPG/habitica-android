@@ -68,7 +68,7 @@
             android:name=".ui.activities.NotificationsActivity"
             android:parentActivityName=".ui.activities.MainActivity"
             android:label="@string/notifications"
-            android:screenOrientation="portrait"
+            android:screenOrientation="unspecified"
             tools:ignore="UnusedAttribute">
         </activity>
         <activity
@@ -150,6 +150,7 @@
         <activity
             android:name=".ui.activities.FullProfileActivity"
             android:parentActivityName=".ui.activities.MainActivity"
+            android:theme="@style/MainAppTheme"
             tools:ignore="UnusedAttribute">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -176,12 +177,12 @@
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name" />
         <activity android:name=".ui.activities.MaintenanceActivity"
-                  android:screenOrientation="portrait"
+                  android:screenOrientation="unspecified"
                   android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".ui.activities.GemPurchaseActivity"
-                  android:screenOrientation="portrait" />
+                  android:screenOrientation="unspecified" />
         <activity android:name=".ui.activities.VerifyUsernameActivity"
-            android:screenOrientation="portrait"
+            android:screenOrientation="unspecified"
             android:windowSoftInputMode="stateHidden" />
         <receiver android:name=".receivers.NotificationPublisher" />
 
