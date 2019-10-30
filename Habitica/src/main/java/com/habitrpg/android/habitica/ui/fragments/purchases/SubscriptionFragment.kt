@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica.ui.fragments
+package com.habitrpg.android.habitica.ui.fragments.purchases
 
 import android.content.Intent
 import android.graphics.drawable.BitmapDrawable
@@ -21,6 +21,7 @@ import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
 import com.habitrpg.android.habitica.ui.activities.GemPurchaseActivity
 import com.habitrpg.android.habitica.ui.activities.GiftSubscriptionActivity
+import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.helpers.bindOptionalView
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard

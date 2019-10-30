@@ -371,4 +371,7 @@ interface ApiService {
 
     @POST("user/allocate-bulk")
     fun bulkAllocatePoints(@Body stats: Map<String, Map<String, Int>>): Flowable<HabitResponse<Stats>>
+
+    @POST("members/transfer-gems")
+    fun transferGems(@Body data: Map<String, Any>): Flowable<HabitResponse<Void>>
 }

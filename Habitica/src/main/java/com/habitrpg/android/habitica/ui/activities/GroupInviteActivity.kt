@@ -118,7 +118,6 @@ class GroupInviteActivity : BaseActivity() {
         viewPager.adapter = object : FragmentPagerAdapter(fragmentManager) {
 
             override fun getItem(position: Int): Fragment {
-
                 val fragment = PartyInviteFragment()
                 fragment.isEmailInvite = position == 1
                 if (fragments.size > position) {

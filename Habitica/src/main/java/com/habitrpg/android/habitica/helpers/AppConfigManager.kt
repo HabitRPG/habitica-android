@@ -10,10 +10,6 @@ class AppConfigManager {
 
     private val remoteConfig = FirebaseRemoteConfig.getInstance()
 
-    fun newShopsEnabled(): Boolean {
-        return true
-    }
-
     fun shopSpriteSuffix(): String {
         return remoteConfig.getString("shopSpriteSuffix")
     }

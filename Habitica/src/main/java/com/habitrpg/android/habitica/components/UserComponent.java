@@ -42,11 +42,13 @@ import com.habitrpg.android.habitica.ui.adapter.tasks.RewardsRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.adapter.tasks.TodosRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.AboutFragment;
 import com.habitrpg.android.habitica.ui.fragments.AchievementsFragment;
-import com.habitrpg.android.habitica.ui.fragments.GemsPurchaseFragment;
+import com.habitrpg.android.habitica.ui.fragments.purchases.GemsPurchaseFragment;
 import com.habitrpg.android.habitica.ui.fragments.NavigationDrawerFragment;
 import com.habitrpg.android.habitica.ui.fragments.NewsFragment;
 import com.habitrpg.android.habitica.ui.fragments.StatsFragment;
-import com.habitrpg.android.habitica.ui.fragments.SubscriptionFragment;
+import com.habitrpg.android.habitica.ui.fragments.purchases.GiftBalanceGemsFragment;
+import com.habitrpg.android.habitica.ui.fragments.purchases.GiftPurchaseGemsFragment;
+import com.habitrpg.android.habitica.ui.fragments.purchases.SubscriptionFragment;
 import com.habitrpg.android.habitica.ui.fragments.faq.FAQDetailFragment;
 import com.habitrpg.android.habitica.ui.fragments.faq.FAQOverviewFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.customization.AvatarCustomizationFragment;
@@ -322,4 +324,8 @@ public interface UserComponent {
     void inject(@NotNull InsufficientGemsDialog insufficientGemsDialog);
 
     void inject(@NotNull GiftGemsActivity giftGemsActivity);
+
+    void inject(@NotNull GiftPurchaseGemsFragment giftPurchaseGemsFragment);
+
+    void inject(@NotNull GiftBalanceGemsFragment giftBalanceGemsFragment);
 }

@@ -252,4 +252,6 @@ interface ApiClient {
     fun verifyUsername(username: String): Flowable<VerifyUsernameResponse>
     fun updateServerUrl(newAddress: String?)
     fun findUsernames(username: String, context: String?, id: String?): Flowable<List<FindUsernameResult>>
+
+    fun transferGems(giftedID: String, amount: Int): Flowable<Void>
 }

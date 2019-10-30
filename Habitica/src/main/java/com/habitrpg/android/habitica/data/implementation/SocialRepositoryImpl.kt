@@ -320,4 +320,8 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
             Flowable.empty()
         } else apiClient.getMemberAchievements(userId)
     }
+
+    override fun transferGems(giftedID: String, amount: Int): Flowable<Void> {
+        return apiClient.transferGems(giftedID, amount)
+    }
 }

@@ -724,7 +724,6 @@
     <string name="gift_one_get_one_detailed_description">While this promotion is active, you’ll receive a matching subscription automatically after sending your gift.</string>
     <string name="gift_subscription_subtitle">Choose the subscription you’d like to gift below! This purchase won’t automatically renew.</string>
     <string name="gift_gems_subtitle">Choose the gem packet you’d like to gift below!</string>
-    <string name="send_gift">Send Gift</string>
     <string name="server">Server</string>
     <string name="gift_confirmation_title">Your gift was sent!</string>
     <string name="gift_confirmation_text_sub_g1g1">You sent %s a %s-month Habitica subscription and the same subscription was applied to your account for our Gift One Get One promotion!</string>
@@ -871,4 +870,9 @@
     <string name="gems_gift_description">Want to bestow a shiny haul of Gems to someone else?</string>
     <string name="gift_gems_disclaimer">Habitica will never require you to gift gems to other players. Begging people for gems is a violation of the Community Guidelines and should be reported to admin@habitica.com.</string>
     <string name="more_out_of_habitica">Get more out of Habitica</string>
+    <string name="purchase">Purchase</string>
+    <string name="from_balance">From Balance</string>
+    <string name="gift_gems_balance_subtitle">Enter how many of your Gems you\'d like to send below or switch tabs to purchase Gems to gift</string>
+    <string name="gems_to_gift">Gems to gift</string>
+    <string name="send_gift">Send Gift</string>
 </resources>

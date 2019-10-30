@@ -65,10 +65,10 @@ fun Long.getRemainingString(res: Resources): String {
     return when {
         diffMonths != 0f -> if (round(diffMonths) == 1f) {
             res.getString(R.string.remaining_1month)
-        } else res.getString(R.string.remaining_months, round(diffMonths))
+        } else res.getString(R.string.remaining_months, round(diffMonths).toInt())
         diffWeeks != 0f -> if (round(diffWeeks) == 1f) {
             res.getString(R.string.remaining_1week)
-        } else res.getString(R.string.remaining_weeks, round(diffWeeks))
+        } else res.getString(R.string.remaining_weeks, round(diffWeeks).toInt())
         diffDays != 0L -> if (diffDays == 1L) {
             res.getString(R.string.remaining_1day)
         } else res.getString(R.string.remaining_days, diffDays)

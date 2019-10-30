@@ -82,6 +82,8 @@ interface SocialRepository : BaseRepository {
 
     fun getMemberAchievements(userId: String?): Flowable<List<Achievement>>
 
+    fun transferGems(giftedID: String, amount: Int): Flowable<Void>
+
     fun getGroupMembership(id: String): Flowable<GroupMembership>
     fun getGroupMemberships(): Flowable<RealmResults<GroupMembership>>
     fun getChatmessage(messageID: String): Flowable<ChatMessage>
