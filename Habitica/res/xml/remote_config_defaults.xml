@@ -60,5 +60,9 @@
         <key>showSubscriptionSubtitle</key>
         <value>false</value>
     </entry>
+    <entry>
+        <key>minimumPasswordLength</key>
+        <value>8</value>
+    </entry>
 </defaultsMap>
     <!-- END xml_defaults -->

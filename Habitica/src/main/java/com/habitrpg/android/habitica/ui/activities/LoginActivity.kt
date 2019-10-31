@@ -41,6 +41,7 @@ import com.habitrpg.android.habitica.extensions.addCancelButton
 import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.extensions.addOkButton
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
+import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.KeyHelper
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.auth.UserAuthResponse
@@ -72,6 +73,8 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
     var keyHelper: KeyHelper? = null
     @Inject
     lateinit var crashlyticsProxy: CrashlyticsProxy
+    @Inject
+    lateinit var configManager: AppConfigManager
 
     private var isRegistering: Boolean = false
     private var isShowingForm: Boolean = false
@@ -109,7 +112,16 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
                 showValidationError(R.string.login_validation_error_fieldsmissing)
                 return@OnClickListener
             }
-            apiClient.registerUser(username, email, password, confirmPassword).subscribe(this@LoginActivity, RxErrorHandler.handleEmptyError())
+            if (password.length < configManager.minimumPasswordLength()) {
+                showValidationError(getString(R.string.password_too_short, configManager.minimumPasswordLength()))
+                return@OnClickListener
+            }
+            apiClient.registerUser(username, email, password, confirmPassword)
+                    .subscribe(this@LoginActivity,
+                            Consumer {
+                                hideProgress()
+                                RxErrorHandler.reportError(it)
+                            })
         } else {
             val username: String = mUsernameET.text.toString().trim { it <= ' ' }
             val password: String = mPasswordET.text.toString()
@@ -117,7 +129,11 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
                 showValidationError(R.string.login_validation_error_fieldsmissing)
                 return@OnClickListener
             }
-            apiClient.connectUser(username, password).subscribe(this@LoginActivity, RxErrorHandler.handleEmptyError())
+            apiClient.connectUser(username, password).subscribe(this@LoginActivity,
+                    Consumer {
+                        hideProgress()
+                        RxErrorHandler.reportError(it)
+                    })
         }
     }
 
@@ -304,15 +320,20 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
     }
 
     private fun showValidationError(resourceMessageString: Int) {
+        showValidationError(getString(resourceMessageString))
+    }
+
+    private fun showValidationError(message: String) {
         mProgressBar.visibility = View.GONE
         val alert = HabiticaAlertDialog(this)
         alert.setTitle(R.string.login_validation_error_title)
-        alert.setMessage(resourceMessageString)
+        alert.setMessage(message)
         alert.addOkButton()
         alert.show()
     }
 
     override fun accept(userAuthResponse: UserAuthResponse) {
+        hideProgress()
         try {
             saveTokens(userAuthResponse.token, userAuthResponse.id)
         } catch (e: Exception) {
