@@ -1,11 +1,11 @@
 package com.habitrpg.android.habitica.ui.activities
 
 import android.os.Bundle
-import android.webkit.WebView
+import android.view.MenuItem
+import android.widget.TextView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
-import io.noties.markwon.Markwon
-import io.noties.markwon.html.HtmlPlugin
+import com.habitrpg.android.habitica.ui.helpers.setMarkdown
 import kotlinx.android.synthetic.main.activity_prefs.*
 import okhttp3.*
 import java.io.BufferedReader
@@ -14,8 +14,6 @@ import java.io.InputStreamReader
 
 
 class GuidelinesActivity: BaseActivity() {
-    private lateinit var request: Request
-
     override fun getLayoutResId(): Int = R.layout.activity_guidelines
 
     override fun injectActivity(component: UserComponent?) { /* no-on */ }
@@ -38,14 +36,20 @@ class GuidelinesActivity: BaseActivity() {
                 val text = reader.readText()
                 response.body()?.close()
 
-                val markwon = Markwon.builder(this@GuidelinesActivity)
-                        .usePlugin(HtmlPlugin.create())
-                        .build()
-
-                findViewById<WebView>(R.id.webview).post {
-                    findViewById<WebView>(R.id.webview).loadData(markwon.toMarkdown(text).toString(), "text/html; charset=utf-8", "utf-8")
+                findViewById<TextView>(R.id.text_view).post {
+                    findViewById<TextView>(R.id.text_view).setMarkdown(text)
                 }
             }
         })
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 }
