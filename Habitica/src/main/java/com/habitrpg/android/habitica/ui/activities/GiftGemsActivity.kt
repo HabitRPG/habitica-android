@@ -61,6 +61,8 @@ class GiftGemsActivity : BaseActivity() {
         setTitle(R.string.gift_gems)
         setSupportActionBar(toolbar)
 
+        purchaseHandler = PurchaseHandler(this, crashlyticsProxy)
+
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
@@ -83,7 +85,6 @@ class GiftGemsActivity : BaseActivity() {
 
     override fun onStart() {
         super.onStart()
-        purchaseHandler = PurchaseHandler(this, crashlyticsProxy)
         purchaseHandler?.startListening()
     }
 
