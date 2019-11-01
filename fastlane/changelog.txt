@@ -1,3 +1,5 @@
 This update improves performance in some cases and has various improvements to how markdown is handled (Support for images and opening links from the task list)
 
+We also made some improvements to how the login screen handles troubles it may encounter.
+
 Be sure to download this update now for a better Habitica experience!
