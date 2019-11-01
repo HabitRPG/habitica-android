@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.DialogFragment
 import com.habitrpg.android.habitica.HabiticaBaseApplication
@@ -20,6 +21,7 @@ import com.habitrpg.android.habitica.extensions.getRemainingString
 import com.habitrpg.android.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.inventory.QuestContent
@@ -167,7 +169,7 @@ class NavigationDrawerFragment : DialogFragment() {
         initializeMenuItems()
 
         subscriptions?.add(adapter.getItemSelectionEvents().subscribe(Consumer {
-            setSelection(it, true)
+            setSelection(it.transitionId, it.bundle, true)
         }, RxErrorHandler.handleEmptyError()))
 
         subscriptions?.add(socialRepository.getGroup(Group.TAVERN_ID)
@@ -240,7 +242,7 @@ class NavigationDrawerFragment : DialogFragment() {
         if (user.isSubscribed && user.purchased?.plan?.dateTerminated != null) {
             val terminatedCalendar = Calendar.getInstance()
             terminatedCalendar.time = user.purchased?.plan?.dateTerminated ?: Date()
-            val msDiff = Calendar.getInstance().timeInMillis - terminatedCalendar.timeInMillis
+            val msDiff = terminatedCalendar.timeInMillis - Calendar.getInstance().timeInMillis
             val daysDiff = TimeUnit.MILLISECONDS.toDays(msDiff)
             if (daysDiff <= 30) {
                 context?.let {
@@ -269,6 +271,14 @@ class NavigationDrawerFragment : DialogFragment() {
             it.showBubble = user.flags?.newStuff ?: false
         }
 
+        val partyMenuItem = getItemWithIdentifier(SIDEBAR_PARTY)
+        if (user.hasParty() && partyMenuItem?.bundle == null) {
+            partyMenuItem?.transitionId = R.id.partyFragment
+            partyMenuItem?.bundle = bundleOf(Pair("partyID", user.party?.id))
+        } else if (!user.hasParty()) {
+            partyMenuItem?.transitionId = R.id.noPartyFragment
+            partyMenuItem?.bundle = null
+        }
     }
 
     override fun onDestroy() {
@@ -312,7 +322,7 @@ class NavigationDrawerFragment : DialogFragment() {
         adapter.updateItems(items)
     }
 
-    fun setSelection(transitionId: Int?, openSelection: Boolean = true) {
+    fun setSelection(transitionId: Int?, bundle: Bundle? = null, openSelection: Boolean = true) {
         adapter.selectedItem = transitionId
         closeDrawer()
 
@@ -320,10 +330,11 @@ class NavigationDrawerFragment : DialogFragment() {
             return
         }
 
-        val activity = activity as? MainActivity
-        if (activity != null) {
-            if (transitionId != null) {
-                activity.navigate(transitionId)
+        if (transitionId != null) {
+            if (bundle != null) {
+                MainNavigationController.navigate(transitionId, bundle)
+            } else {
+                MainNavigationController.navigate(transitionId)
             }
         }
     }

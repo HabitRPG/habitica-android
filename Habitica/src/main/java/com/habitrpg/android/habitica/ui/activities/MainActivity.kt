@@ -218,7 +218,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
             } else if (user?.isValid == true && user?.profile != null) {
                 toolbarTitleTextView.text = destination.label
             }
-            drawerFragment?.setSelection(destination.id, false)
+            drawerFragment?.setSelection(destination.id, null, false)
         }
         MainNavigationController.setup(navigationController)
 

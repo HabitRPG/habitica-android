@@ -45,6 +45,14 @@
             android:name="tabToOpen"
             app:argType="integer"
             android:defaultValue="0"/>
+        <argument
+            android:name="partyID"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/noPartyFragment"
+        android:name="com.habitrpg.android.habitica.ui.fragments.social.NoPartyFragmentFragment"
+        android:label="@string/sidebar_party">
     </fragment>
     <fragment
         android:id="@+id/questDetailFragment"

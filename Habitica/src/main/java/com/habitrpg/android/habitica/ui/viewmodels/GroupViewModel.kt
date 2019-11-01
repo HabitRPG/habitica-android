@@ -71,6 +71,7 @@ open class GroupViewModel : BaseViewModel() {
     }
 
     fun setGroupID(groupID: String) {
+        if (groupID == groupIDSubject.value?.value) return
         groupIDSubject.onNext(groupID.asOptional())
 
         disposable.add(notificationsManager.getNotifications().firstElement().map { it.filter { notification ->

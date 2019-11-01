@@ -39,10 +39,10 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int): Recycle
             notifyDataSetChanged()
         }
 
-    private val itemSelectedEvents = PublishSubject.create<Int>()
+    private val itemSelectedEvents = PublishSubject.create<HabiticaDrawerItem>()
 
 
-    fun getItemSelectionEvents(): Flowable<Int> = itemSelectedEvents.toFlowable(BackpressureStrategy.DROP)
+    fun getItemSelectionEvents(): Flowable<HabiticaDrawerItem> = itemSelectedEvents.toFlowable(BackpressureStrategy.DROP)
 
     fun getItemWithTransitionId(transitionId: Int): HabiticaDrawerItem? =
             items.find { it.transitionId == transitionId }
@@ -73,7 +73,7 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int): Recycle
             itemHolder?.tintColor = tintColor
             itemHolder?.backgroundTintColor = backgroundTintColor
             itemHolder?.bind(drawerItem, drawerItem.transitionId == selectedItem)
-            itemHolder?.itemView?.setOnClickListener { itemSelectedEvents.onNext(drawerItem.transitionId) }
+            itemHolder?.itemView?.setOnClickListener { itemSelectedEvents.onNext(drawerItem) }
         } else if (getItemViewType(position) == 1) {
             (holder as? SectionHeaderViewHolder)?.backgroundTintColor = backgroundTintColor
             (holder as? SectionHeaderViewHolder)?.bind(drawerItem)

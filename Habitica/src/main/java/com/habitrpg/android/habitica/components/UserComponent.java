@@ -76,7 +76,7 @@ import com.habitrpg.android.habitica.ui.fragments.skills.SkillTasksRecyclerViewF
 import com.habitrpg.android.habitica.ui.fragments.skills.SkillsFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.ChatFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.ChatListFragment;
-import com.habitrpg.android.habitica.ui.fragments.social.GroupInformationFragment;
+import com.habitrpg.android.habitica.ui.fragments.social.NoPartyFragmentFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.GuildDetailFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.GuildFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.GuildsOverviewFragment;
@@ -185,7 +185,7 @@ public interface UserComponent {
 
     void inject(ChatListFragment chatListFragment);
 
-    void inject(GroupInformationFragment groupInformationFragment);
+    void inject(NoPartyFragmentFragment noPartyFragmentFragment);
 
     void inject(GuildFragment guildFragment);
 

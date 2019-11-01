@@ -18,7 +18,6 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
-import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
@@ -28,24 +27,22 @@ import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.GroupFormActivity
 import com.habitrpg.android.habitica.ui.activities.MainActivity
-import com.habitrpg.android.habitica.ui.fragments.BaseFragment
+import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.helpers.setMarkdown
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
-import kotlinx.android.synthetic.main.fragment_group_info.*
+import kotlinx.android.synthetic.main.fragment_no_party.*
 import javax.inject.Inject
 import kotlin.math.roundToInt
 
 
-class GroupInformationFragment : BaseFragment() {
+class NoPartyFragmentFragment : BaseMainFragment() {
 
     @Inject
     lateinit var socialRepository: SocialRepository
-    @Inject
-    lateinit var userRepository: UserRepository
     @Inject
     lateinit var configManager: AppConfigManager
 
@@ -54,25 +51,17 @@ class GroupInformationFragment : BaseFragment() {
         field = value
         updateGroup(value)
     }
-    private var user: User? = null
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-            inflater.inflate(R.layout.fragment_group_info, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        hidesToolbar = true
+        super.onCreateView(inflater, container, savedInstanceState)
+        return inflater.inflate(R.layout.fragment_no_party, container, false)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         refreshLayout?.setOnRefreshListener { this.refresh() }
-
-        if (user != null) {
-            setUser(user)
-        } else {
-            compositeSubscription.add(userRepository.getUser().subscribe(Consumer {
-                user = it
-                setUser(user)
-            }, RxErrorHandler.handleEmptyError()))
-        }
 
         updateGroup(group)
 
@@ -82,9 +71,11 @@ class GroupInformationFragment : BaseFragment() {
                 socialRepository.joinGroup(userId)
                         .doOnNext { setInvitation(null) }
                         .flatMap { userRepository.retrieveUser(false) }
-                        .flatMap { socialRepository.retrieveGroup("party") }
-                        .flatMap<List<Member>> { group1 -> socialRepository.retrieveGroupMembers(group1.id, true) }
-                        .subscribe(Consumer {  }, RxErrorHandler.handleEmptyError())
+                        .subscribe(Consumer {
+                            fragmentManager?.popBackStack()
+                            MainNavigationController.navigate(R.id.partyFragment,
+                                    bundleOf(Pair("partyID", user?.party?.id)))
+                        }, RxErrorHandler.handleEmptyError())
             }
         }
 
@@ -143,6 +134,13 @@ class GroupInformationFragment : BaseFragment() {
                 MainNavigationController.navigate(R.id.guildFragment, bundleOf("groupID" to "f2db2a7f-13c5-454d-b3ee-ea1f5089e601"))
             }
         }
+
+        if (group == null && user?.invitations?.party?.id != null) {
+            setInvitation(user?.invitations?.party)
+        } else {
+            setInvitation(null)
+        }
+        username_textview.text = user?.formattedUsername
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -162,6 +160,9 @@ class GroupInformationFragment : BaseFragment() {
                                     userRepository.retrieveUser(false)
                                 }
                                 .subscribe(Consumer {
+                                    fragmentManager?.popBackStack()
+                                    MainNavigationController.navigate(R.id.partyFragment,
+                                            bundleOf(Pair("partyID", user?.party?.id)))
                                 }, RxErrorHandler.handleEmptyError())
                     } else {
                         this.socialRepository.updateGroup(this.group,
@@ -187,15 +188,6 @@ class GroupInformationFragment : BaseFragment() {
                     .doOnComplete { refreshLayout.isRefreshing = false }
                     .subscribe(Consumer {  }, RxErrorHandler.handleEmptyError()))
         }
-    }
-
-    private fun setUser(user: User?) {
-        if (group == null && user?.invitations?.party?.id != null) {
-            setInvitation(user.invitations?.party)
-        } else {
-            setInvitation(null)
-        }
-        username_textview.text = user?.formattedUsername
     }
 
     private fun setInvitation(invitation: PartyInvite?) {
@@ -233,10 +225,10 @@ class GroupInformationFragment : BaseFragment() {
 
     companion object {
 
-        fun newInstance(group: Group?, user: User?): GroupInformationFragment {
+        fun newInstance(group: Group?, user: User?): NoPartyFragmentFragment {
             val args = Bundle()
 
-            val fragment = GroupInformationFragment()
+            val fragment = NoPartyFragmentFragment()
             fragment.arguments = args
             fragment.group = group
             fragment.user = user
