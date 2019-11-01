@@ -43,6 +43,9 @@ class PushNotificationsPreferencesFragment : BasePreferencesFragment(), SharedPr
         updatePreference("preference_push_invited_to_quest", user?.preferences?.pushNotifications?.invitedQuest)
         updatePreference("preference_push_important_announcements", user?.preferences?.pushNotifications?.majorUpdates)
         updatePreference("preference_push_party_activity", user?.preferences?.pushNotifications?.partyActivity)
+        updatePreference("preference_push_party_mention", user?.preferences?.pushNotifications?.mentionParty)
+        updatePreference("preference_push_joined_guild_mention", user?.preferences?.pushNotifications?.mentionJoinedGuild)
+        updatePreference("preference_push_unjoined_guild_mention", user?.preferences?.pushNotifications?.mentionUnjoinedGuild)
         isSettingUser = false
         isInitialSet = false
     }
@@ -67,6 +70,9 @@ class PushNotificationsPreferencesFragment : BasePreferencesFragment(), SharedPr
             "preference_push_invited_to_quest" -> "invitedQuest"
             "preference_push_important_announcements" -> "majorUpdates"
             "preference_push_party_activity" -> "partyActivity"
+            "preference_push_party_mention" -> "mentionParty"
+            "preference_push_joined_guild_mention" -> "mentionJoinedGuild"
+            "preference_push_unjoined_guild_mention" -> "mentionUnjoinedGuild"
             else -> null
         }
         if (pathKey != null) {

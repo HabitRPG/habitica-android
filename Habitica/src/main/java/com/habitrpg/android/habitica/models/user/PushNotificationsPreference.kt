@@ -14,4 +14,7 @@ open class PushNotificationsPreference : RealmObject() {
     var giftedGems: Boolean = false
     var giftedSubscription: Boolean = false
     var partyActivity: Boolean = false
+    var mentionParty: Boolean = false
+    var mentionJoinedGuild: Boolean = false
+    var mentionUnjoinedGuild: Boolean = false
 }

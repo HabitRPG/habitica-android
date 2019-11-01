@@ -870,10 +870,13 @@
     <string name="gems_gift_description">Want to bestow a shiny haul of Gems to someone else?</string>
     <string name="gift_gems_disclaimer">Habitica will never require you to gift gems to other players. Begging people for gems is a violation of the Community Guidelines and should be reported to admin@habitica.com.</string>
     <string name="more_out_of_habitica">Get more out of Habitica</string>
+    <string name="preference_push_party_mention">\@Mentions in Party</string>
     <string name="purchase">Purchase</string>
     <string name="from_balance">From Balance</string>
     <string name="gift_gems_balance_subtitle">Enter how many of your Gems you\'d like to send below or switch tabs to purchase Gems to gift</string>
     <string name="gems_to_gift">Gems to gift</string>
+    <string name="preference_push_joined_guild_mention">\@Mentions in joined Guilds</string>
+    <string name="preference_push_unjoined_guild_mention">\@Mentions in not joined Guilds</string>
     <string name="send_gift">Send Gift</string>
     <string name="copy_userid">Copy User ID</string>
     <string name="id_copied">Copied User ID to clipboard</string>
