@@ -240,8 +240,8 @@
     <string name="quest_begin_message">Are you sure? Only %1$d of your %2$d party members have joined this quest! Quests start automatically when all players have joined or rejected the invitation.</string>
     <string name="ago_1month">1 month ago</string>
     <string name="ago_months">%d month ago</string>
-    <string name="ago_1week">1w remaining</string>
-    <string name="ago_weeks">%dw remaining</string>
+    <string name="ago_1week">1w ago</string>
+    <string name="ago_weeks">%dw ago</string>
     <string name="ago_1day">1d ago</string>
     <string name="ago_days">%dd ago</string>
     <string name="ago_1Minute">1m ago</string>
