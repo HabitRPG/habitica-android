@@ -18,38 +18,12 @@
                 android:layout_height="wrap_content"
                 style="@style/CardView.Default"
                 android:id="@+id/party_invitation_wrapper">
-                <LinearLayout
-                    android:orientation="vertical"
+
+                <com.habitrpg.android.habitica.ui.views.social.InvitationsView
+                    android:id="@+id/invitations_view"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    style="@style/CardContent">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/invited_to_party" />
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_gravity="end">
-
-                        <Button
-                            android:id="@+id/party_invite_accept_button"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/quest_accept"
-                            android:textColor="@color/btn_success"
-                            style="?android:buttonBarButtonStyle" />
-
-                        <Button
-                            android:id="@+id/party_invite_reject_button"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/quest_reject"
-                            android:textColor="@color/btn_danger"
-                            style="?android:buttonBarButtonStyle" />
-                    </LinearLayout>
-                </LinearLayout>
+                    android:layout_height="wrap_content"
+                    style="@style/CardContent" />
             </androidx.cardview.widget.CardView>
 
             <TextView

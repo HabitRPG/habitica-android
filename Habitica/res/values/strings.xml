@@ -882,4 +882,6 @@
     <string name="id_copied">Copied User ID to clipboard</string>
     <string name="copy_username">Copy Username</string>
     <string name="password_too_short">Your password has to be at least %d characters long</string>
+    <string name="invitation_title">%s invited you to %s</string>
+    <string name="someone">Someone</string>
 </resources>

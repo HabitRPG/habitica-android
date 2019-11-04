@@ -134,7 +134,7 @@ open class NotificationsViewModel : BaseViewModel() {
             notification
         } ?: emptyList())
 
-        notifications.addAll(user.invitations?.getGuilds()?.map {
+        notifications.addAll(user.invitations?.guilds?.map {
             val notification = Notification()
             notification.id = "custom-guild-invitation-" + it.id
             notification.type = Notification.Type.GUILD_INVITATION.type

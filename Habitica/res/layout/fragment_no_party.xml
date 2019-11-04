@@ -22,38 +22,11 @@
                 style="@style/CardView.Default"
                 android:id="@+id/invitationWrapper">
 
-                <LinearLayout
-                    android:orientation="vertical"
+                <com.habitrpg.android.habitica.ui.views.social.InvitationsView
+                    android:id="@+id/invitations_view"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    style="@style/CardContent">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/invited_to_party" />
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_gravity="end">
-
-                        <Button
-                            android:id="@+id/buttonPartyInviteAccept"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/quest_accept"
-                            android:textColor="@color/btn_success"
-                            style="?android:buttonBarButtonStyle" />
-
-                        <Button
-                            android:id="@+id/buttonPartyInviteReject"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/quest_reject"
-                            android:textColor="@color/btn_danger"
-                            style="?android:buttonBarButtonStyle" />
-                    </LinearLayout>
-                </LinearLayout>
+                    android:layout_height="wrap_content"
+                    style="@style/CardContent" />
             </androidx.cardview.widget.CardView>
 
             <LinearLayout
@@ -149,57 +122,6 @@
 
                 </LinearLayout>
             </LinearLayout>
-
-            <TextView
-                android:id="@+id/groupNameView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/SectionTitle"/>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/groupDescriptionWrapper"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/CardView.Default">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/CardContent"
-                    android:divider="?android:listDivider"
-                    android:dividerPadding="@dimen/spacing_medium"
-                    android:showDividers="middle"
-                    android:orientation="vertical">
-
-                    <com.habitrpg.android.habitica.ui.views.HabiticaEmojiTextView
-                        android:id="@+id/groupSummaryView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="@dimen/spacing_medium" />
-
-                    <com.habitrpg.android.habitica.ui.views.HabiticaEmojiTextView
-                        android:id="@+id/groupDescriptionView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="@dimen/spacing_medium"/>
-                    <LinearLayout
-                        android:id="@+id/gemCountWrapper"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:padding="@dimen/spacing_medium">
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/gems"/>
-                        <TextView
-                            android:id="@+id/gemCountTextView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
-                    </LinearLayout>
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

@@ -15,21 +15,7 @@ open class Invitations : RealmObject() {
 
     var party: PartyInvite? = null
     var parties: RealmList<PartyInvite>? = null
-    private var guilds: RealmList<GuildInvite>? = null
-
-    /**
-     * @return The guilds invite
-     */
-    fun getGuilds(): List<GuildInvite>? {
-        return guilds
-    }
-
-    /**
-     * @param guilds The guilds
-     */
-    fun setGuilds(guilds: RealmList<GuildInvite>) {
-        this.guilds = guilds
-    }
+    var guilds: RealmList<GuildInvite>? = null
 
     fun removeInvitation(groupID: String) {
         if (party?.id == groupID) {

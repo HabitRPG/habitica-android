@@ -7,12 +7,14 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SocialRepository
+import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
@@ -30,6 +32,7 @@ import com.habitrpg.android.habitica.ui.viewHolders.GroupMemberViewHolder.GroupM
 import com.habitrpg.android.habitica.ui.viewmodels.PartyViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
+import com.habitrpg.android.habitica.ui.views.social.InvitationsView
 import com.habitrpg.android.habitica.ui.views.social.OldQuestProgressView
 import io.reactivex.functions.Consumer
 import io.realm.RealmResults
@@ -49,14 +52,15 @@ class PartyDetailFragment : BaseFragment() {
     @Inject
     lateinit var socialRepository: SocialRepository
     @Inject
+    lateinit var userRepository: UserRepository
+    @Inject
     lateinit var inventoryRepository: InventoryRepository
     @field:[Inject Named(AppModule.NAMED_USER_ID)]
     lateinit var userId: String
 
     private val refreshLayout: androidx.swiperefreshlayout.widget.SwipeRefreshLayout? by bindView(R.id.refreshLayout)
     private val partyInvitationWrapper: ViewGroup? by bindView(R.id.party_invitation_wrapper)
-    private val partyAcceptButton: Button? by bindView(R.id.party_invite_accept_button)
-    private val partyRejectButton: Button? by bindView(R.id.party_invite_reject_button)
+    private val invitationsView: InvitationsView? by bindView(R.id.invitations_view)
     private val titleView: TextView? by bindView(R.id.title_view)
     private val descriptionView: TextView? by bindView(R.id.description_view)
     private val newQuestButton: Button? by bindView(R.id.new_quest_button)
@@ -94,13 +98,29 @@ class PartyDetailFragment : BaseFragment() {
 
         refreshLayout?.setOnRefreshListener { this.refreshParty() }
 
-        partyAcceptButton?.setOnClickListener { onPartyInviteAccepted() }
-        partyRejectButton?.setOnClickListener { onPartyInviteRejected() }
         questAcceptButton?.setOnClickListener { onQuestAccept() }
         questRejectButton?.setOnClickListener { onQuestReject() }
         newQuestButton?.setOnClickListener { inviteNewQuest() }
         questDetailButton?.setOnClickListener { questDetailButtonClicked() }
         leaveButton?.setOnClickListener { leaveParty() }
+
+        invitationsView?.acceptCall = {
+            viewModel?.joinGroup(it) {
+                compositeSubscription.add(userRepository.retrieveUser(false)
+                        .subscribe(Consumer { user ->
+                            fragmentManager?.popBackStack()
+                            MainNavigationController.navigate(R.id.partyFragment,
+                                    bundleOf(Pair("partyID", user.party?.id)))
+
+                        }))
+            }
+        }
+
+        invitationsView?.rejectCall = {
+            socialRepository.rejectGroupInvite(it)
+                    .flatMap { userRepository.retrieveUser(false, true) }
+                    .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+        }
 
         viewModel?.getGroupData()?.observe(viewLifecycleOwner, Observer { updateParty(it) })
         viewModel?.getUserData()?.observe(viewLifecycleOwner, Observer { updateUser(it) })
@@ -164,6 +184,13 @@ class PartyDetailFragment : BaseFragment() {
         }
 
         questProgressView?.configure(user, viewModel?.isUserOnQuest)
+
+        if ((user.invitations?.parties?.count() ?: 0) > 0) {
+            partyInvitationWrapper?.visibility = View.VISIBLE
+            user.invitations?.parties?.let { invitationsView?.setInvitations(it) }
+        } else {
+            partyInvitationWrapper?.visibility = View.GONE
+        }
     }
 
     private fun showParticipantButtons(): Boolean {

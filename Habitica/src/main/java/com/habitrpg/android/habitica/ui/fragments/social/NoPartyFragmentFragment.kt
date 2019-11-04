@@ -9,7 +9,6 @@ import android.graphics.Bitmap
 import android.graphics.Shader
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
-import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,9 +20,7 @@ import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.android.habitica.models.invitations.PartyInvite
 import com.habitrpg.android.habitica.models.members.Member
-import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.GroupFormActivity
 import com.habitrpg.android.habitica.ui.activities.MainActivity
@@ -46,12 +43,6 @@ class NoPartyFragmentFragment : BaseMainFragment() {
     @Inject
     lateinit var configManager: AppConfigManager
 
-    var group: Group? = null
-    set(value) {
-        field = value
-        updateGroup(value)
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         hidesToolbar = true
         super.onCreateView(inflater, container, savedInstanceState)
@@ -63,28 +54,18 @@ class NoPartyFragmentFragment : BaseMainFragment() {
 
         refreshLayout?.setOnRefreshListener { this.refresh() }
 
-        updateGroup(group)
-
-        buttonPartyInviteAccept.setOnClickListener {
-            val userId = user?.invitations?.party?.id
-            if (userId != null) {
-                socialRepository.joinGroup(userId)
-                        .doOnNext { setInvitation(null) }
-                        .flatMap { userRepository.retrieveUser(false) }
-                        .subscribe(Consumer {
-                            fragmentManager?.popBackStack()
-                            MainNavigationController.navigate(R.id.partyFragment,
-                                    bundleOf(Pair("partyID", user?.party?.id)))
-                        }, RxErrorHandler.handleEmptyError())
-            }
+        invitations_view.acceptCall = {
+            socialRepository.joinGroup(it)
+                    .flatMap { userRepository.retrieveUser(false) }
+                    .subscribe(Consumer {
+                        fragmentManager?.popBackStack()
+                        MainNavigationController.navigate(R.id.partyFragment,
+                                bundleOf(Pair("partyID", user?.party?.id)))
+                    }, RxErrorHandler.handleEmptyError())
         }
 
-        buttonPartyInviteReject.setOnClickListener {
-            val userId = user?.invitations?.party?.id
-            if (userId != null) {
-                socialRepository.rejectGroupInvite(userId)
-                        .subscribe(Consumer { setInvitation(null) }, RxErrorHandler.handleEmptyError())
-            }
+        invitations_view.rejectCall = {
+            socialRepository.rejectGroupInvite(it).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
         }
 
         username_textview.setOnClickListener {
@@ -124,9 +105,6 @@ class NoPartyFragmentFragment : BaseMainFragment() {
             }
         }
 
-        groupDescriptionView.movementMethod = LinkMovementMethod.getInstance()
-        groupSummaryView.movementMethod = LinkMovementMethod.getInstance()
-
         if (configManager.noPartyLinkPartyGuild()) {
             join_party_description_textview.setMarkdown(getString(R.string.join_party_description_guild, "[Party Wanted Guild](https://habitica.com/groups/guild/f2db2a7f-13c5-454d-b3ee-ea1f5089e601)"))
             join_party_description_textview.setOnClickListener {
@@ -135,11 +113,13 @@ class NoPartyFragmentFragment : BaseMainFragment() {
             }
         }
 
-        if (group == null && user?.invitations?.party?.id != null) {
-            setInvitation(user?.invitations?.party)
+        if ((user?.invitations?.parties?.count() ?: 0) > 0) {
+            invitationWrapper.visibility = View.VISIBLE
+            user?.invitations?.parties?.let { invitations_view.setInvitations(it) }
         } else {
-            setInvitation(null)
+            invitationWrapper.visibility = View.GONE
         }
+
         username_textview.text = user?.formattedUsername
     }
 
@@ -164,13 +144,6 @@ class NoPartyFragmentFragment : BaseMainFragment() {
                                     MainNavigationController.navigate(R.id.partyFragment,
                                             bundleOf(Pair("partyID", user?.party?.id)))
                                 }, RxErrorHandler.handleEmptyError())
-                    } else {
-                        this.socialRepository.updateGroup(this.group,
-                                bundle?.getString("name"),
-                                bundle?.getString("description"),
-                                bundle?.getString("leader"),
-                                bundle?.getBoolean("leaderCreateChallenge"))
-                                .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
                     }
                 }
             }
@@ -178,20 +151,12 @@ class NoPartyFragmentFragment : BaseMainFragment() {
     }
 
     private fun refresh() {
-        if (group != null) {
-            compositeSubscription.add(socialRepository.retrieveGroup(group?.id ?: "").subscribe(Consumer {}, RxErrorHandler.handleEmptyError()))
-        } else {
-            compositeSubscription.add(userRepository.retrieveUser(false, forced = true)
-                    .filter { it.hasParty() }
-                    .flatMap { socialRepository.retrieveGroup("party") }
-                    .flatMap<List<Member>> { group1 -> socialRepository.retrieveGroupMembers(group1.id, true) }
-                    .doOnComplete { refreshLayout.isRefreshing = false }
-                    .subscribe(Consumer {  }, RxErrorHandler.handleEmptyError()))
-        }
-    }
-
-    private fun setInvitation(invitation: PartyInvite?) {
-        invitationWrapper.visibility = if (invitation == null) View.GONE else View.VISIBLE
+        compositeSubscription.add(userRepository.retrieveUser(false, forced = true)
+                .filter { it.hasParty() }
+                .flatMap { socialRepository.retrieveGroup("party") }
+                .flatMap<List<Member>> { group1 -> socialRepository.retrieveGroupMembers(group1.id, true) }
+                .doOnComplete { refreshLayout.isRefreshing = false }
+                .subscribe(Consumer {  }, RxErrorHandler.handleEmptyError()))
     }
 
     override fun onDestroy() {
@@ -204,33 +169,13 @@ class NoPartyFragmentFragment : BaseMainFragment() {
         component.inject(this)
     }
 
-    private fun updateGroup(group: Group?) {
-        if (noPartyWrapper == null) {
-            return
-        }
-
-        val hasGroup = group != null
-        val groupItemVisibility = if (hasGroup) View.VISIBLE else View.GONE
-        noPartyWrapper.visibility = if (hasGroup) View.GONE else View.VISIBLE
-        groupNameView.visibility = groupItemVisibility
-        groupDescriptionView.visibility = groupItemVisibility
-        groupDescriptionWrapper.visibility = groupItemVisibility
-
-        groupNameView.text = group?.name
-        groupDescriptionView.setMarkdown(group?.description)
-        groupSummaryView.setMarkdown(group?.summary)
-        gemCountWrapper.visibility = if (group?.balance != null && group.balance > 0) View.VISIBLE else View.GONE
-        gemCountTextView.text = (group?.balance ?: 0 * 4.0).toInt().toString()
-    }
-
     companion object {
 
-        fun newInstance(group: Group?, user: User?): NoPartyFragmentFragment {
+        fun newInstance(user: User?): NoPartyFragmentFragment {
             val args = Bundle()
 
             val fragment = NoPartyFragmentFragment()
             fragment.arguments = args
-            fragment.group = group
             fragment.user = user
             return fragment
         }
