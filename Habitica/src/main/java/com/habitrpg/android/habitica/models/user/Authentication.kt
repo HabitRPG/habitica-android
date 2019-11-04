@@ -19,6 +19,10 @@ open class Authentication : RealmObject() {
     @SerializedName("local")
     var localAuthentication: LocalAuthentication? = null
 
+    var hasFacebookAuth = false
+    var hasGoogleAuth = false
+    var hasAppleAuth = false
+
     var timestamps: AuthenticationTimestamps? = null
 
 }

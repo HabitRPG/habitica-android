@@ -884,4 +884,9 @@
     <string name="password_too_short">Your password has to be at least %d characters long</string>
     <string name="invitation_title">%s invited you to %s</string>
     <string name="someone">Someone</string>
+    <string name="authentication_methods">Authentication Methods</string>
+    <string name="local">local</string>
+    <string name="facebook">Facebook</string>
+    <string name="apple_sign_in">Sign in with Apple</string>
+    <string name="google">Google</string>
 </resources>

@@ -59,6 +59,13 @@
                 android:shouldDisableView="false"
                 android:layout="@layout/preference_child_summary"/>
             <Preference
+                android:key="authentication_methods"
+                android:title="@string/authentication_methods"
+                android:selectable="false"
+                android:persistent="false"
+                android:shouldDisableView="false"
+                android:layout="@layout/preference_child_summary"/>
+            <Preference
                 android:key="subscription_status"
                 android:title="@string/subscription_status"
                 android:selectable="true"

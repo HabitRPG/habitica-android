@@ -14,7 +14,7 @@
         android:layout_gravity="end">
 
         <Button
-            android:id="@+id/button_accept"
+            android:id="@+id/accept_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/quest_accept"
@@ -22,7 +22,7 @@
             style="?android:buttonBarButtonStyle" />
 
         <Button
-            android:id="@+id/button_reject"
+            android:id="@+id/reject_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/quest_reject"

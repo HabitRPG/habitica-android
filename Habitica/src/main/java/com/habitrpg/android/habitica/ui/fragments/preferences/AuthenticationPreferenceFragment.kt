@@ -56,6 +56,15 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
         findPreference("change_password").isVisible = user?.authentication?.localAuthentication?.email?.isNotEmpty() == true
         findPreference("add_local_auth").isVisible = user?.authentication?.localAuthentication?.email?.isNotEmpty() != true
         findPreference("confirm_username").isVisible = user?.flags?.isVerifiedUsername != true
+        val preference = findPreference("authentication_methods")
+        val methods = mutableListOf<String>()
+        if (user?.authentication?.localAuthentication?.email != null) {
+            context?.getString(R.string.local)?.let { methods.add(it) }
+        }
+        if (user?.authentication?.hasFacebookAuth == true) { context?.getString(R.string.facebook)?.let { methods.add(it) } }
+        if (user?.authentication?.hasGoogleAuth == true) { context?.getString(R.string.google)?.let { methods.add(it) } }
+        if (user?.authentication?.hasAppleAuth == true) { context?.getString(R.string.apple_sign_in)?.let { methods.add(it) } }
+        preference.summary = methods.joinToString(", ")
     }
 
     private fun configurePreference(preference: Preference?, value: String?, hideIfEmpty: Boolean) {
