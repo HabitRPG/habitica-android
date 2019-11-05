@@ -6,53 +6,60 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:scrollbarSize="3dp"
     android:scrollbarThumbVertical="@color/scrollbarThumb"
-    android:scrollbars="vertical"
-    android:paddingTop="@dimen/row_padding">
+    android:scrollbars="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/SectionTitle"
-            android:text="@string/battle_gear"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:orientation="vertical"
+        android:layout_marginTop="@dimen/spacing_medium">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/row_padding">
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                style="@style/SectionTitle"
+                android:text="@string/battle_gear"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+            <Space
+                android:layout_width="0dp"
                 android:layout_weight="1"
-                android:text="@string/equip_automatically"/>
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/equip_automatically"
+                android:layout_marginEnd="6dp"/>
             <Switch
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/autoEquipSwitch"/>
-
         </LinearLayout>
         <com.habitrpg.android.habitica.ui.views.equipment.EquipmentOverviewView
             android:id="@+id/battlegear_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/spacing_medium" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/SectionTitle"
-            android:text="@string/costume"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/row_padding">
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                style="@style/SectionTitle"
+                android:text="@string/costume"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+            <Space
+                android:layout_width="0dp"
                 android:layout_weight="1"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="6dp"
                 android:text="@string/wear_costume"/>
             <Switch
                 android:layout_width="wrap_content"

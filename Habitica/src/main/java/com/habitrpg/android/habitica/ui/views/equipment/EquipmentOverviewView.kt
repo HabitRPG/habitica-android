@@ -32,9 +32,9 @@ class EquipmentOverviewView @JvmOverloads constructor(
 
     }
 
-    fun updateData(outfit: Outfit) {
-        binding.weaponItem.set(outfit.weapon)
-        binding.shieldItem.set(outfit.shield)
+    fun updateData(outfit: Outfit, isWeaponTwoHanded: Boolean = false) {
+        binding.weaponItem.set(outfit.weapon, isWeaponTwoHanded)
+        binding.shieldItem.set(outfit.shield, false, isWeaponTwoHanded)
         binding.headItem.set(outfit.head)
         binding.armorItem.set(outfit.armor)
         binding.headAccessoryItem.set(outfit.headAccessory)

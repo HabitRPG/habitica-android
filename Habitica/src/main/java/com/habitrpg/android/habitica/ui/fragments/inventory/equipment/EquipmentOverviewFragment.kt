@@ -9,6 +9,7 @@ import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.FragmentEquipmentOverviewBinding
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.models.user.Gear
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import io.reactivex.functions.Consumer
@@ -33,8 +34,7 @@ class EquipmentOverviewFragment : BaseMainFragment() {
             super.user = value
             if (this::binding.isInitialized) {
                 value?.items?.gear?.let {
-                    binding.battlegearView.updateData(it.equipped)
-                    binding.costumeView.updateData(it.costume)
+                    updateGearData(it)
                 }
             }
         }
@@ -56,8 +56,7 @@ class EquipmentOverviewFragment : BaseMainFragment() {
         binding.costumeSwitch.setOnCheckedChangeListener { _, isChecked -> userRepository.updateUser(user, "preferences.costume", isChecked).subscribe(Consumer { }, RxErrorHandler.handleEmptyError()) }
 
         user?.items?.gear?.let {
-            binding.battlegearView.updateData(it.equipped)
-            binding.costumeView.updateData(it.costume)
+            updateGearData(it)
         }
     }
 
@@ -74,4 +73,22 @@ class EquipmentOverviewFragment : BaseMainFragment() {
         MainNavigationController.navigate(EquipmentOverviewFragmentDirections.openEquipmentDetail(type, isCostume ?: false, equipped ?: ""))
     }
 
+    private fun updateGearData(gear: Gear) {
+        if (gear.equipped?.weapon?.isNotEmpty() == true) {
+            compositeSubscription.add(inventoryRepository.getEquipment(gear.equipped?.weapon ?: "").firstElement()
+                    .subscribe(Consumer {
+                        binding.battlegearView.updateData(gear.equipped, it.twoHanded)
+                    }, RxErrorHandler.handleEmptyError()))
+        } else {
+            binding.battlegearView.updateData(gear.equipped)
+        }
+        if (gear.costume?.weapon?.isNotEmpty() == true) {
+            compositeSubscription.add(inventoryRepository.getEquipment(gear.costume?.weapon ?: "").firstElement()
+                    .subscribe(Consumer {
+                        binding.costumeView.updateData(gear.costume, it.twoHanded)
+                    }, RxErrorHandler.handleEmptyError()))
+        } else {
+            binding.costumeView.updateData(gear.costume)
+        }
+    }
 }

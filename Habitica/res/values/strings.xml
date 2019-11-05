@@ -232,8 +232,8 @@
     <string name="outfit_armor">Armor</string>
     <string name="outfit_back">Back</string>
     <string name="outfit_body">Body</string>
-    <string name="outfit_shield">Shield</string>
-    <string name="outfit_weapon">Weapon</string>
+    <string name="outfit_shield">Off-Hand</string>
+    <string name="outfit_weapon">Main-Hand</string>
     <string name="wear_costume">Wear Costume</string>
     <string name="equipped">Equipped</string>
     <string name="quest_cancel_message">Are you sure you want to cancel this quest? All invitation acceptances will be lost. The quest owner will retain possession of the quest scroll.</string>
@@ -852,7 +852,7 @@
     <string name="inviteFriendDescription">You invited a friend (or friends) who joined you on your adventure!</string>
     <string name="keep_challenges">Keep Challenges</string>
     <string name="leave_challenges">Leave Challenges</string>
-    <string name="equip_automatically">Auto-equip new gear</string>
+    <string name="equip_automatically">Auto-equip new</string>
     <string name="accept">Accept</string>
     <string name="reject">Reject</string>
     <string name="complete">Complete</string>
