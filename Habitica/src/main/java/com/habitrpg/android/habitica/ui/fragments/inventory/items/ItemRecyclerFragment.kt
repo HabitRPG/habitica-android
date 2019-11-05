@@ -80,11 +80,12 @@ class ItemRecyclerFragment : BaseFragment() {
 
         adapter = recyclerView?.adapter as? ItemRecyclerAdapter
         if (adapter == null) {
-            adapter = ItemRecyclerAdapter(null, true)
-            adapter?.context = this.activity
-            adapter?.isHatching = this.isHatching
-            adapter?.isFeeding = this.isFeeding
-            adapter?.fragment = this
+            context?.let {
+                adapter = ItemRecyclerAdapter(null, true, context)
+                adapter?.isHatching = this.isHatching
+                adapter?.isFeeding = this.isFeeding
+                adapter?.fragment = this
+            }
             if (this.hatchingItem != null) {
                 adapter?.hatchingItem = this.hatchingItem
             }

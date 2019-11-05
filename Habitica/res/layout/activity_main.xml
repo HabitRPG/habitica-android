@@ -139,7 +139,7 @@
          the container. -->
     <fragment
         android:id="@+id/navigation_drawer"
-        android:name="com.habitrpg.android.habitica.ui.fragments.NavigationDrawerFragment"
+        class="com.habitrpg.android.habitica.ui.fragments.NavigationDrawerFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="start"

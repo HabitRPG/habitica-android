@@ -28,7 +28,7 @@
             app:hintTextAppearance="@style/TextAppearance.AppCompat">
 
             <net.pherth.android.emoji_library.EmojiEditText
-                android:id="@+id/edit.new.message.text"
+                android:id="@+id/edit_new_message_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"

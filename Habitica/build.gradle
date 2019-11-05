@@ -158,6 +158,11 @@ android {
     lintOptions {
         abortOnError false
     }
+
+    viewBinding {
+        enabled true
+    }
+
     signingConfigs {
         release
     }

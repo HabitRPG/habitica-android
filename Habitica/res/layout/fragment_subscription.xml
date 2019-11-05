@@ -88,7 +88,7 @@
                 android:layout_marginRight="26dp"/>
 
             <FrameLayout
-                android:id="@+id/subscribe.listitem1.box"
+                android:id="@+id/subscribe_listitem1_box"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/subscriptionBox">
@@ -104,13 +104,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:srcCompat="@drawable/ic_keyboard_arrow_down_black_24dp"
-                    android:id="@+id/subscribe.listitem1.expand"
+                    android:id="@+id/subscribe_listitem1_expand"
                     android:layout_gravity="end"/>
 
             </FrameLayout>
 
             <TextView
-                android:id="@+id/subscribe.listitem1.description"
+                android:id="@+id/subscribe_listitem1_description"
                 android:text="@string/subscribe_listitem1_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -118,7 +118,7 @@
                 android:visibility="gone"/>
 
             <FrameLayout
-                android:id="@+id/subscribe.listitem2.box"
+                android:id="@+id/subscribe_listitem2_box"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/subscriptionBox">
@@ -133,12 +133,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:srcCompat="@drawable/ic_keyboard_arrow_down_black_24dp"
-                    android:id="@+id/subscribe.listitem2.expand"
+                    android:id="@+id/subscribe_listitem2_expand"
                     android:layout_gravity="end"/>
             </FrameLayout>
 
             <TextView
-                android:id="@+id/subscribe.listitem2.description"
+                android:id="@+id/subscribe_listitem2_description"
                 android:text="@string/subscribe_listitem2_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -146,7 +146,7 @@
                 android:visibility="gone" />
 
             <FrameLayout
-                android:id="@+id/subscribe.listitem3.box"
+                android:id="@+id/subscribe_listitem3_box"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/subscriptionBox">
@@ -161,12 +161,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:srcCompat="@drawable/ic_keyboard_arrow_down_black_24dp"
-                    android:id="@+id/subscribe.listitem3.expand"
+                    android:id="@+id/subscribe_listitem3_expand"
                     android:layout_gravity="end"/>
             </FrameLayout>
 
             <TextView
-                android:id="@+id/subscribe.listitem3.description"
+                android:id="@+id/subscribe_listitem3_description"
                 android:text="@string/subscribe_listitem3_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -174,7 +174,7 @@
                 android:visibility="gone" />
 
             <FrameLayout
-                android:id="@+id/subscribe.listitem4.box"
+                android:id="@+id/subscribe_listitem4_box"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/subscriptionBox"
@@ -189,12 +189,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:srcCompat="@drawable/ic_keyboard_arrow_down_black_24dp"
-                    android:id="@+id/subscribe.listitem4.expand"
+                    android:id="@+id/subscribe_listitem4_expand"
                     android:layout_gravity="end"/>
             </FrameLayout>
 
             <TextView
-                android:id="@+id/subscribe.listitem4.description"
+                android:id="@+id/subscribe_listitem4_description"
                 android:text="@string/subscribe_listitem4_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

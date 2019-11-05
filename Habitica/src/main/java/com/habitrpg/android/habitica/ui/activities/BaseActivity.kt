@@ -1,8 +1,11 @@
 package com.habitrpg.android.habitica.ui.activities
 
+import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
@@ -29,6 +32,10 @@ abstract class BaseActivity : AppCompatActivity() {
 
     protected abstract fun getLayoutResId(): Int
 
+    open fun getContentView(): View {
+        return (getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater).inflate(getLayoutResId(), null)
+    }
+
     protected var compositeSubscription = CompositeDisposable()
 
     private val habiticaApplication: HabiticaApplication
@@ -49,11 +56,11 @@ abstract class BaseActivity : AppCompatActivity() {
         resources.updateConfiguration(configuration, resources.displayMetrics)
         loadTheme(sharedPreferences)
 
-        delegate.setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        delegate.localNightMode = AppCompatDelegate.MODE_NIGHT_NO
         super.onCreate(savedInstanceState)
         habiticaApplication
         injectActivity(HabiticaBaseApplication.userComponent)
-        setContentView(getLayoutResId())
+        setContentView(getContentView())
         compositeSubscription = CompositeDisposable()
     }
 

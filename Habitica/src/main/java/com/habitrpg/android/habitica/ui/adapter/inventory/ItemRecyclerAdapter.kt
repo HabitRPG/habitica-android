@@ -4,18 +4,16 @@ import android.content.Context
 import android.content.res.Resources
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.databinding.ItemItemBinding
 import com.habitrpg.android.habitica.events.commands.FeedCommand
-import com.habitrpg.android.habitica.extensions.inflate
+import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.models.inventory.*
 import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.OwnedPet
 import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemRecyclerFragment
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
-import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.menu.BottomSheetMenu
 import com.habitrpg.android.habitica.ui.menu.BottomSheetMenuItem
 import com.habitrpg.android.habitica.ui.views.dialogs.DetailDialog
@@ -29,7 +27,7 @@ import org.greenrobot.eventbus.EventBus
 import java.text.SimpleDateFormat
 import java.util.*
 
-class ItemRecyclerAdapter(data: OrderedRealmCollection<OwnedItem>?, autoUpdate: Boolean) : RealmRecyclerViewAdapter<OwnedItem, ItemRecyclerAdapter.ItemViewHolder>(data, autoUpdate) {
+class ItemRecyclerAdapter(data: OrderedRealmCollection<OwnedItem>?, autoUpdate: Boolean, val context: Context) : RealmRecyclerViewAdapter<OwnedItem, ItemRecyclerAdapter.ItemViewHolder>(data, autoUpdate) {
 
     var isHatching: Boolean = false
     var isFeeding: Boolean = false
@@ -38,7 +36,6 @@ class ItemRecyclerAdapter(data: OrderedRealmCollection<OwnedItem>?, autoUpdate: 
     var fragment: ItemRecyclerFragment? = null
     private var existingPets: RealmResults<Pet>? = null
     private var ownedPets: Map<String, OwnedPet>? = null
-    var context: Context? = null
     var items: Map<String, Item>? = null
     set(value) {
         field = value
@@ -66,7 +63,7 @@ class ItemRecyclerAdapter(data: OrderedRealmCollection<OwnedItem>?, autoUpdate: 
     val hatchPetEvents = hatchPetSubject.toFlowable(BackpressureStrategy.DROP)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
-        return ItemViewHolder(parent.inflate(R.layout.item_item))
+        return ItemViewHolder(ItemItemBinding.inflate(context?.layoutInflater, parent, false))
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
@@ -86,13 +83,9 @@ class ItemRecyclerAdapter(data: OrderedRealmCollection<OwnedItem>?, autoUpdate: 
         notifyDataSetChanged()
     }
 
-    inner class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+    inner class ItemViewHolder(val binding: ItemItemBinding) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
         var ownedItem: OwnedItem? = null
         var item: Item? = null
-
-        private val titleTextView: TextView by bindView(R.id.titleTextView)
-        private val ownedTextView: TextView by bindView(R.id.ownedTextView)
-        private val imageView: SimpleDraweeView by bindView(R.id.imageView)
 
         var resources: Resources = itemView.resources
 
@@ -114,8 +107,8 @@ class ItemRecyclerAdapter(data: OrderedRealmCollection<OwnedItem>?, autoUpdate: 
         fun bind(ownedItem: OwnedItem, item: Item?) {
             this.ownedItem = ownedItem
             this.item = item
-            titleTextView.text = item?.text
-            ownedTextView.text = ownedItem.numberOwned.toString()
+            binding.titleTextView.text = item?.text
+            binding.ownedTextView.text = ownedItem.numberOwned.toString()
 
             var disabled = false
             val imageName: String?
@@ -138,15 +131,15 @@ class ItemRecyclerAdapter(data: OrderedRealmCollection<OwnedItem>?, autoUpdate: 
                     disabled = !this.canHatch
                 }
             }
-            DataBindingUtils.loadImage(imageView, imageName)
+            DataBindingUtils.loadImage(binding.imageView, imageName)
 
             var alpha = 1.0f
             if (disabled) {
                 alpha = 0.3f
             }
-            imageView.alpha = alpha
-            titleTextView.alpha = alpha
-            ownedTextView.alpha = alpha
+            binding.imageView.alpha = alpha
+            binding.titleTextView.alpha = alpha
+            binding.ownedTextView.alpha = alpha
         }
 
         override fun onClick(v: View) {

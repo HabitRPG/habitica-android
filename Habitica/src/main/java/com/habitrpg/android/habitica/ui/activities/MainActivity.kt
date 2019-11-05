@@ -19,16 +19,12 @@ import android.view.*
 import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.content.edit
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import com.facebook.drawee.view.SimpleDraweeView
-import com.google.android.material.appbar.AppBarLayout
-import com.google.android.material.appbar.CollapsingToolbarLayout
-import com.google.android.material.tabs.TabLayout
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.perf.FirebasePerformance
 import com.habitrpg.android.habitica.HabiticaBaseApplication
@@ -37,6 +33,7 @@ import com.habitrpg.android.habitica.api.HostConfig
 import com.habitrpg.android.habitica.api.MaintenanceApiService
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.*
+import com.habitrpg.android.habitica.databinding.ActivityMainBinding
 import com.habitrpg.android.habitica.events.*
 import com.habitrpg.android.habitica.events.commands.FeedCommand
 import com.habitrpg.android.habitica.extensions.DateUtils
@@ -60,8 +57,6 @@ import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel
 import com.habitrpg.android.habitica.ui.TutorialView
 import com.habitrpg.android.habitica.ui.fragments.NavigationDrawerFragment
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
-import com.habitrpg.android.habitica.ui.helpers.bindOptionalView
-import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.viewmodels.NotificationsViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
@@ -69,7 +64,6 @@ import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.SnackbarDisplayTy
 import com.habitrpg.android.habitica.ui.views.ValueBar
 import com.habitrpg.android.habitica.ui.views.dialogs.AchievementDialog
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
-import com.habitrpg.android.habitica.ui.views.navigation.HabiticaBottomNavigationView
 import com.habitrpg.android.habitica.ui.views.yesterdailies.YesterdailyDialog
 import com.habitrpg.android.habitica.userpicture.BitmapUtils
 import com.habitrpg.android.habitica.widget.AvatarStatsWidgetProvider
@@ -121,20 +115,12 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     @Inject
     internal lateinit var appConfigManager: AppConfigManager
 
-    val snackbarContainer: ViewGroup by bindView(R.id.snackbar_container)
-    internal val bottomNavigation: HabiticaBottomNavigationView by bindView(R.id.bottom_navigation)
+    lateinit var binding: ActivityMainBinding
 
-    private val appBar: AppBarLayout by bindView(R.id.appbar)
-    internal val toolbar: Toolbar by bindView(R.id.toolbar)
-    internal val toolbarAccessoryContainer: FrameLayout by bindView(R.id.toolbar_accessory_container)
-    private val toolbarTitleTextView: TextView by bindView(R.id.toolbar_title)
-    private val collapsingToolbar: CollapsingToolbarLayout by bindView(R.id.collapsing_toolbar)
-    internal val detailTabs: TabLayout? by bindOptionalView(R.id.detail_tabs)
-    val avatarWithBars: View by bindView(R.id.avatar_with_bars)
-    private val overlayLayout: ViewGroup by bindView(R.id.overlayFrameLayout)
-
-    private val connectionIssueTextView: TextView by bindView(R.id.connection_issue_textview)
+    val snackbarContainer: ViewGroup
+    get() = binding.snackbarContainer
     var user: User? = null
+
 
     private var avatarInHeader: AvatarWithBarsViewModel? = null
     private var notificationsViewModel: NotificationsViewModel? = null
@@ -152,11 +138,16 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         get() = user?.id ?: ""
 
     val isAppBarExpanded: Boolean
-        get() = appBar.height - appBar.bottom == 0
+        get() = binding.appbar.height - binding.appbar.bottom == 0
 
 
     override fun getLayoutResId(): Int {
         return R.layout.activity_main
+    }
+
+    override fun getContentView(): View {
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        return binding.root
     }
 
     private var launchTrace: com.google.firebase.perf.metrics.Trace? = null
@@ -165,16 +156,16 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     public override fun onCreate(savedInstanceState: Bundle?) {
         launchTrace = FirebasePerformance.getInstance().newTrace("MainActivityLaunch")
         launchTrace?.start()
-
         super.onCreate(savedInstanceState)
+
 
         if (!HabiticaBaseApplication.checkUserAuthentication(this, hostConfig)) {
             return
         }
 
-        setupToolbar(toolbar)
+        setupToolbar(binding.toolbar)
 
-        avatarInHeader = AvatarWithBarsViewModel(this, avatarWithBars, userRepository)
+        avatarInHeader = AvatarWithBarsViewModel(this, binding.avatarWithBars, userRepository)
         sideAvatarView = AvatarView(this, showBackground = true, showMount = false, showPet = false)
 
         compositeSubscription.add(userRepository.getUser()
@@ -213,10 +204,10 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
         val navigationController = findNavController(R.id.nav_host_fragment)
         navigationController.addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.label.isNullOrEmpty() ) {
-                toolbarTitleTextView.text = user?.profile?.name
+            if (destination.label.isNullOrEmpty() && user?.isValid == true) {
+                binding.toolbarTitle.text = user?.profile?.name
             } else if (user?.isValid == true && user?.profile != null) {
-                toolbarTitleTextView.text = destination.label
+                binding.toolbarTitle.text = destination.label
             }
             drawerFragment?.setSelection(destination.id, null, false)
         }
@@ -239,9 +230,9 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     }
 
     private fun setupBottomnavigationLayoutListener() {
-        bottomNavigation.viewTreeObserver.addOnGlobalLayoutListener {
-            if (bottomNavigation.visibility == View.VISIBLE) {
-                snackbarContainer.setPadding(0, 0, 0, bottomNavigation.barHeight + 12.dpToPx(this))
+        binding.bottomNavigation.viewTreeObserver.addOnGlobalLayoutListener {
+            if (binding.bottomNavigation.visibility == View.VISIBLE) {
+                snackbarContainer.setPadding(0, 0, 0, binding.bottomNavigation.barHeight + 12.dpToPx(this))
             } else {
                 snackbarContainer.setPadding(0, 0, 0, 0)
             }
@@ -530,7 +521,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         view.setTutorialText(text)
         view.onReaction = this
         view.setCanBeDeferred(canBeDeferred)
-        this.overlayLayout.addView(view)
+        binding.overlayFrameLayout.addView(view)
 
         val additionalData = HashMap<String, Any>()
         additionalData["eventLabel"] = step.identifier + "-android"
@@ -546,7 +537,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         view.setTutorialTexts(texts)
         view.onReaction = this
         view.setCanBeDeferred(canBeDeferred)
-        this.overlayLayout.addView(view)
+        binding.overlayFrameLayout.addView(view)
 
         val additionalData = HashMap<String, Any>()
         additionalData["eventLabel"] = step.identifier + "-android"
@@ -561,7 +552,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         updateData[path] = true
         compositeSubscription.add(userRepository.updateUser(user, updateData)
                 .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
-        this.overlayLayout.removeView(this.activeTutorialView)
+        binding.overlayFrameLayout.removeView(this.activeTutorialView)
         this.removeActiveTutorialView()
 
         val additionalData = HashMap<String, Any>()
@@ -578,7 +569,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
     private fun removeActiveTutorialView() {
         if (this.activeTutorialView != null) {
-            this.overlayLayout.removeView(this.activeTutorialView)
+            binding.overlayFrameLayout.removeView(this.activeTutorialView)
             this.activeTutorialView = null
         }
     }
@@ -703,11 +694,11 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
             super.onEvent(event)
         } else {
             connectionIssueHandler?.removeCallbacksAndMessages(null)
-            connectionIssueTextView.visibility = View.VISIBLE
-            connectionIssueTextView.text = event.message
+            binding.connectionIssueTextview.visibility = View.VISIBLE
+            binding.connectionIssueTextview.text = event.message
             connectionIssueHandler = Handler()
             connectionIssueHandler?.postDelayed({
-                connectionIssueTextView.visibility = View.GONE
+                binding.connectionIssueTextview.visibility = View.GONE
             }, 5000)
         }
     }

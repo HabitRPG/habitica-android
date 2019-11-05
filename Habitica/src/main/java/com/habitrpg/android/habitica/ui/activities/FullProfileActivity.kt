@@ -19,6 +19,8 @@ import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SocialRepository
+import com.habitrpg.android.habitica.data.UserRepository
+import com.habitrpg.android.habitica.databinding.ActivityFullProfileBinding
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.UserStatComputer
@@ -54,18 +56,18 @@ class FullProfileActivity : BaseActivity() {
     lateinit var apiClient: ApiClient
     @Inject
     lateinit var socialRepository: SocialRepository
+    @Inject
+    lateinit var userRepository: UserRepository
 
     private val toolbar: Toolbar by bindView(R.id.toolbar)
     private val profileImage: SimpleDraweeView by bindView(R.id.profile_image)
     private val blurbTextView: TextView by bindView(R.id.profile_blurb)
-    private val avatarView: AvatarView by bindView(R.id.avatarView)
     private val attributesCardView: androidx.cardview.widget.CardView by bindView(R.id.profile_attributes_card)
     private val attributesTableLayout: TableLayout by bindView(R.id.attributes_table)
     private val attributesCollapseIcon: AppCompatImageView by bindView(R.id.attributes_collapse_icon)
     private val equipmentTableLayout: TableLayout by bindView(R.id.equipment_table)
     private val costumeTableLayout: TableLayout by bindView(R.id.costume_table)
     private val costumeCard: androidx.cardview.widget.CardView by bindView(R.id.profile_costume_card)
-    private val avatarWithStatsView: View by bindView(R.id.avatar_with_bars)
     private val scrollView: NestedScrollView by bindView(R.id.fullprofile_scrollview)
     private val petsFoundCount: TextView by bindView(R.id.profile_pets_found_count)
     private val mountsTamedCount: TextView by bindView(R.id.profile_mounts_tamed_count)
@@ -84,7 +86,6 @@ class FullProfileActivity : BaseActivity() {
     private var userID = ""
     private var username: String? = null
     private var userDisplayName: String? = null
-    private var avatarWithBars: AvatarWithBarsViewModel? = null
     private var attributeStrSum = 0f
     private var attributeIntSum = 0f
     private var attributeConSum = 0f
@@ -92,6 +93,8 @@ class FullProfileActivity : BaseActivity() {
     private var attributeDetailsHidden = true
     private val attributeRows = ArrayList<TableRow>()
     private val dateFormatter = SimpleDateFormat.getDateInstance()
+    private var avatarWithBars: AvatarWithBarsViewModel? = null
+    lateinit private var binding: ActivityFullProfileBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -105,15 +108,13 @@ class FullProfileActivity : BaseActivity() {
         setTitle(R.string.profile_loading_data)
 
         compositeSubscription.add(socialRepository.getMember(this.userID).subscribe(Consumer { this.updateView(it) }, RxErrorHandler.handleEmptyError()))
-
+        avatarWithBars = AvatarWithBarsViewModel(this, binding.avatarWithBars)
         avatarWithBars?.valueBarLabelsToBlack()
 
-        avatarWithStatsView.setBackgroundColor(ContextCompat.getColor(this, R.color.transparent))
+        binding.avatarWithBars.root.setBackgroundColor(ContextCompat.getColor(this, R.color.transparent))
 
         attributeRows.clear()
         attributesCardView.setOnClickListener { toggleAttributeDetails() }
-
-        avatarWithBars = AvatarWithBarsViewModel(this, avatarWithStatsView)
 
         sendMessageButton.setOnClickListener { showSendMessageToUserDialog() }
         giftGemsButton.setOnClickListener { MainNavigationController.navigate(R.id.giftGemsActivity, bundleOf(Pair("userID", userID), Pair("username", null))) }
@@ -213,7 +214,6 @@ class FullProfileActivity : BaseActivity() {
         user.authentication?.timestamps?.lastLoggedIn?.let { lastLoginView.text = dateFormatter.format(it) }
         totalCheckinsView.text = user.loginIncentives.toString()
 
-        avatarView.setAvatar(user)
         avatarWithBars?.updateData(user)
 
         compositeSubscription.add(loadItemDataByOutfit(user.equipped).subscribe(Consumer { gear -> this.gotGear(gear, user) }, RxErrorHandler.handleEmptyError()))
@@ -463,6 +463,11 @@ class FullProfileActivity : BaseActivity() {
 
     override fun getLayoutResId(): Int {
         return R.layout.activity_full_profile
+    }
+
+    override fun getContentView(): View {
+        binding = ActivityFullProfileBinding.inflate(layoutInflater)
+        return binding.root
     }
 
     override fun injectActivity(component: UserComponent?) {

@@ -122,7 +122,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/spacing_large"
-                    android:id="@+id/login.linear.layout"
+                    android:id="@+id/login_linear_layout"
                     android:orientation="vertical"
                     android:background="@color/transparent">
 

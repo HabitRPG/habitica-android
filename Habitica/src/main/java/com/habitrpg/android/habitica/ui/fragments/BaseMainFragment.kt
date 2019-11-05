@@ -26,10 +26,10 @@ abstract class BaseMainFragment : BaseFragment() {
     lateinit var soundManager: SoundManager
 
     open val activity get() = getActivity() as? MainActivity
-    val tabLayout get() = activity?.detailTabs
-    val collapsingToolbar get() = activity?.toolbar
-    val toolbarAccessoryContainer get() = activity?.toolbarAccessoryContainer
-    val bottomNavigation get() = activity?.bottomNavigation
+    val tabLayout get() = activity?.binding?.detailTabs
+    val collapsingToolbar get() = activity?.binding?.toolbar
+    val toolbarAccessoryContainer get() = activity?.binding?.toolbarAccessoryContainer
+    val bottomNavigation get() = activity?.binding?.bottomNavigation
     var usesTabLayout: Boolean = false
     var hidesToolbar: Boolean = false
     var usesBottomNavigation = false
@@ -85,11 +85,11 @@ abstract class BaseMainFragment : BaseFragment() {
     }
 
     private fun hideToolbar() {
-        activity?.avatarWithBars?.visibility = View.GONE
+        activity?.binding?.avatarWithBars?.root?.visibility = View.GONE
     }
 
     private fun showToolbar() {
-        activity?.avatarWithBars?.visibility = View.VISIBLE
+        activity?.binding?.avatarWithBars?.root?.visibility = View.VISIBLE
     }
 
     private fun disableToolbarScrolling() {
