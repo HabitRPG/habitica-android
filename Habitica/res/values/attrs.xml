@@ -125,4 +125,7 @@
         <attr name="title" />
         <attr name="iconDrawable" />
     </declare-styleable>
+    <declare-styleable name="EquipmentOverviewItem">
+        <attr name="title" />
+    </declare-styleable>
 </resources>

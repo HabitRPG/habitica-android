@@ -151,8 +151,12 @@ android {
         multiDexEnabled true
         resConfigs "en", "bg", "de", "en-rGB", "es", "fr", "hr-rHR", "in", "it", "iw", "ja", "ko", "lt", "nl", "pl", "pt-rBR", "pt-rPT", "ru", "tr", "zh", "zh-rTW"
 
-        versionCode 2285
+        versionCode 2287
         versionName "2.3"
+    }
+
+    viewBinding {
+        enabled = true
     }
 
     lintOptions {
