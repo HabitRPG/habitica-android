@@ -163,7 +163,7 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
                     user.items?.gear?.equipped
                 }
                 when (key.split("_").firstOrNull()) {
-                    "weapon" -> outfit?.head = key
+                    "weapon" -> outfit?.weapon = key
                     "armor" -> outfit?.armor = key
                     "shield" -> outfit?.shield = key
                     "eyewear" -> outfit?.eyeWear = key
