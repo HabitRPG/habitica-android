@@ -39,10 +39,8 @@ class ChallengesOverviewFragment : BaseMainFragment() {
 
         resetViews()
 
-        userChallengesFragment?.user = this.user
         userChallengesFragment?.setViewUserChallengesOnly(true)
 
-        availableChallengesFragment?.user = this.user
         availableChallengesFragment?.setViewUserChallengesOnly(false)
         setViewPagerAdapter()
     }

@@ -2,18 +2,16 @@ package com.habitrpg.android.habitica.ui.fragments.social.challenges
 
 import android.app.Activity
 import android.app.AlertDialog
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import android.widget.Button
 import android.widget.CheckBox
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.ui.adapter.social.challenges.ChallengesFilterRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.utils.Action1
-import java.util.*
 
 internal class ChallengeFilterDialogHolder private constructor(view: View, private val context: Activity) {
 
@@ -24,7 +22,7 @@ internal class ChallengeFilterDialogHolder private constructor(view: View, priva
     private val checkboxNotOwned: CheckBox? by bindView(view, R.id.challenge_filter_not_owned)
 
     private var dialog: AlertDialog? = null
-    private var challengesViewed: List<Challenge>? = null
+    private var filterGroups: List<Group>? = null
     private var currentFilter: ChallengeFilterOptions? = null
     private var selectedGroupsCallback: Action1<ChallengeFilterOptions>? = null
     private var adapter: ChallengesFilterRecyclerViewAdapter? = null
@@ -34,12 +32,12 @@ internal class ChallengeFilterDialogHolder private constructor(view: View, priva
         noneButton?.setOnClickListener { noneClicked() }
     }
 
-    fun bind(builder: AlertDialog.Builder, challengesViewed: List<Challenge>,
+    fun bind(builder: AlertDialog.Builder, filterGroups: List<Group>,
              currentFilter: ChallengeFilterOptions?,
              selectedGroupsCallback: Action1<ChallengeFilterOptions>) {
         builder.setPositiveButton(context.getString(R.string.done)) { _, _ -> doneClicked() }
                 .show()
-        this.challengesViewed = challengesViewed
+        this.filterGroups = filterGroups
         this.currentFilter = currentFilter
         this.selectedGroupsCallback = selectedGroupsCallback
         fillChallengeGroups()
@@ -52,31 +50,12 @@ internal class ChallengeFilterDialogHolder private constructor(view: View, priva
 
     private fun fillChallengeGroups() {
         this.groupRecyclerView?.layoutManager = LinearLayoutManager(context)
-        adapter = ChallengesFilterRecyclerViewAdapter(getGroups(challengesViewed))
+        adapter = filterGroups?.let { ChallengesFilterRecyclerViewAdapter(it) }
         if (currentFilter != null && currentFilter?.showByGroups != null) {
             adapter?.selectAll(currentFilter?.showByGroups ?: emptyList())
         }
 
         this.groupRecyclerView?.adapter = adapter
-    }
-
-    private fun getGroups(challenges: List<Challenge>?): Collection<Group> {
-        val groupMap = HashMap<String, Group>()
-
-        if (challenges != null) {
-            for (challenge in challenges) {
-                if (groupMap.containsKey(challenge.groupName)) {
-                    continue
-                }
-                val group = Group()
-                group.id = challenge.groupId ?: ""
-                group.name = challenge.groupName
-
-                groupMap[challenge.groupName ?: ""] = group
-            }
-        }
-
-        return groupMap.values
     }
 
     private fun doneClicked() {
@@ -100,7 +79,7 @@ internal class ChallengeFilterDialogHolder private constructor(view: View, priva
 
     companion object {
 
-        fun showDialog(activity: Activity, challengesViewed: List<Challenge>,
+        fun showDialog(activity: Activity, filterGroups: List<Group>,
                        currentFilter: ChallengeFilterOptions?,
                        selectedGroupsCallback: Action1<ChallengeFilterOptions>) {
             val dialogLayout = activity.layoutInflater.inflate(R.layout.dialog_challenge_filter, null)
@@ -111,7 +90,7 @@ internal class ChallengeFilterDialogHolder private constructor(view: View, priva
                     .setTitle(R.string.filter)
                     .setView(dialogLayout)
 
-            challengeFilterDialogHolder.bind(builder, challengesViewed, currentFilter, selectedGroupsCallback)
+            challengeFilterDialogHolder.bind(builder, filterGroups, currentFilter, selectedGroupsCallback)
         }
     }
 

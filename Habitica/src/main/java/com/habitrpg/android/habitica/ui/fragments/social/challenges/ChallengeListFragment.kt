@@ -8,12 +8,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ChallengeRepository
+import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.social.Challenge
-import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.adapter.social.ChallengesListViewAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
@@ -24,6 +25,7 @@ import com.habitrpg.android.habitica.ui.helpers.resetViews
 import com.habitrpg.android.habitica.utils.Action1
 import io.reactivex.Flowable
 import io.reactivex.functions.Consumer
+import io.reactivex.rxkotlin.combineLatest
 import io.realm.RealmResults
 import javax.inject.Inject
 import javax.inject.Named
@@ -34,10 +36,11 @@ class ChallengeListFragment : BaseFragment(), androidx.swiperefreshlayout.widget
     @Inject
     lateinit var challengeRepository: ChallengeRepository
     @Inject
+    lateinit var socialRepository: SocialRepository
+    @Inject
     lateinit var userRepository: UserRepository
     @field:[Inject Named(AppModule.NAMED_USER_ID)]
     lateinit var userId: String
-    var user: User? = null
 
     private val swipeRefreshLayout: androidx.swiperefreshlayout.widget.SwipeRefreshLayout? by bindView(R.id.refreshLayout)
     private val recyclerView: RecyclerViewEmptySupport? by bindView(R.id.recyclerView)
@@ -50,6 +53,7 @@ class ChallengeListFragment : BaseFragment(), androidx.swiperefreshlayout.widget
     private var loadedAllData = false
 
     private var challenges: RealmResults<Challenge>? = null
+    private var filterGroups: MutableList<Group>? = null
 
     private var filterOptions: ChallengeFilterOptions? = null
 
@@ -85,7 +89,11 @@ class ChallengeListFragment : BaseFragment(), androidx.swiperefreshlayout.widget
             this.recyclerView?.setBackgroundResource(R.color.white)
         }
 
-        compositeSubscription.add(userRepository.getUser().subscribe(Consumer { this.user = it}, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(socialRepository.getGroup(Group.TAVERN_ID).combineLatest(socialRepository.getUserGroups()).subscribe(Consumer {
+            this.filterGroups = mutableListOf()
+            filterGroups?.add(it.first)
+            filterGroups?.addAll(it.second)
+        }, RxErrorHandler.handleEmptyError()))
 
         recyclerView?.setEmptyView(emptyView)
         recyclerView?.itemAnimator = SafeDefaultItemAnimator()
@@ -123,8 +131,8 @@ class ChallengeListFragment : BaseFragment(), androidx.swiperefreshlayout.widget
     }
 
     private fun loadLocalChallenges() {
-        val observable: Flowable<RealmResults<Challenge>> = if (viewUserChallengesOnly && user != null) {
-            challengeRepository.getUserChallenges(user?.id ?: "")
+        val observable: Flowable<RealmResults<Challenge>> = if (viewUserChallengesOnly) {
+            challengeRepository.getUserChallenges()
         } else {
             challengeRepository.getChallenges()
         }
@@ -156,7 +164,7 @@ class ChallengeListFragment : BaseFragment(), androidx.swiperefreshlayout.widget
     internal fun showFilterDialog() {
         activity?.let {
             ChallengeFilterDialogHolder.showDialog(it,
-                    challenges ?: emptyList(),
+                    filterGroups ?: emptyList(),
                     filterOptions, object : Action1<ChallengeFilterOptions> {
                 override fun call(t: ChallengeFilterOptions) {
                     changeFilter(t)

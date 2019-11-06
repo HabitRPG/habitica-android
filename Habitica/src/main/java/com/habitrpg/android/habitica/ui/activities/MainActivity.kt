@@ -686,7 +686,6 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                     apiClient.readNotification(event.id)
                             .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
                 }, RxErrorHandler.handleEmptyError()))
-
     }
 
     override fun onEvent(event: ShowConnectionProblemEvent) {

@@ -118,8 +118,8 @@ class ChallengeRepositoryImpl(localRepository: ChallengeLocalRepository, apiClie
         return localRepository.challenges
     }
 
-    override fun getUserChallenges(userId: String): Flowable<RealmResults<Challenge>> {
-        return localRepository.getUserChallenges(userId)
+    override fun getUserChallenges(userId: String?): Flowable<RealmResults<Challenge>> {
+        return localRepository.getUserChallenges(userId ?: userID)
     }
 
     override fun retrieveChallenges(page: Int, memberOnly: Boolean): Flowable<List<Challenge>> {
