@@ -71,8 +71,10 @@ class TaskListDeserializer : JsonDeserializer<TaskList> {
                     task.up = obj.get("up")?.asBoolean ?: false
                     task.down = obj.get("down")?.asBoolean ?: false
                     task.streak = obj.get("streak")?.asInt
-                    task.counterUp = obj.get("counterUp")?.asInt
-                    task.counterDown = obj.get("counterDown")?.asInt
+                    try {
+                        task.counterUp = obj.get("counterUp")?.asInt
+                        task.counterDown = obj.get("counterDown")?.asInt
+                    } catch (ignored: java.lang.UnsupportedOperationException) {}
                     task.dateCreated = ctx.deserialize(obj.get("createdAt"), Date::class.java)
                     task.dueDate = ctx.deserialize(obj.get("date"), Date::class.java)
                     task.startDate = ctx.deserialize(obj.get("startDate"), Date::class.java)
@@ -127,8 +129,6 @@ class TaskListDeserializer : JsonDeserializer<TaskList> {
                     task.id?.let { taskMap[it] = task }
                 }
             } catch (ignored: ClassCastException) {
-
-            } catch (ignored: java.lang.UnsupportedOperationException) {
 
             }
         }
