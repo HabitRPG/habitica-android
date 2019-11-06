@@ -149,9 +149,9 @@ class AvatarSetupFragment : BaseFragment() {
 
     private fun selectedBodyCategory() {
         activateButton(bodyButton)
-        this.activeCategory = CATEGORY_BODY
+        this.activeCategory = SetupCustomizationRepository.CATEGORY_BODY
         this.subCategoryTabs?.removeAllTabs()
-        this.subcategories = listOf(SUBCATEGORY_SIZE, SUBCATEGORY_SHIRT)
+        this.subcategories = listOf(SetupCustomizationRepository.SUBCATEGORY_SIZE, SetupCustomizationRepository.SUBCATEGORY_SHIRT)
         subCategoryTabs?.newTab()?.setText(R.string.avatar_size)?.let { this.subCategoryTabs?.addTab(it) }
         subCategoryTabs?.newTab()?.setText(R.string.avatar_shirt)?.let { this.subCategoryTabs?.addTab(it) }
         loadCustomizations()
@@ -159,18 +159,18 @@ class AvatarSetupFragment : BaseFragment() {
 
     private fun selectedSkinCategory() {
         activateButton(skinButton)
-        this.activeCategory = CATEGORY_SKIN
+        this.activeCategory = SetupCustomizationRepository.CATEGORY_SKIN
         this.subCategoryTabs?.removeAllTabs()
-        this.subcategories = listOf(SUBCATEGORY_COLOR)
+        this.subcategories = listOf(SetupCustomizationRepository.SUBCATEGORY_COLOR)
         subCategoryTabs?.newTab()?.setText(R.string.avatar_skin_color)?.let { this.subCategoryTabs?.addTab(it) }
         loadCustomizations()
     }
 
     private fun selectedHairCategory() {
         activateButton(hairButton)
-        this.activeCategory = CATEGORY_HAIR
+        this.activeCategory = SetupCustomizationRepository.CATEGORY_HAIR
         this.subCategoryTabs?.removeAllTabs()
-        this.subcategories = listOf(SUBCATEGORY_BANGS, SUBCATEGORY_COLOR, SUBCATEGORY_PONYTAIL)
+        this.subcategories = listOf(SetupCustomizationRepository.SUBCATEGORY_BANGS, SetupCustomizationRepository.SUBCATEGORY_COLOR, SetupCustomizationRepository.SUBCATEGORY_PONYTAIL)
         subCategoryTabs?.newTab()?.setText(R.string.avatar_hair_bangs)?.let { this.subCategoryTabs?.addTab(it) }
         subCategoryTabs?.newTab()?.setText(R.string.avatar_hair_color)?.let { this.subCategoryTabs?.addTab(it) }
         subCategoryTabs?.newTab()?.setText(R.string.avatar_hair_ponytail)?.let { this.subCategoryTabs?.addTab(it) }
@@ -179,9 +179,9 @@ class AvatarSetupFragment : BaseFragment() {
 
     private fun selectedExtrasCategory() {
         activateButton(extrasButton)
-        this.activeCategory = CATEGORY_EXTRAS
+        this.activeCategory = SetupCustomizationRepository.CATEGORY_EXTRAS
         this.subCategoryTabs?.removeAllTabs()
-        this.subcategories = listOf(SUBCATEGORY_GLASSES, SUBCATEGORY_FLOWER, SUBCATEGORY_WHEELCHAIR)
+        this.subcategories = listOf(SetupCustomizationRepository.SUBCATEGORY_GLASSES, SetupCustomizationRepository.SUBCATEGORY_FLOWER, SetupCustomizationRepository.SUBCATEGORY_WHEELCHAIR)
         subCategoryTabs?.newTab()?.setText(R.string.avatar_glasses)?.let { this.subCategoryTabs?.addTab(it) }
         subCategoryTabs?.newTab()?.setText(R.string.avatar_flower)?.let { this.subCategoryTabs?.addTab(it) }
         subCategoryTabs?.newTab()?.setText(R.string.avatar_wheelchair)?.let { this.subCategoryTabs?.addTab(it) }
@@ -191,14 +191,14 @@ class AvatarSetupFragment : BaseFragment() {
     private fun randomizeCharacter() {
         val user = this.user ?: return
         val updateData = HashMap<String, Any>()
-        updateData["preferences.size"] = chooseRandomKey(customizationRepository.getCustomizations(CATEGORY_BODY, SUBCATEGORY_SIZE, user), false)
-        updateData["preferences.shirt"] = chooseRandomKey(customizationRepository.getCustomizations(CATEGORY_BODY, SUBCATEGORY_SHIRT, user), false)
-        updateData["preferences.skin"] = chooseRandomKey(customizationRepository.getCustomizations(CATEGORY_SKIN, SUBCATEGORY_COLOR, user), false)
-        updateData["preferences.hair.color"] = chooseRandomKey(customizationRepository.getCustomizations(CATEGORY_HAIR, SUBCATEGORY_COLOR, user), false)
-        updateData["preferences.hair.base"] = chooseRandomKey(customizationRepository.getCustomizations(CATEGORY_HAIR, SUBCATEGORY_PONYTAIL, user), false)
-        updateData["preferences.hair.bangs"] = chooseRandomKey(customizationRepository.getCustomizations(CATEGORY_HAIR, SUBCATEGORY_BANGS, user), false)
-        updateData["preferences.hair.flower"] = chooseRandomKey(customizationRepository.getCustomizations(CATEGORY_EXTRAS, SUBCATEGORY_FLOWER, user), true)
-        updateData["preferences.chair"] = chooseRandomKey(customizationRepository.getCustomizations(CATEGORY_EXTRAS, SUBCATEGORY_WHEELCHAIR, user), true)
+        updateData["preferences.size"] = chooseRandomKey(customizationRepository.getCustomizations(SetupCustomizationRepository.CATEGORY_BODY, SetupCustomizationRepository.SUBCATEGORY_SIZE, user), false)
+        updateData["preferences.shirt"] = chooseRandomKey(customizationRepository.getCustomizations(SetupCustomizationRepository.CATEGORY_BODY, SetupCustomizationRepository.SUBCATEGORY_SHIRT, user), false)
+        updateData["preferences.skin"] = chooseRandomKey(customizationRepository.getCustomizations(SetupCustomizationRepository.CATEGORY_SKIN, SetupCustomizationRepository.SUBCATEGORY_COLOR, user), false)
+        updateData["preferences.hair.color"] = chooseRandomKey(customizationRepository.getCustomizations(SetupCustomizationRepository.CATEGORY_HAIR, SetupCustomizationRepository.SUBCATEGORY_COLOR, user), false)
+        updateData["preferences.hair.base"] = chooseRandomKey(customizationRepository.getCustomizations(SetupCustomizationRepository.CATEGORY_HAIR, SetupCustomizationRepository.SUBCATEGORY_PONYTAIL, user), false)
+        updateData["preferences.hair.bangs"] = chooseRandomKey(customizationRepository.getCustomizations(SetupCustomizationRepository.CATEGORY_HAIR, SetupCustomizationRepository.SUBCATEGORY_BANGS, user), false)
+        updateData["preferences.hair.flower"] = chooseRandomKey(customizationRepository.getCustomizations(SetupCustomizationRepository.CATEGORY_EXTRAS, SetupCustomizationRepository.SUBCATEGORY_FLOWER, user), true)
+        updateData["preferences.chair"] = chooseRandomKey(customizationRepository.getCustomizations(SetupCustomizationRepository.CATEGORY_EXTRAS, SetupCustomizationRepository.SUBCATEGORY_WHEELCHAIR, user), true)
         compositeSubscription.add(userRepository.updateUser(user, updateData).subscribeWithErrorHandler(Consumer {}))
     }
 
@@ -230,19 +230,5 @@ class AvatarSetupFragment : BaseFragment() {
         this.caretView?.layoutParams = params
     }
 
-    companion object {
-        const val CATEGORY_BODY = "body"
-        const val CATEGORY_SKIN = "skin"
-        const val CATEGORY_HAIR = "hair"
-        const val CATEGORY_EXTRAS = "extras"
 
-        const val SUBCATEGORY_SIZE = "size"
-        const val SUBCATEGORY_SHIRT = "shirt"
-        const val SUBCATEGORY_COLOR = "color"
-        const val SUBCATEGORY_PONYTAIL = "ponytail"
-        const val SUBCATEGORY_BANGS = "bangs"
-        const val SUBCATEGORY_FLOWER = "flower"
-        const val SUBCATEGORY_WHEELCHAIR = "wheelchair"
-        const val SUBCATEGORY_GLASSES = "glasses"
-    }
 }

@@ -5,7 +5,6 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.SetupCustomizationRepository
 import com.habitrpg.android.habitica.models.SetupCustomization
 import com.habitrpg.android.habitica.models.user.User
-import java.util.*
 import javax.inject.Inject
 
 @Suppress("StringLiteralDuplication")
@@ -36,27 +35,27 @@ constructor(private val context: Context) : SetupCustomizationRepository {
 
     override fun getCustomizations(type: String, subtype: String?, user: User): List<SetupCustomization> {
         return when (type) {
-            "body" -> {
+            SetupCustomizationRepository.CATEGORY_BODY -> {
                     when (subtype) {
-                        "size" -> sizes
-                        "shirt" -> getShirts(user.preferences?.size ?: "slim")
+                        SetupCustomizationRepository.SUBCATEGORY_SIZE -> sizes
+                        SetupCustomizationRepository.SUBCATEGORY_SHIRT -> getShirts(user.preferences?.size ?: "slim")
                         else -> emptyList()
                     }
             }
-            "skin" -> skins
-            "hair" -> {
+            SetupCustomizationRepository.CATEGORY_SKIN -> skins
+            SetupCustomizationRepository.CATEGORY_HAIR -> {
                     when (subtype) {
-                        "bangs" -> getBangs(user.preferences?.hair?.color ?: "")
-                        "ponytail" -> getHairBases(user.preferences?.hair?.color ?: "")
-                        "color" -> hairColors
+                        SetupCustomizationRepository.SUBCATEGORY_BANGS -> getBangs(user.preferences?.hair?.color ?: "")
+                        SetupCustomizationRepository.SUBCATEGORY_PONYTAIL -> getHairBases(user.preferences?.hair?.color ?: "")
+                        SetupCustomizationRepository.SUBCATEGORY_COLOR -> hairColors
                         else -> emptyList()
                     }
             }
-            "extras" -> {
+            SetupCustomizationRepository.CATEGORY_EXTRAS -> {
                 when (subtype) {
-                    "flower" -> flowers
-                    "glasses" -> glasses
-                    "wheelchair" -> wheelchairs
+                    SetupCustomizationRepository.SUBCATEGORY_FLOWER -> flowers
+                    SetupCustomizationRepository.SUBCATEGORY_GLASSES -> glasses
+                    SetupCustomizationRepository.SUBCATEGORY_WHEELCHAIR -> wheelchairs
                     else -> emptyList()
                 }
             }

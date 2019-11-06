@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.data.SetupCustomizationRepository
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.models.SetupCustomization
 import com.habitrpg.android.habitica.models.user.User
@@ -44,37 +45,36 @@ internal class CustomizationSetupAdapter : RecyclerView.Adapter<CustomizationSet
         return customizationList.size
     }
 
-    @Suppress("ReturnCount")
     private fun isCustomizationActive(customization: SetupCustomization): Boolean {
         val prefs = this.user?.preferences ?: return false
-        when (customization.category) {
-            "body" -> {
+        return when (customization.category) {
+            SetupCustomizationRepository.CATEGORY_BODY -> {
                 when (customization.subcategory) {
-                    "size" -> return customization.key == prefs.size
-                    "shirt" -> return customization.key == prefs.shirt
+                    SetupCustomizationRepository.SUBCATEGORY_SIZE -> customization.key == prefs.size
+                    SetupCustomizationRepository.SUBCATEGORY_SHIRT -> customization.key == prefs.shirt
+                    else -> false
                 }
             }
-            "skin" -> return customization.key == prefs.skin
-            "background" -> return customization.key == prefs.background
-            "hair" -> {
+            SetupCustomizationRepository.CATEGORY_SKIN -> customization.key == prefs.skin
+            SetupCustomizationRepository.CATEGORY_HAIR -> {
                 when (customization.subcategory) {
-                    "bangs" -> return Integer.parseInt(customization.key) == prefs.hair?.bangs
-                    "base" -> return Integer.parseInt(customization.key) == prefs.hair?.base
-                    "color" -> return customization.key == prefs.hair?.color
-                    "flower" -> return Integer.parseInt(customization.key) == prefs.hair?.flower
-                    "beard" -> return Integer.parseInt(customization.key) == prefs.hair?.beard
-                    "mustache" -> return Integer.parseInt(customization.key) == prefs.hair?.mustache
+                    SetupCustomizationRepository.SUBCATEGORY_BANGS -> Integer.parseInt(customization.key) == prefs.hair?.bangs
+                    SetupCustomizationRepository.SUBCATEGORY_PONYTAIL -> Integer.parseInt(customization.key) == prefs.hair?.base
+                    SetupCustomizationRepository.SUBCATEGORY_COLOR -> customization.key == prefs.hair?.color
+                    SetupCustomizationRepository.SUBCATEGORY_FLOWER -> Integer.parseInt(customization.key) == prefs.hair?.flower
+                    else -> false
                 }
             }
-            "extras" -> {
+            SetupCustomizationRepository.CATEGORY_EXTRAS -> {
                 when (customization.subcategory) {
-                    "glasses" -> return customization.key == this.user?.items?.gear?.equipped?.eyeWear || "eyewear_base_0" == this.user?.items?.gear?.equipped?.eyeWear && customization.key.isEmpty()
-                    "flower" -> return Integer.parseInt(customization.key) == prefs.hair?.flower
-                    "wheelchair" -> return "chair_" + customization.key == prefs.chair || customization.key == prefs.chair || customization.key == "none" && prefs.chair == null
+                    SetupCustomizationRepository.SUBCATEGORY_GLASSES -> customization.key == this.user?.items?.gear?.equipped?.eyeWear || "eyewear_base_0" == this.user?.items?.gear?.equipped?.eyeWear && customization.key.isEmpty()
+                    SetupCustomizationRepository.SUBCATEGORY_FLOWER -> Integer.parseInt(customization.key) == prefs.hair?.flower
+                    SetupCustomizationRepository.SUBCATEGORY_WHEELCHAIR -> "chair_" + customization.key == prefs.chair || customization.key == prefs.chair || customization.key == "none" && prefs.chair == null
+                    else -> false
                 }
             }
+            else -> false
         }
-        return false
     }
 
     internal inner class CustomizationViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {

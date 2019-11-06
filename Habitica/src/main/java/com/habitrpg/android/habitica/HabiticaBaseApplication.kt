@@ -252,7 +252,6 @@ abstract class HabiticaBaseApplication : MultiDexApplication() {
         fun checkUserAuthentication(context: Context, hostConfig: HostConfig?): Boolean {
             if (hostConfig?.apiKey == null || hostConfig.apiKey == "" || hostConfig.userID == "") {
                 startActivity(IntroActivity::class.java, context)
-
                 return false
             }
 
