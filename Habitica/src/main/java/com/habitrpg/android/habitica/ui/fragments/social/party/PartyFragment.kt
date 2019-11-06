@@ -70,6 +70,8 @@ class PartyFragment : BaseMainFragment() {
 
         this.tutorialStepIdentifier = "party"
         this.tutorialText = getString(R.string.tutorial_party)
+
+        viewModel.retrieveGroup {  }
     }
 
     override fun injectFragment(component: UserComponent) {
