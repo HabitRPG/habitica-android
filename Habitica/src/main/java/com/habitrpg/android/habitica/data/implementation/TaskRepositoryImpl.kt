@@ -119,9 +119,9 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
     private fun handleTaskResponse(user: User, res: TaskDirectionData, task: Task, up: Boolean, localDelta: Float) {
         val userID = user.id
         val taskID = task.id
-        this.localRepository.executeTransactionAsync {
-            val bgTask = it.where(Task::class.java).equalTo("id", taskID).findFirst() ?: return@executeTransactionAsync
-            val bgUser = it.where(User::class.java).equalTo("id", userID).findFirst() ?: return@executeTransactionAsync
+        this.localRepository.executeTransaction {
+            val bgTask = it.where(Task::class.java).equalTo("id", taskID).findFirst() ?: return@executeTransaction
+            val bgUser = it.where(User::class.java).equalTo("id", userID).findFirst() ?: return@executeTransaction
             if (bgTask.type != "reward" && (bgTask.value - localDelta) + res.delta != bgTask.value) {
                 bgTask.value = (bgTask.value - localDelta) + res.delta
                 if (Task.TYPE_DAILY == bgTask.type || Task.TYPE_TODO == bgTask.type) {

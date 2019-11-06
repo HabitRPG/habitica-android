@@ -53,12 +53,12 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
         sortedTasks.forEach { it.reminders?.let { it1 -> allReminders.addAll(it1) } }
         removeOldReminders(allReminders)
 
-        realm.executeTransactionAsync { realm1 -> realm1.insertOrUpdate(sortedTasks) }
+        executeTransaction { realm1 -> realm1.insertOrUpdate(sortedTasks) }
     }
 
     override fun saveCompletedTodos(userId: String, tasks: MutableCollection<Task>) {
         removeCompletedTodos(userId, tasks)
-        realm.executeTransactionAsync { realm1 -> realm1.insertOrUpdate(tasks) }
+        executeTransaction { realm1 -> realm1.insertOrUpdate(tasks) }
     }
 
     private fun sortTasks(taskMap: MutableMap<String, Task>, taskOrder: List<String>): List<Task> {
