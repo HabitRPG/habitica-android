@@ -206,7 +206,7 @@ class ChatListFragment : BaseFragment() {
         chatEditText.setText("@$username $previousText", TextView.BufferType.EDITABLE)
     }
 
-    private fun refresh() {
+    fun refresh() {
         groupId?.let {id ->
             socialRepository.retrieveGroupChat(id).subscribe(Consumer {
                         if (isScrolledToTop && recyclerView != null) {

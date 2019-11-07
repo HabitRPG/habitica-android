@@ -1,11 +1,9 @@
 package com.habitrpg.android.habitica.ui.fragments.social
 
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
@@ -49,6 +47,22 @@ class TavernFragment : BaseMainFragment() {
 
     override fun injectFragment(component: UserComponent) {
         component.inject(this)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_tavern, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    @Suppress("ReturnCount")
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.menu_guild_refresh -> {
+                chatListFragment.refresh()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun setViewPagerAdapter() {
