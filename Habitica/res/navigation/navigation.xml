@@ -47,7 +47,9 @@
             android:defaultValue="0"/>
         <argument
             android:name="partyID"
-            app:argType="string" />
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue=""/>
     </fragment>
     <fragment
         android:id="@+id/noPartyFragment"

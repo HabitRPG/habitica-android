@@ -1,9 +1,11 @@
 package com.habitrpg.android.habitica.ui.fragments.setup
 
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
@@ -19,6 +21,7 @@ import com.habitrpg.android.habitica.ui.adapter.setup.TaskSetupAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.helpers.bindOptionalView
 import com.habitrpg.android.habitica.ui.helpers.resetViews
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import java.util.*
 
 class TaskSetupFragment : BaseFragment() {
@@ -29,6 +32,7 @@ class TaskSetupFragment : BaseFragment() {
     private val recyclerView: RecyclerView? by bindOptionalView(R.id.recyclerView)
     private val avatarView: AvatarView? by bindOptionalView(R.id.avatarView)
     private val speechBubbleView: SpeechBubbleView? by bindOptionalView(R.id.speech_bubble)
+    private val heartView: ImageView? by bindOptionalView(R.id.heart_icon)
     internal var adapter: TaskSetupAdapter = TaskSetupAdapter()
     private var taskGroups: List<List<String>> = listOf()
     private var tasks: List<List<Any>> = listOf()
@@ -56,6 +60,7 @@ class TaskSetupFragment : BaseFragment() {
             this.updateAvatar()
         }
 
+        heartView?.setImageDrawable(BitmapDrawable(HabiticaIconsHelper.imageOfHeartLightBg()))
     }
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {

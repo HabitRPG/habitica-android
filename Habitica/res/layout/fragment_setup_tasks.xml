@@ -1,28 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:orientation="vertical" android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/setup_background"
                 android:gravity="center_horizontal">
-
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
     <ImageView
-            android:id="@+id/heart_icon"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:layout_marginTop="@dimen/setup_vertical_spacing"
-            android:layout_centerHorizontal="true"/>
-
-    <ImageView
+        android:id="@+id/heart_icon"
+        android:layout_height="36dp"
+        android:layout_width="36dp" />
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/setup_vertical_spacing">
+        <ImageView
             android:id="@+id/avatar_background"
-            android:layout_marginTop="@dimen/setup_vertical_spacing"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/heart_icon"
             android:src="@drawable/creator_purple_bg"
-            android:layout_centerHorizontal="true" />
-
-    <com.habitrpg.android.habitica.ui.AvatarView
+            android:layout_centerInParent="true" />
+        <com.habitrpg.android.habitica.ui.AvatarView
             android:id="@+id/avatarView"
             android:layout_width="@dimen/avatar_small_width"
             android:layout_height="@dimen/avatar_small_height"
@@ -30,26 +31,28 @@
             app:showMount="false"
             app:showPet="false"
             app:showSleeping="false"
-            android:layout_centerHorizontal="true"
             android:layout_alignTop="@id/avatar_background"
-            android:layout_marginTop="6dp"/>
+            android:layout_marginStart="54dp"
+            />
+    </RelativeLayout>
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+    <com.habitrpg.android.habitica.ui.SpeechBubbleView
+        android:id="@+id/speech_bubble"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:namePlate="Justin"
+        app:npcDrawable="@drawable/justin_textbox"
+        android:layout_marginLeft="@dimen/content_inset"
+        android:layout_marginRight="@dimen/content_inset"
+        android:layout_marginBottom="12dp"/>
     <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="230dp"
-            android:layout_alignParentBottom="true"
             android:background="@drawable/avatar_customization_category_bg"
             android:id="@+id/recyclerView"
             android:padding="17dp"/>
 
-    <com.habitrpg.android.habitica.ui.SpeechBubbleView
-        android:id="@+id/speech_bubble"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:namePlate="Justin"
-            app:npcDrawable="@drawable/justin_textbox"
-            android:layout_marginLeft="@dimen/content_inset"
-            android:layout_marginRight="@dimen/content_inset"
-            android:layout_above="@id/recyclerView"
-            android:layout_marginBottom="12dp"/>
-
-</RelativeLayout>
+</LinearLayout>
