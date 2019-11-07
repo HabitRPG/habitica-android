@@ -57,11 +57,7 @@ class GroupInviteActivity : BaseActivity() {
         setupToolbar(toolbar)
         viewPager.currentItem = 0
 
-        if (intent.getStringExtra("groupType") == "party") {
-            supportActionBar?.title = getString(R.string.invite_to_party)
-        } else {
-            supportActionBar?.title = getString(R.string.invite_to_guild)
-        }
+        supportActionBar?.title = null
 
         setViewPagerAdapter()
     }
