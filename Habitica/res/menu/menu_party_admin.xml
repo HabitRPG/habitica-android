@@ -11,6 +11,11 @@
         app:showAsAction="never"
         android:title="@string/action_edit" />
     <item
+        android:id="@+id/menu_guild_refresh"
+        android:orderInCategory="1"
+        app:showAsAction="never"
+        android:title="@string/action_refresh" />
+    <item
         android:id="@+id/menu.guild.leave"
         android:orderInCategory="1"
         app:showAsAction="never"

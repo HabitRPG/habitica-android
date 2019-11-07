@@ -3,7 +3,6 @@
       xmlns:app="http://schemas.android.com/apk/res-auto"
       xmlns:tools="http://schemas.android.com/tools"
       tools:context="com.habitrpg.android.habitica.ui.activities.MainActivity">
-
     <item
             android:id="@+id/action_guild_search"
             android:title="@string/guild_search_hint"

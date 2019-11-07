@@ -119,6 +119,10 @@ class GuildFragment : BaseMainFragment() {
                 viewModel.retrieveGroup { }
                 return true
             }
+            R.id.menu_guild_refresh -> {
+                viewModel.retrieveGroup {  }
+                return true
+            }
         }
         return super.onOptionsItemSelected(item)
     }

@@ -122,6 +122,10 @@ class PartyFragment : BaseMainFragment() {
                 (detailFragment as? PartyDetailFragment)?.leaveParty()
                 return true
             }
+            R.id.menu_guild_refresh -> {
+                viewModel.retrieveGroup {  }
+                return true
+            }
         }
 
         return super.onOptionsItemSelected(item)
