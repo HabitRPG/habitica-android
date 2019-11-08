@@ -49,7 +49,7 @@
             android:name="partyID"
             app:argType="string"
             app:nullable="true"
-            android:defaultValue=""/>
+            android:defaultValue=" " />
     </fragment>
     <fragment
         android:id="@+id/noPartyFragment"
