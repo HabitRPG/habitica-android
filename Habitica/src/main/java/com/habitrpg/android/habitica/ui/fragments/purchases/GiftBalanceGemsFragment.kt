@@ -59,11 +59,13 @@ class GiftBalanceGemsFragment : BaseFragment() {
     }
 
     private fun sendGift() {
-        val amount = giftEditText.text.toString().toInt()
-        giftedMember?.id?.let {
-            compositeSubscription.add(socialRepository.transferGems(it, amount).subscribe(Consumer {
-                onCompleted?.invoke()
-            }, RxErrorHandler.handleEmptyError()))
-        }
+        try {
+            val amount = giftEditText.text.toString().toInt()
+            giftedMember?.id?.let {
+                compositeSubscription.add(socialRepository.transferGems(it, amount).subscribe(Consumer {
+                    onCompleted?.invoke()
+                }, RxErrorHandler.handleEmptyError()))
+            }
+        } catch (ignored: NumberFormatException) {}
     }
 }

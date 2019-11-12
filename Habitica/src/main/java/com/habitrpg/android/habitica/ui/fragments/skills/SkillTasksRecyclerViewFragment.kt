@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
@@ -71,11 +70,7 @@ class SkillTasksRecyclerViewFragment : BaseFragment() {
         }, RxErrorHandler.handleEmptyError()))
         recyclerView?.adapter = adapter
 
-        context?.let {
-            recyclerView?.setBackgroundColor(ContextCompat.getColor(it, R.color.blue_5))
-        }
-
-        compositeSubscription.add(tasks.firstElement().subscribe(Consumer {
+        compositeSubscription.add(tasks.subscribe(Consumer {
             adapter.updateData(it)
         }, RxErrorHandler.handleEmptyError()))
     }
