@@ -822,11 +822,12 @@
     <string name="inbox_messages_title">You received %d messages from %s</string>
     <string name="inbox_messages_title_nosender">You received %d messages</string>
     <string name="remove">Remove</string>
-    <string name="transfer_ownership">Transfer Ownership</string>
+    <string name="transfer_ownership">Transfer Leadership</string>
     <string name="remove_member">Remove Member</string>
     <string name="send_message">Send Message</string>
-    <string name="transferred_ownership">Ownership transferred to %s</string>
-    <string name="transfer_ownership_confirm">Are you sure you want to transfer ownership to %s</string>
+    <string name="transferred_ownership">Leadership transferred to %s</string>
+    <string name="transfer_ownership_confirm">Transfer Leadership?</string>
+    <string name="transfer_ownership_confirm_message">This will make %s the new Party leader</string>
     <string name="remove_member_confirm">Are you sure you want to remove %s from the group?</string>
     <string name="transfer">Transfer</string>
     <string name="removed_member">%s was removed from the group</string>

@@ -283,7 +283,8 @@ class PartyDetailFragment : BaseFragment() {
             activity?.dismissKeyboard()
         }
         dialog?.addButton(android.R.string.cancel, false) { _, _ -> activity?.dismissKeyboard() }
-        dialog?.setTitle(context?.getString(R.string.transfer_ownership_confirm, displayName))
+        dialog?.setTitle(context?.getString(R.string.transfer_ownership_confirm))
+        dialog?.setMessage(context?.getString(R.string.transfer_ownership_confirm_message, displayName))
         dialog?.show()
     }
 
