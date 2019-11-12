@@ -2,10 +2,11 @@ package com.habitrpg.android.habitica;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import androidx.preference.PreferenceManager;
 
 import androidx.annotation.NonNull;
+import androidx.preference.PreferenceManager;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.events.ConsumablePurchasedEvent;
 import com.habitrpg.android.habitica.events.UserSubscribedEvent;
@@ -44,9 +45,11 @@ public class HabiticaPurchaseVerifier extends BasePurchaseVerifier {
     private Set<String> purchasedOrderList = new HashSet<>();
     public static Map<String, String> pendingGifts = new HashMap<>();
     private SharedPreferences preferences;
+    private Context context;
 
     public HabiticaPurchaseVerifier(Context context, ApiClient apiClient) {
         preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        this.context = context;
 
         preferences.getStringSet(PURCHASED_PRODUCTS_KEY, purchasedOrderList);
         pendingGifts = loadPendingGifts();
@@ -142,7 +145,7 @@ public class HabiticaPurchaseVerifier extends BasePurchaseVerifier {
                         verifiedPurchases.add(purchase);
 
                         requestListener.onSuccess(verifiedPurchases);
-
+                        FirebaseAnalytics.getInstance(context).logEvent("user_subscribed", null);
                         EventBus.getDefault().post(new UserSubscribedEvent());
                     }, throwable -> {
                         if (throwable.getClass().equals(retrofit2.adapter.rxjava2.HttpException.class)) {
