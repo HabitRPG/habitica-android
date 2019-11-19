@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.core.view.isVisible
+import androidx.core.widget.NestedScrollView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.UserRepository
@@ -25,6 +26,7 @@ import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.helpers.bindOptionalView
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
+import com.habitrpg.android.habitica.ui.helpers.resetViews
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionDetailsView
@@ -45,24 +47,12 @@ class SubscriptionFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
     @Inject
     lateinit var appConfigManager: AppConfigManager
 
+    private val scrollView: NestedScrollView? by bindView(R.id.scroll_view)
+
     private val giftOneGetOneContainer: ViewGroup? by bindView(R.id.gift_subscription_container)
-    private val giftOneGetOneButton: Button? by bindView(R.id.gift_subscription_promo_button)
     private val giftSubscriptionButton: Button? by bindView(R.id.gift_subscription_button)
 
-    private val subscribeListitem1Box: View? by bindView(R.id.subscribe_listitem1_box)
-    private val subscribeListitem2Box: View? by bindView(R.id.subscribe_listitem2_box)
-    private val subscribeListitem3Box: View? by bindView(R.id.subscribe_listitem3_box)
-    private val subscribeListitem4Box: View? by bindView(R.id.subscribe_listitem4_box)
-
-    private val subscribeListitem1Button: ImageView? by bindView(R.id.subscribe_listitem1_expand)
-    private val subscribeListitem2Button: ImageView? by bindView(R.id.subscribe_listitem2_expand)
-    private val subscribeListitem3Button: ImageView? by bindView(R.id.subscribe_listitem3_expand)
-    private val subscribeListitem4Button: ImageView? by bindView(R.id.subscribe_listitem4_expand)
-
-    private val subscribeListItem1Description: TextView? by bindView(R.id.subscribe_listitem1_description)
-    private val subscribeListItem2Description: TextView? by bindView(R.id.subscribe_listitem2_description)
-    private val subscribeListItem3Description: TextView? by bindView(R.id.subscribe_listitem3_description)
-    private val subscribeListItem4Description: TextView? by bindView(R.id.subscribe_listitem4_description)
+    private val headerImageView: ImageView? by bindView(R.id.header_image_view)
 
     private val loadingIndicator: ProgressBar? by bindOptionalView(R.id.loadingIndicator)
     private val subscriptionOptions: View? by bindView(R.id.subscriptionOptions)
@@ -103,10 +93,13 @@ class SubscriptionFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        resetViews()
+
         subscriptionOptions?.visibility = View.GONE
         subscriptionDetailsView?.visibility = View.GONE
+        subscriptionDetailsView?.onShowSubscriptionOptions = { showSubscriptionOptions() }
 
-        giftOneGetOneButton?.setOnClickListener { showGiftSubscriptionDialog() }
+        giftOneGetOneContainer?.setOnClickListener { showGiftSubscriptionDialog() }
         giftSubscriptionButton?.setOnClickListener { showGiftSubscriptionDialog() }
 
         this.subscription1MonthView?.setOnPurchaseClickListener(View.OnClickListener { selectSubscription(PurchaseTypes.Subscription1Month) })
@@ -114,27 +107,12 @@ class SubscriptionFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
         this.subscription6MonthView?.setOnPurchaseClickListener(View.OnClickListener { selectSubscription(PurchaseTypes.Subscription6Month) })
         this.subscription12MonthView?.setOnPurchaseClickListener(View.OnClickListener { selectSubscription(PurchaseTypes.Subscription12Month) })
 
-        this.subscribeListitem1Box?.setOnClickListener { toggleDescriptionView(this.subscribeListitem1Button, this.subscribeListItem1Description) }
-        this.subscribeListitem2Box?.setOnClickListener { toggleDescriptionView(this.subscribeListitem2Button, this.subscribeListItem2Description) }
-        this.subscribeListitem3Box?.setOnClickListener { toggleDescriptionView(this.subscribeListitem3Button, this.subscribeListItem3Description) }
-        this.subscribeListitem4Box?.setOnClickListener { toggleDescriptionView(this.subscribeListitem4Button, this.subscribeListItem4Description) }
-
         val heartDrawable = BitmapDrawable(resources, HabiticaIconsHelper.imageOfHeartLarge())
         supportTextView?.setCompoundDrawablesWithIntrinsicBounds(null, null, null, heartDrawable)
 
         subscribeButton.setOnClickListener { subscribeUser() }
 
         giftOneGetOneContainer?.isVisible = appConfigManager.enableGiftOneGetOne()
-    }
-
-    private fun toggleDescriptionView(button: ImageView?, descriptionView: TextView?) {
-        if (descriptionView?.visibility == View.VISIBLE) {
-            descriptionView.visibility = View.GONE
-            button?.setImageResource(R.drawable.ic_keyboard_arrow_down_black_24dp)
-        } else {
-            descriptionView?.visibility = View.VISIBLE
-            button?.setImageResource(R.drawable.ic_keyboard_arrow_up_black_24dp)
-        }
     }
 
     override fun injectFragment(component: UserComponent) {
@@ -219,24 +197,33 @@ class SubscriptionFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
         if (user != null) {
             val isSubscribed = user?.isSubscribed ?: false
 
-            if (this.subscriptionDetailsView == null) {
+            if (subscriptionDetailsView == null) {
                 return
             }
 
             if (isSubscribed) {
-                this.subscriptionDetailsView?.visibility = View.VISIBLE
+                headerImageView?.setImageResource(R.drawable.subscriber_header)
+                subscriptionDetailsView?.visibility = View.VISIBLE
                 user?.purchased?.plan?.let { this.subscriptionDetailsView?.setPlan(it) }
-                this.subscribeBenefitsTitle?.setText(R.string.subscribe_prompt_thanks)
-                this.subscriptionOptions?.visibility = View.GONE
+                subscribeBenefitsTitle?.setText(R.string.subscribe_prompt_thanks)
+                subscriptionOptions?.visibility = View.GONE
             } else {
+                headerImageView?.setImageResource(R.drawable.subscribe_header)
                 if (!hasLoadedSubscriptionOptions) {
                     return
                 }
-                this.subscriptionOptions?.visibility = View.VISIBLE
-                this.subscriptionDetailsView?.visibility = View.GONE
+                subscriptionOptions?.visibility = View.VISIBLE
+                subscriptionDetailsView?.visibility = View.GONE
             }
-            this.loadingIndicator?.visibility = View.GONE
+            loadingIndicator?.visibility = View.GONE
         }
+    }
+
+    private fun showSubscriptionOptions() {
+        subscriptionOptions?.visibility = View.VISIBLE
+        subscriptionOptions?.postDelayed({
+            scrollView?.smoothScrollTo(0, subscriptionOptions?.top ?: 0)
+        }, 500)
     }
 
     private fun subscribeUser() {

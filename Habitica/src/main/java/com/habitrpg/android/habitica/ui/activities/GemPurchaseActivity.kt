@@ -51,7 +51,7 @@ class GemPurchaseActivity : BaseActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
-        supportActionBar?.setTitle(R.string.gem_purchase_toolbartitle)
+        supportActionBar?.title = ""
 
         purchaseHandler = PurchaseHandler(this, crashlyticsProxy)
 

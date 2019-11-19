@@ -16,13 +16,14 @@
     <color name="maroon_50">#C92B2B</color>
     <color name="maroon_10">#B01515</color>
     <color name="maroon_5">#7D0C0C</color>
+    <color name="maroon_1">#4C0001</color>
 
     <color name="red_500">#ffb6b8</color>
     <color name="red_100">#FF6165</color>
     <color name="red_50">#F74E52</color>
     <color name="red_10">#F23035</color>
     <color name="red_5">#BF262B</color>
-    <color name="red_1">#8C1C20</color>
+    <color name="red_1">#6C0406</color>
 
     <color name="orange_500">#ffc8a7</color>
     <color name="orange_100">#FF944C</color>
@@ -109,7 +110,7 @@
 
     <color name="widget_background">#c8432874</color>
 
-    <color name="gem_view_background">@color/habit_inactive_gray</color>
+    <color name="gem_view_background">@color/gray_700</color>
     <color name="task_border_gray">#1a000000</color>
     <color name="task_secondary_text">#B2B2B2</color>
     <color name="gem_icon_color">#24cc8f</color>

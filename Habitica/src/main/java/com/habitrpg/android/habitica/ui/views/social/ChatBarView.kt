@@ -73,7 +73,7 @@ class ChatBarView : LinearLayout {
 
         HabiticaBaseApplication.userComponent?.inject(this)
 
-        chatEditText.addTextChangedListener(OnChangeTextWatcher { s, _, _, _ ->
+        chatEditText.addTextChangedListener(OnChangeTextWatcher { _, _, _, _ ->
                 setSendButtonEnabled(chatEditText.text.isNotEmpty() && chatEditText.text.length <= maxChatLength)
                 updateTextIndicator(chatEditText.text.toString())
         })

@@ -1,8 +1,9 @@
  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+     android:id="@+id/wrapper"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/gem_view_background"
+    android:background="@drawable/subscription_box_bg"
     android:gravity="center"
     android:minHeight="80dp"
     android:layout_marginBottom="8dp">
@@ -10,7 +11,6 @@
     <FrameLayout
         android:layout_width="50dp"
         android:layout_height="match_parent"
-        android:background="@color/brand_700"
         android:id="@+id/subscriptionSelectedFrameView">
         <View
             android:id="@+id/subscriptionSelectedView"
@@ -25,9 +25,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/spacing_medium"
-        android:layout_marginRight="@dimen/spacing_medium"
         android:layout_marginStart="@dimen/spacing_large"
-        android:layout_marginLeft="@dimen/spacing_large"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp">
 
@@ -35,7 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/priceLabel"
-            android:textColor="?colorPrimary"
+            android:textColor="@color/gray_50"
             android:textSize="24sp"
             android:fontFamily="@string/font_family_medium"
             tools:text="$ 21" />
@@ -44,7 +42,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/descriptionTextView"
-            android:textColor="?colorPrimary"
+            android:textColor="@color/gray_50"
             tools:text="recurring every month"
             />
         <LinearLayout
@@ -57,7 +55,6 @@
                 tools:text="@string/subscribe1month.gemcap"
                 style="@style/Pill"
                 android:layout_marginTop="4dp"
-                android:layout_marginRight="8dp"
                 android:layout_marginEnd="8dp"/>
             <TextView
                 android:id="@+id/hourglassTextView"

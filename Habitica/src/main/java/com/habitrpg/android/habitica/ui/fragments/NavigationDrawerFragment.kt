@@ -91,7 +91,7 @@ class NavigationDrawerFragment : DialogFragment() {
             questMenuView.visibility = View.GONE
             context?.let {
                 adapter.tintColor = it.getThemeColor(R.attr.colorPrimary)
-                adapter.backgroundTintColor = it.getThemeColor(R.attr.colorPrimaryOffset)
+                adapter.backgroundTintColor = it.getThemeColor(R.attr.colorPrimary)
             }
             adapter.items.filter { it.identifier == SIDEBAR_TAVERN }.forEach {
                 it.additionalInfo = null

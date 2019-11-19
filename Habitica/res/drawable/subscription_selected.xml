@@ -5,14 +5,14 @@
     <item>
         <shape android:shape="oval">
             <corners android:radius="@dimen/daily_checkbox_corner_radius"/>
-            <solid android:color="@color/white" />
+            <solid android:color="@color/brand_400" />
             <stroke android:color="@color/transparent" android:width="5dp" />
         </shape>
     </item>
     <item>
         <shape android:shape="oval">
             <corners android:radius="@dimen/daily_checkbox_corner_radius"/>
-            <stroke android:color="@color/white" android:width="1dp" />
+            <stroke android:color="@color/brand_400" android:width="2dp" />
             <size android:height="16dp" android:width="16dp" />
         </shape>
     </item>

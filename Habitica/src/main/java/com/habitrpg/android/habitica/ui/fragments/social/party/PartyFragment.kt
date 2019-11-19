@@ -119,7 +119,7 @@ class PartyFragment : BaseMainFragment() {
                 return true
             }
             R.id.menu_guild_leave -> {
-                (detailFragment as? PartyDetailFragment)?.leaveParty()
+                detailFragment?.leaveParty()
                 return true
             }
             R.id.menu_guild_refresh -> {

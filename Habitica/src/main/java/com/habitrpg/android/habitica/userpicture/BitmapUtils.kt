@@ -6,15 +6,15 @@ import java.io.FileOutputStream
 
 object BitmapUtils {
     fun saveToShareableFile(directory: String, filename: String, bmp: Bitmap): File? {
-        var filename = filename
+        var name = filename
         try {
-            filename = "$directory/$filename"
+            name = "$directory/$name"
 
-            val out = FileOutputStream(filename)
+            val out = FileOutputStream(name)
             bmp.compress(Bitmap.CompressFormat.PNG, 100, out)
             out.flush()
             out.close()
-            return File(filename)
+            return File(name)
         } catch (ignored: Exception) {
         }
 

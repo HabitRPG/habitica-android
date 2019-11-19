@@ -17,7 +17,7 @@ public class SubscriptionPlan extends RealmObject {
     public static String PLANID_BASIC12MONTH = "basic_12mo";
 
     @PrimaryKey
-    private String customerId;
+    public String customerId;
     public Date dateCreated;
     public Date dateUpdated;
     @Nullable

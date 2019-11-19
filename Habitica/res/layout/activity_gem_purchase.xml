@@ -1,64 +1,43 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:app="http://schemas.android.com/apk/res-auto"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context=".ui.activities.MainActivity"
-             android:id="@+id/overlayFrameLayout">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.activities.MainActivity"
+    android:id="@+id/overlayFrameLayout">
     <androidx.drawerlayout.widget.DrawerLayout
-            android:id="@+id/drawer_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-                        android:gravity="center">
+        android:id="@+id/drawer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center">
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:elevation="0dp"
-                tools:context=".ui.activities.MainActivity">
+            android:layout_height="match_parent"
+            android:elevation="0dp"
+            tools:context=".ui.activities.MainActivity">
 
             <FrameLayout
-                    android:id="@+id/fragment_container"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@android:color/white"
-                    app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+                android:id="@+id/fragment_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/white"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
             <com.google.android.material.appbar.AppBarLayout
-                    android:id="@+id/appbar"
+                android:id="@+id/appbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fitsSystemWindows="false">
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fitsSystemWindows="false">
-
-                <com.google.android.material.appbar.CollapsingToolbarLayout
-                        android:id="@+id/collapsing_toolbar"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fitsSystemWindows="false"
-                        app:titleEnabled="false"
-                        app:contentScrim="?attr/colorPrimary"
-                        app:expandedTitleMarginEnd="?attr/actionBarSize"
-                        app:expandedTitleMarginStart="0dp"
-                        app:layout_scrollFlags="scroll|exitUntilCollapsed">
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="?attr/actionBarSize"
-                            app:layout_collapseMode="parallax"
-                            android:src="@drawable/support_habitica"
-                            android:paddingBottom="21dp"
-                            android:contentDescription="@string/support_habitica"/>
-
-                    <androidx.appcompat.widget.Toolbar
-                            android:id="@+id/toolbar"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:minHeight="?attr/actionBarSize"
-                            android:theme="@style/Toolbar"
-                            app:layout_collapseMode="pin"
-                            app:popupTheme="@style/Theme.AppCompat.Light" />
-                </com.google.android.material.appbar.CollapsingToolbarLayout>
+                    android:minHeight="?attr/actionBarSize"
+                    android:background="@color/white"
+                    app:layout_collapseMode="pin"
+                    app:popupTheme="@style/Theme.AppCompat.Light" />
             </com.google.android.material.appbar.AppBarLayout>
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>

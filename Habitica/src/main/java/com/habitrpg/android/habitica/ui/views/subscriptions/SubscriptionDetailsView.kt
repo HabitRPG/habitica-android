@@ -3,30 +3,26 @@ package com.habitrpg.android.habitica.ui.views.subscriptions
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.util.AttributeSet
 import android.view.View
-import android.widget.Button
 import android.widget.LinearLayout
-import android.widget.TextView
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.extensions.inflate
+import com.habitrpg.android.habitica.databinding.SubscriptionDetailsBinding
+import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.models.user.SubscriptionPlan
-import com.habitrpg.android.habitica.ui.helpers.bindView
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
+import java.text.DateFormat
+import java.util.*
 
 class SubscriptionDetailsView : LinearLayout {
 
-    internal val subscriptionDurationTextView: TextView by bindView(R.id.subscriptionDurationTextView)
-    internal val subscriptionStatusActive: TextView by bindView(R.id.subscriptionStatusActive)
-    private val getSubscriptionStatusInactive: TextView by bindView(R.id.subscriptionStatusInactive)
-    internal val paymentProcessorTextView: TextView by bindView(R.id.paymentProcessorTextView)
-    internal val monthsSubscribedTextView: TextView by bindView(R.id.monthsSubscribedTextView)
-    internal val gemCapTextView: TextView by bindView(R.id.gemCapTextView)
-    internal val currentHourglassesTextView: TextView by bindView(R.id.currentHourglassesTextView)
-    private val cancelSubscripnDescription: TextView by bindView(R.id.cancelSubscriptionDescription)
-    internal val visitWebsiteButton: Button by bindView(R.id.visitWebsiteButton)
+    lateinit var binding: SubscriptionDetailsBinding
 
     private var plan: SubscriptionPlan? = null
+
+    var onShowSubscriptionOptions: (() -> Unit)? = null
 
     constructor(context: Context, attributeSet: AttributeSet) : super(context, attributeSet) {
         setupView()
@@ -37,20 +33,33 @@ class SubscriptionDetailsView : LinearLayout {
     }
 
     private fun setupView() {
-        inflate(R.layout.subscription_details, true)
-
-        visitWebsiteButton.setOnClickListener { openSubscriptionWebsite() }
+        binding = SubscriptionDetailsBinding.inflate(context.layoutInflater, this, true)
+        binding.changeSubscriptionButton.setOnClickListener { changeSubscriptionButtonTapped() }
+        binding.heartIcon.setImageDrawable(BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfHeartLightBg()))
     }
 
     fun setPlan(plan: SubscriptionPlan) {
         this.plan = plan
 
         if (plan.isActive) {
-            subscriptionStatusActive.visibility = View.VISIBLE
-            getSubscriptionStatusInactive.visibility = View.GONE
+            if (plan.dateTerminated != null) {
+                if (plan.customerId == "Gift") {
+                    binding.subscriptionStatusNotRecurring.visibility = View.VISIBLE
+                    binding.subscriptionStatusCancelled.visibility = View.GONE
+                } else {
+                    binding.subscriptionStatusNotRecurring.visibility = View.GONE
+                    binding.subscriptionStatusCancelled.visibility = View.VISIBLE
+                }
+                binding.subscriptionStatusActive.visibility = View.GONE
+            } else {
+                binding.subscriptionStatusActive.visibility = View.VISIBLE
+                binding.subscriptionStatusNotRecurring.visibility = View.GONE
+            }
+            binding.subscriptionStatusInactive.visibility = View.GONE
         } else {
-            subscriptionStatusActive.visibility = View.GONE
-            getSubscriptionStatusInactive.visibility = View.VISIBLE
+            binding.subscriptionStatusActive.visibility = View.GONE
+            binding.subscriptionStatusInactive.visibility = View.VISIBLE
+            binding.subscriptionStatusNotRecurring.visibility = View.GONE
         }
 
         var duration: String? = null
@@ -68,31 +77,52 @@ class SubscriptionDetailsView : LinearLayout {
         }
 
         if (duration != null) {
-            subscriptionDurationTextView.text = resources.getString(R.string.subscription_duration, duration)
+            binding.subscriptionDurationTextView.text = resources.getString(R.string.subscription_duration, duration)
+        } else if (plan.dateTerminated != null) {
+            binding.subscriptionDurationTextView.text = resources.getString(R.string.ending_on, DateFormat.getDateInstance().format(plan.dateTerminated ?: Date()))
         }
 
-        paymentProcessorTextView.text = plan.paymentMethod
+        when (plan.paymentMethod) {
+            "Amazon" -> binding.paymentProcessorImageView.setImageResource(R.drawable.payment_amazon)
+            "Apple" -> binding.paymentProcessorImageView.setImageResource(R.drawable.payment_apple)
+            "Google" -> binding.paymentProcessorImageView.setImageResource(R.drawable.payment_google)
+            "Stripe" -> binding.paymentProcessorImageView.setImageResource(R.drawable.payment_stripe)
+             else -> {
+                 if (plan.customerId == "Gift") {
+                     binding.paymentProcessorImageView.setImageResource(R.drawable.payment_gift)
+                     binding.subscriptionPaymentMethodTextview.text = context.getString(R.string.gifted)
+                 } else {
+                     binding.paymentProcessorWrapper.visibility = View.GONE
+                 }
+             }
+        }
 
         if (plan.consecutive?.count == 1) {
-            monthsSubscribedTextView.text = resources.getString(R.string.one_month)
+            binding.monthsSubscribedTextView.text = resources.getString(R.string.one_month)
         } else {
-            monthsSubscribedTextView.text = resources.getString(R.string.x_months, plan.consecutive?.count ?: 0)
+            binding.monthsSubscribedTextView.text = resources.getString(R.string.x_months, plan.consecutive?.count ?: 0)
         }
-        gemCapTextView.text = plan.totalNumberOfGems().toString()
-        currentHourglassesTextView.text = plan.consecutive?.trinkets.toString()
+        binding.gemCapTextView.text = plan.totalNumberOfGems().toString()
+        binding.currentHourglassesTextView.text = plan.consecutive?.trinkets.toString()
 
         if (plan.paymentMethod != null) {
+            binding.changeSubscriptionTitle.setText(R.string.cancel_subscription)
             if (plan.paymentMethod == "Google") {
-                cancelSubscripnDescription.setText(R.string.cancel_subscription_google_description)
-                visitWebsiteButton.setText(R.string.open_in_store)
+                binding.changeSubscriptionDescription.setText(R.string.cancel_subscription_google_description)
+                binding.changeSubscriptionButton.setText(R.string.open_in_store)
             } else {
-                cancelSubscripnDescription.setText(R.string.cancel_subscription_notgoogle_description)
-                visitWebsiteButton.setText(R.string.visit_habitica_website)
+                binding.changeSubscriptionDescription.setText(R.string.cancel_subscription_notgoogle_description)
+                binding.changeSubscriptionButton.setText(R.string.visit_habitica_website)
             }
+        }
+        if (plan.dateTerminated != null) {
+            binding.changeSubscriptionTitle.setText(R.string.resubscribe)
+            binding.changeSubscriptionDescription.setText(R.string.resubscribe_description)
+            binding.changeSubscriptionButton.setText(R.string.renew_subscription)
         }
     }
 
-    private fun openSubscriptionWebsite() {
+    private fun changeSubscriptionButtonTapped() {
         if (plan?.paymentMethod != null) {
             val url = if (plan?.paymentMethod == "Google") {
                 "https://play.google.com/store/account/subscriptions"
@@ -100,6 +130,8 @@ class SubscriptionDetailsView : LinearLayout {
                 context.getString(R.string.base_url) + "/"
             }
             context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+        } else if (plan?.dateTerminated != null) {
+            onShowSubscriptionOptions?.invoke()
         }
     }
 }
