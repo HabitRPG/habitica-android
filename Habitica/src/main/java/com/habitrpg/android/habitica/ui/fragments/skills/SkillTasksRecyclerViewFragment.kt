@@ -24,7 +24,7 @@ import io.reactivex.subjects.PublishSubject
 import javax.inject.Inject
 import javax.inject.Named
 
-class SkillTasksRecyclerViewFragment : BaseFragment() {
+class SkillTasksRecyclerViewFragment(val taskType: String) : BaseFragment() {
     @Inject
     lateinit var taskRepository: TaskRepository
     @field:[Inject Named(AppModule.NAMED_USER_ID)]
@@ -34,7 +34,6 @@ class SkillTasksRecyclerViewFragment : BaseFragment() {
 
     var adapter: SkillTasksRecyclerViewAdapter = SkillTasksRecyclerViewAdapter(null, true)
     internal var layoutManager: LinearLayoutManager? = null
-    var taskType: String? = null
 
     private val taskSelectionEvents = PublishSubject.create<Task>()
 
@@ -56,11 +55,6 @@ class SkillTasksRecyclerViewFragment : BaseFragment() {
 
         resetViews()
 
-        var tasks = taskRepository.getTasks(taskType ?: "", userId)
-        if (taskType == Task.TYPE_TODO) {
-            tasks = tasks.map { it.where().equalTo("completed", false).findAll() }
-        }
-
         val layoutManager = LinearLayoutManager(context)
         recyclerView?.layoutManager = layoutManager
 
@@ -70,6 +64,15 @@ class SkillTasksRecyclerViewFragment : BaseFragment() {
         }, RxErrorHandler.handleEmptyError()))
         recyclerView?.adapter = adapter
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        var tasks = taskRepository.getTasks(taskType, userId)
+        if (taskType == Task.TYPE_TODO) {
+            tasks = tasks.map { it.where().equalTo("completed", false).findAll() }
+        }
         compositeSubscription.add(tasks.subscribe(Consumer {
             adapter.updateData(it)
         }, RxErrorHandler.handleEmptyError()))
