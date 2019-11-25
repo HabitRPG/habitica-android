@@ -53,4 +53,5 @@ interface InventoryLocalRepository : ContentLocalRepository {
     fun hatchPet(eggKey: String, potionKey: String, userID: String)
     fun unhatchPet(eggKey: String, potionKey: String, userID: String)
     fun feedPet(foodKey: String, petKey: String, feedValue: Int, userID: String)
+    fun getLatestMysteryItem(): Flowable<Equipment>
 }

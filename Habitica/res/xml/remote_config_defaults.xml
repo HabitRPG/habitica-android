@@ -64,5 +64,9 @@
         <key>minimumPasswordLength</key>
         <value>8</value>
     </entry>
+    <entry>
+        <key>useNewMysteryBenefits</key>
+        <value>false</value>
+    </entry>
 </defaultsMap>
     <!-- END xml_defaults -->

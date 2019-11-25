@@ -41,6 +41,7 @@
         <attr name="gemCapText" format="string" />
         <attr name="isNonRecurring" format="boolean" />
         <attr name="hourGlassCount" format="integer" />
+        <attr name="flagText" format="string" />
     </declare-styleable>
     <declare-styleable name="SpeechBubbleView">
         <attr name="namePlate" format="string" />

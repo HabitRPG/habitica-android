@@ -312,4 +312,14 @@ class RealmInventoryLocalRepository(realm: Realm, private val context: Context) 
             it.insertOrUpdate(newPet)
         }
     }
+
+    override fun getLatestMysteryItem(): Flowable<Equipment> {
+        return realm.where(Equipment::class.java)
+                .beginsWith("key", "armor_mystery_2")
+                .sort("key", Sort.DESCENDING)
+                .findAll()
+                .asFlowable()
+                .filter { it.isLoaded && it.size > 0}
+                .map { it.first() }
+    }
 }

@@ -83,9 +83,10 @@ class SubscriptionDetailsView : LinearLayout {
         }
 
         when (plan.paymentMethod) {
-            "Amazon" -> binding.paymentProcessorImageView.setImageResource(R.drawable.payment_amazon)
+            "Amazon Payments" -> binding.paymentProcessorImageView.setImageResource(R.drawable.payment_amazon)
             "Apple" -> binding.paymentProcessorImageView.setImageResource(R.drawable.payment_apple)
             "Google" -> binding.paymentProcessorImageView.setImageResource(R.drawable.payment_google)
+            "PayPal" -> binding.paymentProcessorImageView.setImageResource(R.drawable.payment_paypal)
             "Stripe" -> binding.paymentProcessorImageView.setImageResource(R.drawable.payment_stripe)
              else -> {
                  if (plan.customerId == "Gift") {

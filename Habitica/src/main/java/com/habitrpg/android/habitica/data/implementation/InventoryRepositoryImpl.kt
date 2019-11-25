@@ -116,6 +116,10 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
                 .flatMap { item -> sellItem(user, item, ownedItem) }
     }
 
+    override fun getLatestMysteryItem(): Flowable<Equipment> {
+        return localRepository.getLatestMysteryItem()
+    }
+
     private fun sellItem(user: User?, item: Item, ownedItem: OwnedItem): Flowable<User> {
         if (user != null && appConfigManager.enableLocalChanges()) {
             localRepository.executeTransaction {
@@ -282,4 +286,6 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
         } else apiClient.togglePinnedItem(item.pinType ?: "", item.path ?: "")
                 .flatMap { retrieveInAppRewards() }
     }
+
+
 }

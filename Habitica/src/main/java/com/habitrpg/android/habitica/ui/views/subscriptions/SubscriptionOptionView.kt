@@ -29,6 +29,7 @@ class SubscriptionOptionView(context: Context, attrs: AttributeSet) : FrameLayou
         }
 
         binding.gemCapTextView.text = a.getText(R.styleable.SubscriptionOptionView_gemCapText)
+        setFlagText(a.getText(R.styleable.SubscriptionOptionView_flagText))
         val hourGlassCount = a.getInteger(R.styleable.SubscriptionOptionView_hourGlassCount, 0)
         if (hourGlassCount != 0) {
             binding.hourglassTextView.text = context.getString(R.string.subscription_hourglasses, hourGlassCount)
@@ -45,6 +46,17 @@ class SubscriptionOptionView(context: Context, attrs: AttributeSet) : FrameLayou
 
     fun setPriceText(text: String) {
         binding.priceLabel.text = text
+    }
+
+    fun setFlagText(text: CharSequence?) {
+        if (text?.length ?: 0 == 0) {
+            binding.flagFlap.visibility = View.GONE
+            binding.flagTextview.visibility = View.GONE
+        } else {
+            binding.flagFlap.visibility = View.VISIBLE
+            binding.flagTextview.visibility = View.VISIBLE
+            binding.flagTextview.text = text
+        }
     }
 
     fun setIsPurchased(purchased: Boolean) {

@@ -74,4 +74,5 @@ interface InventoryRepository : BaseRepository {
 
     fun togglePinnedItem(item: ShopItem): Flowable<List<ShopItem>>
     fun getItems(itemClass: Class<out Item>, keys: Array<String>, user: User?): Flowable<out RealmResults<out Item>>
+    fun getLatestMysteryItem(): Flowable<Equipment>
 }

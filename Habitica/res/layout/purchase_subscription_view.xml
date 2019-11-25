@@ -1,5 +1,5 @@
- <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-     android:id="@+id/wrapper"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/wrapper"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -29,15 +29,37 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp">
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/priceLabel"
-            android:textColor="@color/gray_50"
-            android:textSize="24sp"
-            android:fontFamily="@string/font_family_medium"
-            tools:text="$ 21" />
+            android:layout_height="wrap_content">
 
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:id="@+id/priceLabel"
+                android:textColor="@color/gray_50"
+                android:textSize="24sp"
+                android:fontFamily="@string/font_family_medium"
+                tools:text="$ 21" />
+            <ImageView
+                android:id="@+id/flag_flap"
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:src="@drawable/flag_flap"
+                android:layout_gravity="center_vertical" />
+            <TextView
+                android:id="@+id/flag_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:paddingEnd="@dimen/spacing_medium"
+                android:background="@color/green_50"
+                android:textColor="@color/white"
+                style="@style/Caption1"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                tools:text="Save 20%"/>
+        </LinearLayout>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

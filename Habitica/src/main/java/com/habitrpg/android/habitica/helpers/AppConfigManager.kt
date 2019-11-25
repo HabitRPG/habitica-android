@@ -78,4 +78,8 @@ class AppConfigManager {
     fun minimumPasswordLength(): Long {
         return remoteConfig.getLong("minimumPasswordLength")
     }
+
+    fun useNewMysteryBenefits(): Boolean {
+        return remoteConfig.getBoolean("useNewMysteryBenefits")
+    }
 }

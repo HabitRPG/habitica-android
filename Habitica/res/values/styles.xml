@@ -352,7 +352,8 @@
     </style>
 
     <style name="Pill">
-        <item name="android:textSize">10sp</item>
+        <item name="android:textSize">11sp</item>
+        <item name="android:fontFamily">@string/font_family_medium</item>
         <item name="android:background">@drawable/pill_bg_gray</item>
         <item name="android:paddingRight">@dimen/pill_horizontal_padding</item>
         <item name="android:paddingLeft">@dimen/pill_horizontal_padding</item>
