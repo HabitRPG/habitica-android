@@ -112,6 +112,14 @@ class AvatarSetupFragment : BaseFragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        if (this.user != null) {
+            this.updateAvatar()
+        }
+        this.selectedBodyCategory()
+    }
+
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         super.setUserVisibleHint(isVisibleToUser)
         if (isVisibleToUser && context != null) {
