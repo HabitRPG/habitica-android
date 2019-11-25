@@ -252,10 +252,14 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
             this.mLoginNormalBtn.text = getString(R.string.register_btn)
             mUsernameET.setHint(R.string.username)
             mPasswordET.imeOptions = EditorInfo.IME_ACTION_NEXT
+            facebookLoginButton.setText(R.string.register_btn_fb)
+            googleLoginButton.setText(R.string.register_btn_google)
         } else {
             this.mLoginNormalBtn.text = getString(R.string.login_btn)
             mUsernameET.setHint(R.string.email_username)
             mPasswordET.imeOptions = EditorInfo.IME_ACTION_DONE
+            facebookLoginButton.setText(R.string.login_btn_fb)
+            googleLoginButton.setText(R.string.login_btn_google)
         }
         this.resetLayout()
     }

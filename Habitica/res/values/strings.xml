@@ -461,6 +461,8 @@
     <string name="not_owned">Not owned</string>
     <string name="login_btn_fb">Login with Facebook</string>
     <string name="login_btn_google">Login with Google</string>
+    <string name="register_btn_fb">Sign up with Facebook</string>
+    <string name="register_btn_google">Sign up with Google</string>
     <string name="action_back">Back</string>
     <string name="welcome_text">Oh, you must be new here. I’m Justin, I’ll be your guide in Habitica.\n\nFirst, what should we call you? Feel free to change what I picked. When you’re all set, let’s create your avatar!</string>
     <string name="randomize">Randomize</string>
