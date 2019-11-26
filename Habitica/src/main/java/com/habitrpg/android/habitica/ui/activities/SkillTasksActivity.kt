@@ -54,12 +54,12 @@ class SkillTasksActivity : BaseActivity() {
         viewPager.adapter = object : FragmentPagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
             override fun getItem(position: Int): Fragment {
-                val taskType = when (position) {
+                val fragment = SkillTasksRecyclerViewFragment()
+                fragment.taskType = when (position) {
                     0 -> Task.TYPE_HABIT
                     1 -> Task.TYPE_DAILY
                     else -> Task.TYPE_TODO
                 }
-                val fragment = SkillTasksRecyclerViewFragment(taskType)
 
                 compositeSubscription.add(fragment.getTaskSelectionEvents().subscribe(Consumer { task -> taskSelected(task) }, RxErrorHandler.handleEmptyError()))
 

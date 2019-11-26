@@ -24,11 +24,12 @@ import io.reactivex.subjects.PublishSubject
 import javax.inject.Inject
 import javax.inject.Named
 
-class SkillTasksRecyclerViewFragment(val taskType: String) : BaseFragment() {
+class SkillTasksRecyclerViewFragment() : BaseFragment() {
     @Inject
     lateinit var taskRepository: TaskRepository
     @field:[Inject Named(AppModule.NAMED_USER_ID)]
     lateinit var userId: String
+    var taskType: String? = null
 
     private val recyclerView: RecyclerView? by bindView(R.id.recyclerView)
 
@@ -63,13 +64,12 @@ class SkillTasksRecyclerViewFragment(val taskType: String) : BaseFragment() {
             taskSelectionEvents.onNext(it)
         }, RxErrorHandler.handleEmptyError()))
         recyclerView?.adapter = adapter
-
     }
 
     override fun onResume() {
         super.onResume()
 
-        var tasks = taskRepository.getTasks(taskType, userId)
+        var tasks = taskRepository.getTasks(taskType ?: "", userId)
         if (taskType == Task.TYPE_TODO) {
             tasks = tasks.map { it.where().equalTo("completed", false).findAll() }
         }
