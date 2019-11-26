@@ -59,16 +59,10 @@ class SubscriptionDetailsView : LinearLayout {
             }
         }
 
-        if (duration != null) {
-            binding.subscriptionDurationTextView.text = resources.getString(R.string.subscription_duration, duration)
-        } else if (plan.isGroupPlanSub) {
-            if (plan.ownerID == currentUserID) {
-                binding.subscriptionDurationTextView.setText(R.string.owner)
-            } else {
-                binding.subscriptionDurationTextView.setText(R.string.member)
-            }
-        } else if (plan.dateTerminated != null) {
-            binding.subscriptionDurationTextView.text = resources.getString(R.string.ending_on, DateFormat.getDateInstance().format(plan.dateTerminated ?: Date()))
+        when {
+            duration != null -> binding.subscriptionDurationTextView.text = resources.getString(R.string.subscription_duration, duration)
+            plan.isGroupPlanSub -> binding.subscriptionDurationTextView.setText(R.string.member_group_plan)
+            plan.dateTerminated != null -> binding.subscriptionDurationTextView.text = resources.getString(R.string.ending_on, DateFormat.getDateInstance().format(plan.dateTerminated ?: Date()))
         }
 
         if (plan.extraMonths > 0) {
@@ -114,12 +108,12 @@ class SubscriptionDetailsView : LinearLayout {
                 binding.changeSubscriptionButton.setText(R.string.open_in_store)
             } else {
                 if (plan.isGroupPlanSub) {
-                    if (plan.ownerID == currentUserID) {
+                    /*if (plan.ownerID == currentUserID) {
                         binding.changeSubscriptionDescription.setText(R.string.cancel_subscription_group_plan_owner)
-                    } else {
+                    } else {*/
                         binding.changeSubscriptionDescription.setText(R.string.cancel_subscription_group_plan)
                         binding.changeSubscriptionButton.visibility = View.GONE
-                    }
+                    //}
                 } else {
                     binding.changeSubscriptionDescription.setText(R.string.cancel_subscription_notgoogle_description)
                 }

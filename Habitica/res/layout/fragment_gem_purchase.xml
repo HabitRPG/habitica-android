@@ -174,14 +174,13 @@
                 android:layout_gravity="center_horizontal"
                 android:src="@drawable/gift_sub_gift"
                 android:layout_marginTop="24dp"
-                android:layout_marginBottom="2dp" />
+                android:layout_marginBottom="6dp" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/gray_300"
                 android:text="@string/gems_gift_description"
                 android:gravity="center_horizontal"
-                style="@style/Body2"
                 android:layout_marginLeft="@dimen/spacing_large"
                 android:layout_marginRight="@dimen/spacing_large"/>
             <Button

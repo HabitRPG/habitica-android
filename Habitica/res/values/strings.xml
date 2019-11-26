@@ -408,8 +408,8 @@
     <string name="active">Active</string>
     <string name="due">Due</string>
     <string name="cancel_subscription">Cancel Subscription</string>
-    <string name="cancel_subscription_google_description">No longer want to subscribe? You can find the option to unsubscribe in the “My Apps” section of the Google Play Store.</string>
-    <string name="cancel_subscription_notgoogle_description">No longer want to subscribe? Due to constraints on mobile payments, you\'ll need to cancel via our website. To do this, tap the button below, log in to your account, tap the User icon in the top right, then go to Subscription. We\'ll miss you!</string>
+    <string name="cancel_subscription_google_description">No longer want to subscribe? You can find the option to unsubscribe in the “My Apps” section of the Google Play Store. Any months of subscription credit will be applied after your subscription has ended.</string>
+    <string name="cancel_subscription_notgoogle_description">No longer want to subscribe? Due to constraints on mobile payments, you\'ll need to cancel via our website. To do this, tap the button below, log in to your account, tap the User icon in the top right, then go to Subscription. Any months of subscription credit will be applied after your subscription has ended. We\'ll miss you! </string>
     <string name="visit_habitica_website">Visit Habitica Website</string>
     <string name="current_bonuses">Current Bonuses</string>
     <string name="months_subscribed">Months subscribed</string>
@@ -908,8 +908,9 @@
     <string name="save_20">Save 20%</string>
     <string name="subscription_credit">Subscription Credit</string>
     <string name="group_plan">Group Plan</string>
-    <string name="cancel_subscription_group_plan">"You have a free subscription because you are a member a Party or Guild that has a Group Plan. This will end if you leave or the Group Plan is cancelled by the owner. Any months of extra subscription credit you have will be applied at the end of the Group Plan. "</string>
-    <string name="cancel_subscription_group_plan_owner">"You have a free subscription because you are an owner of a Party or Guild that has a Group Plan. This will end if you cancel the plan. Any months of extra subscription credit you have will be applied at the end of the Group Plan. You can cancel from the Habitica website. "</string>
+    <string name="cancel_subscription_group_plan">You have a free subscription because you are a member a Party or Guild that has a Group Plan. This will end if you leave or the Group Plan is cancelled by the owner. Any months of extra subscription credit you have will be applied at the end of the Group Plan.</string>
+    <string name="cancel_subscription_group_plan_owner">You have a free subscription because you are an owner of a Party or Guild that has a Group Plan. This will end if you cancel the plan. Any months of extra subscription credit you have will be applied at the end of the Group Plan. You can cancel from the Habitica website.</string>
     <string name="owner">Owner</string>
     <string name="member">Member</string>
+    <string name="member_group_plan">Member of a Group Plan</string>
 </resources>

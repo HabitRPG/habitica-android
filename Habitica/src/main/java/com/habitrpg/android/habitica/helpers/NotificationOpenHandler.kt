@@ -61,7 +61,7 @@ class NotificationOpenHandler {
             MainNavigationController.navigate(R.id.prefsActivity)
         }
 
-        private fun handleChatMessage(type: String, groupID: String) {
+        private fun handleChatMessage(type: String?, groupID: String) {
             when (type) {
                 "party" -> MainNavigationController.navigate(R.id.partyFragment)
                 "tavern" -> MainNavigationController.navigate(R.id.tavernFragment)
