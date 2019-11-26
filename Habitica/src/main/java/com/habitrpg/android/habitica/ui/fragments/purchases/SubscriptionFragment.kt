@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments.purchases
 
 import android.content.Intent
-import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -26,11 +25,9 @@ import com.habitrpg.android.habitica.ui.activities.GiftSubscriptionActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
-import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView
 import io.reactivex.functions.Consumer
-import kotlinx.android.synthetic.main.fragment_subscription.*
 import org.greenrobot.eventbus.Subscribe
 import org.solovyev.android.checkout.Inventory
 import org.solovyev.android.checkout.Sku
@@ -58,25 +55,21 @@ class SubscriptionFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-
         super.onCreateView(inflater, container, savedInstanceState)
-
         fetchUser(null)
-
         binding = FragmentSubscriptionBinding.inflate(inflater, container, false)
-
         return binding.root
     }
 
     @Subscribe
     fun fetchUser(event: UserSubscribedEvent?) {
-        compositeSubscription.add(userRepository.retrieveUser(false, true).subscribe(Consumer { this.setUser(it) }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(userRepository.retrieveUser(withTasks = false, forced = true).subscribe(Consumer { this.setUser(it) }, RxErrorHandler.handleEmptyError()))
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        subscriptionOptions?.visibility = View.GONE
+        binding.subscriptionOptions.visibility = View.GONE
         binding.subscriptionDetails.visibility = View.GONE
         binding.subscriptionDetails.onShowSubscriptionOptions = { showSubscriptionOptions() }
 
@@ -88,10 +81,7 @@ class SubscriptionFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
         binding.subscription6month.setOnPurchaseClickListener(View.OnClickListener { selectSubscription(PurchaseTypes.Subscription6Month) })
         binding.subscription12month.setOnPurchaseClickListener(View.OnClickListener { selectSubscription(PurchaseTypes.Subscription12Month) })
 
-        val heartDrawable = BitmapDrawable(resources, HabiticaIconsHelper.imageOfHeartLarge())
-        supportTextView?.setCompoundDrawablesWithIntrinsicBounds(null, null, null, heartDrawable)
-
-        subscribeButton.setOnClickListener { subscribeUser() }
+        binding.subscribeButton.setOnClickListener { subscribeUser() }
 
         binding.giftSubscriptionContainer?.isVisible = appConfigManager.enableGiftOneGetOne()
 
@@ -192,25 +182,27 @@ class SubscriptionFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
             if (isSubscribed) {
                 binding.headerImageView?.setImageResource(R.drawable.subscriber_header)
                 binding.subscriptionDetails.visibility = View.VISIBLE
+                binding.subscriptionDetails.currentUserID = user?.id
                 user?.purchased?.plan?.let { binding.subscriptionDetails.setPlan(it) }
-                subscribeBenefitsTitle?.setText(R.string.subscribe_prompt_thanks)
-                subscriptionOptions?.visibility = View.GONE
+                binding.subscribeBenefitsTitle.setText(R.string.subscribe_prompt_thanks)
+                binding.subscriptionOptions.visibility = View.GONE
             } else {
                 binding.headerImageView.setImageResource(R.drawable.subscribe_header)
                 if (!hasLoadedSubscriptionOptions) {
                     return
                 }
-                subscriptionOptions?.visibility = View.VISIBLE
+                binding.subscriptionOptions.visibility = View.VISIBLE
                 binding.subscriptionDetails.visibility = View.GONE
+                binding.subscribeBenefitsTitle.setText(R.string.subscribe_prompt)
             }
-            loadingIndicator?.visibility = View.GONE
+            binding.loadingIndicator.visibility = View.GONE
         }
     }
 
     private fun showSubscriptionOptions() {
-        subscriptionOptions?.visibility = View.VISIBLE
-        subscriptionOptions?.postDelayed({
-            binding.scrollView.smoothScrollTo(0, subscriptionOptions?.top ?: 0)
+        binding.subscriptionOptions.visibility = View.VISIBLE
+        binding.subscriptionOptions.postDelayed({
+            binding.scrollView.smoothScrollTo(0, binding.subscriptionOptions.top ?: 0)
         }, 500)
     }
 

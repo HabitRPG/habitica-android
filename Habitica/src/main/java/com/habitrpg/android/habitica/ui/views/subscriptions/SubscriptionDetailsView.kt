@@ -24,6 +24,8 @@ class SubscriptionDetailsView : LinearLayout {
 
     var onShowSubscriptionOptions: (() -> Unit)? = null
 
+    var currentUserID: String? = null
+
     constructor(context: Context, attributeSet: AttributeSet) : super(context, attributeSet) {
         setupView()
     }
@@ -41,26 +43,7 @@ class SubscriptionDetailsView : LinearLayout {
     fun setPlan(plan: SubscriptionPlan) {
         this.plan = plan
 
-        if (plan.isActive) {
-            if (plan.dateTerminated != null) {
-                if (plan.customerId == "Gift") {
-                    binding.subscriptionStatusNotRecurring.visibility = View.VISIBLE
-                    binding.subscriptionStatusCancelled.visibility = View.GONE
-                } else {
-                    binding.subscriptionStatusNotRecurring.visibility = View.GONE
-                    binding.subscriptionStatusCancelled.visibility = View.VISIBLE
-                }
-                binding.subscriptionStatusActive.visibility = View.GONE
-            } else {
-                binding.subscriptionStatusActive.visibility = View.VISIBLE
-                binding.subscriptionStatusNotRecurring.visibility = View.GONE
-            }
-            binding.subscriptionStatusInactive.visibility = View.GONE
-        } else {
-            binding.subscriptionStatusActive.visibility = View.GONE
-            binding.subscriptionStatusInactive.visibility = View.VISIBLE
-            binding.subscriptionStatusNotRecurring.visibility = View.GONE
-        }
+        updateSubscriptionStatusPill(plan)
 
         var duration: String? = null
 
@@ -78,8 +61,25 @@ class SubscriptionDetailsView : LinearLayout {
 
         if (duration != null) {
             binding.subscriptionDurationTextView.text = resources.getString(R.string.subscription_duration, duration)
+        } else if (plan.isGroupPlanSub) {
+            if (plan.ownerID == currentUserID) {
+                binding.subscriptionDurationTextView.setText(R.string.owner)
+            } else {
+                binding.subscriptionDurationTextView.setText(R.string.member)
+            }
         } else if (plan.dateTerminated != null) {
             binding.subscriptionDurationTextView.text = resources.getString(R.string.ending_on, DateFormat.getDateInstance().format(plan.dateTerminated ?: Date()))
+        }
+
+        if (plan.extraMonths > 0) {
+            binding.subscriptionCreditWrapper.visibility = View.VISIBLE
+            if (plan.extraMonths == 1) {
+                binding.subscriptionCreditTextView.text = resources.getString(R.string.one_month)
+            } else {
+                binding.subscriptionCreditTextView.text = resources.getString(R.string.x_months, plan.extraMonths)
+            }
+        } else {
+            binding.subscriptionCreditWrapper.visibility = View.GONE
         }
 
         when (plan.paymentMethod) {
@@ -89,7 +89,7 @@ class SubscriptionDetailsView : LinearLayout {
             "PayPal" -> binding.paymentProcessorImageView.setImageResource(R.drawable.payment_paypal)
             "Stripe" -> binding.paymentProcessorImageView.setImageResource(R.drawable.payment_stripe)
              else -> {
-                 if (plan.customerId == "Gift") {
+                 if (plan.isGiftedSub) {
                      binding.paymentProcessorImageView.setImageResource(R.drawable.payment_gift)
                      binding.subscriptionPaymentMethodTextview.text = context.getString(R.string.gifted)
                  } else {
@@ -106,13 +106,23 @@ class SubscriptionDetailsView : LinearLayout {
         binding.gemCapTextView.text = plan.totalNumberOfGems().toString()
         binding.currentHourglassesTextView.text = plan.consecutive?.trinkets.toString()
 
+        binding.changeSubscriptionButton.visibility = View.VISIBLE
         if (plan.paymentMethod != null) {
             binding.changeSubscriptionTitle.setText(R.string.cancel_subscription)
             if (plan.paymentMethod == "Google") {
                 binding.changeSubscriptionDescription.setText(R.string.cancel_subscription_google_description)
                 binding.changeSubscriptionButton.setText(R.string.open_in_store)
             } else {
-                binding.changeSubscriptionDescription.setText(R.string.cancel_subscription_notgoogle_description)
+                if (plan.isGroupPlanSub) {
+                    if (plan.ownerID == currentUserID) {
+                        binding.changeSubscriptionDescription.setText(R.string.cancel_subscription_group_plan_owner)
+                    } else {
+                        binding.changeSubscriptionDescription.setText(R.string.cancel_subscription_group_plan)
+                        binding.changeSubscriptionButton.visibility = View.GONE
+                    }
+                } else {
+                    binding.changeSubscriptionDescription.setText(R.string.cancel_subscription_notgoogle_description)
+                }
                 binding.changeSubscriptionButton.setText(R.string.visit_habitica_website)
             }
         }
@@ -120,6 +130,38 @@ class SubscriptionDetailsView : LinearLayout {
             binding.changeSubscriptionTitle.setText(R.string.resubscribe)
             binding.changeSubscriptionDescription.setText(R.string.resubscribe_description)
             binding.changeSubscriptionButton.setText(R.string.renew_subscription)
+        }
+    }
+
+    private fun updateSubscriptionStatusPill(plan: SubscriptionPlan) {
+        if (plan.isActive) {
+            if (plan.dateTerminated != null) {
+                if (plan.isGiftedSub) {
+                    binding.subscriptionStatusNotRecurring.visibility = View.VISIBLE
+                    binding.subscriptionStatusCancelled.visibility = View.GONE
+                } else {
+                    binding.subscriptionStatusNotRecurring.visibility = View.GONE
+                    binding.subscriptionStatusCancelled.visibility = View.VISIBLE
+                }
+                binding.subscriptionStatusActive.visibility = View.GONE
+                binding.subscriptionStatusGroupPlan.visibility = View.GONE
+            } else {
+                if (plan.isGroupPlanSub) {
+                    binding.subscriptionStatusGroupPlan.visibility = View.VISIBLE
+                    binding.subscriptionStatusActive.visibility = View.GONE
+                    binding.subscriptionStatusNotRecurring.visibility = View.GONE
+                } else {
+                    binding.subscriptionStatusActive.visibility = View.VISIBLE
+                    binding.subscriptionStatusNotRecurring.visibility = View.GONE
+                    binding.subscriptionStatusGroupPlan.visibility = View.GONE
+                }
+            }
+            binding.subscriptionStatusInactive.visibility = View.GONE
+        } else {
+            binding.subscriptionStatusActive.visibility = View.GONE
+            binding.subscriptionStatusInactive.visibility = View.VISIBLE
+            binding.subscriptionStatusNotRecurring.visibility = View.GONE
+            binding.subscriptionStatusGroupPlan.visibility = View.GONE
         }
     }
 

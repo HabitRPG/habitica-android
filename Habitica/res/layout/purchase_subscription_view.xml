@@ -55,7 +55,7 @@
                 android:paddingEnd="@dimen/spacing_medium"
                 android:background="@color/green_50"
                 android:textColor="@color/white"
-                style="@style/Caption1"
+                style="@style/Caption2"
                 android:layout_gravity="center_vertical"
                 android:gravity="center_vertical"
                 tools:text="Save 20%"/>
@@ -64,7 +64,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/descriptionTextView"
-            android:textColor="@color/gray_50"
             tools:text="recurring every month"
             />
         <LinearLayout
@@ -76,6 +75,7 @@
                 android:layout_height="wrap_content"
                 tools:text="@string/subscribe1month.gemcap"
                 style="@style/Pill"
+                android:textSize="12sp"
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="8dp"/>
             <TextView
@@ -84,6 +84,7 @@
                 android:layout_height="wrap_content"
                 tools:text="+1 Mystic Hourglass"
                 style="@style/Pill"
+                android:textSize="12sp"
                 android:layout_marginTop="4dp"/>
         </LinearLayout>
     </LinearLayout>

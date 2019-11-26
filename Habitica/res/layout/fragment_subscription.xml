@@ -73,7 +73,7 @@
 
             <TextView
                 android:id="@+id/subscribeBenefitsTitle"
-                android:layout_width="match_parent"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:text="@string/subscribe_prompt"
                 android:gravity="center"
@@ -81,8 +81,7 @@
                 android:textColor="@color/brand_300"
                 android:lineSpacingExtra="4dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginLeft="26dp"
-                android:layout_marginRight="26dp"/>
+                android:layout_gravity="center_horizontal"/>
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -246,7 +245,7 @@
                 android:src="@drawable/separator_fancy"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"/>
+                android:layout_marginBottom="12dp"/>
 
             <ProgressBar
                 style="?android:attr/progressBarStyle"
@@ -275,20 +274,16 @@
                 android:id="@+id/subscriptionOptions"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="24dp"
-                >
+                android:orientation="vertical">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="250dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:gravity="center_horizontal"
                     style="@style/Subheader1"
                     android:textColor="@color/brand_300"
                     android:text="@string/subscribe_options_title"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
                     android:layout_marginBottom="20dp"/>
 
                 <com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView
