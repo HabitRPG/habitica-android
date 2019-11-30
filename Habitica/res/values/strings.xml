@@ -913,4 +913,8 @@
     <string name="owner">Owner</string>
     <string name="member">Member</string>
     <string name="member_group_plan">Member of a Group Plan</string>
+    <string name="event">Event</string>
+    <string name="promo_g1g1_description">Gift a subscription now and you’ll get the same sub for yourself free!</string>
+    <string name="promo_g1g1_prompt">Gift One, Get One Event</string>
+    <string name="sale">Sale</string>
 </resources>

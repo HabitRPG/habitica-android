@@ -94,7 +94,7 @@ class NavigationDrawerFragment : DialogFragment() {
                 adapter.backgroundTintColor = it.getThemeColor(R.attr.colorPrimary)
             }
             adapter.items.filter { it.identifier == SIDEBAR_TAVERN }.forEach {
-                it.additionalInfo = null
+                it.subtitle = null
             }
             return
         }
@@ -122,8 +122,7 @@ class NavigationDrawerFragment : DialogFragment() {
         questMenuView.hideBossArt()
 
         adapter.items.filter { it.identifier == SIDEBAR_TAVERN }.forEach {
-            it.additionalInfo = context?.getString(R.string.active_world_boss)
-            it.additionalInfoAsPill = false
+            it.subtitle = context?.getString(R.string.active_world_boss)
         }
         adapter.notifyDataSetChanged()
 
@@ -199,9 +198,9 @@ class NavigationDrawerFragment : DialogFragment() {
 
         val tavernItem = getItemWithIdentifier(SIDEBAR_TAVERN)
         if (user.preferences?.sleep == true) {
-            tavernItem?.additionalInfo = context?.getString(R.string.damage_paused)
+            tavernItem?.subtitle = context?.getString(R.string.damage_paused)
         } else {
-            tavernItem?.additionalInfo = null
+            tavernItem?.subtitle = null
         }
 
         val specialItems = user.items?.special
@@ -215,9 +214,9 @@ class NavigationDrawerFragment : DialogFragment() {
                 item.isVisible = false
             } else {
                 if (user.stats?.lvl ?: 0 < HabiticaSnackbar.MIN_LEVEL_FOR_SKILLS && (!hasSpecialItems)) {
-                    item.additionalInfo = getString(R.string.unlock_lvl_11)
+                    item.pillText = getString(R.string.unlock_lvl_11)
                 } else {
-                    item.additionalInfo = null
+                    item.pillText = null
                 }
                 item.isVisible = true
             }
@@ -227,9 +226,9 @@ class NavigationDrawerFragment : DialogFragment() {
         if (statsItem != null) {
             if (user.preferences?.disableClasses != true) {
                 if (user.stats?.lvl ?: 0 >= 10 && user.stats?.points ?: 0 > 0) {
-                    statsItem.additionalInfo = user.stats?.points.toString()
+                    statsItem.pillText = user.stats?.points.toString()
                 } else {
-                    statsItem.additionalInfo = null
+                    statsItem.pillText = null
                 }
                 statsItem.isVisible = true
             } else {
@@ -246,8 +245,8 @@ class NavigationDrawerFragment : DialogFragment() {
             val daysDiff = TimeUnit.MILLISECONDS.toDays(msDiff)
             if (daysDiff <= 30) {
                 context?.let {
-                    subscriptionItem?.additionalInfo = user.purchased?.plan?.dateTerminated?.getRemainingString(it.resources)
-                    subscriptionItem?.additionalInfoTextColor = when {
+                    subscriptionItem?.subtitle = user.purchased?.plan?.dateTerminated?.getRemainingString(it.resources)
+                    subscriptionItem?.subtitleTextColor = when {
                         daysDiff <= 2 -> ContextCompat.getColor(it, R.color.red_100)
                         daysDiff <= 7 -> ContextCompat.getColor(it, R.color.brand_400)
                         else -> it.getThemeColor(R.attr.textColorSecondary)
@@ -255,12 +254,14 @@ class NavigationDrawerFragment : DialogFragment() {
                 }
             }
         } else {
-            subscriptionItem?.additionalInfo = if (configManager.showSubscriptionSubtitle()) {
-                context?.getString(R.string.more_out_of_habitica)
-            } else {
-                null
-            }
+            subscriptionItem?.subtitle = context?.getString(R.string.more_out_of_habitica)
         }
+
+        if (configManager.enableGiftOneGetOne()) {
+            subscriptionItem?.pillText = context?.getString(R.string.sale)
+            context?.let { subscriptionItem?.pillBackground = ContextCompat.getDrawable(it, R.drawable.pill_bg_teal) }
+        }
+        subscriptionItem?.let { updateItem(it) }
 
         val promoItem = getItemWithIdentifier(SIDEBAR_SUBSCRIPTION_PROMO)
         if (promoItem != null) {
@@ -297,7 +298,7 @@ class NavigationDrawerFragment : DialogFragment() {
             items.add(HabiticaDrawerItem(R.id.statsFragment, SIDEBAR_STATS, context.getString(R.string.sidebar_stats)))
             items.add(HabiticaDrawerItem(R.id.achievementsFragment, SIDEBAR_ACHIEVEMENTS, context.getString(R.string.sidebar_achievements)))
             items.add(HabiticaDrawerItem(0, SIDEBAR_SOCIAL, context.getString(R.string.sidebar_section_social), true))
-            items.add(HabiticaDrawerItem(R.id.tavernFragment, SIDEBAR_TAVERN, context.getString(R.string.sidebar_tavern), isHeader = false, additionalInfoAsPill = false))
+            items.add(HabiticaDrawerItem(R.id.tavernFragment, SIDEBAR_TAVERN, context.getString(R.string.sidebar_tavern), isHeader = false))
             items.add(HabiticaDrawerItem(R.id.partyFragment, SIDEBAR_PARTY, context.getString(R.string.sidebar_party)))
             items.add(HabiticaDrawerItem(R.id.guildsOverviewFragment, SIDEBAR_GUILDS, context.getString(R.string.sidebar_guilds)))
             items.add(HabiticaDrawerItem(R.id.challengesOverviewFragment, SIDEBAR_CHALLENGES, context.getString(R.string.sidebar_challenges)))
@@ -308,15 +309,19 @@ class NavigationDrawerFragment : DialogFragment() {
             items.add(HabiticaDrawerItem(R.id.itemsFragment, SIDEBAR_ITEMS, context.getString(R.string.sidebar_items)))
             items.add(HabiticaDrawerItem(R.id.stableFragment, SIDEBAR_STABLE, context.getString(R.string.sidebar_stable)))
             items.add(HabiticaDrawerItem(R.id.gemPurchaseActivity, SIDEBAR_GEMS, context.getString(R.string.sidebar_gems)))
-            items.add(HabiticaDrawerItem(R.id.subscriptionPurchaseActivity, SIDEBAR_SUBSCRIPTION, context.getString(R.string.sidebar_subscription), isHeader = false, additionalInfoAsPill = false))
+            items.add(HabiticaDrawerItem(R.id.subscriptionPurchaseActivity, SIDEBAR_SUBSCRIPTION, context.getString(R.string.sidebar_subscription), isHeader = false))
             items.add(HabiticaDrawerItem(0, SIDEBAR_ABOUT_HEADER, context.getString(R.string.sidebar_about), true))
             items.add(HabiticaDrawerItem(R.id.newsFragment, SIDEBAR_NEWS, context.getString(R.string.sidebar_news)))
             items.add(HabiticaDrawerItem(R.id.FAQOverviewFragment, SIDEBAR_HELP, context.getString(R.string.sidebar_help)))
             items.add(HabiticaDrawerItem(R.id.aboutFragment, SIDEBAR_ABOUT, context.getString(R.string.sidebar_about)))
         }
-        if (configManager.showSubscriptionBanner()) {
+        if (configManager.enableGiftOneGetOne()) {
+            val item = HabiticaDrawerItem(R.id.subscriptionPurchaseActivity, SIDEBAR_G1G1_PROMO)
+            item.itemViewType = 3
+            items.add(item)
+        } else if (configManager.showSubscriptionBanner()) {
             val item = HabiticaDrawerItem(R.id.subscriptionPurchaseActivity, SIDEBAR_SUBSCRIPTION_PROMO)
-            item.isPromo = true
+            item.itemViewType = 2
             items.add(item)
         }
         adapter.updateItems(items)
@@ -477,6 +482,7 @@ class NavigationDrawerFragment : DialogFragment() {
         const val SIDEBAR_GEMS = "gems"
         const val SIDEBAR_SUBSCRIPTION = "subscription"
         const val SIDEBAR_SUBSCRIPTION_PROMO = "subscriptionpromo"
+        const val SIDEBAR_G1G1_PROMO = "g1g1promo"
         const val SIDEBAR_ABOUT_HEADER = "about_header"
         const val SIDEBAR_NEWS = "news"
         const val SIDEBAR_HELP = "help"

@@ -10,6 +10,7 @@ import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.ui.helpers.bindOptionalView
 import com.habitrpg.android.habitica.ui.menu.HabiticaDrawerItem
+import com.habitrpg.android.habitica.ui.viewHolders.GiftOneGetOnePromoMenuView
 import com.habitrpg.android.habitica.ui.views.promo.SubscriptionBuyGemsPromoView
 import com.habitrpg.android.habitica.ui.views.promo.SubscriptionBuyGemsPromoViewHolder
 import io.reactivex.BackpressureStrategy
@@ -88,19 +89,13 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int): Recycle
         return if (getItem(position).isHeader) {
             1
         } else {
-            if (getItem(position).isPromo) {
-                2
-            } else {
-                0
-            }
+            getItem(position).itemViewType ?: 0
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            0 -> DrawerItemViewHolder(parent.inflate(R.layout.drawer_main_item))
-            1 -> SectionHeaderViewHolder(parent.inflate(R.layout.drawer_main_section_header))
-            else -> {
+            2 -> {
                 val itemView = SubscriptionBuyGemsPromoView(parent.context)
                 itemView.layoutParams = ViewGroup.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT,
@@ -108,6 +103,16 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int): Recycle
                 )
                 SubscriptionBuyGemsPromoViewHolder(itemView)
             }
+            3 -> {
+                val itemView = GiftOneGetOnePromoMenuView(parent.context)
+                itemView.layoutParams = ViewGroup.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        148.dpToPx(parent.context)
+                )
+                SubscriptionBuyGemsPromoViewHolder(itemView)
+            }
+            1 -> SectionHeaderViewHolder(parent.inflate(R.layout.drawer_main_section_header))
+            else -> DrawerItemViewHolder(parent.inflate(R.layout.drawer_main_item))
         }
     }
 
@@ -132,35 +137,31 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int): Recycle
                 titleTextView?.setTextColor(ContextCompat.getColor(itemView.context, R.color.gray_10))
             }
 
-            if (drawerItem.additionalInfo == null) {
-                pillView?.visibility = View.GONE
-                additionalInfoView?.visibility = View.GONE
-            } else {
-                if (drawerItem.additionalInfoAsPill) {
-                    additionalInfoView?.visibility = View.GONE
-                    val pillView = this.pillView
-                    if (pillView != null) {
-                        pillView.visibility = View.VISIBLE
-                        pillView.text = drawerItem.additionalInfo
+            if (drawerItem.pillText != null) {
+                pillView?.let { pillView ->
+                    pillView.visibility = View.VISIBLE
+                    pillView.text = drawerItem.pillText
 
-                        val pL = pillView.paddingLeft
-                        val pT = pillView.paddingTop
-                        val pR = pillView.paddingRight
-                        val pB = pillView.paddingBottom
+                    val pL = pillView.paddingLeft
+                    val pT = pillView.paddingTop
+                    val pR = pillView.paddingRight
+                    val pB = pillView.paddingBottom
 
-                        pillView.background = ContextCompat.getDrawable(itemView.context, R.drawable.pill_bg_purple_200)
-                        pillView.setTextColor(ContextCompat.getColor(itemView.context, R.color.white))
-                        pillView.setPadding(pL, pT, pR, pB)
-                    }
-                } else {
-                    pillView?.visibility = View.GONE
-                    val additionalInfoView = this.additionalInfoView
-                    if (additionalInfoView != null) {
-                        additionalInfoView.text = drawerItem.additionalInfo
-                        additionalInfoView.visibility = View.VISIBLE
-                        additionalInfoView.setTextColor(drawerItem.additionalInfoTextColor ?: tintColor)
-                    }
+                    pillView.background = drawerItem.pillBackground ?: ContextCompat.getDrawable(itemView.context, R.drawable.pill_bg_purple_200)
+                    pillView.setTextColor(ContextCompat.getColor(itemView.context, R.color.white))
+                    pillView.setPadding(pL, pT, pR, pB)
                 }
+            } else {
+                pillView?.visibility = View.GONE
+            }
+            if (drawerItem.subtitle != null){
+                additionalInfoView?.let { additionalInfoView ->
+                    additionalInfoView.text = drawerItem.subtitle
+                    additionalInfoView.visibility = View.VISIBLE
+                    additionalInfoView.setTextColor(drawerItem.subtitleTextColor ?: tintColor)
+                }
+            } else {
+                additionalInfoView?.visibility = View.GONE
             }
             bubbleView?.visibility = if (drawerItem.showBubble) View.VISIBLE else View.GONE
         }
