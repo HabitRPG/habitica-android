@@ -111,7 +111,7 @@ class TaskFilterHelper {
                     Task.FILTER_GRAY -> query = query.equalTo("completed", true).or().equalTo("isDue", false)
                     Task.FILTER_WEAK -> query = query.lessThan("value", 1.0)
                     Task.FILTER_STRONG -> query = query.greaterThanOrEqualTo("value", 1.0)
-                    Task.FILTER_DATED -> query = query.isNotNull("dueDate").equalTo("completed", false)
+                    Task.FILTER_DATED -> query = query.isNotNull("dueDate").equalTo("completed", false).sortBy("dueDate")
                     Task.FILTER_COMPLETED -> query = query.equalTo("completed", true)
                 }
             }
