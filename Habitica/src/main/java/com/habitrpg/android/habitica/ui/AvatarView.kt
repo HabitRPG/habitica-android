@@ -41,6 +41,7 @@ class AvatarView : View {
     private var avatarBitmap: Bitmap? = null
     private var avatarCanvas: Canvas? = null
     private var currentLayers: Map<LayerType, String>? = null
+    var enableNewSnowman = false
 
     private val layerMap: Map<LayerType, String>
         get() {
@@ -214,7 +215,11 @@ class AvatarView : View {
 
         avatar.stats?.buffs?.let { buffs ->
             if (buffs.snowball == true) {
-                layerMap[LayerType.VISUAL_BUFF] = "snowman"
+                if (Calendar.getInstance().get(Calendar.YEAR) > 2019) {
+                    layerMap[LayerType.VISUAL_BUFF] = "avatar_snowball_" + avatar.stats?.habitClass
+                } else {
+                    layerMap[LayerType.VISUAL_BUFF] = "snowman"
+                }
                 hasVisualBuffs = true
             }
 
