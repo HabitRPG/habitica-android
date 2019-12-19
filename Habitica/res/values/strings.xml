@@ -917,4 +917,12 @@
     <string name="promo_g1g1_description">Gift a subscription now and you’ll get the same sub for yourself free!</string>
     <string name="promo_g1g1_prompt">Gift One, Get One Event</string>
     <string name="sale">Sale</string>
+    <string name="g1g1_info_1">In honor of the season of giving we\'re bringing back a very special promotion. Now when you gift somebody a subscription, you get the same sub for yourself for free!</string>
+    <string name="gift_a_subscription">Gift a Subscription</string>
+    <string name="g1g1_info_2">How it works</string>
+    <string name="g1g1_info_2_text">Tap ‘Gift a Subscription’ and type in the username of the account you’d like to gift to. From there, pick the sub length you’d like to gift and check out. Your account will automatically be rewarded with the same level of subscription you just gifted.</string>
+    <string name="g1g1_info_3">Limitations</string>
+    <string name="g1g1_info_3_text">This promotion only applies when you gift to another Habitican. If you or your gift recipient already have a subscription, the gifted subscription will add months of credit that will only be used after the current subscription is cancelled expires.</string>
+    <string name="limited_event">Limited event</string>
+    <string name="g1g1_duration">Dec 17 to Jan 6</string>
 </resources>

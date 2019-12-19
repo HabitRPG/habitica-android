@@ -1,13 +1,13 @@
 package com.habitrpg.android.habitica.ui.viewHolders
 
 import android.content.Context
+import android.content.Intent
 import android.util.AttributeSet
 import android.widget.RelativeLayout
 import androidx.core.content.ContextCompat
-import androidx.core.os.bundleOf
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.inflate
-import com.habitrpg.android.habitica.helpers.MainNavigationController
+import com.habitrpg.android.habitica.ui.activities.GiftOneGetOneInfoActivity
 import kotlinx.android.synthetic.main.promo_subscription_buy_gems.view.*
 
 class GiftOneGetOnePromoMenuView @JvmOverloads constructor(
@@ -20,6 +20,11 @@ class GiftOneGetOnePromoMenuView @JvmOverloads constructor(
         clipToPadding = false
         clipChildren = false
         clipToOutline = false
-        button.setOnClickListener { MainNavigationController.navigate(R.id.gemPurchaseActivity, bundleOf(Pair("openSubscription", true))) }
+        button.setOnClickListener {
+            val intent = Intent(context, GiftOneGetOneInfoActivity::class.java)
+            context.startActivity(intent)
+        }
     }
+
+
 }

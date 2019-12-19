@@ -49,8 +49,8 @@ class NotificationOpenHandler {
             MainNavigationController.navigate(R.id.questDetailFragment, bundleOf("partyID" to partyId, "questKey" to questKey))
         }
 
-        private fun openGuildDetailScreen(groupID: String) {
-            if (groupID.isEmpty()) {
+        private fun openGuildDetailScreen(groupID: String?) {
+            if (groupID?.isNotEmpty() != true) {
                 return
             }
             MainNavigationController.navigate(R.id.guildFragment, bundleOf("groupID" to groupID))
@@ -61,7 +61,7 @@ class NotificationOpenHandler {
             MainNavigationController.navigate(R.id.prefsActivity)
         }
 
-        private fun handleChatMessage(type: String?, groupID: String) {
+        private fun handleChatMessage(type: String?, groupID: String?) {
             when (type) {
                 "party" -> MainNavigationController.navigate(R.id.partyFragment)
                 "tavern" -> MainNavigationController.navigate(R.id.tavernFragment)

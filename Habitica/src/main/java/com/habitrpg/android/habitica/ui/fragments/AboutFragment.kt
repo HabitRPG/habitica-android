@@ -2,7 +2,6 @@ package com.habitrpg.android.habitica.ui.fragments
 
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.Gravity
@@ -12,6 +11,7 @@ import android.view.ViewGroup
 import android.view.animation.AccelerateInterpolator
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.app.ShareCompat
 import androidx.core.net.toUri
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.habitrpg.android.habitica.R
@@ -159,11 +159,13 @@ class AboutFragment : BaseMainFragment() {
 
         bodyOfEmail += " \nDetails:\n"
 
-        val emailIntent = Intent(Intent.ACTION_SENDTO, Uri.fromParts(
-                "mailto", appConfigManager.supportEmail(), null))
-        emailIntent.putExtra(Intent.EXTRA_SUBJECT, subject)
-        emailIntent.putExtra(Intent.EXTRA_TEXT, bodyOfEmail)
-        startActivity(Intent.createChooser(emailIntent, "Send email..."))
+        ShareCompat.IntentBuilder.from(activity)
+                .setType("message/rfc822")
+                .addEmailTo(appConfigManager.supportEmail())
+                .setSubject(subject)
+                .setText(bodyOfEmail)
+                .setChooserTitle("Send email...")
+                .startChooser()
     }
 
     private fun doTheThing() {

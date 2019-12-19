@@ -130,6 +130,8 @@ class TaskListDeserializer : JsonDeserializer<TaskList> {
                 }
             } catch (ignored: ClassCastException) {
 
+            } catch (ignored: java.lang.UnsupportedOperationException) {
+
             }
         }
 
