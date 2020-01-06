@@ -23,6 +23,7 @@ class NotificationOpenHandler {
                 PushNotificationManager.GIFT_ONE_GET_ONE_PUSH_NOTIFICATION_KEY -> openSubscriptionScreen()
                 PushNotificationManager.CHAT_MENTION_NOTIFICATION_KEY -> handleChatMessage(intent.getStringExtra("type"), intent.getStringExtra("groupID"))
                 PushNotificationManager.GROUP_ACTIVITY_NOTIFICATION_KEY -> handleChatMessage(intent.getStringExtra("type"), intent.getStringExtra("groupID"))
+                PushNotificationManager.G1G1_PROMO_KEY -> openGiftOneGetOneInfoScreen()
             }
         }
 
@@ -40,6 +41,10 @@ class NotificationOpenHandler {
 
         private fun openPartyScreen() {
             MainNavigationController.navigate(R.id.partyFragment)
+        }
+
+        private fun openGiftOneGetOneInfoScreen() {
+            MainNavigationController.navigate(R.id.giftOneGetOneInfoActivity)
         }
 
         private fun openQuestDetailSCreen(partyId: String?, questKey: String?) {

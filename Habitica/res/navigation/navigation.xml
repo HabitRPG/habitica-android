@@ -151,6 +151,11 @@
             android:defaultValue="true" />
     </activity>
     <activity
+        android:id="@+id/giftOneGetOneInfoActivity"
+        android:name="com.habitrpg.android.habitica.ui.activities.GiftOneGetOneInfoActivity"
+        android:label="@string/gift_one_get_one" >
+    </activity>
+    <activity
         android:id="@+id/gemPurchaseActivity"
         android:name="com.habitrpg.android.habitica.ui.activities.GemPurchaseActivity"
         android:label="@string/gem_purchase_toolbartitle">

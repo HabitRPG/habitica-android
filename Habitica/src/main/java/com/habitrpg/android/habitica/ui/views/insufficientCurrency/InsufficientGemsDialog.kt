@@ -43,8 +43,6 @@ class InsufficientGemsDialog(context: Context) : InsufficientCurrencyDialog(cont
         super.onCreate(savedInstanceState)
         imageView.setImageResource(R.drawable.gems_84)
         textView.setText(R.string.insufficientGems)
-
-
         addCloseButton()
     }
 

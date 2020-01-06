@@ -37,7 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="32dp"
             android:minWidth="110dp"
-            android:text="@string/send_gift"
+            android:text="@string/learn_more"
             style="@style/HabiticaButton.White"
             android:textSize="14sp"
             android:textColor="@color/teal_50"

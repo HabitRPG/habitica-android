@@ -115,6 +115,7 @@ class PushNotificationManager(var apiClient: ApiClient, private val sharedPrefer
         const val GIFT_ONE_GET_ONE_PUSH_NOTIFICATION_KEY = "gift1get1"
         const val CHAT_MENTION_NOTIFICATION_KEY = "chatMention"
         const val GROUP_ACTIVITY_NOTIFICATION_KEY = "groupActivity"
+        const val G1G1_PROMO_KEY = "g1g1Promo"
         private const val DEVICE_TOKEN_PREFERENCE_KEY = "device-token-preference"
     }
 }

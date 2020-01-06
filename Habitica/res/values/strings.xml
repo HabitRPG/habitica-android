@@ -397,7 +397,7 @@
     <string name="subscribe_listitem3_description">Subscribe now to get an exclusive set now and receive new items every month!</string>
     <string name="subscribe_listitem3_description_new">Subscribe now to get this %s and receive new items every month! </string>
     <string name="subscribe_listitem4_description">Receive the Royal Purple Jackalope pet when you become a new subscriber.</string>
-    <string name="subscribe_listitem5_description">Discover even more items in Habitica with a 2x bonus daily drop rate.</string>
+    <string name="subscribe_listitem5_description">Discover even more items in Habitica with a 2x bonus daily drop cap.</string>
     <string name="subscribe1month_gemcap">25 Gem cap</string>
     <string name="subscribe3month_gemcap">30 Gem cap</string>
     <string name="subscribe6month_gemcap">35 Gem cap</string>
@@ -922,7 +922,8 @@
     <string name="g1g1_info_2">How it works</string>
     <string name="g1g1_info_2_text">Tap ‘Gift a Subscription’ and type in the username of the account you’d like to gift to. From there, pick the sub length you’d like to gift and check out. Your account will automatically be rewarded with the same level of subscription you just gifted.</string>
     <string name="g1g1_info_3">Limitations</string>
-    <string name="g1g1_info_3_text">This promotion only applies when you gift to another Habitican. If you or your gift recipient already have a subscription, the gifted subscription will add months of credit that will only be used after the current subscription is cancelled expires.</string>
+    <string name="g1g1_info_3_text">This promotion only applies when you gift to another Habitican. If you or your gift recipient already have a subscription, the gifted subscription will add months of credit that will only be used after the current subscription is cancelled or expires.</string>
     <string name="limited_event">Limited event</string>
     <string name="g1g1_duration">Dec 17 to Jan 6</string>
+    <string name="learn_more">Learn more</string>
 </resources>
