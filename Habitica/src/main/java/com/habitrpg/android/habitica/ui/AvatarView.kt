@@ -556,6 +556,9 @@ class AvatarView : View {
             tempMap["Pet-Gryphon-Gryphatrice"] = "gif"
             tempMap["Mount_Head_Gryphon-Gryphatrice"] = "gif"
             tempMap["Mount_Body_Gryphon-Gryphatrice"] = "gif"
+            tempMap["background_clocktower"] = "gif"
+            tempMap["background_airship"] = "gif"
+            tempMap["background_steamworks"] = "gif"
             FILEFORMAT_MAP = Collections.unmodifiableMap(tempMap)
 
 

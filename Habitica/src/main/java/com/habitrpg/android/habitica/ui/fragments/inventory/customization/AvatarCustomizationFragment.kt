@@ -122,14 +122,7 @@ class AvatarCustomizationFragment : BaseMainFragment() {
     }
 
     private fun setGridSpanCount(width: Int) {
-        var itemWidth = 0F
-        context?.resources?.let {
-            itemWidth = if (this.type != null && this.type == "background") {
-                context?.resources?.getDimension(R.dimen.avatar_width)
-            } else {
-                context?.resources?.getDimension(R.dimen.customization_width)
-            } ?: 0F
-        }
+        val itemWidth = context?.resources?.getDimension(R.dimen.customization_width) ?: 0F
         var spanCount = (width / itemWidth).toInt()
         if (spanCount == 0) {
             spanCount = 1

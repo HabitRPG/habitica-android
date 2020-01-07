@@ -128,6 +128,11 @@ class CustomizationDeserializer : JsonDeserializer<List<Customization>> {
             customization.price = 0
             customization.setPrice = 0
             customization.isBuyable = false
+        } else if ("timeTravelBackgrounds" == setName) {
+            customization.customizationSetName = "Time Travel Backgrounds"
+            customization.price = 0
+            customization.setPrice = 0
+            customization.isBuyable = false
         } else {
             customization.price = 7
             customization.setPrice = 15

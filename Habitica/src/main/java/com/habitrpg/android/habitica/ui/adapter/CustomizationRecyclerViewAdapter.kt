@@ -60,11 +60,7 @@ class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerVi
                     .inflate(R.layout.customization_section_header, parent, false)
             SectionViewHolder(view)
         } else {
-            val viewID: Int = if (viewType == 1) {
-                R.layout.customization_grid_item
-            } else {
-                R.layout.customization_grid_background_item
-            }
+            val viewID: Int = R.layout.customization_grid_item
 
             val view = LayoutInflater.from(parent.context).inflate(viewID, parent, false)
             CustomizationViewHolder(view)
@@ -90,17 +86,14 @@ class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerVi
         return if (this.customizationList[position].javaClass == CustomizationSet::class.java) {
             0
         } else {
-            val customization = customizationList[position] as Customization
-            if (customization.type == "background") {
-                2
-            } else 1
+            1
         }
     }
 
     fun setCustomizations(newCustomizationList: List<Customization>) {
         this.customizationList = ArrayList()
         var lastSet = CustomizationSet()
-        for (customization in newCustomizationList) {
+        for (customization in newCustomizationList.reversed()) {
             if (customization.customizationSet != null && customization.customizationSet != lastSet.identifier) {
                 val set = CustomizationSet()
                 set.identifier = customization.customizationSet
@@ -172,7 +165,7 @@ class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerVi
                 val priceLabel = dialogContent.findViewById<TextView>(R.id.priceLabel)
                 priceLabel.text = customization?.price.toString()
 
-                (dialogContent.findViewById<View>(R.id.gem_icon) as ImageView).setImageBitmap(HabiticaIconsHelper.imageOfGem())
+                (dialogContent.findViewById<View>(R.id.gem_icon) as? ImageView)?.setImageBitmap(HabiticaIconsHelper.imageOfGem())
 
                 val dialog = HabiticaAlertDialog(itemView.context)
                 dialog.addButton(R.string.purchase_button, true) { _, _ ->
@@ -216,7 +209,7 @@ class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerVi
         fun bind(set: CustomizationSet) {
             this.set = set
             this.label.text = set.text
-            if (set.hasPurchasable) {
+            if (set.hasPurchasable && !set.identifier.contains("timeTravel")) {
                 this.purchaseSetButton.visibility = View.VISIBLE
                 this.purchaseSetButton.text = context.getString(R.string.purchase_set_button, set.price)
             } else {

@@ -20,7 +20,8 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:id="@+id/priceLabel"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:layout_marginEnd="2dp"/>
 
         <ImageView
             android:layout_width="wrap_content"
