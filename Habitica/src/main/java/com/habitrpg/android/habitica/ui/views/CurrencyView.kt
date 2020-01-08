@@ -86,11 +86,9 @@ class CurrencyView : androidx.appcompat.widget.AppCompatTextView {
 
     var value = 0.0
     set(value) {
-        if (field != value) {
-            field = value
-            text = NumberAbbreviator.abbreviate(context, value)
-            updateVisibility()
-        }
+        field = value
+        text = NumberAbbreviator.abbreviate(context, value)
+        updateVisibility()
     }
 
     var isLocked = false

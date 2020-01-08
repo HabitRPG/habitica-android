@@ -22,7 +22,7 @@ class CurrencyViews : LinearLayout {
         get() = goldTextView.value
         set(value) { goldTextView.value = value }
     var gems: Double
-        get() = goldTextView.value
+        get() = gemTextView.value
         set(value) { gemTextView.value = value }
     var hourglasses: Double
         get() = hourglassTextView.value

@@ -152,7 +152,7 @@ android {
         resConfigs "en", "bg", "de", "en-rGB", "es", "fr", "hr-rHR", "in", "it", "iw", "ja", "ko", "lt", "nl", "pl", "pt-rBR", "pt-rPT", "ru", "tr", "zh", "zh-rTW"
 
         versionCode 2336
-        versionName "2.4"
+        versionName "2.4.1"
     }
 
     viewBinding {
