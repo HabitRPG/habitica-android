@@ -5,6 +5,7 @@ import android.util.AttributeSet
 import android.view.Gravity
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.facebook.drawee.backends.pipeline.Fresco
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.models.inventory.QuestContent
@@ -36,7 +37,15 @@ abstract class PurchaseDialogContent : LinearLayout {
 
 
     open fun setItem(item: ShopItem) {
-        DataBindingUtils.loadImage(imageView, item.imageName)
+        if (item.path?.contains("timeTravelBackgrounds") == true) {
+            val controller = Fresco.newDraweeControllerBuilder()
+                    .setUri("https://habitica-assets.s3.amazonaws.com/mobileApp/images/${item.imageName?.replace("icon_", "")}.gif")
+                    .setAutoPlayAnimations(true)
+                    .build()
+            imageView.controller = controller
+        } else {
+            DataBindingUtils.loadImage(imageView, item.imageName)
+        }
         titleTextView.text = item.text
     }
 

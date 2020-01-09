@@ -139,8 +139,11 @@ class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerVi
         fun bind(customization: Customization) {
             this.customization = customization
 
-
-            DataBindingUtils.loadImage(this.imageView, customization.getImageName(userSize, hairColor))
+            if (customization.customizationSet?.contains("timeTravel") == true) {
+                DataBindingUtils.loadImage(this.imageView, customization.getImageName(userSize, hairColor), imageFormat = "gif")
+            } else {
+                DataBindingUtils.loadImage(this.imageView, customization.getImageName(userSize, hairColor))
+            }
             cardView.setCardBackgroundColor(ContextCompat.getColor(itemView.context, android.R.color.white))
             if (customization.isUsable) {
                 imageView.alpha = 1.0f

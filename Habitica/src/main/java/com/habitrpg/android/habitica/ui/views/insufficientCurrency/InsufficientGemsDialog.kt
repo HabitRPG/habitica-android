@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.os.bundleOf
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.events.ConsumablePurchasedEvent
@@ -24,7 +25,7 @@ import javax.inject.Inject
  * Created by phillip on 27.09.17.
  */
 
-class InsufficientGemsDialog(context: Context) : InsufficientCurrencyDialog(context) {
+class InsufficientGemsDialog(context: Context, var gemPrice: Int) : InsufficientCurrencyDialog(context) {
 
     private var purchaseButton: Button? = null
     @Inject
@@ -37,6 +38,8 @@ class InsufficientGemsDialog(context: Context) : InsufficientCurrencyDialog(cont
     override fun getLayoutID(): Int {
         return R.layout.dialog_insufficient_gems
     }
+
+    var sku: String? = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         HabiticaBaseApplication.userComponent?.inject(this)
@@ -54,6 +57,15 @@ class InsufficientGemsDialog(context: Context) : InsufficientCurrencyDialog(cont
                 purchaseHandler = PurchaseHandler(it, crashlyticsProxy)
                 purchaseHandler?.startListening()
                 purchaseHandler?.whenCheckoutReady = {
+                    sku = if (configManager.insufficientGemPurchaseAdjust()) {
+                        if (gemPrice > 4) {
+                            PurchaseTypes.Purchase21Gems
+                        } else {
+                            PurchaseTypes.Purchase4Gems
+                        }
+                    } else {
+                        PurchaseTypes.Purchase4Gems
+                    }
                     purchaseHandler?.getInAppPurchaseSKU(PurchaseTypes.Purchase4Gems) { sku ->
                         val purchaseTextView = contentView.findViewById<TextView>(R.id.purchase_textview)
                         purchaseTextView.text = sku.displayTitle
@@ -62,6 +74,7 @@ class InsufficientGemsDialog(context: Context) : InsufficientCurrencyDialog(cont
                 }
 
                 purchaseButton?.setOnClickListener {
+                    FirebaseAnalytics.getInstance(context).logEvent("purchased_gems_from_insufficient", bundleOf(Pair("gemPrice", gemPrice), Pair("sku", "")))
                     purchaseHandler?.purchaseGems(PurchaseTypes.Purchase4Gems)
                 }
                 addButton(R.string.see_other_options, false) { _, _ -> MainNavigationController.navigate(R.id.gemPurchaseActivity, bundleOf(Pair("openSubscription", false))) }

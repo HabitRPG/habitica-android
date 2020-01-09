@@ -147,7 +147,6 @@ public class Customization extends RealmObject {
     }
 
     public String getImageName(String userSize, String hairColor) {
-
         switch (this.type) {
             case "skin":
                 return "skin_" + this.identifier;

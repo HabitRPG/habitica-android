@@ -67,6 +67,10 @@ class AppConfigManager {
         return remoteConfig.getBoolean("insufficientGemPurchase")
     }
 
+    fun insufficientGemPurchaseAdjust(): Boolean {
+        return remoteConfig.getBoolean("insufficientGemPurchaseAdjust")
+    }
+
     fun showSubscriptionBanner(): Boolean {
         return remoteConfig.getBoolean("showSubscriptionBanner")
     }

@@ -268,7 +268,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
                 when {
                     "gems" == shopItem.purchaseType -> InsufficientSubscriberGemsDialog(context)
                     "gold" == shopItem.currency -> InsufficientGoldDialog(context)
-                    "gems" == shopItem.currency -> InsufficientGemsDialog(context)
+                    "gems" == shopItem.currency -> InsufficientGemsDialog(context, shopItem.value)
                     "hourglasses" == shopItem.currency -> InsufficientHourglassesDialog(context)
                     else -> null
                 }?.show()

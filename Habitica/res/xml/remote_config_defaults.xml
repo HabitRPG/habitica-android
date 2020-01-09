@@ -68,5 +68,9 @@
         <key>useNewMysteryBenefits</key>
         <value>false</value>
     </entry>
+    <entry>
+        <key>insufficientGemPurchaseAdjust</key>
+        <value>false</value>
+    </entry>
 </defaultsMap>
     <!-- END xml_defaults -->
