@@ -52,14 +52,13 @@ class SubscriptionFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        fetchUser(null)
         binding = FragmentSubscriptionBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     @Subscribe
     fun fetchUser(event: UserSubscribedEvent?) {
-        compositeSubscription.add(userRepository.retrieveUser(withTasks = false, forced = true).subscribe(Consumer { this.setUser(it) }, RxErrorHandler.handleEmptyError()))
+        refresh()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -79,7 +78,9 @@ class SubscriptionFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
 
         binding.subscribeButton.setOnClickListener { subscribeUser() }
 
-        binding.giftSubscriptionContainer?.isVisible = appConfigManager.enableGiftOneGetOne()
+        binding.giftSubscriptionContainer.isVisible = appConfigManager.enableGiftOneGetOne()
+
+        binding.refreshLayout.setOnRefreshListener { refresh() }
 
         if (appConfigManager.useNewMysteryBenefits()) {
             compositeSubscription.add(inventoryRepository.getLatestMysteryItem().subscribe(Consumer {
@@ -89,12 +90,24 @@ class SubscriptionFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        refresh();
+    }
+
+    private fun refresh() {
+        compositeSubscription.add(userRepository.retrieveUser(withTasks = false, forced = true).subscribe(Consumer {
+            this.setUser(it)
+            binding.refreshLayout.isRefreshing = false
+        }, RxErrorHandler.handleEmptyError()))
+    }
+
     override fun injectFragment(component: UserComponent) {
         component.inject(this)
     }
 
     override fun setupCheckout() {
-        purchaseHandler?.getAllSubscriptionProducts {subscriptions ->
+        purchaseHandler?.getAllSubscriptionProducts { subscriptions ->
             this.skus = subscriptions.skus
             for (sku in subscriptions.skus) {
                 updateButtonLabel(sku, sku.price, subscriptions)
