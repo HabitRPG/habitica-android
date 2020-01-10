@@ -80,6 +80,7 @@
         <activity
             android:name=".ui.activities.LoginActivity"
             android:label="@string/LoginActivityName"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize">
         </activity>
         <activity
