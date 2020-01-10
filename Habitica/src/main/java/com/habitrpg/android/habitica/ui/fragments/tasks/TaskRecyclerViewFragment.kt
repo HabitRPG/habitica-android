@@ -18,6 +18,7 @@ import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
+import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBinding
 import com.habitrpg.android.habitica.extensions.setScaledPadding
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.AppConfigManager
@@ -39,13 +40,13 @@ import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
-import kotlinx.android.synthetic.main.fragment_refresh_recyclerview.*
 import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Named
 
 open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener {
+    lateinit var binding: FragmentRefreshRecyclerviewBinding
     var recyclerAdapter: TaskRecyclerViewAdapter? = null
     var itemAnimator = SafeDefaultItemAnimator()
     @field:[Inject Named(AppModule.NAMED_USER_ID)]
@@ -93,7 +94,7 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
         }
 
         recyclerAdapter = adapter as? TaskRecyclerViewAdapter
-        recyclerView.adapter = adapter
+        binding.recyclerView.adapter = adapter
 
         if (this.classType != null) {
             compositeSubscription.add(taskRepository.getTasks(this.classType ?: "", userID).firstElement().subscribe(Consumer {
@@ -130,7 +131,7 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
 
     private fun allowReordering() {
         val itemTouchHelper = itemTouchCallback?.let { ItemTouchHelper(it) }
-        itemTouchHelper?.attachToRecyclerView(recyclerView)
+        itemTouchHelper?.attachToRecyclerView(binding.recyclerView)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -153,7 +154,7 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
                 if (taskViewHolder != null) {
                     taskViewHolder.movingFromPosition = viewHolder.adapterPosition
                 }
-                refreshLayout.isEnabled = false
+                binding.refreshLayout.isEnabled = false
             }
 
             override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
@@ -175,7 +176,7 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
 
             override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
                 super.clearView(recyclerView, viewHolder)
-                refreshLayout?.isEnabled = true
+                binding.refreshLayout.isEnabled = true
 
                 if (viewHolder.adapterPosition == NO_POSITION) return
                 val taskViewHolder = viewHolder as? BaseTaskViewHolder
@@ -204,7 +205,8 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
             this.classType = savedInstanceState.getString(CLASS_TYPE_KEY, "")
         }
 
-        return inflater.inflate(R.layout.fragment_refresh_recyclerview, container, false)
+        binding = FragmentRefreshRecyclerviewBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     protected open fun getLayoutManager(context: Context?): androidx.recyclerview.widget.LinearLayoutManager {
@@ -228,15 +230,15 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        recyclerView.setScaledPadding(context, 0, 0, 0, 48)
-        recyclerView.adapter = recyclerAdapter as? RecyclerView.Adapter<*>
+        binding.recyclerView.setScaledPadding(context, 0, 0, 0, 48)
+        binding.recyclerView.adapter = recyclerAdapter as? RecyclerView.Adapter<*>
         recyclerAdapter?.filter()
 
         layoutManager = getLayoutManager(context)
         layoutManager?.isItemPrefetchEnabled = false
-        recyclerView.layoutManager = layoutManager
+        binding.recyclerView.layoutManager = layoutManager
 
-        if (recyclerView.adapter == null) {
+        if (binding.recyclerView.adapter == null) {
             this.setInnerAdapter()
         }
 
@@ -259,37 +261,38 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
                     }?.subscribeWithErrorHandler(Consumer {})?.let { compositeSubscription.add(it) }
         }
 
-        val bottomPadding = (recyclerView.paddingBottom + TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 60f, resources.displayMetrics)).toInt()
-        recyclerView.setPadding(0, 0, 0, bottomPadding)
-        recyclerView.itemAnimator = itemAnimator
+        val bottomPadding = (binding.recyclerView.paddingBottom + TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 60f, resources.displayMetrics)).toInt()
+        binding.recyclerView.setPadding(0, 0, 0, bottomPadding)
+        binding.recyclerView.itemAnimator = itemAnimator
 
-        refreshLayout.setOnRefreshListener(this)
+        binding.refreshLayout.setOnRefreshListener(this)
 
-        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    refreshLayout?.isEnabled = (activity as? MainActivity)?.isAppBarExpanded ?: false
+                    binding.refreshLayout.isEnabled = (activity as? MainActivity)?.isAppBarExpanded ?: false
                 }
             }
         })
 
         if (this.classType != null) {
+            binding.recyclerView.setEmptyView(binding.emptyView)
             when (this.classType) {
                 Task.TYPE_HABIT -> {
-                    this.emptyViewTitle.setText(R.string.empty_title_habits)
-                    this.emptyViewDescription.setText(R.string.empty_description_habits)
+                    binding.emptyViewTitle.setText(R.string.empty_title_habits)
+                    binding.emptyViewDescription.setText(R.string.empty_description_habits)
                 }
                 Task.TYPE_DAILY -> {
-                    this.emptyViewTitle.setText(R.string.empty_title_dailies)
-                    this.emptyViewDescription.setText(R.string.empty_description_dailies)
+                    binding.emptyViewTitle.setText(R.string.empty_title_dailies)
+                    binding.emptyViewDescription.setText(R.string.empty_description_dailies)
                 }
                 Task.TYPE_TODO -> {
-                    this.emptyViewTitle.setText(R.string.empty_title_todos)
-                    this.emptyViewDescription.setText(R.string.empty_description_todos)
+                    binding.emptyViewTitle.setText(R.string.empty_title_todos)
+                    binding.emptyViewDescription.setText(R.string.empty_description_todos)
                 }
                 Task.TYPE_REWARD -> {
-                    this.emptyViewTitle.setText(R.string.empty_title_rewards)
+                    binding.emptyViewTitle.setText(R.string.empty_title_rewards)
                 }
             }
         }
@@ -315,10 +318,10 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
         get() = this.classType + super.displayedClassName
 
     override fun onRefresh() {
-        refreshLayout.isRefreshing = true
+        binding.refreshLayout.isRefreshing = true
         compositeSubscription.add(userRepository.retrieveUser(true, true)
                 .doOnTerminate {
-                    refreshLayout?.isRefreshing = false
+                    binding.refreshLayout.isRefreshing = false
                 }.subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
     }
 
