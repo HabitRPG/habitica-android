@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="contributor.0">#4e4a57</color>
-    <color name="contributor.1">#c42871</color>
-    <color name="contributor.2">#b01515</color>
-    <color name="contributor.3">#d70e14</color>
-    <color name="contributor.4">#c24d00</color>
-    <color name="contributor.5">#9e650f</color>
-    <color name="contributor.6">#2b8363</color>
-    <color name="contributor.7">#167e87</color>
-    <color name="contributor.mod">#277eab</color>
-    <color name="contributor.staff">#6133b4</color>
+    <color name="contributor_0">#4e4a57</color>
+    <color name="contributor_1">#c42871</color>
+    <color name="contributor_2">#b01515</color>
+    <color name="contributor_3">#d70e14</color>
+    <color name="contributor_4">#c24d00</color>
+    <color name="contributor_5">#9e650f</color>
+    <color name="contributor_6">#2b8363</color>
+    <color name="contributor_7">#167e87</color>
+    <color name="contributor_mod">#277eab</color>
+    <color name="contributor_staff">#6133b4</color>
+    <color name="contributor_npc">#000000</color>
 </resources>

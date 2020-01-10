@@ -9,6 +9,7 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.core.widget.TextViewCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.models.members.PlayerTier
@@ -25,15 +26,25 @@ class UsernameLabel(context: Context?, attrs: AttributeSet?) : LinearLayout(cont
         textView.text = value
     }
 
+    var isNPC: Boolean = false
+    set(value) {
+        field = value
+        tier = tier
+    }
+
     var tier: Int = 0
     set(value) {
         field = value
-        textView.setTextColor(PlayerTier.getColorForTier(context, value))
+        if (isNPC) {
+            textView.setTextColor(ContextCompat.getColor(context, R.color.contributor_npc))
+        } else {
+            textView.setTextColor(PlayerTier.getColorForTier(context, value))
+        }
         if (value == 0) {
             tierIconView.visibility = View.GONE
         } else {
             tierIconView.visibility = View.VISIBLE
-            tierIconView.setImageBitmap(HabiticaIconsHelper.imageOfContributorBadge(value.toFloat(), false))
+            tierIconView.setImageBitmap(HabiticaIconsHelper.imageOfContributorBadge(value.toFloat(), isNPC))
         }
     }
 

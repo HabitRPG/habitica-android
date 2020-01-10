@@ -111,6 +111,13 @@ open class User : RealmObject(), Avatar, VersionedObject {
                 contributor.userId = this.id
             }
         }
+    var backer: Backer? = null
+        set(backer) {
+            field = backer
+            if (backer != null && this.id != null && !backer.isManaged) {
+                backer.id = this.id
+            }
+        }
     var invitations: Invitations? = null
         set(invitations) {
             field = invitations

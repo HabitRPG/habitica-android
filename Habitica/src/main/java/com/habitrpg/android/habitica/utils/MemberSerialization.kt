@@ -78,6 +78,9 @@ class MemberSerialization : JsonDeserializer<Member> {
         if (obj.has("contributor")) {
             member.contributor = context.deserialize<ContributorInfo>(obj.get("contributor"), ContributorInfo::class.java)
         }
+        if (obj.has("backer")) {
+            member.backer = context.deserialize<Backer>(obj.get("backer"), Backer::class.java)
+        }
         if (obj.has("auth")) {
             member.authentication = context.deserialize<Authentication>(obj.get("auth"), Authentication::class.java)
         }

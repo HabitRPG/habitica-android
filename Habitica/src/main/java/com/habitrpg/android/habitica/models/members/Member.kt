@@ -75,6 +75,13 @@ open class Member : RealmObject(), Avatar {
                 contributor.userId = this.id
             }
         }
+    var backer: Backer? = null
+        set(backer) {
+            field = backer
+            if (backer != null && this.id != null && !backer.isManaged) {
+                backer.id = this.id
+            }
+        }
     var authentication: Authentication? = null
         set(authentication) {
             field = authentication

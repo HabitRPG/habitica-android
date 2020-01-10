@@ -100,6 +100,9 @@ class UserDeserializer : JsonDeserializer<User> {
         if (obj.has("contributor")) {
             user.contributor = context.deserialize(obj.get("contributor"), ContributorInfo::class.java)
         }
+        if (obj.has("backer")) {
+            user.backer = context.deserialize<Backer>(obj.get("backer"), Backer::class.java)
+        }
         if (obj.has("invitations")) {
             user.invitations = context.deserialize(obj.get("invitations"), Invitations::class.java)
         }

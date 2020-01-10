@@ -98,6 +98,7 @@ class ChatRecyclerViewHolder(itemView: View, private var userId: String, private
 
         val name = user?.profile?.name
         if (wasSent) {
+            userLabel.isNPC = user?.backer?.npc != null
             userLabel.tier = user?.contributor?.level ?: 0
             userLabel.username = name
             if (user?.username != null) {
@@ -107,6 +108,7 @@ class ChatRecyclerViewHolder(itemView: View, private var userId: String, private
                 sublineTextView.text = msg.timestamp?.getAgoString(res)
             }
         } else {
+            userLabel.isNPC = msg.backer?.npc != null
             userLabel.tier = msg.contributor?.level ?: 0
             userLabel.username = msg.user
             if (msg.username != null) {

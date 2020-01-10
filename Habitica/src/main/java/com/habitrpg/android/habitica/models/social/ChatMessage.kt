@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.models.social
 
+import com.habitrpg.android.habitica.models.user.Backer
 import com.habitrpg.android.habitica.models.user.ContributorInfo
 import io.realm.RealmList
 import io.realm.RealmObject
@@ -15,6 +16,7 @@ open class ChatMessage : RealmObject() {
         likes?.forEach { it.messageId = value }
         userStyles?.id = id
         contributor?.userId = id
+        backer?.id = id
     }
 
     var text: String? = null
