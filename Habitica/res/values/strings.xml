@@ -926,4 +926,6 @@
     <string name="limited_event">Limited event</string>
     <string name="g1g1_duration">Dec 17 to Jan 6</string>
     <string name="learn_more">Learn more</string>
+    <string name="purchase_from_timetravel_shop">You can purchase this customization from the Time Travelers shop</string>
+    <string name="go_shopping">Go shopping</string>
 </resources>

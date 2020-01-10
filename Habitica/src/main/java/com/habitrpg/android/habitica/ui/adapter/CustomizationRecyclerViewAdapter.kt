@@ -159,32 +159,41 @@ class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerVi
 
         override fun onClick(v: View) {
             if (customization?.isUsable == false) {
+                if (customization?.customizationSet?.contains("timeTravel") == true) {
+                    val dialog = HabiticaAlertDialog(itemView.context)
+                    dialog.setMessage(R.string.purchase_from_timetravel_shop)
+                    dialog.addButton(R.string.go_shopping, true) { _, _ ->
+                        MainNavigationController.navigate(R.id.shopsFragment)
+                    }
+                    dialog.addButton(R.string.reward_dialog_dismiss, false)
+                    dialog.show()
+                } else {
+                    val dialogContent = LayoutInflater.from(itemView.context).inflate(R.layout.dialog_purchase_customization, null) as LinearLayout
 
-                val dialogContent = LayoutInflater.from(itemView.context).inflate(R.layout.dialog_purchase_customization, null) as LinearLayout
+                    val imageView = dialogContent.findViewById<SimpleDraweeView>(R.id.imageView)
+                    DataBindingUtils.loadImage(imageView, customization?.getImageName(userSize, hairColor))
 
-                val imageView = dialogContent.findViewById<SimpleDraweeView>(R.id.imageView)
-                DataBindingUtils.loadImage(imageView, customization?.getImageName(userSize, hairColor))
+                    val priceLabel = dialogContent.findViewById<TextView>(R.id.priceLabel)
+                    priceLabel.text = customization?.price.toString()
 
-                val priceLabel = dialogContent.findViewById<TextView>(R.id.priceLabel)
-                priceLabel.text = customization?.price.toString()
+                    (dialogContent.findViewById<View>(R.id.gem_icon) as? ImageView)?.setImageBitmap(HabiticaIconsHelper.imageOfGem())
 
-                (dialogContent.findViewById<View>(R.id.gem_icon) as? ImageView)?.setImageBitmap(HabiticaIconsHelper.imageOfGem())
-
-                val dialog = HabiticaAlertDialog(itemView.context)
-                dialog.addButton(R.string.purchase_button, true) { _, _ ->
-                            if (customization?.price ?: 0 > gemBalance) {
-                                MainNavigationController.navigate(R.id.gemPurchaseActivity, bundleOf(Pair("openSubscription", false)))
-                                return@addButton
-                            }
-
-                            customization?.let {
-                                unlockCustomizationEvents.onNext(it)
-                            }
+                    val dialog = HabiticaAlertDialog(itemView.context)
+                    dialog.addButton(R.string.purchase_button, true) { _, _ ->
+                        if (customization?.price ?: 0 > gemBalance) {
+                            MainNavigationController.navigate(R.id.gemPurchaseActivity, bundleOf(Pair("openSubscription", false)))
+                            return@addButton
                         }
-                dialog.setTitle(itemView.context.getString(R.string.purchase_customization))
-                dialog.setAdditionalContentView(dialogContent)
-                dialog.addButton(R.string.reward_dialog_dismiss, false)
-                dialog.show()
+
+                        customization?.let {
+                            unlockCustomizationEvents.onNext(it)
+                        }
+                    }
+                    dialog.setTitle(R.string.purchase_customization)
+                    dialog.setAdditionalContentView(dialogContent)
+                    dialog.addButton(R.string.reward_dialog_dismiss, false)
+                    dialog.show()
+                }
                 return
             }
 
