@@ -3,6 +3,5 @@
     android:layout_width="@dimen/pet_image_width" android:layout_height="@dimen/pet_image_height"
     android:layout_gravity="center">
     <com.facebook.drawee.view.SimpleDraweeView android:id="@+id/pet_imageview"
-        android:layout_width="@dimen/pet_image_width" android:layout_height="@dimen/pet_image_height"
-        android:layout_gravity="center" />
+        android:layout_width="90dp" android:layout_height="90dp" android:layout_gravity="center" android:scaleType="center" />
 </FrameLayout>

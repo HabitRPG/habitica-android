@@ -19,7 +19,6 @@ import android.view.*
 import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.content.edit
 import androidx.lifecycle.ViewModelProviders
@@ -432,7 +431,6 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                                     val mountImageSideLength = 99
                                     val sharedImage = Bitmap.createBitmap(mountImageSideLength, mountImageSideLength, Bitmap.Config.ARGB_8888)
                                     val canvas = Canvas(sharedImage)
-                                    canvas.drawColor(ContextCompat.getColor(this, R.color.brand_300))
                                     mountImageView?.drawable?.setBounds(0, 0, mountImageSideLength, mountImageSideLength)
                                     mountImageView?.drawable?.draw(canvas)
                                     event1.shareImage = sharedImage
@@ -708,7 +706,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
             val petWrapper = View.inflate(this, R.layout.pet_imageview, null) as? FrameLayout
             val petImageView = petWrapper?.findViewById(R.id.pet_imageview) as? SimpleDraweeView
 
-            DataBindingUtils.loadImage(petImageView, "Pet-" + egg.key + "-" + potion.key)
+            DataBindingUtils.loadImage(petImageView, "social_Pet-" + egg.key + "-" + potion.key)
             val potionName = potion.text
             val eggName = egg.text
             val dialog = HabiticaAlertDialog(this)
@@ -721,7 +719,6 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                 val petImageSideLength = 140
                 val sharedImage = Bitmap.createBitmap(petImageSideLength, petImageSideLength, Bitmap.Config.ARGB_8888)
                 val canvas = Canvas(sharedImage)
-                canvas.drawColor(ContextCompat.getColor(this, R.color.brand_300))
                 petImageView?.drawable?.setBounds(0, 0, petImageSideLength, petImageSideLength)
                 petImageView?.drawable?.draw(canvas)
                 event1.shareImage = sharedImage
