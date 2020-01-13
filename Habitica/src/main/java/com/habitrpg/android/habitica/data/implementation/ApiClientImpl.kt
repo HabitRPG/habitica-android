@@ -189,7 +189,7 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
             val res = getErrorResponse(error)
             val status = error.code()
 
-            if (status == 404 || error.response().raw().request().url().toString().endsWith("/user/push-devices")) {
+            if (status == 404 || error.response()?.raw()?.request()?.url()?.toString()?.endsWith("/user/push-devices") == true) {
                 //workaround for an error that sometimes displays that the user already has this push device
                 return
             }
@@ -213,7 +213,7 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
     }
 
     override fun getErrorResponse(throwable: HttpException): ErrorResponse {
-        val errorResponse = throwable.response().errorBody() ?: return ErrorResponse()
+        val errorResponse = throwable.response()?.errorBody() ?: return ErrorResponse()
         val errorConverter = gsonConverter
                 .responseBodyConverter(ErrorResponse::class.java, arrayOfNulls(0), retrofitAdapter)
         return try {

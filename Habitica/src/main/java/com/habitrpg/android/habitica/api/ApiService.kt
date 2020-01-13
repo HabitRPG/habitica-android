@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.api
 
 import com.habitrpg.android.habitica.models.*
+import com.habitrpg.android.habitica.models.Tag
 import com.habitrpg.android.habitica.models.auth.UserAuth
 import com.habitrpg.android.habitica.models.auth.UserAuthResponse
 import com.habitrpg.android.habitica.models.auth.UserAuthSocial
