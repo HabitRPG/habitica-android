@@ -146,7 +146,6 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
         }
 
         itemTouchCallback = object : ItemTouchHelper.Callback() {
-
             override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
                 super.onSelectedChanged(viewHolder, actionState)
                 if (viewHolder == null || viewHolder.adapterPosition == NO_POSITION) return
@@ -166,8 +165,12 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
 
             //defines the enabled move directions in each state (idle, swiping, dragging).
             override fun getMovementFlags(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int {
-                return makeFlag(ItemTouchHelper.ACTION_STATE_DRAG,
-                        ItemTouchHelper.DOWN or ItemTouchHelper.UP)
+                return if (recyclerAdapter?.getItemViewType(viewHolder.adapterPosition) ?: 0 == 2) {
+                    makeFlag(ItemTouchHelper.ACTION_STATE_IDLE, 0)
+                } else {
+                    makeFlag(ItemTouchHelper.ACTION_STATE_DRAG,
+                            ItemTouchHelper.DOWN or ItemTouchHelper.UP)
+                }
             }
 
             override fun isItemViewSwipeEnabled(): Boolean = false
@@ -242,9 +245,7 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
             this.setInnerAdapter()
         }
 
-        if (classType != Task.TYPE_REWARD) {
-            allowReordering()
-        }
+        allowReordering()
 
         if (this.classType != null) {
             recyclerAdapter?.errorButtonEvents?.subscribe(Consumer {
