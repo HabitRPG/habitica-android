@@ -487,6 +487,13 @@
     <string name="empty_title_todos">You don\'t have any To-Dos</string>
     <string name="empty_description_todos">To-Dos are tasks that only need to be completed once. Add checklists to your To-Dos to increase their value.</string>
     <string name="empty_title_rewards">You don\'t have any Rewards</string>
+    <string name="empty_title_habits_filtered">No Habits</string>
+    <string name="empty_description_habits_filtered">There aren\'t any Habits visible with your current filters.</string>
+    <string name="empty_title_dailies_filtered">No Dailies</string>
+    <string name="empty_description_dailies_filtered">There aren\'t any Dailies visible with your current filters.</string>
+    <string name="empty_title_todos_filtered">No To-Dos</string>
+    <string name="empty_description_todos_filtered">There aren\'t any To-Dos visible with your current filters.</string>
+    <string name="empty_title_rewards_filtered">No Rewards</string>
     <string name="reset_walkthrough">Reset Tutorials</string>
     <string name="read_community_guidelines">Review our <u>Community Guidelines</u> before posting</string>
     <string name="maintenance">Maintenance</string>

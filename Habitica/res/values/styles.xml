@@ -310,9 +310,7 @@
 
     <style name="EmptyView">
         <item name="android:padding">@dimen/section_top_padding</item>
-        <item name="android:layout_gravity">center</item>
         <item name="android:gravity">center</item>
-        <item name="android:background">@color/white</item>
         <item name="android:layout_marginLeft">20dp</item>
         <item name="android:layout_marginRight">20dp</item>
     </style>
