@@ -39,6 +39,13 @@ class ShopsFragment : BaseMainFragment() {
         setViewPagerAdapter()
         toolbarAccessoryContainer?.addView(currencyView)
 
+        arguments?.let {
+            val args = ShopsFragmentArgs.fromBundle(it)
+            if (args.selectedTab > 0) {
+                viewPager.currentItem = args.selectedTab
+            }
+        }
+
         compositeSubscription.add(userRepository.getUser().subscribe(Consumer { updateCurrencyView(it) }, RxErrorHandler.handleEmptyError()))
     }
 

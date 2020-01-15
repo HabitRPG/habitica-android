@@ -110,7 +110,12 @@
     <fragment
         android:id="@+id/shopsFragment"
         android:name="com.habitrpg.android.habitica.ui.fragments.inventory.shops.ShopsFragment"
-        android:label="@string/sidebar_shops" />
+        android:label="@string/sidebar_shops" >
+        <argument
+            android:name="selectedTab"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
     <fragment
         android:id="@+id/avatarOverviewFragment"
         android:name="com.habitrpg.android.habitica.ui.fragments.inventory.customization.AvatarOverviewFragment"

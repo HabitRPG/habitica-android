@@ -272,11 +272,11 @@
     </style>
 
     <style name="AlertDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
-        <item name="colorAccent">@color/brand_100</item>
+        <item name="colorAccent">@color/brand_400</item>
     </style>
 
     <style name="HabiticaAlertDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
-        <item name="colorAccent">@color/brand_100</item>
+        <item name="colorAccent">@color/brand_400</item>
         <item name="android:windowFrame">@null</item>
         <item name="android:windowIsFloating">true</item>
         <item name="android:windowContentOverlay">@null</item>

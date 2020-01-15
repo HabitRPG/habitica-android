@@ -206,7 +206,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
             val gemsLeft = if (shopItem.limitedNumberLeft != null) shopItem.limitedNumberLeft else 0
             if ((gemsLeft == 0 && shopItem.purchaseType == "gems") || shopItem.canAfford(user, false)) {
                 val observable: Flowable<Any>
-                if (shopIdentifier != null && shopIdentifier == Shop.TIME_TRAVELERS_SHOP || "mystery_set" == shopItem.purchaseType) {
+                if (shopIdentifier != null && shopIdentifier == Shop.TIME_TRAVELERS_SHOP || "mystery_set" == shopItem.purchaseType || shopItem.currency == "hourglasses") {
                     observable = if (shopItem.purchaseType == "gear") {
                         inventoryRepository.purchaseMysterySet(shopItem.key)
                     } else {
@@ -253,7 +253,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
                         .flatMap { userRepository.retrieveUser(withTasks = false, forced = true) }
                         .flatMap { inventoryRepository.retrieveInAppRewards() }
                         .subscribe({
-                            if (item.isTypeGear) {
+                            if (item.isTypeGear || item.currency == "hourglasses") {
                                 EventBus.getDefault().post(GearPurchasedEvent(item))
                             }
                         }) { throwable ->
@@ -280,9 +280,9 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
 
     private fun setBuyButtonEnabled(enabled: Boolean) {
         if (enabled) {
-            buyButton.alpha = 0.5f
-        } else {
             buyButton.alpha = 1.0f
+        } else {
+            buyButton.alpha = 0.5f
         }
     }
 }
