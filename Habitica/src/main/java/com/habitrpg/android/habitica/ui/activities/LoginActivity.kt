@@ -31,6 +31,7 @@ import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.common.GooglePlayServicesUtil
 import com.google.android.gms.common.Scopes
+import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.api.HostConfig
@@ -40,10 +41,7 @@ import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.addCancelButton
 import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.extensions.addOkButton
-import com.habitrpg.android.habitica.helpers.AmplitudeManager
-import com.habitrpg.android.habitica.helpers.AppConfigManager
-import com.habitrpg.android.habitica.helpers.KeyHelper
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.*
 import com.habitrpg.android.habitica.models.auth.UserAuthResponse
 import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
 import com.habitrpg.android.habitica.ui.helpers.bindView
@@ -51,6 +49,7 @@ import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.login.LockableScrollView
 import com.habitrpg.android.habitica.ui.views.login.LoginBackgroundView
+import com.willowtreeapps.signinwithapplebutton.SignInWithAppleConfiguration
 import io.reactivex.Flowable
 import io.reactivex.exceptions.Exceptions
 import io.reactivex.functions.Consumer
@@ -96,6 +95,7 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
     private val forgotPasswordButton: Button by bindView(R.id.forgot_password)
     private val facebookLoginButton: Button by bindView(R.id.fb_login_button)
     private val googleLoginButton: Button by bindView(R.id.google_login_button)
+    private val appleLoginButton: Button by bindView(R.id.apple_login_button)
 
     private var callbackManager = CallbackManager.Factory.create()
     private var googleEmail: String? = null
@@ -177,6 +177,25 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
         forgotPasswordButton.setOnClickListener { onForgotPasswordClicked() }
         facebookLoginButton.setOnClickListener { handleFacebookLogin() }
         googleLoginButton.setOnClickListener { handleGoogleLogin() }
+        appleLoginButton.setOnClickListener {
+            val configuration = SignInWithAppleConfiguration(
+                    clientId = BuildConfig.APPLE_AUTH_CLIENT_ID,
+                    redirectUri = "https://habitrpg-delta.herokuapp.com/api/v4/user/auth/apple",
+                    scope = "name email"
+            )
+            val fragmentTag = "SignInWithAppleButton-SignInWebViewDialogFragment"
+
+            SignInWithAppleService(supportFragmentManager, fragmentTag, configuration) { result ->
+                when (result) {
+                    is SignInWithAppleResult.Success -> {
+                        val response = UserAuthResponse()
+                        response.id = result.userID
+                        response.apiToken = result.apiKey
+                        response.newUser = result.newUser
+                    }
+                }
+            }.show()
+        }
     }
 
     private fun setupFacebookLogin() {

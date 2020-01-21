@@ -138,6 +138,8 @@ interface ApiService {
     @POST("user/auth/social")
     fun connectSocial(@Body auth: UserAuthSocial): Flowable<HabitResponse<UserAuthResponse>>
 
+    @POST("user/auth/apple")
+    fun loginApple(@Body auth: Map<String, Any>): Flowable<HabitResponse<UserAuthResponse>>
 
     @POST("user/sleep")
     fun sleep(): Flowable<HabitResponse<Boolean>>

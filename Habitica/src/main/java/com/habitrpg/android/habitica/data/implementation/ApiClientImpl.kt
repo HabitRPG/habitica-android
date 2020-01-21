@@ -174,6 +174,10 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
         return this.apiService.connectSocial(auth).compose(configureApiCallObserver())
     }
 
+    override fun loginApple(authToken: String): Flowable<UserAuthResponse> {
+        return apiService.loginApple(mapOf(Pair("code", authToken))).compose(configureApiCallObserver())
+    }
+
     override fun accept(throwable: Throwable) {
         val throwableClass = throwable.javaClass
         if (SocketTimeoutException::class.java.isAssignableFrom(throwableClass)) {
