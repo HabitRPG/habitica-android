@@ -4,6 +4,7 @@ import com.habitrpg.android.habitica.models.tasks.Task
 import io.realm.Case
 import io.realm.OrderedRealmCollection
 import io.realm.RealmQuery
+import io.realm.Sort
 import java.util.*
 
 class TaskFilterHelper {
@@ -114,6 +115,9 @@ class TaskFilterHelper {
                     Task.FILTER_DATED -> query = query.isNotNull("dueDate").equalTo("completed", false).sort("dueDate")
                     Task.FILTER_COMPLETED -> query = query.equalTo("completed", true)
                 }
+            }
+            if (activeFilter != Task.FILTER_DATED) {
+                query = query.sort("position", Sort.ASCENDING, "dateCreated", Sort.DESCENDING)
             }
         }
         return query
