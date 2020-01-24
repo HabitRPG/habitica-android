@@ -273,9 +273,88 @@
                     android:title="@string/preference_push_unjoined_guild_mention"
                     android:layout="@layout/preference_child_summary"/>
             </PreferenceCategory>
-
         </PreferenceScreen>
+    </PreferenceCategory>
 
+
+    <PreferenceCategory
+        android:title="@string/emails"
+        android:layout="@layout/preference_category">
+
+        <CheckBoxPreference
+            android:key="useEmails"
+            android:defaultValue="true"
+            android:title="@string/pref_emails_checkbox"
+            android:layout="@layout/preference_child_summary"/>
+
+        <PreferenceScreen
+            android:key="emailNotifications"
+            android:title="@string/emails"
+            android:layout="@layout/preference_child_summary">
+
+            <PreferenceCategory android:title="@string/emails">
+                <CheckBoxPreference
+                    android:key="preference_email_you_won_challenge"
+                    android:defaultValue="true"
+                    android:title="@string/preference_push_you_won_challenge"
+                    android:layout="@layout/preference_child_summary"/>
+                <CheckBoxPreference
+                    android:key="preference_email_onboarding"
+                    android:defaultValue="true"
+                    android:title="@string/preference_email_onboarding"
+                    android:layout="@layout/preference_child_summary"/>
+                <CheckBoxPreference
+                    android:key="preference_email_received_a_private_message"
+                    android:defaultValue="true"
+                    android:title="@string/preference_push_received_a_private_message"
+                    android:layout="@layout/preference_child_summary"/>
+                <CheckBoxPreference
+                    android:key="preference_email_gifted_gems"
+                    android:defaultValue="true"
+                    android:title="@string/preference_push_gifted_gems"
+                    android:layout="@layout/preference_child_summary"/>
+                <CheckBoxPreference
+                    android:key="preference_email_gifted_subscription"
+                    android:defaultValue="true"
+                    android:title="@string/preference_push_gifted_subscription"
+                    android:layout="@layout/preference_child_summary"/>
+                <CheckBoxPreference
+                    android:key="preference_email_invited_to_party"
+                    android:defaultValue="true"
+                    android:title="@string/preference_push_invited_to_party"
+                    android:layout="@layout/preference_child_summary"/>
+                <CheckBoxPreference
+                    android:key="preference_email_invited_to_guild"
+                    android:defaultValue="true"
+                    android:title="@string/preference_push_invited_to_guild"
+                    android:layout="@layout/preference_child_summary"/>
+                <CheckBoxPreference
+                    android:key="preference_email_kicked_group"
+                    android:defaultValue="true"
+                    android:title="@string/preference_email_kicked_group"
+                    android:layout="@layout/preference_child_summary"/>
+                <CheckBoxPreference
+                    android:key="preference_email_your_quest_has_begun"
+                    android:defaultValue="true"
+                    android:title="@string/preference_push_your_quest_has_begun"
+                    android:layout="@layout/preference_child_summary"/>
+                <CheckBoxPreference
+                    android:key="preference_email_invited_to_quest"
+                    android:defaultValue="true"
+                    android:title="@string/preference_push_invited_to_quest"
+                    android:layout="@layout/preference_child_summary"/>
+                <CheckBoxPreference
+                    android:key="preference_email_important_announcements"
+                    android:defaultValue="true"
+                    android:title="@string/preference_push_important_announcements"
+                    android:layout="@layout/preference_child_summary"/>
+                <CheckBoxPreference
+                    android:key="preference_email_subscription_reminder"
+                    android:defaultValue="true"
+                    android:title="@string/preference_email_subscription_reminder"
+                    android:layout="@layout/preference_child_summary"/>
+            </PreferenceCategory>
+        </PreferenceScreen>
     </PreferenceCategory>
 
     <PreferenceCategory

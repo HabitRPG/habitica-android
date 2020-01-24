@@ -5,11 +5,7 @@ import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceScreen
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
-import com.habitrpg.android.habitica.ui.fragments.preferences.APIPreferenceFragment
-import com.habitrpg.android.habitica.ui.fragments.preferences.AuthenticationPreferenceFragment
-import com.habitrpg.android.habitica.ui.fragments.preferences.PreferencesFragment
-import com.habitrpg.android.habitica.ui.fragments.preferences.ProfilePreferencesFragment
-import com.habitrpg.android.habitica.ui.fragments.preferences.PushNotificationsPreferencesFragment
+import com.habitrpg.android.habitica.ui.fragments.preferences.*
 import kotlinx.android.synthetic.main.activity_prefs.*
 
 class PrefsActivity : BaseActivity(), PreferenceFragmentCompat.OnPreferenceStartScreenCallback {
@@ -60,6 +56,7 @@ class PrefsActivity : BaseActivity(), PreferenceFragmentCompat.OnPreferenceStart
                 "authentication" -> AuthenticationPreferenceFragment()
                 "api" -> APIPreferenceFragment()
                 "pushNotifications" -> PushNotificationsPreferencesFragment()
+                "emailNotifications" -> EmailNotificationsPreferencesFragment()
                 else -> null
             }
 }

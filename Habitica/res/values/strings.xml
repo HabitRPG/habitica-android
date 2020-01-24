@@ -25,7 +25,7 @@
 
     <string name="pref_cds_header">Custom Day Start</string>
 
-    <string name="pref_push_notifications_checkbox">User Push Notifications</string>
+    <string name="pref_push_notifications_checkbox">Use Push Notifications</string>
     <string name="push_notifications">Push Notifications</string>
     <string name="push_notifications_sum">Set your push notifications settings</string>
     <string name="preference_push_you_won_challenge">You won a Challenge!</string>
@@ -936,4 +936,9 @@
     <string name="learn_more">Learn more</string>
     <string name="purchase_from_timetravel_shop">You can purchase this customization from the Time Travelers shop</string>
     <string name="go_shopping">Go shopping</string>
+    <string name="emails">Email Notifications</string>
+    <string name="pref_emails_checkbox">Use Email Notifications</string>
+    <string name="preference_email_subscription_reminder">Subscription Reminders</string>
+    <string name="preference_email_kicked_group">Kicked from group</string>
+    <string name="preference_email_onboarding">Guidance with setting up your Habitica Account</string>
 </resources>
