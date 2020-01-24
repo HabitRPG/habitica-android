@@ -67,8 +67,6 @@ class SkillsFragment : BaseMainFragment() {
 
         resetViews()
 
-        recyclerView.invalidateItemDecorations()
-        recyclerView.addItemDecoration(androidx.recyclerview.widget.DividerItemDecoration(getActivity(), androidx.recyclerview.widget.DividerItemDecoration.VERTICAL))
         recyclerView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(activity)
         recyclerView.adapter = adapter
         recyclerView.itemAnimator = SafeDefaultItemAnimator()
@@ -78,9 +76,12 @@ class SkillsFragment : BaseMainFragment() {
         if (user == null || adapter == null) {
             return
         }
-        adapter?.mana = this.user?.stats?.mp ?: 0.toDouble()
+        adapter?.mana = this.user?.stats?.mp ?: 0.0
+        adapter?.level = this.user?.stats?.lvl ?: 0
+        adapter?.specialItems = this.user?.items?.special
         user?.let { user ->
-            Observable.concat(userRepository.getSkills(user).firstElement().toObservable().flatMap { Observable.fromIterable(it) }, userRepository.getSpecialItems(user).firstElement().toObservable().flatMap { Observable.fromIterable(it) })
+            Observable.concat(userRepository.getSkills(user).firstElement().toObservable().flatMap { Observable.fromIterable(it) },
+                    userRepository.getSpecialItems(user).firstElement().toObservable().flatMap { Observable.fromIterable(it) })
                     .toList()
                     .subscribe(Consumer { skills -> adapter?.setSkillList(skills) }, RxErrorHandler.handleEmptyError())
         }
@@ -119,7 +120,6 @@ class SkillsFragment : BaseMainFragment() {
         }
         compositeSubscription.add(userRepository.retrieveUser(false).subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
     }
-
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

@@ -367,7 +367,7 @@
     <string name="gem_purchase_listitem3">Quests that reward you with pet eggs</string>
     <string name="gem_purchase_listitem4">The ability to change your class before level 100</string>
     <string name="support_habitica">Support Habitica</string>
-    <string name="skill_transformation_use">use</string>
+    <string name="skill_transformation_use">Use</string>
     <string name="hatching_market_info">Not getting the right drops? Check out the Market!</string>
     <string name="feeding_market_info">Need different food? Buy more from the market!</string>
     <string name="open_market">Open Market</string>
@@ -941,4 +941,5 @@
     <string name="preference_email_subscription_reminder">Subscription Reminders</string>
     <string name="preference_email_kicked_group">Kicked from group</string>
     <string name="preference_email_onboarding">Guidance with setting up your Habitica Account</string>
+    <string name="skill_unlocks_at">Skill unlocks at level %d</string>
 </resources>
