@@ -200,11 +200,14 @@ open class GroupViewModel : BaseViewModel() {
         disposable.add(socialRepository.deleteMessage(chatMessage).subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
     }
 
-    fun postGroupChat(chatText: String, onComplete: () -> Unit?) {
+    fun postGroupChat(chatText: String, onComplete: () -> Unit, onError: () -> Unit) {
         groupIDSubject.value?.value?.let {
-            socialRepository.postGroupChat(it, chatText).subscribe(Consumer {
+            socialRepository.postGroupChat(it, chatText).subscribe({
                 onComplete()
-            }, RxErrorHandler.handleEmptyError())
+            }, { error ->
+                RxErrorHandler.reportError(error)
+                onError()
+            })
         }
     }
 

@@ -55,6 +55,10 @@ class ChatBarView : LinearLayout {
             autocompleteAdapter?.groupID = value
         }
 
+    var message: String?
+    get() = chatEditText.text.toString()
+    set(value) = chatEditText.setText(value)
+
     constructor(context: Context) : super(context) {
         setupView(context)
     }
@@ -115,7 +119,7 @@ class ChatBarView : LinearLayout {
     }
 
     private fun sendButtonPressed() {
-        val chatText = chatEditText.text.toString()
+        val chatText = message ?: ""
         if (chatText.isNotEmpty()) {
             chatEditText.text = null
             sendAction?.invoke(chatText)

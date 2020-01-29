@@ -123,9 +123,12 @@ class InboxMessageListFragment : BaseMainFragment(), androidx.swiperefreshlayout
             socialRepository.postPrivateMessage(userID, chatText)
                     .delay(200, TimeUnit.MILLISECONDS)
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(Consumer {
+                    .subscribe({
                 recyclerView?.scrollToPosition(0)
-            }, RxErrorHandler.handleEmptyError())
+            }, { error ->
+                        RxErrorHandler.reportError(error)
+                        chatBarView.message = chatText
+                    })
             KeyboardUtil.dismissKeyboard(getActivity())
         }
     }
