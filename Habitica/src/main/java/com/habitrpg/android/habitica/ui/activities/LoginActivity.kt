@@ -180,7 +180,7 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
         appleLoginButton.setOnClickListener {
             val configuration = SignInWithAppleConfiguration(
                     clientId = BuildConfig.APPLE_AUTH_CLIENT_ID,
-                    redirectUri = "https://habitrpg-delta.herokuapp.com/api/v4/user/auth/apple",
+                    redirectUri = "${hostConfig.address}/api/v4/user/auth/apple",
                     scope = "name email"
             )
             val fragmentTag = "SignInWithAppleButton-SignInWebViewDialogFragment"

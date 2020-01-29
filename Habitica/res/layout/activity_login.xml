@@ -219,7 +219,7 @@
                         android:layout_marginTop="@dimen/spacing_large"
                         android:layout_height="@dimen/diamond_button_height"
                         android:text="@string/login_btn_apple"
-                        android:drawableLeft="@drawable/google_icon"
+                        android:drawableLeft="@drawable/apple_icon"
                         style="@style/LoginButton"/>
 
                     <Button

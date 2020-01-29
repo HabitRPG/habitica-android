@@ -4,9 +4,11 @@ import android.net.Uri
 import android.os.Build
 import android.util.Log
 import android.webkit.WebResourceRequest
+import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.annotation.RequiresApi
+import com.habitrpg.android.habitica.BuildConfig
 
 class SignInWebViewClient(
         private val attempt: SignInWithAppleService.AuthenticationAttempt,
@@ -21,6 +23,11 @@ class SignInWebViewClient(
     @RequiresApi(Build.VERSION_CODES.N)
     override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
         return isUrlOverridden(view, request?.url)
+    }
+
+    override fun shouldInterceptRequest(view: WebView?, request: WebResourceRequest?): WebResourceResponse? {
+        request?.requestHeaders?.let { it["Authorization"] = "Basic " + BuildConfig.STAGING_KEY }
+        return super.shouldInterceptRequest(view, request)
     }
 
     private fun isUrlOverridden(view: WebView?, url: Uri?): Boolean {
