@@ -104,7 +104,6 @@ class SkillsFragment : BaseMainFragment() {
     }
 
     private fun displaySkillResult(usedSkill: Skill?, response: SkillResponse) {
-        removeProgressDialog()
         adapter?.mana = response.user.stats?.mp ?: 0.0
         val activity = activity ?: return
         if ("special" == usedSkill?.habitClass) {
@@ -144,23 +143,12 @@ class SkillsFragment : BaseMainFragment() {
         if (skill == null) {
             return
         }
-        displayProgressDialog()
         val observable: Flowable<SkillResponse> = if (taskId != null) {
             userRepository.useSkill(user, skill.key, skill.target, taskId)
         } else {
             userRepository.useSkill(user, skill.key, skill.target)
         }
-        compositeSubscription.add(observable.subscribe({ skillResponse -> this.displaySkillResult(skill, skillResponse) }) { removeProgressDialog() })
+        compositeSubscription.add(observable.subscribe(Consumer { skillResponse -> this.displaySkillResult(skill, skillResponse) },
+                RxErrorHandler.handleEmptyError()))
     }
-
-    private fun displayProgressDialog() {
-        progressDialog?.dismiss()
-        @Suppress("DEPRECATION")
-        progressDialog = ProgressDialog.show(activity, context?.getString(R.string.skill_progress_title), null, true)
-    }
-
-    private fun removeProgressDialog() {
-        progressDialog?.dismiss()
-    }
-
 }
