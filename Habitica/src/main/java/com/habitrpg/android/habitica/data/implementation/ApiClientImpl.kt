@@ -347,6 +347,10 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
         }
     }
 
+    override fun cancelSubscription(): Flowable<Any> {
+        return apiService.cancelSubscription().compose(configureApiCallObserver())
+    }
+
     override fun purchaseHourglassItem(type: String, itemKey: String): Flowable<Any> {
         return apiService.purchaseHourglassItem(type, itemKey).compose(configureApiCallObserver())
     }

@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
+import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentSubscriptionBinding
@@ -26,6 +27,7 @@ import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionVi
 import io.reactivex.functions.Consumer
 import org.greenrobot.eventbus.Subscribe
 import org.solovyev.android.checkout.Inventory
+import org.solovyev.android.checkout.Purchase
 import org.solovyev.android.checkout.Sku
 import javax.inject.Inject
 
@@ -40,6 +42,8 @@ class SubscriptionFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
     lateinit var appConfigManager: AppConfigManager
     @Inject
     lateinit var inventoryRepository: InventoryRepository
+    @Inject
+    lateinit var apiClient: ApiClient
 
     private var selectedSubscriptionSku: Sku? = null
     private var skus: List<Sku> = emptyList()
@@ -48,6 +52,7 @@ class SubscriptionFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
 
     private var user: User? = null
     private var hasLoadedSubscriptionOptions: Boolean = false
+    private var purchasedSubscription: Purchase? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -82,17 +87,15 @@ class SubscriptionFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
 
         binding.refreshLayout.setOnRefreshListener { refresh() }
 
-        if (appConfigManager.useNewMysteryBenefits()) {
-            compositeSubscription.add(inventoryRepository.getLatestMysteryItem().subscribe(Consumer {
-                DataBindingUtils.loadImage(binding.subBenefitsMysteryItemIcon, "shop_set_mystery_${it.key?.split("_")?.last()}")
-                binding.subBenefitsMysteryItemText.text = context?.getString(R.string.subscribe_listitem3_description_new, it.text)
-            }, RxErrorHandler.handleEmptyError()))
-        }
+        compositeSubscription.add(inventoryRepository.getLatestMysteryItem().subscribe(Consumer {
+            DataBindingUtils.loadImage(binding.subBenefitsMysteryItemIcon, "shop_set_mystery_${it.key?.split("_")?.last()}")
+            binding.subBenefitsMysteryItemText.text = context?.getString(R.string.subscribe_listitem3_description_new, it.text)
+        }, RxErrorHandler.handleEmptyError()))
     }
 
     override fun onResume() {
         super.onResume()
-        refresh();
+        refresh()
     }
 
     private fun refresh() {
@@ -165,6 +168,11 @@ class SubscriptionFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
 
     override fun setPurchaseHandler(handler: PurchaseHandler?) {
         this.purchaseHandler = handler
+
+        handler?.checkForSubscription {
+            purchasedSubscription = it
+            checkIfNeedsCancellation()
+        }
     }
 
     private fun purchaseSubscription() {
@@ -178,6 +186,7 @@ class SubscriptionFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
     fun setUser(newUser: User) {
         user = newUser
         this.updateSubscriptionInfo()
+        checkIfNeedsCancellation()
     }
 
     private fun updateSubscriptionInfo() {
@@ -208,10 +217,18 @@ class SubscriptionFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
         }
     }
 
+    private fun checkIfNeedsCancellation() {
+        if (user?.purchased?.plan?.isActive == true) {
+            compositeSubscription.add(apiClient.cancelSubscription().subscribe(Consumer {
+                        refresh()
+            }, RxErrorHandler.handleEmptyError()))
+        }
+    }
+
     private fun showSubscriptionOptions() {
         binding.subscriptionOptions.visibility = View.VISIBLE
         binding.subscriptionOptions.postDelayed({
-            binding.scrollView.smoothScrollTo(0, binding.subscriptionOptions.top ?: 0)
+            binding.scrollView.smoothScrollTo(0, binding.subscriptionOptions.top)
         }, 500)
     }
 

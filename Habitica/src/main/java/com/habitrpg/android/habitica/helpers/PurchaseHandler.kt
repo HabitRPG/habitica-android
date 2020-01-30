@@ -115,6 +115,27 @@ class PurchaseHandler(activity: Activity, val crashlyticsProxy: CrashlyticsProxy
         }
     }
 
+    fun checkForSubscription(onSubscriptionFound: ((Purchase) -> Unit)) {
+        billingRequests?.getPurchases(ProductTypes.SUBSCRIPTION, null, object : RequestListener<Purchases> {
+            override fun onSuccess(result: Purchases) {
+                var lastPurchase: Purchase? = null
+                for (purchase in result.list) {
+                    if (lastPurchase != null && lastPurchase.time > purchase.time) {
+                        continue
+                    } else {
+                        lastPurchase = purchase
+                    }
+                }
+                if (lastPurchase != null) {
+                    onSubscriptionFound(lastPurchase)
+                }
+            }
+
+            override fun onError(response: Int, e: java.lang.Exception) {
+            }
+        })
+    }
+
     private fun checkIfPendingPurchases() {
         billingRequests?.getAllPurchases(ProductTypes.IN_APP, object : RequestListener<Purchases> {
             override fun onSuccess(purchases: Purchases) {

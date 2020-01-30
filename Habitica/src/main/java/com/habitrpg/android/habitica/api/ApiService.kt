@@ -250,6 +250,9 @@ interface ApiService {
     @POST("/iap/android/subscribe")
     fun validateSubscription(@Body request: SubscriptionValidationRequest): Flowable<HabitResponse<Void>>
 
+    @GET("/iap/android/subscribe/cancel")
+    fun cancelSubscription(): Flowable<HabitResponse<Void>>
+
     @POST("/iap/android/norenew-subscribe")
     fun validateNoRenewSubscription(@Body request: PurchaseValidationRequest): Flowable<HabitResponse<Void>>
 
