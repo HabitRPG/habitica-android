@@ -70,6 +70,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
                 priceLabel.currency = shopItem.currency
             } else {
                 setBuyButtonEnabled(false)
+                buyLabel.text = shopItem.unlockCondition?.readableUnlockConditionId()?.let { context.getString(it) }
             }
 
             if (shopItem.isLimited) {
