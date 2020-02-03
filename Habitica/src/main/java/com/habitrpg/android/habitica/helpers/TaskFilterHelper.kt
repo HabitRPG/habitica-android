@@ -100,7 +100,12 @@ class TaskFilterHelper {
                 query = query.`in`("tags.id", tagsId.toTypedArray())
             }
             if (searchQuery?.isNotEmpty() == true) {
-                query = query.beginsWith("text", searchQuery ?: "", Case.INSENSITIVE)
+                query = query
+                        .beginGroup()
+                        .contains("text", searchQuery ?: "", Case.INSENSITIVE)
+                        .or()
+                        .contains("notes", searchQuery ?: "", Case.INSENSITIVE)
+                        .endGroup()
             }
             if (activeFilter != null && activeFilter != Task.FILTER_ALL) {
                 when (activeFilter) {
