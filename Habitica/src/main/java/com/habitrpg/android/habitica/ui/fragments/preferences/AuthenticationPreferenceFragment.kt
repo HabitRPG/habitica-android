@@ -175,7 +175,7 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
         val view = context?.layoutInflater?.inflate(R.layout.dialog_edittext, null)
         var deleteMessage = getString(R.string.delete_account_description)
         val editText = view?.findViewById<EditText>(R.id.editText)
-        if (user?.authentication?.localAuthentication != null) {
+        if (user?.authentication?.localAuthentication?.email != null) {
             editText?.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
         } else {
             deleteMessage = getString(R.string.delete_oauth_account_description)
