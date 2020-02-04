@@ -65,14 +65,6 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
         set(value) {
             field = value
 
-            if (shopItem.unlockCondition == null) {
-                priceLabel.value = shopItem.value.toDouble()
-                priceLabel.currency = shopItem.currency
-            } else {
-                setBuyButtonEnabled(false)
-                buyLabel.text = shopItem.unlockCondition?.readableUnlockConditionId()?.let { context.getString(it) }
-            }
-
             if (shopItem.isLimited) {
                 //TODO: replace with correct date once API is final
                 limitedTextView.text = context.getString(R.string.available_until, Date().toString())
@@ -80,7 +72,19 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
                 limitedTextView.visibility = View.GONE
             }
 
-            priceLabel.isLocked = shopItem.locked
+            if (shopItem.lockedReason(context) == null) {
+                priceLabel.value = shopItem.value.toDouble()
+                priceLabel.currency = shopItem.currency
+            } else {
+                limitedTextView.text = shopItem.lockedReason(context)
+            }
+            if (shopItem.locked) {
+                setBuyButtonEnabled(false)
+                buyLabel.text = context.getString(R.string.locked)
+                limitedTextView.visibility = View.VISIBLE
+            }
+
+            priceLabel.isLocked = shopItem.locked || shopItem.lockedReason(context) != null
 
             val contentView: PurchaseDialogContent
             when {

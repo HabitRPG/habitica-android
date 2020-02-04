@@ -186,7 +186,7 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
             val dialog = HabiticaAlertDialog(context)
             dialog.setTitle(R.string.delete_account)
             dialog.setMessage(deleteMessage)
-            dialog.addButton(R.string.delete_account_confirmation, true, true) { _, _ ->
+            dialog.addButton(R.string.delete_account_confirmation, isPrimary = true, isDestructive = true) { _, _ ->
                 deleteAccount(editText?.text?.toString() ?: "")
             }
             dialog.addCancelButton()

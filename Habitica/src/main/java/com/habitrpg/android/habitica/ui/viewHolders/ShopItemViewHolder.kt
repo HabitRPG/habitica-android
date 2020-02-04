@@ -64,7 +64,11 @@ class ShopItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), Vi
 
         DataBindingUtils.loadImage(this.imageView, item.imageName)
 
-        if (item.unlockCondition == null || !item.locked) {
+        itemDetailIndicator.text = null
+        itemDetailIndicator.visibility = View.GONE
+
+        val lockedReason = item.lockedReason(context)
+        if (!item.locked) {
             priceLabel.text = item.value.toString()
             priceLabel.currency = item.currency
             if (item.currency == null) {
@@ -73,23 +77,19 @@ class ShopItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), Vi
             priceLabel.visibility = View.VISIBLE
             unlockLabel.visibility = View.GONE
         } else {
-            unlockLabel.setText(item.unlockCondition?.readableUnlockConditionId() ?: 0)
+            unlockLabel.text = lockedReason
             priceLabel.visibility = View.GONE
             unlockLabel.visibility = View.VISIBLE
+            itemDetailIndicator.background = lockedDrawable
+            itemDetailIndicator.visibility = View.VISIBLE
         }
 
-        itemDetailIndicator.text = null
-        itemDetailIndicator.visibility = View.GONE
         if (item.isLimited) {
             itemDetailIndicator.background = limitedDrawable
             itemDetailIndicator.visibility = View.VISIBLE
         }
 
         priceLabel.isLocked = item.locked || !canBuy
-        if (item.locked) {
-            itemDetailIndicator.background = lockedDrawable
-            itemDetailIndicator.visibility = View.VISIBLE
-        }
     }
 
     override fun onClick(view: View) {
