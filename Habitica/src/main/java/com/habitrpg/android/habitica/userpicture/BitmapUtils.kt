@@ -9,6 +9,10 @@ object BitmapUtils {
         var name = filename
         try {
             name = "$directory/$name"
+            val dirFile = File(directory)
+            if (!dirFile.exists()) {
+                dirFile.mkdir()
+            }
 
             val out = FileOutputStream(name)
             bmp.compress(Bitmap.CompressFormat.PNG, 100, out)
@@ -16,6 +20,7 @@ object BitmapUtils {
             out.close()
             return File(name)
         } catch (ignored: Exception) {
+            ignored.printStackTrace()
         }
 
         return null
