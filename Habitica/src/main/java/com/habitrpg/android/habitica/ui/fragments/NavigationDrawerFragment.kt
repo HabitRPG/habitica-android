@@ -253,6 +253,8 @@ class NavigationDrawerFragment : DialogFragment() {
                     }
                 }
             }
+        } else if (user.isSubscribed) {
+            subscriptionItem?.subtitle = null
         } else {
             subscriptionItem?.subtitle = context?.getString(R.string.more_out_of_habitica)
         }

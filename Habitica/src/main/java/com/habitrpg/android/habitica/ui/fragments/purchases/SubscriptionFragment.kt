@@ -179,6 +179,7 @@ class SubscriptionFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
         selectedSubscriptionSku?.let { sku ->
             purchaseHandler?.purchaseSubscription(sku) {
                 fetchUser(null)
+                binding.scrollView.smoothScrollTo(0, 0)
             }
         }
     }
@@ -186,7 +187,10 @@ class SubscriptionFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
     fun setUser(newUser: User) {
         user = newUser
         this.updateSubscriptionInfo()
-        checkIfNeedsCancellation()
+        purchaseHandler?.checkForSubscription {
+            purchasedSubscription = it
+            checkIfNeedsCancellation()
+        }
     }
 
     private fun updateSubscriptionInfo() {
@@ -218,7 +222,7 @@ class SubscriptionFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
     }
 
     private fun checkIfNeedsCancellation() {
-        if (user?.purchased?.plan?.isActive == true) {
+        if (user?.purchased?.plan?.isActive == true && purchasedSubscription?.autoRenewing == false) {
             compositeSubscription.add(apiClient.cancelSubscription().subscribe(Consumer {
                         refresh()
             }, RxErrorHandler.handleEmptyError()))

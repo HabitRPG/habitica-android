@@ -47,7 +47,7 @@ class SubscriptionDetailsView : LinearLayout {
 
         var duration: String? = null
 
-        if (plan.planId != null) {
+        if (plan.planId != null && plan.dateTerminated == null) {
             if (plan.planId == SubscriptionPlan.PLANID_BASIC || plan.planId == SubscriptionPlan.PLANID_BASICEARNED) {
                 duration = resources.getString(R.string.month)
             } else if (plan.planId == SubscriptionPlan.PLANID_BASIC3MONTH) {
