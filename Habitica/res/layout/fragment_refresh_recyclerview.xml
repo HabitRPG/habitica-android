@@ -5,44 +5,57 @@
     android:id="@+id/refreshLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    android:background="@color/gray_700">
+    android:background="@color/gray_700"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/emptyView"
+            style="@style/EmptyView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:orientation="vertical"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <ImageView
+                android:id="@+id/empty_icon_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp" />
+
+            <TextView
+                android:id="@+id/emptyViewTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                android:gravity="center"
+                android:textColor="@color/gray_200"
+                android:textSize="@dimen/card_medium_text"
+                tools:text="No Items" />
+
+            <TextView
+                android:id="@+id/emptyViewDescription"
+                style="@style/Body2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="@color/gray_200"
+                tools:text="No Items" />
+        </LinearLayout>
 
         <com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:clipToPadding="false"
             android:scrollbarSize="3dp"
             android:scrollbarThumbVertical="@color/scrollbarThumb"
-            android:scrollbars="vertical"
-            android:clipToPadding="false" />
-
-        <LinearLayout
-            android:id="@+id/emptyView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="60dp"
-            android:visibility="gone"
-            tools:visibility="visible"
-                style="@style/EmptyView">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/emptyViewTitle"
-                    tools:text="No Items"
-                    android:gravity="center"
-                    android:textSize="@dimen/card_medium_text"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/emptyViewDescription"
-                    android:gravity="center"
-                    tools:text="No Items" />
-            </LinearLayout>
+            android:scrollbars="vertical" />
 
     </FrameLayout>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

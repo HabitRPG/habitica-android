@@ -288,44 +288,52 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
     private fun setEmptyLabels() {
         if (this.classType != null) {
             binding.recyclerView.setEmptyView(binding.emptyView)
+            context?.let { binding.emptyIconView.setColorFilter(ContextCompat.getColor(it, R.color.gray_400), android.graphics.PorterDuff.Mode.MULTIPLY) }
             if (taskFilterHelper.howMany(classType) > 0) {
                 when (this.classType) {
                     Task.TYPE_HABIT -> {
+                        binding.emptyIconView.setImageResource(R.drawable.icon_habits_selected)
                         binding.emptyViewTitle.setText(R.string.empty_title_habits_filtered)
                         binding.emptyViewDescription.setText(R.string.empty_description_habits_filtered)
                     }
                     Task.TYPE_DAILY -> {
+                        binding.emptyIconView.setImageResource(R.drawable.icon_dailies_selected)
                         binding.emptyViewTitle.setText(R.string.empty_title_dailies_filtered)
                         binding.emptyViewDescription.setText(R.string.empty_description_dailies_filtered)
                     }
                     Task.TYPE_TODO -> {
+                        binding.emptyIconView.setImageResource(R.drawable.icon_todos_selected)
                         binding.emptyViewTitle.setText(R.string.empty_title_todos_filtered)
                         binding.emptyViewDescription.setText(R.string.empty_description_todos_filtered)
                     }
                     Task.TYPE_REWARD -> {
+                        binding.emptyIconView.setImageResource(R.drawable.icon_rewards_selected)
                         binding.emptyViewTitle.setText(R.string.empty_title_rewards)
                     }
                 }
             } else {
                 when (this.classType) {
                     Task.TYPE_HABIT -> {
+                        binding.emptyIconView.setImageResource(R.drawable.icon_habits_selected)
                         binding.emptyViewTitle.setText(R.string.empty_title_habits)
                         binding.emptyViewDescription.setText(R.string.empty_description_habits)
                     }
                     Task.TYPE_DAILY -> {
+                        binding.emptyIconView.setImageResource(R.drawable.icon_dailies_selected)
                         binding.emptyViewTitle.setText(R.string.empty_title_dailies)
                         binding.emptyViewDescription.setText(R.string.empty_description_dailies)
                     }
                     Task.TYPE_TODO -> {
+                        binding.emptyIconView.setImageResource(R.drawable.icon_todos_selected)
                         binding.emptyViewTitle.setText(R.string.empty_title_todos)
                         binding.emptyViewDescription.setText(R.string.empty_description_todos)
                     }
                     Task.TYPE_REWARD -> {
+                        binding.emptyIconView.setImageResource(R.drawable.icon_rewards_selected)
                         binding.emptyViewTitle.setText(R.string.empty_title_rewards)
                     }
                 }
             }
-
         }
     }
 
