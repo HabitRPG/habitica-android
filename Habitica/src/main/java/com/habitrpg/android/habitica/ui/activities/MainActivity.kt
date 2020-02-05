@@ -427,7 +427,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                         dialog.addButton(R.string.onwards, true)
                         dialog.addButton(R.string.share, false) { hatchingDialog, _ ->
                                     val event1 = ShareEvent()
-                                    event1.sharedMessage = getString(R.string.share_raised, pet.text) + " https://habitica.com/social/raise-pet"
+                                    event1.sharedMessage = getString(R.string.share_raised, pet.text)
                                     val mountImageSideLength = 99
                                     val sharedImage = Bitmap.createBitmap(mountImageSideLength, mountImageSideLength, Bitmap.Config.ARGB_8888)
                                     val canvas = Canvas(sharedImage)
@@ -717,7 +717,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
             dialog.addButton(R.string.onwards, true) { hatchingDialog, _ -> hatchingDialog.dismiss() }
             dialog.addButton(R.string.share, false) { hatchingDialog, _ ->
                 val event1 = ShareEvent()
-                event1.sharedMessage = getString(R.string.share_hatched, potionName, eggName) + " https://habitica.com/social/hatch-pet"
+                event1.sharedMessage = getString(R.string.share_hatched, potionName, eggName)
                 val petImageSideLength = 140
                 val sharedImage = Bitmap.createBitmap(petImageSideLength, petImageSideLength, Bitmap.Config.ARGB_8888)
                 val canvas = Canvas(sharedImage)
