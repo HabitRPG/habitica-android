@@ -5,6 +5,11 @@ import java.io.File
 import java.io.FileOutputStream
 
 object BitmapUtils {
+    fun clearDirectoryContent(directory: String) {
+        val dirFile = File(directory)
+        dirFile.listFiles()?.forEach { it.delete() }
+    }
+
     fun saveToShareableFile(directory: String, filename: String, bmp: Bitmap): File? {
         var name = filename
         try {
