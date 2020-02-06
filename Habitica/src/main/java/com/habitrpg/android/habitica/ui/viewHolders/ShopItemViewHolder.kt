@@ -67,7 +67,7 @@ class ShopItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), Vi
         itemDetailIndicator.text = null
         itemDetailIndicator.visibility = View.GONE
 
-        val lockedReason = item.lockedReason(context)
+        val lockedReason = item.shortLockedReason(context)
         if (!item.locked) {
             priceLabel.text = item.value.toString()
             priceLabel.currency = item.currency

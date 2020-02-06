@@ -336,9 +336,11 @@
     <string name="empty_inbox">You don\'t have any messages. You can send a user a new message from their public chat messages!</string>
     <string name="party_invite">Unlock by inviting friends</string>
     <string name="login_incentive">Unlock by logging into Habitica regularly</string>
+    <string name="login_incentive_count">Unlock by checking into Habitica %d times.</string>
     <string name="create_account">Unlock by creating an account</string>
     <string name="party_invite_short">Invite Friends</string>
     <string name="login_incentive_short">login into Habitica regularly</string>
+    <string name="login_incentive_short_count">%d Checkins</string>
     <string name="create_account_short">create an account</string>
     <string name="successful_purchase">Purchased %1$s</string>
     <string name="gold_plural">gold</string>
@@ -946,6 +948,8 @@
     <string name="preference_email_onboarding">Guidance with setting up your Habitica Account</string>
     <string name="skill_unlocks_at">Skill unlocks at level %d</string>
     <string name="locked">Locked</string>
-    <string name="unlock_previous">Finish Quest %d</string>
-    <string name="unlock_level">Level %d</string>
+    <string name="unlock_previous">Unlock by finishing Quest %d</string>
+    <string name="unlock_level">Unlock by reaching level %d</string>
+    <string name="unlock_previous_short">Finish Quest %d</string>
+    <string name="unlock_level_short">Level %d</string>
 </resources>

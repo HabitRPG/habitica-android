@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.models.shops
 
+import android.content.Context
 import com.habitrpg.android.habitica.R
 
 import io.realm.RealmObject
@@ -10,18 +11,19 @@ open class ShopItemUnlockCondition : RealmObject() {
     @PrimaryKey
     var questKey: String? = null
     private var condition: String? = null
+    var incentiveThreshold: Int? = null
 
-    fun readableUnlockConditionId(): Int = when (this.condition) {
-        "party invite" -> R.string.party_invite
-        "login incentive" -> R.string.login_incentive
-        "create account" -> R.string.create_account
-        else -> R.string.empty
+    fun readableUnlockCondition(context: Context): String = when (this.condition) {
+        "party invite" -> context.getString(R.string.party_invite)
+        "login reward" -> if (incentiveThreshold != null) context.getString(R.string.login_incentive_count, incentiveThreshold) else  context.getString(R.string.login_incentive)
+        "create account" -> context.getString(R.string.create_account)
+        else -> ""
     }
 
-    fun shortReadableUnlockConditionId(): Int = when (this.condition) {
-        "party invite" -> R.string.party_invite_short
-        "login incentive" -> R.string.login_incentive_short
-        "create account" -> R.string.create_account_short
-        else -> R.string.empty
+    fun shortReadableUnlockCondition(context: Context): String = when (this.condition) {
+        "party invite" -> context.getString(R.string.party_invite_short)
+        "login reward" -> if (incentiveThreshold != null) context.getString(R.string.login_incentive_short_count, incentiveThreshold) else  context.getString(R.string.login_incentive_short)
+        "create account" -> context.getString(R.string.create_account_short)
+        else -> ""
     }
 }

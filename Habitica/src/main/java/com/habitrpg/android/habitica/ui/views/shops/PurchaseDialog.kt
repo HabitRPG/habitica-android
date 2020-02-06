@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toDrawable
 import androidx.core.os.bundleOf
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
@@ -82,6 +83,8 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
                 setBuyButtonEnabled(false)
                 buyLabel.text = context.getString(R.string.locked)
                 limitedTextView.visibility = View.VISIBLE
+                limitedTextView.background = ContextCompat.getColor(context, R.color.gray_600).toDrawable()
+                limitedTextView.setTextColor(ContextCompat.getColor(context, R.color.gray_100))
             }
 
             priceLabel.isLocked = shopItem.locked || shopItem.lockedReason(context) != null
@@ -186,9 +189,9 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
             priceLabel.setTextColor(ContextCompat.getColor(context, R.color.white))
             buyLabel.setTextColor(ContextCompat.getColor(context, R.color.white))
         } else {
-            buyButton.background = context.getDrawable(R.drawable.button_background_gray_700)
-            priceLabel.setTextColor(ContextCompat.getColor(context, R.color.gray_200))
-            buyLabel.setTextColor(ContextCompat.getColor(context, R.color.gray_200))
+            buyButton.background = context.getDrawable(R.drawable.button_background_gray_600)
+            priceLabel.setTextColor(ContextCompat.getColor(context, R.color.gray_100))
+            buyLabel.setTextColor(ContextCompat.getColor(context, R.color.gray_100))
         }
 
         if (shopItem.isTypeGear) {

@@ -90,7 +90,27 @@ open class ShopItem : RealmObject() {
     fun lockedReason(context: Context): String? {
         return when {
             unlockCondition != null -> {
-                unlockCondition?.shortReadableUnlockConditionId()?.let { context.getString(it) }
+                unlockCondition?.readableUnlockCondition(context)
+            }
+            previous != null -> {
+                try {
+                    val thisNumber = Character.getNumericValue(key.last())
+                    context.getString(R.string.unlock_previous_short, thisNumber - 1)
+                } catch (e: NumberFormatException) {
+                    null
+                }
+            }
+            level != null -> {
+                context.getString(R.string.unlock_level_short, level ?: 0)
+            }
+            else -> null
+        }
+    }
+
+    fun shortLockedReason(context: Context): String? {
+        return when {
+            unlockCondition != null -> {
+                unlockCondition?.shortReadableUnlockCondition(context)
             }
             previous != null -> {
                 try {
