@@ -87,7 +87,7 @@ open class ShopItem : RealmObject() {
         return this.key.hashCode()
     }
 
-    fun lockedReason(context: Context): String? {
+    fun shortLockedReason(context: Context): String? {
         return when {
             unlockCondition != null -> {
                 unlockCondition?.readableUnlockCondition(context)
@@ -107,7 +107,7 @@ open class ShopItem : RealmObject() {
         }
     }
 
-    fun shortLockedReason(context: Context): String? {
+    fun lockedReason(context: Context): String? {
         return when {
             unlockCondition != null -> {
                 unlockCondition?.shortReadableUnlockCondition(context)

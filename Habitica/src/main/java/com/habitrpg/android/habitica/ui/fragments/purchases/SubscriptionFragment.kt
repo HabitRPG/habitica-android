@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.ui.fragments.purchases
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -227,9 +228,11 @@ class SubscriptionFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
     }
 
     private fun checkIfNeedsCancellation() {
-        if (user?.purchased?.plan?.isActive == true && purchasedSubscription?.autoRenewing == false) {
+        if (user?.purchased?.plan?.paymentMethod == "Google" &&
+                user?.purchased?.plan?.isActive == true &&
+                (purchasedSubscription?.autoRenewing == false ||purchasedSubscription == null)) {
             compositeSubscription.add(apiClient.cancelSubscription().subscribe(Consumer {
-                        refresh()
+                refresh()
             }, RxErrorHandler.handleEmptyError()))
         }
     }

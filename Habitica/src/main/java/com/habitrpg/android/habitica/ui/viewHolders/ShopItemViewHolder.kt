@@ -62,7 +62,7 @@ class ShopItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), Vi
         this.item = item
         buyButton.visibility = View.VISIBLE
 
-        DataBindingUtils.loadImage(this.imageView, item.imageName)
+        DataBindingUtils.loadImage(this.imageView, item.imageName?.replace("_locked", ""))
 
         itemDetailIndicator.text = null
         itemDetailIndicator.visibility = View.GONE

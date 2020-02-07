@@ -80,7 +80,6 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
                 limitedTextView.text = shopItem.lockedReason(context)
             }
             if (shopItem.locked) {
-                setBuyButtonEnabled(false)
                 buyLabel.text = context.getString(R.string.locked)
                 limitedTextView.visibility = View.VISIBLE
                 limitedTextView.background = ContextCompat.getColor(context, R.color.gray_600).toDrawable()
@@ -184,7 +183,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
         }
 
         buyButton.elevation = 0f
-        if (shopItem.canAfford(user, configManager.insufficientGemPurchase())) {
+        if (shopItem.canAfford(user, configManager.insufficientGemPurchase()) && !shopItem.locked) {
             buyButton.background = context.getDrawable(R.drawable.button_background_primary)
             priceLabel.setTextColor(ContextCompat.getColor(context, R.color.white))
             buyLabel.setTextColor(ContextCompat.getColor(context, R.color.white))
@@ -286,12 +285,5 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
         dismiss()
     }
 
-    private fun setBuyButtonEnabled(enabled: Boolean) {
-        if (enabled) {
-            buyButton.alpha = 1.0f
-        } else {
-            buyButton.alpha = 0.5f
-        }
-    }
 }
 
