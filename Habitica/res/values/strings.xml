@@ -952,4 +952,5 @@
     <string name="unlock_level">Unlock by reaching level %d</string>
     <string name="unlock_previous_short">Finish Quest %d</string>
     <string name="unlock_level_short">Level %d</string>
+    <string name="not_participating">You are not participating</string>
 </resources>
