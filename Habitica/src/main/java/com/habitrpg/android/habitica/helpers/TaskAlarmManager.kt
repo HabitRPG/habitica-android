@@ -6,13 +6,14 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Build.VERSION.SDK_INT
-import androidx.core.content.edit
 import androidx.preference.PreferenceManager
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.models.tasks.RemindersItem
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.receivers.NotificationPublisher
 import com.habitrpg.android.habitica.receivers.TaskReceiver
+import com.habitrpg.shared.habitica.HLogger
+import com.habitrpg.shared.habitica.LogLevel
 import io.reactivex.Flowable
 import io.reactivex.functions.Consumer
 import java.util.*
@@ -60,9 +61,6 @@ class TaskAlarmManager(private var context: Context, private var taskRepository:
 
         if (!preventDailyReminder) {
             scheduleDailyReminder(context)
-        }
-        PreferenceManager.getDefaultSharedPreferences(context).edit {
-            putLong("lastReminderSchedule", Date().time)
         }
     }
 
@@ -168,6 +166,7 @@ class TaskAlarmManager(private var context: Context, private var taskRepository:
         }
 
         private fun setAlarm(context: Context, time: Long, pendingIntent: PendingIntent?) {
+            HLogger.log(LogLevel.INFO, "TaskAlarmManager", "Scheduling for $time")
             val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
 
             if (pendingIntent == null) {

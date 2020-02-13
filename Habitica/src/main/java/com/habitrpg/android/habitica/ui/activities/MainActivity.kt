@@ -214,6 +214,12 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
         setupNotifications()
         setupBottomnavigationLayoutListener()
+
+        try {
+            taskAlarmManager.scheduleAllSavedAlarms(sharedPreferences.getBoolean("preventDailyReminder", false))
+        } catch (e: Exception) {
+            crashlyticsProxy.logException(e)
+        }
     }
 
     private fun setupNotifications() {
@@ -272,15 +278,6 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
             this.checkMaintenance()
         }
         resumeFromActivity = false
-
-
-        if (this.sharedPreferences.getLong("lastReminderSchedule", 0) < Date().time - DateUtils.hoursInMs(2)) {
-            try {
-                taskAlarmManager.scheduleAllSavedAlarms(sharedPreferences.getBoolean("preventDailyReminder", false))
-            } catch (e: Exception) {
-                crashlyticsProxy.logException(e)
-            }
-        }
 
         //Track when the app was last opened, so that we can use this to send out special reminders after a week of inactivity
         sharedPreferences.edit {
