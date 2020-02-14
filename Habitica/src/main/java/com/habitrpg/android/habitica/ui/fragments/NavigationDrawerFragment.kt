@@ -304,8 +304,17 @@ class NavigationDrawerFragment : DialogFragment() {
             items.add(HabiticaDrawerItem(R.id.partyFragment, SIDEBAR_PARTY, context.getString(R.string.sidebar_party)))
             items.add(HabiticaDrawerItem(R.id.guildsOverviewFragment, SIDEBAR_GUILDS, context.getString(R.string.sidebar_guilds)))
             items.add(HabiticaDrawerItem(R.id.challengesOverviewFragment, SIDEBAR_CHALLENGES, context.getString(R.string.sidebar_challenges)))
+            if (configManager.raiseShops()) {
+                items.add(HabiticaDrawerItem(0, SIDEBAR_INVENTORY, context.getString(R.string.sidebar_shops), true))
+                items.add(HabiticaDrawerItem(R.id.marketFragment, SIDEBAR_SHOPS_MARKET, context.getString(R.string.market)))
+                items.add(HabiticaDrawerItem(R.id.questShopFragment, SIDEBAR_SHOPS_QUEST, context.getString(R.string.questShop)))
+                items.add(HabiticaDrawerItem(R.id.seasonalShopFragment, SIDEBAR_SHOPS_SEASONAL, context.getString(R.string.seasonalShop)))
+                items.add(HabiticaDrawerItem(R.id.timeTravelersShopFragment, SIDEBAR_SHOPS_TIMETRAVEL, context.getString(R.string.timeTravelers)))
+            }
             items.add(HabiticaDrawerItem(0, SIDEBAR_INVENTORY, context.getString(R.string.sidebar_section_inventory), true))
-            items.add(HabiticaDrawerItem(R.id.shopsFragment, SIDEBAR_SHOPS, context.getString(R.string.sidebar_shops)))
+            if (!configManager.raiseShops()) {
+                items.add(HabiticaDrawerItem(R.id.shopsFragment, SIDEBAR_SHOPS, context.getString(R.string.sidebar_shops)))
+            }
             items.add(HabiticaDrawerItem(R.id.avatarOverviewFragment, SIDEBAR_AVATAR, context.getString(R.string.sidebar_avatar)))
             items.add(HabiticaDrawerItem(R.id.equipmentOverviewFragment, SIDEBAR_EQUIPMENT, context.getString(R.string.sidebar_equipment)))
             items.add(HabiticaDrawerItem(R.id.itemsFragment, SIDEBAR_ITEMS, context.getString(R.string.sidebar_items)))
@@ -477,6 +486,10 @@ class NavigationDrawerFragment : DialogFragment() {
         const val SIDEBAR_CHALLENGES = "challenges"
         const val SIDEBAR_INVENTORY = "inventory"
         const val SIDEBAR_SHOPS = "shops"
+        const val SIDEBAR_SHOPS_MARKET = "market"
+        const val SIDEBAR_SHOPS_QUEST = "questShop"
+        const val SIDEBAR_SHOPS_SEASONAL = "seasonalShop"
+        const val SIDEBAR_SHOPS_TIMETRAVEL = "timeTravelersShop"
         const val SIDEBAR_AVATAR = "avatar"
         const val SIDEBAR_EQUIPMENT = "equipment"
         const val SIDEBAR_ITEMS = "items"

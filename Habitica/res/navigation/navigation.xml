@@ -387,4 +387,20 @@
             app:argType="string"
             app:nullable="true" />
     </fragment>
+    <fragment
+        android:id="@+id/marketFragment"
+        android:name="com.habitrpg.android.habitica.ui.fragments.inventory.shops.MarketFragment"
+        android:label="@string/market" />
+    <fragment
+        android:id="@+id/questShopFragment"
+        android:name="com.habitrpg.android.habitica.ui.fragments.inventory.shops.QuestShopFragment"
+        android:label="@string/questShop" />
+    <fragment
+        android:id="@+id/seasonalShopFragment"
+        android:name="com.habitrpg.android.habitica.ui.fragments.inventory.shops.SeasonalShopFragment"
+        android:label="@string/seasonalShop" />
+    <fragment
+        android:id="@+id/timeTravelersShopFragment"
+        android:name="com.habitrpg.android.habitica.ui.fragments.inventory.shops.TimeTravelersShopFragment"
+        android:label="@string/timeTravelers" />
 </navigation>

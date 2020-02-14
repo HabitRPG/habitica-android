@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.FragmentPagerAdapter
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
@@ -17,8 +19,10 @@ import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.fragment_viewpager.*
 import javax.inject.Inject
 
-class ShopsFragment : BaseMainFragment() {
 
+open class ShopsFragment : BaseMainFragment() {
+
+    protected var lockTab: Int? = null
     @Inject
     lateinit var inventoryRepository: InventoryRepository
 
@@ -39,12 +43,21 @@ class ShopsFragment : BaseMainFragment() {
         setViewPagerAdapter()
         toolbarAccessoryContainer?.addView(currencyView)
 
-        arguments?.let {
-            val args = ShopsFragmentArgs.fromBundle(it)
-            if (args.selectedTab > 0) {
-                viewPager.currentItem = args.selectedTab
+        if (lockTab == null) {
+            arguments?.let {
+                val args = ShopsFragmentArgs.fromBundle(it)
+                if (args.selectedTab > 0) {
+                    viewPager.currentItem = args.selectedTab
+                }
             }
+        } else {
+            this.usesTabLayout = false
+            tabLayout?.visibility = View.GONE
+            viewPager.currentItem = lockTab ?: 0
+            viewPager.setOnTouchListener { _, _ -> true }
         }
+
+        context?.let { FirebaseAnalytics.getInstance(it).logEvent("open_shop", bundleOf(Pair("shopIndex", lockTab))) }
 
         compositeSubscription.add(userRepository.getUser().subscribe(Consumer { updateCurrencyView(it) }, RxErrorHandler.handleEmptyError()))
     }
