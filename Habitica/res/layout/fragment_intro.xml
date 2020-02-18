@@ -40,7 +40,7 @@
         tools:text="@string/intro_2_title"
         android:layout_marginBottom="28dp" />
 
-    <com.facebook.drawee.view.SimpleDraweeView
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/imageView"
