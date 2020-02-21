@@ -52,18 +52,21 @@ class UserDeserializer : JsonDeserializer<User> {
             user.profile = context.deserialize(obj.get("profile"), Profile::class.java)
         }
         if (obj.has("party")) {
-            user.party = context.deserialize(obj.get("party"), UserParty::class.java)
+            val partyObj = obj.getAsJsonObject("party")
+            user.party = context.deserialize(partyObj, UserParty::class.java)
             if (user.party != null && user.party?.quest != null) {
                 user.party?.quest?.id = user.id
-                if (!obj.getAsJsonObject("party").getAsJsonObject("quest").has("RSVPNeeded")) {
+                if (!partyObj.getAsJsonObject("quest").has("RSVPNeeded")) {
                     val realm = Realm.getDefaultInstance()
                     val quest = realm.where(Quest::class.java).equalTo("id", user.id).findFirst()
                     if (quest != null && quest.isValid) {
                         user.party?.quest?.RSVPNeeded = quest.RSVPNeeded
                     }
                 }
-                if (obj.getAsJsonObject("party").getAsJsonObject("quest").has("completed")) {
-                    user.party?.quest?.completed = obj.getAsJsonObject("party").getAsJsonObject("quest").get("completed").asString
+                if (partyObj.getAsJsonObject("quest").has("completed")) {
+                    if (!partyObj.getAsJsonObject("quest").get("completed").isJsonNull) {
+                        user.party?.quest?.completed = obj.getAsJsonObject("party").getAsJsonObject("quest").get("completed").asString
+                    }
                 }
             }
         }
