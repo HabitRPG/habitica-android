@@ -68,7 +68,7 @@ class ShopItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), Vi
         itemDetailIndicator.visibility = View.GONE
 
         val lockedReason = item.shortLockedReason(context)
-        if (!item.locked) {
+        if (!item.locked || lockedReason == null) {
             priceLabel.text = item.value.toString()
             priceLabel.currency = item.currency
             if (item.currency == null) {
@@ -76,6 +76,10 @@ class ShopItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), Vi
             }
             priceLabel.visibility = View.VISIBLE
             unlockLabel.visibility = View.GONE
+            if (item.locked) {
+                itemDetailIndicator.background = lockedDrawable
+                itemDetailIndicator.visibility = View.VISIBLE
+            }
         } else {
             unlockLabel.text = lockedReason
             priceLabel.visibility = View.GONE
