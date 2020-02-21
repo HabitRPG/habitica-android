@@ -11,7 +11,7 @@ import android.widget.LinearLayout
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.SubscriptionDetailsBinding
 import com.habitrpg.android.habitica.extensions.layoutInflater
-import com.habitrpg.android.habitica.models.user.SubscriptionPlan
+import com.habitrpg.shared.habitica.models.user.SubscriptionPlan
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import java.text.DateFormat
 import java.util.*
@@ -20,7 +20,7 @@ class SubscriptionDetailsView : LinearLayout {
 
     lateinit var binding: SubscriptionDetailsBinding
 
-    private var plan: SubscriptionPlan? = null
+    private var plan: com.habitrpg.shared.habitica.models.user.SubscriptionPlan? = null
 
     var onShowSubscriptionOptions: (() -> Unit)? = null
 
@@ -40,7 +40,7 @@ class SubscriptionDetailsView : LinearLayout {
         binding.heartIcon.setImageDrawable(BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfHeartLightBg()))
     }
 
-    fun setPlan(plan: SubscriptionPlan) {
+    fun setPlan(plan: com.habitrpg.shared.habitica.models.user.SubscriptionPlan) {
         this.plan = plan
 
         updateSubscriptionStatusPill(plan)
@@ -48,13 +48,13 @@ class SubscriptionDetailsView : LinearLayout {
         var duration: String? = null
 
         if (plan.planId != null && plan.dateTerminated == null) {
-            if (plan.planId == SubscriptionPlan.PLANID_BASIC || plan.planId == SubscriptionPlan.PLANID_BASICEARNED) {
+            if (plan.planId == com.habitrpg.shared.habitica.models.user.SubscriptionPlan.PLANID_BASIC || plan.planId == com.habitrpg.shared.habitica.models.user.SubscriptionPlan.PLANID_BASICEARNED) {
                 duration = resources.getString(R.string.month)
-            } else if (plan.planId == SubscriptionPlan.PLANID_BASIC3MONTH) {
+            } else if (plan.planId == com.habitrpg.shared.habitica.models.user.SubscriptionPlan.PLANID_BASIC3MONTH) {
                 duration = resources.getString(R.string.three_months)
-            } else if (plan.planId == SubscriptionPlan.PLANID_BASIC6MONTH || plan.planId == SubscriptionPlan.PLANID_GOOGLE6MONTH) {
+            } else if (plan.planId == com.habitrpg.shared.habitica.models.user.SubscriptionPlan.PLANID_BASIC6MONTH || plan.planId == com.habitrpg.shared.habitica.models.user.SubscriptionPlan.PLANID_GOOGLE6MONTH) {
                 duration = resources.getString(R.string.six_months)
-            } else if (plan.planId == SubscriptionPlan.PLANID_BASIC12MONTH) {
+            } else if (plan.planId == com.habitrpg.shared.habitica.models.user.SubscriptionPlan.PLANID_BASIC12MONTH) {
                 duration = resources.getString(R.string.twelve_months)
             }
         }
@@ -127,7 +127,7 @@ class SubscriptionDetailsView : LinearLayout {
         }
     }
 
-    private fun updateSubscriptionStatusPill(plan: SubscriptionPlan) {
+    private fun updateSubscriptionStatusPill(plan: com.habitrpg.shared.habitica.models.user.SubscriptionPlan) {
         if (plan.isActive) {
             if (plan.dateTerminated != null) {
                 if (plan.isGiftedSub) {

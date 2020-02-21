@@ -9,7 +9,7 @@ import androidx.preference.PreferenceManager
 import android.widget.Button
 import androidx.core.content.edit
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.models.tasks.Task
+import com.habitrpg.shared.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.widget.AddTaskWidgetProvider
 

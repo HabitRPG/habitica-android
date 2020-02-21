@@ -10,7 +10,7 @@ import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.TaskFilterHelper
-import com.habitrpg.android.habitica.models.tasks.Task
+import com.habitrpg.shared.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
 import com.habitrpg.android.habitica.ui.viewHolders.BindableViewHolder
 import io.reactivex.Flowable
@@ -21,7 +21,7 @@ import java.util.*
 import javax.inject.Inject
 
 abstract class BaseTasksRecyclerViewAdapter<VH : BindableViewHolder<Task>>(var taskType: String, private val taskFilterHelper: TaskFilterHelper?, private val layoutResource: Int,
-                                                                     newContext: Context, private val userID: String?) : RecyclerView.Adapter<VH>() {
+                                                                                                                     newContext: Context, private val userID: String?) : RecyclerView.Adapter<VH>() {
     @Inject
     lateinit var crashlyticsProxy: CrashlyticsProxy
     @Inject

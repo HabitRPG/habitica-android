@@ -6,11 +6,12 @@ import com.habitrpg.android.habitica.data.local.TaskLocalRepository
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.interactors.ScoreTaskLocallyInteractor
-import com.habitrpg.android.habitica.models.responses.TaskDirection
-import com.habitrpg.android.habitica.models.responses.TaskDirectionData
+import com.habitrpg.shared.habitica.models.responses.TaskDirection
+import com.habitrpg.shared.habitica.models.responses.TaskDirectionData
 import com.habitrpg.android.habitica.models.responses.TaskScoringResult
-import com.habitrpg.android.habitica.models.tasks.*
-import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.shared.habitica.models.user.User
+import com.habitrpg.shared.habitica.models.tasks.Task
+import com.habitrpg.shared.habitica.models.user.TasksOrder
 import io.reactivex.Flowable
 import io.reactivex.Maybe
 import io.reactivex.Single
@@ -35,16 +36,16 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
     override fun getCurrentUserTasks(taskType: String): Flowable<RealmResults<Task>> =
             this.localRepository.getTasks(taskType, userID)
 
-    override fun saveTasks(userId: String, order: TasksOrder, tasks: TaskList) {
+    override fun saveTasks(userId: String, order: TasksOrder, tasks: com.habitrpg.shared.habitica.models.tasks.TaskList) {
         localRepository.saveTasks(userId, order, tasks)
     }
 
-    override fun retrieveTasks(userId: String, tasksOrder: TasksOrder): Flowable<TaskList> {
+    override fun retrieveTasks(userId: String, tasksOrder: TasksOrder): Flowable<com.habitrpg.shared.habitica.models.tasks.TaskList> {
         return this.apiClient.tasks
                 .doOnNext { res -> this.localRepository.saveTasks(userId, tasksOrder, res) }
     }
 
-    override fun retrieveCompletedTodos(userId: String): Flowable<TaskList> {
+    override fun retrieveCompletedTodos(userId: String): Flowable<com.habitrpg.shared.habitica.models.tasks.TaskList> {
         return this.apiClient.getTasks("completedTodos")
                 .doOnNext { taskList ->
                     val tasks = taskList.tasks
@@ -54,7 +55,7 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
                 }
     }
 
-    override fun retrieveTasks(userId: String, tasksOrder: TasksOrder, dueDate: Date): Flowable<TaskList> {
+    override fun retrieveTasks(userId: String, tasksOrder: TasksOrder, dueDate: Date): Flowable<com.habitrpg.shared.habitica.models.tasks.TaskList> {
         val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZZZZZ", Locale.US)
         return this.apiClient.getTasks("dailys", formatter.format(dueDate))
                 .doOnNext { res -> this.localRepository.saveTasks(userId, tasksOrder, res) }
@@ -272,7 +273,7 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
     override fun getTaskCopies(tasks: List<Task>): Flowable<List<Task>> =
             Flowable.just(localRepository.getUnmanagedCopy(tasks))
 
-    override fun retrieveDailiesFromDate(date: Date): Flowable<TaskList> {
+    override fun retrieveDailiesFromDate(date: Date): Flowable<com.habitrpg.shared.habitica.models.tasks.TaskList> {
         val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZZZZZ", Locale.US)
         return apiClient.getTasks("dailys", formatter.format(date))
     }

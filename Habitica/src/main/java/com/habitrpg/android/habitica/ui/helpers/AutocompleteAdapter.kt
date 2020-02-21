@@ -10,7 +10,7 @@ import android.widget.TextView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.extensions.inflate
-import com.habitrpg.android.habitica.models.auth.LocalAuthentication
+import com.habitrpg.shared.habitica.models.auth.LocalAuthentication
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.social.FindUsernameResult
 import com.habitrpg.android.habitica.models.user.Authentication
@@ -55,7 +55,7 @@ class AutocompleteAdapter(val context: Context, val socialRepository: SocialRepo
                         }.filter { it.username?.startsWith(constraint.toString().drop(1)) ?: false }.map {message ->
                             val result = FindUsernameResult()
                             result.authentication = Authentication()
-                            result.authentication?.localAuthentication = LocalAuthentication()
+                            result.authentication?.localAuthentication = com.habitrpg.shared.habitica.models.auth.LocalAuthentication()
                             result.authentication?.localAuthentication?.userID = message.uuid
                             result.authentication?.localAuthentication?.username = message.username
                             result.contributor = message.contributor

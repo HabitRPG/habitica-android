@@ -2,7 +2,7 @@ package com.habitrpg.android.habitica.data
 
 
 import com.habitrpg.android.habitica.models.SetupCustomization
-import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.shared.habitica.models.user.User
 
 interface SetupCustomizationRepository {
 

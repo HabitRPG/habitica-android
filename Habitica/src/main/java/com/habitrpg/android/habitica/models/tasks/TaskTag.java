@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.models.tasks;
 
 
 import com.habitrpg.android.habitica.models.Tag;
+import com.habitrpg.shared.habitica.models.tasks.Task;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;

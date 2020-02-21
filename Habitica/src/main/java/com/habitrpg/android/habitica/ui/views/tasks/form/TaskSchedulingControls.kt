@@ -15,8 +15,8 @@ import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.extensions.inflate
-import com.habitrpg.android.habitica.models.tasks.Days
-import com.habitrpg.android.habitica.models.tasks.Task
+import com.habitrpg.shared.habitica.models.tasks.Days
+import com.habitrpg.shared.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.adapter.SimpleSpinnerAdapter
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import java.text.DateFormat
@@ -92,7 +92,7 @@ class TaskSchedulingControls @JvmOverloads constructor(
         }
         generateSummary()
     }
-    var weeklyRepeat: Days = Days()
+    var weeklyRepeat: com.habitrpg.shared.habitica.models.tasks.Days = com.habitrpg.shared.habitica.models.tasks.Days()
     set(value) {
         field = value
         createWeeklyRepeatViews()
@@ -128,7 +128,7 @@ class TaskSchedulingControls @JvmOverloads constructor(
         frequency = Task.FREQUENCY_WEEKLY
         startDate = Date()
         everyX = 1
-        weeklyRepeat = Days()
+        weeklyRepeat = com.habitrpg.shared.habitica.models.tasks.Days()
 
         repeatsEverySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {

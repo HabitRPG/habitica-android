@@ -1,0 +1,21 @@
+package com.habitrpg.shared.habitica.models.user
+
+import com.habitrpg.shared.habitica.models.inventory.Customization
+import com.habitrpg.shared.habitica.nativePackages.NativeList
+import com.habitrpg.shared.habitica.nativePackages.NativeRealmObject
+import com.habitrpg.shared.habitica.nativePackages.annotations.PrimaryKeyAnnotation
+
+
+open class Purchases : NativeRealmObject() {
+
+    @PrimaryKeyAnnotation
+    var userId: String? = null
+
+    var customizations: NativeList<Customization> = NativeList()
+    internal var user: User? = null
+    var plan: SubscriptionPlan? = null
+
+    fun setCustomizations(customizations: NativeList<Customization>) {
+        this.customizations = customizations
+    }
+}

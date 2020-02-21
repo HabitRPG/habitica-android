@@ -17,7 +17,7 @@ import com.facebook.drawee.view.MultiDraweeHolder
 import com.facebook.imagepipeline.image.ImageInfo
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.helpers.AppConfigManager
-import com.habitrpg.android.habitica.models.Avatar
+import com.habitrpg.shared.habitica.models.Avatar
 import io.reactivex.functions.Consumer
 import java.util.*
 import java.util.concurrent.atomic.AtomicInteger
@@ -33,7 +33,7 @@ class AvatarView : View {
     private var hasPet: Boolean = false
     private var isOrphan: Boolean = false
     private val multiDraweeHolder = MultiDraweeHolder<GenericDraweeHierarchy>()
-    private var avatar: Avatar? = null
+    private var avatar: com.habitrpg.shared.habitica.models.Avatar? = null
     private var avatarRectF: RectF? = null
     private val avatarMatrix = Matrix()
     private val numberLayersInProcess = AtomicInteger(0)
@@ -148,7 +148,7 @@ class AvatarView : View {
         if (isOrphan) multiDraweeHolder.onAttach()
     }
 
-    private fun getLayerMap(avatar: Avatar, resetHasAttributes: Boolean): Map<LayerType, String> {
+    private fun getLayerMap(avatar: com.habitrpg.shared.habitica.models.Avatar, resetHasAttributes: Boolean): Map<LayerType, String> {
         val substitutions = AppConfigManager().spriteSubstitutions()
         val layerMap = getAvatarLayerMap(avatar, substitutions)
 
@@ -197,7 +197,7 @@ class AvatarView : View {
     }
 
     @Suppress("ReturnCount")
-    private fun getAvatarLayerMap(avatar: Avatar, substitutions: Map<String, Map<String, String>>): EnumMap<LayerType, String> {
+    private fun getAvatarLayerMap(avatar: com.habitrpg.shared.habitica.models.Avatar, substitutions: Map<String, Map<String, String>>): EnumMap<LayerType, String> {
         val layerMap = EnumMap<LayerType, String>(LayerType::class.java)
 
         if (!avatar.isValid) {
@@ -411,7 +411,7 @@ class AvatarView : View {
         }
     }
 
-    fun setAvatar(avatar: Avatar) {
+    fun setAvatar(avatar: com.habitrpg.shared.habitica.models.Avatar) {
         val oldUser = this.avatar
         this.avatar = avatar
 

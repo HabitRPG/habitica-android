@@ -13,9 +13,9 @@ import com.habitrpg.android.habitica.databinding.AvatarWithBarsBinding
 import com.habitrpg.android.habitica.events.BoughtGemsEvent
 import com.habitrpg.android.habitica.helpers.HealthFormatter
 import com.habitrpg.android.habitica.helpers.MainNavigationController
-import com.habitrpg.android.habitica.models.Avatar
+import com.habitrpg.shared.habitica.models.Avatar
 import com.habitrpg.android.habitica.models.user.Stats
-import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.shared.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.ValueBar
 import io.reactivex.disposables.Disposable
@@ -24,7 +24,7 @@ import java.util.*
 import kotlin.math.floor
 
 class AvatarWithBarsViewModel(private val context: Context, private val binding: AvatarWithBarsBinding, userRepository: UserRepository? = null) {
-    private var userObject: Avatar? = null
+    private var userObject: com.habitrpg.shared.habitica.models.Avatar? = null
 
     private var cachedMaxHealth: Int = 0
     private var cachedMaxExp: Int = 0
@@ -47,7 +47,7 @@ class AvatarWithBarsViewModel(private val context: Context, private val binding:
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
-    fun updateData(user: Avatar) {
+    fun updateData(user: com.habitrpg.shared.habitica.models.Avatar) {
         userObject = user
 
         val stats = user.stats ?: return

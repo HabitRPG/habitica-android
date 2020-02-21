@@ -12,11 +12,11 @@ import com.habitrpg.android.habitica.models.responses.*
 import com.habitrpg.android.habitica.models.shops.Shop
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.models.social.*
-import com.habitrpg.android.habitica.models.tasks.Task
-import com.habitrpg.android.habitica.models.tasks.TaskList
+import com.habitrpg.shared.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.user.Items
 import com.habitrpg.android.habitica.models.user.Stats
-import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.shared.habitica.models.user.User
+import com.habitrpg.shared.habitica.models.responses.TaskDirectionData
 import io.reactivex.Flowable
 import retrofit2.http.*
 
@@ -38,7 +38,7 @@ interface ApiService {
 
 
     @get:GET("tasks/user")
-    val tasks: Flowable<HabitResponse<TaskList>>
+    val tasks: Flowable<HabitResponse<com.habitrpg.shared.habitica.models.tasks.TaskList>>
 
     @get:GET("world-state")
     val worldState: Flowable<HabitResponse<WorldState>>
@@ -86,10 +86,10 @@ interface ApiService {
     fun hatchPet(@Path("egg") eggKey: String, @Path("hatchingPotion") hatchingPotionKey: String): Flowable<HabitResponse<Items>>
 
     @GET("tasks/user")
-    fun getTasks(@Query("type") type: String): Flowable<HabitResponse<TaskList>>
+    fun getTasks(@Query("type") type: String): Flowable<HabitResponse<com.habitrpg.shared.habitica.models.tasks.TaskList>>
 
     @GET("tasks/user")
-    fun getTasks(@Query("type") type: String, @Query("dueDate") dueDate: String): Flowable<HabitResponse<TaskList>>
+    fun getTasks(@Query("type") type: String, @Query("dueDate") dueDate: String): Flowable<HabitResponse<com.habitrpg.shared.habitica.models.tasks.TaskList>>
 
 
     @POST("user/unlock")
@@ -300,7 +300,7 @@ interface ApiService {
     fun getUserChallenges(@Query("page") page: Int?): Flowable<HabitResponse<List<Challenge>>>
 
     @GET("tasks/challenge/{challengeId}")
-    fun getChallengeTasks(@Path("challengeId") challengeId: String): Flowable<HabitResponse<TaskList>>
+    fun getChallengeTasks(@Path("challengeId") challengeId: String): Flowable<HabitResponse<com.habitrpg.shared.habitica.models.tasks.TaskList>>
 
     @GET("challenges/{challengeId}")
     fun getChallenge(@Path("challengeId") challengeId: String): Flowable<HabitResponse<Challenge>>

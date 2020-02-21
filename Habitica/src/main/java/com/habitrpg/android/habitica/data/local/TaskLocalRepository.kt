@@ -1,10 +1,9 @@
 package com.habitrpg.android.habitica.data.local
 
 import com.habitrpg.android.habitica.models.tasks.RemindersItem
-import com.habitrpg.android.habitica.models.tasks.Task
-import com.habitrpg.android.habitica.models.tasks.TaskList
-import com.habitrpg.android.habitica.models.tasks.TasksOrder
-import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.shared.habitica.models.tasks.Task
+import com.habitrpg.shared.habitica.models.user.TasksOrder
+import com.habitrpg.shared.habitica.models.user.User
 import io.reactivex.Flowable
 import io.reactivex.Maybe
 import io.realm.RealmResults
@@ -14,7 +13,7 @@ interface TaskLocalRepository : BaseLocalRepository {
     fun getTasks(taskType: String, userID: String): Flowable<RealmResults<Task>>
     fun getTasks(userId: String): Flowable<RealmResults<Task>>
 
-    fun saveTasks(userId: String, tasksOrder: TasksOrder, tasks: TaskList)
+    fun saveTasks(userId: String, tasksOrder: TasksOrder, tasks: com.habitrpg.shared.habitica.models.tasks.TaskList)
 
     fun deleteTask(taskID: String)
 
@@ -29,7 +28,7 @@ interface TaskLocalRepository : BaseLocalRepository {
 
     fun getTaskAtPosition(taskType: String, position: Int): Flowable<Task>
 
-    fun updateIsdue(daily: TaskList): Maybe<TaskList>
+    fun updateIsdue(daily: com.habitrpg.shared.habitica.models.tasks.TaskList): Maybe<com.habitrpg.shared.habitica.models.tasks.TaskList>
 
     fun updateTaskPositions(taskOrder: List<String>)
     fun saveCompletedTodos(userId: String, tasks: MutableCollection<Task>)

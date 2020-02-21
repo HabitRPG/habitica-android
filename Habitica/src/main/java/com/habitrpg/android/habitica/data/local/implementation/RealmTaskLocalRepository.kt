@@ -1,8 +1,9 @@
 package com.habitrpg.android.habitica.data.local.implementation
 
 import com.habitrpg.android.habitica.data.local.TaskLocalRepository
-import com.habitrpg.android.habitica.models.tasks.*
-import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.shared.habitica.models.user.User
+import com.habitrpg.shared.habitica.models.tasks.Task
+import com.habitrpg.shared.habitica.models.user.TasksOrder
 import io.reactivex.Flowable
 import io.reactivex.Maybe
 import io.realm.Realm
@@ -37,7 +38,7 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
                 .filter { it.isLoaded }
     }
 
-    override fun saveTasks(userId: String, tasksOrder: TasksOrder, tasks: TaskList) {
+    override fun saveTasks(userId: String, tasksOrder: TasksOrder, tasks: com.habitrpg.shared.habitica.models.tasks.TaskList) {
         val sortedTasks = ArrayList<Task>()
         sortedTasks.addAll(sortTasks(tasks.tasks, tasksOrder.habits))
         sortedTasks.addAll(sortTasks(tasks.tasks, tasksOrder.dailys))
@@ -197,7 +198,7 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
                 .cast(Task::class.java)
     }
 
-    override fun updateIsdue(daily: TaskList): Maybe<TaskList> {
+    override fun updateIsdue(daily: com.habitrpg.shared.habitica.models.tasks.TaskList): Maybe<com.habitrpg.shared.habitica.models.tasks.TaskList> {
         return Flowable.just(realm.where(Task::class.java).equalTo("type", "daily").findAll())
                 .firstElement()
                 .map { tasks ->

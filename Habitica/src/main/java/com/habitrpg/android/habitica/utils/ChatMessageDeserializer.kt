@@ -8,7 +8,7 @@ import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.social.ChatMessageLike
 import com.habitrpg.android.habitica.models.social.UserStyles
 import com.habitrpg.android.habitica.models.user.Backer
-import com.habitrpg.android.habitica.models.user.ContributorInfo
+import com.habitrpg.shared.habitica.models.user.ContributorInfo
 import io.realm.RealmList
 import java.lang.reflect.Type
 import java.util.*
@@ -43,9 +43,9 @@ class ChatMessageDeserializer : JsonDeserializer<ChatMessage> {
         if (obj.has("contributor")) {
             if (!obj.get("contributor").isJsonNull) {
                 if (obj.get("contributor").isJsonObject) {
-                    message.contributor = context.deserialize<ContributorInfo>(obj.get("contributor"), ContributorInfo::class.java)
+                    message.contributor = context.deserialize<com.habitrpg.shared.habitica.models.user.ContributorInfo>(obj.get("contributor"), com.habitrpg.shared.habitica.models.user.ContributorInfo::class.java)
                 } else {
-                    val contributor = ContributorInfo()
+                    val contributor = com.habitrpg.shared.habitica.models.user.ContributorInfo()
                     contributor.text = obj.get("contributor").asString
                     message.contributor = contributor
                 }

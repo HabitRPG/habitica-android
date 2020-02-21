@@ -1,7 +1,7 @@
 package com.habitrpg.android.habitica.models.social
 
-import com.habitrpg.android.habitica.models.tasks.TasksOrder
-import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.shared.habitica.models.user.TasksOrder
+import com.habitrpg.shared.habitica.models.user.User
 import io.realm.RealmObject
 import io.realm.annotations.Ignore
 import io.realm.annotations.PrimaryKey

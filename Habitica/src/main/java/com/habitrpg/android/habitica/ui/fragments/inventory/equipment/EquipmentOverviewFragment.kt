@@ -9,8 +9,8 @@ import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.FragmentEquipmentOverviewBinding
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.android.habitica.models.user.Gear
-import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.shared.habitica.models.user.Gear
+import com.habitrpg.shared.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import io.reactivex.functions.Consumer
 import javax.inject.Inject
@@ -73,7 +73,7 @@ class EquipmentOverviewFragment : BaseMainFragment() {
         MainNavigationController.navigate(EquipmentOverviewFragmentDirections.openEquipmentDetail(type, isCostume ?: false, equipped ?: ""))
     }
 
-    private fun updateGearData(gear: Gear) {
+    private fun updateGearData(gear: com.habitrpg.shared.habitica.models.user.Gear) {
         if (gear.equipped?.weapon?.isNotEmpty() == true) {
             compositeSubscription.add(inventoryRepository.getEquipment(gear.equipped?.weapon ?: "").firstElement()
                     .subscribe(Consumer {

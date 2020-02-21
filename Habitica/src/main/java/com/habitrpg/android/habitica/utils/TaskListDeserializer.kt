@@ -4,7 +4,7 @@ import com.google.firebase.perf.FirebasePerformance
 import com.google.gson.*
 import com.habitrpg.android.habitica.extensions.getAsString
 import com.habitrpg.android.habitica.models.Tag
-import com.habitrpg.android.habitica.models.tasks.*
+import com.habitrpg.shared.habitica.models.tasks.Task
 import io.realm.Realm
 import io.realm.RealmList
 
@@ -14,7 +14,7 @@ import java.util.*
 /**
  * Created by viirus on 09/12/15.
  */
-class TaskListDeserializer : JsonDeserializer<TaskList> {
+class TaskListDeserializer : JsonDeserializer<com.habitrpg.shared.habitica.models.tasks.TaskList> {
 
     private fun getIntListFromJsonArray(jsonArray: JsonArray): List<Int> {
         val intList = ArrayList<Int>()
@@ -38,8 +38,8 @@ class TaskListDeserializer : JsonDeserializer<TaskList> {
         }
     }
 
-    override fun deserialize(json: JsonElement, typeOfT: Type, ctx: JsonDeserializationContext): TaskList {
-        val tasks = TaskList()
+    override fun deserialize(json: JsonElement, typeOfT: Type, ctx: JsonDeserializationContext): com.habitrpg.shared.habitica.models.tasks.TaskList {
+        val tasks = com.habitrpg.shared.habitica.models.tasks.TaskList()
         val taskMap = HashMap<String, Task>()
         val deserializeTrace = FirebasePerformance.getInstance().newTrace("TaskListDeserialize")
         deserializeTrace.start()
@@ -109,7 +109,7 @@ class TaskListDeserializer : JsonDeserializer<TaskList> {
                         }
                     }
                     if (obj.has("repeat")) {
-                        task.repeat = ctx.deserialize(obj.get("repeat"), Days::class.java)
+                        task.repeat = ctx.deserialize(obj.get("repeat"), com.habitrpg.shared.habitica.models.tasks.Days::class.java)
                     }
 
                     if (obj.has("group")) {

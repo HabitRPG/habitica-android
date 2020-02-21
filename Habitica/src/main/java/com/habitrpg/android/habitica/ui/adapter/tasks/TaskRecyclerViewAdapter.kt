@@ -1,8 +1,8 @@
 package com.habitrpg.android.habitica.ui.adapter.tasks
 
-import com.habitrpg.android.habitica.models.responses.TaskDirection
+import com.habitrpg.shared.habitica.models.responses.TaskDirection
 import com.habitrpg.android.habitica.models.tasks.ChecklistItem
-import com.habitrpg.android.habitica.models.tasks.Task
+import com.habitrpg.shared.habitica.models.tasks.Task
 import io.reactivex.Flowable
 import io.realm.OrderedRealmCollection
 

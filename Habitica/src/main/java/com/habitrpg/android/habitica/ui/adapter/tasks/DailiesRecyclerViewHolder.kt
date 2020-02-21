@@ -3,7 +3,7 @@ package com.habitrpg.android.habitica.ui.adapter.tasks
 import android.view.ViewGroup
 
 import com.habitrpg.android.habitica.helpers.TaskFilterHelper
-import com.habitrpg.android.habitica.models.tasks.Task
+import com.habitrpg.shared.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.DailyViewHolder
 
 import io.realm.OrderedRealmCollection

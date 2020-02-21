@@ -2,10 +2,9 @@ package com.habitrpg.android.habitica.data
 
 import com.habitrpg.android.habitica.models.responses.TaskScoringResult
 import com.habitrpg.android.habitica.models.tasks.RemindersItem
-import com.habitrpg.android.habitica.models.tasks.Task
-import com.habitrpg.android.habitica.models.tasks.TaskList
-import com.habitrpg.android.habitica.models.tasks.TasksOrder
-import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.shared.habitica.models.tasks.Task
+import com.habitrpg.shared.habitica.models.user.TasksOrder
+import com.habitrpg.shared.habitica.models.user.User
 import io.reactivex.Flowable
 import io.reactivex.Maybe
 import io.reactivex.Single
@@ -18,10 +17,10 @@ interface TaskRepository : BaseRepository {
     fun getTasks(userId: String): Flowable<RealmResults<Task>>
     fun getCurrentUserTasks(taskType: String): Flowable<RealmResults<Task>>
     fun getTasksOfType(taskType: String): Flowable<RealmResults<Task>>
-    fun saveTasks(userId: String, order: TasksOrder, tasks: TaskList)
+    fun saveTasks(userId: String, order: TasksOrder, tasks: com.habitrpg.shared.habitica.models.tasks.TaskList)
 
-    fun retrieveTasks(userId: String, tasksOrder: TasksOrder): Flowable<TaskList>
-    fun retrieveTasks(userId: String, tasksOrder: TasksOrder, dueDate: Date): Flowable<TaskList>
+    fun retrieveTasks(userId: String, tasksOrder: TasksOrder): Flowable<com.habitrpg.shared.habitica.models.tasks.TaskList>
+    fun retrieveTasks(userId: String, tasksOrder: TasksOrder, dueDate: Date): Flowable<com.habitrpg.shared.habitica.models.tasks.TaskList>
 
     fun taskChecked(user: User?, task: Task, up: Boolean, force: Boolean, notifyFunc: ((TaskScoringResult) -> Unit)?): Flowable<TaskScoringResult?>
     fun taskChecked(user: User?, taskId: String, up: Boolean, force: Boolean, notifyFunc: ((TaskScoringResult) -> Unit)?): Maybe<TaskScoringResult?>
@@ -56,7 +55,7 @@ interface TaskRepository : BaseRepository {
 
     fun getTaskCopies(tasks: List<Task>): Flowable<List<Task>>
 
-    fun retrieveDailiesFromDate(date: Date): Flowable<TaskList>
-    fun retrieveCompletedTodos(userId: String): Flowable<TaskList>
+    fun retrieveDailiesFromDate(date: Date): Flowable<com.habitrpg.shared.habitica.models.tasks.TaskList>
+    fun retrieveCompletedTodos(userId: String): Flowable<com.habitrpg.shared.habitica.models.tasks.TaskList>
     fun syncErroredTasks(): Single<List<Task>>
 }

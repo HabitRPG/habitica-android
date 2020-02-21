@@ -22,8 +22,8 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.inventory.QuestContent
-import com.habitrpg.android.habitica.models.inventory.QuestProgressCollect
-import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.shared.habitica.models.inventory.QuestProgressCollect
+import com.habitrpg.shared.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.helpers.setMarkdown
@@ -260,7 +260,7 @@ class QuestProgressView : LinearLayout {
         alert.show()
     }
 
-    private fun setCollectionViews(collection: RealmList<QuestProgressCollect>, quest: QuestContent) {
+    private fun setCollectionViews(collection: RealmList<com.habitrpg.shared.habitica.models.inventory.QuestProgressCollect>, quest: QuestContent) {
         val inflater = LayoutInflater.from(context)
         for (collect in collection) {
             val contentCollect = quest.getCollectWithKey(collect.key) ?: continue

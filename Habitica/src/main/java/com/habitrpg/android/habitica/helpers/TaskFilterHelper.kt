@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.helpers
 
-import com.habitrpg.android.habitica.models.tasks.Task
+import com.habitrpg.shared.habitica.models.tasks.Task
 import io.realm.Case
 import io.realm.OrderedRealmCollection
 import io.realm.RealmQuery

@@ -5,7 +5,7 @@ import com.habitrpg.android.habitica.models.responses.BuyResponse
 import com.habitrpg.android.habitica.models.responses.FeedResponse
 import com.habitrpg.android.habitica.models.shops.Shop
 import com.habitrpg.android.habitica.models.shops.ShopItem
-import com.habitrpg.android.habitica.models.user.*
+import com.habitrpg.shared.habitica.models.user.User
 import io.reactivex.Flowable
 import io.realm.RealmResults
 

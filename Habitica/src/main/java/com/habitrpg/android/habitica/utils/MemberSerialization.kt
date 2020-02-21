@@ -8,7 +8,6 @@ import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.members.MemberPreferences
 import com.habitrpg.android.habitica.models.social.UserParty
-import com.habitrpg.android.habitica.models.user.*
 import io.realm.Realm
 import java.lang.reflect.Type
 
@@ -76,7 +75,7 @@ class MemberSerialization : JsonDeserializer<Member> {
             }
         }
         if (obj.has("contributor")) {
-            member.contributor = context.deserialize<ContributorInfo>(obj.get("contributor"), ContributorInfo::class.java)
+            member.contributor = context.deserialize<com.habitrpg.shared.habitica.models.user.ContributorInfo>(obj.get("contributor"), com.habitrpg.shared.habitica.models.user.ContributorInfo::class.java)
         }
         if (obj.has("backer")) {
             member.backer = context.deserialize<Backer>(obj.get("backer"), Backer::class.java)

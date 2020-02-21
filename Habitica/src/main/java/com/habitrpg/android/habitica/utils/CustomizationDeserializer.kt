@@ -2,7 +2,7 @@ package com.habitrpg.android.habitica.utils
 
 import android.annotation.SuppressLint
 import com.google.gson.*
-import com.habitrpg.android.habitica.models.inventory.Customization
+import com.habitrpg.shared.habitica.models.inventory.Customization
 import io.realm.Realm
 import io.realm.RealmList
 import java.lang.reflect.Type
