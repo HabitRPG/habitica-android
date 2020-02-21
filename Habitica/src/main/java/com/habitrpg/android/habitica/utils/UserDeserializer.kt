@@ -62,6 +62,9 @@ class UserDeserializer : JsonDeserializer<User> {
                         user.party?.quest?.RSVPNeeded = quest.RSVPNeeded
                     }
                 }
+                if (obj.getAsJsonObject("party").getAsJsonObject("quest").has("completed")) {
+                    user.party?.quest?.completed = obj.getAsJsonObject("party").getAsJsonObject("quest").get("completed").asString
+                }
             }
         }
         if (obj.has("purchased")) {

@@ -28,6 +28,8 @@ open class Quest : RealmObject() {
     var participants: RealmList<Member>? = null
     var rageStrikes: RealmList<QuestRageStrike>? = null
 
+    var completed: String? = null
+
     fun hasRageStrikes(): Boolean {
         return rageStrikes?.isNotEmpty() ?: false
     }
