@@ -352,6 +352,10 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
         if (newUser.profile != null) {
             copiedUser.profile = newUser.profile
         }
+        if (newUser.party != null) {
+            copiedUser.party = newUser.party
+        }
+        copiedUser.needsCron = newUser.needsCron
         copiedUser.versionNumber = newUser.versionNumber
 
         localRepository.saveUser(copiedUser)

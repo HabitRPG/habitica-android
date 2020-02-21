@@ -339,7 +339,7 @@
     <string name="login_incentive_count">Unlock by checking into Habitica %d times.</string>
     <string name="create_account">Unlock by creating an account</string>
     <string name="party_invite_short">Invite Friends</string>
-    <string name="login_incentive_short">login into Habitica regularly</string>
+    <string name="login_incentive_short">log into Habitica regularly</string>
     <string name="login_incentive_short_count">%d Checkins</string>
     <string name="create_account_short">create an account</string>
     <string name="successful_purchase">Purchased %1$s</string>
@@ -953,4 +953,5 @@
     <string name="unlock_previous_short">Finish Quest %d</string>
     <string name="unlock_level_short">Level %d</string>
     <string name="not_participating">You are not participating</string>
+    <string name="quest_completed">Quest completed!</string>
 </resources>

@@ -35,7 +35,6 @@ import com.habitrpg.android.habitica.data.*
 import com.habitrpg.android.habitica.databinding.ActivityMainBinding
 import com.habitrpg.android.habitica.events.*
 import com.habitrpg.android.habitica.events.commands.FeedCommand
-import com.habitrpg.android.habitica.extensions.DateUtils
 import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.*
@@ -356,6 +355,8 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
             if (quest?.completed?.isNotBlank() == true) {
                 compositeSubscription.add(inventoryRepository.getQuestContent(user?.party?.quest?.completed ?: "").firstElement().subscribe {
                     QuestCompletedDialog.showWithQuest(this, it)
+
+                    userRepository.updateUser(user, "party.quest.completed", "").subscribe(Consumer {}, RxErrorHandler.handleEmptyError())
                 })
             }
         }
