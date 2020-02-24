@@ -10,6 +10,15 @@ open class Preferences : NativeRealmObject(), AvatarPreferences {
 
     @PrimaryKeyAnnotation
     override var userId: String? = null
+        set(userId: String?) {
+            field = userId
+            if (hair?.isManaged() == false) {
+                hair?.userId = userId
+            }
+            if (suppressModals?.isManaged() == false) {
+                suppressModals?.userId = userId
+            }
+        }
 
     override var hair: Hair? = null
     var suppressModals: SuppressedModals? = null
@@ -21,11 +30,10 @@ open class Preferences : NativeRealmObject(), AvatarPreferences {
     var dailyDueDefaultView: Boolean = false
     var automaticAllocation: Boolean = false
     var allocationMode: String? = null
-    override var shirt: String? = null
-    override var skin: String? = null
-    override var size: String? = null
+    override var shirt: String = ""
+    override var skin: String = ""
+    override var size: String = ""
     override var background: String? = null
-    override var chair: String? = null
     var language: String? = null
     var sound: String? = null
     var dayStart: Int = 0
@@ -35,25 +43,17 @@ open class Preferences : NativeRealmObject(), AvatarPreferences {
     var emailNotifications: EmailNotificationsPreference? = null
     var autoEquip: Boolean = true
 
-    fun getChair(): String? {
-        return if (chair != null && chair != "none") {
-            if (chair!!.length > 5 && chair!!.substring(0, 6) != "chair_") {
-                chair
-            } else {
-                "chair_" + chair!!
-            }
-        } else null
-    }
+    override var chair: String? = null
+        get(): String? {
+            return if (field != null && field != "none") {
+                if (field!!.length > 5 && field!!.substring(0, 6) != "chair_") {
+                    field
+                } else {
+                    "chair_" + field!!
+                }
+            } else null
+        }
 
-    fun setUserId(userId: String?) {
-        this.userId = userId
-        if (hair?.isManaged() == false) {
-            hair?.userId = userId
-        }
-        if (suppressModals?.isManaged() == false) {
-            suppressModals?.userId = userId
-        }
-    }
 
     fun hasTaskBasedAllocation(): Boolean {
         return allocationMode?.toLowerCase() == "taskbased" && automaticAllocation

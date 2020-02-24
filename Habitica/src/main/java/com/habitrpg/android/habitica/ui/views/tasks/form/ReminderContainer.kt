@@ -8,14 +8,15 @@ import android.widget.LinearLayout
 import androidx.core.view.children
 import androidx.core.view.updateMargins
 import com.habitrpg.android.habitica.extensions.dpToPx
-import com.habitrpg.android.habitica.models.tasks.RemindersItem
+import com.habitrpg.shared.habitica.models.tasks.RemindersItem
 import com.habitrpg.shared.habitica.models.tasks.Task
+import com.habitrpg.shared.habitica.models.tasks.TaskType
 import io.realm.RealmList
 
 class ReminderContainer @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr) {
-    var taskType = Task.TYPE_DAILY
+    var taskType = TaskType.TYPE_DAILY
     set(value) {
         field = value
         for (view in children) {

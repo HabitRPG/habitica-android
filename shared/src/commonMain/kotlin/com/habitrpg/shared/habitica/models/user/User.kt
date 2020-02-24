@@ -5,6 +5,7 @@ import com.habitrpg.shared.habitica.models.invitations.Invitations
 import com.habitrpg.shared.habitica.models.social.ChallengeMembership
 import com.habitrpg.shared.habitica.models.social.UserParty
 import com.habitrpg.shared.habitica.models.tasks.TaskList
+import com.habitrpg.shared.habitica.nativePackages.NativeColor
 import com.habitrpg.shared.habitica.nativePackages.NativeDate
 import com.habitrpg.shared.habitica.nativePackages.NativeList
 import com.habitrpg.shared.habitica.nativePackages.NativeRealmObject
@@ -59,6 +60,12 @@ open class User : NativeRealmObject(), Avatar, VersionedObject {
 
     var balance: Double = 0.toDouble()
     override var stats: Stats? = null
+        set(stats: Stats?) {
+            field = stats
+            if (stats != null && this.id != null && !stats.isManaged()) {
+                stats.userId = this.id
+            }
+        }
     var inbox: Inbox? = null
         set(inbox) {
             field = inbox
@@ -67,15 +74,15 @@ open class User : NativeRealmObject(), Avatar, VersionedObject {
             }
         }
     override var preferences: Preferences? = null
-    get(): Preferences? {
-        return field
-    }
-    set(preferences: Preferences?) {
-        field = preferences
-        if (preferences != null && this.id != null && !preferences.isManaged()) {
-            preferences.userId = this.id
+        get(): Preferences? {
+            return field
         }
-    }
+        set(preferences: Preferences?) {
+            field = preferences
+            if (preferences != null && this.id != null && !preferences.isManaged()) {
+                preferences.userId = this.id
+            }
+        }
 
     var profile: Profile? = null
         set(profile) {
@@ -172,44 +179,31 @@ open class User : NativeRealmObject(), Avatar, VersionedObject {
         get() = this.items?.mounts?.size ?: 0
 
     val contributorColor: Int
-        get() = this.contributor?.contributorColor ?: NativeColour.black
+        get() = this.contributor?.contributorColor ?: NativeColor.black
     val username: String?
-    get() = authentication?.localAuthentication?.username
+        get() = authentication?.localAuthentication?.username
     val formattedUsername: String?
         get() = if (username != null) "@$username" else null
 
-
-    // TODO multi check that missing override is acceptable
-    fun getStats(): Stats? {
-        return stats
-    }
-
-    fun setStats(stats: Stats?) {
-        this.stats = stats
-        if (stats != null && this.id != null && !stats.isManaged()) {
-            stats.userId = this.id
+    override val gemCount: Int
+        get() {
+            return (this.balance * 4).toInt()
         }
-    }
 
-    override val gemCount: Int?
-    get() {
-        return (this.balance * 4).toInt()
-    }
-
-    override val hourglassCount: Int?
-    get() {
-        return purchased?.plan?.consecutive?.trinkets ?: 0
-    }
+    override val hourglassCount: Int
+        get() {
+            return purchased?.plan?.consecutive?.trinkets ?: 0
+        }
 
     override val costume: Outfit?
-    get() {
-        return items?.gear?.costume
-    }
+        get() {
+            return items?.gear?.costume
+        }
 
     override val equipped: Outfit?
-    get() {
-        return items?.gear?.equipped
-    }
+        get() {
+            return items?.gear?.equipped
+        }
 
     override fun hasClass(): Boolean {
         return preferences?.disableClasses != true && flags?.classSelected == true && stats?.habitClass?.isNotEmpty() == true
@@ -217,18 +211,18 @@ open class User : NativeRealmObject(), Avatar, VersionedObject {
 
     override val currentMount: String?
         get() {
-        return items?.currentMount ?: ""
-    }
+            return items?.currentMount ?: ""
+        }
 
     override val currentPet: String?
         get() {
-        return items?.currentPet ?: ""
-    }
+            return items?.currentPet ?: ""
+        }
 
-    override var sleep: Boolean? = null
-    fun getSleep(): Boolean {
-        return preferences?.sleep ?: false
-    }
+    override val sleep: Boolean
+        get(): Boolean {
+            return preferences?.sleep ?: false
+        }
 
     fun hasParty(): Boolean {
         return this.party?.id?.length ?: 0 > 0
@@ -245,8 +239,4 @@ open class User : NativeRealmObject(), Avatar, VersionedObject {
             }
             return isSubscribed
         }
-
-    override fun isValid(): Boolean {
-        return true;
-    }
 }

@@ -8,7 +8,7 @@ import android.widget.FrameLayout
 import android.widget.RelativeLayout
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.inflate
-import com.habitrpg.android.habitica.models.TutorialStep
+import com.habitrpg.shared.habitica.models.TutorialStep
 import com.habitrpg.android.habitica.ui.helpers.bindView
 
 class TutorialView(context: Context, var step: TutorialStep, var onReaction: OnTutorialReaction?) : FrameLayout(context) {

@@ -11,9 +11,9 @@ import com.habitrpg.android.habitica.events.commands.FeedCommand
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.Mount
 import com.habitrpg.android.habitica.models.inventory.Pet
-import com.habitrpg.android.habitica.models.user.Items
-import com.habitrpg.android.habitica.models.user.OwnedMount
-import com.habitrpg.android.habitica.models.user.OwnedPet
+import com.habitrpg.shared.habitica.models.user.Items
+import com.habitrpg.shared.habitica.models.user.OwnedMount
+import com.habitrpg.shared.habitica.models.user.OwnedPet
 import com.habitrpg.android.habitica.ui.adapter.inventory.PetDetailRecyclerAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemRecyclerFragment

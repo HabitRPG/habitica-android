@@ -1,7 +1,7 @@
 package com.habitrpg.android.habitica.models.social
 
 import com.google.gson.annotations.SerializedName
-import com.habitrpg.android.habitica.models.inventory.Quest
+import com.habitrpg.shared.habitica.models.inventory.Quest
 import com.habitrpg.shared.habitica.models.user.User
 
 import io.realm.RealmList

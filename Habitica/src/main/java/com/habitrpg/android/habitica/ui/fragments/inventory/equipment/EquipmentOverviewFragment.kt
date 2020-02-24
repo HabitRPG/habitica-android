@@ -73,22 +73,22 @@ class EquipmentOverviewFragment : BaseMainFragment() {
         MainNavigationController.navigate(EquipmentOverviewFragmentDirections.openEquipmentDetail(type, isCostume ?: false, equipped ?: ""))
     }
 
-    private fun updateGearData(gear: com.habitrpg.shared.habitica.models.user.Gear) {
+    private fun updateGearData(gear: Gear) {
         if (gear.equipped?.weapon?.isNotEmpty() == true) {
             compositeSubscription.add(inventoryRepository.getEquipment(gear.equipped?.weapon ?: "").firstElement()
                     .subscribe(Consumer {
-                        binding.battlegearView.updateData(gear.equipped, it.twoHanded)
+                        binding.battlegearView.updateData(gear.equipped!!, it.twoHanded)
                     }, RxErrorHandler.handleEmptyError()))
         } else {
-            binding.battlegearView.updateData(gear.equipped)
+            binding.battlegearView.updateData(gear.equipped!!)
         }
         if (gear.costume?.weapon?.isNotEmpty() == true) {
             compositeSubscription.add(inventoryRepository.getEquipment(gear.costume?.weapon ?: "").firstElement()
                     .subscribe(Consumer {
-                        binding.costumeView.updateData(gear.costume, it.twoHanded)
+                        binding.costumeView.updateData(gear.costume!!, it.twoHanded)
                     }, RxErrorHandler.handleEmptyError()))
         } else {
-            binding.costumeView.updateData(gear.costume)
+            binding.costumeView.updateData(gear.costume!!)
         }
     }
 }

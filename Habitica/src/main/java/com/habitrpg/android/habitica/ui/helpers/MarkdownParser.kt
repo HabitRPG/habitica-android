@@ -69,7 +69,7 @@ object MarkdownParser {
 
 
 fun TextView.setMarkdown(input: String?) {
-     MarkdownParser.markwon?.setParsedMarkdown(this, MarkdownParser.parseMarkdown(input))
+    MarkdownParser.markwon?.setParsedMarkdown(this, MarkdownParser.parseMarkdown(input))
 }
 
 fun TextView.setParsedMarkdown(input: Spanned?) {

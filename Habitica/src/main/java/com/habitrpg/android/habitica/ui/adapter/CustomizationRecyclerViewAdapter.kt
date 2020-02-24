@@ -23,8 +23,8 @@ import java.util.*
 
 class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
 
-    var userSize: String? = null
-    var hairColor: String? = null
+    var userSize: String = ""
+    var hairColor: String = ""
     var gemBalance: Int = 0
     var customizationList: MutableList<Any> = ArrayList()
     set(value) {

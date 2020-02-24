@@ -6,7 +6,7 @@ import com.habitrpg.shared.habitica.nativePackages.annotations.PrimaryKeyAnnotat
 open class QuestProgressCollect : NativeRealmObject() {
 
     @PrimaryKeyAnnotation
-    var key: String? = null
+    var key: String = ""
 
     var count: Int = 0
 }

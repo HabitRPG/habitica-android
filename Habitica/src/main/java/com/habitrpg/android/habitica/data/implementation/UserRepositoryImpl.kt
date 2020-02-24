@@ -7,7 +7,7 @@ import com.habitrpg.android.habitica.data.local.UserLocalRepository
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.Achievement
-import com.habitrpg.android.habitica.models.QuestAchievement
+import com.habitrpg.shared.habitica.models.QuestAchievement
 import com.habitrpg.android.habitica.models.Skill
 import com.habitrpg.shared.habitica.models.inventory.Customization
 import com.habitrpg.android.habitica.models.inventory.CustomizationSet
@@ -15,7 +15,7 @@ import com.habitrpg.android.habitica.models.responses.SkillResponse
 import com.habitrpg.android.habitica.models.responses.UnlockResponse
 import com.habitrpg.android.habitica.models.responses.VerifyUsernameResponse
 import com.habitrpg.shared.habitica.models.tasks.Task
-import com.habitrpg.android.habitica.models.user.Stats
+import com.habitrpg.shared.habitica.models.user.Stats
 import com.habitrpg.shared.habitica.models.user.User
 import io.reactivex.Flowable
 import io.reactivex.Maybe
@@ -95,7 +95,7 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
     }
 
     override fun sleep(user: User): Flowable<User> {
-        localRepository.executeTransaction { user.preferences?.isSleep = !(user.preferences?.sleep ?: false) }
+        localRepository.executeTransaction { user.preferences?.sleep = !(user.preferences?.sleep ?: false) }
         return apiClient.sleep().map { user }
     }
 
@@ -141,7 +141,7 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
                     copiedUser.preferences = unlockResponse.preferences
                     copiedUser.purchased = unlockResponse.purchased
                     copiedUser.items = unlockResponse.items
-                    copiedUser.balance = copiedUser.balance - customization.price / 4.0
+                    copiedUser.balance = copiedUser.balance - (customization.price ?: 0) / 4.0
                     localRepository.saveUser(copiedUser)
                 }
     }
@@ -290,8 +290,8 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
         if (user != null && appConfigManager.enableLocalChanges()) {
             localRepository.executeTransaction {
                 when (type) {
-                    "skin" -> user.preferences?.setSkin(identifier)
-                    "shirt" -> user.preferences?.setShirt(identifier)
+                    "skin" -> user.preferences?.skin = identifier
+                    "shirt" -> user.preferences?.shirt = identifier
                     "hair" -> {
                         when (category) {
                             "color" -> user.preferences?.hair?.color = identifier
@@ -302,8 +302,8 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
                             "base" -> user.preferences?.hair?.base = identifier.toInt()
                         }
                     }
-                    "background" -> user.preferences?.setBackground(identifier)
-                    "chair" -> user.preferences?.setChair(identifier)
+                    "background" -> user.preferences?.background = identifier
+                    "chair" -> user.preferences?.chair = identifier
                 }
             }
         }

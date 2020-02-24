@@ -5,7 +5,7 @@ import com.habitrpg.shared.habitica.nativePackages.annotations.PrimaryKeyAnnotat
 import com.habitrpg.shared.habitica.nativePackages.annotations.SerializedNameAnnotation
 import kotlin.jvm.JvmOverloads
 
-open class Buffs @JvmOverloads constructor(private var snowball: Boolean? = false, private var streaks: Boolean? = false) : NativeRealmObject() {
+open class Buffs @JvmOverloads constructor(snowball: Boolean? = false, streaks: Boolean? = false) : NativeRealmObject() {
 
     @PrimaryKeyAnnotation
     var userId: String? = null
@@ -15,49 +15,41 @@ open class Buffs @JvmOverloads constructor(private var snowball: Boolean? = fals
     var per: Float? = null
     @SerializedNameAnnotation("int")
     var _int: Float? = null
-    private var seafoam: Boolean? = null
-    private var spookySparkles: Boolean? = null
-    private var shinySeed: Boolean? = null
-
-    fun getSnowball(): Boolean? {
-        return if (snowball != null) snowball else false
-    }
-
-    fun setSnowball(snowball: Boolean?) {
-        this.snowball = snowball
-    }
-
-    fun getSeafoam(): Boolean? {
-        return if (seafoam != null) seafoam else false
-    }
-
-    fun setSeafoam(seafoam: Boolean?) {
-        this.seafoam = seafoam
-    }
-
-    fun getSpookySparkles(): Boolean? {
-        return if (spookySparkles != null) spookySparkles else false
-    }
-
-    fun setSpookySparkles(spookySparkles: Boolean?) {
-        this.spookySparkles = spookySparkles
-    }
-
-    fun getShinySeed(): Boolean? {
-        return if (shinySeed != null) shinySeed else false
-    }
-
-    fun setShinySeed(shinySeed: Boolean?) {
-        this.shinySeed = shinySeed
-    }
-
-    fun getStreaks(): Boolean? {
-        return if (streaks != null) streaks else false
-    }
-
-    fun setStreaks(streaks: Boolean?) {
-        this.streaks = streaks
-    }
+    var seafoam: Boolean? = null
+        get(): Boolean? {
+            return if (field != null) field else false
+        }
+        set(seafoam: Boolean?) {
+            field = seafoam
+        }
+    var spookySparkles: Boolean? = null
+        get(): Boolean? {
+            return if (field != null) field else false
+        }
+        set(spookySparkles: Boolean?) {
+            field = spookySparkles
+        }
+    var shinySeed: Boolean? = null
+        get(): Boolean? {
+            return if (field != null) field else false
+        }
+        set(shinySeed: Boolean?) {
+            field = shinySeed
+        }
+    var snowball: Boolean? = false
+        get() {
+            return if (field != null) field else false
+        }
+        set(snowball) {
+            field = snowball
+        }
+    var streaks: Boolean? = false
+        get(): Boolean? {
+            return if (field != null) field else false
+        }
+        set(streaks: Boolean?) {
+            field = streaks
+        }
 
     fun merge(stats: Buffs?) {
         if (stats == null) {

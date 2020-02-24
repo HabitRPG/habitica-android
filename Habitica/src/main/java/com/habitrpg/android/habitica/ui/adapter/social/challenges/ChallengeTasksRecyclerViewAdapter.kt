@@ -12,6 +12,7 @@ import com.habitrpg.shared.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.adapter.tasks.SortableTasksRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.viewHolders.BindableViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.*
+import com.habitrpg.shared.habitica.models.tasks.TaskType
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import io.reactivex.subjects.PublishSubject
@@ -40,10 +41,10 @@ class ChallengeTasksRecyclerViewAdapter(taskFilterHelper: TaskFilterHelper?, lay
         val task = this.filteredContent?.get(position)
 
         return when (task?.type) {
-            Task.TYPE_HABIT -> TYPE_HABIT
-            Task.TYPE_DAILY -> TYPE_DAILY
-            Task.TYPE_TODO -> TYPE_TODO
-            Task.TYPE_REWARD -> TYPE_REWARD
+            TaskType.TYPE_HABIT -> TYPE_HABIT
+            TaskType.TYPE_DAILY -> TYPE_DAILY
+            TaskType.TYPE_TODO -> TYPE_TODO
+            TaskType.TYPE_REWARD -> TYPE_REWARD
             else -> if (addItemSubject.hasObservers() && task?.type == TASK_TYPE_ADD_ITEM) TYPE_ADD_ITEM else TYPE_HEADER
         }
     }

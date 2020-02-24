@@ -1,13 +1,13 @@
 package com.habitrpg.shared.habitica.models.user
 
 import com.habitrpg.shared.habitica.models.HabitRpgClass
-import com.habitrpg.shared.habitica.nativePackages.NativeClassStrings
 import com.habitrpg.shared.habitica.nativePackages.NativeContext
 import com.habitrpg.shared.habitica.nativePackages.NativeRealmObject
 import com.habitrpg.shared.habitica.nativePackages.annotations.PrimaryKeyAnnotation
 import com.habitrpg.shared.habitica.nativePackages.annotations.SerializedNameAnnotation
-import com.habitrpg.shared.habitica.nativePackages.nativeClassHealer
 
+
+expect fun nativeGetTranslatedClassName(context: NativeContext, habitClass: String?): String
 
 open class Stats : NativeRealmObject() {
 
@@ -71,15 +71,7 @@ open class Stats : NativeRealmObject() {
                     buffs?.per ?: 0f > 0
         }
 
-    fun getTranslatedClassName(context: NativeContext): String {
-        return when (habitClass) {
-            HEALER -> context.getString(NativeClassStrings.healer)
-            ROGUE -> context.getString(NativeClassStrings.rogue)
-            WARRIOR -> context.getString(NativeClassStrings.warrior)
-            MAGE -> context.getString(NativeClassStrings.mage)
-            else -> context.getString(NativeClassStrings.warrior)
-        }
-    }
+    fun getTranslatedClassName(context: NativeContext): String = nativeGetTranslatedClassName(context, habitClass)
 
     fun merge(stats: Stats?) {
         if (stats == null) {

@@ -17,6 +17,7 @@ import com.habitrpg.shared.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.shared.habitica.HLogger
 import com.habitrpg.shared.habitica.LogLevel
+import com.habitrpg.shared.habitica.models.tasks.TaskType
 import io.reactivex.functions.Consumer
 import java.util.*
 import javax.inject.Inject
@@ -75,7 +76,7 @@ class TaskReceiver : BroadcastReceiver() {
                 .setAutoCancel(true)
                 .setContentIntent(pendingIntent)
 
-        if (task.type == Task.TYPE_DAILY || task.type == Task.TYPE_TODO) {
+        if (task.type == TaskType.TYPE_DAILY || task.type == TaskType.TYPE_TODO) {
             val completeIntent = Intent(context, LocalNotificationActionReceiver::class.java)
             completeIntent.action = context.getString(R.string.complete_task_action)
             completeIntent.putExtra("taskID", task.id)

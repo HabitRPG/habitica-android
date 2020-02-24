@@ -1,3 +1,3 @@
 package com.habitrpg.shared.habitica.nativePackages
 
-expect class NativeSpanned
+expect interface NativeSpanned

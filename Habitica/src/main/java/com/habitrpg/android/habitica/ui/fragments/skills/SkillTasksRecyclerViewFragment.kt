@@ -17,6 +17,7 @@ import com.habitrpg.android.habitica.ui.adapter.SkillTasksRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.helpers.resetViews
+import com.habitrpg.shared.habitica.models.tasks.TaskType
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import io.reactivex.functions.Consumer
@@ -70,7 +71,7 @@ class SkillTasksRecyclerViewFragment() : BaseFragment() {
         super.onResume()
 
         var tasks = taskRepository.getTasks(taskType ?: "", userId)
-        if (taskType == Task.TYPE_TODO) {
+        if (taskType == TaskType.TYPE_TODO) {
             tasks = tasks.map { it.where().equalTo("completed", false).findAll() }
         }
         compositeSubscription.add(tasks.subscribe(Consumer {

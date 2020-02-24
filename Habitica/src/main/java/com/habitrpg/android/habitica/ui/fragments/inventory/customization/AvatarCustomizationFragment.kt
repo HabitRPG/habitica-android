@@ -133,14 +133,14 @@ class AvatarCustomizationFragment : BaseMainFragment() {
     fun updateUser(user: User) {
         this.updateActiveCustomization(user)
         if (adapter.customizationList.size != 0) {
-            val ownedCustomizations = ArrayList<String>()
+            val ownedCustomizations = mutableListOf<String>()
             user.purchased?.customizations?.filter { it.type == this.type }?.mapTo(ownedCustomizations) { it.id }
             adapter.updateOwnership(ownedCustomizations)
         } else {
             this.loadCustomizations()
         }
-        this.adapter.userSize = this.user?.preferences?.size
-        this.adapter.hairColor = this.user?.preferences?.hair?.color
+        this.adapter.userSize = this.user?.preferences?.size ?: ""
+        this.adapter.hairColor = this.user?.preferences?.hair?.color ?: ""
         this.adapter.gemBalance = user.gemCount
         adapter.notifyDataSetChanged()
     }

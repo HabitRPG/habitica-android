@@ -1,16 +1,16 @@
 package com.habitrpg.android.habitica.models.social
 
 import com.google.gson.annotations.SerializedName
-import com.habitrpg.android.habitica.models.user.Authentication
+import com.habitrpg.shared.habitica.models.user.Authentication
 import com.habitrpg.shared.habitica.models.user.ContributorInfo
-import com.habitrpg.android.habitica.models.user.Profile
+import com.habitrpg.shared.habitica.models.user.Profile
 
 class FindUsernameResult {
 
     @SerializedName("_id")
     var id: String? = null
 
-    var contributor: com.habitrpg.shared.habitica.models.user.ContributorInfo? = null
+    var contributor: ContributorInfo? = null
     var authentication: Authentication? = null
     var profile: Profile? = null
 

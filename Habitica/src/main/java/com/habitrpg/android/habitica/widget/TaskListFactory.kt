@@ -15,6 +15,7 @@ import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.shared.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
+import com.habitrpg.shared.habitica.models.tasks.TaskType
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
@@ -42,7 +43,7 @@ abstract class TaskListFactory internal constructor(val context: Context, intent
                     .firstElement()
                     .toObservable()
                     .flatMap { Observable.fromIterable(it) }
-                    .filter { task -> task.type == Task.TYPE_TODO && !task.completed || task.isDisplayedActive }
+                    .filter { task -> task.type == TaskType.TYPE_TODO && !task.completed || task.isDisplayedActive }
                     .toList()
                     .flatMapMaybe { tasks -> taskRepository.getTaskCopies(tasks).firstElement() }
                     .subscribeOn(AndroidSchedulers.mainThread())

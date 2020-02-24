@@ -12,41 +12,21 @@ open class Training : NativeRealmObject() {
 
     internal var stats: Stats? = null
     var con: Float? = null
+        get() {
+            return if (field != null) field else 0f
+        }
     var str: Float? = null
+        get() {
+            return if (field != null) field else 0f
+        }
     var per: Float? = null
+        get() {
+            return if (field != null) field else 0f
+        }
     @SerializedNameAnnotation("int")
     var _int: Float? = null
-
-    fun getCon(): Float? {
-        return if (con != null) con else 0f
-    }
-
-    fun setCon(con: Float?) {
-        this.con = con
-    }
-
-    fun getStr(): Float? {
-        return if (str != null) str else 0f
-    }
-
-    fun setStr(str: Float?) {
-        this.str = str
-    }
-
-    fun getPer(): Float? {
-        return if (per != null) per else 0f
-    }
-
-    fun setPer(per: Float?) {
-        this.per = per
-    }
-
-    fun get_int(): Float? {
-        return if (_int != null) _int else 0f
-    }
-
-    fun set_int(_int: Float?) {
-        this._int = _int
+    get() {
+        return if (field != null) field else 0f
     }
 
     fun merge(stats: Training?) {

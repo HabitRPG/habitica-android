@@ -24,7 +24,7 @@ open class Member : NativeRealmObject(), Avatar {
                 this.inbox?.userId = subID
             }
             if (preferences != null && preferences?.isManaged() != true) {
-                preferences?.setUserId(subID)
+                preferences?.userId = subID
             }
             if (this.profile != null && this.profile?.isManaged() != true) {
                 this.profile?.userId = subID
@@ -43,6 +43,12 @@ open class Member : NativeRealmObject(), Avatar {
             }
         }
     override var stats: Stats? = null
+        set(stats: Stats?) {
+            field = stats
+            if (stats != null && this.id != null && !stats.isManaged()) {
+                stats.userId = this.id
+            }
+        }
     var inbox: Inbox? = null
         set(inbox) {
             field = inbox
@@ -51,6 +57,13 @@ open class Member : NativeRealmObject(), Avatar {
             }
         }
     override var preferences: MemberPreferences? = null
+        set(preferences: MemberPreferences?) {
+            field = preferences
+            if (preferences != null && this.id != null && !preferences.isManaged()) {
+                preferences.userId = this.id ?: ""
+            }
+        }
+
     var profile: Profile? = null
         set(profile) {
             field = profile
@@ -94,7 +107,20 @@ open class Member : NativeRealmObject(), Avatar {
             }
         }
     override var costume: Outfit? = null
+        set(costume: Outfit?) {
+            field = costume
+            if (costume != null && this.id != null) {
+                costume.userId = this.id + "costume"
+            }
+        }
+
     override var equipped: Outfit? = null
+        set(equipped: Outfit?) {
+            field = equipped
+            if (equipped != null && this.id != null) {
+                equipped.userId = this.id + "equipped"
+            }
+        }
 
     override var currentMount: String? = null
     override var currentPet: String? = null
@@ -113,84 +139,23 @@ open class Member : NativeRealmObject(), Avatar {
         get() = this.items?.mounts?.size ?: 0
 
     val username: String?
-    get() = authentication?.localAuthentication?.username
+        get() = authentication?.localAuthentication?.username
     val formattedUsername: String?
         get() = if (username != null) "@$username" else null
 
-    fun getPreferences(): MemberPreferences? {
-        return preferences
-    }
 
-    fun setPreferences(preferences: MemberPreferences?) {
-        this.preferences = preferences
-        if (preferences != null && this.id != null && !preferences.isManaged()) {
-            preferences.setUserId(this.id ?: "")
-        }
-    }
+    override var gemCount: Int = 0
 
-    fun getStats(): Stats? {
-        return stats
-    }
-
-    fun setStats(stats: Stats?) {
-        this.stats = stats
-        if (stats != null && this.id != null && !stats.isManaged()) {
-            stats.userId = this.id
-        }
-    }
-
-    override var gemCount: Int? = 0
-
-    override var hourglassCount: Int? = 0
-
-    fun getCostume(): Outfit? {
-        return costume
-    }
-
-    fun setCostume(costume: Outfit?) {
-        this.costume = costume
-        if (costume != null && this.id != null) {
-            costume.userId = this.id + "costume"
-        }
-    }
-
-    fun getEquipped(): Outfit? {
-        return equipped
-    }
+    override var hourglassCount: Int = 0
 
     override fun hasClass(): Boolean {
         return preferences?.disableClasses == false && stats?.habitClass?.isNotEmpty() == true
     }
 
-    fun setEquipped(equipped: Outfit?) {
-        this.equipped = equipped
-        if (equipped != null && this.id != null) {
-            equipped.userId = this.id + "equipped"
+    override val sleep: Boolean
+        get(): Boolean {
+            return preferences?.sleep ?: false
         }
-    }
 
-    fun getCurrentMount(): String? {
-        return currentMount
-    }
 
-    fun setCurrentMount(currentMount: String) {
-        this.currentMount = currentMount
-    }
-
-    fun getCurrentPet(): String? {
-        return currentPet
-    }
-
-    fun setCurrentPet(currentPet: String) {
-        this.currentPet = currentPet
-    }
-
-    override var sleep: Boolean? = false
-    fun getSleep(): Boolean {
-        return getPreferences()?.sleep ?: false
-    }
-
-    override fun isValid(): Boolean {
-        return false // TODO multi
-    }
 }

@@ -7,7 +7,7 @@ import com.habitrpg.shared.habitica.nativePackages.annotations.PrimaryKeyAnnotat
 open class Customization : NativeRealmObject() {
 
     @PrimaryKeyAnnotation
-    var id: String? = null
+    var id: String = ""
     var identifier: String? = null
         set(identifier) {
             field = identifier
@@ -43,10 +43,7 @@ open class Customization : NativeRealmObject() {
                 return false
             }
 
-            return if (this.availableUntil != null && !this.availableUntil!!.after(today)) {
-                false
-            } else true
-
+            return !(this.availableUntil != null && !this.availableUntil!!.after(today))
         }
 
     val isUsable: Boolean

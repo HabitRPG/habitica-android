@@ -10,14 +10,20 @@ open class SubscriptionPlan : NativeRealmObject() {
 
     @PrimaryKeyAnnotation
     var customerId: String? = null
-    var dateCreated: NativeDate? = null
-    var dateUpdated: NativeDate? = null
+    set(customerId: String?) {
+        field = customerId
+        if (consecutive != null && !consecutive!!.isManaged()) {
+            consecutive!!.customerId = customerId
+        }
+    }
+    var dateCreated: NativeDate = NativeDate()
+    var dateUpdated: NativeDate = NativeDate()
     var dateTerminated: NativeDate? = null
     var paymentMethod: String? = null
     var planId: String? = null
-    var gemsBought: Int? = null
-    var extraMonths: Int? = null
-    var quantity: Int? = null
+    var gemsBought: Int = 0
+    var extraMonths: Int = 0
+    var quantity: Int = 0
     var consecutive: SubscriptionPlanConsecutive? = null
 
     var mysteryItemCount: Int = 0
@@ -46,16 +52,7 @@ open class SubscriptionPlan : NativeRealmObject() {
         return totalNumberOfGems() - gemsBought!!
     }
 
-
-    fun setCustomerId(customerId: String) {
-        this.customerId = customerId
-        if (consecutive != null && !consecutive!!.isManaged()) {
-            consecutive!!.customerId = customerId
-        }
-    }
-
     companion object {
-
         var PLANID_BASIC = "basic"
         var PLANID_BASICEARNED = "basic_earned"
         var PLANID_BASIC3MONTH = "basic_3mo"

@@ -1,7 +1,6 @@
 package com.habitrpg.shared.habitica.models.responses
 
 class TaskDirectionDataTemp {
-
     var drop: TaskDirectionDataDrop? = null
     var quest: TaskDirectionDataQuest? = null
     var crit: Float? = null

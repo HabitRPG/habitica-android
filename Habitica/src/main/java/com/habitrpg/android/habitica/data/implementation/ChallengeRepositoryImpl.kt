@@ -7,6 +7,7 @@ import com.habitrpg.android.habitica.models.LeaveChallengeBody
 import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.shared.habitica.models.social.ChallengeMembership
 import com.habitrpg.shared.habitica.models.tasks.Task
+import com.habitrpg.shared.habitica.models.tasks.TaskType
 import com.habitrpg.shared.habitica.models.user.TasksOrder
 import io.reactivex.Flowable
 import io.realm.RealmResults
@@ -42,7 +43,7 @@ class ChallengeRepositoryImpl(localRepository: ChallengeLocalRepository, apiClie
 
     override fun retrieveChallengeTasks(challengeID: String): Flowable<com.habitrpg.shared.habitica.models.tasks.TaskList> {
         return apiClient.getChallengeTasks(challengeID).doOnNext { tasks ->
-            val taskList = tasks.tasks.values.toList()
+            val taskList = tasks.tasks!!.values.toList()
             taskList.forEach {
                 it.userId = challengeID
             }
@@ -59,10 +60,10 @@ class ChallengeRepositoryImpl(localRepository: ChallengeLocalRepository, apiClie
             val taskIdList = value.map { t -> t.id ?: "" }
 
             when (key) {
-                Task.TYPE_HABIT -> tasksOrder.habits = taskIdList
-                Task.TYPE_DAILY -> tasksOrder.dailys = taskIdList
-                Task.TYPE_TODO -> tasksOrder.todos = taskIdList
-                Task.TYPE_REWARD -> tasksOrder.rewards = taskIdList
+                TaskType.TYPE_HABIT -> tasksOrder.habits = taskIdList
+                TaskType.TYPE_DAILY -> tasksOrder.dailys = taskIdList
+                TaskType.TYPE_TODO -> tasksOrder.todos = taskIdList
+                TaskType.TYPE_REWARD -> tasksOrder.rewards = taskIdList
             }
         }
 

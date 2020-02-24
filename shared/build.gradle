@@ -7,7 +7,6 @@ android {
     compileSdkVersion 29
 
     defaultConfig {
-
         minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
@@ -47,8 +46,6 @@ kotlin {
             api "io.realm:realm-gradle-plugin:5.14.0"
         }
 
-        commonMain.kotlin.srcDirs += 'src/commonMain/kotlin'
-
         androidMain.dependencies {
             api 'org.jetbrains.kotlin:kotlin-stdlib'
 
@@ -65,8 +62,6 @@ kotlin {
 
         iosMain.dependencies {
         }
-
-        iosMain.kotlin.srcDirs += 'src/iosMain/kotlin'
     }
 }
 

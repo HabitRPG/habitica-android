@@ -54,7 +54,7 @@ class CustomizationDeserializer : JsonDeserializer<List<Customization>> {
                 if (jsonObject.has(customization.customizationSet)) {
                     val nestedObject = jsonObject.get(customization.customizationSet).asJsonObject
                     if (nestedObject.has(customization.identifier)) {
-                        customizations.add(this.parseBackground(customization, customization.customizationSet, customization.identifier, nestedObject.get(customization.identifier).asJsonObject))
+                        customizations.add(this.parseBackground(customization, customization.customizationSet!!, customization.identifier, nestedObject.get(customization.identifier).asJsonObject))
                         nestedObject.remove(customization.identifier)
                     }
                 }

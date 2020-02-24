@@ -13,7 +13,7 @@ interface Avatar {
 
     val currentPet: String?
 
-    val sleep: Boolean?
+    val sleep: Boolean
 
     val stats: Stats?
 
@@ -26,7 +26,7 @@ interface Avatar {
     val costume: Outfit?
     val equipped: Outfit?
 
-    fun isValid(): Boolean
-
     fun hasClass(): Boolean
+
+    fun isValid(): Boolean
 }

@@ -1,7 +1,7 @@
 package com.habitrpg.android.habitica.data
 
 import com.habitrpg.android.habitica.models.responses.TaskScoringResult
-import com.habitrpg.android.habitica.models.tasks.RemindersItem
+import com.habitrpg.shared.habitica.models.tasks.RemindersItem
 import com.habitrpg.shared.habitica.models.tasks.Task
 import com.habitrpg.shared.habitica.models.user.TasksOrder
 import com.habitrpg.shared.habitica.models.user.User

@@ -45,5 +45,10 @@ expect class NativeColor {
         val teal_100: Int
         val teal_50: Int
         val teal_10: Int
+
+        val blue_500: Int
+        val blue_100: Int
+        val blue_50: Int
+        val blue_10: Int
     }
 }

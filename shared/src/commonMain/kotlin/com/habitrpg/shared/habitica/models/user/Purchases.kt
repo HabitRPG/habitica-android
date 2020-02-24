@@ -14,8 +14,4 @@ open class Purchases : NativeRealmObject() {
     var customizations: NativeList<Customization> = NativeList()
     internal var user: User? = null
     var plan: SubscriptionPlan? = null
-
-    fun setCustomizations(customizations: NativeList<Customization>) {
-        this.customizations = customizations
-    }
 }

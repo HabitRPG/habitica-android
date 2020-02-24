@@ -10,7 +10,12 @@ open class MemberPreferences : NativeRealmObject(), AvatarPreferences {
 
     @PrimaryKeyAnnotation
     override var userId: String? = null
-
+        set(userId: String?) {
+            field = userId
+            if (hair != null && !hair!!.isManaged()) {
+                hair!!.userId = userId
+            }
+        }
     override var hair: Hair? = null
     override var costume: Boolean = false
     override var disableClasses: Boolean = false
@@ -20,21 +25,13 @@ open class MemberPreferences : NativeRealmObject(), AvatarPreferences {
     override var size: String? = null
     override var background: String? = null
     override var chair: String? = null
-
-    fun setUserId(userId: String) {
-        this.userId = userId
-        if (hair != null && !hair!!.isManaged()) {
-            hair!!.userId = userId
+        get(): String? {
+            return if (field != null && field != "none") {
+                if (field!!.length > 5 && field!!.substring(0, 6) != "chair_") {
+                    field
+                } else {
+                    "chair_" + field!!
+                }
+            } else null
         }
-    }
-
-    fun getChair(): String? {
-        return if (chair != null && chair != "none") {
-            if (chair!!.length > 5 && chair!!.substring(0, 6) != "chair_") {
-                chair
-            } else {
-                "chair_" + chair!!
-            }
-        } else null
-    }
 }

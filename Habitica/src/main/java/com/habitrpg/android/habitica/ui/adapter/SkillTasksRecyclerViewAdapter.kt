@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.ui.helpers.TaskTextParser
 import com.habitrpg.shared.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.views.HabiticaEmojiTextView
@@ -61,12 +62,12 @@ class SkillTasksRecyclerViewAdapter(data: OrderedRealmCollection<Task>?, autoUpd
 
         internal fun bindHolder(task: Task) {
             this.task = task
-            titleTextView.text = task.markdownText { titleTextView.text = it }
+            titleTextView.text = TaskTextParser.markdownText(task) { titleTextView.text = it }
             if (task.notes?.isEmpty() == true) {
                 notesTextView.visibility = View.GONE
             } else {
                 notesTextView.visibility = View.VISIBLE
-                notesTextView.text = task.markdownNotes { notesTextView.text = it }
+                notesTextView.text = TaskTextParser.markdownNotes(task) { notesTextView.text = it }
             }
             rightBorderView.setBackgroundResource(task.lightTaskColor)
         }

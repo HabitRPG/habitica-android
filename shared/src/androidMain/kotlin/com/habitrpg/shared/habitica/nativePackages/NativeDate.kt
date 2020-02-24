@@ -1,3 +1,5 @@
 package com.habitrpg.shared.habitica.nativePackages
 
-actual typealias NativeDate = java.util.Date
+import java.util.*
+
+actual typealias NativeDate = Date

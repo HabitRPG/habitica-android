@@ -15,7 +15,7 @@ import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.extensions.setScaledPadding
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.UserStatComputer
-import com.habitrpg.android.habitica.models.user.Stats
+import com.habitrpg.shared.habitica.models.user.Stats
 import com.habitrpg.shared.habitica.models.user.User
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
@@ -212,14 +212,14 @@ class StatsFragment: BaseMainFragment() {
         constitutionStatsView.levelValue = levelStat
         perceptionStatsView.levelValue = levelStat
 
-        totalStrength += currentUser.stats?.buffs?.getStr()?.toInt() ?: 0
-        totalIntelligence += currentUser.stats?.buffs?.get_int()?.toInt() ?: 0
-        totalConstitution += currentUser.stats?.buffs?.getCon()?.toInt() ?: 0
-        totalPerception += currentUser.stats?.buffs?.getPer()?.toInt() ?: 0
-        strengthStatsView.buffValue = currentUser.stats?.buffs?.getStr()?.toInt() ?: 0
-        intelligenceStatsView.buffValue = currentUser.stats?.buffs?.get_int()?.toInt() ?: 0
-        constitutionStatsView.buffValue = currentUser.stats?.buffs?.getCon()?.toInt() ?: 0
-        perceptionStatsView.buffValue = currentUser.stats?.buffs?.getPer()?.toInt() ?: 0
+        totalStrength += currentUser.stats?.buffs?.str?.toInt() ?: 0
+        totalIntelligence += currentUser.stats?.buffs?._int?.toInt() ?: 0
+        totalConstitution += currentUser.stats?.buffs?.con?.toInt() ?: 0
+        totalPerception += currentUser.stats?.buffs?.per?.toInt() ?: 0
+        strengthStatsView.buffValue = currentUser.stats?.buffs?.str?.toInt() ?: 0
+        intelligenceStatsView.buffValue = currentUser.stats?.buffs?._int?.toInt() ?: 0
+        constitutionStatsView.buffValue = currentUser.stats?.buffs?.con?.toInt() ?: 0
+        perceptionStatsView.buffValue = currentUser.stats?.buffs?.per?.toInt() ?: 0
 
         totalStrength += currentUser.stats?.strength ?: 0
         totalIntelligence += currentUser.stats?.intelligence ?: 0

@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.models.notifications
 
-import com.habitrpg.android.habitica.models.invitations.PartyInvite
+import com.habitrpg.shared.habitica.models.invitations.PartyInvite
 
 open class PartyInvitationData : NotificationData {
 

@@ -1,8 +1,11 @@
 package com.habitrpg.android.habitica.data.local.implementation
 
 import com.habitrpg.android.habitica.data.local.TaskLocalRepository
+import com.habitrpg.shared.habitica.models.tasks.ChecklistItem
+import com.habitrpg.shared.habitica.models.tasks.RemindersItem
 import com.habitrpg.shared.habitica.models.user.User
 import com.habitrpg.shared.habitica.models.tasks.Task
+import com.habitrpg.shared.habitica.models.tasks.TaskType
 import com.habitrpg.shared.habitica.models.user.TasksOrder
 import io.reactivex.Flowable
 import io.reactivex.Maybe
@@ -88,11 +91,11 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
                 .equalTo("userId", userID)
                 .beginGroup()
                 .beginGroup()
-                .equalTo("type", Task.TYPE_TODO)
+                .equalTo("type", TaskType.TYPE_TODO)
                 .equalTo("completed", false)
                 .endGroup()
                 .or()
-                .notEqualTo("type", Task.TYPE_TODO)
+                .notEqualTo("type", TaskType.TYPE_TODO)
                 .endGroup()
                 .findAll()
                 .createSnapshot()
@@ -109,7 +112,7 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
     private fun removeCompletedTodos(userID: String, onlineTaskList: MutableCollection<Task>) {
         val localTasks = realm.where(Task::class.java)
                 .equalTo("userId", userID)
-                .equalTo("type", Task.TYPE_TODO)
+                .equalTo("type", TaskType.TYPE_TODO)
                 .equalTo("completed", true)
                 .findAll()
                 .createSnapshot()

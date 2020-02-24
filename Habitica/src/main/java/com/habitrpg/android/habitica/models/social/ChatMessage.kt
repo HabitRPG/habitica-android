@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.models.social
 
-import com.habitrpg.android.habitica.models.user.Backer
+import com.habitrpg.shared.habitica.models.user.Backer
 import com.habitrpg.shared.habitica.models.user.ContributorInfo
 import io.realm.RealmList
 import io.realm.RealmObject
@@ -33,7 +33,7 @@ open class ChatMessage : RealmObject() {
     var uuid: String? = null
     var userID: String? = null
 
-    var contributor: com.habitrpg.shared.habitica.models.user.ContributorInfo? = null
+    var contributor: ContributorInfo? = null
 
     var backer: Backer? = null
 

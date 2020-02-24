@@ -10,7 +10,7 @@ import com.habitrpg.android.habitica.helpers.NotificationsManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.Notification
 import com.habitrpg.android.habitica.models.notifications.*
-import com.habitrpg.android.habitica.models.social.UserParty
+import com.habitrpg.shared.habitica.models.social.UserParty
 import com.habitrpg.shared.habitica.models.user.User
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable

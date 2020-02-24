@@ -4,10 +4,11 @@ import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
 import com.google.gson.JsonParseException
-import com.habitrpg.android.habitica.models.inventory.Quest
-import com.habitrpg.android.habitica.models.members.Member
-import com.habitrpg.android.habitica.models.members.MemberPreferences
-import com.habitrpg.android.habitica.models.social.UserParty
+import com.habitrpg.shared.habitica.models.inventory.Quest
+import com.habitrpg.shared.habitica.models.members.Member
+import com.habitrpg.shared.habitica.models.members.MemberPreferences
+import com.habitrpg.shared.habitica.models.social.UserParty
+import com.habitrpg.shared.habitica.models.user.*
 import io.realm.Realm
 import java.lang.reflect.Type
 
@@ -59,10 +60,10 @@ class MemberSerialization : JsonDeserializer<Member> {
 
             val items = obj.getAsJsonObject("items")
             if (items.has("currentMount") && items.get("currentMount").isJsonPrimitive) {
-                member.setCurrentMount(items.get("currentMount").asString)
+                member.currentMount = items.get("currentMount").asString
             }
             if (items.has("currentPet") && items.get("currentPet").isJsonPrimitive) {
-                member.setCurrentPet(items.get("currentPet").asString)
+                member.currentPet = items.get("currentPet").asString
             }
             if (items.has("gear")) {
                 val gear = items.getAsJsonObject("gear")

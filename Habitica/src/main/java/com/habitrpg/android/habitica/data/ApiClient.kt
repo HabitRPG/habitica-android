@@ -3,16 +3,17 @@ package com.habitrpg.android.habitica.data
 import com.habitrpg.android.habitica.api.HostConfig
 import com.habitrpg.android.habitica.models.*
 import com.habitrpg.android.habitica.models.auth.UserAuthResponse
-import com.habitrpg.android.habitica.models.inventory.Equipment
-import com.habitrpg.android.habitica.models.inventory.Quest
-import com.habitrpg.android.habitica.models.members.Member
+import com.habitrpg.shared.habitica.models.inventory.Equipment
+import com.habitrpg.shared.habitica.models.inventory.Quest
+import com.habitrpg.shared.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.responses.*
 import com.habitrpg.android.habitica.models.shops.Shop
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.models.social.*
+import com.habitrpg.shared.habitica.models.Tag
 import com.habitrpg.shared.habitica.models.tasks.Task
-import com.habitrpg.android.habitica.models.user.Items
-import com.habitrpg.android.habitica.models.user.Stats
+import com.habitrpg.shared.habitica.models.user.Items
+import com.habitrpg.shared.habitica.models.user.Stats
 import com.habitrpg.shared.habitica.models.user.User
 import com.habitrpg.shared.habitica.models.responses.TaskDirectionData
 import io.reactivex.Flowable
@@ -91,7 +92,6 @@ interface ApiClient {
     fun updateTask(id: String, item: Task): Flowable<Task>
 
     fun deleteTask(id: String): Flowable<Void>
-
 
     fun createTag(tag: Tag): Flowable<Tag>
 

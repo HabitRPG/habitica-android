@@ -1,8 +1,8 @@
 package com.habitrpg.android.habitica.utils
 
 import com.google.gson.*
-import com.habitrpg.android.habitica.models.tasks.ChecklistItem
-import com.habitrpg.android.habitica.models.tasks.RemindersItem
+import com.habitrpg.shared.habitica.models.tasks.ChecklistItem
+import com.habitrpg.shared.habitica.models.tasks.RemindersItem
 import com.habitrpg.shared.habitica.models.tasks.Task
 import java.lang.reflect.Type
 import java.util.*
@@ -43,8 +43,8 @@ class TaskSerializer : JsonSerializer<Task> {
                     obj.add("reminders", serializeReminders(task.reminders))
                 }
                 obj.add("reminders", context.serialize(task.reminders))
-                obj.add("daysOfMonth", context.serialize(task.getDaysOfMonth()))
-                obj.add("weeksOfMonth", context.serialize(task.getWeeksOfMonth()))
+                obj.add("daysOfMonth", context.serialize(task.daysOfMonth))
+                obj.add("weeksOfMonth", context.serialize(task.weeksOfMonth))
                 obj.addProperty("completed", task.completed)
             }
             "todo" -> {

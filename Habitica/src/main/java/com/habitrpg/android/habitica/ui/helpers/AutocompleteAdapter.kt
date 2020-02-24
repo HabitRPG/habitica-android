@@ -13,8 +13,8 @@ import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.shared.habitica.models.auth.LocalAuthentication
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.social.FindUsernameResult
-import com.habitrpg.android.habitica.models.user.Authentication
-import com.habitrpg.android.habitica.models.user.Profile
+import com.habitrpg.shared.habitica.models.user.Authentication
+import com.habitrpg.shared.habitica.models.user.Profile
 import com.habitrpg.android.habitica.ui.views.HabiticaEmojiTextView
 import com.habitrpg.android.habitica.ui.views.social.UsernameLabel
 import net.pherth.android.emoji_library.EmojiMap

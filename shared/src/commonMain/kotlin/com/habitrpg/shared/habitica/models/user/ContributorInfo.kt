@@ -11,7 +11,7 @@ open class ContributorInfo : NativeRealmObject() {
     var userId: String? = null
 
     var user: User? = null
-    private var admin: Boolean = false
+    var admin: Boolean = false
     var contributions: String? = null
     var level: Int = 0
     var text: String? = null

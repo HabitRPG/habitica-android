@@ -21,8 +21,11 @@ import com.habitrpg.android.habitica.data.TagRepository
 import com.habitrpg.android.habitica.extensions.OnChangeTextWatcher
 import com.habitrpg.android.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.android.habitica.models.Tag
+import com.habitrpg.shared.habitica.models.Tag
 import com.habitrpg.shared.habitica.models.tasks.Task
+import com.habitrpg.shared.habitica.models.tasks.TaskFilter
+import com.habitrpg.shared.habitica.models.tasks.TaskFrequency
+import com.habitrpg.shared.habitica.models.tasks.TaskType
 import io.reactivex.Observable
 import io.reactivex.functions.Consumer
 import java.util.*
@@ -257,19 +260,19 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : AlertDialo
     fun setTaskType(taskType: String, activeFilter: String?) {
         this.taskType = taskType
         when (taskType) {
-            Task.TYPE_HABIT -> {
+            TaskType.TYPE_HABIT -> {
                 taskTypeTitle.setText(R.string.habits)
                 allTaskFilter.setText(R.string.all)
                 secondTaskFilter.setText(R.string.weak)
                 thirdTaskFilter.setText(R.string.strong)
             }
-            Task.TYPE_DAILY -> {
+            TaskType.TYPE_DAILY -> {
                 taskTypeTitle.setText(R.string.dailies)
                 allTaskFilter.setText(R.string.all)
                 secondTaskFilter.setText(R.string.due)
                 thirdTaskFilter.setText(R.string.gray)
             }
-            Task.TYPE_TODO -> {
+            TaskType.TYPE_TODO -> {
                 taskTypeTitle.setText(R.string.todos)
                 allTaskFilter.setText(R.string.active)
                 secondTaskFilter.setText(R.string.dated)
@@ -286,10 +289,10 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : AlertDialo
             checkedId = R.id.all_task_filter
         } else {
             when (activeFilter) {
-                Task.FILTER_ALL -> checkedId = R.id.all_task_filter
-                Task.FILTER_WEAK, Task.FILTER_DATED -> checkedId = R.id.second_task_filter
-                Task.FILTER_STRONG, Task.FILTER_GRAY, Task.FILTER_COMPLETED -> checkedId = R.id.third_task_filter
-                Task.FILTER_ACTIVE -> checkedId = if (taskType == Task.TYPE_DAILY) {
+                TaskFilter.FILTER_ALL -> checkedId = R.id.all_task_filter
+                TaskFilter.FILTER_WEAK, TaskFilter.FILTER_DATED -> checkedId = R.id.second_task_filter
+                TaskFilter.FILTER_STRONG, TaskFilter.FILTER_GRAY, TaskFilter.FILTER_COMPLETED -> checkedId = R.id.third_task_filter
+                TaskFilter.FILTER_ACTIVE -> checkedId = if (taskType == TaskType.TYPE_DAILY) {
                     R.id.second_task_filter
                 } else {
                     R.id.all_task_filter
@@ -305,20 +308,20 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : AlertDialo
             return
         }
         when (checkedId) {
-            R.id.all_task_filter -> filterType = if (taskType != Task.TYPE_TODO) {
-                Task.FILTER_ALL
+            R.id.all_task_filter -> filterType = if (taskType != TaskType.TYPE_TODO) {
+                TaskFilter.FILTER_ALL
             } else {
-                Task.FILTER_ACTIVE
+                TaskFilter.FILTER_ACTIVE
             }
             R.id.second_task_filter -> when (taskType) {
-                Task.TYPE_HABIT -> filterType = Task.FILTER_WEAK
-                Task.FREQUENCY_DAILY -> filterType = Task.FILTER_ACTIVE
-                Task.TYPE_TODO -> filterType = Task.FILTER_DATED
+                TaskType.TYPE_HABIT -> filterType = TaskFilter.FILTER_WEAK
+                TaskFrequency.FREQUENCY_DAILY -> filterType = TaskFilter.FILTER_ACTIVE
+                TaskType.TYPE_TODO -> filterType = TaskFilter.FILTER_DATED
             }
             R.id.third_task_filter -> when (taskType) {
-                Task.TYPE_HABIT -> filterType = Task.FILTER_STRONG
-                Task.FREQUENCY_DAILY -> filterType = Task.FILTER_GRAY
-                Task.TYPE_TODO -> filterType = Task.FILTER_COMPLETED
+                TaskType.TYPE_HABIT -> filterType = TaskFilter.FILTER_STRONG
+                TaskFrequency.FREQUENCY_DAILY -> filterType = TaskFilter.FILTER_GRAY
+                TaskType.TYPE_TODO -> filterType = TaskFilter.FILTER_COMPLETED
             }
         }
         filtersChanged()
