@@ -8,14 +8,14 @@ import com.habitrpg.android.habitica.models.ContentResult;
 import com.habitrpg.android.habitica.models.FAQArticle;
 import com.habitrpg.android.habitica.models.Notification;
 import com.habitrpg.android.habitica.models.Skill;
+import com.habitrpg.android.habitica.models.inventory.QuestCollect;
+import com.habitrpg.android.habitica.models.inventory.QuestDropItem;
 import com.habitrpg.shared.habitica.models.Tag;
 import com.habitrpg.shared.habitica.models.TutorialStep;
 import com.habitrpg.android.habitica.models.WorldState;
 import com.habitrpg.shared.habitica.models.inventory.Customization;
 import com.habitrpg.shared.habitica.models.inventory.Equipment;
 import com.habitrpg.shared.habitica.models.inventory.Quest;
-import com.habitrpg.shared.habitica.models.inventory.QuestCollect;
-import com.habitrpg.shared.habitica.models.inventory.QuestDropItem;
 import com.habitrpg.shared.habitica.models.members.Member;
 import com.habitrpg.android.habitica.models.responses.FeedResponse;
 import com.habitrpg.android.habitica.models.social.Challenge;
@@ -23,11 +23,11 @@ import com.habitrpg.android.habitica.models.social.ChatMessage;
 import com.habitrpg.android.habitica.models.social.FindUsernameResult;
 import com.habitrpg.android.habitica.models.social.Group;
 import com.habitrpg.shared.habitica.models.tasks.Task;
-import com.habitrpg.android.habitica.models.tasks.TaskList;
+import com.habitrpg.shared.habitica.models.tasks.TaskList;
 import com.habitrpg.shared.habitica.models.user.OwnedItem;
 import com.habitrpg.shared.habitica.models.user.OwnedMount;
 import com.habitrpg.shared.habitica.models.user.OwnedPet;
-import com.habitrpg.android.habitica.models.user.Purchases;
+import com.habitrpg.shared.habitica.models.user.Purchases;
 import com.habitrpg.shared.habitica.models.user.User;
 import com.habitrpg.android.habitica.utils.AchievementListDeserializer;
 import com.habitrpg.android.habitica.utils.BooleanAsIntAdapter;
@@ -70,21 +70,36 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class GSonFactoryCreator {
 
     public static GsonConverterFactory create() {
-        Type skillListType = new TypeToken<List<Skill>>() {}.getType();
-        Type taskTagClassListType = new TypeToken<RealmList<Tag>>() {}.getType();
-        Type customizationListType = new TypeToken<RealmList<Customization>>() {}.getType();
-        Type tutorialStepListType = new TypeToken<RealmList<TutorialStep>>() {}.getType();
-        Type faqArticleListType = new TypeToken<RealmList<FAQArticle>>() {}.getType();
-        Type itemDataListType = new TypeToken<RealmList<Equipment>>() {}.getType();
-        Type questCollectListType = new TypeToken<RealmList<QuestCollect>>() {}.getType();
-        Type chatMessageListType = new TypeToken<RealmList<ChatMessage>>() {}.getType();
-        Type challengeListType = new TypeToken<List<Challenge>>() {}.getType();
-        Type challengeRealmListType = new TypeToken<RealmList<Challenge>>() {}.getType();
-        Type questDropItemListType = new TypeToken<RealmList<QuestDropItem>>() {}.getType();
-        Type ownedItemListType = new TypeToken<RealmList<OwnedItem>>() {}.getType();
-        Type ownedPetListType = new TypeToken<RealmList<OwnedPet>>() {}.getType();
-        Type ownedMountListType = new TypeToken<RealmList<OwnedMount>>() {}.getType();
-        Type achievementsListType = new TypeToken<List<Achievement>>() {}.getType();
+        Type skillListType = new TypeToken<List<Skill>>() {
+        }.getType();
+        Type taskTagClassListType = new TypeToken<RealmList<Tag>>() {
+        }.getType();
+        Type customizationListType = new TypeToken<RealmList<Customization>>() {
+        }.getType();
+        Type tutorialStepListType = new TypeToken<RealmList<TutorialStep>>() {
+        }.getType();
+        Type faqArticleListType = new TypeToken<RealmList<FAQArticle>>() {
+        }.getType();
+        Type itemDataListType = new TypeToken<RealmList<Equipment>>() {
+        }.getType();
+        Type questCollectListType = new TypeToken<RealmList<QuestCollect>>() {
+        }.getType();
+        Type chatMessageListType = new TypeToken<RealmList<ChatMessage>>() {
+        }.getType();
+        Type challengeListType = new TypeToken<List<Challenge>>() {
+        }.getType();
+        Type challengeRealmListType = new TypeToken<RealmList<Challenge>>() {
+        }.getType();
+        Type questDropItemListType = new TypeToken<RealmList<QuestDropItem>>() {
+        }.getType();
+        Type ownedItemListType = new TypeToken<RealmList<OwnedItem>>() {
+        }.getType();
+        Type ownedPetListType = new TypeToken<RealmList<OwnedPet>>() {
+        }.getType();
+        Type ownedMountListType = new TypeToken<RealmList<OwnedMount>>() {
+        }.getType();
+        Type achievementsListType = new TypeToken<List<Achievement>>() {
+        }.getType();
 
 
         //Exclusion strategy needed for DBFlow https://github.com/Raizlabs/DBFlow/issues/121
