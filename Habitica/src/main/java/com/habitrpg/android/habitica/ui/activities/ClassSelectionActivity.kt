@@ -21,10 +21,7 @@ import com.habitrpg.android.habitica.ui.AvatarView
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
-import com.habitrpg.shared.habitica.models.user.Items
-import com.habitrpg.shared.habitica.models.user.Outfit
-import com.habitrpg.shared.habitica.models.user.Preferences
-import com.habitrpg.shared.habitica.models.user.User
+import com.habitrpg.shared.habitica.models.user.*
 import io.reactivex.functions.Consumer
 import javax.inject.Inject
 
@@ -178,7 +175,7 @@ class ClassSelectionActivity : BaseActivity(), Consumer<User> {
         val user = User()
         user.preferences = preferences
         user.items = Items()
-        user.items?.gear = com.habitrpg.shared.habitica.models.user.Gear()
+        user.items?.gear = Gear()
         user.items?.gear?.equipped = outfit
         return user
     }
