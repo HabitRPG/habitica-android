@@ -1,6 +1,6 @@
 package com.habitrpg.shared.habitica.nativePackages
 
-import space.thelen.shared.cluetective.R
+import com.habitrpg.shared.habitica.R
 
 actual class NativeColor {
     actual companion object {

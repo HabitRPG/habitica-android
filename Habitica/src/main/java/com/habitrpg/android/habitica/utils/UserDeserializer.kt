@@ -7,11 +7,12 @@ import com.google.gson.JsonElement
 import com.google.gson.JsonParseException
 import com.google.gson.reflect.TypeToken
 import com.habitrpg.android.habitica.extensions.getAsString
+import com.habitrpg.shared.habitica.models.PushDevice
 import com.habitrpg.shared.habitica.models.QuestAchievement
 import com.habitrpg.shared.habitica.models.Tag
 import com.habitrpg.shared.habitica.models.inventory.Quest
-import com.habitrpg.shared.habitica.models.social.ChallengeMembership
 import com.habitrpg.shared.habitica.models.invitations.Invitations
+import com.habitrpg.shared.habitica.models.social.ChallengeMembership
 import com.habitrpg.shared.habitica.models.social.UserParty
 import com.habitrpg.shared.habitica.models.tasks.TasksOrder
 import com.habitrpg.shared.habitica.models.user.*
@@ -64,7 +65,7 @@ class UserDeserializer : JsonDeserializer<User> {
             }
         }
         if (obj.has("purchased")) {
-            user.purchased = context.deserialize(obj.get("purchased"), com.habitrpg.shared.habitica.models.user.Purchases::class.java)
+            user.purchased = context.deserialize(obj.get("purchased"), Purchases::class.java)
             if (obj.getAsJsonObject("purchased").has("plan")) {
                 if (obj.getAsJsonObject("purchased").getAsJsonObject("plan").has("mysteryItems")) {
                     user.purchased?.plan?.mysteryItemCount = obj.getAsJsonObject("purchased").getAsJsonObject("plan").getAsJsonArray("mysteryItems").size()
@@ -94,7 +95,7 @@ class UserDeserializer : JsonDeserializer<User> {
             }
         }
         if (obj.has("flags")) {
-            user.flags = context.deserialize(obj.get("flags"), com.habitrpg.shared.habitica.models.user.Flags::class.java)
+            user.flags = context.deserialize(obj.get("flags"), Flags::class.java)
         }
         if (obj.has("contributor")) {
             user.contributor = context.deserialize(obj.get("contributor"), ContributorInfo::class.java)
@@ -127,8 +128,8 @@ class UserDeserializer : JsonDeserializer<User> {
         if (obj.has("pushDevices")) {
             user.pushDevices = ArrayList()
             obj.getAsJsonArray("pushDevices")
-                    .map { context.deserialize<com.habitrpg.shared.habitica.models.PushDevice>(it, com.habitrpg.shared.habitica.models.PushDevice::class.java) }
-                    .forEach { (user.pushDevices as? ArrayList<com.habitrpg.shared.habitica.models.PushDevice>)?.add(it) }
+                    .map { context.deserialize<PushDevice>(it, PushDevice::class.java) }
+                    .forEach { (user.pushDevices as? ArrayList<PushDevice>)?.add(it) }
         }
 
         if (obj.has("lastCron")) {

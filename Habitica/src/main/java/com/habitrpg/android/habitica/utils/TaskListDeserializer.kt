@@ -109,7 +109,7 @@ class TaskListDeserializer : JsonDeserializer<TaskList> {
                         }
                     }
                     if (obj.has("repeat")) {
-                        task.repeat = ctx.deserialize(obj.get("repeat"), com.habitrpg.shared.habitica.models.tasks.Days::class.java)
+                        task.repeat = ctx.deserialize(obj.get("repeat"), Days::class.java)
                     }
 
                     if (obj.has("group")) {

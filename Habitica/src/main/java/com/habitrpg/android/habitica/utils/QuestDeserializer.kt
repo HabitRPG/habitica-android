@@ -5,6 +5,7 @@ import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
 import com.google.gson.JsonParseException
 import com.habitrpg.shared.habitica.models.inventory.Quest
+import com.habitrpg.shared.habitica.models.inventory.QuestMember
 import com.habitrpg.shared.habitica.models.inventory.QuestProgress
 import com.habitrpg.shared.habitica.models.inventory.QuestProgressCollect
 import io.realm.RealmList
@@ -35,7 +36,7 @@ class QuestDeserializer : JsonDeserializer<Quest> {
             if (progressObj.has("collect")) {
                 progress.collect = RealmList()
                 for ((key, value) in progressObj.getAsJsonObject("collect").entrySet()) {
-                    val collect = com.habitrpg.shared.habitica.models.inventory.QuestProgressCollect()
+                    val collect = QuestProgressCollect()
                     collect.key = key
                     collect.count = value.asInt
                     progress.collect?.add(collect)
@@ -60,9 +61,9 @@ class QuestDeserializer : JsonDeserializer<Quest> {
         }
 
         if (obj.has("members")) {
-            val members = RealmList<com.habitrpg.shared.habitica.models.inventory.QuestMember>()
+            val members = RealmList<QuestMember>()
             for ((key, value) in obj.getAsJsonObject("members").entrySet()) {
-                val member = com.habitrpg.shared.habitica.models.inventory.QuestMember()
+                val member = QuestMember()
                 member.key = key
                 if (value.isJsonNull) {
                     member.isParticipating = null

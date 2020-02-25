@@ -1,7 +1,6 @@
 package com.habitrpg.shared.habitica
 
 import android.util.Log
-import space.thelen.shared.cluetective.BuildConfig
 
 actual class PlatformLogger actual constructor() {
     actual val enabled: Boolean

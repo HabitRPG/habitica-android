@@ -91,7 +91,7 @@ class OldQuestProgressView : LinearLayout {
 
             if (progress != null) {
                 val inflater = LayoutInflater.from(context)
-                for (collect in progress.collect ?: emptyList<com.habitrpg.shared.habitica.models.inventory.QuestProgressCollect>()) {
+                for (collect in progress.collect ?: emptyList<QuestProgressCollect>()) {
                     val contentCollect = quest.getCollectWithKey(collect.key) ?: continue
                     val view = inflater.inflate(R.layout.quest_collect, collectionContainer, false)
                     val iconView = view.findViewById(R.id.icon_view) as? SimpleDraweeView

@@ -4,7 +4,7 @@
 //import com.habitrpg.android.habitica.BuildConfig;
 //import com.habitrpg.shared.habitica.models.responses.TaskDirectionData;
 //import com.habitrpg.shared.habitica.models.tasks.Task;
-//import TaskList;
+//import com.habitrpg.shared.habitica.models.tasks.TaskList;
 //
 //import org.junit.Test;
 //import org.junit.runner.RunWith;

@@ -5,6 +5,7 @@ import android.os.Parcelable
 import android.text.Spanned
 import androidx.annotation.StringDef
 import com.google.gson.annotations.SerializedName
+import com.habitrpg.shared.habitica.R
 import com.habitrpg.shared.habitica.models.Tag
 import com.habitrpg.shared.habitica.models.tasks.TaskType.Companion.TYPE_DAILY
 import com.habitrpg.shared.habitica.models.tasks.TaskType.Companion.TYPE_HABIT
@@ -17,7 +18,6 @@ import io.realm.annotations.Ignore
 import io.realm.annotations.PrimaryKey
 import org.json.JSONArray
 import org.json.JSONException
-import space.thelen.shared.cluetective.R
 import java.util.*
 import kotlin.collections.ArrayList
 

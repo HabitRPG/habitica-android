@@ -1,7 +1,7 @@
 package com.habitrpg.shared.habitica.models.user
 
 import android.content.Context
-import space.thelen.shared.cluetective.R
+import com.habitrpg.shared.habitica.R
 
 actual fun nativeGetTranslatedClassName(context: Context, habitClass: String?): String {
     return when (habitClass) {

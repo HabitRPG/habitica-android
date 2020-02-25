@@ -55,7 +55,7 @@ class AutocompleteAdapter(val context: Context, val socialRepository: SocialRepo
                         }.filter { it.username?.startsWith(constraint.toString().drop(1)) ?: false }.map {message ->
                             val result = FindUsernameResult()
                             result.authentication = Authentication()
-                            result.authentication?.localAuthentication = com.habitrpg.shared.habitica.models.auth.LocalAuthentication()
+                            result.authentication?.localAuthentication = LocalAuthentication()
                             result.authentication?.localAuthentication?.userID = message.uuid
                             result.authentication?.localAuthentication?.username = message.username
                             result.contributor = message.contributor

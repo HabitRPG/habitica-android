@@ -94,7 +94,7 @@ class TaskSchedulingControls @JvmOverloads constructor(
         }
         generateSummary()
     }
-    var weeklyRepeat: com.habitrpg.shared.habitica.models.tasks.Days = com.habitrpg.shared.habitica.models.tasks.Days()
+    var weeklyRepeat: Days = Days()
     set(value) {
         field = value
         createWeeklyRepeatViews()
@@ -130,7 +130,7 @@ class TaskSchedulingControls @JvmOverloads constructor(
         frequency = TaskFrequency.FREQUENCY_WEEKLY
         startDate = Date()
         everyX = 1
-        weeklyRepeat = com.habitrpg.shared.habitica.models.tasks.Days()
+        weeklyRepeat = Days()
 
         repeatsEverySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {

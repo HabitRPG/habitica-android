@@ -142,7 +142,7 @@ class TaskSetupFragment : BaseFragment() {
             task.frequency = "weekly"
             task.startDate = Date()
             task.everyX = 1
-            val days = com.habitrpg.shared.habitica.models.tasks.Days()
+            val days = Days()
             days.m = true
             days.t = true
             days.w = true
