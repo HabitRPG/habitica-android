@@ -10,12 +10,12 @@ import androidx.core.os.bundleOf
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.helpers.MainNavigationController
-import com.habitrpg.shared.habitica.models.inventory.Customization
 import com.habitrpg.android.habitica.models.inventory.CustomizationSet
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
+import com.habitrpg.shared.habitica.models.inventory.Customization
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import io.reactivex.subjects.PublishSubject
@@ -23,20 +23,20 @@ import java.util.*
 
 class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
 
-    var userSize: String = ""
-    var hairColor: String = ""
+    var userSize: String? = null
+    var hairColor: String? = null
     var gemBalance: Int = 0
     var customizationList: MutableList<Any> = ArrayList()
-    set(value) {
-        field = value
-        notifyDataSetChanged()
-    }
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
     var additionalSetItems: List<Customization> = ArrayList()
     var activeCustomization: String? = null
-    set(value) {
-        field = value
-        this.notifyDataSetChanged()
-    }
+        set(value) {
+            field = value
+            this.notifyDataSetChanged()
+        }
 
     private val selectCustomizationEvents = PublishSubject.create<Customization>()
     private val unlockCustomizationEvents = PublishSubject.create<Customization>()
@@ -45,8 +45,7 @@ class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerVi
     fun updateOwnership(ownedCustomizations: List<String>) {
         for ((position, obj) in customizationList.withIndex()) {
             if (obj.javaClass == Customization::class.java) {
-                val customization = obj as? Customization
-                        ?: return
+                val customization = obj as? Customization ?: return
                 if (customization.purchased != ownedCustomizations.contains(customization.id)) {
                     customization.purchased = ownedCustomizations.contains(customization.id)
                     notifyItemChanged(position)
@@ -238,25 +237,25 @@ class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerVi
 
             val dialog = HabiticaAlertDialog(context)
             dialog.addButton(R.string.purchase_button, true) { _, _ ->
-                        if (set?.price ?: 0 > gemBalance) {
-                            MainNavigationController.navigate(R.id.gemPurchaseActivity, bundleOf(Pair("openSubscription", false)))
-                            return@addButton
-                        }
-                        set?.customizations = ArrayList()
-                        customizationList
-                                .filter { Customization::class.java.isAssignableFrom(it.javaClass) }
-                                .map { it as Customization }
-                                .filter { !it.isUsable && it.customizationSet != null && it.customizationSet == set?.identifier }
-                                .forEach { set?.customizations?.add(it) }
-                        if (additionalSetItems.isNotEmpty()) {
-                            additionalSetItems
-                                    .filter { !it.isUsable && it.customizationSet != null && it.customizationSet == set?.identifier }
-                                    .forEach { set?.customizations?.add(it) }
-                        }
-                        set?.let {
-                            unlockSetEvents.onNext(it)
-                        }
-                    }
+                if (set?.price ?: 0 > gemBalance) {
+                    MainNavigationController.navigate(R.id.gemPurchaseActivity, bundleOf(Pair("openSubscription", false)))
+                    return@addButton
+                }
+                set?.customizations = ArrayList()
+                customizationList
+                        .filter { Customization::class.java.isAssignableFrom(it.javaClass) }
+                        .map { it as Customization }
+                        .filter { !it.isUsable && it.customizationSet != null && it.customizationSet == set?.identifier }
+                        .forEach { set?.customizations?.add(it) }
+                if (additionalSetItems.isNotEmpty()) {
+                    additionalSetItems
+                            .filter { !it.isUsable && it.customizationSet != null && it.customizationSet == set?.identifier }
+                            .forEach { set?.customizations?.add(it) }
+                }
+                set?.let {
+                    unlockSetEvents.onNext(it)
+                }
+            }
             dialog.setTitle(context.getString(R.string.purchase_set_title, set?.text))
             dialog.setAdditionalContentView(dialogContent)
             dialog.addButton(R.string.reward_dialog_dismiss, false)

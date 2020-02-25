@@ -67,6 +67,7 @@ open class User : NativeRealmObject(), Avatar, VersionedObject {
                 stats.userId = this.id
             }
         }
+
     var inbox: Inbox? = null
         set(inbox) {
             field = inbox
@@ -183,44 +184,30 @@ open class User : NativeRealmObject(), Avatar, VersionedObject {
     val formattedUsername: String?
         get() = if (username != null) "@$username" else null
 
-    override val gemCount: Int
-        get() {
-            return (this.balance * 4).toInt()
-        }
+    override val gemCount: Int?
+        get() = (this.balance * 4).toInt()
 
-    override val hourglassCount: Int
-        get() {
-            return purchased?.plan?.consecutive?.trinkets ?: 0
-        }
+    override val hourglassCount: Int?
+        get() = purchased?.plan?.consecutive?.trinkets ?: 0
 
     override val costume: Outfit?
-        get() {
-            return items?.gear?.costume
-        }
+        get() = items?.gear?.costume
 
     override val equipped: Outfit?
-        get() {
-            return items?.gear?.equipped
-        }
+        get() = items?.gear?.equipped
 
     override fun hasClass(): Boolean {
         return preferences?.disableClasses != true && flags?.classSelected == true && stats?.habitClass?.isNotEmpty() == true
     }
 
     override val currentMount: String?
-        get() {
-            return items?.currentMount ?: ""
-        }
+        get() = items?.currentMount ?: ""
 
     override val currentPet: String?
-        get() {
-            return items?.currentPet ?: ""
-        }
+        get() = items?.currentPet ?: ""
 
     override val sleep: Boolean
-        get(): Boolean {
-            return preferences?.sleep ?: false
-        }
+        get() = preferences?.sleep ?: false
 
     fun hasParty(): Boolean {
         return this.party?.id?.length ?: 0 > 0

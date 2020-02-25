@@ -20,10 +20,8 @@ import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.QuestContent
-import com.habitrpg.shared.habitica.models.inventory.Equipment
 import com.habitrpg.android.habitica.models.shops.Shop
 import com.habitrpg.android.habitica.models.shops.ShopItem
-import com.habitrpg.shared.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.views.CurrencyView
 import com.habitrpg.android.habitica.ui.views.CurrencyViews
@@ -34,6 +32,8 @@ import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientG
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientGoldDialog
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientHourglassesDialog
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientSubscriberGemsDialog
+import com.habitrpg.shared.habitica.models.inventory.Equipment
+import com.habitrpg.shared.habitica.models.user.User
 import io.reactivex.Flowable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.functions.Consumer
@@ -163,8 +163,8 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
     private fun setUser(user: User) {
         this.user = user
         currencyView.gold = user.stats?.gp ?: 0.0
-        currencyView.gems = user.gemCount.toDouble()
-        currencyView.hourglasses = user.hourglassCount.toDouble()
+        currencyView.gems = user.gemCount?.toDouble() ?: 0.0
+        currencyView.hourglasses = user.hourglassCount?.toDouble() ?: 0.0
 
         if ("gems" == shopItem.purchaseType) {
             val maxGems = user.purchased?.plan?.totalNumberOfGems() ?: 0

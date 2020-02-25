@@ -12,10 +12,10 @@ open class Gear : NativeRealmObject() {
     var userId: String? = null
         set(userId) {
             field = userId
-            if (costume != null && !costume!!.isManaged()) {
+            if (costume != null && costume?.isManaged() == false) {
                 costume!!.userId = userId
             }
-            if (equipped != null && !equipped!!.isManaged()) {
+            if (equipped != null && equipped?.isManaged() == false) {
                 equipped!!.userId = userId + "equipped"
             }
         }

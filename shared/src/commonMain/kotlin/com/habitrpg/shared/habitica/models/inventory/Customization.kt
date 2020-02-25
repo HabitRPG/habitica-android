@@ -67,7 +67,7 @@ open class Customization : NativeRealmObject() {
         this.id = this.identifier + "_" + this.type + "_" + this.category
     }
 
-    fun getImageName(userSize: String, hairColor: String): String {
+    fun getImageName(userSize: String?, hairColor: String?): String {
         when (this.type) {
             "skin" -> return "skin_" + this.identifier!!
             "shirt" -> return userSize + "_shirt_" + this.identifier

@@ -50,7 +50,6 @@ open class UserStyles : RealmObject(), Avatar {
     override fun hasClass(): Boolean {
         return false
     }
-
     override var stats: Stats? = null
     override var preferences: Preferences? = null
     private var items: Items? = null

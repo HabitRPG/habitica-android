@@ -145,7 +145,6 @@ open class Member : NativeRealmObject(), Avatar {
 
 
     override var gemCount: Int = 0
-
     override var hourglassCount: Int = 0
 
     override fun hasClass(): Boolean {
@@ -153,9 +152,7 @@ open class Member : NativeRealmObject(), Avatar {
     }
 
     override val sleep: Boolean
-        get(): Boolean {
+        get() {
             return preferences?.sleep ?: false
         }
-
-
 }

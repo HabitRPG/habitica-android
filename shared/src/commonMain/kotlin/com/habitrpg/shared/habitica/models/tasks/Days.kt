@@ -18,6 +18,6 @@ expect open class Days {
 
     fun writeToParcel(dest: NativeParcel, flags: Int)
 
-    protected constructor(`in`: NativeParcel)
+    protected constructor(parcel: NativeParcel)
 }
 

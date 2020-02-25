@@ -10,9 +10,9 @@ import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.shops.Shop
-import com.habitrpg.shared.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.views.CurrencyViews
+import com.habitrpg.shared.habitica.models.user.User
 import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.fragment_viewpager.*
 import javax.inject.Inject
@@ -104,7 +104,7 @@ class ShopsFragment : BaseMainFragment() {
 
     private fun updateCurrencyView(user: User) {
         currencyView.gold = user.stats?.gp ?: 0.0
-        currencyView.gems = user.gemCount.toDouble()
+        currencyView.gems = user.gemCount?.toDouble() ?: 0.0
         currencyView.hourglasses = user.hourglassCount?.toDouble() ?: 0.0
     }
 }

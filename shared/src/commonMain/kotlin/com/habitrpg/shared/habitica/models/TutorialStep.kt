@@ -22,6 +22,5 @@ open class TutorialStep : NativeRealmObject() {
     var displayedOn: NativeDate? = null
 
     fun shouldDisplay(): Boolean =
-            !this.wasCompleted && (this.displayedOn == null || NativeDate().getTime() - (displayedOn?.getTime()
-                    ?: 0) > 86400000)
+            !this.wasCompleted && (this.displayedOn == null || NativeDate().time - (displayedOn?.time ?: 0) > 86400000)
 }

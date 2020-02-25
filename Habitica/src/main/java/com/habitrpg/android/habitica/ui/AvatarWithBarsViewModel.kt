@@ -13,11 +13,11 @@ import com.habitrpg.android.habitica.databinding.AvatarWithBarsBinding
 import com.habitrpg.android.habitica.events.BoughtGemsEvent
 import com.habitrpg.android.habitica.helpers.HealthFormatter
 import com.habitrpg.android.habitica.helpers.MainNavigationController
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
+import com.habitrpg.android.habitica.ui.views.ValueBar
 import com.habitrpg.shared.habitica.models.Avatar
 import com.habitrpg.shared.habitica.models.user.Stats
 import com.habitrpg.shared.habitica.models.user.User
-import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
-import com.habitrpg.android.habitica.ui.views.ValueBar
 import io.reactivex.disposables.Disposable
 import org.greenrobot.eventbus.Subscribe
 import java.util.*
@@ -88,8 +88,8 @@ class AvatarWithBarsViewModel(private val context: Context, private val binding:
 
         binding.currencyView.gold = stats.gp ?: 0.0
         if (user is User) {
-            binding.currencyView.hourglasses = user.hourglassCount.toDouble()
-            binding.currencyView.gems = user.gemCount.toDouble()
+            binding.currencyView.hourglasses = user.hourglassCount?.toDouble() ?: 0.0
+            binding.currencyView.gems = user.gemCount?.toDouble() ?: 0.0
         }
 
         binding.currencyView.setOnClickListener {
