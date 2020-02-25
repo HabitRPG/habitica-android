@@ -1,4 +1,4 @@
-package com.habitrpg.shared.habitica.models.user
+package com.habitrpg.shared.habitica.models.tasks
 
 class TasksOrder {
     var habits: List<String> = listOf()

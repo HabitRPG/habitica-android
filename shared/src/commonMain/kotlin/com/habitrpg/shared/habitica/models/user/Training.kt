@@ -25,9 +25,9 @@ open class Training : NativeRealmObject() {
         }
     @SerializedNameAnnotation("int")
     var _int: Float? = null
-    get() {
-        return if (field != null) field else 0f
-    }
+        get() {
+            return if (field != null) field else 0f
+        }
 
     fun merge(stats: Training?) {
         if (stats == null) {

@@ -18,20 +18,21 @@ import com.habitrpg.android.habitica.models.auth.UserAuth
 import com.habitrpg.android.habitica.models.auth.UserAuthResponse
 import com.habitrpg.android.habitica.models.auth.UserAuthSocial
 import com.habitrpg.android.habitica.models.auth.UserAuthSocialTokens
-import com.habitrpg.shared.habitica.models.inventory.Equipment
-import com.habitrpg.shared.habitica.models.inventory.Quest
-import com.habitrpg.shared.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.responses.*
 import com.habitrpg.android.habitica.models.shops.Shop
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.models.social.*
+import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
+import com.habitrpg.shared.habitica.models.Tag
+import com.habitrpg.shared.habitica.models.inventory.Equipment
+import com.habitrpg.shared.habitica.models.inventory.Quest
+import com.habitrpg.shared.habitica.models.members.Member
+import com.habitrpg.shared.habitica.models.responses.TaskDirectionData
 import com.habitrpg.shared.habitica.models.tasks.Task
+import com.habitrpg.shared.habitica.models.tasks.TaskList
 import com.habitrpg.shared.habitica.models.user.Items
 import com.habitrpg.shared.habitica.models.user.Stats
 import com.habitrpg.shared.habitica.models.user.User
-import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
-import com.habitrpg.shared.habitica.models.Tag
-import com.habitrpg.shared.habitica.models.responses.TaskDirectionData
 import io.reactivex.Flowable
 import io.reactivex.FlowableTransformer
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -376,15 +377,15 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
         return apiService.hatchPet(eggKey, hatchingPotionKey).compose(configureApiCallObserver())
     }
 
-    override val tasks: Flowable<com.habitrpg.shared.habitica.models.tasks.TaskList>
+    override val tasks: Flowable<TaskList>
         get() = apiService.tasks.compose(configureApiCallObserver())
 
-    override fun getTasks(type: String): Flowable<com.habitrpg.shared.habitica.models.tasks.TaskList> {
+    override fun getTasks(type: String): Flowable<TaskList> {
         return apiService.getTasks(type).compose(configureApiCallObserver())
     }
 
 
-    override fun getTasks(type: String, dueDate: String): Flowable<com.habitrpg.shared.habitica.models.tasks.TaskList> {
+    override fun getTasks(type: String, dueDate: String): Flowable<TaskList> {
         return apiService.getTasks(type, dueDate).compose(configureApiCallObserver())
     }
 
@@ -629,7 +630,7 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
         }
     }
 
-    override fun getChallengeTasks(challengeId: String): Flowable<com.habitrpg.shared.habitica.models.tasks.TaskList> {
+    override fun getChallengeTasks(challengeId: String): Flowable<TaskList> {
         return apiService.getChallengeTasks(challengeId).compose(configureApiCallObserver())
     }
 

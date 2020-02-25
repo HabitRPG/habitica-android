@@ -22,7 +22,7 @@ open class ContributorInfo : NativeRealmObject() {
 
 
             if (CONTRIBUTOR_COLOR_DICT.get(this.level, -1) > 0) {
-                rColor = CONTRIBUTOR_COLOR_DICT.get(this.level)
+                rColor = CONTRIBUTOR_COLOR_DICT.get(this.level, -1)
             }
 
             return rColor

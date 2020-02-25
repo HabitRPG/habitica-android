@@ -2,16 +2,14 @@ package com.habitrpg.shared.habitica.models.tasks
 
 import android.os.Parcel
 import android.os.Parcelable
-
-import java.util.UUID
-
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
+import java.util.*
 
 /**
  * Created by viirus on 06/07/15.
  */
-actual open class ChecklistItem: RealmObject, Parcelable {
+actual open class ChecklistItem : RealmObject, Parcelable {
 
     @PrimaryKey
     actual var id: String? = null

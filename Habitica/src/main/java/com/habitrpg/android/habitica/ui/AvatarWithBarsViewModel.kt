@@ -24,7 +24,7 @@ import java.util.*
 import kotlin.math.floor
 
 class AvatarWithBarsViewModel(private val context: Context, private val binding: AvatarWithBarsBinding, userRepository: UserRepository? = null) {
-    private var userObject: com.habitrpg.shared.habitica.models.Avatar? = null
+    private var userObject: Avatar? = null
 
     private var cachedMaxHealth: Int = 0
     private var cachedMaxExp: Int = 0
@@ -47,7 +47,7 @@ class AvatarWithBarsViewModel(private val context: Context, private val binding:
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
-    fun updateData(user: com.habitrpg.shared.habitica.models.Avatar) {
+    fun updateData(user: Avatar) {
         userObject = user
 
         val stats = user.stats ?: return

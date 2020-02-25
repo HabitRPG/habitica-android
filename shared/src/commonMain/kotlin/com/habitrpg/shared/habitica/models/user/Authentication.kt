@@ -9,11 +9,11 @@ open class Authentication : NativeRealmObject() {
 
     @PrimaryKeyAnnotation
     var userId: String? = null
-    set(value) {
-        field = value
-        timestamps?.userId = value
-        localAuthentication?.userID = value
-    }
+        set(value) {
+            field = value
+            timestamps?.userId = value
+            localAuthentication?.userID = value
+        }
 
     @SerializedNameAnnotation("local")
     var localAuthentication: LocalAuthentication? = null

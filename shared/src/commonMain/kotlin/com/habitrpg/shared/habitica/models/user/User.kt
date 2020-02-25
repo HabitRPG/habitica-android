@@ -5,6 +5,7 @@ import com.habitrpg.shared.habitica.models.invitations.Invitations
 import com.habitrpg.shared.habitica.models.social.ChallengeMembership
 import com.habitrpg.shared.habitica.models.social.UserParty
 import com.habitrpg.shared.habitica.models.tasks.TaskList
+import com.habitrpg.shared.habitica.models.tasks.TasksOrder
 import com.habitrpg.shared.habitica.nativePackages.NativeColor
 import com.habitrpg.shared.habitica.nativePackages.NativeDate
 import com.habitrpg.shared.habitica.nativePackages.NativeList
@@ -60,7 +61,7 @@ open class User : NativeRealmObject(), Avatar, VersionedObject {
 
     var balance: Double = 0.toDouble()
     override var stats: Stats? = null
-        set(stats: Stats?) {
+        set(stats) {
             field = stats
             if (stats != null && this.id != null && !stats.isManaged()) {
                 stats.userId = this.id
@@ -74,10 +75,7 @@ open class User : NativeRealmObject(), Avatar, VersionedObject {
             }
         }
     override var preferences: Preferences? = null
-        get(): Preferences? {
-            return field
-        }
-        set(preferences: Preferences?) {
+        set(preferences) {
             field = preferences
             if (preferences != null && this.id != null && !preferences.isManaged()) {
                 preferences.userId = this.id

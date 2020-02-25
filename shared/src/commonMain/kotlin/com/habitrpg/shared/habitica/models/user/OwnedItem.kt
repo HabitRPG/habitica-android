@@ -9,15 +9,15 @@ open class OwnedItem : NativeRealmObject(), OwnedObject {
     @PrimaryKeyAnnotation
     override var combinedKey: String? = null
     override var userID: String? = null
-    set(value) {
-        field = value
-        combinedKey = field + itemType + key
-    }
+        set(value) {
+            field = value
+            combinedKey = field + itemType + key
+        }
     override var key: String? = null
-    set(value) {
-        field = value
-        combinedKey = userID + itemType + field
-    }
+        set(value) {
+            field = value
+            combinedKey = userID + itemType + field
+        }
 
     var itemType: String? = null
         set(value) {

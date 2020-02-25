@@ -4,8 +4,8 @@
 //import com.habitrpg.android.habitica.data.ApiClient;
 //import com.habitrpg.android.habitica.data.TaskRepository;
 //import com.habitrpg.android.habitica.data.local.UserLocalRepository;
-//import com.habitrpg.shared.habitica.models.tasks.TaskList;
-//import com.habitrpg.shared.habitica.models.user.TasksOrder;
+//import TaskList;
+//import com.habitrpg.shared.habitica.models.tasks.TasksOrder;
 //import com.habitrpg.shared.habitica.models.user.Flags;
 //import com.habitrpg.shared.habitica.models.user.Items;
 //import com.habitrpg.shared.habitica.models.user.Preferences;

@@ -8,15 +8,15 @@ import com.habitrpg.shared.habitica.nativePackages.annotations.PrimaryKeyAnnotat
 open class Quest : NativeRealmObject() {
     @PrimaryKeyAnnotation
     var id: String? = null
-    set(value) {
-        field = value
-        progress?.id = value
-    }
+        set(value) {
+            field = value
+            progress?.id = value
+        }
     var key: String = ""
-    set(value) {
-        field = value
-        progress?.key = key
-    }
+        set(value) {
+            field = value
+            progress?.key = key
+        }
     var active: Boolean = false
     var leader: String? = null
     var RSVPNeeded: Boolean = false
@@ -39,7 +39,7 @@ open class Quest : NativeRealmObject() {
     }
 
     val activeRageStrikeNumber: Int
-    get() {
-        return rageStrikes?.filter { it.wasHit }?.size ?: 0
-    }
+        get() {
+            return rageStrikes?.filter { it.wasHit }?.size ?: 0
+        }
 }

@@ -1,7 +1,10 @@
 package com.habitrpg.shared.habitica.models.tasks
 
 import com.habitrpg.shared.habitica.models.Tag
-import com.habitrpg.shared.habitica.nativePackages.*
+import com.habitrpg.shared.habitica.nativePackages.NativeDate
+import com.habitrpg.shared.habitica.nativePackages.NativeList
+import com.habitrpg.shared.habitica.nativePackages.NativeParcel
+import com.habitrpg.shared.habitica.nativePackages.NativeSpanned
 
 expect open class Task {
     var id: String?

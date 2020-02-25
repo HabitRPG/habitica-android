@@ -43,9 +43,9 @@ class ChatMessageDeserializer : JsonDeserializer<ChatMessage> {
         if (obj.has("contributor")) {
             if (!obj.get("contributor").isJsonNull) {
                 if (obj.get("contributor").isJsonObject) {
-                    message.contributor = context.deserialize<com.habitrpg.shared.habitica.models.user.ContributorInfo>(obj.get("contributor"), com.habitrpg.shared.habitica.models.user.ContributorInfo::class.java)
+                    message.contributor = context.deserialize<ContributorInfo>(obj.get("contributor"), ContributorInfo::class.java)
                 } else {
-                    val contributor = com.habitrpg.shared.habitica.models.user.ContributorInfo()
+                    val contributor = ContributorInfo()
                     contributor.text = obj.get("contributor").asString
                     message.contributor = contributor
                 }

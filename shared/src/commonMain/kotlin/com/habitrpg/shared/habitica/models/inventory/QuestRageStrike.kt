@@ -10,7 +10,7 @@ open class QuestRageStrike() : NativeRealmObject() {
     var wasHit = false
 
 
-    constructor(key: String, wasHit: Boolean): this() {
+    constructor(key: String, wasHit: Boolean) : this() {
         this.key = key
         this.wasHit = wasHit
     }

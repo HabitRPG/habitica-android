@@ -17,7 +17,7 @@ class FindUsernameResultDeserializer : JsonDeserializer<FindUsernameResult> {
         val result = FindUsernameResult()
 
         if (obj.has("contributor")) {
-            result.contributor = context.deserialize<com.habitrpg.shared.habitica.models.user.ContributorInfo>(obj.get("contributor"), com.habitrpg.shared.habitica.models.user.ContributorInfo::class.java)
+            result.contributor = context.deserialize<ContributorInfo>(obj.get("contributor"), ContributorInfo::class.java)
         }
         if (obj.has("auth")) {
             result.authentication = context.deserialize<Authentication>(obj.get("auth"), Authentication::class.java)

@@ -43,7 +43,7 @@ open class Member : NativeRealmObject(), Avatar {
             }
         }
     override var stats: Stats? = null
-        set(stats: Stats?) {
+        set(stats) {
             field = stats
             if (stats != null && this.id != null && !stats.isManaged()) {
                 stats.userId = this.id
@@ -57,7 +57,7 @@ open class Member : NativeRealmObject(), Avatar {
             }
         }
     override var preferences: MemberPreferences? = null
-        set(preferences: MemberPreferences?) {
+        set(preferences) {
             field = preferences
             if (preferences != null && this.id != null && !preferences.isManaged()) {
                 preferences.userId = this.id ?: ""
@@ -107,7 +107,7 @@ open class Member : NativeRealmObject(), Avatar {
             }
         }
     override var costume: Outfit? = null
-        set(costume: Outfit?) {
+        set(costume) {
             field = costume
             if (costume != null && this.id != null) {
                 costume.userId = this.id + "costume"
@@ -115,7 +115,7 @@ open class Member : NativeRealmObject(), Avatar {
         }
 
     override var equipped: Outfit? = null
-        set(equipped: Outfit?) {
+        set(equipped) {
             field = equipped
             if (equipped != null && this.id != null) {
                 equipped.userId = this.id + "equipped"

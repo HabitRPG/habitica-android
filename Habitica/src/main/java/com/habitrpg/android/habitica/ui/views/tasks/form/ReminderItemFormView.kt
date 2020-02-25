@@ -15,9 +15,8 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.extensions.inflate
-import com.habitrpg.shared.habitica.models.tasks.RemindersItem
-import com.habitrpg.shared.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.helpers.bindView
+import com.habitrpg.shared.habitica.models.tasks.RemindersItem
 import com.habitrpg.shared.habitica.models.tasks.TaskType
 import java.text.DateFormat
 import java.util.*

@@ -27,7 +27,7 @@ open class InboxConversation : RealmObject() {
     var username: String? = null
     var user: String? = null
     var timestamp: Date? = null
-    var contributor: com.habitrpg.shared.habitica.models.user.ContributorInfo? = null
+    var contributor: ContributorInfo? = null
     var userStyles: UserStyles? = null
     var text: String? = null
 

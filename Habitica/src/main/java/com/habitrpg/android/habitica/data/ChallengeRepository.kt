@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.data
 import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.shared.habitica.models.social.ChallengeMembership
 import com.habitrpg.shared.habitica.models.tasks.Task
+import com.habitrpg.shared.habitica.models.tasks.TaskList
 import io.reactivex.Flowable
 import io.realm.RealmResults
 
@@ -14,7 +15,7 @@ interface ChallengeRepository : BaseRepository {
     fun getChallengeTasks(challengeId: String): Flowable<RealmResults<Task>>
 
     fun retrieveChallenge(challengeID: String): Flowable<Challenge>
-    fun retrieveChallengeTasks(challengeID: String): Flowable<com.habitrpg.shared.habitica.models.tasks.TaskList>
+    fun retrieveChallengeTasks(challengeID: String): Flowable<TaskList>
     fun createChallenge(challenge: Challenge, taskList: List<Task>): Flowable<Challenge>
 
     /**

@@ -16,6 +16,7 @@ import com.habitrpg.shared.habitica.models.user.Items
 import com.habitrpg.shared.habitica.models.user.Stats
 import com.habitrpg.shared.habitica.models.user.User
 import com.habitrpg.shared.habitica.models.responses.TaskDirectionData
+import com.habitrpg.shared.habitica.models.tasks.TaskList
 import io.reactivex.Flowable
 import io.reactivex.FlowableTransformer
 import retrofit2.HttpException
@@ -34,7 +35,7 @@ interface ApiClient {
     val user: Flowable<User>
 
 
-    val tasks: Flowable<com.habitrpg.shared.habitica.models.tasks.TaskList>
+    val tasks: Flowable<TaskList>
 
     /* challenges api */
 
@@ -71,8 +72,8 @@ interface ApiClient {
     fun feedPet(petKey: String, foodKey: String): Flowable<FeedResponse>
 
     fun hatchPet(eggKey: String, hatchingPotionKey: String): Flowable<Items>
-    fun getTasks(type: String): Flowable<com.habitrpg.shared.habitica.models.tasks.TaskList>
-    fun getTasks(type: String, dueDate: String): Flowable<com.habitrpg.shared.habitica.models.tasks.TaskList>
+    fun getTasks(type: String): Flowable<TaskList>
+    fun getTasks(type: String, dueDate: String): Flowable<TaskList>
 
 
     fun unlockPath(path: String): Flowable<UnlockResponse>
@@ -192,7 +193,7 @@ interface ApiClient {
 
     fun deletePushDevice(regId: String): Flowable<List<Void>>
 
-    fun getChallengeTasks(challengeId: String): Flowable<com.habitrpg.shared.habitica.models.tasks.TaskList>
+    fun getChallengeTasks(challengeId: String): Flowable<TaskList>
 
     fun getChallenge(challengeId: String): Flowable<Challenge>
 

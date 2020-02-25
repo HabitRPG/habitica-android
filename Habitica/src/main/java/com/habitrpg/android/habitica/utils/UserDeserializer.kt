@@ -13,6 +13,7 @@ import com.habitrpg.shared.habitica.models.inventory.Quest
 import com.habitrpg.shared.habitica.models.social.ChallengeMembership
 import com.habitrpg.shared.habitica.models.invitations.Invitations
 import com.habitrpg.shared.habitica.models.social.UserParty
+import com.habitrpg.shared.habitica.models.tasks.TasksOrder
 import com.habitrpg.shared.habitica.models.user.*
 import io.realm.Realm
 import io.realm.RealmList
@@ -96,7 +97,7 @@ class UserDeserializer : JsonDeserializer<User> {
             user.flags = context.deserialize(obj.get("flags"), com.habitrpg.shared.habitica.models.user.Flags::class.java)
         }
         if (obj.has("contributor")) {
-            user.contributor = context.deserialize(obj.get("contributor"), com.habitrpg.shared.habitica.models.user.ContributorInfo::class.java)
+            user.contributor = context.deserialize(obj.get("contributor"), ContributorInfo::class.java)
         }
         if (obj.has("backer")) {
             user.backer = context.deserialize<Backer>(obj.get("backer"), Backer::class.java)

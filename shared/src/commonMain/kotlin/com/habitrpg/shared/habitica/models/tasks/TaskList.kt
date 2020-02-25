@@ -2,5 +2,5 @@ package com.habitrpg.shared.habitica.models.tasks
 
 
 class TaskList {
-    var tasks: MutableMap<String, Task> = mutableMapOf<String, Task>()
+    var tasks: MutableMap<String, Task> = mutableMapOf()
 }

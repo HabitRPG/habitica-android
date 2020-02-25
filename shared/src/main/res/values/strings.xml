@@ -282,8 +282,8 @@
     <string name="evolved_pet_title">You have tamed %s, let\'s go for a ride!</string>
     <string name="close">Close</string>
     <string name="share">Share</string>
-    <string name="notification_pet_fed" >You fed your %s!</string>
-    <string name="notification_purchase_reward" >You purchased a reward</string>
+    <string name="notification_pet_fed">You fed your %s!</string>
+    <string name="notification_purchase_reward">You purchased a reward</string>
     <string name="world_quest">World Quest</string>
     <string name="inn_description">Need a break? Check into Daniel’s Inn to pause some of Habitica’s more difficult game mechanics:\n\n
 &#8226; Missed Dailies won’t damage you\n

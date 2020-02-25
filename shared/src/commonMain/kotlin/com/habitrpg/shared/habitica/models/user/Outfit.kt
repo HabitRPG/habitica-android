@@ -1,10 +1,10 @@
 package com.habitrpg.shared.habitica.models.user
 
-import android.text.TextUtils
-
 import com.habitrpg.shared.habitica.nativePackages.NativeRealmObject
 import com.habitrpg.shared.habitica.nativePackages.annotations.PrimaryKeyAnnotation
 import com.habitrpg.shared.habitica.nativePackages.annotations.SerializedNameAnnotation
+
+expect fun nativeIsAvailable(outfit: String): Boolean
 
 open class Outfit : NativeRealmObject() {
 
@@ -22,9 +22,7 @@ open class Outfit : NativeRealmObject() {
     var eyeWear: String = ""
     var headAccessory: String = ""
 
-    fun isAvailable(outfit: String): Boolean {
-        return !TextUtils.isEmpty(outfit) && !outfit.endsWith("base_0")
-    }
+    fun isAvailable(outfit: String): Boolean = nativeIsAvailable(outfit)
 
     fun updateWith(newOutfit: Outfit) {
         this.armor = newOutfit.armor

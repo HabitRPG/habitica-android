@@ -91,7 +91,7 @@
     <!--  clock styled weekdays -->
     <color name="days_gray">#ffb5b5b5</color>
 
-    <color name="white">#ffffff </color>
+    <color name="white">#ffffff</color>
 
     <color name="cell_separator">@color/gray_400</color>
     <color name="checklist_separator">@color/gray_600</color>
@@ -136,7 +136,7 @@
     <color name="skin_915533">#915533</color>
     <color name="skin_c3e1dc">#c3e1dc</color>
     <color name="skin_6bd049">#6bd049</color>
-    
+
     <color name="hair_white">#DEDEDE</color>
     <color name="hair_brown">#903A00</color>
     <color name="hair_blond">#CFA925</color>

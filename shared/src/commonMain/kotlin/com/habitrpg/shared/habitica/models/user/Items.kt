@@ -5,7 +5,7 @@ import com.habitrpg.shared.habitica.nativePackages.NativeList
 import com.habitrpg.shared.habitica.nativePackages.NativeRealmObject
 import com.habitrpg.shared.habitica.nativePackages.annotations.PrimaryKeyAnnotation
 
-open class Items : NativeRealmObject{
+open class Items : NativeRealmObject {
 
     @PrimaryKeyAnnotation
     var userId: String? = null
@@ -64,7 +64,7 @@ open class Items : NativeRealmObject{
     var lastDrop_date: NativeDate? = null
 
     //private QuestContent quest;
-    var gear: com.habitrpg.shared.habitica.models.user.Gear? = null
+    var gear: Gear? = null
     var special: SpecialItems? = null
 
     constructor(currentMount: String, currentPet: String, lastDrop_count: Int, lastDrop_date: NativeDate) {

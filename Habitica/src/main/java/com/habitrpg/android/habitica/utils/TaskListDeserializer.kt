@@ -4,10 +4,7 @@ import com.google.firebase.perf.FirebasePerformance
 import com.google.gson.*
 import com.habitrpg.android.habitica.extensions.getAsString
 import com.habitrpg.shared.habitica.models.Tag
-import com.habitrpg.shared.habitica.models.tasks.ChecklistItem
-import com.habitrpg.shared.habitica.models.tasks.RemindersItem
-import com.habitrpg.shared.habitica.models.tasks.Task
-import com.habitrpg.shared.habitica.models.tasks.TaskGroupPlan
+import com.habitrpg.shared.habitica.models.tasks.*
 import io.realm.Realm
 import io.realm.RealmList
 
@@ -17,7 +14,7 @@ import java.util.*
 /**
  * Created by viirus on 09/12/15.
  */
-class TaskListDeserializer : JsonDeserializer<com.habitrpg.shared.habitica.models.tasks.TaskList> {
+class TaskListDeserializer : JsonDeserializer<TaskList> {
 
     private fun getIntListFromJsonArray(jsonArray: JsonArray): List<Int> {
         val intList = ArrayList<Int>()
@@ -41,8 +38,8 @@ class TaskListDeserializer : JsonDeserializer<com.habitrpg.shared.habitica.model
         }
     }
 
-    override fun deserialize(json: JsonElement, typeOfT: Type, ctx: JsonDeserializationContext): com.habitrpg.shared.habitica.models.tasks.TaskList {
-        val tasks = com.habitrpg.shared.habitica.models.tasks.TaskList()
+    override fun deserialize(json: JsonElement, typeOfT: Type, ctx: JsonDeserializationContext): TaskList {
+        val tasks = TaskList()
         val taskMap = HashMap<String, Task>()
         val deserializeTrace = FirebasePerformance.getInstance().newTrace("TaskListDeserialize")
         deserializeTrace.start()

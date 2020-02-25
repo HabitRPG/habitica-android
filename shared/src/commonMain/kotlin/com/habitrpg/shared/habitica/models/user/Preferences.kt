@@ -10,7 +10,7 @@ open class Preferences : NativeRealmObject(), AvatarPreferences {
 
     @PrimaryKeyAnnotation
     override var userId: String? = null
-        set(userId: String?) {
+        set(userId) {
             field = userId
             if (hair?.isManaged() == false) {
                 hair?.userId = userId

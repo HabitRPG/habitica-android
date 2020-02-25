@@ -2,11 +2,9 @@ package com.habitrpg.shared.habitica.models.tasks
 
 import android.os.Parcel
 import android.os.Parcelable
-
-import java.util.Date
-
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
+import java.util.*
 
 actual open class RemindersItem : RealmObject, Parcelable {
     @PrimaryKey
@@ -38,7 +36,7 @@ actual open class RemindersItem : RealmObject, Parcelable {
 
     }
 
-    actual companion object CREATOR: Parcelable.Creator<RemindersItem> {
+    actual companion object CREATOR : Parcelable.Creator<RemindersItem> {
         actual override fun createFromParcel(source: Parcel): RemindersItem = RemindersItem(source)
 
         actual override fun newArray(size: Int): Array<RemindersItem?> = arrayOfNulls(size)

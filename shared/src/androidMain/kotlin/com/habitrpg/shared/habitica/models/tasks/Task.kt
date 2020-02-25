@@ -187,7 +187,6 @@ actual open class Task : RealmObject, Parcelable {
     }
 
 
-
     actual override fun equals(other: Any?): Boolean {
         if (other == null) {
             return false

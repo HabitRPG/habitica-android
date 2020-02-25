@@ -10,12 +10,12 @@ open class SubscriptionPlan : NativeRealmObject() {
 
     @PrimaryKeyAnnotation
     var customerId: String? = null
-    set(customerId: String?) {
-        field = customerId
-        if (consecutive != null && !consecutive!!.isManaged()) {
-            consecutive!!.customerId = customerId
+        set(customerId) {
+            field = customerId
+            if (consecutive != null && !consecutive!!.isManaged()) {
+                consecutive!!.customerId = customerId
+            }
         }
-    }
     var dateCreated: NativeDate = NativeDate()
     var dateUpdated: NativeDate = NativeDate()
     var dateTerminated: NativeDate? = null
@@ -49,7 +49,7 @@ open class SubscriptionPlan : NativeRealmObject() {
     }
 
     fun numberOfGemsLeft(): Int {
-        return totalNumberOfGems() - gemsBought!!
+        return totalNumberOfGems() - gemsBought
     }
 
     companion object {

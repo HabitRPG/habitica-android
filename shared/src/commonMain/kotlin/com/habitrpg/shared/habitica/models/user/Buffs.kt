@@ -19,36 +19,21 @@ open class Buffs @JvmOverloads constructor(snowball: Boolean? = false, streaks: 
         get(): Boolean? {
             return if (field != null) field else false
         }
-        set(seafoam: Boolean?) {
-            field = seafoam
-        }
     var spookySparkles: Boolean? = null
         get(): Boolean? {
             return if (field != null) field else false
-        }
-        set(spookySparkles: Boolean?) {
-            field = spookySparkles
         }
     var shinySeed: Boolean? = null
         get(): Boolean? {
             return if (field != null) field else false
         }
-        set(shinySeed: Boolean?) {
-            field = shinySeed
-        }
     var snowball: Boolean? = false
         get() {
             return if (field != null) field else false
         }
-        set(snowball) {
-            field = snowball
-        }
     var streaks: Boolean? = false
         get(): Boolean? {
             return if (field != null) field else false
-        }
-        set(streaks: Boolean?) {
-            field = streaks
         }
 
     fun merge(stats: Buffs?) {

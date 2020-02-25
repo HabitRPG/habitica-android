@@ -12,13 +12,13 @@ import com.habitrpg.shared.habitica.nativePackages.annotations.PrimaryKeyAnnotat
 open class TaskTag : NativeRealmObject() {
 
     var tag: Tag? = null
-        set(tag: Tag?) {
+        set(tag) {
             field = tag
             tagId = field?.id
             updatePrimaryKey()
         }
     var task: Task? = null
-        set(task: Task?) {
+        set(task) {
             field = task
 
             taskId = field?.id

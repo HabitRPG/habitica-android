@@ -33,7 +33,7 @@ class AvatarView : View {
     private var hasPet: Boolean = false
     private var isOrphan: Boolean = false
     private val multiDraweeHolder = MultiDraweeHolder<GenericDraweeHierarchy>()
-    private var avatar: com.habitrpg.shared.habitica.models.Avatar? = null
+    private var avatar: Avatar? = null
     private var avatarRectF: RectF? = null
     private val avatarMatrix = Matrix()
     private val numberLayersInProcess = AtomicInteger(0)
@@ -148,7 +148,7 @@ class AvatarView : View {
         if (isOrphan) multiDraweeHolder.onAttach()
     }
 
-    private fun getLayerMap(avatar: com.habitrpg.shared.habitica.models.Avatar, resetHasAttributes: Boolean): Map<LayerType, String> {
+    private fun getLayerMap(avatar: Avatar, resetHasAttributes: Boolean): Map<LayerType, String> {
         val substitutions = AppConfigManager().spriteSubstitutions()
         val layerMap = getAvatarLayerMap(avatar, substitutions)
 
@@ -411,7 +411,7 @@ class AvatarView : View {
         }
     }
 
-    fun setAvatar(avatar: com.habitrpg.shared.habitica.models.Avatar) {
+    fun setAvatar(avatar: Avatar) {
         val oldUser = this.avatar
         this.avatar = avatar
 
