@@ -157,7 +157,7 @@ class StableRecyclerFragment : BaseFragment() {
                 if (items.size > 0 && items[items.size - 1].javaClass == String::class.java) {
                     items.removeAt(items.size - 1)
                 }
-                items.add(animal.type)
+                items.add(animal.getTranslatedType(context))
                 lastSectionTitle = animal.type
             }
             when (itemType) {

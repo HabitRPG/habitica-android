@@ -1,5 +1,5 @@
 package com.habitrpg.android.habitica.models.inventory;
-
+import android.content.Context;
 
 public interface Animal {
 
@@ -14,6 +14,8 @@ public interface Animal {
     String getType();
 
     void setType(String type);
+
+    String getTranslatedType(Context c);
 
     String getAnimal();
 

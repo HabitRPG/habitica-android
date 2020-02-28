@@ -1,6 +1,9 @@
 package com.habitrpg.android.habitica.models.inventory;
 
 
+import android.content.Context;
+import com.habitrpg.android.habitica.R;
+
 import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
@@ -28,6 +31,7 @@ public class Pet extends RealmObject implements Animal{
         return text;
     }
 
+
     @Override
     public void setText(String text) {
         this.text = text;
@@ -36,6 +40,18 @@ public class Pet extends RealmObject implements Animal{
     @Override
     public String getType() {
         return type;
+    }
+
+    @Override
+    public String getTranslatedType(Context c) {
+        String currType = type;
+        String translation = c.getString(R.string.drop);
+
+        if (currType.equals(translation)) {
+            currType = c.getString(R.string.standard);
+        }
+
+        return currType;
     }
 
     @Override

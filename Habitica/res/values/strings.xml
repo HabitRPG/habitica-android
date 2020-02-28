@@ -954,4 +954,7 @@
     <string name="unlock_level_short">Level %d</string>
     <string name="not_participating">You are not participating</string>
     <string name="quest_completed">Quest completed!</string>
+
+    <string name="standard"> standard </string>
+    <string name="drop"> drop </string>
 </resources>

@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.models.inventory;
 
-import androidx.annotation.Nullable;
+import android.content.Context;
+import com.habitrpg.android.habitica.R;
 
 import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
@@ -42,6 +43,18 @@ public class Mount extends RealmObject implements Animal {
     @Override
     public void setType(String type) {
         this.type = type;
+    }
+
+    @Override
+    public String getTranslatedType(Context c) {
+        String currType = type;
+        String translation = c.getString(R.string.drop);
+
+        if (currType.equals(translation)) {
+            currType = c.getString(R.string.standard);
+        }
+
+        return currType;
     }
 
     public String getAnimal() {
