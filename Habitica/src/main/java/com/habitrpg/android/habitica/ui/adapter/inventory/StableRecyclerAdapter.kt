@@ -38,20 +38,14 @@ class StableRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder =
-            when (viewType) {
-                0 -> {
-                    val view = parent.inflate(R.layout.shop_header)
-                    ShopHeaderViewHolder(view)
-                }
-                1 -> {
-                    val view = LayoutInflater.from(parent.context).inflate(R.layout.customization_section_header, parent, false)
-                    SectionViewHolder(view)
-                }
-                else -> {
-                    val view = LayoutInflater.from(parent.context).inflate(R.layout.animal_overview_item, parent, false)
-                    StableViewHolder(view)
-                }
+            if (viewType == 0) {
+                val view = parent.inflate(R.layout.shop_header)
+                ShopRecyclerAdapter.ShopHeaderViewHolder(view)
+            } else {
+                val view = LayoutInflater.from(parent.context).inflate(R.layout.animal_overview_item, parent, false)
+                StableViewHolder(view)
             }
+
 
     override fun onBindViewHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder, position: Int) {
         val obj = this.itemList[position]
@@ -72,27 +66,7 @@ class StableRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<
     }
 
     override fun getItemCount(): Int = itemList.size
-
-    internal class ShopHeaderViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
-
-        private val descriptionView: TextView by bindView(itemView, R.id.descriptionView)
-        private val npcBannerView: NPCBannerView by bindView(itemView, R.id.npcBannerView)
-        private val namePlate: TextView by bindView(itemView, R.id.namePlate)
-
-        init {
-            descriptionView.movementMethod = LinkMovementMethod.getInstance()
-        }
-
-        fun bind(shop: Shop, shopSpriteSuffix: String) {
-            npcBannerView.shopSpriteSuffix = shopSpriteSuffix
-            npcBannerView.identifier = shop.identifier
-
-            @Suppress("DEPRECATION")
-            descriptionView.text = Html.fromHtml(shop.notes)
-            namePlate.setText(shop.npcNameResource)
-        }
-
-    }
+    
     internal inner class StableViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView), View.OnClickListener {
         private var animal: Animal? = null
 
