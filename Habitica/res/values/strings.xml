@@ -955,6 +955,6 @@
     <string name="not_participating">You are not participating</string>
     <string name="quest_completed">Quest completed!</string>
 
-    <string name="standard"> standard </string>
-    <string name="drop"> drop </string>
+    <string name="standard"> Standard </string>
+    <string name="wacky"> Wacky </string>
 </resources>
