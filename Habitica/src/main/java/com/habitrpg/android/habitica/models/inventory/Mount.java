@@ -45,26 +45,6 @@ public class Mount extends RealmObject implements Animal {
         this.type = type;
     }
 
-    @Override
-    public String getTranslatedType(Context c) {
-        String currType = type;
-
-        if (currType.equals("drop")) {
-            currType = c.getString(R.string.standard);
-        }
-        if (currType.equals("quest")) {
-            currType = c.getString(R.string.quest);
-        }
-        if (currType.equals("wacky")) {
-            currType = c.getString(R.string.wacky);
-        }
-        if (currType.equals("special")) {
-            currType = c.getString(R.string.special);
-        }
-
-        return currType;
-    }
-
     public String getAnimal() {
         if (animal == null) {
             return key.split("-")[0];

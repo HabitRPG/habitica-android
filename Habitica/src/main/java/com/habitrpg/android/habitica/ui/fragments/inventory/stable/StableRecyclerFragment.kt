@@ -11,6 +11,7 @@ import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.Animal
+import com.habitrpg.android.habitica.models.inventory.getTranslatedType
 import com.habitrpg.android.habitica.models.user.OwnedMount
 import com.habitrpg.android.habitica.models.user.OwnedObject
 import com.habitrpg.android.habitica.models.user.OwnedPet

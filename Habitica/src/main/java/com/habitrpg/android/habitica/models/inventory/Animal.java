@@ -15,8 +15,6 @@ public interface Animal {
 
     void setType(String type);
 
-    String getTranslatedType(Context c);
-
     String getAnimal();
 
     void setAnimal(String animal);
