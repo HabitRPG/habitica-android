@@ -5,6 +5,9 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.models.inventory.Animal
 
 fun Animal.getTranslatedType(c: Context?): String {
+    if (c == null) {
+        return type
+    }
 
     var currType: String = when (type) {
         "drop"    -> c?.getString(R.string.standard).toString()

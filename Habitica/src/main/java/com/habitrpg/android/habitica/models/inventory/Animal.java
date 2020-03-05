@@ -1,5 +1,4 @@
 package com.habitrpg.android.habitica.models.inventory;
-import android.content.Context;
 
 public interface Animal {
 

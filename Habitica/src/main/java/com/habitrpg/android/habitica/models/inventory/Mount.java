@@ -1,8 +1,5 @@
 package com.habitrpg.android.habitica.models.inventory;
 
-import android.content.Context;
-import com.habitrpg.android.habitica.R;
-
 import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
