@@ -1,7 +1,8 @@
-package com.habitrpg.android.habitica.models.inventory
+package com.habitrpg.android.habitica.extensions
 
 import android.content.Context
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.models.inventory.Animal
 
 fun Animal.getTranslatedType(c: Context?): String {
 
