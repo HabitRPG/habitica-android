@@ -79,7 +79,7 @@ class AppConfigManager {
         return remoteConfig.getLong("minimumPasswordLength")
     }
 
-    fun useNewMysteryBenefits(): Boolean {
-        return remoteConfig.getBoolean("useNewMysteryBenefits")
+    fun raiseShops(): Boolean {
+        return remoteConfig.getBoolean("raiseShops")
     }
 }

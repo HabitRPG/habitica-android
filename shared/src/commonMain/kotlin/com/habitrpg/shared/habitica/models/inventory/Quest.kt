@@ -27,6 +27,8 @@ open class Quest : NativeRealmObject() {
     var participants: NativeList<Member>? = null
     var rageStrikes: NativeList<QuestRageStrike>? = null
 
+    var completed: String? = null
+
     fun hasRageStrikes(): Boolean {
         return rageStrikes?.isNotEmpty() ?: false
     }

@@ -117,7 +117,7 @@ dependencies {
     //Push Notifications
     implementation 'com.google.firebase:firebase-core:17.2.2'
     implementation 'com.google.firebase:firebase-messaging:20.1.0'
-    implementation 'com.google.firebase:firebase-config:19.1.0'
+    implementation 'com.google.firebase:firebase-config:19.1.1'
     implementation 'com.google.firebase:firebase-perf:19.0.5'
     implementation 'com.google.android.gms:play-services-auth:17.0.0'
     implementation 'io.realm:android-adapters:3.1.0'
@@ -125,7 +125,7 @@ dependencies {
     implementation 'androidx.multidex:multidex:2.0.1'
     implementation 'com.nex3z:flow-layout:1.2.2'
 
-    implementation 'androidx.core:core-ktx:1.1.0'
+    implementation 'androidx.core:core-ktx:1.2.0'
     implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
     implementation "androidx.lifecycle:lifecycle-common-java8:2.2.0"
     implementation 'androidx.navigation:navigation-fragment-ktx:2.2.1'
@@ -153,7 +153,7 @@ android {
         multiDexEnabled true
         resConfigs "en", "bg", "de", "en-rGB", "es", "fr", "hr-rHR", "in", "it", "iw", "ja", "ko", "lt", "nl", "pl", "pt-rBR", "pt-rPT", "ru", "tr", "zh", "zh-rTW"
 
-        versionCode 2373
+        versionCode 2384
         versionName "2.5"
     }
 

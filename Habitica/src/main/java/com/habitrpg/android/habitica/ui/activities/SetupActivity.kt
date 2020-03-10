@@ -23,7 +23,6 @@ import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
-import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.shared.habitica.models.user.User
@@ -72,8 +71,8 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        compositeSubscription.add(userRepository.getUser().subscribeWithErrorHandler(Consumer { this.onUserReceived(it) }))
-        compositeSubscription.add(userRepository.retrieveUser().subscribeWithErrorHandler(Consumer {}))
+        compositeSubscription.add(userRepository.getUser().subscribe(Consumer { this.onUserReceived(it) }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(userRepository.retrieveUser().subscribe(Consumer {}, RxErrorHandler.handleEmptyError()))
         val additionalData = HashMap<String, Any>()
         additionalData["status"] = "displayed"
         AmplitudeManager.sendEvent("setup", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT, additionalData)
@@ -202,16 +201,15 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
             additionalData["status"] = "completed"
             AmplitudeManager.sendEvent("setup", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT, additionalData)
 
-            this.startMainActivity()
+            startMainActivity()
             return
         }
         this.user = user
-        if (this.pager.adapter == null) {
-            this.setupViewpager()
-        } else {
-            this.avatarSetupFragment?.setUser(user)
-            this.taskSetupFragment?.setUser(user)
+        if (pager.adapter == null) {
+            setupViewpager()
         }
+        avatarSetupFragment?.setUser(user)
+        taskSetupFragment?.setUser(user)
     }
 
     private fun startMainActivity() {

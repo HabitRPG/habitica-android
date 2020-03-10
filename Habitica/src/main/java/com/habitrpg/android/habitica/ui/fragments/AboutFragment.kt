@@ -159,13 +159,15 @@ class AboutFragment : BaseMainFragment() {
 
         bodyOfEmail += " \nDetails:\n"
 
-        ShareCompat.IntentBuilder.from(activity)
+        activity?.let {
+            ShareCompat.IntentBuilder.from(it)
                 .setType("message/rfc822")
                 .addEmailTo(appConfigManager.supportEmail())
                 .setSubject(subject)
                 .setText(bodyOfEmail)
                 .setChooserTitle("Send email...")
                 .startChooser()
+        }
     }
 
     private fun doTheThing() {

@@ -90,7 +90,7 @@ open class ShopItem : RealmObject() {
     fun shortLockedReason(context: Context): String? {
         return when {
             unlockCondition != null -> {
-                unlockCondition?.readableUnlockCondition(context)
+                unlockCondition?.shortReadableUnlockCondition(context)
             }
             previous != null -> {
                 try {
@@ -110,7 +110,7 @@ open class ShopItem : RealmObject() {
     fun lockedReason(context: Context): String? {
         return when {
             unlockCondition != null -> {
-                unlockCondition?.shortReadableUnlockCondition(context)
+                unlockCondition?.readableUnlockCondition(context)
             }
             previous != null -> {
                 try {
