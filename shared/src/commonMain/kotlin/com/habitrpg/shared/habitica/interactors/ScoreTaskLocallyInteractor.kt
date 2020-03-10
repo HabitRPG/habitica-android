@@ -31,7 +31,6 @@ class ScoreTaskLocallyInteractor {
                             ?: 0)
                 }
             }
-
             return nextDelta
         }
 
