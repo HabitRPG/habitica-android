@@ -8,6 +8,7 @@ import android.widget.TextView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
+import com.habitrpg.android.habitica.extensions.getTranslatedType
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.Animal
@@ -157,7 +158,7 @@ class StableRecyclerFragment : BaseFragment() {
                 if (items.size > 0 && items[items.size - 1].javaClass == String::class.java) {
                     items.removeAt(items.size - 1)
                 }
-                items.add(animal.type)
+                items.add(animal.getTranslatedType(context))
                 lastSectionTitle = animal.type
             }
             when (itemType) {
