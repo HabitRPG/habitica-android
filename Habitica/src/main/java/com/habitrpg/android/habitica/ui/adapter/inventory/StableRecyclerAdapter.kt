@@ -39,8 +39,8 @@ class StableRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder =
             if (viewType == 0) {
-                val view = parent.inflate(R.layout.shop_header)
-                ShopRecyclerAdapter.ShopHeaderViewHolder(view)
+                val view = LayoutInflater.from(parent.context).inflate(R.layout.customization_section_header, parent, false)
+                SectionViewHolder(view)
             } else {
                 val view = LayoutInflater.from(parent.context).inflate(R.layout.animal_overview_item, parent, false)
                 StableViewHolder(view)
