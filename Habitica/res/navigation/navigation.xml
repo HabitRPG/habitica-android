@@ -203,7 +203,7 @@
     <fragment
         android:id="@+id/FAQOverviewFragment"
         android:name="com.habitrpg.android.habitica.ui.fragments.support.FAQOverviewFragment"
-        android:label="@string/sidebar_help" >
+        android:label="@string/habitica_questions">
         <deepLink app:uri="habitica.com/static/faq" />
     </fragment>
     <fragment
@@ -395,7 +395,7 @@
     <fragment
         android:id="@+id/supportMainFragment"
         android:name="com.habitrpg.android.habitica.ui.fragments.support.SupportMainFragment"
-        android:label="SupportMainFragment" >
+        android:label="@string/support" >
         <action
             android:id="@+id/showFAQFragment"
             app:destination="@id/FAQOverviewFragment" />
@@ -403,5 +403,5 @@
     <fragment
         android:id="@+id/bugFixFragment"
         android:name="com.habitrpg.android.habitica.ui.fragments.support.BugFixFragment"
-        android:label="BugFixFragment" />
+        android:label="@string/bugs_fixes" />
 </navigation>

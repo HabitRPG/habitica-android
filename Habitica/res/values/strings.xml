@@ -995,5 +995,7 @@
     <string name="manual_sync_restart_description">Sometimes the app won’t automatically update content. Try pulling to refresh or force closing the app and reopening it.</string>
     <string name="update_app">Update the App</string>
     <string name="update_app_description">We’re constantly pushing out new fixes, so be sure to check the Play Store to see if there are any updates available.</string>
+    <string name="support">Support</string>
     <string name="wacky"> Wacky </string>
+    <string name="habitica_questions">Habitica Questions</string>
 </resources>
