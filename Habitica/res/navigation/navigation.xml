@@ -202,12 +202,9 @@
         android:label="@string/sidebar_news" />
     <fragment
         android:id="@+id/FAQOverviewFragment"
-        android:name="com.habitrpg.android.habitica.ui.fragments.faq.FAQOverviewFragment"
+        android:name="com.habitrpg.android.habitica.ui.fragments.support.FAQOverviewFragment"
         android:label="@string/sidebar_help" >
         <deepLink app:uri="habitica.com/static/faq" />
-        <action
-            android:id="@+id/openFAQDetail"
-            app:destination="@id/FAQDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/aboutFragment"
@@ -245,14 +242,6 @@
         <action
             android:id="@+id/openGuildDetail"
             app:destination="@id/guildFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/FAQDetailFragment"
-        android:name="com.habitrpg.android.habitica.ui.fragments.faq.FAQDetailFragment"
-        android:label="@string/sidebar_help" >
-        <argument
-            android:name="position"
-            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/avatarCustomizationFragment"
@@ -403,4 +392,16 @@
         android:id="@+id/timeTravelersShopFragment"
         android:name="com.habitrpg.android.habitica.ui.fragments.inventory.shops.TimeTravelersShopFragment"
         android:label="@string/timeTravelers" />
+    <fragment
+        android:id="@+id/supportMainFragment"
+        android:name="com.habitrpg.android.habitica.ui.fragments.support.SupportMainFragment"
+        android:label="SupportMainFragment" >
+        <action
+            android:id="@+id/showFAQFragment"
+            app:destination="@id/FAQOverviewFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/bugFixFragment"
+        android:name="com.habitrpg.android.habitica.ui.fragments.support.BugFixFragment"
+        android:label="BugFixFragment" />
 </navigation>

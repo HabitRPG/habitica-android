@@ -14,6 +14,7 @@
     <attr name="statsColor" format="color" />
     <attr name="statsTitle" format="string" />
     <attr name="title" format="string" />
+    <attr name="description" format="string" />
     <attr name="iconDrawable" format="integer" />
     <attr name="identifier" format="string" />
     <attr name="hasLightBackground" format="boolean" />
@@ -61,7 +62,7 @@
         <attr name="barIconDrawable" format="integer" />
         <attr name="barHeight" format="dimension" />
         <attr name="lightBackground" format="boolean" />
-        <attr name="description" format="string" />
+        <attr name="description" />
         <attr name="labelSpacing" format="dimension" />
     </declare-styleable>
     <declare-styleable name="HabiticaProgressBar">
@@ -128,5 +129,12 @@
     </declare-styleable>
     <declare-styleable name="EquipmentOverviewItem">
         <attr name="title" />
+    </declare-styleable>
+    <declare-styleable name="SupportCollapsibleSection">
+        <attr name="title" />
+        <attr name="titleColor" format="color" />
+        <attr name="subtitle" format="string" />
+        <attr name="description" />
+        <attr name="iconDrawable" />
     </declare-styleable>
 </resources>

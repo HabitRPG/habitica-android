@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <!-- view background color -->
+    <solid
+        android:color="@color/brand_300" >
+    </solid>
+
+    <!-- Here is the corner radius -->
+    <corners android:bottomLeftRadius="4dp" android:bottomRightRadius="4dp">
+    </corners>
+
+</shape>
