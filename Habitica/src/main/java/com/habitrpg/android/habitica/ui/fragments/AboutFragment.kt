@@ -2,7 +2,6 @@ package com.habitrpg.android.habitica.ui.fragments
 
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -11,14 +10,13 @@ import android.view.ViewGroup
 import android.view.animation.AccelerateInterpolator
 import android.widget.TextView
 import android.widget.Toast
-import androidx.core.app.ShareCompat
 import androidx.core.net.toUri
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.helpers.AppConfigManager
-import com.habitrpg.android.habitica.helpers.AppTestingLevel
 import com.habitrpg.android.habitica.helpers.DeviceName
+import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.helpers.bindView
@@ -122,8 +120,7 @@ class AboutFragment : BaseMainFragment() {
         sourceCodeLink.setOnClickListener { openBrowserLink(androidSourceCodeLink) }
         twitter.setOnClickListener { openBrowserLink(twitterLink) }
         sourceCodeButton.setOnClickListener { openBrowserLink(androidSourceCodeLink) }
-        reportBug.setOnClickListener { sendEmail("[Android] Bugreport") }
-        sendFeedback.setOnClickListener { sendEmail("[Android] Feedback") }
+        reportBug.setOnClickListener { MainNavigationController.navigate(R.id.bugFixFragment) }
         googlePlayStoreButton.setOnClickListener { openGooglePlay() }
         updateAvailableWrapper.setOnClickListener { openGooglePlay() }
     }
@@ -132,42 +129,6 @@ class AboutFragment : BaseMainFragment() {
         val uriUrl = url.toUri()
         val launchBrowser = Intent(Intent.ACTION_VIEW, uriUrl)
         startActivity(launchBrowser)
-    }
-
-    private fun sendEmail(subject: String) {
-        val version = Build.VERSION.SDK_INT
-        val deviceName = deviceInfo?.name ?: DeviceName.getDeviceName()
-        val manufacturer = deviceInfo?.manufacturer ?: Build.MANUFACTURER
-        var bodyOfEmail = "Device: $manufacturer $deviceName" +
-                " \nAndroid Version: $version"+
-                " \nAppVersion: " + getString(R.string.version_info, versionName, versionCode)
-
-        if (appConfigManager.testingLevel().name != AppTestingLevel.PRODUCTION.name) {
-            bodyOfEmail += " ${appConfigManager.testingLevel().name}"
-        }
-        bodyOfEmail += " \nUser ID: $userId"
-
-        val user = this.user
-        if (user != null) {
-            bodyOfEmail += " \nLevel: " + (user.stats?.lvl ?: 0) +
-                    " \nClass: " + (if (user.preferences?.disableClasses == true) "Disabled" else (user.stats?.habitClass ?: "None")) +
-                    " \nIs in Inn: " + (user.preferences?.sleep ?: false) +
-                    " \nUses Costume: " + (user.preferences?.costume ?: false) +
-                    " \nCustom Day Start: " + (user.preferences?.dayStart ?: 0) +
-                    " \nTimezone Offset: " + (user.preferences?.timezoneOffset ?: 0)
-        }
-
-        bodyOfEmail += " \nDetails:\n"
-
-        activity?.let {
-            ShareCompat.IntentBuilder.from(it)
-                .setType("message/rfc822")
-                .addEmailTo(appConfigManager.supportEmail())
-                .setSubject(subject)
-                .setText(bodyOfEmail)
-                .setChooserTitle("Send email...")
-                .startChooser()
-        }
     }
 
     private fun doTheThing() {

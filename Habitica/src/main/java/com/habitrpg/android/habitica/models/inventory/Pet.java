@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica.models.inventory;
 
-
 import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
@@ -27,6 +26,7 @@ public class Pet extends RealmObject implements Animal{
     public String getText() {
         return text;
     }
+
 
     @Override
     public void setText(String text) {

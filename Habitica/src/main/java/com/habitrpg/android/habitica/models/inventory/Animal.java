@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica.models.inventory;
 
-
 public interface Animal {
 
     String getKey();

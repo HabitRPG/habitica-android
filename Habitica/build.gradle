@@ -102,6 +102,8 @@ dependencies {
     }
     //Tests
     testImplementation 'junit:junit:4.12'
+    testImplementation 'androidx.test:core:1.0.0'
+    testImplementation "com.google.truth:truth:1.0.1"
     testImplementation 'org.assertj:assertj-core:2.6.0'
     testImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.2'
     testImplementation 'org.robolectric:robolectric:3.8'

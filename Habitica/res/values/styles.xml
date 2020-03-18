@@ -293,6 +293,13 @@
         <item name="android:paddingTop">@dimen/section_top_padding</item>
     </style>
 
+    <style name="SectionHeaderCaps">
+        <item name="android:textSize">10sp</item>
+        <item name="android:textColor">@color/gray_200</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:layout_marginStart">@dimen/spacing_large</item>
+    </style>
+
     <style name="BottomMenu">
         <item name="android:divider">?android:listDivider</item>
         <item name="android:showDividers">middle</item>
