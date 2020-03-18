@@ -44,13 +44,17 @@ class PartyViewModel: GroupViewModel() {
 
     fun acceptQuest() {
         groupIDSubject.value?.value?.let {
-            disposable.add(socialRepository.acceptQuest(null, it).subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+            disposable.add(socialRepository.acceptQuest(null, it)
+                    .flatMap { userRepository.retrieveUser() }
+                    .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
         }
     }
 
     fun rejectQuest() {
         groupIDSubject.value?.value?.let {
-            disposable.add(socialRepository.rejectQuest(null, it).subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+            disposable.add(socialRepository.rejectQuest(null, it)
+                    .flatMap { userRepository.retrieveUser() }
+                    .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
         }
     }
 
