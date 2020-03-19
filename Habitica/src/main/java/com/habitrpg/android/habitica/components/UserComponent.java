@@ -46,6 +46,7 @@ import com.habitrpg.android.habitica.ui.fragments.NavigationDrawerFragment;
 import com.habitrpg.android.habitica.ui.fragments.NewsFragment;
 import com.habitrpg.android.habitica.ui.fragments.StatsFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.customization.AvatarCustomizationFragment;
+import com.habitrpg.android.habitica.ui.fragments.inventory.customization.AvatarEquipmentFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.customization.AvatarOverviewFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.equipment.EquipmentDetailFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.equipment.EquipmentOverviewFragment;
@@ -334,4 +335,6 @@ public interface UserComponent {
     void inject(@NotNull SupportMainFragment supportMainFragment);
 
     void inject(@NotNull BugFixFragment bugFixFragment);
+
+    void inject(@NotNull AvatarEquipmentFragment avatarEquipmentFragment);
 }

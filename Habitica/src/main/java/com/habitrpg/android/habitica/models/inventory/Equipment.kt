@@ -23,4 +23,5 @@ open class Equipment : RealmObject() {
     var _int: Int = 0
     var owned: Boolean? = null
     var twoHanded = false
+    var mystery = ""
 }

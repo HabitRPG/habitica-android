@@ -94,7 +94,7 @@ open class Preferences : RealmObject(), AvatarPreferences {
 
     override fun getChair(): String? {
         return if (chair != null && chair != "none") {
-            if (chair!!.length > 5 && chair!!.substring(0, 6) != "chair_") {
+            if (chair?.substring(0, 6) == "chair_") {
                 chair
             } else {
                 "chair_" + chair!!

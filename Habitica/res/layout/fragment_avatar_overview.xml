@@ -71,6 +71,21 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/avatarChairView"
                     app:equipmentTitle="@string/avatar_wheelchair"/>
+                <com.habitrpg.android.habitica.ui.views.EquipmentItemRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/avatar_glasses_view"
+                    app:equipmentTitle="@string/avatar_glasses"/>
+                <com.habitrpg.android.habitica.ui.views.EquipmentItemRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/avatar_animal_ears_view"
+                    app:equipmentTitle="@string/animal_ears"/>
+                <com.habitrpg.android.habitica.ui.views.EquipmentItemRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/avatar_animal_tail_view"
+                    app:equipmentTitle="@string/animal_tail"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
         <TextView

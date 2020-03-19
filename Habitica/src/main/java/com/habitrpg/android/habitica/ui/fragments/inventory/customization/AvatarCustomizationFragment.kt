@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.CustomizationRepository
+import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.Customization
@@ -27,6 +28,8 @@ class AvatarCustomizationFragment : BaseMainFragment() {
 
     @Inject
     lateinit var customizationRepository: CustomizationRepository
+    @Inject
+    lateinit var inventoryRepository: InventoryRepository
 
     var type: String? = null
     var category: String? = null

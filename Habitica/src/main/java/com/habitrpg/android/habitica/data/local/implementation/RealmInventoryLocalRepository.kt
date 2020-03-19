@@ -316,7 +316,7 @@ class RealmInventoryLocalRepository(realm: Realm, private val context: Context) 
     override fun getLatestMysteryItem(): Flowable<Equipment> {
         return realm.where(Equipment::class.java)
                 .contains("key", "mystery_2")
-                .sort("key", Sort.DESCENDING)
+                .sort("mystery", Sort.DESCENDING)
                 .findAll()
                 .asFlowable()
                 .filter { it.isLoaded && it.size > 0}
