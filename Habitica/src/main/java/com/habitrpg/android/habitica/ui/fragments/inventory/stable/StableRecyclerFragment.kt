@@ -179,6 +179,8 @@ class StableRecyclerFragment : BaseFragment() {
         if (!((lastAnimal.type == "premium" || lastAnimal.type == "special") && lastAnimal.numberOwned == 0)) {
             items.add(lastAnimal)
         }
+
+        items.add(0, "header")
         return items
     }
 
