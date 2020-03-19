@@ -998,4 +998,5 @@
     <string name="support">Support</string>
     <string name="wacky"> Wacky </string>
     <string name="habitica_questions">Habitica Questions</string>
+    <string name="could_not_find_user">Could not find user</string>
 </resources>
