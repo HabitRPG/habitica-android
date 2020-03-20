@@ -70,6 +70,15 @@ class RealmInventoryLocalRepository(realm: Realm, private val context: Context) 
                 .filter { it.isLoaded }
     }
 
+    override fun getEquipmentType(type: String, set: String): Flowable<RealmResults<Equipment>> {
+        return realm.where(Equipment::class.java)
+                .equalTo("type", type)
+                .equalTo("gearSet", set)
+                .findAll()
+                .asFlowable()
+                .filter { it.isLoaded }
+    }
+
     override fun getOwnedItems(itemType: String, userID: String): Flowable<RealmResults<OwnedItem>> {
         return realm.where(OwnedItem::class.java)
                 .greaterThan("numberOwned", 0)

@@ -24,4 +24,5 @@ open class Equipment : RealmObject() {
     var owned: Boolean? = null
     var twoHanded = false
     var mystery = ""
+    var gearSet = ""
 }

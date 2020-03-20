@@ -12,7 +12,7 @@ import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.responses.UnlockResponse
 import com.habitrpg.android.habitica.models.user.User
-import com.habitrpg.android.habitica.ui.adapter.CustomizationRecyclerViewAdapter
+import com.habitrpg.android.habitica.ui.adapter.CustomizationEquipmentRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.helpers.MarginDecoration
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
@@ -30,7 +30,7 @@ class AvatarEquipmentFragment : BaseMainFragment() {
     var category: String? = null
     private var activeEquipment: String? = null
 
-    internal var adapter: CustomizationRecyclerViewAdapter = CustomizationRecyclerViewAdapter()
+    internal var adapter: CustomizationEquipmentRecyclerViewAdapter = CustomizationEquipmentRecyclerViewAdapter()
     internal var layoutManager: GridLayoutManager = GridLayoutManager(activity, 2)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -39,18 +39,13 @@ class AvatarEquipmentFragment : BaseMainFragment() {
         val view = inflater.inflate(R.layout.fragment_recyclerview, container, false)
 
         compositeSubscription.add(adapter.getSelectCustomizationEvents()
-                .flatMap { customization ->
-                    userRepository.useCustomization(user, customization.type ?: "", customization.category, customization.identifier ?: "")
+                .flatMap { equipment ->
+                    inventoryRepository.equip(user, if (user?.preferences?.costume == true) "costume" else "equipped", equipment.key ?: "")
                 }
                 .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
         compositeSubscription.add(adapter.getUnlockCustomizationEvents()
-                .flatMap<UnlockResponse> { customization ->
-                    val user = this.user
-                    if (user != null) {
-                        userRepository.unlockPath(user, customization)
-                    } else {
-                        Flowable.empty()
-                    }
+                .flatMap<UnlockResponse> {
+                    Flowable.empty()
                 }
                 .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
         compositeSubscription.add(adapter.getUnlockSetEvents()
@@ -69,7 +64,7 @@ class AvatarEquipmentFragment : BaseMainFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         arguments?.let {
-            val args = AvatarCustomizationFragmentArgs.fromBundle(it)
+            val args = AvatarEquipmentFragmentArgs.fromBundle(it)
             type = args.type
             if (args.category.isNotEmpty()) {
                 category = args.category
@@ -77,7 +72,7 @@ class AvatarEquipmentFragment : BaseMainFragment() {
         }
 
         setGridSpanCount(view.width)
-        val layoutManager = GridLayoutManager(activity, 2)
+        val layoutManager = GridLayoutManager(activity, 4)
         layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
                 return if (adapter.getItemViewType(position) == 0) {
@@ -105,6 +100,9 @@ class AvatarEquipmentFragment : BaseMainFragment() {
 
     private fun loadEquipment() {
         val type = this.type ?: return
+        inventoryRepository.getEquipmentType(type, category ?: "").subscribe(Consumer {
+            adapter.setEquipment(it)
+        }, RxErrorHandler.handleEmptyError())
     }
 
     private fun setGridSpanCount(width: Int) {
@@ -118,15 +116,6 @@ class AvatarEquipmentFragment : BaseMainFragment() {
 
     fun updateUser(user: User) {
         this.updateActiveCustomization(user)
-        if (adapter.customizationList.size != 0) {
-            val ownedCustomizations = ArrayList<String>()
-            user.purchased?.customizations?.filter { it.type == this.type }?.mapTo(ownedCustomizations) { it.id }
-            adapter.updateOwnership(ownedCustomizations)
-        } else {
-            this.loadEquipment()
-        }
-        this.adapter.userSize = this.user?.preferences?.size
-        this.adapter.hairColor = this.user?.preferences?.hair?.color
         this.adapter.gemBalance = user.gemCount
         adapter.notifyDataSetChanged()
     }
@@ -135,25 +124,16 @@ class AvatarEquipmentFragment : BaseMainFragment() {
         if (this.type == null || user.preferences == null) {
             return
         }
-        val prefs = this.user?.preferences
+        val outfit = if (user.preferences?.costume == true) this.user?.items?.gear?.costume else this.user?.items?.gear?.equipped
         val activeEquipment = when (this.type) {
-            "skin" -> prefs?.skin
-            "shirt" -> prefs?.shirt
-            "background" -> prefs?.background
-            "hair" -> when (this.category) {
-                "bangs" -> prefs?.hair?.bangs.toString()
-                "base" -> prefs?.hair?.base.toString()
-                "color" -> prefs?.hair?.color
-                "flower" -> prefs?.hair?.flower.toString()
-                "beard" -> prefs?.hair?.beard.toString()
-                "mustache" -> prefs?.hair?.mustache.toString()
-                else -> ""
-            }
+            "headAccessory" -> outfit?.headAccessory
+            "back" -> outfit?.back
+            "eyewear" -> outfit?.eyeWear
             else -> ""
         }
         if (activeEquipment != null) {
             this.activeEquipment = activeEquipment
-            this.adapter.activeCustomization = activeEquipment
+            this.adapter.activeEquipment = activeEquipment
         }
     }
 }

@@ -1001,4 +1001,7 @@
     <string name="could_not_find_user">Could not find user</string>
     <string name="animal_ears">Animal Ears</string>
     <string name="animal_tail">Animal Tail</string>
+    <string name="avatar_headband">Headband</string>
+    <string name="avatar_accent">Accent</string>
+    <string name="buy_all">Buy All</string>
 </resources>
