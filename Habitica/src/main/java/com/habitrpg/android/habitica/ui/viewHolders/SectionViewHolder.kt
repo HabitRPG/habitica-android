@@ -9,12 +9,13 @@ import android.widget.Button
 import android.widget.Spinner
 import android.widget.TextView
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.databinding.CustomizationSectionHeaderBinding
 import com.habitrpg.android.habitica.ui.helpers.bindView
 
 class SectionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
+    private val binding = CustomizationSectionHeaderBinding.bind(itemView)
     private val label: TextView by bindView(itemView, R.id.label)
-    private val purchaseSetButton: Button? by bindView(itemView, R.id.purchaseSetButton)
     private val selectionSpinner: Spinner? by bindView(itemView, R.id.classSelectionSpinner)
     internal val notesView: TextView? by bindView(itemView, R.id.headerNotesView)
     var context: Context = itemView.context
@@ -22,7 +23,7 @@ class SectionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     var spinnerSelectionChanged: (() -> Unit)? = null
 
     init {
-        this.purchaseSetButton?.visibility = View.GONE
+        binding.purchaseSetButton.visibility = View.GONE
         selectionSpinner?.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 spinnerSelectionChanged?.invoke()
