@@ -2,20 +2,15 @@ package com.habitrpg.android.habitica.ui.adapter.inventory
 
 import android.content.Context
 import android.graphics.drawable.BitmapDrawable
-import android.text.Html
-import android.text.method.LinkMovementMethod
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.inflate
-import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.Animal
-import com.habitrpg.android.habitica.models.shops.Shop
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.fragments.inventory.stable.StableFragmentDirections
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
@@ -25,7 +20,6 @@ import com.habitrpg.android.habitica.ui.views.NPCBannerView
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
-import javax.inject.Inject
 
 class StableRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
 
