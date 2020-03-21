@@ -16,7 +16,6 @@ class SectionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     private val binding = CustomizationSectionHeaderBinding.bind(itemView)
     private val label: TextView by bindView(itemView, R.id.label)
-//    private val purchaseSetButton: Button? by bindView(itemView, R.id.purchaseSetButton)
     private val selectionSpinner: Spinner? by bindView(itemView, R.id.classSelectionSpinner)
     internal val notesView: TextView? by bindView(itemView, R.id.headerNotesView)
     var context: Context = itemView.context
