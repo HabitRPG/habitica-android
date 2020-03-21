@@ -70,18 +70,18 @@ class StableRecyclerFragment : BaseFragment() {
         layoutManager = androidx.recyclerview.widget.GridLayoutManager(activity, 2)
         layoutManager?.spanSizeLookup = object : androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
-                return if (adapter?.getItemViewType(position) == 0) {
+                return if (adapter?.getItemViewType(position) == 0 || adapter?.getItemViewType(position) == 1) {
                     layoutManager?.spanCount ?: 1
                 } else {
                     1
                 }
             }
         }
+
         recyclerView?.layoutManager = layoutManager
         activity?.let {
             recyclerView?.addItemDecoration(MarginDecoration(it))
         }
-
 
         adapter = recyclerView?.adapter as? StableRecyclerAdapter
         if (adapter == null) {
