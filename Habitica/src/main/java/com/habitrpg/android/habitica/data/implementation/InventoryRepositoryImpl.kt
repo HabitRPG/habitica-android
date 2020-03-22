@@ -48,6 +48,10 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
         return localRepository.getOwnedEquipment()
     }
 
+    override fun getEquipmentType(type: String, set: String): Flowable<RealmResults<Equipment>> {
+        return localRepository.getEquipmentType(type, set)
+    }
+
     override fun getOwnedItems(itemType: String): Flowable<RealmResults<OwnedItem>> {
         return localRepository.getOwnedItems(itemType, userID)
     }

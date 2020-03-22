@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:paddingLeft="20dp"
-    android:paddingRight="20dp">
+    android:paddingRight="20dp"
+    android:gravity="center_horizontal">
 
     <TextView
             android:layout_width="match_parent"
@@ -18,4 +20,23 @@
             android:id="@+id/uuidEditText" android:layout_gravity="center_horizontal"
             android:focusable="true"
             android:maxLines="1"/>
+
+    <ProgressBar
+        android:id="@+id/progress_circular"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:visibility="visible"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/error_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_medium"
+        android:layout_marginBottom="@dimen/spacing_medium"
+        android:text="@string/could_not_find_user"
+        android:textColor="@color/red_50"
+        tools:visibility="visible"
+        android:gravity="center_horizontal"
+        android:visibility="gone"/>
 </LinearLayout>

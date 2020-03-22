@@ -33,6 +33,7 @@ interface InventoryRepository : BaseRepository {
     fun retrieveInAppRewards(): Flowable<List<ShopItem>>
 
     fun getOwnedEquipment(type: String): Flowable<RealmResults<Equipment>>
+    fun getEquipmentType(type: String, set: String): Flowable<RealmResults<Equipment>>
 
     fun getOwnedItems(itemType: String): Flowable<RealmResults<OwnedItem>>
     fun getOwnedItems(): Flowable<Map<String, OwnedItem>>

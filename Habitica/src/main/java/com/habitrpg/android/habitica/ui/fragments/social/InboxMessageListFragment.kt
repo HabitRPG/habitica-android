@@ -4,9 +4,7 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -101,6 +99,21 @@ class InboxMessageListFragment : BaseMainFragment(), androidx.swiperefreshlayout
         super.onDestroy()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        this.activity?.menuInflater?.inflate(R.menu.inbox_chat, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.open_profile -> {
+                openProfile()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     override fun injectFragment(component: UserComponent) {
         component.inject(this)
     }
@@ -136,6 +149,7 @@ class InboxMessageListFragment : BaseMainFragment(), androidx.swiperefreshlayout
     private fun setReceivingUser(chatRoomUser: String?, replyToUserUUID: String) {
         this.chatRoomUser = chatRoomUser
         this.replyToUserUUID = replyToUserUUID
+        activity?.title = chatRoomUser
     }
 
     private fun copyMessageToClipboard(chatMessage: ChatMessage) {
@@ -165,4 +179,7 @@ class InboxMessageListFragment : BaseMainFragment(), androidx.swiperefreshlayout
         }
     }
 
+    private fun openProfile() {
+        replyToUserUUID?.let { FullProfileActivity.open(it) }
+    }
 }

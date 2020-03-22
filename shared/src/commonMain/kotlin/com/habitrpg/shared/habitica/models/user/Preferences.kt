@@ -46,7 +46,7 @@ open class Preferences : NativeRealmObject(), AvatarPreferences {
     override var chair: String? = null
         get(): String? {
             return if (field != null && field != "none") {
-                if (field!!.length > 5 && field!!.substring(0, 6) != "chair_") {
+                if (chair?.substring(0, 6) == "chair_") {
                     field
                 } else {
                     "chair_" + field!!

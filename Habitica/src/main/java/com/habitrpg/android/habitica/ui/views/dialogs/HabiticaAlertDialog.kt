@@ -149,10 +149,10 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
     fun getContentView(): View? = additionalContentView
 
     fun addButton(stringRes: Int, isPrimary: Boolean, isDestructive: Boolean = false, function: ((HabiticaAlertDialog, Int) -> Unit)? = null): Button {
-        return addButton(context.getString(stringRes), isPrimary, isDestructive, function)
+        return addButton(context.getString(stringRes), isPrimary, isDestructive, true, function)
     }
 
-    fun addButton(string: String, isPrimary: Boolean, isDestructive: Boolean = false, function: ((HabiticaAlertDialog, Int) -> Unit)? = null): Button {
+    fun addButton(string: String, isPrimary: Boolean, isDestructive: Boolean = false, autoDismiss: Boolean = true, function: ((HabiticaAlertDialog, Int) -> Unit)? = null): Button {
         val button: Button = if (isPrimary) {
             if (isDestructive) {
                 buttonsWrapper.inflate(R.layout.dialog_habitica_primary_destructive_button) as? Button
@@ -169,7 +169,7 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
         button.text = string
         button.minWidth = 147.dpToPx(context)
         button.setScaledPadding(context, 20, 0, 20, 0)
-        return addButton(button, true, function) as Button
+        return addButton(button, autoDismiss, function) as Button
     }
 
 

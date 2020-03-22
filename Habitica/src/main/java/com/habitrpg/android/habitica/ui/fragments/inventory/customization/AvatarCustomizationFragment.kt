@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.CustomizationRepository
+import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.responses.UnlockResponse
@@ -27,6 +28,8 @@ class AvatarCustomizationFragment : BaseMainFragment() {
 
     @Inject
     lateinit var customizationRepository: CustomizationRepository
+    @Inject
+    lateinit var inventoryRepository: InventoryRepository
 
     var type: String? = null
     var category: String? = null
@@ -80,8 +83,7 @@ class AvatarCustomizationFragment : BaseMainFragment() {
             }
         }
 
-        setGridSpanCount(view.width)
-        val layoutManager = GridLayoutManager(activity, 2)
+        val layoutManager = GridLayoutManager(activity, 4)
         layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
                 return if (adapter.getItemViewType(position) == 0) {
@@ -91,6 +93,7 @@ class AvatarCustomizationFragment : BaseMainFragment() {
                 }
             }
         }
+        setGridSpanCount(view.width)
         recyclerView.layoutManager = layoutManager
         recyclerView.addItemDecoration(MarginDecoration(context))
 

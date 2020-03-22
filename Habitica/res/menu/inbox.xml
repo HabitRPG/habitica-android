@@ -1,0 +1,10 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.habitrpg.android.habitica.TaskActivity">
+
+    <item android:id="@+id/send_message"
+        android:icon="@drawable/menu_messages"
+        android:title="@string/send_message"
+        app:showAsAction="ifRoom" />
+</menu>

@@ -34,6 +34,7 @@ interface InventoryLocalRepository : ContentLocalRepository {
     fun getItems(itemClass: Class<out Item>, keys: Array<String>, user: User?): Flowable<out RealmResults<out Item>>
     fun getOwnedItems(itemType: String, userID: String): Flowable<RealmResults<OwnedItem>>
     fun getOwnedItems(userID: String): Flowable<Map<String, OwnedItem>>
+    fun getEquipmentType(type: String, set: String): Flowable<RealmResults<Equipment>>
 
     fun getEquipment(key: String): Flowable<Equipment>
     fun getMounts(type: String, group: String, color: String?): Flowable<RealmResults<Mount>>

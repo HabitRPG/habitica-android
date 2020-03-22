@@ -4,11 +4,14 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
-import androidx.core.content.ContextCompat
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.core.os.bundleOf
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.databinding.CustomizationGridItemBinding
+import com.habitrpg.android.habitica.databinding.CustomizationSectionHeaderBinding
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.inventory.CustomizationSet
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
@@ -125,35 +128,33 @@ class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerVi
 
     internal inner class CustomizationViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
-        private val cardView: androidx.cardview.widget.CardView by bindView(itemView, R.id.card_view)
-        private val linearLayout: RelativeLayout by bindView(itemView, R.id.linearLayout)
-        private val imageView: SimpleDraweeView by bindView(itemView, R.id.imageView)
-        private val purchaseOverlay: View by bindView(itemView, R.id.purchaseOverlay)
-
+        private val binding = CustomizationGridItemBinding.bind(itemView)
         var customization: Customization? = null
 
         init {
-            linearLayout.setOnClickListener(this)
+            itemView.setOnClickListener(this)
         }
 
         fun bind(customization: Customization) {
             this.customization = customization
 
             if (customization.customizationSet?.contains("timeTravel") == true) {
-                DataBindingUtils.loadImage(this.imageView, customization.getImageName(userSize, hairColor), imageFormat = "gif")
+                DataBindingUtils.loadImage(binding.imageView, customization.getImageName(userSize, hairColor), imageFormat = "gif")
             } else {
-                DataBindingUtils.loadImage(this.imageView, customization.getImageName(userSize, hairColor))
+                DataBindingUtils.loadImage(binding.imageView, customization.getImageName(userSize, hairColor))
             }
-            cardView.setCardBackgroundColor(ContextCompat.getColor(itemView.context, android.R.color.white))
             if (customization.isUsable) {
-                imageView.alpha = 1.0f
-                purchaseOverlay.alpha = 0.0f
-                if (customization.identifier == activeCustomization) {
-                    cardView.setCardBackgroundColor(ContextCompat.getColor(itemView.context, R.color.brand_500))
-                }
+                binding.buyButton.visibility = View.GONE
             } else {
-                imageView.alpha = 0.3f
-                purchaseOverlay.alpha = 0.8f
+                binding.buyButton.visibility = View.VISIBLE
+                binding.priceLabel.currency = "gems"
+                binding.priceLabel.value = customization.price.toDouble()
+            }
+
+            if (activeCustomization == customization.identifier) {
+                binding.wrapper.background = itemView.context.getDrawable(R.drawable.layout_rounded_bg_gray_700_brand_border)
+            } else {
+                binding.wrapper.background = itemView.context.getDrawable(R.drawable.layout_rounded_bg_gray_700)
             }
         }
 
@@ -209,23 +210,24 @@ class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerVi
 
     internal inner class SectionViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
+        private val binding = CustomizationSectionHeaderBinding.bind(itemView)
         private val label: TextView by bindView(itemView, R.id.label)
-        private val purchaseSetButton: Button by bindView(itemView, R.id.purchaseSetButton)
         var context: Context = itemView.context
         private var set: CustomizationSet? = null
 
         init {
-            purchaseSetButton.setOnClickListener(this)
+            binding.purchaseSetButton.setOnClickListener(this)
         }
 
         fun bind(set: CustomizationSet) {
             this.set = set
             this.label.text = set.text
             if (set.hasPurchasable && !set.identifier.contains("timeTravel")) {
-                this.purchaseSetButton.visibility = View.VISIBLE
-                this.purchaseSetButton.text = context.getString(R.string.purchase_set_button, set.price)
+                binding.purchaseSetButton.visibility = View.VISIBLE
+                binding.setPriceLabel.value = set.price.toDouble()
+                binding.setPriceLabel.currency = "gems"
             } else {
-                this.purchaseSetButton.visibility = View.GONE
+                binding.purchaseSetButton.visibility = View.GONE
             }
         }
 
