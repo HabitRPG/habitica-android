@@ -11,6 +11,7 @@ import com.habitrpg.shared.habitica.models.Tag
 import com.habitrpg.shared.habitica.models.inventory.Equipment
 import com.habitrpg.shared.habitica.models.inventory.Quest
 import com.habitrpg.shared.habitica.models.members.Member
+import com.habitrpg.shared.habitica.models.responses.TaskDirection
 import com.habitrpg.shared.habitica.models.responses.TaskDirectionData
 import com.habitrpg.shared.habitica.models.tasks.Task
 import com.habitrpg.shared.habitica.models.tasks.TaskList
@@ -180,6 +181,7 @@ interface ApiClient {
 
     //Members URL
     fun getMember(memberId: String): Flowable<Member>
+
     fun getMemberWithUsername(username: String): Flowable<Member>
 
     fun getMemberAchievements(memberId: String): Flowable<List<Achievement>>
@@ -215,6 +217,7 @@ interface ApiClient {
 
     // Notifications
     fun readNotification(notificationId: String): Flowable<List<*>>
+
     fun readNotifications(notificationIds: Map<String, List<String>>): Flowable<List<*>>
     fun seeNotifications(notificationIds: Map<String, List<String>>): Flowable<List<*>>
 
@@ -229,6 +232,8 @@ interface ApiClient {
     fun retrieveInboxConversations(): Flowable<List<InboxConversation>>
 
     fun <T> configureApiCallObserver(): FlowableTransformer<HabitResponse<T>, T>
+    fun <T> configureApiOnlineErrorHandler(): FlowableTransformer<T, T>
+    fun <T> configureApiOfflineErrorHandler(offlineCallback: () -> T?): FlowableTransformer<T, T>
 
     fun openMysteryItem(): Flowable<Equipment>
 
@@ -258,4 +263,9 @@ interface ApiClient {
     fun findUsernames(username: String, context: String?, id: String?): Flowable<List<FindUsernameResult>>
 
     fun transferGems(giftedID: String, amount: Int): Flowable<Void>
+
+    // Offline
+    fun syncOfflineChanges()
+
+    fun offlinePostTaskDirection(user: User, task: Task, direction: TaskDirection): Flowable<TaskDirectionData>
 }

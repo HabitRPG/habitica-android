@@ -6,7 +6,6 @@ import com.habitrpg.android.habitica.data.local.TaskLocalRepository
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.responses.TaskScoringResult
-import com.habitrpg.shared.habitica.interactors.ScoreTaskLocallyInteractor
 import com.habitrpg.shared.habitica.models.responses.TaskDirection
 import com.habitrpg.shared.habitica.models.responses.TaskDirectionData
 import com.habitrpg.shared.habitica.models.tasks.*
@@ -60,66 +59,41 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
 
     @Suppress("ReturnCount")
     override fun taskChecked(user: User?, task: Task, up: Boolean, force: Boolean, notifyFunc: ((TaskScoringResult) -> Unit)?): Flowable<TaskScoringResult?> {
-        val localData = if (user != null && appConfigManager.enableLocalTaskScoring()) {
-             ScoreTaskLocallyInteractor.score(user, task, if (up) TaskDirection.UP else TaskDirection.DOWN)
-        } else null
-        if (user != null && localData != null) {
-            val stats = user.stats
-            val result = TaskScoringResult()
-
-            result.healthDelta = localData.hp - (stats?.hp ?: 0.0)
-            result.experienceDelta = localData.exp - (stats?.exp ?: 0.0)
-            result.manaDelta = localData.mp - (stats?.mp ?: 0.0)
-            result.goldDelta = localData.gp - (stats?.gp ?: 0.0)
-            result.hasLeveledUp = localData.lvl > stats?.lvl ?: 0
-            result.questDamage = localData._tmp?.quest?.progressDelta
-            result.drop = localData._tmp?.drop
-            notifyFunc?.invoke(result)
-
-            handleTaskResponse(user, localData, task, up, 0f)
-        }
         val now = Date().time
         val id = task.id
         if (lastTaskAction > now - 500 && !force || id == null) {
             return Flowable.empty()
         }
-
         lastTaskAction = now
-        return this.apiClient.postTaskDirection(id, (if (up) TaskDirection.UP else TaskDirection.DOWN).text)
-                .flatMapMaybe {
-                    // There are cases where the user object is not set correctly. So the app refetches it as a fallback
-                    if (user == null) {
-                        localRepository.getUser(userID).firstElement()
-                    } else {
-                        Maybe.just(user)
-                    }.map { user -> Pair(it, user) }
-                }
-                .map { (res, user): Pair<TaskDirectionData, User> ->
-                    // save local task changes
-                    val result = TaskScoringResult()
-                    val stats = user.stats
 
-                    result.healthDelta = res.hp - (stats?.hp ?: 0.0)
-                    result.experienceDelta = res.exp - (stats?.exp ?: 0.0)
-                    result.manaDelta = res.mp - (stats?.mp ?: 0.0)
-                    result.goldDelta = res.gp - (stats?.gp ?: 0.0)
-                    result.hasLeveledUp = res.lvl > stats?.lvl ?: 0
-                    result.questDamage = res._tmp?.quest?.progressDelta
-                    result.drop = res._tmp?.drop
-                    if (localData == null) {
-                        notifyFunc?.invoke(result)
-                    }
-                    handleTaskResponse(user, res, task, up, localData?.delta ?: 0f)
-                    result
-                }
+        // There are cases where the user object is not set correctly. So the app refetches it as a fallback
+        val fetchedUser = user ?: localRepository.getUser(userID).blockingFirst()
+        return this.apiClient.offlinePostTaskDirection(fetchedUser, task, (if (up) TaskDirection.UP else TaskDirection.DOWN)).map { res ->
+            // save local task changes
+            val result = TaskScoringResult()
+            val stats = fetchedUser.stats
+
+            result.healthDelta = res.hp - (stats?.hp ?: 0.0)
+            result.experienceDelta = res.exp - (stats?.exp ?: 0.0)
+            result.manaDelta = res.mp - (stats?.mp ?: 0.0)
+            result.goldDelta = res.gp - (stats?.gp ?: 0.0)
+            result.hasLeveledUp = res.lvl > stats?.lvl ?: 0
+            result.questDamage = res._tmp?.quest?.progressDelta
+            result.drop = res._tmp?.drop
+            notifyFunc?.invoke(result)
+            handleTaskResponse(fetchedUser, res, task, up, res?.delta ?: 0f)
+            result
+        }
     }
 
     private fun handleTaskResponse(user: User, res: TaskDirectionData, task: Task, up: Boolean, localDelta: Float) {
         val userID = user.id
         val taskID = task.id
         this.localRepository.executeTransaction {
-            val bgTask = it.where(Task::class.java).equalTo("id", taskID).findFirst() ?: return@executeTransaction
-            val bgUser = it.where(User::class.java).equalTo("id", userID).findFirst() ?: return@executeTransaction
+            val bgTask = it.where(Task::class.java).equalTo("id", taskID).findFirst()
+                    ?: return@executeTransaction
+            val bgUser = it.where(User::class.java).equalTo("id", userID).findFirst()
+                    ?: return@executeTransaction
             if (bgTask.type != "reward" && (bgTask.value - localDelta) + res.delta != bgTask.value) {
                 bgTask.value = (bgTask.value - localDelta) + res.delta
                 if (TaskType.TYPE_DAILY == bgTask.type || TaskType.TYPE_TODO == bgTask.type) {
@@ -169,7 +143,7 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
 
     override fun createTask(task: Task, force: Boolean): Flowable<Task> {
         val now = Date().time
-        if (lastTaskAction > now - 500  && !force) {
+        if (lastTaskAction > now - 500 && !force) {
             return Flowable.empty()
         }
         lastTaskAction = now
@@ -199,7 +173,7 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
     @Suppress("ReturnCount")
     override fun updateTask(task: Task, force: Boolean): Maybe<Task> {
         val now = Date().time
-        if ((lastTaskAction > now - 500  && !force)|| !task.isValid ) {
+        if ((lastTaskAction > now - 500 && !force) || !task.isValid) {
             return Maybe.just(task)
         }
         lastTaskAction = now

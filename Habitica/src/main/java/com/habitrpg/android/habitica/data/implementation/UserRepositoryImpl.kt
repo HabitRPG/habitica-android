@@ -47,6 +47,9 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
     override fun retrieveUser(withTasks: Boolean, forced: Boolean): Flowable<User> {
         if (forced || this.lastSync == null || Date().time - (this.lastSync?.time ?: 0) > 180000) {
             lastSync = Date()
+            if (withTasks) {
+                apiClient.syncOfflineChanges()
+            }
             return apiClient.retrieveUser(withTasks)
                     .doOnNext { localRepository.saveUser(it) }
                     .doOnNext { user ->

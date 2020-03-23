@@ -23,10 +23,14 @@ import com.habitrpg.android.habitica.models.shops.Shop
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.models.social.*
 import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
+import com.habitrpg.shared.habitica.data.ApiRequest
+import com.habitrpg.shared.habitica.data.OfflineClient
+import com.habitrpg.shared.habitica.interactors.ScoreTaskLocallyInteractor
 import com.habitrpg.shared.habitica.models.Tag
 import com.habitrpg.shared.habitica.models.inventory.Equipment
 import com.habitrpg.shared.habitica.models.inventory.Quest
 import com.habitrpg.shared.habitica.models.members.Member
+import com.habitrpg.shared.habitica.models.responses.TaskDirection
 import com.habitrpg.shared.habitica.models.responses.TaskDirectionData
 import com.habitrpg.shared.habitica.models.tasks.Task
 import com.habitrpg.shared.habitica.models.tasks.TaskList
@@ -58,13 +62,29 @@ import javax.net.ssl.SSLException
 
 class ApiClientImpl//private OnHabitsAPIResult mResultListener;
 //private HostConfig mConfig;
-(private val gsonConverter: GsonConverterFactory, override val hostConfig: HostConfig, private val crashlyticsProxy: CrashlyticsProxy, private val notificationsManager: NotificationsManager, private val context: Context) : Consumer<Throwable>, ApiClient {
-
-
+(private val gsonConverter: GsonConverterFactory, override val hostConfig: HostConfig, private val crashlyticsProxy: CrashlyticsProxy, private val notificationsManager: NotificationsManager, private val offlineClient: OfflineClient, private val context: Context) : Consumer<Throwable>, ApiClient {
     private lateinit var retrofitAdapter: Retrofit
 
     // I think we don't need the ApiClientImpl anymore we could just use ApiService
     private lateinit var apiService: ApiService
+
+    private val apiOfflineErrorHandlerTransformer = { offlineCallback: () -> Any? ->
+        FlowableTransformer<Any, Any> { observable ->
+            observable
+                    .onErrorReturn { error ->
+                        this.accept(error)
+                        if (error is SocketException || error is SSLException) {
+                            offlineCallback()
+                        } else {
+                            null
+                        }
+                    }
+        }
+    }
+
+    private val apiOnlineErrorHandlerTransformer = FlowableTransformer<Any, Any> { observable ->
+        observable.doOnError(this)
+    }
 
     private val apiCallTransformer = FlowableTransformer<HabitResponse<Any>, Any> { observable ->
         observable
@@ -155,14 +175,14 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
         auth.password = password
         auth.confirmPassword = confirmPassword
         auth.email = email
-        return this.apiService.registerUser(auth).compose(configureApiCallObserver())
+        return this.apiService.registerUser(auth).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun connectUser(username: String, password: String): Flowable<UserAuthResponse> {
         val auth = UserAuth()
         auth.username = username
         auth.password = password
-        return this.apiService.connectLocal(auth).compose(configureApiCallObserver())
+        return this.apiService.connectLocal(auth).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun connectSocial(network: String, userId: String, accessToken: String): Flowable<UserAuthResponse> {
@@ -173,11 +193,11 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
         authResponse.access_token = accessToken
         auth.authResponse = authResponse
 
-        return this.apiService.connectSocial(auth).compose(configureApiCallObserver())
+        return this.apiService.connectSocial(auth).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun loginApple(authToken: String): Flowable<UserAuthResponse> {
-        return apiService.loginApple(mapOf(Pair("code", authToken))).compose(configureApiCallObserver())
+        return apiService.loginApple(mapOf(Pair("code", authToken))).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun accept(throwable: Throwable) {
@@ -248,11 +268,11 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
     }
 
     override fun retrieveInboxMessages(uuid: String, page: Int): Flowable<List<ChatMessage>> {
-        return apiService.getInboxMessages(uuid, page).compose(configureApiCallObserver())
+        return apiService.getInboxMessages(uuid, page).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun retrieveInboxConversations(): Flowable<List<InboxConversation>> {
-        return apiService.getInboxConversations().compose(configureApiCallObserver())
+        return apiService.getInboxConversations().compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun hasAuthenticationKeys(): Boolean {
@@ -276,9 +296,16 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
      This function is used with Observer.compose to reuse transformers across the application.
      See here for more info: http://blog.danlew.net/2015/03/02/dont-break-the-chain/
      */
-
     override fun <T> configureApiCallObserver(): FlowableTransformer<HabitResponse<T>, T> {
         return apiCallTransformer as FlowableTransformer<HabitResponse<T>, T>
+    }
+
+    override fun <T> configureApiOnlineErrorHandler(): FlowableTransformer<T, T> {
+        return apiOnlineErrorHandlerTransformer as FlowableTransformer<T, T>
+    }
+
+    override fun <T> configureApiOfflineErrorHandler(offlineCallback: (() -> T?)): FlowableTransformer<T, T> {
+        return apiOfflineErrorHandlerTransformer(offlineCallback) as FlowableTransformer<T, T>
     }
 
     override fun updateAuthenticationCredentials(userID: String?, apiToken: String?) {
@@ -294,41 +321,41 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
     }
 
     override val status: Flowable<Status>
-        get() = apiService.status.compose(configureApiCallObserver())
+        get() = apiService.status.compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
 
     override fun getContent(language: String): Flowable<ContentResult> {
-        return apiService.getContent(language).compose(configureApiCallObserver())
+        return apiService.getContent(language).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override val user: Flowable<User>
-        get() = apiService.user.compose(configureApiCallObserver())
+        get() = apiService.user.compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
 
     override fun updateUser(updateDictionary: Map<String, Any>): Flowable<User> {
-        return apiService.updateUser(updateDictionary).compose(configureApiCallObserver())
+        return apiService.updateUser(updateDictionary).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun registrationLanguage(registrationLanguage: String): Flowable<User> {
-        return apiService.registrationLanguage(registrationLanguage).compose(configureApiCallObserver())
+        return apiService.registrationLanguage(registrationLanguage).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun retrieveInAppRewards(): Flowable<List<ShopItem>> {
-        return apiService.retrieveInAppRewards().compose(configureApiCallObserver())
+        return apiService.retrieveInAppRewards().compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun retrieveOldGear(): Flowable<List<ShopItem>> {
-        return apiService.retrieveOldGearRewards().compose(configureApiCallObserver())
+        return apiService.retrieveOldGearRewards().compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun equipItem(type: String, itemKey: String): Flowable<Items> {
-        return apiService.equipItem(type, itemKey).compose(configureApiCallObserver())
+        return apiService.equipItem(type, itemKey).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun buyItem(itemKey: String): Flowable<BuyResponse> {
-        return apiService.buyItem(itemKey).compose(configureApiCallObserver())
+        return apiService.buyItem(itemKey).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun purchaseItem(type: String, itemKey: String): Flowable<Any> {
-        return apiService.purchaseItem(type, itemKey).compose(configureApiCallObserver())
+        return apiService.purchaseItem(type, itemKey).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun validateSubscription(request: SubscriptionValidationRequest): Flowable<Any> {
@@ -350,120 +377,136 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
     }
 
     override fun cancelSubscription(): Flowable<Any> {
-        return apiService.cancelSubscription().compose(configureApiCallObserver())
+        return apiService.cancelSubscription().compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun purchaseHourglassItem(type: String, itemKey: String): Flowable<Any> {
-        return apiService.purchaseHourglassItem(type, itemKey).compose(configureApiCallObserver())
+        return apiService.purchaseHourglassItem(type, itemKey).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun purchaseMysterySet(itemKey: String): Flowable<Any> {
-        return apiService.purchaseMysterySet(itemKey).compose(configureApiCallObserver())
+        return apiService.purchaseMysterySet(itemKey).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun purchaseQuest(key: String): Flowable<Any> {
-        return apiService.purchaseQuest(key).compose(configureApiCallObserver())
+        return apiService.purchaseQuest(key).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun sellItem(itemType: String, itemKey: String): Flowable<User> {
-        return apiService.sellItem(itemType, itemKey).compose(configureApiCallObserver())
+        return apiService.sellItem(itemType, itemKey).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun feedPet(petKey: String, foodKey: String): Flowable<FeedResponse> {
-        return apiService.feedPet(petKey, foodKey).compose(configureApiCallObserver())
+        return apiService.feedPet(petKey, foodKey).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun hatchPet(eggKey: String, hatchingPotionKey: String): Flowable<Items> {
-        return apiService.hatchPet(eggKey, hatchingPotionKey).compose(configureApiCallObserver())
+        return apiService.hatchPet(eggKey, hatchingPotionKey).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override val tasks: Flowable<TaskList>
-        get() = apiService.tasks.compose(configureApiCallObserver())
+        get() = apiService.tasks.compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
 
     override fun getTasks(type: String): Flowable<TaskList> {
-        return apiService.getTasks(type).compose(configureApiCallObserver())
+        return apiService.getTasks(type).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
 
     override fun getTasks(type: String, dueDate: String): Flowable<TaskList> {
-        return apiService.getTasks(type, dueDate).compose(configureApiCallObserver())
+        return apiService.getTasks(type, dueDate).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
 
     override fun unlockPath(path: String): Flowable<UnlockResponse> {
-        return apiService.unlockPath(path).compose(configureApiCallObserver())
+        return apiService.unlockPath(path).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun getTask(id: String): Flowable<Task> {
-        return apiService.getTask(id).compose(configureApiCallObserver())
+        return apiService.getTask(id).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
+    }
+
+    override fun offlinePostTaskDirection(user: User, task: Task, direction: TaskDirection): Flowable<TaskDirectionData> {
+        val taskId = task.id
+        return if (taskId == null) {
+            Flowable.empty()
+        } else {
+            apiService.postTaskDirection(taskId, direction.text)
+                    .compose(configureApiCallObserver())
+                    .compose(configureApiOfflineErrorHandler<TaskDirectionData> {
+                        offlineClient.addPendingRequest(ApiRequest{
+                            apiService.postTaskDirection(taskId, direction.text)
+                        })
+                        ScoreTaskLocallyInteractor.score(user, task, direction)
+                    })
+        }
     }
 
     override fun postTaskDirection(id: String, direction: String): Flowable<TaskDirectionData> {
-        return apiService.postTaskDirection(id, direction).compose(configureApiCallObserver())
+        return apiService.postTaskDirection(id, direction).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun postTaskNewPosition(id: String, position: Int): Flowable<List<String>> {
-        return apiService.postTaskNewPosition(id, position).compose(configureApiCallObserver())
+        return apiService.postTaskNewPosition(id, position).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun scoreChecklistItem(taskId: String, itemId: String): Flowable<Task> {
-        return apiService.scoreChecklistItem(taskId, itemId).compose(configureApiCallObserver())
+        return apiService.scoreChecklistItem(taskId, itemId).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun createTask(item: Task): Flowable<Task> {
-        return apiService.createTask(item).compose(configureApiCallObserver())
+        return apiService.createTask(item).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun createTasks(tasks: List<Task>): Flowable<List<Task>> {
-        return apiService.createTasks(tasks).compose(configureApiCallObserver())
+        return apiService.createTasks(tasks).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun updateTask(id: String, item: Task): Flowable<Task> {
-        return apiService.updateTask(id, item).compose(configureApiCallObserver())
+        return apiService.updateTask(id, item).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun deleteTask(id: String): Flowable<Void> {
-        return apiService.deleteTask(id).compose(configureApiCallObserver())
+        return apiService.deleteTask(id).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun createTag(tag: Tag): Flowable<Tag> {
-        return apiService.createTag(tag).compose(configureApiCallObserver())
+        return apiService.createTag(tag).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun updateTag(id: String, tag: Tag): Flowable<Tag> {
-        return apiService.updateTag(id, tag).compose(configureApiCallObserver())
+        return apiService.updateTag(id, tag).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun deleteTag(id: String): Flowable<Void> {
-        return apiService.deleteTag(id).compose(configureApiCallObserver())
+        return apiService.deleteTag(id).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun sleep(): Flowable<Boolean> {
-        return apiService.sleep().compose(configureApiCallObserver())
+        return apiService.sleep().compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun revive(): Flowable<User> {
-        return apiService.revive().compose(configureApiCallObserver())
+        return apiService.revive().compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun useSkill(skillName: String, targetType: String, targetId: String): Flowable<SkillResponse> {
-        return apiService.useSkill(skillName, targetType, targetId).compose(configureApiCallObserver())
+        return apiService.useSkill(skillName, targetType, targetId).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun useSkill(skillName: String, targetType: String): Flowable<SkillResponse> {
-        return apiService.useSkill(skillName, targetType).compose(configureApiCallObserver())
+        return apiService.useSkill(skillName, targetType).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun changeClass(): Flowable<User> {
-        return apiService.changeClass().compose(configureApiCallObserver())
+        return apiService.changeClass().compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun changeClass(className: String): Flowable<User> {
-        return apiService.changeClass(className).compose(configureApiCallObserver())
+        return apiService.changeClass(className).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun disableClasses(): Flowable<User> {
-        return apiService.disableClasses().compose(configureApiCallObserver())
+        return apiService.disableClasses().compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun markPrivateMessagesRead(): Flowable<Void> {
@@ -475,106 +518,107 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
     }
 
     override fun listGroups(type: String): Flowable<List<Group>> {
-        return apiService.listGroups(type).compose(configureApiCallObserver())
+        return apiService.listGroups(type).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun getGroup(groupId: String): Flowable<Group> {
-        return apiService.getGroup(groupId).compose(configureApiCallObserver())
+        return apiService.getGroup(groupId).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun createGroup(group: Group): Flowable<Group> {
-        return apiService.createGroup(group).compose(configureApiCallObserver())
+        return apiService.createGroup(group).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun updateGroup(id: String, item: Group): Flowable<Group> {
-        return apiService.updateGroup(id, item).compose(configureApiCallObserver())
+        return apiService.updateGroup(id, item).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun removeMemberFromGroup(groupID: String, userID: String): Flowable<Void> {
-        return apiService.removeMemberFromGroup(groupID, userID).compose(configureApiCallObserver())
+        return apiService.removeMemberFromGroup(groupID, userID).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun listGroupChat(groupId: String): Flowable<List<ChatMessage>> {
-        return apiService.listGroupChat(groupId).compose(configureApiCallObserver())
+        return apiService.listGroupChat(groupId).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun joinGroup(groupId: String): Flowable<Group> {
-        return apiService.joinGroup(groupId).compose(configureApiCallObserver())
+        return apiService.joinGroup(groupId).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun leaveGroup(groupId: String, keepChallenges: String): Flowable<Void> {
-        return apiService.leaveGroup(groupId, keepChallenges).compose(configureApiCallObserver())
+        return apiService.leaveGroup(groupId, keepChallenges).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun postGroupChat(groupId: String, message: Map<String, String>): Flowable<PostChatMessageResult> {
-        return apiService.postGroupChat(groupId, message).compose(configureApiCallObserver())
+        return apiService.postGroupChat(groupId, message).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun deleteMessage(groupId: String, messageId: String): Flowable<Void> {
-        return apiService.deleteMessage(groupId, messageId).compose(configureApiCallObserver())
+        return apiService.deleteMessage(groupId, messageId).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
+
     override fun deleteInboxMessage(id: String): Flowable<Void> {
-        return apiService.deleteInboxMessage(id).compose(configureApiCallObserver())
+        return apiService.deleteInboxMessage(id).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun getGroupMembers(groupId: String, includeAllPublicFields: Boolean?): Flowable<List<Member>> {
-        return apiService.getGroupMembers(groupId, includeAllPublicFields).compose(configureApiCallObserver())
+        return apiService.getGroupMembers(groupId, includeAllPublicFields).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun getGroupMembers(groupId: String, includeAllPublicFields: Boolean?, lastId: String): Flowable<List<Member>> {
-        return apiService.getGroupMembers(groupId, includeAllPublicFields, lastId).compose(configureApiCallObserver())
+        return apiService.getGroupMembers(groupId, includeAllPublicFields, lastId).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun likeMessage(groupId: String, mid: String): Flowable<ChatMessage> {
-        return apiService.likeMessage(groupId, mid).compose(configureApiCallObserver())
+        return apiService.likeMessage(groupId, mid).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun flagMessage(groupId: String, mid: String, data: MutableMap<String, String>): Flowable<Void> {
-        return apiService.flagMessage(groupId, mid, data).compose(configureApiCallObserver())
+        return apiService.flagMessage(groupId, mid, data).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun flagInboxMessage(mid: String, data: MutableMap<String, String>): Flowable<Void> {
-        return apiService.flagInboxMessage(mid, data).compose(configureApiCallObserver())
+        return apiService.flagInboxMessage(mid, data).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun seenMessages(groupId: String): Flowable<Void> {
-        return apiService.seenMessages(groupId).compose(configureApiCallObserver())
+        return apiService.seenMessages(groupId).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun inviteToGroup(groupId: String, inviteData: Map<String, Any>): Flowable<Void> {
-        return apiService.inviteToGroup(groupId, inviteData).compose(configureApiCallObserver())
+        return apiService.inviteToGroup(groupId, inviteData).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun rejectGroupInvite(groupId: String): Flowable<Void> {
-        return apiService.rejectGroupInvite(groupId).compose(configureApiCallObserver())
+        return apiService.rejectGroupInvite(groupId).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun acceptQuest(groupId: String): Flowable<Void> {
-        return apiService.acceptQuest(groupId).compose(configureApiCallObserver())
+        return apiService.acceptQuest(groupId).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun rejectQuest(groupId: String): Flowable<Void> {
-        return apiService.rejectQuest(groupId).compose(configureApiCallObserver())
+        return apiService.rejectQuest(groupId).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun cancelQuest(groupId: String): Flowable<Void> {
-        return apiService.cancelQuest(groupId).compose(configureApiCallObserver())
+        return apiService.cancelQuest(groupId).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun forceStartQuest(groupId: String, group: Group): Flowable<Quest> {
-        return apiService.forceStartQuest(groupId, group).compose(configureApiCallObserver())
+        return apiService.forceStartQuest(groupId, group).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun inviteToQuest(groupId: String, questKey: String): Flowable<Quest> {
-        return apiService.inviteToQuest(groupId, questKey).compose(configureApiCallObserver())
+        return apiService.inviteToQuest(groupId, questKey).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun abortQuest(groupId: String): Flowable<Quest> {
-        return apiService.abortQuest(groupId).compose(configureApiCallObserver())
+        return apiService.abortQuest(groupId).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun leaveQuest(groupId: String): Flowable<Void> {
-        return apiService.leaveQuest(groupId).compose(configureApiCallObserver())
+        return apiService.leaveQuest(groupId).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun validatePurchase(request: PurchaseValidationRequest): Flowable<PurchaseValidationResult> {
@@ -587,157 +631,158 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
     }
 
     override fun changeCustomDayStart(updateObject: Map<String, Any>): Flowable<User> {
-        return apiService.changeCustomDayStart(updateObject).compose(configureApiCallObserver())
+        return apiService.changeCustomDayStart(updateObject).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun getMember(memberId: String): Flowable<Member> {
-        return apiService.getMember(memberId).compose(configureApiCallObserver())
+        return apiService.getMember(memberId).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun getMemberWithUsername(username: String): Flowable<Member> {
-        return apiService.getMemberWithUsername(username).compose(configureApiCallObserver())
+        return apiService.getMemberWithUsername(username).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun getMemberAchievements(memberId: String): Flowable<List<Achievement>> {
-        return apiService.getMemberAchievements(memberId).compose(configureApiCallObserver())
+        return apiService.getMemberAchievements(memberId).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun findUsernames(username: String, context: String?, id: String?): Flowable<List<FindUsernameResult>> {
-        return apiService.findUsernames(username, context, id).compose(configureApiCallObserver())
+        return apiService.findUsernames(username, context, id).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun postPrivateMessage(messageDetails: Map<String, String>): Flowable<PostChatMessageResult> {
-        return apiService.postPrivateMessage(messageDetails).compose(configureApiCallObserver())
+        return apiService.postPrivateMessage(messageDetails).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun retrieveShopIventory(identifier: String): Flowable<Shop> {
-        return apiService.retrieveShopInventory(identifier).compose(configureApiCallObserver())
+        return apiService.retrieveShopInventory(identifier).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun addPushDevice(pushDeviceData: Map<String, String>): Flowable<List<Void>> {
-        return apiService.addPushDevice(pushDeviceData).compose(configureApiCallObserver())
+        return apiService.addPushDevice(pushDeviceData).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun deletePushDevice(regId: String): Flowable<List<Void>> {
-        return apiService.deletePushDevice(regId).compose(configureApiCallObserver())
+        return apiService.deletePushDevice(regId).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun getUserChallenges(page: Int, memberOnly: Boolean): Flowable<List<Challenge>> {
         return if (memberOnly) {
-            apiService.getUserChallenges(page, memberOnly).compose(configureApiCallObserver())
+            apiService.getUserChallenges(page, memberOnly).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
         } else {
-            apiService.getUserChallenges(page).compose(configureApiCallObserver())
+            apiService.getUserChallenges(page).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
         }
     }
 
     override fun getChallengeTasks(challengeId: String): Flowable<TaskList> {
-        return apiService.getChallengeTasks(challengeId).compose(configureApiCallObserver())
+        return apiService.getChallengeTasks(challengeId).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun getChallenge(challengeId: String): Flowable<Challenge> {
-        return apiService.getChallenge(challengeId).compose(configureApiCallObserver())
+        return apiService.getChallenge(challengeId).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun joinChallenge(challengeId: String): Flowable<Challenge> {
-        return apiService.joinChallenge(challengeId).compose(configureApiCallObserver())
+        return apiService.joinChallenge(challengeId).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun leaveChallenge(challengeId: String, body: LeaveChallengeBody): Flowable<Void> {
-        return apiService.leaveChallenge(challengeId, body).compose(configureApiCallObserver())
+        return apiService.leaveChallenge(challengeId, body).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
 
     override fun createChallenge(challenge: Challenge): Flowable<Challenge> {
-        return apiService.createChallenge(challenge).compose(configureApiCallObserver())
+        return apiService.createChallenge(challenge).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun createChallengeTasks(challengeId: String, tasks: List<Task>): Flowable<List<Task>> {
-        return apiService.createChallengeTasks(challengeId, tasks).compose(configureApiCallObserver())
+        return apiService.createChallengeTasks(challengeId, tasks).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun createChallengeTask(challengeId: String, task: Task): Flowable<Task> {
-        return apiService.createChallengeTask(challengeId, task).compose(configureApiCallObserver())
+        return apiService.createChallengeTask(challengeId, task).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun updateChallenge(challenge: Challenge): Flowable<Challenge> {
-        return apiService.updateChallenge(challenge.id ?: "", challenge).compose(configureApiCallObserver())
+        return apiService.updateChallenge(challenge.id
+                ?: "", challenge).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun deleteChallenge(challengeId: String): Flowable<Void> {
-        return apiService.deleteChallenge(challengeId).compose(configureApiCallObserver())
+        return apiService.deleteChallenge(challengeId).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun debugAddTenGems(): Flowable<Void> {
-        return apiService.debugAddTenGems().compose(configureApiCallObserver())
+        return apiService.debugAddTenGems().compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun readNotification(notificationId: String): Flowable<List<*>> {
-        return apiService.readNotification(notificationId).compose(configureApiCallObserver())
+        return apiService.readNotification(notificationId).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun readNotifications(notificationIds: Map<String, List<String>>): Flowable<List<*>> {
-        return apiService.readNotifications(notificationIds).compose(configureApiCallObserver())
+        return apiService.readNotifications(notificationIds).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun seeNotifications(notificationIds: Map<String, List<String>>): Flowable<List<*>> {
-        return apiService.seeNotifications(notificationIds).compose(configureApiCallObserver())
+        return apiService.seeNotifications(notificationIds).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override val content: Flowable<ContentResult>
-        get() = apiService.getContent(languageCode).compose(configureApiCallObserver())
+        get() = apiService.getContent(languageCode).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
 
     override fun openMysteryItem(): Flowable<Equipment> {
-        return apiService.openMysteryItem().compose(configureApiCallObserver())
+        return apiService.openMysteryItem().compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun runCron(): Flowable<Void> {
-        return apiService.runCron().compose(configureApiCallObserver())
+        return apiService.runCron().compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun resetAccount(): Flowable<Void> {
-        return apiService.resetAccount().compose(configureApiCallObserver())
+        return apiService.resetAccount().compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun deleteAccount(password: String): Flowable<Void> {
         val updateObject = HashMap<String, String>()
         updateObject["password"] = password
-        return apiService.deleteAccount(updateObject).compose(configureApiCallObserver())
+        return apiService.deleteAccount(updateObject).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun togglePinnedItem(pinType: String, path: String): Flowable<Void> {
-        return apiService.togglePinnedItem(pinType, path).compose(configureApiCallObserver())
+        return apiService.togglePinnedItem(pinType, path).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun sendPasswordResetEmail(email: String): Flowable<Void> {
         val data = HashMap<String, String>()
         data["email"] = email
-        return apiService.sendPasswordResetEmail(data).compose(configureApiCallObserver())
+        return apiService.sendPasswordResetEmail(data).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun updateLoginName(newLoginName: String, password: String): Flowable<Void> {
         val updateObject = HashMap<String, String>()
         updateObject["username"] = newLoginName
         updateObject["password"] = password
-        return apiService.updateLoginName(updateObject).compose(configureApiCallObserver())
+        return apiService.updateLoginName(updateObject).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun updateUsername(newLoginName: String): Flowable<Void> {
         val updateObject = HashMap<String, String>()
         updateObject["username"] = newLoginName
-        return apiService.updateLoginName(updateObject).compose(configureApiCallObserver())
+        return apiService.updateLoginName(updateObject).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun verifyUsername(username: String): Flowable<VerifyUsernameResponse> {
         val updateObject = HashMap<String, String>()
         updateObject["username"] = username
-        return this.apiService.verifyUsername(updateObject).compose(configureApiCallObserver())
+        return this.apiService.verifyUsername(updateObject).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun updateEmail(newEmail: String, password: String): Flowable<Void> {
         val updateObject = HashMap<String, String>()
         updateObject["newEmail"] = newEmail
         updateObject["password"] = password
-        return apiService.updateEmail(updateObject).compose(configureApiCallObserver())
+        return apiService.updateEmail(updateObject).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun updatePassword(oldPassword: String, newPassword: String, newPasswordConfirmation: String): Flowable<Void> {
@@ -745,15 +790,15 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
         updateObject["password"] = oldPassword
         updateObject["newPassword"] = newPassword
         updateObject["confirmPassword"] = newPasswordConfirmation
-        return apiService.updatePassword(updateObject).compose(configureApiCallObserver())
+        return apiService.updatePassword(updateObject).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun allocatePoint(stat: String): Flowable<Stats> {
-        return apiService.allocatePoint(stat).compose(configureApiCallObserver())
+        return apiService.allocatePoint(stat).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun transferGems(giftedID: String, amount: Int): Flowable<Void> {
-        return apiService.transferGems(mapOf(Pair("toUserId", giftedID), Pair("gemAmount", amount))).compose(configureApiCallObserver())
+        return apiService.transferGems(mapOf(Pair("toUserId", giftedID), Pair("gemAmount", amount))).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun bulkAllocatePoints(strength: Int, intelligence: Int, constitution: Int, perception: Int): Flowable<Stats> {
@@ -764,15 +809,21 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
         stats["con"] = constitution
         stats["per"] = perception
         body["stats"] = stats
-        return apiService.bulkAllocatePoints(body).compose(configureApiCallObserver())
+        return apiService.bulkAllocatePoints(body).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun retrieveMarketGear(): Flowable<Shop> {
-        return apiService.retrieveMarketGear().compose(configureApiCallObserver())
+        return apiService.retrieveMarketGear().compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
+    }
+
+    override fun syncOfflineChanges() {
+        if (offlineClient.hasPendingRequest()) {
+            offlineClient.trySubmitPendingRequests()
+        }
     }
 
     override val worldState: Flowable<WorldState>
-        get() = apiService.worldState.compose(configureApiCallObserver())
+        get() = apiService.worldState.compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
 
     companion object {
         fun createGsonFactory(): GsonConverterFactory {

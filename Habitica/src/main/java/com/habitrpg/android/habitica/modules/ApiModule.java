@@ -1,15 +1,17 @@
 package com.habitrpg.android.habitica.modules;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-
 import com.habitrpg.android.habitica.api.HostConfig;
 import com.habitrpg.android.habitica.api.MaintenanceApiService;
 import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.data.implementation.ApiClientImpl;
-import com.habitrpg.android.habitica.helpers.NotificationsManager;
 import com.habitrpg.android.habitica.helpers.KeyHelper;
+import com.habitrpg.android.habitica.helpers.NotificationsManager;
 import com.habitrpg.android.habitica.proxy.CrashlyticsProxy;
+import com.habitrpg.shared.habitica.data.OfflineClient;
+import com.habitrpg.shared.habitica.data.implementation.OfflineClientImpl;
+
+import android.content.Context;
+import android.content.SharedPreferences;
 
 import javax.annotation.Nullable;
 import javax.inject.Singleton;
@@ -42,8 +44,14 @@ public class ApiModule {
 
     @Provides
     @Singleton
-    public ApiClient providesApiHelper(GsonConverterFactory gsonConverter, HostConfig hostConfig, CrashlyticsProxy crashlyticsProxy, NotificationsManager notificationsManager, Context context) {
-        return new ApiClientImpl(gsonConverter, hostConfig, crashlyticsProxy, notificationsManager, context);
+    public ApiClient providesApiHelper(GsonConverterFactory gsonConverter, HostConfig hostConfig, CrashlyticsProxy crashlyticsProxy, NotificationsManager notificationsManager, OfflineClient offlineClient, Context context) {
+        return new ApiClientImpl(gsonConverter, hostConfig, crashlyticsProxy, notificationsManager, offlineClient, context);
+    }
+
+    @Provides
+    @Singleton
+    public OfflineClient providesOfflineClient() {
+        return new OfflineClientImpl();
     }
 
     @Provides
