@@ -11,11 +11,11 @@ import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.responses.UnlockResponse
-import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.adapter.CustomizationEquipmentRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.helpers.MarginDecoration
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
+import com.habitrpg.shared.habitica.models.user.User
 import io.reactivex.Flowable
 import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
@@ -116,7 +116,7 @@ class AvatarEquipmentFragment : BaseMainFragment() {
 
     fun updateUser(user: User) {
         this.updateActiveCustomization(user)
-        this.adapter.gemBalance = user.gemCount
+        this.adapter.gemBalance = user.gemCount ?: 0
         adapter.notifyDataSetChanged()
     }
 

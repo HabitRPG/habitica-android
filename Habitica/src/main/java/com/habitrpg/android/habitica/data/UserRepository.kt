@@ -22,7 +22,6 @@ interface UserRepository : BaseRepository {
     fun updateUser(user: User?, updateData: Map<String, Any>): Flowable<User>
     fun updateUser(user: User?, key: String, value: Any): Flowable<User>
 
-    fun retrieveUser(withTasks: Boolean): Flowable<User>
     fun retrieveUser(withTasks: Boolean = false, forced: Boolean = false): Flowable<User>
 
     fun revive(user: User): Flowable<User>

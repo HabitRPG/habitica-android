@@ -148,7 +148,7 @@ class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerVi
             } else {
                 binding.buyButton.visibility = View.VISIBLE
                 binding.priceLabel.currency = "gems"
-                binding.priceLabel.value = customization.price.toDouble()
+                binding.priceLabel.value = customization.price?.toDouble() ?: 0.0
             }
 
             if (activeCustomization == customization.identifier) {
