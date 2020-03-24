@@ -155,7 +155,7 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
         if (task.id == null) {
             task.id = UUID.randomUUID().toString()
         }
-        localRepository.saveSyncronous(task)
+        localRepository.saveSynchronous(task)
 
         return apiClient.createTask(task)
                 .map { task1 ->
@@ -166,7 +166,7 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
                 .doOnError {
                     task.hasErrored = true
                     task.isSaving = false
-                    localRepository.saveSyncronous(task)
+                    localRepository.saveSynchronous(task)
                 }
     }
 
@@ -181,7 +181,7 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
         val unmanagedTask = localRepository.getUnmanagedCopy(task)
         unmanagedTask.isSaving = true
         unmanagedTask.hasErrored = false
-        localRepository.saveSyncronous(unmanagedTask)
+        localRepository.saveSynchronous(unmanagedTask)
         return apiClient.updateTask(id, unmanagedTask).singleElement()
                 .map { task1 ->
                     task1.position = task.position
@@ -191,7 +191,7 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
                 .doOnError {
                     unmanagedTask.hasErrored = true
                     unmanagedTask.isSaving = false
-                    localRepository.saveSyncronous(unmanagedTask)
+                    localRepository.saveSynchronous(unmanagedTask)
                 }
     }
 

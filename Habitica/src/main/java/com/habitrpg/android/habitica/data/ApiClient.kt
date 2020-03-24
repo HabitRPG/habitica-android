@@ -110,7 +110,7 @@ interface ApiClient {
 
     fun sleep(): Flowable<Boolean>
 
-    fun revive(): Flowable<User>
+    fun revive(user: User): Flowable<User>
 
     fun useSkill(skillName: String, targetType: String, targetId: String): Flowable<SkillResponse>
 

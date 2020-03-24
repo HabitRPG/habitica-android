@@ -26,6 +26,7 @@ import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
 import com.habitrpg.shared.habitica.data.ApiRequest
 import com.habitrpg.shared.habitica.data.OfflineClient
 import com.habitrpg.shared.habitica.interactors.ScoreTaskLocallyInteractor
+import com.habitrpg.shared.habitica.interactors.UserLocalInteractor
 import com.habitrpg.shared.habitica.models.Tag
 import com.habitrpg.shared.habitica.models.inventory.Equipment
 import com.habitrpg.shared.habitica.models.inventory.Quest
@@ -252,7 +253,6 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
     }
 
     override fun retrieveUser(withTasks: Boolean): Flowable<User> {
-
         var userObservable = this.user
 
         if (withTasks) {
@@ -433,7 +433,7 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
             apiService.postTaskDirection(taskId, direction.text)
                     .compose(configureApiCallObserver())
                     .compose(configureApiOfflineErrorHandler<TaskDirectionData> {
-                        offlineClient.addPendingRequest(ApiRequest{
+                        offlineClient.addPendingRequest(ApiRequest {
                             apiService.postTaskDirection(taskId, direction.text)
                         })
                         ScoreTaskLocallyInteractor.score(user, task, direction)
@@ -485,8 +485,11 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
         return apiService.sleep().compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
-    override fun revive(): Flowable<User> {
-        return apiService.revive().compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
+    override fun revive(user: User): Flowable<User> {
+        return apiService.revive().compose(configureApiCallObserver()).compose(configureApiOfflineErrorHandler {
+            this.offlineClient.addPendingRequest(ApiRequest { apiService.revive() })
+            UserLocalInteractor.revive(user)
+        })
     }
 
     override fun useSkill(skillName: String, targetType: String, targetId: String): Flowable<SkillResponse> {

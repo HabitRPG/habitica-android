@@ -78,7 +78,7 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
     }
 
     override fun revive(user: User): Flowable<User> =
-            apiClient.revive().map { newUser -> mergeUser(user, newUser) }
+            apiClient.revive(localRepository.getUnmanagedCopy(user)).map { newUser -> mergeUser(user, newUser) }
 
     override fun resetTutorial(user: User?) {
         localRepository.getTutorialSteps()
