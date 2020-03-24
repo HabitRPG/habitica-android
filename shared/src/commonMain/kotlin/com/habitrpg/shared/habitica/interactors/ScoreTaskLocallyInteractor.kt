@@ -47,7 +47,7 @@ class ScoreTaskLocallyInteractor {
         }
 
         fun score(user: User, task: Task, direction: TaskDirection): TaskDirectionData? {
-            return if (task.type == TaskType.TYPE_HABIT || direction == TaskDirection.UP) {
+            return if (task.type == TaskType.TYPE_HABIT || task.type == TaskType.TYPE_TODO || task.type == TaskType.TYPE_DAILY) {
                 val stats = user.stats ?: return null
                 val computedStats = computeStats(user)
                 val result = TaskDirectionData()
@@ -57,7 +57,7 @@ class ScoreTaskLocallyInteractor {
                 result.mp = stats.mp ?: 0.0
                 val delta = calculateDelta(task, direction)
                 result.delta = delta.toFloat()
-                if (delta > 0) {
+                if (delta > 0 || task.type == TaskType.TYPE_DAILY || task.type == TaskType.TYPE_TODO) {
                     addPoints(result, delta, stats, computedStats, task, direction)
                 } else {
                     subtractPoints(result, delta, stats, computedStats, task)
@@ -74,12 +74,11 @@ class ScoreTaskLocallyInteractor {
                 }
                 if (result.exp >= stats.toNextLevel?.toDouble() ?: 0.0) {
                     result.exp = result.exp - (stats.toNextLevel?.toDouble() ?: 0.0)
-                    result.lvl = (user.stats?.lvl ?: 0 + 1).toLong()
+                    result.lvl = ((stats.lvl ?: 0) + 1).toLong()
                     result.hp = 50.0
                 } else {
                     result.lvl = (user.stats?.lvl ?: 0).toLong()
                 }
-
                 result
             } else {
                 null
@@ -106,7 +105,7 @@ class ScoreTaskLocallyInteractor {
             val streak = task.streak ?: 0
             result.gp = (stats.gp ?: 0.0) + if (task.streak != null) {
                 val currentStreak = if (direction == TaskDirection.DOWN) streak - 1 else streak
-                val streakBonus = (currentStreak / 100) * 1
+                val streakBonus = (currentStreak / 100.0) * 1.0
                 val afterStreak = goldMod * streakBonus
                 afterStreak
             } else {

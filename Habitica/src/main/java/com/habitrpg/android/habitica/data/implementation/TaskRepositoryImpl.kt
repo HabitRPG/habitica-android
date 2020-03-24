@@ -81,12 +81,12 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
             result.questDamage = res._tmp?.quest?.progressDelta
             result.drop = res._tmp?.drop
             notifyFunc?.invoke(result)
-            handleTaskResponse(fetchedUser, res, task, up, res?.delta ?: 0f)
+            handleTaskResponse(fetchedUser, res, task, up)
             result
         }
     }
 
-    private fun handleTaskResponse(user: User, res: TaskDirectionData, task: Task, up: Boolean, localDelta: Float) {
+    private fun handleTaskResponse(user: User, res: TaskDirectionData, task: Task, up: Boolean) {
         val userID = user.id
         val taskID = task.id
         this.localRepository.executeTransaction {
@@ -94,8 +94,8 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
                     ?: return@executeTransaction
             val bgUser = it.where(User::class.java).equalTo("id", userID).findFirst()
                     ?: return@executeTransaction
-            if (bgTask.type != "reward" && (bgTask.value - localDelta) + res.delta != bgTask.value) {
-                bgTask.value = (bgTask.value - localDelta) + res.delta
+            if (bgTask.type != "reward" && (bgTask.value) + res.delta != bgTask.value) {
+                bgTask.value = bgTask.value + res.delta
                 if (TaskType.TYPE_DAILY == bgTask.type || TaskType.TYPE_TODO == bgTask.type) {
                     bgTask.completed = up
                     if (TaskType.TYPE_DAILY == bgTask.type && up) {
