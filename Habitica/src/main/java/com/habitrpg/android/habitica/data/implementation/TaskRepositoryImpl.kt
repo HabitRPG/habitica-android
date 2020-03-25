@@ -151,7 +151,6 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
         if (task.id == null) {
             task.id = UUID.randomUUID().toString()
         }
-        localRepository.saveSynchronous(task)
 
         return apiClient.createTask(task)
                 .map { task1 ->
@@ -159,10 +158,6 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
                     task1
                 }
                 .doOnNext { localRepository.save(it) }
-                .doOnError {
-                    // TODO offline mode Tyler
-                    localRepository.saveSynchronous(task)
-                }
     }
 
     @Suppress("ReturnCount")

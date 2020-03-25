@@ -460,7 +460,12 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
     }
 
     override fun createTasks(tasks: List<Task>): Flowable<List<Task>> {
-        return apiService.createTasks(tasks).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
+        return apiService.createTasks(tasks)
+                .compose(configureApiCallObserver())
+                .compose(configureApiOfflineErrorHandler(
+                        { apiService.createTasks(tasks) },
+                        { tasks }
+                ))
     }
 
     override fun updateTask(id: String, item: Task): Flowable<Task> {
