@@ -35,7 +35,7 @@ class TagRepositoryImpl(localRepository: TagLocalRepository, apiClient: ApiClien
                 }
     }
 
-    override fun deleteTag(id: String): Flowable<Void> {
+    override fun deleteTag(id: String): Flowable<Unit> {
         return apiClient.deleteTag(id)
                 .doOnNext {
                     localRepository.deleteTag(id)
@@ -55,7 +55,7 @@ class TagRepositoryImpl(localRepository: TagLocalRepository, apiClient: ApiClien
                 .toList()
     }
 
-    override fun deleteTags(tagIds: Collection<String>): Single<List<Void>> {
+    override fun deleteTags(tagIds: Collection<String>): Single<List<Unit>> {
         return Flowable.defer { Flowable.fromIterable(tagIds) }
                 .flatMap { this.deleteTag(it) }
         .toList()

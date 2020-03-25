@@ -99,7 +99,7 @@ interface ApiClient {
 
     fun updateTag(id: String, tag: Tag): Flowable<Tag>
 
-    fun deleteTag(id: String): Flowable<Void>
+    fun deleteTag(id: String): Flowable<Unit>
 
     fun registerUser(username: String, email: String, password: String, confirmPassword: String): Flowable<UserAuthResponse>
 

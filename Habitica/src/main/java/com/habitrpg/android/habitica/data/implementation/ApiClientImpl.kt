@@ -488,15 +488,27 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
     }
 
     override fun createTag(tag: Tag): Flowable<Tag> {
-        return apiService.createTag(tag).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
+        return apiService.createTag(tag)
+                .compose(configureApiCallObserver())
+                .compose(configureApiOfflineErrorHandler(
+                        { apiService.createTag(tag) },
+                        { tag }
+                ))
     }
 
     override fun updateTag(id: String, tag: Tag): Flowable<Tag> {
-        return apiService.updateTag(id, tag).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
+        return apiService.updateTag(id, tag)
+                .compose(configureApiCallObserver())
+                .compose(configureApiOfflineErrorHandler(
+                        { apiService.updateTag(id, tag) },
+                        { tag }
+                ))
     }
 
-    override fun deleteTag(id: String): Flowable<Void> {
-        return apiService.deleteTag(id).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
+    override fun deleteTag(id: String): Flowable<Unit> {
+        return apiService.deleteTag(id)
+                .compose(configureApiCallObserver())
+                .compose(configureApiOfflineErrorHandler { apiService.deleteTag(id) })
     }
 
     override fun sleep(): Flowable<Boolean> {
