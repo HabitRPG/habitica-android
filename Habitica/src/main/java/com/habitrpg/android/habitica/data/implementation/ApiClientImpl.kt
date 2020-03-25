@@ -428,7 +428,7 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
         return apiService.getTask(id).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
-    override fun offlinePostTaskDirection(user: User, task: Task, direction: TaskDirection): Flowable<TaskDirectionData> {
+    override fun postTaskDirection(user: User, task: Task, direction: TaskDirection): Flowable<TaskDirectionData> {
         val taskId = task.id
         return if (taskId == null) {
             Flowable.empty()
@@ -440,10 +440,6 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
                             { TaskLocalInteractor.score(user, task, direction) }
                     ))
         }
-    }
-
-    override fun postTaskDirection(id: String, direction: String): Flowable<TaskDirectionData> {
-        return apiService.postTaskDirection(id, direction).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun postTaskNewPosition(id: String, position: Int): Flowable<List<String>> {

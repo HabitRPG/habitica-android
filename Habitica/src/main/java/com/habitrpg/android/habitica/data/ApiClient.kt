@@ -81,7 +81,7 @@ interface ApiClient {
 
     fun getTask(id: String): Flowable<Task>
 
-    fun postTaskDirection(id: String, direction: String): Flowable<TaskDirectionData>
+    fun postTaskDirection(user: User, task: Task, direction: TaskDirection): Flowable<TaskDirectionData>
 
     fun postTaskNewPosition(id: String, position: Int): Flowable<List<String>>
 
@@ -268,5 +268,4 @@ interface ApiClient {
     // Offline
     fun syncOfflineChanges()
 
-    fun offlinePostTaskDirection(user: User, task: Task, direction: TaskDirection): Flowable<TaskDirectionData>
 }

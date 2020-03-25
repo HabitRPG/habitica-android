@@ -67,7 +67,7 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
 
         // There are cases where the user object is not set correctly. So the app refetches it as a fallback
         val fetchedUser = user ?: localRepository.getUser(userID).blockingFirst()
-        return this.apiClient.offlinePostTaskDirection(fetchedUser, task, (if (up) TaskDirection.UP else TaskDirection.DOWN)).map { res ->
+        return this.apiClient.postTaskDirection(fetchedUser, task, (if (up) TaskDirection.UP else TaskDirection.DOWN)).map { res ->
             // save local task changes
             val result = TaskScoringResult()
             val stats = fetchedUser.stats
