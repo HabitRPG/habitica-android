@@ -135,15 +135,6 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <ProgressBar
-                android:id="@+id/syncing_view"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="@dimen/spacing_small"
-                android:layout_marginRight="@dimen/spacing_small"
-                style="@style/Widget.AppCompat.ProgressBar"/>
-
             <LinearLayout
                 android:id="@+id/checklistIndicatorWrapper"
                 android:layout_width="@dimen/checklist_wrapper_width"

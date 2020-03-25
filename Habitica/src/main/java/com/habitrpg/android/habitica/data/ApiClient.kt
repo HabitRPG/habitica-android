@@ -233,7 +233,7 @@ interface ApiClient {
 
     fun <T> configureApiCallObserver(): FlowableTransformer<HabitResponse<T>, T>
     fun <T> configureApiOnlineErrorHandler(): FlowableTransformer<T, T>
-    fun <T> configureApiOfflineErrorHandler(offlineCallback: () -> T?): FlowableTransformer<T, T>
+    fun <T> configureApiOfflineErrorHandler(apiCall: () -> Flowable<HabitResponse<T>>, offlineObjectCreator: () -> T?): FlowableTransformer<T, T>
 
     fun openMysteryItem(): Flowable<Equipment>
 

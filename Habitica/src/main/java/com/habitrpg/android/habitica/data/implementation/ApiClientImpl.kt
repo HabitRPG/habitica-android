@@ -69,13 +69,13 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
     // I think we don't need the ApiClientImpl anymore we could just use ApiService
     private lateinit var apiService: ApiService
 
-    private val apiOfflineErrorHandlerTransformer = { offlineCallback: () -> Any? ->
-        FlowableTransformer<Any, Any> { observable ->
+    private fun <T> apiOfflineErrorHandlerTransformer(apiCall: () -> Flowable<HabitResponse<T>>, localObjectCreator: () -> T?): FlowableTransformer<T, T> {
+        return FlowableTransformer { observable ->
             observable
                     .onErrorReturn { error ->
-                        this.accept(error)
                         if (error is SocketException || error is SSLException) {
-                            offlineCallback()
+                            offlineClient.addPendingRequest(ApiRequest { apiCall() })
+                            localObjectCreator()
                         } else {
                             null
                         }
@@ -98,7 +98,6 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
                 }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnError(this)
     }
     private var languageCode: String? = null
     private var lastAPICallURL: String? = null
@@ -176,7 +175,7 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
         auth.password = password
         auth.confirmPassword = confirmPassword
         auth.email = email
-        return this.apiService.registerUser(auth).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler()).compose(configureApiOnlineErrorHandler())
+        return this.apiService.registerUser(auth).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun connectUser(username: String, password: String): Flowable<UserAuthResponse> {
@@ -304,8 +303,8 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
         return apiOnlineErrorHandlerTransformer as FlowableTransformer<T, T>
     }
 
-    override fun <T> configureApiOfflineErrorHandler(offlineCallback: (() -> T?)): FlowableTransformer<T, T> {
-        return apiOfflineErrorHandlerTransformer(offlineCallback) as FlowableTransformer<T, T>
+    override fun <T> configureApiOfflineErrorHandler(apiCall: () -> Flowable<HabitResponse<T>>, offlineObjectCreator: () -> T?): FlowableTransformer<T, T> {
+        return apiOfflineErrorHandlerTransformer(apiCall, offlineObjectCreator) as FlowableTransformer<T, T>
     }
 
     override fun updateAuthenticationCredentials(userID: String?, apiToken: String?) {
@@ -432,12 +431,10 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
         } else {
             apiService.postTaskDirection(taskId, direction.text)
                     .compose(configureApiCallObserver())
-                    .compose(configureApiOfflineErrorHandler<TaskDirectionData> {
-                        offlineClient.addPendingRequest(ApiRequest {
-                            apiService.postTaskDirection(taskId, direction.text)
-                        })
-                        ScoreTaskLocallyInteractor.score(user, task, direction)
-                    })
+                    .compose(configureApiOfflineErrorHandler<TaskDirectionData>(
+                            { apiService.postTaskDirection(taskId, direction.text) },
+                            { ScoreTaskLocallyInteractor.score(user, task, direction) }
+                    ))
         }
     }
 
@@ -454,7 +451,12 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
     }
 
     override fun createTask(item: Task): Flowable<Task> {
-        return apiService.createTask(item).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
+        return apiService.createTask(item)
+                .compose(configureApiCallObserver())
+                .compose(configureApiOfflineErrorHandler(
+                        { apiService.createTask(item) },
+                        { item }
+                ))
     }
 
     override fun createTasks(tasks: List<Task>): Flowable<List<Task>> {
@@ -486,10 +488,11 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
     }
 
     override fun revive(user: User): Flowable<User> {
-        return apiService.revive().compose(configureApiCallObserver()).compose(configureApiOfflineErrorHandler {
-            this.offlineClient.addPendingRequest(ApiRequest { apiService.revive() })
-            UserLocalInteractor.revive(user)
-        })
+        return apiService.revive().compose(configureApiCallObserver())
+                .compose(configureApiOfflineErrorHandler(
+                        { apiService.revive() },
+                        { UserLocalInteractor.revive(user) }
+                ))
     }
 
     override fun useSkill(skillName: String, targetType: String, targetId: String): Flowable<SkillResponse> {
