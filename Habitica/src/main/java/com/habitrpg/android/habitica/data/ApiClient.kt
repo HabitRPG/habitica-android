@@ -85,7 +85,7 @@ interface ApiClient {
 
     fun postTaskNewPosition(id: String, position: Int): Flowable<List<String>>
 
-    fun scoreChecklistItem(taskId: String, itemId: String): Flowable<Task>
+    fun scoreChecklistItem(task: Task, itemId: String): Flowable<Task>
 
     fun createTask(item: Task): Flowable<Task>
 

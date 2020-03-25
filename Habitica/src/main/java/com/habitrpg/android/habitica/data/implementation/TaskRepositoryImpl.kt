@@ -125,11 +125,10 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
                 .flatMap { task -> taskChecked(user, task, up, force, notifyFunc).singleElement() }
     }
 
-    override fun scoreChecklistItem(taskId: String, itemId: String): Flowable<Task> {
-        return apiClient.scoreChecklistItem(taskId, itemId)
-                .flatMapMaybe { localRepository.getTask(taskId).firstElement() }
-                .doOnNext { task ->
-                    val updatedItem: ChecklistItem? = task.checklist?.lastOrNull { itemId == it.id }
+    override fun scoreChecklistItem(task: Task, itemId: String): Flowable<Task> {
+        return apiClient.scoreChecklistItem(task, itemId)
+                .doOnNext { taskRes ->
+                    val updatedItem: ChecklistItem? = taskRes.checklist?.lastOrNull { itemId == it.id }
                     if (updatedItem != null) {
                         localRepository.executeTransaction { updatedItem.completed = !updatedItem.completed }
                     }

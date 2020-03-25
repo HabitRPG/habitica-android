@@ -435,7 +435,7 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
         } else {
             apiService.postTaskDirection(taskId, direction.text)
                     .compose(configureApiCallObserver())
-                    .compose(configureApiOfflineErrorHandler<TaskDirectionData>(
+                    .compose(configureApiOfflineErrorHandler(
                             { apiService.postTaskDirection(taskId, direction.text) },
                             { TaskLocalInteractor.score(user, task, direction) }
                     ))
@@ -443,11 +443,18 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
     }
 
     override fun postTaskNewPosition(id: String, position: Int): Flowable<List<String>> {
-        return apiService.postTaskNewPosition(id, position).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
+        return apiService.postTaskNewPosition(id, position)
+                .compose(configureApiCallObserver())
+                .compose(configureApiOnlineErrorHandler())
     }
 
-    override fun scoreChecklistItem(taskId: String, itemId: String): Flowable<Task> {
-        return apiService.scoreChecklistItem(taskId, itemId).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
+    override fun scoreChecklistItem(task: Task, itemId: String): Flowable<Task> {
+        return apiService.scoreChecklistItem(task.id ?: "", itemId)
+                .compose(configureApiCallObserver())
+                .compose(configureApiOfflineErrorHandler(
+                        { apiService.scoreChecklistItem(task.id ?: "", itemId) },
+                        { task }
+                ))
     }
 
     override fun createTask(item: Task): Flowable<Task> {
