@@ -142,23 +142,6 @@
 
         </LinearLayout>
 
-        <ProgressBar
-            android:id="@+id/syncing_view"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="@dimen/spacing_small"
-            android:layout_marginRight="@dimen/spacing_small"
-            style="@style/Widget.AppCompat.ProgressBar"/>
-        <ImageButton
-            android:id="@+id/error_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:background="@color/transparent"
-            android:src="@drawable/ic_warning_black"
-            android:layout_marginLeft="@dimen/spacing_small"
-            android:layout_marginRight="@dimen/spacing_small"/>
         <FrameLayout
             android:id="@+id/btnMinusWrapper"
             android:layout_width="@dimen/button_width"

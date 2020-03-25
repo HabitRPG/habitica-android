@@ -12,7 +12,6 @@ import com.habitrpg.shared.habitica.models.tasks.*
 import com.habitrpg.shared.habitica.models.user.User
 import io.reactivex.Flowable
 import io.reactivex.Maybe
-import io.reactivex.Single
 import io.reactivex.functions.Consumer
 import io.realm.Realm
 import io.realm.RealmResults
@@ -148,9 +147,6 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
         }
         lastTaskAction = now
 
-        task.isSaving = true
-        task.isCreating = true
-        task.hasErrored = false
         task.userId = userID
         if (task.id == null) {
             task.id = UUID.randomUUID().toString()
@@ -164,8 +160,7 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
                 }
                 .doOnNext { localRepository.save(it) }
                 .doOnError {
-                    task.hasErrored = true
-                    task.isSaving = false
+                    // TODO offline mode Tyler
                     localRepository.saveSynchronous(task)
                 }
     }
@@ -179,8 +174,6 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
         lastTaskAction = now
         val id = task.id ?: return Maybe.just(task)
         val unmanagedTask = localRepository.getUnmanagedCopy(task)
-        unmanagedTask.isSaving = true
-        unmanagedTask.hasErrored = false
         localRepository.saveSynchronous(unmanagedTask)
         return apiClient.updateTask(id, unmanagedTask).singleElement()
                 .map { task1 ->
@@ -189,8 +182,7 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
                 }
                 .doOnSuccess { localRepository.save(it) }
                 .doOnError {
-                    unmanagedTask.hasErrored = true
-                    unmanagedTask.isSaving = false
+                    // TODO offline mode Tyler
                     localRepository.saveSynchronous(unmanagedTask)
                 }
     }
@@ -247,18 +239,5 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
     override fun retrieveDailiesFromDate(date: Date): Flowable<TaskList> {
         val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZZZZZ", Locale.US)
         return apiClient.getTasks("dailys", formatter.format(date))
-    }
-
-    override fun syncErroredTasks(): Single<List<Task>> {
-        return localRepository.getErroredTasks(userID).firstElement()
-                .flatMapPublisher { Flowable.fromIterable(it) }
-                .map { localRepository.getUnmanagedCopy(it) }
-                .flatMap {
-                    return@flatMap if (it.isCreating) {
-                        createTask(it, true)
-                    } else {
-                        updateTask(it, true).toFlowable()
-                    }
-                }.toList()
     }
 }

@@ -2,14 +2,17 @@ package com.habitrpg.android.habitica.ui.viewHolders.tasks
 
 import android.content.Context
 import android.view.View
-import android.widget.*
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.shared.habitica.models.responses.TaskDirection
-import com.habitrpg.shared.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.helpers.*
 import com.habitrpg.android.habitica.ui.viewHolders.BindableViewHolder
 import com.habitrpg.android.habitica.ui.views.EllipsisTextView
+import com.habitrpg.shared.habitica.models.responses.TaskDirection
+import com.habitrpg.shared.habitica.models.tasks.Task
 import io.noties.markwon.utils.NoCopySpannableFactory
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -37,8 +40,6 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
     private val taskIconWrapper: LinearLayout? by bindView(itemView, R.id.taskIconWrapper)
     private val approvalRequiredTextView: TextView? by bindView(itemView, R.id.approvalRequiredTextField)
     private val expandNotesButton: Button? by bindOptionalView(R.id.expand_notes_button)
-    private val syncingView: ProgressBar? by bindOptionalView(R.id.syncing_view)
-    private val errorIconView: ImageButton? by bindOptionalView(R.id.error_icon)
     protected val taskGray: Int by bindColor(itemView.context, R.color.task_gray)
 
     private var openTaskDisabled: Boolean = false
@@ -73,7 +74,6 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
 
         titleTextView.setOnClickListener { onClick(it) }
         notesTextView?.setOnClickListener { onClick(it) }
-        errorIconView?.setOnClickListener { errorButtonClicked?.run()}
 
         //Re enable when we find a way to only react when a link is tapped.
         //notesTextView.movementMethod = LinkMovementMethod.getInstance()
@@ -169,9 +169,6 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
         } else {
             approvalRequiredTextView?.visibility = View.GONE
         }
-
-        syncingView?.visibility = if (task?.isSaving == true) View.VISIBLE else View.GONE
-        errorIconView?.visibility = if (task?.hasErrored == true) View.VISIBLE else View.GONE
     }
 
 

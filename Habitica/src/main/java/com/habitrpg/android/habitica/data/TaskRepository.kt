@@ -8,7 +8,6 @@ import com.habitrpg.shared.habitica.models.tasks.TasksOrder
 import com.habitrpg.shared.habitica.models.user.User
 import io.reactivex.Flowable
 import io.reactivex.Maybe
-import io.reactivex.Single
 import io.realm.Realm
 import io.realm.RealmResults
 import java.util.*
@@ -58,5 +57,4 @@ interface TaskRepository : BaseRepository {
 
     fun retrieveDailiesFromDate(date: Date): Flowable<TaskList>
     fun retrieveCompletedTodos(userId: String): Flowable<TaskList>
-    fun syncErroredTasks(): Single<List<Task>>
 }

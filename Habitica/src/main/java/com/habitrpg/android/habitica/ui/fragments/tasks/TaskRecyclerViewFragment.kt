@@ -251,9 +251,6 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
         allowReordering()
 
         if (this.classType != null) {
-            recyclerAdapter?.errorButtonEvents?.subscribe(Consumer {
-                taskRepository.syncErroredTasks().subscribe(Consumer {}, RxErrorHandler.handleEmptyError())
-            }, RxErrorHandler.handleEmptyError())?.let { compositeSubscription.add(it) }
             recyclerAdapter?.taskOpenEvents?.subscribeWithErrorHandler(Consumer {
                 openTaskForm(it)
             })?.let { compositeSubscription.add(it) }

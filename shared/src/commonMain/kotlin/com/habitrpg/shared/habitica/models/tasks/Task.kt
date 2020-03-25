@@ -43,9 +43,6 @@ expect open class Task {
     var nextDue: NativeList<NativeDate>?
 
     //Needed for offline creating/updating
-    var isSaving: Boolean
-    var hasErrored: Boolean
-    var isCreating: Boolean
     var yesterDaily: Boolean
 
     var daysOfMonthString: String?
