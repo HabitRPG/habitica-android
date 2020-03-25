@@ -93,7 +93,7 @@ interface ApiClient {
 
     fun updateTask(id: String, item: Task): Flowable<Task>
 
-    fun deleteTask(id: String): Flowable<Void>
+    fun deleteTask(id: String): Flowable<Unit>
 
     fun createTag(tag: Tag): Flowable<Tag>
 
@@ -233,7 +233,8 @@ interface ApiClient {
 
     fun <T> configureApiCallObserver(): FlowableTransformer<HabitResponse<T>, T>
     fun <T> configureApiOnlineErrorHandler(): FlowableTransformer<T, T>
-    fun <T> configureApiOfflineErrorHandler(apiCall: () -> Flowable<HabitResponse<T>>, offlineObjectCreator: () -> T?): FlowableTransformer<T, T>
+    fun configureApiOfflineErrorHandler(apiCall: () -> Flowable<HabitResponse<Void>>): FlowableTransformer<Void, Unit>
+    fun <T : Any> configureApiOfflineErrorHandler(apiCall: () -> Flowable<HabitResponse<T>>, offlineObjectCreator: (() -> T?)?): FlowableTransformer<T, T>
 
     fun openMysteryItem(): Flowable<Equipment>
 

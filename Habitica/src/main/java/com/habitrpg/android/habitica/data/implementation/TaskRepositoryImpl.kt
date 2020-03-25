@@ -169,20 +169,15 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
         lastTaskAction = now
         val id = task.id ?: return Maybe.just(task)
         val unmanagedTask = localRepository.getUnmanagedCopy(task)
-        localRepository.saveSynchronous(unmanagedTask)
         return apiClient.updateTask(id, unmanagedTask).singleElement()
                 .map { task1 ->
                     task1.position = task.position
                     task1
                 }
                 .doOnSuccess { localRepository.save(it) }
-                .doOnError {
-                    // TODO offline mode Tyler
-                    localRepository.saveSynchronous(unmanagedTask)
-                }
     }
 
-    override fun deleteTask(taskId: String): Flowable<Void> {
+    override fun deleteTask(taskId: String): Flowable<Unit> {
         return apiClient.deleteTask(taskId)
                 .doOnNext { localRepository.deleteTask(taskId) }
     }

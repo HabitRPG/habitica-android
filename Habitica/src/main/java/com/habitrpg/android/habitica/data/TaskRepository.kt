@@ -30,7 +30,7 @@ interface TaskRepository : BaseRepository {
     fun getTaskCopy(taskId: String): Flowable<Task>
     fun createTask(task: Task, force: Boolean = false): Flowable<Task>
     fun updateTask(task: Task, force: Boolean = false): Maybe<Task>?
-    fun deleteTask(taskId: String): Flowable<Void>
+    fun deleteTask(taskId: String): Flowable<Unit>
     fun saveTask(task: Task)
 
     fun createTasks(newTasks: List<Task>): Flowable<List<Task>>
