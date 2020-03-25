@@ -10,7 +10,7 @@ import kotlin.math.min
 import kotlin.math.pow
 import kotlin.math.roundToLong
 
-class ScoreTaskLocallyInteractor {
+class TaskLocalInteractor {
     companion object {
         const val MAX_TASK_VALUE = 21.27
         const val MIN_TASK_VALUE = -47.27

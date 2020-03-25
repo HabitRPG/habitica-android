@@ -25,7 +25,7 @@ import com.habitrpg.android.habitica.models.social.*
 import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
 import com.habitrpg.shared.habitica.data.ApiRequest
 import com.habitrpg.shared.habitica.data.OfflineClient
-import com.habitrpg.shared.habitica.interactors.ScoreTaskLocallyInteractor
+import com.habitrpg.shared.habitica.interactors.TaskLocalInteractor
 import com.habitrpg.shared.habitica.interactors.UserLocalInteractor
 import com.habitrpg.shared.habitica.models.Tag
 import com.habitrpg.shared.habitica.models.inventory.Equipment
@@ -437,7 +437,7 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
                     .compose(configureApiCallObserver())
                     .compose(configureApiOfflineErrorHandler<TaskDirectionData>(
                             { apiService.postTaskDirection(taskId, direction.text) },
-                            { ScoreTaskLocallyInteractor.score(user, task, direction) }
+                            { TaskLocalInteractor.score(user, task, direction) }
                     ))
         }
     }
