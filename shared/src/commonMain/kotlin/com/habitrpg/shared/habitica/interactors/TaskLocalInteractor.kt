@@ -63,6 +63,20 @@ class TaskLocalInteractor {
                     result.lvl = (user.stats?.lvl ?: 0).toLong()
                 }
                 result
+            } else if (task.type == TaskType.TYPE_REWARD && direction == TaskDirection.DOWN) {
+                val stats = user.stats ?: return null
+                if (task.value <= stats.gp ?: 0.0) {
+                    val result = TaskDirectionData()
+                    result.hp = stats.hp ?: 0.0
+                    result.exp = stats.exp ?: 0.0
+                    result.mp = stats.mp ?: 0.0
+                    result.gp = (stats.gp ?: 0.0) - task.value
+                    result.lvl = (user.stats?.lvl ?: 0).toLong()
+                    result.delta = 0.0F
+                    result
+                } else {
+                    null
+                }
             } else {
                 null
             }
