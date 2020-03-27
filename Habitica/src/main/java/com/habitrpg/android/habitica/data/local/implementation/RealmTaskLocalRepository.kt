@@ -2,7 +2,6 @@ package com.habitrpg.android.habitica.data.local.implementation
 
 import com.habitrpg.android.habitica.data.local.TaskLocalRepository
 import com.habitrpg.shared.habitica.models.tasks.*
-import com.habitrpg.shared.habitica.models.tasks.TasksOrder
 import com.habitrpg.shared.habitica.models.user.User
 import io.reactivex.Flowable
 import io.reactivex.Maybe
@@ -217,16 +216,6 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
             }
         }
     }
-
-    override fun getErroredTasks(userID: String): Flowable<RealmResults<Task>> {
-        return realm.where(Task::class.java)
-                .equalTo("userId", userID)
-                .equalTo("hasErrored", true)
-                .sort("position")
-                .findAll()
-                .asFlowable()
-                .filter { it.isLoaded }
-                .retry(1)    }
 
     override fun getUser(userID: String): Flowable<User> {
         return realm.where(User::class.java)

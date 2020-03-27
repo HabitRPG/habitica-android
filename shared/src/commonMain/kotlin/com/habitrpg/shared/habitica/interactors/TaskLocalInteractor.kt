@@ -16,35 +16,18 @@ class TaskLocalInteractor {
         const val MIN_TASK_VALUE = -47.27
         const val CLOSE_ENOUGH = 0.00001
 
-        private fun calculateDelta(task: Task, direction: TaskDirection): Double {
-            val currentValue = when {
-                task.value < MIN_TASK_VALUE -> MIN_TASK_VALUE
-                task.value > MAX_TASK_VALUE -> MAX_TASK_VALUE
-                else -> task.value
+        fun newPosition(id: String, position: Int, tasks: MutableList<String>): MutableList<String> {
+            tasks.remove(id)
+            if (position < 0) {
+                tasks.add(0, id)
+            } else if (position > tasks.size) {
+                tasks.add(tasks.size, id)
+            } else {
+                tasks.add(position, id)
             }
-
-            var nextDelta = 0.9747.pow(currentValue) * if (direction == TaskDirection.DOWN) -1 else 1
-
-            if (task.checklist?.size ?: 0 > 0) {
-                if (task.type == TaskType.TYPE_TODO) {
-                    nextDelta *= 1 + (task.checklist?.map { if (it.completed) 1 else 0 }?.reduce { _, _ -> 0 }
-                            ?: 0)
-                }
-            }
-            return nextDelta
+            return tasks
         }
 
-        private fun scoreHabit(user: User, task: Task, direction: TaskDirection) {
-
-        }
-
-        private fun scoreDaily(user: User, task: Task, direction: TaskDirection) {
-
-        }
-
-        private fun scoreToDo(user: User, task: Task, direction: TaskDirection) {
-
-        }
 
         fun score(user: User, task: Task, direction: TaskDirection): TaskDirectionData? {
             return if (task.type == TaskType.TYPE_HABIT || task.type == TaskType.TYPE_TODO || task.type == TaskType.TYPE_DAILY) {
@@ -83,6 +66,36 @@ class TaskLocalInteractor {
             } else {
                 null
             }
+        }
+
+        private fun calculateDelta(task: Task, direction: TaskDirection): Double {
+            val currentValue = when {
+                task.value < MIN_TASK_VALUE -> MIN_TASK_VALUE
+                task.value > MAX_TASK_VALUE -> MAX_TASK_VALUE
+                else -> task.value
+            }
+
+            var nextDelta = 0.9747.pow(currentValue) * if (direction == TaskDirection.DOWN) -1 else 1
+
+            if (task.checklist?.size ?: 0 > 0) {
+                if (task.type == TaskType.TYPE_TODO) {
+                    nextDelta *= 1 + (task.checklist?.map { if (it.completed) 1 else 0 }?.reduce { _, _ -> 0 }
+                            ?: 0)
+                }
+            }
+            return nextDelta
+        }
+
+        private fun scoreHabit(user: User, task: Task, direction: TaskDirection) {
+
+        }
+
+        private fun scoreDaily(user: User, task: Task, direction: TaskDirection) {
+
+        }
+
+        private fun scoreToDo(user: User, task: Task, direction: TaskDirection) {
+
         }
 
         private fun subtractPoints(result: TaskDirectionData, delta: Double, stats: Stats, computedStats: Stats, task: Task) {

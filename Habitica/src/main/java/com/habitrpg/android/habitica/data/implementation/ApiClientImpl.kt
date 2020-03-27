@@ -442,10 +442,13 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
         }
     }
 
-    override fun postTaskNewPosition(id: String, position: Int): Flowable<List<String>> {
+    override fun postTaskNewPosition(id: String, position: Int, tasks: MutableList<String>): Flowable<List<String>> {
         return apiService.postTaskNewPosition(id, position)
                 .compose(configureApiCallObserver())
-                .compose(configureApiOnlineErrorHandler())
+                .compose(configureApiOfflineErrorHandler(
+                        { apiService.postTaskNewPosition(id, position)},
+                        { TaskLocalInteractor.newPosition(id, position, tasks) }
+                ))
     }
 
     override fun scoreChecklistItem(task: Task, itemId: String): Flowable<Task> {

@@ -204,8 +204,15 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
     }
 
     override fun updateTaskPosition(taskType: String, taskID: String, newPosition: Int): Maybe<List<String>> {
-        return apiClient.postTaskNewPosition(taskID, newPosition).firstElement()
-                .doOnSuccess { localRepository.updateTaskPositions(it) }
+        return localRepository.getTasks(taskType, userID)
+                .map {taskList ->
+                    taskList.sort("position").map { task -> task.id ?: "" }
+                }
+                .flatMapMaybe {taskIdList ->
+                    apiClient.postTaskNewPosition(taskID, newPosition, taskIdList.toMutableList())
+                            .firstElement()
+                            .doOnSuccess { localRepository.updateTaskPositions(it) }
+                }.firstElement()
     }
 
     override fun getUnmanagedTask(taskid: String): Flowable<Task> =
@@ -227,6 +234,6 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
 
     override fun retrieveDailiesFromDate(date: Date): Flowable<TaskList> {
         val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZZZZZ", Locale.US)
-        return apiClient.getTasks("dailys", formatter.format(date))
+        return apiClient.getTasks(TaskType.TYPE_DAILY, formatter.format(date))
     }
 }

@@ -83,7 +83,7 @@ interface ApiClient {
 
     fun postTaskDirection(user: User, task: Task, direction: TaskDirection): Flowable<TaskDirectionData>
 
-    fun postTaskNewPosition(id: String, position: Int): Flowable<List<String>>
+    fun postTaskNewPosition(id: String, position: Int, tasks: MutableList<String>): Flowable<List<String>>
 
     fun scoreChecklistItem(task: Task, itemId: String): Flowable<Task>
 
