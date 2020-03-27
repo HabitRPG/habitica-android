@@ -143,7 +143,6 @@ class ItemRecyclerAdapter(data: OrderedRealmCollection<OwnedItem>?, autoUpdate: 
         }
 
         override fun onClick(v: View) {
-            val context = context
             if (!isHatching && !isFeeding) {
                 val menu = BottomSheetMenu(context)
                 if (item !is QuestContent && item !is SpecialItem) {

@@ -83,7 +83,7 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
     override fun saveGroupMemberships(userId: String?, memberships: List<GroupMembership>) {
         save(memberships)
         if (userId != null) {
-            val existingMemberships = realm.where(GroupMembership::class.java).equalTo("userId", userId).findAll()
+            val existingMemberships = realm.where(GroupMembership::class.java).equalTo("userID", userId).findAll()
             val membersToRemove = ArrayList<GroupMembership>()
             for (existingMembership in existingMemberships) {
                 val isStillMember = memberships.any { existingMembership.combinedID == it.combinedID }

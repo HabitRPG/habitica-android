@@ -83,7 +83,7 @@ class TaskAlarmManager(private var context: Context, private var taskRepository:
     private fun setAlarmForRemindersItem(reminderItemTask: Task, remindersItem: RemindersItem?) {
         val now = Date()
         val reminderTime = remindersItem?.time
-        if (reminderTime == null || remindersItem.time?.before(now) == true) {
+        if (reminderTime == null || reminderTime.before(now)) {
             return
         }
 
