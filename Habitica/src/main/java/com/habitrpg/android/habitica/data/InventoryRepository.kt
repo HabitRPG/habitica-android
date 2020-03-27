@@ -51,7 +51,7 @@ interface InventoryRepository : BaseRepository {
     fun changeOwnedCount(type: String, key: String, amountToAdd: Int)
 
     fun sellItem(user: User?, type: String, key: String): Flowable<User>
-    fun sellItem(user: User?, item: OwnedItem): Flowable<User>
+    fun sellItem(user: User?, ownedItem: OwnedItem): Flowable<User>
 
     fun equipGear(user: User?, equipment: String, asCostume: Boolean): Flowable<Items>
     fun equip(user: User?, type: String, key: String): Flowable<Items>

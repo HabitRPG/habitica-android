@@ -7,13 +7,13 @@ import com.habitrpg.android.habitica.data.local.UserLocalRepository
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.Achievement
-import com.habitrpg.shared.habitica.models.QuestAchievement
 import com.habitrpg.android.habitica.models.Skill
-import com.habitrpg.shared.habitica.models.inventory.Customization
 import com.habitrpg.android.habitica.models.inventory.CustomizationSet
 import com.habitrpg.android.habitica.models.responses.SkillResponse
 import com.habitrpg.android.habitica.models.responses.UnlockResponse
 import com.habitrpg.android.habitica.models.responses.VerifyUsernameResponse
+import com.habitrpg.shared.habitica.models.QuestAchievement
+import com.habitrpg.shared.habitica.models.inventory.Customization
 import com.habitrpg.shared.habitica.models.tasks.Task
 import com.habitrpg.shared.habitica.models.user.Stats
 import com.habitrpg.shared.habitica.models.user.User
@@ -42,9 +42,6 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
         updateData[key] = value
         return updateUser(user, updateData)
     }
-
-    override fun retrieveUser(withTasks: Boolean): Flowable<User> =
-            retrieveUser(withTasks, false)
 
     @Suppress("ReturnCount")
     override fun retrieveUser(withTasks: Boolean, forced: Boolean): Flowable<User> {

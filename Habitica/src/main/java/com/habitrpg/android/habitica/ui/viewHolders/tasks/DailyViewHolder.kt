@@ -3,10 +3,10 @@ package com.habitrpg.android.habitica.ui.viewHolders.tasks
 import android.view.View
 import android.widget.TextView
 import com.habitrpg.android.habitica.R
-import com.habitrpg.shared.habitica.models.responses.TaskDirection
-import com.habitrpg.shared.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.helpers.bindView
+import com.habitrpg.shared.habitica.models.responses.TaskDirection
 import com.habitrpg.shared.habitica.models.tasks.ChecklistItem
+import com.habitrpg.shared.habitica.models.tasks.Task
 import java.text.DateFormat
 import java.util.*
 
@@ -25,37 +25,38 @@ class DailyViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> U
             return isVisible
         }
 
-    override fun bind(newTask: Task, position: Int) {
-        this.task = newTask
-        if (newTask.isChecklistDisplayActive) {
-            this.checklistIndicatorWrapper.setBackgroundResource(newTask.lightTaskColor)
+    override fun bind(data: Task, position: Int) {
+        this.task = data
+        if (data.isChecklistDisplayActive) {
+            this.checklistIndicatorWrapper.setBackgroundResource(data.lightTaskColor)
         } else {
             this.checklistIndicatorWrapper.setBackgroundColor(this.taskGray)
         }
 
-        if (newTask.reminders?.size == 0) {
+        if (data.reminders?.size == 0) {
             reminderTextView.visibility = View.GONE
         } else {
             reminderTextView.visibility = View.VISIBLE
             val now = Date()
             val calendar = Calendar.getInstance()
-            val nextReminder = newTask.reminders?.firstOrNull {
+            val nextReminder = data.reminders?.firstOrNull {
                 calendar.time = now
                 calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DATE), it.time?.hours ?: 0, it.time?.minutes ?: 0, 0)
                 now < calendar.time
-            } ?: newTask.reminders?.first()
+            } ?: data.reminders?.first()
 
             var reminderString = ""
-            if (nextReminder?.time != null) {
-                reminderString += formatter.format(nextReminder.time)
+            val reminderTime = nextReminder?.time
+            if (reminderTime != null) {
+                reminderString += formatter.format(reminderTime)
             }
-            if ((newTask.reminders?.size ?: 0) > 1) {
-                reminderString = "$reminderString (+${(newTask.reminders?.size ?: 0)-1})"
+            if ((data.reminders?.size ?: 0) > 1) {
+                reminderString = "$reminderString (+${(data.reminders?.size ?: 0)-1})"
             }
             reminderTextView.text = reminderString
         }
 
-        super.bind(newTask, position)
+        super.bind(data, position)
     }
 
     override fun shouldDisplayAsActive(newTask: Task): Boolean {

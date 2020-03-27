@@ -44,7 +44,7 @@ class ChallengeRepositoryImpl(localRepository: ChallengeLocalRepository, apiClie
 
     override fun retrieveChallengeTasks(challengeID: String): Flowable<TaskList> {
         return apiClient.getChallengeTasks(challengeID).doOnNext { tasks ->
-            val taskList = tasks.tasks!!.values.toList()
+            val taskList = tasks.tasks.values.toList()
             taskList.forEach {
                 it.userId = challengeID
             }

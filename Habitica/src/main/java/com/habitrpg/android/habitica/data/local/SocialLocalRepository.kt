@@ -1,10 +1,10 @@
 package com.habitrpg.android.habitica.data.local
 
-import com.habitrpg.shared.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.models.social.GroupMembership
 import com.habitrpg.android.habitica.models.social.InboxConversation
+import com.habitrpg.shared.habitica.models.members.Member
 import com.habitrpg.shared.habitica.models.user.User
 import io.reactivex.Flowable
 import io.realm.RealmResults
@@ -39,13 +39,13 @@ interface SocialLocalRepository : BaseLocalRepository {
     fun updateMembership(userId: String, id: String, isMember: Boolean)
     fun getGroupMembership(userId: String, id: String): Flowable<GroupMembership>
     fun getGroupMemberships(userId: String): Flowable<RealmResults<GroupMembership>>
-    fun rejectGroupInvitation(userID: String, groupID: String)
+    fun rejectGroupInvitation(userId: String, groupID: String)
 
     fun getInboxMessages(userId: String, replyToUserID: String?): Flowable<RealmResults<ChatMessage>>
 
     fun getInboxConversation(userId: String): Flowable<RealmResults<InboxConversation>>
-    fun saveGroupMemberships(userID: String?, memberships: List<GroupMembership>)
-    fun saveInboxMessages(userID: String, recipientID: String, messages: List<ChatMessage>, page: Int)
-    fun saveInboxConversations(userID: String, conversations: List<InboxConversation>)
+    fun saveGroupMemberships(userId: String?, memberships: List<GroupMembership>)
+    fun saveInboxMessages(userId: String, recipientID: String, messages: List<ChatMessage>, page: Int)
+    fun saveInboxConversations(userId: String, conversations: List<InboxConversation>)
     fun getChatMessage(messageID: String): Flowable<ChatMessage>
 }

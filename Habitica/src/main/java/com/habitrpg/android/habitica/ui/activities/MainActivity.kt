@@ -42,13 +42,11 @@ import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManag
 import com.habitrpg.android.habitica.interactors.CheckClassSelectionUseCase
 import com.habitrpg.android.habitica.interactors.DisplayItemDropUseCase
 import com.habitrpg.android.habitica.interactors.NotifyUserUseCase
-import com.habitrpg.shared.habitica.models.TutorialStep
 import com.habitrpg.android.habitica.models.inventory.Egg
 import com.habitrpg.android.habitica.models.inventory.HatchingPotion
 import com.habitrpg.android.habitica.models.notifications.LoginIncentiveData
 import com.habitrpg.android.habitica.models.responses.MaintenanceResponse
 import com.habitrpg.android.habitica.models.responses.TaskScoringResult
-import com.habitrpg.shared.habitica.models.user.User
 import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
 import com.habitrpg.android.habitica.ui.AvatarView
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel
@@ -69,6 +67,8 @@ import com.habitrpg.android.habitica.widget.AvatarStatsWidgetProvider
 import com.habitrpg.android.habitica.widget.DailiesWidgetProvider
 import com.habitrpg.android.habitica.widget.HabitButtonWidgetProvider
 import com.habitrpg.android.habitica.widget.TodoListWidgetProvider
+import com.habitrpg.shared.habitica.models.TutorialStep
+import com.habitrpg.shared.habitica.models.user.User
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Action
@@ -386,20 +386,20 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
         if (resultCode == NOTIFICATION_CLICK && data?.hasExtra("notificationId") == true) {
             notificationsViewModel?.click(
-                    data.getStringExtra("notificationId"),
+                    data.getStringExtra("notificationId") ?: "",
                     MainNavigationController
             )
         }
 
         if (resultCode == NOTIFICATION_ACCEPT && data?.hasExtra("notificationId") == true) {
             notificationsViewModel?.accept(
-                    data.getStringExtra("notificationId")
+                    data.getStringExtra("notificationId") ?: ""
             )
         }
 
         if (resultCode == NOTIFICATION_REJECT && data?.hasExtra("notificationId") == true) {
             notificationsViewModel?.reject(
-                    data.getStringExtra("notificationId")
+                    data.getStringExtra("notificationId") ?: ""
             )
         }
         PurchaseHandler.findForActivity(this)?.onResult(requestCode, resultCode, data)

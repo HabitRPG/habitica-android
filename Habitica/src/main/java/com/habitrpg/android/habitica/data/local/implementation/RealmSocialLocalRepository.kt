@@ -1,8 +1,8 @@
 package com.habitrpg.android.habitica.data.local.implementation
 
 import com.habitrpg.android.habitica.data.local.SocialLocalRepository
-import com.habitrpg.shared.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.*
+import com.habitrpg.shared.habitica.models.members.Member
 import com.habitrpg.shared.habitica.models.user.ContributorInfo
 import com.habitrpg.shared.habitica.models.user.User
 import io.reactivex.Flowable
@@ -47,8 +47,8 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
         }
     }
 
-    override fun saveInboxMessages(userID: String, recipientID: String, messages: List<ChatMessage>, page: Int) {
-        messages.forEach { it.userID = userID }
+    override fun saveInboxMessages(userId: String, recipientID: String, messages: List<ChatMessage>, page: Int) {
+        messages.forEach { it.userID = userId }
         save(messages)
         if (page != 0) return
         val existingMessages = realm.where(ChatMessage::class.java).equalTo("isInboxMessage", true).equalTo("uuid", recipientID).findAll()
@@ -64,8 +64,8 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
         }
     }
 
-    override fun saveInboxConversations(userID: String, conversations: List<InboxConversation>) {
-        conversations.forEach { it.userID = userID }
+    override fun saveInboxConversations(userId: String, conversations: List<InboxConversation>) {
+        conversations.forEach { it.userID = userId }
         save(conversations)
         val existingConversations = realm.where(InboxConversation::class.java).findAll()
         val conversationsToRemove = ArrayList<InboxConversation>()
@@ -80,10 +80,10 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
         }
     }
 
-    override fun saveGroupMemberships(userID: String?, memberships: List<GroupMembership>) {
+    override fun saveGroupMemberships(userId: String?, memberships: List<GroupMembership>) {
         save(memberships)
-        if (userID != null) {
-            val existingMemberships = realm.where(GroupMembership::class.java).equalTo("userID", userID).findAll()
+        if (userId != null) {
+            val existingMemberships = realm.where(GroupMembership::class.java).equalTo("userId", userId).findAll()
             val membersToRemove = ArrayList<GroupMembership>()
             for (existingMembership in existingMemberships) {
                 val isStillMember = memberships.any { existingMembership.combinedID == it.combinedID }
@@ -196,8 +196,8 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
         }
     }
 
-    override fun rejectGroupInvitation(userID: String, groupID: String) {
-        val user = realm.where(User::class.java).equalTo("id", userID).findFirst()
+    override fun rejectGroupInvitation(userId: String, groupID: String) {
+        val user = realm.where(User::class.java).equalTo("id", userId).findFirst()
         executeTransaction {
             user?.invitations?.removeInvitation(groupID)
         }
@@ -254,20 +254,20 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
         return party != null && party.isValid
     }
 
-    override fun getInboxMessages(userID: String, replyToUserID: String?): Flowable<RealmResults<ChatMessage>> {
+    override fun getInboxMessages(userId: String, replyToUserID: String?): Flowable<RealmResults<ChatMessage>> {
         return realm.where(ChatMessage::class.java)
                 .equalTo("isInboxMessage", true)
                 .equalTo("uuid", replyToUserID)
-                .equalTo("userID", userID)
+                .equalTo("userID", userId)
                 .sort("timestamp", Sort.DESCENDING)
                 .findAll()
                 .asFlowable()
                 .filter { it.isLoaded }
     }
 
-    override fun getInboxConversation(userID: String): Flowable<RealmResults<InboxConversation>> {
+    override fun getInboxConversation(userId: String): Flowable<RealmResults<InboxConversation>> {
         return realm.where(InboxConversation::class.java)
-                .equalTo("userID", userID)
+                .equalTo("userID", userId)
                 .sort("timestamp", Sort.DESCENDING)
                 .findAll()
                 .asFlowable()

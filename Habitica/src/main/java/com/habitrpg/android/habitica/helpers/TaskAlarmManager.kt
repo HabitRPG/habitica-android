@@ -8,12 +8,12 @@ import android.os.Build
 import android.os.Build.VERSION.SDK_INT
 import androidx.preference.PreferenceManager
 import com.habitrpg.android.habitica.data.TaskRepository
-import com.habitrpg.shared.habitica.models.tasks.RemindersItem
-import com.habitrpg.shared.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.receivers.NotificationPublisher
 import com.habitrpg.android.habitica.receivers.TaskReceiver
 import com.habitrpg.shared.habitica.HLogger
 import com.habitrpg.shared.habitica.LogLevel
+import com.habitrpg.shared.habitica.models.tasks.RemindersItem
+import com.habitrpg.shared.habitica.models.tasks.Task
 import com.habitrpg.shared.habitica.models.tasks.TaskType
 import io.reactivex.Flowable
 import io.reactivex.functions.Consumer
@@ -82,12 +82,13 @@ class TaskAlarmManager(private var context: Context, private var taskRepository:
 
     private fun setAlarmForRemindersItem(reminderItemTask: Task, remindersItem: RemindersItem?) {
         val now = Date()
-        if (remindersItem == null || remindersItem.time?.before(now) == true) {
+        val reminderTime = remindersItem?.time
+        if (reminderTime == null || remindersItem.time?.before(now) == true) {
             return
         }
 
         val cal = Calendar.getInstance()
-        cal.time = remindersItem.time
+        cal.time = reminderTime
 
         val intent = Intent(context, TaskReceiver::class.java)
         intent.action = remindersItem.id

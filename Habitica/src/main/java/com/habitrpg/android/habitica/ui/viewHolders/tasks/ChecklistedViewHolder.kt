@@ -14,12 +14,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.shared.habitica.models.responses.TaskDirection
-import com.habitrpg.shared.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.views.HabiticaEmojiTextView
+import com.habitrpg.shared.habitica.models.responses.TaskDirection
 import com.habitrpg.shared.habitica.models.tasks.ChecklistItem
+import com.habitrpg.shared.habitica.models.tasks.Task
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
@@ -42,31 +42,31 @@ abstract class ChecklistedViewHolder(itemView: View, scoreTaskFunc: ((Task, Task
         expandCheckboxTouchArea(checkboxHolder, checkbox)
     }
 
-    override fun bind(newTask: Task, position: Int) {
-        var completed = newTask.completed
-        if (newTask.isPendingApproval) {
+    override fun bind(data: Task, position: Int) {
+        var completed = data.completed
+        if (data.isPendingApproval) {
             completed = false
         }
         this.checkbox.isChecked = completed
-        if (this.shouldDisplayAsActive(newTask) && !newTask.isPendingApproval) {
-            this.checkboxHolder.setBackgroundResource(newTask.lightTaskColor)
+        if (this.shouldDisplayAsActive(data) && !data.isPendingApproval) {
+            this.checkboxHolder.setBackgroundResource(data.lightTaskColor)
         } else {
             this.checkboxHolder.setBackgroundColor(this.taskGray)
         }
-        this.checklistCompletedTextView.text = newTask.completedChecklistCount.toString()
-        this.checklistAllTextView.text = newTask.checklist?.size.toString()
+        this.checklistCompletedTextView.text = data.completedChecklistCount.toString()
+        this.checklistAllTextView.text = data.checklist?.size.toString()
 
         this.checklistView.removeAllViews()
         this.updateChecklistDisplay()
 
-        this.checklistIndicatorWrapper.visibility = if (newTask.checklist?.size == 0) View.GONE else View.VISIBLE
-        this.rightBorderView?.visibility = if (newTask.checklist?.size == 0) View.VISIBLE else View.GONE
-        if (newTask.completed) {
-            this.rightBorderView?.setBackgroundResource(newTask.lightTaskColor)
+        this.checklistIndicatorWrapper.visibility = if (data.checklist?.size == 0) View.GONE else View.VISIBLE
+        this.rightBorderView?.visibility = if (data.checklist?.size == 0) View.VISIBLE else View.GONE
+        if (data.completed) {
+            this.rightBorderView?.setBackgroundResource(data.lightTaskColor)
         } else {
             this.rightBorderView?.setBackgroundColor(this.taskGray)
         }
-        super.bind(newTask, position)
+        super.bind(data, position)
     }
 
     abstract fun shouldDisplayAsActive(newTask: Task): Boolean

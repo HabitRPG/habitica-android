@@ -10,13 +10,13 @@ import com.habitrpg.android.habitica.databinding.ItemItemBinding
 import com.habitrpg.android.habitica.events.commands.FeedCommand
 import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.models.inventory.*
-import com.habitrpg.shared.habitica.models.user.OwnedItem
-import com.habitrpg.shared.habitica.models.user.OwnedPet
 import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemRecyclerFragment
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.menu.BottomSheetMenu
 import com.habitrpg.android.habitica.ui.menu.BottomSheetMenuItem
 import com.habitrpg.android.habitica.ui.views.dialogs.DetailDialog
+import com.habitrpg.shared.habitica.models.user.OwnedItem
+import com.habitrpg.shared.habitica.models.user.OwnedPet
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import io.reactivex.subjects.PublishSubject
@@ -63,7 +63,7 @@ class ItemRecyclerAdapter(data: OrderedRealmCollection<OwnedItem>?, autoUpdate: 
     val hatchPetEvents = hatchPetSubject.toFlowable(BackpressureStrategy.DROP)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
-        return ItemViewHolder(ItemItemBinding.inflate(context?.layoutInflater, parent, false))
+        return ItemViewHolder(ItemItemBinding.inflate(context.layoutInflater, parent, false))
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
@@ -143,7 +143,7 @@ class ItemRecyclerAdapter(data: OrderedRealmCollection<OwnedItem>?, autoUpdate: 
         }
 
         override fun onClick(v: View) {
-            val context = context ?: return
+            val context = context
             if (!isHatching && !isFeeding) {
                 val menu = BottomSheetMenu(context)
                 if (item !is QuestContent && item !is SpecialItem) {

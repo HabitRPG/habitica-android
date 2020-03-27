@@ -14,12 +14,12 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.shops.ShopItem
-import com.habitrpg.shared.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.activities.SkillMemberActivity
 import com.habitrpg.android.habitica.ui.adapter.tasks.RewardsRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
+import com.habitrpg.shared.habitica.models.user.User
 import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.fragment_refresh_recyclerview.*
 import java.util.*
@@ -99,7 +99,7 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
                         userRepository.useSkill(user,
                                 selectedCard?.key ?: "",
                                 "member",
-                                data.getStringExtra("member_id"))
+                                data.getStringExtra("member_id") ?: "")
                                 .subscribeWithErrorHandler(Consumer {
                                     val activity = (activity as? MainActivity) ?: return@Consumer
                                     HabiticaSnackbar.showSnackbar(activity.snackbarContainer,

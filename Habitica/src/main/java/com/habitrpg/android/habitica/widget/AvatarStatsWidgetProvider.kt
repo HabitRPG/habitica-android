@@ -12,10 +12,10 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.helpers.HealthFormatter
 import com.habitrpg.android.habitica.helpers.NumberAbbreviator
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.shared.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.AvatarView
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
+import com.habitrpg.shared.habitica.models.user.User
 import io.reactivex.functions.Consumer
 
 class AvatarStatsWidgetProvider : BaseWidgetProvider() {
@@ -41,7 +41,7 @@ class AvatarStatsWidgetProvider : BaseWidgetProvider() {
         this.appWidgetManager = appWidgetManager
         this.context = context
 
-        userRepository?.getUser()?.firstElement()?.subscribe(Consumer<User> { this.updateData(it) }, RxErrorHandler.handleEmptyError())
+        userRepository.getUser().firstElement()?.subscribe(Consumer<User> { this.updateData(it) }, RxErrorHandler.handleEmptyError())
     }
 
     override fun configureRemoteViews(remoteViews: RemoteViews, widgetId: Int, columns: Int, rows: Int): RemoteViews {

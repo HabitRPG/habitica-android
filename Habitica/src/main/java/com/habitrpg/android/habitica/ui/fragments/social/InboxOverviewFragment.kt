@@ -105,7 +105,7 @@ class InboxOverviewFragment : BaseMainFragment(), androidx.swiperefreshlayout.wi
                             binding.progressCircular.visibility = View.GONE
                         })
             }
-            alert.addButton(getString(R.string.action_cancel), false) { dialog, _ ->
+            alert.addButton(getString(R.string.action_cancel), false) { _, _ ->
                 thisActivity.dismissKeyboard()
             }
             alert.setAdditionalContentView(binding.root)

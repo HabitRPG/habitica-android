@@ -44,7 +44,7 @@ class TagRepositoryImpl(localRepository: TagLocalRepository, apiClient: ApiClien
 
     override fun createTags(tags: Collection<Tag>): Single<List<Tag>> {
         return Flowable.defer { Flowable.fromIterable(tags) }
-                .filter { tag -> tag.name != null && !tag.name.isEmpty() }
+                .filter { tag -> tag.name.isNotEmpty() }
                 .flatMap { this.createTag(it) }
                 .toList()
     }
