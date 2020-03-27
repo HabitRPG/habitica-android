@@ -3,7 +3,7 @@ package com.habitrpg.android.habitica.data.implementation
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.TagRepository
 import com.habitrpg.android.habitica.data.local.TagLocalRepository
-import com.habitrpg.android.habitica.models.Tag
+import com.habitrpg.shared.habitica.models.Tag
 import io.reactivex.Flowable
 import io.reactivex.Single
 import io.realm.RealmResults
@@ -44,7 +44,7 @@ class TagRepositoryImpl(localRepository: TagLocalRepository, apiClient: ApiClien
 
     override fun createTags(tags: Collection<Tag>): Single<List<Tag>> {
         return Flowable.defer { Flowable.fromIterable(tags) }
-                .filter { tag -> tag.name != null && !tag.name.isEmpty() }
+                .filter { tag -> tag.name.isNotEmpty() }
                 .flatMap { this.createTag(it) }
                 .toList()
     }

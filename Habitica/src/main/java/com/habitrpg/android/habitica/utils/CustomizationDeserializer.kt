@@ -2,7 +2,7 @@ package com.habitrpg.android.habitica.utils
 
 import android.annotation.SuppressLint
 import com.google.gson.*
-import com.habitrpg.android.habitica.models.inventory.Customization
+import com.habitrpg.shared.habitica.models.inventory.Customization
 import io.realm.Realm
 import io.realm.RealmList
 import java.lang.reflect.Type
@@ -54,7 +54,7 @@ class CustomizationDeserializer : JsonDeserializer<List<Customization>> {
                 if (jsonObject.has(customization.customizationSet)) {
                     val nestedObject = jsonObject.get(customization.customizationSet).asJsonObject
                     if (nestedObject.has(customization.identifier)) {
-                        customizations.add(this.parseBackground(customization, customization.customizationSet, customization.identifier, nestedObject.get(customization.identifier).asJsonObject))
+                        customizations.add(this.parseBackground(customization, customization.customizationSet ?: "", customization.identifier, nestedObject.get(customization.identifier).asJsonObject))
                         nestedObject.remove(customization.identifier)
                     }
                 }

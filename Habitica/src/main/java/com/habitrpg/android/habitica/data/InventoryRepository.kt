@@ -5,7 +5,9 @@ import com.habitrpg.android.habitica.models.responses.BuyResponse
 import com.habitrpg.android.habitica.models.responses.FeedResponse
 import com.habitrpg.android.habitica.models.shops.Shop
 import com.habitrpg.android.habitica.models.shops.ShopItem
-import com.habitrpg.android.habitica.models.user.*
+import com.habitrpg.shared.habitica.models.inventory.Equipment
+import com.habitrpg.shared.habitica.models.inventory.Quest
+import com.habitrpg.shared.habitica.models.user.*
 import io.reactivex.Flowable
 import io.realm.RealmResults
 
@@ -49,7 +51,7 @@ interface InventoryRepository : BaseRepository {
     fun changeOwnedCount(type: String, key: String, amountToAdd: Int)
 
     fun sellItem(user: User?, type: String, key: String): Flowable<User>
-    fun sellItem(user: User?, item: OwnedItem): Flowable<User>
+    fun sellItem(user: User?, ownedItem: OwnedItem): Flowable<User>
 
     fun equipGear(user: User?, equipment: String, asCostume: Boolean): Flowable<Items>
     fun equip(user: User?, type: String, key: String): Flowable<Items>

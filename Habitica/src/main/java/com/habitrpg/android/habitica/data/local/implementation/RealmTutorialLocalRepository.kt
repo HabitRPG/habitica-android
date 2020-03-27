@@ -1,7 +1,7 @@
 package com.habitrpg.android.habitica.data.local.implementation
 
 import com.habitrpg.android.habitica.data.local.TutorialLocalRepository
-import com.habitrpg.android.habitica.models.TutorialStep
+import com.habitrpg.shared.habitica.models.TutorialStep
 import io.reactivex.Flowable
 import io.realm.Realm
 import io.realm.RealmResults

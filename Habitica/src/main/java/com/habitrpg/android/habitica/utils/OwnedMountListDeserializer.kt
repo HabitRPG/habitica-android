@@ -3,7 +3,7 @@ package com.habitrpg.android.habitica.utils
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
-import com.habitrpg.android.habitica.models.user.OwnedMount
+import com.habitrpg.shared.habitica.models.user.OwnedMount
 import io.realm.RealmList
 import java.lang.reflect.Type
 

@@ -6,7 +6,7 @@ import android.util.AttributeSet
 import android.widget.TextView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.ui.helpers.bindView
-import com.habitrpg.android.habitica.models.inventory.Equipment
+import com.habitrpg.shared.habitica.models.inventory.Equipment
 import com.habitrpg.android.habitica.models.shops.ShopItem
 
 internal class PurchaseDialogGearContent : PurchaseDialogContent {

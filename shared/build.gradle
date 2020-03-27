@@ -1,22 +1,22 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-multiplatform'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'realm-android'
 
 android {
     compileSdkVersion 29
 
     defaultConfig {
-
         minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
     }
     buildTypes {
-        release {
-        }
+        release {}
     }
-    sourceSets{
+    sourceSets {
+        main.java.srcDirs += 'src/commonMain/kotlin'
         main.java.srcDirs += 'src/androidMain/kotlin'
     }
     compileOptions {
@@ -26,11 +26,11 @@ android {
 
 kotlin {
     targets {
-        final def iOSTarget = System.getenv('SDK_NAME')?.startsWith("iphoneos") \
-                              ? presets.iosArm64 : presets.iosX64
+        final def iOSTarget = System.getenv('SDK_NAME')?.startsWith("iphoneos")    \
+                                 ? presets.iosArm64 : presets.iosX64
 
         fromPreset(iOSTarget, 'ios') {
-             binaries {
+            binaries {
                 framework('shared')
             }
         }
@@ -41,19 +41,37 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             api 'org.jetbrains.kotlin:kotlin-stdlib-common'
+
+            compileOnly 'javax.annotation:javax.annotation-api:1.3.2'
         }
 
         commonMain.kotlin.srcDirs += 'src/commonMain/kotlin'
 
         androidMain.dependencies {
             api 'org.jetbrains.kotlin:kotlin-stdlib'
+
+            //RxJava
+            implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+            implementation 'io.reactivex.rxjava2:rxjava:2.2.8'
+            implementation 'io.reactivex.rxjava2:rxkotlin:2.3.0'
+
+            //Push Notifications
+            api 'androidx.core:core-ktx:1.0.2'
         }
+
+        androidMain.kotlin.srcDirs += 'src/androidMain/kotlin'
 
         iosMain.dependencies {
         }
 
         iosMain.kotlin.srcDirs += 'src/iosMain/kotlin'
     }
+}
+
+dependencies {
+    kapt 'io.realm:realm-annotations-processor:5.14.0'
+
+    implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
 }
 
 // workaround for https://youtrack.jetbrains.com/issue/KT-27170

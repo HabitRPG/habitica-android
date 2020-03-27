@@ -3,8 +3,8 @@ package com.habitrpg.android.habitica.utils
 import com.google.firebase.perf.FirebasePerformance
 import com.google.gson.*
 import com.habitrpg.android.habitica.extensions.getAsString
-import com.habitrpg.android.habitica.models.Tag
-import com.habitrpg.android.habitica.models.tasks.*
+import com.habitrpg.shared.habitica.models.Tag
+import com.habitrpg.shared.habitica.models.tasks.*
 import io.realm.Realm
 import io.realm.RealmList
 
@@ -29,12 +29,12 @@ class TaskListDeserializer : JsonDeserializer<TaskList> {
     private fun getMonthlyDays(e: JsonElement, task: Task) {
         val weeksOfMonth = e.asJsonObject.getAsJsonArray("weeksOfMonth")
         if (weeksOfMonth != null && weeksOfMonth.size() > 0) {
-            task.setWeeksOfMonth(getIntListFromJsonArray(weeksOfMonth))
+            task.weeksOfMonth = getIntListFromJsonArray(weeksOfMonth)
         }
 
         val daysOfMonth = e.asJsonObject.getAsJsonArray("daysOfMonth")
         if (weeksOfMonth != null && weeksOfMonth.size() > 0) {
-            task.setDaysOfMonth(getIntListFromJsonArray(daysOfMonth))
+            task.daysOfMonth = getIntListFromJsonArray(daysOfMonth)
         }
     }
 

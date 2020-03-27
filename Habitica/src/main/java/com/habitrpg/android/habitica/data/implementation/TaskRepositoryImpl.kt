@@ -5,12 +5,12 @@ import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.local.TaskLocalRepository
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.android.habitica.interactors.ScoreTaskLocallyInteractor
-import com.habitrpg.android.habitica.models.responses.TaskDirection
-import com.habitrpg.android.habitica.models.responses.TaskDirectionData
 import com.habitrpg.android.habitica.models.responses.TaskScoringResult
-import com.habitrpg.android.habitica.models.tasks.*
-import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.shared.habitica.interactors.ScoreTaskLocallyInteractor
+import com.habitrpg.shared.habitica.models.responses.TaskDirection
+import com.habitrpg.shared.habitica.models.responses.TaskDirectionData
+import com.habitrpg.shared.habitica.models.tasks.*
+import com.habitrpg.shared.habitica.models.user.User
 import io.reactivex.Flowable
 import io.reactivex.Maybe
 import io.reactivex.Single
@@ -48,9 +48,7 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
         return this.apiClient.getTasks("completedTodos")
                 .doOnNext { taskList ->
                     val tasks = taskList.tasks
-                    if (tasks != null) {
-                        this.localRepository.saveCompletedTodos(userId, tasks.values)
-                    }
+                    this.localRepository.saveCompletedTodos(userId, tasks.values)
                 }
     }
 
@@ -124,12 +122,12 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
             val bgUser = it.where(User::class.java).equalTo("id", userID).findFirst() ?: return@executeTransaction
             if (bgTask.type != "reward" && (bgTask.value - localDelta) + res.delta != bgTask.value) {
                 bgTask.value = (bgTask.value - localDelta) + res.delta
-                if (Task.TYPE_DAILY == bgTask.type || Task.TYPE_TODO == bgTask.type) {
+                if (TaskType.TYPE_DAILY == bgTask.type || TaskType.TYPE_TODO == bgTask.type) {
                     bgTask.completed = up
-                    if (Task.TYPE_DAILY == bgTask.type && up) {
+                    if (TaskType.TYPE_DAILY == bgTask.type && up) {
                         bgTask.streak = (bgTask.streak ?: 0) + 1
                     }
-                } else if (Task.TYPE_HABIT == bgTask.type) {
+                } else if (TaskType.TYPE_HABIT == bgTask.type) {
                     if (up) {
                         bgTask.counterUp = (bgTask.counterUp ?: 0) + 1
                     } else {

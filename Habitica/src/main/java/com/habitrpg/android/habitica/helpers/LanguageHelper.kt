@@ -4,7 +4,7 @@ import java.util.*
 
 class LanguageHelper(languageSharedPref: String?) {
 
-    var locale: Locale? = null
+    lateinit var locale: Locale
         private set
     var languageCode: String? = null
         private set

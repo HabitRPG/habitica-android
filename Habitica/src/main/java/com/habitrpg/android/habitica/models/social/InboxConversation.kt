@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.models.social
 
-import com.habitrpg.android.habitica.models.user.ContributorInfo
+import com.habitrpg.shared.habitica.models.user.ContributorInfo
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 import java.util.*

@@ -73,7 +73,7 @@ class SupportMainFragment : BaseMainFragment() {
     private val versionName: String by lazy {
         try {
             @Suppress("DEPRECATION")
-            activity?.packageManager?.getPackageInfo(activity?.packageName, 0)?.versionName ?: ""
+            activity?.packageManager?.getPackageInfo(activity?.packageName ?: "", 0)?.versionName ?: ""
         } catch (e: PackageManager.NameNotFoundException) {
             ""
         }
@@ -82,7 +82,7 @@ class SupportMainFragment : BaseMainFragment() {
     private val versionCode: Int by lazy {
         try {
             @Suppress("DEPRECATION")
-            activity?.packageManager?.getPackageInfo(activity?.packageName, 0)?.versionCode ?: 0
+            activity?.packageManager?.getPackageInfo(activity?.packageName ?: "", 0)?.versionCode ?: 0
         } catch (e: PackageManager.NameNotFoundException) {
             0
         }

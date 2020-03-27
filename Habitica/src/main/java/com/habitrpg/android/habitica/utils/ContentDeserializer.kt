@@ -12,6 +12,8 @@ import com.habitrpg.android.habitica.models.ContentResult
 import com.habitrpg.android.habitica.models.FAQArticle
 import com.habitrpg.android.habitica.models.Skill
 import com.habitrpg.android.habitica.models.inventory.*
+import com.habitrpg.shared.habitica.models.inventory.Customization
+import com.habitrpg.shared.habitica.models.inventory.Equipment
 import io.realm.RealmList
 import java.lang.reflect.Type
 

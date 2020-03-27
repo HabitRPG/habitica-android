@@ -11,13 +11,13 @@ import com.habitrpg.android.habitica.data.CustomizationRepository
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.android.habitica.models.inventory.Customization
 import com.habitrpg.android.habitica.models.responses.UnlockResponse
-import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.adapter.CustomizationRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.helpers.MarginDecoration
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
+import com.habitrpg.shared.habitica.models.inventory.Customization
+import com.habitrpg.shared.habitica.models.user.User
 import io.reactivex.Flowable
 import io.reactivex.functions.Consumer
 import io.realm.RealmResults
@@ -136,15 +136,15 @@ class AvatarCustomizationFragment : BaseMainFragment() {
     fun updateUser(user: User) {
         this.updateActiveCustomization(user)
         if (adapter.customizationList.size != 0) {
-            val ownedCustomizations = ArrayList<String>()
+            val ownedCustomizations = mutableListOf<String>()
             user.purchased?.customizations?.filter { it.type == this.type }?.mapTo(ownedCustomizations) { it.id }
             adapter.updateOwnership(ownedCustomizations)
         } else {
             this.loadCustomizations()
         }
-        this.adapter.userSize = this.user?.preferences?.size
-        this.adapter.hairColor = this.user?.preferences?.hair?.color
-        this.adapter.gemBalance = user.gemCount
+        this.adapter.userSize = this.user?.preferences?.size ?: ""
+        this.adapter.hairColor = this.user?.preferences?.hair?.color ?: ""
+        this.adapter.gemBalance = user.gemCount ?: 0
         adapter.notifyDataSetChanged()
     }
 

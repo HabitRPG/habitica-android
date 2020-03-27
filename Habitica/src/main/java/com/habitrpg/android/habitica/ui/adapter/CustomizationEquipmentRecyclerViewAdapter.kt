@@ -12,10 +12,10 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.CustomizationGridItemBinding
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.inventory.CustomizationSet
-import com.habitrpg.android.habitica.models.inventory.Equipment
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
+import com.habitrpg.shared.habitica.models.inventory.Equipment
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import io.reactivex.subjects.PublishSubject
@@ -26,15 +26,15 @@ class CustomizationEquipmentRecyclerViewAdapter : androidx.recyclerview.widget.R
     var gemBalance: Int = 0
     var equipmentList
             : MutableList<Equipment> = ArrayList()
-    set(value) {
-        field = value
-        notifyDataSetChanged()
-    }
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
     var activeEquipment: String? = null
-    set(value) {
-        field = value
-        this.notifyDataSetChanged()
-    }
+        set(value) {
+            field = value
+            this.notifyDataSetChanged()
+        }
 
     private val selectCustomizationEvents = PublishSubject.create<Equipment>()
     private val unlockCustomizationEvents = PublishSubject.create<Equipment>()
