@@ -16,12 +16,11 @@ import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.TaskFilterHelper
-import com.habitrpg.shared.habitica.models.tasks.Task
-import com.habitrpg.shared.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.TaskFormActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.views.tasks.TaskFilterDialog
 import com.habitrpg.shared.habitica.models.tasks.TaskType
+import com.habitrpg.shared.habitica.models.user.User
 import io.reactivex.functions.Consumer
 import java.util.*
 import javax.inject.Inject
@@ -160,8 +159,9 @@ class TasksFragment : BaseMainFragment(), SearchView.OnQueryTextListener {
     private fun showFilterDialog() {
         context?.let {
             val dialog = TaskFilterDialog(it, HabiticaBaseApplication.userComponent)
-            if (user != null) {
-                dialog.setTags(user?.tags?.createSnapshot() ?: emptyList())
+            val userId = user?.id
+            if (userId != null) {
+                tagRepository.getTags(userId).subscribe(Consumer {tagsList -> dialog.setTags(tagsList)}, RxErrorHandler.handleEmptyError())
             }
             dialog.setActiveTags(taskFilterHelper.tags)
             if (activeFragment != null) {

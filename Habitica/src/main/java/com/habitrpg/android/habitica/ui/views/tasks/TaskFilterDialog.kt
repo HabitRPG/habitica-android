@@ -22,7 +22,6 @@ import com.habitrpg.android.habitica.extensions.OnChangeTextWatcher
 import com.habitrpg.android.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.shared.habitica.models.Tag
-import com.habitrpg.shared.habitica.models.tasks.Task
 import com.habitrpg.shared.habitica.models.tasks.TaskFilter
 import com.habitrpg.shared.habitica.models.tasks.TaskFrequency
 import com.habitrpg.shared.habitica.models.tasks.TaskType
