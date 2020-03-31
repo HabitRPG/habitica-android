@@ -3,7 +3,11 @@ package com.habitrpg.android.habitica.ui.viewHolders
 import android.content.Context
 import androidx.recyclerview.widget.RecyclerView
 import android.view.View
-import android.widget.*
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.LinearLayout
+import android.widget.Spinner
+import android.widget.TextView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.ui.helpers.bindView
 
