@@ -80,7 +80,7 @@ class StableRecyclerFragment : BaseFragment() {
 
         recyclerView?.layoutManager = layoutManager
         activity?.let {
-            recyclerView?.addItemDecoration(MarginDecoration(it))
+            recyclerView?.addItemDecoration(MarginDecoration(it, setOf(HEADER_VIEW_TYPE, SECTION_VIEW_TYPE)))
         }
 
         adapter = recyclerView?.adapter as? StableRecyclerAdapter
@@ -186,5 +186,7 @@ class StableRecyclerFragment : BaseFragment() {
 
     companion object {
         private const val ITEM_TYPE_KEY = "CLASS_TYPE_KEY"
+        private const val HEADER_VIEW_TYPE = 0
+        private const val SECTION_VIEW_TYPE = 1
     }
 }

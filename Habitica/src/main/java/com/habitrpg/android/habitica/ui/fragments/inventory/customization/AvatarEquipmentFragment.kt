@@ -83,7 +83,7 @@ class AvatarEquipmentFragment : BaseMainFragment() {
             }
         }
         recyclerView.layoutManager = layoutManager
-        recyclerView.addItemDecoration(MarginDecoration(context))
+        recyclerView.addItemDecoration(MarginDecoration(context, setOf()))
 
         recyclerView.adapter = adapter
         recyclerView.itemAnimator = SafeDefaultItemAnimator()

@@ -27,8 +27,6 @@ class StableRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<
     var context: Context? = null
     var activity: MainActivity? = null
 
-    var shopSpriteSuffix: String = ""
-
     private var itemList: List<Any> = ArrayList()
 
     fun setItemList(itemList: List<Any>) {
@@ -52,7 +50,7 @@ class StableRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<
     override fun onBindViewHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder, position: Int) {
         val obj = this.itemList[position]
         if (obj == "header") {
-            (holder as? StableHeaderViewHolder)?.bind(shopSpriteSuffix)
+            (holder as? StableHeaderViewHolder)?.bind()
         } else if (obj.javaClass == String::class.java) {
             (holder as? SectionViewHolder)?.bind(obj as? String ?: "")
         } else {
@@ -80,11 +78,8 @@ class StableRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<
         private val npcBannerView: NPCBannerView by bindView(itemView, R.id.npcBannerView)
         private val namePlate: TextView by bindView(itemView, R.id.namePlate)
 
-        fun bind(shopSpriteSuffix: String) {
-            npcBannerView.shopSpriteSuffix = shopSpriteSuffix
+        fun bind() {
             npcBannerView.identifier = "stable"
-
-            @Suppress("DEPRECATION")
             namePlate.setText(R.string.stable_owner)
         }
     }
