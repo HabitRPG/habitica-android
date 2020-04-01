@@ -80,7 +80,7 @@ class StableRecyclerFragment : BaseFragment() {
 
         recyclerView?.layoutManager = layoutManager
         activity?.let {
-            recyclerView?.addItemDecoration(MarginDecoration(it, setOf(HEADER_VIEW_TYPE, SECTION_VIEW_TYPE)))
+            recyclerView?.addItemDecoration(MarginDecoration(it, setOf(HEADER_VIEW_TYPE)))
         }
 
         adapter = recyclerView?.adapter as? StableRecyclerAdapter

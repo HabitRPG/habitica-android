@@ -4,7 +4,12 @@ import android.content.Context
 import android.graphics.drawable.BitmapDrawable
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
+import android.widget.LinearLayout
+import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.recyclerview.widget.GridLayoutManager
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.inflate
@@ -20,6 +25,7 @@ import com.habitrpg.android.habitica.ui.views.NPCBannerView
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
+
 
 class StableRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
 
@@ -52,7 +58,13 @@ class StableRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<
         if (obj == "header") {
             (holder as? StableHeaderViewHolder)?.bind()
         } else if (obj.javaClass == String::class.java) {
+            if (obj == "Standard") {
+                var params = holder.itemView.layoutParams as GridLayoutManager.LayoutParams
+                params.height = 130
+                holder.itemView.layoutParams = params
+            }
             (holder as? SectionViewHolder)?.bind(obj as? String ?: "")
+
         } else {
             (obj as? Animal)?.let { (holder as? StableViewHolder)?.bind(it) }
 
@@ -77,10 +89,12 @@ class StableRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<
 
         private val npcBannerView: NPCBannerView by bindView(itemView, R.id.npcBannerView)
         private val namePlate: TextView by bindView(itemView, R.id.namePlate)
+        private val descriptionView: TextView by bindView(itemView, R.id.descriptionView)
 
         fun bind() {
             npcBannerView.identifier = "stable"
             namePlate.setText(R.string.stable_owner)
+            descriptionView.visibility = View.GONE
         }
     }
     

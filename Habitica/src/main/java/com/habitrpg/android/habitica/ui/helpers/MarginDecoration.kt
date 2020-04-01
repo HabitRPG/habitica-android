@@ -11,14 +11,12 @@ class MarginDecoration(context: Context?, noMarginViewTypes: Set<Int>) : Recycle
     private var noMarginViewTypes = noMarginViewTypes
 
     override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
-        for (i in 0 until parent.childCount) {
-            val view: View = parent.getChildAt(i)
-            val position: Int = parent.getChildAdapterPosition(view)
-            val viewType: Int? = parent.adapter?.getItemViewType(position)
-            if (!noMarginViewTypes.contains(viewType)) {
-                outRect.set(margin, margin, margin, margin)
-            }
+        val position = parent.getChildAdapterPosition(view)
+        val viewType: Int? = parent.adapter?.getItemViewType(position)
+        if (noMarginViewTypes.contains(viewType)) {
+            outRect.setEmpty();
+        } else {
+            outRect.set(margin, margin, margin, margin);
         }
-
     }
 }
