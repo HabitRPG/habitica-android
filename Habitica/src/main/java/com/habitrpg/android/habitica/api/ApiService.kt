@@ -62,10 +62,10 @@ interface ApiService {
     fun equipItem(@Path("type") type: String, @Path("key") itemKey: String): Flowable<HabitResponse<Items>>
 
     @POST("user/buy/{key}")
-    fun buyItem(@Path("key") itemKey: String): Flowable<HabitResponse<BuyResponse>>
+    fun buyItem(@Path("key") itemKey: String, @Body quantity: Map<String, Int>): Flowable<HabitResponse<BuyResponse>>
 
     @POST("user/purchase/{type}/{key}")
-    fun purchaseItem(@Path("type") type: String, @Path("key") itemKey: String): Flowable<HabitResponse<Void>>
+    fun purchaseItem(@Path("type") type: String, @Path("key") itemKey: String, @Body quantity: Map<String, Int>): Flowable<HabitResponse<Void>>
 
     @POST("user/purchase-hourglass/{type}/{key}")
     fun purchaseHourglassItem(@Path("type") type: String, @Path("key") itemKey: String): Flowable<HabitResponse<Void>>

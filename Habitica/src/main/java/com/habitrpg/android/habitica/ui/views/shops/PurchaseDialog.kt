@@ -60,6 +60,8 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
     private val buyLabel: TextView
     private val pinButton: Button by bindView(customHeader, R.id.pin_button)
 
+    private var purchaseQuantity = 1
+
     var purchaseCardAction: ((ShopItem) -> Unit)? = null
 
     private var shopItem: ShopItem = item
@@ -74,7 +76,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
             }
 
             if (shopItem.lockedReason(context) == null) {
-                priceLabel.value = shopItem.value.toDouble()
+                updatePurchaseTotal()
                 priceLabel.currency = shopItem.currency
             } else {
                 limitedTextView.text = shopItem.lockedReason(context)
@@ -100,12 +102,33 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
                     inventoryRepository.getEquipment(shopItem.key).firstElement().subscribe(Consumer<Equipment> { contentView.setEquipment(it) }, RxErrorHandler.handleEmptyError())
                     checkGearClass()
                 }
-                "gems" == shopItem.purchaseType -> contentView = PurchaseDialogGemsContent(context)
+                "gems" == shopItem.purchaseType -> {
+                    val gemContent = PurchaseDialogGemsContent(context)
+                    gemContent.stepperView.onValueChanged = {
+                        purchaseQuantity = it.toInt()
+                        updatePurchaseTotal()
+                    }
+                    contentView = gemContent
+                }
                 else -> contentView = PurchaseDialogBaseContent(context)
             }
             contentView.setItem(shopItem)
             setAdditionalContentView(contentView)
         }
+
+    fun updatePurchaseTotal() {
+        priceLabel.value = shopItem.value.toDouble() * purchaseQuantity
+
+        if (shopItem.canAfford(user, purchaseQuantity) && !shopItem.locked) {
+            buyButton.background = context.getDrawable(R.drawable.button_background_primary)
+            priceLabel.setTextColor(ContextCompat.getColor(context, R.color.white))
+            buyLabel.setTextColor(ContextCompat.getColor(context, R.color.white))
+        } else {
+            buyButton.background = context.getDrawable(R.drawable.button_background_gray_600)
+            priceLabel.setTextColor(ContextCompat.getColor(context, R.color.gray_100))
+            buyLabel.setTextColor(ContextCompat.getColor(context, R.color.gray_100))
+        }
+    }
 
     private fun checkGearClass() {
         val user = user ?: return
@@ -183,15 +206,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
         }
 
         buyButton.elevation = 0f
-        if (shopItem.canAfford(user, configManager.insufficientGemPurchase()) && !shopItem.locked) {
-            buyButton.background = context.getDrawable(R.drawable.button_background_primary)
-            priceLabel.setTextColor(ContextCompat.getColor(context, R.color.white))
-            buyLabel.setTextColor(ContextCompat.getColor(context, R.color.white))
-        } else {
-            buyButton.background = context.getDrawable(R.drawable.button_background_gray_600)
-            priceLabel.setTextColor(ContextCompat.getColor(context, R.color.gray_100))
-            buyLabel.setTextColor(ContextCompat.getColor(context, R.color.gray_100))
-        }
+        updatePurchaseTotal()
 
         if (shopItem.isTypeGear) {
             checkGearClass()
@@ -211,7 +226,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
         val snackbarText = arrayOf("")
         if (shopItem.isValid && !shopItem.locked) {
             val gemsLeft = if (shopItem.limitedNumberLeft != null) shopItem.limitedNumberLeft else 0
-            if ((gemsLeft == 0 && shopItem.purchaseType == "gems") || shopItem.canAfford(user, false)) {
+            if ((gemsLeft == 0 && shopItem.purchaseType == "gems") || shopItem.canAfford(user, purchaseQuantity)) {
                 val observable: Flowable<Any>
                 if (shopIdentifier != null && shopIdentifier == Shop.TIME_TRAVELERS_SHOP || "mystery_set" == shopItem.purchaseType || shopItem.currency == "hourglasses") {
                     observable = if (shopItem.purchaseType == "gear") {
@@ -226,7 +241,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
                     dismiss()
                     return
                 } else if ("gold" == shopItem.currency && "gem" != shopItem.key) {
-                    observable = inventoryRepository.buyItem(user, shopItem.key, shopItem.value.toDouble()).map { buyResponse ->
+                    observable = inventoryRepository.buyItem(user, shopItem.key, shopItem.value.toDouble(), purchaseQuantity).map { buyResponse ->
                         if (shopItem.key == "armoire") {
                             snackbarText[0] = when {
                                 buyResponse.armoire["type"] == "gear" -> context.getString(R.string.armoireEquipment, buyResponse.armoire["dropText"])
@@ -237,7 +252,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
                         buyResponse
                     }
                 } else {
-                    observable = inventoryRepository.purchaseItem(shopItem.purchaseType, shopItem.key)
+                    observable = inventoryRepository.purchaseItem(shopItem.purchaseType, shopItem.key, purchaseQuantity)
                 }
                 observable
                         .doOnNext {

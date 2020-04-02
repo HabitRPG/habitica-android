@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.views.tasks.form
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.widget.EditText
 import android.widget.ImageButton
@@ -13,7 +14,7 @@ import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import java.text.DecimalFormat
 
-class RewardValueFormView @JvmOverloads constructor(
+class StepperValueFormView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : RelativeLayout(context, attrs, defStyleAttr) {
 
@@ -21,19 +22,35 @@ class RewardValueFormView @JvmOverloads constructor(
     private val upButton: ImageButton by bindView(R.id.up_button)
     private val downButton: ImageButton by bindView(R.id.down_button)
 
+    var onValueChanged: ((Double) -> Unit)? = null
+
     private val decimalFormat = DecimalFormat("0.###")
     private var editTextIsFocused = false
 
     var value = 0.0
     set(value) {
-        val newValue = if (value >= 0) value else 0.0
+        var newValue = if (value >= minValue) value else minValue
+        maxValue?.let {
+            if (newValue > it) {
+                newValue = it
+            }
+        }
         val oldValue = field
         field = newValue
         if (oldValue != newValue) {
             valueString = decimalFormat.format(newValue)
         }
-        downButton.isEnabled = field > 0
+        downButton.isEnabled = field > minValue
+        maxValue?.let {
+            if (it == 0.0) return@let
+            upButton.isEnabled = value < it
+        }
+
+        onValueChanged?.invoke(value)
     }
+
+    var maxValue: Double? = null
+    var minValue: Double = 0.0
 
     private var valueString = ""
     set(value) {
@@ -51,11 +68,28 @@ class RewardValueFormView @JvmOverloads constructor(
         }
     }
 
+    var iconDrawable: Drawable?
+    get() {
+        return editText.compoundDrawables.firstOrNull()
+    }
+    set(value) {
+        editText.setCompoundDrawablesWithIntrinsicBounds(value, null, null, null)
+    }
+
     init {
-        inflate(R.layout.task_form_reward_value, true)
+        inflate(R.layout.form_stepper_value, true)
+
+        val attributes = context.theme?.obtainStyledAttributes(
+                attrs,
+                R.styleable.StepperValueFormView,
+                0, 0)
+
         //set value here, so that the setter is called and everything is set up correctly
-        value = 10.0
-        editText.setCompoundDrawablesWithIntrinsicBounds(HabiticaIconsHelper.imageOfGold().asDrawable(context.resources), null, null, null)
+        maxValue = attributes?.getFloat(R.styleable.StepperValueFormView_maxValue, 0f)?.toDouble()
+        minValue = attributes?.getFloat(R.styleable.StepperValueFormView_minValue, 0f)?.toDouble() ?: 0.0
+        value = attributes?.getFloat(R.styleable.StepperValueFormView_defaultValue, 10.0f)?.toDouble() ?: 10.0
+        iconDrawable = attributes?.getDrawable(R.styleable.StepperValueFormView_iconDrawable) ?: HabiticaIconsHelper.imageOfGold().asDrawable(context.resources)
+
 
         upButton.setOnClickListener {
             value += 1

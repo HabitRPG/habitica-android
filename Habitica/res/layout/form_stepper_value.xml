@@ -20,7 +20,7 @@
         android:layout_width="56dp"
         android:layout_height="match_parent"
         android:background="@color/gray_600"
-        android:src="@drawable/ic_arrow_drop_up_gray_48dp"
+        android:src="@drawable/ic_arrow_drop_up_gray_48dp_states"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         />

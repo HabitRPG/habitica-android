@@ -228,8 +228,8 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
                 .doOnNext { localRepository.changeOwnedCount("quests", quest.key, userID, -1) }
     }
 
-    override fun buyItem(user: User?, id: String, value: Double): Flowable<BuyResponse> {
-        return apiClient.buyItem(id)
+    override fun buyItem(user: User?, id: String, value: Double, purchaseQuantity: Int): Flowable<BuyResponse> {
+        return apiClient.buyItem(id, purchaseQuantity)
                 .doOnNext { buyResponse ->
                     if (user == null) {
                         return@doOnNext
@@ -251,7 +251,7 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
                     if (buyResponse.gp != null) {
                         copiedUser.stats?.gp = buyResponse.gp
                     } else {
-                        copiedUser.stats?.gp = copiedUser.stats?.gp ?: 0 - value
+                        copiedUser.stats?.gp = copiedUser.stats?.gp ?: 0 - (value * purchaseQuantity)
                     }
                     if (buyResponse.lvl != null) {
                         copiedUser.stats?.lvl = buyResponse.lvl
@@ -280,8 +280,8 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
         return apiClient.purchaseQuest(key)
     }
 
-    override fun purchaseItem(purchaseType: String, key: String): Flowable<Any> {
-        return apiClient.purchaseItem(purchaseType, key)
+    override fun purchaseItem(purchaseType: String, key: String, purchaseQuantity: Int): Flowable<Any> {
+        return apiClient.purchaseItem(purchaseType, key, purchaseQuantity)
     }
 
     override fun togglePinnedItem(item: ShopItem): Flowable<List<ShopItem>> {
