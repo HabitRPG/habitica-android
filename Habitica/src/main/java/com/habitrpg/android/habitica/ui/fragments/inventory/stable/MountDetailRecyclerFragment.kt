@@ -58,7 +58,7 @@ class MountDetailRecyclerFragment : BaseMainFragment() {
 
         layoutManager = androidx.recyclerview.widget.GridLayoutManager(activity, 2)
         recyclerView.layoutManager = layoutManager
-        recyclerView.addItemDecoration(MarginDecoration(activity, setOf()))
+        recyclerView.addItemDecoration(MarginDecoration(activity))
 
         adapter = recyclerView.adapter as? MountDetailRecyclerAdapter
         if (adapter == null) {

@@ -60,7 +60,7 @@ class StableRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<
         } else if (obj.javaClass == String::class.java) {
             if (obj == "Standard") {
                 var params = holder.itemView.layoutParams as GridLayoutManager.LayoutParams
-                params.height = 130
+                params.height = 135
                 holder.itemView.layoutParams = params
             }
             (holder as? SectionViewHolder)?.bind(obj as? String ?: "")

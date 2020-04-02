@@ -72,7 +72,7 @@ class PetDetailRecyclerFragment : BaseMainFragment() {
 
         layoutManager = androidx.recyclerview.widget.GridLayoutManager(getActivity(), 2)
         recyclerView.layoutManager = layoutManager
-        recyclerView.addItemDecoration(MarginDecoration(getActivity(), setOf()))
+        recyclerView.addItemDecoration(MarginDecoration(getActivity()))
 
         adapter.context = this.getActivity()
         adapter.itemType = this.animalType

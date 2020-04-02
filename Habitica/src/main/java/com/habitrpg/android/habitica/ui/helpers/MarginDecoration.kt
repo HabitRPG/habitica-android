@@ -6,7 +6,7 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 
-class MarginDecoration(context: Context?, noMarginViewTypes: Set<Int>) : RecyclerView.ItemDecoration() {
+class MarginDecoration(context: Context?, noMarginViewTypes: Set<Int> = setOf()) : RecyclerView.ItemDecoration() {
     private val margin: Int = context?.resources?.getDimensionPixelSize(R.dimen.grid_item_margin) ?: 0
     private var noMarginViewTypes = noMarginViewTypes
 
