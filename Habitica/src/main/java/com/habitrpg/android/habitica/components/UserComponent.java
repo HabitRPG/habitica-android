@@ -93,6 +93,7 @@ import com.habitrpg.android.habitica.ui.fragments.social.party.PartyDetailFragme
 import com.habitrpg.android.habitica.ui.fragments.social.party.PartyFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.party.PartyInviteFragment;
 import com.habitrpg.android.habitica.ui.fragments.support.BugFixFragment;
+import com.habitrpg.android.habitica.ui.fragments.support.FAQDetailFragment;
 import com.habitrpg.android.habitica.ui.fragments.support.FAQOverviewFragment;
 import com.habitrpg.android.habitica.ui.fragments.support.SupportMainFragment;
 import com.habitrpg.android.habitica.ui.fragments.tasks.TaskRecyclerViewFragment;
@@ -337,4 +338,6 @@ public interface UserComponent {
     void inject(@NotNull BugFixFragment bugFixFragment);
 
     void inject(@NotNull AvatarEquipmentFragment avatarEquipmentFragment);
+
+    void inject(@NotNull FAQDetailFragment faqDetailFragment);
 }
