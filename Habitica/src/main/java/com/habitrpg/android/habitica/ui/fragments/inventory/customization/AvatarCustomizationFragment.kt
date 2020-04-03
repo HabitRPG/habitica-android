@@ -138,7 +138,7 @@ class AvatarCustomizationFragment : BaseMainFragment() {
         this.updateActiveCustomization(user)
         if (adapter.customizationList.size != 0) {
             val ownedCustomizations = ArrayList<String>()
-            user.purchased?.customizations?.filter { it.type == this.type }?.mapTo(ownedCustomizations) { it.id }
+            user.purchased?.customizations?.filter { it.type == this.type }?.mapTo(ownedCustomizations) { it.id ?: "" }
             adapter.updateOwnership(ownedCustomizations)
         } else {
             this.loadCustomizations()

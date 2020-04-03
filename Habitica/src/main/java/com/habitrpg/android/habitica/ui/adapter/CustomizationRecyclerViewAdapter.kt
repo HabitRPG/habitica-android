@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.adapter
 
 import android.content.Context
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -138,17 +139,25 @@ class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerVi
         fun bind(customization: Customization) {
             this.customization = customization
 
-            if (customization.customizationSet?.contains("timeTravel") == true) {
-                DataBindingUtils.loadImage(binding.imageView, customization.getImageName(userSize, hairColor), imageFormat = "gif")
-            } else {
-                DataBindingUtils.loadImage(binding.imageView, customization.getImageName(userSize, hairColor))
+            DataBindingUtils.loadImage(binding.imageView, customization.getIconName(userSize, hairColor))
+
+            if (customization.type == "background") {
+                val params = (binding.imageView.layoutParams as? LinearLayout.LayoutParams)?.apply {
+                    gravity = Gravity.CENTER
+                }
+                binding.imageView.layoutParams = params
             }
+
             if (customization.isUsable) {
                 binding.buyButton.visibility = View.GONE
             } else {
                 binding.buyButton.visibility = View.VISIBLE
-                binding.priceLabel.currency = "gems"
-                binding.priceLabel.value = customization.price.toDouble()
+                if (customization.customizationSet?.contains("timeTravel") == true) {
+                    binding.priceLabel.currency = "hourglasses"
+                } else {
+                    binding.priceLabel.currency = "gems"
+                }
+                binding.priceLabel.value = customization.price?.toDouble() ?: 0.0
             }
 
             if (activeCustomization == customization.identifier) {

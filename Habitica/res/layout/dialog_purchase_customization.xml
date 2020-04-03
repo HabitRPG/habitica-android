@@ -4,10 +4,11 @@
     android:layout_height="wrap_content">
 
     <com.facebook.drawee.view.SimpleDraweeView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/avatar_width"
+        android:layout_height="@dimen/avatar_height"
         android:id="@+id/imageView"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:scaleType="center"/>
 
     <LinearLayout
         android:orientation="horizontal"
