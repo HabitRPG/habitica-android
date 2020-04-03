@@ -6,10 +6,17 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 
-class MarginDecoration(context: Context?) : RecyclerView.ItemDecoration() {
+class MarginDecoration(context: Context?, noMarginViewTypes: Set<Int> = setOf()) : RecyclerView.ItemDecoration() {
     private val margin: Int = context?.resources?.getDimensionPixelSize(R.dimen.grid_item_margin) ?: 0
+    private var noMarginViewTypes = noMarginViewTypes
 
     override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
-        outRect.set(margin, margin, margin, margin)
+        val position = parent.getChildAdapterPosition(view)
+        val viewType: Int? = parent.adapter?.getItemViewType(position)
+        if (noMarginViewTypes.contains(viewType)) {
+            outRect.setEmpty();
+        } else {
+            outRect.set(margin, margin, margin, margin);
+        }
     }
 }
