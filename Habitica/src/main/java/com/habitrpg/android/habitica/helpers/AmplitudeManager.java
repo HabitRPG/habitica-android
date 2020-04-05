@@ -11,7 +11,6 @@ import java.util.Map;
 /**
  * Created by viirus on 23-Sep-16.
  */
-
 public class AmplitudeManager {
 
     public static String EVENT_CATEGORY_BEHAVIOUR = "behaviour";

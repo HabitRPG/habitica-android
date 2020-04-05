@@ -9,7 +9,6 @@ import io.realm.Realm;
 
 class TestRepositoryModule extends RepositoryModule {
 
-
     @Provides
     @Override
     public Realm providesRealm() {

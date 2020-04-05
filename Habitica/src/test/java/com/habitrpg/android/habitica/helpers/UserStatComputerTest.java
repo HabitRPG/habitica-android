@@ -73,7 +73,7 @@ public class UserStatComputerTest {
         Assert.assertEquals(con * 0.0f, attributeRow.getConVal());
         Assert.assertEquals(per * 0.5f, attributeRow.getPerVal());
         Assert.assertFalse(attributeRow.getRoundDown());
-        Assert.assertFalse(attributeRow.getIsSummary());
+        Assert.assertFalse(attributeRow.getSummary());
     }
 
     @Test
@@ -91,7 +91,7 @@ public class UserStatComputerTest {
         Assert.assertEquals(con * 0.0f, attributeRow.getConVal());
         Assert.assertEquals(per * 0.5f, attributeRow.getPerVal());
         Assert.assertFalse(attributeRow.getRoundDown());
-        Assert.assertFalse(attributeRow.getIsSummary());
+        Assert.assertFalse(attributeRow.getSummary());
     }
 
     @Test
@@ -109,6 +109,6 @@ public class UserStatComputerTest {
         Assert.assertEquals(con * 0.0f, attributeRow.getConVal());
         Assert.assertEquals(per * 0.0f, attributeRow.getPerVal());
         Assert.assertFalse(attributeRow.getRoundDown());
-        Assert.assertFalse(attributeRow.getIsSummary());
+        Assert.assertFalse(attributeRow.getSummary());
     }
 }
