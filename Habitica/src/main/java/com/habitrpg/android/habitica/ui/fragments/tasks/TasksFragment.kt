@@ -21,6 +21,7 @@ import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.TaskFormActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.views.tasks.TaskFilterDialog
+import io.reactivex.disposables.Disposable
 import io.reactivex.functions.Consumer
 import java.util.*
 import javax.inject.Inject
@@ -158,9 +159,11 @@ class TasksFragment : BaseMainFragment(), SearchView.OnQueryTextListener {
 
     private fun showFilterDialog() {
         context?.let {
+            var disposable: Disposable? = null
             val dialog = TaskFilterDialog(it, HabiticaBaseApplication.userComponent)
             if (user != null) {
                 dialog.setTags(user?.tags?.createSnapshot() ?: emptyList())
+                disposable = tagRepository.getTags(user?.id ?: "").subscribe(Consumer {tagsList -> dialog.setTags(tagsList)}, RxErrorHandler.handleEmptyError())
             }
             dialog.setActiveTags(taskFilterHelper.tags)
             if (activeFragment != null) {
@@ -182,6 +185,11 @@ class TasksFragment : BaseMainFragment(), SearchView.OnQueryTextListener {
                     updateFilterIcon()
                 }
             })
+            dialog.setOnDismissListener {
+                if (disposable?.isDisposed == false) {
+                    disposable?.dispose()
+                }
+            }
             dialog.show()
         }
     }
