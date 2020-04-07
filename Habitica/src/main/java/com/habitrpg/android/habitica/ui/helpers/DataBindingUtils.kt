@@ -20,7 +20,9 @@ import com.facebook.imagepipeline.datasource.BaseBitmapDataSubscriber
 import com.facebook.imagepipeline.image.CloseableImage
 import com.facebook.imagepipeline.request.ImageRequestBuilder
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.helpers.AppConfigManager
 import java.util.*
+import kotlin.collections.HashMap
 
 
 fun SimpleDraweeView.loadImage(imageName: String, imageFormat: String? = null) {
@@ -77,6 +79,7 @@ object DataBindingUtils {
 
     fun getFullFilename(imageName: String, imageFormat: String?): String {
         val name = when {
+            spriteSubstitutions.containsKey(imageName) -> spriteSubstitutions[imageName]
             FILENAME_MAP.containsKey(imageName) -> FILENAME_MAP[imageName]
             imageName.startsWith("handleless") -> "chair_$imageName"
             else -> imageName
@@ -128,6 +131,16 @@ object DataBindingUtils {
 
     private val FILEFORMAT_MAP: Map<String, String>
     private val FILENAME_MAP: Map<String, String>
+
+    private var spriteSubstitutions: Map<String, String> = HashMap()
+    get() {
+        if (Date().time - (lastSubstitutionCheck?.time ?: 0) > 180000) {
+            field = AppConfigManager().spriteSubstitutions().get("generic") ?: HashMap()
+            lastSubstitutionCheck = Date()
+        }
+        return field
+    }
+    private var lastSubstitutionCheck: Date? = null
 
     init {
         val tempMap = HashMap<String, String>()
