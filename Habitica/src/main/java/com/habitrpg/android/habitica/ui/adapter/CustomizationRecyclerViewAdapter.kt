@@ -42,20 +42,15 @@ class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerVi
         this.notifyDataSetChanged()
     }
 
+    var ownedCustomiztations: List<String> = listOf()
+
     private val selectCustomizationEvents = PublishSubject.create<Customization>()
     private val unlockCustomizationEvents = PublishSubject.create<Customization>()
     private val unlockSetEvents = PublishSubject.create<CustomizationSet>()
 
     fun updateOwnership(ownedCustomizations: List<String>) {
-        for ((position, obj) in customizationList.withIndex()) {
-            if (obj.javaClass == Customization::class.java) {
-                val customization = obj as? Customization ?: return
-                if (customization.purchased != ownedCustomizations.contains(customization.id)) {
-                    customization.purchased = ownedCustomizations.contains(customization.id)
-                    notifyItemChanged(position)
-                }
-            }
-        }
+        this.ownedCustomiztations = ownedCustomizations
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder {
@@ -103,12 +98,12 @@ class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerVi
                 set.identifier = customization.customizationSet
                 set.text = customization.customizationSetName
                 set.price = customization.setPrice
-                set.hasPurchasable = !customization.isUsable
+                set.hasPurchasable = !customization.isUsable(ownedCustomiztations.contains(customization.identifier))
                 lastSet = set
                 customizationList.add(set)
             }
             customizationList.add(customization)
-            if (!customization.isUsable && !lastSet.hasPurchasable) {
+            if (!customization.isUsable(ownedCustomiztations.contains(customization.identifier)) && !lastSet.hasPurchasable) {
                 lastSet.hasPurchasable = true
             }
         }
@@ -148,7 +143,7 @@ class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerVi
                 binding.imageView.layoutParams = params
             }
 
-            if (customization.isUsable) {
+            if (customization.isUsable(ownedCustomiztations.contains(customization.identifier))) {
                 binding.buyButton.visibility = View.GONE
             } else {
                 binding.buyButton.visibility = View.VISIBLE
@@ -168,7 +163,7 @@ class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerVi
         }
 
         override fun onClick(v: View) {
-            if (customization?.isUsable == false) {
+            if (customization?.isUsable(ownedCustomiztations.contains(customization?.identifier)) == false) {
                 if (customization?.customizationSet?.contains("timeTravel") == true) {
                     val dialog = HabiticaAlertDialog(itemView.context)
                     dialog.setMessage(R.string.purchase_from_timetravel_shop)
@@ -256,11 +251,11 @@ class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerVi
                         customizationList
                                 .filter { Customization::class.java.isAssignableFrom(it.javaClass) }
                                 .map { it as Customization }
-                                .filter { !it.isUsable && it.customizationSet != null && it.customizationSet == set?.identifier }
+                                .filter { !it.isUsable(ownedCustomiztations.contains(it.identifier)) && it.customizationSet != null && it.customizationSet == set?.identifier }
                                 .forEach { set?.customizations?.add(it) }
                         if (additionalSetItems.isNotEmpty()) {
                             additionalSetItems
-                                    .filter { !it.isUsable && it.customizationSet != null && it.customizationSet == set?.identifier }
+                                    .filter { !it.isUsable(ownedCustomiztations.contains(it.identifier)) && it.customizationSet != null && it.customizationSet == set?.identifier }
                                     .forEach { set?.customizations?.add(it) }
                         }
                         set?.let {

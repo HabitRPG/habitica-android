@@ -104,11 +104,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/avatar_animal_ears_view"
+                    android:visibility="gone"
                     app:equipmentTitle="@string/animal_ears"/>
                 <com.habitrpg.android.habitica.ui.views.EquipmentItemRow
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/avatar_animal_tail_view"
+                    android:visibility="gone"
                     app:equipmentTitle="@string/animal_tail"/>
                 <com.habitrpg.android.habitica.ui.views.EquipmentItemRow
                     android:layout_width="match_parent"

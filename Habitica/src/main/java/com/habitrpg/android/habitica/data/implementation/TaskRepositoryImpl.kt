@@ -140,7 +140,7 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
             }
             res._tmp?.drop?.key?.let { key ->
                 val type = when(res._tmp?.drop?.type?.toLowerCase(Locale.US)) {
-                    "hatchingPotion" -> "hatchingPotions"
+                    "hatchingpotion" -> "hatchingPotions"
                     "egg" -> "eggs"
                     else -> res._tmp?.drop?.type?.toLowerCase(Locale.US)
                 }

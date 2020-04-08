@@ -26,7 +26,6 @@ open class Customization : RealmObject() {
     var customizationSet: String? = null
     var customizationSetName: String? = null
     var text: String? = null
-    var purchased = false
     var isBuyable = false
     var price: Int? = null
     var setPrice: Int? = null
@@ -48,7 +47,7 @@ open class Customization : RealmObject() {
 
     fun getIconName(userSize: String?, hairColor: String?): String {
         return if (type == "background") {
-            "background_$identifier"
+            "icon_background_$identifier"
         } else {
             getImageName(userSize, hairColor)
         }
@@ -73,8 +72,9 @@ open class Customization : RealmObject() {
         return ""
     }
 
-    val isUsable: Boolean
-        get() = price == null || price == 0 || purchased
+    fun isUsable(purchased: Boolean): Boolean {
+        return price == null || price == 0 || purchased
+    }
 
     val path: String
         get() {
@@ -82,8 +82,7 @@ open class Customization : RealmObject() {
             if (this.category != null) {
                 path = path + "." + this.category
             }
-            path = path + "." + identifier
+            path = "$path.$identifier"
             return path
         }
-
 }

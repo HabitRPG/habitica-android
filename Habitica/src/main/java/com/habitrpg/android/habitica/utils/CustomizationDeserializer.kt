@@ -16,9 +16,8 @@ class CustomizationDeserializer : JsonDeserializer<List<Customization>> {
         val customizations = RealmList<Customization>()
         val realm = Realm.getDefaultInstance()
 
+        val existingCustomizations = realm.copyFromRealm(realm.where(Customization::class.java).findAll())
         if (jsonObject.has("shirt")) {
-            val existingCustomizations = realm.copyFromRealm(realm.where(Customization::class.java).findAll())
-
             for (customization in existingCustomizations) {
                 if (jsonObject.has(customization.type)) {
                     var nestedObject = jsonObject.get(customization.type).asJsonObject
@@ -48,8 +47,6 @@ class CustomizationDeserializer : JsonDeserializer<List<Customization>> {
                 }
             }
         } else {
-            val existingCustomizations = realm.copyFromRealm(realm.where(Customization::class.java).findAll())
-
             for (customization in existingCustomizations) {
                 if (jsonObject.has(customization.customizationSet)) {
                     val nestedObject = jsonObject.get(customization.customizationSet).asJsonObject
@@ -123,19 +120,23 @@ class CustomizationDeserializer : JsonDeserializer<List<Customization>> {
             customization.type = "background"
             customization.identifier = key
         }
-        if ("incentiveBackgrounds" == setName) {
-            customization.customizationSetName = "Login Incentive"
-            customization.price = 0
-            customization.setPrice = 0
-            customization.isBuyable = false
-        } else if ("timeTravelBackgrounds" == setName) {
-            customization.customizationSetName = "Time Travel Backgrounds"
-            customization.price = 1
-            customization.setPrice = 0
-            customization.isBuyable = false
-        } else {
-            customization.price = 7
-            customization.setPrice = 15
+        when (setName) {
+            "incentiveBackgrounds" -> {
+                customization.customizationSetName = "Login Incentive"
+                customization.price = 0
+                customization.setPrice = 0
+                customization.isBuyable = false
+            }
+            "timeTravelBackgrounds" -> {
+                customization.customizationSetName = "Time Travel Backgrounds"
+                customization.price = 1
+                customization.setPrice = 0
+                customization.isBuyable = false
+            }
+            else -> {
+                customization.price = 7
+                customization.setPrice = 15
+            }
         }
 
         customization.text = entry.get("text").asString
