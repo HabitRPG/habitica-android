@@ -58,6 +58,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
     private val buyButton: View
     private val priceLabel: CurrencyView
     private val buyLabel: TextView
+    private var amountErrorLabel: TextView? = null
     private val pinButton: Button by bindView(customHeader, R.id.pin_button)
 
     private var purchaseQuantity = 1
@@ -112,6 +113,9 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
                 }
                 else -> contentView = PurchaseDialogBaseContent(context)
             }
+
+            amountErrorLabel = contentView.findViewById(R.id.amount_error_label)
+
             contentView.setItem(shopItem)
             setAdditionalContentView(contentView)
         }
@@ -119,7 +123,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
     fun updatePurchaseTotal() {
         priceLabel.value = shopItem.value.toDouble() * purchaseQuantity
 
-        if (shopItem.canAfford(user, purchaseQuantity) && !shopItem.locked) {
+        if (shopItem.canAfford(user, purchaseQuantity) && !shopItem.locked && purchaseQuantity >= 1) {
             buyButton.background = context.getDrawable(R.drawable.button_background_primary)
             priceLabel.setTextColor(ContextCompat.getColor(context, R.color.white))
             buyLabel.setTextColor(ContextCompat.getColor(context, R.color.white))
@@ -127,6 +131,12 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
             buyButton.background = context.getDrawable(R.drawable.button_background_gray_600)
             priceLabel.setTextColor(ContextCompat.getColor(context, R.color.gray_100))
             buyLabel.setTextColor(ContextCompat.getColor(context, R.color.gray_100))
+        }
+
+        if (purchaseQuantity < 1 || (shopItem.limitedNumberLeft != null && (shopItem.limitedNumberLeft ?: 0) < purchaseQuantity)) {
+            amountErrorLabel?.visibility = View.VISIBLE
+        } else {
+            amountErrorLabel?.visibility = View.GONE
         }
     }
 

@@ -28,16 +28,16 @@ class StepperValueFormView @JvmOverloads constructor(
     private var editTextIsFocused = false
 
     var value = 0.0
-    set(value) {
-        var newValue = if (value >= minValue) value else minValue
+    set(new) {
+        var newValue = if (new >= minValue) new else minValue
         maxValue?.let {
-            if (newValue > it) {
+            if (newValue > it && it > 0) {
                 newValue = it
             }
         }
         val oldValue = field
         field = newValue
-        if (oldValue != newValue) {
+        if (oldValue != new) {
             valueString = decimalFormat.format(newValue)
         }
         downButton.isEnabled = field > minValue

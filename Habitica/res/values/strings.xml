@@ -1005,4 +1005,5 @@
     <string name="avatar_accent">Accent</string>
     <string name="buy_all">Buy All</string>
     <string name="read_more">Read More</string>
+    <string name="purchase_amount_error">You are unable to buy that amount.</string>
 </resources>
