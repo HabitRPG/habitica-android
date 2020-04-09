@@ -120,7 +120,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
             setAdditionalContentView(contentView)
         }
 
-    fun updatePurchaseTotal() {
+    private fun updatePurchaseTotal() {
         priceLabel.value = shopItem.value.toDouble() * purchaseQuantity
 
         if (shopItem.canAfford(user, purchaseQuantity) && !shopItem.locked && purchaseQuantity >= 1) {

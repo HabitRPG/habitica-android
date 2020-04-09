@@ -71,6 +71,9 @@ class TaskListDeserializer : JsonDeserializer<TaskList> {
                     task.up = obj.get("up")?.asBoolean ?: false
                     task.down = obj.get("down")?.asBoolean ?: false
                     task.streak = obj.get("streak")?.asInt
+                    if (obj.getAsJsonObject("challenge").has("id")) {
+                        task.challengeID = obj.getAsJsonObject("challenge").get("id").asString
+                    }
                     try {
                         task.counterUp = obj.get("counterUp")?.asInt
                         task.counterDown = obj.get("counterDown")?.asInt

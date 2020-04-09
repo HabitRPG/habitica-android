@@ -83,6 +83,9 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
         notesTextView?.addEllipsesListener(object : EllipsisTextView.EllipsisListener {
             override fun ellipsisStateChanged(ellipses: Boolean) {
                 GlobalScope.launch(Dispatchers.Main.immediate) {
+                    if (ellipses) {
+                        notesTextView?.maxLines = 3
+                    }
                     expandNotesButton?.visibility = if (ellipses || notesExpanded) View.VISIBLE else View.GONE
                 }
             }
@@ -96,7 +99,7 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
             notesTextView?.maxLines = 100
             expandNotesButton?.text = context.getString(R.string.collapse_notes)
         } else {
-            notesTextView?.maxLines = 3
+            notesTextView?.maxLines = 5
             expandNotesButton?.text = context.getString(R.string.expand_notes)
         }
     }
@@ -106,6 +109,8 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
         itemView.setBackgroundResource(R.color.white)
 
         expandNotesButton?.visibility = View.GONE
+        notesExpanded = false
+        notesTextView?.maxLines = 5
         if (data.notes?.isNotEmpty() == true) {
             notesTextView?.visibility = View.VISIBLE
             //expandNotesButton.visibility = if (notesTextView.hadEllipses() || notesExpanded) View.VISIBLE else View.GONE
@@ -158,7 +163,7 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
         iconViewReminder?.visibility = if (data.reminders?.size ?: 0 > 0) View.VISIBLE else View.GONE
         iconViewTag?.visibility = if (data.tags?.size ?: 0 > 0) View.VISIBLE else View.GONE
 
-        iconViewChallenge?.visibility = View.GONE
+        iconViewChallenge?.visibility = if (task?.challengeID != null) View.VISIBLE else View.GONE
 
         configureSpecialTaskTextView(data)
 
