@@ -11,26 +11,27 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        >
+        android:paddingStart="30dp"
+        android:paddingEnd="30dp"
+        android:paddingTop="@dimen/spacing_large"
+        android:paddingBottom="@dimen/spacing_large">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/black"
+            style="@style/Headline6"
             android:id="@+id/questionTextView"
-            android:layout_gravity="center_horizontal"
-            android:padding="@dimen/card_padding"/>
+            android:layout_gravity="center_horizontal"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/answerTextView"
             android:layout_gravity="center_horizontal"
-            android:paddingLeft="@dimen/card_padding"
-            android:paddingStart="@dimen/card_padding"
-            android:paddingEnd="@dimen/card_padding"
-            android:paddingRight="@dimen/card_padding"
-            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_marginTop="12dp"
+            android:textColor="@color/gray_200"
+            style="@style/Subheader3"
             />
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

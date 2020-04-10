@@ -264,7 +264,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
                 } else {
                     observable = inventoryRepository.purchaseItem(shopItem.purchaseType, shopItem.key, purchaseQuantity)
                 }
-                observable
+                val subscription = observable
                         .doOnNext {
                             val event = ShowSnackbarEvent()
                             if (snackbarText[0].isNotEmpty()) {
@@ -274,10 +274,10 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
                             }
                             event.type = HabiticaSnackbar.SnackbarDisplayType.NORMAL
                             event.rightIcon = priceLabel.compoundDrawables[0]
-                            when {
-                                "gold" == item.currency -> event.rightTextColor = ContextCompat.getColor(context, R.color.yellow_5)
-                                "gems" == item.currency -> event.rightTextColor = ContextCompat.getColor(context, R.color.green_10)
-                                "hourglasses" == item.currency -> event.rightTextColor = ContextCompat.getColor(context, R.color.brand_300)
+                            when (item.currency) {
+                                "gold" -> event.rightTextColor = ContextCompat.getColor(context, R.color.yellow_5)
+                                "gems" -> event.rightTextColor = ContextCompat.getColor(context, R.color.green_10)
+                                "hourglasses" -> event.rightTextColor = ContextCompat.getColor(context, R.color.brand_300)
                             }
                             event.rightText = "-" + priceLabel.text
                             EventBus.getDefault().post(event)
@@ -298,7 +298,13 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
                         }
             } else {
                 when {
-                    "gems" == shopItem.purchaseType -> InsufficientSubscriberGemsDialog(context)
+                    "gems" == shopItem.purchaseType -> {
+                        if (shopItem.canAfford(user, purchaseQuantity)) {
+                            InsufficientSubscriberGemsDialog(context)
+                        } else {
+                            InsufficientGoldDialog(context)
+                        }
+                    }
                     "gold" == shopItem.currency -> InsufficientGoldDialog(context)
                     "gems" == shopItem.currency -> InsufficientGemsDialog(context, shopItem.value)
                     "hourglasses" == shopItem.currency -> InsufficientHourglassesDialog(context)

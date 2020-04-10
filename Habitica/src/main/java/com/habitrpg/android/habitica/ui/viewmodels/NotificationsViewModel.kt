@@ -314,7 +314,7 @@ open class NotificationsViewModel : BaseViewModel() {
     private fun acceptGroupInvitation(groupId: String?) {
         groupId?.let {
             disposable.add(socialRepository.joinGroup(it)
-                    .flatMap { userRepository.retrieveUser(false) }
+                    .flatMap { userRepository.retrieveUser(false, forced = true) }
                     .subscribe(Consumer {
                         refreshNotifications()
                     }, RxErrorHandler.handleEmptyError()))
@@ -324,7 +324,7 @@ open class NotificationsViewModel : BaseViewModel() {
     fun rejectGroupInvite(groupId: String?) {
         groupId?.let {
             disposable.add(socialRepository.rejectGroupInvite(it)
-                    .flatMap { userRepository.retrieveUser(false) }
+                    .flatMap { userRepository.retrieveUser(false, forced = true) }
                     .subscribe(Consumer {
                         refreshNotifications()
                     }, RxErrorHandler.handleEmptyError()))
@@ -334,7 +334,7 @@ open class NotificationsViewModel : BaseViewModel() {
     private fun acceptQuestInvitation() {
         party?.id?.let {
             disposable.add(socialRepository.acceptQuest(null, it)
-                    .flatMap { userRepository.retrieveUser(false) }
+                    .flatMap { userRepository.retrieveUser(false, forced = true) }
                     .subscribe(Consumer {
                         refreshNotifications()
                     }, RxErrorHandler.handleEmptyError()))
@@ -344,7 +344,7 @@ open class NotificationsViewModel : BaseViewModel() {
     private fun rejectQuestInvitation() {
         party?.id?.let {
             disposable.add(socialRepository.rejectQuest(null, it)
-                    .flatMap { userRepository.retrieveUser(false) }
+                    .flatMap { userRepository.retrieveUser(false, forced = true) }
                     .subscribe(Consumer {
                         refreshNotifications()
                     }, RxErrorHandler.handleEmptyError()))

@@ -290,6 +290,4 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
         } else apiClient.togglePinnedItem(item.pinType ?: "", item.path ?: "")
                 .flatMap { retrieveInAppRewards() }
     }
-
-
 }

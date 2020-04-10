@@ -2,7 +2,9 @@ package com.habitrpg.android.habitica.ui.helpers
 
 import android.graphics.Bitmap
 import android.graphics.PorterDuff
+import android.graphics.drawable.Animatable
 import android.view.View
+import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.Transformation
 import android.widget.LinearLayout
@@ -14,10 +16,12 @@ import com.facebook.common.executors.CallerThreadExecutor
 import com.facebook.common.references.CloseableReference
 import com.facebook.datasource.DataSource
 import com.facebook.drawee.backends.pipeline.Fresco
+import com.facebook.drawee.controller.BaseControllerListener
 import com.facebook.drawee.interfaces.DraweeController
 import com.facebook.drawee.view.SimpleDraweeView
 import com.facebook.imagepipeline.datasource.BaseBitmapDataSubscriber
 import com.facebook.imagepipeline.image.CloseableImage
+import com.facebook.imagepipeline.image.ImageInfo
 import com.facebook.imagepipeline.request.ImageRequestBuilder
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.helpers.AppConfigManager
@@ -42,11 +46,19 @@ object DataBindingUtils {
                 return
             }
             view.tag = fullname
-            val controller: DraweeController = Fresco.newDraweeControllerBuilder()
+            val builder = Fresco.newDraweeControllerBuilder()
                     .setUri("https://habitica-assets.s3.amazonaws.com/mobileApp/images/$fullname")
+                    .setControllerListener(object : BaseControllerListener<ImageInfo>() {
+                        override fun onFinalImageSet(id: String?, imageInfo: ImageInfo?, animatable: Animatable?) {
+                            if (imageInfo != null && view.layoutParams.height == ViewGroup.LayoutParams.WRAP_CONTENT) {
+                                view.aspectRatio = imageInfo.width.toFloat() / imageInfo.height
+                            }
+                            super.onFinalImageSet(id, imageInfo, animatable)
+                        }
+                    })
                     .setAutoPlayAnimations(true)
                     .setOldController(view.controller)
-                    .build()
+            val controller: DraweeController = builder.build()
             view.controller = controller
         }
     }

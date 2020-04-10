@@ -29,6 +29,7 @@
                 android:layout_marginStart="@dimen/spacing_large"
                 android:layout_marginEnd="@dimen/spacing_large"
                 style="@style/Subheader2"
+                android:letterSpacing="0.015"
                 android:textColor="@color/black"
                 />
             <TextView
@@ -36,9 +37,10 @@
                 android:layout_height="wrap_content"
                 android:text="@string/using_habitica_description"
                 style="@style/Body2"
+                android:lineSpacingExtra="3sp"
                 android:textColor="@color/gray_50"
-                android:layout_marginStart="40dp"
-                android:layout_marginEnd="40dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
                 android:gravity="center"
                 android:layout_marginTop="6dp"
                 android:layout_marginBottom="16dp"
@@ -55,8 +57,7 @@
                 android:background="@drawable/support_info_lower_bg"
                 android:textColor="@color/white"
                 android:textAllCaps="false"
-                android:textStyle="bold"
-                android:textSize="12sp"
+                style="@style/Subheader1"
                 />
         </LinearLayout>
         <LinearLayout
@@ -84,9 +85,10 @@
                 android:layout_height="wrap_content"
                 android:text="@string/bugs_fixes_description"
                 style="@style/Body2"
+                android:lineSpacingExtra="3sp"
                 android:textColor="@color/gray_50"
-                android:layout_marginStart="40dp"
-                android:layout_marginEnd="40dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
                 android:gravity="center"
                 android:layout_marginTop="6dp"
                 android:layout_marginBottom="16dp"
@@ -103,8 +105,7 @@
                 android:background="@drawable/support_info_lower_bg"
                 android:textColor="@color/white"
                 android:textAllCaps="false"
-                android:textStyle="bold"
-                android:textSize="12sp"
+                style="@style/Subheader1"
                 />
         </LinearLayout>
         <LinearLayout
@@ -132,9 +133,10 @@
                 android:layout_height="wrap_content"
                 android:text="@string/suggestions_feedback_description"
                 style="@style/Body2"
+                android:lineSpacingExtra="3sp"
                 android:textColor="@color/gray_50"
-                android:layout_marginStart="40dp"
-                android:layout_marginEnd="40dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
                 android:gravity="center"
                 android:layout_marginTop="6dp"
                 android:layout_marginBottom="16dp"
@@ -151,8 +153,7 @@
                 android:background="@drawable/support_info_lower_bg"
                 android:textColor="@color/white"
                 android:textStyle="bold"
-                android:textAllCaps="false"
-                android:textSize="12sp"
+                style="@style/Subheader1"
                 />
         </LinearLayout>
     </LinearLayout>

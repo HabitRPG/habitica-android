@@ -42,8 +42,6 @@ class WrapContentDraweeView : SimpleDraweeView {
     }
 
     internal fun updateViewSize(imageInfo: ImageInfo?) {
-        if (imageInfo != null) {
-            aspectRatio = imageInfo.width.toFloat() / imageInfo.height
-        }
+
     }
 }

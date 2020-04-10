@@ -294,10 +294,12 @@
     </style>
 
     <style name="SectionHeaderCaps">
+        <item name="android:fontFamily">@string/font_family_medium</item>
         <item name="android:textSize">10sp</item>
         <item name="android:textColor">@color/gray_200</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:layout_marginStart">@dimen/spacing_large</item>
+        <item name="android:letterSpacing">0.08</item>
     </style>
 
     <style name="BottomMenu">

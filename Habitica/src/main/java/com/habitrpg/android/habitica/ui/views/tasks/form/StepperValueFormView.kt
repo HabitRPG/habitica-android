@@ -54,6 +54,7 @@ class StepperValueFormView @JvmOverloads constructor(
 
     private var valueString = ""
     set(value) {
+        if (value.isEmpty()) return
         field = value
 
         if (editText.text.toString() != field) {

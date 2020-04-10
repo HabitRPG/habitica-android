@@ -89,9 +89,7 @@ class ShopFragment : BaseFragment() {
 
         adapter?.selectedGearCategory = user?.stats?.habitClass ?: ""
 
-        if (shop == null) {
-            loadShopInventory()
-        } else {
+        if (shop != null) {
             adapter?.setShop(shop)
         }
         adapter?.shopSpriteSuffix = configManager.shopSpriteSuffix()
@@ -116,6 +114,11 @@ class ShopFragment : BaseFragment() {
                 }, RxErrorHandler.handleEmptyError()))
 
         view.post { setGridSpanCount(view.width) }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        loadShopInventory()
     }
 
     private fun loadShopInventory() {
