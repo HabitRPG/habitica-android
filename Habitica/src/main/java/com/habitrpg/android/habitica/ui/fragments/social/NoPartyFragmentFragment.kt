@@ -65,6 +65,7 @@ class NoPartyFragmentFragment : BaseMainFragment() {
 
         invitations_view.rejectCall = {
             socialRepository.rejectGroupInvite(it).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+            invitationWrapper.visibility = View.GONE
         }
 
         invitations_view.setLeader = { leader ->
