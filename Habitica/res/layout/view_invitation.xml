@@ -16,13 +16,21 @@
             android:layout_height="match_parent"
             style="@style/CardContent">
 
-            <com.habitrpg.android.habitica.ui.AvatarView
-                android:id="@+id/groupleader_avatar_view"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_gravity="center"
-                app:showMount="false"
-                app:showPet="false" />
+            <com.habitrpg.android.habitica.ui.RoundedFrameLayout
+                android:layout_width="@dimen/party_invite_avatar"
+                android:layout_height="@dimen/party_invite_avatar"
+                android:clipChildren="true"
+                android:layout_marginEnd="@dimen/spacing_medium"
+                android:background="@drawable/rounded_avatar_bg">
+                <com.habitrpg.android.habitica.ui.AvatarView
+                    android:id="@+id/groupleader_avatar_view"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center"
+                    app:showBackground="true"
+                    app:showMount="false"
+                    app:showPet="false" />
+            </com.habitrpg.android.habitica.ui.RoundedFrameLayout>
 
             <TextView
                 android:id="@+id/groupleader_text_view"
