@@ -87,7 +87,7 @@ class NoPartyFragmentFragment : BaseMainFragment() {
             }
         }
 
-        craetePartyButton.setOnClickListener {
+        createPartyButton.setOnClickListener {
             val bundle = Bundle()
             bundle.putString("groupType", "party")
             bundle.putString("leader", user?.id)
