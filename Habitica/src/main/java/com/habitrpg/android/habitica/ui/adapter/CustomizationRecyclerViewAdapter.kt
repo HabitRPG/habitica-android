@@ -1,14 +1,18 @@
 package com.habitrpg.android.habitica.ui.adapter
 
 import android.content.Context
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
-import androidx.core.content.ContextCompat
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.core.os.bundleOf
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.databinding.CustomizationGridItemBinding
+import com.habitrpg.android.habitica.databinding.CustomizationSectionHeaderBinding
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.inventory.Customization
 import com.habitrpg.android.habitica.models.inventory.CustomizationSet
@@ -38,20 +42,15 @@ class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerVi
         this.notifyDataSetChanged()
     }
 
+    var ownedCustomiztations: List<String> = listOf()
+
     private val selectCustomizationEvents = PublishSubject.create<Customization>()
     private val unlockCustomizationEvents = PublishSubject.create<Customization>()
     private val unlockSetEvents = PublishSubject.create<CustomizationSet>()
 
     fun updateOwnership(ownedCustomizations: List<String>) {
-        for ((position, obj) in customizationList.withIndex()) {
-            if (obj.javaClass == Customization::class.java) {
-                val customization = obj as? Customization ?: return
-                if (customization.purchased != ownedCustomizations.contains(customization.id)) {
-                    customization.purchased = ownedCustomizations.contains(customization.id)
-                    notifyItemChanged(position)
-                }
-            }
-        }
+        this.ownedCustomiztations = ownedCustomizations
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder {
@@ -99,12 +98,12 @@ class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerVi
                 set.identifier = customization.customizationSet
                 set.text = customization.customizationSetName
                 set.price = customization.setPrice
-                set.hasPurchasable = !customization.isUsable
+                set.hasPurchasable = !customization.isUsable(ownedCustomiztations.contains(customization.identifier))
                 lastSet = set
                 customizationList.add(set)
             }
             customizationList.add(customization)
-            if (!customization.isUsable && !lastSet.hasPurchasable) {
+            if (!customization.isUsable(ownedCustomiztations.contains(customization.identifier)) && !lastSet.hasPurchasable) {
                 lastSet.hasPurchasable = true
             }
         }
@@ -125,45 +124,51 @@ class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerVi
 
     internal inner class CustomizationViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
-        private val cardView: androidx.cardview.widget.CardView by bindView(itemView, R.id.card_view)
-        private val linearLayout: RelativeLayout by bindView(itemView, R.id.linearLayout)
-        private val imageView: SimpleDraweeView by bindView(itemView, R.id.imageView)
-        private val purchaseOverlay: View by bindView(itemView, R.id.purchaseOverlay)
-
+        private val binding = CustomizationGridItemBinding.bind(itemView)
         var customization: Customization? = null
 
         init {
-            linearLayout.setOnClickListener(this)
+            itemView.setOnClickListener(this)
         }
 
         fun bind(customization: Customization) {
             this.customization = customization
 
-            if (customization.customizationSet?.contains("timeTravel") == true) {
-                DataBindingUtils.loadImage(this.imageView, customization.getImageName(userSize, hairColor), imageFormat = "gif")
-            } else {
-                DataBindingUtils.loadImage(this.imageView, customization.getImageName(userSize, hairColor))
-            }
-            cardView.setCardBackgroundColor(ContextCompat.getColor(itemView.context, android.R.color.white))
-            if (customization.isUsable) {
-                imageView.alpha = 1.0f
-                purchaseOverlay.alpha = 0.0f
-                if (customization.identifier == activeCustomization) {
-                    cardView.setCardBackgroundColor(ContextCompat.getColor(itemView.context, R.color.brand_500))
+            DataBindingUtils.loadImage(binding.imageView, customization.getIconName(userSize, hairColor))
+
+            if (customization.type == "background") {
+                val params = (binding.imageView.layoutParams as? LinearLayout.LayoutParams)?.apply {
+                    gravity = Gravity.CENTER
                 }
+                binding.imageView.layoutParams = params
+            }
+
+            if (customization.isUsable(ownedCustomiztations.contains(customization.identifier))) {
+                binding.buyButton.visibility = View.GONE
             } else {
-                imageView.alpha = 0.3f
-                purchaseOverlay.alpha = 0.8f
+                binding.buyButton.visibility = View.VISIBLE
+                if (customization.customizationSet?.contains("timeTravel") == true) {
+                    binding.priceLabel.currency = "hourglasses"
+                } else {
+                    binding.priceLabel.currency = "gems"
+                }
+                binding.priceLabel.value = customization.price?.toDouble() ?: 0.0
+            }
+
+            if (activeCustomization == customization.identifier) {
+                binding.wrapper.background = itemView.context.getDrawable(R.drawable.layout_rounded_bg_gray_700_brand_border)
+            } else {
+                binding.wrapper.background = itemView.context.getDrawable(R.drawable.layout_rounded_bg_gray_700)
             }
         }
 
         override fun onClick(v: View) {
-            if (customization?.isUsable == false) {
+            if (customization?.isUsable(ownedCustomiztations.contains(customization?.identifier)) == false) {
                 if (customization?.customizationSet?.contains("timeTravel") == true) {
                     val dialog = HabiticaAlertDialog(itemView.context)
                     dialog.setMessage(R.string.purchase_from_timetravel_shop)
                     dialog.addButton(R.string.go_shopping, true) { _, _ ->
-                        MainNavigationController.navigate(R.id.shopsFragment)
+                        MainNavigationController.navigate(R.id.shopsFragment, bundleOf(Pair("selectedTab", 3)))
                     }
                     dialog.addButton(R.string.reward_dialog_dismiss, false)
                     dialog.show()
@@ -209,23 +214,24 @@ class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerVi
 
     internal inner class SectionViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
+        private val binding = CustomizationSectionHeaderBinding.bind(itemView)
         private val label: TextView by bindView(itemView, R.id.label)
-        private val purchaseSetButton: Button by bindView(itemView, R.id.purchaseSetButton)
         var context: Context = itemView.context
         private var set: CustomizationSet? = null
 
         init {
-            purchaseSetButton.setOnClickListener(this)
+            binding.purchaseSetButton.setOnClickListener(this)
         }
 
         fun bind(set: CustomizationSet) {
             this.set = set
             this.label.text = set.text
             if (set.hasPurchasable && !set.identifier.contains("timeTravel")) {
-                this.purchaseSetButton.visibility = View.VISIBLE
-                this.purchaseSetButton.text = context.getString(R.string.purchase_set_button, set.price)
+                binding.purchaseSetButton.visibility = View.VISIBLE
+                binding.setPriceLabel.value = set.price.toDouble()
+                binding.setPriceLabel.currency = "gems"
             } else {
-                this.purchaseSetButton.visibility = View.GONE
+                binding.purchaseSetButton.visibility = View.GONE
             }
         }
 
@@ -245,11 +251,11 @@ class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerVi
                         customizationList
                                 .filter { Customization::class.java.isAssignableFrom(it.javaClass) }
                                 .map { it as Customization }
-                                .filter { !it.isUsable && it.customizationSet != null && it.customizationSet == set?.identifier }
+                                .filter { !it.isUsable(ownedCustomiztations.contains(it.identifier)) && it.customizationSet != null && it.customizationSet == set?.identifier }
                                 .forEach { set?.customizations?.add(it) }
                         if (additionalSetItems.isNotEmpty()) {
                             additionalSetItems
-                                    .filter { !it.isUsable && it.customizationSet != null && it.customizationSet == set?.identifier }
+                                    .filter { !it.isUsable(ownedCustomiztations.contains(it.identifier)) && it.customizationSet != null && it.customizationSet == set?.identifier }
                                     .forEach { set?.customizations?.add(it) }
                         }
                         set?.let {

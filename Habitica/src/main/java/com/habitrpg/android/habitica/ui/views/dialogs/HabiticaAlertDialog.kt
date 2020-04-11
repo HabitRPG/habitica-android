@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.ui.views.dialogs
 
 import android.app.Activity
 import android.content.Context
+import android.text.method.ScrollingMovementMethod
 import android.view.*
 import android.view.animation.AccelerateInterpolator
 import android.widget.*
@@ -61,7 +62,7 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
     }
 
     override fun setTitle(title: CharSequence?) {
-        if (title != null) {
+        if ((title?.length ?: 0) > 0) {
             titleTextView.visibility = View.VISIBLE
         } else {
             titleTextView.visibility = View.GONE
@@ -74,12 +75,13 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
     }
 
     override fun setMessage(message: CharSequence?) {
-        if (message != null) {
+        if ((message?.length ?: 0) > 0) {
             messageTextView.visibility = View.VISIBLE
         } else {
             messageTextView.visibility = View.GONE
         }
         messageTextView.text = message
+        messageTextView.movementMethod = ScrollingMovementMethod()
     }
 
     fun setMessage(messageId: Int) {
@@ -87,7 +89,7 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
     }
 
     fun setNotice(notice: CharSequence?) {
-        if (notice != null) {
+        if ((notice?.length ?: 0) > 0) {
             noticeTextView.visibility = View.VISIBLE
         } else {
             noticeTextView.visibility = View.GONE
@@ -147,10 +149,10 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
     fun getContentView(): View? = additionalContentView
 
     fun addButton(stringRes: Int, isPrimary: Boolean, isDestructive: Boolean = false, function: ((HabiticaAlertDialog, Int) -> Unit)? = null): Button {
-        return addButton(context.getString(stringRes), isPrimary, isDestructive, function)
+        return addButton(context.getString(stringRes), isPrimary, isDestructive, true, function)
     }
 
-    fun addButton(string: String, isPrimary: Boolean, isDestructive: Boolean = false, function: ((HabiticaAlertDialog, Int) -> Unit)? = null): Button {
+    fun addButton(string: String, isPrimary: Boolean, isDestructive: Boolean = false, autoDismiss: Boolean = true, function: ((HabiticaAlertDialog, Int) -> Unit)? = null): Button {
         val button: Button = if (isPrimary) {
             if (isDestructive) {
                 buttonsWrapper.inflate(R.layout.dialog_habitica_primary_destructive_button) as? Button
@@ -167,7 +169,7 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
         button.text = string
         button.minWidth = 147.dpToPx(context)
         button.setScaledPadding(context, 20, 0, 20, 0)
-        return addButton(button, true, function) as Button
+        return addButton(button, autoDismiss, function) as Button
     }
 
 

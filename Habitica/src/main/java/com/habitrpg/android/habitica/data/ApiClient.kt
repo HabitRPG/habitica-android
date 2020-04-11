@@ -52,9 +52,9 @@ interface ApiClient {
 
     fun equipItem(type: String, itemKey: String): Flowable<Items>
 
-    fun buyItem(itemKey: String): Flowable<BuyResponse>
+    fun buyItem(itemKey: String, purchaseQuantity: Int): Flowable<BuyResponse>
 
-    fun purchaseItem(type: String, itemKey: String): Flowable<Any>
+    fun purchaseItem(type: String, itemKey: String, purchaseQuantity: Int): Flowable<Any>
 
     fun purchaseHourglassItem(type: String, itemKey: String): Flowable<Any>
 
@@ -63,6 +63,7 @@ interface ApiClient {
     fun purchaseQuest(key: String): Flowable<Any>
     fun validateSubscription(request: SubscriptionValidationRequest): Flowable<Any>
     fun validateNoRenewSubscription(request: PurchaseValidationRequest): Flowable<Any>
+    fun cancelSubscription(): Flowable<Any>
 
     fun sellItem(itemType: String, itemKey: String): Flowable<User>
 
@@ -103,6 +104,8 @@ interface ApiClient {
     fun connectUser(username: String, password: String): Flowable<UserAuthResponse>
 
     fun connectSocial(network: String, userId: String, accessToken: String): Flowable<UserAuthResponse>
+    fun loginApple(authToken: String): Flowable<UserAuthResponse>
+
     fun sleep(): Flowable<Boolean>
 
     fun revive(): Flowable<User>

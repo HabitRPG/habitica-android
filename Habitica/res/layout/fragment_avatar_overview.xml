@@ -33,7 +33,8 @@
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp">
+                    android:layout_height="50dp"
+                    android:gravity="center_vertical">
 
                     <TextView
                         android:layout_width="0dp"
@@ -52,7 +53,6 @@
                         android:layout_height="match_parent"
                         android:id="@+id/avatarSizeSpinner"
                         android:spinnerMode="dropdown"
-                        android:layout_marginRight="8dp"
                         android:layout_marginEnd="8dp"
                         android:entries="@array/avatar_sizes"/>
                 </LinearLayout>
@@ -66,11 +66,57 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/avatarSkinView"
                     app:equipmentTitle="@string/avatar_skin"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/avatar_extras"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            style="@style/SectionTitle"/>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/CardView.Default">
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="?android:listDivider"
+                android:showDividers="middle">
+                <com.habitrpg.android.habitica.ui.views.EquipmentItemRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/avatar_glasses_view"
+                    app:equipmentTitle="@string/avatar_glasses"/>
                 <com.habitrpg.android.habitica.ui.views.EquipmentItemRow
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/avatarChairView"
                     app:equipmentTitle="@string/avatar_wheelchair"/>
+                <com.habitrpg.android.habitica.ui.views.EquipmentItemRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/avatar_accent_view"
+                    app:equipmentTitle="@string/avatar_accent" />
+                <com.habitrpg.android.habitica.ui.views.EquipmentItemRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/avatar_animal_ears_view"
+                    android:visibility="gone"
+                    app:equipmentTitle="@string/animal_ears"/>
+                <com.habitrpg.android.habitica.ui.views.EquipmentItemRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/avatar_animal_tail_view"
+                    android:visibility="gone"
+                    app:equipmentTitle="@string/animal_tail"/>
+                <com.habitrpg.android.habitica.ui.views.EquipmentItemRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/avatar_headband_view"
+                    app:equipmentTitle="@string/avatar_headband"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
         <TextView
@@ -105,11 +151,6 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/avatarHairBangsView"
                     app:equipmentTitle="@string/avatar_bangs" />
-                <com.habitrpg.android.habitica.ui.views.EquipmentItemRow
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/avatarHairFlowerView"
-                    app:equipmentTitle="@string/avatar_flower" />
                 <com.habitrpg.android.habitica.ui.views.EquipmentItemRow
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

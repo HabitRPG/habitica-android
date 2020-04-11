@@ -16,6 +16,7 @@ open class QuestContent : RealmObject(), Item {
     }
     internal var text: String = ""
     var notes: String = ""
+    var completion: String = ""
     internal var value: Int = 0
     var previous: String? = null
     var lvl: Int = 0

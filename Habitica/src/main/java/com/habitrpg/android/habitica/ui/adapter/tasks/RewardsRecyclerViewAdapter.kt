@@ -75,7 +75,7 @@ class RewardsRecyclerViewAdapter(private var customRewards: OrderedRealmCollecti
         } else if (inAppRewards != null) {
             val item = inAppRewards?.get(position - customRewardCount) ?: return
             if (holder is ShopItemViewHolder) {
-                holder.bind(item, item.canAfford(user, configManager.insufficientGemPurchase()))
+                holder.bind(item, item.canAfford(user, 1))
                 holder.isPinned = true
                 holder.hidePinIndicator()
             }

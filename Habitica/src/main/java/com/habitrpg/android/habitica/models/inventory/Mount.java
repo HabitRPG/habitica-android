@@ -1,7 +1,5 @@
 package com.habitrpg.android.habitica.models.inventory;
 
-import androidx.annotation.Nullable;
-
 import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;

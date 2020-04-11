@@ -110,7 +110,12 @@
     <fragment
         android:id="@+id/shopsFragment"
         android:name="com.habitrpg.android.habitica.ui.fragments.inventory.shops.ShopsFragment"
-        android:label="@string/sidebar_shops" />
+        android:label="@string/sidebar_shops" >
+        <argument
+            android:name="selectedTab"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
     <fragment
         android:id="@+id/avatarOverviewFragment"
         android:name="com.habitrpg.android.habitica.ui.fragments.inventory.customization.AvatarOverviewFragment"
@@ -118,6 +123,9 @@
         <action
             android:id="@+id/openAvatarDetail"
             app:destination="@id/avatarCustomizationFragment" />
+        <action
+            android:id="@+id/openAvatarEquipment"
+            app:destination="@id/avatarEquipmentFragment" />
     </fragment>
     <fragment
         android:id="@+id/itemsFragment"
@@ -197,12 +205,20 @@
         android:label="@string/sidebar_news" />
     <fragment
         android:id="@+id/FAQOverviewFragment"
-        android:name="com.habitrpg.android.habitica.ui.fragments.faq.FAQOverviewFragment"
-        android:label="@string/sidebar_help" >
+        android:name="com.habitrpg.android.habitica.ui.fragments.support.FAQOverviewFragment"
+        android:label="@string/habitica_questions">
         <deepLink app:uri="habitica.com/static/faq" />
         <action
             android:id="@+id/openFAQDetail"
             app:destination="@id/FAQDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/FAQDetailFragment"
+        android:name="com.habitrpg.android.habitica.ui.fragments.support.FAQDetailFragment"
+        android:label="@string/sidebar_help" >
+        <argument
+            android:name="position"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/aboutFragment"
@@ -242,16 +258,19 @@
             app:destination="@id/guildFragment" />
     </fragment>
     <fragment
-        android:id="@+id/FAQDetailFragment"
-        android:name="com.habitrpg.android.habitica.ui.fragments.faq.FAQDetailFragment"
-        android:label="@string/sidebar_help" >
-        <argument
-            android:name="position"
-            app:argType="integer" />
-    </fragment>
-    <fragment
         android:id="@+id/avatarCustomizationFragment"
         android:name="com.habitrpg.android.habitica.ui.fragments.inventory.customization.AvatarCustomizationFragment"
+        android:label="@string/sidebar_avatar" >
+        <argument
+            android:name="type"
+            app:argType="string" />
+        <argument
+            android:name="category"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/avatarEquipmentFragment"
+        android:name="com.habitrpg.android.habitica.ui.fragments.inventory.customization.AvatarEquipmentFragment"
         android:label="@string/sidebar_avatar" >
         <argument
             android:name="type"
@@ -382,4 +401,32 @@
             app:argType="string"
             app:nullable="true" />
     </fragment>
+    <fragment
+        android:id="@+id/marketFragment"
+        android:name="com.habitrpg.android.habitica.ui.fragments.inventory.shops.MarketFragment"
+        android:label="@string/market" />
+    <fragment
+        android:id="@+id/questShopFragment"
+        android:name="com.habitrpg.android.habitica.ui.fragments.inventory.shops.QuestShopFragment"
+        android:label="@string/questShop" />
+    <fragment
+        android:id="@+id/seasonalShopFragment"
+        android:name="com.habitrpg.android.habitica.ui.fragments.inventory.shops.SeasonalShopFragment"
+        android:label="@string/seasonalShop" />
+    <fragment
+        android:id="@+id/timeTravelersShopFragment"
+        android:name="com.habitrpg.android.habitica.ui.fragments.inventory.shops.TimeTravelersShopFragment"
+        android:label="@string/timeTravelers" />
+    <fragment
+        android:id="@+id/supportMainFragment"
+        android:name="com.habitrpg.android.habitica.ui.fragments.support.SupportMainFragment"
+        android:label="@string/support" >
+        <action
+            android:id="@+id/showFAQFragment"
+            app:destination="@id/FAQOverviewFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/bugFixFragment"
+        android:name="com.habitrpg.android.habitica.ui.fragments.support.BugFixFragment"
+        android:label="@string/bugs_fixes" />
 </navigation>

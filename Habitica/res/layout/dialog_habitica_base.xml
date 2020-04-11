@@ -57,6 +57,7 @@
             android:paddingStart="@dimen/alert_side_padding"
             android:paddingEnd="@dimen/alert_side_padding"
             android:textColor="?textColorSecondary"
+            android:scrollbars = "vertical"
             style="@style/Body2"
             />
         <androidx.core.widget.NestedScrollView

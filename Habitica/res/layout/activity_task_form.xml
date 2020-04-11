@@ -83,7 +83,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/cost"
                     style="@style/TaskFormSectionheader"/>
-                <com.habitrpg.android.habitica.ui.views.tasks.form.RewardValueFormView
+                <com.habitrpg.android.habitica.ui.views.tasks.form.StepperValueFormView
                     android:id="@+id/reward_value"
                     android:layout_width="match_parent"
                     android:layout_height="56dp" />

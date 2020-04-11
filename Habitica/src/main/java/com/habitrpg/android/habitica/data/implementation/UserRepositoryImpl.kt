@@ -141,7 +141,7 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
                     copiedUser.preferences = unlockResponse.preferences
                     copiedUser.purchased = unlockResponse.purchased
                     copiedUser.items = unlockResponse.items
-                    copiedUser.balance = copiedUser.balance - customization.price / 4.0
+                    copiedUser.balance = copiedUser.balance - (customization.price ?: 0) / 4.0
                     localRepository.saveUser(copiedUser)
                 }
     }
@@ -352,6 +352,10 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
         if (newUser.profile != null) {
             copiedUser.profile = newUser.profile
         }
+        if (newUser.party != null) {
+            copiedUser.party = newUser.party
+        }
+        copiedUser.needsCron = newUser.needsCron
         copiedUser.versionNumber = newUser.versionNumber
 
         localRepository.saveUser(copiedUser)

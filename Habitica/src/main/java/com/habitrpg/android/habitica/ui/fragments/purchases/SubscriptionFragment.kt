@@ -2,16 +2,20 @@ package com.habitrpg.android.habitica.ui.fragments.purchases
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import androidx.core.view.isVisible
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
+import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentSubscriptionBinding
 import com.habitrpg.android.habitica.events.UserSubscribedEvent
+import com.habitrpg.android.habitica.extensions.addCancelButton
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.PurchaseHandler
 import com.habitrpg.android.habitica.helpers.PurchaseTypes
@@ -20,12 +24,16 @@ import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
 import com.habitrpg.android.habitica.ui.activities.GemPurchaseActivity
 import com.habitrpg.android.habitica.ui.activities.GiftOneGetOneInfoActivity
+import com.habitrpg.android.habitica.ui.activities.GiftSubscriptionActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
+import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
+import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView
 import io.reactivex.functions.Consumer
 import org.greenrobot.eventbus.Subscribe
 import org.solovyev.android.checkout.Inventory
+import org.solovyev.android.checkout.Purchase
 import org.solovyev.android.checkout.Sku
 import javax.inject.Inject
 
@@ -40,6 +48,8 @@ class SubscriptionFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
     lateinit var appConfigManager: AppConfigManager
     @Inject
     lateinit var inventoryRepository: InventoryRepository
+    @Inject
+    lateinit var apiClient: ApiClient
 
     private var selectedSubscriptionSku: Sku? = null
     private var skus: List<Sku> = emptyList()
@@ -48,6 +58,7 @@ class SubscriptionFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
 
     private var user: User? = null
     private var hasLoadedSubscriptionOptions: Boolean = false
+    private var purchasedSubscription: Purchase? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -82,17 +93,15 @@ class SubscriptionFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
 
         binding.refreshLayout.setOnRefreshListener { refresh() }
 
-        if (appConfigManager.useNewMysteryBenefits()) {
-            compositeSubscription.add(inventoryRepository.getLatestMysteryItem().subscribe(Consumer {
-                DataBindingUtils.loadImage(binding.subBenefitsMysteryItemIcon, "shop_set_mystery_${it.key?.split("_")?.last()}")
-                binding.subBenefitsMysteryItemText.text = context?.getString(R.string.subscribe_listitem3_description_new, it.text)
-            }, RxErrorHandler.handleEmptyError()))
-        }
+        compositeSubscription.add(inventoryRepository.getLatestMysteryItem().subscribe(Consumer {
+            DataBindingUtils.loadImage(binding.subBenefitsMysteryItemIcon, "shop_set_mystery_${it.key?.split("_")?.last()}")
+            binding.subBenefitsMysteryItemText.text = context?.getString(R.string.subscribe_listitem3_description_new, it.text)
+        }, RxErrorHandler.handleEmptyError()))
     }
 
     override fun onResume() {
         super.onResume()
-        refresh();
+        refresh()
     }
 
     private fun refresh() {
@@ -165,12 +174,18 @@ class SubscriptionFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
 
     override fun setPurchaseHandler(handler: PurchaseHandler?) {
         this.purchaseHandler = handler
+
+        handler?.checkForSubscription {
+            purchasedSubscription = it
+            checkIfNeedsCancellation()
+        }
     }
 
     private fun purchaseSubscription() {
         selectedSubscriptionSku?.let { sku ->
             purchaseHandler?.purchaseSubscription(sku) {
                 fetchUser(null)
+                binding.scrollView.smoothScrollTo(0, 0)
             }
         }
     }
@@ -178,6 +193,10 @@ class SubscriptionFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
     fun setUser(newUser: User) {
         user = newUser
         this.updateSubscriptionInfo()
+        purchaseHandler?.checkForSubscription {
+            purchasedSubscription = it
+            checkIfNeedsCancellation()
+        }
     }
 
     private fun updateSubscriptionInfo() {
@@ -208,10 +227,20 @@ class SubscriptionFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
         }
     }
 
+    private fun checkIfNeedsCancellation() {
+        if (user?.purchased?.plan?.paymentMethod == "Google" &&
+                user?.purchased?.plan?.isActive == true &&
+                (purchasedSubscription?.autoRenewing == false ||purchasedSubscription == null)) {
+            compositeSubscription.add(apiClient.cancelSubscription().subscribe(Consumer {
+                refresh()
+            }, RxErrorHandler.handleEmptyError()))
+        }
+    }
+
     private fun showSubscriptionOptions() {
         binding.subscriptionOptions.visibility = View.VISIBLE
         binding.subscriptionOptions.postDelayed({
-            binding.scrollView.smoothScrollTo(0, binding.subscriptionOptions.top ?: 0)
+            binding.scrollView.smoothScrollTo(0, binding.subscriptionOptions.top)
         }, 500)
     }
 
@@ -220,7 +249,28 @@ class SubscriptionFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
     }
 
     private fun showGiftSubscriptionDialog() {
-        val intent = Intent(context, GiftOneGetOneInfoActivity::class.java)
-        context?.startActivity(intent)
+        if (appConfigManager.enableGiftOneGetOne()) {
+            val intent = Intent(context, GiftOneGetOneInfoActivity::class.java)
+            context?.startActivity(intent)
+        } else {
+            val chooseRecipientDialogView = this.activity?.layoutInflater?.inflate(R.layout.dialog_choose_message_recipient, null)
+
+            this.activity?.let { thisActivity ->
+                val alert = HabiticaAlertDialog(thisActivity)
+                alert.setTitle(getString(R.string.gift_title))
+                alert.addButton(getString(R.string.action_continue), true) { _, _ ->
+                    val usernameEditText = chooseRecipientDialogView?.findViewById<View>(R.id.uuidEditText) as? EditText
+                    val intent = Intent(thisActivity, GiftSubscriptionActivity::class.java).apply {
+                        putExtra("username", usernameEditText?.text.toString())
+                    }
+                    startActivity(intent)
+                }
+                alert.addCancelButton { _, _ ->
+                    thisActivity.dismissKeyboard()
+                }
+                alert.setAdditionalContentView(chooseRecipientDialogView)
+                alert.show()
+            }
+        }
     }
 }

@@ -272,11 +272,11 @@
     </style>
 
     <style name="AlertDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
-        <item name="colorAccent">@color/brand_100</item>
+        <item name="colorAccent">@color/brand_400</item>
     </style>
 
     <style name="HabiticaAlertDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
-        <item name="colorAccent">@color/brand_100</item>
+        <item name="colorAccent">@color/brand_400</item>
         <item name="android:windowFrame">@null</item>
         <item name="android:windowIsFloating">true</item>
         <item name="android:windowContentOverlay">@null</item>
@@ -291,6 +291,13 @@
         <item name="android:paddingLeft">@dimen/section_leftright_padding</item>
         <item name="android:paddingRight">@dimen/section_leftright_padding</item>
         <item name="android:paddingTop">@dimen/section_top_padding</item>
+    </style>
+
+    <style name="SectionHeaderCaps">
+        <item name="android:textSize">10sp</item>
+        <item name="android:textColor">@color/gray_200</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:layout_marginStart">@dimen/spacing_large</item>
     </style>
 
     <style name="BottomMenu">
@@ -310,9 +317,7 @@
 
     <style name="EmptyView">
         <item name="android:padding">@dimen/section_top_padding</item>
-        <item name="android:layout_gravity">center</item>
         <item name="android:gravity">center</item>
-        <item name="android:background">@color/white</item>
         <item name="android:layout_marginLeft">20dp</item>
         <item name="android:layout_marginRight">20dp</item>
     </style>

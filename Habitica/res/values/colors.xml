@@ -125,6 +125,7 @@
     <color name="black_20_alpha">#33000000</color>
     <color name="black_50_alpha">#89000000</color>
     <color name="gray_20_alpha">#331a181d</color>
+    <color name="blue_500_24">#3CA9DCF6</color>
     <color name="light_gray_bg">#F6F4F8</color>
 
     <color name="skin_ddc994">#ddc994</color>

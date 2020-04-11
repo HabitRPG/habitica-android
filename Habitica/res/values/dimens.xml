@@ -50,7 +50,7 @@
     <dimen name="grid_item_margin">6dp</dimen>
     <dimen name="avatar_small_width">90dp</dimen>
     <dimen name="avatar_small_height">90dp</dimen>
-    <dimen name="customization_width">100dp</dimen>
+    <dimen name="customization_width">76dp</dimen>
     <dimen name="gear_image_size">68dp</dimen>
     <dimen name="row_padding">12dp</dimen>
     <dimen name="row_title_size">16sp</dimen>

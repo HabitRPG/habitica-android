@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toDrawable
 import androidx.core.os.bundleOf
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
@@ -57,20 +58,16 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
     private val buyButton: View
     private val priceLabel: CurrencyView
     private val buyLabel: TextView
+    private var amountErrorLabel: TextView? = null
     private val pinButton: Button by bindView(customHeader, R.id.pin_button)
+
+    private var purchaseQuantity = 1
 
     var purchaseCardAction: ((ShopItem) -> Unit)? = null
 
     private var shopItem: ShopItem = item
         set(value) {
             field = value
-
-            if (shopItem.unlockCondition == null) {
-                priceLabel.value = shopItem.value.toDouble()
-                priceLabel.currency = shopItem.currency
-            } else {
-                setBuyButtonEnabled(false)
-            }
 
             if (shopItem.isLimited) {
                 //TODO: replace with correct date once API is final
@@ -79,7 +76,20 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
                 limitedTextView.visibility = View.GONE
             }
 
-            priceLabel.isLocked = shopItem.locked
+            if (shopItem.lockedReason(context) == null) {
+                updatePurchaseTotal()
+                priceLabel.currency = shopItem.currency
+            } else {
+                limitedTextView.text = shopItem.lockedReason(context)
+            }
+            if (shopItem.locked) {
+                buyLabel.text = context.getString(R.string.locked)
+                limitedTextView.visibility = View.VISIBLE
+                limitedTextView.background = ContextCompat.getColor(context, R.color.gray_600).toDrawable()
+                limitedTextView.setTextColor(ContextCompat.getColor(context, R.color.gray_100))
+            }
+
+            priceLabel.isLocked = shopItem.locked || shopItem.lockedReason(context) != null
 
             val contentView: PurchaseDialogContent
             when {
@@ -93,12 +103,42 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
                     inventoryRepository.getEquipment(shopItem.key).firstElement().subscribe(Consumer<Equipment> { contentView.setEquipment(it) }, RxErrorHandler.handleEmptyError())
                     checkGearClass()
                 }
-                "gems" == shopItem.purchaseType -> contentView = PurchaseDialogGemsContent(context)
+                "gems" == shopItem.purchaseType -> {
+                    val gemContent = PurchaseDialogGemsContent(context)
+                    gemContent.stepperView.onValueChanged = {
+                        purchaseQuantity = it.toInt()
+                        updatePurchaseTotal()
+                    }
+                    contentView = gemContent
+                }
                 else -> contentView = PurchaseDialogBaseContent(context)
             }
+
+            amountErrorLabel = contentView.findViewById(R.id.amount_error_label)
+
             contentView.setItem(shopItem)
             setAdditionalContentView(contentView)
         }
+
+    private fun updatePurchaseTotal() {
+        priceLabel.value = shopItem.value.toDouble() * purchaseQuantity
+
+        if (shopItem.canAfford(user, purchaseQuantity) && !shopItem.locked && purchaseQuantity >= 1) {
+            buyButton.background = context.getDrawable(R.drawable.button_background_primary)
+            priceLabel.setTextColor(ContextCompat.getColor(context, R.color.white))
+            buyLabel.setTextColor(ContextCompat.getColor(context, R.color.white))
+        } else {
+            buyButton.background = context.getDrawable(R.drawable.button_background_gray_600)
+            priceLabel.setTextColor(ContextCompat.getColor(context, R.color.gray_100))
+            buyLabel.setTextColor(ContextCompat.getColor(context, R.color.gray_100))
+        }
+
+        if (purchaseQuantity < 1 || (shopItem.limitedNumberLeft != null && (shopItem.limitedNumberLeft ?: 0) < purchaseQuantity)) {
+            amountErrorLabel?.visibility = View.VISIBLE
+        } else {
+            amountErrorLabel?.visibility = View.GONE
+        }
+    }
 
     private fun checkGearClass() {
         val user = user ?: return
@@ -176,15 +216,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
         }
 
         buyButton.elevation = 0f
-        if (shopItem.canAfford(user, configManager.insufficientGemPurchase())) {
-            buyButton.background = context.getDrawable(R.drawable.button_background_primary)
-            priceLabel.setTextColor(ContextCompat.getColor(context, R.color.white))
-            buyLabel.setTextColor(ContextCompat.getColor(context, R.color.white))
-        } else {
-            buyButton.background = context.getDrawable(R.drawable.button_background_gray_700)
-            priceLabel.setTextColor(ContextCompat.getColor(context, R.color.gray_200))
-            buyLabel.setTextColor(ContextCompat.getColor(context, R.color.gray_200))
-        }
+        updatePurchaseTotal()
 
         if (shopItem.isTypeGear) {
             checkGearClass()
@@ -204,9 +236,9 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
         val snackbarText = arrayOf("")
         if (shopItem.isValid && !shopItem.locked) {
             val gemsLeft = if (shopItem.limitedNumberLeft != null) shopItem.limitedNumberLeft else 0
-            if ((gemsLeft == 0 && shopItem.purchaseType == "gems") || shopItem.canAfford(user, false)) {
+            if ((gemsLeft == 0 && shopItem.purchaseType == "gems") || shopItem.canAfford(user, purchaseQuantity)) {
                 val observable: Flowable<Any>
-                if (shopIdentifier != null && shopIdentifier == Shop.TIME_TRAVELERS_SHOP || "mystery_set" == shopItem.purchaseType) {
+                if (shopIdentifier != null && shopIdentifier == Shop.TIME_TRAVELERS_SHOP || "mystery_set" == shopItem.purchaseType || shopItem.currency == "hourglasses") {
                     observable = if (shopItem.purchaseType == "gear") {
                         inventoryRepository.purchaseMysterySet(shopItem.key)
                     } else {
@@ -219,7 +251,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
                     dismiss()
                     return
                 } else if ("gold" == shopItem.currency && "gem" != shopItem.key) {
-                    observable = inventoryRepository.buyItem(user, shopItem.key, shopItem.value.toDouble()).map { buyResponse ->
+                    observable = inventoryRepository.buyItem(user, shopItem.key, shopItem.value.toDouble(), purchaseQuantity).map { buyResponse ->
                         if (shopItem.key == "armoire") {
                             snackbarText[0] = when {
                                 buyResponse.armoire["type"] == "gear" -> context.getString(R.string.armoireEquipment, buyResponse.armoire["dropText"])
@@ -230,7 +262,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
                         buyResponse
                     }
                 } else {
-                    observable = inventoryRepository.purchaseItem(shopItem.purchaseType, shopItem.key)
+                    observable = inventoryRepository.purchaseItem(shopItem.purchaseType, shopItem.key, purchaseQuantity)
                 }
                 observable
                         .doOnNext {
@@ -253,7 +285,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
                         .flatMap { userRepository.retrieveUser(withTasks = false, forced = true) }
                         .flatMap { inventoryRepository.retrieveInAppRewards() }
                         .subscribe({
-                            if (item.isTypeGear) {
+                            if (item.isTypeGear || item.currency == "hourglasses") {
                                 EventBus.getDefault().post(GearPurchasedEvent(item))
                             }
                         }) { throwable ->
@@ -278,12 +310,5 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
         dismiss()
     }
 
-    private fun setBuyButtonEnabled(enabled: Boolean) {
-        if (enabled) {
-            buyButton.alpha = 0.5f
-        } else {
-            buyButton.alpha = 1.0f
-        }
-    }
 }
 

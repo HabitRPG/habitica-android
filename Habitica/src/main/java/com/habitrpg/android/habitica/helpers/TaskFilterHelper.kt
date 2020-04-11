@@ -4,6 +4,7 @@ import com.habitrpg.android.habitica.models.tasks.Task
 import io.realm.Case
 import io.realm.OrderedRealmCollection
 import io.realm.RealmQuery
+import io.realm.Sort
 import java.util.*
 
 class TaskFilterHelper {
@@ -99,7 +100,12 @@ class TaskFilterHelper {
                 query = query.`in`("tags.id", tagsId.toTypedArray())
             }
             if (searchQuery?.isNotEmpty() == true) {
-                query = query.beginsWith("text", searchQuery ?: "", Case.INSENSITIVE)
+                query = query
+                        .beginGroup()
+                        .contains("text", searchQuery ?: "", Case.INSENSITIVE)
+                        .or()
+                        .contains("notes", searchQuery ?: "", Case.INSENSITIVE)
+                        .endGroup()
             }
             if (activeFilter != null && activeFilter != Task.FILTER_ALL) {
                 when (activeFilter) {
@@ -114,6 +120,9 @@ class TaskFilterHelper {
                     Task.FILTER_DATED -> query = query.isNotNull("dueDate").equalTo("completed", false).sort("dueDate")
                     Task.FILTER_COMPLETED -> query = query.equalTo("completed", true)
                 }
+            }
+            if (activeFilter != Task.FILTER_DATED) {
+                query = query.sort("position", Sort.ASCENDING, "dateCreated", Sort.DESCENDING)
             }
         }
         return query

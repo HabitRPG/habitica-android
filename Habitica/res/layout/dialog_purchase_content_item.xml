@@ -31,4 +31,13 @@
         android:textColor="@color/black_50_alpha"
         tools:text="These are the notes"
         android:gravity="center"/>
+    <TextView
+        android:id="@+id/amount_error_label"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:text="@string/purchase_amount_error"
+        android:textSize="12sp"
+        android:textColor="@color/gray_200"
+        android:layout_marginTop="@dimen/spacing_medium"
+        android:gravity="center_horizontal"/>
 </merge>

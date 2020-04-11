@@ -10,6 +10,7 @@ import com.habitrpg.android.habitica.models.responses.TaskDirection
 import com.habitrpg.android.habitica.models.responses.TaskDirectionData
 import com.habitrpg.android.habitica.models.responses.TaskScoringResult
 import com.habitrpg.android.habitica.models.tasks.*
+import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.Flowable
 import io.reactivex.Maybe
@@ -137,6 +138,23 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
                     }
                 }
             }
+            res._tmp?.drop?.key?.let { key ->
+                val type = when(res._tmp?.drop?.type?.toLowerCase(Locale.US)) {
+                    "hatchingpotion" -> "hatchingPotions"
+                    "egg" -> "eggs"
+                    else -> res._tmp?.drop?.type?.toLowerCase(Locale.US)
+                }
+                var item = it.where(OwnedItem::class.java).equalTo("itemType", type).equalTo("key", key).findFirst()
+                if (item == null) {
+                    item = OwnedItem()
+                    item.key = key
+                    item.itemType = type
+                    item.userID = user.id
+                }
+                item.numberOwned += 1
+                it.insertOrUpdate(item)
+            }
+
             val stats = bgUser.stats
             stats?.hp = res.hp
             stats?.exp = res.exp

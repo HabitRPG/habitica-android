@@ -8,10 +8,12 @@ import android.widget.TextView
 import com.facebook.drawee.backends.pipeline.Fresco
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.helpers.bindView
+
 
 abstract class PurchaseDialogContent : LinearLayout {
 
@@ -43,6 +45,10 @@ abstract class PurchaseDialogContent : LinearLayout {
                     .setAutoPlayAnimations(true)
                     .build()
             imageView.controller = controller
+            val params = imageView.layoutParams
+            params.height = 147.dpToPx(context)
+            params.width = 140.dpToPx(context)
+            imageView.layoutParams = params
         } else {
             DataBindingUtils.loadImage(imageView, item.imageName)
         }

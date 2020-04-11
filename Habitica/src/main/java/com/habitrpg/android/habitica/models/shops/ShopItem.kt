@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.models.shops
 
+import android.content.Context
 import android.content.res.Resources
 
 import com.google.gson.annotations.SerializedName
@@ -12,6 +13,10 @@ import io.realm.annotations.PrimaryKey
 open class ShopItem : RealmObject() {
     @PrimaryKey
     var key: String = ""
+    set(value) {
+        field = value
+        unlockCondition?.questKey = key
+    }
     var text: String? = ""
     var notes: String? = ""
     @SerializedName("class")
@@ -36,11 +41,20 @@ open class ShopItem : RealmObject() {
     var categoryIdentifier: String = ""
     var limitedNumberLeft: Int? = null
     var unlockCondition: ShopItemUnlockCondition? = null
+    set(value) {
+        field = value
+        if (key.isNotEmpty()) {
+            field?.questKey = key
+        }
+    }
     var path: String? = null
     var isSuggested: String? = null
     var pinType: String? = null
     @SerializedName("klass")
     var habitClass: String? = null
+    var previous: String? = null
+    @SerializedName("lvl")
+    var level: Int? = null
 
     val isTypeItem: Boolean
         get() = "eggs" == purchaseType || "hatchingPotions" == purchaseType || "food" == purchaseType || "armoire" == purchaseType || "potion" == purchaseType
@@ -54,10 +68,10 @@ open class ShopItem : RealmObject() {
     val isTypeAnimal: Boolean
         get() = "pets" == purchaseType || "mounts" == purchaseType
 
-    fun canAfford(user: User?, canAlwaysAffordSpecial: Boolean): Boolean = when(currency) {
-        "gold" -> value <= user?.stats?.gp ?: 0.0
-        "gems" -> if (canAlwaysAffordSpecial) true else value <= user?.gemCount ?: 0
-        "hourglasses" -> if (canAlwaysAffordSpecial) true else value <= user?.purchased?.plan?.consecutive?.trinkets ?: 0
+    fun canAfford(user: User?, quantity: Int): Boolean = when(currency) {
+        "gold" -> (value * quantity) <= user?.stats?.gp ?: 0.0
+        "gems" -> true
+        "hourglasses" -> true
         else -> false
     }
 
@@ -71,6 +85,46 @@ open class ShopItem : RealmObject() {
 
     override fun hashCode(): Int {
         return this.key.hashCode()
+    }
+
+    fun shortLockedReason(context: Context): String? {
+        return when {
+            unlockCondition != null -> {
+                unlockCondition?.shortReadableUnlockCondition(context)
+            }
+            previous != null -> {
+                try {
+                    val thisNumber = Character.getNumericValue(key.last())
+                    context.getString(R.string.unlock_previous_short, thisNumber - 1)
+                } catch (e: NumberFormatException) {
+                    null
+                }
+            }
+            level != null -> {
+                context.getString(R.string.unlock_level_short, level ?: 0)
+            }
+            else -> null
+        }
+    }
+
+    fun lockedReason(context: Context): String? {
+        return when {
+            unlockCondition != null -> {
+                unlockCondition?.readableUnlockCondition(context)
+            }
+            previous != null -> {
+                try {
+                    val thisNumber = Character.getNumericValue(key.last())
+                    context.getString(R.string.unlock_previous, thisNumber - 1)
+                } catch (e: NumberFormatException) {
+                    null
+                }
+            }
+            level != null -> {
+                context.getString(R.string.unlock_level, level ?: 0)
+            }
+            else -> null
+        }
     }
 
     companion object {

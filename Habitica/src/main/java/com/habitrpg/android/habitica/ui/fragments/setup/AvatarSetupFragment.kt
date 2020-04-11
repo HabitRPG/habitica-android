@@ -146,6 +146,7 @@ class AvatarSetupFragment : BaseFragment() {
         if (this.adapter != null) {
             this.adapter?.user = user
             this.adapter?.notifyDataSetChanged()
+            loadCustomizations()
         }
     }
 

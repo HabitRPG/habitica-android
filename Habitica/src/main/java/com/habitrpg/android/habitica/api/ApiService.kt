@@ -62,10 +62,10 @@ interface ApiService {
     fun equipItem(@Path("type") type: String, @Path("key") itemKey: String): Flowable<HabitResponse<Items>>
 
     @POST("user/buy/{key}")
-    fun buyItem(@Path("key") itemKey: String): Flowable<HabitResponse<BuyResponse>>
+    fun buyItem(@Path("key") itemKey: String, @Body quantity: Map<String, Int>): Flowable<HabitResponse<BuyResponse>>
 
     @POST("user/purchase/{type}/{key}")
-    fun purchaseItem(@Path("type") type: String, @Path("key") itemKey: String): Flowable<HabitResponse<Void>>
+    fun purchaseItem(@Path("type") type: String, @Path("key") itemKey: String, @Body quantity: Map<String, Int>): Flowable<HabitResponse<Void>>
 
     @POST("user/purchase-hourglass/{type}/{key}")
     fun purchaseHourglassItem(@Path("type") type: String, @Path("key") itemKey: String): Flowable<HabitResponse<Void>>
@@ -138,6 +138,8 @@ interface ApiService {
     @POST("user/auth/social")
     fun connectSocial(@Body auth: UserAuthSocial): Flowable<HabitResponse<UserAuthResponse>>
 
+    @POST("user/auth/apple")
+    fun loginApple(@Body auth: Map<String, Any>): Flowable<HabitResponse<UserAuthResponse>>
 
     @POST("user/sleep")
     fun sleep(): Flowable<HabitResponse<Boolean>>
@@ -247,6 +249,9 @@ interface ApiService {
 
     @POST("/iap/android/subscribe")
     fun validateSubscription(@Body request: SubscriptionValidationRequest): Flowable<HabitResponse<Void>>
+
+    @GET("/iap/android/subscribe/cancel")
+    fun cancelSubscription(): Flowable<HabitResponse<Void>>
 
     @POST("/iap/android/norenew-subscribe")
     fun validateNoRenewSubscription(@Body request: PurchaseValidationRequest): Flowable<HabitResponse<Void>>

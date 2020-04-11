@@ -72,5 +72,9 @@
         <key>insufficientGemPurchaseAdjust</key>
         <value>false</value>
     </entry>
+    <entry>
+        <key>raiseShops</key>
+        <value>false</value>
+    </entry>
 </defaultsMap>
     <!-- END xml_defaults -->

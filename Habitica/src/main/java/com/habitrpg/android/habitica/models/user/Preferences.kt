@@ -6,6 +6,7 @@ import com.habitrpg.android.habitica.models.AvatarPreferences
 
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
+import java.util.*
 
 open class Preferences : RealmObject(), AvatarPreferences {
 
@@ -33,6 +34,7 @@ open class Preferences : RealmObject(), AvatarPreferences {
     var timezoneOffset: Int = 0
     var timezoneOffsetAtLastCron: Int = 0
     var pushNotifications: PushNotificationsPreference? = null
+    var emailNotifications: EmailNotificationsPreference? = null
     var autoEquip: Boolean = true
 
     override fun getBackground(): String? {
@@ -93,7 +95,7 @@ open class Preferences : RealmObject(), AvatarPreferences {
 
     override fun getChair(): String? {
         return if (chair != null && chair != "none") {
-            if (chair!!.length > 5 && chair!!.substring(0, 6) != "chair_") {
+            if (chair?.contains("chair_") == true) {
                 chair
             } else {
                 "chair_" + chair!!
@@ -120,6 +122,6 @@ open class Preferences : RealmObject(), AvatarPreferences {
     }
 
     fun hasTaskBasedAllocation(): Boolean {
-        return allocationMode?.toLowerCase() == "taskbased" && automaticAllocation
+        return allocationMode?.toLowerCase(Locale.ROOT) == "taskbased" && automaticAllocation
     }
 }

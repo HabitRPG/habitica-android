@@ -201,7 +201,7 @@
                         android:layout_marginTop="@dimen/spacing_xlarge"
                         android:layout_height="@dimen/diamond_button_height"
                         android:text="@string/login_btn_fb"
-                        android:drawableLeft="@drawable/facebook_icon"
+                        android:drawableStart="@drawable/facebook_icon"
                         style="@style/LoginButton"/>
 
                     <Button
@@ -210,8 +210,18 @@
                         android:layout_marginTop="@dimen/spacing_large"
                         android:layout_height="@dimen/diamond_button_height"
                         android:text="@string/login_btn_google"
-                        android:drawableLeft="@drawable/google_icon"
+                        android:drawableStart="@drawable/google_icon"
                         style="@style/LoginButton"/>
+
+                    <Button
+                        android:id="@+id/apple_login_button"
+                        android:layout_width="match_parent"
+                        android:layout_marginTop="@dimen/spacing_large"
+                        android:layout_height="@dimen/diamond_button_height"
+                        android:text="@string/login_btn_apple"
+                        android:drawableStart="@drawable/apple_icon"
+                        style="@style/LoginButton"
+                        android:visibility="gone"/>
 
                     <Button
                         android:id="@+id/forgot_password"
@@ -222,7 +232,7 @@
                         android:text="@string/forgot_pw_btn"
                         android:layout_gravity="center_horizontal"
                         android:textColor="@color/white_75_alpha"
-                        android:background="@color/transparent"/>
+                        android:background="@color/transparent" />
 
                 </LinearLayout>
 

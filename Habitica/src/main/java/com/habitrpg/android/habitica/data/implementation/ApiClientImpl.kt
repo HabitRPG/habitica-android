@@ -174,6 +174,10 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
         return this.apiService.connectSocial(auth).compose(configureApiCallObserver())
     }
 
+    override fun loginApple(authToken: String): Flowable<UserAuthResponse> {
+        return apiService.loginApple(mapOf(Pair("code", authToken))).compose(configureApiCallObserver())
+    }
+
     override fun accept(throwable: Throwable) {
         val throwableClass = throwable.javaClass
         if (SocketTimeoutException::class.java.isAssignableFrom(throwableClass)) {
@@ -317,12 +321,12 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
         return apiService.equipItem(type, itemKey).compose(configureApiCallObserver())
     }
 
-    override fun buyItem(itemKey: String): Flowable<BuyResponse> {
-        return apiService.buyItem(itemKey).compose(configureApiCallObserver())
+    override fun buyItem(itemKey: String, purchaseQuantity: Int): Flowable<BuyResponse> {
+        return apiService.buyItem(itemKey, mapOf(Pair("quantity", purchaseQuantity))).compose(configureApiCallObserver())
     }
 
-    override fun purchaseItem(type: String, itemKey: String): Flowable<Any> {
-        return apiService.purchaseItem(type, itemKey).compose(configureApiCallObserver())
+    override fun purchaseItem(type: String, itemKey: String, purchaseQuantity: Int): Flowable<Any> {
+        return apiService.purchaseItem(type, itemKey, mapOf(Pair("quantity", purchaseQuantity))).compose(configureApiCallObserver())
     }
 
     override fun validateSubscription(request: SubscriptionValidationRequest): Flowable<Any> {
@@ -341,6 +345,10 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
             }
             habitResponse.getData()
         }
+    }
+
+    override fun cancelSubscription(): Flowable<Any> {
+        return apiService.cancelSubscription().compose(configureApiCallObserver())
     }
 
     override fun purchaseHourglassItem(type: String, itemKey: String): Flowable<Any> {

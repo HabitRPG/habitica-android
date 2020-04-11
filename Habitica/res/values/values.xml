@@ -89,6 +89,14 @@
         <item>Rosstavo\'s Theme</item>
         <item>Dewin\'s Theme</item>
         <item>Airu\'s Theme</item>
+        <item>Beatscribe\'s NES Theme</item>
+        <item>Arashi\'s Theme</item>
+        <item>Triumph Theme</item>
+        <item>Lunasol Theme</item>
+        <item>SpacePenguin\'s Theme</item>
+        <item>MAFL Theme</item>
+        <item>Pizilden\'s Theme</item>
+        <item>Farvoid Theme</item>
     </string-array>
 
     <string-array name="AudioValues">
@@ -100,6 +108,14 @@
         <item>rosstavoTheme</item>
         <item>dewinTheme</item>
         <item>airuTheme</item>
+        <item>beatscribeNesTheme</item>
+        <item>arashiTheme</item>
+        <item>triumphTheme</item>
+        <item>lunasolTheme</item>
+        <item>spacePenguinTheme</item>
+        <item>maflTheme</item>
+        <item>pizildenTheme</item>
+        <item>farvoidTheme</item>
     </string-array>
 
 

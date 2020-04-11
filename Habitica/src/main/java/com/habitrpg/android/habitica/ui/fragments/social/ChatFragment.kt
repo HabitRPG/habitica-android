@@ -209,8 +209,10 @@ class ChatFragment : BaseFragment() {
     }
 
     private fun sendChatMessage(chatText: String) {
-        viewModel?.postGroupChat(chatText) {
+        viewModel?.postGroupChat(chatText, {
             recyclerView?.scrollToPosition(0)
+        }) {
+            chatBarView.message = chatText
         }
     }
 }

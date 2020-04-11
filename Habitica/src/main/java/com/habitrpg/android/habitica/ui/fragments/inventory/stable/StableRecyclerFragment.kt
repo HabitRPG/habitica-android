@@ -8,6 +8,7 @@ import android.widget.TextView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
+import com.habitrpg.android.habitica.extensions.getTranslatedType
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.Animal
@@ -69,18 +70,18 @@ class StableRecyclerFragment : BaseFragment() {
         layoutManager = androidx.recyclerview.widget.GridLayoutManager(activity, 2)
         layoutManager?.spanSizeLookup = object : androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
-                return if (adapter?.getItemViewType(position) == 0) {
+                return if (adapter?.getItemViewType(position) == 0 || adapter?.getItemViewType(position) == 1) {
                     layoutManager?.spanCount ?: 1
                 } else {
                     1
                 }
             }
         }
+
         recyclerView?.layoutManager = layoutManager
         activity?.let {
-            recyclerView?.addItemDecoration(MarginDecoration(it))
+            recyclerView?.addItemDecoration(MarginDecoration(it, setOf(HEADER_VIEW_TYPE)))
         }
-
 
         adapter = recyclerView?.adapter as? StableRecyclerAdapter
         if (adapter == null) {
@@ -157,7 +158,7 @@ class StableRecyclerFragment : BaseFragment() {
                 if (items.size > 0 && items[items.size - 1].javaClass == String::class.java) {
                     items.removeAt(items.size - 1)
                 }
-                items.add(animal.type)
+                items.add(animal.getTranslatedType(context))
                 lastSectionTitle = animal.type
             }
             when (itemType) {
@@ -178,10 +179,14 @@ class StableRecyclerFragment : BaseFragment() {
         if (!((lastAnimal.type == "premium" || lastAnimal.type == "special") && lastAnimal.numberOwned == 0)) {
             items.add(lastAnimal)
         }
+
+        items.add(0, "header")
         return items
     }
 
     companion object {
         private const val ITEM_TYPE_KEY = "CLASS_TYPE_KEY"
+        private const val HEADER_VIEW_TYPE = 0
+        private const val SECTION_VIEW_TYPE = 1
     }
 }

@@ -15,6 +15,8 @@ import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.activities.MainActivity
+import com.habitrpg.shared.habitica.HLogger
+import com.habitrpg.shared.habitica.LogLevel
 import io.reactivex.functions.Consumer
 import java.util.*
 import javax.inject.Inject
@@ -31,6 +33,7 @@ class TaskReceiver : BroadcastReceiver() {
     lateinit var taskRepository: TaskRepository
 
     override fun onReceive(context: Context, intent: Intent) {
+        HLogger.log(LogLevel.INFO, this::javaClass.name, "onReceive")
         HabiticaBaseApplication.userComponent?.inject(this)
         val extras = intent.extras
         if (extras != null) {
@@ -58,6 +61,7 @@ class TaskReceiver : BroadcastReceiver() {
 
     private fun createNotification(context: Context, task: Task) {
         val intent = Intent(context, MainActivity::class.java)
+        HLogger.log(LogLevel.INFO, this::javaClass.name, "Create Notification")
 
         intent.putExtra("notificationIdentifier", "task_reminder")
         val pendingIntent = PendingIntent.getActivity(context, System.currentTimeMillis().toInt(), intent, 0)

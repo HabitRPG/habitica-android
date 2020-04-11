@@ -5,7 +5,7 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -13,6 +13,7 @@ import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.models.Skill
+import com.habitrpg.android.habitica.models.user.SpecialItems
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
@@ -24,11 +25,21 @@ class SkillsRecyclerViewAdapter : RecyclerView.Adapter<SkillsRecyclerViewAdapter
     private val useSkillSubject = PublishSubject.create<Skill>()
     val useSkillEvents = useSkillSubject.toFlowable(BackpressureStrategy.DROP)
 
-    var mana: Double = 0.toDouble()
-     set(value) {
-         field = value
-         notifyDataSetChanged()
-     }
+    var mana: Double = 0.0
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
+    var level: Int = 0
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
+    var specialItems: SpecialItems? = null
+    set(value) {
+        field = value
+        notifyDataSetChanged()
+    }
     private var skillList: List<Skill> = emptyList()
 
     fun setSkillList(skillList: List<Skill>) {
@@ -51,18 +62,23 @@ class SkillsRecyclerViewAdapter : RecyclerView.Adapter<SkillsRecyclerViewAdapter
     inner class SkillViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
         private val magicDrawable: Drawable
+        private val lockDrawable: Drawable
         private val skillImageView: SimpleDraweeView by bindView(R.id.skill_image)
         private val skillNameTextView: TextView by bindView(R.id.skill_text)
         private val skillNotesTextView: TextView by bindView(R.id.skill_notes)
-        private val priceButton: Button by bindView(itemView, R.id.price_button)
+        private val buttonWrapper: ViewGroup by bindView(itemView, R.id.button_wrapper)
+        private val priceLabel: TextView by bindView(itemView, R.id.price_label)
+        private val buttonIconView: ImageView by bindView(itemView, R.id.button_icon_view)
+        private val countLabel: TextView by bindView(itemView, R.id.count_label)
 
         var skill: Skill? = null
 
         var context: Context = itemView.context
 
         init {
-            priceButton.setOnClickListener(this)
+            buttonWrapper.setOnClickListener(this)
             magicDrawable = BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfMagic())
+            lockDrawable = BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfLocked(ContextCompat.getColor(context, R.color.gray_400)))
         }
 
         fun bind(skill: Skill) {
@@ -70,31 +86,62 @@ class SkillsRecyclerViewAdapter : RecyclerView.Adapter<SkillsRecyclerViewAdapter
             skillNameTextView.text = skill.text
             skillNotesTextView.text = skill.notes
 
+            skillNameTextView.setTextColor(ContextCompat.getColor(context, R.color.gray_50))
+            skillNotesTextView.setTextColor(ContextCompat.getColor(context, R.color.gray_200))
+            skillNotesTextView.visibility = View.VISIBLE
+            priceLabel.visibility = View.VISIBLE
+
             if ("special" == skill.habitClass) {
-                priceButton.setText(R.string.skill_transformation_use)
-
-                priceButton.setCompoundDrawables(null, null, null, null)
+                countLabel.visibility = View.VISIBLE
+                countLabel.text = getOwnedCount(skill.key).toString()
+                priceLabel.setText(R.string.skill_transformation_use)
+                priceLabel.setTextColor(ContextCompat.getColor(context, R.color.brand_400))
+                buttonIconView.setImageDrawable(null)
+                buttonWrapper.setBackgroundColor(ContextCompat.getColor(context, R.color.gray_600))
+                buttonIconView.alpha = 1.0f
+                priceLabel.alpha = 1.0f
             } else {
-                priceButton.text = skill.mana?.toString()
+                countLabel.visibility = View.GONE
+                priceLabel.text = skill.mana?.toString()
+                priceLabel.setTextColor(ContextCompat.getColor(context, R.color.blue_10))
+                buttonIconView.setImageDrawable(magicDrawable)
 
-                priceButton.setCompoundDrawablesWithIntrinsicBounds(magicDrawable, null, null, null)
+                if (skill.mana ?: 0 > mana) {
+                    buttonWrapper.setBackgroundColor(ContextCompat.getColor(context, R.color.gray_600))
+                    buttonIconView.alpha = 0.3f
+                    priceLabel.alpha = 0.3f
+                } else {
+                    buttonWrapper.setBackgroundColor(ContextCompat.getColor(context, R.color.blue_500_24))
+                    buttonIconView.alpha = 1.0f
+                    priceLabel.alpha = 1.0f
+                }
+                if ((skill.lvl ?: 0) > level) {
+                    buttonWrapper.setBackgroundColor(ContextCompat.getColor(context, R.color.gray_600))
+                    skillNameTextView.setTextColor(ContextCompat.getColor(context, R.color.task_gray))
+                    skillNameTextView.text = context.getString(R.string.skill_unlocks_at, skill.lvl)
+                    skillNotesTextView.visibility = View.GONE
+                    buttonIconView.setImageDrawable(lockDrawable)
+                    priceLabel.visibility = View.GONE
+                }
             }
             DataBindingUtils.loadImage(skillImageView, "shop_" + skill.key)
 
-            if (skill.mana ?: 0 > mana) {
-                priceButton.isEnabled = false
-                priceButton.setBackgroundResource(R.color.task_gray)
-                skillNameTextView.setTextColor(ContextCompat.getColor(context, R.color.task_gray))
-                skillNotesTextView.setTextColor(ContextCompat.getColor(context, R.color.task_gray))
-            } else {
-                skillNameTextView.setTextColor(ContextCompat.getColor(context, android.R.color.black))
-                skillNotesTextView.setTextColor(ContextCompat.getColor(context, android.R.color.black))
-                priceButton.isEnabled = true
-            }
         }
 
         override fun onClick(v: View) {
-            skill?.let { useSkillSubject.onNext(it) }
+            if ((skill?.lvl ?: 0) <= level) {
+                skill?.let { useSkillSubject.onNext(it) }
+            }
+        }
+
+        private fun getOwnedCount(key: String): Int {
+            return when (key) {
+                "snowball" -> specialItems?.snowball
+                "shinySeed" -> specialItems?.shinySeed
+                "seafoam" -> specialItems?.seafoam
+                "spookySparkles" -> specialItems?.spookySparkles
+                else -> 0
+            } ?: 0
         }
     }
 }

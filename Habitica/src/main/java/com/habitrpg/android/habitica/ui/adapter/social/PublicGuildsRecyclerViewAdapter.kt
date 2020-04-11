@@ -96,7 +96,11 @@ class PublicGuildsRecyclerViewAdapter(data: OrderedRealmCollection<Group>?, auto
                 unfilteredData?.let {
                     if (constraint.isNotEmpty()) {
                         updateData(it.where()
+                                .beginGroup()
                                 .contains("name", constraint.toString(), Case.INSENSITIVE)
+                                .or()
+                                .contains("summary", constraint.toString(), Case.INSENSITIVE)
+                                .endGroup()
                                 .findAll())
                     }
                 }

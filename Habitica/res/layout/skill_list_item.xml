@@ -1,17 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/RowWrapper"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/layout_rounded_bg_gray_700"
+        android:clipToPadding="true"
+        android:clipChildren="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp">
 
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/skill_image"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_gravity="center_vertical" />
-
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="8dp"/>
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -20,7 +30,9 @@
             android:layout_marginRight="8dp"
             android:layout_weight="1"
             android:gravity="center_vertical"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp">
 
             <TextView
                 android:id="@+id/skill_text"
@@ -36,20 +48,33 @@
                 style="@style/Caption2.Regular"
                 tools:text="This is the spell description"/>
         </LinearLayout>
-    <Button
-        android:id="@+id/price_button"
-        android:layout_width="wrap_content"
-        android:layout_height="32dp"
-        android:minWidth="64dp"
-        android:layout_gravity="center_vertical"
-        android:gravity="left|center_vertical"
-        android:drawablePadding="5dp"
-        android:background="@drawable/rounded_purple_square"
-        android:paddingLeft="12dp"
-        android:paddingStart="12dp"
-        android:paddingRight="12dp"
-        android:paddingEnd="12dp"
+        <LinearLayout
+            android:id="@+id/button_wrapper"
+            android:layout_width="48dp"
+            android:layout_height="match_parent"
+            android:background="@color/blue_500"
+            android:orientation="vertical"
+            android:gravity="center">
+            <ImageView
+                android:id="@+id/button_icon_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/price_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
+    <TextView
+        android:id="@+id/count_label"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="13dp"
+        android:background="@drawable/circle_gray300"
+        tools:text="1"
         android:textColor="@color/white"
-        tools:text="150"
-        android:textSize="15sp" />
-</LinearLayout>
+        android:gravity="center"
+        />
+</RelativeLayout>

@@ -47,9 +47,9 @@ class FixCharacterValuesActivity: BaseActivity() {
         setTitle(R.string.fix_character_values)
         setupToolbar(binding.toolbar)
 
-        repository.getUser(userId).firstElement().subscribe(Consumer {
+        compositeSubscription.add(repository.getUser(userId).firstElement().subscribe(Consumer {
             user = it
-        }, RxErrorHandler.handleEmptyError())
+        }, RxErrorHandler.handleEmptyError()))
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -57,8 +57,8 @@ class FixCharacterValuesActivity: BaseActivity() {
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        val id = item?.itemId
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val id = item.itemId
 
         if (id == R.id.action_save_changes) {
             @Suppress("DEPRECATION")
@@ -70,10 +70,10 @@ class FixCharacterValuesActivity: BaseActivity() {
             userInfo["stats.mp"] = binding.manaEditText.getDoubleValue()
             userInfo["stats.lvl"] = binding.levelEditText.getDoubleValue().toInt()
             userInfo["achievements.streak"] = binding.streakEditText.getDoubleValue().toInt()
-            repository.updateUser(user, userInfo).subscribe(Consumer {}, RxErrorHandler.handleEmptyError(), Action {
+            compositeSubscription.add(repository.updateUser(user, userInfo).subscribe(Consumer {}, RxErrorHandler.handleEmptyError(), Action {
                 progressDialog.dismiss()
                 finish()
-            })
+            }))
             return true
         }
 
@@ -89,14 +89,15 @@ class FixCharacterValuesActivity: BaseActivity() {
     }
 
     private fun updateFields(user: User) {
-        binding.healthEditText.text = user.stats?.hp.toString()
-        binding.experienceEditText.text = user.stats?.exp.toString()
-        binding.goldEditText.text = user.stats?.gp.toString()
-        binding.manaEditText.text = user.stats?.mp.toString()
-        binding.levelEditText.text = user.stats?.lvl.toString()
+        val stats = user.stats ?: return
+        binding.healthEditText.text = stats.hp.toString()
+        binding.experienceEditText.text = stats.exp.toString()
+        binding.goldEditText.text = stats.gp.toString()
+        binding.manaEditText.text = stats.mp.toString()
+        binding.levelEditText.text = stats.lvl.toString()
         binding.streakEditText.text = user.streakCount.toString()
 
-        when (user.stats?.habitClass) {
+        when (stats.habitClass) {
             Stats.WARRIOR -> {
                 binding.levelEditText.iconBackgroundColor = ContextCompat.getColor(this, R.color.red_500)
                 binding.levelEditText.setIconBitmap(HabiticaIconsHelper.imageOfWarriorLightBg())
@@ -116,7 +117,7 @@ class FixCharacterValuesActivity: BaseActivity() {
         }
     }
 
-    fun FixValuesEditText.getDoubleValue(): Double {
+    private fun FixValuesEditText.getDoubleValue(): Double {
         val stringValue = this.text
         return try {
             stringValue.toDouble()

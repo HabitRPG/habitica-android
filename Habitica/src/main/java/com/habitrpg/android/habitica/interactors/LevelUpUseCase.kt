@@ -61,7 +61,7 @@ constructor(private val soundManager: SoundManager, threadExecutor: ThreadExecut
                 }
 
                 val event = ShareEvent()
-                event.sharedMessage = requestValues.activity.getString(R.string.share_levelup, requestValues.newLevel) + " https://habitica.com/social/level-UP"
+                event.sharedMessage = requestValues.activity.getString(R.string.share_levelup, requestValues.newLevel)
                 val avatarView = AvatarView(requestValues.activity, showBackground = true, showMount = true, showPet = true)
                 avatarView.setAvatar(requestValues.user)
                 avatarView.onAvatarImageReady(Consumer { t -> event.shareImage = t })

@@ -44,6 +44,7 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
 
     private var timePreference: TimePreference? = null
     private var pushNotificationsPreference: PreferenceScreen? = null
+    private var emailNotificationsPreference: PreferenceScreen? = null
     private var classSelectionPreference: Preference? = null
     private var serverUrlPreference: ListPreference? = null
 
@@ -60,8 +61,12 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
 
 
         pushNotificationsPreference = findPreference("pushNotifications") as? PreferenceScreen
-        val userPushNotifications = preferenceManager.sharedPreferences.getBoolean("usePushNotifications", true)
-        pushNotificationsPreference?.isEnabled = userPushNotifications
+        val usePushNotifications = preferenceManager.sharedPreferences.getBoolean("usePushNotifications", true)
+        pushNotificationsPreference?.isEnabled = usePushNotifications
+
+        emailNotificationsPreference = findPreference("emailNotifications") as? PreferenceScreen
+        val useEmailNotifications = preferenceManager.sharedPreferences.getBoolean("useEmailNotifications", true)
+        emailNotificationsPreference?.isEnabled = useEmailNotifications
 
 
         classSelectionPreference = findPreference("choose_class")
@@ -160,6 +165,10 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                 } else {
                     pushNotificationManager.removePushDeviceUsingStoredToken()
                 }
+            }
+            "useEmailNotifications" -> {
+                val useEmailNotifications = sharedPreferences.getBoolean(key, false)
+                emailNotificationsPreference?.isEnabled = useEmailNotifications
             }
             "cds_time" -> {
                 val timeval = sharedPreferences.getString("cds_time", "00:00")

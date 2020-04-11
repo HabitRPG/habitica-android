@@ -42,16 +42,11 @@ import com.habitrpg.android.habitica.ui.adapter.tasks.RewardsRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.adapter.tasks.TodosRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.AboutFragment;
 import com.habitrpg.android.habitica.ui.fragments.AchievementsFragment;
-import com.habitrpg.android.habitica.ui.fragments.purchases.GemsPurchaseFragment;
 import com.habitrpg.android.habitica.ui.fragments.NavigationDrawerFragment;
 import com.habitrpg.android.habitica.ui.fragments.NewsFragment;
 import com.habitrpg.android.habitica.ui.fragments.StatsFragment;
-import com.habitrpg.android.habitica.ui.fragments.purchases.GiftBalanceGemsFragment;
-import com.habitrpg.android.habitica.ui.fragments.purchases.GiftPurchaseGemsFragment;
-import com.habitrpg.android.habitica.ui.fragments.purchases.SubscriptionFragment;
-import com.habitrpg.android.habitica.ui.fragments.faq.FAQDetailFragment;
-import com.habitrpg.android.habitica.ui.fragments.faq.FAQOverviewFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.customization.AvatarCustomizationFragment;
+import com.habitrpg.android.habitica.ui.fragments.inventory.customization.AvatarEquipmentFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.customization.AvatarOverviewFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.equipment.EquipmentDetailFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.equipment.EquipmentOverviewFragment;
@@ -65,9 +60,14 @@ import com.habitrpg.android.habitica.ui.fragments.inventory.stable.StableFragmen
 import com.habitrpg.android.habitica.ui.fragments.inventory.stable.StableRecyclerFragment;
 import com.habitrpg.android.habitica.ui.fragments.preferences.APIPreferenceFragment;
 import com.habitrpg.android.habitica.ui.fragments.preferences.AuthenticationPreferenceFragment;
+import com.habitrpg.android.habitica.ui.fragments.preferences.EmailNotificationsPreferencesFragment;
 import com.habitrpg.android.habitica.ui.fragments.preferences.PreferencesFragment;
 import com.habitrpg.android.habitica.ui.fragments.preferences.ProfilePreferencesFragment;
 import com.habitrpg.android.habitica.ui.fragments.preferences.PushNotificationsPreferencesFragment;
+import com.habitrpg.android.habitica.ui.fragments.purchases.GemsPurchaseFragment;
+import com.habitrpg.android.habitica.ui.fragments.purchases.GiftBalanceGemsFragment;
+import com.habitrpg.android.habitica.ui.fragments.purchases.GiftPurchaseGemsFragment;
+import com.habitrpg.android.habitica.ui.fragments.purchases.SubscriptionFragment;
 import com.habitrpg.android.habitica.ui.fragments.setup.AvatarSetupFragment;
 import com.habitrpg.android.habitica.ui.fragments.setup.IntroFragment;
 import com.habitrpg.android.habitica.ui.fragments.setup.TaskSetupFragment;
@@ -76,12 +76,12 @@ import com.habitrpg.android.habitica.ui.fragments.skills.SkillTasksRecyclerViewF
 import com.habitrpg.android.habitica.ui.fragments.skills.SkillsFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.ChatFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.ChatListFragment;
-import com.habitrpg.android.habitica.ui.fragments.social.NoPartyFragmentFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.GuildDetailFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.GuildFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.GuildsOverviewFragment;
-import com.habitrpg.android.habitica.ui.fragments.social.InboxOverviewFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.InboxMessageListFragment;
+import com.habitrpg.android.habitica.ui.fragments.social.InboxOverviewFragment;
+import com.habitrpg.android.habitica.ui.fragments.social.NoPartyFragmentFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.PublicGuildsFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.QuestDetailFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.TavernDetailFragment;
@@ -92,6 +92,10 @@ import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengesOv
 import com.habitrpg.android.habitica.ui.fragments.social.party.PartyDetailFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.party.PartyFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.party.PartyInviteFragment;
+import com.habitrpg.android.habitica.ui.fragments.support.BugFixFragment;
+import com.habitrpg.android.habitica.ui.fragments.support.FAQDetailFragment;
+import com.habitrpg.android.habitica.ui.fragments.support.FAQOverviewFragment;
+import com.habitrpg.android.habitica.ui.fragments.support.SupportMainFragment;
 import com.habitrpg.android.habitica.ui.fragments.tasks.TaskRecyclerViewFragment;
 import com.habitrpg.android.habitica.ui.fragments.tasks.TasksFragment;
 import com.habitrpg.android.habitica.ui.viewmodels.GroupViewModel;
@@ -144,8 +148,6 @@ public interface UserComponent {
     void inject(SkillMemberActivity skillMembersActivity);
 
     void inject(TasksFragment tasksFragment);
-
-    void inject(FAQDetailFragment faqDetailFragment);
 
     void inject(FAQOverviewFragment faqOverviewFragment);
 
@@ -328,4 +330,14 @@ public interface UserComponent {
     void inject(@NotNull GiftPurchaseGemsFragment giftPurchaseGemsFragment);
 
     void inject(@NotNull GiftBalanceGemsFragment giftBalanceGemsFragment);
+
+    void inject(@NotNull EmailNotificationsPreferencesFragment emailNotificationsPreferencesFragment);
+
+    void inject(@NotNull SupportMainFragment supportMainFragment);
+
+    void inject(@NotNull BugFixFragment bugFixFragment);
+
+    void inject(@NotNull AvatarEquipmentFragment avatarEquipmentFragment);
+
+    void inject(@NotNull FAQDetailFragment faqDetailFragment);
 }

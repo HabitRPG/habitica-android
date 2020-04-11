@@ -35,7 +35,6 @@ import com.habitrpg.android.habitica.data.*
 import com.habitrpg.android.habitica.databinding.ActivityMainBinding
 import com.habitrpg.android.habitica.events.*
 import com.habitrpg.android.habitica.events.commands.FeedCommand
-import com.habitrpg.android.habitica.extensions.DateUtils
 import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.*
@@ -63,6 +62,7 @@ import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.SnackbarDisplayTy
 import com.habitrpg.android.habitica.ui.views.ValueBar
 import com.habitrpg.android.habitica.ui.views.dialogs.AchievementDialog
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
+import com.habitrpg.android.habitica.ui.views.dialogs.QuestCompletedDialog
 import com.habitrpg.android.habitica.ui.views.yesterdailies.YesterdailyDialog
 import com.habitrpg.android.habitica.userpicture.BitmapUtils
 import com.habitrpg.android.habitica.widget.AvatarStatsWidgetProvider
@@ -214,6 +214,12 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
         setupNotifications()
         setupBottomnavigationLayoutListener()
+
+        try {
+            taskAlarmManager.scheduleAllSavedAlarms(sharedPreferences.getBoolean("preventDailyReminder", false))
+        } catch (e: Exception) {
+            crashlyticsProxy.logException(e)
+        }
     }
 
     private fun setupNotifications() {
@@ -272,15 +278,6 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
             this.checkMaintenance()
         }
         resumeFromActivity = false
-
-
-        if (this.sharedPreferences.getLong("lastReminderSchedule", 0) < Date().time - DateUtils.hoursInMs(2)) {
-            try {
-                taskAlarmManager.scheduleAllSavedAlarms(sharedPreferences.getBoolean("preventDailyReminder", false))
-            } catch (e: Exception) {
-                crashlyticsProxy.logException(e)
-            }
-        }
 
         //Track when the app was last opened, so that we can use this to send out special reminders after a week of inactivity
         sharedPreferences.edit {
@@ -352,6 +349,15 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
             if (user?.flags?.isVerifiedUsername == false && isActivityVisible) {
                 val intent = Intent(this, VerifyUsernameActivity::class.java)
                 startActivity(intent)
+            }
+
+            val quest = user?.party?.quest
+            if (quest?.completed?.isNotBlank() == true) {
+                compositeSubscription.add(inventoryRepository.getQuestContent(user?.party?.quest?.completed ?: "").firstElement().subscribe {
+                    QuestCompletedDialog.showWithQuest(this, it)
+
+                    userRepository.updateUser(user, "party.quest.completed", "").subscribe(Consumer {}, RxErrorHandler.handleEmptyError())
+                })
             }
         }
     }
@@ -427,7 +433,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                         dialog.addButton(R.string.onwards, true)
                         dialog.addButton(R.string.share, false) { hatchingDialog, _ ->
                                     val event1 = ShareEvent()
-                                    event1.sharedMessage = getString(R.string.share_raised, pet.text) + " https://habitica.com/social/raise-pet"
+                                    event1.sharedMessage = getString(R.string.share_raised, pet.text)
                                     val mountImageSideLength = 99
                                     val sharedImage = Bitmap.createBitmap(mountImageSideLength, mountImageSideLength, Bitmap.Config.ARGB_8888)
                                     val canvas = Canvas(sharedImage)
@@ -578,13 +584,16 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         val sharingIntent = Intent(Intent.ACTION_SEND)
         sharingIntent.type = "*/*"
         sharingIntent.putExtra(Intent.EXTRA_TEXT, event.sharedMessage)
-        val f = BitmapUtils.saveToShareableFile("$filesDir/shared_images", "share.png", event.shareImage)
+        BitmapUtils.clearDirectoryContent("$filesDir/shared_images")
+        val f = BitmapUtils.saveToShareableFile("$filesDir/shared_images", "${Date().toString()}.png", event.shareImage)
         val fileUri = f?.let { FileProvider.getUriForFile(this, getString(R.string.content_provider), it) }
-        sharingIntent.putExtra(Intent.EXTRA_STREAM, fileUri)
-        val resInfoList = this.packageManager.queryIntentActivities(sharingIntent, PackageManager.MATCH_DEFAULT_ONLY)
-        for (resolveInfo in resInfoList) {
-            val packageName = resolveInfo.activityInfo.packageName
-            this.grantUriPermission(packageName, fileUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        if (fileUri != null) {
+            sharingIntent.putExtra(Intent.EXTRA_STREAM, fileUri)
+            val resInfoList = this.packageManager.queryIntentActivities(sharingIntent, PackageManager.MATCH_DEFAULT_ONLY)
+            for (resolveInfo in resInfoList) {
+                val packageName = resolveInfo.activityInfo.packageName
+                this.grantUriPermission(packageName, fileUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            }
         }
         startActivity(Intent.createChooser(sharingIntent, getString(R.string.share_using)))
     }
@@ -715,7 +724,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
             dialog.addButton(R.string.onwards, true) { hatchingDialog, _ -> hatchingDialog.dismiss() }
             dialog.addButton(R.string.share, false) { hatchingDialog, _ ->
                 val event1 = ShareEvent()
-                event1.sharedMessage = getString(R.string.share_hatched, potionName, eggName) + " https://habitica.com/social/hatch-pet"
+                event1.sharedMessage = getString(R.string.share_hatched, potionName, eggName)
                 val petImageSideLength = 140
                 val sharedImage = Bitmap.createBitmap(petImageSideLength, petImageSideLength, Bitmap.Config.ARGB_8888)
                 val canvas = Canvas(sharedImage)

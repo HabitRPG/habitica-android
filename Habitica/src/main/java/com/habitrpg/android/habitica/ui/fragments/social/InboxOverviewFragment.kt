@@ -2,15 +2,12 @@ package com.habitrpg.android.habitica.ui.fragments.social
 
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
-import android.widget.EditText
+import android.view.*
 import android.widget.TextView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
+import com.habitrpg.android.habitica.databinding.DialogChooseMessageRecipientBinding
 import com.habitrpg.android.habitica.extensions.getAgoString
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
@@ -36,8 +33,6 @@ class InboxOverviewFragment : BaseMainFragment(), androidx.swiperefreshlayout.wi
     lateinit var userId: String
     @Inject
     lateinit var configManager: AppConfigManager
-
-    private var chooseRecipientDialogView: View? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -69,6 +64,11 @@ class InboxOverviewFragment : BaseMainFragment(), androidx.swiperefreshlayout.wi
         super.onDestroy()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        this.activity?.menuInflater?.inflate(R.menu.inbox, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.send_message -> {
@@ -81,19 +81,34 @@ class InboxOverviewFragment : BaseMainFragment(), androidx.swiperefreshlayout.wi
 
     private fun openNewMessageDialog() {
         assert(this.activity != null)
-        this.chooseRecipientDialogView = this.activity?.layoutInflater?.inflate(R.layout.dialog_choose_message_recipient, null)
+        val binding = DialogChooseMessageRecipientBinding.inflate(layoutInflater)
 
         this.activity?.let { thisActivity ->
             val alert = HabiticaAlertDialog(thisActivity)
             alert.setTitle(getString(R.string.choose_recipient_title))
-            alert.addButton(getString(R.string.action_continue), true) { _, _ ->
-                    val uuidEditText = chooseRecipientDialogView?.findViewById<View>(R.id.uuidEditText) as? EditText
-                    openInboxMessages(uuidEditText?.text?.toString() ?: "", "")
-                }
+            alert.addButton(
+                    getString(R.string.action_continue),
+                    true,
+                    false,
+                    false
+            ) { _, _ ->
+                binding.errorTextView.visibility = View.GONE
+                binding.progressCircular.visibility = View.VISIBLE
+                val username = binding.uuidEditText.text?.toString() ?: ""
+                socialRepository.getMemberWithUsername(username)
+                        .subscribe({
+                            alert.dismiss()
+                            openInboxMessages("", username)
+                            binding.progressCircular.visibility = View.GONE
+                        }, {
+                            binding.errorTextView.visibility = View.VISIBLE
+                            binding.progressCircular.visibility = View.GONE
+                        })
+            }
             alert.addButton(getString(R.string.action_cancel), false) { dialog, _ ->
-                    thisActivity.dismissKeyboard()
-                }
-            alert.setAdditionalContentView(chooseRecipientDialogView)
+                thisActivity.dismissKeyboard()
+            }
+            alert.setAdditionalContentView(binding.root)
             alert.show()
         }
 

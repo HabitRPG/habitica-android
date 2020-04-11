@@ -247,11 +247,20 @@ class PartyDetailFragment : BaseFragment() {
         } else {
             DataBindingUtils.loadImage(questImageView, "quest_" + questContent.key)
         }
+        questImageWrapper?.alpha = 1.0f
+        questProgressView?.alpha = 1.0f
         if (viewModel?.isQuestActive == true) {
             questProgressView?.visibility = View.VISIBLE
             questProgressView?.setData(questContent, viewModel?.getGroupData()?.value?.quest?.progress)
 
-            questParticipationView?.text = context?.getString(R.string.number_participants, viewModel?.getGroupData()?.value?.quest?.members?.size)
+            val questParticipants = viewModel?.getGroupData()?.value?.quest?.members
+            if (questParticipants?.find { it.key == userId } != null) {
+                questParticipationView?.text = context?.getString(R.string.number_participants, questParticipants.size)
+            } else {
+                questParticipationView?.text = context?.getString(R.string.not_participating)
+                questImageWrapper?.alpha = 0.5f
+                questProgressView?.alpha = 0.5f
+            }
         } else {
             questProgressView?.visibility = View.GONE
         }
