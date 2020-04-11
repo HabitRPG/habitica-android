@@ -67,6 +67,16 @@ class NoPartyFragmentFragment : BaseMainFragment() {
             socialRepository.rejectGroupInvite(it).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
         }
 
+        invitations_view.setLeader = { leader ->
+            compositeSubscription.add(
+                    socialRepository.getMember(leader)
+                            .subscribe(Consumer {
+                                invitations_view.avatarView.setAvatar(it)
+                                invitations_view.textView.text = getString(R.string.invitation_title,it.displayName,invitations_view.groupName)
+                            }, RxErrorHandler.handleEmptyError())
+            )
+        }
+
         username_textview.setOnClickListener {
             val clipboard = context?.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
             val clip = ClipData.newPlainText(context?.getString(R.string.username), user?.username)
