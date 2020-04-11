@@ -359,11 +359,13 @@ class PartyDetailFragment : BaseFragment() {
             alert.addButton(R.string.keep_challenges, true) { _, _ ->
                 viewModel?.leaveGroup(true) {
                     fragmentManager?.popBackStack()
+                    MainNavigationController.navigate(R.id.noPartyFragment)
                 }
             }
             alert.addButton(R.string.leave_challenges, true) { _, _ ->
                 viewModel?.leaveGroup(false) {
                     fragmentManager?.popBackStack()
+                    MainNavigationController.navigate(R.id.noPartyFragment)
                 }
             }
             alert.addButton(R.string.no, false)
