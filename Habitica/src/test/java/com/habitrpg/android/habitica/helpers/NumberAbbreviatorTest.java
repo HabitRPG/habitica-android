@@ -2,27 +2,27 @@ package com.habitrpg.android.habitica.helpers;
 
 import android.content.Context;
 
-import com.habitrpg.android.habitica.BuildConfig;
+import com.habitrpg.android.habitica.R;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.RuntimeEnvironment;
-import org.robolectric.annotation.Config;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
-
-@Config(constants = BuildConfig.class)
-@RunWith(value = RobolectricTestRunner.class)
 public class NumberAbbreviatorTest {
 
     private Context context;
 
     @Before
     public void setUp() {
-        context = RuntimeEnvironment.application;
+        context = mock(Context.class);
+
+        when(context.getString(R.string.thousand_abbrev)).thenReturn("k");
+        when(context.getString(R.string.million_abbrev)).thenReturn("m");
+        when(context.getString(R.string.billion_abbrev)).thenReturn("b");
+        when(context.getString(R.string.trillion_abbrev)).thenReturn("t");
     }
 
     @Test

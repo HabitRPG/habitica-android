@@ -369,7 +369,7 @@ class FullProfileActivity : BaseActivity() {
             if (row is UserStatComputer.EquipmentRow) {
                 addEquipmentRow(equipmentTableLayout, row.gearKey, row.text, row.stats)
             } else if (row is UserStatComputer.AttributeRow) {
-                addAttributeRow(getString(row.labelId), row.strVal, row.intVal, row.conVal, row.perVal, row.roundDown, row.isSummary)
+                addAttributeRow(getString(row.labelId), row.strVal, row.intVal, row.conVal, row.perVal, row.roundDown, row.summary)
             }
         }
 
