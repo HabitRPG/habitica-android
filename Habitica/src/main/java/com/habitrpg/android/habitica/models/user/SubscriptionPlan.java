@@ -62,8 +62,6 @@ public class SubscriptionPlan extends RealmObject {
         return totalNumberOfGems() - gemsBought;
     }
 
-
-
     public void setCustomerId(String customerId) {
         this.customerId = customerId;
         if (consecutive != null && !consecutive.isManaged()) {

@@ -1,6 +1,9 @@
 language: android
+dist: trusty
 jdk: oraclejdk8
-udo: required
+sudo: required
+services:
+  - mongodb
 addons:
   apt:
     sources:
@@ -11,19 +14,19 @@ before_install:
   - $CXX --version
   - export JAVA7_HOME=/usr/lib/jvm/java-7-oracle
   - export JAVA8_HOME=/usr/lib/jvm/java-8-oracle
-  - if [ $REQUIRES_SERVER ]; then nvm install 6.9.3; fi
-  - if [ $REQUIRES_SERVER ]; then nvm use 6.9.3; fi
-  - if [ $REQUIRES_SERVER ]; then npm i -g npm@4; fi
-  - if [ $REQUIRES_SERVER ]; then sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10; fi
-  - if [ $REQUIRES_SERVER ]; then echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | sudo tee /etc/apt/sources.list.d/mongodb.list; fi
-  - if [ $REQUIRES_SERVER ]; then sudo apt-get update; fi
-  - if [ $REQUIRES_SERVER ]; then sudo apt-get install mongodb-org-server; fi
-  - if [ $REQUIRES_SERVER ]; then git clone https://github.com/HabitRPG/habitrpg.git ../habitrpg; fi
-  - if [ $REQUIRES_SERVER ]; then until nc -z localhost 27017; do echo Waiting for MongoDB; sleep 2; done; fi
-  - if [ $REQUIRES_SERVER ]; then cd ../habitrpg && cp config.json.example config.json && npm install; fi
-  - if [ $REQUIRES_SERVER ]; then npm start; fi &
-  - if [ $REQUIRES_SERVER ]; then until nc -z localhost 3000; do echo Waiting for Habitica Server; sleep 2; done; fi
-  - if [ $REQUIRES_SERVER ]; then cd -; fi
+  - if [ $REQUIRES_SERVER = "true" ]; then nvm install 6.9.3; fi
+  - if [ $REQUIRES_SERVER = "true" ]; then nvm use 6.9.3; fi
+  - if [ $REQUIRES_SERVER = "true" ]; then npm i -g npm@6; fi
+  - if [ $REQUIRES_SERVER = "true" ]; then sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10; fi
+  - if [ $REQUIRES_SERVER = "true" ]; then echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | sudo tee /etc/apt/sources.list.d/mongodb.list; fi
+  - if [ $REQUIRES_SERVER = "true" ]; then sudo apt-get update || true; fi
+  - if [ $REQUIRES_SERVER = "true" ]; then sudo apt-get -y install mongodb; fi
+  - if [ $REQUIRES_SERVER = "true" ]; then git clone https://github.com/HabitRPG/habitica.git; fi
+  - if [ $REQUIRES_SERVER = "true" ]; then until nc -z localhost 27017; do echo Waiting for MongoDB; sleep 2; done; fi
+  - if [ $REQUIRES_SERVER = "true" ]; then cd habitica && cp config.json.example config.json && npm install; fi
+  - if [ $REQUIRES_SERVER = "true" ]; then npm start; fi &
+  - if [ $REQUIRES_SERVER = "true" ]; then until nc -z localhost 3000; do echo Waiting for Habitica Server; sleep 2; done; fi
+  - if [ $REQUIRES_SERVER = "true" ]; then cd -; fi
 android:
   components:
     # Uncomment the lines below if you want to
@@ -35,7 +38,7 @@ android:
     - build-tools-28.0.3
 
     # The SDK version used to compile your project
-    - android-28
+    - android-29
 
     # Additional components
     - extra-google-google_play_services
@@ -55,11 +58,11 @@ before_script:
   - cp habitica.resources.example habitica.resources
   - cp Habitica/google-services.json.example Habitica/google-services.json
 script:
-  - ./gradlew $TEST
+  - ./gradlew $TEST2
 env:
   global:
     - CXX=g++-4.8
     - DISABLE_REQUEST_LOGGING=true
   matrix:
-    - TEST="assembleDebug -PdisablePreDex"
-    - TEST="testProdDebugUnitTest -PdisablePreDex --stacktrace" REQUIRES_SERVER=true
+    - TEST1="assembleDebug -PdisablePreDex"
+    - TEST2="testProdDebugUnitTest -PdisablePreDex --stacktrace" REQUIRES_SERVER=false

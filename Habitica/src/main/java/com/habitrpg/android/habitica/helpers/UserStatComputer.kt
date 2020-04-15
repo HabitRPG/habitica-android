@@ -17,7 +17,7 @@ class UserStatComputer {
         var conVal: Float = 0.toFloat()
         var perVal: Float = 0.toFloat()
         var roundDown: Boolean = false
-        var isSummary: Boolean = false
+        var summary: Boolean = false
     }
 
     inner class EquipmentRow : StatsRow {
@@ -125,7 +125,7 @@ class UserStatComputer {
         attributeRow.conVal = conAttributes
         attributeRow.perVal = perAttributes
         attributeRow.roundDown = true
-        attributeRow.isSummary = false
+        attributeRow.summary = false
         skillRows.add(attributeRow)
 
 
@@ -136,7 +136,7 @@ class UserStatComputer {
         attributeRow2.conVal = conClassBonus
         attributeRow2.perVal = perClassBonus
         attributeRow2.roundDown = false
-        attributeRow2.isSummary = false
+        attributeRow2.summary = false
         skillRows.add(attributeRow2)
 
         return skillRows
