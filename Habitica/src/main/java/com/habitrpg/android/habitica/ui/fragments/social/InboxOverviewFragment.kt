@@ -82,7 +82,6 @@ class InboxOverviewFragment : BaseMainFragment(), androidx.swiperefreshlayout.wi
     private fun openNewMessageDialog() {
         assert(this.activity != null)
         val binding = DialogChooseMessageRecipientBinding.inflate(layoutInflater)
-
         this.activity?.let { thisActivity ->
             val alert = HabiticaAlertDialog(thisActivity)
             alert.setTitle(getString(R.string.choose_recipient_title))
@@ -109,6 +108,7 @@ class InboxOverviewFragment : BaseMainFragment(), androidx.swiperefreshlayout.wi
                 thisActivity.dismissKeyboard()
             }
             alert.setAdditionalContentView(binding.root)
+            binding.uuidEditText.requestFocus()
             alert.show()
         }
 

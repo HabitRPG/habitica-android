@@ -63,13 +63,16 @@ class InboxMessageListFragment : BaseMainFragment(), androidx.swiperefreshlayout
             val args = InboxMessageListFragmentArgs.fromBundle(it)
             setReceivingUser(args.username, args.userID)
         }
-        viewModel = ViewModelProviders.of(this, InboxViewModelFactory(replyToUserUUID ?: "")).get(InboxViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, InboxViewModelFactory(replyToUserUUID, chatRoomUser)).get(InboxViewModel::class.java)
 
         val layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this.getActivity())
         recyclerView.layoutManager = layoutManager
 
         chatAdapter = InboxAdapter(user)
-        viewModel?.messages?.observe(this, Observer { chatAdapter?.submitList(it) })
+        viewModel?.messages?.observe(this.viewLifecycleOwner, Observer { chatAdapter?.submitList(it) })
+        viewModel?.getMemberData()?.observe(this.viewLifecycleOwner, Observer {
+            activity?.binding?.toolbarTitle?.text = it?.profile?.name
+        })
         recyclerView.adapter = chatAdapter
         recyclerView.itemAnimator = SafeDefaultItemAnimator()
         chatAdapter?.let { adapter ->
@@ -119,6 +122,7 @@ class InboxMessageListFragment : BaseMainFragment(), androidx.swiperefreshlayout
     }
 
     private fun refreshConversation() {
+        if (viewModel?.memberID?.isNotBlank() != true) { return }
         compositeSubscription.add(this.socialRepository.retrieveInboxMessages(replyToUserUUID ?: "", 0)
                 .subscribe(Consumer {}, RxErrorHandler.handleEmptyError(), Action {
                     swipeRefreshLayout?.isRefreshing = false
@@ -132,12 +136,13 @@ class InboxMessageListFragment : BaseMainFragment(), androidx.swiperefreshlayout
     }
 
     private fun sendMessage(chatText: String) {
-        replyToUserUUID?.let {userID ->
+        viewModel?.memberID?.let {userID ->
             socialRepository.postPrivateMessage(userID, chatText)
                     .delay(200, TimeUnit.MILLISECONDS)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
                 recyclerView?.scrollToPosition(0)
+                        viewModel?.invalidateDataSource()
             }, { error ->
                         RxErrorHandler.reportError(error)
                         chatBarView.message = chatText
