@@ -1,12 +1,12 @@
 package com.habitrpg.android.habitica.ui.fragments.support
 
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.app.ShareCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.databinding.FragmentSupportBugFixBinding
@@ -97,13 +97,16 @@ class BugFixFragment: BaseMainFragment() {
         bodyOfEmail += " \nDetails:\n"
 
         activity?.let {
-            ShareCompat.IntentBuilder.from(it)
-                    .setType("message/rfc822")
-                    .addEmailTo(appConfigManager.supportEmail())
-                    .setSubject(subject)
-                    .setText(bodyOfEmail)
-                    .setChooserTitle("Send email...")
-                    .startChooser()
+            val email = Intent(Intent.ACTION_SEND)
+            email.putExtra(Intent.EXTRA_EMAIL, arrayOf<String>(appConfigManager.supportEmail()))
+            email.putExtra(Intent.EXTRA_SUBJECT, subject)
+            email.putExtra(Intent.EXTRA_TEXT, bodyOfEmail)
+
+            //need this to prompts email client only
+            //need this to prompts email client only
+            email.type = "message/rfc822"
+
+            startActivity(Intent.createChooser(email, "Choose an Email client :"))
         }
     }
 }

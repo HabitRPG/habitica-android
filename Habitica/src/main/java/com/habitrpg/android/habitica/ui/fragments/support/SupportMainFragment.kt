@@ -1,12 +1,13 @@
 package com.habitrpg.android.habitica.ui.fragments.support
 
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.app.ShareCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.FAQRepository
@@ -20,6 +21,7 @@ import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import io.reactivex.Completable
 import javax.inject.Inject
 import javax.inject.Named
+
 
 class SupportMainFragment : BaseMainFragment() {
     private var deviceInfo: DeviceName.DeviceInfo? = null
@@ -114,13 +116,14 @@ class SupportMainFragment : BaseMainFragment() {
         bodyOfEmail += " \nDetails:\n"
 
         activity?.let {
-            ShareCompat.IntentBuilder.from(it)
-                    .setType("message/rfc822")
-                    .addEmailTo(appConfigManager.supportEmail())
-                    .setSubject(subject)
-                    .setText(bodyOfEmail)
-                    .setChooserTitle("Send email...")
-                    .startChooser()
+            val emailIntent = Intent(Intent.ACTION_SENDTO)
+            val mailto = "mailto:bob@example.org" +
+                    "?cc=" + "alice@example.com" +
+                    "&subject=" + Uri.encode(subject) +
+                    "&body=" + Uri.encode(bodyOfEmail)
+            emailIntent.setData(Uri.parse(mailto));
+
+            startActivity(Intent.createChooser(emailIntent, "Choose an Email client :"))
         }
     }
 }

@@ -56,6 +56,7 @@
                 android:layout_marginBottom="@dimen/spacing_medium"
                 android:background="@drawable/support_info_lower_bg"
                 android:textColor="@color/white"
+                android:elevation="2dp"
                 android:textAllCaps="false"
                 style="@style/Subheader1"
                 />
@@ -78,6 +79,7 @@
                 android:layout_marginStart="@dimen/spacing_large"
                 android:layout_marginEnd="@dimen/spacing_large"
                 style="@style/Subheader2"
+                android:letterSpacing="0.015"
                 android:textColor="@color/black"
                 />
             <TextView
@@ -104,6 +106,7 @@
                 android:layout_marginBottom="@dimen/spacing_medium"
                 android:background="@drawable/support_info_lower_bg"
                 android:textColor="@color/white"
+                android:elevation="2dp"
                 android:textAllCaps="false"
                 style="@style/Subheader1"
                 />
@@ -126,6 +129,7 @@
                 android:layout_marginStart="@dimen/spacing_large"
                 android:layout_marginEnd="@dimen/spacing_large"
                 style="@style/Subheader2"
+                android:letterSpacing="0.015"
                 android:textColor="@color/black"
                 />
             <TextView
@@ -151,8 +155,8 @@
                 android:layout_marginEnd="@dimen/spacing_medium"
                 android:layout_marginBottom="@dimen/spacing_medium"
                 android:background="@drawable/support_info_lower_bg"
+                android:elevation="2dp"
                 android:textColor="@color/white"
-                android:textStyle="bold"
                 style="@style/Subheader1"
                 />
         </LinearLayout>
