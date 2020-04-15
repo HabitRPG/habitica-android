@@ -109,17 +109,6 @@ class PartyDetailFragment : BaseFragment() {
 
         invitationsView?.setLeader = null
 
-//        this attempt flickers to show populated views, then goes back to placeholders
-//        invitations_view.setLeader = {
-//                    compositeSubscription.add(
-//                        socialRepository.getMember(it)
-//                                .subscribe(Consumer {
-//                                    inviteLeaderAvatarView?.setAvatar(it)
-//                                    inviteLeaderTextView?.text = getString(R.string.invitation_title,it.displayName, invitationsView?.groupName)
-//                                }, RxErrorHandler.handleEmptyError())
-//        )
-//                    }
-
         invitationsView?.acceptCall = {
             viewModel?.joinGroup(it) {
                 compositeSubscription.add(userRepository.retrieveUser(false)
