@@ -201,7 +201,9 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
             additionalData["status"] = "completed"
             AmplitudeManager.sendEvent("setup", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT, additionalData)
 
-            startMainActivity()
+            compositeSubscription.add(userRepository.updateUser(user, "flags.welcomed", true).subscribe(Consumer {
+                startMainActivity()
+            }, RxErrorHandler.handleEmptyError()))
             return
         }
         this.user = user
