@@ -299,7 +299,7 @@
         <item name="android:textColor">@color/gray_200</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:layout_marginStart">@dimen/spacing_large</item>
-        <item name="android:letterSpacing">0.1</item>
+        <item name="android:letterSpacing">0.15</item>
     </style>
 
     <style name="BottomMenu">
