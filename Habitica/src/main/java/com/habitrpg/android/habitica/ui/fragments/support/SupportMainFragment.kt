@@ -117,11 +117,10 @@ class SupportMainFragment : BaseMainFragment() {
 
         activity?.let {
             val emailIntent = Intent(Intent.ACTION_SENDTO)
-            val mailto = "mailto:bob@example.org" +
-                    "?cc=" + "alice@example.com" +
+            val mailto = "mailto:" + appConfigManager.supportEmail() +
                     "&subject=" + Uri.encode(subject) +
                     "&body=" + Uri.encode(bodyOfEmail)
-            emailIntent.setData(Uri.parse(mailto));
+            emailIntent.data = Uri.parse(mailto);
 
             startActivity(Intent.createChooser(emailIntent, "Choose an Email client :"))
         }

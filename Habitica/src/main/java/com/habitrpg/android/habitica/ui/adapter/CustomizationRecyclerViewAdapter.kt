@@ -30,6 +30,7 @@ class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerVi
     var userSize: String? = null
     var hairColor: String? = null
     var gemBalance: Int = 0
+    var unsortedCustomizations: List<Customization> = ArrayList()
     var customizationList: MutableList<Any> = ArrayList()
     set(value) {
         field = value
@@ -50,6 +51,7 @@ class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerVi
 
     fun updateOwnership(ownedCustomizations: List<String>) {
         this.ownedCustomiztations = ownedCustomizations
+        setCustomizations(unsortedCustomizations)
         notifyDataSetChanged()
     }
 
@@ -90,9 +92,16 @@ class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerVi
     }
 
     fun setCustomizations(newCustomizationList: List<Customization>) {
+        unsortedCustomizations = newCustomizationList
         this.customizationList = ArrayList()
         var lastSet = CustomizationSet()
+        val today = Date()
         for (customization in newCustomizationList.reversed()) {
+            if (customization.availableFrom != null || customization.availableUntil != null) {
+                if ((customization.availableFrom?.compareTo(today) ?: 0 > 0 || customization.availableUntil?.compareTo(today) ?: 0 < 0) && !customization.isUsable(ownedCustomiztations.contains(customization.identifier))) {
+                    continue
+                }
+            }
             if (customization.customizationSet != null && customization.customizationSet != lastSet.identifier) {
                 val set = CustomizationSet()
                 set.identifier = customization.customizationSet

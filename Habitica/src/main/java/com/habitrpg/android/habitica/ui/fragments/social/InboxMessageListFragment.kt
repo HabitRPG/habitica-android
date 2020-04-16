@@ -90,6 +90,13 @@ class InboxMessageListFragment : BaseMainFragment(), androidx.swiperefreshlayout
         communityGuidelinesView.visibility = View.GONE
     }
 
+    override fun onResume() {
+        if (replyToUserUUID?.isNotBlank() != true && chatRoomUser?.isNotBlank() != true) {
+            fragmentManager?.popBackStack()
+        }
+        super.onResume()
+    }
+
     override fun onAttach(context: Context) {
         view?.invalidate()
         view?.forceLayout()

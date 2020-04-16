@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.ui.fragments.support
 
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -97,16 +98,13 @@ class BugFixFragment: BaseMainFragment() {
         bodyOfEmail += " \nDetails:\n"
 
         activity?.let {
-            val email = Intent(Intent.ACTION_SEND)
-            email.putExtra(Intent.EXTRA_EMAIL, arrayOf<String>(appConfigManager.supportEmail()))
-            email.putExtra(Intent.EXTRA_SUBJECT, subject)
-            email.putExtra(Intent.EXTRA_TEXT, bodyOfEmail)
+            val emailIntent = Intent(Intent.ACTION_SENDTO)
+            val mailto = "mailto:" + appConfigManager.supportEmail() +
+                    "&subject=" + Uri.encode(subject) +
+                    "&body=" + Uri.encode(bodyOfEmail)
+            emailIntent.data = Uri.parse(mailto);
 
-            //need this to prompts email client only
-            //need this to prompts email client only
-            email.type = "message/rfc822"
-
-            startActivity(Intent.createChooser(email, "Choose an Email client :"))
+            startActivity(Intent.createChooser(emailIntent, "Choose an Email client :"))
         }
     }
 }

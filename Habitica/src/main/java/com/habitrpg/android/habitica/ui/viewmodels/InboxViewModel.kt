@@ -75,7 +75,7 @@ class InboxViewModel(recipientID: String?, recipientUsername: String?) : BaseVie
         if (recipientID?.isNotBlank() == true) {
             setMemberID(recipientID)
             loadMemberFromLocal()
-        } else {
+        } else if (recipientUsername?.isNotBlank() == true) {
             socialRepository.getMemberWithUsername(recipientUsername).subscribe(Consumer {
                 setMemberID(it.id ?: "")
                 member.value = it
