@@ -6,6 +6,7 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.view.View
+import android.widget.TextView
 import androidx.core.os.bundleOf
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.UserRepository
@@ -63,19 +64,9 @@ class AvatarWithBarsViewModel(private val context: Context, private val binding:
         binding.mpBar.visibility = if (stats.habitClass == null || stats.lvl ?: 0 < 10 || user.preferences?.disableClasses == true) View.GONE else View.VISIBLE
 
         if (!user.hasClass()) {
-            binding.lvlTv.text = context.getString(R.string.user_level, stats.lvl)
-            binding.lvlTv.setCompoundDrawables(null, null, null, null)
+            setUserLevel(context, binding.lvlTv, stats.lvl)
         } else {
-            binding.lvlTv.text = context.getString(R.string.user_level_with_class, stats.lvl, userClass.substring(0, 1).toUpperCase(Locale.getDefault()) + userClass.substring(1))
-            var drawable: Drawable? = null
-            when (stats.habitClass) {
-                Stats.WARRIOR -> drawable = BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfWarriorDarkBg())
-                Stats.ROGUE -> drawable = BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfRogueDarkBg())
-                Stats.MAGE -> drawable = BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfMageDarkBg())
-                Stats.HEALER -> drawable = BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfHealerDarkBg())
-            }
-            drawable?.setBounds(0, 0, drawable.minimumWidth, drawable.minimumHeight)
-            binding.lvlTv.setCompoundDrawables(drawable, null, null, null)
+            setUserLevelWithClass(context, binding.lvlTv, stats.lvl, capitalize(userClass), stats.habitClass)
         }
 
         setHpBarData(stats.hp?.toFloat() ?: 0.toFloat(), stats.maxHealth ?: 0)
@@ -144,5 +135,26 @@ class AvatarWithBarsViewModel(private val context: Context, private val binding:
             val hp = stats.hp?.let { HealthFormatter.format(it) } ?: 0.0
             valueBar.set(hp, maxHP.toDouble())
         }
+
+        private fun setUserLevel(context: Context, textView: TextView, level: Int?) {
+            textView.text = context.getString(R.string.user_level, level)
+            textView.setCompoundDrawables(null, null, null, null)
+        }
+
+        private fun setUserLevelWithClass(context: Context, textView: TextView, level: Int?, userClassString: String, habitClass: String?) {
+            textView.text = context.getString(R.string.user_level_with_class, level, userClassString)
+            var drawable: Drawable? = null
+            when (habitClass) {
+                Stats.WARRIOR -> drawable = BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfWarriorDarkBg())
+                Stats.ROGUE -> drawable = BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfRogueDarkBg())
+                Stats.MAGE -> drawable = BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfMageDarkBg())
+                Stats.HEALER -> drawable = BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfHealerDarkBg())
+            }
+            drawable?.setBounds(0, 0, drawable.minimumWidth, drawable.minimumHeight)
+            textView.setCompoundDrawables(drawable, null, null, null)
+        }
+
+        private fun capitalize(s: String) =
+                s.substring(0, 1).toUpperCase(Locale.getDefault()) + s.substring(1)
     }
 }
