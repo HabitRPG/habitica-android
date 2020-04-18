@@ -953,7 +953,7 @@
     <string name="unlock_previous">Unlock by finishing Quest %d</string>
     <string name="unlock_level">Unlock by reaching level %d</string>
     <string name="unlock_previous_short">Finish Quest %d</string>
-    <string name="unlock_level_short">Level %d</string>
+    <string name="level_unabbreviated">Level %d</string>
     <string name="not_participating">You are not participating</string>
     <string name="quest_completed">Quest completed!</string>
     <string name="using_habitica">Using Habitica</string>
