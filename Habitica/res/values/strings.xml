@@ -293,6 +293,7 @@
     <string name="empty_items">You don\'t have any %s</string>
     <string name="user_level">Lvl %d</string>
     <string name="user_level_with_class">Lvl %1$d %2$s</string>
+    <string name="user_level_with_class_unabbreviated">Level %1$d %2$s</string>
     <string name="warrior">Warrior</string>
     <string name="rogue">Rogue</string>
     <string name="mage">Mage</string>

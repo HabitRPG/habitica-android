@@ -138,11 +138,13 @@ class AvatarWithBarsViewModel(private val context: Context, private val binding:
 
         private fun setUserLevel(context: Context, textView: TextView, level: Int?) {
             textView.text = context.getString(R.string.user_level, level)
+            textView.contentDescription = context.getString(R.string.level_unabbreviated, level)
             textView.setCompoundDrawables(null, null, null, null)
         }
 
         private fun setUserLevelWithClass(context: Context, textView: TextView, level: Int?, userClassString: String, habitClass: String?) {
             textView.text = context.getString(R.string.user_level_with_class, level, userClassString)
+            textView.contentDescription = context.getString(R.string.user_level_with_class_unabbreviated, level, userClassString)
             var drawable: Drawable? = null
             when (habitClass) {
                 Stats.WARRIOR -> drawable = BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfWarriorDarkBg())
