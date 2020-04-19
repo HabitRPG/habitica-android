@@ -86,6 +86,8 @@
     <string name="start_date">Start Date</string>
     <string name="positive_habit_form">Positive</string>
     <string name="negative_habit_form">Negative</string>
+    <string name="on">On</string>
+    <string name="off">Off</string>
     <string name="checklist">Checklist</string>
     <string name="reminders">Reminders</string>
 
