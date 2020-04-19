@@ -42,8 +42,7 @@ class FixValuesEditText(context: Context, attrs: AttributeSet) : FrameLayout(con
         binding.editTextWrapper.setHintTextAppearance(attributes.getResourceId(R.styleable.FixValuesEditText_hintStyle, R.style.PurpleTextLabel))
         iconBackgroundColor = attributes.getColor(R.styleable.FixValuesEditText_iconBgColor, 0)
 
-        val iconName = attributes.getString(R.styleable.FixValuesEditText_fixIconName)
-        when (iconName) {
+        when (attributes.getString(R.styleable.FixValuesEditText_fixIconName)) {
             "health" -> binding.iconView.setImageBitmap(HabiticaIconsHelper.imageOfHeartLightBg())
             "experience" -> binding.iconView.setImageBitmap(HabiticaIconsHelper.imageOfExperience())
             "mana" -> binding.iconView.setImageBitmap(HabiticaIconsHelper.imageOfMagic())

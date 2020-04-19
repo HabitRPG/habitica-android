@@ -31,7 +31,7 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
     private var buttonsWrapper: LinearLayout
     private var noticeTextView: TextView
 
-    private var additionalContentView: View? = null
+    internal var additionalContentView: View? = null
 
     var isScrollingLayout: Boolean = false
     get() {
