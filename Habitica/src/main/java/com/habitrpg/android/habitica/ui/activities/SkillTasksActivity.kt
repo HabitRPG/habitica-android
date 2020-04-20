@@ -18,7 +18,6 @@ import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.fragments.skills.SkillTasksRecyclerViewFragment
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import io.reactivex.functions.Consumer
-import kotlinx.android.synthetic.main.activity_prefs.*
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -40,7 +39,7 @@ class SkillTasksActivity : BaseActivity() {
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setupToolbar(toolbar)
+        setupToolbar(findViewById(R.id.toolbar))
         loadTaskLists()
     }
 

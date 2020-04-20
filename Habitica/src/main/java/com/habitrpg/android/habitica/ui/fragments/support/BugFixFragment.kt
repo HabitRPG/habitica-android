@@ -100,7 +100,7 @@ class BugFixFragment: BaseMainFragment() {
         activity?.let {
             val emailIntent = Intent(Intent.ACTION_SENDTO)
             val mailto = "mailto:" + appConfigManager.supportEmail() +
-                    "&subject=" + Uri.encode(subject) +
+                    "?subject=" + Uri.encode(subject) +
                     "&body=" + Uri.encode(bodyOfEmail)
             emailIntent.data = Uri.parse(mailto);
 
