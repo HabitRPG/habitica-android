@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.View
+import android.view.accessibility.AccessibilityEvent
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -22,7 +23,11 @@ class HabitResetStreakButtons @JvmOverloads constructor(
         field = value
         removeAllViews()
         addAllButtons()
+        selectedButton.sendAccessibilityEvent(
+                AccessibilityEvent.CONTENT_CHANGE_TYPE_CONTENT_DESCRIPTION)
     }
+
+    private lateinit var selectedButton: TextView
 
     init {
         addAllButtons()
@@ -43,14 +48,22 @@ class HabitResetStreakButtons @JvmOverloads constructor(
             button.gravity = Gravity.CENTER
             button.layoutParams = layoutParams
             addView(button)
+            if (resetOption == selectedResetOption) {
+                selectedButton = button;
+            }
         }
     }
 
     private fun createButton(resetOption: HabitResetOption): TextView {
+        val isActive = selectedResetOption == resetOption
+
         val button = TextView(context)
-        button.text = context.getString(resetOption.nameRes)
+        val buttonText = context.getString(resetOption.nameRes)
+        button.text = buttonText
+        button.contentDescription = toContentDescription(buttonText, isActive)
         button.background = ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_white)
-        if (selectedResetOption == resetOption) {
+
+        if (isActive) {
             button.background.setTint(tintColor)
             button.setTextColor(ContextCompat.getColor(context, R.color.white))
         } else {
@@ -61,5 +74,12 @@ class HabitResetStreakButtons @JvmOverloads constructor(
             selectedResetOption = resetOption
         }
         return button
+    }
+
+    private fun toContentDescription(buttonText: CharSequence, isActive: Boolean): String {
+        val statusString = if (isActive) {
+            context.getString(R.string.selected)
+        } else context.getString(R.string.not_selected)
+        return "$buttonText, $statusString"
     }
 }
