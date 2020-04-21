@@ -88,6 +88,8 @@
     <string name="negative_habit_form">Negative</string>
     <string name="on">On</string>
     <string name="off">Off</string>
+    <string name="selected">Selected</string>
+    <string name="not_selected">Not selected</string>
     <string name="checklist">Checklist</string>
     <string name="reminders">Reminders</string>
 
