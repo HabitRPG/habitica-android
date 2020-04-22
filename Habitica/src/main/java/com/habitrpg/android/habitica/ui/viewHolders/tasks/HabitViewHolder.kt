@@ -34,7 +34,7 @@ class HabitViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> U
         btnMinus.setOnClickListener { onMinusButtonClicked() }
     }
 
-    override fun bind(data: Task, position: Int) {
+    override fun bind(data: Task, position: Int, displayMode: String) {
         this.task = data
         if (data.up == true) {
             this.btnPlusWrapper.setBackgroundResource(data.lightTaskColor)
@@ -82,7 +82,7 @@ class HabitViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> U
         } else {
             streakTextView.visibility = View.GONE
         }
-        super.bind(data, position)
+        super.bind(data, position, displayMode)
     }
 
     private fun onPlusButtonClicked() {

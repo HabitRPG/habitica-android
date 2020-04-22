@@ -64,7 +64,7 @@ dependencies {
     compileOnly 'com.github.pengrad:jdk9-deps:1.0'
     //App Compatibility and Material Design
     implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'com.google.android.material:material:1.1.0'
+    implementation 'com.google.android.material:material:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'androidx.legacy:legacy-preference-v14:1.0.0'
     // Emojis
@@ -162,8 +162,8 @@ android {
         multiDexEnabled true
         resConfigs "en", "bg", "de", "en-rGB", "es", "fr", "hr-rHR", "in", "it", "iw", "ja", "ko", "lt", "nl", "pl", "pt-rBR", "pt-rPT", "ru", "tr", "zh", "zh-rTW"
 
-        versionCode 2408
-        versionName "2.6"
+        versionCode 2412
+        versionName "2.6.1"
     }
 
     viewBinding {
@@ -211,6 +211,12 @@ android {
     productFlavors {
         dev {
             dimension "buildType"
+        }
+
+        staff {
+            dimension "buildType"
+            buildConfigField "String", "TESTING_LEVEL", "\"staff\""
+            resValue "string", "app_name", "Habitica Staff"
         }
 
         alpha {

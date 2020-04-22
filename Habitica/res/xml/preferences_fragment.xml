@@ -112,6 +112,13 @@
                 android:shouldDisableView="false"
                 android:summary="@string/SP_APIToken_summary"
                 android:layout="@layout/preference_child_summary"/>
+            <ListPreference
+                android:entries="@array/weekdays"
+                android:entryValues="@array/weekdayValues"
+                android:key="@string/pref_first_day_of_the_week_key"
+                android:layout="@layout/preference_child_summary"
+                android:summary="@string/pref_first_day_of_the_week_summary"
+                android:title="@string/pref_first_day_of_the_week_title" />
         </PreferenceScreen>
 
         <Preference
@@ -131,11 +138,12 @@
     <PreferenceCategory
         android:title="@string/app_settings"
         android:layout="@layout/preference_category">
-        <ListPreference android:title="@string/pref_first_day_of_the_week_title"
-            android:key="@string/pref_first_day_of_the_week_key"
-            android:entries="@array/weekdays"
-            android:entryValues="@array/weekdayValues"
-            android:summary="@string/pref_first_day_of_the_week_summary"
+        <ListPreference
+            android:title="@string/task_display"
+            android:key="task_display"
+            android:entries="@array/TaskDisplayTypes"
+            android:entryValues="@array/TaskDisplayValues"
+            android:defaultValue="standard"
             android:layout="@layout/preference_child_summary"/>
         <ListPreference android:title="@string/Language_title"
             android:key="language"

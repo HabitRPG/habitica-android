@@ -24,6 +24,14 @@ abstract class RealmBaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(
     private var updateOnModification: Boolean = false
     override var ignoreUpdates: Boolean = false
 
+    override var taskDisplayMode: String = "standard"
+    set(value) {
+        if (field != value) {
+            field = value
+            notifyDataSetChanged()
+        }
+    }
+
     private val resultsListener: OrderedRealmCollectionChangeListener<RealmResults<Task>> by lazy {
         OrderedRealmCollectionChangeListener<RealmResults<Task>> { _, changeSet ->
             buildChangeSet(changeSet)
@@ -128,7 +136,7 @@ abstract class RealmBaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(
     override fun onBindViewHolder(holder: VH, position: Int) {
         val item = getItem(position)
         if (item != null) {
-            holder.bind(item, position)
+            holder.bind(item, position, taskDisplayMode)
             holder.errorButtonClicked = Action {
                 errorButtonEventsSubject.onNext("")
             }

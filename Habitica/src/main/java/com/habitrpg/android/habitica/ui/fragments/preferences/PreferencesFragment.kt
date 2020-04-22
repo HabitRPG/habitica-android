@@ -78,6 +78,10 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
         val themePreference = findPreference("theme_name") as? ListPreference
         themePreference?.isVisible = configManager.testingLevel() == AppTestingLevel.ALPHA || BuildConfig.DEBUG
         themePreference?.summary = themePreference?.entry
+
+
+        val taskDisplayPreference = findPreference("task_display") as? ListPreference
+        taskDisplayPreference?.summary = taskDisplayPreference?.entry
     }
 
     override fun onResume() {
@@ -223,6 +227,10 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
             "server_url" -> {
                 apiClient.updateServerUrl(sharedPreferences.getString(key, ""))
                 findPreference(key).summary = sharedPreferences.getString(key, "")
+            }
+            "task_display" -> {
+                val preference = findPreference(key) as ListPreference
+                preference.summary = preference.entry
             }
         }
     }

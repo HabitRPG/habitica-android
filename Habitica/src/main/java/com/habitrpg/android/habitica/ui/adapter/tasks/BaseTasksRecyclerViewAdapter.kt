@@ -46,7 +46,7 @@ abstract class BaseTasksRecyclerViewAdapter<VH : BindableViewHolder<Task>>(var t
     override fun onBindViewHolder(holder: VH, position: Int) {
         val item = filteredContent?.get(position)
         if (item != null) {
-            holder.bind(item, position)
+            holder.bind(item, position, "normal")
         }
         /*if (this.displayedChecklist != null && ChecklistedViewHolder.class.isAssignableFrom(holder.getClass())) {
             ChecklistedViewHolder checklistedHolder = (ChecklistedViewHolder) holder;

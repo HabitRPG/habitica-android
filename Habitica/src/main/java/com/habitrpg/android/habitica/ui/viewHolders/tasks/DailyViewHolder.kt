@@ -25,7 +25,7 @@ class DailyViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> U
             return isVisible
         }
 
-    override fun bind(newTask: Task, position: Int) {
+    override fun bind(newTask: Task, position: Int, displayMode: String) {
         this.task = newTask
         if (newTask.isChecklistDisplayActive) {
             this.checklistIndicatorWrapper.setBackgroundResource(newTask.lightTaskColor)
@@ -55,7 +55,7 @@ class DailyViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> U
             reminderTextView.text = reminderString
         }
 
-        super.bind(newTask, position)
+        super.bind(newTask, position, displayMode)
     }
 
     override fun shouldDisplayAsActive(newTask: Task): Boolean {

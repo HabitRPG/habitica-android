@@ -1,5 +1,7 @@
 package com.habitrpg.android.habitica.helpers
 
+import android.content.Context
+import androidx.preference.PreferenceManager
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -81,5 +83,14 @@ class AppConfigManager {
 
     fun raiseShops(): Boolean {
         return remoteConfig.getBoolean("raiseShops")
+    }
+
+    fun taskDisplayMode(context: Context): String {
+        return if (remoteConfig.getBoolean("enableTaskDisplayMode")) {
+            val preferences = PreferenceManager.getDefaultSharedPreferences(context)
+            preferences.getString("task_display", "standard") ?: "standard"
+        } else {
+            "standard"
+        }
     }
 }

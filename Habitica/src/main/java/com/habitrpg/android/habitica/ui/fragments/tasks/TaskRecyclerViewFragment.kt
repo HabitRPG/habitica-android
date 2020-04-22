@@ -102,6 +102,8 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
                 this.recyclerAdapter?.filter()
             }, RxErrorHandler.handleEmptyError()))
         }
+
+        context?.let { recyclerAdapter?.taskDisplayMode = configManager.taskDisplayMode(it) }
     }
 
     private fun handleTaskResult(result: TaskScoringResult, value: Int) {
@@ -357,6 +359,11 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
                 .doOnTerminate {
                     binding.refreshLayout.isRefreshing = false
                 }.subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+    }
+
+    override fun onResume() {
+        super.onResume()
+        context?.let { recyclerAdapter?.taskDisplayMode = configManager.taskDisplayMode(it) }
     }
 
     fun setActiveFilter(activeFilter: String) {

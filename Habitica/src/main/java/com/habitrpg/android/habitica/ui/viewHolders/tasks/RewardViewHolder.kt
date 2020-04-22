@@ -63,9 +63,9 @@ class RewardViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> 
         this.buyButton.isEnabled = !taskActionsDisabled
     }
 
-    fun bind(reward: Task, position: Int, canBuy: Boolean) {
+    fun bind(reward: Task, position: Int, canBuy: Boolean, displayMode: String) {
         this.task = reward
-        super.bind(reward, position)
+        super.bind(reward, position, displayMode)
         this.priceLabel.text = NumberAbbreviator.abbreviate(itemView.context, this.task?.value ?: 0.0)
 
         if (canBuy) {
