@@ -279,23 +279,26 @@ class TaskSchedulingControls @JvmOverloads constructor(
     }
 
     private fun configureMonthlyRepeatViews() {
-        val white = ContextCompat.getColor(context, R.color.white)
-        val unselectedText = ContextCompat.getColor(context, R.color.gray_100)
-        val unselectedBackground = ContextCompat.getColor(context, R.color.taskform_gray)
         if (daysOfMonth != null && daysOfMonth?.isEmpty() != true) {
-            monthlyRepeatDaysButton.setTextColor(white)
-            monthlyRepeatDaysButton.background.mutate().setTint(tintColor)
+            styleButtonAsActive(monthlyRepeatDaysButton)
         } else {
-            monthlyRepeatDaysButton.setTextColor(unselectedText)
-            monthlyRepeatDaysButton.background.mutate().setTint(unselectedBackground)
+            styleButtonAsInactive(monthlyRepeatDaysButton)
         }
         if (weeksOfMonth != null && weeksOfMonth?.isEmpty() != true) {
-            monthlyRepeatWeeksButton.setTextColor(white)
-            monthlyRepeatWeeksButton.background.mutate().setTint(tintColor)
+            styleButtonAsActive(monthlyRepeatWeeksButton)
         } else {
-            monthlyRepeatWeeksButton.setTextColor(unselectedText)
-            monthlyRepeatWeeksButton.background.mutate().setTint(unselectedBackground)
+            styleButtonAsInactive(monthlyRepeatWeeksButton)
         }
+    }
+
+    private fun styleButtonAsActive(button: TextView) {
+        button.setTextColor(ContextCompat.getColor(context, R.color.white))
+        button.background.mutate().setTint(tintColor)
+    }
+
+    private fun styleButtonAsInactive(button: TextView) {
+        button.setTextColor(ContextCompat.getColor(context, R.color.gray_100))
+        button.background.mutate().setTint(ContextCompat.getColor(context, R.color.taskform_gray))
     }
 
     private fun toContentDescription(buttonText: CharSequence, isActive: Boolean): String {
