@@ -9,6 +9,7 @@ import android.text.TextUtils
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
+import android.view.accessibility.AccessibilityEvent
 import android.widget.*
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
@@ -226,6 +227,8 @@ class TaskSchedulingControls @JvmOverloads constructor(
             1 -> weeklyRepeat.su = isActive
         }
         createWeeklyRepeatViews()
+        weeklyRepeatWrapper.findViewWithTag<TextView>(weekday).sendAccessibilityEvent(
+                AccessibilityEvent.CONTENT_CHANGE_TYPE_CONTENT_DESCRIPTION)
     }
 
     private fun isWeekdayActive(weekday: Int): Boolean {
@@ -247,10 +250,12 @@ class TaskSchedulingControls @JvmOverloads constructor(
         val lastWeekday = weekdayOrder.last()
         for (weekdayCode in weekdayOrder) {
             val button = TextView(context, null, 0, R.style.TaskFormWeekdayButton)
+            val isActive = isWeekdayActive(weekdayCode)
             val layoutParams = LayoutParams(size, size)
             button.layoutParams = layoutParams
             button.text = weekdays[weekdayCode].first().toUpperCase().toString()
-            val isActive = isWeekdayActive(weekdayCode)
+            button.contentDescription = toContentDescription(weekdays[weekdayCode], isActive)
+            button.tag = weekdayCode
             if (isActive) {
                 button.background = context.getDrawable(R.drawable.habit_scoring_circle_selected)
                 button.background.mutate().setTint(tintColor)
@@ -291,6 +296,13 @@ class TaskSchedulingControls @JvmOverloads constructor(
             monthlyRepeatWeeksButton.setTextColor(unselectedText)
             monthlyRepeatWeeksButton.background.mutate().setTint(unselectedBackground)
         }
+    }
+
+    private fun toContentDescription(buttonText: CharSequence, isActive: Boolean): String {
+        val statusString = if (isActive) {
+            context.getString(R.string.selected)
+        } else context.getString(R.string.not_selected)
+        return "$buttonText, $statusString"
     }
 
     private fun generateSummary() {
