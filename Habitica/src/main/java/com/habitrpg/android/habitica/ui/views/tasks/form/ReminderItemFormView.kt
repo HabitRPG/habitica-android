@@ -5,6 +5,7 @@ import android.app.TimePickerDialog
 import android.content.Context
 import android.util.AttributeSet
 import android.view.Gravity
+import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.LinearInterpolator
@@ -59,12 +60,16 @@ class ReminderItemFormView @JvmOverloads constructor(
                 rotate.interpolator = LinearInterpolator()
                 rotate.fillAfter = true
                 button.startAnimation(rotate)
+                // This button is not clickable in this state, so make screen readers skip it.
+                button.importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
             } else {
                 val rotate = RotateAnimation(0f, 135f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f)
                 rotate.duration = animDuration
                 rotate.interpolator = LinearInterpolator()
                 rotate.fillAfter = true
                 button.startAnimation(rotate)
+                // This button IS now clickable, so allow screen readers to focus it.
+                button.importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_YES
             }
         }
 
@@ -80,6 +85,9 @@ class ReminderItemFormView @JvmOverloads constructor(
                 (parent as? ViewGroup)?.removeView(this)
             }
         }
+        // It's ok to make the description always be 'Delete Reminder' because when this button is
+        // a plus button we set it as 'unimportant for accessibility' so it can't be focused.
+        button.contentDescription = context.getString(R.string.delete_reminder)
         button.drawable.mutate().setTint(tintColor)
 
         textView.setOnClickListener {
@@ -99,6 +107,7 @@ class ReminderItemFormView @JvmOverloads constructor(
                 timePickerDialog.show()
             }
         }
+        textView.labelFor = button.id
     }
     override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
         valueChangedListener?.let {
