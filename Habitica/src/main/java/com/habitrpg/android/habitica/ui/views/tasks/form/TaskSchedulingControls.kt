@@ -294,11 +294,13 @@ class TaskSchedulingControls @JvmOverloads constructor(
     private fun styleButtonAsActive(button: TextView) {
         button.setTextColor(ContextCompat.getColor(context, R.color.white))
         button.background.mutate().setTint(tintColor)
+        button.contentDescription = toContentDescription(button.text, true)
     }
 
     private fun styleButtonAsInactive(button: TextView) {
         button.setTextColor(ContextCompat.getColor(context, R.color.gray_100))
         button.background.mutate().setTint(ContextCompat.getColor(context, R.color.taskform_gray))
+        button.contentDescription = toContentDescription(button.text, false)
     }
 
     private fun toContentDescription(buttonText: CharSequence, isActive: Boolean): String {
