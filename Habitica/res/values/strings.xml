@@ -1013,4 +1013,5 @@
     <string name="read_more">Read More</string>
     <string name="purchase_amount_error">You are unable to buy that amount.</string>
     <string name="still_questions">Still have a question?</string>
+    <string name="delete_checklist_entry">Delete Checklist entry</string>
 </resources>
