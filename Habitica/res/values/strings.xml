@@ -134,7 +134,7 @@
     <string name="members">Members</string>
     <string name="habits">Habits</string>
     <string name="dailies">Dailies</string>
-    <string name="todos">To-Dos</string>
+    <string name="todos">To-Do\'s</string>
     <string name="rewards">Rewards</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
@@ -491,15 +491,15 @@
     <string name="empty_description_habits">Habits are tasks that don\'t have a rigid schedule. You can check them off many times a day, or not at all.</string>
     <string name="empty_title_dailies">You don\'t have any Dailies</string>
     <string name="empty_description_dailies">Dailies are tasks that repeat on a regular basis. Choose the schedule that works for you!</string>
-    <string name="empty_title_todos">You don\'t have any To-Dos</string>
-    <string name="empty_description_todos">To-Dos are tasks that only need to be completed once. Add checklists to your To-Dos to increase their value.</string>
+    <string name="empty_title_todos">You don\'t have any To-Do\'s</string>
+    <string name="empty_description_todos">To-Do\'s are tasks that only need to be completed once. Add checklists to your To-Do\'s to increase their value.</string>
     <string name="empty_title_rewards">You don\'t have any Rewards</string>
     <string name="empty_title_habits_filtered">No Habits</string>
     <string name="empty_description_habits_filtered">There aren\'t any Habits visible with your current filters.</string>
     <string name="empty_title_dailies_filtered">No Dailies</string>
     <string name="empty_description_dailies_filtered">There aren\'t any Dailies visible with your current filters.</string>
-    <string name="empty_title_todos_filtered">No To-Dos</string>
-    <string name="empty_description_todos_filtered">There aren\'t any To-Dos visible with your current filters.</string>
+    <string name="empty_title_todos_filtered">No To-Do\'s</string>
+    <string name="empty_description_todos_filtered">There aren\'t any To-Do\'s visible with your current filters.</string>
     <string name="empty_title_rewards_filtered">No Rewards</string>
     <string name="reset_walkthrough">Reset Tutorials</string>
     <string name="read_community_guidelines">Review our <u>Community Guidelines</u> before posting</string>
@@ -693,7 +693,7 @@
     <string name="next_day_reminder_title">Did you check off your tasks today?</string>
     <string name="next_day_reminder_text">There\'s lots to unlock and discover as you level up, so keep up with your tasks and have fun!</string>
     <string name="daily_tip_0">Want to try something new? Join a Challenge to expand your task list and win some Gems!</string>
-    <string name="daily_tip_1">Add checklists to your To-Dos to multiply your rewards!</string>
+    <string name="daily_tip_1">Add checklists to your To-Do\'s to multiply your rewards!</string>
     <string name="daily_tip_2">You can change how often each Daily repeats. Even infrequent tasks can be scheduled.</string>
     <string name="daily_tip_3">You can schedule specific reminders for Dailies too.</string>
     <string name="daily_tip_4">Occasionally re-evaluating your tasks can help keep you on the right path.</string>
