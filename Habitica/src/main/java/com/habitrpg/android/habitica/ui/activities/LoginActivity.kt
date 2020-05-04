@@ -294,7 +294,11 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
             }
         }
         if (requestCode == REQUEST_CODE_RECOVER_FROM_PLAY_SERVICES_ERROR) {
-            handleGoogleLoginResult()
+            // RESULT_CANCELED occurs when user denies requested permissions. In this case we don't
+            // want to immediately ask them to accept permissions again. See Issue #1290 on github.
+            if (resultCode != Activity.RESULT_CANCELED) {
+                handleGoogleLoginResult()
+            }
         }
 
         if (requestCode == FacebookSdk.getCallbackRequestCodeOffset()) {
