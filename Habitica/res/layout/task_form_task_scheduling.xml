@@ -60,7 +60,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/repeats"
                 android:textColor="@color/gray_300"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:labelFor="@+id/repeats_every_spinner"/>
 
             <Spinner
                 android:id="@+id/repeats_every_spinner"
@@ -108,8 +109,9 @@
                     android:id="@+id/repeats_every_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text="@string/days"
-                    android:textColor="@color/gray_300"/>
+                    android:text="@string/days"
+                    android:textColor="@color/gray_300"
+                    android:labelFor="@+id/repeats_every_edittext"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

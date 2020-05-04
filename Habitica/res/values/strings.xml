@@ -86,6 +86,10 @@
     <string name="start_date">Start Date</string>
     <string name="positive_habit_form">Positive</string>
     <string name="negative_habit_form">Negative</string>
+    <string name="on">On</string>
+    <string name="off">Off</string>
+    <string name="selected">Selected</string>
+    <string name="not_selected">Not selected</string>
     <string name="checklist">Checklist</string>
     <string name="reminders">Reminders</string>
 
@@ -821,6 +825,7 @@
     <string name="invite_to_party">Invite to Party</string>
     <string name="are_you_sure">Are you sure?</string>
     <string name="delete_task">Delete Task</string>
+    <string name="delete_reminder">Delete Reminder</string>
     <string name="not_now">Not right now</string>
     <string name="levelup_detail_10">Choose a class that fits your playstyle and unlock special skills and armor to help you on your journey</string>
     <string name="levelup_title_10">Class System unlocked!</string>
@@ -1009,4 +1014,5 @@
     <string name="read_more">Read More</string>
     <string name="purchase_amount_error">You are unable to buy that amount.</string>
     <string name="still_questions">Still have a question?</string>
+    <string name="delete_checklist_entry">Delete Checklist entry</string>
 </resources>

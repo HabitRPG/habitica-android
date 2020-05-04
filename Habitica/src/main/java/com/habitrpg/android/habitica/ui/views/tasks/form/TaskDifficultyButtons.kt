@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.ui.views.tasks.form
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
+import android.view.accessibility.AccessibilityEvent
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Space
@@ -24,7 +25,9 @@ class TaskDifficultyButtons @JvmOverloads constructor(
         field = value
         removeAllViews()
         addAllButtons()
+        selectedButton.sendAccessibilityEvent(AccessibilityEvent.CONTENT_CHANGE_TYPE_CONTENT_DESCRIPTION)
     }
+    private lateinit var selectedButton: View
 
     init {
         addAllButtons()
@@ -41,6 +44,9 @@ class TaskDifficultyButtons @JvmOverloads constructor(
                 layoutParams.weight = 1f
                 space.layoutParams = layoutParams
                 addView(space)
+            }
+            if (difficulty.value == selectedDifficulty) {
+                selectedButton = button;
             }
         }
     }
@@ -59,10 +65,21 @@ class TaskDifficultyButtons @JvmOverloads constructor(
         }
         val drawable = HabiticaIconsHelper.imageOfTaskDifficultyStars(difficultyColor, difficulty.value, true).asDrawable(resources)
         view.findViewById<ImageView>(R.id.image_view).setImageDrawable(drawable)
-        view.findViewById<TextView>(R.id.text_view).text = context.getText(difficulty.nameRes)
+
+        val buttonText = context.getText(difficulty.nameRes)
+        view.findViewById<TextView>(R.id.text_view).text = buttonText
+        view.contentDescription = toContentDescription(buttonText, isActive)
+
         view.setOnClickListener {
             selectedDifficulty = difficulty.value
         }
         return view
+    }
+
+    private fun toContentDescription(buttonText: CharSequence, isActive: Boolean): String {
+        val statusString = if (isActive) {
+            context.getString(R.string.selected)
+        } else context.getString(R.string.not_selected)
+        return "$buttonText, $statusString"
     }
 }
