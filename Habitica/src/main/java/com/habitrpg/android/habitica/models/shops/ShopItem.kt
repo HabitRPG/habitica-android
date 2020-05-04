@@ -101,7 +101,7 @@ open class ShopItem : RealmObject() {
                 }
             }
             level != null -> {
-                context.getString(R.string.unlock_level_short, level ?: 0)
+                context.getString(R.string.level_unabbreviated, level ?: 0)
             }
             else -> null
         }
