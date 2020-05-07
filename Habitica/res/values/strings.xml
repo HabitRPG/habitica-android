@@ -406,7 +406,7 @@
     <string name="subscribe_listitem1_description">You’ll be able to buy Gems from the Market for 20 gold each!</string>
     <string name="subscribe_listitem2_description">Earn Mystic Hourglasses to purchase items in the Time Traveler’s Shop!</string>
     <string name="subscribe_listitem3_description">Subscribe now to get an exclusive set now and receive new items every month!</string>
-    <string name="subscribe_listitem3_description_new">Subscribe now to get this %s and receive new items every month! </string>
+    <string name="subscribe_listitem3_description_new">Subscribe now to get this %s and receive new items every month!</string>
     <string name="subscribe_listitem4_description">Receive the Royal Purple Jackalope pet when you become a new subscriber.</string>
     <string name="subscribe_listitem5_description">Discover even more items in Habitica with a 2x bonus daily drop cap.</string>
     <string name="subscribe1month_gemcap">25 Gem cap</string>
@@ -420,7 +420,7 @@
     <string name="due">Due</string>
     <string name="cancel_subscription">Cancel Subscription</string>
     <string name="cancel_subscription_google_description">No longer want to subscribe? You can find the option to unsubscribe in the “My Apps” section of the Google Play Store. Any months of subscription credit will be applied after your subscription has ended.</string>
-    <string name="cancel_subscription_notgoogle_description">No longer want to subscribe? Due to constraints on mobile payments, you\'ll need to cancel via our website. To do this, tap the button below, log in to your account, tap the User icon in the top right, then go to Subscription. Any months of subscription credit will be applied after your subscription has ended. We\'ll miss you! </string>
+    <string name="cancel_subscription_notgoogle_description">No longer want to subscribe? Due to constraints on mobile payments, you\'ll need to cancel via our website. To do this, tap the button below, log in to your account, tap the User icon in the top right, then go to Subscription. Any months of subscription credit will be applied after your subscription has ended. We\'ll miss you!</string>
     <string name="visit_habitica_website">Visit Habitica Website</string>
     <string name="current_bonuses">Current Bonuses</string>
     <string name="months_subscribed">Months subscribed</string>
@@ -719,8 +719,8 @@
     <string name="two_handed">Two-Handed</string>
     <string name="usernamePromptTitle">It’s time to set your username!</string>
     <string name="usernamePromptBody">Login names are now unique usernames that will be visible beside your display name and used for invitations, chat @mentions, and messaging.</string>
-    <string name="usernamePromptWiki">If you’d like to learn more about this change, <a href="https://habitica.wikia_com/wiki/Player_Names">visit our wiki.</a></string>
-    <string name="usernamePromptDisclaimer">Usernames should conform to our <a href="https://habitica.com/static/terms">Terms of Service</a> and <a href="https://habitica_com/static/community-guidelines">Community Guidelines</a>. If you didn’t previously set a login name, your username was auto-generated.</string>
+    <string name="usernamePromptWiki">If you’d like to learn more about this change, <a href="https://habitica.wikia.com/wiki/Player_Names">visit our wiki.</a></string>
+    <string name="usernamePromptDisclaimer">Usernames should conform to our <a href="https://habitica.com/static/terms">Terms of Service</a> and <a href="https://habitica.com/static/community-guidelines">Community Guidelines</a>. If you didn’t previously set a login name, your username was auto-generated.</string>
     <string name="confirm_username_title">Are you sure you want to confirm your current username?</string>
     <string name="confirm_username_description">Confirming your username will make it public for invitations, @mentions and messaging. You can change your username from settings at any time.</string>
     <string name="cancel">Cancel</string>
@@ -985,7 +985,7 @@
     <string name="gold_description">Gold is the **main form of currency** within Habitica and allows you to buy certain gear, quests, items, or even custom rewards you make for yourself.\n\n**Earn Gold** through completing tasks or quests, or through some Class skills. Higher **Perception stats** raise the amount of Gold you earn.\n\nIf you subscribe to Habitica, you can even use Gold to purchase a number of Gems determined by the length of time you’ve been subscribed.</string>
     <string name="mana_description">Mana points are unlocked with the class system at level 10 and allow you to **use Skills** once you begin learning them at level 11.\n\nSome **MP is restored** at day reset every day, but you can regain more by completing tasks or using a Mage class skill.</string>
     <string name="stat_allocation">Stat Allocation</string>
-    <string name="stat_description">All Habitica characters have four stats that affect the gameplay aspects of Habitica.\n\n**Strength (STR)** affects critical hits and raises damage done to a Quest Boss. Warriors and Rogues gain STR from their class equipment.\n\n**Constitution (CON)** raises your HP and makes you take less damage. Healers and Warriors gain CON from their class equipment.\n\n**Intelligence (INT)** raises the amount of EXP you earn and gives you more Mana. Mages and Healers gain INT from their class equipment.\n\n**Perception (PER)** increases the gold you earn and the rate of finding dropped items.Rogues and Mages gain PER from their class equipment.\n\nAfter level 10, you earn 1 Stat Point every level you gain that you can put into any stat you’d like. You can also equip gear that has different combinations of stat boosts.</string>
+    <string name="stat_description">All Habitica characters have four stats that affect the gameplay aspects of Habitica.\n\n**Strength (STR)** affects critical hits and raises damage done to a Quest Boss. Warriors and Rogues gain STR from their class equipment.\n\n**Constitution (CON)** raises your HP and makes you take less damage. Healers and Warriors gain CON from their class equipment.\n\n**Intelligence (INT)** raises the amount of EXP you earn and gives you more Mana. Mages and Healers gain INT from their class equipment.\n\n**Perception (PER)** increases the gold you earn and the rate of finding dropped items. Rogues and Mages gain PER from their class equipment.\n\nAfter level 10, you earn 1 Stat Point every level you gain that you can put into any stat you’d like. You can also equip gear that has different combinations of stat boosts.</string>
 
     <string name="standard"> Standard </string>
     <string name="premium_currency">Premium Currency</string>
