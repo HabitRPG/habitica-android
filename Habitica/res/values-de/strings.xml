@@ -343,7 +343,7 @@
     <string name="subscription_duration_norenew">Für %s</string>
     <string name="subscribe">Abonnieren</string>
     <string name="subscribe_listitem1_description">Du wirst auf dem Markt für jeweils 20 Goldstücke Edelsteine kaufen können!</string>
-    <string name="subscribe_listitem2_description">"Verdiene Dir Mystische Sanduhren, um im Laden der Zeitreisenden Gegenstände zu erwerben! "</string>
+    <string name="subscribe_listitem2_description">Verdiene Dir Mystische Sanduhren, um im Laden der Zeitreisenden Gegenstände zu erwerben!</string>
     <string name="subscribe_listitem3_description">Abonniere jetzt, um direkt ein einzigartiges Set zu bekommen und jeden Monat neue Gegenstände zu erhalten!</string>
     <string name="subscribe_listitem4_description">Verdoppelte Beute-Limits ermöglichen es Dir, täglich von erledigten Aufgaben mehr Gegenstände zu finden und deinen Stall schneller zu vervollständigen!</string>
     <string name="subscription_hourglasses">+%d Mystische Sanduhr</string>
