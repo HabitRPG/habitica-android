@@ -807,4 +807,6 @@
     <string name="preference_email_kicked_group">Исключен из группы</string>
     <string name="learn_more">Подробнее</string>
     <string name="g1g1_duration">С 17 декабря по 6 января</string>
+    <string name="level_unabbreviated">Уровень %d</string>
+    <string name="unlock_previous_short">Завершите квест %d</string>
 </resources>
