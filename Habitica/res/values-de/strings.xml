@@ -221,7 +221,7 @@
     <string name="quests">Quests</string>
     <string name="pets">Haustiere</string>
     <string name="mounts">Reittiere</string>
-    <string name="armoireEquipment">Du hast folgenden Ausrüstungsgegenstand im Schrank gefunden: %s</string>
+    <string name="armoireEquipment">Du hast %s im Schrank gefunden</string>
     <string name="armoireFood">Du wühlst im Schrank herum und findest %1$s %2$s. Was macht das denn hier?</string>
     <string name="armoireExp">Du ringst mit dem verzauberten Schrank und gewinnst Erfahrung. Nimm das!</string>
     <string name="sell">Verkaufen (%d Gold)</string>
@@ -255,7 +255,7 @@
     <string name="warrior_description">Krieger erzielen mehr \"kritische Treffer\" und fügen bei Bosskämpfen mehr Schaden zu. Spiele einen Krieger, wenn Du Monster mit Leichtigkeit besiegen willst! Krieger profitieren von hohen Werten bei Stärke.</string>
     <string name="mage_description">Magier lernen Fähigkeiten, die Bossmonstern Schaden zufügen, und Erfahrung und Mana erhöhen. Spiele einen Magier, wenn ein schnelles Aufsteigen im Level Dich motiviert! Magier profitieren von hohen Werten bei Intelligenz.</string>
     <string name="rogue_description">Schurken lernen Spezialfähigkeiten, die es Ihrer Party erlauben, mehr Gold und zufällige Gegenstände zu finden. Spiele einen Schurken, wenn Du jede Menge Gegenstände und Gold haben willst! Schurken profitieren von hohen Wahrnehmungspunkten.</string>
-    <string name="healer_description">Heiler stehen Schaden unbeeindruckt gegenüber und erweitern diesen Schutz auf andere. Verpasste tägliche Aufgaben und schlechte Angewohnheiten schaden ihnen nicht viel und sie haben Mittel und Wege Lebenspunkte wiederherzustellen. Spiele einen Heiler, wenn Du gerne Anderen in Deiner Party hilfst, oder wenn es Dich besonders reizt, dem Tod durch harte Arbeit zu entkommen!</string>
+    <string name="healer_description">Heiler lernen Fähigkeiten, die sie und ihre Party heilen und schützen. Spiele einen Heiler wenn es Dir Freude bereitet, anderen beizustehen oder Schaden zu vermeiden! Heiler profitieren von hohen Werten bei Ausdauer.</string>
     <string name="select_class">Klasse wählen</string>
     <string name="opt_out_class">Später entscheiden</string>
     <string name="class_confirmation">Bist Du sicher, dass Du %s werden willst?</string>
@@ -345,7 +345,7 @@
     <string name="subscribe_listitem1_description">Du wirst auf dem Markt für jeweils 20 Goldstücke Edelsteine kaufen können!</string>
     <string name="subscribe_listitem2_description">Verdiene Dir Mystische Sanduhren, um im Laden der Zeitreisenden Gegenstände zu erwerben!</string>
     <string name="subscribe_listitem3_description">Abonniere jetzt, um direkt ein einzigartiges Set zu bekommen und jeden Monat neue Gegenstände zu erhalten!</string>
-    <string name="subscribe_listitem4_description">Verdoppelte Beute-Limits ermöglichen es Dir, täglich von erledigten Aufgaben mehr Gegenstände zu finden und deinen Stall schneller zu vervollständigen!</string>
+    <string name="subscribe_listitem4_description">Erhalte das Königlich purpurfarbene Wolpertinger Haustier wenn Du ein Abonnement abschließt.</string>
     <string name="subscription_hourglasses">+%d Mystische Sanduhr</string>
     <string name="payment_method">Zahlungsmethode</string>
     <string name="subscription">Abonnement</string>
