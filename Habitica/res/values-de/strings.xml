@@ -343,7 +343,7 @@
     <string name="subscription_duration_norenew">Für %s</string>
     <string name="subscribe">Abonnieren</string>
     <string name="subscribe_listitem1_description">Du wirst auf dem Markt für jeweils 20 Goldstücke Edelsteine kaufen können!</string>
-    <string name="subscribe_listitem2_description">Jeden Monat wirst Du einen einzigartigen optischen Gegenstand für Deinen Avatar erhalten.\n\nAußerdem gewährt Dir der Mysteriöse Zeitreisende für jeweils drei durchgehend abonnierte Monate Zugang zu historischen (und futuristischen!) optischen Gegenständen.</string>
+    <string name="subscribe_listitem2_description">"Verdiene Dir Mystische Sanduhren, um im Laden der Zeitreisenden Gegenstände zu erwerben! "</string>
     <string name="subscribe_listitem3_description">Abonniere jetzt, um direkt ein einzigartiges Set zu bekommen und jeden Monat neue Gegenstände zu erhalten!</string>
     <string name="subscribe_listitem4_description">Verdoppelte Beute-Limits ermöglichen es Dir, täglich von erledigten Aufgaben mehr Gegenstände zu finden und deinen Stall schneller zu vervollständigen!</string>
     <string name="subscription_hourglasses">+%d Mystische Sanduhr</string>
@@ -430,7 +430,7 @@
     <string name="empty_description_todos">To-Dos sind Aufgaben, die nur einmal abgehakt werden. Füge Unteraufgaben zu den To-Dos hinzu, um deren Wert zu steigern.</string>
     <string name="empty_title_rewards">Du hast keine Belohnungen</string>
     <string name="reset_walkthrough">Setze Justins Einführung zurück</string>
-    <string name="read_community_guidelines">Bitte lies Dir unsere Community-Richtlinien durch, bevor du etwas postest</string>
+    <string name="read_community_guidelines">Lies unsere <u>Community-Richtlinien</u> durch, bevor du etwas postest</string>
     <string name="maintenance">Wartung</string>
     <string name="reload_content">Inhalt erneut laden</string>
     <string name="dailyDueDefaultView">Setze die Standards der Tagesaufgaben auf \"fällig\"</string>
@@ -457,7 +457,7 @@
     <string name="party_description">Party-Beschreibung</string>
     <string name="number_participants">%1$d Teilnehmer</string>
     <string name="welcome_back">Willkommen zurück</string>
-    <string name="yesterdaililes_prompt">Hast Du gestern einige Deiner Tagesaufgaben gemacht\?</string>
+    <string name="yesterdaililes_prompt">Hake alle Tagesaufgaben ab, die Du gestern erledigt hast:</string>
     <string name="start_day">Starte meinen Tag</string>
     <string name="leave_party_confirmation">Bist Du sicher, dass Du die Party verlassen willst?</string>
     <string name="pending">Ausstehend</string>
