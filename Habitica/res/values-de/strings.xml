@@ -254,7 +254,7 @@
     <string name="healer">Heiler</string>
     <string name="warrior_description">Krieger erzielen mehr \"kritische Treffer\" und fügen bei Bosskämpfen mehr Schaden zu. Spiele einen Krieger, wenn Du Monster mit Leichtigkeit besiegen willst! Krieger profitieren von hohen Werten bei Stärke.</string>
     <string name="mage_description">Magier lernen Fähigkeiten, die Bossmonstern Schaden zufügen, und Erfahrung und Mana erhöhen. Spiele einen Magier, wenn ein schnelles Aufsteigen im Level Dich motiviert! Magier profitieren von hohen Werten bei Intelligenz.</string>
-    <string name="rogue_description">Schurken lernen Spezialfähigkeiten die es Ihrer Party erlaubt, mehr Gold und zufällige Gegenstände zu finden. Spiele einen Schurken, wenn Du jede Menge Gegenstände und Gold haben willst! Schurken profitieren von hohen Wahrnehmungspunkten.</string>
+    <string name="rogue_description">Schurken lernen Spezialfähigkeiten, die es Ihrer Party erlauben, mehr Gold und zufällige Gegenstände zu finden. Spiele einen Schurken, wenn Du jede Menge Gegenstände und Gold haben willst! Schurken profitieren von hohen Wahrnehmungspunkten.</string>
     <string name="healer_description">Heiler stehen Schaden unbeeindruckt gegenüber und erweitern diesen Schutz auf andere. Verpasste tägliche Aufgaben und schlechte Angewohnheiten schaden ihnen nicht viel und sie haben Mittel und Wege Lebenspunkte wiederherzustellen. Spiele einen Heiler, wenn Du gerne Anderen in Deiner Party hilfst, oder wenn es Dich besonders reizt, dem Tod durch harte Arbeit zu entkommen!</string>
     <string name="select_class">Klasse wählen</string>
     <string name="opt_out_class">Später entscheiden</string>
@@ -697,8 +697,8 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="unallocated_stats_points"><![CDATA[Du kannst <b>%1$s Attributpunkt(e)</b> verteilen]]></string>
     <string name="new_subscriber_item"><![CDATA[Du hast einen neuen <b>Überraschungsgegenstand</b>]]></string>
     <string name="invited_to_party_notification"><![CDATA[Du wurdest zu der Gruppe <b>%1$s</b> eingeladen]]></string>
-    <string name="invited_to_private_guild"><![CDATA[Du wurdest eingeladen, der privaten Gilde <b>%1$s</b> beizutreten.]]></string>
-    <string name="invited_to_public_guild"><![CDATA[Du wurdest eingeladen, der Gilde <b>%1$s</b> beizutreten.]]></string>
+    <string name="invited_to_private_guild">Du wurdest eingeladen, der privaten Gilde <b>%1$s</b> beizutreten</string>
+    <string name="invited_to_public_guild">Du wurdest eingeladen, der Gilde <b>%1$s</b> beizutreten</string>
     <string name="invited_to_quest"><![CDATA[Du wurdest zur Quest <b>%1$s</b> eingeladen]]></string>
     <string name="repeat_summary" translatable="false">%1$s wird jeden %2$s %3$s %4$s wiederholt</string>
     <string name="skill_progress_title">Fertigkeiten benutzen</string>
