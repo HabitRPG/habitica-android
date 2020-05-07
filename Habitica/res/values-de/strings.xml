@@ -353,7 +353,7 @@
     <string name="due">Fällig</string>
     <string name="cancel_subscription">Abonnement kündigen</string>
     <string name="cancel_subscription_google_description">Du willst nicht länger Abonnent sein\? Du findest die Option zum Kündigen im Google Play Store unter \"Meine Apps und Spiele\". Deine zusätzlichen Abonnementguthaben-Monate werden nach Ablauf Deines Abonnements verwendet.</string>
-    <string name="cancel_subscription_notgoogle_description">Du möchtest Dein Abonnement beenden? Aufgrund Deiner Zahlungsmethode kannst Du Dein Abonnement nur über die Webseite beenden. Benutze die Schaltfläche unten, um die Seite in Deinem Browser zu öffnen!</string>
+    <string name="cancel_subscription_notgoogle_description">Du möchtest Dein Abonnement beenden\? Aufgrund Deiner Zahlungsmethode kannst Du Dein Abonnement nur über die Webseite beenden. Benutze die Schaltfläche unten, um die Seite in Deinem Browser zu öffnen und log dich in deinen Account ein. Drücke das User Icon oben rechts und wähle \"Abonnement\". Übrige Abonnement credits werden übernommen, wenn dein Abonnement endet. Wir vermissen dich jetzt schon!</string>
     <string name="visit_habitica_website">Habitica-Internetseite besuchen</string>
     <string name="current_bonuses">Aktuelle Boni</string>
     <string name="months_subscribed">Abonnierte Monate</string>
