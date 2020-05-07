@@ -353,7 +353,7 @@
     <string name="due">Fällig</string>
     <string name="cancel_subscription">Abonnement kündigen</string>
     <string name="cancel_subscription_google_description">Du willst nicht länger Abonnent sein\? Du findest die Option zum Kündigen im Google Play Store unter \"Meine Apps und Spiele\". Deine zusätzlichen Abonnementguthaben-Monate werden nach Ablauf Deines Abonnements verwendet.</string>
-    <string name="cancel_subscription_notgoogle_description">Du möchtest Dein Abonnement beenden\? Aufgrund Deiner Zahlungsmethode kannst Du Dein Abonnement nur über die Webseite beenden. Benutze die Schaltfläche unten, um die Seite in Deinem Browser zu öffnen und log dich in deinen Account ein. Drücke das User Icon oben rechts und wähle \"Abonnement\". Übrige Abonnement credits werden übernommen, wenn dein Abonnement endet. Wir vermissen dich jetzt schon!</string>
+    <string name="cancel_subscription_notgoogle_description">Du möchtest Dein Abonnement beenden\? Aufgrund Deiner Zahlungsmethode kannst Du Dein Abonnement nur über die Webseite beenden. Benutze die Schaltfläche unten, um die Seite in Deinem Browser zu öffnen und logge Dich in Deinen Account ein. Drücke das User Icon oben rechts und wähle \"Abonnement\". Übrige Abonnement-Credits werden übernommen, wenn Dein Abonnement endet. Wir vermissen Dich jetzt schon!</string>
     <string name="visit_habitica_website">Habitica-Internetseite besuchen</string>
     <string name="current_bonuses">Aktuelle Boni</string>
     <string name="months_subscribed">Abonnierte Monate</string>
@@ -680,8 +680,7 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="daily_tip_7">Versuche Gegenstände aus dem Marktplatz an Deine Belohnungen anzuheften, um Dich zu motivieren sie Dir zu verdienen!</string>
     <string name="week_reminder_text">Pausen sind gesund, dennoch kannst Du mit einfachen Aufgaben Punkte verdienen um Level aufzusteigen und coole Ausrüstung zu bekommen!</string>
     <string name="usernamePromptBody">Loginnamen sind jetzt einzigartige Benutzernamen, welche neben Deinem Anzeigenamen sichtbar sind und für Einladungen, Chat @Erwähnungen und Nachrichten benutzt werden.</string>
-    <string name="usernamePromptWiki">Wenn Du mehr über diese Änderung erfahren möchtest, <a href="https://habitica.wikia.com/wiki/Player_Names">geh auf unsere Wiki.</a>
-    </string>
+    <string name="usernamePromptWiki">Wenn Du mehr über diese Änderung erfahren möchtest, <a href="https://habitica.wikia.com/wiki/Player_Names">geh auf unsere Wiki.</a></string>
     <string name="usernamePromptDisclaimer">Benutzernamen sollten mit unseren <a href="https://habitica.com/static/terms">Servicebedingungen</a> und <a href="https://habitica.com/static/community-guidelines">Community-Richtlinien</a> übereinstimmen. Falls Du vorher keinen Loginnamen festgelegt hast, wurde Dein Benutzername auto-generiert.</string>
     <string name="confirm_username_description">Das Bestätigen Deines Nutzernamens wird diesen für Einladungen, @Erwähnungen und Nachrichten öffentlich machen. Du kannst Deinen Benutzernamen jederzeit in den Einstellungen ändern.</string>
     <string name="equipment_str">STR:</string>
