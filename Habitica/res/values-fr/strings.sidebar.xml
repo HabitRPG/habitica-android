@@ -1,20 +1,22 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="sidebar_tasks">Tâches</string>
-  <string name="sidebar_skills">Compétences</string>
-  <string name="sidebar_section_social">Social</string>
-  <string name="sidebar_inbox">Messages</string>
-  <string name="sidebar_tavern">Auberge</string>
-  <string name="sidebar_party">Équipe</string>
-  <string name="sidebar_purchaseGems">Gemmes et abonnement</string>
-  <string name="sidebar_guilds">Guildes</string>
-  <string name="sidebar_challenges">Défis</string>
-  <string name="sidebar_section_inventory">Inventaire</string>
-  <string name="sidebar_avatar">Avatar</string>
-  <string name="sidebar_equipment">Équipement</string>
-  <string name="sidebar_stable">Écurie</string>
-  <string name="sidebar_news">Nouveautés</string>
+    <string name="sidebar_tasks">Tâches</string>
+    <string name="sidebar_skills">Compétences</string>
+    <string name="sidebar_section_social">Social</string>
+    <string name="sidebar_inbox">Messages</string>
+    <string name="sidebar_tavern">Auberge</string>
+    <string name="sidebar_party">Équipe</string>
+    <string name="sidebar_purchaseGems">Gemmes et abonnement</string>
+    <string name="sidebar_guilds">Guildes</string>
+    <string name="sidebar_challenges">Défis</string>
+    <string name="sidebar_section_inventory">Inventaire</string>
+    <string name="sidebar_avatar">Personnalisation de l\'avatar</string>
+    <string name="sidebar_equipment">Équipement</string>
+    <string name="sidebar_stable">Familiers &amp; montures</string>
+    <string name="sidebar_news">Nouveautés</string>
     <string name="sidebar_about">À propos</string>
-  <string name="sidebar_shops">Magasins</string>
-  <string name="sidebar_stats">Stats</string>
+    <string name="sidebar_shops">Magasins</string>
+    <string name="sidebar_stats">Stats</string>
+    <string name="sidebar_subscription">Abonnement</string>
+    <string name="sidebar_gems">Acheter des gemmes</string>
 </resources>

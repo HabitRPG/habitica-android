@@ -20,7 +20,7 @@
     <string name="pref_reminder_checkbox">알림 활성화 하기</string>
     <string name="pref_reminder_picker">알림 시간 설정</string>
     <string name="pref_cds_header">하루 시작 시간</string>
-    <string name="pref_push_notifications_checkbox">사용자 알림</string>
+    <string name="pref_push_notifications_checkbox">푸쉬 알림 사용</string>
     <string name="push_notifications">푸쉬 알림</string>
     <string name="push_notifications_sum">푸쉬 알림 설정</string>
     <string name="preference_push_you_won_challenge">도전 과제에서 우승하였습니다!</string>
@@ -197,7 +197,7 @@
     <string name="outfit_armor">방어구</string>
     <string name="outfit_back">등</string>
     <string name="outfit_body">몸</string>
-    <string name="outfit_shield">방패</string>
+    <string name="outfit_shield">보조무기</string>
     <string name="outfit_weapon">무기</string>
     <string name="wear_costume">의상 착용하기</string>
     <string name="equipped">착용됨</string>
