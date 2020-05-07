@@ -86,7 +86,7 @@
     <string name="sunday">Воскресенье</string>
     <string name="levelup_header">Вы достигли %1$d уровня!</string>
     <string name="levelup_detail">Благодаря выполнению своих целей в реальной жизни вы получили уровень и восполнили полностью здоровье!</string>
-    <string name="onwards">Ура!</string>
+    <string name="onwards">Вперёд!</string>
     <string name="faint_subtitle">Не отчаивайтесь!</string>
     <string name="faint_penalty_body">Вы потеряли Уровень, Золото и предмет Экипировки, но вы сможете все вернуть, если продолжите выполнять задачи! Удачи! Вы справитесь.</string>
     <string name="faint_header">У вас закончилось здоровье!</string>
@@ -809,4 +809,19 @@
     <string name="g1g1_duration">С 17 декабря по 6 января</string>
     <string name="level_unabbreviated">Уровень %d</string>
     <string name="unlock_previous_short">Завершите квест %d</string>
+    <string name="avatar_headband">Ободок</string>
+    <string name="could_not_find_user">Пользователь не найден</string>
+    <string name="wacky">Чокнутые</string>
+    <string name="support">Техподдержка</string>
+    <string name="update_app">Обновить приложение</string>
+    <string name="clear_cache">Очистить кэш</string>
+    <string name="mystic_hourglasses">Мистические песочные часы</string>
+    <string name="common_questions">Частые вопросы</string>
+    <string name="premium_currency">Премиальное средство оплаты</string>
+    <string name="currency">Средство оплаты</string>
+    <string name="stat_allocation">Распределение очков характеристик</string>
+    <string name="mana_points">Очки маны</string>
+    <string name="experience_points">Очки опыта</string>
+    <string name="health_points">Очки здоровья</string>
+    <string name="contact_us">Обратная связь</string>
 </resources>
