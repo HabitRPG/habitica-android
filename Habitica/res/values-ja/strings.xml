@@ -641,7 +641,7 @@
     <string name="usernamePromptTitle">あなたのユーザー名を決める時間です！</string>
     <string name="usernamePromptBody">ログイン名は、現在は固有のユーザー名になりました。あなたの表示名の近くに表示されて、招待、チャットでの＠返信、メッセージのやりとりなどで使用されるでしょう。</string>
     <string name="usernamePromptWiki">もしこの変更についてより詳しく知りたいときは、<a href="https://habitica.wikia_com/wiki/Player_Names">wiki</a>をご覧ください</string>
-    <string name="usernamePromptDisclaimer">ユーザー名は、私たちの<a href="https://habitica.com/static/terms">サービス利用規約</a>と<a href="https://habitica_com/static/community-guidelines">コミュニティーガイドライン</a>を守ったものでなければなりません。もしあなたが以前にログイン名を設定していなかった場合、あなたのユーザー名は自動生成されました。</string>
+    <string name="usernamePromptDisclaimer">ユーザー名は、私たちの<a href="https://habitica.com/static/terms">サービス利用規約</a>と<a href="https://habitica_com/static/community-guidelines">コミュニティガイドライン</a>を守ったものでなければなりません。もしあなたが以前にログイン名を設定していなかった場合、あなたのユーザー名は自動生成されました。</string>
     <string name="confirm_username_title">本当に現在のユーザー名を承認しますか？</string>
     <string name="confirm_username_description">承認されたユーザー名は招待や@メンション、メッセージなどで公開されます。ユーザー名はいつでも「設定」から変更可能です。</string>
     <string name="cancel">キャンセル</string>
@@ -751,4 +751,6 @@
     <string name="new_password_repeat">新しいパスワードをもう一度入力してください</string>
     <string name="task_title">タスクのタイトル</string>
     <string name="days">日</string>
+    <string name="off">オフ</string>
+    <string name="on">オン</string>
 </resources>
