@@ -1014,7 +1014,9 @@
     <string name="on">Bật</string>
     <string name="gold_description">Vàng là **dạng đơn vị tiền tệ chính** trong Habitica và giúp bạn mua trang bị, nhiệm vụ, vật phẩm nhất định, hoặc thậm chí Phần thưởng tự chọn bạn tự làm cho mình.
 \n
-\n**Kiếm Vàng** thông qua việc hoàn thành công việc hoặc nhiệm vụ, hoặc thông qua một vài Kĩ năng chức nghiệp. **Chỉ số</string>
+\n**Kiếm Vàng** thông qua việc hoàn thành công việc hoặc nhiệm vụ, hoặc thông qua một vài Kĩ năng chức nghiệp. **Chỉ số Trực giác** tăng lượng Vàng bạn kiếm được.
+\n
+\nNếu bạn đăng kí Habitica, bạn thậm chí có thể dùng Vàng để mua một lượng Gem nhất định dựa vào thời gian bạn đã đăng kí.</string>
     <string name="mana_points">Điểm Mana</string>
     <string name="experience_description">Điểm Kinh nghiệp thể hiện tiến trình của bạn và giúp bạn lên cấp. Bạn sẽ đa phần **kiếm Kinh nghiệm** từ việc hoàn thành những công việc hay nhiệm vụ, nhưng cũng có một vài Kĩ năng chức nghiệp cho Kinh nghiệm.
 \n
@@ -1032,4 +1034,19 @@
     <string name="send_bug_prompt">Gửi báo cáo lỗi tới chúng tôi và chúng tôi sẽ quay lại với bạn!</string>
     <string name="common_fixes">Sửa chữa phổ biến</string>
     <string name="support_bug_title">Chúng tôi liên tục cố gắng để làm cho ứng dụng của chúng ta tốt hơn dựa vào phản hồi của người chơi nhưng đôi khi một vài lỗi hiện ra…</string>
+    <string name="stat_description">Tất cả nhân vật của Habitica có bốn chỉ số mà ảnh hưởng tới phương diện trò chơi của Habitica.
+\n
+\n**Sức mạnh (SM)** ảnh hưởng tới đòn đánh chí mạng và tăng sát thương tới Nhiệm vụ Quái vật. Chiến binh và Đạo tặc nhận SM từ trang bị chức nghiệp của họ.
+\n
+\n**Thể chất (TC)** tăng Máu của bạn và giúp bạn nhận ít sát thương hơn. Phục hồi sư và Chiến binh nhận TC từ trang bị chức nghiệp của họ.
+\n
+\n**Trí tuệ (TT)** tăng lượng Kinh nghiệm bạn kiếm được và giúp bạn có nhiều Mana hơn. Pháp sư và Phục hồi sư nhận INT từ trang bị chức nghiệp của họ.
+\n
+\n**Trực giác (TG)** tăng lượng Vàng bạn kiếm được và tỉ lệ nhặt được vật phẩm rơi ngẫu nhiên. Đạo tặc và Pháp sư nhận TG từ trang bị chức nghiệp của họ.
+\n
+\nSau cấp độ 10, bạn nhận được 1 điểm Chỉ số cho mỗi cấp độ bạn kiếm được và bạn có thể đặt thêm nó vào một Chỉ số mà bạn thích. Bạn còn có thể mặc những trang bị có cộng thêm chỉ số nhiều loại khác nhau.</string>
+    <string name="stat_allocation">Phân bổ Chỉ số</string>
+    <string name="mana_description">Điểm Mana được mở khóa với hệ thống chức nghiệp ở cấp độ 10 và cho phép bạn **sử dụng Kĩ năng** một khí bạn bắt đầu học được chúng ở cấp độ 11.
+\n
+\nMột vài **Mana được phục hồi** khi bắt đầu ngày mới, nhưng bạn có thể kiếm lại nhiều hơn bằng việc hoàn thành công việc hay sử dụng Kĩ năng của chức nghiệp Pháp sư.</string>
 </resources>
