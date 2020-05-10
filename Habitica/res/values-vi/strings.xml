@@ -1049,4 +1049,20 @@
     <string name="mana_description">Điểm Mana được mở khóa với hệ thống chức nghiệp ở cấp độ 10 và cho phép bạn **sử dụng Kĩ năng** một khí bạn bắt đầu học được chúng ở cấp độ 11.
 \n
 \nMột vài **Mana được phục hồi** khi bắt đầu ngày mới, nhưng bạn có thể kiếm lại nhiều hơn bằng việc hoàn thành công việc hay sử dụng Kĩ năng của chức nghiệp Pháp sư.</string>
+    <string name="clear_cache">Xóa bộ nhớ lưu trữ của bạn</string>
+    <string name="hourglasses_description">Đồng hồ Cát bí ẩn là một dạng tiền tệ vô cùng hiếm mà bạn chỉ có thể nhận được cho việc đăng ký Habitica ba tháng liền hoặc nhiều hơn. Chúng được dùng trong cửa hàng của Nhà du hành thời gian để mua những bộ trang bị, thú cưng, thú cưỡi, hình nền động, hay thậm chí là những Nhiệm vụ đặc biệt.
+\n
+\nBạn có thể nhận được tối đa bốn Đồng hồ Cát bí ẩn mỗi năm. Thời gian chúng được thưởng dựa vào lịch làm mới lại Gói đăng ký của bạn. Chúng được gửi vào ngày đầu tiên của tháng mới sau lần thanh toán Gói đăng ký cuối cùng mà bạn đủ điều kiện để nhận một cái. Xem thêm trang [Gói đăng ký] để thêm nhiều thông tin chi tiết.</string>
+    <string name="mystic_hourglasses">Đồng hồ cát bí ẩn</string>
+    <string name="subscriber_currency">Đơn vị tiền tệ của Người đăng ký</string>
+    <string name="game_mechanics">Cơ chế trò chơi</string>
+    <string name="common_questions">Câu hỏi thường gặp</string>
+    <string name="gems_description">Gem là một Đơn vị tiền tệ được thanh toán bằng tiền thật cho phép bạn mua những nội dung đặc biệt của Habitica và một trong những nguồn hỗ trợ tài chính chính cho Đội ngũ Habitica bên cạnh Gói đăng ký.
+\n
+\nTất cả nội dung được thanh toán bằng Gem đơn thuần là kèm thêm hoặc có thể đạt được miễn phí bằng thời gian.
+\n
+\nBạn cũng có thể nhận Gem bằng quà từ những người chơi khác, giải thưởng Thử thách, cống hiến cho Habitica, hoặc đăng ký.</string>
+    <string name="currency">Đơn vị tiền tệ</string>
+    <string name="premium_currency">Đơn vị Tiền tệ Cao cấp</string>
+    <string name="standard">Tiêu chuẩn</string>
 </resources>
