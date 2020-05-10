@@ -992,4 +992,12 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
 \n
 \nWenn Deine **HP 0 erreichen**, wirst Du ein Level verlieren, sowie alles Gold und ein Stück Deiner Ausrüstung. Verlorene Ausrüstung kann wieder gekauft werden.</string>
     <string name="number_responded">%1$d/%2$d haben geantwortet</string>
+    <string name="mana_description">Mana-Punkte werden mit dem Klassensystem ab Level 10 freigeschaltet und ermöglichen Dir **Fähigkeiten zu verwenden**, sobald Du ab Level 11 welche erlernt hat.
+\n
+\nEtwas **Mana wird aufgefüllt** bei Deinem Tageswechsel, aber Du kannst mehr Mana dazugewinnen, indem Du Aufgaben erledigst oder Fähigkeiten eines Magiers anwendest.</string>
+    <string name="gold_description">Gold ist die **Hauptwährung** in Habitica und ermöglicht Dir, Ausrüstung, Quests, Gegenstände oder sogar maßgeschneiderte Belohnungen zu kaufen.
+\n
+\n**Verdiene Gold** durch das Abschliessen von Quests oder mittels Klassenfähigkeiten. Höhere **Wahrnehmungswerte** erhöhen die Menge an Gold, die Du verdienst.
+\n
+\nWen Du Habitica abonnierst, kannst Du mit Gold sogar eine beschränkte Anzahl Edelsteine kaufen, je nachdem, wie lange Du schon Abonnent bist.</string>
 </resources>
