@@ -699,4 +699,5 @@
     <string name="selected">Seleccionado</string>
     <string name="off">Apagado</string>
     <string name="authentication_error_body">Su nombre de usuario y / o contraseña eran incorrectos.</string>
+    <string name="network_error_no_network_body">No tienes conexión a Internet.</string>
 </resources>
