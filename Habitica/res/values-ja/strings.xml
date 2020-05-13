@@ -758,4 +758,6 @@
     <string name="user_level_with_class_unabbreviated">レベル %1$d %2$s</string>
     <string name="weeks">週</string>
     <string name="repeats">くり返し</string>
+    <string name="x_class">%s クラス</string>
+    <string name="become_x">%sになる</string>
 </resources>
