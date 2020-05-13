@@ -921,4 +921,48 @@
     <string name="g1g1_info_3_text">Esta promoção será aplicada apenas quando você presentear outro(a) Habiticano(a). Se você ou seu destinatário já tiver um assinatura, a assinatura presenteada será adicionada como meses de crédito, que serão aplicados somente após o cancelado ou expiração da assinatura atual.</string>
     <string name="g1g1_info_3">Limitações</string>
     <string name="g1g1_info_2_text">Clique em \"Dê uma assinatura de presente\" e escreva o nome de usuário da conta que você gostaria de presentar. Em seguida, escolha o plano que você deseja presentear e confira. Sua conta será automaticamente recompensada com o mesmo nível de assinatura que você acabou de presentear.</string>
+    <string name="stat_allocation">Alocação de Atributos</string>
+    <string name="mana_description">Pontos de Mana são desbloqueados com o sistema de classe a partir do nível 10 e te permite **usar Habilidades** quando você começar a aprendê-las no nível 11.
+\n
+\nAlguns **PM são restaurados** na redefinição do dia todos os dias, mas você pode recuperar mais completando tarefas ou usando uma alguma habilidade da classe Mago(a).</string>
+    <string name="gold_description">"Ouro é a **principal forma de moeda** dentro de Habitica e te permite comprar certos equipamentos, missões, itens ou recompensas personalizadas que você criou para si mesmo(a).
+\n
+\n**Ganhe Ouro** ao completar tarefas ou missões, ou com algumas habilidades de Classe.  Pontos elevados no **atributo Percepção** irá aumentar a quantidade de Ouro que você ganha.
+\n
+\nSe você for assinante no Habitica, você pode até usar o Ouro para comprar várias Gemas determinadas pelo período em que tiver assinado."</string>
+    <string name="mana_points">Pontos de Mana</string>
+    <string name="experience_description">Pontos de Experiência representa seu progresso e permite que você atinja outro nível. Você irá **obter EXP** ao completar, principalmente, tarefas ou missões, mas também existem algumas habilidades de classe que dão EXP.
+\n
+\nTarefas com dificuldades elevadas ou com coloração avermelhada irão te dar **mais EXP**. O **atributo Inteligência** também aumenta sua taxa de ganho de EXP.</string>
+    <string name="experience_points">Pontos de Experiência</string>
+    <string name="health_description">Isso representa a vida do seu avatar. Perder uma Diária ou fazer um Hábito negativo **reduzirá seus PV**.
+\n
+\n**Recupere PV** ao atingir um novo nível, usar Poção de Vida ou usar uma habilidade de classe com poder de cura.
+\n
+\nSe seu **PV chegar a 0**, você irá perder um nível, todo seu Ouro e alguma peça de equipamento. O equipamento perdido pode ser comprado novamente.</string>
+    <string name="health_points">Pontos de Vida</string>
+    <string name="stats_currency">Atributos &amp; Moedas</string>
+    <string name="how_best_habitica">Não sabe como usar o Habitica da melhor maneira\?</string>
+    <string name="overview">Visão geral</string>
+    <string name="send_bug_prompt">Envie-nos um relatório de erro e entraremos em contato com você!</string>
+    <string name="common_fixes">Erros comuns</string>
+    <string name="support_bug_title">Estamos constantemente tentando melhorar nossos aplicativos com base nos comentários dos(as) jogadores(as), mas às vezes aparecem alguns erros…</string>
+    <string name="lets_go">Vamos lá</string>
+    <string name="bugs_fixes_description">Algo deu errado\? Verifique as respostas aqui ou entre em contato conosco para obter ajuda.</string>
+    <string name="bugs_fixes">Erros &amp; Correções</string>
+    <string name="suggestions_feedback">Sugestões &amp; Comentários</string>
+    <string name="get_help">Obter ajuda</string>
+    <string name="contact_us">Contate-nos</string>
+    <string name="suggestions_feedback_description">Você tem informações sobre como os recursos podem funcionar melhor ou uma ideia para algo novo\? Conte-nos!</string>
+    <string name="using_habitica_description">Explicaremos o básico e responderemos a perguntas comuns para te atualizar</string>
+    <string name="using_habitica">Usando Habitica</string>
+    <string name="level_unabbreviated">Nível %d</string>
+    <string name="delete_reminder">Excluir lembrete</string>
+    <string name="number_responded">%1$d/%2$d Respondeu</string>
+    <string name="gold_capitalilzed">Ouro</string>
+    <string name="user_level_with_class_unabbreviated">Nível %1$d %2$s</string>
+    <string name="not_selected">Não selecionado</string>
+    <string name="selected">Selecionado</string>
+    <string name="off">Desativado</string>
+    <string name="on">Ativado</string>
 </resources>
