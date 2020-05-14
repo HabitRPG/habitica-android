@@ -1000,4 +1000,24 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
 \n**Verdiene Gold** durch das Abschliessen von Quests oder mittels Klassenfähigkeiten. Höhere **Wahrnehmungswerte** erhöhen die Menge an Gold, die Du verdienst.
 \n
 \nWen Du Habitica abonnierst, kannst Du mit Gold sogar eine beschränkte Anzahl Edelsteine kaufen, je nachdem, wie lange Du schon Abonnent bist.</string>
+    <string name="update_app_description">Wir lassen immer wieder neue Bugfixes raus. Deshalb solltest Du regelmäßig im Play-Store nach Aktualisierungen ausschau halten.</string>
+    <string name="hourglasses_description">Mystische Sanduhren sind eine extrem seltene Währung, die Du nur durch ein Habitica-Abonnement von mindestens drei aufeinanderfolgenden Monaten erhalten kannst. Du brauchst die Sanduhren im Shop der Mystischen Zeitreisenden, um Ausrüstungssets aus vergangenen Zeiten zu kaufen, oder auch Haustiere, Reittiere, animierte Hintergründe oder spezielle Quests.
+\n
+\nDu kannst bis zu vier Mystische Sanduhren pro Jahr erhalten. Der Zeitpunkt, wann das passiert, hängt von Deiner Abonnements-Erneuerung ab. Die Sanduhren trudeln am ersten Tag des neuen Monats nach der Abonnementszahlung ein, für die Dir eine Sanduhr zusteht. Sie auf der [Abonnement]-Seite nach, wenn Du mehr wissen willst.</string>
+    <string name="gems_description">Edelsteine sind eine Währung, die Du mit echtem Geld kaufst. Sie ermöglichen Dir, zusätzliche Inhalte in Habitica zu kaufen und sind neben Abonnementen eine der Haupteinnahmequellen für das Habitica-Team.
+\n
+\nAlle Inhalte, die mit Edelsteinen gekauft werden, sind rein kosmetischer Natur oder können mit der Zeit auch kostenlos erhalten werden.
+\n
+\nDu kannst Edelsteine auch als Geschenk von anderen Spielern erhalten, als Preis einer Herausforderung, durch Mitarbeit an Habitica oder durch ein Abonnement.</string>
+    <string name="stat_description">Alle Habitica-Charaktere haben vier Eigenschaften, die Habiticas Spielablauf beeinflussen.
+\n
+\n**Stärke (STR)** beeinflusst kritische Treffer und erhöht den Schaden, den Du einem Quest Boss zufügst. Krieger und Schurken erhalten STR von Ihrer Klassenausrüstung.
+\n
+\n**Ausdauer (CON)** erhöht Deine HP und sorgt dafür, dass Du weniger Schaden nimmst. Heiler und Krieger erhalten CON von Ihrer Klassenausrüstung.
+\n
+\n**Intelligenz (INT)** steigert die Menge an EXP, die Du verdienst und gibt Dir mehr Mana. Magier und Heiler erhalten INT von Ihrer Klassenausrüstung.
+\n
+\n**Wahrnehmung (PER)** erhöht die Goldmenge, die Du erhältst und die Rate Deiner Fundgegenstände. Schurken und Magier erhalten PER von Ihrer Klassenausrüstung.
+\n
+\nAb Level 10 verdienst Du einen Eigenschaften-Punkt für jedes Level, das Du aufsteigst. Diesen Punkt kannst Du in eine beliebige Eigenschaft stecken. Ausserdem kannst Du Ausrüstung anziehen, die unterschiedliche Eigenschaften-Boni gewährt.</string>
 </resources>
