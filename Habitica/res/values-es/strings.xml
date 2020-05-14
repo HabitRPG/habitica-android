@@ -704,4 +704,14 @@
     <string name="ago_1week">Hace 1 semana</string>
     <string name="ago_months">Hace %d mes</string>
     <string name="on">En</string>
+    <string name="remaining_1hour">Queda 1h</string>
+    <string name="remaining_hours">Quedan %dh</string>
+    <string name="remaining_minutes">Quedan %dm</string>
+    <string name="remaining_1Minute">Queda 1m</string>
+    <string name="remaining_days">Quedan %dd</string>
+    <string name="remaining_1day">Queda 1d</string>
+    <string name="remaining_weeks">Quedan %d semanas</string>
+    <string name="remaining_1week">Queda 1 semana</string>
+    <string name="remaining_months">Quedan %d meses</string>
+    <string name="remaining_1month">Queda 1 mes</string>
 </resources>
