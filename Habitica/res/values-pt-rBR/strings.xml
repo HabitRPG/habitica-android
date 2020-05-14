@@ -965,4 +965,26 @@
     <string name="selected">Selecionado</string>
     <string name="off">Desativado</string>
     <string name="on">Ativado</string>
+    <string name="mystic_hourglasses">Ampulheta Mística</string>
+    <string name="subscriber_currency">Moeda de assinante</string>
+    <string name="game_mechanics">Mecânicas de jogo</string>
+    <string name="common_questions">Perguntas comuns</string>
+    <string name="gems_description">Gemas são um tipo de moeda que podem ser compradas com dinheiro real e que permite a compra de conteúdo extra em Habitica, além de ser uma das principais fontes de suporte financeiro para a equipe Habitica, assim como as assinaturas.
+\n
+\nTodos os conteúdos comprados com Gemas são puramente cosméticos ou podem ser obtidos gratuitamente com o tempo.
+\n
+\nVocê também pode receber Gemas por outros jogadores(as), prêmios de Desafios, contribuindo para o Habitica ou se tornando um(a) assinante.</string>
+    <string name="currency">Moeda</string>
+    <string name="standard">Padrão</string>
+    <string name="stat_description">Todos os personagens em Habitica têm quatro atributos que afetam os aspectos da jogabilidade.
+\n
+\n**Força (FOR)** afeta acertos críticos e aumenta o dano causado a um Chefão de Missão. Guerreiros(as) e Gatunos(as) ganham FOR a partir dos seus equipamentos de classe.
+\n
+\n**Constituição (CON)** aumenta seu PV e faz com que você sofra menos danos. Curandeiros(as) e Guerreiros(as) ganham CON a partir dos seus equipamentos de classe.
+\n
+\n**Inteligência (INT)** aumenta a quantidade de EXP que você ganha e concede mais Mana. Magos(as) e Curandeiros(as) ganham INT a partir dos seus equipamentos de classe.
+\n
+\n**Percepção (PER)** aumenta a quantidade de ouro que você ganha e a capacidade de encontrar itens \"dropáveis\". Gatunos(as) e Magos(as) ganham PER a partir dos seus equipamentos de classe.
+\n
+\nApós o nível 10, você ganha 1 Ponto de Atributo em cada nível obtido e pode colocar em qualquer atributo que desejar. Você também pode equipar equipamentos com diferentes combinações de aumento de atributos.</string>
 </resources>
