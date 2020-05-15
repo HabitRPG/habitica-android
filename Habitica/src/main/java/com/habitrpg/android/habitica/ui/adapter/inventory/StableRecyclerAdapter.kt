@@ -128,6 +128,7 @@ class StableRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<
             var owned = animal?.numberOwned?.toString()
             var totalNum = animal?.totalNumber?.toString()
             this.ownedTextView.text = context?.getString(R.string.pet_ownership_fraction, owned, totalNum)
+            this.ownedTextView.background = context?.getDrawable(R.drawable.layout_rounded_bg_shopitem_price)
             ownedTextView.visibility = if (animal?.type == "special") View.GONE else View.VISIBLE
             imageView.background = null
             DataBindingUtils.loadImage(imageName) {
