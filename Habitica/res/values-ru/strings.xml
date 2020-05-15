@@ -629,8 +629,7 @@
     <string name="two_handed">Двуручное</string>
     <string name="usernamePromptTitle">Время выбрать себе Имя пользователя!</string>
     <string name="usernamePromptBody">Имена для логина теперь являются уникальными Никами, которые будут отображаться рядом с вашим отображаемым именем и использоваться для приглашений, чата @упоминаний и обмена сообщениями.</string>
-    <string name="usernamePromptWiki">Если хотите узнать более подробнее про изменения, то <a href="https://habitica.fandom.com/wiki/Player_Names">посетите вики.</a>
-    </string>
+    <string name="usernamePromptWiki">Если хотите узнать более подробнее про изменения, то <a href="https://habitica.fandom.com/wiki/Player_Names">посетите вики.</a></string>
     <string name="usernamePromptDisclaimer">Имя пользователя должно соответствовать нашим <a href="https://habitica.com/static/terms">Условиям обслуживания</a> и <a href="https://habitica_com/static/community-guidelines">Принципам сообщества</a>. Если вы ранее не выбирали имя для логина, то ваше Имя был автоматически сгенерировано.</string>
     <string name="confirm_username_title">Вы уверены, что хотите выбрать такое Имя пользователя?</string>
     <string name="confirm_username_description">Подтверждая свое Имя пользователя, дает возможность принимать приглашения, @упоминания и сообщения. Вы можете сменить свое Имя пользователя в любое время в настройках.</string>
@@ -825,4 +824,9 @@
     <string name="health_points">Очки здоровья</string>
     <string name="contact_us">Обратная связь</string>
     <string name="network_error_no_network_body">Вы не подключены к интернету.</string>
+    <string name="days">День/ Дня/ Дней</string>
+    <string name="scheduling">Составление расписания</string>
+    <string name="every">кажд.</string>
+    <string name="add_local_authentication">Добавить локальную аутентификацию</string>
+    <string name="join_party_description_guild">Передайте нижестоящее имя пользователя другу или отправьтесь в %s, чтобы встретиться с потенциальными единомышленниками!</string>
 </resources>
