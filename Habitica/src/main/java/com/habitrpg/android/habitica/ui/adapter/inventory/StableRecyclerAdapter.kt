@@ -1,14 +1,12 @@
 package com.habitrpg.android.habitica.ui.adapter.inventory
 
 import android.content.Context
+import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
-import android.widget.LinearLayout
-import android.widget.RelativeLayout
 import android.widget.TextView
-import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
@@ -118,16 +116,22 @@ class StableRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<
             }
             ownedTextView.visibility = View.VISIBLE
             this.imageView.alpha = 1.0f
+            this.titleView.alpha = 1.0f
+            this.ownedTextView.alpha = 1.0f
+
             val imageName = if (itemType == "pets") {
-                "Pet-" + item.key
+                "Pet_Egg_" + item.animal
             } else {
                 "Mount_Icon_" + item.key
             }
-            this.ownedTextView.text = animal?.numberOwned?.toString()
-            ownedTextView.visibility = if (animal?.numberOwned == 0 || animal?.type == "special") View.GONE else View.VISIBLE
+
+            var owned = animal?.numberOwned?.toString()
+            var totalNum = animal?.totalNumber?.toString()
+            this.ownedTextView.text = context?.getString(R.string.pet_ownership_fraction, owned, totalNum)
+            ownedTextView.visibility = if (animal?.type == "special") View.GONE else View.VISIBLE
             imageView.background = null
             DataBindingUtils.loadImage(imageName) {
-                val drawable = BitmapDrawable(context?.resources, if (item.numberOwned > 0) it else it.extractAlpha())
+                val drawable = BitmapDrawable(context?.resources, it)
                 Observable.just(drawable)
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(Consumer {
@@ -135,7 +139,15 @@ class StableRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<
                         }, RxErrorHandler.handleEmptyError())
             }
             if (item.numberOwned <= 0) {
-                this.imageView.alpha = 0.1f
+                this.imageView.alpha = 0.2f
+                this.titleView.alpha = 0.2f
+                this.ownedTextView.alpha = 0.2f
+            }
+
+            if (item.numberOwned == item.totalNumber) {
+                this.ownedTextView.setTextColor(Color.parseColor("#FFFFFF"))
+                var new_background = context?.getDrawable(R.drawable.layout_rounded_bg_animalitem_complete)?.mutate()
+                this.ownedTextView.background = new_background
             }
         }
 

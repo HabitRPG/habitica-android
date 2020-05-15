@@ -29,4 +29,8 @@ public interface Animal {
     Integer getNumberOwned();
 
     void setNumberOwned(Integer numberOwned);
+
+    Integer getTotalNumber();
+
+    void setTotalNumber(Integer totalNumber);
 }

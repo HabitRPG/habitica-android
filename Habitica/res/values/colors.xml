@@ -148,6 +148,7 @@
     <color name="black">#000</color>
     <color name="setup_background">#efeff4</color>
     <color name="setup_label_background">#fafaff</color>
+    <color name="animalitem_all_eggs">#6ECDB2</color>
 
     <color name="dark_brown">#794b00</color>
 </resources>

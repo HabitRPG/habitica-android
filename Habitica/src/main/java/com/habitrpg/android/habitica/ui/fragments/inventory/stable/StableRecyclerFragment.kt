@@ -144,7 +144,6 @@ class StableRecyclerFragment : BaseFragment() {
         val items = ArrayList<Any>()
         var lastAnimal: Animal = unsortedAnimals[0] ?: return items
         var lastSectionTitle = ""
-
         for (animal in unsortedAnimals) {
             val identifier = if (animal.animal.isNotEmpty() && animal.type != "special") animal.animal else animal.key
             val lastIdentifier = if (lastAnimal.animal.isNotEmpty()) lastAnimal.animal else lastAnimal.key
@@ -154,6 +153,9 @@ class StableRecyclerFragment : BaseFragment() {
                 }
                 lastAnimal = animal
             }
+
+            lastAnimal.totalNumber += 1
+
             if (animal.type != lastSectionTitle) {
                 if (items.size > 0 && items[items.size - 1].javaClass == String::class.java) {
                     items.removeAt(items.size - 1)
@@ -175,6 +177,7 @@ class StableRecyclerFragment : BaseFragment() {
                     }
                 }
             }
+
         }
         if (!((lastAnimal.type == "premium" || lastAnimal.type == "special") && lastAnimal.numberOwned == 0)) {
             items.add(lastAnimal)
@@ -187,6 +190,5 @@ class StableRecyclerFragment : BaseFragment() {
     companion object {
         private const val ITEM_TYPE_KEY = "CLASS_TYPE_KEY"
         private const val HEADER_VIEW_TYPE = 0
-        private const val SECTION_VIEW_TYPE = 1
     }
 }

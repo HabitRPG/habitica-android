@@ -53,7 +53,7 @@
     <dimen name="pet_width">84dp</dimen>
     <dimen name="bottom_menu_padding">28dp</dimen>
     <dimen name="pet_image_width">68dp</dimen>
-    <dimen name="pet_image_height">68dp</dimen>
+    <dimen name="pet_image_height">65dp</dimen>
     <dimen name="shop_height">124dp</dimen>
     <dimen name="bar_icon_padding">10dp</dimen>
     <dimen name="task_text_padding">16dp</dimen>

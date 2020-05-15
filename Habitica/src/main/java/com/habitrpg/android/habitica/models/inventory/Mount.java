@@ -12,7 +12,10 @@ public class Mount extends RealmObject implements Animal {
     boolean premium;
 
     @Ignore
-    Integer numberOwned;
+    private Integer numberOwned;
+
+    @Ignore
+    private Integer totalNumber;
 
     public String getKey() {
         return key;
@@ -81,5 +84,16 @@ public class Mount extends RealmObject implements Animal {
 
     public void setNumberOwned(Integer numberOwned) {
         this.numberOwned = numberOwned;
+    }
+
+    public Integer getTotalNumber() {
+        if (totalNumber == null) {
+            return 0;
+        }
+        return totalNumber;
+    }
+
+    public void setTotalNumber(Integer totalNumber) {
+        this.totalNumber = totalNumber;
     }
 }

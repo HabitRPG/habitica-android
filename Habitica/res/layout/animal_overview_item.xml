@@ -10,9 +10,9 @@
         android:layout_marginTop="6dp"
         android:layout_marginBottom="6dp"
         android:layout_width="80dp"
-        android:layout_height="112dp"
+        android:layout_height="108dp"
         android:orientation="vertical"
-        android:background="@drawable/layout_rounded_bg_gray_700"
+        android:background="@drawable/layout_rounded_bg_shopitem"
         android:layout_centerInParent="true">
         style="@style/CardContent">
             <com.facebook.drawee.view.SimpleDraweeView
@@ -24,6 +24,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="3.5dp"
                 android:layout_gravity="center_horizontal"
                 android:id="@+id/titleTextView"
                 android:textSize="13sp"
@@ -31,9 +32,12 @@
                 style="@style/RowTitle"/>
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_gravity="center_horizontal"
                 android:id="@+id/ownedTextView"
+                android:gravity="center"
+                android:textSize="12sp"
+                android:background="@drawable/layout_rounded_bg_shopitem_price"
                 style="@style/RowText"/>
     </LinearLayout>
 </RelativeLayout>
