@@ -522,7 +522,7 @@
     <string name="dailyDueDefaultView">Đặt Việc hằng ngày mặc định ở mục \'thời hạn\'</string>
     <string name="reload_content">Tải lại Nội dung</string>
     <string name="maintenance">Bảo trì</string>
-    <string name="read_community_guidelines">Prefs</string>
+    <string name="read_community_guidelines">Xem xét <u>Nội quy Cộng đồng</u> của chúng tôi trước khi đăng bài</string>
     <string name="reset_walkthrough">Đặt lại Hướng dẫn</string>
     <string name="empty_title_rewards_filtered">Không Phần thưởng</string>
     <string name="empty_description_todos_filtered">Hiện không có Việc cần làm nào hiện ra với Bộ lọc hiện tại của bạn.</string>
@@ -741,7 +741,7 @@
     <string name="joined">Đã tham gia</string>
     <string name="created_challenge">Đã tạo Thử thách</string>
     <string name="challenge_categories">Chuyên mục của Thử thách</string>
-    <string name="usernamePromptWiki">Prefs</string>
+    <string name="usernamePromptWiki">Nếu bạn muốn tìm hiểu thêm về sự thay đổi này, <a href="https://habitica.wikia_com/wiki/Player_Names">ghé thăm trang wiki của chúng tôi.</a></string>
     <string name="usernamePromptBody">Tên đăng nhập bây giờ là những cái tên độc nhất mà sẽ được nhìn thấy bên cạnh tên hiển thị của bạn và được dùng cho lời mời, @mentions khi nói chuyện, và nhắn tin.</string>
     <string name="usernamePromptTitle">Bây giờ là lúc thiết lập tên đăng nhập của bạn!</string>
     <string name="two_handed">Hai tay</string>
@@ -785,14 +785,14 @@
     <string name="only_leader_create_challenge">Chỉ có Lãnh đạo có thể tạo Thử thách</string>
     <string name="create">Tạo</string>
     <string name="defeat">Đánh bại</string>
-    <string name="invited_to_quest">Prefs</string>
-    <string name="invited_to_public_guild">Prefs</string>
-    <string name="invited_to_private_guild">Prefs</string>
-    <string name="invited_to_party_notification">Prefs</string>
-    <string name="new_subscriber_item">Prefs</string>
-    <string name="unallocated_stats_points">Prefs</string>
-    <string name="new_msg_party">Prefs</string>
-    <string name="new_msg_guild">Prefs</string>
+    <string name="invited_to_quest">Bạn đã được mời tham gia vào Nhiệm vụ <b>%1$s</b></string>
+    <string name="invited_to_public_guild">Bạn đã được mời tham gia vào Bang hội <b>%1$s</b></string>
+    <string name="invited_to_private_guild">Bạn đã được mời tham gia vào Bang hội kín <b>%1$s</b></string>
+    <string name="invited_to_party_notification">Bạn đã được mời tham gia vào Tổ đội <b>%1$s</b></string>
+    <string name="new_subscriber_item">Bạn có <b>Vật phẩm Bí ẩn</b> mới</string>
+    <string name="unallocated_stats_points">Bạn có <b>%1$s Điểm Chỉ số chưa phân bổ</b></string>
+    <string name="new_msg_party">Tổ đội của bạn, <b>%1$s</b>, có bài viết mới</string>
+    <string name="new_msg_guild"><b>%1$s</b> có bài viết mới</string>
     <string name="new_bailey_update">Cập nhập mới từ Bailey!</string>
     <string name="dismiss_all">Bỏ qua Tất cả</string>
     <string name="no_notifications_text">Những nàng tiên thông báo đã gửi tặng bạn một tràng pháo tay nồng nhiệt! Làm tốt lắm!</string>
@@ -833,7 +833,7 @@
     <string name="cancel">Hủy</string>
     <string name="confirm_username_description">Xác nhận tên đăng nhập của bạn sẽ khiến nó công khai cho lời mời, @mentions và nhắn tin. Bạn có thể thay đổi tên đăng nhập của mình từ Cài đặt bất cứ lúc nào.</string>
     <string name="confirm_username_title">Bạn có chắc xác nhận tên đăng nhập hiện tại của mình chứ\?</string>
-    <string name="usernamePromptDisclaimer">Prefs</string>
+    <string name="usernamePromptDisclaimer">Tên người dùng nên tuân thủ <a href="https://habitica.com/static/terms">Điều khoản Dịch vụ</a> và <a href="https://habitica_com/static/community-guidelines"> Nội quy Cộng đồng</a> của chúng tôi. Nếu bạn chưa đặt tên đăng nhập, tên người dùng của bạn đã được tự động tạo ra.</string>
     <string name="mountMasterDescription">Bạn đã kiếm được Thành tựu \"Bậc thầy Thú cưỡi\" cho việc thuần hóa tất cả thú cưỡi!</string>
     <string name="mountMasterTitle">Bậc thầy Thú cưỡi</string>
     <string name="beastMasterDescription">Bạn đã kiếm được Thành tựu \"Bậc thầy Huấn luyện thú\" cho việc sưu tầm tất cả thú cưng!</string>
@@ -1065,4 +1065,22 @@
     <string name="currency">Đơn vị tiền tệ</string>
     <string name="premium_currency">Đơn vị Tiền tệ Cao cấp</string>
     <string name="standard">Tiêu chuẩn</string>
+    <string name="delete_checklist_entry">Xóa Danh mục</string>
+    <string name="still_questions">Vẫn còn thắc mắc\?</string>
+    <string name="purchase_amount_error">Bạn không thể mua số lượng đó.</string>
+    <string name="read_more">Đọc thêm</string>
+    <string name="buy_all">Mua Tất cả</string>
+    <string name="avatar_accent">Cài hoa</string>
+    <string name="avatar_headband">Băng đeo đầu</string>
+    <string name="animal_tail">Đuôi động vật</string>
+    <string name="animal_ears">Tai động vật</string>
+    <string name="could_not_find_user">Không thể tìm thấy người dùng</string>
+    <string name="habitica_questions">Những câu hỏi về Habitica</string>
+    <string name="wacky">Kì quặc</string>
+    <string name="support">Hỗ trợ</string>
+    <string name="update_app_description">Chúng tôi đang liên tục đưa ra những sửa chữa mới nhất, vì vậy hãy chắc là mình đã ghé Cửa hàng Play và xem có bản cập nhập nào mới chưa nhé.</string>
+    <string name="update_app">Cập nhập Ứng dụng</string>
+    <string name="manual_sync_restart_description">Đôi khi ứng dụng không tự động cập nhập nội dung. Thử kéo xuống để tải lại hoặc buộc đóng ứng dụng và mở lại.</string>
+    <string name="manual_sync_restart">Đồng bộ hóa Thủ công hay Khởi động lại</string>
+    <string name="clear_cache_description">Để xóa bộ nhớ tạm của bạn, mở ứng dụng Cài đặt trên điện thoại. Tới Lưu trữ &gt; Ứng dụng &gt; Habitica, sau đó chạm Xóa bộ nhớ tạm.</string>
 </resources>
