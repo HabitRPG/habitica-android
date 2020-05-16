@@ -987,4 +987,22 @@
 \n**Percepção (PER)** aumenta a quantidade de ouro que você ganha e a capacidade de encontrar itens \"dropáveis\". Gatunos(as) e Magos(as) ganham PER a partir dos seus equipamentos de classe.
 \n
 \nApós o nível 10, você ganha 1 Ponto de Atributo em cada nível obtido e pode colocar em qualquer atributo que desejar. Você também pode equipar equipamentos com diferentes combinações de aumento de atributos.</string>
+    <string name="read_more">Leia mais</string>
+    <string name="buy_all">Comprar todos(as)</string>
+    <string name="avatar_headband">Tiara</string>
+    <string name="animal_tail">Cauda de animal</string>
+    <string name="animal_ears">Orelhas de animais</string>
+    <string name="could_not_find_user">Não foi possível encontrar o usuário</string>
+    <string name="habitica_questions">Perguntas Habitica</string>
+    <string name="wacky">Maluco</string>
+    <string name="support">Suporte</string>
+    <string name="update_app_description">Estamos constantemente lançando novas correções. Verifique a Play Store para ver se há atualizações disponíveis.</string>
+    <string name="update_app">Atualizar o aplicativo</string>
+    <string name="manual_sync_restart_description">Algumas vezes, o aplicativo não irá atualizar o conteúdo automaticamente. Tente puxar para baixo para atualizá-lo ou, então, force o fechamento do aplicativo e tente reabri-lo.</string>
+    <string name="manual_sync_restart">Sincronização manual ou reinicialização</string>
+    <string name="clear_cache_description">Para limpar seu cache, abra as Configurações do aplicativo no seu telefone. Vá até Armazenamento &gt; Aplicativos &gt; Habitica, então toque em \"Limpar cache\".</string>
+    <string name="clear_cache">Limpe seu cache</string>
+    <string name="hourglasses_description">Ampulhetas Místicas são uma forma extremamente rara de moeda que você só pode receber se assinar o Habitica por três meses consecutivos ou mais. Elas são usadas na loja dos Viajantes do Tempo para comprar conjuntos de equipamentos lançados no passado, mascotes, montarias, cenários animados ou até mesmo missões especiais.
+\n
+\nVocê pode receber até quatro Ampulhetas Místicas por ano. O tempo de recompensa é baseado na sua programação de renovação de assinaturas. Elas são enviadas no primeiro dia de um novo mês após o seu último pagamento de assinatura que te qualificou a receber uma ampulheta. Veja a página [Assinatura] para mais detalhes.</string>
 </resources>
