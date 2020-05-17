@@ -48,7 +48,7 @@
     <string name="about_libraries">Bibliotecas</string>
     <string name="about_habitica_open_source">Habitica está disponível como software de código aberto no Github</string>
     <string name="about_rate_our_app">Avalie nosso Aplicativo</string>
-    <string name="about_give_us_feedback">Nos envie Feedback!</string>
+    <string name="about_give_us_feedback">Nos dê seu FeedBack!</string>
     <string name="about_bugreport">Reportar um Erro</string>
     <string name="about_source_code">Código Fonte</string>
     <!--Network Errors-->
@@ -88,13 +88,13 @@
     <string name="levelup_detail">Por completar seus objetivos da vida real, você subiu de nível e agora está totalmente curado!</string>
     <string name="onwards">Hurra!</string>
     <string name="faint_subtitle">Não se desespere!</string>
-    <string name="faint_penalty_body">Você perdeu um Nível. seu Ouro, e uma parte de Equipamento, mas você pode ganhar todos eles de volta com trabalho pesado! Boa sorte--Você se sairá bem.</string>
-    <string name="faint_header">Sua vida caiu abaixo de zero!</string>
+    <string name="faint_penalty_body">Você perdeu um Nível, seu Ouro, e uma parte de Equipamento, mas você pode ganhar todos eles de volta com trabalho duro! Boa sorte--Você se sairá bem.</string>
+    <string name="faint_header">Você perdeu toda sua vida!</string>
     <string name="faint_button">Restaurar Vida &amp; Tentar Novamente</string>
     <string name="filter">Filtro</string>
     <string name="used_skill_without_mana">Você usou %1$s.</string>
     <string name="new_checklist_item">Novo item de Lista</string>
-    <string name="reminder_title">Lembre-se de marcar suas Diárias</string>
+    <string name="reminder_title">Lembre-se de marcar suas tarefas</string>
     <string name="unlock_lvl_11">Desbloqueie no nível 11</string>
     <string name="forgot_pw_btn">Esqueci a senha</string>
     <string name="tavern_inn_checkOut">Reativar Diárias</string>
@@ -115,7 +115,7 @@
     <string name="avatar_hair">Cabelo</string>
     <string name="avatar_shirt">Camisa</string>
     <string name="avatar_skin">Pele</string>
-    <string name="avatar_base">Básico</string>
+    <string name="avatar_base">Base</string>
     <string name="avatar_color">Cor</string>
     <string name="avatar_beard">Barba</string>
     <string name="avatar_mustache">Bigode</string>
@@ -701,7 +701,7 @@
     <string name="member">Membro</string>
     <string name="owner">Proprietário(a)</string>
     <string name="cancel_subscription_group_plan_owner">Você tem uma assinatura gratuita porque é proprietário de um Grupo ou Guilda que possui um Plano de Time. Isso terminará se você cancelar o plano. Quaisquer meses de crédito de assinatura extra que você tiver serão aplicados no final do Plano de Time. Você pode cancelar através do site do Habitica.</string>
-    <string name="cancel_subscription_group_plan">Você tem uma assinatura gratuita porque é membro de um Grupo ou Guilda que possui um Plano de Time. Isso terminará se você sair ou o Plano de Trupo for cancelado pelo proprietário. Quaisquer meses de crédito de assinatura extra que você tiver serão aplicados no final do Plano de Time.</string>
+    <string name="cancel_subscription_group_plan">Você tem uma assinatura gratuita porque é membro de um Grupo ou Guilda que possui um Plano de Grupo. Isso terminará se você sair ou o Plano de Grupo for cancelado pelo proprietário. Quaisquer meses de crédito de assinatura extra que você tiver serão aplicados no final do Plano de Time.</string>
     <string name="group_plan">Plano de Time</string>
     <string name="subscription_credit">Crédito de assinatura</string>
     <string name="save_20">Salvar 20%</string>
