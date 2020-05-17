@@ -239,11 +239,12 @@
     <string name="notification_pet_fed">%sにえさをやった!</string>
     <string name="notification_purchase_reward">報酬をを購入しました</string>
     <string name="world_quest">世界のクエスト</string>
-    <string name="inn_description">休憩が必要？ダニエルの宿屋にチェックインし、Habiticaのややこしいゲームシステムを一時停止しましょう:
-・日課をこなさなくてもダメージを受けなくなります
-・タスクの連続実行は変更されなくなり、色も変わらなくなります
-・日課をこなさなくてもボスからのダメージを受けなくなります
-・チェックアウトするまで、ボスダメージや収集クエストアイテムは保留されたままになります</string>
+    <string name="inn_description">休憩が必要？ダニエルのロッジにチェックインし、Habiticaのややこしいゲームシステムを一時停止しましょう：
+\n
+\n ・日課をこなさなくてもダメージを受けなくなります
+\n ・タスクの連続実行は変更されなくなり、色も変わらなくなります
+\n ・日課をこなさなくてもボスからのダメージを受けなくなります
+\n ・チェックアウトするまで、ボスダメージや収集クエストアイテムは保留されたままになります</string>
     <string name="empty_items">%s を持ってないよ</string>
     <string name="user_level">レベル %d</string>
     <string name="user_level_with_class">レベル %1$d %2$s</string>
