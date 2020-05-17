@@ -2,7 +2,7 @@
 <resources>
     <string name="sidebar_tasks">タスク</string>
     <string name="sidebar_skills">スキル</string>
-    <string name="sidebar_section_social">コミュニティー</string>
+    <string name="sidebar_section_social">コミュニティ</string>
     <string name="sidebar_inbox">メッセージ</string>
     <string name="sidebar_tavern">キャンプ場</string>
     <string name="sidebar_party">パーティー</string>
