@@ -229,6 +229,7 @@ class TaskSchedulingControls @JvmOverloads constructor(
         createWeeklyRepeatViews()
         weeklyRepeatWrapper.findViewWithTag<TextView>(weekday).sendAccessibilityEvent(
                 AccessibilityEvent.CONTENT_CHANGE_TYPE_CONTENT_DESCRIPTION)
+        generateSummary()
     }
 
     private fun isWeekdayActive(weekday: Int): Boolean {
