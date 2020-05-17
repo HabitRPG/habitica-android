@@ -20,7 +20,7 @@
     <string name="pref_reminder_checkbox">Ativar Lembrete</string>
     <string name="pref_reminder_picker">Definir Hora do Lembrete</string>
     <string name="pref_cds_header">Início do dia personalizado</string>
-    <string name="pref_push_notifications_checkbox">Usar notificações via push</string>
+    <string name="pref_push_notifications_checkbox">Usar notificações push</string>
     <string name="push_notifications">Notificações Push</string>
     <string name="push_notifications_sum">Configurar suas notificações push</string>
     <string name="preference_push_you_won_challenge">Você venceu um Desafio!</string>
@@ -36,10 +36,10 @@
     <string name="action_cancel">Cancelar</string>
     <string name="login_btn">Entrar</string>
     <string name="register_btn">Registrar</string>
-    <string name="username">Usuário</string>
-    <string name="email_username">E-mail ou Usuário</string>
+    <string name="username">Nome de usuário</string>
+    <string name="email_username">E-mail ou Nome de usuário</string>
     <string name="password">Senha</string>
-    <string name="emailAddress">Email</string>
+    <string name="emailAddress">Endereço de email</string>
     <string name="confirmpassword">Confirmar senha</string>
     <string name="logout">Sair</string>
     <string name="logout_description">Sair da sua conta</string>
@@ -1005,4 +1005,9 @@
     <string name="hourglasses_description">Ampulhetas Místicas são uma forma extremamente rara de moeda que você só pode receber se assinar o Habitica por três meses consecutivos ou mais. Elas são usadas na loja dos Viajantes do Tempo para comprar conjuntos de equipamentos lançados no passado, mascotes, montarias, cenários animados ou até mesmo missões especiais.
 \n
 \nVocê pode receber até quatro Ampulhetas Místicas por ano. O tempo de recompensa é baseado na sua programação de renovação de assinaturas. Elas são enviadas no primeiro dia de um novo mês após o seu último pagamento de assinatura que te qualificou a receber uma ampulheta. Veja a página [Assinatura] para mais detalhes.</string>
+    <string name="delete_checklist_entry">Excluir entrada da lista</string>
+    <string name="still_questions">Você ainda tem alguma pergunta\?</string>
+    <string name="purchase_amount_error">Você não pode comprar essa quantidade.</string>
+    <string name="avatar_accent">Acessório</string>
+    <string name="premium_currency">Dinheiro premium</string>
 </resources>
