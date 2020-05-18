@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="tutorial_overview">Nous y voilà ! J\'ai rempli certaines tâches en fonction de vos centres d\'intérêt. Essayez d\'en ajouter quelques-unes. Vous pouvez modifier une tâche en sélectionnant son titre.</string>
-    <string name="tutorial_habits_1">D\'abord les habitudes. Il peut s\'agir d\'habitudes positives que vous voudriez améliorer, ou d\'habitudes négatives que vous voulez perdre.</string>
-    <string name="tutorial_habits_2">Chaque fois que vous réalisez une habitude positive, utilisez le + pour gagner de l\'expérience et de l\'or !</string>
+    <string name="tutorial_overview">Nous y voilà ! J\'ai rempli certaines tâches pour vous, basé sur vos centres d\'intérêt. Essayez d\'en ajouter quelques-unes vous-même. Vous pouvez modifier une tâche en tapant sur son titre.</string>
+    <string name="tutorial_habits_1">Les habitudes en premier. Il s\'agira d\'habitudes positives que vous voulez améliorer, ou d\'habitudes négatives que vous voulez abandonner.</string>
+    <string name="tutorial_habits_2">Chaque fois que vous achevez une habitude positive, touchez le + pour gagner de l\'expérience et de l\'or !</string>
     <string name="tutorial_habits_3">Si vous vous laissez aller à une mauvaise habitude, utiliser le - réduira la santé de votre avatar pour vous forcer à rester vigilant.</string>
     <string name="tutorial_habits_4">Essayez ! Vous pouvez découvrir les autres types de tâches à travers la barre de navigation inférieure.</string>
     <string name="tutorial_dailies_1">Utilisez les quotidiennes pour les tâches qui doivent être faites selon un planning régulier.</string>
