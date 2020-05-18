@@ -25,7 +25,6 @@ import com.habitrpg.android.habitica.ui.helpers.*
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.Companion.showSnackbar
 import io.reactivex.functions.Consumer
-import java.util.Locale
 import javax.inject.Inject
 
 class ItemRecyclerFragment : BaseFragment() {
@@ -65,20 +64,13 @@ class ItemRecyclerFragment : BaseFragment() {
         component.inject(this)
     }
 
-    private fun noItemsSuffix(): String {
-        return when(itemType) {
-            "special" -> " " + getString(R.string.sidebar_items).toLowerCase(Locale.getDefault())
-            else -> ""
-        }
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         resetViews()
 
         recyclerView?.setEmptyView(emptyView)
-        emptyTextView?.text = getString(R.string.empty_items, itemTypeText + noItemsSuffix())
+        emptyTextView?.text = getString(R.string.empty_items, itemTypeText)
 
         val context = activity
 

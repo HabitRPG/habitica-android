@@ -75,8 +75,10 @@ class ItemsFragment : BaseMainFragment() {
                 }
                 fragment.isHatching = false
                 fragment.isFeeding = false
-                fragment.itemTypeText = this.getPageTitle(position).toString()
                 fragment.user = this@ItemsFragment.user
+                fragment.itemTypeText =
+                    if (position == 4) getString(R.string.special_items)
+                    else this.getPageTitle(position).toString()
 
                 return fragment
             }
