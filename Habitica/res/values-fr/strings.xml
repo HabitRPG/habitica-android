@@ -7,11 +7,11 @@
     <!--Prefs-->
     <string name="PS_settings_title">Paramètres</string>
     <string name="SP_userID_title">ID d\'utilisateur</string>
-    <string name="SP_userID_summary">Votre ID d\'utilisateur</string>
+    <string name="SP_userID_summary">Votre identifiant</string>
     <string name="SP_APIToken_title">Jeton d\'API</string>
     <string name="SP_APIToken_summary">Votre jeton d\'API</string>
     <string name="Language_title">Langage</string>
-    <string name="Language_summary">Changer la langue d\'Habitica</string>
+    <string name="Language_summary">Changer la langue de Habitica</string>
     <string name="PS_contact_title">Contactez-moi</string>
     <string name="pref_account_header">Compte</string>
     <string name="pref_first_day_of_the_week_title">Premier jour de la semaine</string>
