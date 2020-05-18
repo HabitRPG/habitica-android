@@ -701,7 +701,7 @@
     <string name="ago_months">%dヶ月前</string>
     <string name="ago_1month">1ヶ月前</string>
     <string name="skill_progress_title">スキルを使う</string>
-    <string name="authentication_error_body">ユーザー名かパスワードが間違っています。</string>
+    <string name="authentication_error_body">ユーザーネームかパスワードが間違っています。</string>
     <string name="network_error_no_network_body">インターネットに接続されていません。</string>
     <string name="x_months">%dヶ月</string>
     <string name="create_account_short">アカウントを作成する</string>
