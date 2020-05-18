@@ -286,7 +286,7 @@
     <string name="confirm">確認</string>
     <string name="market">市場</string>
     <string name="timeTravelers">タイムトラベラー</string>
-    <string name="seasonalShop">期間限定ショップ</string>
+    <string name="seasonalShop">季節の店</string>
     <string name="empty_inbox">メッセージがありません。公開チャットから他のユーザーにメッセージを送ることができます！</string>
     <string name="party_invite">友達を招待するとアンロック</string>
     <string name="login_incentive">Habiticaに連続でログインするとアンロック</string>
@@ -771,4 +771,24 @@
     <string name="garden">菜園の</string>
     <string name="join_guild">ギルドに参加する</string>
     <string name="invite_to_guild">ギルドに招待する</string>
+    <string name="google">Google</string>
+    <string name="facebook">Facebook</string>
+    <string name="purchase">購入する</string>
+    <string name="special_achievements">特別な実績</string>
+    <string name="seasonal_achievements">季節の実績</string>
+    <string name="basic_achievements">基本の実績</string>
+    <string name="sidebar_achievements">実績</string>
+    <string name="new_task">新しいタスク</string>
+    <string name="delete_task">タスクを削除する</string>
+    <string name="guild_members">ギルドメンバー</string>
+    <string name="scheduling">スケジュール設定</string>
+    <string name="new_reminder">リマインダを追加する</string>
+    <string name="defeat">倒す</string>
+    <string name="setup_task_habit_1">Habiticaにタスクを追加しましょう</string>
+    <string name="cost">価格</string>
+    <string name="joined_guild">ギルドに参加しました</string>
+    <string name="left_guild">ギルドを脱退しました</string>
+    <string name="leave_guild_confirmation">ギルドを脱退して、チャレンジを続けるか止めるかしますか？</string>
+    <string name="not_selected">未選択</string>
+    <string name="selected">選択中</string>
 </resources>
