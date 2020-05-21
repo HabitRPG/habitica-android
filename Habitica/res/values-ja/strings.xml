@@ -874,4 +874,28 @@
     <string name="checklist_text">チェックリストのテキスト</string>
     <string name="gift_confirmation_text_sub_g1g1">%sに%sヶ月分のHabitica寄付会員特典を送りました。そして、１つ贈って１つ無料で手に入れようキャンペーンによって、あなたのアカウントにも同じ寄付会員特典が適用されました！</string>
     <string name="number_responded">%1$d/%2$d人参加予定</string>
+    <string name="from_balance">残高から</string>
+    <string name="preference_push_party_mention">パーティーチャットでのあなたへの返信</string>
+    <string name="more_out_of_habitica">Habiticaをさらに楽しみましょう</string>
+    <string name="gift_gems_disclaimer">Habiticaはプレイヤー間のジェムの贈答を強制しません。他のプレイヤーにジェムを要求することはコミュニティガイドラインに違反します。この行為を見かけた方はadmin@habitica.comまでご連絡ください。</string>
+    <string name="gems_gift_description">どなたかに輝くジェムを送りたいですか？</string>
+    <string name="profile_gift_subscription">寄付会員特典を
+\n贈る</string>
+    <string name="profile_gift_gems">ジェムを
+\n送る</string>
+    <string name="profile_send_message">メッセージを
+\n送る</string>
+    <string name="see_other_options">その他のオプションを見る</string>
+    <string name="promo_subscription_buy_gems_description">寄付会員になって、ゴールドでジェムを購入したり、月ごとのミステリーアイテムを手に入れたり、落とし物の上限を増やしたり、他にもいろいろな特典を受けましょう！</string>
+    <string name="promo_subscription_buy_gems_prompt">ジェムが必要ですか？</string>
+    <string name="reject">拒否</string>
+    <string name="accept">承諾</string>
+    <string name="equip_automatically">新しい装備品を自動装備する</string>
+    <string name="leave_challenges">チャレンジをやめる</string>
+    <string name="keep_challenges">チャレンジを続ける</string>
+    <string name="inviteFriendDescription">仲間（または仲間たち）を招待し、ともに冒険の旅に出ました！</string>
+    <string name="inviteFriendTitle">仲間を招待しました</string>
+    <string name="joinedChallengeDescription">チャレンジに参加することで自らに試練を課しました！</string>
+    <string name="joinedChallengeTitle">チャレンジに参加しました</string>
+    <string name="joinedGuildDescription">勇気をだしてギルドに入り、Habiticaの人々と交流しました！</string>
 </resources>
