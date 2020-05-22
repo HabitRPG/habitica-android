@@ -44,7 +44,7 @@
     <string name="logout">Выйти</string>
     <string name="logout_description">Выйти из вашего аккаунта</string>
     <string name="LoginActivityName">Добро пожаловать</string>
-    <string name="about_title">О приложении</string>
+    <string name="about_title">О себе</string>
     <string name="about_libraries">Библиотеки</string>
     <string name="about_habitica_open_source">Habitica – проект с открытым исходным кодом, который доступен на Github</string>
     <string name="about_rate_our_app">Оцените наше приложение</string>
@@ -845,4 +845,25 @@
     <string name="selected">Выбрано</string>
     <string name="on">Вкл.</string>
     <string name="off">Выкл.</string>
+    <string name="skill_progress_title">Применение навыка</string>
+    <string name="joinedGuildTitle">Присоединился к гильдии</string>
+    <string name="triadBingoDescription">Вы заработали достижение «Тройное Бинго» за нахождение всех питомцев, приручение всех скакунов и повторное нахождение всех питомцев!</string>
+    <string name="triadBingoTitle">Тройное бинго</string>
+    <string name="mountMasterTitle">Повелитель скакунов</string>
+    <string name="beastMasterDescription">Вы заработали достижение «Повелитель зверей» за то, что собрали всех питомцев!</string>
+    <string name="beastMasterTitle">Повелитель зверей</string>
+    <string name="partyOnDescription">Ваша команда увеличилась до 4 участников!</string>
+    <string name="partyUpDescription">Вы объединились с членом команды!</string>
+    <string name="invitation_title">%s пригласил(а) вас в %s</string>
+    <string name="id_copied">ID пользователя cкопирован в буфер обмена</string>
+    <string name="preference_push_unjoined_guild_mention">\@Упоминания в остальных Гильдиях</string>
+    <string name="preference_push_joined_guild_mention">\@Упоминания в моих Гильдиях</string>
+    <string name="from_balance">Со счета</string>
+    <string name="preference_push_party_mention">\@Упоминания в команде</string>
+    <string name="see_other_options">Показать другие опции</string>
+    <string name="preference_push_party_activity">События в команде</string>
+    <string name="equip_automatically">Авто-надевание нового</string>
+    <string name="keep_challenges">Оставить испытания</string>
+    <string name="joinedChallengeTitle">Присоединился(-ась) к испытанию</string>
+    <string name="joinedGuildDescription">Отважился(-ась) зайти на социальную сторону страны Habitica, присоединившись к Гильдии!</string>
 </resources>
