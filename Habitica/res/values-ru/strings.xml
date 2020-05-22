@@ -208,8 +208,8 @@
     <string name="quest_cancel_message">Вы уверены, что хотите отменить квест? Все принятые приглашения будут отменены. Квестовый свиток останется у владельца.</string>
     <string name="quest_begin_message">Вы уверены? Только %1$d из %2$d членов команды присоединились к этому квесту! Квест начнется автоматически, когда все игроки присоедятся или отклонят приглашение.</string>
     <string name="ago_1day">1 день назад</string>
-    <string name="ago_days">%d дней назад</string>
-    <string name="ago_hours">%d часов назад</string>
+    <string name="ago_days">%d д. назад</string>
+    <string name="ago_hours">%d ч. назад</string>
     <string name="ago_1hour">1 час назад</string>
     <string name="today">Сегодня</string>
     <string name="sidebar_items">Предметы</string>
@@ -650,7 +650,7 @@
     <string name="equipment_int">ИНТ:</string>
     <string name="equipment_per">ВОС:</string>
     <string name="ago_1Minute">1 минуту назад</string>
-    <string name="ago_minutes">%dминуты назад</string>
+    <string name="ago_minutes">%d мин. назад</string>
     <string name="opting_out_progress">Не принимать участие</string>
     <string name="subscription_duration_norenew">Для %s</string>
     <string name="subscribe1month_gemcap">Максимум 25 драгоценные камни</string>
@@ -795,7 +795,7 @@
     <string name="create_account_short">Зарегистрироваться</string>
     <string name="login_incentive_short_count">%d входов в игру</string>
     <string name="party_invite_short">Пригласить друзей</string>
-    <string name="ago_weeks">%d недель назад</string>
+    <string name="ago_weeks">%d нед. назад</string>
     <string name="ago_1week">1 неделю назад</string>
     <string name="ago_months">%d мес. назад</string>
     <string name="ago_1month">1 месяц назад</string>
@@ -829,4 +829,20 @@
     <string name="every">кажд.</string>
     <string name="add_local_authentication">Добавить локальную аутентификацию</string>
     <string name="join_party_description_guild">Передайте нижестоящее имя пользователя другу или отправьтесь в %s, чтобы встретиться с потенциальными единомышленниками!</string>
+    <string name="weeks">Нед.</string>
+    <string name="gift_confirmation_text_sub">Вы отправили %s %s-мес. подписку на Habitica.</string>
+    <string name="remaining_1hour">Остался 1 час</string>
+    <string name="remaining_hours">Осталось: %d ч.</string>
+    <string name="remaining_minutes">Осталось: %d мин.</string>
+    <string name="remaining_1Minute">Осталась 1 минута</string>
+    <string name="remaining_days">Осталось: %d д.</string>
+    <string name="remaining_1day">Остался 1 день</string>
+    <string name="remaining_weeks">Осталось: %d нед.</string>
+    <string name="remaining_1week">Осталась 1 неделя</string>
+    <string name="remaining_months">Осталось: %d мес.</string>
+    <string name="remaining_1month">Остался 1 месяц</string>
+    <string name="not_selected">Не выбрано</string>
+    <string name="selected">Выбрано</string>
+    <string name="on">Вкл.</string>
+    <string name="off">Выкл.</string>
 </resources>
