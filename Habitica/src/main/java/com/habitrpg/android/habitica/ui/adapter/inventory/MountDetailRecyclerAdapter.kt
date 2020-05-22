@@ -39,7 +39,7 @@ class MountDetailRecyclerAdapter(data: OrderedRealmCollection<Mount>?, autoUpdat
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MountViewHolder {
-        return MountViewHolder(parent.inflate(R.layout.animal_overview_item))
+        return MountViewHolder(parent.inflate(R.layout.pet_overview_item))
     }
 
     override fun onBindViewHolder(holder: MountViewHolder, position: Int) {

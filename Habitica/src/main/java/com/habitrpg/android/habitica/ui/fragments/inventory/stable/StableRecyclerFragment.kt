@@ -106,7 +106,8 @@ class StableRecyclerFragment : BaseFragment() {
     private fun setGridSpanCount(width: Int) {
         var spanCount = 0
         if (context != null && context?.resources != null) {
-            val itemWidth: Float = context?.resources?.getDimension(R.dimen.pet_width) ?: 0.toFloat()
+            var animal_width = if (itemType == "pets") R.dimen.pet_width else R.dimen.mount_width
+            val itemWidth: Float = context?.resources?.getDimension(animal_width) ?: 0.toFloat()
 
             spanCount = (width / itemWidth).toInt()
         }

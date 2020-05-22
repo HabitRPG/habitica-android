@@ -6,7 +6,6 @@ import android.graphics.drawable.BitmapDrawable
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
@@ -45,9 +44,11 @@ class StableRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<
             } else if (viewType == 1) {
                 val view = parent.inflate(R.layout.customization_section_header)
                 SectionViewHolder(view)
-            }
-            else {
-                val view = parent.inflate(R.layout.animal_overview_item)
+            } else if (viewType == 2) {
+                val view = parent.inflate(R.layout.pet_overview_item)
+                StableViewHolder(view)
+            } else {
+                val view = parent.inflate(R.layout.mount_overview_item)
                 StableViewHolder(view)
             }
     
@@ -70,14 +71,19 @@ class StableRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (itemList[position] == "header") {
+        var item = itemList[position]
+
+        return if (item == "header") {
             0
         }
-        else if (itemList[position].javaClass == String::class.java) {
+        else if (item.javaClass == String::class.java) {
             1
         }
-        else {
+        else if (itemType == "pets") {
             2
+        }
+        else {
+            3
         }
     }
 
