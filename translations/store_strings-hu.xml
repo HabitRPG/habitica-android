@@ -1,2 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="store_short_description">"Fogd fel úgy az életed, mint egy játékot, hogy motivált és szervezett maradhass! "</string>
+</resources>
