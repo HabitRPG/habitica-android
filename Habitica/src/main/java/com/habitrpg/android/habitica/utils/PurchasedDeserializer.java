@@ -5,7 +5,8 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import com.habitrpg.shared.habitica.models.inventory.Customization;
+
+import com.habitrpg.shared.habitica.models.user.OwnedCustomization;
 import com.habitrpg.shared.habitica.models.user.Purchases;
 import com.habitrpg.shared.habitica.models.user.SubscriptionPlan;
 

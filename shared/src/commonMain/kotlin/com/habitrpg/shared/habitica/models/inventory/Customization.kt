@@ -46,8 +46,36 @@ open class Customization : NativeRealmObject() {
             return !(this.availableUntil != null && !this.availableUntil!!.after(today))
         }
 
-    val isUsable: Boolean
-        get() = this.price == null || this.price == 0 || this.purchased
+    fun getIconName(userSize: String?, hairColor: String?): String {
+        return if (type == "background") {
+            "icon_background_$identifier"
+        } else {
+            getImageName(userSize, hairColor)
+        }
+    }
+
+    fun getImageName(userSize: String?, hairColor: String?): String {
+        when (type) {
+            "skin" -> return "skin_$identifier"
+            "shirt" -> return userSize + "_shirt_" + identifier
+            "hair" -> {
+                return if (identifier == "0") {
+                    "head_0"
+                } else when (this.category) {
+                    "color" -> "hair_bangs_1_$identifier"
+                    "flower" -> "hair_flower_$identifier"
+                    else -> "hair_" + this.category + "_" + identifier + "_" + hairColor
+                }
+            }
+            "background" -> return "background_$identifier"
+            "chair" -> return "chair_$identifier"
+        }
+        return ""
+    }
+
+    fun isUsable(purchased: Boolean): Boolean {
+        return price == null || price == 0 || purchased
+    }
 
     val path: String
         get() {
@@ -65,26 +93,5 @@ open class Customization : NativeRealmObject() {
 
     private fun updateID() {
         this.id = this.identifier + "_" + this.type + "_" + this.category
-    }
-
-    fun getImageName(userSize: String?, hairColor: String?): String {
-        when (this.type) {
-            "skin" -> return "skin_" + this.identifier!!
-            "shirt" -> return userSize + "_shirt_" + this.identifier
-            "hair" -> {
-                if (this.identifier == "0") {
-                    return "head_0"
-                }
-
-                when (this.category) {
-                    "color" -> return "hair_bangs_1_" + this.identifier!!
-                    "flower" -> return "hair_flower_" + this.identifier!!
-                    else -> return "hair_" + this.category + "_" + this.identifier + "_" + hairColor
-                }
-            }
-            "background" -> return "background_" + this.identifier!!
-            "chair" -> return "chair_" + this.identifier!!
-        }
-        return ""
     }
 }

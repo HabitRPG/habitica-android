@@ -13,6 +13,7 @@ expect open class Task {
     var text: String
     var notes: String?
     var type: String
+    var challengeID: String?
     var attribute: String?
     var value: Double
     var tags: NativeList<Tag>?

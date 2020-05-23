@@ -14,8 +14,8 @@ import com.habitrpg.android.habitica.extensions.Optional
 import com.habitrpg.android.habitica.extensions.asOptional
 import com.habitrpg.android.habitica.extensions.filterOptionalDoOnEmpty
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.ChatMessage
+import com.habitrpg.shared.habitica.models.members.Member
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -42,6 +42,7 @@ class InboxViewModel(recipientID: String?, recipientUsername: String?) : BaseVie
     private val member: MutableLiveData<Member?> by lazy {
         MutableLiveData<Member?>()
     }
+
     fun getMemberData(): LiveData<Member?> = member
 
     private fun loadMemberFromLocal() {
@@ -86,7 +87,7 @@ class InboxViewModel(recipientID: String?, recipientUsername: String?) : BaseVie
     }
 }
 
-private class MessagesDataSource(val socialRepository: SocialRepository, var recipientID: String?):
+private class MessagesDataSource(val socialRepository: SocialRepository, var recipientID: String?) :
         PositionalDataSource<ChatMessage>() {
     private var lastFetchWasEnd = false
     override fun loadRange(params: LoadRangeParams, callback: LoadRangeCallback<ChatMessage>) {
@@ -95,7 +96,9 @@ private class MessagesDataSource(val socialRepository: SocialRepository, var rec
             return
         }
         GlobalScope.launch(Dispatchers.Main.immediate) {
-            if (recipientID?.isNotBlank() != true) { return@launch }
+            if (recipientID?.isNotBlank() != true) {
+                return@launch
+            }
             val page = ceil(params.startPosition.toFloat() / params.loadSize.toFloat()).toInt()
             socialRepository.retrieveInboxMessages(recipientID ?: "", page)
                     .subscribe(Consumer {
@@ -113,10 +116,12 @@ private class MessagesDataSource(val socialRepository: SocialRepository, var rec
                     .firstElement()
                     .flatMapPublisher {
                         if (it.isEmpty()) {
-                            if (recipientID?.isNotBlank() != true) { return@flatMapPublisher Flowable.just(it) }
+                            if (recipientID?.isNotBlank() != true) {
+                                return@flatMapPublisher Flowable.just(it)
+                            }
                             socialRepository.retrieveInboxMessages(recipientID ?: "", 0)
-                                    .doOnNext {
-                                        messages -> if (messages.size != 10) lastFetchWasEnd = true
+                                    .doOnNext { messages ->
+                                        if (messages.size != 10) lastFetchWasEnd = true
                                     }
                         } else {
                             Flowable.just(it)

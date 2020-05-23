@@ -9,6 +9,7 @@ import com.habitrpg.android.habitica.models.responses.TaskScoringResult
 import com.habitrpg.shared.habitica.models.responses.TaskDirection
 import com.habitrpg.shared.habitica.models.responses.TaskDirectionData
 import com.habitrpg.shared.habitica.models.tasks.*
+import com.habitrpg.shared.habitica.models.user.OwnedItem
 import com.habitrpg.shared.habitica.models.user.User
 import io.reactivex.Flowable
 import io.reactivex.Maybe

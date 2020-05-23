@@ -16,11 +16,11 @@ import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.ui.helpers.TaskTextParser
-import com.habitrpg.shared.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.helpers.bindColor
 import com.habitrpg.android.habitica.ui.views.HabiticaEmojiTextView
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.shared.habitica.models.tasks.ChecklistItem
+import com.habitrpg.shared.habitica.models.tasks.Task
 import com.habitrpg.shared.habitica.models.tasks.TaskType
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -113,12 +113,12 @@ class YesterdailyDialog private constructor(context: Context, private val userRe
         checkbox?.isChecked = item.completed
         checkbox?.setOnCheckedChangeListener { _, isChecked ->
             item.completed = isChecked
-            taskRepository.scoreChecklistItem(task.id ?: "", item.id ?: "").subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+            taskRepository.scoreChecklistItem(task, item.id ?: "").subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
             configureChecklistView(checklistView, task, item)
         }
         checklistView.setOnClickListener {
             item.completed = !item.completed
-            taskRepository.scoreChecklistItem(task.id ?: "", item.id ?: "").subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+            taskRepository.scoreChecklistItem(task, item.id ?: "").subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
             configureChecklistView(checklistView, task, item)
         }
         val checkboxHolder = checklistView.findViewById<View>(R.id.checkBoxHolder)

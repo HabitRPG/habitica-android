@@ -1,11 +1,11 @@
-package com.habitrpg.android.habitica.models.user
+package com.habitrpg.shared.habitica.models.user
 
-import io.realm.RealmObject
-import io.realm.annotations.PrimaryKey
+import com.habitrpg.shared.habitica.nativePackages.NativeRealmObject
+import com.habitrpg.shared.habitica.nativePackages.annotations.PrimaryKeyAnnotation
 
-open class OwnedCustomization : RealmObject(), OwnedObject {
+open class OwnedCustomization : NativeRealmObject(), OwnedObject {
 
-    @PrimaryKey
+    @PrimaryKeyAnnotation
     override var combinedKey: String? = null
     override var userID: String? = null
         set(value) {
