@@ -135,7 +135,7 @@
     <string name="quest_begin">クエストをはじめる</string>
     <string name="quest_cancel">招待を中止する</string>
     <string name="quest_abort">クエストを中断する</string>
-    <string name="version_info">バージョン : %1$s (%2$d)</string>
+    <string name="version_info">バージョン： %1$s (%2$d)</string>
     <string name="sidebar_help">ヘルプとFAQ</string>
     <string name="complete_tutorial">わかった!</string>
     <string name="dismiss_tutorial">もう一度通知</string>
@@ -228,7 +228,7 @@
     <string name="hatch_with_potion">たまごがえしの薬を使う</string>
     <string name="hatch_egg">たまごをかえす</string>
     <string name="invite_party">パーティーを招待する</string>
-    <string name="dialog_feeding">%s にえさをやる :</string>
+    <string name="dialog_feeding">%s にえさをやる：</string>
     <string name="use_animal">連れていく</string>
     <string name="feed">えさをやる</string>
     <string name="hatch_with">%s でペットをかえす</string>
@@ -239,7 +239,7 @@
     <string name="notification_pet_fed">%sにえさをやった!</string>
     <string name="notification_purchase_reward">報酬をを購入しました</string>
     <string name="world_quest">世界のクエスト</string>
-    <string name="inn_description">休憩が必要？ダニエルのロッジにチェックインし、Habiticaのややこしいゲームシステムを一時停止しましょう：
+    <string name="inn_description">休息が必要ですか？　Danielのロッジにチェックインして、Habiticaにおける手ごわいゲーム要素を停止させましょう。：
 \n
 \n ・日課をこなさなくてもダメージを受けなくなります
 \n ・タスクの連続実行は変更されなくなり、色も変わらなくなります
@@ -276,13 +276,13 @@
     <string name="invite_email_description">メールを通じて、友達が Habitica に登録したら、自動的にあなたのパーティーに招待するよ！</string>
     <string name="add_invites">招待の追加</string>
     <string name="email">メール</string>
-    <string name="share_using">共有 ( シェア ) : </string>
+    <string name="share_using">共有 ( シェア )：</string>
     <string name="share_levelup">実生活で習慣を改善して、#Habitica でレベル%dになりました！</string>
     <string name="share_hatched">実生活でのタスクをこなして、#Habitica で%1$s%2$s のペットをかえしました！</string>
     <string name="share_raised">実生活でタスクをこなして、#Habitica で%1$s の乗騎を手に入れました！</string>
     <string name="open_in_store">Play ストアで開く</string>
     <string name="change_class_confirmation">クラスを変更します。いいですか? 3 ジェムかかります。</string>
-    <string name="change_class_equipment_warning">注意 : %s クラスの装備を買うことはできなくなります。</string>
+    <string name="change_class_equipment_warning">注意： %s クラスの装備を買うことはできなくなります。</string>
     <string name="confirm">確認</string>
     <string name="market">市場</string>
     <string name="timeTravelers">タイムトラベラー</string>
@@ -474,8 +474,8 @@
     <string name="million_abbrev">m</string>
     <string name="billion_abbrev">b</string>
     <string name="available_until">%sまで利用可能</string>
-    <string name="gems_left_max">今月のジェム: 残り%1$d/%2$d</string>
-    <string name="gems_left_nomax">今月のジェム: 残り%d</string>
+    <string name="gems_left_max">今月のジェム： 残り%1$d/%2$d</string>
+    <string name="gems_left_nomax">今月のジェム： 残り%d</string>
     <string name="health">体力</string>
     <string name="collect">集める</string>
     <string name="rage_meter">怒りメーター</string>
@@ -586,8 +586,8 @@
     <string name="strike_active_description">愛すべき%sは%sの攻撃で%sが破壊されてしまい途方に暮れています。急いでタスクに取り組んで、あの怪物を倒して再建の手助けをしましょう！</string>
     <string name="questShop">クエスト ショップ</string>
     <string name="market_owner_long">商人のAlex</string>
-    <string name="tavern_owner_long">ロッジの主人ダニエル</string>
-    <string name="stable_owner_long">猛獣使いのマット</string>
+    <string name="tavern_owner_long">ロッジの主人Daniel</string>
+    <string name="stable_owner_long">猛獣使いのMatt</string>
     <string name="hide_boss_art">ボス画像を隠す</string>
     <string name="active_world_boss">活動中のワールドボス</string>
     <string name="no_party_description">仲間たちと一緒に、または各自で、クエストに挑戦しましょう。モンスターと戦ったり、チャレンジを作ったり…… そして、パーティーを通じてあなた自身を責任ある状態にし続けてみましょう。</string>
@@ -602,7 +602,7 @@
     <string name="world_boss_description_3">あなたは通常のクエストボスへもこれまで通り挑戦し続けることができます。ダメージはどちらのボスにも適用されます</string>
     <string name="world_boss_description_4">キャンプ場でボス戦の進行状況と怒りの攻撃をチェックしましょう</string>
     <string name="world_boss_action_prompt">ボスを倒して%sの脅威からHabiticaを守り、特別なごほうびを手に入れよう！</string>
-    <string name="questShop_owner_long">クエストガイドのイアン</string>
+    <string name="questShop_owner_long">クエストガイドのIan</string>
     <string name="seasonalShop_owner_long">季節の魔女</string>
     <string name="rage_attack">怒りの攻撃：</string>
     <string name="tavern_description_world_boss">やれやれ、下の方にいるモンスターは気にしないでください。——あなたが休憩にチャットするにはまだ安全ですから。</string>
@@ -658,10 +658,10 @@
     <string name="setup_task_join_habitica_notes">To-Doは完了したり、編集したり、削除することができます。</string>
     <string name="setup_task_reward">自分自身へごほうびを与える</string>
     <string name="setup_task_reward_notes">TVを見ましょう、ゲームで遊びましょう、おやつを食べましょう、あなた次第です！</string>
-    <string name="equipment_str">力:</string>
-    <string name="equipment_con">体質:</string>
-    <string name="equipment_int">知能:</string>
-    <string name="equipment_per">知覚:</string>
+    <string name="equipment_str">力：</string>
+    <string name="equipment_con">体質：</string>
+    <string name="equipment_int">知能：</string>
+    <string name="equipment_per">知覚：</string>
     <string name="visit_website">ウェブサイトを訪れる</string>
     <string name="subscribe_gift_description">寄付会員特典を誰かに贈りたいですか？</string>
     <string name="gift_subscription">寄付会員特典を贈る</string>
@@ -701,7 +701,7 @@
     <string name="ago_months">%dヶ月前</string>
     <string name="ago_1month">1ヶ月前</string>
     <string name="skill_progress_title">スキルを使う</string>
-    <string name="authentication_error_body">ユーザーネームかパスワードが間違っています。</string>
+    <string name="authentication_error_body">ユーザー名かパスワードが間違っています。</string>
     <string name="network_error_no_network_body">インターネットに接続されていません。</string>
     <string name="x_months">%dヶ月</string>
     <string name="create_account_short">アカウントを作成する</string>
@@ -914,11 +914,20 @@
     <string name="someone">誰か</string>
     <string name="invitation_title">%sは%sにあなたを招待しました</string>
     <string name="password_too_short">パスワードが短すぎます。あと%d文字必要です</string>
-    <string name="copy_username">ユーザーネームをコピーする</string>
+    <string name="copy_username">ユーザー名をコピーする</string>
     <string name="id_copied">ユーザーIDをクリップボードにコピーする</string>
     <string name="copy_userid">ユーザーIDをコピーする</string>
     <string name="preference_push_unjoined_guild_mention">未参加ギルドでのあなたへの返信</string>
     <string name="preference_push_joined_guild_mention">参加ギルドでのあなたへの返信</string>
     <string name="gems_to_gift">ジェムを贈る</string>
     <string name="gift_gems_balance_subtitle">贈りたいジェムの数を記入するか、タブを切り替えて贈るためのジェムを購入してください</string>
+    <string name="g1g1_info_2">機能説明</string>
+    <string name="gift_a_subscription">寄付会員特典を贈る</string>
+    <string name="g1g1_info_1">クリスマスの季節を祝して、特別なプロモーションが戻ってきます。いま寄付会員特典を贈ると、無料であなた自身も同じ寄付会員特典を受けることができます！</string>
+    <string name="promo_g1g1_prompt">誰かに寄付会員特典を贈ると、自分も無料で同じ寄付会員特典を受けられるイベント</string>
+    <string name="promo_g1g1_description">いま寄付会員特典を贈ると、無料であなた自身も同じ寄付会員特典を受けることができます！</string>
+    <string name="event">イベント</string>
+    <string name="owner">オーナー</string>
+    <string name="member">メンバー</string>
+    <string name="member_group_plan">グループプランのメンバー</string>
 </resources>
