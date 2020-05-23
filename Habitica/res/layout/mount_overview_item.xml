@@ -8,37 +8,35 @@
 
     <LinearLayout
         android:id="@+id/card_view"
-        android:layout_width="124dp"
-        android:layout_height="156dp"
-        android:layout_centerInParent="true"
+        android:layout_width="127dp"
+        android:layout_height="140dp"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="6dp"
-        android:layout_marginBottom="6dp"
         android:background="@drawable/layout_rounded_bg_shopitem"
         android:orientation="vertical">
         style="@style/CardContent">
 
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/imageView"
-            android:layout_width="@dimen/mount_image_width"
-            android:layout_height="@dimen/mount_image_height"
+            android:layout_width="79dp"
+            android:layout_height="94dp"
             android:layout_gravity="center_horizontal"
             android:scaleType="fitEnd" />
 
         <TextView
-            android:id="@+id/titleTextView"
-            style="@style/RowTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
             android:layout_marginBottom="3.5dp"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/titleTextView"
+            android:textSize="13sp"
             android:gravity="center"
-            android:textSize="13sp" />
-
+            style="@style/RowTitle"/>
         <TextView
             android:id="@+id/ownedTextView"
             style="@style/RowText"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="match_parent"
             android:layout_gravity="center_horizontal"
             android:background="@drawable/layout_rounded_bg_shopitem_price"
             android:gravity="center"

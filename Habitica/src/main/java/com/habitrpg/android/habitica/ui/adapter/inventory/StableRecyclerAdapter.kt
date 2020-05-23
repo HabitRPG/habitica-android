@@ -6,6 +6,7 @@ import android.graphics.drawable.BitmapDrawable
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
@@ -131,31 +132,40 @@ class StableRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<
                 "Mount_Icon_" + item.key
             }
 
-            var owned = animal?.numberOwned?.toString()
-            var totalNum = animal?.totalNumber?.toString()
-            this.ownedTextView.text = context?.getString(R.string.pet_ownership_fraction, owned, totalNum)
-            this.ownedTextView.background = context?.getDrawable(R.drawable.layout_rounded_bg_shopitem_price)
-            ownedTextView.visibility = if (animal?.type == "special") View.GONE else View.VISIBLE
-            imageView.background = null
-            DataBindingUtils.loadImage(imageName) {
-                val drawable = BitmapDrawable(context?.resources, it)
-                Observable.just(drawable)
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(Consumer {
-                            imageView.background = drawable
-                        }, RxErrorHandler.handleEmptyError())
-            }
-            if (item.numberOwned <= 0) {
-                this.imageView.alpha = 0.2f
-                this.titleView.alpha = 0.2f
-                this.ownedTextView.alpha = 0.2f
+            context?.let {
+
+                var owned = item.numberOwned?.toString()
+                var totalNum = item.totalNumber?.toString()
+
+
+                this.ownedTextView.text = context?.getString(R.string.pet_ownership_fraction, owned, totalNum)
+                this.ownedTextView.background = context?.getDrawable(R.drawable.layout_rounded_bg_shopitem_price)
+
+                this.ownedTextView.setTextColor(ContextCompat.getColor(it, R.color.black) )
+
+                ownedTextView.visibility = if (animal?.type == "special") View.GONE else View.VISIBLE
+                imageView.background = null
+
+                DataBindingUtils.loadImage(imageName) {
+                    val drawable = BitmapDrawable(context?.resources, it)
+                    Observable.just(drawable)
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(Consumer {
+                                imageView.background = drawable
+                            }, RxErrorHandler.handleEmptyError())
+                }
+                if (item.numberOwned <= 0) {
+                    this.imageView.alpha = 0.2f
+                    this.titleView.alpha = 0.2f
+                    this.ownedTextView.alpha = 0.2f
+                }
+
+                if (item.numberOwned == item.totalNumber) {
+                    this.ownedTextView.background = context?.getDrawable(R.drawable.layout_rounded_bg_animalitem_complete)
+                    this.ownedTextView.setTextColor(ContextCompat.getColor(it, R.color.white))
+                }
             }
 
-            if (item.numberOwned == item.totalNumber) {
-                this.ownedTextView.setTextColor(Color.parseColor("#FFFFFF"))
-                var new_background = context?.getDrawable(R.drawable.layout_rounded_bg_animalitem_complete)?.mutate()
-                this.ownedTextView.background = new_background
-            }
         }
 
         override fun onClick(v: View) {
