@@ -27,12 +27,10 @@ class RealmCustomizationLocalRepository(realm: Realm) : RealmContentLocalReposit
                     .isNull("availableFrom")
                     .isNull("availableUntil")
                     .endGroup()
-                    .or()
-                    .equalTo("purchased", true)
                     .endGroup()
         }
         return query
-                .sort("customizationSet")
+                .sort("customizationSetName")
                 .findAll()
                 .asFlowable()
                 .filter { it.isLoaded }

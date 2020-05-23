@@ -3,13 +3,16 @@ package com.habitrpg.android.habitica.ui.viewmodels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.habitrpg.android.habitica.components.UserComponent
+import com.habitrpg.android.habitica.events.ShowSnackbarEvent
 import com.habitrpg.android.habitica.extensions.filterOptionalDoOnEmpty
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.shared.habitica.models.members.Member
+import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import io.reactivex.BackpressureStrategy
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
 import io.realm.RealmResults
+import org.greenrobot.eventbus.EventBus
 
 class PartyViewModel: GroupViewModel() {
 
@@ -46,7 +49,12 @@ class PartyViewModel: GroupViewModel() {
         groupIDSubject.value?.value?.let {
             disposable.add(socialRepository.acceptQuest(null, it)
                     .flatMap { userRepository.retrieveUser() }
-                    .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+                    .subscribe(Consumer {
+                        val event = ShowSnackbarEvent()
+                        event.type = HabiticaSnackbar.SnackbarDisplayType.SUCCESS
+                        event.text = "Quest invitation accepted"
+                        EventBus.getDefault().post(event)
+                    }, RxErrorHandler.handleEmptyError()))
         }
     }
 
@@ -54,7 +62,12 @@ class PartyViewModel: GroupViewModel() {
         groupIDSubject.value?.value?.let {
             disposable.add(socialRepository.rejectQuest(null, it)
                     .flatMap { userRepository.retrieveUser() }
-                    .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+                    .subscribe(Consumer {
+                        val event = ShowSnackbarEvent()
+                        event.type = HabiticaSnackbar.SnackbarDisplayType.FAILURE
+                        event.text = "Quest invitation rejected"
+                        EventBus.getDefault().post(event)
+                    }, RxErrorHandler.handleEmptyError()))
         }
     }
 

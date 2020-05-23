@@ -87,7 +87,7 @@ class TaskFormActivity : BaseActivity() {
     private val statPerceptionButton: TextView by bindView(R.id.stat_perception_button)
 
     private val rewardValueTitleView: TextView by bindView(R.id.reward_value_title)
-    private val rewardValueFormView: RewardValueFormView by bindView(R.id.reward_value)
+    private val stepperValueFormView: StepperValueFormView by bindView(R.id.reward_value)
 
     private val tagsTitleView: TextView by bindView(R.id.tags_title)
     private val tagsWrapper: LinearLayout by bindView(R.id.tags_wrapper)
@@ -226,6 +226,10 @@ class TaskFormActivity : BaseActivity() {
         when (item?.itemId) {
             R.id.action_save -> saveTask()
             R.id.action_delete -> deleteTask()
+            android.R.id.home -> {
+                onBackPressed()
+                return true
+            }
         }
         return super.onOptionsItemSelected(item)
     }
@@ -273,7 +277,7 @@ class TaskFormActivity : BaseActivity() {
 
         val rewardViewsVisibility = if (taskType == TaskType.TYPE_REWARD) View.VISIBLE else View.GONE
         rewardValueTitleView.visibility = rewardViewsVisibility
-        rewardValueFormView.visibility = rewardViewsVisibility
+        stepperValueFormView.visibility = rewardViewsVisibility
 
         tagsTitleView.visibility = if (isChallengeTask) View.GONE else View.VISIBLE
         tagsWrapper.visibility = if (isChallengeTask) View.GONE else View.VISIBLE
@@ -348,7 +352,7 @@ class TaskFormActivity : BaseActivity() {
                 taskSchedulingControls.frequency = task.frequency ?: TaskFrequency.FREQUENCY_DAILY
             }
             TaskType.TYPE_TODO -> taskSchedulingControls.dueDate = task.dueDate
-            TaskType.TYPE_REWARD -> rewardValueFormView.value = task.value
+            TaskType.TYPE_REWARD -> stepperValueFormView.value = task.value
         }
         if (taskType == TaskType.TYPE_DAILY || taskType == TaskType.TYPE_TODO) {
             task.checklist?.let { checklistContainer.checklistItems = it }
@@ -422,7 +426,7 @@ class TaskFormActivity : BaseActivity() {
         } else if (taskType == TaskType.TYPE_TODO) {
             thisTask.dueDate = taskSchedulingControls.dueDate
         } else if (taskType == TaskType.TYPE_REWARD) {
-            thisTask.value = rewardValueFormView.value
+            thisTask.value = stepperValueFormView.value
         }
 
         val resultIntent = Intent()

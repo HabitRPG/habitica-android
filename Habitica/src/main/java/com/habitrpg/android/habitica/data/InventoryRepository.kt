@@ -62,7 +62,7 @@ interface InventoryRepository : BaseRepository {
 
     fun inviteToQuest(quest: QuestContent): Flowable<Quest>
 
-    fun buyItem(user: User?, id: String, value: Double): Flowable<BuyResponse>
+    fun buyItem(user: User?, id: String, value: Double, purchaseQuantity: Int): Flowable<BuyResponse>
 
     fun retrieveShopInventory(identifier: String): Flowable<Shop>
     fun retrieveMarketGear(): Flowable<Shop>
@@ -73,7 +73,7 @@ interface InventoryRepository : BaseRepository {
 
     fun purchaseQuest(key: String): Flowable<Any>
 
-    fun purchaseItem(purchaseType: String, key: String): Flowable<Any>
+    fun purchaseItem(purchaseType: String, key: String, purchaseQuantity: Int): Flowable<Any>
 
     fun togglePinnedItem(item: ShopItem): Flowable<List<ShopItem>>
     fun getItems(itemClass: Class<out Item>, keys: Array<String>, user: User?): Flowable<out RealmResults<out Item>>

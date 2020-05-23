@@ -86,6 +86,10 @@
     <string name="start_date">Start Date</string>
     <string name="positive_habit_form">Positive</string>
     <string name="negative_habit_form">Negative</string>
+    <string name="on">On</string>
+    <string name="off">Off</string>
+    <string name="selected">Selected</string>
+    <string name="not_selected">Not selected</string>
     <string name="checklist">Checklist</string>
     <string name="reminders">Reminders</string>
 
@@ -134,7 +138,7 @@
     <string name="members">Members</string>
     <string name="habits">Habits</string>
     <string name="dailies">Dailies</string>
-    <string name="todos">To-Dos</string>
+    <string name="todos">To-Do\'s</string>
     <string name="rewards">Rewards</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
@@ -293,6 +297,7 @@
     <string name="empty_items">You don\'t have any %s</string>
     <string name="user_level">Lvl %d</string>
     <string name="user_level_with_class">Lvl %1$d %2$s</string>
+    <string name="user_level_with_class_unabbreviated">Level %1$d %2$s</string>
     <string name="warrior">Warrior</string>
     <string name="rogue">Rogue</string>
     <string name="mage">Mage</string>
@@ -401,7 +406,7 @@
     <string name="subscribe_listitem1_description">You’ll be able to buy Gems from the Market for 20 gold each!</string>
     <string name="subscribe_listitem2_description">Earn Mystic Hourglasses to purchase items in the Time Traveler’s Shop!</string>
     <string name="subscribe_listitem3_description">Subscribe now to get an exclusive set now and receive new items every month!</string>
-    <string name="subscribe_listitem3_description_new">Subscribe now to get this %s and receive new items every month! </string>
+    <string name="subscribe_listitem3_description_new">Subscribe now to get this %s and receive new items every month!</string>
     <string name="subscribe_listitem4_description">Receive the Royal Purple Jackalope pet when you become a new subscriber.</string>
     <string name="subscribe_listitem5_description">Discover even more items in Habitica with a 2x bonus daily drop cap.</string>
     <string name="subscribe1month_gemcap">25 Gem cap</string>
@@ -415,7 +420,7 @@
     <string name="due">Due</string>
     <string name="cancel_subscription">Cancel Subscription</string>
     <string name="cancel_subscription_google_description">No longer want to subscribe? You can find the option to unsubscribe in the “My Apps” section of the Google Play Store. Any months of subscription credit will be applied after your subscription has ended.</string>
-    <string name="cancel_subscription_notgoogle_description">No longer want to subscribe? Due to constraints on mobile payments, you\'ll need to cancel via our website. To do this, tap the button below, log in to your account, tap the User icon in the top right, then go to Subscription. Any months of subscription credit will be applied after your subscription has ended. We\'ll miss you! </string>
+    <string name="cancel_subscription_notgoogle_description">No longer want to subscribe? Due to constraints on mobile payments, you\'ll need to cancel via our website. To do this, tap the button below, log in to your account, tap the User icon in the top right, then go to Subscription. Any months of subscription credit will be applied after your subscription has ended. We\'ll miss you!</string>
     <string name="visit_habitica_website">Visit Habitica Website</string>
     <string name="current_bonuses">Current Bonuses</string>
     <string name="months_subscribed">Months subscribed</string>
@@ -491,15 +496,15 @@
     <string name="empty_description_habits">Habits are tasks that don\'t have a rigid schedule. You can check them off many times a day, or not at all.</string>
     <string name="empty_title_dailies">You don\'t have any Dailies</string>
     <string name="empty_description_dailies">Dailies are tasks that repeat on a regular basis. Choose the schedule that works for you!</string>
-    <string name="empty_title_todos">You don\'t have any To-Dos</string>
-    <string name="empty_description_todos">To-Dos are tasks that only need to be completed once. Add checklists to your To-Dos to increase their value.</string>
+    <string name="empty_title_todos">You don\'t have any To-Do\'s</string>
+    <string name="empty_description_todos">To-Do\'s are tasks that only need to be completed once. Add checklists to your To-Do\'s to increase their value.</string>
     <string name="empty_title_rewards">You don\'t have any Rewards</string>
     <string name="empty_title_habits_filtered">No Habits</string>
     <string name="empty_description_habits_filtered">There aren\'t any Habits visible with your current filters.</string>
     <string name="empty_title_dailies_filtered">No Dailies</string>
     <string name="empty_description_dailies_filtered">There aren\'t any Dailies visible with your current filters.</string>
-    <string name="empty_title_todos_filtered">No To-Dos</string>
-    <string name="empty_description_todos_filtered">There aren\'t any To-Dos visible with your current filters.</string>
+    <string name="empty_title_todos_filtered">No To-Do\'s</string>
+    <string name="empty_description_todos_filtered">There aren\'t any To-Do\'s visible with your current filters.</string>
     <string name="empty_title_rewards_filtered">No Rewards</string>
     <string name="reset_walkthrough">Reset Tutorials</string>
     <string name="read_community_guidelines">Review our <u>Community Guidelines</u> before posting</string>
@@ -530,6 +535,7 @@
     <string name="leave_party">Leave Party</string>
     <string name="party_description">Party Description</string>
     <string name="number_participants">%1$d Participants</string>
+    <string name="number_responded">%1$d/%2$d Responded</string>
     <string name="welcome_back">Welcome Back</string>
     <string name="yesterdaililes_prompt">Check off any Dailies you did yesterday:</string>
     <string name="start_day">Start My Day</string>
@@ -692,7 +698,7 @@
     <string name="next_day_reminder_title">Did you check off your tasks today?</string>
     <string name="next_day_reminder_text">There\'s lots to unlock and discover as you level up, so keep up with your tasks and have fun!</string>
     <string name="daily_tip_0">Want to try something new? Join a Challenge to expand your task list and win some Gems!</string>
-    <string name="daily_tip_1">Add checklists to your To-Dos to multiply your rewards!</string>
+    <string name="daily_tip_1">Add checklists to your To-Do\'s to multiply your rewards!</string>
     <string name="daily_tip_2">You can change how often each Daily repeats. Even infrequent tasks can be scheduled.</string>
     <string name="daily_tip_3">You can schedule specific reminders for Dailies too.</string>
     <string name="daily_tip_4">Occasionally re-evaluating your tasks can help keep you on the right path.</string>
@@ -713,8 +719,8 @@
     <string name="two_handed">Two-Handed</string>
     <string name="usernamePromptTitle">It’s time to set your username!</string>
     <string name="usernamePromptBody">Login names are now unique usernames that will be visible beside your display name and used for invitations, chat @mentions, and messaging.</string>
-    <string name="usernamePromptWiki">If you’d like to learn more about this change, <a href="https://habitica.wikia_com/wiki/Player_Names">visit our wiki.</a></string>
-    <string name="usernamePromptDisclaimer">Usernames should conform to our <a href="https://habitica.com/static/terms">Terms of Service</a> and <a href="https://habitica_com/static/community-guidelines">Community Guidelines</a>. If you didn’t previously set a login name, your username was auto-generated.</string>
+    <string name="usernamePromptWiki">If you’d like to learn more about this change, <a href="https://habitica.wikia.com/wiki/Player_Names">visit our wiki.</a></string>
+    <string name="usernamePromptDisclaimer">Usernames should conform to our <a href="https://habitica.com/static/terms">Terms of Service</a> and <a href="https://habitica.com/static/community-guidelines">Community Guidelines</a>. If you didn’t previously set a login name, your username was auto-generated.</string>
     <string name="confirm_username_title">Are you sure you want to confirm your current username?</string>
     <string name="confirm_username_description">Confirming your username will make it public for invitations, @mentions and messaging. You can change your username from settings at any time.</string>
     <string name="cancel">Cancel</string>
@@ -819,6 +825,7 @@
     <string name="invite_to_party">Invite to Party</string>
     <string name="are_you_sure">Are you sure?</string>
     <string name="delete_task">Delete Task</string>
+    <string name="delete_reminder">Delete Reminder</string>
     <string name="not_now">Not right now</string>
     <string name="levelup_detail_10">Choose a class that fits your playstyle and unlock special skills and armor to help you on your journey</string>
     <string name="levelup_title_10">Class System unlocked!</string>
@@ -952,11 +959,11 @@
     <string name="unlock_previous">Unlock by finishing Quest %d</string>
     <string name="unlock_level">Unlock by reaching level %d</string>
     <string name="unlock_previous_short">Finish Quest %d</string>
-    <string name="unlock_level_short">Level %d</string>
+    <string name="level_unabbreviated">Level %d</string>
     <string name="not_participating">You are not participating</string>
     <string name="quest_completed">Quest completed!</string>
     <string name="using_habitica">Using Habitica</string>
-    <string name="using_habitica_description">Confused? We’ll go over the basics to get you up to speed.</string>
+    <string name="using_habitica_description">We’ll explain the basics and answer common questions to get you up to speed</string>
     <string name="suggestions_feedback_description">Have input on how features could work better or an idea for something new? Tell us!</string>
     <string name="contact_us">Contact Us</string>
     <string name="get_help">Get Help</string>
@@ -971,24 +978,24 @@
     <string name="how_best_habitica">Not sure how to best use Habitica?</string>
     <string name="stats_currency"><![CDATA[Stats & Currency]]></string>
     <string name="health_points">Health Points</string>
-    <string name="health_description">This represents your avatars life. Missing a Daily or doing a negative Habit **reduces your HP**.\n\n**Regain HP** by completing tasks, using a Health Potion, or a healing ability.\n\nIf your **HP reaches 0** your avatar will pass out (lose a level, all Gold, and one piece of equipment). Lost equipment can be re-purchased.</string>
+    <string name="health_description">This represents your avatar’s life. Missing a Daily or doing a negative Habit **reduces your HP**.\n\n**Regain HP** by leveling up, using a Health Potion, or a class skill with healing ability.\n\nIf your **HP reaches 0** you will lose a level, all Gold, and one piece of equipment. Lost equipment can be re-purchased.</string>
     <string name="experience_points">Experience Points</string>
-    <string name="experience_description">Experience points represent your progress and allows you to level up. You’ll mainly **gain EXP** from completing tasks or quests.\n\nHigher difficulty or red colored tasks will give you **more EXP**. The **Intelligence** stat also raises your EXP gain.</string>
+    <string name="experience_description">Experience points represent your progress and allow you to level up. You’ll mainly **gain EXP** from completing tasks or quests, but there are also some class skills that give EXP.\n\nTasks of higher difficulty, or red-colored tasks will give you **more EXP**. The **Intelligence stat** also raises your rate of EXP gain.</string>
     <string name="mana_points">Mana Points</string>
-    <string name="gold_description">Gold is the **main form of currency** within Habitica and allows you to buy certain gear, quests, items, or even custom rewards you make for yourself.\n\n**Earn Gold** through completing tasks or quests. **Perception** raises the amount of Gold you earn. Rogue’s can also use an ability to get more Gold.\n\nIf you subscribe to Habitica, you can even use Gold to purchase Gems.</string>
-    <string name="mana_description">Mana points are unlocked with the class system at level 10 and allow you to **use Skills**.\n\nSome **MP is restored** naturally every day, but you can regain more by completing tasks or using a Mage ability.</string>
+    <string name="gold_description">Gold is the **main form of currency** within Habitica and allows you to buy certain gear, quests, items, or even custom rewards you make for yourself.\n\n**Earn Gold** through completing tasks or quests, or through some Class skills. Higher **Perception stats** raise the amount of Gold you earn.\n\nIf you subscribe to Habitica, you can even use Gold to purchase a number of Gems determined by the length of time you’ve been subscribed.</string>
+    <string name="mana_description">Mana points are unlocked with the class system at level 10 and allow you to **use Skills** once you begin learning them at level 11.\n\nSome **MP is restored** at day reset every day, but you can regain more by completing tasks or using a Mage class skill.</string>
     <string name="stat_allocation">Stat Allocation</string>
-    <string name="stat_description">All Habitica characters have four stats that affect the gameplay aspects of Habitica.\n\n**Strength (STR)** affects critical hits and raises damage done to a Quest Boss. Mainly for Warriors and Rogues.\n\n**Constitution (CON)** raises your HP and makes you take less damage. Mainly for Healers and Warriors.\n\n**Intelligence (INT)** raises the amount of EXP you earn and gives you more Mana. Mainly for Mages and Healers.\n\n**Perception (PER)** increases the gold you earn and the rate of finding items. Mainly for Rogues and Mages.\nnAfter level 10, you earn 1 Stat Point every level you gain that you can put into any stat you’d like. You can also equip gear that has different combinations of stat boosts.</string>
+    <string name="stat_description">All Habitica characters have four stats that affect the gameplay aspects of Habitica.\n\n**Strength (STR)** affects critical hits and raises damage done to a Quest Boss. Warriors and Rogues gain STR from their class equipment.\n\n**Constitution (CON)** raises your HP and makes you take less damage. Healers and Warriors gain CON from their class equipment.\n\n**Intelligence (INT)** raises the amount of EXP you earn and gives you more Mana. Mages and Healers gain INT from their class equipment.\n\n**Perception (PER)** increases the gold you earn and the rate of finding dropped items. Rogues and Mages gain PER from their class equipment.\n\nAfter level 10, you earn 1 Stat Point every level you gain that you can put into any stat you’d like. You can also equip gear that has different combinations of stat boosts.</string>
 
     <string name="standard"> Standard </string>
     <string name="premium_currency">Premium Currency</string>
     <string name="currency">Currency</string>
-    <string name="gems_description">Gems are a currency purchased with real money that allow you to buy extra content within Habitica and are one of the main source of financial support for the Habitica team alongside subscriptions.\n\nAll content purchased through Gems is purely cosmetic or can be obtained for free with time.\n\nYou can also receive Gems through gifts, Challenge prizes, contributing work to Habitica, or subscribing.</string>
+    <string name="gems_description">Gems are a currency purchased with real money that allow you to buy extra content within Habitica and are one of the main sources of financial support for the Habitica team alongside subscriptions.\n\nAll content purchased through Gems is purely cosmetic or can be obtained for free with time.\n\nYou can also receive Gems through gifts from other players, Challenge prizes, contributing to Habitica, or subscribing.</string>
     <string name="common_questions">Common Questions</string>
     <string name="game_mechanics">Game Mechanics</string>
     <string name="subscriber_currency">Subscriber Currency</string>
     <string name="mystic_hourglasses">Mystic Hourglasses</string>
-    <string name="hourglasses_description">Mystic Hourglasses are an extremely rare form of currency you can only receive for subscribing to Habitica. They are used in the Time Traveler’s shop to buy past gear sets, pets, mounts, animated backgrounds, or even special quests.\n\nYou can receive up to four Mystic Hourglasses a year. The time they are rewarded is based on your subscription renewal schedule. They are sent out on the first day of a new month after your last subscription payment that qualified you for an hourglass. See the [Subscription] page for more details.</string>
+    <string name="hourglasses_description">Mystic Hourglasses are an extremely rare form of currency you can only receive for subscribing to Habitica for three consecutive months or more. They are used in the Time Traveler’s shop to buy past gear sets, pets, mounts, animated backgrounds, or even special quests.\n\nYou can receive up to four Mystic Hourglasses a year. The time they are rewarded is based on your subscription renewal schedule. They are sent out on the first day of a new month after your last subscription payment that qualified you for an hourglass. See the [Subscription] page for more details.</string>
     <string name="clear_cache">Clear your Cache</string>
     <string name="clear_cache_description"><![CDATA[To clear your cache, open your phone’s Settings app. Go to Storage > Apps >  Habitica, then tap Clear Cache.]]></string>
     <string name="manual_sync_restart">Manual Sync or Restart</string>
@@ -1004,4 +1011,8 @@
     <string name="avatar_headband">Headband</string>
     <string name="avatar_accent">Accent</string>
     <string name="buy_all">Buy All</string>
+    <string name="read_more">Read More</string>
+    <string name="purchase_amount_error">You are unable to buy that amount.</string>
+    <string name="still_questions">Still have a question?</string>
+    <string name="delete_checklist_entry">Delete Checklist entry</string>
 </resources>

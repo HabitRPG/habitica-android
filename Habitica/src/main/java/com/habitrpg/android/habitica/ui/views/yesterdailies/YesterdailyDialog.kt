@@ -97,12 +97,7 @@ class YesterdailyDialog private constructor(context: Context, private val userRe
                 val checklistContainer = taskView.findViewById<ViewGroup>(R.id.checklistView)
                 for (item in task.checklist ?: emptyList<ChecklistItem>()) {
                     val checklistView = inflater.inflate(R.layout.checklist_item_row, yesterdailiesList, false)
-                    configureChecklistView(checklistView, item)
-                    checklistView.setOnClickListener {
-                        item.completed = !item.completed
-                        taskRepository.scoreChecklistItem(task, item.id ?: "").subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
-                        configureChecklistView(checklistView, item)
-                    }
+                    configureChecklistView(checklistView, task, item)
                     checklistContainer.addView(checklistView)
                 }
             }
@@ -113,9 +108,19 @@ class YesterdailyDialog private constructor(context: Context, private val userRe
         }
     }
 
-    private fun configureChecklistView(checklistView: View, item: ChecklistItem) {
+    private fun configureChecklistView(checklistView: View, task: Task, item: ChecklistItem) {
         val checkbox = checklistView.findViewById(R.id.checkBox) as? CheckBox
         checkbox?.isChecked = item.completed
+        checkbox?.setOnCheckedChangeListener { _, isChecked ->
+            item.completed = isChecked
+            taskRepository.scoreChecklistItem(task.id ?: "", item.id ?: "").subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+            configureChecklistView(checklistView, task, item)
+        }
+        checklistView.setOnClickListener {
+            item.completed = !item.completed
+            taskRepository.scoreChecklistItem(task.id ?: "", item.id ?: "").subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+            configureChecklistView(checklistView, task, item)
+        }
         val checkboxHolder = checklistView.findViewById<View>(R.id.checkBoxHolder)
         checkboxHolder.setBackgroundResource(R.color.gray_700)
         val textView = checklistView.findViewById(R.id.checkedTextView) as? TextView

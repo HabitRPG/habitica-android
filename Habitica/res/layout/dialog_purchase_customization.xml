@@ -4,10 +4,11 @@
     android:layout_height="wrap_content">
 
     <com.facebook.drawee.view.SimpleDraweeView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/avatar_width"
+        android:layout_height="@dimen/avatar_height"
         android:id="@+id/imageView"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:scaleType="center"/>
 
     <LinearLayout
         android:orientation="horizontal"
@@ -29,5 +30,14 @@
             android:id="@+id/gem_icon"
             android:layout_gravity="center"/>
     </LinearLayout>
+    <TextView
+        android:id="@+id/amount_error_label"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:text="@string/purchase_amount_error"
+        android:textSize="12sp"
+        android:textColor="@color/gray_200"
+        android:layout_marginTop="@dimen/spacing_medium"
+        android:gravity="center_horizontal"/>
 
 </LinearLayout>

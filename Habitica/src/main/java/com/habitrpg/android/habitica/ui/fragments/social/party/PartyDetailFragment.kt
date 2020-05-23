@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import com.facebook.drawee.view.SimpleDraweeView
@@ -210,6 +211,7 @@ class PartyDetailFragment : BaseFragment() {
         }
         questImageWrapper?.alpha = 1.0f
         questProgressView?.alpha = 1.0f
+        context?.let { questParticipationView?.setTextColor(ContextCompat.getColor(it, R.color.gray_300)) }
         if (viewModel?.isQuestActive == true) {
             questProgressView?.visibility = View.VISIBLE
             questProgressView?.setData(questContent, viewModel?.getGroupData()?.value?.quest?.progress)
@@ -219,11 +221,15 @@ class PartyDetailFragment : BaseFragment() {
                 questParticipationView?.text = context?.getString(R.string.number_participants, questParticipants.size)
             } else {
                 questParticipationView?.text = context?.getString(R.string.not_participating)
+                context?.let { questParticipationView?.setTextColor(ContextCompat.getColor(it, R.color.red_10)) }
                 questImageWrapper?.alpha = 0.5f
                 questProgressView?.alpha = 0.5f
             }
         } else {
             questProgressView?.visibility = View.GONE
+            val members = viewModel?.getGroupData()?.value?.quest?.members
+            val responded = members?.filter { it.isParticipating != null }
+            questParticipationView?.text = context?.getString(R.string.number_responded, responded?.size, members?.size)
         }
     }
 

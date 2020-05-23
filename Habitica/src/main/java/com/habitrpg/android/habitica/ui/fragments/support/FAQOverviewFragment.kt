@@ -12,14 +12,12 @@ import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.FAQRepository
 import com.habitrpg.android.habitica.databinding.FragmentFaqOverviewBinding
 import com.habitrpg.android.habitica.databinding.SupportFaqItemBinding
-import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.helpers.setMarkdown
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
-import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import io.reactivex.functions.Consumer
 import javax.inject.Inject
 
@@ -71,11 +69,7 @@ class FAQOverviewFragment : BaseMainFragment() {
                 val binding = SupportFaqItemBinding.inflate(context.layoutInflater, binding.faqLinearLayout, true)
                 binding.textView.text = article.question
                 binding.root.setOnClickListener {
-                    val dialog = HabiticaAlertDialog(binding.root.context)
-                    dialog.setTitle(article.question)
-                    dialog.setMessage(article.answer)
-                    dialog.addCloseButton()
-                    dialog.show()
+                    MainNavigationController.navigate(FAQOverviewFragmentDirections.openFAQDetail(article.position ?: 0))
                 }
             }
         }, RxErrorHandler.handleEmptyError()))

@@ -55,9 +55,9 @@ interface ApiClient {
 
     fun equipItem(type: String, itemKey: String): Flowable<Items>
 
-    fun buyItem(itemKey: String): Flowable<BuyResponse>
+    fun buyItem(itemKey: String, purchaseQuantity: Int): Flowable<BuyResponse>
 
-    fun purchaseItem(type: String, itemKey: String): Flowable<Any>
+    fun purchaseItem(type: String, itemKey: String, purchaseQuantity: Int): Flowable<Any>
 
     fun purchaseHourglassItem(type: String, itemKey: String): Flowable<Any>
 

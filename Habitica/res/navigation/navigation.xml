@@ -208,6 +208,17 @@
         android:name="com.habitrpg.android.habitica.ui.fragments.support.FAQOverviewFragment"
         android:label="@string/habitica_questions">
         <deepLink app:uri="habitica.com/static/faq" />
+        <action
+            android:id="@+id/openFAQDetail"
+            app:destination="@id/FAQDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/FAQDetailFragment"
+        android:name="com.habitrpg.android.habitica.ui.fragments.support.FAQDetailFragment"
+        android:label="@string/sidebar_help" >
+        <argument
+            android:name="position"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/aboutFragment"

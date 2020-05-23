@@ -55,7 +55,7 @@ class ProfilePreferencesFragment: BasePreferencesFragment(), SharedPreferences.O
         val profileCategory = findPreference("profile") as? PreferenceCategory
         configurePreference(profileCategory?.findPreference(key), sharedPreferences?.getString(key, ""))
         if (sharedPreferences != null) {
-            val newValue = sharedPreferences.getString(key, "") ?: ""
+            val newValue = sharedPreferences.getString(key, "") ?: return
             val observable: Flowable<User>? = when (key) {
                 "display_name" -> {
                     if (newValue != user?.profile?.name) {
@@ -65,16 +65,14 @@ class ProfilePreferencesFragment: BasePreferencesFragment(), SharedPreferences.O
                     }
                 }
                 "photo_url" -> {
-                    val newName = sharedPreferences.getString(key, "") ?: ""
-                    if (newName != user?.profile?.imageUrl) {
+                    if (newValue != user?.profile?.imageUrl) {
                         userRepository.updateUser(user, "profile.imageUrl", newValue)
                     } else {
                         null
                     }
                 }
                 "about" -> {
-                    val newName = sharedPreferences.getString(key, "") ?: ""
-                    if (newName != user?.profile?.blurb) {
+                    if (newValue != user?.profile?.blurb) {
                         userRepository.updateUser(user, "profile.blurb", newValue)
                     } else {
                         null
@@ -85,5 +83,4 @@ class ProfilePreferencesFragment: BasePreferencesFragment(), SharedPreferences.O
             observable?.subscribe(Consumer {}, RxErrorHandler.handleEmptyError())?.let { compositeSubscription.add(it) }
         }
     }
-
 }

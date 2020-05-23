@@ -68,10 +68,10 @@ open class ShopItem : RealmObject() {
     val isTypeAnimal: Boolean
         get() = "pets" == purchaseType || "mounts" == purchaseType
 
-    fun canAfford(user: User?, canAlwaysAffordSpecial: Boolean): Boolean = when(currency) {
-        "gold" -> value <= user?.stats?.gp ?: 0.0
-        "gems" -> if (canAlwaysAffordSpecial) true else value <= user?.gemCount ?: 0
-        "hourglasses" -> if (canAlwaysAffordSpecial) true else value <= user?.purchased?.plan?.consecutive?.trinkets ?: 0
+    fun canAfford(user: User?, quantity: Int): Boolean = when(currency) {
+        "gold" -> (value * quantity) <= user?.stats?.gp ?: 0.0
+        "gems" -> true
+        "hourglasses" -> true
         else -> false
     }
 
@@ -101,7 +101,7 @@ open class ShopItem : RealmObject() {
                 }
             }
             level != null -> {
-                context.getString(R.string.unlock_level_short, level ?: 0)
+                context.getString(R.string.level_unabbreviated, level ?: 0)
             }
             else -> null
         }

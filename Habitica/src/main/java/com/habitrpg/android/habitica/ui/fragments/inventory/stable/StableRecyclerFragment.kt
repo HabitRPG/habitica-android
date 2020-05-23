@@ -70,18 +70,18 @@ class StableRecyclerFragment : BaseFragment() {
         layoutManager = androidx.recyclerview.widget.GridLayoutManager(activity, 2)
         layoutManager?.spanSizeLookup = object : androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
-                return if (adapter?.getItemViewType(position) == 0) {
+                return if (adapter?.getItemViewType(position) == 0 || adapter?.getItemViewType(position) == 1) {
                     layoutManager?.spanCount ?: 1
                 } else {
                     1
                 }
             }
         }
+
         recyclerView?.layoutManager = layoutManager
         activity?.let {
-            recyclerView?.addItemDecoration(MarginDecoration(it))
+            recyclerView?.addItemDecoration(MarginDecoration(it, setOf(HEADER_VIEW_TYPE)))
         }
-
 
         adapter = recyclerView?.adapter as? StableRecyclerAdapter
         if (adapter == null) {
@@ -179,10 +179,14 @@ class StableRecyclerFragment : BaseFragment() {
         if (!((lastAnimal.type == "premium" || lastAnimal.type == "special") && lastAnimal.numberOwned == 0)) {
             items.add(lastAnimal)
         }
+
+        items.add(0, "header")
         return items
     }
 
     companion object {
         private const val ITEM_TYPE_KEY = "CLASS_TYPE_KEY"
+        private const val HEADER_VIEW_TYPE = 0
+        private const val SECTION_VIEW_TYPE = 1
     }
 }

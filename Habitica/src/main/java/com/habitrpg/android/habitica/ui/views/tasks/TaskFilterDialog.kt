@@ -114,6 +114,7 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : AlertDialo
     }
 
     private fun createTagViews() {
+        tagsList.removeAllViews()
         val colorStateList = ColorStateList(
                 arrayOf(intArrayOf(-android.R.attr.state_checked), //disabled
                         intArrayOf(android.R.attr.state_checked) //enabled

@@ -5,11 +5,11 @@
 
     <!-- view background color -->
     <solid
-        android:color="@color/brand_300" >
+        android:color="@color/brand_400" >
     </solid>
 
     <!-- Here is the corner radius -->
-    <corners android:bottomLeftRadius="4dp" android:bottomRightRadius="4dp">
+    <corners android:radius="8dp">
     </corners>
 
 </shape>

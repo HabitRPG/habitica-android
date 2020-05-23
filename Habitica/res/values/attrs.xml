@@ -137,4 +137,10 @@
         <attr name="description" />
         <attr name="iconDrawable" />
     </declare-styleable>
+    <declare-styleable name="StepperValueFormView">
+        <attr name="defaultValue" />
+        <attr name="iconDrawable" />
+        <attr name="maxValue" format="integer" />
+        <attr name="minValue" format="integer" />
+    </declare-styleable>
 </resources>

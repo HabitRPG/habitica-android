@@ -86,8 +86,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 tools:text="3 Participants"
-                                android:textColor="@color/gray_300"
-                                android:visibility="gone"/>
+                                android:textColor="@color/gray_300" />
                         </LinearLayout>
                         <ImageView
                             android:layout_width="wrap_content"

@@ -12,8 +12,9 @@ open class SubscriptionPlan : NativeRealmObject() {
     var customerId: String? = null
         set(customerId) {
             field = customerId
-            if (consecutive != null && !consecutive!!.isManaged()) {
-                consecutive!!.customerId = customerId
+            val consecutive = this.consecutive
+            if (consecutive != null && !consecutive.isManaged()) {
+                consecutive.customerId = customerId
             }
         }
     var dateCreated: NativeDate = NativeDate()
@@ -28,7 +29,7 @@ open class SubscriptionPlan : NativeRealmObject() {
 
     var mysteryItemCount: Int = 0
     @SerializedNameAnnotation("owner")
-    var ownerID: String? = null
+    var ownerID: String = ""
 
     val isGroupPlanSub: Boolean
         get() = customerId == "group-plan"
@@ -39,7 +40,8 @@ open class SubscriptionPlan : NativeRealmObject() {
     val isActive: Boolean
         get() {
             val today = NativeDate()
-            return customerId != null && (this.dateTerminated == null || this.dateTerminated!!.after(today))
+            val dateTerminated = this.dateTerminated
+            return customerId != null && (dateTerminated == null || dateTerminated.after(today))
         }
 
     fun totalNumberOfGems(): Int {

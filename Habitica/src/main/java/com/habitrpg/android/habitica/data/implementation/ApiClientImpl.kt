@@ -353,12 +353,12 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
         return apiService.equipItem(type, itemKey).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
-    override fun buyItem(itemKey: String): Flowable<BuyResponse> {
-        return apiService.buyItem(itemKey).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
+    override fun buyItem(itemKey: String, purchaseQuantity: Int): Flowable<BuyResponse> {
+        return apiService.buyItem(itemKey, mapOf(Pair("quantity", purchaseQuantity))).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
-    override fun purchaseItem(type: String, itemKey: String): Flowable<Any> {
-        return apiService.purchaseItem(type, itemKey).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
+    override fun purchaseItem(type: String, itemKey: String, purchaseQuantity: Int): Flowable<Any> {
+        return apiService.purchaseItem(type, itemKey, mapOf(Pair("quantity", purchaseQuantity))).compose(configureApiCallObserver()).compose(configureApiOnlineErrorHandler())
     }
 
     override fun validateSubscription(request: SubscriptionValidationRequest): Flowable<Any> {

@@ -9,6 +9,7 @@ import android.text.TextUtils
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
+import android.view.accessibility.AccessibilityEvent
 import android.widget.*
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
@@ -228,6 +229,8 @@ class TaskSchedulingControls @JvmOverloads constructor(
             1 -> weeklyRepeat.su = isActive
         }
         createWeeklyRepeatViews()
+        weeklyRepeatWrapper.findViewWithTag<TextView>(weekday).sendAccessibilityEvent(
+                AccessibilityEvent.CONTENT_CHANGE_TYPE_CONTENT_DESCRIPTION)
     }
 
     private fun isWeekdayActive(weekday: Int): Boolean {
@@ -249,10 +252,12 @@ class TaskSchedulingControls @JvmOverloads constructor(
         val lastWeekday = weekdayOrder.last()
         for (weekdayCode in weekdayOrder) {
             val button = TextView(context, null, 0, R.style.TaskFormWeekdayButton)
+            val isActive = isWeekdayActive(weekdayCode)
             val layoutParams = LayoutParams(size, size)
             button.layoutParams = layoutParams
             button.text = weekdays[weekdayCode].first().toUpperCase().toString()
-            val isActive = isWeekdayActive(weekdayCode)
+            button.contentDescription = toContentDescription(weekdays[weekdayCode], isActive)
+            button.tag = weekdayCode
             if (isActive) {
                 button.background = context.getDrawable(R.drawable.habit_scoring_circle_selected)
                 button.background.mutate().setTint(tintColor)
@@ -276,23 +281,35 @@ class TaskSchedulingControls @JvmOverloads constructor(
     }
 
     private fun configureMonthlyRepeatViews() {
-        val white = ContextCompat.getColor(context, R.color.white)
-        val unselectedText = ContextCompat.getColor(context, R.color.gray_100)
-        val unselectedBackground = ContextCompat.getColor(context, R.color.taskform_gray)
         if (daysOfMonth != null && daysOfMonth?.isEmpty() != true) {
-            monthlyRepeatDaysButton.setTextColor(white)
-            monthlyRepeatDaysButton.background.mutate().setTint(tintColor)
+            styleButtonAsActive(monthlyRepeatDaysButton)
         } else {
-            monthlyRepeatDaysButton.setTextColor(unselectedText)
-            monthlyRepeatDaysButton.background.mutate().setTint(unselectedBackground)
+            styleButtonAsInactive(monthlyRepeatDaysButton)
         }
         if (weeksOfMonth != null && weeksOfMonth?.isEmpty() != true) {
-            monthlyRepeatWeeksButton.setTextColor(white)
-            monthlyRepeatWeeksButton.background.mutate().setTint(tintColor)
+            styleButtonAsActive(monthlyRepeatWeeksButton)
         } else {
-            monthlyRepeatWeeksButton.setTextColor(unselectedText)
-            monthlyRepeatWeeksButton.background.mutate().setTint(unselectedBackground)
+            styleButtonAsInactive(monthlyRepeatWeeksButton)
         }
+    }
+
+    private fun styleButtonAsActive(button: TextView) {
+        button.setTextColor(ContextCompat.getColor(context, R.color.white))
+        button.background.mutate().setTint(tintColor)
+        button.contentDescription = toContentDescription(button.text, true)
+    }
+
+    private fun styleButtonAsInactive(button: TextView) {
+        button.setTextColor(ContextCompat.getColor(context, R.color.gray_100))
+        button.background.mutate().setTint(ContextCompat.getColor(context, R.color.taskform_gray))
+        button.contentDescription = toContentDescription(button.text, false)
+    }
+
+    private fun toContentDescription(buttonText: CharSequence, isActive: Boolean): String {
+        val statusString = if (isActive) {
+            context.getString(R.string.selected)
+        } else context.getString(R.string.not_selected)
+        return "$buttonText, $statusString"
     }
 
     private fun generateSummary() {

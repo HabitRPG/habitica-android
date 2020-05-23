@@ -15,7 +15,7 @@
             android:layout_alignTop="@+id/progressBar"
             android:layout_marginEnd="@dimen/bar_icon_padding"
             android:layout_marginRight="@dimen/bar_icon_padding"
-            android:contentDescription="Bar Icon"
+            android:contentDescription="@null"
             android:scaleType="center"
             android:visibility="gone"/>
 

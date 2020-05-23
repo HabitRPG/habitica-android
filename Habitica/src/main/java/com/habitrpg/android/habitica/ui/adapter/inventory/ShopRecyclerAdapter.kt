@@ -139,7 +139,7 @@ class ShopRecyclerAdapter(private val configManager: AppConfigManager) : android
                 ShopItem::class.java -> {
                     val item = obj as? ShopItem ?: return
                     val itemHolder = holder as? ShopItemViewHolder ?: return
-                    itemHolder.bind(item, item.canAfford(user, configManager.insufficientGemPurchase()))
+                    itemHolder.bind(item, item.canAfford(user, 1))
                     if (ownedItems.containsKey(item.key+"-"+item.pinType)) {
                         itemHolder.itemCount = ownedItems[item.key+"-"+item.pinType]?.numberOwned ?: 0
                     }

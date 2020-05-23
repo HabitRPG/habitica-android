@@ -294,10 +294,12 @@
     </style>
 
     <style name="SectionHeaderCaps">
+        <item name="android:fontFamily">@string/font_family_medium</item>
         <item name="android:textSize">10sp</item>
         <item name="android:textColor">@color/gray_200</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:layout_marginStart">@dimen/spacing_large</item>
+        <item name="android:letterSpacing">0.1</item>
     </style>
 
     <style name="BottomMenu">
@@ -634,6 +636,7 @@
         <item name="android:textColor">@color/gray_10</item>
         <item name="android:layout_marginTop">@dimen/spacing_large</item>
         <item name="android:layout_marginBottom">@dimen/spacing_medium</item>
+        <item name="android:accessibilityHeading">true</item>
     </style>
 
     <style name="TaskFormToggle">

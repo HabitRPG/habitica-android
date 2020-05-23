@@ -95,6 +95,7 @@ class AvatarCustomizationFragment : BaseMainFragment() {
         }
         setGridSpanCount(view.width)
         recyclerView.layoutManager = layoutManager
+
         recyclerView.addItemDecoration(MarginDecoration(context))
 
         recyclerView.adapter = adapter
@@ -117,7 +118,7 @@ class AvatarCustomizationFragment : BaseMainFragment() {
 
     private fun loadCustomizations() {
         val type = this.type ?: return
-        compositeSubscription.add(customizationRepository.getCustomizations(type, category, true).subscribe(Consumer<RealmResults<Customization>> { adapter.setCustomizations(it) }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(customizationRepository.getCustomizations(type, category, false).subscribe(Consumer<RealmResults<Customization>> { adapter.setCustomizations(it) }, RxErrorHandler.handleEmptyError()))
         if (type == "hair" && (category == "beard" || category == "mustache")) {
             val otherCategory = if (category == "mustache") "beard" else "mustache"
             compositeSubscription.add(customizationRepository.getCustomizations(type, otherCategory, true).subscribe(Consumer<RealmResults<Customization>> { adapter.additionalSetItems = it }, RxErrorHandler.handleEmptyError()))
@@ -136,8 +137,8 @@ class AvatarCustomizationFragment : BaseMainFragment() {
     fun updateUser(user: User) {
         this.updateActiveCustomization(user)
         if (adapter.customizationList.size != 0) {
-            val ownedCustomizations = mutableListOf<String>()
-            user.purchased?.customizations?.filter { it.type == this.type }?.mapTo(ownedCustomizations) { it.id }
+            val ownedCustomizations = ArrayList<String>()
+            user.purchased?.customizations?.filter { it.type == this.type && it.purchased }?.mapTo(ownedCustomizations) { it.key ?: "" }
             adapter.updateOwnership(ownedCustomizations)
         } else {
             this.loadCustomizations()

@@ -66,7 +66,7 @@
         android:layout_height="wrap_content"
         app:subtitle="@string/premium_currency"
         app:title="@string/gems"
-        app:titleColor="@color/teal_100"
+        app:titleColor="@color/green_10"
         android:layout_marginStart="@dimen/spacing_medium"
         android:layout_marginEnd="@dimen/spacing_medium"
         android:layout_marginBottom="@dimen/spacing_medium"
@@ -100,21 +100,38 @@
         android:layout_height="wrap_content"
         android:text="@string/common_questions"
         style="@style/SectionHeaderCaps"
-        android:layout_marginTop="@dimen/spacing_large"/>
+        android:layout_marginTop="@dimen/spacing_large"
+        android:layout_marginBottom="@dimen/spacing_medium"/>
     <LinearLayout
         android:id="@+id/faq_linear_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="32dp"
+        android:paddingStart="32dp"
+        android:paddingEnd="32dp"
+        android:paddingBottom="32dp"
+        android:orientation="vertical"
+        android:background="@color/gray_700"
+        android:layout_marginTop="@dimen/spacing_large"
+        android:gravity="center">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/still_questions"
+            android:textColor="@color/black"
+            style="@style/Subheader3"
+            android:layout_marginBottom="@dimen/spacing_small"/>
     <TextView
         android:id="@+id/more_help_text_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_large"
-        android:paddingTop="@dimen/spacing_large"
-        android:paddingStart="@dimen/spacing_large"
-        android:paddingEnd="@dimen/spacing_large"
-        android:paddingBottom="@dimen/spacing_large"
-        android:background="@color/gray_700"/>
+        android:textSize="14sp"
+        android:textColor="@color/gray_50"
+        android:gravity="center"/>
+</LinearLayout>
 </LinearLayout>
 </ScrollView>

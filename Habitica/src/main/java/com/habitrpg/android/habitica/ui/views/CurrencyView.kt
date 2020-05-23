@@ -20,9 +20,11 @@ class CurrencyView : androidx.appcompat.widget.AppCompatTextView {
     var currency: String? = null
         set(currency) {
             field = currency
+            setCurrencyContentDescriptionFromCurrency(currency)
             configureCurrency()
             updateVisibility()
         }
+    private var currencyContentDescription: String? = null
 
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
         val attributes = context.theme?.obtainStyledAttributes(
@@ -40,7 +42,17 @@ class CurrencyView : androidx.appcompat.widget.AppCompatTextView {
     constructor(context: Context, currency: String, lightbackground: Boolean) : super(context) {
         this.lightBackground = lightbackground
         this.currency = currency
+        setCurrencyContentDescriptionFromCurrency(currency)
         visibility = GONE
+    }
+
+    private fun setCurrencyContentDescriptionFromCurrency(currency: String?) {
+        when (currency) {
+            "gold" -> this.currencyContentDescription = context.getString(R.string.gold_plural)
+            "gems" -> this.currencyContentDescription = context.getString(R.string.gems)
+            "hourglasses" -> this.currencyContentDescription = context.getString(R.string.mystic_hourglasses)
+            else -> this.currencyContentDescription = ""
+        }
     }
 
     private fun configureCurrency() {
@@ -87,7 +99,9 @@ class CurrencyView : androidx.appcompat.widget.AppCompatTextView {
     var value = 0.0
     set(value) {
         field = value
-        text = NumberAbbreviator.abbreviate(context, value)
+        val abbreviatedValue = NumberAbbreviator.abbreviate(context, value)
+        text = abbreviatedValue
+        contentDescription = "$abbreviatedValue $currencyContentDescription"
         updateVisibility()
     }
 

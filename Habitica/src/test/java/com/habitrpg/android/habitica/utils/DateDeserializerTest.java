@@ -21,8 +21,6 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 
-@Config(constants = BuildConfig.class)
-@RunWith(RobolectricTestRunner.class)
 public class DateDeserializerTest {
     DateDeserializer deserializer;
     JsonDeserializationContext deserializationContext;

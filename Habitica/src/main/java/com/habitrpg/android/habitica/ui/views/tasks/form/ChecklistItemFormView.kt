@@ -41,6 +41,11 @@ class ChecklistItemFormView @JvmOverloads constructor(
     var animDuration = 0L
     var isAddButton: Boolean = true
     set(value) {
+        // Button is only clickable when it is *not* an add button (ie when it is a delete button),
+        // so make screenreaders skip it when it is an add button.
+        button.importantForAccessibility =
+                if (value) View.IMPORTANT_FOR_ACCESSIBILITY_NO
+                else View.IMPORTANT_FOR_ACCESSIBILITY_YES
         if (field == value) {
             return
         }
@@ -83,11 +88,15 @@ class ChecklistItemFormView @JvmOverloads constructor(
                 (parent as? ViewGroup)?.removeView(this)
             }
         }
+        // It's ok to make the description always be 'Delete ..' because when this button is
+        // a plus button we set it as 'unimportant for accessibility' so it can't be focused.
+        button.contentDescription = context.getString(R.string.delete_checklist_entry)
         button.drawable.mutate().setTint(tintColor)
 
         editText.addTextChangedListener(OnChangeTextWatcher { s, _, _, _ ->
             item.text = s.toString()
             textChangedListener?.let { it(s.toString()) }
         })
+        editText.labelFor = button.id
     }
 }

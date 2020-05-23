@@ -18,6 +18,7 @@ import com.facebook.imagepipeline.image.ImageInfo
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.shared.habitica.models.Avatar
+import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import io.reactivex.functions.Consumer
 import java.util.*
 import java.util.concurrent.atomic.AtomicInteger
@@ -121,7 +122,7 @@ class AvatarView : View {
             multiDraweeHolder.add(draweeHolder)
 
             val controller = Fresco.newDraweeControllerBuilder()
-                    .setUri(IMAGE_URI_ROOT + getFileName(layerName))
+                    .setUri(IMAGE_URI_ROOT + DataBindingUtils.getFullFilename(layerName, null))
                     .setControllerListener(object : BaseControllerListener<ImageInfo>() {
                         override fun onFinalImageSet(
                                 id: String?,
@@ -382,18 +383,7 @@ class AvatarView : View {
         return bounds
     }
 
-    private fun getFileName(imageName: String): String {
-        val name = when {
-            FILENAME_MAP.containsKey(imageName) -> FILENAME_MAP[imageName]
-            imageName.startsWith("handleless") -> "chair_$imageName"
-            else -> imageName
-        }
-        return name + if (FILEFORMAT_MAP.containsKey(imageName)) {
-            "." + FILEFORMAT_MAP[imageName]
-        } else {
-            ".png"
-        }
-    }
+
 
     private fun onLayerComplete() {
         if (numberLayersInProcess.decrementAndGet() == 0) {
@@ -528,50 +518,9 @@ class AvatarView : View {
     companion object {
         const val IMAGE_URI_ROOT = "https://habitica-assets.s3.amazonaws.com/mobileApp/images/"
         private const val TAG = "AvatarView"
-        val FILEFORMAT_MAP: Map<String, String>
-        val FILENAME_MAP: Map<String, String>
         private val FULL_HERO_RECT = Rect(0, 0, 140, 147)
         private val COMPACT_HERO_RECT = Rect(0, 0, 114, 114)
         private val HERO_ONLY_RECT = Rect(0, 0, 90, 90)
 
-        init {
-            val tempMap = HashMap<String, String>()
-            tempMap["head_special_1"] = "gif"
-            tempMap["broad_armor_special_1"] = "gif"
-            tempMap["slim_armor_special_1"] = "gif"
-            tempMap["head_special_0"] = "gif"
-            tempMap["slim_armor_special_0"] = "gif"
-            tempMap["broad_armor_special_0"] = "gif"
-            tempMap["weapon_special_critical"] = "gif"
-            tempMap["weapon_special_0"] = "gif"
-            tempMap["shield_special_0"] = "gif"
-            tempMap["Pet-Wolf-Cerberus"] = "gif"
-            tempMap["armor_special_ks2019"] = "gif"
-            tempMap["slim_armor_special_ks2019"] = "gif"
-            tempMap["broad_armor_special_ks2019"] = "gif"
-            tempMap["eyewear_special_ks2019"] = "gif"
-            tempMap["head_special_ks2019"] = "gif"
-            tempMap["shield_special_ks2019"] = "gif"
-            tempMap["weapon_special_ks2019"] = "gif"
-            tempMap["Pet-Gryphon-Gryphatrice"] = "gif"
-            tempMap["Mount_Head_Gryphon-Gryphatrice"] = "gif"
-            tempMap["Mount_Body_Gryphon-Gryphatrice"] = "gif"
-            tempMap["background_clocktower"] = "gif"
-            tempMap["background_airship"] = "gif"
-            tempMap["background_steamworks"] = "gif"
-            FILEFORMAT_MAP = Collections.unmodifiableMap(tempMap)
-
-
-            val tempNameMap = HashMap<String, String>()
-            tempNameMap["head_special_1"] = "ContributorOnly-Equip-CrystalHelmet"
-            tempNameMap["armor_special_1"] = "ContributorOnly-Equip-CrystalArmor"
-            tempNameMap["head_special_0"] = "BackerOnly-Equip-ShadeHelmet"
-            tempNameMap["armor_special_0"] = "BackerOnly-Equip-ShadeArmor"
-            tempNameMap["shield_special_0"] = "BackerOnly-Shield-TormentedSkull"
-            tempNameMap["weapon_special_0"] = "BackerOnly-Weapon-DarkSoulsBlade"
-            tempNameMap["weapon_special_critical"] = "weapon_special_critical"
-            tempNameMap["Pet-Wolf-Cerberus"] = "Pet-Wolf-Cerberus"
-            FILENAME_MAP = Collections.unmodifiableMap(tempNameMap)
-        }
     }
 }
