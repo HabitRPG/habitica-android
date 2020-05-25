@@ -8,7 +8,7 @@
     <string name="PS_settings_title">Настройки</string>
     <string name="SP_userID_title">ID пользователя</string>
     <string name="SP_userID_summary">Ваш ID</string>
-    <string name="SP_APIToken_title">API Знак</string>
+    <string name="SP_APIToken_title">API токен</string>
     <string name="SP_APIToken_summary">Ваш API Token</string>
     <string name="Language_title">Язык</string>
     <string name="Language_summary">Изменить язык Habitica</string>
