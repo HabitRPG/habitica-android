@@ -356,7 +356,7 @@
     <string name="monthly_gem_cap">Ежемесячный лимит самоцветов</string>
     <string name="inactive">Неактивный</string>
     <string name="one_month">1 месяц</string>
-    <string name="months">%d месяцев</string>
+    <string name="months">Мес.</string>
     <string name="month">месяц</string>
     <string name="three_months">3 месяца</string>
     <string name="six_months">6 месяцев</string>
@@ -826,7 +826,7 @@
     <string name="network_error_no_network_body">Вы не подключены к интернету.</string>
     <string name="days">День/ Дня/ Дней</string>
     <string name="scheduling">Составление расписания</string>
-    <string name="every">кажд.</string>
+    <string name="every">Кажд.</string>
     <string name="add_local_authentication">Добавить локальную аутентификацию</string>
     <string name="join_party_description_guild">Передайте нижестоящее имя пользователя другу или отправьтесь в %s, чтобы встретиться с потенциальными единомышленниками!</string>
     <string name="weeks">Нед.</string>
@@ -866,4 +866,5 @@
     <string name="keep_challenges">Оставить испытания</string>
     <string name="joinedChallengeTitle">Присоединился(-ась) к испытанию</string>
     <string name="joinedGuildDescription">Отважился(-ась) зайти на социальную сторону страны Habitica, присоединившись к Гильдии!</string>
+    <string name="report_message_title">Сообщить о нарушении %s:</string>
 </resources>
