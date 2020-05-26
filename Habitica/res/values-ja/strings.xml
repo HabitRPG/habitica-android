@@ -958,4 +958,12 @@
     <string name="learn_more">もっと詳しく知る</string>
     <string name="limited_event">限定イベント</string>
     <string name="g1g1_info_2_text">「寄付会員特典を贈る」をタップして、贈る相手のユーザーネームを入力し、贈る寄付会員特典の期間を選択してください。あなたのアカウントにあなたが贈ったのと同じ寄付会員特典が贈られます。</string>
+    <string name="lets_go">レッツゴー</string>
+    <string name="bugs_fixes_description">何か問題が起こりましたか？　解決方法をチェックするか、サポートを受けるために我々に連絡してください。</string>
+    <string name="bugs_fixes">バグとバグの修正</string>
+    <string name="suggestions_feedback">提案とフィードバック</string>
+    <string name="get_help">サポートを受ける</string>
+    <string name="contact_us">お問い合わせ</string>
+    <string name="using_habitica_description">基本的な機能の説明とよくある質問にお答えします</string>
+    <string name="purchase_amount_error">その量を買うことはできません。</string>
 </resources>
