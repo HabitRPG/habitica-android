@@ -8,7 +8,7 @@ assignees: ''
 ---
 
 **Describe the bug**
-A clear and concise description of what the bug is.
+A clear and concise description of what the bug is. If your issue is not related to a specific bug, please submit it as a suggestion through our form: https://forms.gle/Fa6oztkDsbzLqSvE9
 
 **To Reproduce**
 Steps to reproduce the behavior:
