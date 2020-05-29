@@ -134,8 +134,8 @@ class StableRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<
 
             context?.let {
 
-                var owned = item.numberOwned?.toString()
-                var totalNum = item.totalNumber?.toString()
+                var owned = item.numberOwned
+                var totalNum = item.totalNumber
 
 
                 this.ownedTextView.text = context?.getString(R.string.pet_ownership_fraction, owned, totalNum)
