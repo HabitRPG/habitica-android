@@ -965,7 +965,7 @@
     <string name="get_help">サポートを受ける</string>
     <string name="contact_us">お問い合わせ</string>
     <string name="using_habitica_description">基本的な機能の説明とよくある質問にお答えします</string>
-    <string name="purchase_amount_error">その量を買うことはできません。</string>
+    <string name="purchase_amount_error">この金額を買うことはできません。</string>
     <string name="stat_allocation">ステータスポイントの割り当て</string>
     <string name="premium_currency">特別なゲーム内通貨</string>
     <string name="currency">ゲーム内通貨</string>
