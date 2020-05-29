@@ -52,7 +52,7 @@
     <string name="about_bugreport">バグを報告する</string>
     <string name="about_source_code">ソースコード</string>
     <!--Network Errors-->
-    <string name="internal_error_api">サーバーに問題があるようです。後ほど再試行してください。</string>
+    <string name="internal_error_api">サーバーに接続できません</string>
     <string name="authentication_error_title">認証エラー</string>
     <string name="login_validation_error_title">確認エラー</string>
     <string name="login_validation_error_fieldsmissing">全ての入力欄に入力してください。</string>
@@ -694,10 +694,10 @@
     <string name="new_msg_party"><![CDATA[あなたのパーティー、<b>%1$s</b> に新しい投稿があります]]></string>
     <string name="unallocated_stats_points"><![CDATA[<b>%1$sポイントが割り当てできます。</b>]]></string>
     <string name="new_subscriber_item"><![CDATA[新しい<b>ミステリー アイテム</b>]]></string>
-    <string name="invited_to_party_notification"><![CDATA[パーティー「<b>%1$s</b>」に招待されました。]]></string>
-    <string name="invited_to_private_guild"><![CDATA[<b>%1$s</b> プライベートギルドに招待されました。]]></string>
-    <string name="invited_to_public_guild"><![CDATA[<b>%1$s</b> ギルドに招待されました。]]></string>
-    <string name="invited_to_quest"><![CDATA[<b>%1$s</b> クエストに招待されました。]]></string>
+    <string name="invited_to_party_notification">パーティー「<b>%1$s</b>」に招待されました</string>
+    <string name="invited_to_private_guild">プライベートギルド「<b>%1$s</b> 」に招待されました</string>
+    <string name="invited_to_public_guild">「<b>%1$s</b> 」ギルドに招待されました</string>
+    <string name="invited_to_quest"><b>%1$s</b> クエストに招待されました</string>
     <string name="ago_months">%dヶ月前</string>
     <string name="ago_1month">1ヶ月前</string>
     <string name="skill_progress_title">スキルを使う</string>
@@ -981,4 +981,7 @@
 \n**HPの回復**にはレベルアップするか、体力回復の薬を使うか、治療士のスキルを使います。
 \n
 \nもしあなたの**HPが0になると**レベルが1下がり、ゴールドを全て失い、装備を一つ失います。無くなった装備はもう一度購入することで取り戻せます。</string>
+    <string name="mana_description">マナポイント(Mana points=MP)はレベル10になってクラスシステムが解放されると表示されるようになり、レベル11から一つずつ覚える**スキルを使う**ことができるようになります。
+\n
+\n日をまたぐことでいくらかの**MPは回復します**が、タスクを完了したり、魔道士のスキルを使用することでさらにMPを獲得できます。</string>
 </resources>
