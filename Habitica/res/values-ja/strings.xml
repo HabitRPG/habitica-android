@@ -984,4 +984,8 @@
     <string name="mana_description">マナポイント(Mana points=MP)はレベル10になってクラスシステムが解放されると表示されるようになり、レベル11から一つずつ覚える**スキルを使う**ことができるようになります。
 \n
 \n日をまたぐことでいくらかの**MPは回復します**が、タスクを完了したり、魔道士のスキルを使用することでさらにMPを獲得できます。</string>
+    <string name="stats_currency">ステータスとゲーム内通貨</string>
+    <string name="overview">概要</string>
+    <string name="send_bug_prompt">バグの報告をしてください。対応します！</string>
+    <string name="common_fixes">一般的な対処法</string>
 </resources>
