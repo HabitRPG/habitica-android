@@ -923,7 +923,7 @@
     <string name="gift_gems_balance_subtitle">贈りたいジェムの数を記入するか、タブを切り替えて贈るためのジェムを購入してください</string>
     <string name="g1g1_info_2">機能説明</string>
     <string name="gift_a_subscription">寄付会員特典を贈る</string>
-    <string name="g1g1_info_1">クリスマスの季節を祝して、特別なプロモーションが戻ってきます。いま寄付会員特典を贈ると、無料であなた自身も同じ寄付会員特典を受けることができます！</string>
+    <string name="g1g1_info_1">贈り物の季節を祝して、特別なプロモーションが戻ってきます。いま寄付会員特典を贈ると、無料であなた自身も同じ寄付会員特典を受けることができます！</string>
     <string name="promo_g1g1_prompt">誰かに寄付会員特典を贈ると、自分も無料で同じ寄付会員特典を受けられるイベント</string>
     <string name="promo_g1g1_description">いま寄付会員特典を贈ると、無料であなた自身も同じ寄付会員特典を受けることができます！</string>
     <string name="event">イベント</string>
@@ -988,4 +988,9 @@
     <string name="overview">概要</string>
     <string name="send_bug_prompt">バグの報告をしてください。対応します！</string>
     <string name="common_fixes">一般的な対処法</string>
+    <string name="gold_description">ゴールドは**メインのゲーム内通貨**で、装備・クエスト・アイテム・自分自身で設定できるカスタムごほうびなどを購入することができます。
+\n
+\n**ゴールドを稼ぐには**タスクやクエストを完了するか、スキルを使います。**知覚のステータス**が高いほど、得るゴールドの量が多くなります。
+\n
+\nあなたがHabiticaの寄付会員なら、ゴールドでジェムを購入することができます。購入できる数は寄付会員期間の長さによって変化します。</string>
 </resources>
