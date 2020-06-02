@@ -851,7 +851,7 @@
     <string name="mountMasterDescription">すべての乗騎を集めた実績、「乗騎使い」を手に入れました！</string>
     <string name="mountMasterTitle">乗騎使い</string>
     <string name="beastMasterDescription">全てのペットを集めたため、「獣使い」の実績を獲得しました！</string>
-    <string name="mystery_item_received">箱を開けて%sを受け取りました</string>
+    <string name="mystery_item_received">宝箱を開け、%@を見つけました</string>
     <string name="removed_member">%sはグループから解除されました</string>
     <string name="transfer">移譲する</string>
     <string name="remove_member_confirm">本当に%sをグループから解除しますか？</string>
@@ -1005,4 +1005,9 @@
 \n
 \nレベル10以降、レベルアップごとにステータスポイントを1獲得でき、好きなステータスに割り振ることができます。ステータスを増加させる様々な組み合わせのアイテムを装備することができます。</string>
     <string name="cancel_subscription_group_plan_owner">あなたはグループプランのギルドかパーティーのオーナーのため、無料の寄付会員特典を持っています。これはプランをキャンセルしない限り続きます。グループプランの終了時に全ての月の追加の寄付会員特典が適用されます。これはHabiticaのウェブサイトでキャンセルできます。</string>
+    <string name="gems_description">ジェムは現実のお金で購入するゲーム内通貨です。ジェムで追加要素を購入できます。ジェムの購入金は寄付とともにHabiticaチームの主要な資金源になっています。
+\n
+\nジェムで購入できる全ての要素は純粋な装飾品で、時間が経過すると無料で入手できるようになります。
+\n
+\nジェムは他のプレイヤーから贈り物・チャレンジの賞品・Habiticaへの貢献・寄付会員特典としても受け取ることができます。</string>
 </resources>
