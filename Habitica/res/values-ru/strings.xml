@@ -347,7 +347,7 @@
     <string name="subscription">Подписка</string>
     <string name="active">Активный</string>
     <string name="cancel_subscription">Отменить подписку</string>
-    <string name="cancel_subscription_google_description">Больше не хотите использовать подписку? При желании можете отписаться в разделе \"Мои приложения\" в Google Play Store.</string>
+    <string name="cancel_subscription_google_description">Больше не хотите использовать подписку\? При желании можете отписаться в разделе «Мои приложения» в Google Play Store.</string>
     <string name="cancel_subscription_notgoogle_description">Вы хотите отменить свою подписку\? Из-за способа оплаты вы можете отменить подписку только через сайт. Нажмите кнопку ниже, чтобы открыть страницу в браузере!</string>
     <string name="visit_habitica_website">Посетите сайт Habitica</string>
     <string name="current_bonuses">Текущие бонусы</string>
@@ -378,7 +378,7 @@
     <string name="challenge">Испытание</string>
     <string name="not_part_of_a_challenge">Сейчас вы не участвуете в испытаниях!</string>
     <string name="join_a_challenge">Присоединитесь к испытанию, чтобы добавить готовый набор задач в ваш список, и соревнуйтесь с другими хабитанцами, чтобы заработать достижения и даже самоцветы!</string>
-    <string name="check_the_public_challenge_tab">Откройте вкладку \"Общее\", чтобы найти испытания, созданные пользователями, которые больше всего подходят вам!</string>
+    <string name="check_the_public_challenge_tab">Откройте вкладку «Общее», чтобы найти испытания, созданные пользователями, которые больше всего подходят вам!</string>
     <string name="inbox">Сообщения</string>
     <string name="special">Специальное</string>
     <string name="gem_for_gold_description">Ваша подписка Habitica позволяет приобретать несколько самоцветов каждый месяц в обмен на золото.</string>
@@ -614,7 +614,7 @@
     <string name="daily_tip_4">Иногда пересмотр ваших старых задач может помочь вернуться на продуктивную дорожку.</string>
     <string name="daily_tip_5">Сделайте несколько глубоких вдохов, чтобы сконцентрироваться. Вы со всем справитесь!</string>
     <string name="daily_tip_6">Попробуйте установить таймер на 10 минут и увидите как много задач вы сделаете!</string>
-    <string name="daily_tip_7">Попробуйте закрепить предметы из \"Рынка\" к вашей колонке \"Награды\", чтобы мотивировать себя на получение их!</string>
+    <string name="daily_tip_7">Попробуйте закрепить предметы из «Рынка» к вашей колонке «Награды», чтобы мотивировать себя на получение их!</string>
     <string name="daily_tip_8">Вы можете изменить сложность заданий, чтобы себя ощутимее вознаграждать за выполнение сложных задач!</string>
     <string name="daily_tip_9">Если у вас сложный период в жизни, попробуйте раздробить ваши задачи на более мелкие части.</string>
     <string name="moderator">Модератор</string>
