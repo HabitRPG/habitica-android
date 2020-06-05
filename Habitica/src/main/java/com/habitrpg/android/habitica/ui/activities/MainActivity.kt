@@ -56,6 +56,7 @@ import com.habitrpg.android.habitica.ui.TutorialView
 import com.habitrpg.android.habitica.ui.fragments.NavigationDrawerFragment
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.viewmodels.NotificationsViewModel
+import com.habitrpg.android.habitica.ui.views.AdventureGuideDrawerArrowDrawable
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.SnackbarDisplayType
@@ -81,6 +82,8 @@ import java.util.*
 import javax.inject.Inject
 
 open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
+    private lateinit var drawerIcon: AdventureGuideDrawerArrowDrawable
+
     @Inject
     internal lateinit var apiClient: ApiClient
     @Inject
@@ -191,10 +194,9 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                 findViewById(R.id.drawer_layout), /* DrawerLayout object */
                 R.string.navigation_drawer_open, /* "open drawer" description */
                 R.string.navigation_drawer_close  /* "close drawer" description */
-        ) {
-
-        }
-
+        ) {}
+        drawerIcon = AdventureGuideDrawerArrowDrawable(supportActionBar?.themedContext)
+        drawerToggle?.drawerArrowDrawable = drawerIcon
         // Set the drawer toggle as the DrawerListener
         drawerToggle?.let { drawerLayout.addDrawerListener(it) }
 
@@ -359,6 +361,8 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                     userRepository.updateUser(user, "party.quest.completed", "").subscribe(Consumer {}, RxErrorHandler.handleEmptyError())
                 })
             }
+
+            drawerIcon.setEnabled(user?.hasCompletedOnboarding == false)
         }
     }
 

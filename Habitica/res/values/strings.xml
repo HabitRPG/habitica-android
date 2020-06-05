@@ -1017,4 +1017,5 @@
     <string name="task_display">Task list display</string>
     <string name="onboarding_tasks">Onboarding Tasks</string>
     <string name="complete_for_gold">Complete to earn 100 Gold!</string>
+    <string name="delete_checklist_entry">Delete...</string>
 </resources>

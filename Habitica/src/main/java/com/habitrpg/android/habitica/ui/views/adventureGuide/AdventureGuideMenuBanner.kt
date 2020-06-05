@@ -24,7 +24,7 @@ class AdventureGuideMenuBanner @JvmOverloads constructor(
         val achievements = user.onboardingAchievements
         val completed = achievements.count { it.earned }
         binding.progressBar.max = achievements.size
-        binding.progressBar.progress = completed / achievements.size
+        binding.progressBar.progress = completed
         binding.countView.text = "${completed} / ${achievements.size}"
     }
 }
