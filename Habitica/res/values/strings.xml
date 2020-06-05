@@ -1015,4 +1015,6 @@
     <string name="purchase_amount_error">You are unable to buy that amount.</string>
     <string name="still_questions">Still have a question?</string>
     <string name="task_display">Task list display</string>
+    <string name="onboarding_tasks">Onboarding Tasks</string>
+    <string name="complete_for_gold">Complete to earn 100 Gold!</string>
 </resources>

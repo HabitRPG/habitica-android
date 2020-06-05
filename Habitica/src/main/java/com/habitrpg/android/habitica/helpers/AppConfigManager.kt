@@ -85,6 +85,10 @@ class AppConfigManager {
         return remoteConfig.getBoolean("raiseShops")
     }
 
+    fun enableTaskDisplayMode(): Boolean {
+        return remoteConfig.getBoolean("enableTaskDisplayMode")
+    }
+
     fun taskDisplayMode(context: Context): String {
         return if (remoteConfig.getBoolean("enableTaskDisplayMode")) {
             val preferences = PreferenceManager.getDefaultSharedPreferences(context)

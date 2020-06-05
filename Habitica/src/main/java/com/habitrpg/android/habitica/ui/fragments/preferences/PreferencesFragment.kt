@@ -81,7 +81,11 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
 
 
         val taskDisplayPreference = findPreference("task_display") as? ListPreference
-        taskDisplayPreference?.summary = taskDisplayPreference?.entry
+        if (configManager.enableTaskDisplayMode()) {
+            taskDisplayPreference?.summary = taskDisplayPreference?.entry
+        } else {
+            taskDisplayPreference?.isVisible = false
+        }
     }
 
     override fun onResume() {

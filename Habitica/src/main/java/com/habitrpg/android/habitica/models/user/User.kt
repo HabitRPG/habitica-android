@@ -53,6 +53,9 @@ open class User : RealmObject(), Avatar, VersionedObject {
             for (test in abTests ?: emptyList<ABTest>()) {
                 test.userID = id
             }
+            for (achievement in achievements ?: emptyList<UserAchievement>()) {
+                achievement.userId = id
+            }
         }
 
     @SerializedName("_v")
@@ -127,6 +130,7 @@ open class User : RealmObject(), Avatar, VersionedObject {
         }
 
     var tags = RealmList<Tag>()
+    var achievements = RealmList<UserAchievement>()
     var questAchievements = RealmList<QuestAchievement>()
         set(value) {
             field = value
@@ -238,4 +242,30 @@ open class User : RealmObject(), Avatar, VersionedObject {
             }
             return isSubscribed
         }
+
+    val onboardingAchievements: List<UserAchievement>
+        get() {
+            val onboarding = mutableMapOf<String, UserAchievement>()
+            for (key in ONBOARDING_ACHIEVEMENT_KEYS) {
+                val achievement = UserAchievement()
+                achievement.key = key
+                onboarding[key] = achievement
+            }
+            for (achievement in achievements) {
+                if (achievement.key in ONBOARDING_ACHIEVEMENT_KEYS) {
+                    onboarding[achievement.key ?: ""] = achievement
+                }
+            }
+            return onboarding.values.toList()
+        }
+
+    val hasCompletedOnboarding: Boolean
+        get() {
+            val onboarding = onboardingAchievements
+            return onboarding.count { it.earned } == onboarding.size
+        }
+
+    companion object {
+        val ONBOARDING_ACHIEVEMENT_KEYS = listOf("createdTask", "completedTask", "hatchedPet", "fedPet", "purchasedEquipment")
+    }
 }
