@@ -376,7 +376,7 @@
     <string name="challenge_remove_tasks_text">タスクを削除しますか？</string>
     <string name="remove_tasks">削除する</string>
     <string name="keep_tasks">残す</string>
-    <string name="my_challenges">参加しているチャレンジ</string>
+    <string name="my_challenges">マイチャレンジ</string>
     <string name="daily">日課</string>
     <string name="habit">習慣</string>
     <string name="reward">ごほうび</string>
