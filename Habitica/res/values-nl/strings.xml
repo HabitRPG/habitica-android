@@ -538,7 +538,7 @@
     <string name="strength_description">Verhoogt de bonus van voltreffers en maakt ze waarschijnlijker bij het voltooien van een taak. Verhoogt ook de schade die toegebracht wordt aan bazen.</string>
     <string name="intelligence">Intelligentie</string>
     <string name="intelligence_description">Verhoogt ERV die verdiend word door taken te voltooien. Verhoogt ook je mana capaciteit en hoe snel mana regenereert.</string>
-    <string name="constitution">Lichaam</string>
+    <string name="constitution">Weerbaarheid</string>
     <string name="constitution_description">Verlaagt de hoeveelheid schade die je krijgt van je taken. De schade die je krijgt van bazen wordt niet verlaagd.</string>
     <string name="perception">Perceptie</string>
     <string name="perception_description">Verhoogt de kans om drops te vinden bij het voltooien van Taken, de dagelijkse drop-capaciteit, seriebonussen en de hoeveelheid goud die wordt die je verdient door Taken.</string>
@@ -551,7 +551,7 @@
     <string name="points_to_allocate">%dpunten toe te wijzen</string>
     <string name="distribute_evenly_help">Wijst hetzelfde aantal punten toe aan elke eigenschap</string>
     <string name="distribute_class_help">Wijst meer punten toe aan de eigenschappen die belangrijk zijn voor jou Klasse.</string>
-    <string name="distribute_task_help">Wijst punten toe op basis van de categorieën van Kracht, Intelligentie, Lichaam en Perceptie  die verbonden zijn aan de taken die je voltooit.</string>
+    <string name="distribute_task_help">Wijst punten toe op basis van de categorieën van Kracht, Intelligentie, Weerbaarheid en Perceptie die verbonden zijn aan de taken die je voltooit.</string>
     <string name="allocating_points">Punten aan het toewijzen</string>
     <string name="class_equipment">Uitrusting</string>
     <string name="equipment_empty">Je hebt alle uitrusting al! Meer zal uitgebracht worden tijdens de Grote Galas, dicht bij de zonnestilstanden en nachteveningen.</string>
