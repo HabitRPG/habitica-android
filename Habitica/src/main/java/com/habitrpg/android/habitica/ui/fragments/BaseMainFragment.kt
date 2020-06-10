@@ -1,12 +1,15 @@
 package com.habitrpg.android.habitica.ui.fragments
 
 import android.content.Context
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.tabs.TabLayout
+import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.helpers.RxErrorHandler

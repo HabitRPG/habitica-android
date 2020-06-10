@@ -81,6 +81,8 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int): Recycle
             (holder as? SectionHeaderViewHolder)?.bind(drawerItem)
         } else if (getItemViewType(position) == 4) {
             drawerItem.user?.let { (holder.itemView as? AdventureGuideMenuBanner)?.updateData(it) }
+            holder.itemView.setOnClickListener { itemSelectedEvents.onNext(drawerItem) }
+
         }
     }
 

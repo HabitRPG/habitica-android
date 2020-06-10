@@ -146,7 +146,7 @@ dependencies {
 
 android {
     compileSdkVersion 29
-    buildToolsVersion '28.0.3'
+    buildToolsVersion '29.0.3'
     testOptions {
         unitTests {
             includeAndroidResources = true
@@ -162,7 +162,7 @@ android {
         multiDexEnabled true
         resConfigs "en", "bg", "de", "en-rGB", "es", "fr", "hr-rHR", "in", "it", "iw", "ja", "ko", "lt", "nl", "pl", "pt-rBR", "pt-rPT", "ru", "tr", "zh", "zh-rTW"
 
-        versionCode 2421
+        versionCode 2426
         versionName "2.6.2"
     }
 

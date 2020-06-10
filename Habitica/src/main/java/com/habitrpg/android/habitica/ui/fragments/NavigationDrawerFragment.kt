@@ -299,7 +299,7 @@ class NavigationDrawerFragment : DialogFragment() {
     private fun initializeMenuItems() {
         val items = ArrayList<HabiticaDrawerItem>()
         context?.let {context ->
-            val adventureItem = HabiticaDrawerItem(R.id.tasksFragment, SIDEBAR_ADVENTURE_GUIDE)
+            val adventureItem = HabiticaDrawerItem(R.id.adventureGuideActivity, SIDEBAR_ADVENTURE_GUIDE)
             adventureItem.itemViewType = 4
             items.add(adventureItem)
             items.add(HabiticaDrawerItem(R.id.tasksFragment, SIDEBAR_TASKS, context.getString(R.string.sidebar_tasks)))

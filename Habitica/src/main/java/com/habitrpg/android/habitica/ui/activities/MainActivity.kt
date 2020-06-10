@@ -62,6 +62,7 @@ import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.SnackbarDisplayType
 import com.habitrpg.android.habitica.ui.views.ValueBar
 import com.habitrpg.android.habitica.ui.views.dialogs.AchievementDialog
+import com.habitrpg.android.habitica.ui.views.dialogs.FirstDropDialog
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.dialogs.QuestCompletedDialog
 import com.habitrpg.android.habitica.ui.views.yesterdailies.YesterdailyDialog
@@ -166,6 +167,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         }
 
         setupToolbar(binding.toolbar)
+        drawerIcon = AdventureGuideDrawerArrowDrawable(supportActionBar?.themedContext)
 
         avatarInHeader = AvatarWithBarsViewModel(this, binding.avatarWithBars, userRepository)
         sideAvatarView = AvatarView(this, showBackground = true, showMount = false, showPet = false)
@@ -195,7 +197,6 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                 R.string.navigation_drawer_open, /* "open drawer" description */
                 R.string.navigation_drawer_close  /* "close drawer" description */
         ) {}
-        drawerIcon = AdventureGuideDrawerArrowDrawable(supportActionBar?.themedContext)
         drawerToggle?.drawerArrowDrawable = drawerIcon
         // Set the drawer toggle as the DrawerListener
         drawerToggle?.let { drawerLayout.addDrawerListener(it) }
@@ -694,6 +695,19 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                 .subscribe(Action {
                     val dialog = AchievementDialog(this)
                     dialog.setType(event.type)
+                    dialog.enqueue()
+                    apiClient.readNotification(event.id)
+                            .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+                }, RxErrorHandler.handleEmptyError()))
+    }
+
+    @Subscribe
+    fun showFirstDropDialog(event: ShowFirstDropDialog) {
+        compositeSubscription.add(Completable.complete()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(Action {
+                    val dialog = FirstDropDialog(this)
+                    dialog.configure(event.egg, event.hatchingPotion)
                     dialog.enqueue()
                     apiClient.readNotification(event.id)
                             .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())

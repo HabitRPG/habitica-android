@@ -81,6 +81,12 @@
             android:windowSoftInputMode="adjustResize">
         </activity>
         <activity
+            android:name=".ui.activities.AdventureGuideActivity"
+            android:label="@string/LoginActivityName"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize">
+        </activity>
+        <activity
             android:name=".ui.activities.IntroActivity"
             android:windowSoftInputMode="adjustResize">
         </activity>

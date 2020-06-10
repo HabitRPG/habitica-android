@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:layout_marginBottom="@dimen/spacing_large">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/egg_view"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:scaleType="center"
+            android:layout_marginEnd="@dimen/spacing_large"
+            app:actualImageScaleType="center"
+            android:background="@drawable/layout_rounded_bg_gray_700"/>
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/hatchingPotion_view"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            app:actualImageScaleType="center"
+            android:background="@drawable/layout_rounded_bg_gray_700" />
+    </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Body2"
+        android:textColor="@color/gray_200"
+        android:gravity="center_horizontal"
+        android:text="@string/first_drop_explanation1"
+        android:layout_marginBottom="@dimen/spacing_medium"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Body1"
+        android:textColor="@color/gray_100"
+        android:text="@string/first_drop_explanation2"
+        android:gravity="center_horizontal"/>
+</LinearLayout>

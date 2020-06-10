@@ -18,8 +18,8 @@
             android:layout_width="48dp"
             android:layout_height="52dp"
             android:scaleType="center"
-            android:layout_marginStart="@dimen/spacing_large"
-            android:layout_marginEnd="@dimen/spacing_large" />
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp" />
         <ImageView
             android:layout_width="41dp"
             android:layout_height="wrap_content"
@@ -38,5 +38,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/Body2"
+        android:textColor="@color/gray_200"
         android:gravity="center_horizontal"/>
 </LinearLayout>

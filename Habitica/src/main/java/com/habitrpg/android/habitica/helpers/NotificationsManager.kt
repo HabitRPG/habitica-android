@@ -5,8 +5,11 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.events.ShowAchievementDialog
 import com.habitrpg.android.habitica.events.ShowCheckinDialog
+import com.habitrpg.android.habitica.events.ShowFirstDropDialog
 import com.habitrpg.android.habitica.events.ShowSnackbarEvent
 import com.habitrpg.android.habitica.models.Notification
+import com.habitrpg.android.habitica.models.notifications.AchievementData
+import com.habitrpg.android.habitica.models.notifications.FirstDropData
 import com.habitrpg.android.habitica.models.notifications.LoginIncentiveData
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import io.reactivex.BackpressureStrategy
@@ -49,7 +52,7 @@ class NotificationsManager (private val context: Context) {
         this.apiClient = apiClient
     }
 
-    fun handlePopupNotifications(notifications: List<Notification>): Boolean? {
+    private fun handlePopupNotifications(notifications: List<Notification>): Boolean? {
         val now = Date()
         if (now.time - (lastNotificationHandling?.time ?: 0) < 500) {
             return true
@@ -68,6 +71,9 @@ class NotificationsManager (private val context: Context) {
                         Notification.Type.ACHIEVEMENT_GUILD_JOINED.type -> displayAchievementNotification(it)
                         Notification.Type.ACHIEVEMENT_CHALLENGE_JOINED.type -> displayAchievementNotification(it)
                         Notification.Type.ACHIEVEMENT_INVITED_FRIEND.type -> displayAchievementNotification(it)
+                        Notification.Type.ACHIEVEMENT_GENERIC.type -> displayGenericAchievementNotification(it)
+                        Notification.Type.ACHIEVEMENT_ONBOARDING_COMPLETE.type -> displayAchievementNotification(it)
+                        Notification.Type.FIRST_DROP.type -> displayFirstDropNotification(it)
                         else -> false
                     }
 
@@ -80,7 +86,13 @@ class NotificationsManager (private val context: Context) {
         return true
     }
 
-    fun displayLoginIncentiveNotification(notification: Notification): Boolean? {
+    private fun displayFirstDropNotification(notification: Notification): Boolean {
+        val data = (notification.data as? FirstDropData)
+        EventBus.getDefault().post(ShowFirstDropDialog(data?.egg ?: "", data?.hatchingPotion ?: "", notification.id))
+        return true
+    }
+
+    private fun displayLoginIncentiveNotification(notification: Notification): Boolean? {
         val notificationData = notification.data as? LoginIncentiveData
         val nextUnlockText = context.getString(R.string.nextPrizeUnlocks, notificationData?.nextRewardAt)
         if (notificationData?.rewardKey != null) {
@@ -102,6 +114,11 @@ class NotificationsManager (private val context: Context) {
 
     private fun displayAchievementNotification(notification: Notification): Boolean {
         EventBus.getDefault().post(ShowAchievementDialog(notification.type ?: "", notification.id))
+        return true
+    }
+
+    private fun displayGenericAchievementNotification(notification: Notification): Boolean {
+        EventBus.getDefault().post(ShowAchievementDialog((notification.data as? AchievementData)?.achievement ?: "", notification.id))
         return true
     }
 }

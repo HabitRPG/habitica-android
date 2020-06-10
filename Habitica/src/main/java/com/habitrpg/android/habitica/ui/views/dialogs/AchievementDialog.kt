@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.views.dialogs
 
 import android.content.Context
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
@@ -36,6 +37,12 @@ class AchievementDialog(context: Context) : HabiticaAlertDialog(context) {
             Notification.Type.ACHIEVEMENT_GUILD_JOINED.type -> configure(R.string.joinedGuildTitle, R.string.joinedGuildDescription, "guild")
             Notification.Type.ACHIEVEMENT_CHALLENGE_JOINED.type -> configure(R.string.joinedChallengeTitle, R.string.joinedChallengeDescription, "challenge")
             Notification.Type.ACHIEVEMENT_INVITED_FRIEND.type -> configure(R.string.inviteFriendTitle, R.string.inviteFriendDescription, "friends")
+            "createdTask" -> configure(R.string.createdTaskTitle, R.string.createdTaskDescription, type)
+            "completedTask" -> configure(R.string.completedTaskTitle, R.string.completedTaskDescription, type)
+            "hatchedPet" -> configure(R.string.hatchedPetTitle, R.string.hatchedPetDescription, type)
+            "fedPet" -> configure(R.string.fedPetTitle, R.string.fedPetDescription, type)
+            "purchasedEquipment" -> configure(R.string.purchasedEquipmentTitle, R.string.purchasedEquipmentDescription, type)
+            Notification.Type.ACHIEVEMENT_ONBOARDING_COMPLETE.type -> configure(R.string.onboardingCompleteTitle, R.string.onboardingCompleteDescription, "onboardingComplete")
         }
     }
 
@@ -43,10 +50,15 @@ class AchievementDialog(context: Context) : HabiticaAlertDialog(context) {
         titleView?.text = context.getString(titleID)
         descriptionView?.text = context.getString(descriptionID)
         DataBindingUtils.loadImage(iconView, "achievement-${iconName}2x")
-        setTitle(R.string.achievement_title)
-        addButton(R.string.onwards, true)
-        addButton(R.string.view_achievements, isPrimary = false, isDestructive = false) { _, _ ->
+        if (iconName == "onboardingComplete") {
+            setTitle(R.string.onboardingComplete_achievement_title)
+            titleView?.setTextSize(TypedValue.COMPLEX_UNIT_SP,14f)
+        } else {
+            setTitle(R.string.achievement_title)
+        }
+        addButton(R.string.view_achievements, isPrimary = true, isDestructive = false) { _, _ ->
             MainNavigationController.navigate(R.id.achievementsFragment)
         }
+        addButton(R.string.close, false)
     }
 }
