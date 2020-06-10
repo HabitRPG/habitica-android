@@ -53,30 +53,22 @@ class ItemsFragment : BaseMainFragment() {
         viewPager?.adapter = object : FragmentPagerAdapter(fragmentManager) {
 
             override fun getItem(position: Int): androidx.fragment.app.Fragment {
-
                 val fragment = ItemRecyclerFragment()
 
-                when (position) {
-                    0 -> {
-                        fragment.itemType = "eggs"
-                    }
-                    1 -> {
-                        fragment.itemType = "hatchingPotions"
-                    }
-                    2 -> {
-                        fragment.itemType = "food"
-                    }
-                    3 -> {
-                        fragment.itemType = "quests"
-                    }
-                    4 -> {
-                        fragment.itemType = "special"
-                    }
+                fragment.itemType = when (position) {
+                    0 -> "eggs"
+                    1 -> "hatchingPotions"
+                    2 -> "food"
+                    3 -> "quests"
+                    4 -> "special"
+                    else -> ""
                 }
                 fragment.isHatching = false
                 fragment.isFeeding = false
-                fragment.itemTypeText = this.getPageTitle(position).toString()
                 fragment.user = this@ItemsFragment.user
+                fragment.itemTypeText =
+                    if (position == 4) getString(R.string.special_items)
+                    else this.getPageTitle(position).toString()
 
                 return fragment
             }
