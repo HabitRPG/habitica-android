@@ -24,7 +24,7 @@
             android:background="@drawable/layout_rounded_bg_gray_700"
             android:paddingTop="8dp"
             android:paddingStart="16dp">
-            <EditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editText"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

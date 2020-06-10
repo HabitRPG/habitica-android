@@ -13,6 +13,8 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SocialRepository
+import com.habitrpg.android.habitica.databinding.ActivityIntroBinding
+import com.habitrpg.android.habitica.databinding.ActivityNotificationsBinding
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.Notification
 import com.habitrpg.android.habitica.models.inventory.QuestContent
@@ -20,11 +22,11 @@ import com.habitrpg.android.habitica.models.notifications.*
 import com.habitrpg.android.habitica.ui.activities.MainActivity.Companion.NOTIFICATION_CLICK
 import com.habitrpg.android.habitica.ui.viewmodels.NotificationsViewModel
 import io.reactivex.functions.Consumer
-import kotlinx.android.synthetic.main.activity_notifications.*
 import javax.inject.Inject
 
 class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener {
 
+    private lateinit var binding: ActivityNotificationsBinding
     @Inject
     lateinit var inventoryRepository: InventoryRepository
     @Inject
@@ -36,12 +38,17 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
 
     override fun getLayoutResId(): Int = R.layout.activity_notifications
 
+    override fun getContentView(): View {
+        binding = ActivityNotificationsBinding.inflate(layoutInflater)
+        return binding.root
+    }
+
     private var notifications: List<Notification> = emptyList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setupToolbar(toolbar)
+        setupToolbar(binding.toolbar)
 
         inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as? LayoutInflater
 
@@ -53,7 +60,7 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
             viewModel.markNotificationsAsSeen(it)
         }, RxErrorHandler.handleEmptyError()))
 
-        notifications_refresh_layout?.setOnRefreshListener(this)
+        binding.notificationsRefreshLayout.setOnRefreshListener(this)
     }
 
     override fun injectActivity(component: UserComponent?) {
@@ -69,21 +76,21 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
     }
 
     override fun onRefresh() {
-        notifications_refresh_layout.isRefreshing = true
+        binding.notificationsRefreshLayout.isRefreshing = true
 
         compositeSubscription.add(viewModel.refreshNotifications().subscribe(Consumer {
-            notifications_refresh_layout.isRefreshing = false
+            binding.notificationsRefreshLayout.isRefreshing = false
         }, RxErrorHandler.handleEmptyError()))
     }
 
     private fun setNotifications(notifications: List<Notification>) {
         this.notifications = notifications
 
-        if (notification_items == null) {
+        if (binding.notificationItems == null) {
             return
         }
 
-        notification_items.removeAllViewsInLayout()
+        binding.notificationItems.removeAllViewsInLayout()
 
         if (notifications.isEmpty()) {
             displayNoNotificationsView()
@@ -93,15 +100,15 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
     }
 
     private fun displayNoNotificationsView() {
-        notification_items.showDividers = LinearLayout.SHOW_DIVIDER_NONE
+        binding.notificationItems.showDividers = LinearLayout.SHOW_DIVIDER_NONE
 
-        notification_items.addView(inflater?.inflate(R.layout.no_notifications, notification_items, false))
+        binding.notificationItems.addView(inflater?.inflate(R.layout.no_notifications, binding.notificationItems, false))
     }
 
     private fun displayNotificationsListView(notifications: List<Notification>) {
-        notification_items.showDividers = LinearLayout.SHOW_DIVIDER_MIDDLE or LinearLayout.SHOW_DIVIDER_END
+        binding.notificationItems.showDividers = LinearLayout.SHOW_DIVIDER_MIDDLE or LinearLayout.SHOW_DIVIDER_END
 
-        notification_items.addView(
+        binding.notificationItems.addView(
                 createNotificationsHeaderView(notifications.count())
         )
 
@@ -121,13 +128,13 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
             }
 
             if (item != null) {
-                notification_items.addView(item)
+                binding.notificationItems.addView(item)
             }
         }
     }
 
     private fun createNotificationsHeaderView(notificationCount: Int): View? {
-        val header = inflater?.inflate(R.layout.notifications_header, notification_items, false)
+        val header = inflater?.inflate(R.layout.notifications_header, binding.notificationItems, false)
 
         val badge = header?.findViewById(R.id.notifications_title_badge) as? TextView
         badge?.text = notificationCount.toString()
@@ -237,7 +244,7 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
             imageResourceId: Int? = null,
             textColor: Int? = null
     ): View? {
-        val item = inflater?.inflate(R.layout.notification_item, notification_items, false)
+        val item = inflater?.inflate(R.layout.notification_item, binding.notificationItems, false)
 
         val container = item?.findViewById(R.id.notification_item) as? View
         container?.setOnClickListener {
@@ -337,7 +344,7 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
             notification: Notification,
             messageText: CharSequence,
             openable: Boolean = false): View? {
-        val item = inflater?.inflate(R.layout.notification_item_actionable, notification_items, false)
+        val item = inflater?.inflate(R.layout.notification_item_actionable, binding.notificationItems, false)
 
         if (openable) {
             val container = item?.findViewById(R.id.notification_item) as? View

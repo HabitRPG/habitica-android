@@ -220,8 +220,7 @@
                         android:layout_height="@dimen/diamond_button_height"
                         android:text="@string/login_btn_apple"
                         android:drawableStart="@drawable/apple_icon"
-                        style="@style/LoginButton"
-                        android:visibility="gone"/>
+                        style="@style/LoginButton"/>
 
                     <Button
                         android:id="@+id/forgot_password"

@@ -116,7 +116,7 @@ class ChallengeTasksRecyclerViewAdapter(taskFilterHelper: TaskFilterHelper?, lay
             addBtn.setOnClickListener { newTask?.let { callback.onNext(it) } }
         }
 
-        override fun bind(data: Task, position: Int) {
+        override fun bind(data: Task, position: Int, displayMode: String) {
             this.newTask = data
             addBtn.text = data.text
         }
@@ -126,7 +126,7 @@ class ChallengeTasksRecyclerViewAdapter(taskFilterHelper: TaskFilterHelper?, lay
 
         private val dividerName: TextView = itemView.findViewById(R.id.divider_name)
 
-        override fun bind(data: Task, position: Int) {
+        override fun bind(data: Task, position: Int, displayMode: String) {
             dividerName.text = data.text
         }
     }

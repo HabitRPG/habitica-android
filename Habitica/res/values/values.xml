@@ -33,6 +33,18 @@
         <item>@string/avatar_size_broad</item>
     </string-array>
 
+    <string-array name="TaskDisplayTypes">
+        <item>Standard</item>
+        <item>Compact</item>
+        <item>Minimal</item>
+    </string-array>
+
+    <string-array name="TaskDisplayValues">
+        <item>standard</item>
+        <item>compact</item>
+        <item>minimal</item>
+    </string-array>
+
     <string-array name="Language">
         <item>English</item>
         <item>Български</item>

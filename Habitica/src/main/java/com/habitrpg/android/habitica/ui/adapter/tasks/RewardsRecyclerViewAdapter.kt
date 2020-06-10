@@ -33,6 +33,15 @@ class RewardsRecyclerViewAdapter(private var customRewards: OrderedRealmCollecti
     private var purchaseCardSubject = PublishSubject.create<ShopItem>()
     val purchaseCardEvents: Flowable<ShopItem> = purchaseCardSubject.toFlowable(BackpressureStrategy.LATEST)
 
+
+    override var taskDisplayMode: String = "standard"
+        set(value) {
+            if (field != value) {
+                field = value
+                notifyDataSetChanged()
+            }
+        }
+
     private val inAppRewardCount: Int
         get() {
             if (inAppRewards?.isValid != true) return 0
@@ -71,7 +80,7 @@ class RewardsRecyclerViewAdapter(private var customRewards: OrderedRealmCollecti
         if (customRewards != null && position < customRewardCount) {
             val reward = customRewards?.get(position) ?: return
             val gold = user?.stats?.gp ?: 0.0
-            (holder as? RewardViewHolder)?.bind(reward, position, reward.value < gold)
+            (holder as? RewardViewHolder)?.bind(reward, position, reward.value < gold, taskDisplayMode)
         } else if (inAppRewards != null) {
             val item = inAppRewards?.get(position - customRewardCount) ?: return
             if (holder is ShopItemViewHolder) {

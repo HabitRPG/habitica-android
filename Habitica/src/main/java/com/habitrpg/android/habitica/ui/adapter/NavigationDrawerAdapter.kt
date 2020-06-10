@@ -11,6 +11,7 @@ import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.ui.helpers.bindOptionalView
 import com.habitrpg.android.habitica.ui.menu.HabiticaDrawerItem
 import com.habitrpg.android.habitica.ui.viewHolders.GiftOneGetOnePromoMenuView
+import com.habitrpg.android.habitica.ui.views.adventureGuide.AdventureGuideMenuBanner
 import com.habitrpg.android.habitica.ui.views.promo.SubscriptionBuyGemsPromoView
 import com.habitrpg.android.habitica.ui.views.promo.SubscriptionBuyGemsPromoViewHolder
 import io.reactivex.BackpressureStrategy
@@ -78,6 +79,8 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int): Recycle
         } else if (getItemViewType(position) == 1) {
             (holder as? SectionHeaderViewHolder)?.backgroundTintColor = backgroundTintColor
             (holder as? SectionHeaderViewHolder)?.bind(drawerItem)
+        } else if (getItemViewType(position) == 4) {
+            drawerItem.user?.let { (holder.itemView as? AdventureGuideMenuBanner)?.updateData(it) }
         }
     }
 
@@ -108,6 +111,14 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int): Recycle
                 itemView.layoutParams = ViewGroup.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         148.dpToPx(parent.context)
+                )
+                SubscriptionBuyGemsPromoViewHolder(itemView)
+            }
+            4 -> {
+                val itemView = AdventureGuideMenuBanner(parent.context)
+                itemView.layoutParams = ViewGroup.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        104.dpToPx(parent.context)
                 )
                 SubscriptionBuyGemsPromoViewHolder(itemView)
             }

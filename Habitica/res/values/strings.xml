@@ -1016,4 +1016,7 @@
     <string name="still_questions">Still have a question?</string>
     <string name="delete_checklist_entry">Delete Checklist entry</string>
     <string name="pet_ownership_fraction">%1$d/%2$d</string>
+    <string name="task_display">Task list display</string>
+    <string name="onboarding_tasks">Onboarding Tasks</string>
+    <string name="complete_for_gold">Complete to earn 100 Gold!</string>
 </resources>

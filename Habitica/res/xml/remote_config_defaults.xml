@@ -76,5 +76,9 @@
         <key>raiseShops</key>
         <value>false</value>
     </entry>
+    <entry>
+        <key>enableTaskDisplayMode</key>
+        <value>true</value>
+    </entry>
 </defaultsMap>
     <!-- END xml_defaults -->
