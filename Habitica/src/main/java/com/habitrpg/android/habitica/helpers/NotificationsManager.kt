@@ -1,6 +1,8 @@
 package com.habitrpg.android.habitica.helpers
 
 import android.content.Context
+import androidx.core.os.bundleOf
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.events.ShowAchievementDialog
@@ -11,6 +13,7 @@ import com.habitrpg.android.habitica.models.Notification
 import com.habitrpg.android.habitica.models.notifications.AchievementData
 import com.habitrpg.android.habitica.models.notifications.FirstDropData
 import com.habitrpg.android.habitica.models.notifications.LoginIncentiveData
+import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
@@ -114,11 +117,22 @@ class NotificationsManager (private val context: Context) {
 
     private fun displayAchievementNotification(notification: Notification): Boolean {
         EventBus.getDefault().post(ShowAchievementDialog(notification.type ?: "", notification.id))
+        logOnboardingEvents(notification.type ?: "")
         return true
     }
 
     private fun displayGenericAchievementNotification(notification: Notification): Boolean {
-        EventBus.getDefault().post(ShowAchievementDialog((notification.data as? AchievementData)?.achievement ?: "", notification.id))
+        val achievement = (notification.data as? AchievementData)?.achievement ?: ""
+        EventBus.getDefault().post(ShowAchievementDialog(achievement, notification.id))
+        logOnboardingEvents(achievement)
         return true
+    }
+
+    private fun logOnboardingEvents(type: String) {
+        if (User.ONBOARDING_ACHIEVEMENT_KEYS.contains(type)) {
+            FirebaseAnalytics.getInstance(context).logEvent(type, null)
+        } else if (type == Notification.Type.ACHIEVEMENT_ONBOARDING_COMPLETE.type) {
+            FirebaseAnalytics.getInstance(context).logEvent(type, null)
+        }
     }
 }
