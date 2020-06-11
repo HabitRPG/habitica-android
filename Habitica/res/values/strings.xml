@@ -1015,7 +1015,6 @@
     <string name="read_more">Read More</string>
     <string name="purchase_amount_error">You are unable to buy that amount.</string>
     <string name="still_questions">Still have a question?</string>
-    <string name="delete_checklist_entry">Delete Checklist entry</string>
     <string name="pet_ownership_fraction">%1$d/%2$d</string>
     <string name="task_display">Task list display</string>
     <string name="onboarding_tasks">Onboarding Tasks</string>

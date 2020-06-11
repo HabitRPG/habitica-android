@@ -93,17 +93,29 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
 
             val contentView: PurchaseDialogContent
             when {
-                shopItem.isTypeItem -> contentView = PurchaseDialogItemContent(context)
-                shopItem.isTypeQuest -> {
-                    contentView = PurchaseDialogQuestContent(context)
-                    inventoryRepository.getQuestContent(shopItem.key).firstElement().subscribe(Consumer<QuestContent> { contentView.setQuestContent(it) }, RxErrorHandler.handleEmptyError())
+                shopItem.isTypeItem -> {
+                    val itemContent = PurchaseDialogItemContent(context)
+                    if (shopItem.canPurchaseBulk) {
+                        itemContent.stepperView.visibility = View.VISIBLE
+                        itemContent.stepperView.onValueChanged = {
+                            purchaseQuantity = it.toInt()
+                            updatePurchaseTotal()
+                        }
+                    } else {
+                        itemContent.stepperView.visibility = View.GONE
+                    }
+                    contentView = itemContent
                 }
-                shopItem.isTypeGear -> {
+                    shopItem.isTypeQuest -> {
+                    contentView = PurchaseDialogQuestContent(context)
+                    inventoryRepository.getQuestContent(shopItem.key).firstElement().subscribe(Consumer { contentView.setQuestContent(it) }, RxErrorHandler.handleEmptyError())
+                }
+                    shopItem.isTypeGear -> {
                     contentView = PurchaseDialogGearContent(context)
-                    inventoryRepository.getEquipment(shopItem.key).firstElement().subscribe(Consumer<Equipment> { contentView.setEquipment(it) }, RxErrorHandler.handleEmptyError())
+                    inventoryRepository.getEquipment(shopItem.key).firstElement().subscribe(Consumer { contentView.setEquipment(it) }, RxErrorHandler.handleEmptyError())
                     checkGearClass()
                 }
-                "gems" == shopItem.purchaseType -> {
+                    "gems" == shopItem.purchaseType -> {
                     val gemContent = PurchaseDialogGemsContent(context)
                     gemContent.stepperView.onValueChanged = {
                         purchaseQuantity = it.toInt()
@@ -111,7 +123,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
                     }
                     contentView = gemContent
                 }
-                else -> contentView = PurchaseDialogBaseContent(context)
+                    else -> contentView = PurchaseDialogBaseContent(context)
             }
 
             amountErrorLabel = contentView.findViewById(R.id.amount_error_label)
@@ -123,7 +135,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
     private fun updatePurchaseTotal() {
         priceLabel.value = shopItem.value.toDouble() * purchaseQuantity
 
-        if (shopItem.canAfford(user, purchaseQuantity) && !shopItem.locked && purchaseQuantity >= 1) {
+        if ((shopItem.currency != "gold" || shopItem.canAfford(user, purchaseQuantity)) && !shopItem.locked && purchaseQuantity >= 1) {
             buyButton.background = context.getDrawable(R.drawable.button_background_primary)
             priceLabel.setTextColor(ContextCompat.getColor(context, R.color.white))
             buyLabel.setTextColor(ContextCompat.getColor(context, R.color.white))
