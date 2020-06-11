@@ -13,6 +13,12 @@
     <dimen name="section_top_padding">16dp</dimen>
     <dimen name="card_margin">6dp</dimen>
 
+    <dimen name="party_invite_button">31dp</dimen>
+    <dimen name="party_accept_button_start_margin">5dp</dimen>
+    <dimen name="party_invite_avatar">46dp</dimen>  <!--50?-->
+    <dimen name="party_invite_separator">4dp</dimen>
+    <dimen name="party_invite_text_width">140dp</dimen>
+
     <dimen name="bar_size">15dp</dimen>
     <dimen name="bar_padding">5dp</dimen>
     <dimen name="bar_padding_small">2dp</dimen>
