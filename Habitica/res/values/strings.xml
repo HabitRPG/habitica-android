@@ -1052,4 +1052,8 @@
     <string name="onboardingCompleteTitle">You earned 5 Achievements and 100 Gold for your efforts.</string>
     <string name="onboardingCompleteDescription">If you want even more, check out Achievements and start collecting!</string>
     <string name="onboardingComplete_achievement_title">You completed your OnboardingTasks!</string>
+    <string name="excess_items">Excess Items</string>
+    <string name="excessItemsXLeft">You only need %d %s to hatch all possible pets. Are you sure you want to purchase %d?</string>
+    <string name="purchaseX">Purchase %d</string>
+    <string name="excessItemsNoneLeft">You\'ve already hatched all possible %s pets. Are you sure you want to purchase %d %s?</string>
 </resources>
