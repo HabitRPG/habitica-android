@@ -690,10 +690,10 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
     @Subscribe
     fun showAchievementDialog(event: ShowAchievementDialog) {
-        retrieveUser()
         compositeSubscription.add(Completable.complete()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(Action {
+                    retrieveUser()
                     val dialog = AchievementDialog(this)
                     dialog.setType(event.type)
                     dialog.enqueue()
@@ -704,10 +704,10 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
     @Subscribe
     fun showFirstDropDialog(event: ShowFirstDropDialog) {
-        retrieveUser()
         compositeSubscription.add(Completable.complete()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(Action {
+                    retrieveUser()
                     val dialog = FirstDropDialog(this)
                     dialog.configure(event.egg, event.hatchingPotion)
                     dialog.enqueue()

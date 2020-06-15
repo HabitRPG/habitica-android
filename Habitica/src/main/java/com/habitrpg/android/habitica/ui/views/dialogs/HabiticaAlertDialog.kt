@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.ui.views.dialogs
 import android.app.Activity
 import android.content.Context
 import android.text.method.ScrollingMovementMethod
+import android.util.Log
 import android.view.*
 import android.view.animation.AccelerateInterpolator
 import android.widget.*
@@ -257,8 +258,10 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
             if (dialogQueue.firstOrNull() == currentDialog) {
                 dialogQueue.removeAt(0)
             }
+            Log.i("SHOWNEXT", dialogQueue.toString())
             if (dialogQueue.size > 0) {
-                if ((dialogQueue[0].context as? Activity)?.isFinishing == false) {
+                Log.i("FOUNDONE", dialogQueue[0].toString())
+                if ((dialogQueue[0].context as? Activity) == null || (dialogQueue[0].context as? Activity)?.isFinishing == false) {
                     dialogQueue[0].show()
                 }
             }
@@ -267,7 +270,9 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
         private fun addToQueue(dialog: HabiticaAlertDialog) {
             if (dialogQueue.isEmpty()) {
                 dialog.show()
+                Log.i("SHOWIMMEDIATELY", dialog.toString())
             }
+            Log.i("ADDTOQUEUE", dialog.toString())
             dialogQueue.add(dialog)
         }
     }
