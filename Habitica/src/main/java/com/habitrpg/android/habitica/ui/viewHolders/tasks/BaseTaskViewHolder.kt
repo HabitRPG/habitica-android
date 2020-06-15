@@ -83,7 +83,7 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
         notesTextView?.addEllipsesListener(object : EllipsisTextView.EllipsisListener {
             override fun ellipsisStateChanged(ellipses: Boolean) {
                 GlobalScope.launch(Dispatchers.Main.immediate) {
-                    if (ellipses) {
+                    if (ellipses && notesTextView?.maxLines != 3) {
                         notesTextView?.maxLines = 3
                     }
                     expandNotesButton?.visibility = if (ellipses || notesExpanded) View.VISIBLE else View.GONE
@@ -123,7 +123,7 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
                 titleTextView.setParsedMarkdown(data.parsedText)
             } else {
                 titleTextView.text = data.text
-                titleTextView.setSpannableFactory(NoCopySpannableFactory.getInstance());
+                titleTextView.setSpannableFactory(NoCopySpannableFactory.getInstance())
                 if (data.text.isNotEmpty()) {
                     Single.just(data.text)
                             .map { MarkdownParser.parseMarkdown(it) }
@@ -139,7 +139,7 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
                         notesTextView?.setParsedMarkdown(data.parsedText)
                     } else {
                         notesTextView?.text = data.notes
-                        notesTextView?.setSpannableFactory(NoCopySpannableFactory.getInstance());
+                        notesTextView?.setSpannableFactory(NoCopySpannableFactory.getInstance())
                         data.notes?.let {notes ->
                             if (notes.isEmpty()) {
                                 return@let

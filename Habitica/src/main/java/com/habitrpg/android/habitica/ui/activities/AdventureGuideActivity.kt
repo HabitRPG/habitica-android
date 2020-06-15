@@ -2,7 +2,9 @@ package com.habitrpg.android.habitica.ui.activities
 
 import android.graphics.Paint
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
+import androidx.core.app.NavUtils
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
@@ -14,6 +16,7 @@ import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import io.reactivex.functions.Consumer
 import javax.inject.Inject
+
 
 class AdventureGuideActivity : BaseActivity() {
     private lateinit var binding: ActivityAdventureGuideBinding
@@ -59,6 +62,16 @@ class AdventureGuideActivity : BaseActivity() {
         )
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                NavUtils.navigateUpFromSameTask(this)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
     override fun onStart() {
         super.onStart()
         compositeSubscription.add(userRepository.getUser().subscribe(Consumer {
@@ -74,7 +87,7 @@ class AdventureGuideActivity : BaseActivity() {
 
         if (completed > 0) {
             binding.progressTextview.text = getString(R.string.percent_completed, ((completed / achievements.size.toFloat()) * 100).toInt())
-            binding.progressTextview.setTextColor(ContextCompat.getColor(this, R.color.yellow_10))
+            binding.progressTextview.setTextColor(ContextCompat.getColor(this, R.color.yellow_5))
         }
 
         binding.achievementContainer.removeAllViews()

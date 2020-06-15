@@ -1033,7 +1033,7 @@
     <string name="create_task_description">Add a task for something you would like to accomplish this week</string>
     <string name="complete_task_description">Check off any of your tasks to earn rewards</string>
     <string name="hatch_pet_description">Head over to your Items and try combining a Hatching Potion and Egg</string>
-    <string name="feedPet_description">There are many different types of food, but pets can be picky</string>
+    <string name="feedPet_description">Complete tasks to get food! You can feed it to your pet from Pets &amp; Mounts</string>
     <string name="purchase_equipment_description">Equipment is a way to customize your avatar and improve your stats</string>
     <string name="createdTaskTitle">Created your first task</string>
     <string name="completedTaskTitle">Completed a task</string>

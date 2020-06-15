@@ -220,7 +220,7 @@ class TaskFormActivity : BaseActivity() {
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item?.itemId) {
             R.id.action_save -> saveTask()
             R.id.action_delete -> deleteTask()

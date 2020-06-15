@@ -53,12 +53,13 @@
         android:gravity="center_horizontal"
         android:text="@string/adventure_guide_description"
         style="@style/Body2"
+        android:textColor="@color/gray_50"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_large"
+        android:layout_marginTop="24dp"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp">
         <TextView
@@ -85,8 +86,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
+        android:layout_marginBottom="@dimen/spacing_medium"
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
         android:progressBackgroundTint="@color/gray_600"
+        android:progressBackgroundTintMode="src_in"
         android:progressTint="@color/yellow_50"/>
 
     <LinearLayout

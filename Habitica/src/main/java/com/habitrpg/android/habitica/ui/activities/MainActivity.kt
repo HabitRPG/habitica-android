@@ -253,7 +253,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         drawerToggle?.syncState()
     }
 
-    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         Log.e("RESTORED:", savedInstanceState.toString())
     }
@@ -391,20 +391,20 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
         if (resultCode == NOTIFICATION_CLICK && data?.hasExtra("notificationId") == true) {
             notificationsViewModel?.click(
-                    data.getStringExtra("notificationId"),
+                    data.getStringExtra("notificationId") ?: "",
                     MainNavigationController
             )
         }
 
         if (resultCode == NOTIFICATION_ACCEPT && data?.hasExtra("notificationId") == true) {
             notificationsViewModel?.accept(
-                    data.getStringExtra("notificationId")
+                    data.getStringExtra("notificationId") ?: ""
             )
         }
 
         if (resultCode == NOTIFICATION_REJECT && data?.hasExtra("notificationId") == true) {
             notificationsViewModel?.reject(
-                    data.getStringExtra("notificationId")
+                    data.getStringExtra("notificationId") ?: ""
             )
         }
         PurchaseHandler.findForActivity(this)?.onResult(requestCode, resultCode, data)
@@ -690,6 +690,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
     @Subscribe
     fun showAchievementDialog(event: ShowAchievementDialog) {
+        retrieveUser()
         compositeSubscription.add(Completable.complete()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(Action {
@@ -703,6 +704,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
     @Subscribe
     fun showFirstDropDialog(event: ShowFirstDropDialog) {
+        retrieveUser()
         compositeSubscription.add(Completable.complete()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(Action {

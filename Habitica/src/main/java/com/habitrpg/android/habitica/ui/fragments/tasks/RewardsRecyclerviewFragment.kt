@@ -99,7 +99,7 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
                         userRepository.useSkill(user,
                                 selectedCard?.key ?: "",
                                 "member",
-                                data.getStringExtra("member_id"))
+                                data.getStringExtra("member_id") ?: "")
                                 .subscribeWithErrorHandler(Consumer {
                                     val activity = (activity as? MainActivity) ?: return@Consumer
                                     HabiticaSnackbar.showSnackbar(activity.snackbarContainer,

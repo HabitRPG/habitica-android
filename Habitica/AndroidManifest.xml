@@ -85,6 +85,9 @@
             android:label="@string/LoginActivityName"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.habitrpg.android.habitica.ui.activities.MainActivity" />
         </activity>
         <activity
             android:name=".ui.activities.IntroActivity"

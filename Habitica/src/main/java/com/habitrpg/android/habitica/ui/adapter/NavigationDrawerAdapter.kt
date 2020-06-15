@@ -70,19 +70,23 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int): Recycle
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val drawerItem = getItem(position)
-        if (getItemViewType(position) == 0) {
-            val itemHolder = holder as? DrawerItemViewHolder
-            itemHolder?.tintColor = tintColor
-            itemHolder?.backgroundTintColor = backgroundTintColor
-            itemHolder?.bind(drawerItem, drawerItem.transitionId == selectedItem)
-            itemHolder?.itemView?.setOnClickListener { itemSelectedEvents.onNext(drawerItem) }
-        } else if (getItemViewType(position) == 1) {
-            (holder as? SectionHeaderViewHolder)?.backgroundTintColor = backgroundTintColor
-            (holder as? SectionHeaderViewHolder)?.bind(drawerItem)
-        } else if (getItemViewType(position) == 4) {
-            drawerItem.user?.let { (holder.itemView as? AdventureGuideMenuBanner)?.updateData(it) }
-            holder.itemView.setOnClickListener { itemSelectedEvents.onNext(drawerItem) }
+        when {
+            getItemViewType(position) == 0 -> {
+                val itemHolder = holder as? DrawerItemViewHolder
+                itemHolder?.tintColor = tintColor
+                itemHolder?.backgroundTintColor = backgroundTintColor
+                itemHolder?.bind(drawerItem, drawerItem.transitionId == selectedItem)
+                itemHolder?.itemView?.setOnClickListener { itemSelectedEvents.onNext(drawerItem) }
+            }
+            getItemViewType(position) == 1 -> {
+                (holder as? SectionHeaderViewHolder)?.backgroundTintColor = backgroundTintColor
+                (holder as? SectionHeaderViewHolder)?.bind(drawerItem)
+            }
+            getItemViewType(position) == 4 -> {
+                drawerItem.user?.let { (holder.itemView as? AdventureGuideMenuBanner)?.updateData(it) }
+                holder.itemView.setOnClickListener { itemSelectedEvents.onNext(drawerItem) }
 
+            }
         }
     }
 
