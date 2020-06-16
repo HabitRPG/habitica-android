@@ -81,10 +81,6 @@ class AppConfigManager {
         return remoteConfig.getLong("minimumPasswordLength")
     }
 
-    fun raiseShops(): Boolean {
-        return remoteConfig.getBoolean("raiseShops")
-    }
-
     fun enableTaskDisplayMode(): Boolean {
         return remoteConfig.getBoolean("enableTaskDisplayMode")
     }
@@ -96,5 +92,9 @@ class AppConfigManager {
         } else {
             "standard"
         }
+    }
+
+    fun reorderMenu(): Boolean {
+        return remoteConfig.getBoolean("reorderMenu")
     }
 }

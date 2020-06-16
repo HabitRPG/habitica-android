@@ -80,5 +80,9 @@
         <key>enableTaskDisplayMode</key>
         <value>true</value>
     </entry>
+    <entry>
+        <key>reorderMenu</key>
+        <value>false</value>
+    </entry>
 </defaultsMap>
     <!-- END xml_defaults -->
