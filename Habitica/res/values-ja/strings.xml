@@ -44,7 +44,7 @@
     <string name="logout">ログアウト</string>
     <string name="logout_description">ログアウトする</string>
     <string name="LoginActivityName">ようこそ</string>
-    <string name="about_title">プロフィール</string>
+    <string name="about_title">Habiticaについて</string>
     <string name="about_libraries">ライブラリー</string>
     <string name="about_habitica_open_source">Habitica は Github にてオープンソース・ソフトウェアとして開発されています</string>
     <string name="about_rate_our_app">このアプリをレビュー</string>
