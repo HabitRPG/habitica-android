@@ -509,9 +509,9 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         return super.onKeyUp(keyCode, event)
     }
 
-    protected fun retrieveUser() {
+    protected fun retrieveUser(forced: Boolean = false) {
         if (hostConfig.hasAuthentication()) {
-            compositeSubscription.add(this.userRepository.retrieveUser(true)
+            compositeSubscription.add(this.userRepository.retrieveUser(true, forced)
                     .doOnNext { user1 ->
                         FirebaseAnalytics.getInstance(this).setUserProperty("has_party", if (user1.party?.id?.isNotEmpty() == true) "true" else "false")
                         FirebaseAnalytics.getInstance(this).setUserProperty("is_subscribed", if (user1.isSubscribed) "true" else "false")
@@ -693,7 +693,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         compositeSubscription.add(Completable.complete()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(Action {
-                    retrieveUser()
+                    retrieveUser(true)
                     val dialog = AchievementDialog(this)
                     dialog.setType(event.type)
                     dialog.enqueue()
@@ -707,7 +707,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         compositeSubscription.add(Completable.complete()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(Action {
-                    retrieveUser()
+                    retrieveUser(true)
                     val dialog = FirstDropDialog(this)
                     dialog.configure(event.egg, event.hatchingPotion)
                     dialog.enqueue()

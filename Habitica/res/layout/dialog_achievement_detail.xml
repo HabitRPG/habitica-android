@@ -6,6 +6,7 @@
     android:layout_height="wrap_content"
     android:gravity="center_horizontal">
     <LinearLayout
+        android:id="@+id/achievement_wrapper"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -27,6 +28,11 @@
             android:layout_height="wrap_content"
             android:src="@drawable/sparkles_right" />
     </LinearLayout>
+    <ImageView
+        android:id="@+id/onboarding_done_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/onboarding_done_art" />
     <TextView
         android:id="@+id/title_view"
         android:layout_width="match_parent"

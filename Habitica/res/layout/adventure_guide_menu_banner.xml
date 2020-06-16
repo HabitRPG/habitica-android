@@ -38,10 +38,10 @@
                 android:layout_marginBottom="10dp">
 
                 <TextView
+                    android:id="@+id/description_view"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/complete_for_gold"
                     android:textColor="@color/gray_50"
                     android:textSize="12sp" />
 

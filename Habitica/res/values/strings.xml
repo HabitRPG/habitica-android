@@ -1018,10 +1018,10 @@
     <string name="pet_ownership_fraction">%1$d/%2$d</string>
     <string name="task_display">Task list display</string>
     <string name="onboarding_tasks">Onboarding Tasks</string>
-    <string name="complete_for_gold">Complete to earn 100 Gold!</string>
+    <string name="complete_for_gold"><![CDATA[Complete to earn <font color="#EE9109"><b>100 Gold</b></font>!]]></string>
     <string name="delete_checklist_entry">Delete…</string>
     <string name="getting_started">Getting Started</string>
-    <string name="adventure_guide_description">Complete these onboarding tasks and you’ll earn 5 Achievements and 100 Gold once you’re done!</string>
+    <string name="adventure_guide_description"><![CDATA[Complete these onboarding tasks and you’ll earn <b>5 Achievements</b> and <font color="#EE9109"><b>100 Gold</b></font> once you’re done!]]></string>
     <string name="your_progress">Your Progress</string>
     <string name="lets_get_started">Let\'s get started</string>
     <string name="percent_completed">%d%% Complete</string>

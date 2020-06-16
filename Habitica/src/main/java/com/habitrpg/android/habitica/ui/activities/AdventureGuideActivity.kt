@@ -1,9 +1,12 @@
 package com.habitrpg.android.habitica.ui.activities
 
 import android.graphics.Paint
+import android.os.Build
 import android.os.Bundle
+import android.text.Html
 import android.view.MenuItem
 import android.view.View
+import android.widget.TextView
 import androidx.core.app.NavUtils
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
@@ -60,6 +63,13 @@ class AdventureGuideActivity : BaseActivity() {
                 Pair("fedPet", getString(R.string.feedPet_description)),
                 Pair("purchasedEquipment", getString(R.string.purchase_equipment_description))
         )
+
+        val descriptionText = getString(R.string.adventure_guide_description)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            binding.descriptionView.setText(Html.fromHtml(descriptionText,  Html.FROM_HTML_MODE_LEGACY), TextView.BufferType.SPANNABLE)
+        } else {
+            binding.descriptionView.setText(Html.fromHtml(descriptionText), TextView.BufferType.SPANNABLE)
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

@@ -11,21 +11,27 @@
         android:gravity="center"
         android:layout_marginTop="@dimen/spacing_small"
         android:layout_marginBottom="@dimen/spacing_large">
-
-        <com.facebook.drawee.view.SimpleDraweeView
-            android:id="@+id/egg_view"
+        <FrameLayout
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:scaleType="center"
-            android:layout_marginEnd="@dimen/spacing_large"
-            app:actualImageScaleType="center"
-            android:background="@drawable/layout_rounded_bg_gray_700"/>
-        <com.facebook.drawee.view.SimpleDraweeView
-            android:id="@+id/hatchingPotion_view"
+            android:background="@drawable/layout_rounded_bg_gray_700"
+            android:layout_marginEnd="@dimen/spacing_large">
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/egg_view"
+                android:layout_width="@dimen/gear_image_size"
+                android:layout_height="@dimen/gear_image_size"
+                android:layout_gravity="center"/>
+        </FrameLayout>
+        <FrameLayout
             android:layout_width="80dp"
             android:layout_height="80dp"
-            app:actualImageScaleType="center"
-            android:background="@drawable/layout_rounded_bg_gray_700" />
+            android:background="@drawable/layout_rounded_bg_gray_700">
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/hatchingPotion_view"
+                android:layout_width="@dimen/gear_image_size"
+                android:layout_height="@dimen/gear_image_size"
+                android:layout_gravity="center" />
+        </FrameLayout>
     </LinearLayout>
     <TextView
         android:layout_width="match_parent"

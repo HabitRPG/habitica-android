@@ -47,6 +47,7 @@
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="@dimen/spacing_medium"/>
     <TextView
+        android:id="@+id/description_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
@@ -88,7 +89,7 @@
         android:layout_marginBottom="@dimen/spacing_medium"
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
         android:progressBackgroundTint="@color/gray_600"
-        android:progressBackgroundTintMode="src_in"
+        android:progressBackgroundTintMode="src_over"
         android:progressTint="@color/yellow_50"/>
 
     <LinearLayout
