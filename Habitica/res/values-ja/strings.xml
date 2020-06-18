@@ -584,7 +584,7 @@
     <string name="strike_description_title">怒り攻撃とは？</string>
     <string name="strike_active_title">%s が襲撃を受けました！</string>
     <string name="strike_active_description">愛すべき%sは%sの攻撃で%sが破壊されてしまい途方に暮れています。急いでタスクに取り組んで、あの怪物を倒して再建の手助けをしましょう！</string>
-    <string name="questShop">クエスト ショップ</string>
+    <string name="questShop">クエスト売り場</string>
     <string name="market_owner_long">商人のAlex</string>
     <string name="tavern_owner_long">ロッジの主人Daniel</string>
     <string name="stable_owner_long">猛獣使いのMatt</string>
