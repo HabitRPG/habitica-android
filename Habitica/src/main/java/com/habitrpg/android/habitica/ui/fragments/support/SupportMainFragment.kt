@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.net.toUri
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.FAQRepository
@@ -51,7 +52,9 @@ class SupportMainFragment : BaseMainFragment() {
             MainNavigationController.navigate(R.id.bugFixFragment)
         }
         binding.suggestionsFeedbackWrapper.setOnClickListener {
-            sendEmail("[Android] Feedback")
+            val uriUrl = appConfigManager.feedbackURL().toUri()
+            val launchBrowser = Intent(Intent.ACTION_VIEW, uriUrl)
+            startActivity(launchBrowser)
         }
 
         compositeSubscription.add(Completable.fromAction {
@@ -70,59 +73,5 @@ class SupportMainFragment : BaseMainFragment() {
 
     override fun injectFragment(component: UserComponent) {
         component.inject(this)
-    }
-
-    private val versionName: String by lazy {
-        try {
-            @Suppress("DEPRECATION")
-            activity?.packageManager?.getPackageInfo(activity?.packageName ?: "", 0)?.versionName ?: ""
-        } catch (e: PackageManager.NameNotFoundException) {
-            ""
-        }
-    }
-
-    private val versionCode: Int by lazy {
-        try {
-            @Suppress("DEPRECATION")
-            activity?.packageManager?.getPackageInfo(activity?.packageName ?: "", 0)?.versionCode ?: 0
-        } catch (e: PackageManager.NameNotFoundException) {
-            0
-        }
-    }
-
-    private fun sendEmail(subject: String) {
-        val version = Build.VERSION.SDK_INT
-        val deviceName = deviceInfo?.name ?: DeviceName.getDeviceName()
-        val manufacturer = deviceInfo?.manufacturer ?: Build.MANUFACTURER
-        var bodyOfEmail = "Device: $manufacturer $deviceName" +
-                " \nAndroid Version: $version"+
-                " \nAppVersion: " + getString(R.string.version_info, versionName, versionCode)
-
-        if (appConfigManager.testingLevel().name != AppTestingLevel.PRODUCTION.name) {
-            bodyOfEmail += " ${appConfigManager.testingLevel().name}"
-        }
-        bodyOfEmail += " \nUser ID: $userId"
-
-        val user = this.user
-        if (user != null) {
-            bodyOfEmail += " \nLevel: " + (user.stats?.lvl ?: 0) +
-                    " \nClass: " + (if (user.preferences?.disableClasses == true) "Disabled" else (user.stats?.habitClass ?: "None")) +
-                    " \nIs in Inn: " + (user.preferences?.sleep ?: false) +
-                    " \nUses Costume: " + (user.preferences?.costume ?: false) +
-                    " \nCustom Day Start: " + (user.preferences?.dayStart ?: 0) +
-                    " \nTimezone Offset: " + (user.preferences?.timezoneOffset ?: 0)
-        }
-
-        bodyOfEmail += " \nDetails:\n"
-
-        activity?.let {
-            val emailIntent = Intent(Intent.ACTION_SENDTO)
-            val mailto = "mailto:" + appConfigManager.supportEmail() +
-                    "?subject=" + Uri.encode(subject) +
-                    "&body=" + Uri.encode(bodyOfEmail)
-            emailIntent.data = Uri.parse(mailto);
-
-            startActivity(Intent.createChooser(emailIntent, "Choose an Email client :"))
-        }
     }
 }

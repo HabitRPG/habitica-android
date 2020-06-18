@@ -42,6 +42,7 @@ import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManag
 import com.habitrpg.android.habitica.interactors.CheckClassSelectionUseCase
 import com.habitrpg.android.habitica.interactors.DisplayItemDropUseCase
 import com.habitrpg.android.habitica.interactors.NotifyUserUseCase
+import com.habitrpg.android.habitica.models.Notification
 import com.habitrpg.android.habitica.models.TutorialStep
 import com.habitrpg.android.habitica.models.inventory.Egg
 import com.habitrpg.android.habitica.models.inventory.HatchingPotion
@@ -690,6 +691,13 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
     @Subscribe
     fun showAchievementDialog(event: ShowAchievementDialog) {
+        if (User.ONBOARDING_ACHIEVEMENT_KEYS.contains(event.type) || event.type == Notification.Type.ACHIEVEMENT_ONBOARDING_COMPLETE.type) {
+            if (!appConfigManager.enableAdventureGuide()) {
+                apiClient.readNotification(event.id)
+                        .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+                return
+            }
+        }
         compositeSubscription.add(Completable.complete()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(Action {
@@ -704,6 +712,11 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
     @Subscribe
     fun showFirstDropDialog(event: ShowFirstDropDialog) {
+        if (!appConfigManager.enableAdventureGuide()) {
+            apiClient.readNotification(event.id)
+                    .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+            return
+        }
         compositeSubscription.add(Completable.complete()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(Action {
@@ -741,7 +754,10 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
             val dialog = HabiticaAlertDialog(this)
             dialog.setTitle(getString(R.string.hatched_pet_title, potionName, eggName))
             dialog.setAdditionalContentView(petWrapper)
-            dialog.addButton(R.string.onwards, true) { hatchingDialog, _ -> hatchingDialog.dismiss() }
+            dialog.addButton(R.string.equip, true) { _, _ ->
+                inventoryRepository.equip(user, "pet", "Pet-" + egg.key + "-" + potion.key)
+                        .subscribe(Consumer {}, RxErrorHandler.handleEmptyError())
+            }
             dialog.addButton(R.string.share, false) { hatchingDialog, _ ->
                 val event1 = ShareEvent()
                 event1.sharedMessage = getString(R.string.share_hatched, potionName, eggName)
@@ -754,6 +770,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                 EventBus.getDefault().post(event1)
                 hatchingDialog.dismiss()
             }
+            dialog.setExtraCloseButtonVisibility(View.VISIBLE)
             dialog.enqueue()
         }.subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
     }

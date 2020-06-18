@@ -85,6 +85,10 @@ class AppConfigManager {
         return remoteConfig.getBoolean("enableTaskDisplayMode")
     }
 
+    fun feedbackURL(): String {
+        return remoteConfig.getString("feedbackURL")
+    }
+
     fun taskDisplayMode(context: Context): String {
         return if (remoteConfig.getBoolean("enableTaskDisplayMode")) {
             val preferences = PreferenceManager.getDefaultSharedPreferences(context)
@@ -96,5 +100,9 @@ class AppConfigManager {
 
     fun reorderMenu(): Boolean {
         return remoteConfig.getBoolean("reorderMenu")
+    }
+
+    fun enableAdventureGuide(): Boolean {
+        return remoteConfig.getBoolean("enableAdventureGuide")
     }
 }

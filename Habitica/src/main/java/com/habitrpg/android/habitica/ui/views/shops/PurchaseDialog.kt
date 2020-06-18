@@ -365,6 +365,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
         alert.addButton(context.getString(R.string.purchaseX, quantity), false, false) { _, _ ->
             buyItem(quantity)
         }
+        alert.setExtraCloseButtonVisibility(View.VISIBLE)
         alert.show()
     }
 
@@ -396,6 +397,12 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
                         ownedCount += if (mount.owned) 1 else 0
                     }
                 }
+            }.flatMap { inventoryRepository.getOwnedItems("eggs") }.doOnNext {
+                for (egg in it) {
+                    if (egg.key == item.key) {
+                        ownedCount += egg.numberOwned
+                    }
+                }
             }.firstElement().subscribe {
                 val remaining = 20 - ownedCount
                 onResult(remaining)
@@ -415,12 +422,19 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
                         ownedCount += if (mount.owned) 1 else 0
                     }
                 }
+            }.flatMap { inventoryRepository.getOwnedItems("hatchingPotions") }.doOnNext {
+                for (potion in it) {
+                    if (potion.key == item.key) {
+                        ownedCount += potion.numberOwned
+                    }
+                }
             }.firstElement().subscribe {
                 val remaining = 18 - ownedCount
                 onResult(remaining)
             }
+        } else {
+            onResult(-1)
         }
-        onResult(-1)
     }
 }
 

@@ -31,6 +31,7 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
     private var scrollingSeparator: View
     private var buttonsWrapper: LinearLayout
     private var noticeTextView: TextView
+    private var closeButton: Button
 
     internal var additionalContentView: View? = null
 
@@ -58,6 +59,8 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
         scrollingSeparator = view.findViewById(R.id.scrolling_separator)
         buttonsWrapper = view.findViewById(R.id.buttons_wrapper)
         noticeTextView = view.findViewById(R.id.notice_text_view)
+        closeButton = view.findViewById(R.id.close_button)
+        closeButton.setOnClickListener { dismiss() }
         dialogContainer.clipChildren = true
         dialogContainer.clipToOutline = true
     }
@@ -126,6 +129,10 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
     fun setAdditionalContentSidePadding(padding: Int) {
         contentView.setPadding(padding, 0, padding, contentView.paddingBottom)
         messageTextView.setPadding(padding, messageTextView.paddingTop, padding, messageTextView.paddingBottom)
+    }
+
+    fun setExtraCloseButtonVisibility(visibility: Int) {
+        closeButton.visibility = visibility
     }
 
     private fun updateButtonLayout() {

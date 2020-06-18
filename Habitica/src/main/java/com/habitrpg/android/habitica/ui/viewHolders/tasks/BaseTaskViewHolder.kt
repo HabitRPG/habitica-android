@@ -173,7 +173,9 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
             iconViewTag?.visibility = if (data.tags?.size ?: 0 > 0) View.VISIBLE else View.GONE
 
             iconViewChallenge?.visibility = if (task?.challengeID != null) View.VISIBLE else View.GONE
-
+            if (task?.challengeID != null) {
+                iconViewChallenge?.setImageResource(if (task?.challengeBroken?.isNotBlank() == true) R.drawable.task_broken_megaphone else R.drawable.task_megaphone)
+            }
             configureSpecialTaskTextView(data)
 
             taskIconWrapper?.visibility = if (taskIconWrapperIsVisible) View.VISIBLE else View.GONE

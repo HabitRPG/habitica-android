@@ -126,7 +126,7 @@
                         android:layout_marginStart="@dimen/task_icon_space"
                         android:layout_marginLeft="@dimen/task_icon_space"
                         android:contentDescription="@string/belongs_to_challenge"
-                        app:srcCompat="@drawable/task_icon_challenge" />
+                        app:srcCompat="@drawable/task_megaphone" />
 
                     <ImageView
                         android:id="@+id/iconviewReminder"
@@ -176,8 +176,7 @@
                 android:layout_width="@dimen/checklist_wrapper_width"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:orientation="vertical"
-                tools:background="@color/md_green_300">
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/checkListCompletedTextView"

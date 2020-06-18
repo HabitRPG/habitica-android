@@ -284,8 +284,12 @@ class NavigationDrawerFragment : DialogFragment() {
         }
 
         val adventureGuideItem = getItemWithIdentifier(SIDEBAR_ADVENTURE_GUIDE)
-        adventureGuideItem?.isVisible = !user.hasCompletedOnboarding
-        adventureGuideItem?.user = user
+        if (configManager.enableAdventureGuide()) {
+            adventureGuideItem?.isVisible = !user.hasCompletedOnboarding
+            adventureGuideItem?.user = user
+        } else {
+            adventureGuideItem?.isVisible = false
+        }
     }
 
     override fun onDestroy() {

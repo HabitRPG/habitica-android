@@ -122,7 +122,7 @@
                     android:layout_height="@dimen/task_icon_size"
                     android:layout_marginStart="@dimen/task_icon_space"
                     android:contentDescription="@string/belongs_to_challenge"
-                    app:srcCompat="@drawable/task_icon_challenge" />
+                    app:srcCompat="@drawable/task_megaphone" />
 
                 <ImageView
                     android:id="@+id/iconviewReminder"
