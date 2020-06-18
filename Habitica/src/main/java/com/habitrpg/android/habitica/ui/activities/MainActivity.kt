@@ -364,7 +364,11 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                 })
             }
 
-            drawerIcon.setEnabled(user?.hasCompletedOnboarding == false)
+            if (appConfigManager.enableAdventureGuide()) {
+                drawerIcon.setEnabled(user?.hasCompletedOnboarding == false)
+            } else {
+                drawerIcon.setEnabled(false)
+            }
         }
     }
 
