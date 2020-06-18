@@ -1055,6 +1055,6 @@
     <string name="excess_items">Excess Items</string>
     <string name="excessItemsXLeft">You only need %d %s to hatch all possible pets. Are you sure you want to purchase %d?</string>
     <string name="purchaseX">Purchase %d</string>
-    <string name="excessItemsNoneLeft">You\'ve already hatched all possible %s pets. Are you sure you want to purchase %d %s?</string>
+    <string name="excessItemsNoneLeft">You already have everything you need for all %s pets. Are you sure you want to purchase %d %ss?</string>
     <string name="equip">Equip</string>
 </resources>

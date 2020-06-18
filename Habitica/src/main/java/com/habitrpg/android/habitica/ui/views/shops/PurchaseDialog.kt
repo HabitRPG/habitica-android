@@ -43,6 +43,7 @@ import io.reactivex.functions.Consumer
 import org.greenrobot.eventbus.EventBus
 import java.util.*
 import javax.inject.Inject
+import kotlin.math.max
 
 class PurchaseDialog(context: Context, component: UserComponent?, val item: ShopItem) : HabiticaAlertDialog(context) {
 
@@ -403,13 +404,13 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
                         ownedCount += egg.numberOwned
                     }
                 }
-            }.firstElement().subscribe {
-                val remaining = 20 - ownedCount
-                onResult(remaining)
-            }
+            }.firstElement().doOnComplete {
+                val remaining = 18 - ownedCount
+                onResult(max(0, remaining))
+            }.subscribe(Consumer {}, RxErrorHandler.handleEmptyError())
         } else if (item.purchaseType == "hatchingPotions") {
             var ownedCount = 0
-            inventoryRepository.getPets("Wolf", "quest", item.key).filter {
+            inventoryRepository.getPets("Wolf", "premium", item.key).filter {
                 return@filter it.size > 0
             }.flatMap { inventoryRepository.getOwnedPets() }.doOnNext {                for (pet in it) {
                     if (pet.key?.contains(item.key) == true) {
@@ -428,10 +429,10 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
                         ownedCount += potion.numberOwned
                     }
                 }
-            }.firstElement().subscribe {
+            }.firstElement().doOnComplete {
                 val remaining = 18 - ownedCount
-                onResult(remaining)
-            }
+                onResult(max(0, remaining))
+            }.subscribe(Consumer {}, RxErrorHandler.handleEmptyError())
         } else {
             onResult(-1)
         }
