@@ -454,7 +454,7 @@
     <string name="new_challenge_title">新しいチャレンジのタイトル</string>
     <string name="ownership">所有</string>
     <string name="inn">ロッジ</string>
-    <string name="start_quest">新しいクエストを開始する</string>
+    <string name="start_quest">クエストを開始</string>
     <string name="leave_party">パーティーを抜ける</string>
     <string name="party_description">パーティーの説明</string>
     <string name="number_participants">%1$d 人の参加者</string>
