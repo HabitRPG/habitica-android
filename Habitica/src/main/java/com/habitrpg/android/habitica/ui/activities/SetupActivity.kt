@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import androidx.appcompat.content.res.AppCompatResources
@@ -61,6 +62,7 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
     internal var taskSetupFragment: TaskSetupFragment? = null
     internal var user: User? = null
     private var completedSetup = false
+    private var createdTasks = false
 
     private val isLastPage: Boolean
         get() = this.pager.adapter == null || this.pager.currentItem == (this.pager.adapter?.count ?: 0) - 1
@@ -127,8 +129,13 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
             if (this.taskSetupFragment == null) {
                 return
             }
+            if (createdTasks) {
+                onUserReceived(user)
+                return
+            }
             val newTasks = this.taskSetupFragment?.createSampleTasks()
             this.completedSetup = true
+            createdTasks = true
             newTasks?.let {
                 this.taskRepository.createTasks(it).subscribe(Consumer { onUserReceived(user) }, RxErrorHandler.handleEmptyError())
             }
@@ -194,14 +201,14 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
 
     private fun onUserReceived(user: User?) {
         if (completedSetup) {
-            if (!compositeSubscription.isDisposed) {
-                compositeSubscription.dispose()
-            }
             val additionalData = HashMap<String, Any>()
             additionalData["status"] = "completed"
             AmplitudeManager.sendEvent("setup", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT, additionalData)
 
             compositeSubscription.add(userRepository.updateUser(user, "flags.welcomed", true).subscribe(Consumer {
+                if (!compositeSubscription.isDisposed) {
+                    compositeSubscription.dispose()
+                }
                 startMainActivity()
             }, RxErrorHandler.handleEmptyError()))
             return
@@ -254,6 +261,29 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
                     fragment
                 }
             }
+        }
+
+        override fun instantiateItem(container: ViewGroup, position: Int): Any {
+            val item = super.instantiateItem(container, position)
+            when (item) {
+                is AvatarSetupFragment -> {
+                    avatarSetupFragment = item
+                    item.activity = this@SetupActivity
+                    item.setUser(user)
+                    item.width = pager.width
+                }
+                is TaskSetupFragment -> {
+                    taskSetupFragment = item
+                    item.setUser(user)
+                }
+                is WelcomeFragment -> {
+                    welcomeFragment = item
+                    item.nameValidEvents.toFlowable(BackpressureStrategy.DROP)?.subscribe {
+                        setNextButtonEnabled(it)
+                    }
+                }
+            }
+            return item
         }
 
         override fun getCount(): Int {

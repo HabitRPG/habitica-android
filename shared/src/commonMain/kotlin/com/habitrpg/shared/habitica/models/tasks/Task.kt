@@ -14,6 +14,7 @@ expect open class Task {
     var notes: String?
     var type: String
     var challengeID: String?
+    var challengeBroken: String?
     var attribute: String?
     var value: Double
     var tags: NativeList<Tag>?

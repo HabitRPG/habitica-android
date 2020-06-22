@@ -77,30 +77,30 @@ class BugFixFragment: BaseMainFragment() {
         val deviceName = deviceInfo?.name ?: DeviceName.getDeviceName()
         val manufacturer = deviceInfo?.manufacturer ?: Build.MANUFACTURER
         var bodyOfEmail = "Device: $manufacturer $deviceName" +
-                " \nAndroid Version: $version"+
-                " \nAppVersion: " + getString(R.string.version_info, versionName, versionCode)
+                " %0AAndroid Version: $version"+
+                " %0AAppVersion: " + getString(R.string.version_info, versionName, versionCode)
 
         if (appConfigManager.testingLevel().name != AppTestingLevel.PRODUCTION.name) {
             bodyOfEmail += " ${appConfigManager.testingLevel().name}"
         }
-        bodyOfEmail += " \nUser ID: $userId"
+        bodyOfEmail += " %0AUser ID: $userId"
 
         val user = this.user
         if (user != null) {
-            bodyOfEmail += " \nLevel: " + (user.stats?.lvl ?: 0) +
-                    " \nClass: " + (if (user.preferences?.disableClasses == true) "Disabled" else (user.stats?.habitClass ?: "None")) +
-                    " \nIs in Inn: " + (user.preferences?.sleep ?: false) +
-                    " \nUses Costume: " + (user.preferences?.costume ?: false) +
-                    " \nCustom Day Start: " + (user.preferences?.dayStart ?: 0) +
-                    " \nTimezone Offset: " + (user.preferences?.timezoneOffset ?: 0)
+            bodyOfEmail += " %0ALevel: " + (user.stats?.lvl ?: 0) +
+                    " %0AClass: " + (if (user.preferences?.disableClasses == true) "Disabled" else (user.stats?.habitClass ?: "None")) +
+                    " %0AIs in Inn: " + (user.preferences?.sleep ?: false) +
+                    " %0AUses Costume: " + (user.preferences?.costume ?: false) +
+                    " %0ACustom Day Start: " + (user.preferences?.dayStart ?: 0) +
+                    " %0ATimezone Offset: " + (user.preferences?.timezoneOffset ?: 0)
         }
 
-        bodyOfEmail += " \nDetails:\n"
+        bodyOfEmail += " %0ADetails:%0A"
 
         activity?.let {
             val emailIntent = Intent(Intent.ACTION_SENDTO)
             val mailto = "mailto:" + appConfigManager.supportEmail() +
-                    "&subject=" + Uri.encode(subject) +
+                    "?subject=" + Uri.encode(subject) +
                     "&body=" + Uri.encode(bodyOfEmail)
             emailIntent.data = Uri.parse(mailto);
 

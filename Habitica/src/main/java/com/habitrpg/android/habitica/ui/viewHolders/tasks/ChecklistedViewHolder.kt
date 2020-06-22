@@ -42,9 +42,9 @@ abstract class ChecklistedViewHolder(itemView: View, scoreTaskFunc: ((Task, Task
         expandCheckboxTouchArea(checkboxHolder, checkbox)
     }
 
-    override fun bind(data: Task, position: Int) {
-        var completed = data.completed
-        if (data.isPendingApproval) {
+    override fun bind(newTask: Task, position: Int, displayMode: String) {
+        var completed = newTask.completed
+        if (newTask.isPendingApproval) {
             completed = false
         }
         this.checkbox.isChecked = completed
@@ -66,7 +66,7 @@ abstract class ChecklistedViewHolder(itemView: View, scoreTaskFunc: ((Task, Task
         } else {
             this.rightBorderView?.setBackgroundColor(this.taskGray)
         }
-        super.bind(data, position)
+        super.bind(newTask, position, displayMode)
     }
 
     abstract fun shouldDisplayAsActive(newTask: Task): Boolean

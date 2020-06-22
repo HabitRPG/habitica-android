@@ -6,7 +6,6 @@ import androidx.preference.PreferenceScreen
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.ui.fragments.preferences.*
-import kotlinx.android.synthetic.main.activity_prefs.*
 
 class PrefsActivity : BaseActivity(), PreferenceFragmentCompat.OnPreferenceStartScreenCallback {
 
@@ -15,7 +14,7 @@ class PrefsActivity : BaseActivity(), PreferenceFragmentCompat.OnPreferenceStart
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setupToolbar(toolbar)
+        setupToolbar(findViewById(R.id.toolbar))
 
         supportFragmentManager.beginTransaction()
                 .add(R.id.fragment_container, PreferencesFragment())

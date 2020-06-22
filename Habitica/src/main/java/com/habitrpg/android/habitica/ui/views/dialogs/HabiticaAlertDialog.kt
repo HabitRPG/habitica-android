@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.ui.views.dialogs
 import android.app.Activity
 import android.content.Context
 import android.text.method.ScrollingMovementMethod
+import android.util.Log
 import android.view.*
 import android.view.animation.AccelerateInterpolator
 import android.widget.*
@@ -30,8 +31,9 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
     private var scrollingSeparator: View
     private var buttonsWrapper: LinearLayout
     private var noticeTextView: TextView
+    private var closeButton: Button
 
-    private var additionalContentView: View? = null
+    internal var additionalContentView: View? = null
 
     var isScrollingLayout: Boolean = false
     get() {
@@ -57,6 +59,8 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
         scrollingSeparator = view.findViewById(R.id.scrolling_separator)
         buttonsWrapper = view.findViewById(R.id.buttons_wrapper)
         noticeTextView = view.findViewById(R.id.notice_text_view)
+        closeButton = view.findViewById(R.id.close_button)
+        closeButton.setOnClickListener { dismiss() }
         dialogContainer.clipChildren = true
         dialogContainer.clipToOutline = true
     }
@@ -125,6 +129,10 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
     fun setAdditionalContentSidePadding(padding: Int) {
         contentView.setPadding(padding, 0, padding, contentView.paddingBottom)
         messageTextView.setPadding(padding, messageTextView.paddingTop, padding, messageTextView.paddingBottom)
+    }
+
+    fun setExtraCloseButtonVisibility(visibility: Int) {
+        closeButton.visibility = visibility
     }
 
     private fun updateButtonLayout() {
@@ -257,8 +265,10 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
             if (dialogQueue.firstOrNull() == currentDialog) {
                 dialogQueue.removeAt(0)
             }
+            Log.i("SHOWNEXT", dialogQueue.toString())
             if (dialogQueue.size > 0) {
-                if ((dialogQueue[0].context as? Activity)?.isFinishing == false) {
+                Log.i("FOUNDONE", dialogQueue[0].toString())
+                if ((dialogQueue[0].context as? Activity) == null || (dialogQueue[0].context as? Activity)?.isFinishing == false) {
                     dialogQueue[0].show()
                 }
             }
@@ -267,7 +277,9 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
         private fun addToQueue(dialog: HabiticaAlertDialog) {
             if (dialogQueue.isEmpty()) {
                 dialog.show()
+                Log.i("SHOWIMMEDIATELY", dialog.toString())
             }
+            Log.i("ADDTOQUEUE", dialog.toString())
             dialogQueue.add(dialog)
         }
     }

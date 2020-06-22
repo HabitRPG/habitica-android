@@ -12,14 +12,14 @@ class TodoViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> Un
 
     private val dateFormatter: DateFormat = android.text.format.DateFormat.getDateFormat(context)
 
-    override fun bind(data: Task, position: Int) {
-        this.task = data
-        if (data.completed) {
+    override fun bind(newTask: Task, position: Int, displayMode: String) {
+        this.task = newTask
+        if (newTask.completed) {
             checklistIndicatorWrapper.setBackgroundColor(taskGray)
         } else {
             checklistIndicatorWrapper.setBackgroundColor(data.lightTaskColor)
         }
-        super.bind(data, position)
+        super.bind(newTask, position, displayMode)
     }
 
     override fun configureSpecialTaskTextView(task: Task) {

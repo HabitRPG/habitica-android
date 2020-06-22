@@ -65,6 +65,17 @@ class NoPartyFragmentFragment : BaseMainFragment() {
 
         invitations_view.rejectCall = {
             socialRepository.rejectGroupInvite(it).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+            invitationWrapper.visibility = View.GONE
+        }
+
+        invitations_view.setLeader = { leader ->
+            compositeSubscription.add(
+                    socialRepository.getMember(leader)
+                            .subscribe(Consumer {
+                                invitations_view.avatarView.setAvatar(it)
+                                invitations_view.textView.text = getString(R.string.invitation_title,it.displayName,invitations_view.groupName)
+                            }, RxErrorHandler.handleEmptyError())
+            )
         }
 
         username_textview.setOnClickListener {
@@ -77,7 +88,7 @@ class NoPartyFragmentFragment : BaseMainFragment() {
             }
         }
 
-        craetePartyButton.setOnClickListener {
+        createPartyButton.setOnClickListener {
             val bundle = Bundle()
             bundle.putString("groupType", "party")
             bundle.putString("leader", user?.id)

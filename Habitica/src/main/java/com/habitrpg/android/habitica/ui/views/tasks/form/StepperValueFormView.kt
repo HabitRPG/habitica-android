@@ -54,17 +54,21 @@ class StepperValueFormView @JvmOverloads constructor(
 
     private var valueString = ""
     set(value) {
-        if (value.isEmpty()) return
+        val hasChanged = field != value || editText.text.toString() != field
         field = value
+        if (value.isEmpty()) {
+            onValueChanged?.invoke(0.0)
+            return
+        }
 
-        if (editText.text.toString() != field) {
+        if (hasChanged) {
             editText.setText(field)
             if (editTextIsFocused) {
                 editText.setSelection(field.length)
             }
         }
         val newValue = field.toDoubleOrNull() ?: 0.0
-        if (this.value != newValue) {
+        if (this.value != newValue || hasChanged) {
             this.value = newValue
         }
     }

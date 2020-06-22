@@ -11,6 +11,8 @@ interface TaskRecyclerViewAdapter {
 
     val errorButtonEvents: Flowable<String>
 
+    var taskDisplayMode: String
+
     fun updateData(tasks: OrderedRealmCollection<Task>?)
 
     fun filter()

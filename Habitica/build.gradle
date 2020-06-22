@@ -18,7 +18,7 @@ buildscript {
     }
     dependencies {
         classpath 'io.fabric.tools:gradle:1.+'
-        classpath 'com.android.tools.build:gradle:3.6.2'
+        classpath 'com.android.tools.build:gradle:4.0.0'
         classpath('com.noveogroup.android:check:1.2.5') {
             exclude module: 'checkstyle'
             exclude module: 'pmd-java'
@@ -129,12 +129,12 @@ dependencies {
     implementation 'androidx.multidex:multidex:2.0.1'
     implementation 'com.nex3z:flow-layout:1.2.2'
 
-    implementation 'androidx.core:core-ktx:1.2.0'
+    implementation 'androidx.core:core-ktx:1.3.0'
     implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
     implementation "androidx.lifecycle:lifecycle-common-java8:2.2.0"
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.2.1'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.2.1'
-    implementation "androidx.paging:paging-runtime-ktx:2.1.1"
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.2.2'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.2.2'
+    implementation "androidx.paging:paging-runtime-ktx:2.1.2"
     implementation 'com.plattysoft.leonids:LeonidsLib:1.3.2'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.3'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.3'
@@ -145,8 +145,8 @@ dependencies {
 }
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion '28.0.3'
+    compileSdkVersion 30
+    buildToolsVersion '29.0.3'
     testOptions {
         unitTests {
             includeAndroidResources = true
@@ -162,8 +162,8 @@ android {
         multiDexEnabled true
         resConfigs "en", "bg", "de", "en-rGB", "es", "fr", "hr-rHR", "in", "it", "iw", "ja", "ko", "lt", "nl", "pl", "pt-rBR", "pt-rPT", "ru", "tr", "zh", "zh-rTW"
 
-        versionCode 2404
-        versionName "2.5"
+        versionCode 2441
+        versionName "2.7"
     }
 
     viewBinding {
@@ -211,6 +211,12 @@ android {
     productFlavors {
         dev {
             dimension "buildType"
+        }
+
+        staff {
+            dimension "buildType"
+            buildConfigField "String", "TESTING_LEVEL", "\"staff\""
+            resValue "string", "app_name", "Habitica Staff"
         }
 
         alpha {

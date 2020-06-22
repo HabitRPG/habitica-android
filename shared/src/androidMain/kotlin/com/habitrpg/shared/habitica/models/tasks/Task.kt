@@ -36,6 +36,7 @@ actual open class Task : RealmObject, Parcelable {
     @TaskTypes
     actual var type: String = ""
     actual var challengeID: String? = ""
+    actual var challengeBroken: String? = null
     actual var attribute: String? = StatsConsts.STRENGTH
     actual var value: Double = 0.0
     actual var tags: RealmList<Tag>? = RealmList()

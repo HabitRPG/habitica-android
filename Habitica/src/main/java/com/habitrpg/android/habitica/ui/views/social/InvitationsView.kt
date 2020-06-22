@@ -7,6 +7,8 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.inflate
+import com.habitrpg.android.habitica.ui.AvatarView
+import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.shared.habitica.models.invitations.GenericInvitation
 
 class InvitationsView @JvmOverloads constructor(
@@ -15,6 +17,13 @@ class InvitationsView @JvmOverloads constructor(
 
     var acceptCall: ((String) -> Unit)? = null
     var rejectCall: ((String) -> Unit)? = null
+    var setLeader: ((String) -> Unit)? = null
+    val avatarView: AvatarView by bindView(R.id.groupleader_avatar_view)
+    val textView: TextView by bindView(R.id.groupleader_text_view)
+    var leaderID: String? = null
+    var groupName: String? = null
+    var leaderName: String? = null
+    val view = inflate(R.layout.view_invitation, true)
 
     init {
         orientation = VERTICAL
@@ -23,9 +32,15 @@ class InvitationsView @JvmOverloads constructor(
     fun setInvitations(invitations: List<GenericInvitation>) {
         removeAllViews()
         for (invitation in invitations) {
+            leaderID = invitation.inviter
+            groupName = invitation.name
             val view = inflate(R.layout.view_invitation, true)
-            val textView = view.findViewById<TextView>(R.id.text_view)
-            textView.text = context.getString(R.string.invitation_title, context.getString(R.string.someone), invitation.name)
+
+            leaderID?.let {
+                setLeader?.invoke(it)
+                invalidate()
+            }
+
             view.findViewById<Button>(R.id.accept_button).setOnClickListener {
                 invitation.id?.let { it1 -> acceptCall?.invoke(it1) }
             }

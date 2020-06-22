@@ -48,21 +48,23 @@ class SignInWebViewDialogFragment : DialogFragment() {
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
 
-        val webView = WebView(context).apply {
-            settings.apply {
-                javaScriptEnabled = true
-                javaScriptCanOpenWindowsAutomatically = true
+        val webView = context?.let {
+            WebView(it).apply {
+                settings.apply {
+                    javaScriptEnabled = true
+                    javaScriptCanOpenWindowsAutomatically = true
+                }
             }
         }
 
-        webView.webViewClient = SignInWebViewClient(authenticationAttempt, ::onCallback)
+        webView?.webViewClient = SignInWebViewClient(authenticationAttempt, ::onCallback)
 
         if (savedInstanceState != null) {
             savedInstanceState.getBundle(WEB_VIEW_KEY)?.run {
-                webView.restoreState(this)
+                webView?.restoreState(this)
             }
         } else {
-            webView.loadUrl(authenticationAttempt.authenticationUri)
+            webView?.loadUrl(authenticationAttempt.authenticationUri)
         }
 
         return webView

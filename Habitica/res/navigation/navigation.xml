@@ -429,4 +429,8 @@
         android:id="@+id/bugFixFragment"
         android:name="com.habitrpg.android.habitica.ui.fragments.support.BugFixFragment"
         android:label="@string/bugs_fixes" />
+    <activity
+        android:id="@+id/adventureGuideActivity"
+        android:name="com.habitrpg.android.habitica.ui.activities.AdventureGuideActivity"
+        android:label="" />
 </navigation>

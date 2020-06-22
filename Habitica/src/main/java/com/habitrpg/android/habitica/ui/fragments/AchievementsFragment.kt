@@ -86,7 +86,15 @@ class AchievementsFragment: BaseMainFragment(), SwipeRefreshLayout.OnRefreshList
 
         refreshLayout.setOnRefreshListener(this)
 
-        compositeSubscription.add(userRepository.getAchievements().subscribe(Consumer<RealmResults<Achievement>> {
+        compositeSubscription.add(userRepository.getAchievements().map { achievements ->
+            achievements.sortedBy {
+                if (it.category == "onboarding") {
+                    it.index
+                } else {
+                    (it.category?.first()?.toInt() ?: 2) * it.index
+                }
+            }
+        }.subscribe(Consumer {
             val entries = mutableListOf<Any>()
             var lastCategory = ""
             it.forEach { achievement ->

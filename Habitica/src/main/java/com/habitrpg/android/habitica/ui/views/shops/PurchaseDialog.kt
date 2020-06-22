@@ -15,10 +15,14 @@ import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.events.GearPurchasedEvent
 import com.habitrpg.android.habitica.events.ShowSnackbarEvent
+import com.habitrpg.android.habitica.extensions.addCancelButton
 import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.models.inventory.Egg
+import com.habitrpg.android.habitica.models.inventory.Equipment
+import com.habitrpg.android.habitica.models.inventory.HatchingPotion
 import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.shops.Shop
 import com.habitrpg.android.habitica.models.shops.ShopItem
@@ -93,17 +97,29 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
 
             val contentView: PurchaseDialogContent
             when {
-                shopItem.isTypeItem -> contentView = PurchaseDialogItemContent(context)
-                shopItem.isTypeQuest -> {
-                    contentView = PurchaseDialogQuestContent(context)
-                    inventoryRepository.getQuestContent(shopItem.key).firstElement().subscribe(Consumer<QuestContent> { contentView.setQuestContent(it) }, RxErrorHandler.handleEmptyError())
+                shopItem.isTypeItem -> {
+                    val itemContent = PurchaseDialogItemContent(context)
+                    if (shopItem.canPurchaseBulk) {
+                        itemContent.stepperView.visibility = View.VISIBLE
+                        itemContent.stepperView.onValueChanged = {
+                            purchaseQuantity = it.toInt()
+                            updatePurchaseTotal()
+                        }
+                    } else {
+                        itemContent.stepperView.visibility = View.GONE
+                    }
+                    contentView = itemContent
                 }
-                shopItem.isTypeGear -> {
+                    shopItem.isTypeQuest -> {
+                    contentView = PurchaseDialogQuestContent(context)
+                    inventoryRepository.getQuestContent(shopItem.key).firstElement().subscribe(Consumer { contentView.setQuestContent(it) }, RxErrorHandler.handleEmptyError())
+                }
+                    shopItem.isTypeGear -> {
                     contentView = PurchaseDialogGearContent(context)
-                    inventoryRepository.getEquipment(shopItem.key).firstElement().subscribe(Consumer<Equipment> { contentView.setEquipment(it) }, RxErrorHandler.handleEmptyError())
+                    inventoryRepository.getEquipment(shopItem.key).firstElement().subscribe(Consumer { contentView.setEquipment(it) }, RxErrorHandler.handleEmptyError())
                     checkGearClass()
                 }
-                "gems" == shopItem.purchaseType -> {
+                    "gems" == shopItem.purchaseType -> {
                     val gemContent = PurchaseDialogGemsContent(context)
                     gemContent.stepperView.onValueChanged = {
                         purchaseQuantity = it.toInt()
@@ -111,7 +127,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
                     }
                     contentView = gemContent
                 }
-                else -> contentView = PurchaseDialogBaseContent(context)
+                    else -> contentView = PurchaseDialogBaseContent(context)
             }
 
             amountErrorLabel = contentView.findViewById(R.id.amount_error_label)
@@ -123,7 +139,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
     private fun updatePurchaseTotal() {
         priceLabel.value = shopItem.value.toDouble() * purchaseQuantity
 
-        if (shopItem.canAfford(user, purchaseQuantity) && !shopItem.locked && purchaseQuantity >= 1) {
+        if ((shopItem.currency != "gold" || shopItem.canAfford(user, purchaseQuantity)) && !shopItem.locked && purchaseQuantity >= 1) {
             buyButton.background = context.getDrawable(R.drawable.button_background_primary)
             priceLabel.setTextColor(ContextCompat.getColor(context, R.color.white))
             buyLabel.setTextColor(ContextCompat.getColor(context, R.color.white))
@@ -213,6 +229,8 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
             } else {
                 limitedTextView.setBackgroundColor(ContextCompat.getColor(context, R.color.green_10))
             }
+            val gemContent = additionalContentView as? PurchaseDialogGemsContent
+            gemContent?.stepperView?.maxValue = (user?.purchased?.plan?.numberOfGemsLeft() ?: 1).toDouble()
         }
 
         buyButton.elevation = 0f
@@ -233,69 +251,20 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
     }
 
     private fun onBuyButtonClicked() {
-        val snackbarText = arrayOf("")
         if (shopItem.isValid && !shopItem.locked) {
             val gemsLeft = if (shopItem.limitedNumberLeft != null) shopItem.limitedNumberLeft else 0
             if ((gemsLeft == 0 && shopItem.purchaseType == "gems") || shopItem.canAfford(user, purchaseQuantity)) {
-                val observable: Flowable<Any>
-                if (shopIdentifier != null && shopIdentifier == Shop.TIME_TRAVELERS_SHOP || "mystery_set" == shopItem.purchaseType || shopItem.currency == "hourglasses") {
-                    observable = if (shopItem.purchaseType == "gear") {
-                        inventoryRepository.purchaseMysterySet(shopItem.key)
-                    } else {
-                        inventoryRepository.purchaseHourglassItem(shopItem.purchaseType, shopItem.key)
-                    }
-                } else if (shopItem.purchaseType == "quests" && shopItem.currency == "gold") {
-                    observable = inventoryRepository.purchaseQuest(shopItem.key)
-                } else if (shopItem.purchaseType == "card") {
-                    purchaseCardAction?.invoke(shopItem)
-                    dismiss()
-                    return
-                } else if ("gold" == shopItem.currency && "gem" != shopItem.key) {
-                    observable = inventoryRepository.buyItem(user, shopItem.key, shopItem.value.toDouble(), purchaseQuantity).map { buyResponse ->
-                        if (shopItem.key == "armoire") {
-                            snackbarText[0] = when {
-                                buyResponse.armoire["type"] == "gear" -> context.getString(R.string.armoireEquipment, buyResponse.armoire["dropText"])
-                                buyResponse.armoire["type"] == "food" -> context.getString(R.string.armoireFood, buyResponse.armoire["dropArticle"] ?: "", buyResponse.armoire["dropText"])
-                                else -> context.getString(R.string.armoireExp)
-                            }
+                remainingPurchaseQuantity { quantity ->
+                    if (quantity >= 0) {
+                        if (quantity < purchaseQuantity) {
+                            displayPurchaseConfirmationDialog(quantity)
+                            dismiss()
+                            return@remainingPurchaseQuantity
                         }
-                        buyResponse
                     }
-                } else {
-                    observable = inventoryRepository.purchaseItem(shopItem.purchaseType, shopItem.key, purchaseQuantity)
+                    buyItem(purchaseQuantity)
                 }
-                val subscription = observable
-                        .doOnNext {
-                            val event = ShowSnackbarEvent()
-                            if (snackbarText[0].isNotEmpty()) {
-                                event.text = snackbarText[0]
-                            } else {
-                                event.text = context.getString(R.string.successful_purchase, shopItem.text)
-                            }
-                            event.type = HabiticaSnackbar.SnackbarDisplayType.NORMAL
-                            event.rightIcon = priceLabel.compoundDrawables[0]
-                            when (item.currency) {
-                                "gold" -> event.rightTextColor = ContextCompat.getColor(context, R.color.yellow_5)
-                                "gems" -> event.rightTextColor = ContextCompat.getColor(context, R.color.green_10)
-                                "hourglasses" -> event.rightTextColor = ContextCompat.getColor(context, R.color.brand_300)
-                            }
-                            event.rightText = "-" + priceLabel.text
-                            EventBus.getDefault().post(event)
-                        }
-                        .flatMap { userRepository.retrieveUser(withTasks = false, forced = true) }
-                        .flatMap { inventoryRepository.retrieveInAppRewards() }
-                        .subscribe({
-                            if (item.isTypeGear || item.currency == "hourglasses") {
-                                EventBus.getDefault().post(GearPurchasedEvent(item))
-                            }
-                        }) { throwable ->
-                            if (throwable.javaClass.isAssignableFrom(retrofit2.HttpException::class.java)) {
-                                val error = throwable as retrofit2.HttpException
-                                if (error.code() == 401 && shopItem.currency == "gems") {
-                                    MainNavigationController.navigate(R.id.gemPurchaseActivity, bundleOf(Pair("openSubscription", false)))
-                                }
-                            }
-                        }
+
             } else {
                 when {
                     "gems" == shopItem.purchaseType -> {
@@ -316,5 +285,157 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
         dismiss()
     }
 
+    private fun buyItem(quantity: Int) {
+        val snackbarText = arrayOf("")
+        val observable: Flowable<Any>
+        if (shopIdentifier != null && shopIdentifier == Shop.TIME_TRAVELERS_SHOP || "mystery_set" == shopItem.purchaseType || shopItem.currency == "hourglasses") {
+            observable = if (shopItem.purchaseType == "gear") {
+                inventoryRepository.purchaseMysterySet(shopItem.key)
+            } else {
+                inventoryRepository.purchaseHourglassItem(shopItem.purchaseType, shopItem.key)
+            }
+        } else if (shopItem.purchaseType == "quests" && shopItem.currency == "gold") {
+            observable = inventoryRepository.purchaseQuest(shopItem.key)
+        } else if (shopItem.purchaseType == "card") {
+            purchaseCardAction?.invoke(shopItem)
+            dismiss()
+            return
+        } else if ("gold" == shopItem.currency && "gem" != shopItem.key) {
+            observable = inventoryRepository.buyItem(user, shopItem.key, shopItem.value.toDouble(), quantity).map { buyResponse ->
+                if (shopItem.key == "armoire") {
+                    snackbarText[0] = when {
+                        buyResponse.armoire["type"] == "gear" -> context.getString(R.string.armoireEquipment, buyResponse.armoire["dropText"])
+                        buyResponse.armoire["type"] == "food" -> context.getString(R.string.armoireFood, buyResponse.armoire["dropArticle"] ?: "", buyResponse.armoire["dropText"])
+                        else -> context.getString(R.string.armoireExp)
+                    }
+                }
+                buyResponse
+            }
+        } else {
+            observable = inventoryRepository.purchaseItem(shopItem.purchaseType, shopItem.key, quantity)
+        }
+        val subscription = observable
+                .doOnNext {
+                    val event = ShowSnackbarEvent()
+                    if (snackbarText[0].isNotEmpty()) {
+                        event.text = snackbarText[0]
+                    } else {
+                        event.text = context.getString(R.string.successful_purchase, shopItem.text)
+                    }
+                    event.type = HabiticaSnackbar.SnackbarDisplayType.NORMAL
+                    event.rightIcon = priceLabel.compoundDrawables[0]
+                    when (item.currency) {
+                        "gold" -> event.rightTextColor = ContextCompat.getColor(context, R.color.yellow_5)
+                        "gems" -> event.rightTextColor = ContextCompat.getColor(context, R.color.green_10)
+                        "hourglasses" -> event.rightTextColor = ContextCompat.getColor(context, R.color.brand_300)
+                    }
+                    event.rightText = "-" + priceLabel.text
+                    EventBus.getDefault().post(event)
+                }
+                .flatMap { userRepository.retrieveUser(withTasks = false, forced = true) }
+                .flatMap { inventoryRepository.retrieveInAppRewards() }
+                .subscribe({
+                    if (item.isTypeGear || item.currency == "hourglasses") {
+                        EventBus.getDefault().post(GearPurchasedEvent(item))
+                    }
+                }) { throwable ->
+                    if (throwable.javaClass.isAssignableFrom(retrofit2.HttpException::class.java)) {
+                        val error = throwable as retrofit2.HttpException
+                        if (error.code() == 401 && shopItem.currency == "gems") {
+                            MainNavigationController.navigate(R.id.gemPurchaseActivity, bundleOf(Pair("openSubscription", false)))
+                        }
+                    }
+                }
+    }
+
+    private fun displayPurchaseConfirmationDialog(quantity: Int) {
+        if (quantity == 0) {
+            displayNoRemainingConfirmationDialog()
+        } else {
+            displaySomeRemainingConfirmationDialog(quantity)
+        }
+    }
+
+    private fun displaySomeRemainingConfirmationDialog(quantity: Int) {
+        val alert = HabiticaAlertDialog(context)
+        alert.setTitle(R.string.excess_items)
+        alert.setMessage(context.getString(R.string.excessItemsXLeft, quantity, item.text, purchaseQuantity))
+        alert.addButton(context.getString(R.string.purchaseX, purchaseQuantity), true, false) { _, _ ->
+            buyItem(purchaseQuantity)
+        }
+        alert.addButton(context.getString(R.string.purchaseX, quantity), false, false) { _, _ ->
+            buyItem(quantity)
+        }
+        alert.setExtraCloseButtonVisibility(View.VISIBLE)
+        alert.show()
+    }
+
+    private fun displayNoRemainingConfirmationDialog() {
+        val alert = HabiticaAlertDialog(context)
+        alert.setTitle(R.string.excess_items)
+        alert.setMessage(context.getString(R.string.excessItemsNoneLeft, item.text, purchaseQuantity, item.text))
+        alert.addButton(context.getString(R.string.purchaseX, purchaseQuantity), true, false) { _, _ ->
+            buyItem(purchaseQuantity)
+        }
+        alert.addCancelButton()
+        alert.show()
+    }
+
+    private fun remainingPurchaseQuantity(onResult: (Int) -> Unit) {
+        if (item.purchaseType == "eggs") {
+            var ownedCount = 0
+            inventoryRepository.getPets(item.key, "quest", null).filter {
+                return@filter it.size > 0
+            }.flatMap { inventoryRepository.getOwnedPets() }.doOnNext {
+                for (pet in it) {
+                    if (pet.key?.contains(item.key) == true) {
+                        ownedCount += if (pet.trained > 0) 1 else 0
+                    }
+                }
+            }.flatMap { inventoryRepository.getOwnedMounts() }.doOnNext {
+                for (mount in it) {
+                    if (mount.key?.contains(item.key) == true) {
+                        ownedCount += if (mount.owned) 1 else 0
+                    }
+                }
+            }.flatMap { inventoryRepository.getOwnedItems("eggs") }.doOnNext {
+                for (egg in it) {
+                    if (egg.key == item.key) {
+                        ownedCount += egg.numberOwned
+                    }
+                }
+            }.firstElement().subscribe {
+                val remaining = 20 - ownedCount
+                onResult(remaining)
+            }
+        } else if (item.purchaseType == "hatchingPotions") {
+            var ownedCount = 0
+            inventoryRepository.getPets("Wolf", "quest", item.key).filter {
+                return@filter it.size > 0
+            }.flatMap { inventoryRepository.getOwnedPets() }.doOnNext {                for (pet in it) {
+                    if (pet.key?.contains(item.key) == true) {
+                        ownedCount += if (pet.trained > 0) 1 else 0
+                    }
+                }
+            }.flatMap { inventoryRepository.getOwnedMounts() }.doOnNext {
+                for (mount in it) {
+                    if (mount.key?.contains(item.key) == true) {
+                        ownedCount += if (mount.owned) 1 else 0
+                    }
+                }
+            }.flatMap { inventoryRepository.getOwnedItems("hatchingPotions") }.doOnNext {
+                for (potion in it) {
+                    if (potion.key == item.key) {
+                        ownedCount += potion.numberOwned
+                    }
+                }
+            }.firstElement().subscribe {
+                val remaining = 18 - ownedCount
+                onResult(remaining)
+            }
+        } else {
+            onResult(-1)
+        }
+    }
 }
 

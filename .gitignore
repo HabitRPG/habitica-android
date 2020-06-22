@@ -67,3 +67,5 @@ fastlane/metadata/android/*/changelogs/
 /Habitica/amazon
 /fastlane/Fastfile.bkp
 /fastlane/Fastfile
+*.aab
+/Habitica/alpha

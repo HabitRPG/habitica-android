@@ -23,6 +23,10 @@ class Notification {
         ACHIEVEMENT_GUILD_JOINED("GUILD_JOINED_ACHIEVEMENT"),
         ACHIEVEMENT_CHALLENGE_JOINED("CHALLENGE_JOINED_ACHIEVEMENT"),
         ACHIEVEMENT_INVITED_FRIEND("INVITED_FRIEND_ACHIEVEMENT"),
+        ACHIEVEMENT_GENERIC("ACHIEVEMENT"),
+        ACHIEVEMENT_ONBOARDING_COMPLETE("ONBOARDING_COMPLETE"),
+
+        FIRST_DROP("FIRST_DROPS"),
 
         // Custom notification types (created by this app)
         GUILD_INVITATION("GUILD_INVITATION"),
@@ -49,6 +53,8 @@ class Notification {
             Type.GUILD_INVITATION.type -> GuildInvitationData::class.java
             Type.PARTY_INVITATION.type -> PartyInvitationData::class.java
             Type.QUEST_INVITATION.type -> QuestInvitationData::class.java
+            Type.FIRST_DROP.type -> FirstDropData::class.java
+            Type.ACHIEVEMENT_GENERIC.type -> AchievementData::class.java
             else -> null
         }
     }
