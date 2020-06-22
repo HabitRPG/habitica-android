@@ -26,6 +26,7 @@ import com.habitrpg.android.habitica.models.inventory.HatchingPotion
 import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.shops.Shop
 import com.habitrpg.android.habitica.models.shops.ShopItem
+import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.views.CurrencyView
@@ -38,8 +39,10 @@ import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientG
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientHourglassesDialog
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientSubscriberGemsDialog
 import io.reactivex.Flowable
+import io.reactivex.Maybe
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.functions.Consumer
+import io.realm.RealmResults
 import org.greenrobot.eventbus.EventBus
 import java.util.*
 import javax.inject.Inject
@@ -382,57 +385,56 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
     }
 
     private fun remainingPurchaseQuantity(onResult: (Int) -> Unit) {
+        var totalCount = 20
+        var ownedCount = 0
+        var shouldWarn = true
+        var maybe: Maybe<RealmResults<OwnedItem>>? = null
         if (item.purchaseType == "eggs") {
-            var ownedCount = 0
-            inventoryRepository.getPets(item.key, "quest", null).filter {
-                return@filter it.size > 0
-            }.flatMap { inventoryRepository.getOwnedPets() }.doOnNext {
-                for (pet in it) {
-                    if (pet.key?.contains(item.key) == true) {
-                        ownedCount += if (pet.trained > 0) 1 else 0
-                    }
-                }
-            }.flatMap { inventoryRepository.getOwnedMounts() }.doOnNext {
-                for (mount in it) {
-                    if (mount.key?.contains(item.key) == true) {
-                        ownedCount += if (mount.owned) 1 else 0
-                    }
-                }
-            }.flatMap { inventoryRepository.getOwnedItems("eggs") }.doOnNext {
-                for (egg in it) {
-                    if (egg.key == item.key) {
-                        ownedCount += egg.numberOwned
-                    }
-                }
-            }.firstElement().doOnComplete {
-                val remaining = 18 - ownedCount
-                onResult(max(0, remaining))
-            }.subscribe(Consumer {}, RxErrorHandler.handleEmptyError())
+            maybe = inventoryRepository.getPets(item.key, "quest", null).firstElement().filter {
+                shouldWarn = it.size > 0
+                return@filter shouldWarn
+            }.flatMap { inventoryRepository.getOwnedItems("eggs").firstElement() }
         } else if (item.purchaseType == "hatchingPotions") {
-            var ownedCount = 0
-            inventoryRepository.getPets("Wolf", "premium", item.key).filter {
-                return@filter it.size > 0
-            }.flatMap { inventoryRepository.getOwnedPets() }.doOnNext {                for (pet in it) {
-                    if (pet.key?.contains(item.key) == true) {
-                        ownedCount += if (pet.trained > 0) 1 else 0
+            totalCount = 18
+            maybe = inventoryRepository.getPets().firstElement().filter {
+                val filteredPets = it.filter {pet ->
+                    pet.type == "premium" || pet.type == "wacky"
+                }
+                shouldWarn = filteredPets.isNotEmpty()
+                return@filter shouldWarn
+            }.flatMap { inventoryRepository.getOwnedItems("hatchingPotions").firstElement() }
+        }
+        if (maybe != null) {
+            val sub = maybe
+                    .doOnComplete {
+                        if (!shouldWarn) {
+                            onResult(-1)
+                        }
+                        val remaining = 18 - ownedCount
+                        onResult(max(0, remaining))
+                    }.flatMap {
+                for (thisItem in it) {
+                    if (thisItem.key == item.key) {
+                        ownedCount += thisItem.numberOwned
                     }
                 }
-            }.flatMap { inventoryRepository.getOwnedMounts() }.doOnNext {
-                for (mount in it) {
-                    if (mount.key?.contains(item.key) == true) {
-                        ownedCount += if (mount.owned) 1 else 0
+                inventoryRepository.getOwnedMounts().firstElement() }
+                    .flatMapPublisher {
+                        for (mount in it) {
+                        if (mount.key?.contains(item.key) == true) {
+                            ownedCount += if (mount.owned) 1 else 0
+                        }
                     }
-                }
-            }.flatMap { inventoryRepository.getOwnedItems("hatchingPotions") }.doOnNext {
-                for (potion in it) {
-                    if (potion.key == item.key) {
-                        ownedCount += potion.numberOwned
-                    }
-                }
-            }.firstElement().doOnComplete {
-                val remaining = 18 - ownedCount
-                onResult(max(0, remaining))
-            }.subscribe(Consumer {}, RxErrorHandler.handleEmptyError())
+                        inventoryRepository.getOwnedPets()
+                    }.firstElement().subscribe(Consumer {
+                        for (pet in it) {
+                            if (pet.key?.contains(item.key) == true) {
+                                ownedCount += if (pet.trained > 0) 1 else 0
+                            }
+                        }
+                        val remaining = totalCount - ownedCount
+                        onResult(max(0, remaining))
+                    }, RxErrorHandler.handleEmptyError())
         } else {
             onResult(-1)
         }

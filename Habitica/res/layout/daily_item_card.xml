@@ -126,6 +126,7 @@
                         android:layout_marginStart="@dimen/task_icon_space"
                         android:layout_marginLeft="@dimen/task_icon_space"
                         android:contentDescription="@string/belongs_to_challenge"
+                        android:scaleType="center"
                         app:srcCompat="@drawable/task_megaphone" />
 
                     <ImageView
@@ -135,6 +136,7 @@
                         android:layout_marginStart="@dimen/task_icon_space"
                         android:layout_marginLeft="@dimen/task_icon_space"
                         android:contentDescription="@string/has_reminder"
+                        android:scaleType="center"
                         app:srcCompat="@drawable/task_icon_reminder" />
                     <TextView
                         android:id="@+id/reminder_textview"
@@ -150,6 +152,7 @@
                         android:layout_marginStart="@dimen/task_icon_space"
                         android:layout_marginLeft="@dimen/task_icon_space"
                         android:contentDescription="@string/has_tag"
+                        android:scaleType="center"
                         app:srcCompat="@drawable/task_icon_tag" />
                 </LinearLayout>
             </LinearLayout>

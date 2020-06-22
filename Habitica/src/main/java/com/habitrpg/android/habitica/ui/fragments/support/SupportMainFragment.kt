@@ -52,9 +52,11 @@ class SupportMainFragment : BaseMainFragment() {
             MainNavigationController.navigate(R.id.bugFixFragment)
         }
         binding.suggestionsFeedbackWrapper.setOnClickListener {
-            val uriUrl = appConfigManager.feedbackURL().toUri()
-            val launchBrowser = Intent(Intent.ACTION_VIEW, uriUrl)
-            startActivity(launchBrowser)
+            if (appConfigManager.feedbackURL().isNotBlank()) {
+                val uriUrl = appConfigManager.feedbackURL().toUri()
+                val launchBrowser = Intent(Intent.ACTION_VIEW, uriUrl)
+                startActivity(launchBrowser)
+            }
         }
 
         compositeSubscription.add(Completable.fromAction {
