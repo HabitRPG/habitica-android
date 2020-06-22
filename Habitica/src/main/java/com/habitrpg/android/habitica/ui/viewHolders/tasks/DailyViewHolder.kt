@@ -32,26 +32,25 @@ class DailyViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> U
         } else {
             this.checklistIndicatorWrapper.setBackgroundColor(this.taskGray)
         }
-
-        if (data.reminders?.size == 0) {
+        if (newTask.reminders?.size == 0) {
             reminderTextView.visibility = View.GONE
         } else {
             reminderTextView.visibility = View.VISIBLE
             val now = Date()
             val calendar = Calendar.getInstance()
-            val nextReminder = data.reminders?.firstOrNull {
+            val nextReminder = newTask.reminders?.firstOrNull {
                 calendar.time = now
                 calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DATE), it.time?.hours ?: 0, it.time?.minutes ?: 0, 0)
                 now < calendar.time
-            } ?: data.reminders?.first()
+            } ?: newTask.reminders?.first()
 
             var reminderString = ""
             val reminderTime = nextReminder?.time
             if (reminderTime != null) {
                 reminderString += formatter.format(reminderTime)
             }
-            if ((data.reminders?.size ?: 0) > 1) {
-                reminderString = "$reminderString (+${(data.reminders?.size ?: 0)-1})"
+            if ((newTask.reminders?.size ?: 0) > 1) {
+                reminderString = "$reminderString (+${(newTask.reminders?.size ?: 0)-1})"
             }
             reminderTextView.text = reminderString
         }

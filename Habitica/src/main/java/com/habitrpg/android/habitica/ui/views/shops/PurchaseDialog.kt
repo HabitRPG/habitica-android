@@ -21,7 +21,6 @@ import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.Egg
-import com.habitrpg.android.habitica.models.inventory.Equipment
 import com.habitrpg.android.habitica.models.inventory.HatchingPotion
 import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.shops.Shop

@@ -14,10 +14,10 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.shared.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.fragments.skills.SkillTasksRecyclerViewFragment
 import com.habitrpg.android.habitica.ui.helpers.bindView
+import com.habitrpg.shared.habitica.models.tasks.Task
 import com.habitrpg.shared.habitica.models.tasks.TaskType
 import io.reactivex.functions.Consumer
 import javax.inject.Inject
@@ -73,9 +73,9 @@ class SkillTasksActivity : BaseActivity() {
                 val item = super.instantiateItem(container, position)
                 if (item is SkillTasksRecyclerViewFragment) {
                     item.taskType = when (position) {
-                        0 -> Task.TYPE_HABIT
-                        1 -> Task.TYPE_DAILY
-                        else -> Task.TYPE_TODO
+                        0 -> TaskType.TYPE_HABIT
+                        1 -> TaskType.TYPE_DAILY
+                        else -> TaskType.TYPE_TODO
                     }
 
                     compositeSubscription.add(item.getTaskSelectionEvents().subscribe(Consumer { task -> taskSelected(task) }, RxErrorHandler.handleEmptyError()))

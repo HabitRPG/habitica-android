@@ -13,7 +13,7 @@ import com.habitrpg.android.habitica.models.Notification
 import com.habitrpg.android.habitica.models.notifications.AchievementData
 import com.habitrpg.android.habitica.models.notifications.FirstDropData
 import com.habitrpg.android.habitica.models.notifications.LoginIncentiveData
-import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.shared.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable

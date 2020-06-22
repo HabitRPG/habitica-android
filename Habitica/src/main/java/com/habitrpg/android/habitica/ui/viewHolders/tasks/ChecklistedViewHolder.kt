@@ -48,21 +48,21 @@ abstract class ChecklistedViewHolder(itemView: View, scoreTaskFunc: ((Task, Task
             completed = false
         }
         this.checkbox.isChecked = completed
-        if (this.shouldDisplayAsActive(data) && !data.isPendingApproval) {
-            this.checkboxHolder.setBackgroundResource(data.lightTaskColor)
+        if (this.shouldDisplayAsActive(newTask) && !newTask.isPendingApproval) {
+            this.checkboxHolder.setBackgroundResource(newTask.lightTaskColor)
         } else {
             this.checkboxHolder.setBackgroundColor(this.taskGray)
         }
-        this.checklistCompletedTextView.text = data.completedChecklistCount.toString()
-        this.checklistAllTextView.text = data.checklist?.size.toString()
+        this.checklistCompletedTextView.text = newTask.completedChecklistCount.toString()
+        this.checklistAllTextView.text = newTask.checklist?.size.toString()
 
         this.checklistView.removeAllViews()
         this.updateChecklistDisplay()
 
-        this.checklistIndicatorWrapper.visibility = if (data.checklist?.size == 0) View.GONE else View.VISIBLE
-        this.rightBorderView?.visibility = if (data.checklist?.size == 0) View.VISIBLE else View.GONE
-        if (data.completed) {
-            this.rightBorderView?.setBackgroundResource(data.lightTaskColor)
+        this.checklistIndicatorWrapper.visibility = if (newTask.checklist?.size == 0) View.GONE else View.VISIBLE
+        this.rightBorderView?.visibility = if (newTask.checklist?.size == 0) View.VISIBLE else View.GONE
+        if (newTask.completed) {
+            this.rightBorderView?.setBackgroundResource(newTask.lightTaskColor)
         } else {
             this.rightBorderView?.setBackgroundColor(this.taskGray)
         }

@@ -17,7 +17,7 @@ class TodoViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> Un
         if (newTask.completed) {
             checklistIndicatorWrapper.setBackgroundColor(taskGray)
         } else {
-            checklistIndicatorWrapper.setBackgroundColor(data.lightTaskColor)
+            checklistIndicatorWrapper.setBackgroundColor(newTask.lightTaskColor)
         }
         super.bind(newTask, position, displayMode)
     }

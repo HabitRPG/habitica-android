@@ -43,7 +43,6 @@ import com.habitrpg.android.habitica.interactors.CheckClassSelectionUseCase
 import com.habitrpg.android.habitica.interactors.DisplayItemDropUseCase
 import com.habitrpg.android.habitica.interactors.NotifyUserUseCase
 import com.habitrpg.android.habitica.models.Notification
-import com.habitrpg.android.habitica.models.TutorialStep
 import com.habitrpg.android.habitica.models.inventory.Egg
 import com.habitrpg.android.habitica.models.inventory.HatchingPotion
 import com.habitrpg.android.habitica.models.notifications.LoginIncentiveData
