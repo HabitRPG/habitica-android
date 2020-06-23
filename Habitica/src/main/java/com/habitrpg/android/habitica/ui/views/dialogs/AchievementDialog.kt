@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.views.dialogs
 
 import android.content.Context
+import android.graphics.Typeface
 import android.os.Build
 import android.text.Html
 import android.util.TypedValue
@@ -15,6 +16,7 @@ import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 
 class AchievementDialog(context: Context) : HabiticaAlertDialog(context) {
+    var isLastOnboardingAchievement: Boolean = false
 
     private val binding: DialogAchievementDetailBinding = DialogAchievementDetailBinding.inflate(context.layoutInflater)
 
@@ -51,6 +53,7 @@ class AchievementDialog(context: Context) : HabiticaAlertDialog(context) {
             binding.titleView.setTextSize(TypedValue.COMPLEX_UNIT_SP,14f)
             binding.achievementWrapper.visibility = View.GONE
             binding.onboardingDoneIcon.visibility = View.VISIBLE
+            binding.titleView.typeface = Typeface.DEFAULT
             val titleText = context.getString(titleID)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 binding.titleView.setText(Html.fromHtml(titleText,  Html.FROM_HTML_MODE_LEGACY), TextView.BufferType.SPANNABLE)
@@ -67,8 +70,10 @@ class AchievementDialog(context: Context) : HabiticaAlertDialog(context) {
 
             addButton(R.string.onwards, isPrimary = true, isDestructive = false) { _, _ ->
             }
-            addButton(R.string.view_onboarding_tasks, false, false) { _, _ ->
-                MainNavigationController.navigate(R.id.adventureGuideActivity)
+            if (!isLastOnboardingAchievement) {
+                addButton(R.string.view_onboarding_tasks, false, false) { _, _ ->
+                    MainNavigationController.navigate(R.id.adventureGuideActivity)
+                }
             }
         } else {
             addButton(R.string.view_achievements, isPrimary = true, isDestructive = false) { _, _ ->

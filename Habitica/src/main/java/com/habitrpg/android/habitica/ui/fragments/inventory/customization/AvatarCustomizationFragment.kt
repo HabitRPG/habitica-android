@@ -49,7 +49,7 @@ class AvatarCustomizationFragment : BaseMainFragment() {
                 }
                 .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
         compositeSubscription.add(adapter.getUnlockCustomizationEvents()
-                .flatMap<UnlockResponse> { customization ->
+                .flatMap { customization ->
                     val user = this.user
                     if (user != null) {
                     userRepository.unlockPath(user, customization)
@@ -57,9 +57,11 @@ class AvatarCustomizationFragment : BaseMainFragment() {
                         Flowable.empty()
                     }
                 }
+                .flatMap { userRepository.retrieveUser(withTasks = false, forced = true) }
+                .flatMap { inventoryRepository.retrieveInAppRewards() }
                 .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
         compositeSubscription.add(adapter.getUnlockSetEvents()
-                .flatMap<UnlockResponse> { set ->
+                .flatMap { set ->
                     val user = this.user
                     if (user != null) {
                         userRepository.unlockPath(user, set)
@@ -67,6 +69,8 @@ class AvatarCustomizationFragment : BaseMainFragment() {
                         Flowable.empty()
                     }
                  }
+                .flatMap { userRepository.retrieveUser(withTasks = false, forced = true) }
+                .flatMap { inventoryRepository.retrieveInAppRewards() }
                 .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
 
 

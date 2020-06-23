@@ -707,6 +707,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                 .subscribe(Action {
                     retrieveUser(true)
                     val dialog = AchievementDialog(this)
+                    dialog.isLastOnboardingAchievement = event.isLastOnboardingAchievement
                     dialog.setType(event.type)
                     dialog.enqueue()
                     apiClient.readNotification(event.id)
@@ -759,7 +760,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
             dialog.setTitle(getString(R.string.hatched_pet_title, potionName, eggName))
             dialog.setAdditionalContentView(petWrapper)
             dialog.addButton(R.string.equip, true) { _, _ ->
-                inventoryRepository.equip(user, "pet", "Pet-" + egg.key + "-" + potion.key)
+                inventoryRepository.equip(user, "pet", egg.key + "-" + potion.key)
                         .subscribe(Consumer {}, RxErrorHandler.handleEmptyError())
             }
             dialog.addButton(R.string.share, false) { hatchingDialog, _ ->
