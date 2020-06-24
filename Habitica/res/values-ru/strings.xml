@@ -662,7 +662,7 @@
     <string name="visit_website">посетите сайт</string>
     <string name="subscribe_gift_description">Хотите дать преимущества подписки кому-то еще\?</string>
     <string name="gift_subscription">Подарить подписку</string>
-    <string name="gift_title">Кому бы вы хотели дать\?</string>
+    <string name="gift_title">Кому бы вы хотели сделать подарок\?</string>
     <string name="gift_one_get_one">Если вы подаришь кому-то один, тогда вы получишь один!</string>
     <string name="gift_one_get_one_detailed_description">Пока эта акция активна, вы получите соответствующую подписку автоматически после отправки подарка.</string>
     <string name="gift_subscription_subtitle">Выберите подписку, которую вы хотите подарить в низу! Эта покупка не будет автоматически продлена.</string>
