@@ -276,7 +276,7 @@
     <string name="add_invites">Añadir invitaciones</string>
     <string name="email">Correo electrónico</string>
     <string name="share_using">Compartir con</string>
-    <string name="share_levelup">¡He subido al nivel %d en Habitica mejorando mis hábitos en el mundo real!</string>
+    <string name="share_levelup">¡He subido al nivel %d en #Habitica mejorando mis hábitos en el mundo real!</string>
     <string name="share_hatched">¡He criado un %1$s %2$s en Habitica realizando mis tareas diarias!</string>
     <string name="share_raised">¡He conseguido una montura de %1$s en #Habitica realizando mis tareas diarias!</string>
     <string name="open_in_store">Abrir en Play Store</string>
