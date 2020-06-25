@@ -368,7 +368,12 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
     }
 
     override fun feedPet(petKey: String, foodKey: String): Flowable<FeedResponse> {
-        return apiService.feedPet(petKey, foodKey).compose(configureApiCallObserver())
+        return apiService.feedPet(petKey, foodKey)
+                .map {
+                    it.data.message = it.message
+                    it
+                }
+                .compose(configureApiCallObserver())
     }
 
     override fun hatchPet(eggKey: String, hatchingPotionKey: String): Flowable<Items> {

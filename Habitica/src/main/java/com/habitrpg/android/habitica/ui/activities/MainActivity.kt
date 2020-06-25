@@ -432,7 +432,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         val pet = event.usingPet
         compositeSubscription.add(this.inventoryRepository.feedPet(event.usingPet, event.usingFood)
                 .subscribe(Consumer { feedResponse ->
-                    HabiticaSnackbar.showSnackbar(snackbarContainer, getString(R.string.notification_pet_fed, pet.text), SnackbarDisplayType.NORMAL)
+                    HabiticaSnackbar.showSnackbar(snackbarContainer, feedResponse.message, SnackbarDisplayType.NORMAL)
                     if (feedResponse.value == -1) {
                         val mountWrapper = View.inflate(this, R.layout.pet_imageview, null) as? FrameLayout
                         val mountImageView = mountWrapper?.findViewById(R.id.pet_imageview) as? SimpleDraweeView

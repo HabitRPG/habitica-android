@@ -72,7 +72,6 @@ class PetDetailRecyclerAdapter(data: OrderedRealmCollection<Pet>?, autoUpdate: B
         var ownedPet: OwnedPet? = null
 
         private val imageView: SimpleDraweeView by bindView(R.id.imageView)
-        private val titleView: TextView by bindView(R.id.titleTextView)
         private val trainedProgressbar: ProgressBar by bindView(R.id.trainedProgressBar)
 
         private val isOwned: Boolean
@@ -95,13 +94,8 @@ class PetDetailRecyclerAdapter(data: OrderedRealmCollection<Pet>?, autoUpdate: B
         fun bind(item: Pet, ownedPet: OwnedPet?) {
             this.animal = item
             this.ownedPet = ownedPet
-            titleView.text = when {
-                item.color == "Veggie" -> context?.getString(R.string.garden)
-                item.type == "special" ->item.text
-                else -> item.color
-            }
             this.imageView.alpha = 1.0f
-            val imageName = "Pet-$itemType-${item.color}"
+            val imageName = "social_Pet-$itemType-${item.color}"
             if (this.ownedPet?.trained ?: 0 > 0) {
                 if (this.canRaiseToMount) {
                     this.trainedProgressbar.visibility = View.VISIBLE
