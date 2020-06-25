@@ -81,6 +81,7 @@ import io.realm.Realm
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import java.util.*
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {

@@ -131,7 +131,7 @@ class PetDetailRecyclerAdapter(data: OrderedRealmCollection<Pet>?, autoUpdate: B
             }
             val context = context ?: return
             val menu = BottomSheetMenu(context)
-            menu.addMenuItem(BottomSheetMenuItem(itemView.resources.getString(R.string.use_animal)))
+            menu.addMenuItem(BottomSheetMenuItem(itemView.resources.getString(R.string.equip)))
             if (canRaiseToMount) {
                 menu.addMenuItem(BottomSheetMenuItem(itemView.resources.getString(R.string.feed)))
             }
