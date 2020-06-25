@@ -394,7 +394,7 @@
     <string name="myster_item_notes">寄付会員は、毎月ミステリーアイテムを受け取ることができます。ミステリーアイテムは通常、月の終わりの週に新たなものがリリースされます。</string>
     <string name="open">開く</string>
     <string name="checkInRewardEarned">あなたは人生・生活を向上するために力を注いだので、ごほうびとして %1$s を獲得しました。</string>
-    <string name="nextPrizeUnlocks" tools:ignore="PluralsCandidate">あと%1$d日のログインで、新たな賞品が手に入ります</string>
+    <string name="nextPrizeUnlocks" tools:ignore="PluralsCandidate">次に賞品が受け取れるのは計%1$d日目のログインです</string>
     <string name="pending_approval">保留された承認</string>
     <string name="filters">フィルター</string>
     <string name="done">完了</string>
