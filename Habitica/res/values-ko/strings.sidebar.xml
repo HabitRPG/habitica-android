@@ -15,6 +15,6 @@
     <string name="sidebar_news">뉴스</string>
     <string name="sidebar_about">소개</string>
     <string name="sidebar_shops">상점</string>
-    <string name="sidebar_inbox">메세지</string>
+    <string name="sidebar_inbox">메시지</string>
     <string name="sidebar_stats">능력치</string>
 </resources>
