@@ -198,7 +198,7 @@
     <string name="outfit_back">등</string>
     <string name="outfit_body">몸</string>
     <string name="outfit_shield">보조무기</string>
-    <string name="outfit_weapon">무기</string>
+    <string name="outfit_weapon">주무기</string>
     <string name="wear_costume">의상 착용하기</string>
     <string name="equipped">착용됨</string>
     <string name="quest_cancel_message">정말로 이 퀘스트를 취소하시겠습니까\? 모든 초대장과 승인들을 잃을 것입니다. 퀘스트 스크롤은 주인에게 돌아갑니다.</string>
