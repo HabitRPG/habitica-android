@@ -796,4 +796,11 @@
     <string name="selected">선택됨</string>
     <string name="off">끄기</string>
     <string name="on">켜기</string>
+    <string name="remaining_hours">%d시간 남음</string>
+    <string name="remaining_minutes">%d분 남음</string>
+    <string name="remaining_days">%d일 남음</string>
+    <string name="remaining_weeks">%d 주 남음</string>
+    <string name="remaining_months">%d 달 남음</string>
+    <string name="ago_weeks">%d주 전</string>
+    <string name="ago_months">%d 개월 전</string>
 </resources>
