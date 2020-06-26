@@ -808,4 +808,6 @@
     <string name="login_incentive_short">해비티카에 정기적으로 접속하세요</string>
     <string name="login_incentive_count">해비티카에 %d 회 접속해서 잠금해제하세요.</string>
     <string name="user_level_with_class_unabbreviated">레벨 %1$d %2$s</string>
+    <string name="create_account_short">계정 생성</string>
+    <string name="party_invite_short">친구 초대</string>
 </resources>
