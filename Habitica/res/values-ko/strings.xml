@@ -323,8 +323,8 @@
     <string name="subscribe_prompt">정기구독자가 되어서 다음과 같은 혜택을 받으세요!</string>
     <string name="subscribe_listitem1">골드로 보석 구매</string>
     <string name="subscribe_listitem2">신비한 모래시계</string>
-    <string name="subscribe_listitem3">더 많은 기록 보관</string>
-    <string name="subscribe_listitem4">일일 획득 가능한 아이템 개수 두 배</string>
+    <string name="subscribe_listitem3">월간 미스터리 아이템</string>
+    <string name="subscribe_listitem4">스페셜 구독자 펫</string>
     <string name="subscriptions">구독</string>
     <string name="subscription_duration">자동이체: 매 %s</string>
     <string name="subscribe">구독하기</string>
@@ -812,4 +812,5 @@
 \n
 \n1년에 최대 네 개의 모래시계를 받을 수 있습니다. 받는 시간은 구독 갱신 스케쥴에 따라 정해집니다. 모래시계 획득 자격을 얻게 되는 달의 구독료 지불 다음 달의 첫 날 받게됩니다. 자세한 설명은 [구독] 페이지를 참고하세요.</string>
     <string name="mystic_hourglasses">신비한 모래시계</string>
+    <string name="subscribe_listitem5">아이템 드롭이 두 배</string>
 </resources>
