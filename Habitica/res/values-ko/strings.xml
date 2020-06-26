@@ -320,9 +320,9 @@
     <string name="has_reminder">알림 있음</string>
     <string name="has_tag">태그 있음</string>
     <string name="subscribe_title">정기구독은 개발자를 후원하고 Habitica를 유지하는 데 도움이 됩니다</string>
-    <string name="subscribe_prompt">정기구독자가 되면 다음과 같은 혜택을 얻을 수 있습니다:</string>
+    <string name="subscribe_prompt">정기구독자가 되어서 다음과 같은 혜택을 받으세요!</string>
     <string name="subscribe_listitem1">골드로 보석 구매</string>
-    <string name="subscribe_listitem2">월별 한정 아이템</string>
+    <string name="subscribe_listitem2">신비한 모래시계</string>
     <string name="subscribe_listitem3">더 많은 기록 보관</string>
     <string name="subscribe_listitem4">일일 획득 가능한 아이템 개수 두 배</string>
     <string name="subscriptions">구독</string>
@@ -333,9 +333,7 @@
 \n처음에는 매달 구비량이 한 달에 25개로 제한되어 있지만, 후원 기간에 따라 올라갈 수 있습니다.
 \n
 \n연속 정기후원 3개월마다 보석 제한개수가 5개씩, 최대 월 50개까지 올라갑니다!</string>
-    <string name="subscribe_listitem2_description">매달 당신의 아바타를 위한 독특한 의상 아이템을 드립니다!
-\n
-\n더불어, 정기 후원을 해주시는 매 3달마다, 미스터리 시간 여행자가 전통적인 (그리고 미래지향적인!) 꾸미기 아이템을 소개해 줄 겁니다.</string>
+    <string name="subscribe_listitem2_description">신비한 모래시계를 얻어서 시간 여행자 상점에서 아이템을 구입하세요!</string>
     <string name="subscribe_listitem3_description">완료한 할 일과 과제 기록이 더 오래 남습니다.</string>
     <string name="subscribe_listitem4_description">드롭 제한 두 배로 인하여 매일 과제를 수행하며 펫 컬렉션 완성을 도울 더 많은 아이템을 얻을 수 있습니다!</string>
     <string name="subscription_hourglasses">신비한 모래시계 +%d개</string>
@@ -515,8 +513,8 @@
     <string name="purchase_gems">보석 구매하기</string>
     <string name="insufficientHourglasses">이 아이템을 구입하려면 더 많은 신비한 모래시계가 필요합니다!</string>
     <string name="get_hourglasses">모래시계 받기</string>
-    <string name="subscribe_for_hourglasses">모래시계를 얻으려면 정기 후원을 해주세요</string>
-    <string name="timetravelers_closed_description">연속 정기후원 3달마다 신비한 모래시계 한 개씩을 얻을 수 있고 그것을 사용해서 과거와... 그리고 미래의 한정판 아이템, 펫, 그리고 탑승펫 등을 열 수 있습니다!</string>
+    <string name="subscribe_for_hourglasses">모래시계를 얻으려면 정기 구독을 해주세요</string>
+    <string name="timetravelers_closed_description">연속 정기구독 3달마다 신비한 모래시계 한 개씩을 얻을 수 있고 그것을 사용해서 과거와... 그리고 미래의 한정판 아이템, 펫, 그리고 탑승펫 등을 열 수 있습니다!</string>
     <string name="want_to_subscribe">정기후원 하고 싶어요</string>
     <string name="seasonal_closed_description">그랜드 갈라는 춘분, 하지, 추분 그리고 동지 즈음에 열리니 그 때마다 재미있는 여러 계절별 특별 아이템을 찾으러 오세요!</string>
     <string name="come_back_soon">어서 다시 만나요!</string>
@@ -810,4 +808,8 @@
     <string name="user_level_with_class_unabbreviated">레벨 %1$d %2$s</string>
     <string name="create_account_short">계정 생성</string>
     <string name="party_invite_short">친구 초대</string>
+    <string name="hourglasses_description">신비한 모래시계는 해비티카를 매 3개월 연속 구독당 1개씩만 받을 수 있는 희귀한 화폐입니다. 시간 여행자의 상점에서 이전에 출시되었던 장비세트나, 펫, 탑승펫, 움직이는 배경, 혹은 특수 퀘스트등을 사는 데 이용됩니다.
+\n
+\n1년에 최대 네 개의 모래시계를 받을 수 있습니다. 받는 시간은 구독 갱신 스케쥴에 따라 정해집니다. 모래시계 획득 자격을 얻게 되는 달의 구독료 지불 다음 달의 첫 날 받게됩니다. 자세한 설명은 [구독] 페이지를 참고하세요.</string>
+    <string name="mystic_hourglasses">신비한 모래시계</string>
 </resources>
