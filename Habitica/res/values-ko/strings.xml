@@ -264,9 +264,9 @@
     <string name="add_invites">초대 더하기</string>
     <string name="email">이메일</string>
     <string name="share_using">공유하기</string>
-    <string name="share_levelup">일상생활의 습관을 개선하여 해비티카에서 레벨 %d이(가) 되었어요!</string>
-    <string name="share_hatched">일상생활의 과제들을 달성하여 해비티카에서 %1$s %2$s 펫을 부화시켰어요!</string>
-    <string name="share_raised">일상생활의 과제들을 달성하여 %1$s 탑승펫을 얻었어요!</string>
+    <string name="share_levelup">일상생활의 습관을 개선하여 #Habitica 에서 레벨 %d이(가) 되었어요!</string>
+    <string name="share_hatched">일상생활의 과제들을 달성하여 #Habitica 에서 %1$s %2$s 펫을 부화시켰어요!</string>
+    <string name="share_raised">일상생활의 과제들을 달성하여 #Habitica 에서 %1$s 탑승펫을 얻었어요!</string>
     <string name="open_in_store">플레이스토어로 열기</string>
     <string name="change_class_confirmation">정말로 직업을 바꾸시겠습니까\? 보석 3개가 소모됩니다.</string>
     <string name="change_class_equipment_warning">주의: 더 이상 %s 직업의 장비를 구입할 수 없게됩니다.</string>
@@ -301,7 +301,7 @@
     <string name="google_services_missing">구글 플레이 서비스를 찾을 수 없습니다.</string>
     <string name="gem_purchase_toolbartitle">구매</string>
     <string name="gem_purchase_title">보석을 구매하시면 개발자를 지원하고 Habitica가 계속될 수 있도록 도울 수 있습니다</string>
-    <string name="gem_purchase_subtitle">보석들은 당신의 계정에 다양한 요소를 추가해줍니다. 예를들어:</string>
+    <string name="gem_purchase_subtitle">보석들은 당신의 계정에 다양한 요소를 추가해줍니다, 예를 들어:</string>
     <string name="gem_purchase_listitem1">아바타를 위한 멋진 의상</string>
     <string name="gem_purchase_listitem2">환상적인 배경들</string>
     <string name="gem_purchase_listitem3">펫알을 얻을 수 있는 재미있는 퀘스트들</string>
@@ -803,4 +803,9 @@
     <string name="remaining_months">%d 달 남음</string>
     <string name="ago_weeks">%d주 전</string>
     <string name="ago_months">%d 개월 전</string>
+    <string name="gold_capitalilzed">골드</string>
+    <string name="login_incentive_short_count">체크인 %d 회</string>
+    <string name="login_incentive_short">해비티카에 정기적으로 접속하세요</string>
+    <string name="login_incentive_count">해비티카에 %d 회 접속해서 잠금해제하세요.</string>
+    <string name="user_level_with_class_unabbreviated">레벨 %1$d %2$s</string>
 </resources>
