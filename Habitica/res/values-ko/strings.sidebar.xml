@@ -9,12 +9,14 @@
     <string name="sidebar_guilds">길드</string>
     <string name="sidebar_challenges">도전</string>
     <string name="sidebar_section_inventory">인벤토리</string>
-    <string name="sidebar_avatar">아바타</string>
+    <string name="sidebar_avatar">아바타 설정</string>
     <string name="sidebar_equipment">장비</string>
-    <string name="sidebar_stable">마구간</string>
+    <string name="sidebar_stable">펫 &amp; 탑승용 펫</string>
     <string name="sidebar_news">뉴스</string>
     <string name="sidebar_about">소개</string>
     <string name="sidebar_shops">상점</string>
     <string name="sidebar_inbox">메시지</string>
     <string name="sidebar_stats">능력치</string>
+    <string name="sidebar_subscription">구독</string>
+    <string name="sidebar_gems">보석 구매</string>
 </resources>
