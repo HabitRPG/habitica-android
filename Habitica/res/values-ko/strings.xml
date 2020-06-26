@@ -785,4 +785,15 @@
     <string name="insufficientGoldTitle">골드가 부족합니다</string>
     <string name="notifications">알림</string>
     <string name="x_months">%d 개월</string>
+    <string name="remaining_1hour">1시간 남음</string>
+    <string name="remaining_1Minute">1분 남음</string>
+    <string name="remaining_1day">1일 남음</string>
+    <string name="remaining_1week">1주 남음</string>
+    <string name="remaining_1month">1달 남음</string>
+    <string name="ago_1week">1주 전</string>
+    <string name="ago_1month">1달 전</string>
+    <string name="not_selected">선택되지 않음</string>
+    <string name="selected">선택됨</string>
+    <string name="off">끄기</string>
+    <string name="on">켜기</string>
 </resources>
