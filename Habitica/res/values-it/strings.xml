@@ -430,7 +430,7 @@
     <string name="empty_title_todos">Non hai alcuna To-do.</string>
     <string name="empty_description_todos">Le To-do sono attività da completare solo una volta. Aggiungi una checklist alle tue To-do per aumentarne il valore.</string>
     <string name="empty_title_rewards">Non hai nessuna Ricompensa</string>
-    <string name="reset_walkthrough">Ripristina la spiegazione introduttiva di Justin</string>
+    <string name="reset_walkthrough">Ripristina i Tutorial</string>
     <string name="read_community_guidelines">Per favore, leggi le Linee guida della community prima di scrivere un post.</string>
     <string name="maintenance">Manutenzione</string>
     <string name="reload_content">Ricarica contenuti</string>
