@@ -332,7 +332,7 @@
     <string name="has_reminder">Ha promemoria</string>
     <string name="has_tag">Ha etichetta</string>
     <string name="subscribe_title">Gli abbonamenti aiutano a supportare gli sviluppatori e a tenere Habitica in vita </string>
-    <string name="subscribe_prompt">Abbonati per ottenere questi utili benefici:</string>
+    <string name="subscribe_prompt">Abbonati per ottenere questi benefici esclusivi!</string>
     <string name="subscribe_listitem1">Oro per gemme</string>
     <string name="subscribe_listitem2">Clessidre Mistiche</string>
     <string name="subscribe_listitem3">Oggetti Misteriosi Mensili</string>
@@ -792,4 +792,5 @@
     <string name="on">Acceso</string>
     <string name="authentication_error_body">Il tuo Nome utente e/o la tua Password non sono corretti.</string>
     <string name="network_error_no_network_body">Non sei connesso a Internet.</string>
+    <string name="empty_description_dailies_filtered">Non ci sono Daily visibili con i filtri attuali.</string>
 </resources>
