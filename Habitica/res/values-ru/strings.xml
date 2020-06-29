@@ -737,7 +737,7 @@
     <string name="share_challenge_with">Поделиться испытанием с</string>
     <string name="details">Подробнее</string>
     <string name="create_task">Создать %s</string>
-    <string name="new_task">Новая задача</string>
+    <string name="new_task">Новое Задание</string>
     <string name="confirm_deletion">Подтвердить удаление</string>
     <string name="special_achievements">Особые достижения</string>
     <string name="seasonal_achievements">Сезонные достижения</string>
@@ -746,7 +746,7 @@
     <string name="pin">Прикрепить</string>
     <string name="levelup_title_10">Система классов открыта!</string>
     <string name="not_now">Не сейчас</string>
-    <string name="delete_task">Удалить задачу</string>
+    <string name="delete_task">Удалить задание</string>
     <string name="are_you_sure">Вы уверены\?</string>
     <string name="invite_to_party">Пригласить в команду</string>
     <string name="guild_bank">Банк гильдии</string>
