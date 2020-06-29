@@ -288,7 +288,7 @@
     <string name="party_invite">Разблокировать, пригласив друзей</string>
     <string name="login_incentive">Разблокируй, регулярно заходя в Habitica</string>
     <string name="create_account">Разблокируй, создав аккаунт</string>
-    <string name="successful_purchase">Купленный %1$s</string>
+    <string name="successful_purchase">Куплено %1$s</string>
     <string name="gold_plural">золото</string>
     <string name="chat_message_copied">Сообщение скопировано в буфер обмена</string>
     <string name="edit_tag_btn_edit">Редактировать</string>
