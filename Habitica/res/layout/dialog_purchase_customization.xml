@@ -38,6 +38,7 @@
         android:textSize="12sp"
         android:textColor="@color/gray_200"
         android:layout_marginTop="@dimen/spacing_medium"
+        android:visibility="gone"
         android:gravity="center_horizontal"/>
 
 </LinearLayout>

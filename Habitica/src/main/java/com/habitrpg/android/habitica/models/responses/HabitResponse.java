@@ -13,6 +13,7 @@ public class HabitResponse<T> {
     public T data;
     public List<Notification> notifications;
     private Boolean success;
+    public String message;
 
     /**
      * @return The success

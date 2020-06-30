@@ -96,7 +96,7 @@ class ItemRecyclerAdapter(data: OrderedRealmCollection<OwnedItem>?, autoUpdate: 
                 } else {
                     hatchingItem?.key + "-" + item?.key
                 }
-                val pet = existingPets?.where()?.equalTo("key", petKey)?.findFirst()
+                val pet = existingPets?.where()?.equalTo("key", petKey)?.notEqualTo("type", "special")?.findFirst()
                 return pet != null && ownedPets?.get(pet.key)?.trained ?: 0 <= 0
             }
 

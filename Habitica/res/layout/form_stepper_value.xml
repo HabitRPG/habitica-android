@@ -16,20 +16,20 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"/>
     <ImageButton
-        android:id="@+id/up_button"
-        android:layout_width="56dp"
-        android:layout_height="match_parent"
-        android:background="@color/gray_600"
-        android:src="@drawable/ic_arrow_drop_up_gray_48dp_states"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        />
-    <ImageButton
         android:id="@+id/down_button"
         android:layout_width="56dp"
         android:layout_height="match_parent"
         android:background="@color/gray_600"
         android:src="@drawable/ic_arrow_drop_down_gray_48dp_states"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        />
+    <ImageButton
+        android:id="@+id/up_button"
+        android:layout_width="56dp"
+        android:layout_height="match_parent"
+        android:background="@color/gray_600"
+        android:src="@drawable/ic_arrow_drop_up_gray_48dp_states"
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
         />

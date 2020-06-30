@@ -20,9 +20,6 @@ import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.android.habitica.models.inventory.Egg
-import com.habitrpg.android.habitica.models.inventory.HatchingPotion
-import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.shops.Shop
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.ui.helpers.bindView
@@ -35,21 +32,26 @@ import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientG
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientGoldDialog
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientHourglassesDialog
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientSubscriberGemsDialog
-import com.habitrpg.shared.habitica.models.inventory.Equipment
+import com.habitrpg.shared.habitica.models.user.OwnedItem
 import com.habitrpg.shared.habitica.models.user.User
 import io.reactivex.Flowable
+import io.reactivex.Maybe
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.functions.Consumer
+import io.realm.RealmResults
 import org.greenrobot.eventbus.EventBus
 import java.util.*
 import javax.inject.Inject
+import kotlin.math.max
 
 class PurchaseDialog(context: Context, component: UserComponent?, val item: ShopItem) : HabiticaAlertDialog(context) {
 
     @Inject
     lateinit var userRepository: UserRepository
+
     @Inject
     lateinit var inventoryRepository: InventoryRepository
+
     @Inject
     lateinit var configManager: AppConfigManager
 
@@ -109,16 +111,16 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
                     }
                     contentView = itemContent
                 }
-                    shopItem.isTypeQuest -> {
+                shopItem.isTypeQuest -> {
                     contentView = PurchaseDialogQuestContent(context)
                     inventoryRepository.getQuestContent(shopItem.key).firstElement().subscribe(Consumer { contentView.setQuestContent(it) }, RxErrorHandler.handleEmptyError())
                 }
-                    shopItem.isTypeGear -> {
+                shopItem.isTypeGear -> {
                     contentView = PurchaseDialogGearContent(context)
                     inventoryRepository.getEquipment(shopItem.key).firstElement().subscribe(Consumer { contentView.setEquipment(it) }, RxErrorHandler.handleEmptyError())
                     checkGearClass()
                 }
-                    "gems" == shopItem.purchaseType -> {
+                "gems" == shopItem.purchaseType -> {
                     val gemContent = PurchaseDialogGemsContent(context)
                     gemContent.stepperView.onValueChanged = {
                         purchaseQuantity = it.toInt()
@@ -126,7 +128,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
                     }
                     contentView = gemContent
                 }
-                    else -> contentView = PurchaseDialogBaseContent(context)
+                else -> contentView = PurchaseDialogBaseContent(context)
             }
 
             amountErrorLabel = contentView.findViewById(R.id.amount_error_label)
@@ -148,7 +150,8 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
             buyLabel.setTextColor(ContextCompat.getColor(context, R.color.gray_100))
         }
 
-        if (purchaseQuantity < 1 || (shopItem.limitedNumberLeft != null && (shopItem.limitedNumberLeft ?: 0) < purchaseQuantity)) {
+        if (purchaseQuantity < 1 || (shopItem.limitedNumberLeft != null && (shopItem.limitedNumberLeft
+                        ?: 0) < purchaseQuantity)) {
             amountErrorLabel?.visibility = View.VISIBLE
         } else {
             amountErrorLabel?.visibility = View.GONE
@@ -229,7 +232,8 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
                 limitedTextView.setBackgroundColor(ContextCompat.getColor(context, R.color.green_10))
             }
             val gemContent = additionalContentView as? PurchaseDialogGemsContent
-            gemContent?.stepperView?.maxValue = (user?.purchased?.plan?.numberOfGemsLeft() ?: 1).toDouble()
+            gemContent?.stepperView?.maxValue = (user?.purchased?.plan?.numberOfGemsLeft()
+                    ?: 1).toDouble()
         }
 
         buyButton.elevation = 0f
@@ -304,7 +308,8 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
                 if (shopItem.key == "armoire") {
                     snackbarText[0] = when {
                         buyResponse.armoire["type"] == "gear" -> context.getString(R.string.armoireEquipment, buyResponse.armoire["dropText"])
-                        buyResponse.armoire["type"] == "food" -> context.getString(R.string.armoireFood, buyResponse.armoire["dropArticle"] ?: "", buyResponse.armoire["dropText"])
+                        buyResponse.armoire["type"] == "food" -> context.getString(R.string.armoireFood, buyResponse.armoire["dropArticle"]
+                                ?: "", buyResponse.armoire["dropText"])
                         else -> context.getString(R.string.armoireExp)
                     }
                 }
@@ -381,57 +386,57 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
     }
 
     private fun remainingPurchaseQuantity(onResult: (Int) -> Unit) {
+        var totalCount = 20
+        var ownedCount = 0
+        var shouldWarn = true
+        var maybe: Maybe<RealmResults<OwnedItem>>? = null
         if (item.purchaseType == "eggs") {
-            var ownedCount = 0
-            inventoryRepository.getPets(item.key, "quest", null).filter {
-                return@filter it.size > 0
-            }.flatMap { inventoryRepository.getOwnedPets() }.doOnNext {
-                for (pet in it) {
-                    if (pet.key?.contains(item.key) == true) {
-                        ownedCount += if (pet.trained > 0) 1 else 0
-                    }
-                }
-            }.flatMap { inventoryRepository.getOwnedMounts() }.doOnNext {
-                for (mount in it) {
-                    if (mount.key?.contains(item.key) == true) {
-                        ownedCount += if (mount.owned) 1 else 0
-                    }
-                }
-            }.flatMap { inventoryRepository.getOwnedItems("eggs") }.doOnNext {
-                for (egg in it) {
-                    if (egg.key == item.key) {
-                        ownedCount += egg.numberOwned
-                    }
-                }
-            }.firstElement().subscribe {
-                val remaining = 20 - ownedCount
-                onResult(remaining)
-            }
+            maybe = inventoryRepository.getPets(item.key, "quest", null).firstElement().filter {
+                shouldWarn = it.size > 0
+                return@filter shouldWarn
+            }.flatMap { inventoryRepository.getOwnedItems("eggs").firstElement() }
         } else if (item.purchaseType == "hatchingPotions") {
-            var ownedCount = 0
-            inventoryRepository.getPets("Wolf", "quest", item.key).filter {
-                return@filter it.size > 0
-            }.flatMap { inventoryRepository.getOwnedPets() }.doOnNext {                for (pet in it) {
-                    if (pet.key?.contains(item.key) == true) {
-                        ownedCount += if (pet.trained > 0) 1 else 0
-                    }
+            totalCount = 18
+            maybe = inventoryRepository.getPets().firstElement().filter {
+                val filteredPets = it.filter { pet ->
+                    pet.type == "premium" || pet.type == "wacky"
                 }
-            }.flatMap { inventoryRepository.getOwnedMounts() }.doOnNext {
-                for (mount in it) {
-                    if (mount.key?.contains(item.key) == true) {
-                        ownedCount += if (mount.owned) 1 else 0
+                shouldWarn = filteredPets.isNotEmpty()
+                return@filter shouldWarn
+            }.flatMap { inventoryRepository.getOwnedItems("hatchingPotions").firstElement() }
+        }
+        if (maybe != null) {
+            val sub = maybe
+                    .doOnComplete {
+                        if (!shouldWarn) {
+                            onResult(-1)
+                        }
+                        val remaining = 18 - ownedCount
+                        onResult(max(0, remaining))
+                    }.flatMap {
+                        for (thisItem in it) {
+                            if (thisItem.key == item.key) {
+                                ownedCount += thisItem.numberOwned
+                            }
+                        }
+                        inventoryRepository.getOwnedMounts().firstElement()
                     }
-                }
-            }.flatMap { inventoryRepository.getOwnedItems("hatchingPotions") }.doOnNext {
-                for (potion in it) {
-                    if (potion.key == item.key) {
-                        ownedCount += potion.numberOwned
-                    }
-                }
-            }.firstElement().subscribe {
-                val remaining = 18 - ownedCount
-                onResult(remaining)
-            }
+                    .flatMapPublisher {
+                        for (mount in it) {
+                            if (mount.key?.contains(item.key) == true) {
+                                ownedCount += if (mount.owned) 1 else 0
+                            }
+                        }
+                        inventoryRepository.getOwnedPets()
+                    }.firstElement().subscribe(Consumer {
+                        for (pet in it) {
+                            if (pet.key?.contains(item.key) == true) {
+                                ownedCount += if (pet.trained > 0) 1 else 0
+                            }
+                        }
+                        val remaining = totalCount - ownedCount
+                        onResult(max(0, remaining))
+                    }, RxErrorHandler.handleEmptyError())
         } else {
             onResult(-1)
         }

@@ -97,7 +97,7 @@ class MountDetailRecyclerAdapter(data: OrderedRealmCollection<Mount>?, autoUpdat
                 return
             }
             val menu = BottomSheetMenu(itemView.context)
-            menu.addMenuItem(BottomSheetMenuItem(resources.getString(R.string.use_animal)))
+            menu.addMenuItem(BottomSheetMenuItem(resources.getString(R.string.equip)))
             menu.setSelectionRunnable {
                 animal?.let { equipEvents.onNext(it.key) }
             }

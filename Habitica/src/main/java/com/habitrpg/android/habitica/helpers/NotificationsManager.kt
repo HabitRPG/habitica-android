@@ -15,12 +15,17 @@ import com.habitrpg.android.habitica.models.notifications.FirstDropData
 import com.habitrpg.android.habitica.models.notifications.LoginIncentiveData
 import com.habitrpg.shared.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
+import com.habitrpg.android.habitica.ui.views.dialogs.AchievementDialog
 import io.reactivex.BackpressureStrategy
+import io.reactivex.Completable
 import io.reactivex.Flowable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.functions.Action
 import io.reactivex.functions.Consumer
 import io.reactivex.subjects.BehaviorSubject
 import org.greenrobot.eventbus.EventBus
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 class NotificationsManager (private val context: Context) {
     private val seenNotifications: MutableMap<String, Boolean>
@@ -57,7 +62,7 @@ class NotificationsManager (private val context: Context) {
 
     private fun handlePopupNotifications(notifications: List<Notification>): Boolean? {
         val now = Date()
-        if (now.time - (lastNotificationHandling?.time ?: 0) < 500) {
+        if (now.time - (lastNotificationHandling?.time ?: 0) < 300) {
             return true
         }
         lastNotificationHandling = now
@@ -74,7 +79,9 @@ class NotificationsManager (private val context: Context) {
                         Notification.Type.ACHIEVEMENT_GUILD_JOINED.type -> displayAchievementNotification(it)
                         Notification.Type.ACHIEVEMENT_CHALLENGE_JOINED.type -> displayAchievementNotification(it)
                         Notification.Type.ACHIEVEMENT_INVITED_FRIEND.type -> displayAchievementNotification(it)
-                        Notification.Type.ACHIEVEMENT_GENERIC.type -> displayGenericAchievementNotification(it)
+                        Notification.Type.ACHIEVEMENT_GENERIC.type -> displayAchievementNotification(it, notifications.find { notif ->
+                            notif.type == Notification.Type.ACHIEVEMENT_ONBOARDING_COMPLETE.type
+                        } != null)
                         Notification.Type.ACHIEVEMENT_ONBOARDING_COMPLETE.type -> displayAchievementNotification(it)
                         Notification.Type.FIRST_DROP.type -> displayFirstDropNotification(it)
                         else -> false
@@ -115,15 +122,18 @@ class NotificationsManager (private val context: Context) {
         return true
     }
 
-    private fun displayAchievementNotification(notification: Notification): Boolean {
-        EventBus.getDefault().post(ShowAchievementDialog(notification.type ?: "", notification.id))
-        logOnboardingEvents(notification.type ?: "")
-        return true
-    }
-
-    private fun displayGenericAchievementNotification(notification: Notification): Boolean {
-        val achievement = (notification.data as? AchievementData)?.achievement ?: ""
-        EventBus.getDefault().post(ShowAchievementDialog(achievement, notification.id))
+    private fun displayAchievementNotification(notification: Notification, isLastOnboardingAchievement: Boolean = false): Boolean {
+        val achievement = (notification.data as? AchievementData)?.achievement ?: notification.type ?: ""
+        val delay: Long = if (achievement == "createdTask" || achievement == Notification.Type.ACHIEVEMENT_ONBOARDING_COMPLETE.type) {
+            1000
+        } else {
+            200
+        }
+        val sub = Completable.complete()
+                .delay(delay, TimeUnit.MILLISECONDS)
+                .subscribe(Action {
+                    EventBus.getDefault().post(ShowAchievementDialog(achievement, notification.id, isLastOnboardingAchievement))
+                }, RxErrorHandler.handleEmptyError())
         logOnboardingEvents(achievement)
         return true
     }

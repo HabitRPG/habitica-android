@@ -1,28 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card_view"
-    android:layout_height="wrap_content"
-    android:layout_width="match_parent"
+    android:layout_height="96dp"
+    android:layout_width="76dp"
     android:background="@drawable/layout_rounded_bg_gray_700"
     android:orientation="vertical"
-    style="@style/CardContent">
+    android:padding="8dp">
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/imageView"
-        android:layout_width="@dimen/pet_image_width"
-        android:layout_height="@dimen/pet_image_height"
-        android:layout_gravity="center_horizontal"
-        android:scaleType="fitEnd" />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:id="@+id/titleTextView"
-        style="@style/RowTitle"/>
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_gravity="center"
+        app:actualImageScaleType="fitCenter"/>
 
     <ProgressBar
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/trainedProgressBar"
+        android:progressTint="@color/green_100"
+        android:progressBackgroundTint="@color/gray_600"
+        android:progressBackgroundTintMode="src_over"
+        android:layout_marginTop="4dp"
         android:max="50" />
 </LinearLayout>

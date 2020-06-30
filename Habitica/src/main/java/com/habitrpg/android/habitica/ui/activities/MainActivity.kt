@@ -81,6 +81,7 @@ import io.realm.Realm
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import java.util.*
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
@@ -364,7 +365,11 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                 })
             }
 
-            drawerIcon.setEnabled(user?.hasCompletedOnboarding == false)
+            if (appConfigManager.enableAdventureGuide()) {
+                drawerIcon.setEnabled(user?.hasCompletedOnboarding == false)
+            } else {
+                drawerIcon.setEnabled(false)
+            }
         }
     }
 
@@ -427,7 +432,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         val pet = event.usingPet
         compositeSubscription.add(this.inventoryRepository.feedPet(event.usingPet, event.usingFood)
                 .subscribe(Consumer { feedResponse ->
-                    HabiticaSnackbar.showSnackbar(snackbarContainer, getString(R.string.notification_pet_fed, pet.text), SnackbarDisplayType.NORMAL)
+                    HabiticaSnackbar.showSnackbar(snackbarContainer, feedResponse.message, SnackbarDisplayType.NORMAL)
                     if (feedResponse.value == -1) {
                         val mountWrapper = View.inflate(this, R.layout.pet_imageview, null) as? FrameLayout
                         val mountImageView = mountWrapper?.findViewById(R.id.pet_imageview) as? SimpleDraweeView
@@ -703,6 +708,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                 .subscribe(Action {
                     retrieveUser(true)
                     val dialog = AchievementDialog(this)
+                    dialog.isLastOnboardingAchievement = event.isLastOnboardingAchievement
                     dialog.setType(event.type)
                     dialog.enqueue()
                     apiClient.readNotification(event.id)
@@ -755,7 +761,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
             dialog.setTitle(getString(R.string.hatched_pet_title, potionName, eggName))
             dialog.setAdditionalContentView(petWrapper)
             dialog.addButton(R.string.equip, true) { _, _ ->
-                inventoryRepository.equip(user, "pet", "Pet-" + egg.key + "-" + potion.key)
+                inventoryRepository.equip(user, "pet", egg.key + "-" + potion.key)
                         .subscribe(Consumer {}, RxErrorHandler.handleEmptyError())
             }
             dialog.addButton(R.string.share, false) { hatchingDialog, _ ->

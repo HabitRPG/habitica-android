@@ -1032,7 +1032,7 @@
     <string name="purchase_equipment_title">Purchase Equipment</string>
     <string name="create_task_description">Add a task for something you would like to accomplish this week</string>
     <string name="complete_task_description">Check off any of your tasks to earn rewards</string>
-    <string name="hatch_pet_description">Head over to your Items and try combining a Hatching Potion and Egg</string>
+    <string name="hatch_pet_description">Complete tasks to get a Hatching Potion and Egg then hatch your Pet!</string>
     <string name="feedPet_description">Complete tasks to get food! You can feed it to your pet from Pets &amp; Mounts</string>
     <string name="purchase_equipment_description">Equipment is a way to customize your avatar and improve your stats</string>
     <string name="createdTaskTitle">Created your first task</string>
@@ -1040,21 +1040,22 @@
     <string name="hatchedPetTitle">Hatched a Pet</string>
     <string name="fedPetTitle">Fed a Pet</string>
     <string name="purchasedEquipmentTitle">Purchased Equipment</string>
-    <string name="createdTaskDescription">You created your first task</string>
-    <string name="completedTaskDescription">You completed a task for the first time</string>
-    <string name="hatchedPetDescription">You hatched your first pet</string>
-    <string name="fedPetDescription">You fed your first piece of food to a pet</string>
-    <string name="purchasedEquipmentDescription">You purchased your first piece of equipment for your avatar</string>
+    <string name="createdTaskDescription">Keep it up! If you need help planning tasks, try thinking about what you’d like to do during a specific time of day</string>
+    <string name="completedTaskDescription">A task can be a Habit, Daily, or To Do. Continue completing them to receive all sorts of rewards!</string>
+    <string name="hatchedPetDescription">There are so many Pets to collect, you’re bound to have a favorite. If you feed them, they may just grow…</string>
+    <string name="fedPetDescription">Every Pet has a specific food they enjoy! Experiment to find out which will grow your Pet the fastest</string>
+    <string name="purchasedEquipmentDescription">Equipment can be practical or just fashionable. Raise your stats to get all sorts of benefits to your avatar</string>
     <string name="first_drop_explanation1">Completing tasks gives you a chance to find eggs, hatching potions,  and pet food.</string>
     <string name="first_drop_explanation2">Head to your Items and try combining your new Egg and Hatching Potion!</string>
     <string name="go_to_items">Go to Items</string>
     <string name="first_drop_title">You found new items!</string>
-    <string name="onboardingCompleteTitle">You earned 5 Achievements and 100 Gold for your efforts.</string>
+    <string name="onboardingCompleteTitle"><![CDATA[You earned <b>5 Achievements</b> and <font color="#EE9109"><b>100 Gold</b></font> for your efforts.]]></string>
     <string name="onboardingCompleteDescription">If you want even more, check out Achievements and start collecting!</string>
     <string name="onboardingComplete_achievement_title">You completed your OnboardingTasks!</string>
     <string name="excess_items">Excess Items</string>
     <string name="excessItemsXLeft">You only need %d %s to hatch all possible pets. Are you sure you want to purchase %d?</string>
     <string name="purchaseX">Purchase %d</string>
-    <string name="excessItemsNoneLeft">You\'ve already hatched all possible %s pets. Are you sure you want to purchase %d %s?</string>
+    <string name="excessItemsNoneLeft">You already have everything you need for all %s pets. Are you sure you want to purchase %d %ss?</string>
     <string name="equip">Equip</string>
+    <string name="view_onboarding_tasks">View Onboarding Tasks</string>
 </resources>
