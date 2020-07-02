@@ -1012,7 +1012,7 @@
     <string name="manual_sync_restart">Synchronisez ou redémarrez</string>
     <string name="clear_cache_description">Pour vider votre cache, ouvrez l\'application de paramètres de votre téléphone. Ensuite, allez dans le menu Stockage &gt; Applications &gt; Habitica, puis sélectionnez l\'option Vider le cache.</string>
     <string name="clear_cache">Videz votre cache</string>
-    <string name="hourglasses_description">Les sabliers mystiques sont une forme de monnaie extrêmement rare que vous ne recevrez qu\'en vous abonnant à Habitica pour trois mois consécutifs ou plus. Ils sont utilisable à la boutique des voyageurs temporels pour acheter d\'anciens ensembles, familiers, montures, arrières-plans animés ou même des quêtes spéciales.
+    <string name="hourglasses_description">Les sabliers mystiques sont une forme de monnaie extrêmement rare que vous ne recevrez qu\'en vous abonnant à Habitica pour trois mois consécutifs ou plus. Ils sont utilisables à la boutique des voyageurs temporels pour acheter d\'anciens ensembles, familiers, montures, arrière-plans animés ou même des quêtes spéciales.
 \n
 \nVous pouvez recevoir jusqu\'à quatre sabliers mystiques par an. Vous les recevrez au moment où votre abonnement se renouvelle. Ils vous sont envoyés le premier jour du mois qui suit votre dernier paiement d\'abonnement vous qualifiant pour un sablier. Lisez la page d\'[abonnement] pour plus de détails.</string>
 </resources>
