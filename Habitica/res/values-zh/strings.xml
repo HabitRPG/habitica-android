@@ -110,7 +110,7 @@
     <string name="rewards">奖励</string>
     <string name="yes">是的</string>
     <string name="no">不</string>
-    <string name="quest">任务</string>
+    <string name="quest">副本</string>
     <string name="avatar_body">身体</string>
     <string name="avatar_hair">头发</string>
     <string name="avatar_shirt">上衣</string>
@@ -220,7 +220,7 @@
     <string name="eggs">蛋</string>
     <string name="hatching_potions">孵化药水</string>
     <string name="food">食物</string>
-    <string name="quests">任务</string>
+    <string name="quests">副本</string>
     <string name="pets">宠物</string>
     <string name="mounts">坐骑</string>
     <string name="armoireEquipment">你在魔法衣橱里找到了%s</string>
@@ -240,13 +240,13 @@
     <string name="share">分享</string>
     <string name="notification_pet_fed">你喂食了你的%s！</string>
     <string name="notification_purchase_reward">你购买了一个奖励</string>
-    <string name="world_quest">世界任务</string>
-    <string name="inn_description">需要休息？进入Daniel的客栈并暂停Habitica的一些困难机制吧。
-\n
+    <string name="world_quest">世界副本</string>
+    <string name="inn_description">需要休息？进入Daniel的客栈并暂停Habitica的一些困难机制吧。 
+\n 
 \n • 未完成的每日任务不会造成伤害
 \n • 任务连击不会断，颜色也不会变
-\n • Boss不会因你未完成每日任务而造成伤害。
-\n • 你对boss的伤害和收集任务物品会保持不变，直到你离开客栈</string>
+\n • Boss不会因你未完成每日任务而造成伤害
+\n • 你对boss的伤害和收集副本物品会保持不变，直到你离开客栈</string>
     <string name="empty_items">你没有任何的%s</string>
     <string name="user_level">Lvl %d 级</string>
     <string name="user_level_with_class">Lvl %1$d %2$s</string>
@@ -318,7 +318,7 @@
     <string name="gem_purchase_subtitle">你可以通过宝石给你的账户购买更多有趣的额外物品，包括：</string>
     <string name="gem_purchase_listitem1">角色形象的炫酷装扮</string>
     <string name="gem_purchase_listitem2">超棒的背景</string>
-    <string name="gem_purchase_listitem3">任务会奖励你宠物蛋</string>
+    <string name="gem_purchase_listitem3">副本会奖励你宠物蛋</string>
     <string name="gem_purchase_listitem4">100级前改变你职业的能力</string>
     <string name="support_habitica">支持Habitica</string>
     <string name="skill_transformation_use">使用</string>
@@ -570,7 +570,7 @@
     <string name="rage_strike_count">暴走：%d/%d</string>
     <string name="strike_description_title">什么是暴击？</string>
     <string name="strike_active_title">%s被攻击了！</string>
-    <string name="questShop">用户商店</string>
+    <string name="questShop">副本商店</string>
     <string name="market_owner_long">商人Alex</string>
     <string name="tavern_owner_long">客栈老板Daniel</string>
     <string name="stable_owner_long">驯兽师Matt</string>
@@ -608,12 +608,12 @@
     <string name="staff_moderators">工作人员和管理员</string>
     <string name="pending_strike_title">即将造成的攻击</string>
     <string name="strike_active_description">我们心爱的 %s 在 %s 攻击 %s 时被彻底破坏了，快抓紧时间完成你的任务来打败怪物，帮助我们重建！</string>
-    <string name="no_party_description">和朋友一同完成任务或者独自出击。和怪物战斗，创建挑战，能力越大，责任越大。</string>
+    <string name="no_party_description">和朋友一同完成副本或者独自出击。和怪物战斗，创建挑战，能力越大，责任越大。</string>
     <string name="join_party_description">把下方的用户名给一个队伍成员，这样他们就能邀请你加入了</string>
     <string name="insufficientSubscriberGems">你已经买空了这个月所有的宝石限额！每月可购买的宝石将于当月前三天内上架，感谢你的订阅！</string>
     <string name="world_boss_description_intro">世界Boss是一個全体玩家一同参与的特殊活动，大家一起团结一致通过完成任务来打败这个强力的怪物！</string>
     <string name="world_boss_description_2">Boss不会因为你没完成任务而攻击你，但是会积累怒气值，如果怒气值蓄满，Boss会随机攻击一个店主！</string>
-    <string name="world_boss_description_3">你可以同时挑战普通任务的Boss们，伤害对两者都有效</string>
+    <string name="world_boss_description_3">你可以同时挑战普通副本的Boss们，伤害对两者都有效</string>
     <string name="world_boss_description_4">在酒馆可以看到Boss攻略进度和怒气伤害</string>
     <string name="world_boss_action_prompt">打败Boss就能获得特殊奖励！快来从%s的手里拯救Habitica吧！</string>
     <string name="seasonalShop_owner_long">季节女巫</string>
@@ -696,7 +696,7 @@
     <string name="invited_to_party_notification"><![CDATA[你被邀请加入队伍<b>%1$s</b>]]></string>
     <string name="invited_to_private_guild"><![CDATA[你被邀请加入一个私人工会<b>%1$s</b>]]></string>
     <string name="invited_to_public_guild"><![CDATA[你被邀请加入一个工会<b>%1$s</b>]]></string>
-    <string name="invited_to_quest"><![CDATA[你被邀请加入任务<b>%1$s</b>]]></string>
+    <string name="invited_to_quest">你被邀请加入副本<b>%1$s</b></string>
     <string name="x_class">%s职业</string>
     <string name="become_x">成为%s</string>
     <string name="need_more_help">需要其他帮助？</string>
@@ -947,7 +947,7 @@
 \n所有通过宝石购买的内容只改变外貌，或者可以随时间免费获得的。
 \n
 \n你还可以通过其他玩家的礼物，挑战奖，为Habitica捐款或订阅来获得宝石。</string>
-    <string name="gold_description">金币是Habitica中的**主要货币**，可以让您购买某些装备，任务，物品，甚至是自定义奖励。
+    <string name="gold_description">金币是Habitica中的**主要货币**，可以让您购买某些装备、副本、物品，甚至是自定义奖励。
 \n
 \n通过完成任务或副本，或通过一些职业技能来**获得金币**。更高的**感知属性**提高了您赚取的金币数量。
 \n
@@ -960,7 +960,7 @@
     <string name="standard">标准</string>
     <string name="stat_allocation">属性分配</string>
     <string name="mana_points">法力值</string>
-    <string name="experience_description">经验值代表您的进步，也可以使您升级。你将主要通过完成任务或任务来**获得经验**，但是一些职业技能给你经验。
+    <string name="experience_description">经验值代表您的进步，也可以使您升级。你将主要通过完成任务或副本来**获得经验**，但是一些职业技能给你经验。
 \n
 \n难度较高的任务或红色任务将为您提供**更多的经验**。**智力属性**也可以提高你的经验获取率。</string>
     <string name="experience_points">经验值</string>
