@@ -136,7 +136,7 @@
     <string name="quest_cancel">招待を中止する</string>
     <string name="quest_abort">クエストを中断する</string>
     <string name="version_info">バージョン： %1$s (%2$d)</string>
-    <string name="sidebar_help">ヘルプとFAQ</string>
+    <string name="sidebar_help">ヘルプ・よくある質問</string>
     <string name="complete_tutorial">わかった!</string>
     <string name="dismiss_tutorial">もう一度通知</string>
     <string name="intro_1_subtitle">へよこそう</string>
@@ -569,7 +569,7 @@
     <string name="view_community_guidelines">コミュニティガイドラインを見る</string>
     <string name="guidelines_description">Habiticaは、そして特にキャンプ場などの公共スペースは、年齢やバックグラウンドにかかわらず歓迎する雰囲気を作ろうと努力しています。質問がある場合は、ガイドラインに助言を求めてみて下さい。</string>
     <string name="helpful_links">有用なリンク</string>
-    <string name="view_faq">FAQを見る</string>
+    <string name="view_faq">よくある質問を見る</string>
     <string name="report_bug">バグを報告する</string>
     <string name="player_tiers">プレイヤー段位</string>
     <string name="staff_moderators">スタッフとモデレーター</string>
