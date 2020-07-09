@@ -333,7 +333,7 @@
     <string name="has_reminder">Ha promemoria</string>
     <string name="has_tag">Ha etichetta</string>
     <string name="subscribe_title">Gli abbonamenti aiutano a supportare gli sviluppatori e a tenere Habitica in vita </string>
-    <string name="subscribe_prompt">Abbonati per ottenere questi benefici esclusivi!</string>
+    <string name="subscribe_prompt">Abbonati per ottenere questi vantaggi esclusivi!</string>
     <string name="subscribe_listitem1">Oro per gemme</string>
     <string name="subscribe_listitem2">Clessidre Mistiche</string>
     <string name="subscribe_listitem3">Oggetti Misteriosi Mensili</string>
@@ -660,14 +660,14 @@
     <string name="equipment_int">INT:</string>
     <string name="equipment_per">PER:</string>
     <string name="visit_website">Visita il sito web</string>
-    <string name="subscribe_gift_description">Vuoi dare i benefici di un abbonamento a qualcun altro?</string>
+    <string name="subscribe_gift_description">Vuoi dare i vantaggi di un abbonamento a qualcun altro\?</string>
     <string name="gift_subscription">Regala Abbonamento</string>
     <string name="gift_one_get_one_description">Evento Regala un Abbonamento e Ricevi un Abbonamento Gratuito in corso ora!</string>
     <string name="gift_title">A chi vorresti regalarlo?</string>
     <string name="gift_one_get_one">Regalane uno, Ottienine uno per te!</string>
     <string name="gift_one_get_one_detailed_description">Mentre questa promozione è attiva, riceverai un abbonamento corrispondente dopo aver mandato il tuo regalo.</string>
     <string name="gift_subscription_subtitle">Scegli l\'abbonamento che vorresti regalare qua sotto! Questo acquisto non si rinnoverà automaticamente.</string>
-    <string name="send_gift">Manda un Regalo</string>
+    <string name="send_gift">Invia un Regalo</string>
     <string name="server">Server</string>
     <string name="gift_confirmation_title">Il tuo regalo è stato inviato!</string>
     <string name="gift_confirmation_text_g1g1">L\'abbonamento regalato è stato ricevuto e l\'abbonamento corrispondente applicato al tuo profilo.</string>
@@ -972,8 +972,8 @@
     <string name="triadBingoTitle">Triplo Bingo</string>
     <string name="mountMasterTitle">A cavallo!</string>
     <string name="beastMasterDescription">Hai ottenuto la medaglia “Domatore” per aver collezionato tutti gli animali!</string>
-    <string name="beastMasterTitle">Domatore</string>
-    <string name="partyOnDescription">La tua squadra è cresciuta fino a 4 membri!</string>
+    <string name="beastMasterTitle">Re delle Bestie</string>
+    <string name="partyOnDescription">La tua squadra ha raggiunto i 4 membri!</string>
     <string name="partyOnTitle">Una squadra spumeggiante</string>
     <string name="partyUpDescription">Hai collaborato con un membro della squadra!</string>
     <string name="partyUpTitle">Una squadra felice</string>
