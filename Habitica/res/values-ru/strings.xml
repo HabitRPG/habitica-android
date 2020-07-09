@@ -900,4 +900,6 @@
     <string name="years">Год</string>
     <string name="assigned_stat">Очки характеристики распределены</string>
     <string name="take_me_back">Вернуться</string>
+    <string name="login_incentive_short">регулярное посещение сайта Habitica</string>
+    <string name="login_incentive_count">Разблокируй, зайдя в Habitica % раз.</string>
 </resources>
