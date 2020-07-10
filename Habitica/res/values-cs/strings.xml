@@ -524,4 +524,7 @@
     <string name="about_libraries">Knihovny</string>
     <string name="about_bugreport">Nahlásit chybu</string>
     <string name="about_source_code">Zdrojový kód</string>
+    <string name="about_rate_our_app">Ohodnoť naši aplikaci</string>
+    <string name="about_title">O aplikaci</string>
+    <string name="about_give_us_feedback">Pošli nám zpětnou vazbu!</string>
 </resources>
