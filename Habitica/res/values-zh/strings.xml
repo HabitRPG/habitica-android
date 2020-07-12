@@ -20,17 +20,17 @@
     <string name="pref_reminder_checkbox">激活提醒</string>
     <string name="pref_reminder_picker">设置提醒时间</string>
     <string name="pref_cds_header">自定义每日起始时间</string>
-    <string name="pref_push_notifications_checkbox">用推送通知</string>
+    <string name="pref_push_notifications_checkbox">开启推送提醒</string>
     <string name="push_notifications">推送通知</string>
-    <string name="push_notifications_sum">设置用户推送通知</string>
+    <string name="push_notifications_sum">设置用户推送提醒</string>
     <string name="preference_push_you_won_challenge">你赢得了一项挑战！</string>
     <string name="preference_push_received_a_private_message">收到一条私信</string>
-    <string name="preference_push_gifted_gems">赠送的宝石</string>
+    <string name="preference_push_gifted_gems">获赠钻石</string>
     <string name="preference_push_gifted_subscription">赠送的订阅</string>
-    <string name="preference_push_invited_to_party">被邀请加入队伍</string>
-    <string name="preference_push_invited_to_guild">已邀请至公会</string>
+    <string name="preference_push_invited_to_party">受邀入队</string>
+    <string name="preference_push_invited_to_guild">受邀加入公会</string>
     <string name="preference_push_your_quest_has_begun">你的冒险开始了</string>
-    <string name="preference_push_invited_to_quest">被邀请加入冒险</string>
+    <string name="preference_push_invited_to_quest">受邀加入冒险</string>
     <!--Adding tasks-->
     <string name="action_edit">编辑</string>
     <string name="action_cancel">取消</string>
@@ -39,22 +39,22 @@
     <string name="username">用户名</string>
     <string name="email_username">电子邮件或用户名</string>
     <string name="password">密码</string>
-    <string name="emailAddress">电子邮件地址</string>
+    <string name="emailAddress">电子邮件</string>
     <string name="confirmpassword">确认密码</string>
     <string name="logout">注销</string>
-    <string name="logout_description">从你的账号登出</string>
+    <string name="logout_description">退出账号</string>
     <string name="LoginActivityName">欢迎</string>
     <string name="about_title">关于</string>
     <string name="about_libraries">资源库</string>
-    <string name="about_habitica_open_source">Habitica是一个发布在Github上的开源软件</string>
-    <string name="about_rate_our_app">评价我们的应用</string>
-    <string name="about_give_us_feedback">请给我们提交建议！</string>
-    <string name="about_bugreport">反馈漏洞</string>
+    <string name="about_habitica_open_source">Habitica是一款发布于Github的开源软件</string>
+    <string name="about_rate_our_app">给我们的应用打分</string>
+    <string name="about_give_us_feedback">向我们提交反馈！</string>
+    <string name="about_bugreport">反馈软件问题</string>
     <string name="about_source_code">源代码</string>
     <!--Network Errors-->
-    <string name="internal_error_api">服务器连接丢失</string>
-    <string name="authentication_error_title">认证出现错误</string>
-    <string name="login_validation_error_title">认可错误</string>
+    <string name="internal_error_api">与服务器断开连接</string>
+    <string name="authentication_error_title">身份验证错误</string>
+    <string name="login_validation_error_title">验证错误</string>
     <string name="login_validation_error_fieldsmissing">请填写所有内容。</string>
     <string name="save_changes">保存</string>
     <string name="copy">复制</string>
@@ -84,12 +84,12 @@
     <string name="friday">五</string>
     <string name="saturday">六</string>
     <string name="sunday">日</string>
-    <string name="levelup_header">你达到%1$d级！</string>
+    <string name="levelup_header">你达到了%1$d级！</string>
     <string name="levelup_detail">通过完成您现实生活中的目标，你提升等级并恢复满血状态了！</string>
-    <string name="onwards">吼啊~！</string>
-    <string name="faint_subtitle">别失望！</string>
+    <string name="onwards">冲啊！</string>
+    <string name="faint_subtitle">别丧气！</string>
     <string name="faint_penalty_body">你降了一级，丢失了所有的金币和一件装备。不过继续努力，你就可以把他们都拿回来！加油，你会更棒的！</string>
-    <string name="faint_header">你失去了所有的生命值！</string>
+    <string name="faint_header">你的生命值耗光了！</string>
     <string name="faint_button">补满生命值 &amp; 再次尝试</string>
     <string name="filter">筛选</string>
     <string name="used_skill_without_mana">你使用了 %1$s.</string>
@@ -927,7 +927,7 @@
     <string name="ago_1month">1月前</string>
     <string name="skill_progress_title">使用技能</string>
     <string name="authentication_error_body">你的用户名和/或密码不正确。</string>
-    <string name="network_error_no_network_body">你没有连接到互联网。</string>
+    <string name="network_error_no_network_body">未连接到互联网</string>
     <string name="stat_description">所有Habitica角色都有四个会影响Habitica游戏玩法的属性。
 \n
 \n**力量**增加“暴击”的几率。暴击时，金币、经验值、和物品掉落的机会都会有所增长。它也能帮助你伤害boss。战士和盗贼从他们的职业装备获得力量。
