@@ -309,7 +309,10 @@
     </style>
     
     <style name="BottomMenuItem">
-        <item name="android:padding">@dimen/bottom_menu_padding</item>
+        <item name="android:paddingStart">@dimen/bottom_menu_padding</item>
+        <item name="android:paddingEnd">@dimen/bottom_menu_padding</item>
+        <item name="android:paddingTop">@dimen/spacing_large</item>
+        <item name="android:paddingBottom">@dimen/spacing_large</item>
         <item name="android:background">@drawable/selection_highlight</item>
     </style>
 

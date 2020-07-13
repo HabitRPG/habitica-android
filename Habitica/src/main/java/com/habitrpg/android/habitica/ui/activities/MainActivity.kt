@@ -159,7 +159,11 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
     @SuppressLint("ObsoleteSdkInt")
     public override fun onCreate(savedInstanceState: Bundle?) {
-        launchTrace = FirebasePerformance.getInstance().newTrace("MainActivityLaunch")
+        try {
+            launchTrace = FirebasePerformance.getInstance().newTrace("MainActivityLaunch")
+        } catch (_: IllegalStateException) {
+
+        }
         launchTrace?.start()
         super.onCreate(savedInstanceState)
 
@@ -358,11 +362,15 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
             val quest = user?.party?.quest
             if (quest?.completed?.isNotBlank() == true) {
-                compositeSubscription.add(inventoryRepository.getQuestContent(user?.party?.quest?.completed ?: "").firstElement().subscribe {
+                compositeSubscription.add(inventoryRepository.getQuestContent(user?.party?.quest?.completed ?: "").firstElement().subscribe(Consumer {
                     QuestCompletedDialog.showWithQuest(this, it)
 
                     userRepository.updateUser(user, "party.quest.completed", "").subscribe(Consumer {}, RxErrorHandler.handleEmptyError())
-                })
+                }, RxErrorHandler.handleEmptyError()))
+            }
+
+            if (user?.flags?.welcomed == false) {
+                compositeSubscription.add(userRepository.updateUser(user, "flags.welcomed", true).subscribe(Consumer {}, RxErrorHandler.handleEmptyError()))
             }
 
             if (appConfigManager.enableAdventureGuide()) {

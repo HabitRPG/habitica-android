@@ -55,19 +55,23 @@ class StableRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<
     
     override fun onBindViewHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder, position: Int) {
         val obj = this.itemList[position]
-        if (obj == "header") {
-            (holder as? StableHeaderViewHolder)?.bind()
-        } else if (obj.javaClass == String::class.java) {
-            if (obj == "Standard") {
-                var params = holder.itemView.layoutParams as GridLayoutManager.LayoutParams
-                params.height = 135
-                holder.itemView.layoutParams = params
+        when {
+            obj == "header" -> {
+                (holder as? StableHeaderViewHolder)?.bind()
             }
-            (holder as? SectionViewHolder)?.bind(obj as? String ?: "")
+            obj.javaClass == String::class.java -> {
+                if (obj == "Standard") {
+                    val params = holder.itemView.layoutParams as GridLayoutManager.LayoutParams
+                    params.height = 135
+                    holder.itemView.layoutParams = params
+                }
+                (holder as? SectionViewHolder)?.bind(obj as? String ?: "")
 
-        } else {
-            (obj as? Animal)?.let { (holder as? StableViewHolder)?.bind(it) }
+            }
+            else -> {
+                (obj as? Animal)?.let { (holder as? StableViewHolder)?.bind(it) }
 
+            }
         }
     }
 

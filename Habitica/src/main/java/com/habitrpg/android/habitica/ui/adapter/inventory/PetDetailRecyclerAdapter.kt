@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.adapter.inventory
 
 import android.content.Context
+import android.graphics.PorterDuff
 import android.graphics.drawable.BitmapDrawable
 import android.view.View
 import android.view.ViewGroup
@@ -107,10 +108,14 @@ class PetDetailRecyclerAdapter(data: OrderedRealmCollection<Pet>?, autoUpdate: B
                 this.trainedProgressbar.visibility = View.GONE
                 this.imageView.alpha = 0.1f
             }
+            if (android.os.Build.VERSION.SDK_INT > android.os.Build.VERSION_CODES.LOLLIPOP_MR1) {
+                trainedProgressbar.progressBackgroundTintMode = PorterDuff.Mode.SRC_OVER
+            }
             imageView.background = null
             val trained = ownedPet?.trained ?: 0
             DataBindingUtils.loadImage(imageName) {
-                val drawable = BitmapDrawable(context?.resources, if (trained  == 0) it.extractAlpha() else it)
+                val resources = context?.resources ?: return@loadImage
+                val drawable = BitmapDrawable(resources, if (trained  == 0) it.extractAlpha() else it)
                 Observable.just(drawable)
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(Consumer {
@@ -125,6 +130,7 @@ class PetDetailRecyclerAdapter(data: OrderedRealmCollection<Pet>?, autoUpdate: B
             }
             val context = context ?: return
             val menu = BottomSheetMenu(context)
+            menu.setTitle(animal?.text)
             menu.addMenuItem(BottomSheetMenuItem(itemView.resources.getString(R.string.equip)))
             if (canRaiseToMount) {
                 menu.addMenuItem(BottomSheetMenuItem(itemView.resources.getString(R.string.feed)))

@@ -21,7 +21,6 @@
         android:id="@+id/trainedProgressBar"
         android:progressTint="@color/green_100"
         android:progressBackgroundTint="@color/gray_600"
-        android:progressBackgroundTintMode="src_over"
         android:layout_marginTop="4dp"
         android:max="50" />
 </LinearLayout>
