@@ -5,13 +5,15 @@ import android.view.View
 import android.widget.LinearLayout
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.databinding.MenuBottomSheetBinding
 
 class BottomSheetMenu(context: Context) : BottomSheetDialog(context), View.OnClickListener {
-    private var contentView = layoutInflater.inflate(R.layout.menu_bottom_sheet, null) as LinearLayout
+    private var binding = MenuBottomSheetBinding.inflate(layoutInflater)
     private var runnable: ((Int) -> Unit)? = null
 
     init {
-        setContentView(contentView)
+        setContentView(binding.root)
+        binding.titleView.visibility = View.GONE
     }
 
     fun setSelectionRunnable(runnable: (Int) -> Unit) {
@@ -24,19 +26,24 @@ class BottomSheetMenu(context: Context) : BottomSheetDialog(context), View.OnCli
         }
     }
 
+    override fun setTitle(title: CharSequence?) {
+        binding.titleView.text = title
+        binding.titleView.visibility = View.VISIBLE
+    }
+
     fun addMenuItem(menuItem: BottomSheetMenuItem) {
-        val item = menuItem.inflate(this.context, layoutInflater, this.contentView)
+        val item = menuItem.inflate(this.context, layoutInflater, this.binding.menuItems)
         item.setOnClickListener(this)
-        this.contentView.addView(item)
+        this.binding.menuItems.addView(item)
     }
 
     fun removeMenuItem(index: Int) {
-        this.contentView.removeViewAt(index)
+        this.binding.menuItems.removeViewAt(index)
     }
 
     override fun onClick(v: View) {
         if (this.runnable != null) {
-            val index = this.contentView.indexOfChild(v)
+            val index = this.binding.menuItems.indexOfChild(v)
             if (index != -1) {
                 runnable?.let { it(index) }
                 this.dismiss()
