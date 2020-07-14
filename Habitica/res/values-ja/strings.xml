@@ -237,15 +237,15 @@
     <string name="close">閉じる</string>
     <string name="share">共有する</string>
     <string name="notification_pet_fed">%sにえさをやった!</string>
-    <string name="notification_purchase_reward">報酬をを購入しました</string>
-    <string name="world_quest">世界のクエスト</string>
+    <string name="notification_purchase_reward">ごほうびを購入しました</string>
+    <string name="world_quest">ワールドクエスト</string>
     <string name="inn_description">休息が必要ですか？　Danielのロッジにチェックインして、Habiticaにおける手ごわいゲーム要素を停止させましょう。：
 \n
 \n ・日課をこなさなくてもダメージを受けなくなります
 \n ・タスクの連続実行は変更されなくなり、色も変わらなくなります
 \n ・日課をこなさなくてもボスからのダメージを受けなくなります
 \n ・チェックアウトするまで、ボスダメージや収集クエストアイテムは保留されたままになります</string>
-    <string name="empty_items">%s を持ってないよ</string>
+    <string name="empty_items">%s を持っていません</string>
     <string name="user_level">レベル %d</string>
     <string name="user_level_with_class">レベル %1$d %2$s</string>
     <string name="warrior">戦士</string>
@@ -425,11 +425,11 @@
     <string name="setuP_group_other">ほか</string>
     <string name="clear">クリア</string>
     <string name="empty_title_habits">習慣を持っていません</string>
-    <string name="empty_description_habits">習慣は、タスクの中でもこなすスケジュールがきっちりと決まっていないもの。１日に何回チェックしてもいいし、チェックしない日があっても大丈夫。</string>
+    <string name="empty_description_habits">習慣は、タスクの中でもこなすスケジュールがきっちりと決まっていないものです。１日に何回チェックしてもいいし、チェックしない日があっても大丈夫です。</string>
     <string name="empty_title_dailies">日課を持っていません</string>
-    <string name="empty_description_dailies">日課は一定のペースでこなすタスクだよ。自分に合ったスケジュールを組もう！</string>
+    <string name="empty_description_dailies">日課は一定のペースでこなすタスクです。自分に合ったスケジュールを組みましょう！</string>
     <string name="empty_title_todos">To-Doがありません</string>
-    <string name="empty_description_todos">To-Doは一度だけ実行すればいいタスク。チェックリストを加えて忘れないようにしよう。</string>
+    <string name="empty_description_todos">To-Doは一度だけ実行すればいいタスクです。チェックリストを加えて忘れないようにしましょう。</string>
     <string name="empty_title_rewards">ごほうびがありません</string>
     <string name="reset_walkthrough">チュートリアルをリセット</string>
     <string name="read_community_guidelines">投稿する前に、私たちの<u>コミュニティガイドライン</u>を見直してください</string>
