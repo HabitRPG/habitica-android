@@ -458,7 +458,7 @@
     <string name="party_description">Descripción del Equipo</string>
     <string name="number_participants">%1$dParticipantes</string>
     <string name="welcome_back">¡Bienvenido/a de vuelta!</string>
-    <string name="yesterdaililes_prompt">¿Has hecho alguno de estos Diarios ayer?</string>
+    <string name="yesterdaililes_prompt">Tacha las Tareas Diarias que hayas realizado ayer:</string>
     <string name="start_day">Empezar mi día</string>
     <string name="leave_party_confirmation">¿Seguro que quieres salir del Equipo\?</string>
     <string name="pending">Pendiente</string>
