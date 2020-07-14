@@ -433,7 +433,7 @@
     <string name="party_description">Deskripsi Party</string>
     <string name="number_participants">%1$d Partisipan</string>
     <string name="welcome_back">Selamat Datang Kembali</string>
-    <string name="yesterdaililes_prompt">Apakah kamu melakukan Keseharian berikut ini kemarin?</string>
+    <string name="yesterdaililes_prompt">Periksa Keseharian yang kamu lakukan kemarin:</string>
     <string name="start_day">Mulai Hariku</string>
     <string name="leave_party_confirmation">Apakah kamu yakin ingin meninggalkan Party ini?</string>
     <string name="pending">Menunggu</string>
