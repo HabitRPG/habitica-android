@@ -545,7 +545,7 @@
     <string name="leave_quest_confirmation">Är du säker på att du vill lämna det aktiva uppdraget? Alla dina uppdragsframsteg kommer att förloras.</string>
     <string name="number_participants">%1$d deltagare</string>
     <string name="welcome_back">Välkommen tillbaka</string>
-    <string name="yesterdaililes_prompt">Gjorde du dina dailies igår?</string>
+    <string name="yesterdaililes_prompt">Gjorde du dina dailies igår:</string>
     <string name="start_day">Starta min dag</string>
     <string name="leave_party_confirmation">Är du säker på att du vill lämna partyt?</string>
     <string name="nextPrizeUnlocksIn" formatted="false">Nästa pris vid %d incheckningar</string>
