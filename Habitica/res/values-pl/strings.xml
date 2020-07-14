@@ -431,7 +431,7 @@
     <string name="party_description">Opis drużyny</string>
     <string name="number_participants">%1$d Uczestników</string>
     <string name="welcome_back">Witaj ponownie</string>
-    <string name="yesterdaililes_prompt">Czy wykonałeś wczoraj któreś z tych Codziennych?</string>
+    <string name="yesterdaililes_prompt">Zaznacz wykonane wczoraj Codzienne:</string>
     <string name="start_day">Rozpocznij mój dzień</string>
     <string name="leave_party_confirmation">Jesteś pewien, że chcesz opuścić drużynę ?</string>
     <string name="pending">Oczekujące</string>
