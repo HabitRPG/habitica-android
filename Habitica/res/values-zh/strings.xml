@@ -927,7 +927,7 @@
     <string name="ago_1month">1月前</string>
     <string name="skill_progress_title">使用技能</string>
     <string name="authentication_error_body">你的用户名和/或密码不正确。</string>
-    <string name="network_error_no_network_body">未连接到互联网</string>
+    <string name="network_error_no_network_body">未连接到互联网。</string>
     <string name="stat_description">所有Habitica角色都有四个会影响Habitica游戏玩法的属性。
 \n
 \n**力量**增加“暴击”的几率。暴击时，金币、经验值、和物品掉落的机会都会有所增长。它也能帮助你伤害boss。战士和盗贼从他们的职业装备获得力量。
