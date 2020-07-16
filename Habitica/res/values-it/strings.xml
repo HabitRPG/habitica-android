@@ -427,7 +427,7 @@
     <string name="empty_title_habits">Non hai alcuna Abitudine</string>
     <string name="empty_description_habits">Le Abitudini sono attività che possono essere svolte in modo molto flessibile. Puoi usarle diverse volte al giorno, o non usarle affatto.</string>
     <string name="empty_title_dailies">Non hai nessuna Attività Giornaliera</string>
-    <string name="empty_description_dailies">Le Attività Giornaliere sono delle attività che vanno svolte regolarmente. Scegli la frequenza con cui ti trovi meglio!</string>
+    <string name="empty_description_dailies">Le Attività Giornaliere sono delle attività che vanno svolte regolarmente. Scegli la frequenza migliore per te!</string>
     <string name="empty_title_todos">Non hai alcuna Cosa da Fare</string>
     <string name="empty_description_todos">Le Cose da Fare sono attività da completare solo una volta. Aggiungi una checklist alle tue Cose da Fare per aumentarne il valore.</string>
     <string name="empty_title_rewards">Non hai nessuna Ricompensa</string>
