@@ -14,6 +14,7 @@ fun Animal.getTranslatedType(c: Context?): String {
         "quest"   -> c?.getString(R.string.quest).toString()
         "wacky"   -> c?.getString(R.string.wacky).toString()
         "special" -> c?.getString(R.string.special).toString()
+        "premium" -> c?.getString(R.string.magic_potion).toString()
         else      -> {
             type
         }

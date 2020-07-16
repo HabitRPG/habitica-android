@@ -12,10 +12,7 @@ import com.habitrpg.android.habitica.extensions.getTranslatedType
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.Animal
-import com.habitrpg.android.habitica.models.user.OwnedMount
-import com.habitrpg.android.habitica.models.user.OwnedObject
-import com.habitrpg.android.habitica.models.user.OwnedPet
-import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.android.habitica.models.user.*
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.adapter.inventory.StableRecyclerAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
@@ -91,6 +88,12 @@ class StableRecyclerFragment : BaseFragment() {
             adapter?.context = context
             recyclerView?.adapter = adapter
             recyclerView?.itemAnimator = SafeDefaultItemAnimator()
+
+            adapter?.let {
+                compositeSubscription.add(it.getEquipFlowable()
+                        .flatMap<Items> { key -> inventoryRepository.equip(user, if (itemType == "pets") "pet" else "mount", key) }
+                        .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+            }
         }
         
         this.loadItems()
@@ -146,7 +149,7 @@ class StableRecyclerFragment : BaseFragment() {
         var lastAnimal: Animal = unsortedAnimals[0] ?: return items
         var lastSectionTitle = ""
         for (animal in unsortedAnimals) {
-            val identifier = if (animal.animal.isNotEmpty() && animal.type != "special") animal.animal else animal.key
+            val identifier = if (animal.animal.isNotEmpty() && (animal.type != "special" && animal.type != "wacky")) animal.animal else animal.key
             val lastIdentifier = if (lastAnimal.animal.isNotEmpty()) lastAnimal.animal else lastAnimal.key
             if (identifier != lastIdentifier || animal === unsortedAnimals[unsortedAnimals.size - 1]) {
                 if (!((lastAnimal.type == "premium" || lastAnimal.type == "special") && lastAnimal.numberOwned == 0)) {

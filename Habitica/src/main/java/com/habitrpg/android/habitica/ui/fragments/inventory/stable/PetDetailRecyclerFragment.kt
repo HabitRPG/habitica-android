@@ -9,9 +9,12 @@ import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.events.commands.FeedCommand
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.models.inventory.Egg
+import com.habitrpg.android.habitica.models.inventory.HatchingPotion
 import com.habitrpg.android.habitica.models.inventory.Mount
 import com.habitrpg.android.habitica.models.inventory.Pet
 import com.habitrpg.android.habitica.models.user.Items
+import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.OwnedMount
 import com.habitrpg.android.habitica.models.user.OwnedPet
 import com.habitrpg.android.habitica.ui.adapter.inventory.PetDetailRecyclerAdapter
@@ -83,6 +86,11 @@ class PetDetailRecyclerFragment : BaseMainFragment() {
         compositeSubscription.add(adapter.getEquipFlowable()
                 .flatMap<Items> { key -> inventoryRepository.equip(user, "pet", key) }
                 .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+        adapter.animalIngredientsRetriever = {
+            val egg = inventoryRepository.getItems(Egg::class.java, arrayOf(it.animal), null).firstElement().blockingGet().firstOrNull()
+            val potion = inventoryRepository.getItems(HatchingPotion::class.java, arrayOf(it.color), null).firstElement().blockingGet().firstOrNull()
+            Pair(egg as? Egg, potion as? HatchingPotion)
+        }
 
         view.post { setGridSpanCount(view.width) }
     }
@@ -122,6 +130,7 @@ class PetDetailRecyclerFragment : BaseMainFragment() {
                         return@map mountMap
                     }
                     .subscribe(Consumer { adapter.setOwnedMounts(it) }, RxErrorHandler.handleEmptyError()))
+            compositeSubscription.add(inventoryRepository.getOwnedItems().subscribe(Consumer { adapter.setOwnedItems(it) }, RxErrorHandler.handleEmptyError()))
             compositeSubscription.add(inventoryRepository.getPets(animalType, animalGroup, animalColor).firstElement().subscribe(Consumer<RealmResults<Pet>> { adapter.updateData(it) }, RxErrorHandler.handleEmptyError()))
             compositeSubscription.add(inventoryRepository.getMounts(animalType, animalGroup, animalColor).subscribe(Consumer<RealmResults<Mount>> { adapter.setExistingMounts(it) }, RxErrorHandler.handleEmptyError()))
         }

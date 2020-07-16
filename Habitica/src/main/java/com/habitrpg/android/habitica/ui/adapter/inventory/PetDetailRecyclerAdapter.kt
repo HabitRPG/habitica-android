@@ -10,16 +10,19 @@ import android.widget.TextView
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.events.commands.FeedCommand
+import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.android.habitica.models.inventory.Mount
-import com.habitrpg.android.habitica.models.inventory.Pet
+import com.habitrpg.android.habitica.models.inventory.*
+import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.OwnedMount
 import com.habitrpg.android.habitica.models.user.OwnedPet
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.menu.BottomSheetMenu
 import com.habitrpg.android.habitica.ui.menu.BottomSheetMenuItem
+import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
+import com.habitrpg.android.habitica.ui.views.dialogs.PetSuggestHatchDialog
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import io.reactivex.Observable
@@ -38,11 +41,14 @@ class PetDetailRecyclerAdapter(data: OrderedRealmCollection<Pet>?, autoUpdate: B
     private var existingMounts: RealmResults<Mount>? = null
     private var ownedPets: Map<String, OwnedPet>? = null
     private var ownedMounts: Map<String, OwnedMount>? = null
+    private var ownedItems: Map<String, OwnedItem>? = null
     private val equipEvents = PublishSubject.create<String>()
 
     fun getEquipFlowable(): Flowable<String> {
         return equipEvents.toFlowable(BackpressureStrategy.DROP)
     }
+
+    var animalIngredientsRetriever: ((Animal) -> Pair<Egg?, HatchingPotion?>)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PetViewHolder {
         return PetViewHolder(parent.inflate(R.layout.pet_detail_item))
@@ -68,6 +74,12 @@ class PetDetailRecyclerAdapter(data: OrderedRealmCollection<Pet>?, autoUpdate: B
         this.ownedPets = ownedPets
         notifyDataSetChanged()
     }
+
+    fun setOwnedItems(ownedItems: Map<String, OwnedItem>) {
+        this.ownedItems = ownedItems
+        notifyDataSetChanged()
+    }
+
     inner class PetViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView), View.OnClickListener {
         var animal: Pet? = null
         var ownedPet: OwnedPet? = null
@@ -86,6 +98,11 @@ class PetDetailRecyclerAdapter(data: OrderedRealmCollection<Pet>?, autoUpdate: B
                     }
                 }
                 return false
+            }
+
+        private val canHatch: Boolean
+            get() {
+                return ownedItems?.get(animal?.animal + "-eggs") != null && ownedItems?.get(animal?.color + "-hatchingPotions") != null
             }
 
         init {
@@ -126,6 +143,7 @@ class PetDetailRecyclerAdapter(data: OrderedRealmCollection<Pet>?, autoUpdate: B
 
         override fun onClick(v: View) {
             if (!this.isOwned) {
+                showRequirementsDialog()
                 return
             }
             val context = context ?: return
@@ -147,6 +165,16 @@ class PetDetailRecyclerAdapter(data: OrderedRealmCollection<Pet>?, autoUpdate: B
                 }
             }
             menu.show()
+        }
+
+        private fun showRequirementsDialog() {
+            val context = context ?: return
+            val dialog = PetSuggestHatchDialog(context)
+            animal?.let {
+                val ingredients = animalIngredientsRetriever?.invoke(it)
+                dialog.configure(it, ingredients?.first, ingredients?.second, canHatch)
+            }
+            dialog.show()
         }
     }
 }

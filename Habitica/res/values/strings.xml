@@ -1027,8 +1027,8 @@
     <string name="percent_completed">%d%% Complete</string>
     <string name="create_task_title">Create a Task</string>
     <string name="complete_task_title">Complete a Task</string>
-    <string name="hatch_pet_title">Hatch a Pet</string>
-    <string name="feedPet_title">Feed a Pet</string>
+    <string name="hatch_pet_title">Hatch a new pet</string>
+    <string name="feedPet_title">Feed a pet</string>
     <string name="purchase_equipment_title">Purchase Equipment</string>
     <string name="create_task_description">Add a task for something you would like to accomplish this week</string>
     <string name="complete_task_description">Check off any of your tasks to earn rewards</string>
@@ -1058,4 +1058,10 @@
     <string name="excessItemsNoneLeft">You already have everything you need for all %s pets. Are you sure you want to purchase %d %ss?</string>
     <string name="equip">Equip</string>
     <string name="view_onboarding_tasks">View Onboarding Tasks</string>
+    <string name="suggest_pet_hatch">You\'ll need a %s Egg and %s Potion to hatch this pet</string>
+    <string name="can_hatch_pet">You can use a %s Egg and a %s Potion to hatch this pet</string>
+    <string name="hatch_pet">Hatch Pet</string>
+    <string name="unhatched_pet">Unhatched Pet</string>
+    <string name="magic_potions">Magic Potions</string>
+    <string name="magic_potion">Magic Potion</string>
 </resources>
