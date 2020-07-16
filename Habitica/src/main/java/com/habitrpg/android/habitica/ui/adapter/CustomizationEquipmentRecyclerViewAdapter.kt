@@ -65,6 +65,8 @@ class CustomizationEquipmentRecyclerViewAdapter : androidx.recyclerview.widget.R
 
     fun setEquipment(newEquipmentList: List<Equipment>) {
         this.equipmentList = newEquipmentList.toMutableList()
+        val emptyEquipment = Equipment()
+        equipmentList.add(0, emptyEquipment)
         this.notifyDataSetChanged()
     }
 
@@ -104,7 +106,7 @@ class CustomizationEquipmentRecyclerViewAdapter : androidx.recyclerview.widget.R
                 }
             }
 
-            if (activeEquipment == equipment.key) {
+            if (activeEquipment == equipment.key || (activeEquipment?.contains("base_0") == true && equipment.key?.isNotBlank() != true)) {
                 binding.wrapper.background = itemView.context.getDrawable(R.drawable.layout_rounded_bg_gray_700_brand_border)
             } else {
                 binding.wrapper.background = itemView.context.getDrawable(R.drawable.layout_rounded_bg_gray_700)

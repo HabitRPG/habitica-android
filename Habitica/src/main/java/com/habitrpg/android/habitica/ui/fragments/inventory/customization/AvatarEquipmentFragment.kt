@@ -40,7 +40,8 @@ class AvatarEquipmentFragment : BaseMainFragment() {
 
         compositeSubscription.add(adapter.getSelectCustomizationEvents()
                 .flatMap { equipment ->
-                    inventoryRepository.equip(user, if (user?.preferences?.costume == true) "costume" else "equipped", equipment.key ?: "")
+                    val key = (if (equipment.key?.isNotBlank() != true) activeEquipment else equipment.key) ?: ""
+                    inventoryRepository.equip(user, if (user?.preferences?.costume == true) "costume" else "equipped", key)
                 }
                 .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
         compositeSubscription.add(adapter.getUnlockCustomizationEvents()
