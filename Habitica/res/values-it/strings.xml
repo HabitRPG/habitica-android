@@ -106,7 +106,7 @@
     <string name="members">Membri</string>
     <string name="habits">Abitudini</string>
     <string name="dailies">Daily</string>
-    <string name="todos">To-do</string>
+    <string name="todos">To Do</string>
     <string name="rewards">Ricompense</string>
     <string name="yes">Sì</string>
     <string name="no">No</string>
@@ -305,12 +305,12 @@ Le Dailies mancate e le cattive Abitudini non li danneggiano molto, e hanno semp
     <string name="add_task">Aggiungi Attività</string>
     <string name="add_habit">Aggiungi Abitudine</string>
     <string name="add_daily">Aggiungi Daily</string>
-    <string name="add_todo">Aggiungi To-Do</string>
+    <string name="add_todo">Aggiungi To Do</string>
     <string name="add_reward">Aggiungi Ricompensa</string>
     <string name="all_dailies_completed">Hai completato tutte le tue Daily. Ottimo lavoro!</string>
     <string name="widget_habit_button">Habitica esegui Abitudine</string>
     <string name="widget_dailies">Habitica Daily</string>
-    <string name="widget_todo_list">Habitica lista To-Do</string>
+    <string name="widget_todo_list">Habitica lista To Do</string>
     <string name="google_services_missing">Impossibile trovare Google Play Services.</string>
     <string name="gem_purchase_toolbartitle">Compra</string>
     <string name="gem_purchase_title">Comprando gemme supporti gli sviluppatori e tieni in vita Habitica</string>
@@ -344,7 +344,7 @@ Le Dailies mancate e le cattive Abitudini non li danneggiano molto, e hanno semp
     <string name="subscribe">Abbonati</string>
     <string name="subscribe_listitem1_description">Ora Alexander il Mercante ti venderà Gemme al prezzo di 20 Oro l\'una!\n\nLe sue consegne mensili sono inizialmente limitate a 25 Gemme al mese, ma possono aumentare a seconda della durata del tuo abbonamento.\n\nIl limite aumenta di 5 Gemme ogni tre mesi di abbonamento consecutivi, fino ad un massimo di 50 Gemme al mese!</string>
     <string name="subscribe_listitem2_description">Ogni mese riceverai un oggetto davvero unico per il tuo avatar!\n\nIn più, ogni tre mesi di abbonamento consecutivi, i misteriosi Viaggiatori del Tempo ti permetteranno di ottenere oggetti antichi (e futuri!).</string>
-    <string name="subscribe_listitem3_description">Rende le To-Do completate e la cronologia dei progressi delle attività disponibili più a lungo.</string>
+    <string name="subscribe_listitem3_description">Rende le To Do completate e la cronologia dei progressi delle attività disponibili più a lungo.</string>
     <string name="subscribe_listitem4_description">Raddoppiare il numero massimo di drop giornalieri ti farà ricevere più oggetti dalle attività completate ogni giorno, aiutandoti a completare la tua scuderia più velocemente!</string>
     <string name="subscribe1month_gemcap">Limite di 25 Gemme</string>
     <string name="subscribe3month_gemcap">Limite di 30 Gemme</string>
@@ -382,7 +382,7 @@ Le Dailies mancate e le cattive Abitudini non li danneggiano molto, e hanno semp
     <string name="daily">Daily</string>
     <string name="habit">Abitudine</string>
     <string name="reward">Ricompensa</string>
-    <string name="todo">To-Do</string>
+    <string name="todo">To Do</string>
     <string name="official">Ufficiale</string>
     <string name="challenge">Sfida</string>
     <string name="not_part_of_a_challenge">Al momento non stai partecipando a nessuna sfida!</string>
@@ -428,8 +428,8 @@ Le Dailies mancate e le cattive Abitudini non li danneggiano molto, e hanno semp
     <string name="empty_description_habits">Le Abitudini sono attività che possono essere svolte in modo molto flessibile. Puoi usarle diverse volte al giorno, o non usarle affatto.</string>
     <string name="empty_title_dailies">Non hai nessuna Daily</string>
     <string name="empty_description_dailies">Le Daily sono delle attività che vanno svolte regolarmente. Scegli la frequenza con cui ti trovi meglio!</string>
-    <string name="empty_title_todos">Non hai alcuna To-do.</string>
-    <string name="empty_description_todos">Le To-do sono attività da completare solo una volta. Aggiungi una checklist alle tue To-do per aumentarne il valore.</string>
+    <string name="empty_title_todos">Non hai alcuna To Do.</string>
+    <string name="empty_description_todos">Le To Do sono attività da completare solo una volta. Aggiungi una checklist alle tue To Do per aumentarne il valore.</string>
     <string name="empty_title_rewards">Non hai nessuna Ricompensa</string>
     <string name="reset_walkthrough">Ripristina la spiegazione introduttiva di Justin</string>
     <string name="read_community_guidelines">Per favore, leggi le Linee guida della community prima di scrivere un post.</string>
@@ -617,7 +617,7 @@ Le Dailies mancate e le cattive Abitudini non li danneggiano molto, e hanno semp
     <string name="next_day_reminder_title">Hai completato le tue attività oggi?</string>
     <string name="next_day_reminder_text">Sbloccherai e scoprirai cose nuove man mano che salirai di livello, quindi continua a completare le tue attività e divertiti!</string>
     <string name="daily_tip_0">Vuoi provare qualcosa di nuovo? Unisciti ad una Sfida per espandere la tua lista delle attività e vincere qualche Gemma!</string>
-    <string name="daily_tip_1">Aggiungi delle checklist alle tue To-Do perché le tue ricompense si moltiplichino!</string>
+    <string name="daily_tip_1">Aggiungi delle checklist alle tue To Do perché le tue ricompense si moltiplichino!</string>
     <string name="daily_tip_2">Puoi regolare la frequenza di ripetizione di ogni Daily. Perfino la data delle attività infrequenti può essere programmata.</string>
     <string name="daily_tip_3">Puoi impostare dei promemoria specifici anche per le Daily.</string>
     <string name="daily_tip_4">Rivalutare occasionalmente le tue attività può aiutarti a mantenere la giusta strada.</string>
@@ -653,7 +653,7 @@ Le Dailies mancate e le cattive Abitudini non li danneggiano molto, e hanno semp
     <string name="welcomeNameTitle">Come dovremmo chiamarti?</string>
     <string name="display_name_length_error">Il nome pubblico dev\'essere tra 1 e 30 caratteri.</string>
     <string name="setup_task_join_habitica">Raggiungi Habitica (spunta questa casella!)</string>
-    <string name="setup_task_join_habitica_notes">Puoi completare questa To-Do, modificarla, o rimuoverla.</string>
+    <string name="setup_task_join_habitica_notes">Puoi completare questa To Do, modificarla, o rimuoverla.</string>
     <string name="setup_task_reward">Premiati</string>
     <string name="setup_task_reward_notes">Guarda la TV, divertiti con un videogioco, mangia un dolcetto, a te la scelta!</string>
     <string name="equipment_str">FOR:</string>
@@ -708,7 +708,7 @@ Le Dailies mancate e le cattive Abitudini non li danneggiano molto, e hanno semp
     <string name="guild_summary">Riepilogo della Gilda</string>
     <string name="setup_task_habit_2_notes">O cancellala dalla schermata di modifica</string>
     <string name="setup_task_habit_2">Clicca qui per modificarla in una cattiva abitudine che vorresti perdere</string>
-    <string name="setup_task_habit_1_notes">Può essere un\'Abitudine, una Daily o una To-Do</string>
+    <string name="setup_task_habit_1_notes">Può essere un\'Abitudine, una Daily o una To Do</string>
     <string name="setup_task_habit_1">Aggiungi un\'attività su Habitica</string>
     <string name="cost">Costo</string>
     <string name="joined_guild">Ti sei unito alla Gilda</string>

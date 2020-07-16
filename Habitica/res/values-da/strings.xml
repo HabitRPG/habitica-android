@@ -36,7 +36,7 @@
   <string name="preference_push_invited_to_quest">Inviteret til Quest</string>
   <!--Adding tasks-->
   <string name="task_value">Værdi</string>
-  <string name="new_todo">Ny To-Do</string>
+  <string name="new_todo">Ny To Do</string>
   <string name="new_reward">Ny Belønning</string>
   <string name="new_daily">Ny Daglig Opgave</string>
   <string name="new_habit">Ny Vane</string>
@@ -136,7 +136,7 @@
   <string name="members">Medlemmer</string>
   <string name="habits">Vaner</string>
   <string name="dailies">Daglige</string>
-  <string name="todos">To-Dos</string>
+  <string name="todos">To Do\'s</string>
   <string name="rewards">Belønninger</string>
   <string name="taskform.delete.title">Er du sikker?</string>
   <string name="taskform.delete.message">Vil du virkelig slette?</string>
@@ -302,10 +302,10 @@
   <string name="add_task">Tilføj Opgave</string>
   <string name="add_habit">Tilføj Vane</string>
   <string name="add_daily">Tilføj Daglig Opgave</string>
-  <string name="add_todo">Tilføj To-Do</string>
+  <string name="add_todo">Tilføj To Do</string>
   <string name="add_reward">Tilføj Belønning</string>
   <string name="widget_dailies">Habitica Daglige Opgaver</string>
-  <string name="widget_todo_list">Habitica To-Do Liste</string>
+  <string name="widget_todo_list">Habitica To Do Liste</string>
   <string name="widget_add_task">Habitica Tilføj Opgave</string>
   <string name="gem.purchase.toolbartitle">Køb</string>
   <!--Login Incentives-->
@@ -334,7 +334,7 @@
   <string name="daily">Daglig</string>
   <string name="habit">Vane</string>
   <string name="reward">Belønning</string>
-  <string name="todo">To-Do</string>
+  <string name="todo">To Do</string>
   <string name="official">Officiel</string>
   <string name="participating">Deltager</string>
   <string name="challenge">Udfordring</string>

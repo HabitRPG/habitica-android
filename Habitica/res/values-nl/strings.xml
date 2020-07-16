@@ -106,7 +106,7 @@
   <string name="members">Leden</string>
   <string name="habits">Gewoontes</string>
   <string name="dailies">Dagelijkse taken</string>
-  <string name="todos">To-do\'s</string>
+  <string name="todos">To Do\'s</string>
   <string name="rewards">Beloningen</string>
     <string name="yes">Ja</string>
   <string name="no">Nee</string>
@@ -304,12 +304,12 @@
   <string name="add_task">Voeg taak toe</string>
   <string name="add_habit">Voeg Gewoonte toe</string>
   <string name="add_daily">Voeg Dagelijkse taak toe</string>
-  <string name="add_todo">Voeg To-do toe</string>
+  <string name="add_todo">Voeg To Do toe</string>
   <string name="add_reward">Voeg Beloning toe</string>
   <string name="all_dailies_completed">Je hebt al je Dagelijkse taken voltooid. Goed gedaan!</string>
   <string name="widget_habit_button">Habitica Doe Gewoonte</string>
   <string name="widget_dailies">Habitica Dagelijkse taken</string>
-  <string name="widget_todo_list">Habitica to-do lijst</string>
+  <string name="widget_todo_list">Habitica To Do lijst</string>
     <string name="google_services_missing">Google play diensten niet gevonden.</string>
   <string name="gem_purchase_toolbartitle">Kopen</string>
   <string name="gem_purchase_title">Door het kopen van edelstenen steun je de ontwikkelaars en help je Habitica online te houden</string>
@@ -343,7 +343,7 @@
   <string name="subscribe">Abonneer</string>
   <string name="subscribe_listitem1_description">Alexander de Koopman zal nu edelstenen aan je verkopen voor 20 goud per edelsteen!\n\nZijn maandelijkse levering is initieel beperkt tot 25 edelstenen per maand, maar stijgt afhankelijk van de duur van je abonnement.\n\nDit limiet verhoogt met 5 edelstenen voor elke 3 maanden van opeenvolgende abonnement periodes, tot een maximum van 50 edelstenen per maand!</string>
   <string name="subscribe_listitem2_description">Iedere maand ontvang je een uniek cosmetisch voorwerp voor je avatar!\n\nEn voor iedere 3 maanden van opeenvolgende abonnementsperiodes, geven de mysterieuze tijdreizigers je toegang tot historische (en futuristische!) cosmetische voorwerpen.</string>
-  <string name="subscribe_listitem3_description">Maakt voltooide To-do\'s en taakgeschiedenis langer beschikbaar.</string>
+  <string name="subscribe_listitem3_description">Maakt voltooide To Do\'s en taakgeschiedenis langer beschikbaar.</string>
   <string name="subscribe_listitem4_description">Dubbele vondstlimieten laten je dagelijks meer voorwerpen verdienen van je voltooide taken, waardoor je je stal sneller kan voltooien!</string>
   <string name="subscribe1month_gemcap">25 Edelsteen drempel</string>
   <string name="subscribe3month_gemcap">30 Edelsteen drempel</string>
@@ -381,7 +381,7 @@
     <string name="daily">Dagelijkse taak</string>
   <string name="habit">Gewoonte</string>
   <string name="reward">Beloning</string>
-  <string name="todo">To-do</string>
+  <string name="todo">To Do</string>
   <string name="official">Officieel</string>
     <string name="challenge">Uitdaging</string>
     <string name="not_part_of_a_challenge">Je maakt geen deel uit van uitdagingen op dit moment!</string>
@@ -426,8 +426,8 @@
   <string name="empty_description_habits">Gewoontes zijn taken die geen vast schema hebben. Je kan ze meerdere keren per dag afvinken of helemaal niet.</string>
   <string name="empty_title_dailies">Je hebt geen dagelijkse taken</string>
   <string name="empty_description_dailies">Dagelijkse taken zijn taken die op een vast schema herhalen. Kies de routine die voor jou werkt!</string>
-  <string name="empty_title_todos">Je hebt geen to-do\'s</string>
-  <string name="empty_description_todos">To-do\'s zijn taken die slechts een keer voltooid moeten worden. Voeg checklijsten aan je to-do\'s toe om hun waarde te verhogen.</string>
+  <string name="empty_title_todos">Je hebt geen To Do\'s</string>
+  <string name="empty_description_todos">To Do\'s zijn taken die slechts een keer voltooid moeten worden. Voeg checklijsten aan je To Do\'s toe om hun waarde te verhogen.</string>
   <string name="empty_title_rewards">Je hebt geen beloningen</string>
   <string name="reset_walkthrough">Herstart Justins inleiding</string>
   <string name="read_community_guidelines">Lees alsjeblieft onze gemeenschapsrichtlijnen voordat je berichten plaatst</string>
@@ -615,7 +615,7 @@
   <string name="next_day_reminder_title">Heb je jou taken afgevinkt vandaag?</string>
   <string name="next_day_reminder_text">Er is veel om te ontgrendelen en te ontdekken als je niveau omhoog gaat, dus houd je taken bij en veel plezier!</string>
   <string name="daily_tip_0">Wil je iets nieuws proberen? Sluit je aan bij een uitdaging om je takenlijst te vergroten en win wat Edelstenen!</string>
-  <string name="daily_tip_1">Voeg checklijsten toe aan jou To-Dos om de beloningen te vermenigvuldigen!</string>
+  <string name="daily_tip_1">Voeg checklijsten toe aan jou To Do\'s om de beloningen te vermenigvuldigen!</string>
   <string name="daily_tip_2">Je kunt veranderen hoe vaak een Dagelijkse taak zich herhaalt. Zelfs onregelmatige taken kunnen ingepland worden.</string>
   <string name="daily_tip_3">Je kunt ook specifieke herinneringen voor Dagelijkse taken inplannen. </string>
   <string name="daily_tip_4">Het van tijd tot tijd herevalueren van je taken kan je helpen om op het rechte pad te blijven. </string>
@@ -643,7 +643,7 @@
   <string name="username_copied">Gebruikersnaam gekopieerd naar het prikbord</string>
   <string name="display_name_length_error">Gebruikersnamen moeten tussen 1 en 30 karakters lang zijn</string>
   <string name="setup_task_join_habitica">Sluit je aan bij Habitica (Aanvinken)</string>
-  <string name="setup_task_join_habitica_notes">Je kan deze To-do voltooien, bewerken of verwijderen</string>
+  <string name="setup_task_join_habitica_notes">Je kan deze To Do voltooien, bewerken of verwijderen</string>
   <string name="setup_task_reward">Beloon jezelf</string>
   <string name="setup_task_reward_notes">Kijk TV, speel een spel, eet een belonging, aan jou de keuze!</string>
   <string name="equipment_str">KRA:</string>

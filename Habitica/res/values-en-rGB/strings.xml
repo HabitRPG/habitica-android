@@ -102,7 +102,7 @@
   <string name="members">Members</string>
   <string name="habits">Habits</string>
   <string name="dailies">Dailies</string>
-  <string name="todos">To-Dos</string>
+  <string name="todos">To Do\'s</string>
   <string name="rewards">Rewards</string>
   <string name="yes">Yes</string>
   <string name="no">No</string>
@@ -280,12 +280,12 @@
   <string name="add_task">Add Task</string>
   <string name="add_habit">Add Habit</string>
   <string name="add_daily">Add Daily</string>
-  <string name="add_todo">Add To-Do</string>
+  <string name="add_todo">Add To Do</string>
   <string name="add_reward">Add Reward</string>
   <string name="all_dailies_completed">You completed all your dailies. Well done!</string>
   <string name="widget_habit_button">Habitica Do Habit</string>
   <string name="widget_dailies">Habitica Dailies</string>
-  <string name="widget_todo_list">Habitica To-Do List</string>
+  <string name="widget_todo_list">Habitica To Do List</string>
   <string name="google_services_missing">Google Play services could not be found.</string>
   <string name="gem_purchase_toolbartitle">Purchase</string>
   <string name="gem_purchase_title">Buying gems supports the developers and helps keep Habitica running</string>
@@ -318,7 +318,7 @@
   <string name="subscribe">Subscribe</string>
   <string name="subscribe_listitem1_description">Alexander the Merchant will now sell you gems for 20 gold each!\n\nHis monthly shipments are initially capped at 25 Gems per month, but can increase based on your subscription length.\n\nThe cap increases by 5 Gems for every three months of consecutive subscription, up to a maximum of 50 Gems per month!</string>
   <string name="subscribe_listitem2_description">Each month you will receive a unique cosmetic item for your avatar!\n\nPlus, for every three months of consecutive subscription, the Mysterious Time Travellers will grant you access to historic (and futuristic!) cosmetic items.</string>
-  <string name="subscribe_listitem3_description">Makes completed To-Dos and task history available for longer.</string>
+  <string name="subscribe_listitem3_description">Makes completed To Do\'s and task history available for longer.</string>
   <string name="subscribe_listitem4_description">Double drop caps will let you receive more items from your completed tasks every day, helping you complete your stable faster!</string>
   <string name="subscription_hourglasses">+%d Mystic Hourglass</string>
   <string name="payment_method">Payment method</string>
@@ -351,7 +351,7 @@
   <string name="daily">Daily</string>
   <string name="habit">Habit</string>
   <string name="reward">Reward</string>
-  <string name="todo">To-Do</string>
+  <string name="todo">To Do</string>
   <string name="official">Official</string>
   <string name="challenge">Challenge</string>
   <string name="not_part_of_a_challenge">You’re not part of any Challenges right now!</string>
@@ -394,8 +394,8 @@
   <string name="empty_description_habits">Habits are tasks that don&amp;rsquo;t have a rigid schedule. You can check them off many times a day, or not at all.</string>
   <string name="empty_title_dailies">You don&amp;rsquo;t have any Dailies</string>
   <string name="empty_description_dailies">Dailies are tasks that repeat on a regular basis. Choose the schedule that works for you!</string>
-  <string name="empty_title_todos">You don&amp;rsquo;t have any To-Dos</string>
-  <string name="empty_description_todos">To-Dos are tasks that only need to be completed once. Add checklists to your To-Dos to increase their value.</string>
+  <string name="empty_title_todos">You don&amp;rsquo;t have any To Do\'s</string>
+  <string name="empty_description_todos">To Do\'s are tasks that only need to be completed once. Add checklists to your To Do\'s to increase their value.</string>
   <string name="empty_title_rewards">You don&amp;rsquo;t have any Rewards</string>
   <string name="reset_walkthrough">Reset Justin&amp;rsquo;s Walkthrough</string>
   <string name="read_community_guidelines">Please read our Community Guidelines before posting</string>
@@ -622,7 +622,7 @@
   <string name="next_day_reminder_title">Did you check off your tasks today\?</string>
   <string name="next_day_reminder_text">There\'s lots to unlock and discover as you level up, so keep up with your tasks and have fun!</string>
   <string name="daily_tip_0">Want to try something new\? Join a Challenge to expand your task list and win some Gems!</string>
-  <string name="daily_tip_1">Add checklists to your To-Dos to multiply your rewards!</string>
+  <string name="daily_tip_1">Add checklists to your To Do\'s to multiply your rewards!</string>
   <string name="daily_tip_2">You can change how often each Daily repeats. Even infrequent tasks can be schedulled.</string>
   <string name="daily_tip_3">You can schedule specific reminders for Dailies too.</string>
   <string name="daily_tip_4">Occasionally re-evaluating your tasks can help keep you on the right path.</string>
@@ -657,7 +657,7 @@
   <string name="welcomeNameTitle">What should we call you\?</string>
   <string name="display_name_length_error">Display names must be between 1 and 30 characters</string>
   <string name="setup_task_join_habitica">Join Habitica (Check me off!)</string>
-  <string name="setup_task_join_habitica_notes">You can either complete this To-Do, edit it, or remove it.</string>
+  <string name="setup_task_join_habitica_notes">You can either complete this To Do, edit it, or remove it.</string>
   <string name="setup_task_reward">Reward yourself</string>
   <string name="setup_task_reward_notes">Watch TV, play a game, eat a treat, it’s up to you!</string>
   <string name="equipment_str">STR:</string>

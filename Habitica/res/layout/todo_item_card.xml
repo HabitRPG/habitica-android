@@ -59,7 +59,7 @@
                     android:textColor="#000"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:text="To-Do Title" />
+                    tools:text="To Do Title" />
 
                 <com.habitrpg.android.habitica.ui.views.EllipsisTextView
                     android:id="@+id/notesTextView"

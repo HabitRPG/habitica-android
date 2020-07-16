@@ -463,7 +463,7 @@
   <string name="daily">Daglig</string>
   <string name="habit">Vana</string>
   <string name="reward">Belöning</string>
-  <string name="todo">To-Do</string>
+  <string name="todo">To Do</string>
   <string name="official">Officiell</string>
   <string name="participating">Deltar</string>
   <string name="challenge">Utmaning</string>
@@ -517,8 +517,8 @@
   <string name="empty_description_habits">Vanor är uppgifter som inte har något fast schema. Du kan klara dom flera gånger per dag, eller inga alls.</string>
   <string name="empty_title_dailies">Du har inga \"Dailies\"</string>
   <string name="empty_description_dailies">\"Dailies\" är uppgifter som upprepas på återkommande vis. Välj ett schema som passar dig!</string>
-  <string name="empty_title_todos">Du har inga To-Do\'s</string>
-  <string name="empty_description_todos">To-Do\'s är uppgifter som bara behöver göras en gång. Lägg till checklistor i dina To-Do\'s för att öka på värdet.</string>
+  <string name="empty_title_todos">Du har inga To Do\'s</string>
+  <string name="empty_description_todos">To Do\'s är uppgifter som bara behöver göras en gång. Lägg till checklistor i dina To Do\'s för att öka på värdet.</string>
   <string name="empty_title_rewards">Du har inga Belöningar</string>
   <string name="reset_walkthrough">Återställ Justins genomgång</string>
   <string name="read_community_guidelines">Snälla läs Gemenskapens Riktlinjer innan du du gör ett inlägg</string>
