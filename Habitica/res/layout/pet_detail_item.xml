@@ -40,4 +40,30 @@
             android:layout_height="wrap_content"
             android:src="@drawable/pet_status_potion" />
     </LinearLayout>
+    <RelativeLayout
+        android:id="@+id/item_wrapper"
+        android:layout_width="85dp"
+        android:layout_height="70dp"
+        android:layout_gravity="center">
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/hatchingPotion_view"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true" />
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/egg_view"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true" />
+    </RelativeLayout>
+    <ImageView
+        android:id="@+id/checkmark_view"
+        android:layout_width="22dp"
+        android:layout_height="16dp"
+        android:src="@drawable/ic_check"
+        android:tint="@color/brand_300"
+        android:tintMode="src_in"
+        android:layout_gravity="center" />
 </LinearLayout>

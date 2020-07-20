@@ -89,7 +89,11 @@ class PetDetailRecyclerAdapter(data: OrderedRealmCollection<Pet>?, autoUpdate: B
         private val trainedProgressbar: ProgressBar by bindView(R.id.trainedProgressBar)
         private val availableWrapper: ViewGroup by bindView(R.id.items_available_wrapper)
         private val eggAvailableView: ImageView by bindView(R.id.egg_available_view)
-        private val potionAvailableView: ImageView by bindView(R.id.egg_available_view)
+        private val potionAvailableView: ImageView by bindView(R.id.potion_available_view)
+        private val itemWrapper: ViewGroup by bindView(R.id.item_wrapper)
+        private val eggView: SimpleDraweeView by bindView(R.id.egg_view)
+        private val hatchingPotionView: SimpleDraweeView by bindView(R.id.hatchingPotion_view)
+        private val checkMarkView: ImageView by bindView(R.id.checkmark_view)
 
         private val isOwned: Boolean
             get() = this.ownedPet?.trained ?: 0 > 0
@@ -126,7 +130,11 @@ class PetDetailRecyclerAdapter(data: OrderedRealmCollection<Pet>?, autoUpdate: B
             this.animal = item
             this.ownedPet = ownedPet
             this.imageView.alpha = 1.0f
+            imageView.visibility = View.VISIBLE
+            itemWrapper.visibility = View.GONE
+            checkMarkView.visibility = View.GONE
             val imageName = "social_Pet-$itemType-${item.color}"
+            itemView.setBackgroundResource(R.drawable.layout_rounded_bg_gray_700)
             if (this.ownedPet?.trained ?: 0 > 0) {
                 if (this.canRaiseToMount) {
                     this.trainedProgressbar.visibility = View.VISIBLE
@@ -138,9 +146,19 @@ class PetDetailRecyclerAdapter(data: OrderedRealmCollection<Pet>?, autoUpdate: B
             } else {
                 this.trainedProgressbar.visibility = View.GONE
                 this.imageView.alpha = 0.1f
-                availableWrapper.visibility = View.VISIBLE
-                eggAvailableView.alpha = if (hasEgg) 1.0f else 0.2f
-                potionAvailableView.alpha = if (hasPotion) 1.0f else 0.2f
+                if (canHatch) {
+                    imageView.visibility = View.GONE
+                    availableWrapper.visibility = View.GONE
+                    itemWrapper.visibility = View.VISIBLE
+                    checkMarkView.visibility = View.VISIBLE
+                    itemView.setBackgroundResource(R.drawable.layout_rounded_bg_gray_700_brand_border)
+                    DataBindingUtils.loadImage(eggView, "Pet_Egg_${item.animal}")
+                    DataBindingUtils.loadImage(hatchingPotionView, "Pet_HatchingPotion_${item.color}")
+                } else {
+                    availableWrapper.visibility = View.VISIBLE
+                    eggAvailableView.alpha = if (hasEgg) 1.0f else 0.2f
+                    potionAvailableView.alpha = if (hasPotion) 1.0f else 0.2f
+                }
             }
 
             if (android.os.Build.VERSION.SDK_INT > android.os.Build.VERSION_CODES.LOLLIPOP_MR1) {
