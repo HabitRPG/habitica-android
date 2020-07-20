@@ -70,6 +70,7 @@ interface InventoryRepository : BaseRepository {
     fun purchaseHourglassItem(purchaseType: String, key: String): Flowable<Any>
 
     fun purchaseQuest(key: String): Flowable<Any>
+    fun purchaseSpecialSpell(key: String): Flowable<Any>
 
     fun purchaseItem(purchaseType: String, key: String, purchaseQuantity: Int): Flowable<Any>
 

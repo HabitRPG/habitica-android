@@ -299,6 +299,8 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
             }
         } else if (shopItem.purchaseType == "quests" && shopItem.currency == "gold") {
             observable = inventoryRepository.purchaseQuest(shopItem.key)
+        } else if (shopItem.purchaseType == "debuffPotion") {
+            observable = inventoryRepository.purchaseSpecialSpell(shopItem.key)
         } else if (shopItem.purchaseType == "card") {
             purchaseCardAction?.invoke(shopItem)
             dismiss()

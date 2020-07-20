@@ -143,7 +143,7 @@ class ValueBar(context: Context, attrs: AttributeSet?) : FrameLayout(context, at
             progressBar.setBackgroundResource(R.drawable.layout_rounded_bg_light_gray)
         } else {
             textColor = context.getThemeColor(R.attr.textColorPrimaryDark)
-            progressBar.setBackgroundResource(R.drawable.layout_rounded_bg_primary)
+            progressBar.setBackgroundResource(R.drawable.layout_rounded_bg_header_bar)
         }
         valueTextView.setTextColor(textColor)
         descriptionTextView.setTextColor(textColor)

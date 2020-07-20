@@ -64,9 +64,9 @@
     <dimen name="mount_image_width">81dp</dimen>
     <dimen name="mount_image_height">99dp</dimen>
     <dimen name="shop_height">124dp</dimen>
-    <dimen name="bar_icon_padding">6dp</dimen>
+    <dimen name="bar_icon_padding">4dp</dimen>
     <dimen name="task_text_padding">16dp</dimen>
-    <dimen name="header_bar_spacing">3dp</dimen>
+    <dimen name="header_bar_spacing">9dp</dimen>
     <dimen name="bar_size_slim">13dp</dimen>
 
     <dimen name="spacing_small">4dp</dimen>

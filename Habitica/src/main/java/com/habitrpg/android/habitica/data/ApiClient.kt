@@ -61,6 +61,7 @@ interface ApiClient {
     fun purchaseMysterySet(itemKey: String): Flowable<Any>
 
     fun purchaseQuest(key: String): Flowable<Any>
+    fun purchaseSpecialSpell(key: String): Flowable<Any>
     fun validateSubscription(request: SubscriptionValidationRequest): Flowable<Any>
     fun validateNoRenewSubscription(request: PurchaseValidationRequest): Flowable<Any>
     fun cancelSubscription(): Flowable<Any>

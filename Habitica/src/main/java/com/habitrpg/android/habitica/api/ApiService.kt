@@ -76,6 +76,9 @@ interface ApiService {
     @POST("user/buy-quest/{key}")
     fun purchaseQuest(@Path("key") key: String): Flowable<HabitResponse<Void>>
 
+    @POST("user/buy-special-spell/{key}")
+    fun purchaseSpecialSpell(@Path("key") key: String): Flowable<HabitResponse<Void>>
+
     @POST("user/sell/{type}/{key}")
     fun sellItem(@Path("type") itemType: String, @Path("key") itemKey: String): Flowable<HabitResponse<User>>
 

@@ -370,6 +370,10 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
         return apiService.purchaseQuest(key).compose(configureApiCallObserver())
     }
 
+    override fun purchaseSpecialSpell(key: String): Flowable<Any> {
+        return apiService.purchaseSpecialSpell(key).compose(configureApiCallObserver())
+    }
+
     override fun sellItem(itemType: String, itemKey: String): Flowable<User> {
         return apiService.sellItem(itemType, itemKey).compose(configureApiCallObserver())
     }

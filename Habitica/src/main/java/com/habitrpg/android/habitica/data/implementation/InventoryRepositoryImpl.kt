@@ -280,6 +280,10 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
         return apiClient.purchaseQuest(key)
     }
 
+    override fun purchaseSpecialSpell(key: String): Flowable<Any> {
+        return apiClient.purchaseSpecialSpell(key)
+    }
+
     override fun purchaseItem(purchaseType: String, key: String, purchaseQuantity: Int): Flowable<Any> {
         return apiClient.purchaseItem(purchaseType, key, purchaseQuantity)
     }
