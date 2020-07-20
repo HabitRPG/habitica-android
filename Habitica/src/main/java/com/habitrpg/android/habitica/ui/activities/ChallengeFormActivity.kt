@@ -460,6 +460,11 @@ class ChallengeFormActivity : BaseActivity() {
                 Task.TYPE_TODO -> addTodo
                 else -> addReward
             }
+            if(!isExistingTask){
+                // If the task is new we create a unique id for it
+                // Doing it we solve the issue #1278
+                task.id = UUID.randomUUID().toString()
+            }
 
             challengeTasks.addTaskUnder(task, taskAbove)
 
