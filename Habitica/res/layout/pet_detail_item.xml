@@ -23,4 +23,21 @@
         android:progressBackgroundTint="@color/gray_600"
         android:layout_marginTop="4dp"
         android:max="50" />
+    <LinearLayout
+        android:id="@+id/items_available_wrapper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+        <ImageView
+            android:id="@+id/egg_available_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/pet_status_egg"
+            android:layout_marginEnd="8dp"/>
+        <ImageView
+            android:id="@+id/potion_available_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/pet_status_potion" />
+    </LinearLayout>
 </LinearLayout>

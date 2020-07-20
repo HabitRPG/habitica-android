@@ -5,6 +5,7 @@ import android.graphics.PorterDuff
 import android.graphics.drawable.BitmapDrawable
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import com.facebook.drawee.view.SimpleDraweeView
@@ -86,6 +87,9 @@ class PetDetailRecyclerAdapter(data: OrderedRealmCollection<Pet>?, autoUpdate: B
 
         private val imageView: SimpleDraweeView by bindView(R.id.imageView)
         private val trainedProgressbar: ProgressBar by bindView(R.id.trainedProgressBar)
+        private val availableWrapper: ViewGroup by bindView(R.id.items_available_wrapper)
+        private val eggAvailableView: ImageView by bindView(R.id.egg_available_view)
+        private val potionAvailableView: ImageView by bindView(R.id.egg_available_view)
 
         private val isOwned: Boolean
             get() = this.ownedPet?.trained ?: 0 > 0
@@ -100,9 +104,18 @@ class PetDetailRecyclerAdapter(data: OrderedRealmCollection<Pet>?, autoUpdate: B
                 return false
             }
 
+        private val hasEgg: Boolean
+            get() {
+                return ownedItems?.get(animal?.animal + "-eggs") != null
+            }
+        private val hasPotion: Boolean
+            get() {
+                return ownedItems?.get(animal?.color + "-hatchingPotions") != null
+            }
+
         private val canHatch: Boolean
             get() {
-                return ownedItems?.get(animal?.animal + "-eggs") != null && ownedItems?.get(animal?.color + "-hatchingPotions") != null
+                return hasEgg && hasPotion
             }
 
         init {
@@ -121,10 +134,15 @@ class PetDetailRecyclerAdapter(data: OrderedRealmCollection<Pet>?, autoUpdate: B
                 } else {
                     this.trainedProgressbar.visibility = View.GONE
                 }
+                availableWrapper.visibility = View.GONE
             } else {
                 this.trainedProgressbar.visibility = View.GONE
                 this.imageView.alpha = 0.1f
+                availableWrapper.visibility = View.VISIBLE
+                eggAvailableView.alpha = if (hasEgg) 1.0f else 0.2f
+                potionAvailableView.alpha = if (hasPotion) 1.0f else 0.2f
             }
+
             if (android.os.Build.VERSION.SDK_INT > android.os.Build.VERSION_CODES.LOLLIPOP_MR1) {
                 trainedProgressbar.progressBackgroundTintMode = PorterDuff.Mode.SRC_OVER
             }
