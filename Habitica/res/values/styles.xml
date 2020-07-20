@@ -257,6 +257,7 @@
     <!-- used activity_main.xml -->
     <style name="Toolbar" parent="Base.ThemeOverlay.AppCompat.ActionBar">
         <item name="android:textColorPrimary">@color/white</item>
+        <item name="background">?attr/colorPrimaryDark</item>
     </style>
 
     <style name="HabitButton" parent="android:Widget.Button">

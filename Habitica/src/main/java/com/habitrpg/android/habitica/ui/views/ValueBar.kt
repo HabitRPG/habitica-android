@@ -11,6 +11,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import java.math.RoundingMode
@@ -73,7 +74,7 @@ class ValueBar(context: Context, attrs: AttributeSet?) : FrameLayout(context, at
         progressBar.barPendingColor = attributes?.getColor(R.styleable.ValueBar_barPendingColor, 0) ?: 0
         progressBar.barBackgroundColor = attributes?.getColor(R.styleable.ValueBar_barBackgroundColor, 0) ?: 0
 
-        val labelSpacing = attributes?.getDimension(R.styleable.ValueBar_labelSpacing, context.resources.getDimension(R.dimen.spacing_small))
+        val labelSpacing = attributes?.getDimension(R.styleable.ValueBar_labelSpacing, 2.dpToPx(context).toFloat())
         if (labelSpacing != null) {
             labelWrapper.setPadding(0, labelSpacing.toInt(), 0, 0)
         }
