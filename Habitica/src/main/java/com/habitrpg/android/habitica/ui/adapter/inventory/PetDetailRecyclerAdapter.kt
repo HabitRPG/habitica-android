@@ -7,11 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.ProgressBar
-import android.widget.TextView
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.events.commands.FeedCommand
-import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.*
@@ -22,7 +20,6 @@ import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.menu.BottomSheetMenu
 import com.habitrpg.android.habitica.ui.menu.BottomSheetMenuItem
-import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.dialogs.PetSuggestHatchDialog
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
@@ -44,6 +41,7 @@ class PetDetailRecyclerAdapter(data: OrderedRealmCollection<Pet>?, autoUpdate: B
     private var ownedMounts: Map<String, OwnedMount>? = null
     private var ownedItems: Map<String, OwnedItem>? = null
     private val equipEvents = PublishSubject.create<String>()
+    private var ownsSaddles: Boolean = false
 
     fun getEquipFlowable(): Flowable<String> {
         return equipEvents.toFlowable(BackpressureStrategy.DROP)
@@ -78,6 +76,12 @@ class PetDetailRecyclerAdapter(data: OrderedRealmCollection<Pet>?, autoUpdate: B
 
     fun setOwnedItems(ownedItems: Map<String, OwnedItem>) {
         this.ownedItems = ownedItems
+        ownsSaddles = ownedItems.containsKey("Saddle-food")
+        notifyDataSetChanged()
+    }
+
+    fun setOwnsSaddles(ownsSaddles: Boolean) {
+        this.ownsSaddles = ownsSaddles
         notifyDataSetChanged()
     }
 
@@ -133,6 +137,8 @@ class PetDetailRecyclerAdapter(data: OrderedRealmCollection<Pet>?, autoUpdate: B
             imageView.visibility = View.VISIBLE
             itemWrapper.visibility = View.GONE
             checkMarkView.visibility = View.GONE
+            availableWrapper.visibility = View.GONE
+
             val imageName = "social_Pet-$itemType-${item.color}"
             itemView.setBackgroundResource(R.drawable.layout_rounded_bg_gray_700)
             if (this.ownedPet?.trained ?: 0 > 0) {
@@ -142,7 +148,6 @@ class PetDetailRecyclerAdapter(data: OrderedRealmCollection<Pet>?, autoUpdate: B
                 } else {
                     this.trainedProgressbar.visibility = View.GONE
                 }
-                availableWrapper.visibility = View.GONE
             } else {
                 this.trainedProgressbar.visibility = View.GONE
                 this.imageView.alpha = 0.1f
@@ -154,10 +159,6 @@ class PetDetailRecyclerAdapter(data: OrderedRealmCollection<Pet>?, autoUpdate: B
                     itemView.setBackgroundResource(R.drawable.layout_rounded_bg_gray_700_brand_border)
                     DataBindingUtils.loadImage(eggView, "Pet_Egg_${item.animal}")
                     DataBindingUtils.loadImage(hatchingPotionView, "Pet_HatchingPotion_${item.color}")
-                } else {
-                    availableWrapper.visibility = View.VISIBLE
-                    eggAvailableView.alpha = if (hasEgg) 1.0f else 0.2f
-                    potionAvailableView.alpha = if (hasPotion) 1.0f else 0.2f
                 }
             }
 
@@ -188,16 +189,30 @@ class PetDetailRecyclerAdapter(data: OrderedRealmCollection<Pet>?, autoUpdate: B
             menu.addMenuItem(BottomSheetMenuItem(itemView.resources.getString(R.string.equip)))
             if (canRaiseToMount) {
                 menu.addMenuItem(BottomSheetMenuItem(itemView.resources.getString(R.string.feed)))
+                if (ownsSaddles) {
+                    menu.addMenuItem(BottomSheetMenuItem(itemView.resources.getString(R.string.use_saddle)))
+                }
             }
             menu.setSelectionRunnable { index ->
-                if (index == 0) {
-                    animal?.let {
-                        equipEvents.onNext(it.key)
+                when (index) {
+                    0 -> {
+                        animal?.let {
+                            equipEvents.onNext(it.key)
+                        }
                     }
-                } else if (index == 1) {
-                    val event = FeedCommand()
-                    event.usingPet = animal
-                    EventBus.getDefault().post(event)
+                    1 -> {
+                        val event = FeedCommand()
+                        event.usingPet = animal
+                        EventBus.getDefault().post(event)
+                    }
+                    2 -> {
+                        val event = FeedCommand()
+                        event.usingPet = animal
+                        val saddle = Food()
+                        saddle.key = "Saddle"
+                        event.usingFood = saddle
+                        EventBus.getDefault().post(event)
+                    }
                 }
             }
             menu.show()

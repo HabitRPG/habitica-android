@@ -220,7 +220,12 @@ class ItemRecyclerFragment : BaseFragment(), androidx.swiperefreshlayout.widget.
             compositeSubscription.add(inventoryRepository.getOwnedItems(type)
                     .doOnNext { items ->
                         if (items.size > 0) {
-                            adapter?.updateData(items)
+                            val filteredItems = if (isFeeding) {
+                                items.where().notEqualTo("key", "Saddle").findAll()
+                            } else {
+                                items
+                            }
+                            adapter?.updateData(filteredItems)
                         }
                     }
                     .map { items -> items.mapNotNull { it.key } }

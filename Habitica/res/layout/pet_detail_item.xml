@@ -60,10 +60,8 @@
     </RelativeLayout>
     <ImageView
         android:id="@+id/checkmark_view"
-        android:layout_width="22dp"
-        android:layout_height="16dp"
-        android:src="@drawable/ic_check"
-        android:tint="@color/brand_300"
-        android:tintMode="src_in"
+        android:layout_width="12dp"
+        android:layout_height="10dp"
+        android:src="@drawable/pet_checkmark"
         android:layout_gravity="center" />
 </LinearLayout>
