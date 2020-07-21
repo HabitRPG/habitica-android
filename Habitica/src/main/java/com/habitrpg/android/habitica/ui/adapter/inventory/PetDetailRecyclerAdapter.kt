@@ -114,11 +114,11 @@ class PetDetailRecyclerAdapter(data: OrderedRealmCollection<Pet>?, autoUpdate: B
 
         private val hasEgg: Boolean
             get() {
-                return ownedItems?.get(animal?.animal + "-eggs") != null
+                return ownedItems?.get(animal?.animal + "-eggs")?.numberOwned ?: 0 > 0
             }
         private val hasPotion: Boolean
             get() {
-                return ownedItems?.get(animal?.color + "-hatchingPotions") != null
+                return ownedItems?.get(animal?.color + "-hatchingPotions")?.numberOwned ?: 0 > 0
             }
 
         private val canHatch: Boolean
@@ -223,7 +223,14 @@ class PetDetailRecyclerAdapter(data: OrderedRealmCollection<Pet>?, autoUpdate: B
             val dialog = PetSuggestHatchDialog(context)
             animal?.let {
                 val ingredients = animalIngredientsRetriever?.invoke(it)
-                dialog.configure(it, ingredients?.first, ingredients?.second, canHatch)
+                dialog.configure(it,
+                        ingredients?.first,
+                        ingredients?.second,
+                        hasEgg,
+                        hasPotion,
+                        ownedItems?.get(animal?.animal + "-eggs") != null,
+                        ownedItems?.get(animal?.color + "-hatchingPotions") != null,
+                        ownedMounts?.containsKey(it.key) == true)
             }
             dialog.show()
         }

@@ -129,7 +129,7 @@ class PetDetailRecyclerFragment : BaseMainFragment() {
                         return@map mountMap
                     }
                     .subscribe(Consumer { adapter.setOwnedMounts(it) }, RxErrorHandler.handleEmptyError()))
-            compositeSubscription.add(inventoryRepository.getOwnedItems().subscribe(Consumer { adapter.setOwnedItems(it) }, RxErrorHandler.handleEmptyError()))
+            compositeSubscription.add(inventoryRepository.getOwnedItems(true).subscribe(Consumer { adapter.setOwnedItems(it) }, RxErrorHandler.handleEmptyError()))
             compositeSubscription.add(inventoryRepository.getPets(animalType, animalGroup, animalColor).firstElement().subscribe(Consumer<RealmResults<Pet>> { adapter.updateData(it) }, RxErrorHandler.handleEmptyError()))
             compositeSubscription.add(inventoryRepository.getMounts(animalType, animalGroup, animalColor).subscribe(Consumer<RealmResults<Mount>> { adapter.setExistingMounts(it) }, RxErrorHandler.handleEmptyError()))
         }

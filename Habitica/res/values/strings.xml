@@ -1058,11 +1058,19 @@
     <string name="excessItemsNoneLeft">You already have everything you need for all %s pets. Are you sure you want to purchase %d %ss?</string>
     <string name="equip">Equip</string>
     <string name="view_onboarding_tasks">View Onboarding Tasks</string>
-    <string name="suggest_pet_hatch">You\'ll need a %s Egg and %s Potion to hatch this pet</string>
-    <string name="can_hatch_pet">You can use a %s Egg and a %s Potion to hatch this pet</string>
+    <string name="suggest_pet_hatch_missing_egg">You still need a %s Egg to hatch this pet</string>
+    <string name="suggest_pet_hatch_missing_potion">You still need a %s Potion to hatch this pet</string>
+    <string name="suggest_pet_hatch_missing_both">You need a %s and %s Potion to hatch this pet</string>
+    <string name="suggest_pet_hatch_again_missing_egg">You still need a %s Egg to hatch this pet again</string>
+    <string name="suggest_pet_hatch_again_missing_potion">You still need a %s Potion to hatch this pet again</string>
+    <string name="suggest_pet_hatch_again_missing_both">You need a %s and %s Potion to hatch this pet again</string>
+    <string name="can_hatch_pet">Combine your %s Egg and %s Potion to hatch this pet!</string>
     <string name="hatch_pet">Hatch Pet</string>
     <string name="unhatched_pet">Unhatched Pet</string>
+    <string name="hatch_pet_again">Hatch Pet again</string>
     <string name="magic_potions">Magic Potions</string>
     <string name="magic_potion">Magic Potion</string>
     <string name="use_saddle">Use Saddle</string>
+    <string name="hatch_your_pet">Hatch your Pet</string>
+    <string name="hatch">Hatch</string>
 </resources>

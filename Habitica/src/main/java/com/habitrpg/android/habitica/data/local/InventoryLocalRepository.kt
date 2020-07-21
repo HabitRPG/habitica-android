@@ -31,8 +31,8 @@ interface InventoryLocalRepository : ContentLocalRepository {
     fun getOwnedEquipment(type: String): Flowable<RealmResults<Equipment>>
 
     fun getItems(itemClass: Class<out Item>, keys: Array<String>, user: User?): Flowable<out RealmResults<out Item>>
-    fun getOwnedItems(itemType: String, userID: String): Flowable<RealmResults<OwnedItem>>
-    fun getOwnedItems(userID: String): Flowable<Map<String, OwnedItem>>
+    fun getOwnedItems(itemType: String, userID: String, includeZero: Boolean): Flowable<RealmResults<OwnedItem>>
+    fun getOwnedItems(userID: String, includeZero: Boolean): Flowable<Map<String, OwnedItem>>
     fun getEquipmentType(type: String, set: String): Flowable<RealmResults<Equipment>>
 
     fun getEquipment(key: String): Flowable<Equipment>
@@ -45,7 +45,7 @@ interface InventoryLocalRepository : ContentLocalRepository {
     fun changeOwnedCount(item: OwnedItem, amountToAdd: Int?)
 
     fun getItem(type: String, key: String): Flowable<Item>
-    fun getOwnedItem(userID: String, type: String, key: String): Flowable<OwnedItem>
+    fun getOwnedItem(userID: String, type: String, key: String, includeZero: Boolean): Flowable<OwnedItem>
 
     fun decrementMysteryItemCount(user: User?)
     fun saveInAppRewards(onlineItems: List<ShopItem>)

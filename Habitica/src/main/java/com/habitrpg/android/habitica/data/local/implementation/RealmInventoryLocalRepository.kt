@@ -79,10 +79,12 @@ class RealmInventoryLocalRepository(realm: Realm, private val context: Context) 
                 .filter { it.isLoaded }
     }
 
-    override fun getOwnedItems(itemType: String, userID: String): Flowable<RealmResults<OwnedItem>> {
-        return realm.where(OwnedItem::class.java)
-                .greaterThan("numberOwned", 0)
-                .equalTo("itemType", itemType)
+    override fun getOwnedItems(itemType: String, userID: String, includeZero: Boolean): Flowable<RealmResults<OwnedItem>> {
+        var query = realm.where(OwnedItem::class.java)
+        if (!includeZero) {
+            query = query.greaterThan("numberOwned", 0)
+        }
+        return query.equalTo("itemType", itemType)
                 .equalTo("userID", userID)
                 .sort("key")
                 .findAll()
@@ -95,10 +97,12 @@ class RealmInventoryLocalRepository(realm: Realm, private val context: Context) 
                 .filter { it.isLoaded }
     }
 
-    override fun getOwnedItems(userID: String): Flowable<Map<String, OwnedItem>> {
-        return realm.where(OwnedItem::class.java)
-                .greaterThan("numberOwned", 0)
-                .equalTo("userID", userID)
+    override fun getOwnedItems(userID: String, includeZero: Boolean): Flowable<Map<String, OwnedItem>> {
+        var query = realm.where(OwnedItem::class.java)
+        if (!includeZero) {
+            query = query.greaterThan("numberOwned", 0)
+        }
+        return query.equalTo("userID", userID)
                 .findAll()
                 .asFlowable()
                 .map {
@@ -185,7 +189,7 @@ class RealmInventoryLocalRepository(realm: Realm, private val context: Context) 
     }
 
     override fun changeOwnedCount(type: String, key: String, userID: String, amountToAdd: Int) {
-        getOwnedItem(userID, type, key).firstElement().subscribe( Consumer { changeOwnedCount(it, amountToAdd)}, RxErrorHandler.handleEmptyError())
+        getOwnedItem(userID, type, key, true).firstElement().subscribe( Consumer { changeOwnedCount(it, amountToAdd)}, RxErrorHandler.handleEmptyError())
     }
 
     override fun changeOwnedCount(item: OwnedItem, amountToAdd: Int?) {
@@ -194,13 +198,15 @@ class RealmInventoryLocalRepository(realm: Realm, private val context: Context) 
         }
     }
 
-    override fun getOwnedItem(userID: String, type: String, key: String): Flowable<OwnedItem> {
-        return realm.where(OwnedItem::class.java)
+    override fun getOwnedItem(userID: String, type: String, key: String, includeZero: Boolean): Flowable<OwnedItem> {
+        var query = realm.where(OwnedItem::class.java)
                 .equalTo("itemType", type)
                 .equalTo("key", key)
                 .equalTo("userID", userID)
-                .greaterThan("numberOwned", 0)
-                .findFirstAsync()
+        if (!includeZero) {
+            query = query.greaterThan("numberOwned", 0)
+        }
+        return query.findFirstAsync()
                 .asFlowable<OwnedItem>()
                 .filter { realmObject -> realmObject.isLoaded }
     }

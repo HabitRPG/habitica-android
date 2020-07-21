@@ -33,8 +33,8 @@ interface InventoryRepository : BaseRepository {
     fun getOwnedEquipment(type: String): Flowable<RealmResults<Equipment>>
     fun getEquipmentType(type: String, set: String): Flowable<RealmResults<Equipment>>
 
-    fun getOwnedItems(itemType: String): Flowable<RealmResults<OwnedItem>>
-    fun getOwnedItems(): Flowable<Map<String, OwnedItem>>
+    fun getOwnedItems(itemType: String, includeZero: Boolean = false): Flowable<RealmResults<OwnedItem>>
+    fun getOwnedItems(includeZero: Boolean = false): Flowable<Map<String, OwnedItem>>
 
     fun getEquipment(key: String): Flowable<Equipment>
 
