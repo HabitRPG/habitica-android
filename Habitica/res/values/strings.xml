@@ -437,9 +437,9 @@
     <string name="subscription_status">Subscription Status</string>
 
     <string name="challenge_leave_title">Leave Challenge</string>
-    <string name="challenge_leave_text">Are you sure you want to leave the Challenge “%s”?</string>
-    <string name="challenge_remove_tasks_title">Remove tasks</string>
-    <string name="challenge_remove_tasks_text">Do you want to remove the tasks?</string>
+    <string name="challenge_leave_description">You can choose to keep this Challenge\'s tasks on your personal task board  or delete them when you leave</string>
+    <string name="leave_keep_tasks">Leave &amp; Keep Tasks</string>
+    <string name="leave_delte_tasks">Leave &amp; Delete Tasks</string>
     <string name="remove_tasks">Remove</string>
     <string name="keep_tasks">Keep</string>
     <string name="my_challenges">My Challenges</string>
@@ -1073,4 +1073,13 @@
     <string name="use_saddle">Use Saddle</string>
     <string name="hatch_your_pet">Hatch your Pet</string>
     <string name="hatch">Hatch</string>
+    <string name="delete_challenge_task_title">Delete Challenge Task?</string>
+    <string name="delete_challenge_task_description">This is one of %d tasks that are part of the “%s” Challenge. You must leave the Challenge to delete this task.</string>
+    <string name="leave_delete_task">Leave &amp; Delete Task</string>
+    <string name="leave_delete_x_tasks">Leave &amp; Delete %d Tasks</string>
+    <string name="broken_challenge">Broken Challenge</string>
+    <string name="broken_challenge_description">This is one of %d tasks that are part of a Challenge that no longer exists. What would you like to do with these left over tasks?</string>
+    <string name="keep_x_tasks">Keep %d Tasks</string>
+    <string name="delete_x_tasks">Delete %d Tasks</string>
+    <string name="challenge_task_name">%s Challenge Task</string>
 </resources>

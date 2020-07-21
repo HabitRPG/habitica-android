@@ -12,8 +12,10 @@ class TodosRecyclerViewAdapter(data: OrderedRealmCollection<Task>?, autoUpdate: 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TodoViewHolder =
             TodoViewHolder(getContentView(parent), { task, direction -> taskScoreEventsSubject.onNext(Pair(task, direction)) },
-                    { task, item -> checklistItemScoreSubject.onNext(Pair(task, item))}) {
-        task -> taskOpenEventsSubject.onNext(task)
-    }
+                    { task, item -> checklistItemScoreSubject.onNext(Pair(task, item))}, {
+                task -> taskOpenEventsSubject.onNext(task)
+            }) {
+                task -> brokenTaskEventsSubject.onNext(task)
+            }
 
 }

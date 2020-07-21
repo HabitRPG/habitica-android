@@ -25,6 +25,7 @@
                 android:layout_height="@dimen/avatar_header_height"
                 android:layout_gravity="center_vertical"
                 android:layout_marginEnd="20dp"
+            android:layout_marginStart="2dp"
                 android:contentDescription="@string/sidebar_avatar"
                 app:showBackground="true"
                 app:showMount="true"

@@ -307,4 +307,12 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
                     }
                 }.toList()
     }
+
+    override fun unlinkAllTasks(challengeID: String?, keepOption: String): Flowable<Void> {
+        return apiClient.unlinkAllTasks(challengeID, keepOption)
+    }
+
+    override fun getTasksForChallenge(challengeID: String?): Flowable<RealmResults<Task>> {
+        return localRepository.getTasksForChallenge(challengeID)
+    }
 }

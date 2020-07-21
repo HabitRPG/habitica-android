@@ -66,6 +66,16 @@
                         android:gravity="top"
                         android:inputType="textCapSentences|textAutoCorrect|textMultiLine"/>
                 </com.google.android.material.textfield.TextInputLayout>
+                <TextView
+                    android:id="@+id/challenge_name_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    style="@style/Caption1"
+                    android:gravity="center"
+                    android:textColor="@color/gray_10"
+                    tools:visibility="visible"
+                    tools:text="Challenge Name"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"

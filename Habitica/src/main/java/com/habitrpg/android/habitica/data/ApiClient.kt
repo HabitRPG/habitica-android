@@ -258,4 +258,5 @@ interface ApiClient {
     fun findUsernames(username: String, context: String?, id: String?): Flowable<List<FindUsernameResult>>
 
     fun transferGems(giftedID: String, amount: Int): Flowable<Void>
+    fun unlinkAllTasks(challengeID: String?, keepOption: String): Flowable<Void>
 }

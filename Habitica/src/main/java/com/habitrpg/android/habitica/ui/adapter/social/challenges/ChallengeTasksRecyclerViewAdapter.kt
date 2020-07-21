@@ -63,16 +63,16 @@ class ChallengeTasksRecyclerViewAdapter(taskFilterHelper: TaskFilterHelper?, lay
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BindableViewHolder<Task> {
         val viewHolder: BindableViewHolder<Task> = when (viewType) {
-            TYPE_HABIT -> HabitViewHolder(getContentView(parent, R.layout.habit_item_card), { _, _ -> }) { task ->
+            TYPE_HABIT -> HabitViewHolder(getContentView(parent, R.layout.habit_item_card), { _, _ -> }, { }) { task ->
                 taskOpenEventsSubject.onNext(task)
             }
-            TYPE_DAILY -> DailyViewHolder(getContentView(parent, R.layout.daily_item_card), { _, _ -> }, { _, _ -> }) { task ->
+            TYPE_DAILY -> DailyViewHolder(getContentView(parent, R.layout.daily_item_card), { _, _ -> }, { _, _ -> }, { }) { task ->
                 taskOpenEventsSubject.onNext(task)
             }
-            TYPE_TODO -> TodoViewHolder(getContentView(parent, R.layout.todo_item_card), { _, _ -> }, { _, _ -> }) { task ->
+            TYPE_TODO -> TodoViewHolder(getContentView(parent, R.layout.todo_item_card), { _, _ -> }, { _, _ -> }, { }) { task ->
                 taskOpenEventsSubject.onNext(task)
             }
-            TYPE_REWARD -> RewardViewHolder(getContentView(parent, R.layout.reward_item_card), { _, _ -> }) { task ->
+            TYPE_REWARD -> RewardViewHolder(getContentView(parent, R.layout.reward_item_card), { _, _ -> }, { }) { task ->
                 taskOpenEventsSubject.onNext(task)
             }
             TYPE_ADD_ITEM -> AddItemViewHolder(getContentView(parent, R.layout.challenge_add_task_item), addItemSubject)

@@ -383,4 +383,7 @@ interface ApiService {
 
     @POST("members/transfer-gems")
     fun transferGems(@Body data: Map<String, Any>): Flowable<HabitResponse<Void>>
+
+    @POST("tasks/unlink-all/{challengeID}")
+    fun unlinkAllTasks(@Path("challengeID") challengeID: String?, @Query("keep") keepOption: String): Flowable<HabitResponse<Void>>
 }

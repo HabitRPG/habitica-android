@@ -21,9 +21,7 @@ import androidx.core.view.forEachIndexed
 import androidx.core.widget.NestedScrollView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
-import com.habitrpg.android.habitica.data.TagRepository
-import com.habitrpg.android.habitica.data.TaskRepository
-import com.habitrpg.android.habitica.data.UserRepository
+import com.habitrpg.android.habitica.data.*
 import com.habitrpg.android.habitica.extensions.OnChangeTextWatcher
 import com.habitrpg.android.habitica.extensions.addCancelButton
 import com.habitrpg.android.habitica.extensions.dpToPx
@@ -31,6 +29,7 @@ import com.habitrpg.android.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager
 import com.habitrpg.android.habitica.models.Tag
+import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.tasks.HabitResetOption
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.user.Stats
@@ -55,6 +54,8 @@ class TaskFormActivity : BaseActivity() {
     lateinit var tagRepository: TagRepository
     @Inject
     lateinit var taskAlarmManager: TaskAlarmManager
+    @Inject
+    lateinit var challengeRepository: ChallengeRepository
 
     private val toolbar: Toolbar by bindView(R.id.toolbar)
     private val scrollView: NestedScrollView by bindView(R.id.scroll_view)
@@ -89,6 +90,10 @@ class TaskFormActivity : BaseActivity() {
 
     private val tagsTitleView: TextView by bindView(R.id.tags_title)
     private val tagsWrapper: LinearLayout by bindView(R.id.tags_wrapper)
+
+    private val challengeNameView: TextView by bindView(R.id.challenge_name_view)
+
+    private var challenge: Challenge? = null
 
     private var isCreating = true
     private var isChallengeTask = false
@@ -193,6 +198,13 @@ class TaskFormActivity : BaseActivity() {
                     task = it
                     //tintColor = ContextCompat.getColor(this, it.mediumTaskColor)
                     fillForm(it)
+                    task?.challengeID?.let {
+                        compositeSubscription.add(challengeRepository.retrieveChallenge(it).subscribe(Consumer {
+                            challenge = it
+                            challengeNameView.text = getString(R.string.challenge_task_name, it.name)
+                            challengeNameView.visibility = View.VISIBLE
+                        }, RxErrorHandler.handleEmptyError()))
+                    }
                 }, RxErrorHandler.handleEmptyError()))
             }
             bundle.containsKey(PARCELABLE_TASK) -> {
@@ -464,6 +476,10 @@ class TaskFormActivity : BaseActivity() {
     }
 
     private fun deleteTask() {
+        if (task?.challengeID?.isNotBlank() == true && task?.challengeBroken?.isNotBlank() != true) {
+            showChallengeDeleteTask()
+            return
+        }
         val alert = HabiticaAlertDialog(this)
         alert.setTitle(R.string.are_you_sure)
         alert.addButton(R.string.delete_task, true) { _, _ ->
@@ -474,6 +490,36 @@ class TaskFormActivity : BaseActivity() {
         }
         alert.addCancelButton()
         alert.show()
+    }
+
+    private fun showChallengeDeleteTask() {
+        compositeSubscription.add(taskRepository.getTasksForChallenge(task?.challengeID).subscribe(Consumer { tasks ->
+            val taskCount = tasks.size
+            val alert = HabiticaAlertDialog(this)
+            alert.setTitle(getString(R.string.delete_challenge_task_title))
+            alert.setMessage(getString(R.string.delete_challenge_task_description, taskCount, challenge?.name ?: ""))
+            alert.addButton(R.string.leave_delete_task, true, true) { _, _ ->
+                challenge?.let {
+                    compositeSubscription.add(challengeRepository.leaveChallenge(it, "keep-all")
+                            .flatMap { taskRepository.deleteTask(task?.id ?: "") }
+                            .flatMap { userRepository.retrieveUser(true) }
+                            .subscribe(Consumer {
+                                finish()
+                            }, RxErrorHandler.handleEmptyError()))
+                }
+            }
+            alert.addButton(getString(R.string.leave_delete_x_tasks, taskCount), false, true) { _, _ ->
+                challenge?.let {
+                    compositeSubscription.add(challengeRepository.leaveChallenge(it, "remove-all")
+                            .flatMap { userRepository.retrieveUser(true) }
+                            .subscribe(Consumer {
+                        finish()
+                    }, RxErrorHandler.handleEmptyError()))
+                }
+            }
+            alert.setExtraCloseButtonVisibility(View.VISIBLE)
+            alert.show()
+        }, RxErrorHandler.handleEmptyError()))
     }
 
     private fun dismissKeyboard() {

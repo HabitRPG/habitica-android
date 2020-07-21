@@ -332,6 +332,10 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
         return apiService.buyItem(itemKey, mapOf(Pair("quantity", purchaseQuantity))).compose(configureApiCallObserver())
     }
 
+    override fun unlinkAllTasks(challengeID: String?, keepOption: String): Flowable<Void> {
+        return apiService.unlinkAllTasks(challengeID, keepOption).compose(configureApiCallObserver())
+    }
+
     override fun purchaseItem(type: String, itemKey: String, purchaseQuantity: Int): Flowable<Any> {
         return apiService.purchaseItem(type, itemKey, mapOf(Pair("quantity", purchaseQuantity))).compose(configureApiCallObserver())
     }
