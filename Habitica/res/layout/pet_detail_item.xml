@@ -22,8 +22,8 @@
         android:progressTint="@color/green_100"
         android:progressBackgroundTint="@color/gray_600"
         android:layout_marginTop="4dp"
-        android:layout_marginStart="9dp"
-        android:layout_marginEnd="9dp"
+        android:layout_marginStart="7dp"
+        android:layout_marginEnd="7dp"
         android:max="50" />
     <LinearLayout
         android:id="@+id/items_available_wrapper"

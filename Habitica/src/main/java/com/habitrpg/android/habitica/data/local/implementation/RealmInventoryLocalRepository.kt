@@ -132,11 +132,15 @@ class RealmInventoryLocalRepository(realm: Realm, private val context: Context) 
                 .filter { it.isLoaded }
     }
 
-    override fun getMounts(type: String, group: String, color: String?): Flowable<RealmResults<Mount>> {
+    override fun getMounts(type: String?, group: String?, color: String?): Flowable<RealmResults<Mount>> {
         var query = realm.where(Mount::class.java)
-                .sort("color", Sort.ASCENDING)
-                .equalTo("type", group)
-                .equalTo("animal", type)
+                .sort("type", Sort.ASCENDING, if (color == null) "color" else "animal", Sort.ASCENDING)
+        if (type != null) {
+            query = query.equalTo("animal", type)
+        }
+        if (group != null) {
+            query = query.equalTo("type", group)
+        }
         if (color != null) {
             query = query.equalTo("color", color)
         }
@@ -162,11 +166,15 @@ class RealmInventoryLocalRepository(realm: Realm, private val context: Context) 
                 .filter { it.isLoaded }
     }
 
-    override fun getPets(type: String, group: String, color: String?): Flowable<RealmResults<Pet>> {
+    override fun getPets(type: String?, group: String?, color: String?): Flowable<RealmResults<Pet>> {
         var query = realm.where(Pet::class.java)
-                .sort("color", Sort.ASCENDING)
-                .equalTo("type", group)
-                .equalTo("animal", type)
+                .sort("type", Sort.ASCENDING, if (color == null) "color" else "animal", Sort.ASCENDING)
+        if (type != null) {
+            query = query.equalTo("animal", type)
+        }
+        if (group != null) {
+            query = query.equalTo("type", group)
+        }
         if (color != null) {
             query = query.equalTo("color", color)
         }

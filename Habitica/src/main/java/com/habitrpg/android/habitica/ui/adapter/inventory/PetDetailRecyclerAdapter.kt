@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.ProgressBar
+import androidx.recyclerview.widget.GridLayoutManager
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.events.commands.FeedCommand
@@ -20,6 +21,7 @@ import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.menu.BottomSheetMenu
 import com.habitrpg.android.habitica.ui.menu.BottomSheetMenuItem
+import com.habitrpg.android.habitica.ui.viewHolders.SectionViewHolder
 import com.habitrpg.android.habitica.ui.views.dialogs.PetSuggestHatchDialog
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
@@ -32,7 +34,7 @@ import io.realm.RealmRecyclerViewAdapter
 import io.realm.RealmResults
 import org.greenrobot.eventbus.EventBus
 
-class PetDetailRecyclerAdapter(data: OrderedRealmCollection<Pet>?, autoUpdate: Boolean) : RealmRecyclerViewAdapter<Pet, PetDetailRecyclerAdapter.PetViewHolder>(data, autoUpdate) {
+class PetDetailRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
 
     var itemType: String? = null
     var context: Context? = null
@@ -43,21 +45,61 @@ class PetDetailRecyclerAdapter(data: OrderedRealmCollection<Pet>?, autoUpdate: B
     private val equipEvents = PublishSubject.create<String>()
     private var ownsSaddles: Boolean = false
 
+    private var itemList: List<Any> = ArrayList()
+
+    fun setItemList(itemList: List<Any>) {
+        this.itemList = itemList
+        this.notifyDataSetChanged()
+    }
+
     fun getEquipFlowable(): Flowable<String> {
         return equipEvents.toFlowable(BackpressureStrategy.DROP)
     }
 
     var animalIngredientsRetriever: ((Animal) -> Pair<Egg?, HatchingPotion?>)? = null
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PetViewHolder {
-        return PetViewHolder(parent.inflate(R.layout.pet_detail_item))
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder =
+            when (viewType) {
+                0 -> {
+                    val view = parent.inflate(R.layout.shop_header)
+                    StableRecyclerAdapter.StableHeaderViewHolder(view)
+                }
+                1 -> {
+                    val view = parent.inflate(R.layout.customization_section_header)
+                    SectionViewHolder(view)
+                }
+                else -> {
+                    PetViewHolder(parent.inflate(R.layout.pet_detail_item))
+                }
+            }
 
-    override fun onBindViewHolder(holder: PetViewHolder, position: Int) {
-        data?.let {
-            holder.bind(it[position], ownedPets?.get(it[position]?.key ?: ""))
+    override fun onBindViewHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder, position: Int) {
+        val obj = this.itemList[position]
+        when {
+            obj.javaClass == String::class.java -> {
+                (holder as? SectionViewHolder)?.bind(obj as? String ?: "")
+            }
+            else -> {
+                (obj as? Pet)?.let { (holder as? PetViewHolder)?.bind(it, ownedPets?.get(it.key ?: "")) }
+            }
         }
     }
+
+    override fun getItemViewType(position: Int): Int {
+        val item = itemList[position]
+
+        return if (item.javaClass == String::class.java) {
+            1
+        }
+        else if (itemType == "pets") {
+            2
+        }
+        else {
+            3
+        }
+    }
+
+    override fun getItemCount(): Int = itemList.size
 
     fun setExistingMounts(existingMounts: RealmResults<Mount>) {
         this.existingMounts = existingMounts

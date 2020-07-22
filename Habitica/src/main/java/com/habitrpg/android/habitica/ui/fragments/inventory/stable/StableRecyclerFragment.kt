@@ -12,6 +12,7 @@ import com.habitrpg.android.habitica.extensions.getTranslatedType
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.Animal
+import com.habitrpg.android.habitica.models.inventory.StableSection
 import com.habitrpg.android.habitica.models.user.*
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.adapter.inventory.StableRecyclerAdapter
@@ -147,41 +148,50 @@ class StableRecyclerFragment : BaseFragment() {
     private fun mapAnimals(unsortedAnimals: RealmResults<out Animal>, ownedAnimals: Map<String, OwnedObject>): ArrayList<Any> {
         val items = ArrayList<Any>()
         var lastAnimal: Animal = unsortedAnimals[0] ?: return items
-        var lastSectionTitle = ""
+        var lastSection: StableSection? = null
         for (animal in unsortedAnimals) {
             val identifier = if (animal.animal.isNotEmpty() && (animal.type != "special" && animal.type != "wacky")) animal.animal else animal.key
             val lastIdentifier = if (lastAnimal.animal.isNotEmpty()) lastAnimal.animal else lastAnimal.key
-            if (identifier != lastIdentifier || animal === unsortedAnimals[unsortedAnimals.size - 1]) {
-                if (!((lastAnimal.type == "premium" || lastAnimal.type == "special") && lastAnimal.numberOwned == 0)) {
+            if (animal.type == "premium") {
+                if (!items.contains(lastAnimal)) {
+                    items.add(lastAnimal)
+                }
+                lastAnimal = items.first { (it as? Animal)?.animal == animal.animal } as Animal
+            } else if (identifier != lastIdentifier || animal === unsortedAnimals[unsortedAnimals.size - 1]) {
+                if (!((lastAnimal.type == "special") && lastAnimal.numberOwned == 0) && !items.contains(lastAnimal)) {
                     items.add(lastAnimal)
                 }
                 lastAnimal = animal
             }
 
-            lastAnimal.totalNumber += 1
 
-            if (animal.type != lastSectionTitle) {
-                if (items.size > 0 && items[items.size - 1].javaClass == String::class.java) {
+            if (animal.type != lastSection?.key) {
+                if (items.size > 0 && items[items.size - 1].javaClass == StableSection::class.java) {
                     items.removeAt(items.size - 1)
                 }
-                items.add(animal.getTranslatedType(context))
-                lastSectionTitle = animal.type
+                val section = StableSection(animal.type, animal.getTranslatedType(context))
+                items.add(section)
+                lastSection = section
             }
-            when (itemType) {
+            val isOwned = when (itemType) {
                 "pets" -> {
                     val ownedPet = ownedAnimals[animal?.key] as? OwnedPet
-                    if (ownedPet?.trained ?: 0 > 0) {
-                        lastAnimal.numberOwned += 1
-                    }
+                    ownedPet?.trained ?: 0 > 0
                 }
                 "mounts" -> {
                     val ownedMount = ownedAnimals[animal?.key] as? OwnedMount
-                    if (ownedMount?.owned == true) {
-                        lastAnimal.numberOwned = lastAnimal.numberOwned + 1
-                    }
+                    ownedMount?.owned == true
                 }
+                else -> false
             }
-
+            if (animal.type != "premium" || isOwned) {
+                lastAnimal.totalNumber += 1
+                lastSection?.totalCount = lastSection?.totalCount ?: 0 + 1
+            }
+            if (isOwned) {
+                lastAnimal.numberOwned += 1
+                lastSection?.ownedCount = lastSection?.ownedCount ?: 0 + 1
+            }
         }
         if (!((lastAnimal.type == "premium" || lastAnimal.type == "special") && lastAnimal.numberOwned == 0)) {
             items.add(lastAnimal)

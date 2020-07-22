@@ -82,7 +82,7 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
         return localRepository.getMounts()
     }
 
-    override fun getMounts(type: String, group: String, color: String?): Flowable<RealmResults<Mount>> {
+    override fun getMounts(type: String?, group: String?, color: String?): Flowable<RealmResults<Mount>> {
         return localRepository.getMounts(type, group, color)
     }
 
@@ -94,7 +94,7 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
         return localRepository.getPets()
     }
 
-    override fun getPets(type: String, group: String, color: String?): Flowable<RealmResults<Pet>> {
+    override fun getPets(type: String?, group: String?, color: String?): Flowable<RealmResults<Pet>> {
         return localRepository.getPets(type, group, color)
     }
 

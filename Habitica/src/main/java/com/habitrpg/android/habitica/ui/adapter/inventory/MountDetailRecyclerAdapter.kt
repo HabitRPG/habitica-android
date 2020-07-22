@@ -11,11 +11,13 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.Mount
+import com.habitrpg.android.habitica.models.inventory.Pet
 import com.habitrpg.android.habitica.models.user.OwnedMount
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.menu.BottomSheetMenu
 import com.habitrpg.android.habitica.ui.menu.BottomSheetMenuItem
+import com.habitrpg.android.habitica.ui.viewHolders.SectionViewHolder
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import io.reactivex.Observable
@@ -25,7 +27,7 @@ import io.reactivex.subjects.PublishSubject
 import io.realm.OrderedRealmCollection
 import io.realm.RealmRecyclerViewAdapter
 
-class MountDetailRecyclerAdapter(data: OrderedRealmCollection<Mount>?, autoUpdate: Boolean) : RealmRecyclerViewAdapter<Mount, MountDetailRecyclerAdapter.MountViewHolder>(data, autoUpdate) {
+class MountDetailRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
 
     var itemType: String? = null
     var context: Context? = null
@@ -33,18 +35,59 @@ class MountDetailRecyclerAdapter(data: OrderedRealmCollection<Mount>?, autoUpdat
 
     private val equipEvents = PublishSubject.create<String>()
 
+    private var itemList: List<Any> = ArrayList()
+
+    fun setItemList(itemList: List<Any>) {
+        this.itemList = itemList
+        this.notifyDataSetChanged()
+    }
 
     fun getEquipFlowable(): Flowable<String> {
         return equipEvents.toFlowable(BackpressureStrategy.DROP)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MountViewHolder {
-        return MountViewHolder(parent.inflate(R.layout.mount_overview_item))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder =
+            when (viewType) {
+                0 -> {
+                    val view = parent.inflate(R.layout.shop_header)
+                    StableRecyclerAdapter.StableHeaderViewHolder(view)
+                }
+                1 -> {
+                    val view = parent.inflate(R.layout.customization_section_header)
+                    SectionViewHolder(view)
+                }
+                else -> {
+                    MountViewHolder(parent.inflate(R.layout.mount_overview_item))
+                }
+            }
+
+    override fun onBindViewHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder, position: Int) {
+        val obj = this.itemList[position]
+        when {
+            obj.javaClass == String::class.java -> {
+                (holder as? SectionViewHolder)?.bind(obj as? String ?: "")
+            }
+            else -> {
+                (obj as? Mount)?.let { (holder as? MountViewHolder)?.bind(it, ownedMounts?.get(it.key ?: "")) }
+            }
+        }
     }
 
-    override fun onBindViewHolder(holder: MountViewHolder, position: Int) {
-        data?.let { holder.bind(it[position], ownedMounts?.get(it[position].key)) }
+    override fun getItemViewType(position: Int): Int {
+        val item = itemList[position]
+
+        return if (item.javaClass == String::class.java) {
+            1
+        }
+        else if (itemType == "pets") {
+            2
+        }
+        else {
+            3
+        }
     }
+
+    override fun getItemCount(): Int = itemList.size
 
     fun setOwnedMounts(ownedMounts: Map<String, OwnedMount>) {
         this.ownedMounts = ownedMounts
@@ -97,6 +140,7 @@ class MountDetailRecyclerAdapter(data: OrderedRealmCollection<Mount>?, autoUpdat
                 return
             }
             val menu = BottomSheetMenu(itemView.context)
+            menu.setTitle(animal?.text)
             menu.addMenuItem(BottomSheetMenuItem(resources.getString(R.string.equip)))
             menu.setSelectionRunnable {
                 animal?.let { equipEvents.onNext(it.key) }
