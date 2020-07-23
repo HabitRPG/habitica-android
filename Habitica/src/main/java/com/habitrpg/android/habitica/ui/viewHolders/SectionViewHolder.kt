@@ -8,6 +8,7 @@ import android.widget.Spinner
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.models.inventory.StableSection
 import com.habitrpg.android.habitica.ui.helpers.bindView
 
 class SectionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -15,6 +16,7 @@ class SectionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val label: TextView by bindView(itemView, R.id.label)
     private val selectionSpinner: Spinner? by bindView(itemView, R.id.classSelectionSpinner)
     internal val notesView: TextView? by bindView(itemView, R.id.headerNotesView)
+    private val countPill: TextView? by bindView(itemView, R.id.count_pill)
     var context: Context = itemView.context
 
     var spinnerSelectionChanged: (() -> Unit)? = null
@@ -39,6 +41,16 @@ class SectionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         } catch (e: Exception) {
             this.label.text = title
         }
+    }
+
+    fun bind(section: StableSection) {
+        label.text = section.text
+        if (section.key == "special") {
+            countPill?.visibility = View.GONE
+        } else {
+            countPill?.visibility = View.VISIBLE
+        }
+        countPill?.text = "${section.ownedCount} / ${section.totalCount}"
     }
 
     var spinnerAdapter: ArrayAdapter<CharSequence>? = null

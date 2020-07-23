@@ -2,29 +2,28 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:clickable="true"
     android:background="@color/white"
     android:focusable="true">
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:id="@+id/card_view"
         android:layout_marginTop="6dp"
         android:layout_marginBottom="6dp"
-        android:layout_width="80dp"
-        android:layout_height="108dp"
+        android:layout_width="76dp"
+        android:layout_height="96dp"
         android:orientation="vertical"
         android:background="@drawable/layout_rounded_bg_shopitem"
         android:layout_centerInParent="true">
-        style="@style/CardContent">
             <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/imageView"
                 android:layout_width="@dimen/pet_image_width"
-                android:layout_height="@dimen/pet_image_height"
+                android:layout_height="60dp"
                 android:layout_gravity="center_horizontal"
-                android:scaleType="fitEnd" />
+                app:actualImageScaleType="fitCenter" />
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="3.5dp"
+                android:layout_height="16dp"
                 android:layout_gravity="center_horizontal"
                 android:id="@+id/titleTextView"
                 android:textSize="13sp"
@@ -32,7 +31,7 @@
                 style="@style/RowTitle"/>
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="20dp"
                 android:layout_gravity="center_horizontal"
                 android:id="@+id/ownedTextView"
                 android:gravity="center"

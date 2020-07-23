@@ -15,6 +15,7 @@ import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.Animal
+import com.habitrpg.android.habitica.models.inventory.StableSection
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.fragments.inventory.stable.StableFragmentDirections
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
@@ -76,13 +77,13 @@ class StableRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<
             obj == "header" -> {
                 (holder as? StableHeaderViewHolder)?.bind()
             }
-            obj.javaClass == String::class.java -> {
+            obj.javaClass == StableSection::class.java -> {
                 if (obj == "Standard") {
                     val params = holder.itemView.layoutParams as GridLayoutManager.LayoutParams
                     params.height = 135
                     holder.itemView.layoutParams = params
                 }
-                (holder as? SectionViewHolder)?.bind(obj as? String ?: "")
+                (holder as? SectionViewHolder)?.bind(obj as StableSection)
             }
             else -> {
                 (obj as? Animal)?.let { (holder as? StableViewHolder)?.bind(it) }
@@ -97,7 +98,7 @@ class StableRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<
         return if (item == "header") {
             0
         }
-        else if (item.javaClass == String::class.java) {
+        else if (item.javaClass == StableSection::class.java) {
             1
         }
         else if (itemType == "pets") {
@@ -164,7 +165,7 @@ class StableRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<
                 this.ownedTextView.text = context?.getString(R.string.pet_ownership_fraction, owned, totalNum)
                 this.ownedTextView.background = context?.getDrawable(R.drawable.layout_rounded_bg_shopitem_price)
 
-                this.ownedTextView.setTextColor(ContextCompat.getColor(it, R.color.black) )
+                this.ownedTextView.setTextColor(ContextCompat.getColor(it, R.color.gray_200) )
 
                 ownedTextView.visibility = if (isIndividualAnimal) View.GONE else View.VISIBLE
                 imageView.background = null

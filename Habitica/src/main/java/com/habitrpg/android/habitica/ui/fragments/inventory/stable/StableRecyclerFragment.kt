@@ -165,7 +165,7 @@ class StableRecyclerFragment : BaseFragment() {
             }
 
 
-            if (animal.type != lastSection?.key) {
+            if (animal.type != lastSection?.key && animal.type != "premium") {
                 if (items.size > 0 && items[items.size - 1].javaClass == StableSection::class.java) {
                     items.removeAt(items.size - 1)
                 }
@@ -184,13 +184,11 @@ class StableRecyclerFragment : BaseFragment() {
                 }
                 else -> false
             }
-            if (animal.type != "premium" || isOwned) {
-                lastAnimal.totalNumber += 1
-                lastSection?.totalCount = lastSection?.totalCount ?: 0 + 1
-            }
+            lastAnimal.totalNumber += 1
+            lastSection?.totalCount = (lastSection?.totalCount ?: 0) + 1
             if (isOwned) {
                 lastAnimal.numberOwned += 1
-                lastSection?.ownedCount = lastSection?.ownedCount ?: 0 + 1
+                lastSection?.ownedCount = (lastSection?.ownedCount ?: 0) + 1
             }
         }
         if (!((lastAnimal.type == "premium" || lastAnimal.type == "special") && lastAnimal.numberOwned == 0)) {
