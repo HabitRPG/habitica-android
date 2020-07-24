@@ -35,5 +35,5 @@ interface TaskLocalRepository : BaseLocalRepository {
     fun saveCompletedTodos(userId: String, tasks: MutableCollection<Task>)
     fun getErroredTasks(userID: String): Flowable<RealmResults<Task>>
     fun getUser(userID: String): Flowable<User>
-    fun getTasksForChallenge(challengeID: String?): Flowable<RealmResults<Task>>
+    fun getTasksForChallenge(challengeID: String?, userID: String?): Flowable<RealmResults<Task>>
 }

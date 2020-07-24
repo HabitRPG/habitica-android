@@ -508,7 +508,7 @@ class TaskFormActivity : BaseActivity() {
     }
 
     private fun showChallengeDeleteTask() {
-        compositeSubscription.add(taskRepository.getTasksForChallenge(task?.challengeID).subscribe(Consumer { tasks ->
+        compositeSubscription.add(taskRepository.getTasksForChallenge(task?.challengeID).firstElement().subscribe(Consumer { tasks ->
             val taskCount = tasks.size
             val alert = HabiticaAlertDialog(this)
             alert.setTitle(getString(R.string.delete_challenge_task_title))

@@ -59,6 +59,7 @@ class PetDetailRecyclerFragment : BaseMainFragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        showsBackButton = true
         super.onViewCreated(view, savedInstanceState)
 
         arguments?.let {

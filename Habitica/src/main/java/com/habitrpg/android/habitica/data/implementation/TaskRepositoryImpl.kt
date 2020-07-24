@@ -313,6 +313,6 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
     }
 
     override fun getTasksForChallenge(challengeID: String?): Flowable<RealmResults<Task>> {
-        return localRepository.getTasksForChallenge(challengeID)
+        return localRepository.getTasksForChallenge(challengeID, userID)
     }
 }

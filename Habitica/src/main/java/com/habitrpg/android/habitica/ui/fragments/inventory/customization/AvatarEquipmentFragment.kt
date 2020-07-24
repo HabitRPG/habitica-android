@@ -63,6 +63,7 @@ class AvatarEquipmentFragment : BaseMainFragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        showsBackButton = true
         super.onViewCreated(view, savedInstanceState)
         arguments?.let {
             val args = AvatarEquipmentFragmentArgs.fromBundle(it)

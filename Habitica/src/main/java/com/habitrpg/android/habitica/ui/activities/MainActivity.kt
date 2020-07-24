@@ -133,7 +133,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     private var sideAvatarView: AvatarView? = null
     private var activeTutorialView: TutorialView? = null
     private var drawerFragment: NavigationDrawerFragment? = null
-    private var drawerToggle: ActionBarDrawerToggle? = null
+    var drawerToggle: ActionBarDrawerToggle? = null
     private var resumeFromActivity = false
     private var userIsOnQuest = false
 
@@ -229,6 +229,11 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         } catch (e: Exception) {
             crashlyticsProxy.logException(e)
         }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 
     private fun setupNotifications() {
