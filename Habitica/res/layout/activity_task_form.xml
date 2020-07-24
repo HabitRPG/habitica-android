@@ -43,20 +43,27 @@
                 android:paddingEnd="@dimen/spacing_large"
                 android:paddingBottom="@dimen/spacing_large">
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/text_input_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/TaskFormTextInputLayoutAppearance">
+                    style="@style/TaskFormTextInputLayoutAppearance"
+                    app:boxStrokeColor="?attr/colorPrimaryDark"
+                    android:alpha="0.75">
                     <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/text_edit_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/task_title"
+                        android:textColor="?attr/toolbarContentColor"
                         android:inputType="textCapSentences|textAutoCorrect"/>
                 </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/notes_input_layout"
                     style="@style/TaskFormTextInputLayoutAppearance"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    app:boxStrokeColor="?attr/colorPrimaryDark"
+                    android:alpha="0.75">
                     <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/notes_edit_text"
                         android:layout_width="match_parent"
@@ -64,6 +71,7 @@
                         android:hint="@string/notes"
                         android:minLines="3"
                         android:gravity="top"
+                        android:textColor="?attr/toolbarContentColor"
                         android:inputType="textCapSentences|textAutoCorrect|textMultiLine"/>
                 </com.google.android.material.textfield.TextInputLayout>
                 <TextView

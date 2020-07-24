@@ -10,10 +10,7 @@ import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.events.commands.FeedCommand
 import com.habitrpg.android.habitica.extensions.getTranslatedType
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.android.habitica.models.inventory.Egg
-import com.habitrpg.android.habitica.models.inventory.HatchingPotion
-import com.habitrpg.android.habitica.models.inventory.Mount
-import com.habitrpg.android.habitica.models.inventory.Pet
+import com.habitrpg.android.habitica.models.inventory.*
 import com.habitrpg.android.habitica.models.user.Items
 import com.habitrpg.android.habitica.models.user.OwnedMount
 import com.habitrpg.android.habitica.models.user.OwnedPet
@@ -87,9 +84,11 @@ class PetDetailRecyclerFragment : BaseMainFragment() {
         }
         recyclerView.layoutManager = layoutManager
         recyclerView.addItemDecoration(MarginDecoration(getActivity()))
-
-        adapter.context = this.getActivity()
-        adapter.itemType = this.animalType
+        adapter.animalIngredientsRetriever = {
+            val egg = inventoryRepository.getItems(Egg::class.java, arrayOf(it.animal), null).firstElement().blockingGet().firstOrNull()
+            val potion = inventoryRepository.getItems(HatchingPotion::class.java, arrayOf(it.color), null).firstElement().blockingGet().firstOrNull()
+            Pair(egg as? Egg, potion as? HatchingPotion)
+        }
         recyclerView.adapter = adapter
         recyclerView.itemAnimator = SafeDefaultItemAnimator()
         this.loadItems()
@@ -97,11 +96,7 @@ class PetDetailRecyclerFragment : BaseMainFragment() {
         compositeSubscription.add(adapter.getEquipFlowable()
                 .flatMap<Items> { key -> inventoryRepository.equip(user, "pet", key) }
                 .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
-        adapter.animalIngredientsRetriever = {
-            val egg = inventoryRepository.getItems(Egg::class.java, arrayOf(it.animal), null).firstElement().blockingGet().firstOrNull()
-            val potion = inventoryRepository.getItems(HatchingPotion::class.java, arrayOf(it.color), null).firstElement().blockingGet().firstOrNull()
-            Pair(egg as? Egg, potion as? HatchingPotion)
-        }
+
 
         view.post { setGridSpanCount(view.width) }
     }
@@ -149,7 +144,7 @@ class PetDetailRecyclerFragment : BaseMainFragment() {
                         for (pet in it) {
                             if (pet.type == "wacky" || pet.type == "special") continue
                             if (pet.type != lastPet?.type) {
-                                items.add(pet.getTranslatedType(context))
+                                items.add(StableSection(pet.type, pet.getTranslatedType(context)))
                             }
                             items.add(pet)
                             lastPet = pet

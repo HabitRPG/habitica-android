@@ -18,15 +18,15 @@
             <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/imageView"
                 android:layout_width="@dimen/pet_image_width"
-                android:layout_height="60dp"
+                android:layout_height="58dp"
                 android:layout_gravity="center_horizontal"
                 app:actualImageScaleType="fitCenter" />
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="16dp"
+                android:layout_height="18dp"
                 android:layout_gravity="center_horizontal"
                 android:id="@+id/titleTextView"
-                android:textSize="13sp"
+                android:textSize="12sp"
                 android:gravity="center"
                 style="@style/RowTitle"/>
             <TextView

@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.views.tasks.form
 
 import android.content.Context
+import android.graphics.Typeface
 import android.util.AttributeSet
 import android.view.View
 import android.view.accessibility.AccessibilityEvent
@@ -58,10 +59,12 @@ class TaskDifficultyButtons @JvmOverloads constructor(
         if (isActive) {
             view.findViewById<ImageView>(R.id.image_view).background.mutate().setTint(tintColor)
             view.findViewById<TextView>(R.id.text_view).setTextColor(tintColor)
+            view.findViewById<TextView>(R.id.text_view).typeface = Typeface.create("sans-serif-medium", Typeface.NORMAL)
         } else {
             view.findViewById<ImageView>(R.id.image_view).background.mutate().setTint(ContextCompat.getColor(context, R.color.taskform_gray))
             view.findViewById<TextView>(R.id.text_view).setTextColor(ContextCompat.getColor(context, R.color.gray_100))
             difficultyColor = ContextCompat.getColor(context, R.color.gray_400)
+            view.findViewById<TextView>(R.id.text_view).typeface = Typeface.create("sans-serif", Typeface.NORMAL)
         }
         val drawable = HabiticaIconsHelper.imageOfTaskDifficultyStars(difficultyColor, difficulty.value, true).asDrawable(resources)
         view.findViewById<ImageView>(R.id.image_view).setImageDrawable(drawable)

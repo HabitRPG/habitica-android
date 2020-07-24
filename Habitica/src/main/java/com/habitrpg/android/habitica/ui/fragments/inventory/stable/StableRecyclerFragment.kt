@@ -12,6 +12,8 @@ import com.habitrpg.android.habitica.extensions.getTranslatedType
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.Animal
+import com.habitrpg.android.habitica.models.inventory.Egg
+import com.habitrpg.android.habitica.models.inventory.HatchingPotion
 import com.habitrpg.android.habitica.models.inventory.StableSection
 import com.habitrpg.android.habitica.models.user.*
 import com.habitrpg.android.habitica.ui.activities.MainActivity
@@ -45,7 +47,7 @@ class StableRecyclerFragment : BaseFragment() {
             this.itemType = savedInstanceState.getString(ITEM_TYPE_KEY, "")
         }
 
-        return container?.inflate(R.layout.fragment_recyclerview)
+        return container?.inflate(R.layout.fragment_recyclerview_stable)
     }
 
     override fun onDestroy() {
@@ -84,9 +86,12 @@ class StableRecyclerFragment : BaseFragment() {
         adapter = recyclerView?.adapter as? StableRecyclerAdapter
         if (adapter == null) {
             adapter = StableRecyclerAdapter()
-            adapter?.activity = this.activity as? MainActivity
+            adapter?.animalIngredientsRetriever = {
+                val egg = inventoryRepository.getItems(Egg::class.java, arrayOf(it.animal), null).firstElement().blockingGet().firstOrNull()
+                val potion = inventoryRepository.getItems(HatchingPotion::class.java, arrayOf(it.color), null).firstElement().blockingGet().firstOrNull()
+                Pair(egg as? Egg, potion as? HatchingPotion)
+            }
             adapter?.itemType = this.itemType
-            adapter?.context = context
             recyclerView?.adapter = adapter
             recyclerView?.itemAnimator = SafeDefaultItemAnimator()
 
@@ -110,8 +115,8 @@ class StableRecyclerFragment : BaseFragment() {
     private fun setGridSpanCount(width: Int) {
         var spanCount = 0
         if (context != null && context?.resources != null) {
-            var animal_width = if (itemType == "pets") R.dimen.pet_width else R.dimen.mount_width
-            val itemWidth: Float = context?.resources?.getDimension(animal_width) ?: 0.toFloat()
+            val animalWidth = if (itemType == "pets") R.dimen.pet_width else R.dimen.mount_width
+            val itemWidth: Float = context?.resources?.getDimension(animalWidth) ?: 0.toFloat()
 
             spanCount = (width / itemWidth).toInt()
         }

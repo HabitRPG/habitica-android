@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.views.tasks.form
 
 import android.content.Context
+import android.graphics.Typeface
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.View
@@ -36,9 +37,11 @@ class HabitScoringButtonsView @JvmOverloads constructor(
             if (value) {
                 positiveTextView.setTextColor(tintColor)
                 positiveView.contentDescription = toContentDescription(R.string.positive_habit_form, R.string.on)
+                positiveTextView.typeface = Typeface.create("sans-serif-medium", Typeface.NORMAL)
             } else {
                 positiveTextView.setTextColor(ContextCompat.getColor(context, R.color.gray_100))
                 positiveView.contentDescription = toContentDescription(R.string.positive_habit_form, R.string.off)
+                positiveTextView.typeface = Typeface.create("sans-serif", Typeface.NORMAL)
             }
         }
 
@@ -49,9 +52,11 @@ class HabitScoringButtonsView @JvmOverloads constructor(
             if (value) {
                 negativeTextView.setTextColor(tintColor)
                 negativeView.contentDescription = toContentDescription(R.string.negative_habit_form, R.string.on)
+                negativeTextView.typeface = Typeface.create("sans-serif-medium", Typeface.NORMAL)
             } else {
                 negativeTextView.setTextColor(ContextCompat.getColor(context, R.color.gray_100))
                 negativeView.contentDescription = toContentDescription(R.string.negative_habit_form, R.string.off)
+                negativeTextView.typeface = Typeface.create("sans-serif", Typeface.NORMAL)
             }
         }
 

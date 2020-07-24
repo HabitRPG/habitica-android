@@ -9,8 +9,8 @@
     android:padding="8dp">
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/imageView"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
         android:layout_gravity="center"
         app:actualImageScaleType="fitCenter"/>
 
@@ -25,23 +25,6 @@
         android:layout_marginStart="7dp"
         android:layout_marginEnd="7dp"
         android:max="50" />
-    <LinearLayout
-        android:id="@+id/items_available_wrapper"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center">
-        <ImageView
-            android:id="@+id/egg_available_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/pet_status_egg"
-            android:layout_marginEnd="8dp"/>
-        <ImageView
-            android:id="@+id/potion_available_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/pet_status_potion" />
-    </LinearLayout>
     <RelativeLayout
         android:id="@+id/item_wrapper"
         android:layout_width="86dp"
@@ -66,4 +49,12 @@
         android:layout_height="10dp"
         android:src="@drawable/pet_checkmark"
         android:layout_gravity="center" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/titleTextView"
+        android:textSize="12sp"
+        android:gravity="center"
+        style="@style/RowTitle" />
 </LinearLayout>

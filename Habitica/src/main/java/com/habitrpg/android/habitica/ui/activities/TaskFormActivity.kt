@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
+import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
@@ -19,6 +20,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import androidx.core.view.forEachIndexed
 import androidx.core.widget.NestedScrollView
+import com.google.android.material.textfield.TextInputLayout
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.*
@@ -60,7 +62,9 @@ class TaskFormActivity : BaseActivity() {
     private val toolbar: Toolbar by bindView(R.id.toolbar)
     private val scrollView: NestedScrollView by bindView(R.id.scroll_view)
     private val upperTextWrapper: LinearLayout by bindView(R.id.upper_text_wrapper)
+    private val textInputLayout: TextInputLayout by bindView(R.id.text_input_layout)
     private val textEditText: EditText by bindView(R.id.text_edit_text)
+    private val notesInputLayout: TextInputLayout by bindView(R.id.notes_input_layout)
     private val notesEditText: EditText by bindView(R.id.notes_edit_text)
     private val habitScoringButtons: HabitScoringButtonsView by bindView(R.id.habit_scoring_buttons)
     private val checklistTitleView: TextView by bindView(R.id.checklist_title)
@@ -176,6 +180,12 @@ class TaskFormActivity : BaseActivity() {
         textEditText.addTextChangedListener(OnChangeTextWatcher { _, _, _, _ ->
             checkCanSave()
         })
+        textEditText.onFocusChangeListener = View.OnFocusChangeListener { view, isFocused ->
+            textInputLayout.alpha = if (isFocused) 1.0f else 0.75f
+        }
+        notesEditText.onFocusChangeListener = View.OnFocusChangeListener { view, isFocused ->
+            notesInputLayout.alpha = if (isFocused) 1.0f else 0.75f
+        }
         statStrengthButton.setOnClickListener { selectedStat = Stats.STRENGTH }
         statIntelligenceButton.setOnClickListener { selectedStat = Stats.INTELLIGENCE }
         statConstitutionButton.setOnClickListener { selectedStat = Stats.CONSTITUTION }
@@ -385,6 +395,11 @@ class TaskFormActivity : BaseActivity() {
         button.background.setTint(if (isSelected) tintColor else ContextCompat.getColor(this, R.color.taskform_gray))
         val textColorID = if (isSelected) R.color.white else R.color.gray_100
         button.setTextColor(ContextCompat.getColor(this, textColorID))
+        if (isSelected) {
+            button.typeface = Typeface.create("sans-serif-medium", Typeface.NORMAL)
+        } else {
+            button.typeface = Typeface.create("sans-serif", Typeface.NORMAL)
+        }
     }
 
     private fun updateTagViewsColors() {

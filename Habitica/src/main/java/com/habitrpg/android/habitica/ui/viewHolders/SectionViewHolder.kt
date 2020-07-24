@@ -2,12 +2,14 @@ package com.habitrpg.android.habitica.ui.viewHolders
 
 import android.content.Context
 import android.view.View
+import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.models.inventory.StableSection
 import com.habitrpg.android.habitica.ui.helpers.bindView
 
@@ -20,6 +22,8 @@ class SectionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     var context: Context = itemView.context
 
     var spinnerSelectionChanged: (() -> Unit)? = null
+
+    constructor(parent: ViewGroup) : this(parent.inflate(R.layout.customization_section_header))
 
     init {
         itemView.findViewById<View?>(R.id.purchaseSetButton)?.visibility = View.GONE
@@ -50,7 +54,7 @@ class SectionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         } else {
             countPill?.visibility = View.VISIBLE
         }
-        countPill?.text = "${section.ownedCount} / ${section.totalCount}"
+        countPill?.text = itemView.context.getString(R.string.pet_ownership_fraction, section.ownedCount, section.totalCount)
     }
 
     var spinnerAdapter: ArrayAdapter<CharSequence>? = null

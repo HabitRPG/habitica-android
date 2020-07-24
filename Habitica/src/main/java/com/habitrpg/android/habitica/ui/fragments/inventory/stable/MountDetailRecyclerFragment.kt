@@ -12,6 +12,7 @@ import com.habitrpg.android.habitica.extensions.getTranslatedType
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.Mount
 import com.habitrpg.android.habitica.models.inventory.Pet
+import com.habitrpg.android.habitica.models.inventory.StableSection
 import com.habitrpg.android.habitica.models.user.OwnedMount
 import com.habitrpg.android.habitica.ui.adapter.inventory.MountDetailRecyclerAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
@@ -77,8 +78,6 @@ class MountDetailRecyclerFragment : BaseMainFragment() {
         adapter = recyclerView.adapter as? MountDetailRecyclerAdapter
         if (adapter == null) {
             adapter = MountDetailRecyclerAdapter()
-            adapter?.itemType = this.animalType
-            adapter?.context = context
             recyclerView.adapter = adapter
             recyclerView.itemAnimator = SafeDefaultItemAnimator()
             this.loadItems()
@@ -103,7 +102,7 @@ class MountDetailRecyclerFragment : BaseMainFragment() {
     private fun setGridSpanCount(width: Int) {
         var spanCount = 0
         context?.resources?.let { resources
-            val itemWidth: Float = resources.getDimension(R.dimen.pet_width)
+            val itemWidth: Float = resources.getDimension(R.dimen.mount_width)
 
             spanCount = (width / itemWidth).toInt()
         }
@@ -130,7 +129,7 @@ class MountDetailRecyclerFragment : BaseMainFragment() {
                         for (mount in it) {
                             if (mount.type == "wacky" || mount.type == "special") continue
                             if (mount.type != lastMount?.type) {
-                                items.add(mount.getTranslatedType(context))
+                                items.add(StableSection(mount.type, mount.getTranslatedType(context)))
                             }
                             items.add(mount)
                             lastMount = mount
