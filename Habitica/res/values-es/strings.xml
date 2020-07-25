@@ -836,4 +836,27 @@
     <string name="register_btn_fb">Registrarse con Facebook</string>
     <string name="login_btn_apple">Registrarse con Apple</string>
     <string name="x_months">Meses</string>
+    <string name="inbox_messages_title_nosender">Recibiste %d mensajes</string>
+    <string name="inbox_messages_title">Recibiste %d mensajes de %s</string>
+    <string name="create_task">Crear %s</string>
+    <string name="take_me_back">Quiero regresar</string>
+    <string name="not_now">Ahora no</string>
+    <string name="setup_task_habit_1">Añade un pendiente a Habitica</string>
+    <string name="cost">Costo</string>
+    <string name="x_class">Clase de %s</string>
+    <string name="become_x">Vuélvete %s</string>
+    <string name="need_more_help">¿Necesitas más ayuda\?</string>
+    <string name="update_available">Actualización disponible: %1$s (%2$d)</string>
+    <string name="streak">Racha</string>
+    <string name="years">Años</string>
+    <string name="weeks">Semanas</string>
+    <string name="days">días</string>
+    <string name="every">Cada</string>
+    <string name="repeats">Repite</string>
+    <string name="monthly">Mensual</string>
+    <string name="adjust_streak">Ajustar racha</string>
+    <string name="gift_confirmation_text_sub">Regalaste una suscripción de Habitica de %s-meses a %s.</string>
+    <string name="gift_confirmation_text_sub_g1g1">Regalaste una suscripción de %s-meses a %s y se aplicó la misma suscripción a tu cuenta por nuestra promoción de Regala Una Llévate Una Gratis!</string>
+    <string name="join_party_description_guild">Da el usuario a continuación a un amigo o ve al %s para conocer a posibles compañeros.</string>
+    <string name="number_responded">%1$d/%2$d respondió</string>
 </resources>
