@@ -535,7 +535,7 @@
     <string name="change">変更する</string>
     <string name="character_level">キャラクターのレベル</string>
     <string name="auto_allocate_points">ポイントの自動割り当て</string>
-    <string name="stat_guide">案内を開始する</string>
+    <string name="stat_guide">ステータス概要</string>
     <string name="character_build">キャラクターの設定</string>
     <string name="character_build_description">各レベルごとに、自由に割り当てることができるポイントが得られます。手動で割り当てることもできますが、自動割り当てによってゲームに割り当てを任せることも可能です。</string>
     <string name="strength">力</string>
