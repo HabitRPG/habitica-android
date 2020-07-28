@@ -13,6 +13,7 @@ import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.*
 import com.habitrpg.android.habitica.models.user.Items
 import com.habitrpg.android.habitica.models.user.OwnedMount
+import com.habitrpg.android.habitica.models.user.OwnedObject
 import com.habitrpg.android.habitica.models.user.OwnedPet
 import com.habitrpg.android.habitica.ui.adapter.inventory.PetDetailRecyclerAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
@@ -21,9 +22,11 @@ import com.habitrpg.android.habitica.ui.helpers.MarginDecoration
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.helpers.resetViews
+import io.reactivex.functions.BiFunction
 import io.reactivex.functions.Consumer
 import io.realm.RealmResults
 import org.greenrobot.eventbus.Subscribe
+import java.util.ArrayList
 import javax.inject.Inject
 
 class PetDetailRecyclerFragment : BaseMainFragment() {
@@ -129,13 +132,6 @@ class PetDetailRecyclerFragment : BaseMainFragment() {
 
     private fun loadItems() {
         if (animalType?.isNotEmpty() == true || animalGroup?.isNotEmpty() == true) {
-            compositeSubscription.add(inventoryRepository.getOwnedPets()
-                    .map { ownedMounts ->
-                        val mountMap = mutableMapOf<String, OwnedPet>()
-                        ownedMounts.forEach { mountMap[it.key ?: ""] = it }
-                        return@map mountMap
-                    }
-                    .subscribe(Consumer { adapter.setOwnedPets(it) }, RxErrorHandler.handleEmptyError()))
             compositeSubscription.add(inventoryRepository.getOwnedMounts()
                     .map { ownedMounts ->
                         val mountMap = mutableMapOf<String, OwnedMount>()
@@ -144,20 +140,34 @@ class PetDetailRecyclerFragment : BaseMainFragment() {
                     }
                     .subscribe(Consumer { adapter.setOwnedMounts(it) }, RxErrorHandler.handleEmptyError()))
             compositeSubscription.add(inventoryRepository.getOwnedItems(true).subscribe(Consumer { adapter.setOwnedItems(it) }, RxErrorHandler.handleEmptyError()))
-            compositeSubscription.add(inventoryRepository.getPets(animalType, animalGroup, animalColor)
-                    .map {
+            compositeSubscription.add(inventoryRepository.getPets(animalType, animalGroup, animalColor).zipWith(inventoryRepository.getOwnedPets()
+                    .map { ownedPets ->
+                        val petMap = mutableMapOf<String, OwnedPet>()
+                        ownedPets.forEach { petMap[it.key ?: ""] = it }
+                        return@map petMap
+                    }.doOnNext {
+                        adapter.setOwnedPets(it)
+                    }, BiFunction<RealmResults<out Pet>, Map<String, OwnedObject>, List<Any>> { unsortedAnimals, ownedAnimals ->
                         val items = mutableListOf<Any>()
                         var lastPet: Pet? = null
-                        for (pet in it) {
+                        var currentSection: StableSection? = null
+                        for (pet in unsortedAnimals) {
                             if (pet.type == "wacky" || pet.type == "special") continue
                             if (pet.type != lastPet?.type) {
-                                items.add(StableSection(pet.type, pet.getTranslatedType(context)))
+                                currentSection = StableSection(pet.type, pet.getTranslatedType(context))
+                                items.add(currentSection)
+                            }
+                            currentSection?.let {
+                                it.totalCount += 1
+                                if (ownedAnimals.containsKey(pet.key)) {
+                                    it.ownedCount += 1
+                                }
                             }
                             items.add(pet)
                             lastPet = pet
                         }
                         items
-                    }
+                    })
                     .subscribe(Consumer { adapter.setItemList(it) }, RxErrorHandler.handleEmptyError()))
             compositeSubscription.add(inventoryRepository.getMounts(animalType, animalGroup, animalColor).subscribe(Consumer<RealmResults<Mount>> { adapter.setExistingMounts(it) }, RxErrorHandler.handleEmptyError()))
         }

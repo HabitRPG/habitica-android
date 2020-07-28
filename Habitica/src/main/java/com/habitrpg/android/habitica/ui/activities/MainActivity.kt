@@ -240,7 +240,11 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         }
         if (destination.id == R.id.petDetailRecyclerFragment || destination.id == R.id.mountDetailRecyclerFragment) {
             compositeSubscription.add(inventoryRepository.getItem("egg", arguments?.getString("type") ?: "").firstElement().subscribe(Consumer {
-                binding.toolbarTitle.text = (it as? Egg)?.mountText
+                binding.toolbarTitle.text = if (destination.id == R.id.petDetailRecyclerFragment) {
+                    (it as? Egg)?.text
+                } else {
+                    (it as? Egg)?.mountText
+                }
             }, RxErrorHandler.handleEmptyError()))
         }
         drawerFragment?.setSelection(destination.id, null, false)

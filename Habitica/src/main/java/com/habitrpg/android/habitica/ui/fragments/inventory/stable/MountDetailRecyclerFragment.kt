@@ -14,12 +14,16 @@ import com.habitrpg.android.habitica.models.inventory.Mount
 import com.habitrpg.android.habitica.models.inventory.Pet
 import com.habitrpg.android.habitica.models.inventory.StableSection
 import com.habitrpg.android.habitica.models.user.OwnedMount
+import com.habitrpg.android.habitica.models.user.OwnedObject
+import com.habitrpg.android.habitica.models.user.OwnedPet
 import com.habitrpg.android.habitica.ui.adapter.inventory.MountDetailRecyclerAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.helpers.MarginDecoration
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.helpers.bindView
+import io.reactivex.functions.BiFunction
 import io.reactivex.functions.Consumer
+import io.realm.RealmResults
 
 import javax.inject.Inject
 
@@ -116,27 +120,35 @@ class MountDetailRecyclerFragment : BaseMainFragment() {
 
     private fun loadItems() {
         if (animalType != null || animalGroup != null) {
-            compositeSubscription.add(inventoryRepository.getOwnedMounts().firstElement()
+            compositeSubscription.add(inventoryRepository.getMounts(animalType, animalGroup, animalColor)
+                    .zipWith(inventoryRepository.getOwnedMounts()
                     .map { ownedMounts ->
                         val mountMap = mutableMapOf<String, OwnedMount>()
                         ownedMounts.forEach { mountMap[it.key ?: ""] = it }
                         return@map mountMap
-                    }
-                    .subscribe(Consumer { adapter?.setOwnedMounts(it) }, RxErrorHandler.handleEmptyError()))
-            compositeSubscription.add(inventoryRepository.getMounts(animalType, animalGroup, animalColor)
-                    .map {
+                    }.doOnNext {
+                        adapter?.setOwnedMounts(it)
+                    }, BiFunction<RealmResults<out Mount>, Map<String, OwnedObject>, List<Any>> { unsortedAnimals, ownedAnimals ->
                         val items = mutableListOf<Any>()
                         var lastMount: Mount? = null
-                        for (mount in it) {
+                        var currentSection: StableSection? = null
+                        for (mount in unsortedAnimals) {
                             if (mount.type == "wacky" || mount.type == "special") continue
                             if (mount.type != lastMount?.type) {
-                                items.add(StableSection(mount.type, mount.getTranslatedType(context)))
+                                currentSection = StableSection(mount.type, mount.getTranslatedType(context))
+                                items.add(currentSection)
+                            }
+                            currentSection?.let {
+                                it.totalCount += 1
+                                if (ownedAnimals.containsKey(mount.key)) {
+                                    it.ownedCount += 1
+                                }
                             }
                             items.add(mount)
                             lastMount = mount
                         }
                         items
-                    }
+                    })
                     .subscribe(Consumer { adapter?.setItemList(it) }, RxErrorHandler.handleEmptyError()))
         }
     }

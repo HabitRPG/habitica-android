@@ -135,7 +135,10 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         fun bind(item: Animal) {
             this.animal = item
             val context = itemView.context
-            titleView.text = eggs[item.animal]?.mountText ?: item.animal
+            val egg = eggs[item.animal]
+            if (egg != null) {
+                titleView.text = if (item.type == "drop" || itemType == "mounts") egg.mountText else egg.text
+            } else item.animal
             ownedTextView.visibility = View.VISIBLE
 
             val imageName = if (itemType == "pets") {
