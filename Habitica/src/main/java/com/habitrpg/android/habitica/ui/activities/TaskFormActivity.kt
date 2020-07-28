@@ -232,6 +232,11 @@ class TaskFormActivity : BaseActivity() {
         configureForm()
     }
 
+    override fun onStart() {
+        super.onStart()
+        textEditText.requestFocus()
+    }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         if (isCreating) {
             menuInflater.inflate(R.menu.menu_task_create, menu)

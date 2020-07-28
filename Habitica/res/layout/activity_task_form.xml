@@ -54,7 +54,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/task_title"
-                        android:textColor="?attr/toolbarContentColor"
+                        android:textColor="?attr/colorPrimaryText"
                         android:inputType="textCapSentences|textAutoCorrect"/>
                 </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout
@@ -71,7 +71,7 @@
                         android:hint="@string/notes"
                         android:minLines="3"
                         android:gravity="top"
-                        android:textColor="?attr/toolbarContentColor"
+                        android:textColor="?attr/colorPrimaryText"
                         android:inputType="textCapSentences|textAutoCorrect|textMultiLine"/>
                 </com.google.android.material.textfield.TextInputLayout>
                 <TextView
