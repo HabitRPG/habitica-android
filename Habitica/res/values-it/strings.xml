@@ -646,7 +646,7 @@
     <string name="confirm_username">Conferma Nome Utente</string>
     <string name="username_not_confirmed">Nome Utente non confermato</string>
     <string name="username_confirmed">Nome Utente Confermato</string>
-    <string name="enter_recipient_username">Inserisci @username del Destinatario</string>
+    <string name="enter_recipient_username">Inserisci @nome_utente del Destinatario</string>
     <string name="username_copied">Nome Utente copiato negli appunti</string>
     <string name="verification_pet">Uno di questi Animali Veterani ti aspetterà dopo che avrai confermato!</string>
     <string name="welcomeNameTitle">Come dovremmo chiamarti?</string>
