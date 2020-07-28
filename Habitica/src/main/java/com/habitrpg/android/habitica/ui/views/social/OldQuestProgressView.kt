@@ -31,6 +31,7 @@ class OldQuestProgressView : LinearLayout {
     private val bossHealthView: ValueBar by bindView(R.id.bossHealthView)
     private val bossRageView: ValueBar by bindView(R.id.bossRageView)
     private val collectionContainer: ViewGroup by bindView(R.id.collectionContainer)
+    private val collectedItemsNumberView: TextView by bindView(R.id.collectedItemsNumberView)
 
     private val rect = RectF()
     private val displayDensity = context.resources.displayMetrics.density
@@ -84,10 +85,12 @@ class OldQuestProgressView : LinearLayout {
             }
             bossNameView.visibility = View.VISIBLE
             bossHealthView.visibility = View.VISIBLE
+            collectedItemsNumberView.visibility = View.GONE
         } else {
             bossNameView.visibility = View.GONE
             bossHealthView.visibility = View.GONE
             bossRageView.visibility = View.GONE
+            collectedItemsNumberView.visibility = View.VISIBLE
 
             if (progress != null) {
                 val inflater = LayoutInflater.from(context)
@@ -109,14 +112,17 @@ class OldQuestProgressView : LinearLayout {
 
     fun configure(user: User, userOnQuest: Boolean?) {
         val value = (user.party?.quest?.progress?.up ?: 0F).toDouble()
+        val collectedItems = user.party?.quest?.progress?.collectedItems
         if (userOnQuest == true) {
             bossHealthView.pendingValue = value
             bossHealthView.description = String.format("%.01f dmg pending", value)
             bossHealthView.descriptionIconView.visibility = View.VISIBLE
+            collectedItemsNumberView.text = "+$collectedItems items found"
         } else {
             bossHealthView.pendingValue = 0.0
             bossHealthView.description = ""
             bossHealthView.descriptionIconView.visibility = View.GONE
+            collectedItemsNumberView.text = ""
         }
     }
 
