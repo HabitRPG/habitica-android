@@ -229,7 +229,7 @@ class ItemRecyclerFragment : BaseFragment(), androidx.swiperefreshlayout.widget.
                         }
                     }
                     .map { items -> items.mapNotNull { it.key } }
-                    .flatMap { inventoryRepository.getItems(itemClass, it.toTypedArray(), user) }
+                    .flatMap { inventoryRepository.getItems(itemClass, it.toTypedArray()) }
                     .map {
                         val itemMap = mutableMapOf<String, Item>()
                         for (item in it) {

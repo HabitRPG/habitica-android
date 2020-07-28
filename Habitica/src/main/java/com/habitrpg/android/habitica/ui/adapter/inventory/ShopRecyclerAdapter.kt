@@ -85,7 +85,7 @@ class ShopRecyclerAdapter(private val configManager: AppConfigManager) : android
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder =
             when (viewType) {
                 0 -> ShopHeaderViewHolder(parent)
-                1 -> SectionViewHolder(parent)
+                1 -> SectionViewHolder(parent.inflate(R.layout.shop_section_header))
                 2 -> EmptyStateViewHolder(parent.inflate(emptyViewResource))
                 else -> {
                     val view = parent.inflate(R.layout.row_shopitem)

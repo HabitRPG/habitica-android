@@ -12,8 +12,6 @@
         android:scrollbarThumbVertical="@color/scrollbarThumb"
         android:scrollbars="vertical"
         android:clipToPadding="false"
-        android:paddingStart="@dimen/spacing_medium"
-        android:paddingEnd="@dimen/spacing_medium"
         android:background="@color/white"/>
 
     <TextView

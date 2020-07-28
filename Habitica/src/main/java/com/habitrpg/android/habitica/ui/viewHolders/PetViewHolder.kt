@@ -24,8 +24,8 @@ class PetViewHolder(parent: ViewGroup, private val equipEvents: PublishSubject<S
     private var hasMount: Boolean = false
     private var hasUnlockedPotion: Boolean = false
     private var hasUnlockedEgg: Boolean = false
-    private var hasEgg: Boolean = false
-    private var hasPotion: Boolean = false
+    private var eggCount: Int = 0
+    private var potionCount: Int = 0
     private var ownsSaddles = false
     private var animal: Pet? = null
 
@@ -36,7 +36,7 @@ class PetViewHolder(parent: ViewGroup, private val equipEvents: PublishSubject<S
     private var canRaiseToMount: Boolean = false
 
     private val canHatch: Boolean
-        get() = hasEgg && hasPotion
+        get() = eggCount > 0 && potionCount > 0
 
     init {
         itemView.setOnClickListener(this)
@@ -44,9 +44,9 @@ class PetViewHolder(parent: ViewGroup, private val equipEvents: PublishSubject<S
 
     fun bind(item: Pet,
              trained: Int,
+             eggCount: Int,
+             potionCount: Int,
              canRaiseToMount: Boolean,
-             hasEgg: Boolean,
-             hasPotion: Boolean,
              ownsSaddles: Boolean,
              hasUnlockedEgg: Boolean,
              hasUnlockedPotion: Boolean,
@@ -55,8 +55,8 @@ class PetViewHolder(parent: ViewGroup, private val equipEvents: PublishSubject<S
         isOwned = trained > 0
         binding.imageView.alpha = 1.0f
         this.canRaiseToMount = canRaiseToMount
-        this.hasEgg = hasEgg
-        this.hasPotion = hasPotion
+        this.eggCount = eggCount
+        this.potionCount = potionCount
         this.ownsSaddles = ownsSaddles
         this.hasUnlockedEgg = hasUnlockedEgg
         this.hasUnlockedPotion = hasUnlockedPotion
@@ -157,8 +157,8 @@ class PetViewHolder(parent: ViewGroup, private val equipEvents: PublishSubject<S
             dialog.configure(it,
                     ingredients?.first,
                     ingredients?.second,
-                    hasEgg,
-                    hasPotion,
+                    eggCount,
+                    potionCount,
                     hasUnlockedEgg,
                     hasUnlockedPotion,
                     hasMount)

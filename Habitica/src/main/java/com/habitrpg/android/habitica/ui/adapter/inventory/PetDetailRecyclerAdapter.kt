@@ -44,11 +44,11 @@ class PetDetailRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapt
         return false
     }
 
-    private fun hasEgg(pet: Pet): Boolean {
-        return ownedItems?.get(pet.animal + "-eggs")?.numberOwned ?: 0 > 0
+    private fun eggCount(pet: Pet): Int {
+        return ownedItems?.get(pet.animal + "-eggs")?.numberOwned ?: 0
     }
-    private fun hasPotion(pet: Pet): Boolean {
-        return ownedItems?.get(pet.color + "-hatchingPotions")?.numberOwned ?: 0 > 0
+    private fun potionCount(pet: Pet): Int {
+        return ownedItems?.get(pet.color + "-hatchingPotions")?.numberOwned ?: 0
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder =
@@ -65,8 +65,8 @@ class PetDetailRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapt
             is Pet -> {
                 (holder as? PetViewHolder)?.bind(obj,
                         ownedPets?.get(obj.key ?: "")?.trained ?: 0,
-                        hasEgg(obj),
-                        hasPotion(obj),
+                        eggCount(obj),
+                        potionCount(obj),
                         canRaiseToMount(obj),
                         ownsSaddles,
                         ownedItems?.get(obj.animal + "-eggs") != null,

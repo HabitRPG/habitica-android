@@ -49,12 +49,13 @@
 
         <item name="searchViewStyle">@style/SearchViewStyle</item>
         <item name="toolbarContentColor">@color/white</item>
+        <item name="colorPrimaryText">@color/brand_50</item>
     </style>
 
 
     <style name="MainAppTheme.Red">
-        <item name="colorPrimary">@color/red_5</item>
-        <item name="colorPrimaryDark">@color/red_1</item>
+        <item name="colorPrimary">@color/red_10</item>
+        <item name="colorPrimaryDark">@color/red_5</item>
         <item name="colorAccent">@color/red_100</item>
         <item name="android:colorPrimary">@color/red_5</item>
         <item name="android:colorPrimaryDark">@color/red_1</item>
@@ -68,11 +69,12 @@
         <item name="barColor">@color/red_5</item>
         <item name="taskFormTint">@color/red_50</item>
         <item name="toolbarContentColor">@color/red_1</item>
+        <item name="colorPrimaryText">@color/red_1</item>
     </style>
 
     <style name="MainAppTheme.Maroon">
-        <item name="colorPrimary">@color/red_1</item>
-        <item name="colorPrimaryDark">@color/maroon_1</item>
+        <item name="colorPrimary">@color/red_10</item>
+        <item name="colorPrimaryDark">@color/maroon_5</item>
         <item name="colorAccent">@color/maroon_100</item>
         <item name="android:colorPrimary">@color/red_1</item>
         <item name="android:colorPrimaryDark">@color/maroon_1</item>
@@ -85,11 +87,12 @@
         <item name="textColorPrimaryDark">@color/red_500</item>
         <item name="barColor">@color/red_1</item>
         <item name="taskFormTint">@color/maroon_50</item>
+        <item name="colorPrimaryText">@color/maroon_1</item>
     </style>
 
     <style name="MainAppTheme.Orange">
-        <item name="colorPrimary">@color/orange_10</item>
-        <item name="colorPrimaryDark">@color/orange_5</item>
+        <item name="colorPrimary">@color/orange_50</item>
+        <item name="colorPrimaryDark">@color/orange_10</item>
         <item name="colorAccent">@color/orange_100</item>
         <item name="android:colorPrimary">@color/orange_10</item>
         <item name="android:colorPrimaryDark">@color/orange_5</item>
@@ -103,11 +106,12 @@
         <item name="barColor">@color/orange_10</item>
         <item name="taskFormTint">@color/orange_50</item>
         <item name="toolbarContentColor">@color/orange_1</item>
+        <item name="colorPrimaryText">@color/orange_1</item>
     </style>
 
     <style name="MainAppTheme.Yellow">
-        <item name="colorPrimary">@color/yellow_10</item>
-        <item name="colorPrimaryDark">@color/yellow_5</item>
+        <item name="colorPrimary">@color/yellow_50</item>
+        <item name="colorPrimaryDark">@color/yellow_10</item>
         <item name="colorAccent">@color/yellow_100</item>
         <item name="android:colorPrimary">@color/yellow_10</item>
         <item name="android:colorPrimaryDark">@color/yellow_5</item>
@@ -121,6 +125,7 @@
         <item name="barColor">@color/yellow_10</item>
         <item name="taskFormTint">@color/yellow_10</item>
         <item name="toolbarContentColor">@color/yellow_1</item>
+        <item name="colorPrimaryText">@color/yellow_1</item>
     </style>
 
     <style name="MainAppTheme.Green">
@@ -139,6 +144,7 @@
         <item name="barColor">@color/green_10</item>
         <item name="taskFormTint">@color/green_50</item>
         <item name="toolbarContentColor">@color/green_1</item>
+        <item name="colorPrimaryText">@color/green_1</item>
     </style>
 
     <style name="MainAppTheme.Teal">
@@ -157,6 +163,7 @@
         <item name="barColor">@color/teal_10</item>
         <item name="taskFormTint">@color/teal_50</item>
         <item name="toolbarContentColor">@color/teal_1</item>
+        <item name="colorPrimaryText">@color/teal_1</item>
     </style>
 
     <style name="MainAppTheme.Blue">
@@ -175,6 +182,7 @@
         <item name="barColor">@color/blue_10</item>
         <item name="taskFormTint">@color/blue_50</item>
         <item name="toolbarContentColor">@color/blue_1</item>
+        <item name="colorPrimaryText">@color/blue_1</item>
     </style>
 
     <style name="BottomSheetTheme" parent="Theme.AppCompat.NoActionBar">
@@ -624,14 +632,14 @@
     <style name="TaskFormTextInputLayoutAppearance" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
         <!-- reference our hint & error styles -->
         <item name="boxBackgroundColor">@color/white_75_alpha</item>
-        <item name="android:textColor">@color/textColorLight</item>
+        <item name="android:textColor">?attr/colorPrimaryText</item>
         <item name="android:textColorHint">@color/textColorLight</item>
         <item name="colorControlNormal">@color/white</item>
         <item name="hintTextAppearance">@style/TaskFormHintTextAppearance</item>
     </style>
 
     <style name="TaskFormHintTextAppearance">
-        <item name="colorPrimary">?attr/toolbarContentColor</item>
+        <item name="colorPrimary">?attr/colorPrimaryText</item>
         <item name="android:textSize">12sp</item>
         <item name="android:fontFamily">@string/font_family_medium</item>
         <item name="fontFamily">@string/font_family_medium</item>
@@ -639,7 +647,7 @@
 
     <style name="TextInputLayoutAppearanceTheme">
         <item name="boxBackgroundColor">@color/taskform_gray</item>
-        <item name="android:textColor">@color/textColorLight</item>
+        <item name="android:textColor">?attr/colorPrimaryText</item>
         <item name="android:textColorHint">@color/gray_300</item>
         <item name="android:colorControlNormal">@color/gray_400</item>
         <item name="android:colorControlActivated">@color/brand_400</item>

@@ -81,8 +81,6 @@ abstract class BaseMainFragment : BaseFragment() {
         activity?.supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
-
-
     private fun updateTabLayoutVisibility() {
         if (this.usesTabLayout) {
             tabLayout?.removeAllTabs()

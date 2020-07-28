@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.ui.views.dialogs
 import android.content.Context
 import android.graphics.drawable.BitmapDrawable
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -35,16 +36,32 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
         setAdditionalContentView(binding.root)
     }
 
-    fun configure(pet: Animal, egg: Egg?, potion: HatchingPotion?, hasEgg: Boolean, hasPotion: Boolean, hasUnlockedEgg: Boolean, hasUnlockedPotion: Boolean, hasMount: Boolean) {
+    fun configure(pet: Animal, egg: Egg?, potion: HatchingPotion?, eggCount: Int, potionCount: Int, hasUnlockedEgg: Boolean, hasUnlockedPotion: Boolean, hasMount: Boolean) {
         DataBindingUtils.loadImage(binding.eggView, "Pet_Egg_${pet.animal}")
         DataBindingUtils.loadImage(binding.hatchingPotionView, "Pet_HatchingPotion_${pet.color}")
         binding.petTitleView.text = pet.text
+
+        val hasEgg = eggCount > 0
+        val hasPotion = potionCount > 0
 
         binding.eggView.alpha = if (hasEgg) 1.0f else 0.5f
         binding.hatchingPotionView.alpha = if (hasPotion) 1.0f else 0.5f
 
         val eggName = egg?.text ?: pet.animal.capitalize()
         val potionName = potion?.text ?: pet.color.capitalize()
+
+        if (hasEgg) {
+            binding.eggCountView.visibility = View.VISIBLE
+            binding.eggCountView.text = eggCount.toString()
+        } else {
+            binding.eggCountView.visibility = View.GONE
+        }
+        if (hasPotion) {
+            binding.potionCountView.visibility = View.VISIBLE
+            binding.potionCountView.text = potionCount.toString()
+        } else {
+            binding.potionCountView.visibility = View.GONE
+        }
 
         if (hasEgg && hasPotion) {
             binding.descriptionView.text = context.getString(R.string.can_hatch_pet,

@@ -87,8 +87,8 @@ class StableRecyclerFragment : BaseFragment() {
         if (adapter == null) {
             adapter = StableRecyclerAdapter()
             adapter?.animalIngredientsRetriever = {
-                val egg = inventoryRepository.getItems(Egg::class.java, arrayOf(it.animal), null).firstElement().blockingGet().firstOrNull()
-                val potion = inventoryRepository.getItems(HatchingPotion::class.java, arrayOf(it.color), null).firstElement().blockingGet().firstOrNull()
+                val egg = inventoryRepository.getItems(Egg::class.java, arrayOf(it.animal)).firstElement().blockingGet().firstOrNull()
+                val potion = inventoryRepository.getItems(HatchingPotion::class.java, arrayOf(it.color)).firstElement().blockingGet().firstOrNull()
                 Pair(egg as? Egg, potion as? HatchingPotion)
             }
             adapter?.itemType = this.itemType
@@ -145,6 +145,17 @@ class StableRecyclerFragment : BaseFragment() {
             animalMap
         }
 
+        compositeSubscription.add(inventoryRepository.getItems(Egg::class.java)
+                .map {
+                    val eggMap = mutableMapOf<String, Egg>()
+                    it.forEach { egg ->
+                        eggMap[egg.key] = egg as Egg
+                    }
+                    eggMap
+                }
+                .subscribe(Consumer {
+            adapter?.setEggs(it)
+        }, RxErrorHandler.handleEmptyError()))
         compositeSubscription.add(observable.zipWith(ownedObservable, BiFunction<RealmResults<out Animal>, Map<String, OwnedObject>, ArrayList<Any>> { unsortedAnimals, ownedAnimals ->
             mapAnimals(unsortedAnimals, ownedAnimals)
         }).subscribe(Consumer { items -> adapter?.setItemList(items) }, RxErrorHandler.handleEmptyError()))

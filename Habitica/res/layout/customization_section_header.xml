@@ -4,6 +4,8 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="55dp"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
     android:gravity="bottom">
 <TextView
     android:id="@+id/label"

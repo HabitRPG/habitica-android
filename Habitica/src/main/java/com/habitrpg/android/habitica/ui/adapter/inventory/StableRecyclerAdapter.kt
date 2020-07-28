@@ -24,6 +24,7 @@ import io.reactivex.subjects.PublishSubject
 
 class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
+    private var eggs: Map<String, Egg> = mapOf()
     var animalIngredientsRetriever: ((Animal) -> Pair<Egg?, HatchingPotion?>)? = null
     var itemType: String? = null
     private val equipEvents = PublishSubject.create<String>()
@@ -60,8 +61,8 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                         (holder as? PetViewHolder)?.bind(item,
                                 item.numberOwned,
                                 canRaiseToMount = false,
-                                hasEgg = false,
-                                hasPotion = false,
+                                eggCount = 0,
+                                potionCount = 0,
                                 ownsSaddles = false,
                                 hasUnlockedEgg = false,
                                 hasUnlockedPotion = false,
@@ -103,6 +104,10 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     override fun getItemCount(): Int = itemList.size
+    fun setEggs(eggs: Map<String, Egg>) {
+        this.eggs = eggs
+        notifyDataSetChanged()
+    }
 
     internal class StableHeaderViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(parent.inflate(R.layout.shop_header)) {
 
@@ -130,7 +135,7 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         fun bind(item: Animal) {
             this.animal = item
             val context = itemView.context
-            titleView.text = item.animal
+            titleView.text = eggs[item.animal]?.mountText ?: item.animal
             ownedTextView.visibility = View.VISIBLE
 
             val imageName = if (itemType == "pets") {

@@ -58,8 +58,12 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
         return localRepository.getOwnedItems(userID, includeZero)
     }
 
-    override fun getItems(itemClass: Class<out Item>, keys: Array<String>, user: User?): Flowable<out RealmResults<out Item>> {
-        return localRepository.getItems(itemClass, keys, user)
+    override fun getItems(itemClass: Class<out Item>, keys: Array<String>): Flowable<out RealmResults<out Item>> {
+        return localRepository.getItems(itemClass, keys)
+    }
+
+    override fun getItems(itemClass: Class<out Item>): Flowable<out RealmResults<out Item>> {
+        return localRepository.getItems(itemClass)
     }
 
     override fun getEquipment(key: String): Flowable<Equipment> {
@@ -122,6 +126,10 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
 
     override fun getLatestMysteryItem(): Flowable<Equipment> {
         return localRepository.getLatestMysteryItem()
+    }
+
+    override fun getItem(type: String, key: String): Flowable<Item> {
+        return localRepository.getItem(type, key)
     }
 
     private fun sellItem(user: User?, item: Item, ownedItem: OwnedItem): Flowable<User> {

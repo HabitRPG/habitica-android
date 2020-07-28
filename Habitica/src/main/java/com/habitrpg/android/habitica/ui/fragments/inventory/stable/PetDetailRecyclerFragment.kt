@@ -71,6 +71,7 @@ class PetDetailRecyclerFragment : BaseMainFragment() {
             animalColor = args.color
         }
 
+
         resetViews()
 
         layoutManager = androidx.recyclerview.widget.GridLayoutManager(getActivity(), 2)
@@ -86,8 +87,8 @@ class PetDetailRecyclerFragment : BaseMainFragment() {
         recyclerView.layoutManager = layoutManager
         recyclerView.addItemDecoration(MarginDecoration(getActivity()))
         adapter.animalIngredientsRetriever = {
-            val egg = inventoryRepository.getItems(Egg::class.java, arrayOf(it.animal), null).firstElement().blockingGet().firstOrNull()
-            val potion = inventoryRepository.getItems(HatchingPotion::class.java, arrayOf(it.color), null).firstElement().blockingGet().firstOrNull()
+            val egg = inventoryRepository.getItems(Egg::class.java, arrayOf(it.animal)).firstElement().blockingGet().firstOrNull()
+            val potion = inventoryRepository.getItems(HatchingPotion::class.java, arrayOf(it.color)).firstElement().blockingGet().firstOrNull()
             Pair(egg as? Egg, potion as? HatchingPotion)
         }
         recyclerView.adapter = adapter
@@ -100,6 +101,11 @@ class PetDetailRecyclerFragment : BaseMainFragment() {
 
 
         view.post { setGridSpanCount(view.width) }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        activity?.title = animalType
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

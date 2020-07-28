@@ -144,7 +144,9 @@ class ChallengeDetailFragment: BaseMainFragment() {
             }, RxErrorHandler.handleEmptyError()))
         }
 
-        joinButton?.setOnClickListener { challenge?.let { challenge -> challengeRepository.joinChallenge(challenge).subscribe(Consumer {}, RxErrorHandler.handleEmptyError()) } }
+        joinButton?.setOnClickListener { challenge?.let { challenge -> challengeRepository.joinChallenge(challenge)
+                .flatMap { userRepository.retrieveUser(true) }
+                .subscribe(Consumer {}, RxErrorHandler.handleEmptyError()) } }
         leaveButton?.setOnClickListener { showChallengeLeaveDialog() }
 
         refresh()

@@ -92,8 +92,13 @@ class RealmInventoryLocalRepository(realm: Realm, private val context: Context) 
                 .filter { it.isLoaded }
     }
 
-    override fun getItems(itemClass: Class<out Item>, keys: Array<String>, user: User?): Flowable<out RealmResults<out Item>> {
+    override fun getItems(itemClass: Class<out Item>, keys: Array<String>): Flowable<out RealmResults<out Item>> {
         return realm.where(itemClass).`in`("key", keys).findAll().asFlowable()
+                .filter { it.isLoaded }
+    }
+
+    override fun getItems(itemClass: Class<out Item>): Flowable<out RealmResults<out Item>> {
+        return realm.where(itemClass).findAll().asFlowable()
                 .filter { it.isLoaded }
     }
 
