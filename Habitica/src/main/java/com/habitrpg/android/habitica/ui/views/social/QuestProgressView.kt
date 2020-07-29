@@ -47,6 +47,7 @@ class QuestProgressView : LinearLayout {
     private val bossNameView: TextView by bindView(R.id.bossNameView)
     private val pendingDamageIconView: ImageView by bindView(R.id.pendingDamageIconView)
     private val pendingDamageTextView: TextView by bindView(R.id.pendingDamageTextView)
+    private val collectedItemsNumber: TextView by bindView(R.id.collectedItemsNumberView)
     private val bossHealthView: ValueBar by bindView(R.id.bossHealthView)
     private val rageMeterView: TextView by bindView(R.id.rageMeterView)
     private val bossRageView: ValueBar by bindView(R.id.bossRageView)
@@ -137,6 +138,7 @@ class QuestProgressView : LinearLayout {
             bossNameView.visibility = View.VISIBLE
             bossHealthView.visibility = View.VISIBLE
             bossHealthView.set(progress.progress?.hp ?: 0.0, quest.boss?.hp?.toDouble() ?: 0.0)
+            collectedItemsNumber.visibility = View.GONE
 
             if (quest.boss?.hasRage() == true) {
                 rageMeterView.visibility = View.VISIBLE
@@ -159,6 +161,7 @@ class QuestProgressView : LinearLayout {
             rageMeterView.visibility = View.GONE
             bossRageView.visibility = View.GONE
             rageStrikeDescriptionView.visibility = View.GONE
+            collectedItemsNumber.visibility = View.VISIBLE
 
             val collection = progress.progress?.collect
             if (collection != null) {
@@ -186,6 +189,7 @@ class QuestProgressView : LinearLayout {
 
     fun configure(user: User) {
         pendingDamageTextView.text = String.format("%.01f dmg pending", (user.party?.quest?.progress?.up ?: 0F) )
+        collectedItemsNumber.text = "+${user.party?.quest?.progress?.collectedItems ?: 0} items found"
     }
 
     private fun setupRageStrikeViews() {
