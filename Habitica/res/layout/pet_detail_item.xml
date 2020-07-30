@@ -10,12 +10,12 @@
     <FrameLayout
         android:id="@+id/image_view_wrapper"
         android:layout_width="65dp"
-        android:layout_height="74dp"
+        android:layout_height="65dp"
         android:layout_gravity="center">
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/imageView"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
         android:layout_gravity="center"
         app:actualImageScaleType="fitCenter"/>
     </FrameLayout>

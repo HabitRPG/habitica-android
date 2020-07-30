@@ -19,14 +19,16 @@ class HabiticaFirebaseMessagingService : FirebaseMessagingService() {
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         userComponent?.inject(this)
-        pushNotificationManager.displayNotification(remoteMessage)
+        if (this::pushNotificationManager.isInitialized) {
+            pushNotificationManager.displayNotification(remoteMessage)
+        }
     }
 
     override fun onNewToken(s: String) {
         super.onNewToken(s)
         userComponent?.inject(this)
         val refreshedToken = FirebaseInstanceId.getInstance().token
-        if (refreshedToken != null) {
+        if (refreshedToken != null && this::pushNotificationManager.isInitialized) {
             pushNotificationManager.refreshedToken = refreshedToken
         }
     }

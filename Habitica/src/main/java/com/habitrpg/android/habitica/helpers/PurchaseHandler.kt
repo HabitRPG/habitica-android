@@ -5,6 +5,7 @@ import android.content.Intent
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
 import org.solovyev.android.checkout.*
+import java.lang.NullPointerException
 import java.util.*
 import javax.annotation.Nonnull
 
@@ -92,7 +93,11 @@ class PurchaseHandler(activity: Activity, val crashlyticsProxy: CrashlyticsProxy
     private fun loadInventory(type: String, skus: List<String>, callback: Inventory.Callback) {
         val request = Inventory.Request.create().loadAllPurchases().loadSkus(type, skus)
         if (request != null) {
-            inventory?.load(request, callback)
+            try {
+                inventory?.load(request, callback)
+            } catch (e: NullPointerException) {
+                return
+            }
         }
     }
 

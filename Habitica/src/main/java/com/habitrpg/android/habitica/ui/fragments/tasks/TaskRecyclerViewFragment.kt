@@ -291,6 +291,9 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
 
     protected fun showBrokenChallengeDialog(task: Task) {
         context?.let {
+            if (!task.isValid) {
+                return
+            }
             taskRepository.getTasksForChallenge(task.challengeID).subscribe(Consumer { tasks ->
                 val taskCount = tasks.size
                 val dialog = HabiticaAlertDialog(it)
