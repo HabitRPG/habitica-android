@@ -118,12 +118,10 @@ class TaskFormActivity : BaseActivity() {
     private var tintColor: Int = 0
     set(value) {
         field = value
-        upperTextWrapper.setBackgroundColor(value)
         taskDifficultyButtons.tintColor = value
         habitScoringButtons.tintColor = value
         habitResetStreakButtons.tintColor = value
         taskSchedulingControls.tintColor = value
-        supportActionBar?.setBackgroundDrawable(ColorDrawable(value))
         updateTagViewsColors()
     }
 
@@ -153,12 +151,22 @@ class TaskFormActivity : BaseActivity() {
         } else {
             "purple"
         }
-
         super.onCreate(savedInstanceState)
+
+        if (forcedTheme == "yellow") {
+            taskDifficultyButtons.textTintColor = ContextCompat.getColor(this, R.color.yellow_5)
+            habitScoringButtons.textTintColor = ContextCompat.getColor(this, R.color.yellow_5)
+        }
+
+
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         tintColor = getThemeColor(R.attr.taskFormTint)
+        val upperTintColor = getThemeColor(R.attr.colorAccent)
+        supportActionBar?.setBackgroundDrawable(ColorDrawable(upperTintColor))
+        upperTextWrapper.setBackgroundColor(upperTintColor)
+
 
         isChallengeTask = bundle.getBoolean(IS_CHALLENGE_TASK, false)
 
@@ -172,7 +180,7 @@ class TaskFormActivity : BaseActivity() {
                     setTagViews()
                 }, RxErrorHandler.handleEmptyError()))
         compositeSubscription.add(userRepository.getUser().subscribe(Consumer {
-            usesTaskAttributeStats = it.preferences?.allocationMode == "taskbased"
+            usesTaskAttributeStats = it.preferences?.allocationMode == "taskbased" && it.preferences?.automaticAllocation == true
             configureForm()
         }, RxErrorHandler.handleEmptyError()))
 

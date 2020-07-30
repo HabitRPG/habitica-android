@@ -1082,4 +1082,6 @@
     <string name="keep_x_tasks">Keep %d Tasks</string>
     <string name="delete_x_tasks">Delete %d Tasks</string>
     <string name="challenge_task_name">%s Challenge Task</string>
+    <string name="pet_category">%s Pets</string>
+    <string name="mount_category">%s Mounts</string>
 </resources>

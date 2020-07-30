@@ -135,7 +135,8 @@ class MountDetailRecyclerFragment : BaseMainFragment() {
                         for (mount in unsortedAnimals) {
                             if (mount.type == "wacky" || mount.type == "special") continue
                             if (mount.type != lastMount?.type) {
-                                currentSection = StableSection(mount.type, mount.getTranslatedType(context))
+                                val title = context?.getString(R.string.pet_category, mount.getTranslatedType(context))
+                                currentSection = StableSection(mount.type, title ?: "")
                                 items.add(currentSection)
                             }
                             currentSection?.let {

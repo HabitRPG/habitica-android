@@ -273,7 +273,7 @@
     <style name="Toolbar" parent="Base.ThemeOverlay.AppCompat.ActionBar">
         <item name="android:textColorPrimary">?attr/toolbarContentColor</item>
         <item name="textColorSecondary">?attr/toolbarContentColor</item>
-        <item name="background">?attr/colorPrimaryDark</item>
+        <item name="background">?attr/colorPrimary</item>
         <item name="actionMenuTextColor">?attr/toolbarContentColor</item>
         <item name="android:actionMenuTextColor">?attr/toolbarContentColor</item>
     </style>
@@ -387,6 +387,7 @@
         <item name="android:paddingLeft">@dimen/pill_horizontal_padding</item>
         <item name="android:paddingTop">@dimen/pill_vertical_padding</item>
         <item name="android:paddingBottom">@dimen/pill_vertical_padding</item>
+        <item name="android:textColor">@color/gray_200</item>
     </style>
 
     <style name="Pill.White">
@@ -634,7 +635,10 @@
         <item name="boxBackgroundColor">@color/white_75_alpha</item>
         <item name="android:textColor">?attr/colorPrimaryText</item>
         <item name="android:textColorHint">@color/textColorLight</item>
-        <item name="colorControlNormal">@color/white</item>
+        <item name="colorControlNormal">?attr/colorPrimary</item>
+        <item name="colorControlActivated">?attr/colorPrimary</item>
+        <item name="colorControlHighlight">?attr/colorPrimary</item>
+        <item name="colorAccent">?attr/colorPrimary</item>
         <item name="hintTextAppearance">@style/TaskFormHintTextAppearance</item>
     </style>
 
@@ -649,9 +653,9 @@
         <item name="boxBackgroundColor">@color/taskform_gray</item>
         <item name="android:textColor">?attr/colorPrimaryText</item>
         <item name="android:textColorHint">@color/gray_300</item>
-        <item name="android:colorControlNormal">@color/gray_400</item>
-        <item name="android:colorControlActivated">@color/brand_400</item>
-        <item name="android:colorControlHighlight">@color/brand_400</item>
+        <item name="android:colorControlNormal">?attr/colorPrimary</item>
+        <item name="android:colorControlActivated">?attr/colorPrimary</item>
+        <item name="android:colorControlHighlight">?attr/colorPrimary</item>
         <item name="android:colorAccent">@color/brand_400</item>
     </style>
 

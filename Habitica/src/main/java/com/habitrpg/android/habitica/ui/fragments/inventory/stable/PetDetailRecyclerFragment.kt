@@ -24,6 +24,7 @@ import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.helpers.resetViews
 import io.reactivex.functions.BiFunction
 import io.reactivex.functions.Consumer
+import io.reactivex.rxkotlin.combineLatest
 import io.realm.RealmResults
 import org.greenrobot.eventbus.Subscribe
 import java.util.ArrayList
@@ -140,35 +141,35 @@ class PetDetailRecyclerFragment : BaseMainFragment() {
                     }
                     .subscribe(Consumer { adapter.setOwnedMounts(it) }, RxErrorHandler.handleEmptyError()))
             compositeSubscription.add(inventoryRepository.getOwnedItems(true).subscribe(Consumer { adapter.setOwnedItems(it) }, RxErrorHandler.handleEmptyError()))
-            compositeSubscription.add(inventoryRepository.getPets(animalType, animalGroup, animalColor).zipWith(inventoryRepository.getOwnedPets()
+            compositeSubscription.add(inventoryRepository.getPets(animalType, animalGroup, animalColor).combineLatest(inventoryRepository.getOwnedPets()
                     .map { ownedPets ->
                         val petMap = mutableMapOf<String, OwnedPet>()
                         ownedPets.forEach { petMap[it.key ?: ""] = it }
                         return@map petMap
                     }.doOnNext {
                         adapter.setOwnedPets(it)
-                    }, BiFunction<RealmResults<out Pet>, Map<String, OwnedObject>, List<Any>> { unsortedAnimals, ownedAnimals ->
+                    }).map {
                         val items = mutableListOf<Any>()
                         var lastPet: Pet? = null
                         var currentSection: StableSection? = null
-                        for (pet in unsortedAnimals) {
+                        for (pet in it.first) {
                             if (pet.type == "wacky" || pet.type == "special") continue
                             if (pet.type != lastPet?.type) {
-                                currentSection = StableSection(pet.type, pet.getTranslatedType(context))
+                                val title = context?.getString(R.string.pet_category, pet.getTranslatedType(context))
+                                currentSection = StableSection(pet.type, title ?: "")
                                 items.add(currentSection)
                             }
-                            currentSection?.let {
-                                it.totalCount += 1
-                                if (ownedAnimals.containsKey(pet.key)) {
-                                    it.ownedCount += 1
+                            currentSection?.let {section ->
+                                section.totalCount += 1
+                                if (it.second.containsKey(pet.key)) {
+                                    section.ownedCount += 1
                                 }
                             }
                             items.add(pet)
                             lastPet = pet
                         }
                         items
-                    })
-                    .subscribe(Consumer { adapter.setItemList(it) }, RxErrorHandler.handleEmptyError()))
+                    }.subscribe(Consumer { adapter.setItemList(it) }, RxErrorHandler.handleEmptyError()))
             compositeSubscription.add(inventoryRepository.getMounts(animalType, animalGroup, animalColor).subscribe(Consumer<RealmResults<Mount>> { adapter.setExistingMounts(it) }, RxErrorHandler.handleEmptyError()))
         }
     }

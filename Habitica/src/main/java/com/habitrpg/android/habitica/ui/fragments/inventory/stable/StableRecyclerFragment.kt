@@ -10,6 +10,7 @@ import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.extensions.getTranslatedType
 import com.habitrpg.android.habitica.extensions.inflate
+import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.Animal
 import com.habitrpg.android.habitica.models.inventory.Egg
@@ -31,6 +32,8 @@ class StableRecyclerFragment : BaseFragment() {
 
     @Inject
     lateinit var inventoryRepository: InventoryRepository
+    @Inject
+    lateinit var configManager: AppConfigManager
 
     private val recyclerView: RecyclerViewEmptySupport? by bindView(R.id.recyclerView)
     private val emptyView: TextView? by bindView(R.id.emptyView)
@@ -92,6 +95,7 @@ class StableRecyclerFragment : BaseFragment() {
                 Pair(egg as? Egg, potion as? HatchingPotion)
             }
             adapter?.itemType = this.itemType
+            adapter?.shopSpriteSuffix = configManager.shopSpriteSuffix()
             recyclerView?.adapter = adapter
             recyclerView?.itemAnimator = SafeDefaultItemAnimator()
 
@@ -185,7 +189,12 @@ class StableRecyclerFragment : BaseFragment() {
                 if (items.size > 0 && items[items.size - 1].javaClass == StableSection::class.java) {
                     items.removeAt(items.size - 1)
                 }
-                val section = StableSection(animal.type, animal.getTranslatedType(context))
+                val title = if (itemType == "pets") {
+                    context?.getString(R.string.pet_category, animal.getTranslatedType(context))
+                } else {
+                    context?.getString(R.string.mount_category, animal.getTranslatedType(context))
+                }
+                val section = StableSection(animal.type, title ?: "")
                 items.add(section)
                 lastSection = section
             }

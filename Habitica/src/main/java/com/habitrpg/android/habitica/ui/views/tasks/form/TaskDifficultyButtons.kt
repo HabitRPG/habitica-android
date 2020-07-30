@@ -21,6 +21,7 @@ class TaskDifficultyButtons @JvmOverloads constructor(
 ) : LinearLayout(context, attrs, defStyleAttr) {
 
     var tintColor: Int = ContextCompat.getColor(context, R.color.brand_300)
+    var textTintColor: Int? = null
     var selectedDifficulty: Float = 1f
     set(value) {
         field = value
@@ -58,7 +59,7 @@ class TaskDifficultyButtons @JvmOverloads constructor(
         var difficultyColor = ContextCompat.getColor(context, R.color.white)
         if (isActive) {
             view.findViewById<ImageView>(R.id.image_view).background.mutate().setTint(tintColor)
-            view.findViewById<TextView>(R.id.text_view).setTextColor(tintColor)
+            view.findViewById<TextView>(R.id.text_view).setTextColor(textTintColor ?: tintColor)
             view.findViewById<TextView>(R.id.text_view).typeface = Typeface.create("sans-serif-medium", Typeface.NORMAL)
         } else {
             view.findViewById<ImageView>(R.id.image_view).background.mutate().setTint(ContextCompat.getColor(context, R.color.taskform_gray))

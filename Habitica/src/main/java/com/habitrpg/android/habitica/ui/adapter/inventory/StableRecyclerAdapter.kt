@@ -4,6 +4,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
@@ -24,6 +25,7 @@ import io.reactivex.subjects.PublishSubject
 
 class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
+    var shopSpriteSuffix: String? = null
     private var eggs: Map<String, Egg> = mapOf()
     var animalIngredientsRetriever: ((Animal) -> Pair<Egg?, HatchingPotion?>)? = null
     var itemType: String? = null
@@ -53,7 +55,14 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (val item = this.itemList[position]) {
             "header" -> (holder as? StableHeaderViewHolder)?.bind()
-            is StableSection -> (holder as? SectionViewHolder)?.bind(item)
+            is StableSection -> {
+                if (item.key == "drop") {
+                    val params = holder.itemView.layoutParams as GridLayoutManager.LayoutParams
+                    params.topMargin = -30
+                    holder.itemView.layoutParams = params
+                }
+                (holder as? SectionViewHolder)?.bind(item)
+            }
             is Animal -> {
                 val isIndividualAnimal = item.type == "special" || item.type == "wacky"
                 if (isIndividualAnimal) {
@@ -109,11 +118,12 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         notifyDataSetChanged()
     }
 
-    internal class StableHeaderViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(parent.inflate(R.layout.shop_header)) {
+    internal inner class StableHeaderViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(parent.inflate(R.layout.shop_header)) {
 
         private var binding: ShopHeaderBinding = ShopHeaderBinding.bind(itemView)
 
         fun bind() {
+            binding.npcBannerView.shopSpriteSuffix = shopSpriteSuffix ?: ""
             binding.npcBannerView.identifier = "stable"
             binding.namePlate.setText(R.string.stable_owner)
             binding.descriptionView.visibility = View.GONE

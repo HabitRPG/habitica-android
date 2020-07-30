@@ -17,7 +17,6 @@
             android:layout_height="wrap_content"
             android:minHeight="?attr/actionBarSize"
             android:theme="@style/Toolbar"
-            android:background="@color/brand_300"
             app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"/>
 
@@ -47,7 +46,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/TaskFormTextInputLayoutAppearance"
-                    app:boxStrokeColor="?attr/colorPrimaryDark"
+                    app:boxStrokeColor="?attr/colorPrimary"
+                    android:backgroundTint="?attr/colorPrimary"
                     android:alpha="0.75">
                     <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/text_edit_text"
@@ -62,7 +62,8 @@
                     style="@style/TaskFormTextInputLayoutAppearance"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:boxStrokeColor="?attr/colorPrimaryDark"
+                    app:boxStrokeColor="?attr/colorPrimary"
+                    android:backgroundTint="?attr/colorPrimary"
                     android:alpha="0.75">
                     <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/notes_edit_text"

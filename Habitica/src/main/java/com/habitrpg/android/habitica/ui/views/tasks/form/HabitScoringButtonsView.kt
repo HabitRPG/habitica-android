@@ -29,13 +29,14 @@ class HabitScoringButtonsView @JvmOverloads constructor(
 
 
     var tintColor: Int = ContextCompat.getColor(context, R.color.brand_300)
+    var textTintColor: Int? = null
 
     var isPositive = true
         set(value) {
             field = value
             positiveImageView.setImageDrawable(HabiticaIconsHelper.imageOfHabitControlPlus(tintColor, value).asDrawable(resources))
             if (value) {
-                positiveTextView.setTextColor(tintColor)
+                positiveTextView.setTextColor(textTintColor ?: tintColor)
                 positiveView.contentDescription = toContentDescription(R.string.positive_habit_form, R.string.on)
                 positiveTextView.typeface = Typeface.create("sans-serif-medium", Typeface.NORMAL)
             } else {
@@ -50,7 +51,7 @@ class HabitScoringButtonsView @JvmOverloads constructor(
             field = value
             negativeImageView.setImageDrawable(HabiticaIconsHelper.imageOfHabitControlMinus(tintColor, value).asDrawable(resources))
             if (value) {
-                negativeTextView.setTextColor(tintColor)
+                negativeTextView.setTextColor(textTintColor ?: tintColor)
                 negativeView.contentDescription = toContentDescription(R.string.negative_habit_form, R.string.on)
                 negativeTextView.typeface = Typeface.create("sans-serif-medium", Typeface.NORMAL)
             } else {

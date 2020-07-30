@@ -36,7 +36,7 @@ class MountDetailRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Ada
 
     override fun onBindViewHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder, position: Int) {
         when (val obj = this.itemList[position]) {
-            is String -> (holder as? SectionViewHolder)?.bind(obj)
+            is StableSection -> (holder as? SectionViewHolder)?.bind(obj)
             is Mount  -> (holder as? MountViewHolder)?.bind(obj, ownedMounts?.get(obj.key ?: "")?.owned == true)
         }
     }

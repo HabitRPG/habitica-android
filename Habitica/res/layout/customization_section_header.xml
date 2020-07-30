@@ -14,16 +14,17 @@
     android:layout_weight="1"
     tools:text="Test header"
     style="@style/Overline"
-    android:textAppearance="?android:attr/textAppearanceMedium"/>
+    android:textColor="@color/gray_200"/>
 <TextView
     android:id="@+id/count_pill"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_height="24dp"
     android:visibility="gone"
     style="@style/Pill"
     android:textSize="10sp"
     android:textAllCaps="true"
     android:letterSpacing="0.15"
+    android:gravity="center"
     />
     <LinearLayout
         android:layout_width="wrap_content"
