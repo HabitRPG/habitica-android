@@ -61,18 +61,13 @@ class PetViewHolder(parent: ViewGroup, private val equipEvents: PublishSubject<S
         this.hasUnlockedEgg = hasUnlockedEgg
         this.hasUnlockedPotion = hasUnlockedPotion
         this.hasMount = hasMount
-        binding.imageViewWrapper.visibility = View.VISIBLE
+        binding.imageView.visibility = View.VISIBLE
         binding.itemWrapper.visibility = View.GONE
         binding.checkmarkView.visibility = View.GONE
 
-        if (item.type == "special" || item.type == "wacky") {
-            binding.titleTextView.text = item.text
-            binding.titleTextView.visibility =View.VISIBLE
-        } else {
-            binding.titleTextView.visibility = View.GONE
-        }
+        binding.titleTextView.visibility = View.GONE
 
-        val imageName = "social_Pet-${item.animal}-${item.color}"
+        val imageName = "stable_Pet-${item.animal}-${item.color}"
         itemView.setBackgroundResource(R.drawable.layout_rounded_bg_gray_700)
         if (trained > 0) {
             if (this.canRaiseToMount) {
@@ -85,7 +80,7 @@ class PetViewHolder(parent: ViewGroup, private val equipEvents: PublishSubject<S
             binding.trainedProgressBar.visibility = View.GONE
             binding.imageView.alpha = 0.2f
             if (canHatch) {
-                binding.imageViewWrapper.visibility = View.GONE
+                binding.imageView.visibility = View.GONE
                 binding.itemWrapper.visibility = View.VISIBLE
                 binding.checkmarkView.visibility = View.VISIBLE
                 itemView.setBackgroundResource(R.drawable.layout_rounded_bg_gray_700_brand_border)

@@ -58,7 +58,7 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             is StableSection -> {
                 if (item.key == "drop") {
                     val params = holder.itemView.layoutParams as GridLayoutManager.LayoutParams
-                    params.topMargin = -30
+                    params.topMargin = -50
                     holder.itemView.layoutParams = params
                 }
                 (holder as? SectionViewHolder)?.bind(item)

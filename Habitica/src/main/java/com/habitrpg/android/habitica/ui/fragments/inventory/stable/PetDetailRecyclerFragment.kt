@@ -155,8 +155,7 @@ class PetDetailRecyclerFragment : BaseMainFragment() {
                         for (pet in it.first) {
                             if (pet.type == "wacky" || pet.type == "special") continue
                             if (pet.type != lastPet?.type) {
-                                val title = context?.getString(R.string.pet_category, pet.getTranslatedType(context))
-                                currentSection = StableSection(pet.type, title ?: "")
+                                currentSection = StableSection(pet.type, pet.getTranslatedType(context))
                                 items.add(currentSection)
                             }
                             currentSection?.let {section ->

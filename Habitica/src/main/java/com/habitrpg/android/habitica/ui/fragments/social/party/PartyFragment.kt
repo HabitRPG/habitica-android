@@ -159,20 +159,21 @@ class PartyFragment : BaseMainFragment() {
                 if (resultCode == Activity.RESULT_OK) {
                     val inviteData = HashMap<String, Any>()
                     inviteData["inviter"] = user?.profile?.name ?: ""
-                    if (data?.getBooleanExtra(GroupInviteActivity.IS_EMAIL_KEY, false) == true) {
-                        val emails = data.getStringArrayExtra(GroupInviteActivity.EMAILS_KEY)
+                    val emails = data?.getStringArrayExtra(GroupInviteActivity.EMAILS_KEY)
+                    if (emails != null && emails.isNotEmpty()) {
                         val invites = ArrayList<HashMap<String, String>>()
-                        emails?.forEach { email ->
+                        emails.forEach { email ->
                             val invite = HashMap<String, String>()
                             invite["name"] = ""
                             invite["email"] = email
                             invites.add(invite)
                         }
                         inviteData["emails"] = invites
-                    } else {
-                        val userIDs = data?.getStringArrayExtra(GroupInviteActivity.USER_IDS_KEY)
+                    }
+                    val userIDs = data?.getStringArrayExtra(GroupInviteActivity.USER_IDS_KEY)
+                    if (userIDs != null && userIDs.isNotEmpty()){
                         val invites = ArrayList<String>()
-                        userIDs?.forEach { invites.add(it) }
+                        userIDs.forEach { invites.add(it) }
                         inviteData["usernames"] = invites
                     }
                     viewModel.inviteToGroup(inviteData)

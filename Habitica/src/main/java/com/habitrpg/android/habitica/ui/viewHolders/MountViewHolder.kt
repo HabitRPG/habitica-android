@@ -31,13 +31,9 @@ class MountViewHolder(parent: ViewGroup, private val equipEvents: PublishSubject
     fun bind(item: Mount, owned: Boolean) {
         animal = item
         this.owned = owned
-        if (item.type == "special" || item.type == "wacky") {
-            binding.titleTextView.text = item.text
-        } else {
-            binding.titleTextView.visibility = View.GONE
-        }
+        binding.titleTextView.visibility = View.GONE
         binding.ownedTextView.visibility = View.GONE
-        val imageName = "Mount_Icon_" + item.animal + "-" + item.color
+        val imageName = "stable_Mount_Icon_" + item.animal + "-" + item.color
         binding.imageView.alpha = 1.0f
         if (!owned) {
             binding.imageView.alpha = 0.2f

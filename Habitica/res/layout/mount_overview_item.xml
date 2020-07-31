@@ -12,17 +12,14 @@
         android:layout_width="104dp"
         android:layout_height="96dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="6dp"
         android:background="@drawable/layout_rounded_bg_shopitem"
         android:orientation="vertical">
 
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/imageView"
-            android:layout_width="81dp"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:maxHeight="99dp"
-            android:layout_gravity="center_horizontal"
+            android:layout_width="68dp"
+            android:layout_height="68dp"
+            android:layout_gravity="center"
             app:actualImageScaleType="fitCenter" />
 
         <TextView
@@ -32,6 +29,7 @@
             android:id="@+id/titleTextView"
             android:textSize="12sp"
             android:gravity="center"
+            android:layout_marginTop="-8dp"
             style="@style/RowTitle"/>
         <TextView
             android:id="@+id/ownedTextView"

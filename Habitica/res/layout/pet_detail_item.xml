@@ -7,18 +7,12 @@
     android:background="@drawable/layout_rounded_bg_gray_700"
     android:orientation="vertical"
     android:padding="8dp">
-    <FrameLayout
-        android:id="@+id/image_view_wrapper"
-        android:layout_width="65dp"
-        android:layout_height="65dp"
-        android:layout_gravity="center">
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/imageView"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
+        android:layout_width="68dp"
+        android:layout_height="68dp"
         android:layout_gravity="center"
         app:actualImageScaleType="fitCenter"/>
-    </FrameLayout>
     <ProgressBar
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
@@ -26,7 +20,6 @@
         android:id="@+id/trainedProgressBar"
         android:progressTint="@color/green_100"
         android:progressBackgroundTint="@color/gray_600"
-        android:layout_marginTop="4dp"
         android:layout_marginStart="7dp"
         android:layout_marginEnd="7dp"
         android:max="50" />

@@ -97,13 +97,8 @@ class GroupInviteActivity : BaseActivity() {
         val intent = Intent()
         if (fragments.size == 0) return intent
         val fragment = fragments[viewPager.currentItem]
-        if (viewPager.currentItem == 1) {
-            intent.putExtra(IS_EMAIL_KEY, true)
-            intent.putExtra(EMAILS_KEY, fragment.values)
-        } else {
-            intent.putExtra(IS_EMAIL_KEY, false)
-            intent.putExtra(USER_IDS_KEY, fragment.values)
-        }
+        intent.putExtra(EMAILS_KEY, fragments[1].values)
+        intent.putExtra(USER_IDS_KEY, fragments[0].values)
         return intent
     }
 
