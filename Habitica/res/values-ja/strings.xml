@@ -429,7 +429,7 @@
     <string name="empty_title_dailies">日課を持っていません</string>
     <string name="empty_description_dailies">日課は一定のペースでこなすタスクです。自分に合ったスケジュールを組みましょう！</string>
     <string name="empty_title_todos">To-Doがありません</string>
-    <string name="empty_description_todos">To-Doは一度だけ実行すればいいタスクです。チェックリストを加えて忘れないようにしましょう。</string>
+    <string name="empty_description_todos">To-Doは1度きりで完了するタスクです。To-Doの報酬を増やすために、チェックリストを追加しましょう。</string>
     <string name="empty_title_rewards">ごほうびがありません</string>
     <string name="reset_walkthrough">チュートリアルをリセット</string>
     <string name="read_community_guidelines">投稿する前に、私たちの<u>コミュニティガイドライン</u>を見直してください</string>
