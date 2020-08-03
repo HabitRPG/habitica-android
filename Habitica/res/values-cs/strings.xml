@@ -439,7 +439,7 @@
     <string name="subscribe">Předplatit</string>
     <string name="subscribe.listitem1.description">Obchodník Alexander ti prodá drahokamy za cenu 20 zlaťáků za drahokam!\n\nHis Jeho měsíční dodávky jsou zprvu omezeny na 25 drahokamů za měsíc, ale může se postupně navyšovat na základě délky tvého předplatného.\n\n Každé tři měsíce souvislého předplatného se jejich počet navýší o 5 a může dosáhnout maxima až 50 drahokamů za měsíc!</string>
     <string name="subscribe.listitem2.description">Každý měsíc obdržíš unikátní předmět pro svojí postavu!\n\n Navíc za každé tři měsíce nepřerušeného předplatného ti Tajemní cestovatelé časem zaručí přístup k historickým (a futuristickým!) kosmetickým předmětům.</string>
-    <string name="subscription_hourglasses">+%dMystické přesýpací hodiny</string>
+    <string name="subscription_hourglasses">+%d Mystické přesýpací hodiny</string>
     <string name="payment_method">Způsob platby</string>
     <string name="subscription">Předplatné</string>
     <string name="active">Aktivní</string>
@@ -555,4 +555,12 @@
     <string name="selected">Vybráno</string>
     <string name="off">Vypnuto</string>
     <string name="on">Zapnuto</string>
+    <string name="subscribe12month_gemcap">Limit 45 drahokamů</string>
+    <string name="subscribe6month_gemcap">Limit 35 drahokamů</string>
+    <string name="subscribe3month_gemcap">Limit 30 drahokamů</string>
+    <string name="subscribe1month_gemcap">Limit 25 drahokamů</string>
+    <string name="subscribe_listitem5_description">Objev ještě více předmětů v Habitica s 2x větším denním limitem na kořist.</string>
+    <string name="subscribe_listitem4_description">Získáš královského fialového Zajdalena jako mazlíčka, jakmile se staneš novým/ou předplatitelem/kou.</string>
+    <string name="subscribe_listitem3_description_new">Staň se předplatitelem/kou nyní a získej tuto sadu: %@, a každý měsíc obdržíš nové předměty!</string>
+    <string name="subscribe_listitem3_description">Staň se předplatitelem/kou nyní a získej exkluzivní sadu a každý měsíc obdržíš nové předměty!</string>
 </resources>
