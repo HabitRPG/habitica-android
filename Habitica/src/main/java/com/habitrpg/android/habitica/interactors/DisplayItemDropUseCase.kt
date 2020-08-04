@@ -1,8 +1,11 @@
 package com.habitrpg.android.habitica.interactors
 
+import android.content.Context
 import android.os.Handler
+import android.provider.Settings.Global.getString
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.executors.PostExecutionThread
 import com.habitrpg.android.habitica.executors.ThreadExecutor
 import com.habitrpg.android.habitica.helpers.SoundManager
@@ -23,7 +26,7 @@ constructor(private val soundManager: SoundManager, threadExecutor: ThreadExecut
             if (data?.questItemsFound ?: 0 > 0 && requestValues.showQuestItems) {
                 if (snackbarText.isNotEmpty())
                     snackbarText.append('\n')
-                snackbarText.append("+${data!!.questItemsFound} quest items")
+                snackbarText.append(requestValues.context.getString(R.string.quest_items_found, data!!.questItemsFound))
             }
 
             if (snackbarText.isNotEmpty()) {

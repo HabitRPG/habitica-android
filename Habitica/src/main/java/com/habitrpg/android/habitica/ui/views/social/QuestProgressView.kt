@@ -189,7 +189,8 @@ class QuestProgressView : LinearLayout {
 
     fun configure(user: User) {
         pendingDamageTextView.text = String.format("%.01f dmg pending", (user.party?.quest?.progress?.up ?: 0F) )
-        collectedItemsNumber.text = "+${user.party?.quest?.progress?.collectedItems ?: 0} items found"
+        val collectedItems = user.party?.quest?.progress?.collectedItems ?: 0
+        collectedItemsNumber.text = context.getString(R.string.quest_items_found, collectedItems)
     }
 
     private fun setupRageStrikeViews() {
