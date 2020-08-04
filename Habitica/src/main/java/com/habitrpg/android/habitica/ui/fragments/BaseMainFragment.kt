@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -27,6 +28,8 @@ abstract class BaseMainFragment : BaseFragment() {
     lateinit var userRepository: UserRepository
     @Inject
     lateinit var soundManager: SoundManager
+
+    protected var showsBackButton: Boolean = false
 
     open val activity get() = getActivity() as? MainActivity
     val tabLayout get() = activity?.binding?.detailTabs
@@ -70,6 +73,12 @@ abstract class BaseMainFragment : BaseFragment() {
         }
 
         return null
+    }
+
+    override fun onResume() {
+        super.onResume()
+        activity?.drawerToggle?.isDrawerIndicatorEnabled = !showsBackButton
+        activity?.supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     private fun updateTabLayoutVisibility() {

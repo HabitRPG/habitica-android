@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.data.implementation
 
 import android.content.Context
 import com.amplitude.api.Amplitude
+import com.facebook.FacebookSdk.getCacheDir
 import com.google.gson.JsonSyntaxException
 import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.HabiticaBaseApplication
@@ -37,6 +38,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.BiFunction
 import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
+import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.logging.HttpLoggingInterceptor
@@ -102,7 +104,12 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
         val timeZone = calendar.timeZone
         val timezoneOffset = -TimeUnit.MINUTES.convert(timeZone.getOffset(calendar.timeInMillis).toLong(), TimeUnit.MILLISECONDS)
 
+        val cacheSize: Long = 10 * 1024 * 1024 // 10 MB
+
+        val cache = Cache(getCacheDir(), cacheSize)
+
         val client = OkHttpClient.Builder()
+                .cache(cache)
                 .addInterceptor(logging)
                 .addNetworkInterceptor { chain ->
                     val original = chain.request()
@@ -325,6 +332,10 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
         return apiService.buyItem(itemKey, mapOf(Pair("quantity", purchaseQuantity))).compose(configureApiCallObserver())
     }
 
+    override fun unlinkAllTasks(challengeID: String?, keepOption: String): Flowable<Void> {
+        return apiService.unlinkAllTasks(challengeID, keepOption).compose(configureApiCallObserver())
+    }
+
     override fun purchaseItem(type: String, itemKey: String, purchaseQuantity: Int): Flowable<Any> {
         return apiService.purchaseItem(type, itemKey, mapOf(Pair("quantity", purchaseQuantity))).compose(configureApiCallObserver())
     }
@@ -361,6 +372,10 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
 
     override fun purchaseQuest(key: String): Flowable<Any> {
         return apiService.purchaseQuest(key).compose(configureApiCallObserver())
+    }
+
+    override fun purchaseSpecialSpell(key: String): Flowable<Any> {
+        return apiService.purchaseSpecialSpell(key).compose(configureApiCallObserver())
     }
 
     override fun sellItem(itemType: String, itemKey: String): Flowable<User> {

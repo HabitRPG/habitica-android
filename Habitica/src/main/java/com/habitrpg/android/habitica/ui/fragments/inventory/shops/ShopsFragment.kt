@@ -54,7 +54,6 @@ open class ShopsFragment : BaseMainFragment() {
             this.usesTabLayout = false
             tabLayout?.visibility = View.GONE
             viewPager.currentItem = lockTab ?: 0
-            viewPager.setOnTouchListener { _, _ -> true }
         }
 
         context?.let { FirebaseAnalytics.getInstance(it).logEvent("open_shop", bundleOf(Pair("shopIndex", lockTab))) }
@@ -85,7 +84,7 @@ open class ShopsFragment : BaseMainFragment() {
 
                 val fragment = ShopFragment()
 
-                fragment.shopIdentifier = when (position) {
+                fragment.shopIdentifier = when (lockTab ?: position) {
                     0 -> Shop.MARKET
                     1 -> Shop.QUEST_SHOP
                     2 -> Shop.SEASONAL_SHOP
@@ -97,7 +96,7 @@ open class ShopsFragment : BaseMainFragment() {
                 return fragment
             }
 
-            override fun getCount(): Int = 4
+            override fun getCount(): Int = if (lockTab != null) 1 else 4
 
             override fun getPageTitle(position: Int): CharSequence? {
                 return when (position) {
@@ -118,6 +117,6 @@ open class ShopsFragment : BaseMainFragment() {
     private fun updateCurrencyView(user: User) {
         currencyView.gold = user.stats?.gp ?: 0.0
         currencyView.gems = user.gemCount.toDouble()
-        currencyView.hourglasses = user.hourglassCount?.toDouble() ?: 0.0
+        currencyView.hourglasses = user.hourglassCount.toDouble()
     }
 }

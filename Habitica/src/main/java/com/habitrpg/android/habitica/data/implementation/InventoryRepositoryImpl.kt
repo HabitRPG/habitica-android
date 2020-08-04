@@ -50,16 +50,20 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
         return localRepository.getEquipmentType(type, set)
     }
 
-    override fun getOwnedItems(itemType: String): Flowable<RealmResults<OwnedItem>> {
-        return localRepository.getOwnedItems(itemType, userID)
+    override fun getOwnedItems(itemType: String, includeZero: Boolean): Flowable<RealmResults<OwnedItem>> {
+        return localRepository.getOwnedItems(itemType, userID, includeZero)
     }
 
-    override fun getOwnedItems(): Flowable<Map<String, OwnedItem>> {
-        return localRepository.getOwnedItems(userID)
+    override fun getOwnedItems(includeZero: Boolean): Flowable<Map<String, OwnedItem>> {
+        return localRepository.getOwnedItems(userID, includeZero)
     }
 
-    override fun getItems(itemClass: Class<out Item>, keys: Array<String>, user: User?): Flowable<out RealmResults<out Item>> {
-        return localRepository.getItems(itemClass, keys, user)
+    override fun getItems(itemClass: Class<out Item>, keys: Array<String>): Flowable<out RealmResults<out Item>> {
+        return localRepository.getItems(itemClass, keys)
+    }
+
+    override fun getItems(itemClass: Class<out Item>): Flowable<out RealmResults<out Item>> {
+        return localRepository.getItems(itemClass)
     }
 
     override fun getEquipment(key: String): Flowable<Equipment> {
@@ -82,7 +86,7 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
         return localRepository.getMounts()
     }
 
-    override fun getMounts(type: String, group: String, color: String?): Flowable<RealmResults<Mount>> {
+    override fun getMounts(type: String?, group: String?, color: String?): Flowable<RealmResults<Mount>> {
         return localRepository.getMounts(type, group, color)
     }
 
@@ -94,7 +98,7 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
         return localRepository.getPets()
     }
 
-    override fun getPets(type: String, group: String, color: String?): Flowable<RealmResults<Pet>> {
+    override fun getPets(type: String?, group: String?, color: String?): Flowable<RealmResults<Pet>> {
         return localRepository.getPets(type, group, color)
     }
 
@@ -111,7 +115,7 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
     }
 
     override fun sellItem(user: User?, type: String, key: String): Flowable<User> {
-        return localRepository.getOwnedItem(userID, type, key)
+        return localRepository.getOwnedItem(userID, type, key, true)
                 .flatMap { item -> sellItem(user, item) }
     }
 
@@ -122,6 +126,10 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
 
     override fun getLatestMysteryItem(): Flowable<Equipment> {
         return localRepository.getLatestMysteryItem()
+    }
+
+    override fun getItem(type: String, key: String): Flowable<Item> {
+        return localRepository.getItem(type, key)
     }
 
     private fun sellItem(user: User?, item: Item, ownedItem: OwnedItem): Flowable<User> {
@@ -278,6 +286,10 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
 
     override fun purchaseQuest(key: String): Flowable<Any> {
         return apiClient.purchaseQuest(key)
+    }
+
+    override fun purchaseSpecialSpell(key: String): Flowable<Any> {
+        return apiClient.purchaseSpecialSpell(key)
     }
 
     override fun purchaseItem(purchaseType: String, key: String, purchaseQuantity: Int): Flowable<Any> {

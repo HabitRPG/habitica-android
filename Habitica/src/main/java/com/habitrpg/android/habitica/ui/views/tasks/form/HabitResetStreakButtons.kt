@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.views.tasks.form
 
 import android.content.Context
+import android.graphics.Typeface
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.View
@@ -66,9 +67,11 @@ class HabitResetStreakButtons @JvmOverloads constructor(
         if (isActive) {
             button.background.setTint(tintColor)
             button.setTextColor(ContextCompat.getColor(context, R.color.white))
+            button.typeface = Typeface.create("sans-serif-medium", Typeface.NORMAL)
         } else {
             button.background.setTint(ContextCompat.getColor(context, R.color.taskform_gray))
             button.setTextColor(ContextCompat.getColor(context, R.color.gray_100))
+            button.typeface = Typeface.create("sans-serif", Typeface.NORMAL)
         }
         button.setOnClickListener {
             selectedResetOption = resetOption

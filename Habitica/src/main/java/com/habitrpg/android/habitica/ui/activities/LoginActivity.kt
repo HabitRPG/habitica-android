@@ -31,6 +31,7 @@ import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.common.GooglePlayServicesUtil
 import com.google.android.gms.common.Scopes
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
@@ -368,6 +369,10 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
         }
 
         HabiticaBaseApplication.reloadUserComponent()
+
+        if (isRegistering) {
+            FirebaseAnalytics.getInstance(this).logEvent("user_registered", null)
+        }
 
         compositeSubscription.add(userRepository.retrieveUser(true)
                 .subscribe(Consumer {

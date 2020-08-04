@@ -19,14 +19,14 @@
     <dimen name="party_invite_separator">4dp</dimen>
     <dimen name="party_invite_text_width">140dp</dimen>
 
-    <dimen name="bar_size">15dp</dimen>
+    <dimen name="bar_size">8dp</dimen>
     <dimen name="bar_padding">5dp</dimen>
     <dimen name="bar_padding_small">2dp</dimen>
     <dimen name="bar_radius">5dp</dimen>
     <dimen name="avatar_width">140dp</dimen>
     <dimen name="avatar_height">147dp</dimen>
-    <dimen name="avatar_header_width">108dp</dimen>
-    <dimen name="avatar_header_height">113dp</dimen>
+    <dimen name="avatar_header_width">94dp</dimen>
+    <dimen name="avatar_header_height">98dp</dimen>
 
     <dimen name="quest_image_width">219dp</dimen>
 
@@ -58,15 +58,15 @@
     <dimen name="row_title_bottommargin">2dp</dimen>
     <dimen name="pet_width">84dp</dimen>
     <dimen name="mount_width">120dp</dimen>
-    <dimen name="bottom_menu_padding">28dp</dimen>
+    <dimen name="bottom_menu_padding">20dp</dimen>
     <dimen name="pet_image_width">68dp</dimen>
     <dimen name="pet_image_height">65dp</dimen>
     <dimen name="mount_image_width">81dp</dimen>
     <dimen name="mount_image_height">99dp</dimen>
     <dimen name="shop_height">124dp</dimen>
-    <dimen name="bar_icon_padding">10dp</dimen>
+    <dimen name="bar_icon_padding">4dp</dimen>
     <dimen name="task_text_padding">16dp</dimen>
-    <dimen name="header_bar_spacing">7dp</dimen>
+    <dimen name="header_bar_spacing">9dp</dimen>
     <dimen name="bar_size_slim">13dp</dimen>
 
     <dimen name="spacing_small">4dp</dimen>

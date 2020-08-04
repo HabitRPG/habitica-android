@@ -144,7 +144,9 @@ class ChallengeDetailFragment: BaseMainFragment() {
             }, RxErrorHandler.handleEmptyError()))
         }
 
-        joinButton?.setOnClickListener { challenge?.let { challenge -> challengeRepository.joinChallenge(challenge).subscribe(Consumer {}, RxErrorHandler.handleEmptyError()) } }
+        joinButton?.setOnClickListener { challenge?.let { challenge -> challengeRepository.joinChallenge(challenge)
+                .flatMap { userRepository.retrieveUser(true) }
+                .subscribe(Consumer {}, RxErrorHandler.handleEmptyError()) } }
         leaveButton?.setOnClickListener { showChallengeLeaveDialog() }
 
         refresh()
@@ -353,34 +355,16 @@ class ChallengeDetailFragment: BaseMainFragment() {
         val context = context ?: return
         val alert = HabiticaAlertDialog(context)
         alert.setTitle(this.getString(R.string.challenge_leave_title))
-        alert.setMessage(this.getString(R.string.challenge_leave_text, challenge?.name ?: ""))
-        alert.addButton(R.string.yes, true) { dialog, _ ->
-            dialog.dismiss()
-            showRemoveTasksDialog(Consumer { keepTasks ->
-                val challenge = challenge ?: return@Consumer
-                challengeRepository.leaveChallenge(challenge, keepTasks).subscribe(Consumer {}, RxErrorHandler.handleEmptyError())
-            })
+        alert.setMessage(this.getString(R.string.challenge_leave_description))
+        alert.addButton(R.string.leave_keep_tasks, true) { dialog, _ ->
+            val challenge = challenge ?: return@addButton
+            challengeRepository.leaveChallenge(challenge, "keep-all").subscribe(Consumer {}, RxErrorHandler.handleEmptyError())
         }
-        alert.addButton(R.string.no, false) { dialog, _ ->
-            dialog.dismiss()
+        alert.addButton(R.string.leave_delte_tasks, false, true) { dialog, _ ->
+            val challenge = challenge ?: return@addButton
+            challengeRepository.leaveChallenge(challenge, "remove-all").subscribe(Consumer {}, RxErrorHandler.handleEmptyError())
         }
+        alert.setExtraCloseButtonVisibility(View.VISIBLE)
         alert.show()
-    }
-
-    private fun showRemoveTasksDialog(callback: Consumer<String>) {
-        context?.let {
-            val alert = HabiticaAlertDialog(it)
-            alert.setTitle(this.getString(R.string.challenge_remove_tasks_title))
-            alert.setMessage(this.getString(R.string.challenge_remove_tasks_text))
-            alert.addButton(R.string.remove_tasks, false) { dialog, _ ->
-                        callback.accept("remove-all")
-                        dialog.dismiss()
-                    }
-            alert.addButton(R.string.keep_tasks, false) { dialog, _ ->
-                        callback.accept("keep-all")
-                        dialog.dismiss()
-                    }
-            alert.show()
-        }
     }
 }

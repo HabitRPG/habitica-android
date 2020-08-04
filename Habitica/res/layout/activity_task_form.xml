@@ -17,7 +17,6 @@
             android:layout_height="wrap_content"
             android:minHeight="?attr/actionBarSize"
             android:theme="@style/Toolbar"
-            android:background="@color/brand_300"
             app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"/>
 
@@ -43,20 +42,29 @@
                 android:paddingEnd="@dimen/spacing_large"
                 android:paddingBottom="@dimen/spacing_large">
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/text_input_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/TaskFormTextInputLayoutAppearance">
+                    style="@style/TaskFormTextInputLayoutAppearance"
+                    app:boxStrokeColor="?attr/colorPrimary"
+                    android:backgroundTint="?attr/colorPrimary"
+                    android:alpha="0.75">
                     <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/text_edit_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/task_title"
+                        android:textColor="?attr/colorPrimaryText"
                         android:inputType="textCapSentences|textAutoCorrect"/>
                 </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/notes_input_layout"
                     style="@style/TaskFormTextInputLayoutAppearance"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    app:boxStrokeColor="?attr/colorPrimary"
+                    android:backgroundTint="?attr/colorPrimary"
+                    android:alpha="0.75">
                     <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/notes_edit_text"
                         android:layout_width="match_parent"
@@ -64,8 +72,19 @@
                         android:hint="@string/notes"
                         android:minLines="3"
                         android:gravity="top"
+                        android:textColor="?attr/colorPrimaryText"
                         android:inputType="textCapSentences|textAutoCorrect|textMultiLine"/>
                 </com.google.android.material.textfield.TextInputLayout>
+                <TextView
+                    android:id="@+id/challenge_name_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    style="@style/Caption1"
+                    android:gravity="center"
+                    android:textColor="@color/gray_10"
+                    tools:visibility="visible"
+                    tools:text="Challenge Name"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"

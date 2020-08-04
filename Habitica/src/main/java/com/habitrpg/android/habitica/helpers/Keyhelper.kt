@@ -12,6 +12,7 @@ import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.IOException
 import java.io.UnsupportedEncodingException
+import java.lang.IllegalStateException
 import java.math.BigInteger
 import java.security.*
 import java.util.*
@@ -187,6 +188,8 @@ constructor(ctx: Context, var sharedPreferences: SharedPreferences, var keyStore
         } catch (error: IllegalArgumentException) {
             null
         } catch (e: GeneralSecurityException) {
+            null
+        } catch (e: IllegalStateException) {
             null
         }
     }

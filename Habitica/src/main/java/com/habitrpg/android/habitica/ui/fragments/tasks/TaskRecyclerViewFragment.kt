@@ -38,6 +38,7 @@ import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.BaseTaskViewHolder
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
+import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
 import java.util.*
@@ -262,6 +263,7 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
             recyclerAdapter?.checklistItemScoreEvents
                     ?.flatMap { taskRepository.scoreChecklistItem(it.first.id ?: "", it.second.id ?: "")
                     }?.subscribeWithErrorHandler(Consumer {})?.let { compositeSubscription.add(it) }
+            recyclerAdapter?.brokenTaskEvents?.subscribeWithErrorHandler(Consumer { showBrokenChallengeDialog(it) })?.let { compositeSubscription.add(it) }
         }
 
         val bottomPadding = (binding.recyclerView.paddingBottom + TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 60f, resources.displayMetrics)).toInt()
@@ -284,6 +286,28 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
         if (Task.TYPE_REWARD == className) {
             compositeSubscription.add(taskRepository.getTasks(this.className, userID)
                     .subscribe(Consumer { recyclerAdapter?.updateData(it) }, RxErrorHandler.handleEmptyError()))
+        }
+    }
+
+    protected fun showBrokenChallengeDialog(task: Task) {
+        context?.let {
+            if (!task.isValid) {
+                return
+            }
+            taskRepository.getTasksForChallenge(task.challengeID).subscribe(Consumer { tasks ->
+                val taskCount = tasks.size
+                val dialog = HabiticaAlertDialog(it)
+                dialog.setTitle(R.string.broken_challenge)
+                dialog.setMessage(it.getString(R.string.broken_challenge_description, taskCount))
+                dialog.addButton(it.getString(R.string.keep_x_tasks, taskCount), true) { _, _ ->
+                    taskRepository.unlinkAllTasks(task.challengeID, "keep-all").subscribe(Consumer {}, RxErrorHandler.handleEmptyError())
+                }
+                dialog.addButton(it.getString(R.string.delete_x_tasks, taskCount), false, true) { _, _ ->
+                    taskRepository.unlinkAllTasks(task.challengeID, "remove-all").subscribe(Consumer {}, RxErrorHandler.handleEmptyError())
+                }
+                dialog.setExtraCloseButtonVisibility(View.VISIBLE)
+                dialog.show()
+            }, RxErrorHandler.handleEmptyError())
         }
     }
 

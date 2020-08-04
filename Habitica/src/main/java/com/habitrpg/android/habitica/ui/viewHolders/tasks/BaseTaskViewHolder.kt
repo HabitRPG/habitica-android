@@ -20,7 +20,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc: ((Task, TaskDirection) -> Unit), var openTaskFunc: ((Task) -> Unit)) : BindableViewHolder<Task>(itemView), View.OnClickListener {
+abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc: ((Task, TaskDirection) -> Unit), var openTaskFunc: ((Task) -> Unit), var brokenTaskFunc: ((Task) -> Unit)) : BindableViewHolder<Task>(itemView), View.OnClickListener {
 
 
     var task: Task? = null
@@ -80,6 +80,11 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
         //titleTextView.movementMethod = LinkMovementMethod.getInstance()
 
         expandNotesButton?.setOnClickListener { expandTask() }
+        iconViewChallenge?.setOnClickListener {
+            task?.let { t ->
+                if (task?.challengeBroken?.isNotBlank() == true) brokenTaskFunc(t)
+            }
+        }
         notesTextView?.addEllipsesListener(object : EllipsisTextView.EllipsisListener {
             override fun ellipsisStateChanged(ellipses: Boolean) {
                 GlobalScope.launch(Dispatchers.Main.immediate) {

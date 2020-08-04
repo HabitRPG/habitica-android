@@ -102,7 +102,7 @@
     <string name="members">Anggota</string>
     <string name="habits">Kebiasaan</string>
     <string name="dailies">Keseharian</string>
-    <string name="todos">To-Do</string>
+    <string name="todos">To Do</string>
     <string name="rewards">Hadiah</string>
     <string name="yes">Ya</string>
     <string name="no">Tidak</string>
@@ -296,7 +296,7 @@
     <string name="all_dailies_completed">Anda telah menyelesaikan semua keseharianmu. Selamat!</string>
     <string name="widget_habit_button">Habitica Melakukan Kebiasaan</string>
     <string name="widget_dailies">Keseharian Habitica</string>
-    <string name="widget_todo_list">Daftar To-Do Habitica</string>
+    <string name="widget_todo_list">Daftar To Do Habitica</string>
     <string name="google_services_missing">Google play services tidak dapat ditemukan.</string>
     <string name="gem_purchase_toolbartitle">Bayar</string>
     <string name="gem_purchase_title">Membeli gem dapat mendukung pengembang dan menjaga Habitica tetap berjalan</string>
@@ -329,7 +329,7 @@
     <string name="subscribe">Berlangganan</string>
     <string name="subscribe_listitem1_description">Alexander sang Saudagar akan menjual permata kepadamu masing-masing seharga 20 koin emas!\n\nPengiriman bulanannya dibatasi di 25 Permata per bulan, tapi bisa meningkat berdasarkan lama berlangganan-mu. \n\nBatasnya meningkat sebanyak 5 Permata setiap tiga bulan berturut-turut kamu berlangganan, hingga batas maksimal 50 Permata per bulan!</string>
     <string name="subscribe_listitem2_description">Setiap bulan kamu akan menerima sebuah item kosmetik unik untuk avatarmu!\n\nPlus, setiap tiga bulan berturut-turut kamu berlangganan, sang Penjelajah Waktu Misterius akan memberimu akses kepada item kosmetik bersejarah (atau futuristik!).</string>
-    <string name="subscribe_listitem3_description">Buat To-Do yang telah diselesaikan dan riwayat tugas tersedia lebih lama.</string>
+    <string name="subscribe_listitem3_description">Buat To Do yang telah diselesaikan dan riwayat tugas tersedia lebih lama.</string>
     <string name="subscribe_listitem4_description">Dua kali lipat batas drop akan mengizinkanmu mendapat lebih banyak item untuk tugas yang terselesaikan setiap hari, membantumu melengkapi istalmu lebih cepat!</string>
     <string name="subscription_hourglasses">+%d Jam Pasir Mistis</string>
     <string name="payment_method">Metode Pembayaran</string>
@@ -362,7 +362,7 @@
     <string name="daily">Keseharian</string>
     <string name="habit">Kebiasaan</string>
     <string name="reward">Hadiah</string>
-    <string name="todo">To-Do</string>
+    <string name="todo">To Do</string>
     <string name="official">Resmi</string>
     <string name="challenge">Tantangan</string>
     <string name="not_part_of_a_challenge">Kamu tidak mengambil bagian dalam Tantangan apapun saat ini!</string>
@@ -407,8 +407,8 @@
     <string name="empty_description_habits">Kebiasaan adalah tugas yang tidak memerlukan jadwal ketat. Kamu bisa menyelesaikannya beberapa kali sehari, atau tidak sama sekali.</string>
     <string name="empty_title_dailies">Kamu tidak punya Keseharian apapun</string>
     <string name="empty_description_dailies">Keseharian adalah tugas yang berulang setiap waktu tertentu secara teratur. Pilih jadwal yang bekerja untukmu!</string>
-    <string name="empty_title_todos">Kamu tidak punya To-Do apapun</string>
-    <string name="empty_description_todos">To-Do adalah tugas yang hanya perlu diselesaikan sekali. Tambahkan ceklis kepada To-Do-mu untuk meningkatkan harganya.</string>
+    <string name="empty_title_todos">Kamu tidak punya To Do apapun</string>
+    <string name="empty_description_todos">To Do adalah tugas yang hanya perlu diselesaikan sekali. Tambahkan ceklis kepada To Do-mu untuk meningkatkan harganya.</string>
     <string name="empty_title_rewards">Kamu tidak punya Hadiah apapun</string>
     <string name="reset_walkthrough">Ulang Panduan Justin</string>
     <string name="read_community_guidelines">Tolong baca Pedoman Komunitas kami sebelum posting</string>

@@ -22,6 +22,8 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.content.FileProvider
 import androidx.core.content.edit
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import com.facebook.drawee.view.SimpleDraweeView
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -133,7 +135,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     private var sideAvatarView: AvatarView? = null
     private var activeTutorialView: TutorialView? = null
     private var drawerFragment: NavigationDrawerFragment? = null
-    private var drawerToggle: ActionBarDrawerToggle? = null
+    var drawerToggle: ActionBarDrawerToggle? = null
     private var resumeFromActivity = false
     private var userIsOnQuest = false
 
@@ -159,7 +161,11 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
     @SuppressLint("ObsoleteSdkInt")
     public override fun onCreate(savedInstanceState: Bundle?) {
-        launchTrace = FirebasePerformance.getInstance().newTrace("MainActivityLaunch")
+        try {
+            launchTrace = FirebasePerformance.getInstance().newTrace("MainActivityLaunch")
+        } catch (_: IllegalStateException) {
+
+        }
         launchTrace?.start()
         super.onCreate(savedInstanceState)
 
@@ -207,13 +213,8 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         supportActionBar?.setHomeButtonEnabled(true)
 
         val navigationController = findNavController(R.id.nav_host_fragment)
-        navigationController.addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.label.isNullOrEmpty() && user?.isValid == true) {
-                binding.toolbarTitle.text = user?.profile?.name
-            } else if (user?.isValid == true && user?.profile != null) {
-                binding.toolbarTitle.text = destination.label
-            }
-            drawerFragment?.setSelection(destination.id, null, false)
+        navigationController.addOnDestinationChangedListener { _, destination, arguments ->
+            updateToolbarTitle(destination, arguments)
         }
         MainNavigationController.setup(navigationController)
 
@@ -225,6 +226,33 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         } catch (e: Exception) {
             crashlyticsProxy.logException(e)
         }
+    }
+
+    private fun updateToolbarTitle(destination: NavDestination, arguments: Bundle?) {
+        binding.toolbarTitle.text = if (destination.id == R.id.petDetailRecyclerFragment || destination.id == R.id.mountDetailRecyclerFragment) {
+            arguments?.getString("type")
+        } else if (destination.label.isNullOrEmpty() && user?.isValid == true) {
+            user?.profile?.name
+        } else if (user?.isValid == true && user?.profile != null) {
+            destination.label
+        } else {
+            ""
+        }
+        if (destination.id == R.id.petDetailRecyclerFragment || destination.id == R.id.mountDetailRecyclerFragment) {
+            compositeSubscription.add(inventoryRepository.getItem("egg", arguments?.getString("type") ?: "").firstElement().subscribe(Consumer {
+                binding.toolbarTitle.text = if (destination.id == R.id.petDetailRecyclerFragment) {
+                    (it as? Egg)?.text
+                } else {
+                    (it as? Egg)?.mountText
+                }
+            }, RxErrorHandler.handleEmptyError()))
+        }
+        drawerFragment?.setSelection(destination.id, null, false)
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 
     private fun setupNotifications() {
@@ -358,11 +386,15 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
             val quest = user?.party?.quest
             if (quest?.completed?.isNotBlank() == true) {
-                compositeSubscription.add(inventoryRepository.getQuestContent(user?.party?.quest?.completed ?: "").firstElement().subscribe {
+                compositeSubscription.add(inventoryRepository.getQuestContent(user?.party?.quest?.completed ?: "").firstElement().subscribe(Consumer {
                     QuestCompletedDialog.showWithQuest(this, it)
 
                     userRepository.updateUser(user, "party.quest.completed", "").subscribe(Consumer {}, RxErrorHandler.handleEmptyError())
-                })
+                }, RxErrorHandler.handleEmptyError()))
+            }
+
+            if (user?.flags?.welcomed == false) {
+                compositeSubscription.add(userRepository.updateUser(user, "flags.welcomed", true).subscribe(Consumer {}, RxErrorHandler.handleEmptyError()))
             }
 
             if (appConfigManager.enableAdventureGuide()) {
