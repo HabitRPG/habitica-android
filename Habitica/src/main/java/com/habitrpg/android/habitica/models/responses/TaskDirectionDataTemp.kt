@@ -9,6 +9,7 @@ class TaskDirectionDataTemp {
 
 class TaskDirectionDataQuest {
     var progressDelta: Double = 0.0
+    var collection: Int = 0
 }
 
 class TaskDirectionDataDrop {
