@@ -362,6 +362,7 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
 
     override fun accept(userAuthResponse: UserAuthResponse) {
         hideProgress()
+        dismissKeyboard()
         try {
             saveTokens(userAuthResponse.token, userAuthResponse.id)
         } catch (e: Exception) {
@@ -598,6 +599,11 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
         alert.setMessage(R.string.forgot_password_confirmation)
         alert.addOkButton()
         alert.show()
+    }
+
+    override fun finish() {
+        dismissKeyboard()
+        super.finish()
     }
 
     companion object {

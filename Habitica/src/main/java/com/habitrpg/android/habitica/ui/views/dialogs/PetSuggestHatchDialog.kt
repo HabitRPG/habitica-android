@@ -143,7 +143,7 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
         }
 
 
-        val imageName = "social_Pet-${pet.animal}-${pet.color}"
+        val imageName = "stable_Pet-${pet.animal}-${pet.color}"
         DataBindingUtils.loadImage(imageName) {
             val resources = context.resources ?: return@loadImage
             val drawable = BitmapDrawable(resources, if (hasMount) it else it.extractAlpha())

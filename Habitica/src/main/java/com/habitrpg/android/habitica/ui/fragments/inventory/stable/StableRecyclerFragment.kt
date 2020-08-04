@@ -17,7 +17,6 @@ import com.habitrpg.android.habitica.models.inventory.Egg
 import com.habitrpg.android.habitica.models.inventory.HatchingPotion
 import com.habitrpg.android.habitica.models.inventory.StableSection
 import com.habitrpg.android.habitica.models.user.*
-import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.adapter.inventory.StableRecyclerAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.helpers.*
@@ -163,6 +162,18 @@ class StableRecyclerFragment : BaseFragment() {
         compositeSubscription.add(observable.zipWith(ownedObservable, BiFunction<RealmResults<out Animal>, Map<String, OwnedObject>, ArrayList<Any>> { unsortedAnimals, ownedAnimals ->
             mapAnimals(unsortedAnimals, ownedAnimals)
         }).subscribe(Consumer { items -> adapter?.setItemList(items) }, RxErrorHandler.handleEmptyError()))
+
+        compositeSubscription.add(inventoryRepository.getOwnedItems("eggs")
+                .map {
+                    val map = mutableMapOf<String, OwnedItem>()
+                    it.forEach { item ->
+                        map[item.key ?: ""] = item
+                    }
+                    map
+                }
+                .subscribe(Consumer {
+            adapter?.ownedEggs = it
+        }, RxErrorHandler.handleEmptyError()))
     }
 
     private fun mapAnimals(unsortedAnimals: RealmResults<out Animal>, ownedAnimals: Map<String, OwnedObject>): ArrayList<Any> {

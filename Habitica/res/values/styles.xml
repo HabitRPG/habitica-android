@@ -390,6 +390,10 @@
         <item name="android:textColor">@color/gray_200</item>
     </style>
 
+    <style name="Pill.Gray700">
+        <item name="android:background">@drawable/pill_bg_gray_700</item>
+    </style>
+
     <style name="Pill.White">
         <item name="android:background">@drawable/pill_bg_white</item>
     </style>

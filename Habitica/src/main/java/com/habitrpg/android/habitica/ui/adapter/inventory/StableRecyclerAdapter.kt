@@ -12,6 +12,7 @@ import com.habitrpg.android.habitica.databinding.ShopHeaderBinding
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.inventory.*
+import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.ui.fragments.inventory.stable.StableFragmentDirections
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.helpers.loadImage
@@ -21,15 +22,17 @@ import com.habitrpg.android.habitica.ui.viewHolders.SectionViewHolder
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import io.reactivex.subjects.PublishSubject
+import io.realm.RealmResults
 
 
-class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class StableRecyclerAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var shopSpriteSuffix: String? = null
     private var eggs: Map<String, Egg> = mapOf()
     var animalIngredientsRetriever: ((Animal) -> Pair<Egg?, HatchingPotion?>)? = null
     var itemType: String? = null
     private val equipEvents = PublishSubject.create<String>()
+    var ownedEggs: Map<String, OwnedItem>? = null
 
     fun getEquipFlowable(): Flowable<String> {
         return equipEvents.toFlowable(BackpressureStrategy.DROP)
@@ -128,7 +131,6 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             binding.namePlate.setText(R.string.stable_owner)
             binding.descriptionView.visibility = View.GONE
         }
-
     }
 
     internal inner class StableViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
@@ -165,7 +167,7 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             ownedTextView.visibility = View.VISIBLE
             imageView.loadImage(imageName)
 
-            val alpha = if (item.numberOwned <= 0) 0.2f else 1.0f
+            val alpha = if (item.numberOwned <= 0 && ownedEggs?.containsKey(item.animal ?: "") != true) 0.2f else 1.0f
             this.imageView.alpha = alpha
             this.titleView.alpha = alpha
             this.ownedTextView.alpha = alpha
@@ -180,7 +182,7 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             val animal = this.animal
             if (animal != null) {
                 val color = if (animal.type == "special") animal.color else null
-                if (animal.numberOwned > 0) {
+                if (animal.numberOwned > 0 || ownedEggs?.containsKey(animal.animal ?: "") == true) {
                     if (itemType == "pets") {
                         MainNavigationController.navigate(StableFragmentDirections.openPetDetail(animal.animal, animal.type, color))
                     } else {

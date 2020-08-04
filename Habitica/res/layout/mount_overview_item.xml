@@ -11,16 +11,23 @@
         android:id="@+id/card_view"
         android:layout_width="104dp"
         android:layout_height="96dp"
-        android:layout_centerHorizontal="true"
+        android:layout_centerInParent="true"
         android:background="@drawable/layout_rounded_bg_shopitem"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:gravity="center">
 
-        <com.facebook.drawee.view.SimpleDraweeView
-            android:id="@+id/imageView"
+        <FrameLayout
             android:layout_width="68dp"
-            android:layout_height="68dp"
-            android:layout_gravity="center"
-            app:actualImageScaleType="fitCenter" />
+            android:layout_height="66dp"
+            android:layout_gravity="center">
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/imageView"
+                android:layout_width="68dp"
+                android:layout_height="68dp"
+                android:layout_gravity="center"
+                app:actualImageScaleType="fitCenter"
+                />
+        </FrameLayout>
 
         <TextView
             android:layout_width="match_parent"

@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card_view"
-    android:layout_height="96dp"
+    android:layout_height="88dp"
     android:layout_width="76dp"
     android:background="@drawable/layout_rounded_bg_gray_700"
     android:orientation="vertical"
@@ -26,7 +26,7 @@
     <RelativeLayout
         android:id="@+id/item_wrapper"
         android:layout_width="86dp"
-        android:layout_height="70dp"
+        android:layout_height="68dp"
         android:layout_gravity="center">
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/hatchingPotion_view"

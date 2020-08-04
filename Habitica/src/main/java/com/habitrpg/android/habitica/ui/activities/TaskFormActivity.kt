@@ -36,6 +36,7 @@ import com.habitrpg.android.habitica.models.tasks.HabitResetOption
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.ui.helpers.bindView
+import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.tasks.form.*
 import io.reactivex.functions.Consumer
@@ -163,7 +164,7 @@ class TaskFormActivity : BaseActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         tintColor = getThemeColor(R.attr.taskFormTint)
-        val upperTintColor = getThemeColor(R.attr.colorAccent)
+        val upperTintColor = if (forcedTheme == "purple") getThemeColor(R.attr.taskFormTint) else getThemeColor(R.attr.colorAccent)
         supportActionBar?.setBackgroundDrawable(ColorDrawable(upperTintColor))
         upperTextWrapper.setBackgroundColor(upperTintColor)
 
@@ -188,10 +189,11 @@ class TaskFormActivity : BaseActivity() {
         textEditText.addTextChangedListener(OnChangeTextWatcher { _, _, _, _ ->
             checkCanSave()
         })
-        textEditText.onFocusChangeListener = View.OnFocusChangeListener { view, isFocused ->
+        textEditText.onFocusChangeListener = View.OnFocusChangeListener { _, isFocused ->
             textInputLayout.alpha = if (isFocused) 1.0f else 0.75f
+            window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)
         }
-        notesEditText.onFocusChangeListener = View.OnFocusChangeListener { view, isFocused ->
+        notesEditText.onFocusChangeListener = View.OnFocusChangeListener { _, isFocused ->
             notesInputLayout.alpha = if (isFocused) 1.0f else 0.75f
         }
         statStrengthButton.setOnClickListener { selectedStat = Stats.STRENGTH }
@@ -216,10 +218,11 @@ class TaskFormActivity : BaseActivity() {
                     task = it
                     //tintColor = ContextCompat.getColor(this, it.mediumTaskColor)
                     fillForm(it)
-                    task?.challengeID?.let {
-                        compositeSubscription.add(challengeRepository.retrieveChallenge(it).subscribe(Consumer {
-                            challenge = it
-                            challengeNameView.text = getString(R.string.challenge_task_name, it.name)
+                    task?.challengeID?.let { challengeID ->
+                        compositeSubscription.add(challengeRepository.retrieveChallenge(challengeID)
+                                .subscribe(Consumer { challenge ->
+                            this.challenge = challenge
+                            challengeNameView.text = getString(R.string.challenge_task_name, challenge.name)
                             challengeNameView.visibility = View.VISIBLE
                         }, RxErrorHandler.handleEmptyError()))
                     }
@@ -256,7 +259,7 @@ class TaskFormActivity : BaseActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item?.itemId) {
+        when (item.itemId) {
             R.id.action_save -> saveTask()
             R.id.action_delete -> deleteTask()
             android.R.id.home -> {
@@ -498,7 +501,6 @@ class TaskFormActivity : BaseActivity() {
         val mainHandler = Handler(this.mainLooper)
         mainHandler.postDelayed({
             setResult(Activity.RESULT_OK, resultIntent)
-            dismissKeyboard()
             finish()
         }, 500)
     }
@@ -513,7 +515,6 @@ class TaskFormActivity : BaseActivity() {
         alert.addButton(R.string.delete_task, true) { _, _ ->
             if (task?.isValid != true) return@addButton
             task?.id?.let { taskRepository.deleteTask(it).subscribe(Consumer {  }, RxErrorHandler.handleEmptyError()) }
-            dismissKeyboard()
             finish()
         }
         alert.addCancelButton()
@@ -550,12 +551,10 @@ class TaskFormActivity : BaseActivity() {
         }, RxErrorHandler.handleEmptyError()))
     }
 
-    private fun dismissKeyboard() {
-        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
-        val currentFocus = currentFocus
-        if (currentFocus != null && !habitAdjustPositiveStreakView.isFocused && !habitAdjustNegativeStreakView.isFocused) {
-            imm?.hideSoftInputFromWindow(currentFocus.windowToken, 0)
-        }
+
+    override fun finish() {
+        dismissKeyboard()
+        super.finish()
     }
 
     companion object {

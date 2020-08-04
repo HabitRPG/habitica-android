@@ -182,6 +182,9 @@ object DataBindingUtils {
         tempMap["Pet_HatchingPotion_Veggie"] = "gif"
         tempMap["Pet_HatchingPotion_Dessert"] = "gif"
         tempMap["Pet-HatchingPotion-Dessert"] = "gif"
+        tempMap["quest_windup"] = "gif"
+        tempMap["Pet-HatchingPotion_Windup"] = "gif"
+        tempMap["Pet_HatchingPotion_Windup"] = "gif"
         FILEFORMAT_MAP = Collections.unmodifiableMap(tempMap)
 
 
