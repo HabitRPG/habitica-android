@@ -76,6 +76,7 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
             result.goldDelta = localData.gp - (stats?.gp ?: 0.0)
             result.hasLeveledUp = localData.lvl > stats?.lvl ?: 0
             result.questDamage = localData._tmp?.quest?.progressDelta
+            result.questItemsFound = localData._tmp?.quest?.collection
             result.drop = localData._tmp?.drop
             notifyFunc?.invoke(result)
 
@@ -108,6 +109,7 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
                     result.goldDelta = res.gp - (stats?.gp ?: 0.0)
                     result.hasLeveledUp = res.lvl > stats?.lvl ?: 0
                     result.questDamage = res._tmp?.quest?.progressDelta
+                    result.questItemsFound = res._tmp?.quest?.collection
                     result.drop = res._tmp?.drop
                     if (localData == null) {
                         notifyFunc?.invoke(result)

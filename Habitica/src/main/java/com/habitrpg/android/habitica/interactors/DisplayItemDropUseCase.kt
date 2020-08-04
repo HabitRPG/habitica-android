@@ -9,6 +9,7 @@ import com.habitrpg.android.habitica.helpers.SoundManager
 import com.habitrpg.android.habitica.models.responses.TaskScoringResult
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import io.reactivex.Flowable
+import java.lang.StringBuilder
 import javax.inject.Inject
 
 class DisplayItemDropUseCase @Inject
@@ -17,11 +18,18 @@ constructor(private val soundManager: SoundManager, threadExecutor: ThreadExecut
     override fun buildUseCaseObservable(requestValues: RequestValues): Flowable<Void> {
         return Flowable.defer {
             val data = requestValues.data
+            var snackbarText = StringBuilder(data?.drop?.dialog ?: "")
 
-            if (data?.drop != null) {
+            if (data?.questItemsFound ?: 0 > 0 && requestValues.showQuestItems) {
+                if (snackbarText.isNotEmpty())
+                    snackbarText.append('\n')
+                snackbarText.append("+${data!!.questItemsFound} quest items")
+            }
+
+            if (snackbarText.isNotEmpty()) {
                 Handler().postDelayed({
                     HabiticaSnackbar.showSnackbar(requestValues.snackbarTargetView,
-                            data.drop?.dialog, HabiticaSnackbar.SnackbarDisplayType.DROP)
+                            snackbarText, HabiticaSnackbar.SnackbarDisplayType.DROP)
                     soundManager.loadAndPlayAudio(SoundManager.SoundItemDrop)
                 }, 3000L)
             }
@@ -30,5 +38,5 @@ constructor(private val soundManager: SoundManager, threadExecutor: ThreadExecut
         }
     }
 
-    class RequestValues(val data: TaskScoringResult?, val context: AppCompatActivity, val snackbarTargetView: ViewGroup) : UseCase.RequestValues
+    class RequestValues(val data: TaskScoringResult?, val context: AppCompatActivity, val snackbarTargetView: ViewGroup, val showQuestItems: Boolean) : UseCase.RequestValues
 }
