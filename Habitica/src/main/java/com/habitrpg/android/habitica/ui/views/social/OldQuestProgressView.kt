@@ -117,7 +117,7 @@ class OldQuestProgressView : LinearLayout {
             bossHealthView.pendingValue = value
             bossHealthView.description = String.format("%.01f dmg pending", value)
             bossHealthView.descriptionIconView.visibility = View.VISIBLE
-            collectedItemsNumberView.text = "+$collectedItems items found"
+            collectedItemsNumberView.text = context.getString(R.string.quest_items_found, collectedItems)
         } else {
             bossHealthView.pendingValue = 0.0
             bossHealthView.description = ""

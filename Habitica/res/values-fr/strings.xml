@@ -220,6 +220,7 @@
     <string name="quests">Quêtes</string>
     <string name="pets">Familiers</string>
     <string name="mounts">Montures</string>
+    <string name="quest_items_found">Vous avez trouvé %d objets pour la quête</string>
     <string name="armoireEquipment">Vous avez trouvé une pièce d\'équipement rare dans l\'Armoire : %s! Génial !</string>
     <string name="armoireFood">Vous farfouillez dans l\'Armoire et trouvez une %1$s %2$s. Qu\'est-ce que ça fait là ?</string>
     <string name="armoireExp">Vous luttez contre l\'Armoire et gagnez de l\'expérience. Prends ça !</string>
