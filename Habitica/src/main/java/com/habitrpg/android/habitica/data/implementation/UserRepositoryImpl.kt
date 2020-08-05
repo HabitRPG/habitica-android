@@ -48,6 +48,7 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
 
     @Suppress("ReturnCount")
     override fun retrieveUser(withTasks: Boolean, forced: Boolean): Flowable<User> {
+        // Only retrieve again after 3 minutes or it's forced.
         if (forced || this.lastSync == null || Date().time - (this.lastSync?.time ?: 0) > 180000) {
             lastSync = Date()
             return apiClient.retrieveUser(withTasks)

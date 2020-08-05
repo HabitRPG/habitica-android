@@ -13,7 +13,7 @@ import com.habitrpg.android.habitica.ui.ItemDetailDialog
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 
-class RewardViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> Unit), openTaskFunc: ((Task) -> Unit)) : BaseTaskViewHolder(itemView, scoreTaskFunc, openTaskFunc) {
+class RewardViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> Unit), openTaskFunc: ((Task) -> Unit), brokenTaskFunc: ((Task) -> Unit)) : BaseTaskViewHolder(itemView, scoreTaskFunc, openTaskFunc, brokenTaskFunc) {
 
     private val buyButton: View by bindView(itemView, R.id.buyButton)
     internal val priceLabel: TextView by bindView(itemView, R.id.priceLabel)
@@ -63,9 +63,9 @@ class RewardViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> 
         this.buyButton.isEnabled = !taskActionsDisabled
     }
 
-    fun bind(reward: Task, position: Int, canBuy: Boolean) {
+    fun bind(reward: Task, position: Int, canBuy: Boolean, displayMode: String) {
         this.task = reward
-        super.bind(reward, position)
+        super.bind(reward, position, displayMode)
         this.priceLabel.text = NumberAbbreviator.abbreviate(itemView.context, this.task?.value ?: 0.0)
 
         if (canBuy) {

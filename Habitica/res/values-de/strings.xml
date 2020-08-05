@@ -106,7 +106,7 @@
     <string name="members">Mitglieder</string>
     <string name="habits">Gewohnheiten</string>
     <string name="dailies">Tagesaufgaben</string>
-    <string name="todos">To-Dos</string>
+    <string name="todos">To Do\'s</string>
     <string name="rewards">Belohnungen</string>
     <string name="yes">Ja</string>
     <string name="no">Nein</string>
@@ -305,12 +305,12 @@
     <string name="add_task">Neue Aufgabe hinzufügen</string>
     <string name="add_habit">Neue Gewohnheit hinzufügen</string>
     <string name="add_daily">Neue Tagesaufgabe hinzufügen</string>
-    <string name="add_todo">Neues To-Do hinzufügen</string>
+    <string name="add_todo">Neues To Do hinzufügen</string>
     <string name="add_reward">Neue Belohnung hinzufügen</string>
     <string name="all_dailies_completed">Du hast alle Deine Tagesaufgaben erledigt. Gut gemacht!</string>
     <string name="widget_habit_button">Habitica: Gewohnheit</string>
     <string name="widget_dailies">Habitica: Tagesaufgaben</string>
-    <string name="widget_todo_list">Habitica To-Do-Liste</string>
+    <string name="widget_todo_list">Habitica To Do-Liste</string>
     <string name="google_services_missing">Google Play Dienste konnten nicht gefunden werden.</string>
     <string name="gem_purchase_toolbartitle">Kaufen</string>
     <string name="gem_purchase_title">Das Erwerben von Edelsteinen unterstützt die Entwickler und hilft Habitica am Laufen zu halten</string>
@@ -378,7 +378,7 @@
     <string name="daily">Tagesaufgabe</string>
     <string name="habit">Gewohnheit</string>
     <string name="reward">Belohnung</string>
-    <string name="todo">To-Do</string>
+    <string name="todo">To Do</string>
     <string name="official">Offiziell</string>
     <string name="challenge">Herausforderung</string>
     <string name="not_part_of_a_challenge">Du nimmst im Moment an keiner Herausforderung teil!</string>
@@ -426,8 +426,8 @@
     <string name="empty_description_habits">Gewohnheiten sind Aufgaben ohne festen Zeitplan. Du kannst sie mehrmals am Tag oder gar nicht abhaken.</string>
     <string name="empty_title_dailies">Du hast keine Tagesaufgaben</string>
     <string name="empty_description_dailies">Tagesaufgaben sind sich regelmäßig wiederholende Aufgaben. Such Dir den Zeitplan aus, der Dir am besten passt!</string>
-    <string name="empty_title_todos">Du hast keine To-Dos</string>
-    <string name="empty_description_todos">To-Dos sind Aufgaben, die nur einmal abgehakt werden. Füge Unteraufgaben zu den To-Dos hinzu, um deren Wert zu steigern.</string>
+    <string name="empty_title_todos">Du hast keine To Do\'s</string>
+    <string name="empty_description_todos">To Do\'s sind Aufgaben, die nur einmal abgehakt werden. Füge Unteraufgaben zu den To Do\'s hinzu, um deren Wert zu steigern.</string>
     <string name="empty_title_rewards">Du hast keine Belohnungen</string>
     <string name="reset_walkthrough">Setze Justins Einführung zurück</string>
     <string name="read_community_guidelines">Lies unsere <u>Community-Richtlinien</u> durch, bevor du etwas postest</string>
@@ -620,7 +620,7 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="next_day_reminder_title">Hast Du Deine Aufgaben heute abgehakt\?</string>
     <string name="next_day_reminder_text">Es gibt eine Menge freizuschalten und zu entdecken während Du in den Leveln aufsteigst, also bleib an Deinen Aufgaben dran und hab Spaß!</string>
     <string name="daily_tip_0">Willst Du etwas Neues ausprobieren\? Tritt einer Herausforderung bei um Deine Aufgabenliste zu erweitern und ein paar Edelsteine zu gewinnen!</string>
-    <string name="daily_tip_1">Erweitere Deine To-Dos mit Kontrolllisten um Deine Belohnungen zu vervielfachen!</string>
+    <string name="daily_tip_1">Erweitere Deine To Do\'s mit Kontrolllisten um Deine Belohnungen zu vervielfachen!</string>
     <string name="daily_tip_2">Du kannst verändern wie oft sich eine Tagesaufgabe wiederholt. Sogar gelegentliche Aufgaben können festgelegt werden.</string>
     <string name="daily_tip_3">Du kannst auch Erinnerungen für Deine Tagesaufgaben einplanen.</string>
     <string name="daily_tip_4">Deine Aufgaben hin und wieder zu überdenken hilft Dir auf dem richtigen Weg zu bleiben. </string>
@@ -643,7 +643,7 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="welcomeNameTitle">Wie sollen wir Dich nennen?</string>
     <string name="display_name_length_error">Anzeigenamen müssen zwischen 1 und 30 Zeichen lang sein</string>
     <string name="setup_task_join_habitica">Tritt Habitica bei (Hak mich ab!)</string>
-    <string name="setup_task_join_habitica_notes">Du kannst dieses To-Do erledigen, bearbeiten oder entfernen.</string>
+    <string name="setup_task_join_habitica_notes">Du kannst dieses To Do erledigen, bearbeiten oder entfernen.</string>
     <string name="setup_task_reward">Belohne Dich</string>
     <string name="setup_task_reward_notes">Schau Fernsehen, spiel ein Spiel, iss etwas Süßes, es liegt ganz an Dir!</string>
     <string name="visit_website">Internetseite besuchen</string>

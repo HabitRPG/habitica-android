@@ -11,6 +11,7 @@ import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.ui.helpers.bindOptionalView
 import com.habitrpg.android.habitica.ui.menu.HabiticaDrawerItem
 import com.habitrpg.android.habitica.ui.viewHolders.GiftOneGetOnePromoMenuView
+import com.habitrpg.android.habitica.ui.views.adventureGuide.AdventureGuideMenuBanner
 import com.habitrpg.android.habitica.ui.views.promo.SubscriptionBuyGemsPromoView
 import com.habitrpg.android.habitica.ui.views.promo.SubscriptionBuyGemsPromoViewHolder
 import io.reactivex.BackpressureStrategy
@@ -69,15 +70,23 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int): Recycle
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val drawerItem = getItem(position)
-        if (getItemViewType(position) == 0) {
-            val itemHolder = holder as? DrawerItemViewHolder
-            itemHolder?.tintColor = tintColor
-            itemHolder?.backgroundTintColor = backgroundTintColor
-            itemHolder?.bind(drawerItem, drawerItem.transitionId == selectedItem)
-            itemHolder?.itemView?.setOnClickListener { itemSelectedEvents.onNext(drawerItem) }
-        } else if (getItemViewType(position) == 1) {
-            (holder as? SectionHeaderViewHolder)?.backgroundTintColor = backgroundTintColor
-            (holder as? SectionHeaderViewHolder)?.bind(drawerItem)
+        when {
+            getItemViewType(position) == 0 -> {
+                val itemHolder = holder as? DrawerItemViewHolder
+                itemHolder?.tintColor = tintColor
+                itemHolder?.backgroundTintColor = backgroundTintColor
+                itemHolder?.bind(drawerItem, drawerItem.transitionId == selectedItem)
+                itemHolder?.itemView?.setOnClickListener { itemSelectedEvents.onNext(drawerItem) }
+            }
+            getItemViewType(position) == 1 -> {
+                (holder as? SectionHeaderViewHolder)?.backgroundTintColor = backgroundTintColor
+                (holder as? SectionHeaderViewHolder)?.bind(drawerItem)
+            }
+            getItemViewType(position) == 4 -> {
+                drawerItem.user?.let { (holder.itemView as? AdventureGuideMenuBanner)?.updateData(it) }
+                holder.itemView.setOnClickListener { itemSelectedEvents.onNext(drawerItem) }
+
+            }
         }
     }
 
@@ -108,6 +117,14 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int): Recycle
                 itemView.layoutParams = ViewGroup.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         148.dpToPx(parent.context)
+                )
+                SubscriptionBuyGemsPromoViewHolder(itemView)
+            }
+            4 -> {
+                val itemView = AdventureGuideMenuBanner(parent.context)
+                itemView.layoutParams = ViewGroup.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        104.dpToPx(parent.context)
                 )
                 SubscriptionBuyGemsPromoViewHolder(itemView)
             }

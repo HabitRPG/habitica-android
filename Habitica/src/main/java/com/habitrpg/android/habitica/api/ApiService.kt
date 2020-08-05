@@ -76,6 +76,9 @@ interface ApiService {
     @POST("user/buy-quest/{key}")
     fun purchaseQuest(@Path("key") key: String): Flowable<HabitResponse<Void>>
 
+    @POST("user/buy-special-spell/{key}")
+    fun purchaseSpecialSpell(@Path("key") key: String): Flowable<HabitResponse<Void>>
+
     @POST("user/sell/{type}/{key}")
     fun sellItem(@Path("type") itemType: String, @Path("key") itemKey: String): Flowable<HabitResponse<User>>
 
@@ -380,4 +383,7 @@ interface ApiService {
 
     @POST("members/transfer-gems")
     fun transferGems(@Body data: Map<String, Any>): Flowable<HabitResponse<Void>>
+
+    @POST("tasks/unlink-all/{challengeID}")
+    fun unlinkAllTasks(@Path("challengeID") challengeID: String?, @Query("keep") keepOption: String): Flowable<HabitResponse<Void>>
 }

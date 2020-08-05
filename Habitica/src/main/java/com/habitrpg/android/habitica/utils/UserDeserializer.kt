@@ -120,6 +120,22 @@ class UserDeserializer : JsonDeserializer<User> {
                 tag.userId = user.id
             }
         }
+        if (obj.has("achievements")) {
+            val achievements = RealmList<UserAchievement>()
+            for (entry in obj.getAsJsonObject("achievements").entrySet()) {
+                if (!entry.value.isJsonPrimitive) {
+                    continue
+                }
+                val achievement = UserAchievement()
+                achievement.key = entry.key
+                achievement.earned = entry.value.asBoolean
+                achievements.add(achievement)
+            }
+            user.achievements = achievements
+            for (achievement in user.achievements) {
+                achievement.userId = user.id
+            }
+        }
         if (obj.has("tasksOrder")) {
             user.tasksOrder = context.deserialize(obj.get("tasksOrder"), TasksOrder::class.java)
         }

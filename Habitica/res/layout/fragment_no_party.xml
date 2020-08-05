@@ -78,7 +78,7 @@
                         android:layout_marginLeft="@dimen/spacing_large"
                         android:layout_marginRight="@dimen/spacing_large"/>
                     <Button
-                        android:id="@+id/craetePartyButton"
+                        android:id="@+id/createPartyButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         style="@style/HabiticaButton.Gray.600"

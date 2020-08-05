@@ -59,7 +59,7 @@
                     android:textColor="#000"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:text="To-Do Title" />
+                    tools:text="To Do Title" />
 
                 <com.habitrpg.android.habitica.ui.views.EllipsisTextView
                     android:id="@+id/notesTextView"
@@ -104,6 +104,7 @@
                         android:textColor="@color/task_secondary_text"
                         android:visibility="invisible"
                         tools:visibility="visible"
+                        android:scaleType="center"
                         tools:text="special"  />
 
                     <ImageView
@@ -113,7 +114,8 @@
                         android:layout_marginStart="@dimen/task_icon_space"
                         android:layout_marginLeft="@dimen/task_icon_space"
                         android:contentDescription="@string/belongs_to_challenge"
-                        app:srcCompat="@drawable/task_icon_challenge" />
+                        android:scaleType="center"
+                        app:srcCompat="@drawable/task_megaphone" />
 
                     <ImageView
                         android:id="@+id/iconviewReminder"
@@ -122,6 +124,7 @@
                         android:layout_marginStart="@dimen/task_icon_space"
                         android:layout_marginLeft="@dimen/task_icon_space"
                         android:contentDescription="@string/has_reminder"
+                        android:scaleType="center"
                         app:srcCompat="@drawable/task_icon_reminder" />
 
                     <ImageView
@@ -131,6 +134,7 @@
                         android:layout_marginStart="@dimen/task_icon_space"
                         android:layout_marginLeft="@dimen/task_icon_space"
                         android:contentDescription="@string/has_tag"
+                        android:scaleType="center"
                         app:srcCompat="@drawable/task_icon_tag" />
                 </LinearLayout>
             </LinearLayout>
@@ -157,8 +161,7 @@
                 android:layout_width="@dimen/checklist_wrapper_width"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:orientation="vertical"
-                tools:background="@color/md_green_300">
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/checkListCompletedTextView"

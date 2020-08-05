@@ -20,7 +20,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc: ((Task, TaskDirection) -> Unit), var openTaskFunc: ((Task) -> Unit)) : BindableViewHolder<Task>(itemView), View.OnClickListener {
+abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc: ((Task, TaskDirection) -> Unit), var openTaskFunc: ((Task) -> Unit), var brokenTaskFunc: ((Task) -> Unit)) : BindableViewHolder<Task>(itemView), View.OnClickListener {
 
 
     var task: Task? = null
@@ -80,10 +80,15 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
         //titleTextView.movementMethod = LinkMovementMethod.getInstance()
 
         expandNotesButton?.setOnClickListener { expandTask() }
+        iconViewChallenge?.setOnClickListener {
+            task?.let { t ->
+                if (task?.challengeBroken?.isNotBlank() == true) brokenTaskFunc(t)
+            }
+        }
         notesTextView?.addEllipsesListener(object : EllipsisTextView.EllipsisListener {
             override fun ellipsisStateChanged(ellipses: Boolean) {
                 GlobalScope.launch(Dispatchers.Main.immediate) {
-                    if (ellipses) {
+                    if (ellipses && notesTextView?.maxLines != 3) {
                         notesTextView?.maxLines = 3
                     }
                     expandNotesButton?.visibility = if (ellipses || notesExpanded) View.VISIBLE else View.GONE
@@ -104,7 +109,7 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
         }
     }
 
-    override fun bind(data: Task, position: Int) {
+    override fun bind(data: Task, position: Int, displayMode: String) {
         task = data
         itemView.setBackgroundResource(R.color.white)
 
@@ -123,7 +128,7 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
                 titleTextView.setParsedMarkdown(data.parsedText)
             } else {
                 titleTextView.text = data.text
-                titleTextView.setSpannableFactory(NoCopySpannableFactory.getInstance());
+                titleTextView.setSpannableFactory(NoCopySpannableFactory.getInstance())
                 if (data.text.isNotEmpty()) {
                     Single.just(data.text)
                             .map { MarkdownParser.parseMarkdown(it) }
@@ -134,40 +139,55 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
                                 titleTextView.setParsedMarkdown(parsedText)
                             }, RxErrorHandler.handleEmptyError())
                 }
-            if (data.parsedNotes != null) {
-                notesTextView?.setParsedMarkdown(data.parsedText)
-            } else {
-                notesTextView?.text = data.notes
-                notesTextView?.setSpannableFactory(NoCopySpannableFactory.getInstance());
-                data.notes?.let {notes ->
-                    if (notes.isEmpty()) {
-                        return@let
+                if (displayMode != "minimal") {
+                    if (data.parsedNotes != null) {
+                        notesTextView?.setParsedMarkdown(data.parsedText)
+                    } else {
+                        notesTextView?.text = data.notes
+                        notesTextView?.setSpannableFactory(NoCopySpannableFactory.getInstance())
+                        data.notes?.let {notes ->
+                            if (notes.isEmpty()) {
+                                return@let
+                            }
+                            Single.just(notes)
+                                    .map { MarkdownParser.parseMarkdown(it) }
+                                    .subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe(Consumer { parsedNotes ->
+                                        notesTextView?.text = parsedNotes
+                                        notesTextView?.setParsedMarkdown(parsedNotes)
+                                    }, RxErrorHandler.handleEmptyError())
+                        }
                     }
-                    Single.just(notes)
-                            .map { MarkdownParser.parseMarkdown(it) }
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(Consumer { parsedNotes ->
-                                notesTextView?.text = parsedNotes
-                                notesTextView?.setParsedMarkdown(parsedNotes)
-                            }, RxErrorHandler.handleEmptyError())
+                } else {
+                    notesTextView?.visibility = View.GONE
                 }
-            }
             }
         } else {
             titleTextView.text = data.text
-            notesTextView?.text = data.notes
+            if (displayMode != "minimal") {
+                notesTextView?.text = data.notes
+            } else {
+                notesTextView?.visibility = View.GONE
+            }
         }
 
         rightBorderView?.setBackgroundResource(data.lightTaskColor)
-        iconViewReminder?.visibility = if (data.reminders?.size ?: 0 > 0) View.VISIBLE else View.GONE
-        iconViewTag?.visibility = if (data.tags?.size ?: 0 > 0) View.VISIBLE else View.GONE
+        if (displayMode == "standard") {
+            iconViewReminder?.visibility = if (data.reminders?.size ?: 0 > 0) View.VISIBLE else View.GONE
+            iconViewTag?.visibility = if (data.tags?.size ?: 0 > 0) View.VISIBLE else View.GONE
 
-        iconViewChallenge?.visibility = if (task?.challengeID != null) View.VISIBLE else View.GONE
+            iconViewChallenge?.visibility = if (task?.challengeID != null) View.VISIBLE else View.GONE
+            if (task?.challengeID != null) {
+                iconViewChallenge?.setImageResource(if (task?.challengeBroken?.isNotBlank() == true) R.drawable.task_broken_megaphone else R.drawable.task_megaphone)
+            }
+            configureSpecialTaskTextView(data)
 
-        configureSpecialTaskTextView(data)
+            taskIconWrapper?.visibility = if (taskIconWrapperIsVisible) View.VISIBLE else View.GONE
+        } else {
+            taskIconWrapper?.visibility = View.GONE
+        }
 
-        taskIconWrapper?.visibility = if (taskIconWrapperIsVisible) View.VISIBLE else View.GONE
 
         if (data.isPendingApproval) {
             approvalRequiredTextView?.visibility = View.VISIBLE

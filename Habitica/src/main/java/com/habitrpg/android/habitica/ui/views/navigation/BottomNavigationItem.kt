@@ -22,16 +22,19 @@ class BottomNavigationItem @JvmOverloads constructor(
     private val titleView: TextView by bindView(R.id.title_view)
     private val badge: TextView by bindView(R.id.badge)
 
+    var selectedVisibility = View.VISIBLE
+    var deselectedVisibility = View.VISIBLE
+
     var isActive = false
     set(value) {
         field = value
         if (isActive) {
-            selectedTitleView.visibility = View.VISIBLE
+            selectedTitleView.visibility = selectedVisibility
             titleView.visibility = View.GONE
             iconView.drawable.setColorFilter(ContextCompat.getColor(context, R.color.white), PorterDuff.Mode.MULTIPLY )
         } else {
             selectedTitleView.visibility = View.GONE
-            titleView.visibility = View.VISIBLE
+            titleView.visibility = deselectedVisibility
             iconView.drawable.setColorFilter(context.getThemeColor(R.attr.textColorPrimaryDark), PorterDuff.Mode.MULTIPLY )
         }
     }

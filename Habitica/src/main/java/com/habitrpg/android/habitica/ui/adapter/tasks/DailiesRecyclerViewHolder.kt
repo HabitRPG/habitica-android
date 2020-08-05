@@ -12,7 +12,9 @@ class DailiesRecyclerViewHolder(data: OrderedRealmCollection<Task>?, autoUpdate:
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DailyViewHolder =
             DailyViewHolder(getContentView(parent), { task, direction -> taskScoreEventsSubject.onNext(Pair(task, direction)) },
-                    { task, item -> checklistItemScoreSubject.onNext(Pair(task, item))}) {
+                    { task, item -> checklistItemScoreSubject.onNext(Pair(task, item))}, {
                 task -> taskOpenEventsSubject.onNext(task)
+            }) {
+                task -> brokenTaskEventsSubject.onNext(task)
             }
 }

@@ -106,7 +106,7 @@
     <string name="members">メンバー</string>
     <string name="habits">習慣</string>
     <string name="dailies">日課</string>
-    <string name="todos">To-Do</string>
+    <string name="todos">To Do</string>
     <string name="rewards">ごほうび</string>
     <string name="yes">はい</string>
     <string name="no">いいえ</string>
@@ -305,12 +305,12 @@
     <string name="add_task">タスクを追加</string>
     <string name="add_habit">習慣を追加</string>
     <string name="add_daily">日課を追加</string>
-    <string name="add_todo">To-Do を追加</string>
+    <string name="add_todo">To Do を追加</string>
     <string name="add_reward">ごほうびを追加</string>
     <string name="all_dailies_completed">日課をすべて完了した。お見事!</string>
     <string name="widget_habit_button">Habitica の習慣</string>
     <string name="widget_dailies">Habitica の日課</string>
-    <string name="widget_todo_list">Habitica のTo-Do リスト</string>
+    <string name="widget_todo_list">Habitica のTo Do リスト</string>
     <string name="google_services_missing">Google Play サービスが見つかりません。</string>
     <string name="gem_purchase_toolbartitle">購入</string>
     <string name="gem_purchase_title">ジェムを購入することで、開発者を支援し、Habitica の運営を維持する手助けができます</string>
@@ -380,7 +380,7 @@
     <string name="daily">日課</string>
     <string name="habit">習慣</string>
     <string name="reward">ごほうび</string>
-    <string name="todo">To-Do</string>
+    <string name="todo">To Do</string>
     <string name="official">Habitica公式</string>
     <string name="challenge">チャレンジ</string>
     <string name="not_part_of_a_challenge">今参加しているチャレンジはありません！</string>
@@ -620,7 +620,7 @@
     <string name="next_day_reminder_title">今日のタスクはチェックしましたか？</string>
     <string name="next_day_reminder_text">あなたがレベルアップするとアンロックされたり発見したりできるものがたくさんあります。だからタスクへ取り組み続けて、楽しんでいきましょう！</string>
     <string name="daily_tip_0">何か新しいことに挑戦したいですか？ あなたのタスクリストを発展させてくれるチャレンジに参加して、いくつかのジェムを獲得しましょう！</string>
-    <string name="daily_tip_1">報酬を増やすためにTo-Doにチェックリストを加えてみましょう！</string>
+    <string name="daily_tip_1">報酬を増やすためにTo Doにチェックリストを加えてみましょう！</string>
     <string name="daily_tip_2">それぞれの日課をどのくらいの頻度で繰り返すかを変更することができます。たまにしなかないタスクでさえスケジュールすることができます。</string>
     <string name="daily_tip_3">日課に対して特定のリマインダーを設定することもできます。</string>
     <string name="daily_tip_4">ときどきタスクを見直して再評価することは、正しい道筋を進み続けるために役立ちます。</string>
@@ -655,7 +655,7 @@
     <string name="welcomeNameTitle">あなたを何と呼べばいいですか？</string>
     <string name="display_name_length_error">表示名は1～30文字以内にしてください</string>
     <string name="setup_task_join_habitica">Habiticaに参加する（チェックして！）</string>
-    <string name="setup_task_join_habitica_notes">To-Doは完了したり、編集したり、削除することができます。</string>
+    <string name="setup_task_join_habitica_notes">To Doは完了したり、編集したり、削除することができます。</string>
     <string name="setup_task_reward">自分自身へごほうびを与える</string>
     <string name="setup_task_reward_notes">TVを見ましょう、ゲームで遊びましょう、おやつを食べましょう、あなた次第です！</string>
     <string name="equipment_str">力：</string>

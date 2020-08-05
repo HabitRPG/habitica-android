@@ -76,5 +76,21 @@
         <key>raiseShops</key>
         <value>false</value>
     </entry>
+    <entry>
+        <key>enableTaskDisplayMode</key>
+        <value>true</value>
+    </entry>
+    <entry>
+        <key>reorderMenu</key>
+        <value>false</value>
+    </entry>
+    <entry>
+        <key>feedbackURL</key>
+        <value></value>
+    </entry>
+    <entry>
+        <key>enableAdventureGuide</key>
+        <value>false</value>
+    </entry>
 </defaultsMap>
     <!-- END xml_defaults -->

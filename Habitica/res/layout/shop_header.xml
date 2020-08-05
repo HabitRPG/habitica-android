@@ -9,7 +9,9 @@
     <com.habitrpg.android.habitica.ui.views.NPCBannerView
         android:id="@+id/npcBannerView"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/shop_scene_height"/>
+        android:layout_height="@dimen/shop_scene_height"
+        android:paddingStart="-8dp"
+        android:paddingEnd="-8dp"/>
 
     <View
         android:layout_width="match_parent"

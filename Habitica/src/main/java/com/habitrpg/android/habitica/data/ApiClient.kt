@@ -61,6 +61,7 @@ interface ApiClient {
     fun purchaseMysterySet(itemKey: String): Flowable<Any>
 
     fun purchaseQuest(key: String): Flowable<Any>
+    fun purchaseSpecialSpell(key: String): Flowable<Any>
     fun validateSubscription(request: SubscriptionValidationRequest): Flowable<Any>
     fun validateNoRenewSubscription(request: PurchaseValidationRequest): Flowable<Any>
     fun cancelSubscription(): Flowable<Any>
@@ -257,4 +258,5 @@ interface ApiClient {
     fun findUsernames(username: String, context: String?, id: String?): Flowable<List<FindUsernameResult>>
 
     fun transferGems(giftedID: String, amount: Int): Flowable<Void>
+    fun unlinkAllTasks(challengeID: String?, keepOption: String): Flowable<Void>
 }

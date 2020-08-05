@@ -10,7 +10,7 @@ import com.habitrpg.android.habitica.models.responses.TaskDirection
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.helpers.bindView
 
-class HabitViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> Unit), openTaskFunc: ((Task) -> Unit)) : BaseTaskViewHolder(itemView, scoreTaskFunc, openTaskFunc) {
+class HabitViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> Unit), openTaskFunc: ((Task) -> Unit), brokenTaskFunc: ((Task) -> Unit)) : BaseTaskViewHolder(itemView, scoreTaskFunc, openTaskFunc, brokenTaskFunc) {
 
     private val btnPlusWrapper: FrameLayout by bindView(itemView, R.id.btnPlusWrapper)
     private val btnPlusIconView: ImageView by bindView(itemView, R.id.btnPlusIconView)
@@ -34,7 +34,7 @@ class HabitViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> U
         btnMinus.setOnClickListener { onMinusButtonClicked() }
     }
 
-    override fun bind(data: Task, position: Int) {
+    override fun bind(data: Task, position: Int, displayMode: String) {
         this.task = data
         if (data.up == true) {
             this.btnPlusWrapper.setBackgroundResource(data.lightTaskColor)
@@ -82,7 +82,7 @@ class HabitViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> U
         } else {
             streakTextView.visibility = View.GONE
         }
-        super.bind(data, position)
+        super.bind(data, position, displayMode)
     }
 
     private fun onPlusButtonClicked() {

@@ -172,7 +172,7 @@ class TaskSchedulingControls @JvmOverloads constructor(
             generateSummary()
         }
         monthlyRepeatWeeksButton.setOnClickListener {
-            weeksOfMonth = mutableListOf(startDateCalendar.get(Calendar.WEEK_OF_MONTH))
+            weeksOfMonth = mutableListOf(startDateCalendar.get(Calendar.WEEK_OF_MONTH) - 1)
             daysOfMonth = null
             generateSummary()
         }
@@ -229,6 +229,7 @@ class TaskSchedulingControls @JvmOverloads constructor(
         createWeeklyRepeatViews()
         weeklyRepeatWrapper.findViewWithTag<TextView>(weekday).sendAccessibilityEvent(
                 AccessibilityEvent.CONTENT_CHANGE_TYPE_CONTENT_DESCRIPTION)
+        generateSummary()
     }
 
     private fun isWeekdayActive(weekday: Int): Boolean {

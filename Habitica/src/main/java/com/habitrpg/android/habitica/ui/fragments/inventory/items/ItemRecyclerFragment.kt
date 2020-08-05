@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.view.Window
 import android.widget.Button
 import android.widget.TextView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
@@ -27,12 +28,13 @@ import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.Companion.showSna
 import io.reactivex.functions.Consumer
 import javax.inject.Inject
 
-class ItemRecyclerFragment : BaseFragment() {
+class ItemRecyclerFragment : BaseFragment(), androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener {
 
     @Inject
     lateinit var inventoryRepository: InventoryRepository
     @Inject
     lateinit var userRepository: UserRepository
+    val refreshLayout: SwipeRefreshLayout? by bindView(R.id.refreshLayout)
     val recyclerView: RecyclerViewEmptySupport? by bindView(R.id.recyclerView)
     val emptyView: View? by bindView(R.id.emptyView)
     private val emptyTextView: TextView? by bindView(R.id.empty_text_view)
@@ -70,6 +72,7 @@ class ItemRecyclerFragment : BaseFragment() {
         resetViews()
 
         recyclerView?.setEmptyView(emptyView)
+        refreshLayout?.setOnRefreshListener(this)
         emptyTextView?.text = getString(R.string.empty_items, itemTypeText)
 
         val context = activity
@@ -191,6 +194,14 @@ class ItemRecyclerFragment : BaseFragment() {
         outState.putString(ITEM_TYPE_KEY, this.itemType)
     }
 
+    override fun onRefresh() {
+        refreshLayout?.isRefreshing = true
+        compositeSubscription.add(userRepository.retrieveUser(true, true)
+                .doOnTerminate {
+                    refreshLayout?.isRefreshing = false
+                }.subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+    }
+
     private fun hatchPet(potion: HatchingPotion, egg: Egg) {
         dismiss()
         (activity as? MainActivity)?.hatchPet(potion, egg)
@@ -209,11 +220,16 @@ class ItemRecyclerFragment : BaseFragment() {
             compositeSubscription.add(inventoryRepository.getOwnedItems(type)
                     .doOnNext { items ->
                         if (items.size > 0) {
-                            adapter?.updateData(items)
+                            val filteredItems = if (isFeeding) {
+                                items.where().notEqualTo("key", "Saddle").findAll()
+                            } else {
+                                items
+                            }
+                            adapter?.updateData(filteredItems)
                         }
                     }
                     .map { items -> items.mapNotNull { it.key } }
-                    .flatMap { inventoryRepository.getItems(itemClass, it.toTypedArray(), user) }
+                    .flatMap { inventoryRepository.getItems(itemClass, it.toTypedArray()) }
                     .map {
                         val itemMap = mutableMapOf<String, Item>()
                         for (item in it) {

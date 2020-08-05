@@ -10,7 +10,7 @@ import com.habitrpg.android.habitica.ui.helpers.bindView
 import java.text.DateFormat
 import java.util.*
 
-class DailyViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> Unit), scoreChecklistItemFunc: ((Task, ChecklistItem) -> Unit), openTaskFunc: ((Task) -> Unit)) : ChecklistedViewHolder(itemView, scoreTaskFunc, scoreChecklistItemFunc, openTaskFunc) {
+class DailyViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> Unit), scoreChecklistItemFunc: ((Task, ChecklistItem) -> Unit), openTaskFunc: ((Task) -> Unit), brokenTaskFunc: ((Task) -> Unit)) : ChecklistedViewHolder(itemView, scoreTaskFunc, scoreChecklistItemFunc, openTaskFunc, brokenTaskFunc) {
 
     private val streakTextView: TextView by bindView(itemView, R.id.streakTextView)
     private val reminderTextView: TextView by bindView(itemView, R.id.reminder_textview)
@@ -25,7 +25,7 @@ class DailyViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> U
             return isVisible
         }
 
-    override fun bind(newTask: Task, position: Int) {
+    override fun bind(newTask: Task, position: Int, displayMode: String) {
         this.task = newTask
         if (newTask.isChecklistDisplayActive) {
             this.checklistIndicatorWrapper.setBackgroundResource(newTask.lightTaskColor)
@@ -55,7 +55,7 @@ class DailyViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> U
             reminderTextView.text = reminderString
         }
 
-        super.bind(newTask, position)
+        super.bind(newTask, position, displayMode)
     }
 
     override fun shouldDisplayAsActive(newTask: Task): Boolean {

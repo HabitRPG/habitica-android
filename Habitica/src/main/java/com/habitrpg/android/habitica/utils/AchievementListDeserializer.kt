@@ -14,7 +14,7 @@ class AchievementListDeserializer: JsonDeserializer<List<Achievement>> {
         for (categoryEntry in json?.asJsonObject?.entrySet() ?: emptySet()) {
             val categoryIdentifier = categoryEntry.key
             for (entry in categoryEntry.value.asJsonObject.getAsJsonObject("achievements").entrySet()) {
-                var obj = entry.value.asJsonObject
+                val obj = entry.value.asJsonObject
                 val achievement = Achievement()
                 achievement.key = entry.key
                 achievement.category = categoryIdentifier

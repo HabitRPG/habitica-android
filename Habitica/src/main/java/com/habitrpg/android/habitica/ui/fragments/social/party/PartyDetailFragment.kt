@@ -24,6 +24,7 @@ import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.modules.AppModule
+import com.habitrpg.android.habitica.ui.AvatarView
 import com.habitrpg.android.habitica.ui.activities.FullProfileActivity
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
@@ -44,7 +45,7 @@ import kotlinx.coroutines.launch
 import net.pherth.android.emoji_library.EmojiEditText
 import javax.inject.Inject
 import javax.inject.Named
-
+import kotlinx.android.synthetic.main.fragment_party_detail.invitations_view
 
 class PartyDetailFragment : BaseFragment() {
 
@@ -62,6 +63,8 @@ class PartyDetailFragment : BaseFragment() {
     private val refreshLayout: androidx.swiperefreshlayout.widget.SwipeRefreshLayout? by bindView(R.id.refreshLayout)
     private val partyInvitationWrapper: ViewGroup? by bindView(R.id.party_invitation_wrapper)
     private val invitationsView: InvitationsView? by bindView(R.id.invitations_view)
+    private val inviteLeaderAvatarView: AvatarView? by bindView(R.id.groupleader_avatar_view)
+    private val inviteLeaderTextView: TextView? by bindView(R.id.groupleader_text_view)
     private val titleView: TextView? by bindView(R.id.title_view)
     private val descriptionView: TextView? by bindView(R.id.description_view)
     private val newQuestButton: Button? by bindView(R.id.new_quest_button)
@@ -104,6 +107,8 @@ class PartyDetailFragment : BaseFragment() {
         newQuestButton?.setOnClickListener { inviteNewQuest() }
         questDetailButton?.setOnClickListener { questDetailButtonClicked() }
         leaveButton?.setOnClickListener { leaveParty() }
+
+        invitationsView?.setLeader = null
 
         invitationsView?.acceptCall = {
             viewModel?.joinGroup(it) {
@@ -188,7 +193,30 @@ class PartyDetailFragment : BaseFragment() {
 
         if ((user.invitations?.parties?.count() ?: 0) > 0) {
             partyInvitationWrapper?.visibility = View.VISIBLE
-            user.invitations?.parties?.let { invitationsView?.setInvitations(it) }
+            user.invitations?.parties?.let {
+                for (invitation in it){
+                    val leaderID = invitation.inviter
+                    val groupName = invitation.name
+
+                    leaderID.let {
+                        compositeSubscription.add(
+                            socialRepository.getMember(it)
+                                    .subscribe(Consumer {
+                                        inviteLeaderAvatarView?.setAvatar(it)
+                                        inviteLeaderTextView?.text = getString(R.string.invitation_title,it.displayName,groupName)
+                                    }, RxErrorHandler.handleEmptyError())
+                                )
+                    }
+
+                    view?.findViewById<Button>(R.id.accept_button)?.setOnClickListener {
+                        invitation.id?.let { it1 -> invitations_view.acceptCall?.invoke(it1) }
+                    }
+
+                    view?.findViewById<Button>(R.id.reject_button)?.setOnClickListener {
+                        invitation.id?.let { it1 -> invitations_view.rejectCall?.invoke(it1) }
+                    }
+                }
+            }
         } else {
             partyInvitationWrapper?.visibility = View.GONE
         }
@@ -335,11 +363,13 @@ class PartyDetailFragment : BaseFragment() {
             alert.addButton(R.string.keep_challenges, true) { _, _ ->
                 viewModel?.leaveGroup(true) {
                     fragmentManager?.popBackStack()
+                    MainNavigationController.navigate(R.id.noPartyFragment)
                 }
             }
             alert.addButton(R.string.leave_challenges, true) { _, _ ->
                 viewModel?.leaveGroup(false) {
                     fragmentManager?.popBackStack()
+                    MainNavigationController.navigate(R.id.noPartyFragment)
                 }
             }
             alert.addButton(R.string.no, false)

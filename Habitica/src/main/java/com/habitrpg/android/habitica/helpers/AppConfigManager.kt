@@ -1,5 +1,7 @@
 package com.habitrpg.android.habitica.helpers
 
+import android.content.Context
+import androidx.preference.PreferenceManager
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -79,7 +81,28 @@ class AppConfigManager {
         return remoteConfig.getLong("minimumPasswordLength")
     }
 
-    fun raiseShops(): Boolean {
-        return remoteConfig.getBoolean("raiseShops")
+    fun enableTaskDisplayMode(): Boolean {
+        return remoteConfig.getBoolean("enableTaskDisplayMode")
+    }
+
+    fun feedbackURL(): String {
+        return remoteConfig.getString("feedbackURL")
+    }
+
+    fun taskDisplayMode(context: Context): String {
+        return if (remoteConfig.getBoolean("enableTaskDisplayMode")) {
+            val preferences = PreferenceManager.getDefaultSharedPreferences(context)
+            preferences.getString("task_display", "standard") ?: "standard"
+        } else {
+            "standard"
+        }
+    }
+
+    fun reorderMenu(): Boolean {
+        return remoteConfig.getBoolean("reorderMenu")
+    }
+
+    fun enableAdventureGuide(): Boolean {
+        return remoteConfig.getBoolean("enableAdventureGuide")
     }
 }

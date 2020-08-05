@@ -84,18 +84,9 @@ class ShopRecyclerAdapter(private val configManager: AppConfigManager) : android
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder =
             when (viewType) {
-                0 -> {
-                    val view = parent.inflate(R.layout.shop_header)
-                    ShopHeaderViewHolder(view)
-                }
-                1 -> {
-                    val view = parent.inflate(R.layout.shop_section_header)
-                    SectionViewHolder(view)
-                }
-                2 -> {
-                    val view = parent.inflate(emptyViewResource)
-                    EmptyStateViewHolder(view)
-                }
+                0 -> ShopHeaderViewHolder(parent)
+                1 -> SectionViewHolder(parent.inflate(R.layout.shop_section_header))
+                2 -> EmptyStateViewHolder(parent.inflate(emptyViewResource))
                 else -> {
                     val view = parent.inflate(R.layout.row_shopitem)
                     val viewHolder = ShopItemViewHolder(view)
@@ -140,8 +131,8 @@ class ShopRecyclerAdapter(private val configManager: AppConfigManager) : android
                     val item = obj as? ShopItem ?: return
                     val itemHolder = holder as? ShopItemViewHolder ?: return
                     itemHolder.bind(item, item.canAfford(user, 1))
-                    if (ownedItems.containsKey(item.key+"-"+item.pinType)) {
-                        itemHolder.itemCount = ownedItems[item.key+"-"+item.pinType]?.numberOwned ?: 0
+                    ownedItems[item.key+"-"+item.purchaseType]?.let {
+                        itemHolder.itemCount = it.numberOwned
                     }
                     itemHolder.isPinned = pinnedItemKeys.contains(item.key)
                 }
@@ -221,7 +212,7 @@ class ShopRecyclerAdapter(private val configManager: AppConfigManager) : android
         this.notifyDataSetChanged()
     }
 
-    internal class ShopHeaderViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
+    internal class ShopHeaderViewHolder(parent: ViewGroup) : androidx.recyclerview.widget.RecyclerView.ViewHolder(parent.inflate(R.layout.shop_header)) {
 
         private val descriptionView: TextView by bindView(itemView, R.id.descriptionView)
         private val npcBannerView: NPCBannerView by bindView(itemView, R.id.npcBannerView)

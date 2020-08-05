@@ -1,20 +1,31 @@
 package com.habitrpg.android.habitica.helpers
 
 import android.content.Context
+import androidx.core.os.bundleOf
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.events.ShowAchievementDialog
 import com.habitrpg.android.habitica.events.ShowCheckinDialog
+import com.habitrpg.android.habitica.events.ShowFirstDropDialog
 import com.habitrpg.android.habitica.events.ShowSnackbarEvent
 import com.habitrpg.android.habitica.models.Notification
+import com.habitrpg.android.habitica.models.notifications.AchievementData
+import com.habitrpg.android.habitica.models.notifications.FirstDropData
 import com.habitrpg.android.habitica.models.notifications.LoginIncentiveData
+import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
+import com.habitrpg.android.habitica.ui.views.dialogs.AchievementDialog
 import io.reactivex.BackpressureStrategy
+import io.reactivex.Completable
 import io.reactivex.Flowable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.functions.Action
 import io.reactivex.functions.Consumer
 import io.reactivex.subjects.BehaviorSubject
 import org.greenrobot.eventbus.EventBus
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 class NotificationsManager (private val context: Context) {
     private val seenNotifications: MutableMap<String, Boolean>
@@ -49,9 +60,9 @@ class NotificationsManager (private val context: Context) {
         this.apiClient = apiClient
     }
 
-    fun handlePopupNotifications(notifications: List<Notification>): Boolean? {
+    private fun handlePopupNotifications(notifications: List<Notification>): Boolean? {
         val now = Date()
-        if (now.time - (lastNotificationHandling?.time ?: 0) < 500) {
+        if (now.time - (lastNotificationHandling?.time ?: 0) < 300) {
             return true
         }
         lastNotificationHandling = now
@@ -68,6 +79,11 @@ class NotificationsManager (private val context: Context) {
                         Notification.Type.ACHIEVEMENT_GUILD_JOINED.type -> displayAchievementNotification(it)
                         Notification.Type.ACHIEVEMENT_CHALLENGE_JOINED.type -> displayAchievementNotification(it)
                         Notification.Type.ACHIEVEMENT_INVITED_FRIEND.type -> displayAchievementNotification(it)
+                        Notification.Type.ACHIEVEMENT_GENERIC.type -> displayAchievementNotification(it, notifications.find { notif ->
+                            notif.type == Notification.Type.ACHIEVEMENT_ONBOARDING_COMPLETE.type
+                        } != null)
+                        Notification.Type.ACHIEVEMENT_ONBOARDING_COMPLETE.type -> displayAchievementNotification(it)
+                        Notification.Type.FIRST_DROP.type -> displayFirstDropNotification(it)
                         else -> false
                     }
 
@@ -80,7 +96,13 @@ class NotificationsManager (private val context: Context) {
         return true
     }
 
-    fun displayLoginIncentiveNotification(notification: Notification): Boolean? {
+    private fun displayFirstDropNotification(notification: Notification): Boolean {
+        val data = (notification.data as? FirstDropData)
+        EventBus.getDefault().post(ShowFirstDropDialog(data?.egg ?: "", data?.hatchingPotion ?: "", notification.id))
+        return true
+    }
+
+    private fun displayLoginIncentiveNotification(notification: Notification): Boolean? {
         val notificationData = notification.data as? LoginIncentiveData
         val nextUnlockText = context.getString(R.string.nextPrizeUnlocks, notificationData?.nextRewardAt)
         if (notificationData?.rewardKey != null) {
@@ -100,8 +122,27 @@ class NotificationsManager (private val context: Context) {
         return true
     }
 
-    private fun displayAchievementNotification(notification: Notification): Boolean {
-        EventBus.getDefault().post(ShowAchievementDialog(notification.type ?: "", notification.id))
+    private fun displayAchievementNotification(notification: Notification, isLastOnboardingAchievement: Boolean = false): Boolean {
+        val achievement = (notification.data as? AchievementData)?.achievement ?: notification.type ?: ""
+        val delay: Long = if (achievement == "createdTask" || achievement == Notification.Type.ACHIEVEMENT_ONBOARDING_COMPLETE.type) {
+            1000
+        } else {
+            200
+        }
+        val sub = Completable.complete()
+                .delay(delay, TimeUnit.MILLISECONDS)
+                .subscribe(Action {
+                    EventBus.getDefault().post(ShowAchievementDialog(achievement, notification.id, isLastOnboardingAchievement))
+                }, RxErrorHandler.handleEmptyError())
+        logOnboardingEvents(achievement)
         return true
+    }
+
+    private fun logOnboardingEvents(type: String) {
+        if (User.ONBOARDING_ACHIEVEMENT_KEYS.contains(type)) {
+            FirebaseAnalytics.getInstance(context).logEvent(type, null)
+        } else if (type == Notification.Type.ACHIEVEMENT_ONBOARDING_COMPLETE.type) {
+            FirebaseAnalytics.getInstance(context).logEvent(type, null)
+        }
     }
 }

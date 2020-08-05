@@ -33,16 +33,16 @@ interface InventoryRepository : BaseRepository {
     fun getOwnedEquipment(type: String): Flowable<RealmResults<Equipment>>
     fun getEquipmentType(type: String, set: String): Flowable<RealmResults<Equipment>>
 
-    fun getOwnedItems(itemType: String): Flowable<RealmResults<OwnedItem>>
-    fun getOwnedItems(): Flowable<Map<String, OwnedItem>>
+    fun getOwnedItems(itemType: String, includeZero: Boolean = false): Flowable<RealmResults<OwnedItem>>
+    fun getOwnedItems(includeZero: Boolean = false): Flowable<Map<String, OwnedItem>>
 
     fun getEquipment(key: String): Flowable<Equipment>
 
     fun openMysteryItem(user: User?): Flowable<Equipment>
 
     fun saveEquipment(equipment: Equipment)
-    fun getMounts(type: String, group: String, color: String?): Flowable<RealmResults<Mount>>
-    fun getPets(type: String, group: String, color: String?): Flowable<RealmResults<Pet>>
+    fun getMounts(type: String?, group: String?, color: String?): Flowable<RealmResults<Mount>>
+    fun getPets(type: String?, group: String?, color: String?): Flowable<RealmResults<Pet>>
 
     fun updateOwnedEquipment(user: User)
 
@@ -70,10 +70,13 @@ interface InventoryRepository : BaseRepository {
     fun purchaseHourglassItem(purchaseType: String, key: String): Flowable<Any>
 
     fun purchaseQuest(key: String): Flowable<Any>
+    fun purchaseSpecialSpell(key: String): Flowable<Any>
 
     fun purchaseItem(purchaseType: String, key: String, purchaseQuantity: Int): Flowable<Any>
 
     fun togglePinnedItem(item: ShopItem): Flowable<List<ShopItem>>
-    fun getItems(itemClass: Class<out Item>, keys: Array<String>, user: User?): Flowable<out RealmResults<out Item>>
+    fun getItems(itemClass: Class<out Item>, keys: Array<String>): Flowable<out RealmResults<out Item>>
+    fun getItems(itemClass: Class<out Item>): Flowable<out RealmResults<out Item>>
     fun getLatestMysteryItem(): Flowable<Equipment>
+    fun getItem(type: String, key: String): Flowable<Item>
 }

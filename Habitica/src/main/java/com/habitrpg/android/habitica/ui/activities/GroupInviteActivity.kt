@@ -24,7 +24,6 @@ import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.Companion.showSnackbar
 import io.reactivex.functions.Consumer
-import kotlinx.android.synthetic.main.activity_prefs.*
 import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -54,7 +53,7 @@ class GroupInviteActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setupToolbar(toolbar)
+        setupToolbar(findViewById(R.id.toolbar))
         viewPager.currentItem = 0
 
         supportActionBar?.title = null

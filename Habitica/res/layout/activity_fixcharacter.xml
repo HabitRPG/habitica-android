@@ -35,72 +35,266 @@
                         android:background="@color/gray_700"
                         android:layout_marginBottom="16dp"
                         />
-
-                    <com.habitrpg.android.habitica.ui.views.settings.FixValuesEditText
-                        android:id="@+id/healthEditText"
+                    <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:title="@string/HP_default"
-                        app:fixIconName="health"
-                        app:hintStyle="@style/RedTextLabel"
                         android:layout_marginLeft="16dp"
                         android:layout_marginRight="16dp"
-                        android:layout_marginBottom="12dp"
-                        app:iconBgColor="@color/red_500"/>
-                    <com.habitrpg.android.habitica.ui.views.settings.FixValuesEditText
-                        android:id="@+id/experienceEditText"
+                        android:layout_marginBottom="12dp" >
+                    <View
+                        android:id="@+id/healthIconBackgroundView"
+                        android:layout_width="80dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="end"
+                        android:background="@color/red_500"/>
+                    <LinearLayout
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent">
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/editTextWrapper"
+                            android:layout_height="match_parent"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/layout_rounded_bg_gray_700"
+                            android:paddingTop="8dp"
+                            android:hint="@string/health"
+                            android:paddingStart="16dp">
+                            <EditText
+                                android:id="@+id/healthEditText"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:inputType="numberDecimal"
+                                android:background="@android:color/transparent"/>
+                        </com.google.android.material.textfield.TextInputLayout>
+                        <ImageView
+                            android:id="@+id/healthIconView"
+                            android:layout_width="56dp"
+                            android:layout_height="56dp"
+                            android:scaleType="center"/>
+                    </LinearLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_gravity="bottom"
+                        android:background="@color/gray_500"
+                        android:layout_marginEnd="56dp"/>
+                    </FrameLayout>
+                    <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:title="@string/XP_default"
-                        app:fixIconName="experience"
-                        app:hintStyle="@style/YellowTextLabel"
                         android:layout_marginLeft="16dp"
                         android:layout_marginRight="16dp"
-                        android:layout_marginBottom="12dp"
-                        app:iconBgColor="@color/yellow_500"/>
-                    <com.habitrpg.android.habitica.ui.views.settings.FixValuesEditText
-                        android:id="@+id/manaEditText"
+                        android:layout_marginBottom="12dp" >
+                        <View
+                            android:id="@+id/experienceIconBackgroundView"
+                            android:layout_width="80dp"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="end"
+                            android:background="@color/yellow_500"/>
+                        <LinearLayout
+                            android:layout_height="match_parent"
+                            android:layout_width="match_parent">
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:layout_height="match_parent"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/layout_rounded_bg_gray_700"
+                                android:paddingTop="8dp"
+                                android:hint="@string/experience_points"
+                                android:paddingStart="16dp">
+                                <EditText
+                                    android:id="@+id/experienceEditText"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:inputType="numberDecimal"
+                                    android:background="@android:color/transparent"/>
+                            </com.google.android.material.textfield.TextInputLayout>
+                            <ImageView
+                                android:id="@+id/experienceIconView"
+                                android:layout_width="56dp"
+                                android:layout_height="56dp"
+                                android:scaleType="center"/>
+                        </LinearLayout>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="2dp"
+                            android:layout_gravity="bottom"
+                            android:background="@color/gray_500"
+                            android:layout_marginEnd="56dp"/>
+                    </FrameLayout>
+                    <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:title="@string/MP_default"
-                        app:fixIconName="mana"
-                        app:hintStyle="@style/BlueTextLabel"
                         android:layout_marginLeft="16dp"
                         android:layout_marginRight="16dp"
-                        android:layout_marginBottom="12dp"
-                        app:iconBgColor="@color/blue_500"/>
-                    <com.habitrpg.android.habitica.ui.views.settings.FixValuesEditText
-                        android:id="@+id/goldEditText"
+                        android:layout_marginBottom="12dp" >
+                        <View
+                            android:id="@+id/manaIconBackgroundView"
+                            android:layout_width="80dp"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="end"
+                            android:background="@color/blue_500"/>
+                        <LinearLayout
+                            android:layout_height="match_parent"
+                            android:layout_width="match_parent">
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:layout_height="match_parent"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/layout_rounded_bg_gray_700"
+                                android:paddingTop="8dp"
+                                android:hint="@string/mana_points"
+                                android:paddingStart="16dp">
+                                <EditText
+                                    android:id="@+id/manaEditText"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:inputType="numberDecimal"
+                                    android:background="@android:color/transparent"/>
+                            </com.google.android.material.textfield.TextInputLayout>
+                            <ImageView
+                                android:id="@+id/manaIconView"
+                                android:layout_width="56dp"
+                                android:layout_height="56dp"
+                                android:scaleType="center"/>
+                        </LinearLayout>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="2dp"
+                            android:layout_gravity="bottom"
+                            android:background="@color/gray_500"
+                            android:layout_marginEnd="56dp"/>
+                    </FrameLayout>
+                    <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:title="@string/gold_plural"
-                        app:fixIconName="gold"
-                        app:hintStyle="@style/YellowTextLabel"
                         android:layout_marginLeft="16dp"
                         android:layout_marginRight="16dp"
-                        android:layout_marginBottom="12dp"
-                        app:iconBgColor="@color/yellow_500"/>
-                    <com.habitrpg.android.habitica.ui.views.settings.FixValuesEditText
-                        android:id="@+id/levelEditText"
+                        android:layout_marginBottom="12dp" >
+                        <View
+                            android:id="@+id/goldIconBackgroundView"
+                            android:layout_width="80dp"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="end"
+                            android:background="@color/yellow_500"/>
+                        <LinearLayout
+                            android:layout_height="match_parent"
+                            android:layout_width="match_parent">
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:layout_height="match_parent"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/layout_rounded_bg_gray_700"
+                                android:paddingTop="8dp"
+                                android:hint="@string/gold_capitalilzed"
+                                android:paddingStart="16dp">
+                                <EditText
+                                    android:id="@+id/goldEditText"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:inputType="numberDecimal"
+                                    android:background="@android:color/transparent"/>
+                            </com.google.android.material.textfield.TextInputLayout>
+                            <ImageView
+                                android:id="@+id/goldIconView"
+                                android:layout_width="56dp"
+                                android:layout_height="56dp"
+                                android:scaleType="center"/>
+                        </LinearLayout>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="2dp"
+                            android:layout_gravity="bottom"
+                            android:background="@color/gray_500"
+                            android:layout_marginEnd="56dp"/>
+                    </FrameLayout>
+                    <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:title="@string/character_level"
-                        app:fixIconName="level"
-                        app:hintStyle="@style/PurpleTextLabel"
                         android:layout_marginLeft="16dp"
                         android:layout_marginRight="16dp"
-                        android:layout_marginBottom="12dp"
-                        app:iconBgColor="@color/brand_300"/>
-                    <com.habitrpg.android.habitica.ui.views.settings.FixValuesEditText
-                        android:id="@+id/streakEditText"
+                        android:layout_marginBottom="12dp" >
+                        <View
+                            android:id="@+id/levelIconBackgroundView"
+                            android:layout_width="80dp"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="end"
+                            android:background="@color/red_500"/>
+                        <LinearLayout
+                            android:layout_height="match_parent"
+                            android:layout_width="match_parent">
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:layout_height="match_parent"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/layout_rounded_bg_gray_700"
+                                android:paddingTop="8dp"
+                                android:hint="@string/character_level"
+                                android:paddingStart="16dp">
+                                <EditText
+                                    android:id="@+id/levelEditText"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:inputType="number"
+                                    android:background="@android:color/transparent"/>
+                            </com.google.android.material.textfield.TextInputLayout>
+                            <ImageView
+                                android:id="@+id/levelIconView"
+                                android:layout_width="56dp"
+                                android:layout_height="56dp"
+                                android:scaleType="center"/>
+                        </LinearLayout>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="2dp"
+                            android:layout_gravity="bottom"
+                            android:background="@color/gray_500"
+                            android:layout_marginEnd="56dp"/>
+                    </FrameLayout>
+                    <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:title="@string/streak_label"
-                        app:fixIconName="streak"
                         android:layout_marginLeft="16dp"
                         android:layout_marginRight="16dp"
-                        android:layout_marginBottom="12dp"
-                        app:iconBgColor="@color/gray_400"/>
+                        android:layout_marginBottom="12dp" >
+                        <View
+                            android:id="@+id/streakIconBackgroundView"
+                            android:layout_width="80dp"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="end"
+                            android:background="@color/gray_400"/>
+                        <LinearLayout
+                            android:layout_height="match_parent"
+                            android:layout_width="match_parent">
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/streakEditTextWrapper"
+                                android:layout_height="match_parent"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/layout_rounded_bg_gray_700"
+                                android:paddingTop="8dp"
+                                android:hint="@string/streak_label"
+                                android:paddingStart="16dp">
+                                <EditText
+                                    android:id="@+id/streakEditText"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:inputType="number"
+                                    android:background="@android:color/transparent"/>
+                            </com.google.android.material.textfield.TextInputLayout>
+                            <ImageView
+                                android:id="@+id/streakIconView"
+                                android:layout_width="56dp"
+                                android:layout_height="56dp"
+                                android:scaleType="center"/>
+                        </LinearLayout>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="2dp"
+                            android:layout_gravity="bottom"
+                            android:background="@color/gray_500"
+                            android:layout_marginEnd="56dp"/>
+                    </FrameLayout>
                 </LinearLayout>
             </ScrollView>
 </LinearLayout>

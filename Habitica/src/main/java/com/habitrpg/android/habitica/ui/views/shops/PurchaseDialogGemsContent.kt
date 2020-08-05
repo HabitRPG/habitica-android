@@ -25,7 +25,5 @@ internal class PurchaseDialogGemsContent(context: Context) : PurchaseDialogConte
         super.setItem(item)
 
         notesTextView.text = item.notes
-
-        stepperView.maxValue = item.limitedNumberLeft?.toDouble()
     }
 }

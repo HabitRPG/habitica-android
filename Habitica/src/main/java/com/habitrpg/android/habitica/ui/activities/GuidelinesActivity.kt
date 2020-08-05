@@ -6,7 +6,6 @@ import android.widget.TextView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.ui.helpers.setMarkdown
-import kotlinx.android.synthetic.main.activity_prefs.*
 import okhttp3.*
 import java.io.BufferedReader
 import java.io.IOException
@@ -20,7 +19,7 @@ class GuidelinesActivity: BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setupToolbar(toolbar)
+        setupToolbar(findViewById(R.id.toolbar))
 
         val client = OkHttpClient()
         val request = Request.Builder().url("https://s3.amazonaws.com/habitica-assets/mobileApp/endpoint/community-guidelines.md").build()

@@ -13,7 +13,6 @@ import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.ui.adapter.social.PartyMemberRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import io.reactivex.functions.Consumer
-import kotlinx.android.synthetic.main.activity_prefs.*
 import javax.inject.Inject
 
 class SkillMemberActivity : BaseActivity() {
@@ -36,7 +35,7 @@ class SkillMemberActivity : BaseActivity() {
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setupToolbar(toolbar)
+        setupToolbar(findViewById(R.id.toolbar))
         loadMemberList()
     }
 

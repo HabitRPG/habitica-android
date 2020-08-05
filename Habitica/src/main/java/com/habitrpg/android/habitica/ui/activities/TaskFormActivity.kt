@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
+import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
@@ -19,11 +20,10 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import androidx.core.view.forEachIndexed
 import androidx.core.widget.NestedScrollView
+import com.google.android.material.textfield.TextInputLayout
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
-import com.habitrpg.android.habitica.data.TagRepository
-import com.habitrpg.android.habitica.data.TaskRepository
-import com.habitrpg.android.habitica.data.UserRepository
+import com.habitrpg.android.habitica.data.*
 import com.habitrpg.android.habitica.extensions.OnChangeTextWatcher
 import com.habitrpg.android.habitica.extensions.addCancelButton
 import com.habitrpg.android.habitica.extensions.dpToPx
@@ -31,6 +31,7 @@ import com.habitrpg.android.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager
 import com.habitrpg.android.habitica.models.Tag
+import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.tasks.HabitResetOption
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.user.Stats
@@ -55,11 +56,15 @@ class TaskFormActivity : BaseActivity() {
     lateinit var tagRepository: TagRepository
     @Inject
     lateinit var taskAlarmManager: TaskAlarmManager
+    @Inject
+    lateinit var challengeRepository: ChallengeRepository
 
     private val toolbar: Toolbar by bindView(R.id.toolbar)
     private val scrollView: NestedScrollView by bindView(R.id.scroll_view)
     private val upperTextWrapper: LinearLayout by bindView(R.id.upper_text_wrapper)
+    private val textInputLayout: TextInputLayout by bindView(R.id.text_input_layout)
     private val textEditText: EditText by bindView(R.id.text_edit_text)
+    private val notesInputLayout: TextInputLayout by bindView(R.id.notes_input_layout)
     private val notesEditText: EditText by bindView(R.id.notes_edit_text)
     private val habitScoringButtons: HabitScoringButtonsView by bindView(R.id.habit_scoring_buttons)
     private val checklistTitleView: TextView by bindView(R.id.checklist_title)
@@ -90,6 +95,10 @@ class TaskFormActivity : BaseActivity() {
     private val tagsTitleView: TextView by bindView(R.id.tags_title)
     private val tagsWrapper: LinearLayout by bindView(R.id.tags_wrapper)
 
+    private val challengeNameView: TextView by bindView(R.id.challenge_name_view)
+
+    private var challenge: Challenge? = null
+
     private var isCreating = true
     private var isChallengeTask = false
     private var usesTaskAttributeStats = false
@@ -109,12 +118,10 @@ class TaskFormActivity : BaseActivity() {
     private var tintColor: Int = 0
     set(value) {
         field = value
-        upperTextWrapper.setBackgroundColor(value)
         taskDifficultyButtons.tintColor = value
         habitScoringButtons.tintColor = value
         habitResetStreakButtons.tintColor = value
         taskSchedulingControls.tintColor = value
-        supportActionBar?.setBackgroundDrawable(ColorDrawable(value))
         updateTagViewsColors()
     }
 
@@ -144,12 +151,22 @@ class TaskFormActivity : BaseActivity() {
         } else {
             "purple"
         }
-
         super.onCreate(savedInstanceState)
+
+        if (forcedTheme == "yellow") {
+            taskDifficultyButtons.textTintColor = ContextCompat.getColor(this, R.color.yellow_5)
+            habitScoringButtons.textTintColor = ContextCompat.getColor(this, R.color.yellow_5)
+        }
+
+
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         tintColor = getThemeColor(R.attr.taskFormTint)
+        val upperTintColor = getThemeColor(R.attr.colorAccent)
+        supportActionBar?.setBackgroundDrawable(ColorDrawable(upperTintColor))
+        upperTextWrapper.setBackgroundColor(upperTintColor)
+
 
         isChallengeTask = bundle.getBoolean(IS_CHALLENGE_TASK, false)
 
@@ -163,7 +180,7 @@ class TaskFormActivity : BaseActivity() {
                     setTagViews()
                 }, RxErrorHandler.handleEmptyError()))
         compositeSubscription.add(userRepository.getUser().subscribe(Consumer {
-            usesTaskAttributeStats = it.preferences?.allocationMode == "taskbased"
+            usesTaskAttributeStats = it.preferences?.allocationMode == "taskbased" && it.preferences?.automaticAllocation == true
             configureForm()
         }, RxErrorHandler.handleEmptyError()))
 
@@ -171,6 +188,12 @@ class TaskFormActivity : BaseActivity() {
         textEditText.addTextChangedListener(OnChangeTextWatcher { _, _, _, _ ->
             checkCanSave()
         })
+        textEditText.onFocusChangeListener = View.OnFocusChangeListener { view, isFocused ->
+            textInputLayout.alpha = if (isFocused) 1.0f else 0.75f
+        }
+        notesEditText.onFocusChangeListener = View.OnFocusChangeListener { view, isFocused ->
+            notesInputLayout.alpha = if (isFocused) 1.0f else 0.75f
+        }
         statStrengthButton.setOnClickListener { selectedStat = Stats.STRENGTH }
         statIntelligenceButton.setOnClickListener { selectedStat = Stats.INTELLIGENCE }
         statConstitutionButton.setOnClickListener { selectedStat = Stats.CONSTITUTION }
@@ -193,6 +216,13 @@ class TaskFormActivity : BaseActivity() {
                     task = it
                     //tintColor = ContextCompat.getColor(this, it.mediumTaskColor)
                     fillForm(it)
+                    task?.challengeID?.let {
+                        compositeSubscription.add(challengeRepository.retrieveChallenge(it).subscribe(Consumer {
+                            challenge = it
+                            challengeNameView.text = getString(R.string.challenge_task_name, it.name)
+                            challengeNameView.visibility = View.VISIBLE
+                        }, RxErrorHandler.handleEmptyError()))
+                    }
                 }, RxErrorHandler.handleEmptyError()))
             }
             bundle.containsKey(PARCELABLE_TASK) -> {
@@ -210,6 +240,11 @@ class TaskFormActivity : BaseActivity() {
         configureForm()
     }
 
+    override fun onStart() {
+        super.onStart()
+        textEditText.requestFocus()
+    }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         if (isCreating) {
             menuInflater.inflate(R.menu.menu_task_create, menu)
@@ -220,7 +255,7 @@ class TaskFormActivity : BaseActivity() {
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item?.itemId) {
             R.id.action_save -> saveTask()
             R.id.action_delete -> deleteTask()
@@ -373,6 +408,11 @@ class TaskFormActivity : BaseActivity() {
         button.background.setTint(if (isSelected) tintColor else ContextCompat.getColor(this, R.color.taskform_gray))
         val textColorID = if (isSelected) R.color.white else R.color.gray_100
         button.setTextColor(ContextCompat.getColor(this, textColorID))
+        if (isSelected) {
+            button.typeface = Typeface.create("sans-serif-medium", Typeface.NORMAL)
+        } else {
+            button.typeface = Typeface.create("sans-serif", Typeface.NORMAL)
+        }
     }
 
     private fun updateTagViewsColors() {
@@ -464,6 +504,10 @@ class TaskFormActivity : BaseActivity() {
     }
 
     private fun deleteTask() {
+        if (task?.challengeID?.isNotBlank() == true && task?.challengeBroken?.isNotBlank() != true) {
+            showChallengeDeleteTask()
+            return
+        }
         val alert = HabiticaAlertDialog(this)
         alert.setTitle(R.string.are_you_sure)
         alert.addButton(R.string.delete_task, true) { _, _ ->
@@ -474,6 +518,36 @@ class TaskFormActivity : BaseActivity() {
         }
         alert.addCancelButton()
         alert.show()
+    }
+
+    private fun showChallengeDeleteTask() {
+        compositeSubscription.add(taskRepository.getTasksForChallenge(task?.challengeID).firstElement().subscribe(Consumer { tasks ->
+            val taskCount = tasks.size
+            val alert = HabiticaAlertDialog(this)
+            alert.setTitle(getString(R.string.delete_challenge_task_title))
+            alert.setMessage(getString(R.string.delete_challenge_task_description, taskCount, challenge?.name ?: ""))
+            alert.addButton(R.string.leave_delete_task, true, true) { _, _ ->
+                challenge?.let {
+                    compositeSubscription.add(challengeRepository.leaveChallenge(it, "keep-all")
+                            .flatMap { taskRepository.deleteTask(task?.id ?: "") }
+                            .flatMap { userRepository.retrieveUser(true) }
+                            .subscribe(Consumer {
+                                finish()
+                            }, RxErrorHandler.handleEmptyError()))
+                }
+            }
+            alert.addButton(getString(R.string.leave_delete_x_tasks, taskCount), false, true) { _, _ ->
+                challenge?.let {
+                    compositeSubscription.add(challengeRepository.leaveChallenge(it, "remove-all")
+                            .flatMap { userRepository.retrieveUser(true) }
+                            .subscribe(Consumer {
+                        finish()
+                    }, RxErrorHandler.handleEmptyError()))
+                }
+            }
+            alert.setExtraCloseButtonVisibility(View.VISIBLE)
+            alert.show()
+        }, RxErrorHandler.handleEmptyError()))
     }
 
     private fun dismissKeyboard() {

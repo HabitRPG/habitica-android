@@ -32,7 +32,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:titleEnabled="false"
-                    app:contentScrim="?attr/colorPrimary"
+                    app:contentScrim="?attr/colorPrimaryDark"
                     app:expandedTitleMarginEnd="?attr/actionBarSize"
                     app:expandedTitleMarginStart="0dp"
                     app:layout_scrollFlags="scroll|exitUntilCollapsed">
@@ -51,6 +51,7 @@
                         android:layout_height="wrap_content"
                         android:minHeight="?attr/actionBarSize"
                         android:theme="@style/Toolbar"
+                        android:background="?attr/colorPrimaryDark"
                         app:layout_collapseMode="pin"
                         app:popupTheme="@style/Theme.AppCompat.Light">
                         <RelativeLayout
@@ -87,7 +88,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="54dp"
                     android:layout_gravity="bottom"
-                    android:background="?colorPrimaryOffset"
+                    android:background="?colorPrimary"
                     android:elevation="0dp"
                     android:fillViewport="false"
 
