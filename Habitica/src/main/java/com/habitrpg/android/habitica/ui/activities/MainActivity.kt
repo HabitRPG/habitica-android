@@ -34,6 +34,7 @@ import com.habitrpg.android.habitica.api.HostConfig
 import com.habitrpg.android.habitica.api.MaintenanceApiService
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.*
+import com.habitrpg.android.habitica.data.local.UserQuestStatus
 import com.habitrpg.android.habitica.databinding.ActivityMainBinding
 import com.habitrpg.android.habitica.events.*
 import com.habitrpg.android.habitica.events.commands.FeedCommand
@@ -136,7 +137,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     private var drawerFragment: NavigationDrawerFragment? = null
     var drawerToggle: ActionBarDrawerToggle? = null
     private var resumeFromActivity = false
-    private var userIsOnQuest = false
+    private var userQuestStatus = UserQuestStatus.NO_QUEST
 
     private var connectionIssueHandler: Handler? = null
 
@@ -184,8 +185,8 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                     this@MainActivity.user = newUser
                     this@MainActivity.setUserData()
                 }, RxErrorHandler.handleEmptyError()))
-        compositeSubscription.add(userRepository.getIsUserOnQuest().subscribeWithErrorHandler(Consumer {
-            userIsOnQuest = it
+        compositeSubscription.add(userRepository.getUserQuestStatus().subscribeWithErrorHandler(Consumer {
+            userQuestStatus = it
         }))
 
         val viewModel = ViewModelProviders.of(this)
@@ -494,12 +495,22 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
     internal fun displayTaskScoringResponse(data: TaskScoringResult?) {
         if (user != null && data != null) {
+            val damageValue = when (userQuestStatus) {
+                UserQuestStatus.QUEST_BOSS,
+                UserQuestStatus.QUEST_UNKNOWN -> data.questDamage
+                else -> 0.0
+            }
             compositeSubscription.add(notifyUserUseCase.observable(NotifyUserUseCase.RequestValues(this, snackbarContainer,
-                    user, data.experienceDelta, data.healthDelta, data.goldDelta, data.manaDelta, if (userIsOnQuest) data.questDamage else 0.0, data.hasLeveledUp))
+                    user, data.experienceDelta, data.healthDelta, data.goldDelta, data.manaDelta, damageValue, data.hasLeveledUp))
                     .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
         }
 
-        compositeSubscription.add(displayItemDropUseCase.observable(DisplayItemDropUseCase.RequestValues(data, this, snackbarContainer, userIsOnQuest))
+        val showItemsFound = when (userQuestStatus) {
+            UserQuestStatus.QUEST_COLLECT,
+            UserQuestStatus.QUEST_UNKNOWN -> true
+            else -> false
+        }
+        compositeSubscription.add(displayItemDropUseCase.observable(DisplayItemDropUseCase.RequestValues(data, this, snackbarContainer, showItemsFound))
                 .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
     }
 
