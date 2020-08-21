@@ -54,6 +54,12 @@
                 android:layout_height="wrap_content"
                 android:text="@string/strong"
                 style="@style/TaskFilterRadioButton"/>
+            <RadioButton
+                android:id="@+id/todays_task_filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/strong"
+                style="@style/TaskFilterRadioButton"/>
         </RadioGroup>
         <View
             android:layout_width="match_parent"

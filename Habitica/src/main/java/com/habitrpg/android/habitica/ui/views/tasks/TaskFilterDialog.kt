@@ -38,6 +38,7 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : AlertDialo
     private var allTaskFilter: RadioButton
     private var secondTaskFilter: RadioButton
     private var thirdTaskFilter: RadioButton
+    private var todaysTaskFilter: RadioButton
     private var tagsEditButton: Button
     private var tagsList: LinearLayout
 
@@ -68,6 +69,7 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : AlertDialo
         allTaskFilter = view.findViewById(R.id.all_task_filter)
         secondTaskFilter = view.findViewById(R.id.second_task_filter)
         thirdTaskFilter = view.findViewById(R.id.third_task_filter)
+        todaysTaskFilter = view.findViewById(R.id.todays_task_filter)
         tagsEditButton = view.findViewById(R.id.tag_edit_button)
         tagsList = view.findViewById(R.id.tags_list)
 
@@ -275,6 +277,7 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : AlertDialo
                 allTaskFilter.setText(R.string.active)
                 secondTaskFilter.setText(R.string.dated)
                 thirdTaskFilter.setText(R.string.completed)
+                todaysTaskFilter.setText("Today")
             }
         }
         setActiveFilter(activeFilter)
