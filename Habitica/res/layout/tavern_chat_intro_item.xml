@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <com.habitrpg.android.habitica.ui.AvatarView
+        android:id="@+id/avatar_view"
+        android:layout_width="87dp"
+        android:layout_height="69dp"
+        android:layout_gravity="center_horizontal|top"
+        android:visibility="visible"
+        app:showBackground="false"
+        app:showMount="false"
+        app:showPet="false"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/filler"
+        android:layout_width="match_parent"
+        android:layout_height="16dp"
+        android:layout_gravity="bottom|center_horizontal"
+        android:ellipsize="end"
+        android:lines="1"
+        android:singleLine="true"
+        android:textAlignment="center"
+        android:textColor="@color/gray_300"
+        android:textSize="12sp" />
+
+    <com.habitrpg.android.habitica.ui.views.social.UsernameLabel
+        android:id="@+id/display_name_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="24dp"
+        android:baselineAligned="false"
+        android:clipToPadding="false"
+        android:textAlignment="center"
+        android:visibility="visible" />
+
+    <TextView
+        android:id="@+id/subline_textview"
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:layout_gravity="center_horizontal"
+        android:ellipsize="end"
+        android:lines="1"
+        android:singleLine="true"
+        android:textAlignment="center"
+        android:textColor="@color/gray_300"
+        android:textSize="12sp"
+        tools:text="@Username" />
+
+    <TextView
+        android:id="@+id/Filler"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_gravity="bottom|center_horizontal"
+        android:ellipsize="end"
+        android:lines="1"
+        android:singleLine="true"
+        android:textAlignment="center"
+        android:textColor="@color/gray_300"
+        android:textSize="12sp" />
+
+    <com.habitrpg.android.habitica.ui.views.HabiticaEmojiTextView
+        android:id="@+id/message_text"
+        android:layout_width="348dp"
+        android:layout_height="42dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:lineSpacingMultiplier="1.0"
+        android:text="Start chatting below! Remember to be friendly and follow the Community Guidelines."
+        android:textAlignment="center"
+        android:textColor="@color/gray_300"
+        tools:text="Start chatting below! Remember to be friendly and follow the Community Guidelines." />
+
+</LinearLayout>

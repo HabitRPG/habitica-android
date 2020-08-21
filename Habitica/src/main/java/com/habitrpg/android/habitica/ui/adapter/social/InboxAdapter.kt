@@ -8,11 +8,14 @@ import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.viewHolders.ChatRecyclerViewHolder
+import com.habitrpg.android.habitica.ui.viewHolders.ChatRecyclerIntroViewHolder
+import com.habitrpg.android.habitica.ui.viewHolders.ChatRecyclerMessageViewHolder
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import io.reactivex.subjects.PublishSubject
+import com.habitrpg.android.habitica.models.members.Member
 
-class InboxAdapter(private var user: User?) : PagedListAdapter<ChatMessage, ChatRecyclerViewHolder>(DIFF_CALLBACK) {
+class InboxAdapter(private var user: User?, private var replyToUser : Member) : PagedListAdapter<ChatMessage, ChatRecyclerViewHolder>(DIFF_CALLBACK) {
     private var expandedMessageId: String? = null
 
     private val likeMessageEvents = PublishSubject.create<ChatMessage>()
@@ -22,24 +25,49 @@ class InboxAdapter(private var user: User?) : PagedListAdapter<ChatMessage, Chat
     private val replyMessageEvents = PublishSubject.create<String>()
     private val copyMessageEvents = PublishSubject.create<ChatMessage>()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatRecyclerViewHolder {
-        return ChatRecyclerViewHolder(parent.inflate(R.layout.tavern_chat_item), user?.id ?: "", false)
+    override fun getItemViewType(position: Int): Int {
+        return when (position == super.getItemCount()) {
+            true -> 1
+            false -> 0
+        }
     }
 
-    override fun onBindViewHolder(holder: ChatRecyclerViewHolder, position: Int) {
-        val message = getItem(position) ?: return
+    override fun getItemCount(): Int {
+        return super.getItemCount() + 1
+    }
 
-        holder.bind(message,
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatRecyclerViewHolder {
+        return if (viewType == 1) ChatRecyclerIntroViewHolder(parent.inflate(R.layout.tavern_chat_intro_item), replyToUser.id!!)
+        else ChatRecyclerMessageViewHolder(parent.inflate(R.layout.tavern_chat_item), user?.id ?: "", false)
+    }
+
+    fun getFirstMessage() : ChatMessage
+    {
+        var firstMessage = ChatMessage()
+        return firstMessage
+    }
+    override fun onBindViewHolder(holder: ChatRecyclerViewHolder, position: Int) {
+        val firstMessage : Boolean = getItemViewType(position) == 1
+        if (firstMessage) {
+            val introHolder = holder as ChatRecyclerIntroViewHolder
+            introHolder.bind(replyToUser)
+            introHolder.onOpenProfile = { userLabelClickEvents.onNext(it) }
+        }
+        else {
+            val message : ChatMessage = getItem(position) ?: return
+            val messageHolder = holder as ChatRecyclerMessageViewHolder
+            messageHolder.bind(message,
                 user?.id ?: "",
                 user,
                 expandedMessageId == message.id)
-        holder.onShouldExpand = { expandMessage(message.id, position) }
-        holder.onLikeMessage = { likeMessageEvents.onNext(it) }
-        holder.onOpenProfile = { userLabelClickEvents.onNext(it) }
-        holder.onReply = { replyMessageEvents.onNext(it) }
-        holder.onCopyMessage = { copyMessageEvents.onNext(it) }
-        holder.onFlagMessage = { flagMessageEvents.onNext(it) }
-        holder.onDeleteMessage = { deleteMessageEvents.onNext(it) }
+            messageHolder.onShouldExpand = { expandMessage(message.id, position) }
+            messageHolder.onLikeMessage = { likeMessageEvents.onNext(it) }
+            messageHolder.onOpenProfile = { userLabelClickEvents.onNext(it) }
+            messageHolder.onReply = { replyMessageEvents.onNext(it) }
+            messageHolder.onCopyMessage = { copyMessageEvents.onNext(it) }
+            messageHolder.onFlagMessage = { flagMessageEvents.onNext(it) }
+            messageHolder.onDeleteMessage = { deleteMessageEvents.onNext(it) }
+        }
     }
 
     fun getLikeMessageFlowable(): Flowable<ChatMessage> {
