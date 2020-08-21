@@ -378,6 +378,7 @@ open class Task : RealmObject, Parcelable {
         const val FILTER_GRAY = "gray"
         const val FILTER_DATED = "dated"
         const val FILTER_COMPLETED = "completed"
+        const val FILTER_TODAY = "today"
         const val FREQUENCY_WEEKLY = "weekly"
         const val FREQUENCY_DAILY = "daily"
         const val FREQUENCY_MONTHLY = "monthly"

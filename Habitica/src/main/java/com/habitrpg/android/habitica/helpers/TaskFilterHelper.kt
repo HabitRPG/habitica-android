@@ -1,10 +1,13 @@
 package com.habitrpg.android.habitica.helpers
 
+import android.util.Log
 import com.habitrpg.android.habitica.models.tasks.Task
 import io.realm.Case
 import io.realm.OrderedRealmCollection
 import io.realm.RealmQuery
 import io.realm.Sort
+import java.text.DateFormat
+import java.text.SimpleDateFormat
 import java.util.*
 
 class TaskFilterHelper {
@@ -70,6 +73,7 @@ class TaskFilterHelper {
                 Task.FILTER_WEAK -> task.value < 1
                 Task.FILTER_STRONG -> task.value >= 1
                 Task.FILTER_DATED -> task.dueDate != null
+                Task.FILTER_TODAY -> task.dueDate != null
                 Task.FILTER_COMPLETED -> task.completed
                 else -> true
             }
@@ -121,10 +125,32 @@ class TaskFilterHelper {
                     Task.FILTER_COMPLETED -> query = query.equalTo("completed", true)
                 }
             }
-            if (activeFilter != Task.FILTER_DATED) {
+            if (activeFilter != Task.FILTER_DATED && activeFilter != Task.FILTER_TODAY) {
                 query = query.sort("position", Sort.ASCENDING, "dateCreated", Sort.DESCENDING)
             }
+            if (activeFilter == Task.FILTER_TODAY) {
+
+
+                val myCalendar: Calendar = Calendar.getInstance()
+                myCalendar.set(Calendar.HOUR_OF_DAY, 0)
+                myCalendar.set(Calendar.MINUTE, 0)
+                myCalendar.set(Calendar.SECOND, 0)
+
+
+                val myCalendar2: Calendar = Calendar.getInstance()
+                myCalendar2.set(Calendar.HOUR_OF_DAY, 23)
+                myCalendar2.set(Calendar.MINUTE, 59)
+                myCalendar2.set(Calendar.SECOND, 59)
+
+
+               query = query.between("dueDate", myCalendar.time, myCalendar2.time ) // contains("dueDate", "df")//dateFormat.format(date).toString());
+            }
         }
+
+
+       // Log.i("Patricia", dateFormat.format(date))//Calendar.getInstance().getTime().toString().substring(0,));
         return query
     }
+
+
 }
