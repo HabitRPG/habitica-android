@@ -326,7 +326,6 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : AlertDialo
             }
             R.id.todays_task_filter -> when (taskType) {
                 Task.TYPE_TODO ->  {
-                    Toast.makeText(context,"sd", Toast.LENGTH_LONG).show();
                     filterType = Task.FILTER_TODAY
                 }
 
