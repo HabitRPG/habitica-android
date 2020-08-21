@@ -68,21 +68,25 @@ class InboxMessageListFragment : BaseMainFragment(), androidx.swiperefreshlayout
         val layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this.getActivity())
         recyclerView.layoutManager = layoutManager
 
-        chatAdapter = InboxAdapter(user)
-        viewModel?.messages?.observe(this.viewLifecycleOwner, Observer { chatAdapter?.submitList(it) })
-        viewModel?.getMemberData()?.observe(this.viewLifecycleOwner, Observer {
-            activity?.binding?.toolbarTitle?.text = it?.profile?.name
-        })
-        recyclerView.adapter = chatAdapter
-        recyclerView.itemAnimator = SafeDefaultItemAnimator()
-        chatAdapter?.let { adapter ->
-            compositeSubscription.add(adapter.getUserLabelClickFlowable().subscribe(Consumer<String> {
-                FullProfileActivity.open(it)
-            }, RxErrorHandler.handleEmptyError()))
-            compositeSubscription.add(adapter.getDeleteMessageFlowable().subscribe(Consumer { this.showDeleteConfirmationDialog(it) }, RxErrorHandler.handleEmptyError()))
-            compositeSubscription.add(adapter.getFlagMessageClickFlowable().subscribe(Consumer { this.showFlagConfirmationDialog(it) }, RxErrorHandler.handleEmptyError()))
-            compositeSubscription.add(adapter.getCopyMessageFlowable().subscribe(Consumer { this.copyMessageToClipboard(it) }, RxErrorHandler.handleEmptyError()))
-        }
+        compositeSubscription.add(apiClient.getMember(replyToUserUUID!!).subscribe( Consumer
+        { member ->
+            chatAdapter = InboxAdapter(user, member)
+            viewModel?.messages?.observe(this.viewLifecycleOwner, Observer { chatAdapter?.submitList(it) })
+
+            viewModel?.getMemberData()?.observe(this.viewLifecycleOwner, Observer {
+                activity?.binding?.toolbarTitle?.text = it?.profile?.name
+            })
+            recyclerView.adapter = chatAdapter
+            recyclerView.itemAnimator = SafeDefaultItemAnimator()
+            chatAdapter?.let { adapter ->
+                compositeSubscription.add(adapter.getUserLabelClickFlowable().subscribe(Consumer<String> {
+                    FullProfileActivity.open(it)
+                }, RxErrorHandler.handleEmptyError()))
+                compositeSubscription.add(adapter.getDeleteMessageFlowable().subscribe(Consumer { this.showDeleteConfirmationDialog(it) }, RxErrorHandler.handleEmptyError()))
+                compositeSubscription.add(adapter.getFlagMessageClickFlowable().subscribe(Consumer { this.showFlagConfirmationDialog(it) }, RxErrorHandler.handleEmptyError()))
+                compositeSubscription.add(adapter.getCopyMessageFlowable().subscribe(Consumer { this.copyMessageToClipboard(it) }, RxErrorHandler.handleEmptyError()))
+            }
+        }))
 
         chatBarView.sendAction = { sendMessage(it) }
         chatBarView.maxChatLength = configManager.maxChatLength()
