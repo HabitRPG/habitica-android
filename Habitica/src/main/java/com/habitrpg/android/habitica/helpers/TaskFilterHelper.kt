@@ -1,13 +1,10 @@
 package com.habitrpg.android.habitica.helpers
 
-import android.util.Log
 import com.habitrpg.android.habitica.models.tasks.Task
 import io.realm.Case
 import io.realm.OrderedRealmCollection
 import io.realm.RealmQuery
 import io.realm.Sort
-import java.text.DateFormat
-import java.text.SimpleDateFormat
 import java.util.*
 
 class TaskFilterHelper {
@@ -130,25 +127,19 @@ class TaskFilterHelper {
             }
             if (activeFilter == Task.FILTER_TODAY) {
 
+                val startOfToday: Calendar = Calendar.getInstance()
+                startOfToday.set(Calendar.HOUR_OF_DAY, 0)
+                startOfToday.set(Calendar.MINUTE, 0)
+                startOfToday.set(Calendar.SECOND, 0)
 
-                val myCalendar: Calendar = Calendar.getInstance()
-                myCalendar.set(Calendar.HOUR_OF_DAY, 0)
-                myCalendar.set(Calendar.MINUTE, 0)
-                myCalendar.set(Calendar.SECOND, 0)
+                val endOfToday: Calendar = Calendar.getInstance()
+                endOfToday.set(Calendar.HOUR_OF_DAY, 23)
+                endOfToday.set(Calendar.MINUTE, 59)
+                endOfToday.set(Calendar.SECOND, 59)
 
-
-                val myCalendar2: Calendar = Calendar.getInstance()
-                myCalendar2.set(Calendar.HOUR_OF_DAY, 23)
-                myCalendar2.set(Calendar.MINUTE, 59)
-                myCalendar2.set(Calendar.SECOND, 59)
-
-
-               query = query.between("dueDate", myCalendar.time, myCalendar2.time ) // contains("dueDate", "df")//dateFormat.format(date).toString());
+               query = query.between("dueDate", startOfToday.time, endOfToday.time )
             }
         }
-
-
-       // Log.i("Patricia", dateFormat.format(date))//Calendar.getInstance().getTime().toString().substring(0,));
         return query
     }
 
