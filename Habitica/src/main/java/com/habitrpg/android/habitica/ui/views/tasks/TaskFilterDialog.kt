@@ -324,6 +324,10 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : AlertDialo
                 Task.FREQUENCY_DAILY -> filterType = Task.FILTER_GRAY
                 Task.TYPE_TODO -> filterType = Task.FILTER_COMPLETED
             }
+            R.id.todays_task_filter -> when (taskType) {
+                Task.TYPE_TODO ->  Toast.makeText(context,"sd", Toast.LENGTH_LONG).show()
+                
+            }
         }
         filtersChanged()
     }
