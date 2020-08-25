@@ -21,6 +21,7 @@ import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.content.FileProvider
 import androidx.core.content.edit
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
@@ -39,6 +40,7 @@ import com.habitrpg.android.habitica.databinding.ActivityMainBinding
 import com.habitrpg.android.habitica.events.*
 import com.habitrpg.android.habitica.events.commands.FeedCommand
 import com.habitrpg.android.habitica.extensions.dpToPx
+import com.habitrpg.android.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.*
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
@@ -208,6 +210,37 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         drawerToggle?.drawerArrowDrawable = drawerIcon
         // Set the drawer toggle as the DrawerListener
         drawerToggle?.let { drawerLayout.addDrawerListener(it) }
+        drawerLayout.addDrawerListener(object : DrawerLayout.DrawerListener {
+            private var isOpeningDrawer: Boolean? = null
+
+            override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
+                val modernHeaderStyle = sharedPreferences.getBoolean("modern_header_style", true)
+                if (modernHeaderStyle && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    if (slideOffset < 0.1f && isOpeningDrawer == null) {
+                        window.statusBarColor = getThemeColor(R.attr.colorPrimaryDark)
+                        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE
+                        isOpeningDrawer = true
+                    } else if (slideOffset > 0.9f && isOpeningDrawer == null) {
+                        window.statusBarColor = getThemeColor(R.attr.headerBackgroundColor)
+                        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+                        isOpeningDrawer = false
+                    }
+                }
+            }
+
+            override fun onDrawerOpened(drawerView: View) {
+                isOpeningDrawer = null
+            }
+
+            override fun onDrawerClosed(drawerView: View) {
+                isOpeningDrawer = null
+            }
+
+            override fun onDrawerStateChanged(newState: Int) {
+
+            }
+
+        })
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeButtonEnabled(true)
