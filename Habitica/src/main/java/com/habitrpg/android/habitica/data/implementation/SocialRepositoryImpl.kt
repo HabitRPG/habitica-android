@@ -43,6 +43,10 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
         return localRepository.getChatMessage(messageID)
     }
 
+    override fun blockMember(userID: String): Flowable<List<String>> {
+        return apiClient.blockMember(userID)
+    }
+
     override fun getGroupMembership(id: String): Flowable<GroupMembership> {
         return localRepository.getGroupMembership(userID, id)
     }
