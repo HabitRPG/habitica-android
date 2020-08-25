@@ -20,16 +20,6 @@ class HabitViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> U
     private val btnMinusWrapper: FrameLayout by bindView(itemView, R.id.btnMinusWrapper)
     private val btnMinusIconView: ImageView by bindView(itemView, R.id.btnMinusIconView)
     private val btnMinus: Button by bindView(itemView, R.id.btnMinus)
-    private val streakTextView: TextView by bindView(itemView, R.id.streakTextView)
-
-    override val taskIconWrapperIsVisible: Boolean
-        get() {
-            var isVisible: Boolean = super.taskIconWrapperIsVisible
-            if (this.streakTextView.visibility == View.VISIBLE) {
-                isVisible = true
-            }
-            return isVisible
-        }
 
     init {
         btnPlus.setOnClickListener { onPlusButtonClicked() }
@@ -98,6 +88,8 @@ class HabitViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> U
         } else {
             streakTextView.visibility = View.GONE
         }
+        reminderTextView.visibility = View.GONE
+        calendarIconView?.visibility = View.GONE
         super.bind(data, position, displayMode)
     }
 

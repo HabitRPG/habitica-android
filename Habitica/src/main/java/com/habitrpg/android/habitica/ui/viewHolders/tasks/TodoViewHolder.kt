@@ -14,18 +14,18 @@ class TodoViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> Un
 
     override fun bind(newTask: Task, position: Int, displayMode: String) {
         this.task = newTask
-        if (newTask.completed) {
-            checklistIndicatorWrapper.setBackgroundColor(taskGray)
-        } else {
-            checklistIndicatorWrapper.setBackgroundColor(newTask.lightTaskColor)
-        }
+        setChecklistIndicatorBackgroundActive(!newTask.completed)
+        reminderTextView.visibility = View.GONE
+        this.streakTextView.visibility = View.GONE
         super.bind(newTask, position, displayMode)
     }
 
     override fun configureSpecialTaskTextView(task: Task) {
+        super.configureSpecialTaskTextView(task)
         if (task.dueDate != null) {
-            this.specialTaskTextView?.text = dateFormatter.format(task.dueDate)
+            task.dueDate?.let { specialTaskTextView?.text = dateFormatter.format(it) }
             this.specialTaskTextView?.visibility = View.VISIBLE
+            calendarIconView?.visibility = View.VISIBLE
         } else {
             this.specialTaskTextView?.visibility = View.INVISIBLE
         }

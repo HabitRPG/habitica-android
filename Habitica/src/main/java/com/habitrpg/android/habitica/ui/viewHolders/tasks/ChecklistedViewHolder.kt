@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.viewHolders.tasks
 
 import android.content.Context
+import android.graphics.PorterDuff
 import android.graphics.Rect
 import android.view.LayoutInflater
 import android.view.TouchDelegate
@@ -10,6 +11,7 @@ import android.widget.CheckBox
 import android.widget.CompoundButton
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
@@ -33,6 +35,7 @@ abstract class ChecklistedViewHolder(itemView: View, scoreTaskFunc: ((Task, Task
     internal val checklistIndicatorWrapper: ViewGroup by bindView(itemView, R.id.checklistIndicatorWrapper)
     private val checklistCompletedTextView: TextView by bindView(itemView, R.id.checkListCompletedTextView)
     private val checklistAllTextView: TextView by bindView(itemView, R.id.checkListAllTextView)
+    private val checklistDivider: View by bindView(itemView, R.id.checklistDivider)
 
     init {
         checklistIndicatorWrapper.isClickable = true
@@ -71,7 +74,7 @@ abstract class ChecklistedViewHolder(itemView: View, scoreTaskFunc: ((Task, Task
             if (this.task?.checklist?.isValid == true) {
                 checklistView.removeAllViews()
                 for (item in this.task?.checklist ?: emptyList<ChecklistItem>()) {
-                    val itemView = layoutInflater?.inflate(R.layout.checklist_item_row, this.checklistView, false) as? LinearLayout
+                    val itemView = layoutInflater?.inflate(R.layout.checklist_item_row, this.checklistView, false)
                     val checkbox = itemView?.findViewById<CheckBox>(R.id.checkBox)
                     val textView = itemView?.findViewById<HabiticaEmojiTextView>(R.id.checkedTextView)
                     // Populate the data into the template view using the data object
@@ -89,6 +92,12 @@ abstract class ChecklistedViewHolder(itemView: View, scoreTaskFunc: ((Task, Task
                     }
                     val checkboxHolder = itemView?.findViewById<View>(R.id.checkBoxHolder) as? ViewGroup
                     expandCheckboxTouchArea(checkboxHolder, checkbox)
+                    val color = ContextCompat.getColor(context, if (task?.completed == true || (task?.type == Task.TYPE_DAILY && task?.isDue == false)) {
+                        R.color.gray_600
+                    } else {
+                        task?.extraLightTaskColor ?: R.color.gray_600
+                    })
+                    color.let { checkboxHolder?.setBackgroundColor(it) }
                     this.checklistView.addView(itemView)
                 }
             }
@@ -97,6 +106,25 @@ abstract class ChecklistedViewHolder(itemView: View, scoreTaskFunc: ((Task, Task
             this.checklistView.removeAllViewsInLayout()
             this.checklistView.visibility = View.GONE
         }
+    }
+
+    protected fun setChecklistIndicatorBackgroundActive(isActive: Boolean) {
+        val drawable = ContextCompat.getDrawable(context, R.drawable.checklist_indicator_background)
+        if (isActive) {
+            drawable?.setTint(ContextCompat.getColor(context, R.color.gray_200))
+            val textColor = ContextCompat.getColor(context, R.color.gray_500)
+            checklistCompletedTextView.setTextColor(textColor)
+            checklistAllTextView.setTextColor(textColor)
+            checklistDivider.setBackgroundColor(textColor)
+        } else {
+            drawable?.setTint(ContextCompat.getColor(context, R.color.gray_600))
+            val textColor = ContextCompat.getColor(context, R.color.gray_300)
+            checklistCompletedTextView.setTextColor(textColor)
+            checklistAllTextView.setTextColor(textColor)
+            checklistDivider.setBackgroundColor(textColor)
+        }
+        drawable?.setTintMode(PorterDuff.Mode.MULTIPLY)
+        checklistIndicatorWrapper.background = drawable
     }
 
     private fun onChecklistIndicatorClicked() {
