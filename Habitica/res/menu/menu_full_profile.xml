@@ -6,4 +6,6 @@
         android:title="@string/copy_username" />
     <item android:id="@+id/copy_userid"
         android:title="@string/copy_userid" />
+    <item android:id="@+id/block_user"
+        android:title="@string/block_user" />
 </menu>

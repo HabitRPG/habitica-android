@@ -21,6 +21,7 @@ import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.ActivityFullProfileBinding
+import com.habitrpg.android.habitica.extensions.addCancelButton
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.UserStatComputer
@@ -50,6 +51,8 @@ import kotlin.math.floor
 import kotlin.math.min
 
 class FullProfileActivity : BaseActivity() {
+    private var blocks: List<String> = listOf()
+
     @Inject
     lateinit var inventoryRepository: InventoryRepository
     @Inject
@@ -119,6 +122,9 @@ class FullProfileActivity : BaseActivity() {
         sendMessageButton.setOnClickListener { showSendMessageToUserDialog() }
         giftGemsButton.setOnClickListener { MainNavigationController.navigate(R.id.giftGemsActivity, bundleOf(Pair("userID", userID), Pair("username", null))) }
         giftSubscriptionButton.setOnClickListener { MainNavigationController.navigate(R.id.giftSubscriptionActivity, bundleOf(Pair("userID", userID), Pair("username", null))) }
+        compositeSubscription.add(userRepository.getUser().subscribe(Consumer {
+            blocks = it.inbox?.blocks ?: listOf()
+        }, RxErrorHandler.handleEmptyError()))
     }
 
     override fun onDestroy() {
@@ -129,16 +135,22 @@ class FullProfileActivity : BaseActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater = menuInflater
         inflater.inflate(R.menu.menu_full_profile, menu)
+        val item = menu?.findItem(R.id.block_user)
+        if (blocks.contains(userID)) {
+            item?.title = getString(R.string.unblock_user)
+        } else {
+            item?.title = getString(R.string.block)
+        }
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when {
-            item.itemId == android.R.id.home -> {
+        return when (item.itemId) {
+            android.R.id.home -> {
                 finish()
                 true
             }
-            item.itemId == R.id.copy_username -> {
+            R.id.copy_username -> {
                 val clipboard = this.getSystemService(Context.CLIPBOARD_SERVICE) as? android.content.ClipboardManager
                 val clip = android.content.ClipData.newPlainText(username, username)
                 clipboard?.setPrimaryClip(clip)
@@ -146,7 +158,7 @@ class FullProfileActivity : BaseActivity() {
                         String.format(getString(R.string.username_copied), userDisplayName), SnackbarDisplayType.NORMAL)
                 true
             }
-            item.itemId == R.id.copy_userid -> {
+            R.id.copy_userid -> {
                 val clipboard = this.getSystemService(Context.CLIPBOARD_SERVICE) as? android.content.ClipboardManager
                 val clip = android.content.ClipData.newPlainText(userID, userID)
                 clipboard?.setPrimaryClip(clip)
@@ -154,8 +166,35 @@ class FullProfileActivity : BaseActivity() {
                         String.format(getString(R.string.id_copied), userDisplayName), SnackbarDisplayType.NORMAL)
                 true
             }
+            R.id.block_user -> {
+                if (blocks.contains(userID)) {
+                    useBlock()
+                } else {
+                    showBlockDialog()
+                }
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun useBlock() {
+        compositeSubscription.add(socialRepository.blockMember(userID).flatMap {
+            userRepository.retrieveUser()
+        }.subscribe(Consumer {
+            invalidateOptionsMenu()
+        }, RxErrorHandler.handleEmptyError()))
+    }
+
+    private fun showBlockDialog() {
+        val dialog = HabiticaAlertDialog(this)
+        dialog.setTitle(getString(R.string.block_user_title, userDisplayName))
+        dialog.setMessage(R.string.block_user_description)
+        dialog.addButton(R.string.block, true, true) { _, _ ->
+            useBlock()
+        }
+        dialog.addCancelButton()
+        dialog.show()
     }
 
     private fun showSendMessageToUserDialog() {

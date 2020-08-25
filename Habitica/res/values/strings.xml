@@ -1085,4 +1085,9 @@
     <string name="challenge_task_name">%s Challenge Task</string>
     <string name="pet_category">%s Pets</string>
     <string name="mount_category">%s Mounts</string>
+    <string name="block_user">Block User</string>
+    <string name="unblock_user">Unblock User</string>
+    <string name="block_user_title">Block %s?</string>
+    <string name="block_user_description">A blocked user cannot send you Private Messages but you will still see their posts in Tavern or Guilds. This will have no effect if the person is a moderator now or in the future.</string>
+    <string name="block">Block</string>
 </resources>
