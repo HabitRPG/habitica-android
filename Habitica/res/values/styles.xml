@@ -50,6 +50,12 @@
         <item name="searchViewStyle">@style/SearchViewStyle</item>
         <item name="toolbarContentColor">@color/white</item>
         <item name="colorPrimaryText">@color/brand_50</item>
+        <item name="headerBackgroundColor">@color/white</item>
+        <item name="headerOffsetColor">@color/gray_700</item>
+        <item name="headerTextColor">@color/gray_10</item>
+    </style>
+
+    <style name="MainAppTheme" parent="AppTheme">
     </style>
 
 
@@ -200,9 +206,6 @@
         <item name="android:windowBackground">@drawable/activity_launch_background</item>
     </style>
 
-    <style name="MainAppTheme" parent="AppTheme">
-    </style>
-
 
     <style name="PopupTheme" parent="Widget.AppCompat.Light.PopupMenu">
         <item name="android:popupBackground">@android:color/white</item>
@@ -274,6 +277,15 @@
         <item name="android:textColorPrimary">?attr/toolbarContentColor</item>
         <item name="textColorSecondary">?attr/toolbarContentColor</item>
         <item name="background">?attr/colorPrimary</item>
+        <item name="actionMenuTextColor">?attr/toolbarContentColor</item>
+        <item name="android:actionMenuTextColor">?attr/toolbarContentColor</item>
+    </style>
+
+
+    <style name="Toolbar.Modern" parent="Base.ThemeOverlay.AppCompat.ActionBar">
+        <item name="android:textColorPrimary">?attr/headerTextColor</item>
+        <item name="textColorSecondary">?attr/headerTextColor</item>
+        <item name="background">?attr/headerBackgroundColor</item>
         <item name="actionMenuTextColor">?attr/toolbarContentColor</item>
         <item name="android:actionMenuTextColor">?attr/toolbarContentColor</item>
     </style>

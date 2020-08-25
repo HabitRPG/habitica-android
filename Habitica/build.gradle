@@ -18,7 +18,7 @@ buildscript {
     }
     dependencies {
         classpath 'io.fabric.tools:gradle:1.+'
-        classpath 'com.android.tools.build:gradle:4.0.0'
+        classpath 'com.android.tools.build:gradle:4.0.1'
         classpath('com.noveogroup.android:check:1.2.5') {
             exclude module: 'checkstyle'
             exclude module: 'pmd-java'
@@ -162,8 +162,8 @@ android {
         multiDexEnabled true
         resConfigs "en", "bg", "de", "en-rGB", "es", "fr", "hr-rHR", "in", "it", "iw", "ja", "ko", "lt", "nl", "pl", "pt-rBR", "pt-rPT", "ru", "tr", "zh", "zh-rTW"
 
-        versionCode 2523
-        versionName "2.8.1"
+        versionCode 2514
+        versionName "2.8"
     }
 
     viewBinding {

@@ -23,6 +23,9 @@
     <attr name="barForegroundColor" format="color" />
     <attr name="barPendingColor" format="color" />
     <attr name="barBackgroundColor" format="color" />
+    <attr name="headerBackgroundColor" format="color" />
+    <attr name="headerOffsetColor" format="color" />
+    <attr name="headerTextColor" format="color" />
     <declare-styleable name="AvatarView">
         <attr name="showBackground" format="boolean" />
         <attr name="showMount" format="boolean" />

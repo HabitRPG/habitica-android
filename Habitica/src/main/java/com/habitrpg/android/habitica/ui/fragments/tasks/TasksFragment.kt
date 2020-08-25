@@ -6,6 +6,7 @@ import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.widget.SearchView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentPagerAdapter
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
@@ -249,6 +250,11 @@ class TasksFragment : BaseMainFragment(), SearchView.OnQueryTextListener {
         }
         if (filterCount == 0) {
             filterMenuItem?.setIcon(R.drawable.ic_action_filter_list)
+            context?.let {
+                val filterIcon = it.getDrawable(R.drawable.ic_action_filter_list)
+                filterIcon?.setColorFilter(it.getThemeColor(R.attr.headerTextColor), PorterDuff.Mode.MULTIPLY)
+                filterMenuItem?.setIcon(filterIcon)
+            }
         } else {
             context?.let {
                 val filterIcon = it.getDrawable(R.drawable.ic_filters_active)

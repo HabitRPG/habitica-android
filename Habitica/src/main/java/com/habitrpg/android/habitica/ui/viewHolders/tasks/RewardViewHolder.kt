@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.ColorUtils
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.helpers.NumberAbbreviator
 import com.habitrpg.android.habitica.models.responses.TaskDirection
@@ -70,10 +71,12 @@ class RewardViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> 
 
         if (canBuy) {
             goldIconView.alpha = 1.0f
-            priceLabel.setTextColor(ContextCompat.getColor(context, R.color.yellow_5))
+            priceLabel.setTextColor(ContextCompat.getColor(context, R.color.yellow_1))
+            buyButton.setBackgroundColor(ContextCompat.getColor(context, R.color.yellow_500))
         } else {
-            goldIconView.alpha = 0.4f
-            priceLabel.setTextColor(ContextCompat.getColor(context, R.color.gray_500))
+            goldIconView.alpha = 0.6f
+            priceLabel.setTextColor(ContextCompat.getColor(context, R.color.gray_300))
+            buyButton.setBackgroundColor(ColorUtils.setAlphaComponent(ContextCompat.getColor(context, R.color.gray_600), 127))
         }
     }
 }
