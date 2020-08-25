@@ -4,12 +4,12 @@
     <item>
         <shape android:shape="rectangle">
             <corners android:radius="@dimen/daily_checkbox_corner_radius"/>
-            <solid android:color="@color/checkbox_checked_fill" />
+            <solid android:color="@color/gray_600" />
             <size android:height="@dimen/checkbox_size" android:width="@dimen/checkbox_size" />
             <padding android:left="0dip" android:top="0dip" android:right="0dip" android:bottom="0dip" />
         </shape>
     </item>
     <item>
-        <bitmap android:src="@drawable/ic_check" android:gravity="center" />
+        <bitmap android:src="@drawable/checkmark" android:gravity="center" />
     </item>
 </layer-list>

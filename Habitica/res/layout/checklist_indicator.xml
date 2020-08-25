@@ -15,14 +15,14 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textColor="@color/white"
-            style="@style/Body3"
+            style="@style/Body1"
             android:textSize="11sp"
             tools:text="1" />
 
         <View
             android:id="@+id/checklistDivider"
             android:layout_width="@dimen/checklist_divider_width"
-            android:layout_height="@dimen/hairline_height"
+            android:layout_height="1.5dp"
             android:background="@color/white" />
 
         <TextView
@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textColor="@color/white"
-            style="@style/Body3"
+            style="@style/Body1"
             android:textSize="11sp"
             tools:text="13" />
 </LinearLayout>

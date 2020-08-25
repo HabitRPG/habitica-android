@@ -12,8 +12,6 @@ import java.util.*
 
 class DailyViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> Unit), scoreChecklistItemFunc: ((Task, ChecklistItem) -> Unit), openTaskFunc: ((Task) -> Unit), brokenTaskFunc: ((Task) -> Unit)) : ChecklistedViewHolder(itemView, scoreTaskFunc, scoreChecklistItemFunc, openTaskFunc, brokenTaskFunc) {
 
-    private val streakTextView: TextView by bindView(itemView, R.id.streakTextView)
-    private val reminderTextView: TextView by bindView(itemView, R.id.reminder_textview)
 
 
     override val taskIconWrapperIsVisible: Boolean
@@ -27,11 +25,7 @@ class DailyViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> U
 
     override fun bind(newTask: Task, position: Int, displayMode: String) {
         this.task = newTask
-        if (newTask.isChecklistDisplayActive) {
-            this.checklistIndicatorWrapper.setBackgroundResource(newTask.lightTaskColor)
-        } else {
-            this.checklistIndicatorWrapper.setBackgroundColor(this.taskGray)
-        }
+        setChecklistIndicatorBackgroundActive(newTask.isChecklistDisplayActive)
 
         if (newTask.reminders?.size == 0) {
             reminderTextView.visibility = View.GONE

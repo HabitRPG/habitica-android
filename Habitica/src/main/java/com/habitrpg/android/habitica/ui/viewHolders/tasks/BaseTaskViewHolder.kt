@@ -31,6 +31,7 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
     private val mainTaskWrapper: ViewGroup by bindView(itemView, R.id.main_task_wrapper)
     private val titleTextView: EllipsisTextView by bindView(itemView, R.id.checkedTextView)
     private val notesTextView: EllipsisTextView? by bindView(itemView, R.id.notesTextView)
+    protected val calendarIconView: ImageView? by bindView(itemView, R.id.iconViewCalendar)
     protected val specialTaskTextView: TextView? by bindOptionalView(itemView, R.id.specialTaskText)
     private val iconViewChallenge: ImageView? by bindView(itemView, R.id.iconviewChallenge)
     private val iconViewReminder: ImageView? by bindOptionalView(itemView, R.id.iconviewReminder)
@@ -40,6 +41,8 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
     private val syncingView: ProgressBar? by bindOptionalView(R.id.syncing_view)
     private val errorIconView: ImageButton? by bindOptionalView(R.id.error_icon)
     protected val taskGray: Int by bindColor(itemView.context, R.color.task_gray)
+    protected val streakTextView: TextView by bindView(itemView, R.id.streakTextView)
+    protected val reminderTextView: TextView by bindView(itemView, R.id.reminder_textview)
 
     private var openTaskDisabled: Boolean = false
     private var taskActionsDisabled: Boolean = false
@@ -59,6 +62,9 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
                 isVisible = true
             }
             if (specialTaskTextView?.visibility == View.VISIBLE) {
+                isVisible = true
+            }
+            if (this.streakTextView.visibility == View.VISIBLE) {
                 isVisible = true
             }
             return isVisible
@@ -198,6 +204,7 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
 
     protected open fun configureSpecialTaskTextView(task: Task) {
         specialTaskTextView?.visibility = View.INVISIBLE
+        calendarIconView?.visibility = View.GONE
     }
 
     override fun onClick(v: View) {
