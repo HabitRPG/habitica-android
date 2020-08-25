@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.habitrpg.android.habitica.ui.activities.MainActivity"
-    android:background="@color/gray_700">
+    android:background="@color/white">
 
     <!-- As the main content view, the view below consumes the entire
          space available using match_parent in both dimensions. -->
@@ -32,7 +32,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:titleEnabled="false"
-                    app:contentScrim="?attr/colorPrimaryDark"
+                    app:contentScrim="?attr/headerBackgroundColor"
                     app:expandedTitleMarginEnd="?attr/actionBarSize"
                     app:expandedTitleMarginStart="0dp"
                     app:layout_scrollFlags="scroll|exitUntilCollapsed">
@@ -50,8 +50,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:minHeight="?attr/actionBarSize"
-                        android:theme="@style/Toolbar"
-                        android:background="?attr/colorPrimaryDark"
+                        android:theme="@style/Toolbar.Modern"
+                        android:background="?attr/headerBackgroundColor"
                         app:layout_collapseMode="pin"
                         app:popupTheme="@style/Theme.AppCompat.Light">
                         <RelativeLayout
@@ -88,17 +88,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="54dp"
                     android:layout_gravity="bottom"
-                    android:background="?colorPrimary"
+                    android:background="?headerOffsetColor"
                     android:elevation="0dp"
                     android:fillViewport="false"
 
-                    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                    android:theme="@style/ThemeOverlay.AppCompat.Light"
                     app:layout_anchor="@+id/collapsing_toolbar"
                     app:layout_anchorGravity="bottom"
 
                     app:layout_collapseMode="pin"
                     app:tabGravity="fill"
-                    app:tabIndicatorColor="?colorContentBackground"
+                    app:tabIndicatorColor="?colorPrimary"
                     app:tabMode="fixed" />
                 <TextView
                     android:id="@+id/connection_issue_textview"

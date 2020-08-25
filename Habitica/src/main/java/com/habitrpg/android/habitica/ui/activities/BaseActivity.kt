@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.ui.activities
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.Configuration
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -93,6 +94,7 @@ abstract class BaseActivity : AppCompatActivity() {
         } else {
             sharedPreferences.getString("theme_name", "purple")
         }
+        val modernHeaderStyle = sharedPreferences.getBoolean("modern_header_style", true)
         if (theme == currentTheme) return
         setTheme(when (theme) {
             "maroon" -> R.style.MainAppTheme_Maroon
@@ -105,7 +107,14 @@ abstract class BaseActivity : AppCompatActivity() {
             else -> R.style.MainAppTheme
         })
         window.navigationBarColor = getThemeColor(R.attr.colorPrimaryDark)
-        window.statusBarColor = getThemeColor(R.attr.colorPrimaryDark)
+        window.statusBarColor = if (modernHeaderStyle && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            getThemeColor(R.attr.headerBackgroundColor)
+        } else {
+            getThemeColor(R.attr.colorPrimaryDark)
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+        }
 
         if (currentTheme != null) {
             reload()

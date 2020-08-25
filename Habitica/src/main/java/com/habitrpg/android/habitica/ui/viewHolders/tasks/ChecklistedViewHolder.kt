@@ -30,7 +30,6 @@ abstract class ChecklistedViewHolder(itemView: View, scoreTaskFunc: ((Task, Task
     private val checkboxHolder: ViewGroup by bindView(itemView, R.id.checkBoxHolder)
     internal val checkbox: CheckBox by bindView(itemView, R.id.checkBox)
     internal val checklistView: LinearLayout by bindView(itemView, R.id.checklistView)
-    internal val checklistBottomSpace: View by bindView(itemView, R.id.checklistBottomSpace)
     internal val checklistIndicatorWrapper: ViewGroup by bindView(itemView, R.id.checklistIndicatorWrapper)
     private val checklistCompletedTextView: TextView by bindView(itemView, R.id.checkListCompletedTextView)
     private val checklistAllTextView: TextView by bindView(itemView, R.id.checkListAllTextView)
@@ -60,12 +59,6 @@ abstract class ChecklistedViewHolder(itemView: View, scoreTaskFunc: ((Task, Task
         this.updateChecklistDisplay()
 
         this.checklistIndicatorWrapper.visibility = if (newTask.checklist?.size == 0) View.GONE else View.VISIBLE
-        this.rightBorderView?.visibility = if (newTask.checklist?.size == 0) View.VISIBLE else View.GONE
-        if (newTask.completed) {
-            this.rightBorderView?.setBackgroundResource(newTask.lightTaskColor)
-        } else {
-            this.rightBorderView?.setBackgroundColor(this.taskGray)
-        }
         super.bind(newTask, position, displayMode)
     }
 
@@ -100,11 +93,9 @@ abstract class ChecklistedViewHolder(itemView: View, scoreTaskFunc: ((Task, Task
                 }
             }
             this.checklistView.visibility = View.VISIBLE
-            this.checklistBottomSpace.visibility = View.VISIBLE
         } else {
             this.checklistView.removeAllViewsInLayout()
             this.checklistView.visibility = View.GONE
-            this.checklistBottomSpace.visibility = View.GONE
         }
     }
 

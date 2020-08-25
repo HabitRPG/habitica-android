@@ -27,7 +27,9 @@ open class ShopsFragment : BaseMainFragment() {
     lateinit var inventoryRepository: InventoryRepository
 
     private val currencyView: CurrencyViews by lazy {
-        CurrencyViews(context)
+        val view = CurrencyViews(context)
+        view.lightBackground = true
+        view
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.ui.viewHolders.tasks
 
 import android.content.Context
 import android.view.View
+import android.view.ViewGroup
 import android.widget.*
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
@@ -27,13 +28,12 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
     var movingFromPosition: Int? = null
     var errorButtonClicked: Action? = null
     protected var context: Context
+    private val mainTaskWrapper: ViewGroup by bindView(itemView, R.id.main_task_wrapper)
     private val titleTextView: EllipsisTextView by bindView(itemView, R.id.checkedTextView)
     private val notesTextView: EllipsisTextView? by bindView(itemView, R.id.notesTextView)
-    internal val rightBorderView: View? by bindOptionalView(itemView, R.id.rightBorderView)
     protected val specialTaskTextView: TextView? by bindOptionalView(itemView, R.id.specialTaskText)
     private val iconViewChallenge: ImageView? by bindView(itemView, R.id.iconviewChallenge)
     private val iconViewReminder: ImageView? by bindOptionalView(itemView, R.id.iconviewReminder)
-    private val iconViewTag: ImageView? by bindView(itemView, R.id.iconviewTag)
     private val taskIconWrapper: LinearLayout? by bindView(itemView, R.id.taskIconWrapper)
     private val approvalRequiredTextView: TextView? by bindView(itemView, R.id.approvalRequiredTextField)
     private val expandNotesButton: Button? by bindOptionalView(R.id.expand_notes_button)
@@ -52,9 +52,6 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
             if (iconViewReminder?.visibility == View.VISIBLE) {
                 isVisible = true
             }
-            if (iconViewTag?.visibility == View.VISIBLE) {
-                isVisible = true
-            }
             if (iconViewChallenge?.visibility == View.VISIBLE) {
                 isVisible = true
             }
@@ -70,6 +67,7 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
     init {
         itemView.setOnClickListener { onClick(it) }
         itemView.isClickable = true
+        mainTaskWrapper.clipToOutline = true
 
         titleTextView.setOnClickListener { onClick(it) }
         notesTextView?.setOnClickListener { onClick(it) }
@@ -172,10 +170,8 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
             }
         }
 
-        rightBorderView?.setBackgroundResource(data.lightTaskColor)
         if (displayMode == "standard") {
             iconViewReminder?.visibility = if (data.reminders?.size ?: 0 > 0) View.VISIBLE else View.GONE
-            iconViewTag?.visibility = if (data.tags?.size ?: 0 > 0) View.VISIBLE else View.GONE
 
             iconViewChallenge?.visibility = if (task?.challengeID != null) View.VISIBLE else View.GONE
             if (task?.challengeID != null) {
