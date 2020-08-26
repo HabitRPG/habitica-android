@@ -8,6 +8,8 @@ import android.view.*
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.paging.DataSource
+import androidx.paging.PagedList
 import com.habitrpg.android.habitica.MainNavDirections
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
@@ -31,6 +33,7 @@ import io.reactivex.functions.Action
 import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.fragment_inbox_message_list.*
 import kotlinx.android.synthetic.main.tavern_chat_new_entry_item.*
+import java.lang.Exception
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -67,15 +70,11 @@ class InboxMessageListFragment : BaseMainFragment(), androidx.swiperefreshlayout
 
         val layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this.getActivity())
         recyclerView.layoutManager = layoutManager
-
         compositeSubscription.add(apiClient.getMember(replyToUserUUID!!).subscribe( Consumer
         { member ->
             chatAdapter = InboxAdapter(user, member)
             viewModel?.messages?.observe(this.viewLifecycleOwner, Observer { chatAdapter?.submitList(it) })
 
-            viewModel?.getMemberData()?.observe(this.viewLifecycleOwner, Observer {
-                activity?.binding?.toolbarTitle?.text = it?.profile?.name
-            })
             recyclerView.adapter = chatAdapter
             recyclerView.itemAnimator = SafeDefaultItemAnimator()
             chatAdapter?.let { adapter ->

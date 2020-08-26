@@ -1,6 +1,8 @@
 package com.habitrpg.android.habitica.ui.adapter.social
 
 import android.view.ViewGroup
+import androidx.paging.DataSource
+import androidx.paging.PagedList
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import com.habitrpg.android.habitica.R
@@ -16,8 +18,10 @@ import io.reactivex.subjects.PublishSubject
 import com.habitrpg.android.habitica.models.members.Member
 
 class InboxAdapter(private var user: User?, private var replyToUser : Member) : PagedListAdapter<ChatMessage, ChatRecyclerViewHolder>(DIFF_CALLBACK) {
-    private var expandedMessageId: String? = null
+    private val FIRST_MESSAGE = 0
+    private val NORMAL_MESSAGE = 1
 
+    private var expandedMessageId: String? = null
     private val likeMessageEvents = PublishSubject.create<ChatMessage>()
     private val userLabelClickEvents = PublishSubject.create<String>()
     private val deleteMessageEvents = PublishSubject.create<ChatMessage>()
@@ -25,29 +29,29 @@ class InboxAdapter(private var user: User?, private var replyToUser : Member) : 
     private val replyMessageEvents = PublishSubject.create<String>()
     private val copyMessageEvents = PublishSubject.create<ChatMessage>()
 
-    override fun getItemViewType(position: Int): Int {
-        return when (position == super.getItemCount()) {
-            true -> 1
-            false -> 0
-        }
+    private fun isPositionIntroMessage(position: Int) : Boolean {
+        return (position == super.getItemCount() - 1)
     }
 
-    override fun getItemCount(): Int {
-        return super.getItemCount() + 1
+    override fun getItemViewType(position: Int): Int {
+        return if (isPositionIntroMessage(position)) FIRST_MESSAGE else NORMAL_MESSAGE
+    }
+
+    override fun getItemId(position: Int): Long {
+        return if (isPositionIntroMessage(position)) -1 else super.getItemId(position)
+    }
+
+    override fun getItem(position: Int) : ChatMessage? {
+        return if (isPositionIntroMessage(position)) ChatMessage() else super.getItem(position)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatRecyclerViewHolder {
-        return if (viewType == 1) ChatRecyclerIntroViewHolder(parent.inflate(R.layout.tavern_chat_intro_item), replyToUser.id!!)
+        return if (viewType == FIRST_MESSAGE) ChatRecyclerIntroViewHolder(parent.inflate(R.layout.tavern_chat_intro_item), replyToUser.id!!)
         else ChatRecyclerMessageViewHolder(parent.inflate(R.layout.tavern_chat_item), user?.id ?: "", false)
     }
 
-    fun getFirstMessage() : ChatMessage
-    {
-        var firstMessage = ChatMessage()
-        return firstMessage
-    }
     override fun onBindViewHolder(holder: ChatRecyclerViewHolder, position: Int) {
-        val firstMessage : Boolean = getItemViewType(position) == 1
+        val firstMessage : Boolean = getItemViewType(position) == FIRST_MESSAGE
         if (firstMessage) {
             val introHolder = holder as ChatRecyclerIntroViewHolder
             introHolder.bind(replyToUser)
@@ -95,6 +99,8 @@ class InboxAdapter(private var user: User?, private var replyToUser : Member) : 
     }
 
     private fun expandMessage(id: String, position: Int) {
+        if (isPositionIntroMessage(position))
+            return
         expandedMessageId = if (expandedMessageId == id) {
             null
         } else {
