@@ -7,10 +7,7 @@ import android.view.LayoutInflater
 import android.view.TouchDelegate
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
-import android.widget.CompoundButton
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -53,7 +50,11 @@ abstract class ChecklistedViewHolder(itemView: View, scoreTaskFunc: ((Task, Task
         if (this.shouldDisplayAsActive(newTask) && !newTask.isPendingApproval) {
             this.checkboxHolder.setBackgroundResource(newTask.lightTaskColor)
         } else {
-            this.checkboxHolder.setBackgroundColor(this.taskGray)
+            if (newTask.completed) {
+                this.checkboxHolder.setBackgroundResource(R.color.gray_700)
+            } else {
+                this.checkboxHolder.setBackgroundColor(this.taskGray)
+            }
         }
         this.checklistCompletedTextView.text = newTask.completedChecklistCount.toString()
         this.checklistAllTextView.text = newTask.checklist?.size.toString()
@@ -75,7 +76,10 @@ abstract class ChecklistedViewHolder(itemView: View, scoreTaskFunc: ((Task, Task
                 checklistView.removeAllViews()
                 for (item in this.task?.checklist ?: emptyList<ChecklistItem>()) {
                     val itemView = layoutInflater?.inflate(R.layout.checklist_item_row, this.checklistView, false)
-                    val checkbox = itemView?.findViewById<CheckBox>(R.id.checkBox)
+                    val checkboxBackground = itemView?.findViewById<FrameLayout>(R.id.checkBoxBackground)
+                    if (task?.type == Task.TYPE_TODO) {
+                        checkboxBackground?.setBackgroundResource(R.drawable.round_checklist_unchecked)
+                    }
                     val textView = itemView?.findViewById<HabiticaEmojiTextView>(R.id.checkedTextView)
                     // Populate the data into the template view using the data object
                     textView?.text = item.text
@@ -86,15 +90,18 @@ abstract class ChecklistedViewHolder(itemView: View, scoreTaskFunc: ((Task, Task
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .subscribe(Consumer<CharSequence> { textView?.text = it }, RxErrorHandler.handleEmptyError())
                     }
-                    checkbox?.isChecked = item.completed
-                    checkbox?.setOnCheckedChangeListener { _, _ ->
+                    val checkmark = itemView?.findViewById<ImageView>(R.id.checkmark)
+                    checkmark?.drawable?.setTintMode(PorterDuff.Mode.SRC_ATOP)
+                    checkmark?.visibility = if (item.completed) View.VISIBLE else View.GONE
+                    val checkboxHolder = itemView?.findViewById<View>(R.id.checkBoxHolder) as? ViewGroup
+                    checkboxHolder?.setOnClickListener { _ ->
                         task?.let { scoreChecklistItemFunc(it, item) }
                     }
-                    val checkboxHolder = itemView?.findViewById<View>(R.id.checkBoxHolder) as? ViewGroup
-                    expandCheckboxTouchArea(checkboxHolder, checkbox)
                     val color = ContextCompat.getColor(context, if (task?.completed == true || (task?.type == Task.TYPE_DAILY && task?.isDue == false)) {
+                        checkmark?.drawable?.setTint(ContextCompat.getColor(context, R.color.gray_400))
                         R.color.gray_600
                     } else {
+                        checkmark?.drawable?.setTint(ContextCompat.getColor(context, task?.darkTaskColor ?: R.color.gray_400))
                         task?.extraLightTaskColor ?: R.color.gray_600
                     })
                     color.let { checkboxHolder?.setBackgroundColor(it) }
