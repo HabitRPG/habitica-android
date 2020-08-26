@@ -116,6 +116,7 @@ class TasksFragment : BaseMainFragment(), SearchView.OnQueryTextListener {
         updateFilterIcon()
 
         val item = menu.findItem(R.id.action_search)
+        tintMenuIcon(item)
         val sv = item.actionView as? SearchView
         sv?.setOnQueryTextListener(this)
         sv?.setIconifiedByDefault(false)

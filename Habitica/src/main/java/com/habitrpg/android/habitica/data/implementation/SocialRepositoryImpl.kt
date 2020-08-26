@@ -273,7 +273,7 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
                 }
     }
 
-    override fun getUserGroups(): Flowable<RealmResults<Group>> = localRepository.getUserGroups(userID)
+    override fun getUserGroups(type: String?): Flowable<RealmResults<Group>> = localRepository.getUserGroups(userID, type)
 
     override fun acceptQuest(user: User?, partyId: String): Flowable<Void> {
         return apiClient.acceptQuest(partyId)
