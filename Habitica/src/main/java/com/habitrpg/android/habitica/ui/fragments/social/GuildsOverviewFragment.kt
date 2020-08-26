@@ -39,6 +39,7 @@ class GuildsOverviewFragment : BaseMainFragment(), androidx.swiperefreshlayout.w
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
+        this.hidesToolbar = true
         super.onCreateView(inflater, container, savedInstanceState)
         binding = FragmentGuildsOverviewBinding.inflate(inflater, container, false)
         return binding?.root

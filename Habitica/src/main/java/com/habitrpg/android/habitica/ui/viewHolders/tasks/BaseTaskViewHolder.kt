@@ -40,7 +40,7 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
     private val expandNotesButton: Button? by bindOptionalView(R.id.expand_notes_button)
     private val syncingView: ProgressBar? by bindOptionalView(R.id.syncing_view)
     private val errorIconView: ImageButton? by bindOptionalView(R.id.error_icon)
-    protected val taskGray: Int by bindColor(itemView.context, R.color.task_gray)
+    protected val taskGray: Int by bindColor(itemView.context, R.color.gray_600)
     protected val streakTextView: TextView by bindView(itemView, R.id.streakTextView)
     protected val reminderTextView: TextView by bindView(itemView, R.id.reminder_textview)
 

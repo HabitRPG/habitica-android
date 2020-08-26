@@ -70,6 +70,7 @@ class ChallengeDetailFragment: BaseMainFragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        this.hidesToolbar = true
         super.onCreateView(inflater, container, savedInstanceState)
         return container?.inflate(R.layout.fragment_challenge_detail)
     }

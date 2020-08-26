@@ -21,7 +21,6 @@
                 android:layout_height="@dimen/avatar_header_height"
                 android:layout_gravity="center_vertical"
                 android:layout_marginEnd="20dp"
-            android:layout_marginStart="2dp"
                 android:contentDescription="@string/sidebar_avatar"
                 app:showBackground="true"
                 app:showMount="true"
@@ -64,9 +63,7 @@
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:paddingBottom="6dp"
-            android:paddingTop="2dp">
+            android:gravity="center_vertical">
 
         <TextView
                 android:id="@+id/lvl_tv"
