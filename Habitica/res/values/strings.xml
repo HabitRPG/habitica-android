@@ -1090,4 +1090,7 @@
     <string name="block_user_title">Block %s?</string>
     <string name="block_user_description">A blocked user cannot send you Private Messages but you will still see their posts in Tavern or Guilds. This will have no effect if the person is a moderator now or in the future.</string>
     <string name="block">Block</string>
+    <string name="disablePrivateMessages">Disable Private Messages</string>
+    <string name="pms_disabled">Private Messages are disabled</string>
+    <string name="pms_disabled_description">You can still send messages, but no one can send them to you. You can enable again from Settings.</string>
 </resources>

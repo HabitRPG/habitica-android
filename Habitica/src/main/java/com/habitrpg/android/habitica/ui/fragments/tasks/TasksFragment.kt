@@ -79,11 +79,17 @@ class TasksFragment : BaseMainFragment(), SearchView.OnQueryTextListener {
         super.onResume()
 
         bottomNavigation?.onTabSelectedListener = {
-            when (it) {
-                Task.TYPE_HABIT -> viewPager?.currentItem = 0
-                Task.TYPE_DAILY -> viewPager?.currentItem = 1
-                Task.TYPE_TODO -> viewPager?.currentItem = 2
-                Task.TYPE_REWARD -> viewPager?.currentItem = 3
+            val newItem = when (it) {
+                Task.TYPE_HABIT -> 0
+                Task.TYPE_DAILY -> 1
+                Task.TYPE_TODO -> 2
+                Task.TYPE_REWARD -> 3
+                else -> 0
+            }
+            if (newItem == viewPager?.currentItem) {
+                refresh()
+            } else {
+                viewPager?.currentItem = newItem
             }
             updateBottomBarBadges()
         }
