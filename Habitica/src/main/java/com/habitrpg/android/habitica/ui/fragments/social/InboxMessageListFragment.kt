@@ -111,6 +111,7 @@ class InboxMessageListFragment : BaseMainFragment(), androidx.swiperefreshlayout
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         this.activity?.menuInflater?.inflate(R.menu.inbox_chat, menu)
+        val item = menu.findItem(R.id.open_profile)
         super.onCreateOptionsMenu(menu, inflater)
     }
 

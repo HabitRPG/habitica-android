@@ -41,6 +41,7 @@ class InboxOverviewFragment : BaseMainFragment(), androidx.swiperefreshlayout.wi
 
         compositeSubscription.add(this.socialRepository.markPrivateMessagesRead(user).subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
 
+
         return inflater.inflate(R.layout.fragment_inbox, container, false)
     }
 
@@ -48,6 +49,10 @@ class InboxOverviewFragment : BaseMainFragment(), androidx.swiperefreshlayout.wi
         super.onViewCreated(view, savedInstanceState)
 
         inbox_refresh_layout?.setOnRefreshListener(this)
+
+        compositeSubscription.add(userRepository.getUser().map { user?.inbox?.optOut ?: false }.distinctUntilChanged().subscribe {
+            opt_out_view.visibility = if (it) View.VISIBLE else View.GONE
+        })
 
         loadMessages()
         retrieveMessages()
@@ -66,6 +71,8 @@ class InboxOverviewFragment : BaseMainFragment(), androidx.swiperefreshlayout.wi
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         this.activity?.menuInflater?.inflate(R.menu.inbox, menu)
+        val item = menu.findItem(R.id.send_message)
+        tintMenuIcon(item)
         super.onCreateOptionsMenu(menu, inflater)
     }
 

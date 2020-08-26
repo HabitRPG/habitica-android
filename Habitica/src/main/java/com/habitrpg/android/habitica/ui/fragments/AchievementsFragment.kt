@@ -134,15 +134,17 @@ class AchievementsFragment: BaseMainFragment(), SwipeRefreshLayout.OnRefreshList
             menuID = menuItem?.itemId ?: 0
             menuItem?.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
             menuItem?.setIcon(R.drawable.ic_round_view_list_24px)
+            tintMenuIcon(menuItem)
 
         } else {
             val menuItem = menu.add(R.string.switch_to_grid_view)
             menuID = menuItem?.itemId ?: 0
             menuItem?.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
             menuItem?.setIcon(R.drawable.ic_round_view_module_24px)
+            tintMenuIcon(menuItem)
         }
         activity?.findViewById<Toolbar>(R.id.toolbar)?.let {
-            ToolbarColorHelper.colorizeToolbar(it, activity, false)
+            ToolbarColorHelper.colorizeToolbar(it, activity, null)
         }
         super.onCreateOptionsMenu(menu, inflater)
     }

@@ -8,6 +8,7 @@ import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
+import androidx.preference.CheckBoxPreference
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceScreen
@@ -236,6 +237,13 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                 val preference = findPreference(key) as ListPreference
                 preference.summary = preference.entry
             }
+            "disablePMs" -> {
+                val isDisabled = sharedPreferences.getBoolean("disablePMs", false)
+                if (user?.inbox?.optOut != isDisabled) {
+                    compositeSubscription.add(userRepository.updateUser(user, "inbox.optOut", isDisabled)
+                            .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+                }
+            }
         }
     }
 
@@ -295,6 +303,10 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
             preference.layoutResource = R.layout.preference_child_summary_error
             preference.summary = context?.getString(R.string.username_not_confirmed)
         }
+
+        val disablePMsPreference = findPreference("disablePMs") as? CheckBoxPreference
+        val inbox = user?.inbox
+        disablePMsPreference?.isChecked = inbox?.optOut ?: true
 
         if (user?.contributor?.admin == true) {
             serverUrlPreference?.isVisible = true
