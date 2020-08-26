@@ -16,6 +16,7 @@
             android:textColor="#000"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:lineSpacingExtra="2sp"
             android:textSize="15sp"
             tools:text="Habit Title" />
 

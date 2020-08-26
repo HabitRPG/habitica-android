@@ -96,8 +96,9 @@ class TaskFormActivity : BaseActivity() {
     private val tagsTitleView: TextView by bindView(R.id.tags_title)
     private val tagsWrapper: LinearLayout by bindView(R.id.tags_wrapper)
 
-    private val challengeNameView: TextView by bindView(R.id.challenge_name_view)
+    override var overrideModernHeader: Boolean? = false
 
+    private val challengeNameView: TextView by bindView(R.id.challenge_name_view)
     private var challenge: Challenge? = null
 
     private var isCreating = true
@@ -527,7 +528,7 @@ class TaskFormActivity : BaseActivity() {
             val alert = HabiticaAlertDialog(this)
             alert.setTitle(getString(R.string.delete_challenge_task_title))
             alert.setMessage(getString(R.string.delete_challenge_task_description, taskCount, challenge?.name ?: ""))
-            alert.addButton(R.string.leave_delete_task, true, true) { _, _ ->
+            alert.addButton(R.string.leave_delete_task, isPrimary = true, isDestructive = true) { _, _ ->
                 challenge?.let {
                     compositeSubscription.add(challengeRepository.leaveChallenge(it, "keep-all")
                             .flatMap { taskRepository.deleteTask(task?.id ?: "") }
@@ -537,7 +538,7 @@ class TaskFormActivity : BaseActivity() {
                             }, RxErrorHandler.handleEmptyError()))
                 }
             }
-            alert.addButton(getString(R.string.leave_delete_x_tasks, taskCount), false, true) { _, _ ->
+            alert.addButton(getString(R.string.leave_delete_x_tasks, taskCount), isPrimary = false, isDestructive = true) { _, _ ->
                 challenge?.let {
                     compositeSubscription.add(challengeRepository.leaveChallenge(it, "remove-all")
                             .flatMap { userRepository.retrieveUser(true) }
@@ -558,7 +559,7 @@ class TaskFormActivity : BaseActivity() {
     }
 
     companion object {
-        val SELECTED_TAGS_KEY = "selectedTags"
+        const val SELECTED_TAGS_KEY = "selectedTags"
         const val TASK_ID_KEY = "taskId"
         const val TASK_VALUE_KEY = "taskValue"
         const val USER_ID_KEY = "userId"

@@ -9,11 +9,7 @@
               android:background="?attr/headerBackgroundColor"
               android:focusable="true"
               android:focusableInTouchMode="true"
-              android:orientation="vertical"
-              android:paddingEnd="@dimen/header_border_spacing"
-              android:paddingLeft="@dimen/header_border_spacing"
-              android:paddingRight="@dimen/header_border_spacing"
-              android:paddingStart="@dimen/header_border_spacing">
+              android:orientation="vertical">
 
     <LinearLayout
             android:layout_width="match_parent"

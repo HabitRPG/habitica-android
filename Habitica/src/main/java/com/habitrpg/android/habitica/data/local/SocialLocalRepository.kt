@@ -12,7 +12,7 @@ import io.realm.RealmResults
 interface SocialLocalRepository : BaseLocalRepository {
     fun getPublicGuilds(): Flowable<RealmResults<Group>>
 
-    fun getUserGroups(userID: String): Flowable<RealmResults<Group>>
+    fun getUserGroups(userID: String, type: String?): Flowable<RealmResults<Group>>
     fun getGroups(type: String): Flowable<RealmResults<Group>>
 
     fun getGroup(id: String): Flowable<Group>

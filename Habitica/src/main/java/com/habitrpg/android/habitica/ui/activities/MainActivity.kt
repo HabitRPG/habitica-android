@@ -26,6 +26,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import com.facebook.drawee.view.SimpleDraweeView
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.perf.FirebasePerformance
@@ -195,7 +196,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                 .get(NotificationsViewModel::class.java)
         notificationsViewModel = viewModel
 
-        val drawerLayout = findViewById<androidx.drawerlayout.widget.DrawerLayout>(R.id.drawer_layout)
+        val drawerLayout = findViewById<DrawerLayout>(R.id.drawer_layout)
 
         drawerFragment = supportFragmentManager.findFragmentById(R.id.navigation_drawer) as? NavigationDrawerFragment
 
@@ -216,11 +217,11 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
             override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
                 val modernHeaderStyle = sharedPreferences.getBoolean("modern_header_style", true)
                 if (modernHeaderStyle && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    if (slideOffset < 0.1f && isOpeningDrawer == null) {
+                    if (slideOffset < 0.5f && isOpeningDrawer == null) {
                         window.statusBarColor = getThemeColor(R.attr.colorPrimaryDark)
                         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE
                         isOpeningDrawer = true
-                    } else if (slideOffset > 0.9f && isOpeningDrawer == null) {
+                    } else if (slideOffset > 0.5f && isOpeningDrawer == null) {
                         window.statusBarColor = getThemeColor(R.attr.headerBackgroundColor)
                         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
                         isOpeningDrawer = false
@@ -229,23 +230,34 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
             }
 
             override fun onDrawerOpened(drawerView: View) {
+                val modernHeaderStyle = sharedPreferences.getBoolean("modern_header_style", true)
+                if (modernHeaderStyle && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    window.statusBarColor = getThemeColor(R.attr.colorPrimaryDark)
+                    window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE
+                }
                 isOpeningDrawer = null
             }
 
             override fun onDrawerClosed(drawerView: View) {
+                val modernHeaderStyle = sharedPreferences.getBoolean("modern_header_style", true)
+                if (modernHeaderStyle && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    window.statusBarColor = getThemeColor(R.attr.headerBackgroundColor)
+                    window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+                }
                 isOpeningDrawer = null
             }
 
             override fun onDrawerStateChanged(newState: Int) {
 
             }
-
         })
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeButtonEnabled(true)
 
-        val navigationController = findNavController(R.id.nav_host_fragment)
+        val navHostFragment = supportFragmentManager
+                .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navigationController = navHostFragment.navController
         navigationController.addOnDestinationChangedListener { _, destination, arguments ->
             updateToolbarTitle(destination, arguments)
         }

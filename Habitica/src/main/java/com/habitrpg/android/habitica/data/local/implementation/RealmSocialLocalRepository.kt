@@ -106,14 +106,14 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
             .asFlowable()
             .filter { it.isLoaded }
 
-    override fun getUserGroups(userID: String): Flowable<RealmResults<Group>> = realm.where(GroupMembership::class.java)
+    override fun getUserGroups(userID: String, type: String?): Flowable<RealmResults<Group>> = realm.where(GroupMembership::class.java)
             .equalTo("userID", userID)
             .findAll()
             .asFlowable()
             .filter { it.isLoaded }
             .flatMap {memberships ->
                 realm.where(Group::class.java)
-                        .equalTo("type", "guild")
+                        .equalTo("type", type ?: "guild")
                         .notEqualTo("id", Group.TAVERN_ID)
                         .`in`("id", memberships.map {
                             return@map it.groupID

@@ -78,5 +78,6 @@ class RewardViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> 
             priceLabel.setTextColor(ContextCompat.getColor(context, R.color.gray_300))
             buyButton.setBackgroundColor(ColorUtils.setAlphaComponent(ContextCompat.getColor(context, R.color.gray_600), 127))
         }
+        streakTextView.visibility = View.GONE
     }
 }

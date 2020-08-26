@@ -276,7 +276,7 @@
     <style name="Toolbar" parent="Base.ThemeOverlay.AppCompat.ActionBar">
         <item name="android:textColorPrimary">?attr/toolbarContentColor</item>
         <item name="textColorSecondary">?attr/toolbarContentColor</item>
-        <item name="background">?attr/colorPrimary</item>
+        <item name="background">?attr/headerBackgroundColor</item>
         <item name="actionMenuTextColor">?attr/toolbarContentColor</item>
         <item name="android:actionMenuTextColor">?attr/toolbarContentColor</item>
     </style>
