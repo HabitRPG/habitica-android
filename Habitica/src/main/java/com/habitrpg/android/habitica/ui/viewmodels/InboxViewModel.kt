@@ -37,7 +37,7 @@ class InboxViewModel(recipientID: String?, recipientUsername: String?) : BaseVie
             .setEnablePlaceholders(false)
             .build()
 
-    private val dataSourceFactory = MessagesDataSourceFactory(socialRepository, recipientID)
+    private val dataSourceFactory = MessagesDataSourceFactory(socialRepository, recipientID, ChatMessage())
     val messages: LiveData<PagedList<ChatMessage>> = dataSourceFactory.toLiveData(config)
     private val member: MutableLiveData<Member?> by lazy {
         MutableLiveData<Member?>()
@@ -86,7 +86,7 @@ class InboxViewModel(recipientID: String?, recipientUsername: String?) : BaseVie
     }
 }
 
-private class MessagesDataSource(val socialRepository: SocialRepository, var recipientID: String?):
+private class MessagesDataSource(val socialRepository: SocialRepository, var recipientID: String?, var footer : ChatMessage?):
         PositionalDataSource<ChatMessage>() {
     private var lastFetchWasEnd = false
     override fun loadRange(params: LoadRangeParams, callback: LoadRangeCallback<ChatMessage>) {
@@ -99,8 +99,15 @@ private class MessagesDataSource(val socialRepository: SocialRepository, var rec
             val page = ceil(params.startPosition.toFloat() / params.loadSize.toFloat()).toInt()
             socialRepository.retrieveInboxMessages(recipientID ?: "", page)
                     .subscribe(Consumer {
-                        if (it.size != 10) lastFetchWasEnd = true
-                        callback.onResult(it)
+                        if (it.size < 10) {
+                            lastFetchWasEnd = true
+                            if (footer != null)
+                                callback.onResult(it.plusElement(footer!!))
+                            else
+                                callback.onResult(it)
+                        }
+                        else
+                            callback.onResult(it)
                     }, RxErrorHandler.handleEmptyError())
         }
     }
@@ -116,23 +123,28 @@ private class MessagesDataSource(val socialRepository: SocialRepository, var rec
                             if (recipientID?.isNotBlank() != true) { return@flatMapPublisher Flowable.just(it) }
                             socialRepository.retrieveInboxMessages(recipientID ?: "", 0)
                                     .doOnNext {
-                                        messages -> if (messages.size != 10) lastFetchWasEnd = true
+                                        messages -> if (messages.size < 10) {
+                                        lastFetchWasEnd = true
+                                    }
                                     }
                         } else {
                             Flowable.just(it)
                         }
                     }
                     .subscribe(Consumer {
-                        callback.onResult(it, 0)
+                        if (it.size < 10 && footer != null)
+                            callback.onResult(it.plusElement(footer!!), 0)
+                        else
+                            callback.onResult(it, 0)
                     }, RxErrorHandler.handleEmptyError())
         }
     }
 }
 
-private class MessagesDataSourceFactory(val socialRepository: SocialRepository, var recipientID: String?) :
+private class MessagesDataSourceFactory(val socialRepository: SocialRepository, var recipientID: String?, val footer : ChatMessage?) :
         DataSource.Factory<Int, ChatMessage>() {
     val sourceLiveData = MutableLiveData<MessagesDataSource>()
-    var latestSource: MessagesDataSource = MessagesDataSource(socialRepository, recipientID)
+    var latestSource: MessagesDataSource = MessagesDataSource(socialRepository, recipientID, footer)
 
     fun updateRecipientID(newID: String?) {
         recipientID = newID
@@ -140,7 +152,7 @@ private class MessagesDataSourceFactory(val socialRepository: SocialRepository, 
     }
 
     override fun create(): DataSource<Int, ChatMessage> {
-        latestSource = MessagesDataSource(socialRepository, recipientID)
+        latestSource = MessagesDataSource(socialRepository, recipientID, footer)
         sourceLiveData.postValue(latestSource)
         return latestSource
     }
