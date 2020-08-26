@@ -324,9 +324,14 @@ class ChallengeFormActivity : BaseActivity() {
 
         locationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         compositeSubscription.add(socialRepository.getUserGroups("guild").zipWith(userRepository.getUser()
-                .map { it.party?.id ?: "" }
+                .map { "" }
                 .distinctUntilChanged()
-                .flatMap { socialRepository.getGroup(it) })
+                .flatMap {
+                    if (it.isBlank()) {
+                        return@flatMap Flowable.empty<Group>()
+                    }
+                    socialRepository.retrieveGroup(it)
+                })
                 .subscribe(Consumer { groups ->
             val mutableGroups = groups.first.toMutableList()
             if (groups.first.firstOrNull { it.id == "00000000-0000-4000-A000-000000000000" } == null) {
