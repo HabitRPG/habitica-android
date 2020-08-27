@@ -121,7 +121,7 @@ class PurchaseHandler(activity: Activity, val crashlyticsProxy: CrashlyticsProxy
                     }
                 }
 
-                override fun onError(i: Int, e: Exception) { crashlyticsProxy.fabricLogE("Purchase", "Consume", e) }
+                override fun onError(i: Int, e: Exception) { crashlyticsProxy.logException(e) }
             })
         }
     }
@@ -158,7 +158,7 @@ class PurchaseHandler(activity: Activity, val crashlyticsProxy: CrashlyticsProxy
                             }
 
                             override fun onError(i: Int, e: Exception) {
-                                crashlyticsProxy.fabricLogE("Purchase", "Consume", e)
+                                crashlyticsProxy.logException(e)
                             }
                         })
                     }
@@ -166,7 +166,7 @@ class PurchaseHandler(activity: Activity, val crashlyticsProxy: CrashlyticsProxy
             }
 
             override fun onError(i: Int, e: Exception) {
-                crashlyticsProxy.fabricLogE("Purchase", "getAllPurchases", e)
+                crashlyticsProxy.logException(e)
             }
         })
     }
@@ -180,7 +180,7 @@ class PurchaseHandler(activity: Activity, val crashlyticsProxy: CrashlyticsProxy
                         override fun onSuccess(o: Any) { /* no-op */ }
 
                         override fun onError(i: Int, e: Exception) {
-                            crashlyticsProxy.fabricLogE("PurchaseConsumeException", "Consume", e)
+                            crashlyticsProxy.logException(e)
                         }
                     })
                 }
@@ -200,7 +200,7 @@ class PurchaseHandler(activity: Activity, val crashlyticsProxy: CrashlyticsProxy
                         override fun onSuccess(o: Any) { /* no-op */ }
 
                         override fun onError(i: Int, e: Exception) {
-                            crashlyticsProxy.fabricLogE("PurchaseConsumeException", "Consume", e)
+                            crashlyticsProxy.logException(e)
                         }
                     })
                 }
@@ -216,7 +216,7 @@ class PurchaseHandler(activity: Activity, val crashlyticsProxy: CrashlyticsProxy
                 override fun onSuccess(result: Any) { /* no-op */ }
 
                 override fun onError(response: Int, e: Exception) {
-                    crashlyticsProxy.fabricLogE("PurchaseConsumeException", "Consume", e)
+                    crashlyticsProxy.logException(e)
                 }
             })
         }

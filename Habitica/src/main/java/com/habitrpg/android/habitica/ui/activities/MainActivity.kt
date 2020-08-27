@@ -255,9 +255,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeButtonEnabled(true)
 
-        val navHostFragment = supportFragmentManager
-                .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        val navigationController = navHostFragment.navController
+        val navigationController = findNavController(R.id.nav_host_fragment)
         navigationController.addOnDestinationChangedListener { _, destination, arguments ->
             updateToolbarTitle(destination, arguments)
         }
