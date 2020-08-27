@@ -5,7 +5,9 @@ import android.content.Context
 import android.content.Intent
 import android.os.Handler
 import android.text.SpannableStringBuilder
+import android.text.format.DateUtils
 import android.text.style.DynamicDrawableSpan
+import android.util.Log
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService
 import com.habitrpg.android.habitica.HabiticaBaseApplication
@@ -35,6 +37,16 @@ abstract class TaskListFactory internal constructor(val context: Context, intent
         this.reloadData = false
     }
 
+    private fun isTodayOrNull(date: Date?): Boolean {
+
+        if (date == null || DateUtils.isToday(date.time)){
+            return true;
+        }
+
+        return false;
+    }
+
+
     private fun loadData() {
         if (!this::taskRepository.isInitialized) {
             return
@@ -45,7 +57,7 @@ abstract class TaskListFactory internal constructor(val context: Context, intent
                     .firstElement()
                     .toObservable()
                     .flatMap { Observable.fromIterable(it) }
-                    .filter { task -> task.type == Task.TYPE_TODO && !task.completed || task.isDisplayedActive }
+                    .filter { task -> task.type == Task.TYPE_TODO && isTodayOrNull(task.dueDate) && !task.completed || task.isDisplayedActive }
                     .toList()
                     .flatMapMaybe { tasks -> taskRepository.getTaskCopies(tasks).firstElement() }
                     .subscribeOn(AndroidSchedulers.mainThread())
