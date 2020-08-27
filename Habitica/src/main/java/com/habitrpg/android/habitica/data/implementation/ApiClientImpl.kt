@@ -87,7 +87,6 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
 
         HabiticaBaseApplication.userComponent?.inject(this)
         crashlyticsProxy.setUserIdentifier(this.hostConfig.userID)
-        crashlyticsProxy.setUserName(this.hostConfig.userID)
         Amplitude.getInstance().userId = this.hostConfig.userID
         buildRetrofit()
     }
@@ -290,7 +289,6 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
         this.hostConfig.userID = userID ?: ""
         this.hostConfig.apiKey = apiToken ?: ""
         crashlyticsProxy.setUserIdentifier(this.hostConfig.userID)
-        crashlyticsProxy.setUserName(this.hostConfig.userID)
         Amplitude.getInstance().userId = this.hostConfig.userID
     }
 
