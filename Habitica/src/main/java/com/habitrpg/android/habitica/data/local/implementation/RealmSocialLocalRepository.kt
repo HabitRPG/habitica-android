@@ -259,7 +259,6 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
                 .equalTo("isInboxMessage", true)
                 .equalTo("uuid", replyToUserID)
                 .equalTo("userID", userID)
-                .sort("timestamp", Sort.DESCENDING)
                 .findAll()
                 .asFlowable()
                 .filter { it.isLoaded }
