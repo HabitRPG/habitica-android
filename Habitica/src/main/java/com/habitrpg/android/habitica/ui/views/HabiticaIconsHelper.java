@@ -786,4 +786,22 @@ public class HabiticaIconsHelper {
 
         return imageOfHabitControlMinus;
     }
+
+    public static Bitmap imageOfFallGemPromoBG(int redGemColor, int greenGemColor, int blueGemColor, int purpleGemColor) {
+        Bitmap imageOfFallGemPromoBG = Bitmap.createBitmap(scaleSize(132), scaleSize(35), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(imageOfFallGemPromoBG);
+        canvas.scale(displayDensity, displayDensity);
+        HabiticaIcons.drawFallGemPromoBG(canvas, redGemColor, greenGemColor, blueGemColor, purpleGemColor);
+
+        return imageOfFallGemPromoBG;
+    }
+
+    public static Bitmap imageOfSpookyGemPromoBG() {
+        Bitmap imageOfSpookyGemPromoBG = Bitmap.createBitmap(scaleSize(132), scaleSize(35), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(imageOfSpookyGemPromoBG);
+        canvas.scale(displayDensity, displayDensity);
+        HabiticaIcons.drawSpookyGemPromoBG(canvas);
+
+        return imageOfSpookyGemPromoBG;
+    }
 }
