@@ -10,11 +10,10 @@ import com.habitrpg.android.habitica.extensions.layoutInflater
 
 class GemPurchaseOptionsView(context: Context, attrs: AttributeSet) : FrameLayout(context, attrs) {
 
-    private var binding: PurchaseGemViewBinding = PurchaseGemViewBinding.inflate(context.layoutInflater, this, true)
+    var binding: PurchaseGemViewBinding = PurchaseGemViewBinding.inflate(context.layoutInflater, this, true)
     var sku: String? = null
 
     init {
-
         val a = context.theme.obtainStyledAttributes(
                 attrs,
                 R.styleable.GemPurchaseOptionsView,

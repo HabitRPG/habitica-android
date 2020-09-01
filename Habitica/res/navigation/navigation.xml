@@ -431,4 +431,8 @@
         android:id="@+id/adventureGuideActivity"
         android:name="com.habitrpg.android.habitica.ui.activities.AdventureGuideActivity"
         android:label="" />
+    <fragment
+        android:id="@+id/promoInfoFragment"
+        android:name="com.habitrpg.android.habitica.ui.fragments.PromoInfoFragment"
+        android:label="PromoInfoFragment" />
 </navigation>

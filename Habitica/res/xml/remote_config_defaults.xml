@@ -92,5 +92,9 @@
         <key>enableAdventureGuide</key>
         <value>false</value>
     </entry>
+    <entry>
+        <key>activePromo</key>
+        <value> </value>
+    </entry>
 </defaultsMap>
     <!-- END xml_defaults -->

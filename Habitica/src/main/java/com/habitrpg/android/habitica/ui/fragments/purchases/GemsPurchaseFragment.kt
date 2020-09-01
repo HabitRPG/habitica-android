@@ -55,22 +55,33 @@ class GemsPurchaseFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.gems4View?.setOnPurchaseClickListener(View.OnClickListener { purchaseGems(PurchaseTypes.Purchase4Gems) })
-        binding.gems21View?.setOnPurchaseClickListener(View.OnClickListener { purchaseGems(PurchaseTypes.Purchase21Gems) })
-        binding.gems42View?.setOnPurchaseClickListener(View.OnClickListener { purchaseGems(PurchaseTypes.Purchase42Gems) })
-        binding.gems84View?.setOnPurchaseClickListener(View.OnClickListener { purchaseGems(PurchaseTypes.Purchase84Gems) })
+        binding.gems4View.setOnPurchaseClickListener(View.OnClickListener { purchaseGems(PurchaseTypes.Purchase4Gems) })
+        binding.gems21View.setOnPurchaseClickListener(View.OnClickListener { purchaseGems(PurchaseTypes.Purchase21Gems) })
+        binding.gems42View.setOnPurchaseClickListener(View.OnClickListener { purchaseGems(PurchaseTypes.Purchase42Gems) })
+        binding.gems84View.setOnPurchaseClickListener(View.OnClickListener { purchaseGems(PurchaseTypes.Purchase84Gems) })
 
         val heartDrawable = BitmapDrawable(resources, HabiticaIconsHelper.imageOfHeartLarge())
-        binding.supportTextView?.setCompoundDrawablesWithIntrinsicBounds(null, null, null, heartDrawable)
+        binding.supportTextView.setCompoundDrawablesWithIntrinsicBounds(null, null, null, heartDrawable)
 
         compositeSubscription.add(userRepository.getUser().subscribe(Consumer {
             binding.subscriptionPromo.visibility = if (it.isSubscribed) View.GONE else View.VISIBLE
         }, RxErrorHandler.handleEmptyError()))
 
-        binding.giftGemsButton?.setOnClickListener { showGiftGemsDialog() }
+        binding.giftGemsButton.setOnClickListener { showGiftGemsDialog() }
 
-        binding.giftSubscriptionContainer?.isVisible = appConfigManager.enableGiftOneGetOne()
+        binding.giftSubscriptionContainer.isVisible = appConfigManager.enableGiftOneGetOne()
         binding.giftSubscriptionContainer.setOnClickListener { showGiftSubscriptionDialog() }
+
+        val promo = appConfigManager.activePromo()
+        if (promo != null) {
+            promo.configurePurchaseBanner(binding)
+            promo.configureGemView(binding.gems4View.binding, 4)
+            promo.configureGemView(binding.gems21View.binding, 21)
+            promo.configureGemView(binding.gems42View.binding, 42)
+            promo.configureGemView(binding.gems84View.binding, 84)
+        } else {
+            binding.promoBanner.visibility = View.GONE
+        }
     }
 
     override fun setupCheckout() {
