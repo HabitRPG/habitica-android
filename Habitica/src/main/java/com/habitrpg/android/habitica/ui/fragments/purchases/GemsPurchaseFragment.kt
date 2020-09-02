@@ -13,10 +13,7 @@ import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentGemPurchaseBinding
 import com.habitrpg.android.habitica.extensions.addCancelButton
-import com.habitrpg.android.habitica.helpers.AppConfigManager
-import com.habitrpg.android.habitica.helpers.PurchaseHandler
-import com.habitrpg.android.habitica.helpers.PurchaseTypes
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.*
 import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
 import com.habitrpg.android.habitica.ui.GemPurchaseOptionsView
 import com.habitrpg.android.habitica.ui.activities.GemPurchaseActivity
@@ -79,6 +76,9 @@ class GemsPurchaseFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
             promo.configureGemView(binding.gems21View.binding, 21)
             promo.configureGemView(binding.gems42View.binding, 42)
             promo.configureGemView(binding.gems84View.binding, 84)
+            binding.promoBanner.setOnClickListener {
+                MainNavigationController.navigate(R.id.promoInfoFragment)
+            }
         } else {
             binding.promoBanner.visibility = View.GONE
         }
