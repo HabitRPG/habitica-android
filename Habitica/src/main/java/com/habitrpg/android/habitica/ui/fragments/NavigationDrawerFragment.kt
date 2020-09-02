@@ -268,11 +268,15 @@ class NavigationDrawerFragment : DialogFragment() {
             context?.let { subscriptionItem?.pillBackground = ContextCompat.getDrawable(it, R.drawable.pill_bg_teal) }
         }
         if (activePromo != null) {
+            var item: HabiticaDrawerItem? = null
             if (activePromo?.promoType == PromoType.GEMS_AMOUNT || activePromo?.promoType == PromoType.GEMS_PRICE) {
-                val gemPurchaseItem = getItemWithIdentifier(SIDEBAR_GEMS)
-                gemPurchaseItem?.pillText = context?.getString(R.string.sale)
-                gemPurchaseItem?.pillBackground = context?.let { activePromo?.pillBackgroundDrawable(it) }
+                item = getItemWithIdentifier(SIDEBAR_GEMS)
             }
+            if (activePromo?.promoType == PromoType.SUBSCRIPTION) {
+                item = getItemWithIdentifier(SIDEBAR_GEMS)
+            }
+            item?.pillText = context?.getString(R.string.sale)
+            item?.pillBackground = context?.let { activePromo?.pillBackgroundDrawable(it) }
         }
         subscriptionItem?.let { updateItem(it) }
 
