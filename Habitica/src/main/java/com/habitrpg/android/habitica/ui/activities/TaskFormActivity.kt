@@ -506,7 +506,7 @@ class TaskFormActivity : BaseActivity() {
     }
 
     private fun deleteTask() {
-        if (task?.challengeID?.isNotBlank() == true && task?.challengeBroken?.isNotBlank() != true) {
+        if (task?.challengeID?.isNotBlank() == true) {
             showChallengeDeleteTask()
             return
         }
