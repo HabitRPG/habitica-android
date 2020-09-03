@@ -69,7 +69,7 @@ open class ShopItem : RealmObject() {
         get() = "pets" == purchaseType || "mounts" == purchaseType
 
     val canPurchaseBulk: Boolean
-        get() = "eggs" == purchaseType || "hatchingPotions" == purchaseType || "food" == purchaseType
+        get() = "eggs" == purchaseType || "hatchingPotions" == purchaseType || "food" == purchaseType || "gems" == purchaseType
 
     fun canAfford(user: User?, quantity: Int): Boolean = when(currency) {
         "gold" -> (value * quantity) <= user?.stats?.gp ?: 0.0
