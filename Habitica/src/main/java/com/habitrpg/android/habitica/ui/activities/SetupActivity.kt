@@ -73,8 +73,8 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        compositeSubscription.add(userRepository.getUser().subscribe(Consumer { this.onUserReceived(it) }, RxErrorHandler.handleEmptyError()))
-        compositeSubscription.add(userRepository.retrieveUser().subscribe(Consumer {}, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(userRepository.getUser().subscribe({ this.onUserReceived(it) }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(userRepository.retrieveUser().subscribe({}, RxErrorHandler.handleEmptyError()))
         val additionalData = HashMap<String, Any>()
         additionalData["status"] = "displayed"
         AmplitudeManager.sendEvent("setup", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT, additionalData)
@@ -83,7 +83,7 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
         for (language in resources.getStringArray(R.array.LanguageValues)) {
             if (language == currentDeviceLanguage) {
                 compositeSubscription.add(apiClient.registrationLanguage(currentDeviceLanguage)
-                        .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+                        .subscribe({ }, RxErrorHandler.handleEmptyError()))
             }
         }
 
@@ -137,7 +137,7 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
             this.completedSetup = true
             createdTasks = true
             newTasks?.let {
-                this.taskRepository.createTasks(it).subscribe(Consumer { onUserReceived(user) }, RxErrorHandler.handleEmptyError())
+                this.taskRepository.createTasks(it).subscribe({ onUserReceived(user) }, RxErrorHandler.handleEmptyError())
             }
         } else if (pager.currentItem == 0) {
 
@@ -205,7 +205,7 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
             additionalData["status"] = "completed"
             AmplitudeManager.sendEvent("setup", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT, additionalData)
 
-            compositeSubscription.add(userRepository.updateUser(user, "flags.welcomed", true).subscribe(Consumer {
+            compositeSubscription.add(userRepository.updateUser(user, "flags.welcomed", true).subscribe({
                 if (!compositeSubscription.isDisposed) {
                     compositeSubscription.dispose()
                 }
@@ -231,7 +231,7 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
     private fun confirmNames(displayName: String, username: String) {
         compositeSubscription.add(userRepository.updateUser(null, "profile.name", displayName)
                 .flatMap { userRepository.updateLoginName(username).toFlowable() }
-                .subscribe(Consumer {  }, RxErrorHandler.handleEmptyError()))
+                .subscribe({  }, RxErrorHandler.handleEmptyError()))
     }
 
     private inner class ViewPageAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm), IconPagerAdapter {

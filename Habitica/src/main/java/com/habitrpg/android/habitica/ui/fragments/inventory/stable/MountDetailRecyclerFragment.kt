@@ -88,7 +88,7 @@ class MountDetailRecyclerFragment : BaseMainFragment() {
             this.loadItems()
 
             adapter?.getEquipFlowable()?.flatMap { key -> inventoryRepository.equip(user, "mount", key) }
-                    ?.subscribe(Consumer { }, RxErrorHandler.handleEmptyError())?.let { compositeSubscription.add(it) }
+                    ?.subscribe({ }, RxErrorHandler.handleEmptyError())?.let { compositeSubscription.add(it) }
         }
 
         if (savedInstanceState != null) {
@@ -128,7 +128,7 @@ class MountDetailRecyclerFragment : BaseMainFragment() {
                         return@map mountMap
                     }.doOnNext {
                         adapter?.setOwnedMounts(it)
-                    }, BiFunction<RealmResults<out Mount>, Map<String, OwnedObject>, List<Any>> { unsortedAnimals, ownedAnimals ->
+                    }, { unsortedAnimals, ownedAnimals ->
                         val items = mutableListOf<Any>()
                         var lastMount: Mount? = null
                         var currentSection: StableSection? = null
@@ -149,7 +149,7 @@ class MountDetailRecyclerFragment : BaseMainFragment() {
                         }
                         items
                     })
-                    .subscribe(Consumer { adapter?.setItemList(it) }, RxErrorHandler.handleEmptyError()))
+                    .subscribe({ adapter?.setItemList(it) }, RxErrorHandler.handleEmptyError()))
         }
     }
 

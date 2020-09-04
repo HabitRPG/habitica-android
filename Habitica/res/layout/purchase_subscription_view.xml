@@ -38,7 +38,7 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:id="@+id/priceLabel"
-                android:textColor="@color/gray_50"
+                android:textColor="@color/text_primary"
                 android:textSize="24sp"
                 android:fontFamily="@string/font_family_medium"
                 tools:text="$ 21" />

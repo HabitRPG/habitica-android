@@ -55,7 +55,7 @@ open class NotificationsViewModel : BaseViewModel() {
         customNotifications.onNext(emptyList())
 
         disposable.add(userRepository.getUser()
-                .subscribe(Consumer {
+                .subscribe({
                     party = it.party
                     var notifications = convertInvitationsToNotifications(it)
                     if (it.flags?.newStuff == true) {
@@ -181,7 +181,7 @@ open class NotificationsViewModel : BaseViewModel() {
         }
 
         disposable.add(userRepository.readNotification(notification.id)
-                .subscribe(Consumer {}, RxErrorHandler.handleEmptyError()))
+                .subscribe({}, RxErrorHandler.handleEmptyError()))
     }
 
     fun dismissAllNotifications(notifications: List<Notification>) {
@@ -198,7 +198,7 @@ open class NotificationsViewModel : BaseViewModel() {
         notificationIds["notificationIds"] = dismissableIds
 
         disposable.add(userRepository.readNotifications(notificationIds)
-                .subscribe(Consumer {}, RxErrorHandler.handleEmptyError()))
+                .subscribe({}, RxErrorHandler.handleEmptyError()))
     }
 
     fun markNotificationsAsSeen(notifications: List<Notification>) {
@@ -215,7 +215,7 @@ open class NotificationsViewModel : BaseViewModel() {
         notificationIds["notificationIds"] = unseenIds
 
         disposable.add(userRepository.seeNotifications(notificationIds)
-                .subscribe(Consumer {}, RxErrorHandler.handleEmptyError()))
+                .subscribe({}, RxErrorHandler.handleEmptyError()))
     }
 
     private fun findNotification(id: String): Notification? {
@@ -315,7 +315,7 @@ open class NotificationsViewModel : BaseViewModel() {
         groupId?.let {
             disposable.add(socialRepository.joinGroup(it)
                     .flatMap { userRepository.retrieveUser(false, forced = true) }
-                    .subscribe(Consumer {
+                    .subscribe({
                         refreshNotifications()
                     }, RxErrorHandler.handleEmptyError()))
         }
@@ -325,7 +325,7 @@ open class NotificationsViewModel : BaseViewModel() {
         groupId?.let {
             disposable.add(socialRepository.rejectGroupInvite(it)
                     .flatMap { userRepository.retrieveUser(false, forced = true) }
-                    .subscribe(Consumer {
+                    .subscribe({
                         refreshNotifications()
                     }, RxErrorHandler.handleEmptyError()))
         }
@@ -335,7 +335,7 @@ open class NotificationsViewModel : BaseViewModel() {
         party?.id?.let {
             disposable.add(socialRepository.acceptQuest(null, it)
                     .flatMap { userRepository.retrieveUser(false, forced = true) }
-                    .subscribe(Consumer {
+                    .subscribe({
                         refreshNotifications()
                     }, RxErrorHandler.handleEmptyError()))
         }
@@ -345,7 +345,7 @@ open class NotificationsViewModel : BaseViewModel() {
         party?.id?.let {
             disposable.add(socialRepository.rejectQuest(null, it)
                     .flatMap { userRepository.retrieveUser(false, forced = true) }
-                    .subscribe(Consumer {
+                    .subscribe({
                         refreshNotifications()
                     }, RxErrorHandler.handleEmptyError()))
         }

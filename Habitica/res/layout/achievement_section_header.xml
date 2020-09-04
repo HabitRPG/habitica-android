@@ -24,7 +24,7 @@
         android:background="@drawable/achievement_section_badge_bg"
         android:paddingStart="2dp"
         android:paddingEnd="2dp"
-        android:textColor="@color/gray_200"
+        android:textColor="@color/text_ternary"
         style="@style/Overline"
         tools:text="1"/>
 </LinearLayout>

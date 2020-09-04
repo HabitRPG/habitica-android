@@ -70,8 +70,7 @@ public class ContributorInfo extends RealmObject {
     }
 
     public int getContributorColor() {
-        int rColor = android.R.color.black;
-
+        int rColor = R.color.text_primary;
 
         if (CONTRIBUTOR_COLOR_DICT.get(this.level, -1) > 0) {
             rColor = CONTRIBUTOR_COLOR_DICT.get(this.level);

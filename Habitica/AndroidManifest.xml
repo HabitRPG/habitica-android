@@ -129,8 +129,6 @@
                 android:name="com.facebook.sdk.AutoLogAppEventsEnabled"
                 android:value="false"/>
         <activity
-            android:name=".ui.activities.AboutActivity" />
-        <activity
             android:name=".ui.activities.TaskFormActivity"
             android:parentActivityName=".ui.activities.MainActivity"
             tools:ignore="UnusedAttribute"

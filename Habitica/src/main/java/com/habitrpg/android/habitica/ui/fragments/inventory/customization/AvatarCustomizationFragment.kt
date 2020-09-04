@@ -47,7 +47,7 @@ class AvatarCustomizationFragment : BaseMainFragment() {
                 .flatMap { customization ->
                     userRepository.useCustomization(user, customization.type ?: "", customization.category, customization.identifier ?: "")
                 }
-                .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+                .subscribe({ }, RxErrorHandler.handleEmptyError()))
         compositeSubscription.add(adapter.getUnlockCustomizationEvents()
                 .flatMap { customization ->
                     val user = this.user
@@ -59,7 +59,7 @@ class AvatarCustomizationFragment : BaseMainFragment() {
                 }
                 .flatMap { userRepository.retrieveUser(withTasks = false, forced = true) }
                 .flatMap { inventoryRepository.retrieveInAppRewards() }
-                .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+                .subscribe({ }, RxErrorHandler.handleEmptyError()))
         compositeSubscription.add(adapter.getUnlockSetEvents()
                 .flatMap { set ->
                     val user = this.user
@@ -71,7 +71,7 @@ class AvatarCustomizationFragment : BaseMainFragment() {
                  }
                 .flatMap { userRepository.retrieveUser(withTasks = false, forced = true) }
                 .flatMap { inventoryRepository.retrieveInAppRewards() }
-                .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+                .subscribe({ }, RxErrorHandler.handleEmptyError()))
 
 
         return view
@@ -106,7 +106,7 @@ class AvatarCustomizationFragment : BaseMainFragment() {
         recyclerView.itemAnimator = SafeDefaultItemAnimator()
         this.loadCustomizations()
 
-        compositeSubscription.add(userRepository.getUser().subscribeWithErrorHandler(Consumer {
+        compositeSubscription.add(userRepository.getUser().subscribeWithErrorHandler({
             updateUser(it)
         }))
     }
@@ -122,10 +122,10 @@ class AvatarCustomizationFragment : BaseMainFragment() {
 
     private fun loadCustomizations() {
         val type = this.type ?: return
-        compositeSubscription.add(customizationRepository.getCustomizations(type, category, false).subscribe(Consumer<RealmResults<Customization>> { adapter.setCustomizations(it) }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(customizationRepository.getCustomizations(type, category, false).subscribe({ adapter.setCustomizations(it) }, RxErrorHandler.handleEmptyError()))
         if (type == "hair" && (category == "beard" || category == "mustache")) {
             val otherCategory = if (category == "mustache") "beard" else "mustache"
-            compositeSubscription.add(customizationRepository.getCustomizations(type, otherCategory, true).subscribe(Consumer<RealmResults<Customization>> { adapter.additionalSetItems = it }, RxErrorHandler.handleEmptyError()))
+            compositeSubscription.add(customizationRepository.getCustomizations(type, otherCategory, true).subscribe({ adapter.additionalSetItems = it }, RxErrorHandler.handleEmptyError()))
         }
     }
 

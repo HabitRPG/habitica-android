@@ -25,15 +25,12 @@ import com.habitrpg.android.habitica.ui.AvatarView
 import com.habitrpg.android.habitica.ui.activities.ChallengeFormActivity
 import com.habitrpg.android.habitica.ui.activities.FullProfileActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
-import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.helpers.setMarkdown
 import com.habitrpg.android.habitica.ui.views.HabiticaEmojiTextView
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.social.UsernameLabel
-import io.reactivex.functions.Action
-import io.reactivex.functions.Consumer
 import net.pherth.android.emoji_library.EmojiParser
 import java.util.*
 import javax.inject.Inject
@@ -105,8 +102,8 @@ class ChallengeDetailFragment: BaseMainFragment() {
                     .flatMap { creatorID ->
                         return@flatMap socialRepository.getMember(creatorID)
                     }
-                    .subscribe(Consumer { set(it)}, RxErrorHandler.handleEmptyError()))
-            compositeSubscription.add(challengeRepository.getChallengeTasks(id).subscribe(Consumer { taskList ->
+                    .subscribe({ set(it)}, RxErrorHandler.handleEmptyError()))
+            compositeSubscription.add(challengeRepository.getChallengeTasks(id).subscribe({ taskList ->
                 taskGrouplayout?.removeAllViewsInLayout()
 
                 val todos = ArrayList<Task>()
@@ -140,14 +137,14 @@ class ChallengeDetailFragment: BaseMainFragment() {
                 }
             }, RxErrorHandler.handleEmptyError()))
 
-            compositeSubscription.add(challengeRepository.isChallengeMember(id).subscribe(Consumer { isMember ->
+            compositeSubscription.add(challengeRepository.isChallengeMember(id).subscribe({ isMember ->
                 setJoined(isMember)
             }, RxErrorHandler.handleEmptyError()))
         }
 
         joinButton?.setOnClickListener { challenge?.let { challenge -> challengeRepository.joinChallenge(challenge)
                 .flatMap { userRepository.retrieveUser(true) }
-                .subscribe(Consumer {}, RxErrorHandler.handleEmptyError()) } }
+                .subscribe({}, RxErrorHandler.handleEmptyError()) } }
         leaveButton?.setOnClickListener { showChallengeLeaveDialog() }
 
         refresh()
@@ -184,7 +181,7 @@ class ChallengeDetailFragment: BaseMainFragment() {
         challengeID?.let {id ->
             challengeRepository.retrieveChallenge(id)
                     .flatMap { challengeRepository.retrieveChallengeTasks(id) }
-                    .subscribe(Consumer {  }, RxErrorHandler.handleEmptyError(), Action {  })
+                    .subscribe({ }, RxErrorHandler.handleEmptyError(), { })
         }
     }
 
@@ -357,13 +354,13 @@ class ChallengeDetailFragment: BaseMainFragment() {
         val alert = HabiticaAlertDialog(context)
         alert.setTitle(this.getString(R.string.challenge_leave_title))
         alert.setMessage(this.getString(R.string.challenge_leave_description))
-        alert.addButton(R.string.leave_keep_tasks, true) { dialog, _ ->
+        alert.addButton(R.string.leave_keep_tasks, true) { _, _ ->
             val challenge = challenge ?: return@addButton
-            challengeRepository.leaveChallenge(challenge, "keep-all").subscribe(Consumer {}, RxErrorHandler.handleEmptyError())
+            challengeRepository.leaveChallenge(challenge, "keep-all").subscribe({}, RxErrorHandler.handleEmptyError())
         }
-        alert.addButton(R.string.leave_delte_tasks, false, true) { dialog, _ ->
+        alert.addButton(R.string.leave_delte_tasks, isPrimary = false, isDestructive = true) { _, _ ->
             val challenge = challenge ?: return@addButton
-            challengeRepository.leaveChallenge(challenge, "remove-all").subscribe(Consumer {}, RxErrorHandler.handleEmptyError())
+            challengeRepository.leaveChallenge(challenge, "remove-all").subscribe({}, RxErrorHandler.handleEmptyError())
         }
         alert.setExtraCloseButtonVisibility(View.VISIBLE)
         alert.show()

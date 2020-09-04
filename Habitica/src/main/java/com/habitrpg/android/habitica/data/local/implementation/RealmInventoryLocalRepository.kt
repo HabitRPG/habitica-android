@@ -202,7 +202,7 @@ class RealmInventoryLocalRepository(realm: Realm, private val context: Context) 
     }
 
     override fun changeOwnedCount(type: String, key: String, userID: String, amountToAdd: Int) {
-        getOwnedItem(userID, type, key, true).firstElement().subscribe( Consumer { changeOwnedCount(it, amountToAdd)}, RxErrorHandler.handleEmptyError())
+        getOwnedItem(userID, type, key, true).firstElement().subscribe({ changeOwnedCount(it, amountToAdd)}, RxErrorHandler.handleEmptyError())
     }
 
     override fun changeOwnedCount(item: OwnedItem, amountToAdd: Int?) {

@@ -9,6 +9,7 @@ import android.view.Gravity
 import android.view.View
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.extensions.isUsingNightModeResources
 import com.habitrpg.android.habitica.helpers.NumberAbbreviator
 
 class CurrencyView : androidx.appcompat.widget.AppCompatTextView {
@@ -34,7 +35,7 @@ class CurrencyView : androidx.appcompat.widget.AppCompatTextView {
         lightBackground = try {
             attributes?.getBoolean(R.styleable.CurrencyView_hasLightBackground, true) ?: true
         } catch (_: ArrayIndexOutOfBoundsException) {
-            true
+            !context.isUsingNightModeResources()
         }
         visibility = GONE
     }
@@ -110,7 +111,7 @@ class CurrencyView : androidx.appcompat.widget.AppCompatTextView {
         if (field != value) {
             field = value
             if (isLocked) {
-                this.setTextColor(ContextCompat.getColor(context, R.color.gray_300))
+                this.setTextColor(ContextCompat.getColor(context, R.color.text_quad))
                 drawable?.alpha = 127
             } else {
                 drawable?.alpha = 255

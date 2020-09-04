@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.habitrpg.android.habitica.ui.activities.FixCharacterValuesActivity"
-    android:background="@color/white">
+    android:background="@color/content_background">
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -49,7 +49,7 @@
                 android:id="@+id/username_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/gray_300"
+                android:textColor="@color/text_quad"
                 android:textSize="12sp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="@dimen/spacing_large"/>
@@ -59,7 +59,7 @@
                 android:layout_gravity="center_horizontal"
                 android:gravity="center_horizontal"
                 android:text="@string/gift_subscription_subtitle"
-                android:textColor="@color/gray_300"
+                android:textColor="@color/text_quad"
                 android:layout_marginLeft="@dimen/spacing_large"
                 android:layout_marginRight="@dimen/spacing_large"/>
             <LinearLayout

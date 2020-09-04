@@ -115,7 +115,7 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
             dialog.setTitle(R.string.change_password)
             dialog.addButton(R.string.change, true) { _, _ ->
                 userRepository.updatePassword(oldPasswordEditText?.text.toString(), passwordEditText?.text.toString(), passwordRepeatEditText?.text.toString())
-                        .subscribe(Consumer {
+                        .subscribe({
                             Toast.makeText(activity, R.string.password_changed, Toast.LENGTH_SHORT).show()
                         }, RxErrorHandler.handleEmptyError())
             }
@@ -138,7 +138,7 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
             dialog.setTitle(R.string.change_email)
             dialog.addButton(R.string.change, true) { _, _ ->
                 userRepository.updateEmail(emailEditText?.text.toString(), passwordEditText?.text.toString())
-                        .subscribe(Consumer {
+                        .subscribe({
                             configurePreference(findPreference("email"), emailEditText?.text.toString(), true)
                         }, RxErrorHandler.handleEmptyError())
             }
@@ -160,7 +160,7 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
             dialog.setTitle(R.string.change_username)
             dialog.addButton(R.string.save, true) { _, _ ->
                 userRepository.updateLoginName(loginNameEditText?.text.toString())
-                        .subscribe(Consumer {
+                        .subscribe({
                             configurePreference(findPreference("login_name"), loginNameEditText?.text.toString(), true)
                         }, RxErrorHandler.handleEmptyError())
             }
@@ -212,7 +212,7 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
                 thisDialog.dismiss()
                 apiClient.registerUser(user?.username ?: "", emailEditText?.text.toString(), passwordEditText?.text.toString(), passwordRepeatEditText?.text.toString())
                         .flatMap { userRepository.retrieveUser(false) }
-                        .subscribe(Consumer {
+                        .subscribe({
                             configurePreference(findPreference("email"), emailEditText?.text.toString(), true)
                         }, RxErrorHandler.handleEmptyError())
             }
@@ -256,7 +256,7 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
         dialog.setMessage(R.string.confirm_username_description)
         dialog.addButton(R.string.confirm, true) { _, _ ->
             userRepository.updateLoginName(user?.authentication?.localAuthentication?.username ?: "")
-                    .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+                    .subscribe({ }, RxErrorHandler.handleEmptyError())
         }
         dialog.addCancelButton()
         dialog.show()

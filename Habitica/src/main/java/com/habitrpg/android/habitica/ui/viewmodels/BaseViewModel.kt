@@ -40,10 +40,10 @@ abstract class BaseViewModel: ViewModel() {
     fun getUserData(): LiveData<User?> = user
 
     private fun loadUserFromLocal() {
-        disposable.add(userRepository.getUser().observeOn(AndroidSchedulers.mainThread()).subscribe(Consumer { user.value = it }, RxErrorHandler.handleEmptyError()))
+        disposable.add(userRepository.getUser().observeOn(AndroidSchedulers.mainThread()).subscribe({ user.value = it }, RxErrorHandler.handleEmptyError()))
     }
 
     fun updateUser(path: String, value: Any) {
-        disposable.add(userRepository.updateUser(getUserData().value, path, value).subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+        disposable.add(userRepository.updateUser(getUserData().value, path, value).subscribe({ }, RxErrorHandler.handleEmptyError()))
     }
 }

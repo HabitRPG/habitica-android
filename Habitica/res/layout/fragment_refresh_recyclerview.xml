@@ -5,7 +5,7 @@
     android:id="@+id/refreshLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gray_700"
+    android:background="@color/window_background"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <FrameLayout
@@ -34,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="6dp"
                 android:gravity="center"
-                android:textColor="@color/gray_200"
+                android:textColor="@color/text_ternary"
                 android:textSize="@dimen/card_medium_text"
                 tools:text="No Items" />
 
@@ -44,7 +44,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textColor="@color/gray_200"
+                android:textColor="@color/text_ternary"
                 tools:text="No Items" />
         </LinearLayout>
 

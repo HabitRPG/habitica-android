@@ -101,7 +101,7 @@ class PetDetailRecyclerFragment : BaseMainFragment() {
 
         compositeSubscription.add(adapter.getEquipFlowable()
                 .flatMap<Items> { key -> inventoryRepository.equip(user, "pet", key) }
-                .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+                .subscribe({ }, RxErrorHandler.handleEmptyError()))
 
 
         view.post { setGridSpanCount(view.width) }
@@ -139,8 +139,8 @@ class PetDetailRecyclerFragment : BaseMainFragment() {
                         ownedMounts.forEach { mountMap[it.key ?: ""] = it }
                         return@map mountMap
                     }
-                    .subscribe(Consumer { adapter.setOwnedMounts(it) }, RxErrorHandler.handleEmptyError()))
-            compositeSubscription.add(inventoryRepository.getOwnedItems(true).subscribe(Consumer { adapter.setOwnedItems(it) }, RxErrorHandler.handleEmptyError()))
+                    .subscribe({ adapter.setOwnedMounts(it) }, RxErrorHandler.handleEmptyError()))
+            compositeSubscription.add(inventoryRepository.getOwnedItems(true).subscribe({ adapter.setOwnedItems(it) }, RxErrorHandler.handleEmptyError()))
             compositeSubscription.add(inventoryRepository.getPets(animalType, animalGroup, animalColor).combineLatest(inventoryRepository.getOwnedPets()
                     .map { ownedPets ->
                         val petMap = mutableMapOf<String, OwnedPet>()
@@ -168,8 +168,8 @@ class PetDetailRecyclerFragment : BaseMainFragment() {
                             lastPet = pet
                         }
                         items
-                    }.subscribe(Consumer { adapter.setItemList(it) }, RxErrorHandler.handleEmptyError()))
-            compositeSubscription.add(inventoryRepository.getMounts(animalType, animalGroup, animalColor).subscribe(Consumer<RealmResults<Mount>> { adapter.setExistingMounts(it) }, RxErrorHandler.handleEmptyError()))
+                    }.subscribe({ adapter.setItemList(it) }, RxErrorHandler.handleEmptyError()))
+            compositeSubscription.add(inventoryRepository.getMounts(animalType, animalGroup, animalColor).subscribe({ adapter.setExistingMounts(it) }, RxErrorHandler.handleEmptyError()))
         }
     }
 

@@ -37,7 +37,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:stretchColumns="2"
-        android:background="@drawable/rounded_border_white">
+        android:background="@drawable/rounded_border_content">
         <TableRow>
             <TextView
                 android:layout_height="42dp"
@@ -49,7 +49,7 @@
                 android:gravity="center_vertical"
                 android:textSize="14sp"
                 />
-            <View android:background="@color/gray_600"
+            <View android:background="@color/offset_background"
                 android:layout_height="42dp"
                 android:layout_width="1dp" />
             <EditText android:id="@+id/display_name_edit_text"
@@ -63,7 +63,7 @@
         <TableRow>
             <View android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/gray_600" android:layout_span="3" />
+                android:background="@color/offset_background" android:layout_span="3" />
         </TableRow>
         <TableRow>
             <TextView android:text="@string/username"
@@ -74,7 +74,7 @@
                 android:layout_marginLeft="1dp"
                 android:gravity="center_vertical"
                 android:textSize="14sp"/>
-            <View android:background="@color/gray_600"
+            <View android:background="@color/offset_background"
                 android:layout_width="1dp"
                 android:layout_height="42dp"/>
             <LinearLayout
@@ -85,7 +85,7 @@
                     android:layout_height="match_parent"
                     android:text="@"
                     android:gravity="center_vertical"
-                    android:textColor="@color/gray_400"
+                    android:textColor="@color/text_dimmed"
                     android:textSize="14sp"/>
                 <EditText android:id="@+id/username_edit_text"
                     android:background="@color/transparent"

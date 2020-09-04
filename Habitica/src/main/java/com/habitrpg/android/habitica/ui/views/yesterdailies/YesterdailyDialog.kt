@@ -31,7 +31,7 @@ class YesterdailyDialog private constructor(context: Context, private val userRe
 
     private lateinit var yesterdailiesList: LinearLayout
 
-    private val taskGray: Int by bindColor(context, R.color.task_gray)
+    private val taskGray: Int by bindColor(context, R.color.disabled_background)
 
     init {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as? LayoutInflater
@@ -109,16 +109,16 @@ class YesterdailyDialog private constructor(context: Context, private val userRe
         checkbox?.isChecked = item.completed
         checkbox?.setOnCheckedChangeListener { _, isChecked ->
             item.completed = isChecked
-            taskRepository.scoreChecklistItem(task.id ?: "", item.id ?: "").subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+            taskRepository.scoreChecklistItem(task.id ?: "", item.id ?: "").subscribe({ }, RxErrorHandler.handleEmptyError())
             configureChecklistView(checklistView, task, item)
         }
         checklistView.setOnClickListener {
             item.completed = !item.completed
-            taskRepository.scoreChecklistItem(task.id ?: "", item.id ?: "").subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+            taskRepository.scoreChecklistItem(task.id ?: "", item.id ?: "").subscribe({ }, RxErrorHandler.handleEmptyError())
             configureChecklistView(checklistView, task, item)
         }
         val checkboxHolder = checklistView.findViewById<View>(R.id.checkBoxHolder)
-        checkboxHolder.setBackgroundResource(R.color.gray_700)
+        checkboxHolder.setBackgroundResource(R.color.window_background)
         val textView = checklistView.findViewById(R.id.checkedTextView) as? TextView
         textView?.text = item.text
     }

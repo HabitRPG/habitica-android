@@ -39,7 +39,7 @@ class InboxOverviewFragment : BaseMainFragment(), androidx.swiperefreshlayout.wi
         this.hidesToolbar = true
         super.onCreateView(inflater, container, savedInstanceState)
 
-        compositeSubscription.add(this.socialRepository.markPrivateMessagesRead(user).subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(this.socialRepository.markPrivateMessagesRead(user).subscribe({ }, RxErrorHandler.handleEmptyError()))
 
 
         return inflater.inflate(R.layout.fragment_inbox, container, false)
@@ -59,7 +59,7 @@ class InboxOverviewFragment : BaseMainFragment(), androidx.swiperefreshlayout.wi
     }
 
     private fun loadMessages() {
-        compositeSubscription.add(socialRepository.getInboxConversations().subscribe(Consumer<RealmResults<InboxConversation>> {
+        compositeSubscription.add(socialRepository.getInboxConversations().subscribe({
             setInboxMessages(it)
         }, RxErrorHandler.handleEmptyError()))
     }
@@ -128,7 +128,7 @@ class InboxOverviewFragment : BaseMainFragment(), androidx.swiperefreshlayout.wi
 
     private fun retrieveMessages() {
         compositeSubscription.add(this.socialRepository.retrieveInboxConversations()
-                .subscribe(Consumer<List<InboxConversation>> {
+                .subscribe({
                     inbox_refresh_layout.isRefreshing = false
                 }, RxErrorHandler.handleEmptyError()))
     }

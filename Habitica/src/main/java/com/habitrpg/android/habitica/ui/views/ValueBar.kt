@@ -13,6 +13,7 @@ import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.extensions.getThemeColor
+import com.habitrpg.android.habitica.extensions.isUsingNightModeResources
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import java.math.RoundingMode
 import java.text.NumberFormat
@@ -68,7 +69,7 @@ class ValueBar(context: Context, attrs: AttributeSet?) : FrameLayout(context, at
                 attrs,
                 R.styleable.ValueBar,
                 0, 0)
-        setLightBackground(attributes?.getBoolean(R.styleable.ValueBar_lightBackground, false) == true)
+        setLightBackground(attributes?.getBoolean(R.styleable.ValueBar_lightBackground, !context.isUsingNightModeResources()) == true)
 
         progressBar.barForegroundColor = attributes?.getColor(R.styleable.ValueBar_barForegroundColor, 0) ?: 0
         progressBar.barPendingColor = attributes?.getColor(R.styleable.ValueBar_barPendingColor, 0) ?: 0
@@ -139,7 +140,7 @@ class ValueBar(context: Context, attrs: AttributeSet?) : FrameLayout(context, at
     fun setLightBackground(lightBackground: Boolean) {
         val textColor: Int
         if (lightBackground) {
-            textColor = ContextCompat.getColor(context, R.color.gray_10)
+            textColor = ContextCompat.getColor(context, R.color.text_primary)
             progressBar.setBackgroundResource(R.drawable.layout_rounded_bg_light_gray)
         } else {
             textColor = context.getThemeColor(R.attr.textColorPrimaryDark)

@@ -44,15 +44,15 @@ class StatsView(context: Context?, attrs: AttributeSet?) : LinearLayout(context,
             field = value
             allocateButton.visibility = if (value) View.VISIBLE else View.GONE
             if (value) {
-                allocatedWrapper.setBackgroundColor(ContextCompat.getColor(context, R.color.gray_600_30))
-                allocateButton.setBackgroundColor(ContextCompat.getColor(context, R.color.gray_600_30))
+                allocatedWrapper.setBackgroundColor(ContextCompat.getColor(context, R.color.offset_background_30))
+                allocateButton.setBackgroundColor(ContextCompat.getColor(context, R.color.offset_background_30))
                 allocatedValueTextView.setTextColor(statColor)
                 allocatedLabelView.setTextColor(statColor)
             } else {
-                allocatedWrapper.setBackgroundColor(ContextCompat.getColor(context, R.color.gray_700))
-                allocateButton.setBackgroundColor(ContextCompat.getColor(context, R.color.gray_700))
-                allocatedValueTextView.setTextColor(ContextCompat.getColor(context, R.color.gray_50))
-                allocatedLabelView.setTextColor(ContextCompat.getColor(context, R.color.gray_300))
+                allocatedWrapper.setBackgroundColor(ContextCompat.getColor(context, R.color.window_background))
+                allocateButton.setBackgroundColor(ContextCompat.getColor(context, R.color.window_background))
+                allocatedValueTextView.setTextColor(ContextCompat.getColor(context, R.color.text_primary))
+                allocatedLabelView.setTextColor(ContextCompat.getColor(context, R.color.text_quad))
             }
         }
 

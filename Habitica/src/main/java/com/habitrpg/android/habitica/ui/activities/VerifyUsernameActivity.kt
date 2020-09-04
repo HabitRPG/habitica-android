@@ -98,8 +98,8 @@ class VerifyUsernameActivity: BaseActivity() {
                         issuesTextView.visibility = View.VISIBLE
                         issuesTextView.text = it.issues.joinToString("\n")
                     }
-                }, BiFunction<Boolean, VerifyUsernameResponse, Boolean> { displayNameUsable, usernameUsable -> displayNameUsable && usernameUsable.isUsable})
-                .subscribe(Consumer {
+                }, { displayNameUsable, usernameUsable -> displayNameUsable && usernameUsable.isUsable})
+                .subscribe({
                     confirmUsernameButton.isEnabled = it
                 }, RxErrorHandler.handleEmptyError()))
 
@@ -117,7 +117,7 @@ class VerifyUsernameActivity: BaseActivity() {
                 .flatMap { userRepository.updateLoginName(usernameEditText.text.toString()).toFlowable() }
                 .doOnComplete { showConfirmationAndFinish() }
                 .doOnEach { confirmUsernameButton.isClickable = true }
-                .subscribe(Consumer {  }, RxErrorHandler.handleEmptyError()))
+                .subscribe({  }, RxErrorHandler.handleEmptyError()))
     }
 
     private fun showConfirmationAndFinish() {

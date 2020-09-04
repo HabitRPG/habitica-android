@@ -133,7 +133,7 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
                     if (!hasPotion) {
                         observable = observable.flatMap { activity.inventoryRepository.purchaseItem("hatchingPotions", thisPotion.key, 1) }
                     }
-                    observable.subscribe(Consumer {
+                    observable.subscribe({
                         (getActivity() as? MainActivity)?.hatchPet(thisPotion, thisEgg)
                     }, RxErrorHandler.handleEmptyError())
                 }
@@ -149,7 +149,7 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
             val drawable = BitmapDrawable(resources, if (hasMount) it else it.extractAlpha())
             Observable.just(drawable)
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(Consumer {
+                    .subscribe({
                         binding.petView.background = drawable
                     }, RxErrorHandler.handleEmptyError())
         }

@@ -80,7 +80,7 @@ class ProfilePreferencesFragment: BasePreferencesFragment(), SharedPreferences.O
                 }
                 else -> null
             }
-            observable?.subscribe(Consumer {}, RxErrorHandler.handleEmptyError())?.let { compositeSubscription.add(it) }
+            observable?.subscribe({}, RxErrorHandler.handleEmptyError())?.let { compositeSubscription.add(it) }
         }
     }
 }

@@ -84,11 +84,11 @@ class EquipmentRecyclerViewAdapter(data: OrderedRealmCollection<Equipment>?, aut
             if (gear.key == equippedGear) {
                 this.equippedIndicator.visibility = View.VISIBLE
                 this.gearContainer.setBackgroundColor(ContextCompat.getColor(context, R.color.brand_700))
-                imageViewWrapper.background = ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_white)
+                imageViewWrapper.background = ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_content)
             } else {
                 this.equippedIndicator.visibility = View.GONE
                 this.gearContainer.setBackgroundResource(R.drawable.selection_highlight)
-                imageViewWrapper.background = ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_gray_700)
+                imageViewWrapper.background = ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_window)
             }
             twoHandedView.visibility = if (gear.twoHanded) View.VISIBLE else View.GONE
             DataBindingUtils.loadImage(imageView, "shop_"+gear.key)

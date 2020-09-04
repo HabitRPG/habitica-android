@@ -15,6 +15,7 @@ import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder
 import com.facebook.drawee.view.DraweeHolder
 import com.facebook.drawee.view.MultiDraweeHolder
 import com.facebook.imagepipeline.image.ImageInfo
+import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.models.Avatar
@@ -42,7 +43,6 @@ class AvatarView : View {
     private var avatarBitmap: Bitmap? = null
     private var avatarCanvas: Canvas? = null
     private var currentLayers: Map<LayerType, String>? = null
-    var enableNewSnowman = false
 
     private val layerMap: Map<LayerType, String>
         get() {
@@ -56,8 +56,9 @@ class AvatarView : View {
 
     private val avatarImage: Bitmap?
         get() {
-            assert(avatar != null)
-            assert(avatarRectF != null)
+            if (BuildConfig.DEBUG && (avatar == null || avatarRectF == null)) {
+                error("Assertion failed")
+            }
             val canvasRect = Rect()
             avatarRectF?.round(canvasRect)
             avatarBitmap = Bitmap.createBitmap(canvasRect.width(), canvasRect.height(), Bitmap.Config.ARGB_8888)
@@ -189,7 +190,7 @@ class AvatarView : View {
     }
 
     private fun substituteOrReturn(substitutions: Map<String, String>?, name: String): String {
-        for (key in substitutions?.keys ?: arrayListOf<String>()) {
+        for (key in substitutions?.keys ?: arrayListOf()) {
             if (name.contains(key)) {
                 return substitutions?.get(key) ?: name
             }

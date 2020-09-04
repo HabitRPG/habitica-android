@@ -22,7 +22,7 @@
             android:id="@+id/content_container"
             android:orientation="vertical" android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white"
+            android:background="@color/content_background"
             >
             <com.google.android.material.appbar.AppBarLayout
                 android:id="@+id/app_bar"
@@ -37,9 +37,9 @@
                     android:minHeight="?attr/actionBarSize"
                     android:theme="@style/Toolbar"
                     app:title=""
-                    android:background="@color/white"
+                    android:background="@color/content_background"
                     app:layout_scrollFlags="scroll|enterAlways"
-                    app:titleTextColor="@color/gray_50"
+                    app:titleTextColor="@color/text_primary"
                     app:theme="@style/ReportMessageToolbar"
                     app:popupTheme="@style/ThemeOverlay.AppCompat.Dark">
                     <ImageButton
@@ -54,7 +54,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/report_violation"
                         android:textSize="20sp"
-                        android:textColor="@color/gray_50"
+                        android:textColor="@color/text_primary"
                         android:layout_marginEnd="36dp"
                         android:id="@+id/toolbar_title" />
                     <Button
@@ -87,7 +87,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     tools:text="Report NAME for violation:"
-                    android:textColor="@color/gray_10"
+                    android:textColor="@color/text_primary"
                     style="@style/Caption1"
                     android:layout_marginBottom="@dimen/spacing_medium"
                     android:layout_marginStart="13dp"/>
@@ -96,7 +96,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/border_1f000000"
-                    android:textColor="@color/gray_300"
+                    android:textColor="@color/text_quad"
                     style="@style/Body2"
                     android:lineSpacingExtra="4sp"
                     android:paddingTop="11dp"
@@ -118,7 +118,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/reason_for_report"
-                        android:textColor="@color/gray_50"
+                        android:textColor="@color/text_primary"
                         android:paddingBottom="34dp"
                         android:paddingTop="16dp"
                         android:paddingStart="@dimen/spacing_large"
@@ -131,7 +131,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     tools:text="@string/report_explanation"
-                    android:textColor="@color/gray_200"
+                    android:textColor="@color/text_ternary"
                     style="@style/Caption3"
                     android:textColorLink="?colorAccent"
                     />

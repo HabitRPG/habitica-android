@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.models.user
 
 import com.google.gson.annotations.SerializedName
+import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.models.*
 import com.habitrpg.android.habitica.models.invitations.Invitations
 import com.habitrpg.android.habitica.models.social.ChallengeMembership
@@ -53,7 +54,7 @@ open class User : RealmObject(), Avatar, VersionedObject {
             for (test in abTests ?: emptyList<ABTest>()) {
                 test.userID = id
             }
-            for (achievement in achievements ?: emptyList<UserAchievement>()) {
+            for (achievement in achievements) {
                 achievement.userId = id
             }
         }
@@ -167,7 +168,7 @@ open class User : RealmObject(), Avatar, VersionedObject {
         get() = this.items?.mounts?.size ?: 0
 
     val contributorColor: Int
-        get() = this.contributor?.contributorColor ?: android.R.color.black
+        get() = this.contributor?.contributorColor ?: R.color.text_primary
     val username: String?
     get() = authentication?.localAuthentication?.username
     val formattedUsername: String?

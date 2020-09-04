@@ -80,13 +80,13 @@
                     android:layout_height="13dp"
                     android:id="@+id/health_bar"
                     app:barForegroundColor="@color/hpColor"
-                    app:barBackgroundColor="@color/gray_700"/>
+                    app:barBackgroundColor="@color/window_background"/>
                 <TextView
                     android:id="@+id/health_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="19dp"
                     android:textSize="12sp"
-                    android:textColor="@color/gray_200"
+                    android:textColor="@color/text_ternary"
                     tools:text="50 / 50"
                     android:layout_marginStart="13dp"/>
             </TableRow>
@@ -98,13 +98,13 @@
                     android:layout_height="13dp"
                     android:id="@+id/experience_bar"
                     app:barForegroundColor="@color/xpColor"
-                    app:barBackgroundColor="@color/gray_700"/>
+                    app:barBackgroundColor="@color/window_background"/>
                 <TextView
                     android:id="@+id/experience_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="19dp"
                     android:textSize="12sp"
-                    android:textColor="@color/gray_200"
+                    android:textColor="@color/text_ternary"
                     tools:text="50 / 50"
                     android:layout_marginStart="13dp"/>
             </TableRow>
@@ -116,13 +116,13 @@
                     android:layout_height="13dp"
                     android:id="@+id/mana_bar"
                     app:barForegroundColor="@color/mpColor"
-                    app:barBackgroundColor="@color/gray_700"/>
+                    app:barBackgroundColor="@color/window_background"/>
                 <TextView
                     android:id="@+id/mana_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="19dp"
                     android:textSize="12sp"
-                    android:textColor="@color/gray_200"
+                    android:textColor="@color/text_ternary"
                     tools:text="50 / 5000"
                     android:layout_marginStart="13dp"/>
             </TableRow>

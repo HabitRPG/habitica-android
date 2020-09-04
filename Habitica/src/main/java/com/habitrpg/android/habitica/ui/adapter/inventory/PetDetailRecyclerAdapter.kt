@@ -101,9 +101,4 @@ class PetDetailRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapt
         ownsSaddles = ownedItems.containsKey("Saddle-food")
         notifyDataSetChanged()
     }
-
-    fun setOwnsSaddles(ownsSaddles: Boolean) {
-        this.ownsSaddles = ownsSaddles
-        notifyDataSetChanged()
-    }
 }

@@ -25,7 +25,7 @@ import io.reactivex.subjects.PublishSubject
 import io.realm.RealmResults
 
 
-class StableRecyclerAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var shopSpriteSuffix: String? = null
     private var eggs: Map<String, Egg> = mapOf()
@@ -160,9 +160,9 @@ class StableRecyclerAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
             }
 
             this.ownedTextView.text = context.getString(R.string.pet_ownership_fraction, item.numberOwned, item.totalNumber)
-            this.ownedTextView.background = context.getDrawable(R.drawable.layout_rounded_bg_shopitem_price)
+            this.ownedTextView.background = ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_shopitem_price)
 
-            this.ownedTextView.setTextColor(ContextCompat.getColor(context, R.color.gray_200))
+            this.ownedTextView.setTextColor(ContextCompat.getColor(context, R.color.text_ternary))
 
             ownedTextView.visibility = View.VISIBLE
             imageView.loadImage(imageName)
@@ -173,7 +173,7 @@ class StableRecyclerAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
             this.ownedTextView.alpha = alpha
 
             if (item.numberOwned == item.totalNumber) {
-                this.ownedTextView.background = context.getDrawable(R.drawable.layout_rounded_bg_animalitem_complete)
+                this.ownedTextView.background = ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_animalitem_complete)
                 this.ownedTextView.setTextColor(ContextCompat.getColor(context, R.color.white))
             }
         }

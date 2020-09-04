@@ -9,7 +9,7 @@
     android:paddingRight="@dimen/shopitem_dialog_content_inset"
     android:gravity="center_horizontal"
     tools:parentTag="LinearLayout"
-    tools:background="@color/white"
+    tools:background="?attr/colorContentBackground"
     tools:orientation="vertical">
 
     <com.facebook.drawee.view.SimpleDraweeView
@@ -48,7 +48,7 @@
         android:layout_width="match_parent"
         android:text="@string/purchase_amount_error"
         android:textSize="12sp"
-        android:textColor="@color/gray_200"
+        android:textColor="@color/text_ternary"
         android:layout_marginTop="@dimen/spacing_medium"
         android:gravity="center_horizontal"/>
 </merge>

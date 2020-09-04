@@ -29,10 +29,10 @@
             android:id="@+id/artCreditTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="By @AnnDeLune"
+            tools:text="By @AnnDeLune"
             android:textColor="@color/white"
             android:textSize="12sp"
-            android:layout_marginRight="@dimen/spacing_medium"/>
+            android:layout_marginEnd="@dimen/spacing_medium"/>
         <ImageView
             android:id="@+id/caretView"
             android:layout_width="wrap_content"
@@ -99,7 +99,7 @@
         android:layout_height="wrap_content"
         app:barForegroundColor="@color/red_50"
         app:valueTextColor="@color/white"
-        app:barBackgroundColor="@color/white_15_alpha"
+        app:barBackgroundColor="@color/content_15_alpha"
         app:barHeight="8dp"
         app:labelSpacing="@dimen/spacing_medium"
         android:paddingLeft="@dimen/spacing_large"
@@ -125,7 +125,7 @@
             android:layout_height="wrap_content"
             tools:text="Boss Rage"
             android:textSize="14sp"
-            android:layout_marginLeft="@dimen/spacing_medium"
+            android:layout_marginStart="@dimen/spacing_medium"
             android:textColor="@color/white"/>
     </LinearLayout>
     <com.habitrpg.android.habitica.ui.views.ValueBar
@@ -134,7 +134,7 @@
         android:layout_height="wrap_content"
         app:barForegroundColor="@color/orange_100"
         app:valueTextColor="@color/white"
-        app:barBackgroundColor="@color/white_15_alpha"
+        app:barBackgroundColor="@color/content_15_alpha"
         app:barHeight="8dp"
         app:labelSpacing="@dimen/spacing_medium"
         android:paddingLeft="@dimen/spacing_large"
@@ -159,7 +159,7 @@
         android:layout_height="wrap_content"
         tools:text="Rage Strikes: 1/3"
         style="@style/Body1"
-        android:background="@drawable/layout_rounded_bg_white_15"
+        android:background="@drawable/layout_rounded_bg_content_15"
         android:gravity="center"
         android:paddingTop="@dimen/spacing_small"
         android:paddingBottom="@dimen/spacing_small"
@@ -180,7 +180,7 @@
         android:layout_height="wrap_content"
         app:title="@string/world_boss_description"
         app:identifier="questDescription"
-        app:color="@color/white">
+        app:color="@color/content_background">
     <TextView
         android:id="@+id/questDescription"
         android:layout_width="match_parent"

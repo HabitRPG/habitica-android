@@ -16,7 +16,7 @@ class SubscriptionBuyGemsPromoView @JvmOverloads constructor(
 
     init {
         inflate(R.layout.promo_subscription_buy_gems, true)
-        setBackgroundColor(ContextCompat.getColor(context, R.color.gray_700))
+        setBackgroundColor(ContextCompat.getColor(context, R.color.window_background))
         clipToPadding = false
         clipChildren = false
         clipToOutline = false

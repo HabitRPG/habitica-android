@@ -59,7 +59,7 @@ class ShopFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        recyclerView.setBackgroundResource(R.color.white)
+        recyclerView.setBackgroundResource(R.color.content_background)
 
         adapter = recyclerView.adapter as? ShopRecyclerAdapter
         if (adapter == null) {
@@ -109,7 +109,7 @@ class ShopFragment : BaseFragment() {
                 .filter { it.hasActiveQuest }
                 .filter { group -> group.quest?.rageStrikes?.any { it.key == shopIdentifier } ?: false }
                 .filter { group -> group.quest?.rageStrikes?.filter { it.key == shopIdentifier }?.get(0)?.wasHit == true }
-                .subscribe(Consumer {
+                .subscribe({
                     adapter?.shopSpriteSuffix = "_"+it.quest?.key
                 }, RxErrorHandler.handleEmptyError()))
 
@@ -148,7 +148,7 @@ class ShopFragment : BaseFragment() {
                         shop1
                     }
                 }
-                .subscribe(Consumer {
+                .subscribe({
                     this.shop = it
                     this.adapter?.setShop(it)
                 }, RxErrorHandler.handleEmptyError()))
@@ -156,10 +156,10 @@ class ShopFragment : BaseFragment() {
 
 
         compositeSubscription.add(this.inventoryRepository.getOwnedItems()
-                .subscribe(Consumer { adapter?.setOwnedItems(it) }, RxErrorHandler.handleEmptyError()))
+                .subscribe({ adapter?.setOwnedItems(it) }, RxErrorHandler.handleEmptyError()))
         compositeSubscription.add(this.inventoryRepository.getInAppRewards()
                 .map { rewards -> rewards.map { it.key } }
-                .subscribe(Consumer { adapter?.setPinnedItemKeys(it) }, RxErrorHandler.handleEmptyError()))
+                .subscribe({ adapter?.setPinnedItemKeys(it) }, RxErrorHandler.handleEmptyError()))
     }
 
     private fun formatTimeTravelersShop(shop: Shop): Shop {
@@ -187,7 +187,7 @@ class ShopFragment : BaseFragment() {
 
     private fun loadMarketGear() {
         compositeSubscription.add(inventoryRepository.retrieveMarketGear()
-                .zipWith(inventoryRepository.getOwnedEquipment().map { equipment -> equipment.map { it.key } }, BiFunction<Shop, List<String?>, Shop> { shop, equipment ->
+                .zipWith(inventoryRepository.getOwnedEquipment().map { equipment -> equipment.map { it.key } }, { shop, equipment ->
                     for (category in shop.categories) {
                         val items = category.items.asSequence().filter {
                             !equipment.contains(it.key)
@@ -197,7 +197,7 @@ class ShopFragment : BaseFragment() {
                     }
                     shop
                 })
-                .subscribe(Consumer<Shop> {
+                .subscribe({
                     this.gearCategories = it.categories
                     adapter?.gearCategories = it.categories
                 }, RxErrorHandler.handleEmptyError()))

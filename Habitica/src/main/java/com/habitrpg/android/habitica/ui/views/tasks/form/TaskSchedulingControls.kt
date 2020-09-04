@@ -258,12 +258,12 @@ class TaskSchedulingControls @JvmOverloads constructor(
             button.contentDescription = toContentDescription(weekdays[weekdayCode], isActive)
             button.tag = weekdayCode
             if (isActive) {
-                button.background = context.getDrawable(R.drawable.habit_scoring_circle_selected)
+                button.background = ContextCompat.getDrawable(context, R.drawable.habit_scoring_circle_selected)
                 button.background.mutate().setTint(tintColor)
                 button.setTextColor(ContextCompat.getColor(context, R.color.white))
             } else {
-                button.background = context.getDrawable(R.drawable.habit_scoring_circle)
-                button.setTextColor(ContextCompat.getColor(context, R.color.gray_100))
+                button.background = ContextCompat.getDrawable(context, R.drawable.habit_scoring_circle)
+                button.setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
             }
             button.setOnClickListener {
                 setWeekdayActive(weekdayCode, !isActive)
@@ -299,7 +299,7 @@ class TaskSchedulingControls @JvmOverloads constructor(
     }
 
     private fun styleButtonAsInactive(button: TextView) {
-        button.setTextColor(ContextCompat.getColor(context, R.color.gray_100))
+        button.setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
         button.background.mutate().setTint(ContextCompat.getColor(context, R.color.taskform_gray))
         button.contentDescription = toContentDescription(button.text, false)
     }

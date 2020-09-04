@@ -12,7 +12,7 @@
         android:text="@string/chat"
         android:id="@+id/new_message_title"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/gray_50" />
+        android:textColor="@color/text_primary" />
 
     <LinearLayout
         android:layout_width="match_parent"

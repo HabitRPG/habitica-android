@@ -5,16 +5,16 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/refreshLayout"
-    android:background="@color/gray_700">
+    android:background="@color/window_background">
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/gray_700">
+        android:background="@color/window_background">
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/gray_700">
+            android:background="@color/window_background">
             <TextView
                 android:id="@+id/title_view"
                 android:layout_width="match_parent"
@@ -34,7 +34,7 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="60dp"
-                    android:background="@drawable/layout_rounded_bg_white"
+                    android:background="@drawable/layout_rounded_bg_content"
                     android:layout_marginRight="@dimen/spacing_large"
                     android:paddingTop="@dimen/spacing_small"
                     android:paddingBottom="@dimen/spacing_small"
@@ -68,7 +68,7 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="60dp"
-                    android:background="@drawable/layout_rounded_bg_white"
+                    android:background="@drawable/layout_rounded_bg_content"
                     android:paddingTop="@dimen/spacing_small"
                     android:paddingBottom="@dimen/spacing_small"
                     android:paddingLeft="@dimen/spacing_medium"
@@ -102,11 +102,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:background="@color/white">
+                android:background="?attr/colorContentBackground">
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/gray_500" />
+                    android:background="@color/content_background_offset" />
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -135,7 +135,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/gray_500" />
+                    android:background="@color/content_background_offset" />
                 <LinearLayout
                     android:id="@+id/leader_wrapper"
                     android:layout_width="match_parent"
@@ -202,7 +202,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/gray_500"
+                    android:background="@color/content_background_offset"
                     android:layout_marginTop="@dimen/spacing_medium"/>
             </LinearLayout>
             <Button

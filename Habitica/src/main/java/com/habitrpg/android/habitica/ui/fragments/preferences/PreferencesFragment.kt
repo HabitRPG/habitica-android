@@ -77,8 +77,10 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
         serverUrlPreference?.isVisible = false
         serverUrlPreference?.summary = preferenceManager.sharedPreferences.getString("server_url", "")
         val themePreference = findPreference("theme_name") as? ListPreference
-        themePreference?.isVisible = configManager.testingLevel() == AppTestingLevel.ALPHA || BuildConfig.DEBUG
-        themePreference?.summary = themePreference?.entry
+        themePreference?.isVisible = configManager.testingLevel() == AppTestingLevel.ALPHA || configManager.testingLevel() == AppTestingLevel.STAFF || BuildConfig.DEBUG
+        themePreference?.summary = themePreference?.entry ?: "Default"
+        val themeModePreference = findPreference("theme_mode") as? ListPreference
+        themeModePreference?.summary = themePreference?.entry ?: "Follow System"
 
 
         val taskDisplayPreference = findPreference("task_display") as? ListPreference
@@ -92,7 +94,6 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
     override fun onResume() {
         super.onResume()
         preferenceManager.sharedPreferences.registerOnSharedPreferenceChangeListener(this)
-
     }
 
     override fun onPause() {
@@ -184,7 +185,7 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                 val pieces = timeval?.split(":".toRegex())?.dropLastWhile { it.isEmpty() }?.toTypedArray()
                 if (pieces != null) {
                     val hour = Integer.parseInt(pieces[0])
-                    userRepository.changeCustomDayStart(hour).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+                    userRepository.changeCustomDayStart(hour).subscribe({ }, RxErrorHandler.handleEmptyError())
                 }
             }
             "language" -> {
@@ -202,7 +203,7 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                 activity?.resources?.updateConfiguration(configuration, activity?.resources?.displayMetrics)
                 userRepository.updateLanguage(user, languageHelper.languageCode ?: "en")
                         .flatMap<ContentResult> { contentRepository.retrieveContent(context,true) }
-                        .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+                        .subscribe({ }, RxErrorHandler.handleEmptyError())
 
                 if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) {
                     val intent = Intent(activity, MainActivity::class.java)
@@ -218,7 +219,7 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                 val newAudioTheme = sharedPreferences.getString(key, "off")
                 if (newAudioTheme != null) {
                     compositeSubscription.add(userRepository.updateUser(user, "preferences.sound", newAudioTheme)
-                            .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+                            .subscribe({ }, RxErrorHandler.handleEmptyError()))
                     soundManager.soundTheme = newAudioTheme
                     soundManager.preloadAllFiles()
                 }
@@ -228,7 +229,7 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                 activity.reload()
             }
             "dailyDueDefaultView" -> userRepository.updateUser(user, "preferences.dailyDueDefaultView", sharedPreferences.getBoolean(key, false))
-                    .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+                    .subscribe({ }, RxErrorHandler.handleEmptyError())
             "server_url" -> {
                 apiClient.updateServerUrl(sharedPreferences.getString(key, ""))
                 findPreference(key).summary = sharedPreferences.getString(key, "")
@@ -241,7 +242,7 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                 val isDisabled = sharedPreferences.getBoolean("disablePMs", false)
                 if (user?.inbox?.optOut != isDisabled) {
                     compositeSubscription.add(userRepository.updateUser(user, "inbox.optOut", isDisabled)
-                            .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+                            .subscribe({ }, RxErrorHandler.handleEmptyError()))
                 }
             }
         }

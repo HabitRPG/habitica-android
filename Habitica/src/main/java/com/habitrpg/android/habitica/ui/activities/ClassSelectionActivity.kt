@@ -88,7 +88,7 @@ class ClassSelectionActivity : BaseActivity(), Consumer<User> {
         isInitialSelection = args.isInitialSelection
         currentClass = args.className
 
-        compositeSubscription.add(userRepository.getUser().firstElement().subscribe(Consumer {
+        compositeSubscription.add(userRepository.getUser().firstElement().subscribe({
             it.preferences?.let {preferences ->
                 val unmanagedPrefs = userRepository.getUnmanagedCopy(preferences)
                 unmanagedPrefs.costume = false
@@ -98,7 +98,7 @@ class ClassSelectionActivity : BaseActivity(), Consumer<User> {
 
         if (!isInitialSelection) {
             compositeSubscription.add(userRepository.changeClass()
-                    .subscribe(Consumer { classWasUnset = true }, RxErrorHandler.handleEmptyError()))
+                    .subscribe({ classWasUnset = true }, RxErrorHandler.handleEmptyError()))
         }
 
         healerWrapper.setOnClickListener { newClass = "healer" }
@@ -120,7 +120,7 @@ class ClassSelectionActivity : BaseActivity(), Consumer<User> {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item?.itemId) {
+        when (item.itemId) {
             R.id.opt_out -> optOutSelected()
         }
         return super.onOptionsItemSelected(item)
@@ -187,7 +187,7 @@ class ClassSelectionActivity : BaseActivity(), Consumer<User> {
         selectedTitleTextView.setTextColor(ContextCompat.getColor(this, R.color.dark_brown))
         selectedDescriptionTextView.setTextColor(ContextCompat.getColor(this, R.color.dark_brown))
         selectedButton.setBackgroundResource(R.drawable.layout_rounded_bg_yellow_10)
-        updateButtonBackgrounds(healerButton, getDrawable(R.drawable.layout_rounded_bg_brand_700_yellow_border))
+        updateButtonBackgrounds(healerButton, ContextCompat.getDrawable(this,R.drawable.layout_rounded_bg_window_yellow_border))
     }
 
     private fun mageSelected() {
@@ -197,7 +197,7 @@ class ClassSelectionActivity : BaseActivity(), Consumer<User> {
         selectedTitleTextView.setTextColor(ContextCompat.getColor(this, R.color.white))
         selectedDescriptionTextView.setTextColor(ContextCompat.getColor(this, R.color.white))
         selectedButton.setBackgroundResource(R.drawable.layout_rounded_bg_gray_alpha)
-        updateButtonBackgrounds(mageButton, getDrawable(R.drawable.layout_rounded_bg_brand_700_blue_border))
+        updateButtonBackgrounds(mageButton, ContextCompat.getDrawable(this,R.drawable.layout_rounded_bg_window_blue_border))
     }
 
     private fun rogueSelected() {
@@ -207,7 +207,7 @@ class ClassSelectionActivity : BaseActivity(), Consumer<User> {
         selectedTitleTextView.setTextColor(ContextCompat.getColor(this, R.color.white))
         selectedDescriptionTextView.setTextColor(ContextCompat.getColor(this, R.color.white))
         selectedButton.setBackgroundResource(R.drawable.layout_rounded_bg_gray_alpha)
-        updateButtonBackgrounds(rogueButton, getDrawable(R.drawable.layout_rounded_bg_brand_700_brand_border))
+        updateButtonBackgrounds(rogueButton, ContextCompat.getDrawable(this,R.drawable.layout_rounded_bg_window_brand_border))
     }
 
     private fun warriorSelected() {
@@ -217,11 +217,11 @@ class ClassSelectionActivity : BaseActivity(), Consumer<User> {
         selectedTitleTextView.setTextColor(ContextCompat.getColor(this, R.color.white))
         selectedDescriptionTextView.setTextColor(ContextCompat.getColor(this, R.color.white))
         selectedButton.setBackgroundResource(R.drawable.layout_rounded_bg_gray_alpha)
-        updateButtonBackgrounds(warriorButton, getDrawable(R.drawable.layout_rounded_bg_brand_700_red_border))
+        updateButtonBackgrounds(warriorButton, ContextCompat.getDrawable(this,R.drawable.layout_rounded_bg_window_red_border))
     }
 
     private fun updateButtonBackgrounds(selectedButton: TextView, background: Drawable?) {
-        val deselectedBackground = getDrawable(R.drawable.layout_rounded_bg_gray_700)
+        val deselectedBackground = ContextCompat.getDrawable(this, R.drawable.layout_rounded_bg_window)
         healerButton.background = if (healerButton == selectedButton) background else deselectedBackground
         mageButton.background = if (mageButton == selectedButton) background else deselectedBackground
         rogueButton.background = if (rogueButton == selectedButton) background else deselectedBackground

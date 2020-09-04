@@ -61,7 +61,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/equipment_str"
                 android:textSize="14sp"
-                android:textColor="@color/gray_200"
+                android:textColor="@color/text_ternary"
                 android:layout_marginRight="5dp"/>
             <TextView
                 android:id="@+id/str_value"
@@ -76,7 +76,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/equipment_con"
                 android:textSize="14sp"
-                android:textColor="@color/gray_200"
+                android:textColor="@color/text_ternary"
                 android:layout_marginRight="5dp"/>
             <TextView
                 android:id="@+id/con_value"
@@ -91,7 +91,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/equipment_int"
                 android:textSize="14sp"
-                android:textColor="@color/gray_200"
+                android:textColor="@color/text_ternary"
                 android:layout_marginRight="5dp"/>
             <TextView
                 android:id="@+id/int_value"
@@ -106,7 +106,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/equipment_per"
                 android:textSize="14sp"
-                android:textColor="@color/gray_200"
+                android:textColor="@color/text_ternary"
                 android:layout_marginRight="5dp"/>
             <TextView
                 android:id="@+id/per_value"

@@ -100,10 +100,6 @@ class AppConfigManager {
         }
     }
 
-    fun reorderMenu(): Boolean {
-        return remoteConfig.getBoolean("reorderMenu")
-    }
-
     fun enableAdventureGuide(): Boolean {
         return remoteConfig.getBoolean("enableAdventureGuide")
     }

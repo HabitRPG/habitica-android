@@ -45,7 +45,7 @@ class IntroActivity : BaseActivity(), View.OnClickListener, ViewPager.OnPageChan
         binding.skipButton.setOnClickListener(this)
         binding.finishButton.setOnClickListener(this)
 
-        compositeSubscription.add(contentRepository.retrieveContent(this).subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(contentRepository.retrieveContent(this).subscribe({ }, RxErrorHandler.handleEmptyError()))
     }
 
     override fun injectActivity(component: UserComponent?) {

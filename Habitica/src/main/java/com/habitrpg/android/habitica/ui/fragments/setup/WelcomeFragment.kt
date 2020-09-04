@@ -77,7 +77,7 @@ class WelcomeFragment : BaseFragment() {
 
         compositeSubscription.add(displayNameVerificationEvents.toFlowable(BackpressureStrategy.DROP)
                 .map { it.length in 1..30 }
-                .subscribeWithErrorHandler(Consumer {
+                .subscribeWithErrorHandler({
                     if (it) {
                         displayNameEditText.setCompoundDrawablesWithIntrinsicBounds(null, null, checkmarkIcon, null)
                         issuesTextView.visibility = View.GONE
@@ -91,7 +91,7 @@ class WelcomeFragment : BaseFragment() {
                 .filter { it.length in 1..30 }
                 .throttleLast(1, TimeUnit.SECONDS)
                 .flatMap { userRepository.verifyUsername(it) }
-                .subscribeWithErrorHandler(Consumer {
+                .subscribeWithErrorHandler({
                     if (it.isUsable) {
                         usernameEditText.setCompoundDrawablesWithIntrinsicBounds(null, null, checkmarkIcon, null)
                         issuesTextView.visibility = View.GONE

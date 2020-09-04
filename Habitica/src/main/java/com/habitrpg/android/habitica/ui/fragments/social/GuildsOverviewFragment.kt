@@ -54,7 +54,7 @@ class GuildsOverviewFragment : BaseMainFragment(), androidx.swiperefreshlayout.w
         binding?.publicGuildsButton?.setOnClickListener {
             MainNavigationController.navigate(GuildsOverviewFragmentDirections.openPublicGuilds())
         }
-        compositeSubscription.add(socialRepository.getUserGroups("guild").subscribe(Consumer { this.setGuilds(it) }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(socialRepository.getUserGroups("guild").subscribe({ this.setGuilds(it) }, RxErrorHandler.handleEmptyError()))
     }
     override fun onDestroy() {
         socialRepository.close()
@@ -73,7 +73,7 @@ class GuildsOverviewFragment : BaseMainFragment(), androidx.swiperefreshlayout.w
 
     private fun fetchGuilds() {
         compositeSubscription.add(this.socialRepository.retrieveGroups("guilds")
-                .subscribe(Consumer {
+                .subscribe({
                     binding?.refreshLayout?.isRefreshing = false
                 }, RxErrorHandler.handleEmptyError()))
     }

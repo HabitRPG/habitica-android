@@ -48,34 +48,34 @@ class LocalNotificationActionReceiver : BroadcastReceiver() {
         when (action) {
             context?.getString(R.string.accept_party_invite) -> {
                 groupID?.let {
-                    socialRepository.joinGroup(it).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+                    socialRepository.joinGroup(it).subscribe({ }, RxErrorHandler.handleEmptyError())
                 }
             }
             context?.getString(R.string.reject_party_invite) -> {
                 groupID?.let {
-                    socialRepository.rejectGroupInvite(it).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+                    socialRepository.rejectGroupInvite(it).subscribe({ }, RxErrorHandler.handleEmptyError())
                 }
             }
             context?.getString(R.string.accept_quest_invite) -> {
-                socialRepository.acceptQuest(user).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+                socialRepository.acceptQuest(user).subscribe({ }, RxErrorHandler.handleEmptyError())
             }
             context?.getString(R.string.reject_quest_invite) -> {
-                socialRepository.rejectQuest(user).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+                socialRepository.rejectQuest(user).subscribe({ }, RxErrorHandler.handleEmptyError())
             }
             context?.getString(R.string.accept_guild_invite) -> {
                 groupID?.let {
-                    socialRepository.joinGroup(it).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+                    socialRepository.joinGroup(it).subscribe({ }, RxErrorHandler.handleEmptyError())
                 }
             }
             context?.getString(R.string.reject_guild_invite) -> {
                 groupID?.let {
-                    socialRepository.rejectGroupInvite(it).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+                    socialRepository.rejectGroupInvite(it).subscribe({ }, RxErrorHandler.handleEmptyError())
                 }
             }
             context?.getString(R.string.group_message_reply) -> {
                 groupID?.let {
                     getMessageText(context?.getString(R.string.group_message_reply))?.let { message ->
-                        socialRepository.postGroupChat(it, message).subscribe(Consumer {
+                        socialRepository.postGroupChat(it, message).subscribe({
                             context?.let { c -> NotificationManagerCompat.from(c).cancel(it.hashCode()) }
                         }, RxErrorHandler.handleEmptyError())
                     }
@@ -84,14 +84,14 @@ class LocalNotificationActionReceiver : BroadcastReceiver() {
             context?.getString(R.string.inbox_message_reply) -> {
                 senderID?.let {
                     getMessageText(context?.getString(R.string.inbox_message_reply))?.let { message ->
-                        socialRepository.postPrivateMessage(it, message).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+                        socialRepository.postPrivateMessage(it, message).subscribe({ }, RxErrorHandler.handleEmptyError())
                     }
                 }
             }
             context?.getString(R.string.complete_task_action) -> {
                 intent?.extras?.getString("taskID")?.let {
                     taskRepository.taskChecked(null, it, up = true, force = false) { _ ->
-                    }.subscribe(Consumer {}, RxErrorHandler.handleEmptyError())
+                    }.subscribe({}, RxErrorHandler.handleEmptyError())
                 }
             }
         }

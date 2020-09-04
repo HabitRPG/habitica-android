@@ -106,7 +106,7 @@ abstract class BaseTasksRecyclerViewAdapter<VH : BindableViewHolder<Task>>(var t
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .toList()
-                    .subscribe(Consumer { this.setTasks(it) }, RxErrorHandler.handleEmptyError())
+                    .subscribe({ this.setTasks(it) }, RxErrorHandler.handleEmptyError())
         }
     }
 

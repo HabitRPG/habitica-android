@@ -8,12 +8,12 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/layout_rounded_bg_gray_700">
+    android:background="@drawable/layout_rounded_bg_window">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@color/white"
+        android:background="@color/content_background"
         android:paddingTop="@dimen/spacing_large"
         android:paddingBottom="@dimen/spacing_large">
         <LinearLayout
@@ -24,7 +24,7 @@
             android:layout_marginEnd="@dimen/spacing_large"
             android:gravity="center_horizontal"
             android:paddingTop="@dimen/spacing_large"
-            android:background="@drawable/layout_rounded_bg_gray_700"
+            android:background="@drawable/layout_rounded_bg_window"
             android:orientation="vertical">
             <TextView
                 android:layout_width="wrap_content"
@@ -34,7 +34,7 @@
                 android:layout_marginEnd="@dimen/spacing_large"
                 style="@style/Subheader2"
                 android:letterSpacing="0.015"
-                android:textColor="@color/black"
+                android:textColor="@color/text_primary"
                 />
             <TextView
                 android:layout_width="wrap_content"
@@ -42,7 +42,7 @@
                 android:text="@string/using_habitica_description"
                 style="@style/Body2"
                 android:lineSpacingExtra="3sp"
-                android:textColor="@color/gray_100"
+                android:textColor="@color/text_secondary"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 android:gravity="center"
@@ -74,7 +74,7 @@
             android:gravity="center_horizontal"
             android:paddingTop="@dimen/spacing_large"
             android:layout_marginTop="@dimen/spacing_medium"
-            android:background="@drawable/layout_rounded_bg_gray_700"
+            android:background="@drawable/layout_rounded_bg_window"
             android:orientation="vertical">
             <TextView
                 android:layout_width="wrap_content"
@@ -84,7 +84,7 @@
                 android:layout_marginEnd="@dimen/spacing_large"
                 style="@style/Subheader2"
                 android:letterSpacing="0.015"
-                android:textColor="@color/black"
+                android:textColor="@color/text_primary"
                 />
             <TextView
                 android:layout_width="wrap_content"
@@ -92,7 +92,7 @@
                 android:text="@string/bugs_fixes_description"
                 style="@style/Body2"
                 android:lineSpacingExtra="3sp"
-                android:textColor="@color/gray_100"
+                android:textColor="@color/text_secondary"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 android:gravity="center"
@@ -122,7 +122,7 @@
             android:layout_marginTop="@dimen/spacing_medium"
             android:layout_marginStart="@dimen/spacing_large"
             android:layout_marginEnd="@dimen/spacing_large"
-            android:background="@drawable/layout_rounded_bg_gray_700"
+            android:background="@drawable/layout_rounded_bg_window"
             android:gravity="center_horizontal"
             android:paddingTop="@dimen/spacing_large"
             android:orientation="vertical">
@@ -134,7 +134,7 @@
                 android:layout_marginEnd="@dimen/spacing_large"
                 style="@style/Subheader2"
                 android:letterSpacing="0.015"
-                android:textColor="@color/black"
+                android:textColor="@color/text_primary"
                 />
             <TextView
                 android:layout_width="wrap_content"
@@ -142,7 +142,7 @@
                 android:text="@string/suggestions_feedback_description"
                 style="@style/Body2"
                 android:lineSpacingExtra="3sp"
-                android:textColor="@color/gray_100"
+                android:textColor="@color/text_secondary"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 android:gravity="center"
@@ -168,13 +168,13 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/gray_500"/>
+        android:background="@color/content_background_offset"/>
     <Button
         android:id="@+id/reset_tutorial_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/HabiticaButton.Gray.600"
-        android:textColor="@color/gray_50"
+        style="@style/HabiticaButton.Offset"
+        android:textColor="@color/text_primary"
         android:text="@string/reset_walkthrough"
         android:layout_margin="@dimen/spacing_large"/>
 </LinearLayout>

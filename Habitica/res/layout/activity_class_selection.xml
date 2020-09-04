@@ -5,7 +5,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@color/white">
+        android:background="@color/content_background">
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -16,10 +16,10 @@
             android:layout_height="wrap_content"
             android:minHeight="?attr/actionBarSize"
             android:theme="@style/Toolbar"
-            android:background="@color/white"
+            android:background="@color/content_background"
             app:layout_scrollFlags="scroll|enterAlways"
             app:title="@string/choose_class"
-            app:titleTextColor="@color/gray_50"
+            app:titleTextColor="@color/text_primary"
             app:theme="@style/ToolbarDarkBackArrow"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"/>
 

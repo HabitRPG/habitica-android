@@ -234,7 +234,7 @@ class ChallengeFormActivity : BaseActivity() {
             fillControlsByChallenge()
         }
 
-        compositeSubscription.add(userRepository.getUser(userId).subscribe(Consumer { this.user = it }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(userRepository.getUser(userId).subscribe({ this.user = it }, RxErrorHandler.handleEmptyError()))
         gemIconView.setImageBitmap(HabiticaIconsHelper.imageOfGem())
 
         challengeAddGemBtn.setOnClickListener { onAddGem() }
@@ -332,7 +332,7 @@ class ChallengeFormActivity : BaseActivity() {
                     }
                     socialRepository.retrieveGroup(it)
                 })
-                .subscribe(Consumer { groups ->
+                .subscribe({ groups ->
             val mutableGroups = groups.first.toMutableList()
             if (groups.first.firstOrNull { it.id == "00000000-0000-4000-A000-000000000000" } == null) {
                 val tavern = Group()
@@ -374,7 +374,7 @@ class ChallengeFormActivity : BaseActivity() {
         addReward?.let { taskList.add(it) }
 
         challengeTasks.setTasks(taskList)
-        compositeSubscription.add(challengeTasks.addItemObservable().subscribe(Consumer { t ->
+        compositeSubscription.add(challengeTasks.addItemObservable().subscribe({ t ->
             when (t) {
                 addHabit -> openNewTaskActivity(Task.TYPE_HABIT, null)
                 addDaily -> openNewTaskActivity(Task.TYPE_DAILY, null)
@@ -395,7 +395,7 @@ class ChallengeFormActivity : BaseActivity() {
 
     private fun fillControlsByChallenge() {
         challengeId?.let {
-            challengeRepository.getChallenge(it).subscribe(Consumer { challenge ->
+            challengeRepository.getChallenge(it).subscribe({ challenge ->
                 groupID = challenge.groupId
                 editMode = true
                 createChallengeTitle.setText(challenge.name)
@@ -414,7 +414,7 @@ class ChallengeFormActivity : BaseActivity() {
                 }
                 checkPrizeAndMinimumForTavern()
             }, RxErrorHandler.handleEmptyError())
-            challengeRepository.getChallengeTasks(it).subscribe(Consumer { tasks ->
+            challengeRepository.getChallengeTasks(it).subscribe({ tasks ->
                 tasks.forEach { task ->
                     addOrUpdateTaskInList(task, true)
                 }
@@ -498,7 +498,7 @@ class ChallengeFormActivity : BaseActivity() {
         return editText.text.toString()
     }
 
-    private inner class GroupArrayAdapter internal constructor(context: Context) : ArrayAdapter<Group>(context, android.R.layout.simple_spinner_item) {
+    private inner class GroupArrayAdapter(context: Context) : ArrayAdapter<Group>(context, android.R.layout.simple_spinner_item) {
 
         override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
             val checkedTextView = super.getView(position, convertView, parent) as? AppCompatTextView

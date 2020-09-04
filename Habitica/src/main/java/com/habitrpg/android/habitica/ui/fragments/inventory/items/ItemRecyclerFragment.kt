@@ -100,11 +100,11 @@ class ItemRecyclerFragment : BaseFragment(), androidx.swiperefreshlayout.widget.
             adapter?.let { adapter ->
                 compositeSubscription.add(adapter.getSellItemFlowable()
                         .flatMap { item -> inventoryRepository.sellItem(user, item) }
-                        .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+                        .subscribe({ }, RxErrorHandler.handleEmptyError()))
 
                 compositeSubscription.add(adapter.getQuestInvitationFlowable()
                         .flatMap { quest -> inventoryRepository.inviteToQuest(quest) }
-                        .subscribe(Consumer { MainNavigationController.navigate(R.id.partyFragment) }, RxErrorHandler.handleEmptyError()))
+                        .subscribe({ MainNavigationController.navigate(R.id.partyFragment) }, RxErrorHandler.handleEmptyError()))
                 compositeSubscription.add(adapter.getOpenMysteryItemFlowable()
                         .flatMap { inventoryRepository.openMysteryItem(user) }
                         .doOnNext {
@@ -116,9 +116,9 @@ class ItemRecyclerFragment : BaseFragment(), androidx.swiperefreshlayout.widget.
                             }
                         }
                         .flatMap { userRepository.retrieveUser(false) }
-                        .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
-                compositeSubscription.add(adapter.startHatchingEvents.subscribeWithErrorHandler(Consumer { showHatchingDialog(it) }))
-                compositeSubscription.add(adapter.hatchPetEvents.subscribeWithErrorHandler(Consumer { hatchPet(it.first, it.second) }))
+                        .subscribe({ }, RxErrorHandler.handleEmptyError()))
+                compositeSubscription.add(adapter.startHatchingEvents.subscribeWithErrorHandler({ showHatchingDialog(it) }))
+                compositeSubscription.add(adapter.hatchPetEvents.subscribeWithErrorHandler({ hatchPet(it.first, it.second) }))
             }
         }
         activity?.let {
@@ -199,7 +199,7 @@ class ItemRecyclerFragment : BaseFragment(), androidx.swiperefreshlayout.widget.
         compositeSubscription.add(userRepository.retrieveUser(true, true)
                 .doOnTerminate {
                     refreshLayout?.isRefreshing = false
-                }.subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+                }.subscribe({ }, RxErrorHandler.handleEmptyError()))
     }
 
     private fun hatchPet(potion: HatchingPotion, egg: Egg) {
@@ -237,19 +237,19 @@ class ItemRecyclerFragment : BaseFragment(), androidx.swiperefreshlayout.widget.
                         }
                         itemMap
                     }
-                    .subscribe(Consumer { items ->
+                    .subscribe({ items ->
                     adapter?.items = items
             }, RxErrorHandler.handleEmptyError()))
         }
 
-        compositeSubscription.add(inventoryRepository.getPets().subscribe(Consumer { adapter?.setExistingPets(it) }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(inventoryRepository.getPets().subscribe({ adapter?.setExistingPets(it) }, RxErrorHandler.handleEmptyError()))
         compositeSubscription.add(inventoryRepository.getOwnedPets().firstElement()
                 .map { ownedMounts ->
                     val mountMap = mutableMapOf<String, OwnedPet>()
                     ownedMounts.forEach { mountMap[it.key ?: ""] = it }
                     return@map mountMap
                 }
-                .subscribe(Consumer { adapter?.setOwnedPets(it) }, RxErrorHandler.handleEmptyError()))
+                .subscribe({ adapter?.setOwnedPets(it) }, RxErrorHandler.handleEmptyError()))
     }
 
     private fun openMarket() {

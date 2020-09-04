@@ -14,7 +14,7 @@
         <com.habitrpg.android.habitica.ui.views.EllipsisTextView
             android:id="@+id/checkedTextView"
             style="@style/Subheader3"
-            android:textColor="#000"
+            android:textColor="?attr/textColorPrimary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:lineSpacingExtra="2sp"
@@ -26,6 +26,7 @@
             style="@style/Caption2.Regular"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="?attr/textColorSecondary"
             android:maxLines="3"
             android:ellipsize="end"
             android:textSize="11sp"

@@ -55,7 +55,7 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         viewModel = ViewModelProviders.of(this)
                 .get(NotificationsViewModel::class.java)
 
-        compositeSubscription.add(viewModel.getNotifications().subscribe(Consumer {
+        compositeSubscription.add(viewModel.getNotifications().subscribe({
             this.setNotifications(it)
             viewModel.markNotificationsAsSeen(it)
         }, RxErrorHandler.handleEmptyError()))
@@ -78,7 +78,7 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
     override fun onRefresh() {
         binding.notificationsRefreshLayout.isRefreshing = true
 
-        compositeSubscription.add(viewModel.refreshNotifications().subscribe(Consumer {
+        compositeSubscription.add(viewModel.refreshNotifications().subscribe({
             binding.notificationsRefreshLayout.isRefreshing = false
         }, RxErrorHandler.handleEmptyError()))
     }
@@ -303,7 +303,7 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
 
         compositeSubscription.add(inventoryRepository.getQuestContent(data?.questKey ?: "")
                 .firstElement()
-                .subscribe(Consumer {
+                .subscribe({
                     updateQuestInvitationView(view, it)
                 }, RxErrorHandler.handleEmptyError()))
 

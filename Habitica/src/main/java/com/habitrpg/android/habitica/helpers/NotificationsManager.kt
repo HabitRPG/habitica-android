@@ -116,7 +116,7 @@ class NotificationsManager (private val context: Context) {
             EventBus.getDefault().post(event)
             if (apiClient != null) {
                 apiClient?.readNotification(notification.id)
-                        ?.subscribe(Consumer {}, RxErrorHandler.handleEmptyError())
+                        ?.subscribe({}, RxErrorHandler.handleEmptyError())
             }
         }
         return true
@@ -131,7 +131,7 @@ class NotificationsManager (private val context: Context) {
         }
         val sub = Completable.complete()
                 .delay(delay, TimeUnit.MILLISECONDS)
-                .subscribe(Action {
+                .subscribe({
                     EventBus.getDefault().post(ShowAchievementDialog(achievement, notification.id, isLastOnboardingAchievement))
                 }, RxErrorHandler.handleEmptyError())
         logOnboardingEvents(achievement)

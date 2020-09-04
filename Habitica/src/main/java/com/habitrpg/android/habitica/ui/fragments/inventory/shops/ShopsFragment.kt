@@ -28,7 +28,6 @@ open class ShopsFragment : BaseMainFragment() {
 
     private val currencyView: CurrencyViews by lazy {
         val view = CurrencyViews(context)
-        view.lightBackground = true
         view
     }
 
@@ -60,7 +59,7 @@ open class ShopsFragment : BaseMainFragment() {
 
         context?.let { FirebaseAnalytics.getInstance(it).logEvent("open_shop", bundleOf(Pair("shopIndex", lockTab))) }
 
-        compositeSubscription.add(userRepository.getUser().subscribe(Consumer { updateCurrencyView(it) }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(userRepository.getUser().subscribe({ updateCurrencyView(it) }, RxErrorHandler.handleEmptyError()))
     }
 
     override fun onDestroyView() {

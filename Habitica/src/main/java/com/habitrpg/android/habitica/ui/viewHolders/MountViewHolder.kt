@@ -43,7 +43,7 @@ class MountViewHolder(parent: ViewGroup, private val equipEvents: PublishSubject
             val drawable = BitmapDrawable(itemView.context.resources, if (owned) it else it.extractAlpha())
             Observable.just(drawable)
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(Consumer {
+                    .subscribe({
                         binding.imageView.background = drawable
                     }, RxErrorHandler.handleEmptyError())
         }

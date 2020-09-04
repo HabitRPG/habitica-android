@@ -5,7 +5,7 @@
     <item android:state_pressed="true" >
         <shape>
             <solid
-                android:color="@color/gray_200"/>
+                android:color="@color/inverted_background_offset"/>
             <corners
                 android:radius="3dp" />
             <padding
@@ -19,7 +19,7 @@
     <item android:state_focused="true" >
         <shape>
             <solid
-                android:color="@color/gray_200"
+                android:color="@color/inverted_background_offset"
                 android:angle="270" />
             <corners
                 android:radius="3dp" />
@@ -34,7 +34,7 @@
     <item>
         <shape>
             <solid
-                android:color="@color/gray_100"
+                android:color="@color/inverted_background"
                 android:angle="270" />
             <corners
                 android:radius="3dp" />

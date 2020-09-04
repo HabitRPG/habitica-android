@@ -45,7 +45,7 @@ class AvatarOverviewFragment : BaseMainFragment(), AdapterView.OnItemSelectedLis
         binding.avatarHairMustacheView.setOnClickListener { displayCustomizationFragment("hair", "mustache") }
         binding.avatarBackgroundView.setOnClickListener { displayCustomizationFragment("background", null) }
 
-        compositeSubscription.add(userRepository.getUser().subscribeWithErrorHandler(Consumer {
+        compositeSubscription.add(userRepository.getUser().subscribeWithErrorHandler({
             updateUser(it)
         }))
     }
@@ -101,7 +101,7 @@ class AvatarOverviewFragment : BaseMainFragment(), AdapterView.OnItemSelectedLis
 
         if (this.user?.isValid == true && this.user?.preferences?.size != newSize) {
             compositeSubscription.add(userRepository.updateUser(user, "preferences.size", newSize)
-                    .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+                    .subscribe({ }, RxErrorHandler.handleEmptyError()))
         }
     }
 

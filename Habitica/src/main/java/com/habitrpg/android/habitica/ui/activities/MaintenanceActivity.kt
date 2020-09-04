@@ -71,7 +71,7 @@ class MaintenanceActivity : BaseActivity() {
             compositeSubscription.add(this.maintenanceService.maintenanceStatus
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(Consumer { maintenanceResponse ->
+                    .subscribe({ maintenanceResponse ->
                         if (!maintenanceResponse.activeMaintenance) {
                             finish()
                         }

@@ -75,7 +75,7 @@ class GiftGemsActivity : BaseActivity() {
 
         setViewPagerAdapter()
 
-        compositeSubscription.add(socialRepository.getMember(giftedUsername ?: giftedUserID).firstElement().subscribe(Consumer {
+        compositeSubscription.add(socialRepository.getMember(giftedUsername ?: giftedUserID).firstElement().subscribe({
             giftedUserID = it.id
             giftedUsername = it.username
             purchaseFragment?.giftedMember = it

@@ -50,8 +50,8 @@ internal class PurchaseDialogGearContent : PurchaseDialogContent {
     private fun configureFieldsForValue(labelView: TextView?, valueTextView: TextView?, value: Int) {
         valueTextView?.text = "+$value"
         if (value == 0) {
-            labelView?.setTextColor(ContextCompat.getColor(context, R.color.gray_400))
-            valueTextView?.setTextColor(ContextCompat.getColor(context, R.color.gray_400))
+            labelView?.setTextColor(ContextCompat.getColor(context, R.color.text_dimmed))
+            valueTextView?.setTextColor(ContextCompat.getColor(context, R.color.text_dimmed))
         }
     }
 }

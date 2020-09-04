@@ -13,7 +13,7 @@
     android:scrollbarSize="3dp"
     android:scrollbarThumbVertical="@color/scrollbarThumb"
     android:scrollbars="vertical"
-    android:background="@color/white">
+    android:background="@color/content_background">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -114,13 +114,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/subscribe_listitem1"
-                        android:textColor="@color/black"
+                        android:textColor="@color/text_primary"
                         style="@style/Body1"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/subscribe_listitem1_description"
-                        android:textColor="@color/black"
+                        android:textColor="@color/text_primary"
                         style="@style/Caption2.Regular"/>
                 </LinearLayout>
             </LinearLayout>
@@ -143,13 +143,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/subscribe_listitem2"
-                        android:textColor="@color/black"
+                        android:textColor="@color/text_primary"
                         style="@style/Body1"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/subscribe_listitem2_description"
-                        android:textColor="@color/black"
+                        android:textColor="@color/text_primary"
                         style="@style/Caption2.Regular"/>
                 </LinearLayout>
             </LinearLayout>
@@ -172,14 +172,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/subscribe_listitem3"
-                        android:textColor="@color/black"
+                        android:textColor="@color/text_primary"
                         style="@style/Body1"/>
                     <TextView
                         android:id="@+id/sub_benefits_mystery_item_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/subscribe_listitem3_description"
-                        android:textColor="@color/black"
+                        android:textColor="@color/text_primary"
                         style="@style/Caption2.Regular"/>
                 </LinearLayout>
             </LinearLayout>
@@ -202,13 +202,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/subscribe_listitem4"
-                        android:textColor="@color/black"
+                        android:textColor="@color/text_primary"
                         style="@style/Body1"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/subscribe_listitem4_description"
-                        android:textColor="@color/black"
+                        android:textColor="@color/text_primary"
                         style="@style/Caption2.Regular"/>
                 </LinearLayout>
             </LinearLayout>
@@ -231,13 +231,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/subscribe_listitem5"
-                        android:textColor="@color/black"
+                        android:textColor="@color/text_primary"
                         style="@style/Body1"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/subscribe_listitem5_description"
-                        android:textColor="@color/black"
+                        android:textColor="@color/text_primary"
                         style="@style/Caption2.Regular"/>
                 </LinearLayout>
             </LinearLayout>
@@ -339,7 +339,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/gray_300"
+                android:textColor="@color/text_quad"
                 android:text="@string/subscribe_gift_description"
                 android:gravity="center_horizontal"
                 android:layout_marginLeft="@dimen/spacing_large"
@@ -356,7 +356,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/gray_700">
+            android:background="@color/window_background">
             <TextView android:id="@+id/supportTextView"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
@@ -367,7 +367,7 @@
                 android:text="@string/subscribe_title"
                 android:layout_gravity="center_horizontal"
                 android:gravity="center"
-                android:textColor="@color/gray_300"
+                android:textColor="@color/text_quad"
                 android:textSize="14sp"
                 android:lineSpacingExtra="4dp"
                 android:layout_marginTop="16dp"

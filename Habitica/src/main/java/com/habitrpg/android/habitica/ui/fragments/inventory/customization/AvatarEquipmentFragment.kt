@@ -43,12 +43,12 @@ class AvatarEquipmentFragment : BaseMainFragment() {
                     val key = (if (equipment.key?.isNotBlank() != true) activeEquipment else equipment.key) ?: ""
                     inventoryRepository.equip(user, if (user?.preferences?.costume == true) "costume" else "equipped", key)
                 }
-                .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+                .subscribe({ }, RxErrorHandler.handleEmptyError()))
         compositeSubscription.add(adapter.getUnlockCustomizationEvents()
                 .flatMap<UnlockResponse> {
                     Flowable.empty()
                 }
-                .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+                .subscribe({ }, RxErrorHandler.handleEmptyError()))
         compositeSubscription.add(adapter.getUnlockSetEvents()
                 .flatMap<UnlockResponse> { set ->
                     val user = this.user
@@ -58,7 +58,7 @@ class AvatarEquipmentFragment : BaseMainFragment() {
                         Flowable.empty()
                     }
                 }
-                .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+                .subscribe({ }, RxErrorHandler.handleEmptyError()))
         return view
     }
 
@@ -91,7 +91,7 @@ class AvatarEquipmentFragment : BaseMainFragment() {
         recyclerView.itemAnimator = SafeDefaultItemAnimator()
         this.loadEquipment()
 
-        compositeSubscription.add(userRepository.getUser().subscribeWithErrorHandler(Consumer {
+        compositeSubscription.add(userRepository.getUser().subscribeWithErrorHandler({
             updateUser(it)
         }))
     }
@@ -102,7 +102,7 @@ class AvatarEquipmentFragment : BaseMainFragment() {
 
     private fun loadEquipment() {
         val type = this.type ?: return
-        inventoryRepository.getEquipmentType(type, category ?: "").subscribe(Consumer {
+        inventoryRepository.getEquipmentType(type, category ?: "").subscribe({
             adapter.setEquipment(it)
         }, RxErrorHandler.handleEmptyError())
     }

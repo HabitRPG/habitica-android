@@ -4,7 +4,7 @@
     <item>
         <shape android:shape="rectangle">
             <corners android:radius="@dimen/daily_checkbox_corner_radius"/>
-            <solid android:color="@color/gray_600" />
+            <solid android:color="@color/offset_background" />
             <size android:height="@dimen/checkbox_size" android:width="@dimen/checkbox_size" />
             <padding android:left="0dip" android:top="0dip" android:right="0dip" android:bottom="0dip" />
         </shape>

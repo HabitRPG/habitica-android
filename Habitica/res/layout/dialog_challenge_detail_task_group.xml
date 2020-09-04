@@ -24,8 +24,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/spacing_medium"
-            style="@style/Pill.White"
-            android:textColor="@color/gray_400"
+            style="@style/Pill.Content"
+            android:textColor="@color/text_dimmed"
             tools:text="2"/>
     </LinearLayout>
 

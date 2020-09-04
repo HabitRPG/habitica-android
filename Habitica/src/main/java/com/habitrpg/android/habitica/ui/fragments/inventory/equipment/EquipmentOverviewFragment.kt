@@ -52,8 +52,8 @@ class EquipmentOverviewFragment : BaseMainFragment() {
         binding.autoEquipSwitch.isChecked = user?.preferences?.autoEquip ?: false
         binding.costumeSwitch.isChecked = user?.preferences?.costume ?: false
 
-        binding.autoEquipSwitch.setOnCheckedChangeListener { _, isChecked -> userRepository.updateUser(user, "preferences.autoEquip", isChecked).subscribe(Consumer { }, RxErrorHandler.handleEmptyError()) }
-        binding.costumeSwitch.setOnCheckedChangeListener { _, isChecked -> userRepository.updateUser(user, "preferences.costume", isChecked).subscribe(Consumer { }, RxErrorHandler.handleEmptyError()) }
+        binding.autoEquipSwitch.setOnCheckedChangeListener { _, isChecked -> userRepository.updateUser(user, "preferences.autoEquip", isChecked).subscribe({ }, RxErrorHandler.handleEmptyError()) }
+        binding.costumeSwitch.setOnCheckedChangeListener { _, isChecked -> userRepository.updateUser(user, "preferences.costume", isChecked).subscribe({ }, RxErrorHandler.handleEmptyError()) }
 
         user?.items?.gear?.let {
             updateGearData(it)
@@ -76,7 +76,7 @@ class EquipmentOverviewFragment : BaseMainFragment() {
     private fun updateGearData(gear: Gear) {
         if (gear.equipped?.weapon?.isNotEmpty() == true) {
             compositeSubscription.add(inventoryRepository.getEquipment(gear.equipped?.weapon ?: "").firstElement()
-                    .subscribe(Consumer {
+                    .subscribe({
                         binding.battlegearView.updateData(gear.equipped, it.twoHanded)
                     }, RxErrorHandler.handleEmptyError()))
         } else {
@@ -84,7 +84,7 @@ class EquipmentOverviewFragment : BaseMainFragment() {
         }
         if (gear.costume?.weapon?.isNotEmpty() == true) {
             compositeSubscription.add(inventoryRepository.getEquipment(gear.costume?.weapon ?: "").firstElement()
-                    .subscribe(Consumer {
+                    .subscribe({
                         binding.costumeView.updateData(gear.costume, it.twoHanded)
                     }, RxErrorHandler.handleEmptyError()))
         } else {

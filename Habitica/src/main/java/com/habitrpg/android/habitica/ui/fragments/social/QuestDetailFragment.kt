@@ -90,10 +90,10 @@ class QuestDetailFragment : BaseMainFragment() {
     override fun onResume() {
         super.onResume()
         compositeSubscription.add(socialRepository.getGroup(partyId)
-                .subscribe(Consumer { this.updateParty(it) }, RxErrorHandler.handleEmptyError()))
+                .subscribe({ this.updateParty(it) }, RxErrorHandler.handleEmptyError()))
         if (questKey != null) {
             compositeSubscription.add(inventoryRepository.getQuestContent(questKey ?: "")
-                    .subscribe(Consumer { this.updateQuestContent(it) }, RxErrorHandler.handleEmptyError()))
+                    .subscribe({ this.updateQuestContent(it) }, RxErrorHandler.handleEmptyError()))
         }
     }
 
@@ -104,7 +104,7 @@ class QuestDetailFragment : BaseMainFragment() {
         party = group
         quest = group.quest
         setQuestParticipants(group.quest?.participants)
-        compositeSubscription.add(socialRepository.getMember(quest?.leader).firstElement().subscribe(Consumer { member ->
+        compositeSubscription.add(socialRepository.getMember(quest?.leader).firstElement().subscribe({ member ->
             if (context != null && questLeaderView != null && member != null) {
                 questLeaderView?.text = context?.getString(R.string.quest_leader_header, member.displayName)
             }
@@ -173,15 +173,15 @@ class QuestDetailFragment : BaseMainFragment() {
                     when {
                         participant.participatesInQuest == null -> {
                             statusTextView?.setText(R.string.pending)
-                            statusTextView?.setTextColor(ContextCompat.getColor(it, R.color.gray_200))
+                            statusTextView?.setTextColor(ContextCompat.getColor(it, R.color.text_ternary))
                         }
                         participant.participatesInQuest == true -> {
                             statusTextView?.setText(R.string.accepted)
-                            statusTextView?.setTextColor(ContextCompat.getColor(it, R.color.green_100))
+                            statusTextView?.setTextColor(ContextCompat.getColor(it, R.color.text_green))
                         }
                         else -> {
                             statusTextView?.setText(R.string.declined)
-                            statusTextView?.setTextColor(ContextCompat.getColor(it, R.color.red_100))
+                            statusTextView?.setTextColor(ContextCompat.getColor(it, R.color.text_red))
                         }
                     }
                 }
@@ -215,14 +215,14 @@ class QuestDetailFragment : BaseMainFragment() {
 
     private fun onQuestAccept() {
         partyId?.let { partyID ->
-        socialRepository.acceptQuest(user, partyID).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+        socialRepository.acceptQuest(user, partyID).subscribe({ }, RxErrorHandler.handleEmptyError())
         }
     }
 
 
     private fun onQuestReject() {
         partyId?.let { partyID ->
-            socialRepository.rejectQuest(user, partyID).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+            socialRepository.rejectQuest(user, partyID).subscribe({ }, RxErrorHandler.handleEmptyError())
         }
     }
 
@@ -235,7 +235,7 @@ class QuestDetailFragment : BaseMainFragment() {
                 val party = party
                 if (party != null) {
                     socialRepository.forceStartQuest(party)
-                            .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+                            .subscribe({ }, RxErrorHandler.handleEmptyError())
                 }
             }
             alert.addButton(R.string.no, false)
@@ -251,7 +251,7 @@ class QuestDetailFragment : BaseMainFragment() {
                 partyId?.let { partyID ->
                     @Suppress("DEPRECATION")
                     socialRepository.cancelQuest(partyID)
-                            .subscribe(Consumer { getActivity()?.fragmentManager?.popBackStack() }, RxErrorHandler.handleEmptyError())
+                            .subscribe({ getActivity()?.fragmentManager?.popBackStack() }, RxErrorHandler.handleEmptyError())
                 }
             }
             alert.addButton(R.string.no, false)
@@ -266,7 +266,7 @@ class QuestDetailFragment : BaseMainFragment() {
                     partyId?.let { partyID ->
                         @Suppress("DEPRECATION")
                         socialRepository.abortQuest(partyID)
-                                .subscribe(Consumer { getActivity()?.fragmentManager?.popBackStack() }, RxErrorHandler.handleEmptyError())
+                                .subscribe({ getActivity()?.fragmentManager?.popBackStack() }, RxErrorHandler.handleEmptyError())
                     }
                 }.setNegativeButton(R.string.no) { _, _ -> }
         builder.show()

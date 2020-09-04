@@ -41,7 +41,7 @@ class NPCBannerView(context: Context, attrs: AttributeSet?) : FrameLayout(contex
     }
 
     init {
-        context?.layoutInflater?.inflate(R.layout.npc_banner, this)
+        context.layoutInflater.inflate(R.layout.npc_banner, this)
     }
 
     private fun setImage() {
@@ -57,7 +57,7 @@ class NPCBannerView(context: Context, attrs: AttributeSet?) : FrameLayout(contex
             drawable.tileModeX = Shader.TileMode.REPEAT
             Observable.just(drawable)
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(Consumer {
+                    .subscribe({
                         backgroundView.background = it
                     }, RxErrorHandler.handleEmptyError())
         }

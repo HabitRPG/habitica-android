@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.extensions.isUsingNightModeResources
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.helpers.bindView
@@ -30,10 +31,6 @@ class ShopItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), Vi
 
     private var context: Context = itemView.context
 
-    private var lockedDrawable = BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfItemIndicatorLocked())
-    private var limitedDrawable = BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfItemIndicatorLimited())
-    private var countDrawable = BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfItemIndicatorNumber())
-
     var purchaseCardAction: ((ShopItem) -> Unit)? = null
 
     var itemCount = 0
@@ -41,7 +38,11 @@ class ShopItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), Vi
         field = value
         if (value > 0) {
             itemDetailIndicator.text = value.toString()
-            itemDetailIndicator.background = countDrawable
+            itemDetailIndicator.background = if (context.isUsingNightModeResources()) {
+                BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfItemIndicatorNumberDark())
+            } else {
+                BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfItemIndicatorNumber())
+            }
             itemDetailIndicator.visibility = View.VISIBLE
         }
     }
@@ -76,20 +77,20 @@ class ShopItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), Vi
             }
             priceLabel.visibility = View.VISIBLE
             unlockLabel.visibility = View.GONE
-            if (item.locked) {
-                itemDetailIndicator.background = lockedDrawable
-                itemDetailIndicator.visibility = View.VISIBLE
-            }
         } else {
             unlockLabel.text = lockedReason
             priceLabel.visibility = View.GONE
             unlockLabel.visibility = View.VISIBLE
-            itemDetailIndicator.background = lockedDrawable
-            itemDetailIndicator.visibility = View.VISIBLE
         }
-
-        if (item.isLimited) {
-            itemDetailIndicator.background = limitedDrawable
+        if (item.locked) {
+            itemDetailIndicator.background = if (context.isUsingNightModeResources()) {
+                BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfItemIndicatorLockedDark())
+            } else {
+                BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfItemIndicatorLocked())
+            }
+            itemDetailIndicator.visibility = View.VISIBLE
+        } else if (item.isLimited) {
+            itemDetailIndicator.background = BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfItemIndicatorLimited())
             itemDetailIndicator.visibility = View.VISIBLE
         }
 

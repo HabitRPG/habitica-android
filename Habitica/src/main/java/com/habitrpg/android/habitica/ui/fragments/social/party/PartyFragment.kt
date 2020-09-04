@@ -49,7 +49,7 @@ class PartyFragment : BaseMainFragment() {
         viewModel.groupViewType = GroupViewType.PARTY
 
         viewModel.getGroupData().observe(viewLifecycleOwner,
-                Observer {
+                {
                     updateGroupUI(it)
                 })
 

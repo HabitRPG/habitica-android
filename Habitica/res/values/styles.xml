@@ -1,7 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.DayNight.DarkActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <item name="android:listSeparatorTextViewStyle">@style/MyOwnListSeperatorTextViewStyle</item>
 
         <item name="android:elevation" tools:targetApi="21">0dp</item>
@@ -18,7 +18,7 @@
         <!-- ...and here we setting appcompat’s color theming attrs -->
         <item name="colorPrimary">@color/brand</item>
         <item name="colorPrimaryDark">@color/brand_50</item>
-        <item name="colorAccent">@color/brand_400</item>
+        <item name="colorAccent">@color/color_accent</item>
         <item name="android:colorPrimary">@color/brand</item>
         <item name="android:colorPrimaryDark">@color/brand_50</item>
         <item name="android:colorAccent">@color/brand_400</item>
@@ -27,14 +27,16 @@
         <item name="colorBadgeBackground">@color/brand_400</item>
         <item name="taskFormTint">@color/brand_300</item>
 
-        <item name="textColorPrimary">@color/gray_50</item>
-        <item name="textColorSecondary">@color/gray_200</item>
+        <item name="textColorPrimary">@color/text_primary</item>
+        <item name="textColorSecondary">@color/text_secondary</item>
         <item name="textColorPrimaryDark">#D5C8FF</item>
         <item name="textColorSecondaryDark">@color/brand_500</item>
+        <item name="android:textColorPrimary">@color/text_primary</item>
+        <item name="android:textColorSecondary">@color/text_ternary</item>
         <item name="barColor">@color/brand_100</item>
 
-        <item name="colorContentBackground">@color/white</item>
-        <item name="colorWindowBackground">@color/gray_700</item>
+        <item name="colorContentBackground">@color/content_background</item>
+        <item name="colorWindowBackground">@color/window_background</item>
 
         <item name="popupMenuStyle">@style/PopupTheme</item>
         <item name="actionOverflowMenuStyle">@style/PopupTheme</item>
@@ -44,20 +46,27 @@
         <item name="alertDialogTheme">@style/AlertDialogTheme</item>
         <item name="android:windowTranslucentStatus">false</item>
 
-        <item name="android:statusBarColor">@color/brand_50</item>
-        <item name="android:navigationBarColor">@color/brand_50</item>
+        <item name="android:statusBarColor">@color/system_bars</item>
+        <item name="android:navigationBarColor">@color/system_bars</item>
 
         <item name="searchViewStyle">@style/SearchViewStyle</item>
         <item name="toolbarContentColor">@color/white</item>
         <item name="colorPrimaryText">@color/brand_50</item>
-        <item name="headerBackgroundColor">@color/white</item>
-        <item name="headerOffsetColor">@color/gray_700</item>
-        <item name="headerTextColor">@color/gray_10</item>
+        <item name="headerBackgroundColor">@color/content_background</item>
+        <item name="headerOffsetColor">@color/window_background</item>
+        <item name="headerTextColor">@color/text_primary</item>
     </style>
 
     <style name="MainAppTheme" parent="AppTheme">
     </style>
 
+    <style name="MainAppTheme.Dark">
+        <item name="colorPrimary">@color/gray_500</item>
+        <item name="barColor">@color/gray_10</item>
+        <item name="colorPrimaryOffset">@color/gray_300</item>
+        <item name="colorPrimaryText">@color/brand_500</item>
+        <item name="textColorPrimaryDark">@color/gray_200</item>
+    </style>
 
     <style name="MainAppTheme.Red">
         <item name="colorPrimary">@color/red_10</item>
@@ -78,6 +87,12 @@
         <item name="colorPrimaryText">@color/red_1</item>
     </style>
 
+    <style name="MainAppTheme.Red.Dark">
+        <item name="barColor">@color/gray_10</item>
+        <item name="colorPrimaryOffset">@color/gray_10</item>
+        <item name="colorPrimaryText">@color/red_500</item>
+    </style>
+
     <style name="MainAppTheme.Maroon">
         <item name="colorPrimary">@color/red_10</item>
         <item name="colorPrimaryDark">@color/maroon_5</item>
@@ -94,6 +109,12 @@
         <item name="barColor">@color/red_1</item>
         <item name="taskFormTint">@color/maroon_50</item>
         <item name="colorPrimaryText">@color/maroon_1</item>
+    </style>
+
+    <style name="MainAppTheme.Maroon.Dark">
+        <item name="barColor">@color/gray_10</item>
+        <item name="colorPrimaryOffset">@color/gray_10</item>
+        <item name="colorPrimaryText">@color/maroon_500</item>
     </style>
 
     <style name="MainAppTheme.Orange">
@@ -115,6 +136,12 @@
         <item name="colorPrimaryText">@color/orange_1</item>
     </style>
 
+    <style name="MainAppTheme.Orange.Dark">
+        <item name="barColor">@color/gray_10</item>
+        <item name="colorPrimaryOffset">@color/gray_10</item>
+        <item name="colorPrimaryText">@color/orange_500</item>
+    </style>
+
     <style name="MainAppTheme.Yellow">
         <item name="colorPrimary">@color/yellow_50</item>
         <item name="colorPrimaryDark">@color/yellow_10</item>
@@ -132,6 +159,12 @@
         <item name="taskFormTint">@color/yellow_10</item>
         <item name="toolbarContentColor">@color/yellow_1</item>
         <item name="colorPrimaryText">@color/yellow_1</item>
+    </style>
+
+    <style name="MainAppTheme.Yellow.Dark">
+        <item name="barColor">@color/gray_10</item>
+        <item name="colorPrimaryOffset">@color/gray_10</item>
+        <item name="colorPrimaryText">@color/yellow_500</item>
     </style>
 
     <style name="MainAppTheme.Green">
@@ -153,6 +186,12 @@
         <item name="colorPrimaryText">@color/green_1</item>
     </style>
 
+    <style name="MainAppTheme.Green.Dark">
+        <item name="barColor">@color/gray_10</item>
+        <item name="colorPrimaryOffset">@color/gray_10</item>
+        <item name="colorPrimaryText">@color/green_500</item>
+    </style>
+
     <style name="MainAppTheme.Teal">
         <item name="colorPrimary">@color/teal_10</item>
         <item name="colorPrimaryDark">@color/teal_5</item>
@@ -170,6 +209,12 @@
         <item name="taskFormTint">@color/teal_50</item>
         <item name="toolbarContentColor">@color/teal_1</item>
         <item name="colorPrimaryText">@color/teal_1</item>
+    </style>
+
+    <style name="MainAppTheme.Teal.Dark">
+        <item name="barColor">@color/gray_10</item>
+        <item name="colorPrimaryOffset">@color/gray_10</item>
+        <item name="colorPrimaryText">@color/teal_500</item>
     </style>
 
     <style name="MainAppTheme.Blue">
@@ -191,6 +236,12 @@
         <item name="colorPrimaryText">@color/blue_1</item>
     </style>
 
+    <style name="MainAppTheme.Blue.Dark">
+        <item name="barColor">@color/gray_10</item>
+        <item name="colorPrimaryOffset">@color/gray_10</item>
+        <item name="colorPrimaryText">@color/blue_500</item>
+    </style>
+
     <style name="BottomSheetTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowIsTranslucent">false</item>
         <item name="android:windowBackground">@android:color/transparent</item>
@@ -208,7 +259,7 @@
 
 
     <style name="PopupTheme" parent="Widget.AppCompat.Light.PopupMenu">
-        <item name="android:popupBackground">@android:color/white</item>
+        <item name="android:popupBackground">@color/content_background</item>
     </style>
 
     <style name="CardText">
@@ -230,7 +281,7 @@
         <item name="android:padding">@dimen/card_padding_compact</item>
     </style>
 
-    <style name="CardView.Default" parent="CardView.Light">
+    <style name="CardView.Default" parent="CardView">
         <item name="android:layout_margin">@dimen/card_margin</item>
     </style>
 
@@ -302,11 +353,11 @@
         <item name="android:textColor">@color/brand_100</item>
     </style>
 
-    <style name="AlertDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+    <style name="AlertDialogTheme" parent="Theme.AppCompat.DayNight.Dialog.Alert">
         <item name="colorAccent">@color/brand_400</item>
     </style>
 
-    <style name="HabiticaAlertDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+    <style name="HabiticaAlertDialogTheme" parent="Theme.AppCompat.DayNight.Dialog.Alert">
         <item name="colorAccent">@color/brand_400</item>
         <item name="android:windowFrame">@null</item>
         <item name="android:windowIsFloating">true</item>
@@ -327,7 +378,7 @@
     <style name="SectionHeaderCaps">
         <item name="android:fontFamily">@string/font_family_medium</item>
         <item name="android:textSize">10sp</item>
-        <item name="android:textColor">@color/gray_200</item>
+        <item name="android:textColor">@color/text_ternary</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:layout_marginStart">@dimen/spacing_large</item>
         <item name="android:letterSpacing">0.15</item>
@@ -399,15 +450,15 @@
         <item name="android:paddingLeft">@dimen/pill_horizontal_padding</item>
         <item name="android:paddingTop">@dimen/pill_vertical_padding</item>
         <item name="android:paddingBottom">@dimen/pill_vertical_padding</item>
-        <item name="android:textColor">@color/gray_200</item>
+        <item name="android:textColor">@color/text_ternary</item>
     </style>
 
-    <style name="Pill.Gray700">
-        <item name="android:background">@drawable/pill_bg_gray_700</item>
+    <style name="Pill.Window">
+        <item name="android:background">@drawable/pill_bg_window</item>
     </style>
 
-    <style name="Pill.White">
-        <item name="android:background">@drawable/pill_bg_white</item>
+    <style name="Pill.Content">
+        <item name="android:background">@drawable/pill_bg_content</item>
     </style>
     <style name="Pill.Purple">
         <item name="android:textColor">@color/white</item>
@@ -449,7 +500,7 @@
         <item name="android:fontFamily" tools:targetApi="jelly_bean">
             @string/font_family_medium
         </item>
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@color/text_primary</item>
         <item name="android:layout_marginBottom">4dp</item>
     </style>
 
@@ -458,7 +509,7 @@
         <item name="android:fontFamily" tools:targetApi="jelly_bean">
             @string/font_family_regular
         </item>
-        <item name="android:textColor">@color/gray_50</item>
+        <item name="android:textColor">@color/text_primary</item>
     </style>
 
     <style name="SubscriptionListDescription" parent="GemPurchaseListItemDescription">
@@ -474,13 +525,13 @@
     </style>
 
     <style name="HabiticaButton.Purple" parent="HabiticaButton">
-        <item name="android:background">@drawable/rounded_purple_square</item>
+        <item name="android:backgroundTint">@color/color_accent</item>
         <item name="android:textColor">@color/white</item>
     </style>
 
-    <style name="HabiticaButton.White" parent="HabiticaButton">
-        <item name="android:background">@drawable/layout_rounded_bg_white</item>
-        <item name="android:textColor">@color/black</item>
+    <style name="HabiticaButton.Content" parent="HabiticaButton">
+        <item name="android:backgroundTint">@color/content_background</item>
+        <item name="android:textColor">@color/text_primary</item>
     </style>
 
     <style name="HabiticaButton.Purple.Small" parent="HabiticaButton.Purple">
@@ -542,14 +593,13 @@
         <item name="android:orientation">vertical</item>
     </style>
 
-    <style name="HabiticaButton" parent="@style/Widget.AppCompat.Button">
+    <style name="HabiticaButton" parent="@style/Widget.MaterialComponents.Button.TextButton">
         <item name="android:textAllCaps">false</item>
         <item name="android:textSize">16sp</item>
         <item name="android:fontFamily">@string/font_family_medium</item>
         <item name="android:minHeight">@dimen/button_height</item>
         <item name="android:textColor">@color/white</item>
-        <item name="android:shadowColor">@color/gray_400</item>
-        <item name="android:layout_height">@dimen/button_height</item>
+        <item name="android:shadowColor">@color/disabled_background</item>
         <item name="android:paddingStart">@dimen/spacing_large</item>
         <item name="android:paddingEnd">@dimen/spacing_large</item>
         <item name="android:elevation">0dp</item>
@@ -563,14 +613,13 @@
         <item name="android:minHeight">@dimen/button_height</item>
         <item name="android:shadowColor">@color/transparent</item>
         <item name="android:textColor">@color/white</item>
-        <item name="android:layout_height">@dimen/button_height</item>
         <item name="android:paddingStart">@dimen/spacing_large</item>
         <item name="android:paddingEnd">@dimen/spacing_large</item>
         <item name="android:minWidth">147dp</item>
     </style>
 
     <style name="HabiticaButton.Primary" parent="HabiticaButton">
-        <item name="android:background">@drawable/button_background_primary</item>
+        <item name="android:backgroundTint">@color/color_accent</item>
         <item name="android:text">?textColorPrimaryDark</item>
     </style>
 
@@ -583,25 +632,25 @@
     </style>
 
     <style name="HabiticaButton.Gray" parent="HabiticaButton">
-        <item name="android:background">@drawable/layout_rounded_bg_gray_700</item>
-        <item name="android:textColor">@color/brand_400</item>
+        <item name="android:backgroundTint">@color/window_background</item>
+        <item name="android:textColor">@color/text_brand_neon</item>
     </style>
 
-    <style name="HabiticaButton.Gray.600" parent="HabiticaButton">
-        <item name="android:background">@drawable/layout_rounded_bg_gray_600</item>
+    <style name="HabiticaButton.Offset" parent="HabiticaButton">
+        <item name="android:backgroundTint">@color/offset_background</item>
         <item name="android:textColor">@color/brand_400</item>
     </style>
 
     <style name="HabiticaButton.Red" parent="HabiticaButton">
-        <item name="android:background">@drawable/layout_rounded_bg_red</item>
+        <item name="android:backgroundTint">@color/red_100</item>
     </style>
 
     <style name="HabiticaButton.Blue" parent="HabiticaButton">
-        <item name="android:background">@drawable/layout_rounded_bg_blue</item>
+        <item name="android:backgroundTint">@color/blue_100</item>
     </style>
 
     <style name="HabiticaButton.Red.Small" parent="HabiticaButton.Small">
-        <item name="android:background">@drawable/layout_rounded_bg_red</item>
+        <item name="android:backgroundTint">@color/red_100</item>
     </style>
 
     <style name="SegmentTitle" parent="Headline">
@@ -609,15 +658,15 @@
     </style>
 
     <style name="HabiticaButton.Green" parent="HabiticaButton">
-        <item name="android:background">@drawable/layout_rounded_bg_green</item>
+        <item name="android:backgroundTint">@color/green_100</item>
     </style>
 
     <style name="HabiticaButton.Green.Small" parent="HabiticaButton.Small">
-        <item name="android:background">@drawable/layout_rounded_bg_green</item>
+        <item name="android:backgroundTint">@color/green_100</item>
     </style>
 
     <style name="HabiticaButton.Yellow" parent="HabiticaButton">
-        <item name="android:background">@drawable/layout_rounded_bg_yellow</item>
+        <item name="android:backgroundTint">@color/yellow_100</item>
     </style>
 
     <style name="CurrencyTextView">
@@ -668,7 +717,7 @@
     <style name="TextInputLayoutAppearanceTheme">
         <item name="boxBackgroundColor">@color/taskform_gray</item>
         <item name="android:textColor">?attr/colorPrimaryText</item>
-        <item name="android:textColorHint">@color/gray_300</item>
+        <item name="android:textColorHint">@color/text_quad</item>
         <item name="android:colorControlNormal">?attr/colorPrimary</item>
         <item name="android:colorControlActivated">?attr/colorPrimary</item>
         <item name="android:colorControlHighlight">?attr/colorPrimary</item>
@@ -678,19 +727,19 @@
     <style name="TextInputLayoutAppearance" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
         <item name="boxBackgroundColor">@color/taskform_gray</item>
         <item name="android:textColor">@color/textColorLight</item>
-        <item name="android:textColorHint">@color/gray_300</item>
+        <item name="android:textColorHint">@color/text_quad</item>
     </style>
 
     <style name="TaskFormSectionheader">
         <item name="android:textSize">16sp</item>
-        <item name="android:textColor">@color/gray_10</item>
+        <item name="android:textColor">@color/text_primary</item>
         <item name="android:layout_marginTop">@dimen/spacing_large</item>
         <item name="android:layout_marginBottom">@dimen/spacing_medium</item>
         <item name="android:accessibilityHeading">true</item>
     </style>
 
     <style name="TaskFormToggle">
-        <item name="android:background">@drawable/layout_rounded_bg_white</item>
+        <item name="android:background">@drawable/layout_rounded_bg_content</item>
         <item name="android:gravity">center</item>
         <item name="android:paddingTop">@dimen/spacing_small</item>
         <item name="android:paddingBottom">@dimen/spacing_small</item>
@@ -707,14 +756,14 @@
         <item name="android:gravity">center</item>
         <item name="android:textSize">16sp</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:background">@drawable/layout_rounded_bg_gray_700</item>
+        <item name="android:background">@drawable/layout_rounded_bg_window</item>
         <item name="android:paddingStart">@dimen/spacing_medium</item>
         <item name="android:paddingEnd">@dimen/spacing_medium</item>
     </style>
 
     <style name="ToolbarDarkBackArrow" parent="Base.Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorControlNormal">@color/gray_50</item>
-        <item name="android:actionMenuTextColor">@color/gray_50</item>
+        <item name="colorControlNormal">@color/text_primary</item>
+        <item name="android:actionMenuTextColor">@color/text_primary</item>
     </style>
 
     <style name="ReportMessageToolbar">
@@ -729,7 +778,7 @@
     <color name="taskform_gray">#99edecee</color>
 
     <style name="PreferenceThemeOverlay.v14" tools:override="true">
-        <item name="android:background">@color/white</item>
+        <item name="android:background">@color/content_background</item>
     </style>
 
 </resources>

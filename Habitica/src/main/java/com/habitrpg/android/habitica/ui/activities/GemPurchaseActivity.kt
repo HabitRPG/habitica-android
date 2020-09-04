@@ -116,7 +116,7 @@ class GemPurchaseActivity : BaseActivity() {
     fun onConsumablePurchased(event: ConsumablePurchasedEvent) {
         if (isActive) {
             purchaseHandler?.consumePurchase(event.purchase)
-            compositeSubscription.add(userRepository.retrieveUser(false).subscribe(Consumer {}, RxErrorHandler.handleEmptyError()))
+            compositeSubscription.add(userRepository.retrieveUser(false).subscribe({}, RxErrorHandler.handleEmptyError()))
         }
     }
 

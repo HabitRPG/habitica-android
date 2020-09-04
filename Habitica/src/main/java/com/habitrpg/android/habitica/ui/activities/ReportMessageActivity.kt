@@ -95,7 +95,7 @@ class ReportMessageActivity : BaseActivity() {
         messageTextView.text = args.text
 
         messageID?.let {messageID ->
-            compositeSubscription.add(socialRepository.getChatmessage(messageID).subscribe(Consumer {
+            compositeSubscription.add(socialRepository.getChatmessage(messageID).subscribe({
                 chatMessage = it
             }, RxErrorHandler.handleEmptyError()))
         }
@@ -117,7 +117,7 @@ class ReportMessageActivity : BaseActivity() {
             isReporting = true
             socialRepository.flagMessage(it, additionInfoEditText.text.toString())
                     .doOnError { isReporting = false }
-                    .subscribe(Consumer {
+                    .subscribe({
                 finish()
             }, RxErrorHandler.handleEmptyError())
         }
@@ -131,7 +131,7 @@ class ReportMessageActivity : BaseActivity() {
             toolbarTextView.setTypeface(null, Typeface.BOLD)
         } else {
             appBar.elevation = 8f
-            window.statusBarColor = ContextCompat.getColor(this, R.color.gray_600)
+            window.statusBarColor = ContextCompat.getColor(this, R.color.offset_background)
             closeButton.visibility = View.VISIBLE
             toolbarTextView.setTypeface(null, Typeface.NORMAL)
         }

@@ -42,7 +42,7 @@ abstract class TaskListWidgetProvider : BaseWidgetProvider() {
 
             if (taskId != null) {
                 userRepository.getUser().firstElement().flatMap { user -> taskRepository.taskChecked(user, taskId, up = true, force = false, notifyFunc = null) }
-                        .subscribe(Consumer { taskDirectionData ->
+                        .subscribe({ taskDirectionData ->
                             showToastForTaskDirection(context, taskDirectionData)
                             AppWidgetManager.getInstance(context).notifyAppWidgetViewDataChanged(appWidgetId, R.id.list_view)
                         }, RxErrorHandler.handleEmptyError())

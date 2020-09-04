@@ -51,7 +51,7 @@ class RewardViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> 
             dialog.setImage("shop_" + this.task?.id)
             dialog.setCurrency("gold")
             dialog.setValue(task?.value)
-            dialog.setBuyListener( DialogInterface.OnClickListener { _, _ -> this.buyReward() })
+            dialog.setBuyListener({ _, _ -> this.buyReward() })
             dialog.show()
         } else {
             super.onClick(v)
@@ -75,8 +75,8 @@ class RewardViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> 
             buyButton.setBackgroundColor(ContextCompat.getColor(context, R.color.yellow_500))
         } else {
             goldIconView.alpha = 0.6f
-            priceLabel.setTextColor(ContextCompat.getColor(context, R.color.gray_300))
-            buyButton.setBackgroundColor(ColorUtils.setAlphaComponent(ContextCompat.getColor(context, R.color.gray_600), 127))
+            priceLabel.setTextColor(ContextCompat.getColor(context, R.color.text_quad))
+            buyButton.setBackgroundColor(ColorUtils.setAlphaComponent(ContextCompat.getColor(context, R.color.offset_background), 127))
         }
         streakTextView.visibility = View.GONE
     }

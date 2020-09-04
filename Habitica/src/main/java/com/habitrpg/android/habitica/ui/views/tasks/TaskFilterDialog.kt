@@ -182,9 +182,9 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : AlertDialo
         createTagViews()
         tagsEditButton.setText(R.string.edit_tag_btn_edit)
         this.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
-        repository.updateTags(editedTags.values).toObservable().flatMap { tags -> Observable.fromIterable(tags) }.subscribe(Consumer { tag -> editedTags.remove(tag.id) }, RxErrorHandler.handleEmptyError())
-        repository.createTags(createdTags.values).toObservable().flatMap { tags -> Observable.fromIterable(tags) }.subscribe(Consumer { tag -> createdTags.remove(tag.id) }, RxErrorHandler.handleEmptyError())
-        repository.deleteTags(deletedTags).subscribe(Consumer { deletedTags.clear() }, RxErrorHandler.handleEmptyError())
+        repository.updateTags(editedTags.values).toObservable().flatMap { tags -> Observable.fromIterable(tags) }.subscribe({ tag -> editedTags.remove(tag.id) }, RxErrorHandler.handleEmptyError())
+        repository.createTags(createdTags.values).toObservable().flatMap { tags -> Observable.fromIterable(tags) }.subscribe({ tag -> createdTags.remove(tag.id) }, RxErrorHandler.handleEmptyError())
+        repository.deleteTags(deletedTags).subscribe({ deletedTags.clear() }, RxErrorHandler.handleEmptyError())
     }
 
     private fun createTagEditViews() {

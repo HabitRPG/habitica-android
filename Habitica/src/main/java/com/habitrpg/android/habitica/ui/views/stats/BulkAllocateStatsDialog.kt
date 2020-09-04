@@ -85,7 +85,7 @@ class BulkAllocateStatsDialog(context: Context, component: UserComponent?) : Ale
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        subscription = userRepository.getUser().subscribe(Consumer {
+        subscription = userRepository.getUser().subscribe({
             user = it
         }, RxErrorHandler.handleEmptyError())
 
@@ -147,7 +147,7 @@ class BulkAllocateStatsDialog(context: Context, component: UserComponent?) : Ale
         if (allocatedPoints > 0) {
             titleView.setBackgroundColor(context.getThemeColor(R.attr.colorAccent))
         } else {
-            titleView.setBackgroundColor(ContextCompat.getColor(context, R.color.gray_400))
+            titleView.setBackgroundColor(ContextCompat.getColor(context, R.color.disabled_background))
         }
 
         getButton(BUTTON_POSITIVE).isEnabled = allocatedPoints > 0

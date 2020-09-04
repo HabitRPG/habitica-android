@@ -17,7 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="46dp"
-        android:background="@drawable/white_rounded_bg"
+        android:background="@drawable/layout_rounded_bg_content"
         android:orientation="vertical"
         android:paddingBottom="16dp"
         android:paddingLeft="21dp"

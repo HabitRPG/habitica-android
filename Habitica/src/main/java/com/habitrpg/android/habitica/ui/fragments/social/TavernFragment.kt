@@ -4,11 +4,13 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
+import androidx.lifecycle.ViewModelProvider
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
-import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
+import com.habitrpg.android.habitica.ui.viewmodels.GroupViewModel
+import com.habitrpg.android.habitica.ui.viewmodels.GroupViewType
 import kotlinx.android.synthetic.main.fragment_viewpager.*
 import javax.inject.Inject
 
@@ -17,10 +19,10 @@ class TavernFragment : BaseMainFragment() {
     @Inject
     lateinit var socialRepository: SocialRepository
 
-    internal var tavern: Group? = null
+    internal lateinit var viewModel: GroupViewModel
 
     internal var tavernDetailFragment = TavernDetailFragment()
-    internal var chatListFragment = ChatListFragment()
+    private var chatFragment: ChatFragment? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -36,6 +38,11 @@ class TavernFragment : BaseMainFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        viewModel = ViewModelProvider(this).get(GroupViewModel::class.java)
+        viewModel.groupViewType = GroupViewType.TAVERN
+        viewModel.getIsMemberData().observe(viewLifecycleOwner, { activity?.invalidateOptionsMenu() })
+
         setViewPagerAdapter()
         viewPager.currentItem = 0
     }
@@ -58,7 +65,7 @@ class TavernFragment : BaseMainFragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menu_guild_refresh -> {
-                chatListFragment.refresh()
+                viewModel.retrieveGroup {  }
                 return true
             }
         }
@@ -71,22 +78,23 @@ class TavernFragment : BaseMainFragment() {
             return
         }
 
-        viewPager.adapter = object : FragmentPagerAdapter(fragmentManager) {
+        viewPager.adapter = object : FragmentPagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
             override fun getItem(position: Int): Fragment {
                 return when (position) {
                     0 -> {
                         tavernDetailFragment
                     }
                     1 -> {
-                        chatListFragment.configure(Group.TAVERN_ID, user, true, "tavern")
-                        chatListFragment
+                        chatFragment = ChatFragment()
+                        chatFragment?.viewModel = viewModel
+                        chatFragment ?: Fragment()
                     }
                     else -> Fragment()
                 }
             }
 
             override fun getCount(): Int {
-                return if (tavern != null && tavern?.quest != null && tavern?.quest?.key != null) {
+                return if (viewModel.getGroupData().value?.quest?.active == true) {
                     3
                 } else 2
             }

@@ -4,7 +4,7 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:background="@drawable/layout_rounded_bg_gray_700"
+              android:background="@drawable/layout_rounded_bg_window"
               android:layout_marginLeft="16dp"
               android:layout_marginRight="16dp">
     <LinearLayout
@@ -56,7 +56,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/level"
                 android:textSize="12sp"
-                android:textColor="@color/gray_300"
+                android:textColor="@color/text_quad"
                 android:gravity="center_horizontal"/>
         </LinearLayout>
         <LinearLayout
@@ -78,7 +78,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/sidebar_equipment"
                 android:textSize="12sp"
-                android:textColor="@color/gray_300"
+                android:textColor="@color/text_quad"
                 android:gravity="center_horizontal"/>
         </LinearLayout>
         <LinearLayout
@@ -100,7 +100,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/buffs"
                 android:textSize="12sp"
-                android:textColor="@color/gray_300"
+                android:textColor="@color/text_quad"
                 android:gravity="center_horizontal"/>
         </LinearLayout>
             <LinearLayout
@@ -124,7 +124,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/allocated"
                     android:textSize="12sp"
-                    android:textColor="@color/gray_300"
+                    android:textColor="@color/text_quad"
                     android:gravity="center_horizontal"/>
             </LinearLayout>
         <ImageButton

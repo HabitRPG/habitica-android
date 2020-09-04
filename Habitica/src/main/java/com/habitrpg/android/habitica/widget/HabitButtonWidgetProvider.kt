@@ -65,7 +65,7 @@ class HabitButtonWidgetProvider : BaseWidgetProvider() {
 
             if (taskId != null) {
                 userRepository.getUser().firstElement().flatMap { user -> taskRepository.taskChecked(user, taskId, TaskDirection.UP.text == direction, false, null) }
-                        .subscribe(Consumer { taskDirectionData -> showToastForTaskDirection(context, taskDirectionData) }, RxErrorHandler.handleEmptyError(), Action { this.onUpdate(context, mgr, ids) })
+                        .subscribe({ taskDirectionData -> showToastForTaskDirection(context, taskDirectionData) }, RxErrorHandler.handleEmptyError(), { this.onUpdate(context, mgr, ids) })
             }
         }
         super.onReceive(context, intent)

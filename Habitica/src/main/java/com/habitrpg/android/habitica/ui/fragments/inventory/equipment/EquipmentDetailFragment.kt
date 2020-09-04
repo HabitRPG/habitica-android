@@ -41,7 +41,7 @@ class EquipmentDetailFragment : BaseMainFragment() {
         this.adapter.isCostume = this.isCostume
         this.adapter.type = this.type
         compositeSubscription.add(this.adapter.equipEvents.flatMapMaybe { key -> inventoryRepository.equipGear(user, key, isCostume ?: false).firstElement() }
-                .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+                .subscribe({ }, RxErrorHandler.handleEmptyError()))
         return v
     }
 
@@ -61,7 +61,7 @@ class EquipmentDetailFragment : BaseMainFragment() {
         recyclerView.addItemDecoration(DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL))
         recyclerView.itemAnimator = SafeDefaultItemAnimator()
 
-        type?.let { type -> inventoryRepository.getOwnedEquipment(type).firstElement().subscribe(Consumer<RealmResults<Equipment>> { this.adapter.updateData(it) }, RxErrorHandler.handleEmptyError()) }
+        type?.let { type -> inventoryRepository.getOwnedEquipment(type).firstElement().subscribe({ this.adapter.updateData(it) }, RxErrorHandler.handleEmptyError()) }
     }
 
     override fun onDestroy() {

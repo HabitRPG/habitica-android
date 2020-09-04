@@ -79,7 +79,7 @@ class ChecklistItemFormView @JvmOverloads constructor(
     init {
         minimumHeight = 38.dpToPx(context)
         inflate(R.layout.task_form_checklist_item, true)
-        background = context.getDrawable(R.drawable.layout_rounded_bg_task_form)
+        background = ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_task_form)
         background.mutate().setTint(ContextCompat.getColor(context, R.color.taskform_gray))
         gravity = Gravity.CENTER_VERTICAL
 

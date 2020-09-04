@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:id="@+id/next_unlock_message"
-        android:textColor="@color/gray_100"
+        android:textColor="@color/text_secondary"
         android:gravity="center_horizontal"
         style="@style/Body1"/>
 

@@ -49,7 +49,7 @@ class TaskAlarmManager(private var context: Context, private var taskRepository:
         taskRepository.getTaskCopy(taskId)
                 .filter { task -> task.isValid && task.isManaged && Task.TYPE_DAILY == task.type }
                 .firstElement()
-                .subscribe(Consumer { this.setAlarmsForTask(it) }, RxErrorHandler.handleEmptyError())
+                .subscribe({ this.setAlarmsForTask(it) }, RxErrorHandler.handleEmptyError())
     }
 
     fun scheduleAllSavedAlarms(preventDailyReminder: Boolean) {
@@ -57,7 +57,7 @@ class TaskAlarmManager(private var context: Context, private var taskRepository:
                 .firstElement()
                 .toFlowable()
                 .flatMap<Task> { Flowable.fromIterable(it) }
-                .subscribe(Consumer { this.setAlarmsForTask(it) }, RxErrorHandler.handleEmptyError())
+                .subscribe({ this.setAlarmsForTask(it) }, RxErrorHandler.handleEmptyError())
 
         if (!preventDailyReminder) {
             scheduleDailyReminder(context)

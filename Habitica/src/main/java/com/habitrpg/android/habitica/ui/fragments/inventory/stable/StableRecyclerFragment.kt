@@ -101,7 +101,7 @@ class StableRecyclerFragment : BaseFragment() {
             adapter?.let {
                 compositeSubscription.add(it.getEquipFlowable()
                         .flatMap<Items> { key -> inventoryRepository.equip(user, if (itemType == "pets") "pet" else "mount", key) }
-                        .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+                        .subscribe({ }, RxErrorHandler.handleEmptyError()))
             }
         }
         
@@ -156,12 +156,12 @@ class StableRecyclerFragment : BaseFragment() {
                     }
                     eggMap
                 }
-                .subscribe(Consumer {
+                .subscribe({
             adapter?.setEggs(it)
         }, RxErrorHandler.handleEmptyError()))
-        compositeSubscription.add(observable.zipWith(ownedObservable, BiFunction<RealmResults<out Animal>, Map<String, OwnedObject>, ArrayList<Any>> { unsortedAnimals, ownedAnimals ->
+        compositeSubscription.add(observable.zipWith(ownedObservable, { unsortedAnimals, ownedAnimals ->
             mapAnimals(unsortedAnimals, ownedAnimals)
-        }).subscribe(Consumer { items -> adapter?.setItemList(items) }, RxErrorHandler.handleEmptyError()))
+        }).subscribe({ items -> adapter?.setItemList(items) }, RxErrorHandler.handleEmptyError()))
 
         compositeSubscription.add(inventoryRepository.getOwnedItems("eggs")
                 .map {
@@ -171,7 +171,7 @@ class StableRecyclerFragment : BaseFragment() {
                     }
                     map
                 }
-                .subscribe(Consumer {
+                .subscribe({
             adapter?.ownedEggs = it
         }, RxErrorHandler.handleEmptyError()))
     }
