@@ -119,7 +119,7 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
             }
             apiClient.registerUser(username, email, password, confirmPassword)
                     .subscribe(this@LoginActivity,
-                            Consumer {
+                            {
                                 hideProgress()
                                 RxErrorHandler.reportError(it)
                             })
@@ -131,7 +131,7 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
                 return@OnClickListener
             }
             apiClient.connectUser(username, password).subscribe(this@LoginActivity,
-                    Consumer {
+                    {
                         hideProgress()
                         RxErrorHandler.reportError(it)
                     })
@@ -307,7 +307,7 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
             val accessToken = AccessToken.getCurrentAccessToken()
             if (accessToken != null && accessToken.token != null) {
                 compositeSubscription.add(apiClient.connectSocial("facebook", accessToken.userId, accessToken.token)
-                        .subscribe(this@LoginActivity, Consumer { hideProgress() }))
+                        .subscribe(this@LoginActivity, { hideProgress() }))
             }
         }
     }
@@ -376,7 +376,7 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
         }
 
         compositeSubscription.add(userRepository.retrieveUser(true)
-                .subscribe(Consumer {
+                .subscribe({
                     if (userAuthResponse.newUser) {
                         this.startSetupActivity()
                     } else {
@@ -424,7 +424,7 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
         }
                 .subscribeOn(Schedulers.io())
                 .flatMap { token -> apiClient.connectSocial("google", googleEmail ?: "", token) }
-                .subscribe(this@LoginActivity, Consumer { throwable ->
+                .subscribe(this@LoginActivity, { throwable ->
                     throwable.printStackTrace()
                     hideProgress()
                     throwable.cause?.let {
@@ -588,7 +588,7 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
         alertDialog.setMessage(R.string.forgot_password_description)
         alertDialog.setAdditionalContentView(input)
         alertDialog.addButton(R.string.send, true) { _, _ ->
-                    userRepository.sendPasswordResetEmail(input.text.toString()).subscribe(Consumer { showPasswordEmailConfirmation() }, RxErrorHandler.handleEmptyError())
+                    userRepository.sendPasswordResetEmail(input.text.toString()).subscribe({ showPasswordEmailConfirmation() }, RxErrorHandler.handleEmptyError())
                 }
         alertDialog.addCancelButton()
         alertDialog.show()

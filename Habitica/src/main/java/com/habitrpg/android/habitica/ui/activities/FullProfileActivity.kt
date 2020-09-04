@@ -94,7 +94,7 @@ class FullProfileActivity : BaseActivity() {
     private val attributeRows = ArrayList<TableRow>()
     private val dateFormatter = SimpleDateFormat.getDateInstance()
     private var avatarWithBars: AvatarWithBarsViewModel? = null
-    lateinit private var binding: ActivityFullProfileBinding
+    private lateinit var binding: ActivityFullProfileBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -107,7 +107,7 @@ class FullProfileActivity : BaseActivity() {
 
         setTitle(R.string.profile_loading_data)
 
-        compositeSubscription.add(socialRepository.getMember(this.userID).subscribe(Consumer { this.updateView(it) }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(socialRepository.getMember(this.userID).subscribe({ this.updateView(it) }, RxErrorHandler.handleEmptyError()))
         avatarWithBars = AvatarWithBarsViewModel(this, binding.avatarWithBars)
         avatarWithBars?.valueBarLabelsToBlack()
 
@@ -119,7 +119,7 @@ class FullProfileActivity : BaseActivity() {
         sendMessageButton.setOnClickListener { showSendMessageToUserDialog() }
         giftGemsButton.setOnClickListener { MainNavigationController.navigate(R.id.giftGemsActivity, bundleOf(Pair("userID", userID), Pair("username", null))) }
         giftSubscriptionButton.setOnClickListener { MainNavigationController.navigate(R.id.giftSubscriptionActivity, bundleOf(Pair("userID", userID), Pair("username", null))) }
-        compositeSubscription.add(userRepository.getUser().subscribe(Consumer {
+        compositeSubscription.add(userRepository.getUser().subscribe({
             blocks = it.inbox?.blocks ?: listOf()
         }, RxErrorHandler.handleEmptyError()))
     }
@@ -179,7 +179,7 @@ class FullProfileActivity : BaseActivity() {
     private fun useBlock() {
         compositeSubscription.add(socialRepository.blockMember(userID).flatMap {
             userRepository.retrieveUser()
-        }.subscribe(Consumer {
+        }.subscribe({
             invalidateOptionsMenu()
         }, RxErrorHandler.handleEmptyError()))
     }
@@ -207,7 +207,7 @@ class FullProfileActivity : BaseActivity() {
         val addMessageDialog = HabiticaAlertDialog(this)
         addMessageDialog.addButton(android.R.string.ok, true) { _, _ ->
                     socialRepository.postPrivateMessage(userID, emojiEditText.text.toString())
-                            .subscribe(Consumer {
+                            .subscribe({
                                 HabiticaSnackbar.showSnackbar(this@FullProfileActivity.scrollView.getChildAt(0) as ViewGroup,
                                         String.format(getString(R.string.profile_message_sent_to), userDisplayName), SnackbarDisplayType.NORMAL)
                             }, RxErrorHandler.handleEmptyError())
@@ -253,17 +253,17 @@ class FullProfileActivity : BaseActivity() {
 
         avatarWithBars?.updateData(user)
 
-        compositeSubscription.add(loadItemDataByOutfit(user.equipped).subscribe(Consumer { gear -> this.gotGear(gear, user) }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(loadItemDataByOutfit(user.equipped).subscribe({ gear -> this.gotGear(gear, user) }, RxErrorHandler.handleEmptyError()))
 
         if (user.preferences?.costume == true) {
-            compositeSubscription.add(loadItemDataByOutfit(user.costume).subscribe(Consumer<RealmResults<Equipment>> { this.gotCostume(it) }, RxErrorHandler.handleEmptyError()))
+            compositeSubscription.add(loadItemDataByOutfit(user.costume).subscribe({ this.gotCostume(it) }, RxErrorHandler.handleEmptyError()))
         } else {
             costumeCard.visibility = View.GONE
         }
 
 
         // Load the members achievements now
-        compositeSubscription.add(socialRepository.getMemberAchievements(this.userID).subscribe(Consumer { this.fillAchievements(it) }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(socialRepository.getMemberAchievements(this.userID).subscribe({ this.fillAchievements(it) }, RxErrorHandler.handleEmptyError()))
     }
 
     private fun updatePetsMountsView(user: Member) {
@@ -310,7 +310,7 @@ class FullProfileActivity : BaseActivity() {
     private fun fillAchievements(labelID: Int, achievements: List<Achievement>, targetList: MutableList<Any>) {
         // Order by ID first
         val achievementList = ArrayList(achievements)
-        achievementList.sortWith(Comparator { achievement, t1 -> achievement.index.toDouble().compareTo(t1.index.toDouble()) })
+        achievementList.sortWith({ achievement, t1 -> achievement.index.toDouble().compareTo(t1.index.toDouble()) })
 
         targetList.add(getString(labelID))
         targetList.addAll(achievementList)

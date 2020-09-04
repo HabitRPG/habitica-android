@@ -81,13 +81,13 @@
                 android:paddingTop="@dimen/spacing_medium"
                 android:paddingBottom="@dimen/spacing_small"
                 app:barForegroundColor="@color/red_50"
-                app:barBackgroundColor="@color/white_15_alpha"/>
+                app:barBackgroundColor="@color/content_15_alpha"/>
             <ImageView
                 android:id="@+id/pendingDamageIconView"
                 android:layout_width="18dp"
                 android:layout_height="18dp"
-                android:layout_marginLeft="@dimen/spacing_medium"
-                android:layout_marginRight="@dimen/spacing_small"/>
+                android:layout_marginStart="@dimen/spacing_medium"
+                android:layout_marginEnd="@dimen/spacing_small"/>
             <TextView
                 android:id="@+id/pendingDamageTextView"
                 android:layout_width="wrap_content"

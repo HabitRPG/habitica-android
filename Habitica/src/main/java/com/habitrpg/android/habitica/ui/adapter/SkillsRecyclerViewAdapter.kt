@@ -78,7 +78,7 @@ class SkillsRecyclerViewAdapter : RecyclerView.Adapter<SkillsRecyclerViewAdapter
         init {
             buttonWrapper.setOnClickListener(this)
             magicDrawable = BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfMagic())
-            lockDrawable = BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfLocked(ContextCompat.getColor(context, R.color.gray_400)))
+            lockDrawable = BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfLocked(ContextCompat.getColor(context, R.color.text_dimmed)))
         }
 
         fun bind(skill: Skill) {
@@ -86,8 +86,8 @@ class SkillsRecyclerViewAdapter : RecyclerView.Adapter<SkillsRecyclerViewAdapter
             skillNameTextView.text = skill.text
             skillNotesTextView.text = skill.notes
 
-            skillNameTextView.setTextColor(ContextCompat.getColor(context, R.color.gray_50))
-            skillNotesTextView.setTextColor(ContextCompat.getColor(context, R.color.gray_200))
+            skillNameTextView.setTextColor(ContextCompat.getColor(context, R.color.text_primary))
+            skillNotesTextView.setTextColor(ContextCompat.getColor(context, R.color.text_ternary))
             skillNotesTextView.visibility = View.VISIBLE
             priceLabel.visibility = View.VISIBLE
 
@@ -95,9 +95,9 @@ class SkillsRecyclerViewAdapter : RecyclerView.Adapter<SkillsRecyclerViewAdapter
                 countLabel.visibility = View.VISIBLE
                 countLabel.text = getOwnedCount(skill.key).toString()
                 priceLabel.setText(R.string.skill_transformation_use)
-                priceLabel.setTextColor(ContextCompat.getColor(context, R.color.brand_400))
+                priceLabel.setTextColor(ContextCompat.getColor(context, R.color.color_accent))
                 buttonIconView.setImageDrawable(null)
-                buttonWrapper.setBackgroundColor(ContextCompat.getColor(context, R.color.gray_600))
+                buttonWrapper.setBackgroundColor(ContextCompat.getColor(context, R.color.offset_background))
                 buttonIconView.alpha = 1.0f
                 priceLabel.alpha = 1.0f
             } else {
@@ -107,7 +107,7 @@ class SkillsRecyclerViewAdapter : RecyclerView.Adapter<SkillsRecyclerViewAdapter
                 buttonIconView.setImageDrawable(magicDrawable)
 
                 if (skill.mana ?: 0 > mana) {
-                    buttonWrapper.setBackgroundColor(ContextCompat.getColor(context, R.color.gray_600))
+                    buttonWrapper.setBackgroundColor(ContextCompat.getColor(context, R.color.offset_background))
                     buttonIconView.alpha = 0.3f
                     priceLabel.alpha = 0.3f
                 } else {
@@ -116,8 +116,8 @@ class SkillsRecyclerViewAdapter : RecyclerView.Adapter<SkillsRecyclerViewAdapter
                     priceLabel.alpha = 1.0f
                 }
                 if ((skill.lvl ?: 0) > level) {
-                    buttonWrapper.setBackgroundColor(ContextCompat.getColor(context, R.color.gray_600))
-                    skillNameTextView.setTextColor(ContextCompat.getColor(context, R.color.task_gray))
+                    buttonWrapper.setBackgroundColor(ContextCompat.getColor(context, R.color.offset_background))
+                    skillNameTextView.setTextColor(ContextCompat.getColor(context, R.color.text_dimmed))
                     skillNameTextView.text = context.getString(R.string.skill_unlocks_at, skill.lvl)
                     skillNotesTextView.visibility = View.GONE
                     buttonIconView.setImageDrawable(lockDrawable)

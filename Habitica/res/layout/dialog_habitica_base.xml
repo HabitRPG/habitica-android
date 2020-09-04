@@ -14,7 +14,7 @@
     android:orientation="vertical"
     android:layout_width="320dp"
     android:layout_height="wrap_content"
-    tools:background="@color/black"
+    tools:background="@android:color/black"
     android:minWidth="300dp"
     android:gravity="center_horizontal"
     android:layout_gravity="center_horizontal"
@@ -75,7 +75,7 @@
             android:id="@+id/scrolling_separator"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/gray_600"
+            android:background="@color/offset_background"
             android:visibility="gone"/>
         <LinearLayout
             android:id="@+id/buttons_wrapper"
@@ -98,11 +98,11 @@
             android:paddingBottom="@dimen/spacing_medium"
             android:paddingStart="@dimen/spacing_large"
             android:paddingEnd="@dimen/spacing_large"
-            android:background="@drawable/layout_rounded_bg_gray_700"
+            android:background="@drawable/layout_rounded_bg_window"
             android:visibility="gone"
             android:gravity="center"
             style="@style/Caption3"
-            android:textColor="@color/gray_100"
+            android:textColor="@color/text_secondary"
             tools:text="This is a small label"
             tools:visibility="visible"/>
     </LinearLayout>

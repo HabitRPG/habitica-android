@@ -43,7 +43,7 @@ class PublicGuildsRecyclerViewAdapter(data: OrderedRealmCollection<Group>?, auto
             val isMember = this.memberGuildIDs.contains(guild.id)
             if (isMember) {
                 this@PublicGuildsRecyclerViewAdapter.socialRepository?.leaveGroup(guild.id, true)
-                        ?.subscribe(Consumer {
+                        ?.subscribe({
                             if (data != null) {
                                 val indexOfGroup = data?.indexOf(guild)
                                 notifyItemChanged(indexOfGroup ?: 0)
@@ -51,7 +51,7 @@ class PublicGuildsRecyclerViewAdapter(data: OrderedRealmCollection<Group>?, auto
                         }, RxErrorHandler.handleEmptyError())
             } else {
                 this@PublicGuildsRecyclerViewAdapter.socialRepository?.joinGroup(guild.id)
-                        ?.subscribe(Consumer { group ->
+                        ?.subscribe({ group ->
                             if (data != null) {
                                 val indexOfGroup = data?.indexOf(group)
                                 notifyItemChanged(indexOfGroup ?: 0)

@@ -14,6 +14,7 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.children
 import com.habitrpg.android.habitica.R
@@ -95,7 +96,7 @@ class HabiticaBottomNavigationView @JvmOverloads constructor(
             animateButtonTap()
             true
         }
-        addButton.setOnTouchListener { _, event ->
+        addButton.setOnTouchListener { view, event ->
             if (event.action == MotionEvent.ACTION_DOWN) {
                 val animX = ObjectAnimator.ofFloat(addButton, "scaleX", 1f, 1.1f)
                 animX.duration = 100
@@ -119,10 +120,10 @@ class HabiticaBottomNavigationView @JvmOverloads constructor(
         submenuWrapper.setOnClickListener { hideSubmenu() }
         updateItemSelection()
 
-        val cutout = context.getDrawable(R.drawable.bottom_navigation_inset)
+        val cutout = ContextCompat.getDrawable(context, R.drawable.bottom_navigation_inset)
         cutout?.setColorFilter(context.getThemeColor(R.attr.barColor), PorterDuff.Mode.MULTIPLY)
         cutoutBackgroundView.setImageDrawable(cutout)
-        val fabBackground = context.getDrawable(R.drawable.fab_background)
+        val fabBackground = ContextCompat.getDrawable(context, R.drawable.fab_background)
         fabBackground?.setColorFilter(context.getThemeColor(R.attr.colorAccent), PorterDuff.Mode.MULTIPLY)
         addButtonBackground.background = fabBackground
     }
@@ -162,19 +163,19 @@ class HabiticaBottomNavigationView @JvmOverloads constructor(
             val view = BottomNavigationSubmenuItem(context)
             when (taskType) {
                 Task.TYPE_HABIT -> {
-                    view.icon = context.getDrawable(R.drawable.add_habit)
+                    view.icon = ContextCompat.getDrawable(context, R.drawable.add_habit)
                     view.title = context.getString(R.string.habit)
                 }
                 Task.TYPE_DAILY -> {
-                    view.icon = context.getDrawable(R.drawable.add_daily)
+                    view.icon = ContextCompat.getDrawable(context, R.drawable.add_daily)
                     view.title = context.getString(R.string.daily)
                 }
                 Task.TYPE_TODO -> {
-                    view.icon = context.getDrawable(R.drawable.add_todo)
+                    view.icon = ContextCompat.getDrawable(context, R.drawable.add_todo)
                     view.title = context.getString(R.string.todo)
                 }
                 Task.TYPE_REWARD -> {
-                    view.icon = context.getDrawable(R.drawable.add_rewards)
+                    view.icon = ContextCompat.getDrawable(context, R.drawable.add_rewards)
                     view.title = context.getString(R.string.reward)
                 }
             }

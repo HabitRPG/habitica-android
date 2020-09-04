@@ -22,11 +22,9 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.content.FileProvider
 import androidx.core.content.edit
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.NavController
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
 import com.facebook.drawee.view.SimpleDraweeView
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.perf.FirebasePerformance
@@ -41,6 +39,7 @@ import com.habitrpg.android.habitica.events.*
 import com.habitrpg.android.habitica.events.commands.FeedCommand
 import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.extensions.getThemeColor
+import com.habitrpg.android.habitica.extensions.isUsingNightModeResources
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.*
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
@@ -79,14 +78,11 @@ import com.habitrpg.android.habitica.widget.HabitButtonWidgetProvider
 import com.habitrpg.android.habitica.widget.TodoListWidgetProvider
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.functions.Action
 import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
-import io.realm.Realm
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import java.util.*
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
@@ -184,16 +180,15 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         sideAvatarView = AvatarView(this, showBackground = true, showMount = false, showPet = false)
 
         compositeSubscription.add(userRepository.getUser()
-                .subscribe(Consumer { newUser ->
+                .subscribe({ newUser ->
                     this@MainActivity.user = newUser
                     this@MainActivity.setUserData()
                 }, RxErrorHandler.handleEmptyError()))
-        compositeSubscription.add(userRepository.getIsUserOnQuest().subscribeWithErrorHandler(Consumer {
+        compositeSubscription.add(userRepository.getIsUserOnQuest().subscribeWithErrorHandler {
             userIsOnQuest = it
-        }))
+        })
 
-        val viewModel = ViewModelProviders.of(this)
-                .get(NotificationsViewModel::class.java)
+        val viewModel = ViewModelProvider(this).get(NotificationsViewModel::class.java)
         notificationsViewModel = viewModel
 
         val drawerLayout = findViewById<DrawerLayout>(R.id.drawer_layout)
@@ -204,7 +199,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
         drawerToggle = object : ActionBarDrawerToggle(
                 this, /* host Activity */
-                findViewById(R.id.drawer_layout), /* DrawerLayout object */
+                drawerLayout, /* DrawerLayout object */
                 R.string.navigation_drawer_open, /* "open drawer" description */
                 R.string.navigation_drawer_close  /* "close drawer" description */
         ) {}
@@ -216,7 +211,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
             override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
                 val modernHeaderStyle = sharedPreferences.getBoolean("modern_header_style", true)
-                if (modernHeaderStyle && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (!isUsingNightModeResources() && modernHeaderStyle && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     if (slideOffset < 0.5f && isOpeningDrawer == null) {
                         window.statusBarColor = getThemeColor(R.attr.colorPrimaryDark)
                         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE
@@ -231,7 +226,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
             override fun onDrawerOpened(drawerView: View) {
                 val modernHeaderStyle = sharedPreferences.getBoolean("modern_header_style", true)
-                if (modernHeaderStyle && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (!isUsingNightModeResources() && modernHeaderStyle && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     window.statusBarColor = getThemeColor(R.attr.colorPrimaryDark)
                     window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE
                 }
@@ -240,7 +235,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
             override fun onDrawerClosed(drawerView: View) {
                 val modernHeaderStyle = sharedPreferences.getBoolean("modern_header_style", true)
-                if (modernHeaderStyle && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (!isUsingNightModeResources() && modernHeaderStyle && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     window.statusBarColor = getThemeColor(R.attr.headerBackgroundColor)
                     window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
                 }
@@ -282,7 +277,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
             ""
         }
         if (destination.id == R.id.petDetailRecyclerFragment || destination.id == R.id.mountDetailRecyclerFragment) {
-            compositeSubscription.add(inventoryRepository.getItem("egg", arguments?.getString("type") ?: "").firstElement().subscribe(Consumer {
+            compositeSubscription.add(inventoryRepository.getItem("egg", arguments?.getString("type") ?: "").firstElement().subscribe({
                 binding.toolbarTitle.text = if (destination.id == R.id.petDetailRecyclerFragment) {
                     (it as? Egg)?.text
                 } else {
@@ -429,15 +424,15 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
             val quest = user?.party?.quest
             if (quest?.completed?.isNotBlank() == true) {
-                compositeSubscription.add(inventoryRepository.getQuestContent(user?.party?.quest?.completed ?: "").firstElement().subscribe(Consumer {
+                compositeSubscription.add(inventoryRepository.getQuestContent(user?.party?.quest?.completed ?: "").firstElement().subscribe({
                     QuestCompletedDialog.showWithQuest(this, it)
 
-                    userRepository.updateUser(user, "party.quest.completed", "").subscribe(Consumer {}, RxErrorHandler.handleEmptyError())
+                    userRepository.updateUser(user, "party.quest.completed", "").subscribe({}, RxErrorHandler.handleEmptyError())
                 }, RxErrorHandler.handleEmptyError()))
             }
 
             if (user?.flags?.welcomed == false) {
-                compositeSubscription.add(userRepository.updateUser(user, "flags.welcomed", true).subscribe(Consumer {}, RxErrorHandler.handleEmptyError()))
+                compositeSubscription.add(userRepository.updateUser(user, "flags.welcomed", true).subscribe({}, RxErrorHandler.handleEmptyError()))
             }
 
             if (appConfigManager.enableAdventureGuide()) {
@@ -506,7 +501,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         }
         val pet = event.usingPet
         compositeSubscription.add(this.inventoryRepository.feedPet(event.usingPet, event.usingFood)
-                .subscribe(Consumer { feedResponse ->
+                .subscribe({ feedResponse ->
                     HabiticaSnackbar.showSnackbar(snackbarContainer, feedResponse.message, SnackbarDisplayType.NORMAL)
                     if (feedResponse.value == -1) {
                         val mountWrapper = View.inflate(this, R.layout.pet_imageview, null) as? FrameLayout
@@ -540,11 +535,11 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         if (user != null && data != null) {
             compositeSubscription.add(notifyUserUseCase.observable(NotifyUserUseCase.RequestValues(this, snackbarContainer,
                     user, data.experienceDelta, data.healthDelta, data.goldDelta, data.manaDelta, if (userIsOnQuest) data.questDamage else 0.0, data.hasLeveledUp))
-                    .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+                    .subscribe({ }, RxErrorHandler.handleEmptyError()))
         }
 
         compositeSubscription.add(displayItemDropUseCase.observable(DisplayItemDropUseCase.RequestValues(data, this, snackbarContainer))
-                .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+                .subscribe({ }, RxErrorHandler.handleEmptyError()))
     }
 
 
@@ -572,7 +567,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
             faintDialog?.addButton(R.string.faint_button, true) { _, _ ->
                         faintDialog = null
                         user?.let {
-                            userRepository.revive(it).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+                            userRepository.revive(it).subscribe({ }, RxErrorHandler.handleEmptyError())
                         }
                     }
             soundManager.loadAndPlayAudio(SoundManager.SoundDeath)
@@ -601,7 +596,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                     }
                     .flatMap { contentRepository.retrieveContent(this,false) }
                     .flatMap { contentRepository.retrieveWorldState() }
-                    .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+                    .subscribe({ }, RxErrorHandler.handleEmptyError()))
         }
     }
 
@@ -642,7 +637,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         val updateData = HashMap<String, Any>()
         updateData[path] = true
         compositeSubscription.add(userRepository.updateUser(user, updateData)
-                .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+                .subscribe({ }, RxErrorHandler.handleEmptyError()))
         binding.overlayFrameLayout.removeView(this.activeTutorialView)
         this.removeActiveTutorialView()
 
@@ -654,7 +649,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     }
 
     override fun onTutorialDeferred(step: TutorialStep) {
-        taskRepository.executeTransaction(Realm.Transaction { step.displayedOn = Date() })
+        taskRepository.executeTransaction { step.displayedOn = Date() }
         this.removeActiveTutorialView()
     }
 
@@ -671,7 +666,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         sharingIntent.type = "*/*"
         sharingIntent.putExtra(Intent.EXTRA_TEXT, event.sharedMessage)
         BitmapUtils.clearDirectoryContent("$filesDir/shared_images")
-        val f = BitmapUtils.saveToShareableFile("$filesDir/shared_images", "${Date().toString()}.png", event.shareImage)
+        val f = BitmapUtils.saveToShareableFile("$filesDir/shared_images", "${Date()}.png", event.shareImage)
         val fileUri = f?.let { FileProvider.getUriForFile(this, getString(R.string.content_provider), it) }
         if (fileUri != null) {
             sharingIntent.putExtra(Intent.EXTRA_STREAM, fileUri)
@@ -757,13 +752,13 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
         compositeSubscription.add(Completable.complete()
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(Action {
+                .subscribe({
                     val alert = HabiticaAlertDialog(this)
                     alert.setAdditionalContentView(view)
                     alert.setTitle(title)
                     alert.addButton(R.string.see_you_tomorrow, true) { _, _ ->
                         apiClient.readNotification(event.notification.id)
-                                .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+                                .subscribe({ }, RxErrorHandler.handleEmptyError())
                     }
                     alert.show()
                 }, RxErrorHandler.handleEmptyError()))
@@ -774,39 +769,39 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         if (User.ONBOARDING_ACHIEVEMENT_KEYS.contains(event.type) || event.type == Notification.Type.ACHIEVEMENT_ONBOARDING_COMPLETE.type) {
             if (!appConfigManager.enableAdventureGuide()) {
                 apiClient.readNotification(event.id)
-                        .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+                        .subscribe({ }, RxErrorHandler.handleEmptyError())
                 return
             }
         }
         compositeSubscription.add(Completable.complete()
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(Action {
+                .subscribe({
                     retrieveUser(true)
                     val dialog = AchievementDialog(this)
                     dialog.isLastOnboardingAchievement = event.isLastOnboardingAchievement
                     dialog.setType(event.type)
                     dialog.enqueue()
                     apiClient.readNotification(event.id)
-                            .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+                            .subscribe({ }, RxErrorHandler.handleEmptyError())
                 }, RxErrorHandler.handleEmptyError()))
     }
 
     @Subscribe
     fun showFirstDropDialog(event: ShowFirstDropDialog) {
         if (!appConfigManager.enableAdventureGuide()) {
-            apiClient.readNotification(event.id)
-                    .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+            compositeSubscription.add(apiClient.readNotification(event.id)
+                    .subscribe({ }, RxErrorHandler.handleEmptyError()))
             return
         }
         compositeSubscription.add(Completable.complete()
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(Action {
+                .subscribe({
                     retrieveUser(true)
                     val dialog = FirstDropDialog(this)
                     dialog.configure(event.egg, event.hatchingPotion)
                     dialog.enqueue()
                     apiClient.readNotification(event.id)
-                            .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+                            .subscribe({ }, RxErrorHandler.handleEmptyError())
                 }, RxErrorHandler.handleEmptyError()))
     }
 
@@ -837,7 +832,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
             dialog.setAdditionalContentView(petWrapper)
             dialog.addButton(R.string.equip, true) { _, _ ->
                 inventoryRepository.equip(user, "pet", egg.key + "-" + potion.key)
-                        .subscribe(Consumer {}, RxErrorHandler.handleEmptyError())
+                        .subscribe({}, RxErrorHandler.handleEmptyError())
             }
             dialog.addButton(R.string.share, false) { hatchingDialog, _ ->
                 val event1 = ShareEvent()
@@ -853,12 +848,12 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
             }
             dialog.setExtraCloseButtonVisibility(View.VISIBLE)
             dialog.enqueue()
-        }.subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+        }.subscribe({ }, RxErrorHandler.handleEmptyError()))
     }
 
     @Subscribe
     fun onConsumablePurchased(event: ConsumablePurchasedEvent) {
-        userRepository.retrieveUser(false, true).subscribe(Consumer {}, RxErrorHandler.handleEmptyError())
+        compositeSubscription.add(userRepository.retrieveUser(withTasks = false, forced = true).subscribe({}, RxErrorHandler.handleEmptyError()))
     }
 
     companion object {

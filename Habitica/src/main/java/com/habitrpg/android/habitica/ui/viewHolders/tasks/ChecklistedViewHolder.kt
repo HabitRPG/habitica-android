@@ -12,6 +12,8 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.extensions.getThemeColor
+import com.habitrpg.android.habitica.extensions.isUsingNightModeResources
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.responses.TaskDirection
 import com.habitrpg.android.habitica.models.tasks.ChecklistItem
@@ -51,7 +53,7 @@ abstract class ChecklistedViewHolder(itemView: View, scoreTaskFunc: ((Task, Task
             this.checkboxHolder.setBackgroundResource(newTask.lightTaskColor)
         } else {
             if (newTask.completed) {
-                this.checkboxHolder.setBackgroundResource(R.color.gray_700)
+                this.checkboxHolder.setBackgroundColor(context.getThemeColor(R.attr.colorWindowBackground))
             } else {
                 this.checkboxHolder.setBackgroundColor(this.taskGray)
             }
@@ -88,7 +90,7 @@ abstract class ChecklistedViewHolder(itemView: View, scoreTaskFunc: ((Task, Task
                                 .map { MarkdownParser.parseMarkdown(it) }
                                 .subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe(Consumer<CharSequence> { textView?.text = it }, RxErrorHandler.handleEmptyError())
+                                .subscribe({ textView?.text = it }, RxErrorHandler.handleEmptyError())
                     }
                     val checkmark = itemView?.findViewById<ImageView>(R.id.checkmark)
                     checkmark?.drawable?.setTintMode(PorterDuff.Mode.SRC_ATOP)
@@ -98,11 +100,11 @@ abstract class ChecklistedViewHolder(itemView: View, scoreTaskFunc: ((Task, Task
                         task?.let { scoreChecklistItemFunc(it, item) }
                     }
                     val color = ContextCompat.getColor(context, if (task?.completed == true || (task?.type == Task.TYPE_DAILY && task?.isDue == false)) {
-                        checkmark?.drawable?.setTint(ContextCompat.getColor(context, R.color.gray_400))
-                        R.color.gray_600
+                        checkmark?.drawable?.setTint(ContextCompat.getColor(context, R.color.text_dimmed))
+                        R.color.offset_background
                     } else {
-                        checkmark?.drawable?.setTint(ContextCompat.getColor(context, task?.darkTaskColor ?: R.color.gray_400))
-                        task?.extraLightTaskColor ?: R.color.gray_600
+                        checkmark?.drawable?.setTint(ContextCompat.getColor(context, task?.darkTaskColor ?: R.color.text_dimmed))
+                        task?.extraLightTaskColor ?: R.color.offset_background
                     })
                     color.let { checkboxHolder?.setBackgroundColor(it) }
                     this.checklistView.addView(itemView)
@@ -118,14 +120,22 @@ abstract class ChecklistedViewHolder(itemView: View, scoreTaskFunc: ((Task, Task
     protected fun setChecklistIndicatorBackgroundActive(isActive: Boolean) {
         val drawable = ContextCompat.getDrawable(context, R.drawable.checklist_indicator_background)
         if (isActive) {
-            drawable?.setTint(ContextCompat.getColor(context, R.color.gray_200))
-            val textColor = ContextCompat.getColor(context, R.color.gray_500)
+            if (context.isUsingNightModeResources()) {
+                drawable?.setTint(ContextCompat.getColor(context, R.color.gray_100))
+            } else {
+                drawable?.setTint(ContextCompat.getColor(context, R.color.gray_200))
+            }
+            val textColor = if (context.isUsingNightModeResources()) {
+                ContextCompat.getColor(context, R.color.gray_10)
+            } else {
+                ContextCompat.getColor(context, R.color.gray_500)
+            }
             checklistCompletedTextView.setTextColor(textColor)
             checklistAllTextView.setTextColor(textColor)
             checklistDivider.setBackgroundColor(textColor)
         } else {
-            drawable?.setTint(ContextCompat.getColor(context, R.color.gray_600))
-            val textColor = ContextCompat.getColor(context, R.color.gray_300)
+            drawable?.setTint(ContextCompat.getColor(context, R.color.offset_background))
+            val textColor = ContextCompat.getColor(context, R.color.text_ternary)
             checklistCompletedTextView.setTextColor(textColor)
             checklistAllTextView.setTextColor(textColor)
             checklistDivider.setBackgroundColor(textColor)

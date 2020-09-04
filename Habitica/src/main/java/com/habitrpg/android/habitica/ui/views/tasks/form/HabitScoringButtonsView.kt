@@ -40,7 +40,7 @@ class HabitScoringButtonsView @JvmOverloads constructor(
                 positiveView.contentDescription = toContentDescription(R.string.positive_habit_form, R.string.on)
                 positiveTextView.typeface = Typeface.create("sans-serif-medium", Typeface.NORMAL)
             } else {
-                positiveTextView.setTextColor(ContextCompat.getColor(context, R.color.gray_100))
+                positiveTextView.setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
                 positiveView.contentDescription = toContentDescription(R.string.positive_habit_form, R.string.off)
                 positiveTextView.typeface = Typeface.create("sans-serif", Typeface.NORMAL)
             }
@@ -55,7 +55,7 @@ class HabitScoringButtonsView @JvmOverloads constructor(
                 negativeView.contentDescription = toContentDescription(R.string.negative_habit_form, R.string.on)
                 negativeTextView.typeface = Typeface.create("sans-serif-medium", Typeface.NORMAL)
             } else {
-                negativeTextView.setTextColor(ContextCompat.getColor(context, R.color.gray_100))
+                negativeTextView.setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
                 negativeView.contentDescription = toContentDescription(R.string.negative_habit_form, R.string.off)
                 negativeTextView.typeface = Typeface.create("sans-serif", Typeface.NORMAL)
             }
@@ -75,7 +75,7 @@ class HabitScoringButtonsView @JvmOverloads constructor(
         }
         negativeView.setOnClickListener {
             isNegative = !isNegative
-            sendAccessibilityEvent(AccessibilityEvent.CONTENT_CHANGE_TYPE_CONTENT_DESCRIPTION);
+            sendAccessibilityEvent(AccessibilityEvent.CONTENT_CHANGE_TYPE_CONTENT_DESCRIPTION)
         }
 
         isPositive = true

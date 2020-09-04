@@ -61,7 +61,7 @@ class TavernDetailFragment : BaseFragment() {
 
         shopSpriteSuffix = configManager.shopSpriteSuffix()
 
-        compositeSubscription.add(userRepository.getUser(userId).subscribe(Consumer {
+        compositeSubscription.add(userRepository.getUser(userId).subscribe({
             this.user = it
             this.updatePausedState()
         }, RxErrorHandler.handleEmptyError()))
@@ -90,12 +90,12 @@ class TavernDetailFragment : BaseFragment() {
                     }
                 }
                 .flatMapMaybe { inventoryRepository.getQuestContent(it.quest?.key ?: "").firstElement() }
-                .subscribe(Consumer {
+                .subscribe({
                     questProgressView.quest = it
                     worldBossSection.visibility = View.VISIBLE
                 }, RxErrorHandler.handleEmptyError()))
 
-        compositeSubscription.add(socialRepository.retrieveGroup(Group.TAVERN_ID).subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(socialRepository.retrieveGroup(Group.TAVERN_ID).subscribe({ }, RxErrorHandler.handleEmptyError()))
 
         user?.let { questProgressView.configure(it) }
     }
@@ -109,7 +109,7 @@ class TavernDetailFragment : BaseFragment() {
 
     private fun bindButtons() {
         innButton.setOnClickListener {
-            user?.let { user -> userRepository.sleep(user).subscribe(Consumer { }, RxErrorHandler.handleEmptyError()) }
+            user?.let { user -> userRepository.sleep(user).subscribe({ }, RxErrorHandler.handleEmptyError()) }
         }
         guidelinesButton.setOnClickListener {
             MainNavigationController.navigate(R.id.guidelinesActivity)
@@ -146,7 +146,7 @@ class TavernDetailFragment : BaseFragment() {
         for (tier in PlayerTier.getTiers()) {
             context?.let {
                 val container = FrameLayout(it)
-                container.background = ContextCompat.getDrawable(it, R.drawable.layout_rounded_bg_gray_700)
+                container.background = ContextCompat.getDrawable(it, R.drawable.layout_rounded_bg_window)
                 val label = UsernameLabel(context, null)
                 label.tier = tier.id
                 label.username = tier.title

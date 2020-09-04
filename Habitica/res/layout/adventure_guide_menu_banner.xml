@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/onboarding_tasks"
                 style="@style/Body1"
-                android:textColor="@color/gray_50"/>
+                android:textColor="@color/text_primary"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -42,7 +42,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textColor="@color/gray_50"
+                    android:textColor="@color/text_primary"
                     android:textSize="12sp" />
 
                 <TextView
@@ -60,7 +60,7 @@
                 android:layout_height="4dp"
                 android:progressTint="@color/yellow_50"
                 style="@android:style/Widget.ProgressBar.Horizontal"
-                android:progressBackgroundTint="@color/gray_600"
+                android:progressBackgroundTint="@color/offset_background"
                 tools:progress="2"
                 android:max="5"/>
         </LinearLayout>

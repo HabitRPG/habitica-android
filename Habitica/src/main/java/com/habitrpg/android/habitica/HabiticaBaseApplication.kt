@@ -196,7 +196,7 @@ abstract class HabiticaBaseApplication : MultiDexApplication() {
                 .setMinimumFetchIntervalInSeconds(if (BuildConfig.DEBUG) 0 else 3600)
                 .build()
         remoteConfig.setConfigSettingsAsync(configSettings)
-        remoteConfig.setDefaults(R.xml.remote_config_defaults)
+        remoteConfig.setDefaultsAsync(R.xml.remote_config_defaults)
         remoteConfig.fetchAndActivate()
     }
 

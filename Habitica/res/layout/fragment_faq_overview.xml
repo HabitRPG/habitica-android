@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="@color/white">
+    android:background="@color/content_background">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -115,14 +115,14 @@
         android:paddingEnd="32dp"
         android:paddingBottom="32dp"
         android:orientation="vertical"
-        android:background="@color/gray_700"
+        android:background="@color/window_background"
         android:layout_marginTop="@dimen/spacing_large"
         android:gravity="center">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/still_questions"
-            android:textColor="@color/black"
+            android:textColor="@color/text_primary"
             style="@style/Subheader3"
             android:layout_marginBottom="@dimen/spacing_small"/>
     <TextView
@@ -130,7 +130,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="14sp"
-        android:textColor="@color/gray_100"
+        android:textColor="@color/text_secondary"
         android:gravity="center"/>
 </LinearLayout>
 </LinearLayout>

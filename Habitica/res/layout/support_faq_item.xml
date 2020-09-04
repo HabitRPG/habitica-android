@@ -17,7 +17,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="14sp"
-        android:textColor="@color/gray_100"
+        android:textColor="@color/text_secondary"
         tools:text="Title"
         android:layout_marginRight="@dimen/spacing_large"
         android:layout_marginTop="@dimen/spacing_medium"

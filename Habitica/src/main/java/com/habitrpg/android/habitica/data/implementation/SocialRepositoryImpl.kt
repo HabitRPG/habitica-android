@@ -71,7 +71,7 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
     }
 
     override fun markMessagesSeen(seenGroupId: String) {
-        apiClient.seenMessages(seenGroupId).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+        apiClient.seenMessages(seenGroupId).subscribe({ }, RxErrorHandler.handleEmptyError())
     }
 
     override fun flagMessage(chatMessage: ChatMessage, additionalInfo: String): Flowable<Void> {
@@ -130,7 +130,7 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
     override fun retrieveGroup(id: String): Flowable<Group> {
         return Flowable.zip(apiClient.getGroup(id).doOnNext { localRepository.saveSyncronous(it) }, retrieveGroupChat(id)
                 .toFlowable(),
-                BiFunction<Group, List<ChatMessage>, Group> { group, _ ->
+                { group, _ ->
                     group
                 }
         )

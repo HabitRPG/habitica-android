@@ -56,7 +56,7 @@ class NoPartyFragmentFragment : BaseMainFragment() {
         invitations_view.acceptCall = {
             socialRepository.joinGroup(it)
                     .flatMap { userRepository.retrieveUser(false) }
-                    .subscribe(Consumer {
+                    .subscribe({
                         fragmentManager?.popBackStack()
                         MainNavigationController.navigate(R.id.partyFragment,
                                 bundleOf(Pair("partyID", user?.party?.id)))
@@ -64,14 +64,14 @@ class NoPartyFragmentFragment : BaseMainFragment() {
         }
 
         invitations_view.rejectCall = {
-            socialRepository.rejectGroupInvite(it).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+            socialRepository.rejectGroupInvite(it).subscribe({ }, RxErrorHandler.handleEmptyError())
             invitationWrapper.visibility = View.GONE
         }
 
         invitations_view.setLeader = { leader ->
             compositeSubscription.add(
                     socialRepository.getMember(leader)
-                            .subscribe(Consumer {
+                            .subscribe({
                                 invitations_view.avatarView.setAvatar(it)
                                 invitations_view.textView.text = getString(R.string.invitation_title,it.displayName,invitations_view.groupName)
                             }, RxErrorHandler.handleEmptyError())
@@ -107,7 +107,7 @@ class NoPartyFragmentFragment : BaseMainFragment() {
                 drawable.tileModeX = Shader.TileMode.REPEAT
                 Observable.just(drawable)
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(Consumer {
+                        .subscribe({
                             if (no_party_background != null) {
                                 no_party_background.background = it
                             }
@@ -149,7 +149,7 @@ class NoPartyFragmentFragment : BaseMainFragment() {
                                 .flatMap {
                                     userRepository.retrieveUser(false)
                                 }
-                                .subscribe(Consumer {
+                                .subscribe({
                                     fragmentManager?.popBackStack()
                                     MainNavigationController.navigate(R.id.partyFragment,
                                             bundleOf(Pair("partyID", user?.party?.id)))
@@ -166,7 +166,7 @@ class NoPartyFragmentFragment : BaseMainFragment() {
                 .flatMap { socialRepository.retrieveGroup("party") }
                 .flatMap<List<Member>> { group1 -> socialRepository.retrieveGroupMembers(group1.id, true) }
                 .doOnComplete { refreshLayout.isRefreshing = false }
-                .subscribe(Consumer {  }, RxErrorHandler.handleEmptyError()))
+                .subscribe({  }, RxErrorHandler.handleEmptyError()))
     }
 
     override fun onDestroy() {

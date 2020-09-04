@@ -7,7 +7,7 @@
 <View
     android:layout_width="match_parent"
     android:layout_height="2dp"
-    android:background="@color/pill_gray"
+    android:background="@color/separator"
         android:layout_marginTop="16dp"/>
 
     <LinearLayout
@@ -58,7 +58,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="2dp"
-            android:background="@color/pill_gray" />
+            android:background="@color/separator" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -83,7 +83,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
                     android:text="@string/edit_tag_btn_edit"
-                    android:textColor="#6133b4"
+                    android:textColor="@color/text_brand"
                     android:textSize="16sp"
                     android:gravity="end|center_vertical"
                     android:paddingEnd="0dp"/>
@@ -107,5 +107,5 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:background="@color/pill_gray" />
+        android:background="@color/separator" />
 </LinearLayout>

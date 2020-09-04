@@ -38,7 +38,7 @@ class FAQDetailFragment : BaseMainFragment() {
 
         arguments?.let {
             val args = FAQDetailFragmentArgs.fromBundle(it)
-            compositeSubscription.add(faqRepository.getArticle(args.position).subscribe(Consumer { faq ->
+            compositeSubscription.add(faqRepository.getArticle(args.position).subscribe({ faq ->
                 this.questionTextView?.text = faq.question
                 this.answerTextView?.text = MarkdownParser.parseMarkdown(faq.answer)
             }, RxErrorHandler.handleEmptyError()))

@@ -49,7 +49,7 @@ class SkillsFragment : BaseMainFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         adapter = SkillsRecyclerViewAdapter()
-        adapter?.useSkillEvents?.subscribeWithErrorHandler(Consumer { onSkillSelected(it) })?.let { compositeSubscription.add(it) }
+        adapter?.useSkillEvents?.subscribeWithErrorHandler({ onSkillSelected(it) })?.let { compositeSubscription.add(it) }
         checkUserLoadSkills()
 
         this.tutorialStepIdentifier = "skills"
@@ -83,7 +83,7 @@ class SkillsFragment : BaseMainFragment() {
             Observable.concat(userRepository.getSkills(user).firstElement().toObservable().flatMap { Observable.fromIterable(it) },
                     userRepository.getSpecialItems(user).firstElement().toObservable().flatMap { Observable.fromIterable(it) })
                     .toList()
-                    .subscribe(Consumer { skills -> adapter?.setSkillList(skills) }, RxErrorHandler.handleEmptyError())
+                    .subscribe({ skills -> adapter?.setSkillList(skills) }, RxErrorHandler.handleEmptyError())
         }
     }
 
@@ -117,7 +117,7 @@ class SkillsFragment : BaseMainFragment() {
                         HabiticaSnackbar.SnackbarDisplayType.BLUE)
             }
         }
-        compositeSubscription.add(userRepository.retrieveUser(false).subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(userRepository.retrieveUser(false).subscribe({ }, RxErrorHandler.handleEmptyError()))
     }
 
 
@@ -148,7 +148,7 @@ class SkillsFragment : BaseMainFragment() {
         } else {
             userRepository.useSkill(user, skill.key, skill.target)
         }
-        compositeSubscription.add(observable.subscribe(Consumer { skillResponse -> this.displaySkillResult(skill, skillResponse) },
+        compositeSubscription.add(observable.subscribe({ skillResponse -> this.displaySkillResult(skill, skillResponse) },
                 RxErrorHandler.handleEmptyError()))
     }
 }

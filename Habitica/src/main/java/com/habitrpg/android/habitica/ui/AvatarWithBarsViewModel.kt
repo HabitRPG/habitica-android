@@ -18,7 +18,6 @@ import com.habitrpg.android.habitica.models.Avatar
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
-import com.habitrpg.android.habitica.ui.views.ValueBar
 import io.reactivex.disposables.Disposable
 import org.greenrobot.eventbus.Subscribe
 import java.util.*
@@ -126,16 +125,6 @@ class AvatarWithBarsViewModel(private val context: Context, private val binding:
     }
 
     companion object {
-        fun setHpBarData(valueBar: ValueBar, stats: Stats) {
-            var maxHP = stats.maxHealth
-            if (maxHP == null || maxHP == 0) {
-                maxHP = 50
-            }
-
-            val hp = stats.hp?.let { HealthFormatter.format(it) } ?: 0.0
-            valueBar.set(hp, maxHP.toDouble())
-        }
-
         private fun setUserLevel(context: Context, textView: TextView, level: Int?) {
             textView.text = context.getString(R.string.user_level, level)
             textView.contentDescription = context.getString(R.string.level_unabbreviated, level)

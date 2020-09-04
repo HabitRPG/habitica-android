@@ -28,7 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/Body2"
-        android:textColor="@color/black_50_alpha"
+        android:textColor="@color/text_secondary"
         tools:text="These are the notes"
         android:gravity="center"/>
 
@@ -185,7 +185,7 @@
         android:layout_width="match_parent"
         android:text="@string/purchase_amount_error"
         android:textSize="12sp"
-        android:textColor="@color/gray_200"
+        android:textColor="@color/text_ternary"
         android:layout_marginTop="@dimen/spacing_medium"
         android:gravity="center_horizontal"/>
 </merge>

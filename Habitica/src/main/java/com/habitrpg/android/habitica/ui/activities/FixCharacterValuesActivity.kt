@@ -49,7 +49,7 @@ class FixCharacterValuesActivity: BaseActivity() {
         setTitle(R.string.fix_character_values)
         setupToolbar(binding.toolbar)
 
-        compositeSubscription.add(repository.getUser(userId).firstElement().subscribe(Consumer {
+        compositeSubscription.add(repository.getUser(userId).firstElement().subscribe({
             user = it
         }, RxErrorHandler.handleEmptyError()))
 
@@ -57,7 +57,7 @@ class FixCharacterValuesActivity: BaseActivity() {
         setIconBackground(binding.experienceIconBackgroundView, ContextCompat.getColor(this, R.color.yellow_500))
         setIconBackground(binding.manaIconBackgroundView, ContextCompat.getColor(this, R.color.blue_500))
         setIconBackground(binding.goldIconBackgroundView, ContextCompat.getColor(this, R.color.yellow_500))
-        setIconBackground(binding.streakIconBackgroundView, ContextCompat.getColor(this, R.color.gray_400))
+        setIconBackground(binding.streakIconBackgroundView, ContextCompat.getColor(this, R.color.separator))
 
         binding.healthIconView.setImageBitmap(HabiticaIconsHelper.imageOfHeartLightBg())
         binding.experienceIconView.setImageBitmap(HabiticaIconsHelper.imageOfExperience())
@@ -85,7 +85,7 @@ class FixCharacterValuesActivity: BaseActivity() {
             userInfo["stats.mp"] = binding.manaEditText.getDoubleValue()
             userInfo["stats.lvl"] = binding.levelEditText.getDoubleValue().toInt()
             userInfo["achievements.streak"] = binding.streakEditText.getDoubleValue().toInt()
-            compositeSubscription.add(repository.updateUser(user, userInfo).subscribe(Consumer {}, RxErrorHandler.handleEmptyError(), Action {
+            compositeSubscription.add(repository.updateUser(user, userInfo).subscribe({}, RxErrorHandler.handleEmptyError(), {
                 progressDialog.dismiss()
                 finish()
             }))

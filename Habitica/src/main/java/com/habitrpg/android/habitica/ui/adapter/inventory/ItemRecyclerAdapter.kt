@@ -63,7 +63,7 @@ class ItemRecyclerAdapter(data: OrderedRealmCollection<OwnedItem>?, autoUpdate: 
     val hatchPetEvents = hatchPetSubject.toFlowable(BackpressureStrategy.DROP)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
-        return ItemViewHolder(ItemItemBinding.inflate(context?.layoutInflater, parent, false))
+        return ItemViewHolder(ItemItemBinding.inflate(context.layoutInflater, parent, false))
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
@@ -143,7 +143,7 @@ class ItemRecyclerAdapter(data: OrderedRealmCollection<OwnedItem>?, autoUpdate: 
         }
 
         override fun onClick(v: View) {
-            val context = context ?: return
+            val context = context
             if (!isHatching && !isFeeding) {
                 val menu = BottomSheetMenu(context)
                 if (item !is QuestContent && item !is SpecialItem) {

@@ -13,12 +13,12 @@
         android:text="@string/come_back_soon"
         android:textSize="18sp"
         android:gravity="center"
-        android:textColor="@color/gray_200"/>
+        android:textColor="@color/text_ternary"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/seasonal_closed_description"
-        android:textColor="@color/gray_300"
+        android:textColor="@color/text_quad"
         android:layout_marginTop="12dp"
         android:gravity="center"
         android:textSize="14sp"/>

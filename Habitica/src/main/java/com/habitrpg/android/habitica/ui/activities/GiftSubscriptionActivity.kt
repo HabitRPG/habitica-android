@@ -96,7 +96,7 @@ class GiftSubscriptionActivity : BaseActivity() {
 
         giftOneGetOneContainer?.isVisible = appConfigManager.enableGiftOneGetOne()
 
-        compositeSubscription.add(socialRepository.getMember(giftedUsername ?: giftedUserID).subscribe(Consumer {
+        compositeSubscription.add(socialRepository.getMember(giftedUsername ?: giftedUserID).subscribe({
             avatarView.setAvatar(it)
             displayNameTextView.username = it.profile?.name
             displayNameTextView.tier = it.contributor?.level ?: 0
@@ -122,10 +122,10 @@ class GiftSubscriptionActivity : BaseActivity() {
     override fun onResume() {
         super.onResume()
 
-        this.subscription1MonthView?.setOnPurchaseClickListener(View.OnClickListener { selectSubscription(PurchaseTypes.Subscription1MonthNoRenew) })
-        this.subscription3MonthView?.setOnPurchaseClickListener(View.OnClickListener { selectSubscription(PurchaseTypes.Subscription3MonthNoRenew) })
-        this.subscription6MonthView?.setOnPurchaseClickListener(View.OnClickListener { selectSubscription(PurchaseTypes.Subscription6MonthNoRenew) })
-        this.subscription12MonthView?.setOnPurchaseClickListener(View.OnClickListener { selectSubscription(PurchaseTypes.Subscription12MonthNoRenew) })
+        this.subscription1MonthView?.setOnPurchaseClickListener({ selectSubscription(PurchaseTypes.Subscription1MonthNoRenew) })
+        this.subscription3MonthView?.setOnPurchaseClickListener({ selectSubscription(PurchaseTypes.Subscription3MonthNoRenew) })
+        this.subscription6MonthView?.setOnPurchaseClickListener({ selectSubscription(PurchaseTypes.Subscription6MonthNoRenew) })
+        this.subscription12MonthView?.setOnPurchaseClickListener({ selectSubscription(PurchaseTypes.Subscription12MonthNoRenew) })
     }
 
     override fun onStop() {

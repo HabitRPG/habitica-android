@@ -8,7 +8,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white">
+    android:background="?attr/colorContentBackground">
     <include layout="@layout/shop_header"
         android:layout_marginBottom="@dimen/spacing_large"
         android:layout_height="wrap_content"
@@ -49,7 +49,7 @@
         android:layout_height="wrap_content"
         app:title="@string/community_guidelines"
         app:identifier="tavernGuidelines">
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/guidelinesButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

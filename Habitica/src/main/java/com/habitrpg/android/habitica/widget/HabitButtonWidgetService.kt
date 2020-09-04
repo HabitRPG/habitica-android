@@ -45,7 +45,7 @@ class HabitButtonWidgetService : Service() {
         makeTaskMapping()
 
         for (taskid in this.taskMapping.keys) {
-            taskRepository.getUnmanagedTask(taskid).firstElement().subscribe(Consumer<Task> { this.updateData(it) }, RxErrorHandler.handleEmptyError())
+            taskRepository.getUnmanagedTask(taskid).firstElement().subscribe({ this.updateData(it) }, RxErrorHandler.handleEmptyError())
         }
 
         stopSelf()

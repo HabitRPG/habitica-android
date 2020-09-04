@@ -66,10 +66,10 @@ class GiftPurchaseGemsFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        gems4View?.setOnPurchaseClickListener(View.OnClickListener { purchaseGems(PurchaseTypes.Purchase4Gems) })
-        gems21View?.setOnPurchaseClickListener(View.OnClickListener { purchaseGems(PurchaseTypes.Purchase21Gems) })
-        gems42View?.setOnPurchaseClickListener(View.OnClickListener { purchaseGems(PurchaseTypes.Purchase42Gems) })
-        gems84View?.setOnPurchaseClickListener(View.OnClickListener { purchaseGems(PurchaseTypes.Purchase84Gems) })
+        gems4View?.setOnPurchaseClickListener({ purchaseGems(PurchaseTypes.Purchase4Gems) })
+        gems21View?.setOnPurchaseClickListener({ purchaseGems(PurchaseTypes.Purchase21Gems) })
+        gems42View?.setOnPurchaseClickListener({ purchaseGems(PurchaseTypes.Purchase42Gems) })
+        gems84View?.setOnPurchaseClickListener({ purchaseGems(PurchaseTypes.Purchase84Gems) })
     }
 
     fun setupCheckout() {

@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica.models.inventory;
+package com.habitrpg.android.habitica.models.inventory
 
 import android.content.Context
 import com.google.common.truth.Truth.assertThat

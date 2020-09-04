@@ -42,7 +42,7 @@ class SkillMemberActivity : BaseActivity() {
     private fun loadMemberList() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         viewAdapter = PartyMemberRecyclerViewAdapter(null, true)
-        viewAdapter?.getUserClickedEvents()?.subscribe(Consumer { userId ->
+        viewAdapter?.getUserClickedEvents()?.subscribe({ userId ->
             val resultIntent = Intent()
             resultIntent.putExtra("member_id", userId)
             setResult(Activity.RESULT_OK, resultIntent)
@@ -53,6 +53,6 @@ class SkillMemberActivity : BaseActivity() {
         compositeSubscription.add(userRepository.getUser()
                 .firstElement()
                 .flatMap { user -> socialRepository.getGroupMembers(user.party?.id ?: "").firstElement() }
-                .subscribe(Consumer { viewAdapter?.updateData(it) }, RxErrorHandler.handleEmptyError()))
+                .subscribe({ viewAdapter?.updateData(it) }, RxErrorHandler.handleEmptyError()))
     }
 }

@@ -6,7 +6,7 @@
     android:scrollbarSize="3dp"
     android:scrollbarThumbVertical="@color/scrollbarThumb"
     android:scrollbars="vertical"
-    android:background="@color/white">
+    android:background="?attr/colorContentBackground">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -38,7 +38,7 @@
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:background="@drawable/layout_rounded_bg_gray_700"
+            android:background="@drawable/layout_rounded_bg_window"
             android:layout_marginTop="@dimen/spacing_small"
             android:orientation="vertical"
             android:paddingTop="@dimen/spacing_small"
@@ -94,25 +94,23 @@
         <Button
             android:id="@+id/googlePlayStoreButton"
             android:layout_width="250dp"
-            android:layout_height="35dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="35sp"
-            android:background="@drawable/rounded_purple_square"
+            style="@style/HabiticaButton.Gray"
             android:text="@string/about_rate_our_app"
             android:textAllCaps="false"
-            android:textColor="@color/white"
             android:textSize="@dimen/card_medium_text" />
 
         <Button
             android:id="@+id/reportBug"
             android:layout_width="250dp"
-            android:layout_height="35dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20sp"
-            android:background="@drawable/rounded_purple_square"
+            style="@style/HabiticaButton.Gray"
             android:text="@string/about_bugreport"
             android:textAllCaps="false"
-            android:textColor="@color/white"
             android:textSize="@dimen/card_medium_text" />
 
         <TextView
@@ -127,13 +125,12 @@
         <Button
             android:id="@+id/sourceCodeButton"
             android:layout_width="250dp"
-            android:layout_height="35dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10sp"
-            android:background="@drawable/rounded_purple_square"
+            style="@style/HabiticaButton.Gray"
             android:text="@string/about_source_code"
             android:textAllCaps="false"
-            android:textColor="@color/white"
             android:textSize="@dimen/card_medium_text" />
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

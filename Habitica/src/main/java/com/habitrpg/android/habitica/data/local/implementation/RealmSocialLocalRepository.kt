@@ -254,20 +254,20 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
         return party != null && party.isValid
     }
 
-    override fun getInboxMessages(userID: String, replyToUserID: String?): Flowable<RealmResults<ChatMessage>> {
+    override fun getInboxMessages(userId: String, replyToUserID: String?): Flowable<RealmResults<ChatMessage>> {
         return realm.where(ChatMessage::class.java)
                 .equalTo("isInboxMessage", true)
                 .equalTo("uuid", replyToUserID)
-                .equalTo("userID", userID)
+                .equalTo("userID", userId)
                 .sort("timestamp", Sort.DESCENDING)
                 .findAll()
                 .asFlowable()
                 .filter { it.isLoaded }
     }
 
-    override fun getInboxConversation(userID: String): Flowable<RealmResults<InboxConversation>> {
+    override fun getInboxConversation(userId: String): Flowable<RealmResults<InboxConversation>> {
         return realm.where(InboxConversation::class.java)
-                .equalTo("userID", userID)
+                .equalTo("userID", userId)
                 .sort("timestamp", Sort.DESCENDING)
                 .findAll()
                 .asFlowable()

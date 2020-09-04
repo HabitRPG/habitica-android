@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.activities.PrefsActivity"
     android:orientation="vertical"
-    android:background="@color/white">
+    android:background="?attr/colorContentBackground">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -202,7 +202,7 @@
 
                     android:hint="@string/identify_your_challenge_with_a_tag"
                     android:maxLines="1"
-                    android:textColor="@color/gray_100"
+                    android:textColor="@color/text_secondary"
                     android:textColorHint="#61000000" />
             </com.google.android.material.textfield.TextInputLayout>
 

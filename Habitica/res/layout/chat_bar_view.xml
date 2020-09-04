@@ -25,7 +25,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:hint="@string/write_message"
-                    android:textColor="@android:color/black"
+                    android:textColor="@color/text_primary"
                     android:inputType="textCapSentences|textMultiLine"
                     android:lineSpacingExtra="2dp"
                     android:background="@drawable/rounded_border"
@@ -61,7 +61,7 @@
                     android:layout_height="30dp"
                     android:layout_gravity="center"
                     android:background="@color/transparent"
-                    android:tint="@color/gray_400"
+                    android:tint="@color/disabled_background"
                     android:src="@drawable/ic_send_grey_600_24dp"
                     android:contentDescription="@string/send"/>
             </LinearLayout>
@@ -71,7 +71,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:background="@color/brand_300"
+            android:background="@color/brand_background"
             android:paddingStart="@dimen/spacing_large"
             android:paddingEnd="@dimen/spacing_large"
             android:paddingTop="@dimen/spacing_large"
@@ -89,7 +89,7 @@
                 android:id="@+id/communityGuidelinesAcceptButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/HabiticaButton.Blue"
+                style="@style/HabiticaButton.Primary"
                 android:text="@string/i_agree_to_follow_the_guidelines"/>
         </LinearLayout>
 </merge>

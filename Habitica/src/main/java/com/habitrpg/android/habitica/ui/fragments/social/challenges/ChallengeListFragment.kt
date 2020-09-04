@@ -78,7 +78,7 @@ class ChallengeListFragment : BaseFragment(), androidx.swiperefreshlayout.widget
         resetViews()
 
         challengeAdapter = ChallengesListViewAdapter(null, true, viewUserChallengesOnly, userId)
-        challengeAdapter?.getOpenDetailFragmentFlowable()?.subscribe(Consumer { openDetailFragment(it) }, RxErrorHandler.handleEmptyError())
+        challengeAdapter?.getOpenDetailFragmentFlowable()?.subscribe({ openDetailFragment(it) }, RxErrorHandler.handleEmptyError())
                 ?.let { compositeSubscription.add(it) }
 
         swipeRefreshLayout?.setOnRefreshListener(this)
@@ -89,7 +89,7 @@ class ChallengeListFragment : BaseFragment(), androidx.swiperefreshlayout.widget
             this.recyclerView?.setBackgroundResource(R.color.white)
         }
 
-        compositeSubscription.add(socialRepository.getGroup(Group.TAVERN_ID).combineLatest(socialRepository.getUserGroups("guild")).subscribe(Consumer {
+        compositeSubscription.add(socialRepository.getGroup(Group.TAVERN_ID).combineLatest(socialRepository.getUserGroups("guild")).subscribe({
             this.filterGroups = mutableListOf()
             filterGroups?.add(it.first)
             filterGroups?.addAll(it.second)
@@ -137,7 +137,7 @@ class ChallengeListFragment : BaseFragment(), androidx.swiperefreshlayout.widget
             challengeRepository.getChallenges()
         }
 
-        compositeSubscription.add(observable.firstElement().subscribe(Consumer { challenges ->
+        compositeSubscription.add(observable.firstElement().subscribe({ challenges ->
             if (challenges.size == 0) {
                 retrieveChallengesPage()
             }
@@ -153,7 +153,7 @@ class ChallengeListFragment : BaseFragment(), androidx.swiperefreshlayout.widget
         setRefreshing(true)
         compositeSubscription.add(challengeRepository.retrieveChallenges(nextPageToLoad, viewUserChallengesOnly).doOnComplete {
             setRefreshing(false)
-        } .subscribe(Consumer {
+        } .subscribe({
             if (it.size < 10) {
                 loadedAllData = true
             }

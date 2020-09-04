@@ -29,7 +29,7 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
     private var selectedCard: ShopItem? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        compositeSubscription.add(inventoryRepository.retrieveInAppRewards().subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(inventoryRepository.retrieveInAppRewards().subscribe({ }, RxErrorHandler.handleEmptyError()))
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
@@ -52,16 +52,16 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
         }
         recyclerView.itemAnimator = SafeDefaultItemAnimator()
 
-        compositeSubscription.add(inventoryRepository.getInAppRewards().subscribe(Consumer {
+        compositeSubscription.add(inventoryRepository.getInAppRewards().subscribe({
             (recyclerAdapter as? RewardsRecyclerViewAdapter)?.updateItemRewards(it)
         }, RxErrorHandler.handleEmptyError()))
 
-        (recyclerAdapter as? RewardsRecyclerViewAdapter)?.purchaseCardEvents?.subscribe(Consumer {
+        (recyclerAdapter as? RewardsRecyclerViewAdapter)?.purchaseCardEvents?.subscribe({
             selectedCard = it
             val intent = Intent(activity, SkillMemberActivity::class.java)
             startActivityForResult(intent, 11)
         }, RxErrorHandler.handleEmptyError())?.let { compositeSubscription.add(it) }
-        recyclerAdapter?.brokenTaskEvents?.subscribeWithErrorHandler(Consumer { showBrokenChallengeDialog(it) })?.let { compositeSubscription.add(it) }
+        recyclerAdapter?.brokenTaskEvents?.subscribeWithErrorHandler({ showBrokenChallengeDialog(it) })?.let { compositeSubscription.add(it) }
     }
 
     override fun getLayoutManager(context: Context?): LinearLayoutManager {
@@ -74,7 +74,7 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
                 .flatMap<List<ShopItem>> { inventoryRepository.retrieveInAppRewards() }
                 .doOnTerminate {
                     refreshLayout?.isRefreshing = false
-                }.subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+                }.subscribe({ }, RxErrorHandler.handleEmptyError()))
     }
 
     private fun setGridSpanCount(width: Int) {

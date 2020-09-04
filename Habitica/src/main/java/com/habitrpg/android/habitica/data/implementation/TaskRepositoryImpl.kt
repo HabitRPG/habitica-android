@@ -277,11 +277,11 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
             getTask(taskid).map { localRepository.getUnmanagedCopy(it) }
 
     override fun updateTaskInBackground(task: Task) {
-        updateTask(task).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+        updateTask(task).subscribe({ }, RxErrorHandler.handleEmptyError())
     }
 
     override fun createTaskInBackground(task: Task) {
-        createTask(task).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+        createTask(task).subscribe({ }, RxErrorHandler.handleEmptyError())
     }
 
     override fun getTaskCopies(userId: String): Flowable<List<Task>> =

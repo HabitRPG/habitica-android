@@ -14,9 +14,9 @@ class MarginDecoration(context: Context?, noMarginViewTypes: Set<Int> = setOf())
         val position = parent.getChildAdapterPosition(view)
         val viewType: Int? = parent.adapter?.getItemViewType(position)
         if (noMarginViewTypes.contains(viewType)) {
-            outRect.setEmpty();
+            outRect.setEmpty()
         } else {
-            outRect.set(margin, margin, margin, margin);
+            outRect.set(margin, margin, margin, margin)
         }
     }
 }

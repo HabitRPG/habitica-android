@@ -92,7 +92,7 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
                     updateData
                 }
                 .flatMap { updateData -> updateUser(user, updateData).firstElement() }
-                .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+                .subscribe({ }, RxErrorHandler.handleEmptyError())
     }
 
     override fun sleep(user: User): Flowable<User> {
@@ -284,7 +284,7 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
         }
         observable.flatMap { apiClient.runCron().firstElement() }
                 .flatMap { this.retrieveUser(withTasks = true, forced = true).firstElement() }
-                .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+                .subscribe({ }, RxErrorHandler.handleEmptyError())
     }
 
     override fun useCustomization(user: User?, type: String, category: String?, identifier: String): Flowable<User> {

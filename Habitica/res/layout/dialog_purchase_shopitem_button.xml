@@ -6,7 +6,7 @@
     android:layout_width="wrap_content"
     android:layout_height="40dp"
     android:gravity="center"
-    android:background="@drawable/layout_rounded_bg_gray_700"
+    android:background="@drawable/layout_rounded_bg_window"
     android:paddingLeft="16dp"
     android:paddingRight="16dp">
     <TextView

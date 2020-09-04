@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.habitrpg.android.habitica.ui.activities.MainActivity"
-    android:background="@color/white">
+    android:background="@color/content_background">
 
     <!-- As the main content view, the view below consumes the entire
          space available using match_parent in both dimensions. -->
@@ -53,10 +53,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:minHeight="?attr/actionBarSize"
-                        android:theme="@style/Toolbar.Modern"
+                        style="@style/Toolbar.Modern"
                         android:background="?attr/headerBackgroundColor"
                         app:layout_collapseMode="pin"
-                        app:popupTheme="@style/Theme.AppCompat.Light">
+                        app:popupTheme="@style/Theme.AppCompat.DayNight">
                         <RelativeLayout
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
@@ -96,8 +96,6 @@
                     android:background="?headerOffsetColor"
                     android:elevation="0dp"
                     android:fillViewport="false"
-
-                    android:theme="@style/ThemeOverlay.AppCompat.Light"
                     app:layout_anchor="@+id/collapsing_toolbar"
                     app:layout_anchorGravity="bottom"
 
@@ -110,7 +108,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
-                    android:background="@color/gray_50"
+                    android:background="@color/text_primary"
                     android:textSize="14sp"
                     android:gravity="center_horizontal"
                     android:padding="@dimen/spacing_small"

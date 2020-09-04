@@ -6,7 +6,7 @@
     android:scrollbarSize="3dp"
     android:scrollbarThumbVertical="@color/scrollbarThumb"
     android:scrollbars="vertical"
-    android:background="@color/white">
+    android:background="@color/content_background">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -233,7 +233,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/gray_300"
+                android:textColor="@color/text_quad"
                 android:text="@string/gems_gift_description"
                 android:gravity="center_horizontal"
                 android:layout_marginLeft="@dimen/spacing_large"
@@ -258,10 +258,10 @@
             android:text="@string/gem_purchase_title"
             android:layout_gravity="center_horizontal"
             android:gravity="center"
-            android:textColor="@color/gray_200"
+            android:textColor="@color/text_ternary"
             android:textSize="14sp"
             android:lineSpacingExtra="4dp"
-            android:background="@color/gray_700"
+            android:background="@color/window_background"
             android:drawablePadding="@dimen/spacing_medium"/>
 
         <com.habitrpg.android.habitica.ui.views.promo.SubscriptionBuyGemsPromoView

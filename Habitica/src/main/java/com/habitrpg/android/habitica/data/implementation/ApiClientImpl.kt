@@ -243,7 +243,7 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
             val tasksObservable = this.tasks
 
             userObservable = Flowable.zip(userObservable, tasksObservable,
-                    BiFunction { habitRPGUser, tasks ->
+                    { habitRPGUser, tasks ->
                         habitRPGUser.tasks = tasks
                         habitRPGUser
                     })

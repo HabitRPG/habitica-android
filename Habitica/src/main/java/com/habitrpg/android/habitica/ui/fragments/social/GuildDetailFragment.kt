@@ -70,9 +70,9 @@ class GuildDetailFragment : BaseFragment() {
 
         refreshLayout.setOnRefreshListener { this.refresh() }
 
-        viewModel?.getGroupData()?.observe(viewLifecycleOwner, Observer { updateGuild(it) })
-        viewModel?.getLeaderData()?.observe(viewLifecycleOwner, Observer { setLeader(it) })
-        viewModel?.getIsMemberData()?.observe(viewLifecycleOwner, Observer { updateMembership(it) })
+        viewModel?.getGroupData()?.observe(viewLifecycleOwner, { updateGuild(it) })
+        viewModel?.getLeaderData()?.observe(viewLifecycleOwner, { setLeader(it) })
+        viewModel?.getIsMemberData()?.observe(viewLifecycleOwner, { updateMembership(it) })
 
         guildDescriptionView.movementMethod = LinkMovementMethod.getInstance()
         guildBankIconView.setImageBitmap(HabiticaIconsHelper.imageOfGem())

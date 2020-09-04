@@ -48,7 +48,7 @@ class SoundManager {
             val soundFiles = ArrayList<SoundFile>()
 
             soundFiles.add(SoundFile(soundTheme, type))
-            soundFileLoader.download(soundFiles).observeOn(Schedulers.newThread()).subscribe(Consumer {
+            soundFileLoader.download(soundFiles).observeOn(Schedulers.newThread()).subscribe({
                 val file = soundFiles[0]
                 loadedSoundFiles[type] = file
                 file.play()

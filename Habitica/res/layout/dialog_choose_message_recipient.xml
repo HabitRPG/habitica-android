@@ -13,7 +13,7 @@
             android:layout_height="wrap_content"
             android:text="@string/enter_recipient_username"
         android:textSize="12sp"
-        android:textColor="@color/gray_200"/>
+        android:textColor="@color/text_ternary"/>
     <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

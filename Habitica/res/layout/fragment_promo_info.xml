@@ -88,7 +88,7 @@
             android:gravity="center"
             android:fontFamily="@string/font_family_medium"
             android:textSize="15sp"
-            android:textColor="@color/gray_100"
+            android:textColor="@color/text_secondary"
             android:text="@string/how_it_works"
             android:layout_marginTop="22dp"
             android:layout_marginBottom="7dp"/>
@@ -98,7 +98,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textSize="15sp"
-            android:textColor="@color/gray_300"
+            android:textColor="@color/text_quad"
             android:lineSpacingExtra="2dp"/>
 
         <TextView
@@ -108,7 +108,7 @@
             android:gravity="center"
             android:fontFamily="@string/font_family_medium"
             android:textSize="15sp"
-            android:textColor="@color/gray_100"
+            android:textColor="@color/text_secondary"
             android:text="@string/limitations"
             android:layout_marginTop="22dp"
             android:layout_marginBottom="7dp"/>
@@ -118,7 +118,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textSize="15sp"
-            android:textColor="@color/gray_300"
+            android:textColor="@color/text_quad"
             tools:text="This is some text"
             android:lineSpacingExtra="2dp"/>
     </LinearLayout>

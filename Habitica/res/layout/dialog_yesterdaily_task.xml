@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:minHeight="60dp"
     android:elevation="2dp"
     android:layout_margin="4dp"
@@ -32,7 +34,8 @@
             style="@style/Subheader3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="12dp" />
+            android:layout_margin="12dp"
+            tools:text="Title"/>
     </LinearLayout>
     <LinearLayout
         android:id="@+id/checklistView"

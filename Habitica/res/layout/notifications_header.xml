@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
+    android:background="?attr/colorContentBackground"
     android:orientation="horizontal"
     android:paddingLeft="20dp"
     android:paddingTop="10dp"
@@ -26,7 +26,7 @@
             android:background="@color/transparent"
             android:text="@string/notifications"
             android:textAllCaps="true"
-            android:textColor="@color/gray_300"
+            android:textColor="@color/text_quad"
             android:textSize="12sp" />
 
         <TextView
@@ -37,7 +37,7 @@
             android:background="@drawable/badge_gray"
             android:gravity="center"
             android:minWidth="24dp"
-            android:textColor="@color/gray_300"
+            android:textColor="@color/text_quad"
             android:textSize="12sp"
             tools:text="1" />
     </LinearLayout>

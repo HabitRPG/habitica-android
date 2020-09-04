@@ -42,14 +42,14 @@ class PartyViewModel: GroupViewModel() {
                 .filterOptionalDoOnEmpty { members.value = null }
                 .flatMap { socialRepository.getGroupMembers(it) }
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(Consumer { members.value = it }, RxErrorHandler.handleEmptyError()))
+                .subscribe({ members.value = it }, RxErrorHandler.handleEmptyError()))
     }
 
     fun acceptQuest() {
         groupIDSubject.value?.value?.let {
             disposable.add(socialRepository.acceptQuest(null, it)
                     .flatMap { userRepository.retrieveUser() }
-                    .subscribe(Consumer {
+                    .subscribe({
                         val event = ShowSnackbarEvent()
                         event.type = HabiticaSnackbar.SnackbarDisplayType.SUCCESS
                         event.text = "Quest invitation accepted"
@@ -62,7 +62,7 @@ class PartyViewModel: GroupViewModel() {
         groupIDSubject.value?.value?.let {
             disposable.add(socialRepository.rejectQuest(null, it)
                     .flatMap { userRepository.retrieveUser() }
-                    .subscribe(Consumer {
+                    .subscribe({
                         val event = ShowSnackbarEvent()
                         event.type = HabiticaSnackbar.SnackbarDisplayType.FAILURE
                         event.text = "Quest invitation rejected"
@@ -80,7 +80,7 @@ class PartyViewModel: GroupViewModel() {
         disposable.add(userRepository.getUser()
                 .map { it.party?.id ?: "" }
                 .distinctUntilChanged()
-                .subscribe(Consumer { groupID ->
+                .subscribe({ groupID ->
                     setGroupID(groupID)
                 }, RxErrorHandler.handleEmptyError()))
     }

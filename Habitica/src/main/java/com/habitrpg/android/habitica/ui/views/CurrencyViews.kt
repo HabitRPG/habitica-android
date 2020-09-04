@@ -5,6 +5,7 @@ import android.util.AttributeSet
 import android.util.TypedValue
 import android.widget.LinearLayout
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.extensions.isUsingNightModeResources
 
 class CurrencyViews : LinearLayout {
     var lightBackground: Boolean = false
@@ -35,7 +36,8 @@ class CurrencyViews : LinearLayout {
                 R.styleable.CurrencyViews,
                 0, 0)
         setupViews()
-        lightBackground = attributes?.getBoolean(R.styleable.CurrencyViews_hasLightBackground, true) ?: true
+        val fallBackLight = !(context?.isUsingNightModeResources() == true)
+        lightBackground = attributes?.getBoolean(R.styleable.CurrencyViews_hasLightBackground, fallBackLight) ?: fallBackLight
     }
 
     constructor(context: Context?) : super(context) {

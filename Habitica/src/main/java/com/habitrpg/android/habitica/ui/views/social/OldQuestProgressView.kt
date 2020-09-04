@@ -34,9 +34,9 @@ class OldQuestProgressView : LinearLayout {
 
     private val rect = RectF()
     private val displayDensity = context.resources.displayMetrics.density
-    private val lightGray = ContextCompat.getColor(context, R.color.gray_700)
-    private val mediumGray = ContextCompat.getColor(context, R.color.gray_600)
-    private val darkGray = ContextCompat.getColor(context, R.color.gray_400)
+    private val lightGray = ContextCompat.getColor(context, R.color.window_background)
+    private val mediumGray = ContextCompat.getColor(context, R.color.offset_background)
+    private val darkGray = ContextCompat.getColor(context, R.color.separator)
 
     constructor(context: Context) : super(context) {
         setupView(context)

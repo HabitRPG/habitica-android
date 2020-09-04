@@ -149,7 +149,7 @@ class GroupInviteActivity : BaseActivity() {
         inviteData["uuids"] = invites
 
         compositeSubscription.add(this.socialRepository.inviteToGroup(user.party?.id ?: "", inviteData)
-                .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+                .subscribe({ }, RxErrorHandler.handleEmptyError()))
     }
 
     companion object {

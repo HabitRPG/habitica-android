@@ -85,7 +85,7 @@ class StatsFragment: BaseMainFragment() {
             binding.distributeTaskHelpButton.setImageBitmap(HabiticaIconsHelper.imageOfInfoIcon(color))
         }
 
-        compositeSubscription.add(userRepository.getUser(userId).subscribe(Consumer {
+        compositeSubscription.add(userRepository.getUser(userId).subscribe({
             canAllocatePoints = user?.stats?.lvl ?: 0 >= 10 && user?.stats?.points ?: 0 > 0
             binding.unlockAtLevel.visibility = if (it?.stats?.lvl ?: 0 < 10) View.VISIBLE else View.GONE
             updateStats(it)
@@ -109,7 +109,7 @@ class StatsFragment: BaseMainFragment() {
         }
 
         binding.automaticAllocationSwitch.setOnCheckedChangeListener{ _, isChecked ->
-            userRepository.updateUser(user, "preferences.automaticAllocation", isChecked).subscribe(Consumer {}, RxErrorHandler.handleEmptyError())
+            userRepository.updateUser(user, "preferences.automaticAllocation", isChecked).subscribe({}, RxErrorHandler.handleEmptyError())
         }
 
         binding.strengthStatsView.allocateAction = { allocatePoint(Stats.STRENGTH) }
@@ -136,7 +136,7 @@ class StatsFragment: BaseMainFragment() {
     }
 
     private fun changeAutoAllocationMode(allocationMode: String) {
-        compositeSubscription.add(userRepository.updateUser(user, "preferences.allocationMode", allocationMode).subscribe(Consumer {}, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(userRepository.updateUser(user, "preferences.allocationMode", allocationMode).subscribe({}, RxErrorHandler.handleEmptyError()))
         binding.distributeEvenlyButton.isChecked = allocationMode == Stats.AUTO_ALLOCATE_FLAT
         binding.distributeClassButton.isChecked = allocationMode == Stats.AUTO_ALLOCATE_CLASSBASED
         binding.distributeTaskButton.isChecked = allocationMode == Stats.AUTO_ALLOCATE_TASKBASED
@@ -151,7 +151,7 @@ class StatsFragment: BaseMainFragment() {
     }
 
     private fun allocatePoint(stat: String) {
-        compositeSubscription.add(userRepository.allocatePoint(user, stat).subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(userRepository.allocatePoint(user, stat).subscribe({ }, RxErrorHandler.handleEmptyError()))
     }
 
     private fun updateAttributePoints(user: User) {
@@ -186,7 +186,7 @@ class StatsFragment: BaseMainFragment() {
                 binding.rightSparklesView.visibility = View.VISIBLE
             } else {
                 binding.numberOfPointsTextView.text = getString(R.string.no_points_to_allocate)
-                binding.numberOfPointsTextView.setTextColor(ContextCompat.getColor(context, R.color.gray_300))
+                binding.numberOfPointsTextView.setTextColor(ContextCompat.getColor(context, R.color.text_quad))
                 binding.numberOfPointsTextView.setBackgroundColor(ContextCompat.getColor(context, R.color.transparent))
                 binding.leftSparklesView.visibility = View.GONE
                 binding.rightSparklesView.visibility = View.GONE

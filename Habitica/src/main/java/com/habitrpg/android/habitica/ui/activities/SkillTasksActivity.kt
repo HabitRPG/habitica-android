@@ -61,7 +61,7 @@ class SkillTasksActivity : BaseActivity() {
                     else -> Task.TYPE_TODO
                 }
 
-                compositeSubscription.add(fragment.getTaskSelectionEvents().subscribe(Consumer { task -> taskSelected(task) }, RxErrorHandler.handleEmptyError()))
+                compositeSubscription.add(fragment.getTaskSelectionEvents().subscribe({ task -> taskSelected(task) }, RxErrorHandler.handleEmptyError()))
 
                 viewFragmentsDictionary.put(position, fragment)
 
@@ -77,7 +77,7 @@ class SkillTasksActivity : BaseActivity() {
                         else -> Task.TYPE_TODO
                     }
 
-                    compositeSubscription.add(item.getTaskSelectionEvents().subscribe(Consumer { task -> taskSelected(task) }, RxErrorHandler.handleEmptyError()))
+                    compositeSubscription.add(item.getTaskSelectionEvents().subscribe({ task -> taskSelected(task) }, RxErrorHandler.handleEmptyError()))
                     viewFragmentsDictionary.put(position, item)
                 }
                 return item

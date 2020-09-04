@@ -113,7 +113,7 @@ class PartyDetailFragment : BaseFragment() {
         invitationsView?.acceptCall = {
             viewModel?.joinGroup(it) {
                 compositeSubscription.add(userRepository.retrieveUser(false)
-                        .subscribe(Consumer { user ->
+                        .subscribe({ user ->
                             fragmentManager?.popBackStack()
                             MainNavigationController.navigate(R.id.partyFragment,
                                     bundleOf(Pair("partyID", user.party?.id)))
@@ -125,12 +125,12 @@ class PartyDetailFragment : BaseFragment() {
         invitationsView?.rejectCall = {
             socialRepository.rejectGroupInvite(it)
                     .flatMap { userRepository.retrieveUser(false, true) }
-                    .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+                    .subscribe({ }, RxErrorHandler.handleEmptyError())
         }
 
-        viewModel?.getGroupData()?.observe(viewLifecycleOwner, Observer { updateParty(it) })
-        viewModel?.getUserData()?.observe(viewLifecycleOwner, Observer { updateUser(it) })
-        viewModel?.getMembersData()?.observe(viewLifecycleOwner, Observer { updateMembersList(it) })
+        viewModel?.getGroupData()?.observe(viewLifecycleOwner, { updateParty(it) })
+        viewModel?.getUserData()?.observe(viewLifecycleOwner, { updateUser(it) })
+        viewModel?.getMembersData()?.observe(viewLifecycleOwner, { updateMembersList(it) })
     }
 
     private fun refreshParty() {
@@ -157,7 +157,7 @@ class PartyDetailFragment : BaseFragment() {
                 delay(500)
                 inventoryRepository.getQuestContent(party.quest?.key ?: "")
                         .firstElement()
-                        .subscribe(Consumer<QuestContent> { this@PartyDetailFragment.updateQuestContent(it) }, RxErrorHandler.handleEmptyError())
+                        .subscribe({ this@PartyDetailFragment.updateQuestContent(it) }, RxErrorHandler.handleEmptyError())
             }
         } else {
             newQuestButton?.visibility = View.VISIBLE
@@ -201,7 +201,7 @@ class PartyDetailFragment : BaseFragment() {
                     leaderID.let {
                         compositeSubscription.add(
                             socialRepository.getMember(it)
-                                    .subscribe(Consumer {
+                                    .subscribe({
                                         inviteLeaderAvatarView?.setAvatar(it)
                                         inviteLeaderTextView?.text = getString(R.string.invitation_title,it.displayName,groupName)
                                     }, RxErrorHandler.handleEmptyError())
@@ -239,7 +239,7 @@ class PartyDetailFragment : BaseFragment() {
         }
         questImageWrapper?.alpha = 1.0f
         questProgressView?.alpha = 1.0f
-        context?.let { questParticipationView?.setTextColor(ContextCompat.getColor(it, R.color.gray_300)) }
+        context?.let { questParticipationView?.setTextColor(ContextCompat.getColor(it, R.color.text_quad)) }
         if (viewModel?.isQuestActive == true) {
             questProgressView?.visibility = View.VISIBLE
             questProgressView?.setData(questContent, viewModel?.getGroupData()?.value?.quest?.progress)
@@ -300,7 +300,7 @@ class PartyDetailFragment : BaseFragment() {
         val addMessageDialog = context?.let { HabiticaAlertDialog(it) }
         addMessageDialog?.addButton(android.R.string.ok, true) { _, _ ->
             socialRepository.postPrivateMessage(userID, emojiEditText.text.toString())
-                    .subscribe(Consumer {
+                    .subscribe({
                         (activity as? MainActivity)?.snackbarContainer?.let { it1 ->
                             HabiticaSnackbar.showSnackbar(it1,
                                     String.format(getString(R.string.profile_message_sent_to), username), HabiticaSnackbar.SnackbarDisplayType.NORMAL)
@@ -317,7 +317,7 @@ class PartyDetailFragment : BaseFragment() {
         val dialog = context?.let { HabiticaAlertDialog(it) }
         dialog?.addButton(R.string.transfer, true) { _, _ ->
             socialRepository.transferGroupOwnership(viewModel?.groupID ?: "", userID)
-                    .subscribe(Consumer {
+                    .subscribe({
                         (activity as? MainActivity)?.snackbarContainer?.let { it1 ->
                             HabiticaSnackbar.showSnackbar(it1,
                                     String.format(getString(R.string.transferred_ownership), displayName), HabiticaSnackbar.SnackbarDisplayType.NORMAL)
@@ -335,7 +335,7 @@ class PartyDetailFragment : BaseFragment() {
         val dialog = context?.let { HabiticaAlertDialog(it) }
         dialog?.addButton(R.string.remove, true) { _, _ ->
             socialRepository.removeMemberFromGroup(viewModel?.groupID ?: "", userID)
-                    .subscribe(Consumer {
+                    .subscribe({
                         (activity as? MainActivity)?.snackbarContainer?.let { it1 ->
                             HabiticaSnackbar.showSnackbar(it1,
                                     String.format(getString(R.string.removed_member), displayName), HabiticaSnackbar.SnackbarDisplayType.NORMAL)

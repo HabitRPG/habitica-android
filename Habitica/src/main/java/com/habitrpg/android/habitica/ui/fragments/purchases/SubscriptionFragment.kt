@@ -82,10 +82,10 @@ class SubscriptionFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
         binding.giftSubscriptionContainer.setOnClickListener { showGiftSubscriptionDialog() }
         binding.giftSubscriptionButton.setOnClickListener { showGiftSubscriptionDialog() }
 
-        binding.subscription1month.setOnPurchaseClickListener(View.OnClickListener { selectSubscription(PurchaseTypes.Subscription1Month) })
-        binding.subscription3month.setOnPurchaseClickListener(View.OnClickListener { selectSubscription(PurchaseTypes.Subscription3Month) })
-        binding.subscription6month.setOnPurchaseClickListener(View.OnClickListener { selectSubscription(PurchaseTypes.Subscription6Month) })
-        binding.subscription12month.setOnPurchaseClickListener(View.OnClickListener { selectSubscription(PurchaseTypes.Subscription12Month) })
+        binding.subscription1month.setOnPurchaseClickListener({ selectSubscription(PurchaseTypes.Subscription1Month) })
+        binding.subscription3month.setOnPurchaseClickListener({ selectSubscription(PurchaseTypes.Subscription3Month) })
+        binding.subscription6month.setOnPurchaseClickListener({ selectSubscription(PurchaseTypes.Subscription6Month) })
+        binding.subscription12month.setOnPurchaseClickListener({ selectSubscription(PurchaseTypes.Subscription12Month) })
 
         binding.subscribeButton.setOnClickListener { subscribeUser() }
 
@@ -93,7 +93,7 @@ class SubscriptionFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
 
         binding.refreshLayout.setOnRefreshListener { refresh() }
 
-        compositeSubscription.add(inventoryRepository.getLatestMysteryItem().subscribe(Consumer {
+        compositeSubscription.add(inventoryRepository.getLatestMysteryItem().subscribe({
             DataBindingUtils.loadImage(binding.subBenefitsMysteryItemIcon, "shop_set_mystery_${it.key?.split("_")?.last()}")
             binding.subBenefitsMysteryItemText.text = context?.getString(R.string.subscribe_listitem3_description_new, it.text)
         }, RxErrorHandler.handleEmptyError()))
@@ -105,7 +105,7 @@ class SubscriptionFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
     }
 
     private fun refresh() {
-        compositeSubscription.add(userRepository.retrieveUser(withTasks = false, forced = true).subscribe(Consumer {
+        compositeSubscription.add(userRepository.retrieveUser(withTasks = false, forced = true).subscribe({
             this.setUser(it)
             binding.refreshLayout.isRefreshing = false
         }, RxErrorHandler.handleEmptyError()))
@@ -154,7 +154,7 @@ class SubscriptionFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
         val subscriptionOptionButton = buttonForSku(this.selectedSubscriptionSku)
         subscriptionOptionButton?.setIsPurchased(true)
         if (binding.subscribeButton != null) {
-            binding.subscribeButton?.isEnabled = true
+            binding.subscribeButton.isEnabled = true
         }
     }
 
@@ -208,7 +208,7 @@ class SubscriptionFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
             }
 
             if (isSubscribed) {
-                binding.headerImageView?.setImageResource(R.drawable.subscriber_header)
+                binding.headerImageView.setImageResource(R.drawable.subscriber_header)
                 binding.subscriptionDetails.visibility = View.VISIBLE
                 binding.subscriptionDetails.currentUserID = user?.id
                 user?.purchased?.plan?.let { binding.subscriptionDetails.setPlan(it) }
@@ -231,7 +231,7 @@ class SubscriptionFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
         if (user?.purchased?.plan?.paymentMethod == "Google" &&
                 user?.purchased?.plan?.isActive == true &&
                 (purchasedSubscription?.autoRenewing == false ||purchasedSubscription == null)) {
-            compositeSubscription.add(apiClient.cancelSubscription().subscribe(Consumer {
+            compositeSubscription.add(apiClient.cancelSubscription().subscribe({
                 refresh()
             }, RxErrorHandler.handleEmptyError()))
         }

@@ -64,12 +64,12 @@ class HabitButtonWidgetActivity : BaseActivity() {
         }
 
         adapter = SkillTasksRecyclerViewAdapter(null, true)
-        adapter?.getTaskSelectionEvents()?.subscribe(Consumer { task -> taskSelected(task.id) },
+        adapter?.getTaskSelectionEvents()?.subscribe({ task -> taskSelected(task.id) },
                 RxErrorHandler.handleEmptyError())
                 ?.let { compositeSubscription.add(it) }
         recyclerView.adapter = adapter
 
-        compositeSubscription.add(taskRepository.getTasks(Task.TYPE_HABIT, userId).firstElement().subscribe(Consumer { adapter?.updateData(it) }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(taskRepository.getTasks(Task.TYPE_HABIT, userId).firstElement().subscribe({ adapter?.updateData(it) }, RxErrorHandler.handleEmptyError()))
     }
 
     private fun taskSelected(taskId: String?) {

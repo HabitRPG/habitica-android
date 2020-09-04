@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:background="@color/white">
+    tools:background="@color/content_background">
     <ImageView
         android:id="@+id/heart_icon"
         android:layout_width="20dp"
@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:text="@string/thanks_for_subscribing"
         style="@style/Body2"
-        android:textColor="@color/gray_300"
+        android:textColor="@color/text_quad"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="12dp"
         android:layout_marginTop="4dp"

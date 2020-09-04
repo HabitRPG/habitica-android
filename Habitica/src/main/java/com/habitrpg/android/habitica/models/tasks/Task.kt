@@ -199,7 +199,7 @@ open class Task : RealmObject, Parcelable {
             return this.parsedText ?: ""
         }
 
-        MarkdownParser.parseMarkdownAsync(this.text, Consumer { parsedText ->
+        MarkdownParser.parseMarkdownAsync(this.text, { parsedText ->
             this.parsedText = parsedText
             callback(parsedText)
         })
@@ -213,7 +213,7 @@ open class Task : RealmObject, Parcelable {
         }
 
         if (notes?.isNotEmpty() == true) {
-            MarkdownParser.parseMarkdownAsync(notes, Consumer { parsedText ->
+            MarkdownParser.parseMarkdownAsync(notes, { parsedText ->
                 parsedNotes = parsedText
                 callback(parsedText)
             })

@@ -62,7 +62,7 @@ class GiftBalanceGemsFragment : BaseFragment() {
         try {
             val amount = giftEditText.text.toString().toInt()
             giftedMember?.id?.let {
-                compositeSubscription.add(socialRepository.transferGems(it, amount).subscribe(Consumer {
+                compositeSubscription.add(socialRepository.transferGems(it, amount).subscribe({
                     onCompleted?.invoke()
                 }, RxErrorHandler.handleEmptyError()))
             }

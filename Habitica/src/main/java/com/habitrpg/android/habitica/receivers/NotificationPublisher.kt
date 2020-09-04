@@ -65,7 +65,7 @@ class NotificationPublisher : BroadcastReceiver() {
         if (checkDailies) {
             taskRepository.getTasks(Task.TYPE_DAILY).firstElement().zipWith(userRepository.getUser().firstElement(), BiFunction<RealmResults<Task>, User, Pair<RealmResults<Task>, User>> { tasks, user ->
                 return@BiFunction Pair(tasks, user)
-            }).subscribe(Consumer { pair ->
+            }).subscribe({ pair ->
                 var showNotifications = false
                 for (task in pair.first) {
                     if (task?.checkIfDue() == true) {

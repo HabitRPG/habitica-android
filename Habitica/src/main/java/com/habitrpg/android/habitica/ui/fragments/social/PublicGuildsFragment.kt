@@ -47,7 +47,7 @@ class PublicGuildsFragment : BaseMainFragment(), SearchView.OnQueryTextListener 
         viewAdapter = PublicGuildsRecyclerViewAdapter(null, true)
         compositeSubscription.add(socialRepository.getGroupMemberships()
                 .map { it.map { membership -> membership.groupID } }
-                .subscribeWithErrorHandler(Consumer { viewAdapter.setMemberGuildIDs(it) }))
+                .subscribeWithErrorHandler({ viewAdapter.setMemberGuildIDs(it) }))
         viewAdapter.socialRepository = socialRepository
         recyclerView?.adapter = viewAdapter
         recyclerView?.itemAnimator = SafeDefaultItemAnimator()
@@ -62,10 +62,10 @@ class PublicGuildsFragment : BaseMainFragment(), SearchView.OnQueryTextListener 
     private fun fetchGuilds() {
         compositeSubscription.add(this.socialRepository.getPublicGuilds()
                 .firstElement()
-                .subscribe(Consumer { groups ->
+                .subscribe({ groups ->
                     this@PublicGuildsFragment.viewAdapter.setUnfilteredData(groups)
                 }, RxErrorHandler.handleEmptyError()))
-        compositeSubscription.add(this.socialRepository.retrieveGroups("publicGuilds").subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(this.socialRepository.retrieveGroups("publicGuilds").subscribe({ }, RxErrorHandler.handleEmptyError()))
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

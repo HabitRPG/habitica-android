@@ -177,11 +177,11 @@ class TaskFormActivity : BaseActivity() {
 
         compositeSubscription.add(tagRepository.getTags()
                 .map { tagRepository.getUnmanagedCopy(it) }
-                .subscribe(Consumer {
+                .subscribe({
                     tags = it
                     setTagViews()
                 }, RxErrorHandler.handleEmptyError()))
-        compositeSubscription.add(userRepository.getUser().subscribe(Consumer {
+        compositeSubscription.add(userRepository.getUser().subscribe({
             usesTaskAttributeStats = it.preferences?.allocationMode == "taskbased" && it.preferences?.automaticAllocation == true
             configureForm()
         }, RxErrorHandler.handleEmptyError()))
@@ -215,13 +215,13 @@ class TaskFormActivity : BaseActivity() {
         when {
             taskId != null -> {
                 isCreating = false
-                compositeSubscription.add(taskRepository.getUnmanagedTask(taskId).firstElement().subscribe(Consumer {
+                compositeSubscription.add(taskRepository.getUnmanagedTask(taskId).firstElement().subscribe({
                     task = it
                     //tintColor = ContextCompat.getColor(this, it.mediumTaskColor)
                     fillForm(it)
                     task?.challengeID?.let { challengeID ->
                         compositeSubscription.add(challengeRepository.retrieveChallenge(challengeID)
-                                .subscribe(Consumer { challenge ->
+                                .subscribe({ challenge ->
                             this.challenge = challenge
                             challengeNameView.text = getString(R.string.challenge_task_name, challenge.name)
                             challengeNameView.visibility = View.VISIBLE
@@ -410,7 +410,7 @@ class TaskFormActivity : BaseActivity() {
 
     private fun configureStatsButton(button: TextView, isSelected: Boolean) {
         button.background.setTint(if (isSelected) tintColor else ContextCompat.getColor(this, R.color.taskform_gray))
-        val textColorID = if (isSelected) R.color.white else R.color.gray_100
+        val textColorID = if (isSelected) R.color.window_background else R.color.text_secondary
         button.setTextColor(ContextCompat.getColor(this, textColorID))
         if (isSelected) {
             button.typeface = Typeface.create("sans-serif-medium", Typeface.NORMAL)
@@ -426,7 +426,7 @@ class TaskFormActivity : BaseActivity() {
                     arrayOf(intArrayOf(-android.R.attr.state_checked), // unchecked
                             intArrayOf(android.R.attr.state_checked)  // checked
                     ),
-                    intArrayOf(ContextCompat.getColor(this, R.color.gray_400), tintColor)
+                    intArrayOf(ContextCompat.getColor(this, R.color.text_dimmed), tintColor)
             )
             tagView?.buttonTintList = colorStateList
         }
@@ -515,7 +515,7 @@ class TaskFormActivity : BaseActivity() {
         alert.setTitle(R.string.are_you_sure)
         alert.addButton(R.string.delete_task, true) { _, _ ->
             if (task?.isValid != true) return@addButton
-            task?.id?.let { taskRepository.deleteTask(it).subscribe(Consumer {  }, RxErrorHandler.handleEmptyError()) }
+            task?.id?.let { taskRepository.deleteTask(it).subscribe({  }, RxErrorHandler.handleEmptyError()) }
             finish()
         }
         alert.addCancelButton()
@@ -523,7 +523,7 @@ class TaskFormActivity : BaseActivity() {
     }
 
     private fun showChallengeDeleteTask() {
-        compositeSubscription.add(taskRepository.getTasksForChallenge(task?.challengeID).firstElement().subscribe(Consumer { tasks ->
+        compositeSubscription.add(taskRepository.getTasksForChallenge(task?.challengeID).firstElement().subscribe({ tasks ->
             val taskCount = tasks.size
             val alert = HabiticaAlertDialog(this)
             alert.setTitle(getString(R.string.delete_challenge_task_title))
@@ -533,7 +533,7 @@ class TaskFormActivity : BaseActivity() {
                     compositeSubscription.add(challengeRepository.leaveChallenge(it, "keep-all")
                             .flatMap { taskRepository.deleteTask(task?.id ?: "") }
                             .flatMap { userRepository.retrieveUser(true) }
-                            .subscribe(Consumer {
+                            .subscribe({
                                 finish()
                             }, RxErrorHandler.handleEmptyError()))
                 }
@@ -542,7 +542,7 @@ class TaskFormActivity : BaseActivity() {
                 challenge?.let {
                     compositeSubscription.add(challengeRepository.leaveChallenge(it, "remove-all")
                             .flatMap { userRepository.retrieveUser(true) }
-                            .subscribe(Consumer {
+                            .subscribe({
                         finish()
                     }, RxErrorHandler.handleEmptyError()))
                 }

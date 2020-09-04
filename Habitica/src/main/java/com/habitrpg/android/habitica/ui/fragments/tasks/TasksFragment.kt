@@ -171,7 +171,7 @@ class TasksFragment : BaseMainFragment(), SearchView.OnQueryTextListener {
             val dialog = TaskFilterDialog(it, HabiticaBaseApplication.userComponent)
             if (user != null) {
                 dialog.setTags(user?.tags?.createSnapshot() ?: emptyList())
-                disposable = tagRepository.getTags(user?.id ?: "").subscribe(Consumer {tagsList -> dialog.setTags(tagsList)}, RxErrorHandler.handleEmptyError())
+                disposable = tagRepository.getTags(user?.id ?: "").subscribe({ tagsList -> dialog.setTags(tagsList)}, RxErrorHandler.handleEmptyError())
             }
             dialog.setActiveTags(taskFilterHelper.tags)
             if (activeFragment != null) {
@@ -195,7 +195,7 @@ class TasksFragment : BaseMainFragment(), SearchView.OnQueryTextListener {
             })
             dialog.setOnDismissListener {
                 if (disposable?.isDisposed == false) {
-                    disposable?.dispose()
+                    disposable.dispose()
                 }
             }
             dialog.show()
@@ -275,7 +275,7 @@ class TasksFragment : BaseMainFragment(), SearchView.OnQueryTextListener {
         if (bottomNavigation == null) {
             return
         }
-        compositeSubscription.add(tutorialRepository.getTutorialSteps(listOf("habits", "dailies", "todos", "rewards")).subscribe(Consumer { tutorialSteps ->
+        compositeSubscription.add(tutorialRepository.getTutorialSteps(listOf("habits", "dailies", "todos", "rewards")).subscribe({ tutorialSteps ->
             val activeTutorialFragments = ArrayList<String>()
             for (step in tutorialSteps) {
                 var id = -1

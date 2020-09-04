@@ -54,7 +54,7 @@ abstract class BaseMainFragment : BaseFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        compositeSubscription.add(userRepository.getUser().subscribe(Consumer { user = it }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(userRepository.getUser().subscribe({ user = it }, RxErrorHandler.handleEmptyError()))
 
         if (this.usesBottomNavigation) {
             bottomNavigation?.visibility = View.VISIBLE

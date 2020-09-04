@@ -199,7 +199,7 @@ class QuestProgressView : LinearLayout {
                 DataBindingUtils.loadImage("rage_strike_${strike.key}") {
                     Observable.just(it)
                             .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(Consumer { bitmap ->
+                            .subscribe({ bitmap ->
                                 val displayDensity = resources.displayMetrics.density
                                 val width = bitmap.width * displayDensity
                                 val height = bitmap.height * displayDensity

@@ -12,7 +12,6 @@ import com.habitrpg.android.habitica.receivers.LocalNotificationActionReceiver;
 import com.habitrpg.android.habitica.receivers.NotificationPublisher;
 import com.habitrpg.android.habitica.receivers.TaskAlarmBootReceiver;
 import com.habitrpg.android.habitica.receivers.TaskReceiver;
-import com.habitrpg.android.habitica.ui.activities.AboutActivity;
 import com.habitrpg.android.habitica.ui.activities.AdventureGuideActivity;
 import com.habitrpg.android.habitica.ui.activities.ChallengeFormActivity;
 import com.habitrpg.android.habitica.ui.activities.ClassSelectionActivity;
@@ -77,7 +76,6 @@ import com.habitrpg.android.habitica.ui.fragments.setup.WelcomeFragment;
 import com.habitrpg.android.habitica.ui.fragments.skills.SkillTasksRecyclerViewFragment;
 import com.habitrpg.android.habitica.ui.fragments.skills.SkillsFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.ChatFragment;
-import com.habitrpg.android.habitica.ui.fragments.social.ChatListFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.GuildDetailFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.GuildFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.GuildsOverviewFragment;
@@ -124,8 +122,6 @@ import dagger.Subcomponent;
 @Subcomponent(modules = {UserModule.class, UserRepositoryModule.class})
 public interface UserComponent {
     void inject(ClassSelectionActivity classSelectionActivity);
-
-    void inject(AboutActivity aboutActivity);
 
     void inject(GroupFormActivity groupFormActivity);
 
@@ -186,8 +182,6 @@ public interface UserComponent {
     void inject(PartyFragment partyFragment);
 
     void inject(PartyInviteFragment partyInviteFragment);
-
-    void inject(ChatListFragment chatListFragment);
 
     void inject(NoPartyFragmentFragment noPartyFragmentFragment);
 

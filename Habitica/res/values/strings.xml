@@ -1103,4 +1103,7 @@
     <string name="spooky_promo_info_instructions">Between October 29th and November 2nd, simply purchase any Gem bundle like usual and your account will be credited with the promotional amount of Gems. More Gems to spend, share, or save for any future releases!</string>
     <string name="spooky_promo_info_limitations">This promotion only applies during the limited time event. This event starts on October 29th at 8:00 AM EDT (12:00 UTC) and will end November 2nd at 8:00 PM EDT (00:00 UTC). The promo offer is only available when buying Gems for yourself.</string>
     <string name="spooky_promo_info_prompt">The Gem Sale is back to haunt the very end of this year’s Fall Gala! This is one last chance to get more Gems than ever, so stock up while it lasts!</string>
+    <string name="dark_mode">Dark Mode</string>
+    <string name="theme_mode">Theme Mode</string>
+    <string name="theme_color">Theme Color</string>
 </resources>

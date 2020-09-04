@@ -49,7 +49,6 @@ class HabiticaProgressBar(context: Context, attrs: AttributeSet?) : FrameLayout(
             }
         }
 
-
     private fun updateBar() {
         val remainingValue = currentValue - pendingValue
         val remainingPercent = if (remainingValue < 0) {

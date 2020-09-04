@@ -40,7 +40,7 @@ class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUp
         return if (viewType == 0) {
             SystemChatMessageViewHolder(parent.inflate(R.layout.system_chat_message))
         } else {
-            ChatRecyclerViewHolder(parent.inflate(R.layout.tavern_chat_item), uuid, isTavern)
+            ChatRecyclerViewHolder(parent.inflate(R.layout.chat_item), uuid, isTavern)
         }
     }
 

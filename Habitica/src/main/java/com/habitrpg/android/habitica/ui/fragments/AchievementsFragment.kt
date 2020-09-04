@@ -74,7 +74,7 @@ class AchievementsFragment: BaseMainFragment(), SwipeRefreshLayout.OnRefreshList
         recyclerView.layoutManager = layoutManager
         recyclerView.adapter = adapter
         adapter.useGridLayout = useGridLayout
-        context?.let { recyclerView.background = ColorDrawable(ContextCompat.getColor(it, R.color.white)) }
+        context?.let { recyclerView.background = ColorDrawable(ContextCompat.getColor(it, R.color.content_background)) }
 
         layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
@@ -96,7 +96,7 @@ class AchievementsFragment: BaseMainFragment(), SwipeRefreshLayout.OnRefreshList
                     (it.category?.first()?.toInt() ?: 2) * it.index
                 }
             }
-        }.subscribe(Consumer {
+        }.subscribe({
             val entries = mutableListOf<Any>()
             var lastCategory = ""
             it.forEach { achievement ->
@@ -117,7 +117,7 @@ class AchievementsFragment: BaseMainFragment(), SwipeRefreshLayout.OnRefreshList
                 .combineLatest(userRepository.getQuestAchievements()
                         .map { it.mapNotNull { achievement -> achievement.questKey } }
                         .flatMap { inventoryRepository.getQuestContent(it) })
-                .subscribeWithErrorHandler(Consumer { result ->
+                .subscribeWithErrorHandler({ result ->
                     val achievements = result.first.map {achievement ->
                         val questContent = result.second.firstOrNull { achievement.questKey == it.key }
                         achievement.title = questContent?.text
@@ -158,7 +158,7 @@ class AchievementsFragment: BaseMainFragment(), SwipeRefreshLayout.OnRefreshList
     }
 
     override fun onRefresh() {
-        compositeSubscription.add(userRepository.retrieveAchievements().subscribe(Consumer {
-        }, RxErrorHandler.handleEmptyError(), Action { refreshLayout.isRefreshing = false }))
+        compositeSubscription.add(userRepository.retrieveAchievements().subscribe({
+        }, RxErrorHandler.handleEmptyError(), { refreshLayout.isRefreshing = false }))
     }
 }

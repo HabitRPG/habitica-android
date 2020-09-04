@@ -50,7 +50,7 @@ abstract class TaskListFactory internal constructor(val context: Context, intent
                     .flatMapMaybe { tasks -> taskRepository.getTaskCopies(tasks).firstElement() }
                     .subscribeOn(AndroidSchedulers.mainThread())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(Consumer { tasks ->
+                    .subscribe({ tasks ->
                         reloadData = false
                         taskList = tasks
                         AppWidgetManager.getInstance(context).notifyAppWidgetViewDataChanged(widgetId, R.id.list_view)

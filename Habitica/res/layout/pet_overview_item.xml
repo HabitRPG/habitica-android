@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:clickable="true"
-    android:background="@color/white"
+    android:background="?attr/colorContentBackground"
     android:focusable="true">
     <LinearLayout
         android:id="@+id/card_view"
@@ -34,6 +34,7 @@
                 android:id="@+id/titleTextView"
                 android:textSize="12sp"
                 android:gravity="center"
+                android:textColor="@color/text_primary"
                 style="@style/RowTitle"/>
             <TextView
                 android:layout_width="match_parent"
@@ -43,6 +44,7 @@
                 android:gravity="center"
                 android:textSize="12sp"
                 android:background="@drawable/layout_rounded_bg_shopitem_price"
+                android:textColor="@color/text_secondary"
                 style="@style/RowText"/>
     </LinearLayout>
 </RelativeLayout>

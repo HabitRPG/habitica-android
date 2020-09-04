@@ -23,7 +23,7 @@ class InboxAdapter(private var user: User?) : PagedListAdapter<ChatMessage, Chat
     private val copyMessageEvents = PublishSubject.create<ChatMessage>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatRecyclerViewHolder {
-        return ChatRecyclerViewHolder(parent.inflate(R.layout.tavern_chat_item), user?.id ?: "", false)
+        return ChatRecyclerViewHolder(parent.inflate(R.layout.chat_item), user?.id ?: "", false)
     }
 
     override fun onBindViewHolder(holder: ChatRecyclerViewHolder, position: Int) {

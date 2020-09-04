@@ -5,7 +5,7 @@
 <LinearLayout
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/content_background"
     android:layout_marginBottom="@dimen/spacing_large">
     <TextView
         android:layout_width="match_parent"
@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:padding="19dp"
         android:orientation="vertical"
-        android:background="@drawable/layout_rounded_bg_gray_700"
+        android:background="@drawable/layout_rounded_bg_window"
         android:layout_marginLeft="@dimen/spacing_medium"
         android:layout_marginRight="@dimen/spacing_medium"
         android:layout_marginBottom="@dimen/spacing_medium">
@@ -30,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/clear_cache"
-            android:textColor="@color/black"
+            android:textColor="@color/text_primary"
             style="@style/Body1"
             android:layout_marginBottom="4dp"/>
         <TextView
@@ -44,7 +44,7 @@
         android:layout_height="wrap_content"
         android:padding="19dp"
         android:orientation="vertical"
-        android:background="@drawable/layout_rounded_bg_gray_700"
+        android:background="@drawable/layout_rounded_bg_window"
         android:layout_marginLeft="@dimen/spacing_medium"
         android:layout_marginRight="@dimen/spacing_medium"
         android:layout_marginBottom="@dimen/spacing_medium">
@@ -52,7 +52,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/manual_sync_restart"
-            android:textColor="@color/black"
+            android:textColor="@color/text_primary"
             style="@style/Body1"
             android:layout_marginBottom="4dp"/>
         <TextView
@@ -66,7 +66,7 @@
         android:layout_height="wrap_content"
         android:padding="19dp"
         android:orientation="vertical"
-        android:background="@drawable/layout_rounded_bg_gray_700"
+        android:background="@drawable/layout_rounded_bg_window"
         android:layout_marginLeft="@dimen/spacing_medium"
         android:layout_marginRight="@dimen/spacing_medium"
         android:layout_marginBottom="@dimen/spacing_medium">
@@ -74,7 +74,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/update_app"
-            android:textColor="@color/black"
+            android:textColor="@color/text_primary"
             style="@style/Body1"
             android:layout_marginBottom="4dp"/>
         <TextView
@@ -97,7 +97,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/send_bug_prompt"
-        android:textColor="@color/gray_300"
+        android:textColor="@color/text_quad"
         android:gravity="center"
         android:textSize="14sp"
         android:layout_marginTop="@dimen/spacing_small"

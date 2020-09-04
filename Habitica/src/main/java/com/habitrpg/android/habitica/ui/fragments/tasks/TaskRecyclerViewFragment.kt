@@ -98,7 +98,7 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
         binding.recyclerView.adapter = adapter
 
         if (this.classType != null) {
-            compositeSubscription.add(taskRepository.getTasks(this.classType ?: "", userID).firstElement().subscribe(Consumer {
+            compositeSubscription.add(taskRepository.getTasks(this.classType ?: "", userID).firstElement().subscribe({
                 this.recyclerAdapter?.updateUnfilteredData(it)
                 this.recyclerAdapter?.filter()
             }, RxErrorHandler.handleEmptyError()))
@@ -201,7 +201,7 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
                     )
                             .delay(1, TimeUnit.SECONDS)
                             .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(Consumer {
+                            .subscribe({
                                 recyclerAdapter?.ignoreUpdates = false
                             }, RxErrorHandler.handleEmptyError()))
                 }
@@ -251,19 +251,19 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
         allowReordering()
 
         if (this.classType != null) {
-            recyclerAdapter?.errorButtonEvents?.subscribe(Consumer {
-                taskRepository.syncErroredTasks().subscribe(Consumer {}, RxErrorHandler.handleEmptyError())
+            recyclerAdapter?.errorButtonEvents?.subscribe({
+                taskRepository.syncErroredTasks().subscribe({}, RxErrorHandler.handleEmptyError())
             }, RxErrorHandler.handleEmptyError())?.let { compositeSubscription.add(it) }
-            recyclerAdapter?.taskOpenEvents?.subscribeWithErrorHandler(Consumer {
+            recyclerAdapter?.taskOpenEvents?.subscribeWithErrorHandler({
                 openTaskForm(it)
             })?.let { compositeSubscription.add(it) }
             recyclerAdapter?.taskScoreEvents
                     ?.doOnNext { playSound(it.second) }
-                    ?.subscribeWithErrorHandler(Consumer { scoreTask(it.first, it.second) })?.let { compositeSubscription.add(it) }
+                    ?.subscribeWithErrorHandler({ scoreTask(it.first, it.second) })?.let { compositeSubscription.add(it) }
             recyclerAdapter?.checklistItemScoreEvents
                     ?.flatMap { taskRepository.scoreChecklistItem(it.first.id ?: "", it.second.id ?: "")
-                    }?.subscribeWithErrorHandler(Consumer {})?.let { compositeSubscription.add(it) }
-            recyclerAdapter?.brokenTaskEvents?.subscribeWithErrorHandler(Consumer { showBrokenChallengeDialog(it) })?.let { compositeSubscription.add(it) }
+                    }?.subscribeWithErrorHandler({})?.let { compositeSubscription.add(it) }
+            recyclerAdapter?.brokenTaskEvents?.subscribeWithErrorHandler({ showBrokenChallengeDialog(it) })?.let { compositeSubscription.add(it) }
         }
 
         val bottomPadding = (binding.recyclerView.paddingBottom + TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 60f, resources.displayMetrics)).toInt()
@@ -285,7 +285,7 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
 
         if (Task.TYPE_REWARD == className) {
             compositeSubscription.add(taskRepository.getTasks(this.className, userID)
-                    .subscribe(Consumer { recyclerAdapter?.updateData(it) }, RxErrorHandler.handleEmptyError()))
+                    .subscribe({ recyclerAdapter?.updateData(it) }, RxErrorHandler.handleEmptyError()))
         }
     }
 
@@ -294,16 +294,16 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
             if (!task.isValid) {
                 return
             }
-            taskRepository.getTasksForChallenge(task.challengeID).subscribe(Consumer { tasks ->
+            taskRepository.getTasksForChallenge(task.challengeID).subscribe({ tasks ->
                 val taskCount = tasks.size
                 val dialog = HabiticaAlertDialog(it)
                 dialog.setTitle(R.string.broken_challenge)
                 dialog.setMessage(it.getString(R.string.broken_challenge_description, taskCount))
                 dialog.addButton(it.getString(R.string.keep_x_tasks, taskCount), true) { _, _ ->
-                    taskRepository.unlinkAllTasks(task.challengeID, "keep-all").subscribe(Consumer {}, RxErrorHandler.handleEmptyError())
+                    taskRepository.unlinkAllTasks(task.challengeID, "keep-all").subscribe({}, RxErrorHandler.handleEmptyError())
                 }
                 dialog.addButton(it.getString(R.string.delete_x_tasks, taskCount), false, true) { _, _ ->
-                    taskRepository.unlinkAllTasks(task.challengeID, "remove-all").subscribe(Consumer {}, RxErrorHandler.handleEmptyError())
+                    taskRepository.unlinkAllTasks(task.challengeID, "remove-all").subscribe({}, RxErrorHandler.handleEmptyError())
                 }
                 dialog.setExtraCloseButtonVisibility(View.VISIBLE)
                 dialog.show()
@@ -314,7 +314,7 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
     private fun setEmptyLabels() {
         if (this.classType != null) {
             binding.recyclerView.setEmptyView(binding.emptyView)
-            context?.let { binding.emptyIconView.setColorFilter(ContextCompat.getColor(it, R.color.gray_400), android.graphics.PorterDuff.Mode.MULTIPLY) }
+            context?.let { binding.emptyIconView.setColorFilter(ContextCompat.getColor(it, R.color.text_dimmed), android.graphics.PorterDuff.Mode.MULTIPLY) }
             if (taskFilterHelper.howMany(classType) > 0) {
                 when (this.classType) {
                     Task.TYPE_HABIT -> {
@@ -366,7 +366,7 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
     private fun scoreTask(task: Task, direction: TaskDirection) {
         compositeSubscription.add(taskRepository.taskChecked(user, task, direction == TaskDirection.UP, false) { result ->
             handleTaskResult(result, task.value.toInt())
-        }.subscribeWithErrorHandler(Consumer {}))
+        }.subscribeWithErrorHandler({}))
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -382,7 +382,7 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
         compositeSubscription.add(userRepository.retrieveUser(true, true)
                 .doOnTerminate {
                     binding.refreshLayout.isRefreshing = false
-                }.subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+                }.subscribe({ }, RxErrorHandler.handleEmptyError()))
     }
 
     override fun onResume() {
@@ -397,7 +397,7 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
         setEmptyLabels()
 
         if (activeFilter == Task.FILTER_COMPLETED) {
-            compositeSubscription.add(taskRepository.retrieveCompletedTodos(userID).subscribe(Consumer {}, RxErrorHandler.handleEmptyError()))
+            compositeSubscription.add(taskRepository.retrieveCompletedTodos(userID).subscribe({}, RxErrorHandler.handleEmptyError()))
         }
     }
 

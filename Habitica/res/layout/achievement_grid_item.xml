@@ -8,13 +8,13 @@
     android:gravity="center_vertical"
     android:paddingTop="13dp"
     android:paddingBottom="13dp"
-    tools:background="@color/white">
+    tools:background="?attr/colorContentBackground">
     <LinearLayout
         android:id="@+id/achievement_container"
         android:layout_width="156dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@drawable/layout_rounded_bg_gray_700"
+        android:background="@drawable/layout_rounded_bg_window"
         android:clipChildren="true"
         android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true"
@@ -37,8 +37,8 @@
             android:minHeight="40dp"
             style="@style/Body1"
             android:gravity="center"
-            android:textColor="@color/gray_100"
-            android:background="@color/gray_600"
+            android:textColor="@color/text_secondary"
+            android:background="@color/offset_background"
             android:paddingStart="@dimen/spacing_medium"
             android:paddingEnd="@dimen/spacing_medium"
             android:paddingTop="@dimen/spacing_small"

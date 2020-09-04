@@ -7,6 +7,7 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.habitrpg.android.habitica.R
@@ -43,10 +44,10 @@ class GuildFragment : BaseMainFragment() {
         super.onViewCreated(view, savedInstanceState)
         resetViews()
 
-        viewModel = ViewModelProviders.of(this).get(GroupViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(GroupViewModel::class.java)
         viewModel.groupViewType = GroupViewType.GUILD
-        viewModel.getGroupData().observe(viewLifecycleOwner, Observer { setGroup(it) })
-        viewModel.getIsMemberData().observe(viewLifecycleOwner, Observer { activity?.invalidateOptionsMenu() })
+        viewModel.getGroupData().observe(viewLifecycleOwner, { setGroup(it) })
+        viewModel.getIsMemberData().observe(viewLifecycleOwner, { activity?.invalidateOptionsMenu() })
 
         arguments?.let {
             val args = GuildFragmentArgs.fromBundle(it)
@@ -133,7 +134,6 @@ class GuildFragment : BaseMainFragment() {
         viewPager?.adapter = object : FragmentPagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
             override fun getItem(position: Int): Fragment {
-
                 val fragment: Fragment?
 
                 when (position) {

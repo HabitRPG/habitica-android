@@ -76,7 +76,7 @@ class PushNotificationsPreferencesFragment : BasePreferencesFragment(), SharedPr
             else -> null
         }
         if (pathKey != null) {
-            compositeSubscription.add(userRepository.updateUser(user, "preferences.pushNotifications.$pathKey", sharedPreferences.getBoolean(key, false)).subscribe(Consumer {  }, RxErrorHandler.handleEmptyError()))
+            compositeSubscription.add(userRepository.updateUser(user, "preferences.pushNotifications.$pathKey", sharedPreferences.getBoolean(key, false)).subscribe({  }, RxErrorHandler.handleEmptyError()))
         }
     }
 }

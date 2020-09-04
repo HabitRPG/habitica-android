@@ -81,7 +81,7 @@ open class DragLinearLayout @JvmOverloads constructor(context: Context, attrs: A
         /**
          * If non-null, a reference to an on-going position animation.
          */
-        internal var swapAnimation: ValueAnimator? = null
+        var swapAnimation: ValueAnimator? = null
 
         fun endExistingAnimation() {
             swapAnimation?.end()
@@ -103,18 +103,18 @@ open class DragLinearLayout @JvmOverloads constructor(context: Context, attrs: A
      *  * if gesture ends without drag, or settling finishes, #stopDetecting - #detecting == false
      */
     private inner class DragItem {
-        internal var view: View? = null
+        var view: View? = null
         private var startVisibility: Int = 0
-        internal var viewDrawable: BitmapDrawable? = null
-        internal var position: Int = 0
-        internal var startTop: Int = 0
-        internal var height: Int = 0
-        internal var totalDragOffset: Int = 0
-        internal var targetTopOffset: Int = 0
-        internal var settleAnimation: ValueAnimator? = null
+        var viewDrawable: BitmapDrawable? = null
+        var position: Int = 0
+        var startTop: Int = 0
+        var height: Int = 0
+        var totalDragOffset: Int = 0
+        var targetTopOffset: Int = 0
+        var settleAnimation: ValueAnimator? = null
 
-        internal var detecting: Boolean = false
-        internal var dragging: Boolean = false
+        var detecting: Boolean = false
+        var dragging: Boolean = false
 
         init {
             stopDetecting()
