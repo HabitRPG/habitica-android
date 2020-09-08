@@ -10,16 +10,15 @@ import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.ui.helpers.bindView
-
 class AvatarCategoryView(context: Context, attrs: AttributeSet?) : LinearLayout(context, attrs) {
 
     private val icon: Drawable?
-    private val textView: TextView by bindView(R.id.text_view)
+    private val textView: TextView
 
     init {
         View.inflate(context, R.layout.avatar_category, this)
 
+        textView = findViewById(com.habitrpg.android.habitica.R.id.text_view)
         val a = context.theme.obtainStyledAttributes(
                 attrs,
                 R.styleable.AvatarCategoryView,

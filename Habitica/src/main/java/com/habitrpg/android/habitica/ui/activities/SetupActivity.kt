@@ -24,13 +24,13 @@ import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
+import com.habitrpg.android.habitica.databinding.ActivitySetupBinding
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.fragments.setup.AvatarSetupFragment
 import com.habitrpg.android.habitica.ui.fragments.setup.TaskSetupFragment
 import com.habitrpg.android.habitica.ui.fragments.setup.WelcomeFragment
-import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.views.FadingViewPager
 import com.viewpagerindicator.IconPageIndicator
 import com.viewpagerindicator.IconPagerAdapter
@@ -40,6 +40,8 @@ import java.util.*
 import javax.inject.Inject
 
 class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
+
+    private lateinit var binding: ActivitySetupBinding
 
     @Inject
     lateinit var apiClient: ApiClient
@@ -52,11 +54,6 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
     @Inject
     lateinit var taskRepository: TaskRepository
 
-    private val pager: FadingViewPager by bindView(R.id.viewPager)
-    private val nextButton: Button by bindView(R.id.nextButton)
-    private val previousButton: Button by bindView(R.id.previousButton)
-    private val indicator: IconPageIndicator by bindView(R.id.view_pager_indicator)
-
     internal var welcomeFragment: WelcomeFragment? = null
     internal var avatarSetupFragment: AvatarSetupFragment? = null
     internal var taskSetupFragment: TaskSetupFragment? = null
@@ -65,10 +62,15 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
     private var createdTasks = false
 
     private val isLastPage: Boolean
-        get() = this.pager.adapter == null || this.pager.currentItem == (this.pager.adapter?.count ?: 0) - 1
+        get() = binding.viewPager.adapter == null || binding.viewPager.currentItem == (binding.viewPager.adapter?.count ?: 0) - 1
 
     override fun getLayoutResId(): Int {
         return R.layout.activity_setup
+    }
+
+    override fun getContentView(): View {
+        binding = ActivitySetupBinding.inflate(layoutInflater)
+        return binding.root
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -96,10 +98,10 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
             window.statusBarColor = ContextCompat.getColor(this, R.color.days_gray)
         }
 
-        pager.disableFading = true
+        binding.viewPager.disableFading = true
 
-        previousButton.setOnClickListener { previousClicked() }
-        nextButton.setOnClickListener { nextClicked() }
+        binding.previousButton.setOnClickListener { previousClicked() }
+        binding.nextButton.setOnClickListener { nextClicked() }
     }
 
     override fun injectActivity(component: UserComponent?) {
@@ -114,10 +116,10 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
     private fun setupViewpager() {
         val fragmentManager = supportFragmentManager
 
-        pager.adapter = ViewPageAdapter(fragmentManager)
+        binding.viewPager.adapter = ViewPageAdapter(fragmentManager)
 
-        pager.addOnPageChangeListener(this)
-        indicator.setViewPager(pager)
+        binding.viewPager.addOnPageChangeListener(this)
+        binding.viewPagerIndicator.setViewPager(binding.viewPager)
     }
 
     private fun nextClicked() {
@@ -139,43 +141,43 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
             newTasks?.let {
                 this.taskRepository.createTasks(it).subscribe({ onUserReceived(user) }, RxErrorHandler.handleEmptyError())
             }
-        } else if (pager.currentItem == 0) {
+        } else if (binding.viewPager.currentItem == 0) {
 
             confirmNames(welcomeFragment?.displayName ?: "", welcomeFragment?.username ?: "")
 
             val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
             imm?.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
         }
-        this.pager.currentItem = this.pager.currentItem + 1
+        binding.viewPager.currentItem = binding.viewPager.currentItem + 1
     }
 
     private fun previousClicked() {
-        this.pager.currentItem = this.pager.currentItem - 1
+        binding.viewPager.currentItem = binding.viewPager.currentItem - 1
     }
 
     private fun setPreviousButtonEnabled(enabled: Boolean) {
         val leftDrawable: Drawable?
         if (enabled) {
-            previousButton.setText(R.string.action_back)
+            binding.previousButton.setText(R.string.action_back)
             leftDrawable = AppCompatResources.getDrawable(this, R.drawable.back_arrow_enabled)
         } else {
-            previousButton.text = null
+            binding.previousButton.text = null
             leftDrawable = AppCompatResources.getDrawable(this, R.drawable.back_arrow_disabled)
         }
-        previousButton.setCompoundDrawablesWithIntrinsicBounds(leftDrawable, null, null, null)
+        binding.previousButton.setCompoundDrawablesWithIntrinsicBounds(leftDrawable, null, null, null)
     }
 
     private fun setNextButtonEnabled(enabled: Boolean) {
-        nextButton.isEnabled = enabled
+        binding.nextButton.isEnabled = enabled
         val rightDrawable = AppCompatResources.getDrawable(this, R.drawable.forward_arrow_enabled)
         if (enabled) {
-            nextButton.setTextColor(ContextCompat.getColor(this, R.color.white))
+            binding.nextButton.setTextColor(ContextCompat.getColor(this, R.color.white))
             rightDrawable?.alpha = 255
         } else {
-            nextButton.setTextColor(ContextCompat.getColor(this, R.color.white_50_alpha))
+            binding.nextButton.setTextColor(ContextCompat.getColor(this, R.color.white_50_alpha))
             rightDrawable?.alpha = 127
         }
-        nextButton.setCompoundDrawablesWithIntrinsicBounds(null, null, rightDrawable, null)
+        binding.nextButton.setCompoundDrawablesWithIntrinsicBounds(null, null, rightDrawable, null)
     }
 
     override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) = Unit
@@ -184,15 +186,15 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
         when {
             position == 0 -> {
                 this.setPreviousButtonEnabled(false)
-                this.nextButton.text = this.getString(R.string.next_button)
+                binding.nextButton.text = this.getString(R.string.next_button)
             }
             isLastPage -> {
                 this.setPreviousButtonEnabled(true)
-                this.nextButton.text = this.getString(R.string.intro_finish_button)
+                binding.nextButton.text = this.getString(R.string.intro_finish_button)
             }
             else -> {
                 this.setPreviousButtonEnabled(true)
-                this.nextButton.text = this.getString(R.string.next_button)
+                binding.nextButton.text = this.getString(R.string.next_button)
             }
         }
     }
@@ -214,7 +216,7 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
             return
         }
         this.user = user
-        if (pager.adapter == null) {
+        if (binding.viewPager.adapter == null) {
             setupViewpager()
         }
         avatarSetupFragment?.setUser(user)
@@ -242,7 +244,7 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
                     val fragment = AvatarSetupFragment()
                     fragment.activity = this@SetupActivity
                     fragment.setUser(user)
-                    fragment.width = pager.width
+                    fragment.width = binding.viewPager.width
                     avatarSetupFragment = fragment
                     fragment
                 }
@@ -270,7 +272,7 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
                     avatarSetupFragment = item
                     item.activity = this@SetupActivity
                     item.setUser(user)
-                    item.width = pager.width
+                    item.width = binding.viewPager.width
                 }
                 is TaskSetupFragment -> {
                     taskSetupFragment = item

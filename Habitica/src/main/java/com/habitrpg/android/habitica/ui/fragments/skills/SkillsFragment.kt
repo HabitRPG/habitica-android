@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments.skills
 
 import android.app.Activity
-import android.app.ProgressDialog
 import android.content.Intent
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
@@ -11,6 +10,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
+import com.habitrpg.android.habitica.databinding.FragmentSkillsBinding
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.Skill
@@ -21,24 +21,26 @@ import com.habitrpg.android.habitica.ui.activities.SkillTasksActivity
 import com.habitrpg.android.habitica.ui.adapter.SkillsRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
-import com.habitrpg.android.habitica.ui.helpers.resetViews
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.Companion.showSnackbar
 import io.reactivex.Flowable
 import io.reactivex.Observable
-import io.reactivex.functions.Consumer
-import kotlinx.android.synthetic.main.fragment_skills.*
 
-class SkillsFragment : BaseMainFragment() {
+class SkillsFragment : BaseMainFragment<FragmentSkillsBinding>() {
 
     private val TASK_SELECTION_ACTIVITY = 10
     private val MEMBER_SELECTION_ACTIVITY = 11
 
     internal var adapter: SkillsRecyclerViewAdapter? = null
     private var selectedSkill: Skill? = null
-    @Suppress("DEPRECATION")
-    private var progressDialog: ProgressDialog? = null
+
+
+    override var binding: FragmentSkillsBinding? = null
+
+    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentSkillsBinding {
+        return FragmentSkillsBinding.inflate(inflater, container, false)
+    }
 
     override var user: User? = null
         set(value) {
@@ -47,15 +49,13 @@ class SkillsFragment : BaseMainFragment() {
         }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        super.onCreateView(inflater, container, savedInstanceState)
         adapter = SkillsRecyclerViewAdapter()
-        adapter?.useSkillEvents?.subscribeWithErrorHandler({ onSkillSelected(it) })?.let { compositeSubscription.add(it) }
+        adapter?.useSkillEvents?.subscribeWithErrorHandler { onSkillSelected(it) }?.let { compositeSubscription.add(it) }
         checkUserLoadSkills()
 
         this.tutorialStepIdentifier = "skills"
         this.tutorialText = getString(R.string.tutorial_skills)
-
-        return inflater.inflate(R.layout.fragment_skills, container, false)
+        return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     override fun injectFragment(component: UserComponent) {
@@ -65,11 +65,9 @@ class SkillsFragment : BaseMainFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        resetViews()
-
-        recyclerView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(activity)
-        recyclerView.adapter = adapter
-        recyclerView.itemAnimator = SafeDefaultItemAnimator()
+        binding?.recyclerView?.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(activity)
+        binding?.recyclerView?.adapter = adapter
+        binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
     }
 
     private fun checkUserLoadSkills() {

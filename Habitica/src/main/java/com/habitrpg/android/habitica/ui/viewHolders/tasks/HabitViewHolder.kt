@@ -11,16 +11,15 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.isUsingNightModeResources
 import com.habitrpg.android.habitica.models.responses.TaskDirection
 import com.habitrpg.android.habitica.models.tasks.Task
-import com.habitrpg.android.habitica.ui.helpers.bindView
 
 class HabitViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> Unit), openTaskFunc: ((Task) -> Unit), brokenTaskFunc: ((Task) -> Unit)) : BaseTaskViewHolder(itemView, scoreTaskFunc, openTaskFunc, brokenTaskFunc) {
 
-    private val btnPlusWrapper: FrameLayout by bindView(itemView, R.id.btnPlusWrapper)
-    private val btnPlusIconView: ImageView by bindView(itemView, R.id.btnPlusIconView)
-    private val btnPlus: Button by bindView(itemView, R.id.btnPlus)
-    private val btnMinusWrapper: FrameLayout by bindView(itemView, R.id.btnMinusWrapper)
-    private val btnMinusIconView: ImageView by bindView(itemView, R.id.btnMinusIconView)
-    private val btnMinus: Button by bindView(itemView, R.id.btnMinus)
+    private val btnPlusWrapper: FrameLayout = itemView.findViewById(R.id.btnPlusWrapper)
+    private val btnPlusIconView: ImageView = itemView.findViewById(R.id.btnPlusIconView)
+    private val btnPlus: Button = itemView.findViewById(R.id.btnPlus)
+    private val btnMinusWrapper: FrameLayout = itemView.findViewById(R.id.btnMinusWrapper)
+    private val btnMinusIconView: ImageView = itemView.findViewById(R.id.btnMinusIconView)
+    private val btnMinus: Button = itemView.findViewById(R.id.btnMinus)
 
     init {
         btnPlus.setOnClickListener { onPlusButtonClicked() }

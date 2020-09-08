@@ -64,6 +64,7 @@
                     android:layout_height="wrap_content"
                     app:boxStrokeColor="?attr/colorPrimary"
                     android:backgroundTint="?attr/colorPrimary"
+                    android:layout_marginTop="@dimen/spacing_large"
                     android:alpha="0.75">
                     <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/notes_edit_text"
@@ -97,7 +98,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
                 <TextView
-                    android:id="@+id/reward_value_title"
+                    android:id="@+id/reward_value_title_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/cost"
@@ -107,7 +108,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="56dp" />
                 <TextView
-                    android:id="@+id/checklist_title"
+                    android:id="@+id/checklist_title_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/checklist"
@@ -117,7 +118,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
                 <TextView
-                    android:id="@+id/task_difficulty_title"
+                    android:id="@+id/task_difficulty_title_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/difficulty"
@@ -127,7 +128,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
                 <TextView
-                    android:id="@+id/habit_reset_streak_title"
+                    android:id="@+id/habit_reset_streak_title_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/reset_streak"
@@ -137,17 +138,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
                 <TextView
-                    android:id="@+id/scheduling_title"
+                    android:id="@+id/scheduling_title_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/scheduling"
                     style="@style/TaskFormSectionheader"/>
                 <com.habitrpg.android.habitica.ui.views.tasks.form.TaskSchedulingControls
-                    android:id="@+id/scheduling_controls"
+                    android:id="@+id/task_scheduling_controls"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
                 <TextView
-                    android:id="@+id/adjust_streak_title"
+                    android:id="@+id/adjust_streak_title_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/adjust_streak"
@@ -162,7 +163,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1">
                         <androidx.appcompat.widget.AppCompatEditText
-                            android:id="@+id/habit_adjust_positive_streak"
+                            android:id="@+id/habit_adjust_positive_streak_view"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="@string/positive_habit_form"
@@ -177,7 +178,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1">
                         <androidx.appcompat.widget.AppCompatEditText
-                            android:id="@+id/habit_adjust_negative_streak"
+                            android:id="@+id/habit_adjust_negative_streak_view"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="@string/negative_habit_form"
@@ -186,7 +187,7 @@
                 </LinearLayout>
 
                 <TextView
-                    android:id="@+id/reminders_title"
+                    android:id="@+id/reminders_title_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/reminders"
@@ -247,7 +248,7 @@
                     </LinearLayout>
                 </LinearLayout>
                 <TextView
-                    android:id="@+id/tags_title"
+                    android:id="@+id/tags_title_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/tags"

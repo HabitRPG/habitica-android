@@ -118,12 +118,6 @@ class AvatarWithBarsViewModel(private val context: Context, private val binding:
         binding.currencyView.gems = gems.toDouble()
     }
 
-    fun valueBarLabelsToBlack() {
-        binding.hpBar.setLightBackground(true)
-        binding.xpBar.setLightBackground(true)
-        binding.mpBar.setLightBackground(true)
-    }
-
     companion object {
         private fun setUserLevel(context: Context, textView: TextView, level: Int?) {
             textView.text = context.getString(R.string.user_level, level)

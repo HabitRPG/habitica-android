@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
@@ -16,7 +17,6 @@ import io.noties.markwon.utils.NoCopySpannableFactory
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Action
-import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -29,21 +29,21 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
     var movingFromPosition: Int? = null
     var errorButtonClicked: Action? = null
     protected var context: Context
-    private val mainTaskWrapper: ViewGroup by bindView(itemView, R.id.main_task_wrapper)
-    private val titleTextView: EllipsisTextView by bindView(itemView, R.id.checkedTextView)
-    private val notesTextView: EllipsisTextView? by bindView(itemView, R.id.notesTextView)
-    protected val calendarIconView: ImageView? by bindView(itemView, R.id.iconViewCalendar)
-    protected val specialTaskTextView: TextView? by bindOptionalView(itemView, R.id.specialTaskText)
-    private val iconViewChallenge: ImageView? by bindView(itemView, R.id.iconviewChallenge)
-    private val iconViewReminder: ImageView? by bindOptionalView(itemView, R.id.iconviewReminder)
-    private val taskIconWrapper: LinearLayout? by bindView(itemView, R.id.taskIconWrapper)
-    private val approvalRequiredTextView: TextView? by bindView(itemView, R.id.approvalRequiredTextField)
-    private val expandNotesButton: Button? by bindOptionalView(R.id.expand_notes_button)
-    private val syncingView: ProgressBar? by bindOptionalView(R.id.syncing_view)
-    private val errorIconView: ImageButton? by bindOptionalView(R.id.error_icon)
-    protected val taskGray: Int by bindColor(itemView.context, R.color.offset_background)
-    protected val streakTextView: TextView by bindView(itemView, R.id.streakTextView)
-    protected val reminderTextView: TextView by bindView(itemView, R.id.reminder_textview)
+    private val mainTaskWrapper: ViewGroup = itemView.findViewById(R.id.main_task_wrapper)
+    private val titleTextView: EllipsisTextView = itemView.findViewById(R.id.checkedTextView)
+    private val notesTextView: EllipsisTextView? = itemView.findViewById(R.id.notesTextView)
+    protected val calendarIconView: ImageView? = itemView.findViewById(R.id.iconViewCalendar)
+    protected val specialTaskTextView: TextView? = itemView.findViewById(R.id.specialTaskText)
+    private val iconViewChallenge: ImageView? = itemView.findViewById(R.id.iconviewChallenge)
+    private val iconViewReminder: ImageView? = itemView.findViewById(R.id.iconviewReminder)
+    private val taskIconWrapper: LinearLayout? = itemView.findViewById(R.id.taskIconWrapper)
+    private val approvalRequiredTextView: TextView? = itemView.findViewById(R.id.approvalRequiredTextField)
+    private val expandNotesButton: Button? = itemView.findViewById(R.id.expand_notes_button)
+    private val syncingView: ProgressBar? = itemView.findViewById(R.id.syncing_view)
+    private val errorIconView: ImageButton? = itemView.findViewById(R.id.error_icon)
+    protected val taskGray: Int = ContextCompat.getColor(itemView.context, R.color.offset_background)
+    protected val streakTextView: TextView = itemView.findViewById(R.id.streakTextView)
+    protected val reminderTextView: TextView = itemView.findViewById(R.id.reminder_textview)
 
     private var openTaskDisabled: Boolean = false
     private var taskActionsDisabled: Boolean = false
@@ -93,8 +93,8 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
         notesTextView?.addEllipsesListener(object : EllipsisTextView.EllipsisListener {
             override fun ellipsisStateChanged(ellipses: Boolean) {
                 GlobalScope.launch(Dispatchers.Main.immediate) {
-                    if (ellipses && notesTextView?.maxLines != 3) {
-                        notesTextView?.maxLines = 3
+                    if (ellipses && notesTextView.maxLines != 3) {
+                        notesTextView.maxLines = 3
                     }
                     expandNotesButton?.visibility = if (ellipses || notesExpanded) View.VISIBLE else View.GONE
                 }

@@ -14,7 +14,6 @@ import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.inventory.*
 import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.ui.fragments.inventory.stable.StableFragmentDirections
-import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.helpers.loadImage
 import com.habitrpg.android.habitica.ui.viewHolders.MountViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.PetViewHolder
@@ -136,9 +135,9 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     internal inner class StableViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
         private var animal: Animal? = null
 
-        private val imageView: SimpleDraweeView by bindView(itemView, R.id.imageView)
-        private val titleView: TextView by bindView(itemView, R.id.titleTextView)
-        private val ownedTextView: TextView by bindView(itemView, R.id.ownedTextView)
+        private val imageView: SimpleDraweeView = itemView.findViewById(R.id.imageView)
+        private val titleView: TextView = itemView.findViewById(R.id.titleTextView)
+        private val ownedTextView: TextView = itemView.findViewById(R.id.ownedTextView)
 
         init {
             itemView.setOnClickListener(this)

@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
+import com.habitrpg.android.habitica.databinding.FragmentRecyclerviewBinding
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.responses.UnlockResponse
@@ -17,14 +18,18 @@ import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.helpers.MarginDecoration
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import io.reactivex.Flowable
-import io.reactivex.functions.Consumer
-import kotlinx.android.synthetic.main.fragment_recyclerview.*
 import javax.inject.Inject
 
-class AvatarEquipmentFragment : BaseMainFragment() {
+class AvatarEquipmentFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
 
     @Inject
     lateinit var inventoryRepository: InventoryRepository
+
+    override var binding: FragmentRecyclerviewBinding? = null
+
+    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentRecyclerviewBinding {
+        return FragmentRecyclerviewBinding.inflate(inflater, container, false)
+    }
 
     var type: String? = null
     var category: String? = null
@@ -35,9 +40,6 @@ class AvatarEquipmentFragment : BaseMainFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        super.onCreateView(inflater, container, savedInstanceState)
-        val view = inflater.inflate(R.layout.fragment_recyclerview, container, false)
-
         compositeSubscription.add(adapter.getSelectCustomizationEvents()
                 .flatMap { equipment ->
                     val key = (if (equipment.key?.isNotBlank() != true) activeEquipment else equipment.key) ?: ""
@@ -50,7 +52,7 @@ class AvatarEquipmentFragment : BaseMainFragment() {
                 }
                 .subscribe({ }, RxErrorHandler.handleEmptyError()))
         compositeSubscription.add(adapter.getUnlockSetEvents()
-                .flatMap<UnlockResponse> { set ->
+                .flatMap { set ->
                     val user = this.user
                     if (user != null) {
                         userRepository.unlockPath(user, set)
@@ -59,7 +61,7 @@ class AvatarEquipmentFragment : BaseMainFragment() {
                     }
                 }
                 .subscribe({ }, RxErrorHandler.handleEmptyError()))
-        return view
+        return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -84,16 +86,16 @@ class AvatarEquipmentFragment : BaseMainFragment() {
                 }
             }
         }
-        recyclerView.layoutManager = layoutManager
-        recyclerView.addItemDecoration(MarginDecoration(context))
+        binding?.recyclerView?.layoutManager = layoutManager
+        binding?.recyclerView?.addItemDecoration(MarginDecoration(context))
 
-        recyclerView.adapter = adapter
-        recyclerView.itemAnimator = SafeDefaultItemAnimator()
+        binding?.recyclerView?.adapter = adapter
+        binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
         this.loadEquipment()
 
-        compositeSubscription.add(userRepository.getUser().subscribeWithErrorHandler({
+        compositeSubscription.add(userRepository.getUser().subscribeWithErrorHandler {
             updateUser(it)
-        }))
+        })
     }
 
     override fun injectFragment(component: UserComponent) {
@@ -102,9 +104,9 @@ class AvatarEquipmentFragment : BaseMainFragment() {
 
     private fun loadEquipment() {
         val type = this.type ?: return
-        inventoryRepository.getEquipmentType(type, category ?: "").subscribe({
+        compositeSubscription.add(inventoryRepository.getEquipmentType(type, category ?: "").subscribe({
             adapter.setEquipment(it)
-        }, RxErrorHandler.handleEmptyError())
+        }, RxErrorHandler.handleEmptyError()))
     }
 
     private fun setGridSpanCount(width: Int) {

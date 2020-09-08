@@ -19,22 +19,20 @@ import com.habitrpg.android.habitica.models.responses.TaskDirection
 import com.habitrpg.android.habitica.models.tasks.ChecklistItem
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
-import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.views.HabiticaEmojiTextView
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
 
 abstract class ChecklistedViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> Unit), var scoreChecklistItemFunc: ((Task, ChecklistItem) -> Unit), openTaskFunc: ((Task) -> Unit), brokenTaskFunc: ((Task) -> Unit)) : BaseTaskViewHolder(itemView, scoreTaskFunc, openTaskFunc, brokenTaskFunc), CompoundButton.OnCheckedChangeListener {
 
-    private val checkboxHolder: ViewGroup by bindView(itemView, R.id.checkBoxHolder)
-    internal val checkbox: CheckBox by bindView(itemView, R.id.checkBox)
-    internal val checklistView: LinearLayout by bindView(itemView, R.id.checklistView)
-    internal val checklistIndicatorWrapper: ViewGroup by bindView(itemView, R.id.checklistIndicatorWrapper)
-    private val checklistCompletedTextView: TextView by bindView(itemView, R.id.checkListCompletedTextView)
-    private val checklistAllTextView: TextView by bindView(itemView, R.id.checkListAllTextView)
-    private val checklistDivider: View by bindView(itemView, R.id.checklistDivider)
+    private val checkboxHolder: ViewGroup = itemView.findViewById(R.id.checkBoxHolder)
+    internal val checkbox: CheckBox = itemView.findViewById(R.id.checkBox)
+    internal val checklistView: LinearLayout = itemView.findViewById(R.id.checklistView)
+    internal val checklistIndicatorWrapper: ViewGroup = itemView.findViewById(R.id.checklistIndicatorWrapper)
+    private val checklistCompletedTextView: TextView = itemView.findViewById(R.id.checkListCompletedTextView)
+    private val checklistAllTextView: TextView = itemView.findViewById(R.id.checkListAllTextView)
+    private val checklistDivider: View = itemView.findViewById(R.id.checklistDivider)
 
     init {
         checklistIndicatorWrapper.isClickable = true

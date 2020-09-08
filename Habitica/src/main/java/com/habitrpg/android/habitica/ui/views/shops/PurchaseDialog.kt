@@ -24,7 +24,6 @@ import com.habitrpg.android.habitica.models.shops.Shop
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.User
-import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.views.CurrencyView
 import com.habitrpg.android.habitica.ui.views.CurrencyViews
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
@@ -57,13 +56,13 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
     private val customHeader: View by lazy {
         LayoutInflater.from(context).inflate(R.layout.dialog_purchase_shopitem_header, null)
     }
-    private val currencyView: CurrencyViews by bindView(customHeader, R.id.currencyView)
-    private val limitedTextView: TextView by bindView(customHeader, R.id.limitedTextView)
+    private val currencyView: CurrencyViews
+    private val limitedTextView: TextView
     private val buyButton: View
     private val priceLabel: CurrencyView
     private val buyLabel: TextView
     private var amountErrorLabel: TextView? = null
-    private val pinButton: Button by bindView(customHeader, R.id.pin_button)
+    private val pinButton: Button
 
     private var purchaseQuantity = 1
 
@@ -189,6 +188,9 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
         forceScrollableLayout = true
 
         setCustomHeaderView(customHeader)
+        currencyView = customHeader.findViewById(R.id.currencyView)
+        limitedTextView = customHeader.findViewById(R.id.limitedTextView)
+        pinButton = customHeader.findViewById(R.id.pin_button)
 
         addCloseButton()
         buyButton = addButton(layoutInflater.inflate(R.layout.dialog_purchase_shopitem_button, null), autoDismiss = false) { _, _ ->
@@ -224,7 +226,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
                 limitedTextView.setBackgroundColor(ContextCompat.getColor(context, R.color.green_10))
             }
             val gemContent = additionalContentView as? PurchaseDialogGemsContent
-            gemContent?.stepperView?.maxValue = (user.purchased?.plan?.numberOfGemsLeft() ?: 1).toDouble()
+            gemContent?.binding?.stepperView?.maxValue = (user.purchased?.plan?.numberOfGemsLeft() ?: 1).toDouble()
         }
 
         buyButton.elevation = 0f

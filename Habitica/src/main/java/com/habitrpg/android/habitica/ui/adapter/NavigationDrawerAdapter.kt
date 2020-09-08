@@ -9,7 +9,6 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.models.promotions.HabiticaPromotion
-import com.habitrpg.android.habitica.ui.helpers.bindOptionalView
 import com.habitrpg.android.habitica.ui.menu.HabiticaDrawerItem
 import com.habitrpg.android.habitica.ui.viewHolders.GiftOneGetOnePromoMenuView
 import com.habitrpg.android.habitica.ui.views.adventureGuide.AdventureGuideMenuBanner
@@ -154,10 +153,10 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int): Recycle
         var tintColor: Int = 0
         var backgroundTintColor: Int = 0
 
-        private val titleTextView: TextView? by bindOptionalView(itemView, R.id.titleTextView)
-        private val pillView: TextView? by bindOptionalView(itemView, R.id.pillView)
-        private val bubbleView: View? by bindOptionalView(itemView, R.id.bubble_view)
-        private val additionalInfoView: TextView? by bindOptionalView(itemView, R.id.additionalInfoView)
+        private val titleTextView: TextView? = itemView.findViewById(R.id.titleTextView)
+        private val pillView: TextView? = itemView.findViewById(R.id.pillView)
+        private val bubbleView: View? = itemView.findViewById(R.id.bubble_view)
+        private val additionalInfoView: TextView? = itemView.findViewById(R.id.additionalInfoView)
 
         fun bind(drawerItem: HabiticaDrawerItem, isSelected: Boolean) {
             titleTextView?.text = drawerItem.text

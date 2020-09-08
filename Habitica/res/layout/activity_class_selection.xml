@@ -137,7 +137,7 @@
             </LinearLayout>
         </LinearLayout>
         <LinearLayout
-            android:id="@+id/selected_wrapper"
+            android:id="@+id/selected_wrapper_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1.7"
@@ -156,7 +156,7 @@
                 android:rotation="90"
                 android:src="@drawable/class_selection_inset_arrow"/>
             <TextView
-                android:id="@+id/selected_title_textview"
+                android:id="@+id/selected_title_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="Healer"
@@ -167,7 +167,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1">
                 <TextView
-                    android:id="@+id/selected_description_textview"
+                    android:id="@+id/selected_description_text_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     tools:text="@string/healer_description"

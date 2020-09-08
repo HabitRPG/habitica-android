@@ -8,7 +8,6 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.user.User
-import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.viewHolders.ChatRecyclerViewHolder
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
@@ -105,7 +104,7 @@ class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUp
 }
 
 class SystemChatMessageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    private val textView: TextView by bindView(R.id.text_view)
+    private val textView: TextView = itemView.findViewById(R.id.text_view)
 
     fun bind(chatMessage: ChatMessage?) {
         textView.text = chatMessage?.text?.removePrefix("`")?.removeSuffix("`")

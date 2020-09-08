@@ -8,16 +8,24 @@ import androidx.lifecycle.ViewModelProvider
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
+import com.habitrpg.android.habitica.databinding.FragmentPartyInviteBinding
+import com.habitrpg.android.habitica.databinding.FragmentViewpagerBinding
+import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.viewmodels.GroupViewModel
 import com.habitrpg.android.habitica.ui.viewmodels.GroupViewType
-import kotlinx.android.synthetic.main.fragment_viewpager.*
 import javax.inject.Inject
 
-class TavernFragment : BaseMainFragment() {
+class TavernFragment : BaseMainFragment<FragmentViewpagerBinding>() {
 
     @Inject
     lateinit var socialRepository: SocialRepository
+
+    override var binding: FragmentViewpagerBinding? = null
+
+    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentViewpagerBinding {
+        return FragmentViewpagerBinding.inflate(inflater, container, false)
+    }
 
     internal lateinit var viewModel: GroupViewModel
 
@@ -28,12 +36,10 @@ class TavernFragment : BaseMainFragment() {
                               savedInstanceState: Bundle?): View? {
         this.usesTabLayout = true
         this.hidesToolbar = true
-        super.onCreateView(inflater, container, savedInstanceState)
-        val v = inflater.inflate(R.layout.fragment_viewpager, container, false)
         this.tutorialStepIdentifier = "tavern"
         this.tutorialText = getString(R.string.tutorial_tavern)
 
-        return v
+        return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -41,10 +47,11 @@ class TavernFragment : BaseMainFragment() {
 
         viewModel = ViewModelProvider(this).get(GroupViewModel::class.java)
         viewModel.groupViewType = GroupViewType.TAVERN
+        viewModel.setGroupID(Group.TAVERN_ID)
         viewModel.getIsMemberData().observe(viewLifecycleOwner, { activity?.invalidateOptionsMenu() })
 
         setViewPagerAdapter()
-        viewPager.currentItem = 0
+        binding?.viewPager?.currentItem = 0
     }
 
     override fun onDestroy() {
@@ -78,7 +85,7 @@ class TavernFragment : BaseMainFragment() {
             return
         }
 
-        viewPager.adapter = object : FragmentPagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+        binding?.viewPager?.adapter = object : FragmentPagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
             override fun getItem(position: Int): Fragment {
                 return when (position) {
                     0 -> {
@@ -108,7 +115,7 @@ class TavernFragment : BaseMainFragment() {
                 }
             }
         }
-        tabLayout?.setupWithViewPager(viewPager)
+        tabLayout?.setupWithViewPager(binding?.viewPager)
     }
 
 }

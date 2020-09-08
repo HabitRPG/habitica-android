@@ -6,35 +6,35 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
+import com.habitrpg.android.habitica.databinding.FragmentViewpagerBinding
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.ui.activities.GroupFormActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
-import com.habitrpg.android.habitica.ui.helpers.bindView
-import com.habitrpg.android.habitica.ui.helpers.resetViews
 import com.habitrpg.android.habitica.ui.viewmodels.GroupViewModel
 import com.habitrpg.android.habitica.ui.viewmodels.GroupViewType
 
-class GuildFragment : BaseMainFragment() {
+class GuildFragment : BaseMainFragment<FragmentViewpagerBinding>() {
 
-    private val viewPager: androidx.viewpager.widget.ViewPager? by bindView(R.id.viewPager)
     internal lateinit var viewModel: GroupViewModel
     private var guildInformationFragment: GuildDetailFragment? = null
     private var chatFragment: ChatFragment? = null
+
+    override var binding: FragmentViewpagerBinding? = null
+
+    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentViewpagerBinding {
+        return FragmentViewpagerBinding.inflate(inflater, container, false)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         this.usesTabLayout = true
         this.hidesToolbar = true
-        super.onCreateView(inflater, container, savedInstanceState)
-        return inflater.inflate(R.layout.fragment_viewpager, container, false)
+        return super.onCreateView(inflater, container, savedInstanceState)
     }
-
 
     override fun injectFragment(component: UserComponent) {
         component.inject(this)
@@ -42,7 +42,6 @@ class GuildFragment : BaseMainFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        resetViews()
 
         viewModel = ViewModelProvider(this).get(GroupViewModel::class.java)
         viewModel.groupViewType = GroupViewType.GUILD
@@ -54,14 +53,14 @@ class GuildFragment : BaseMainFragment() {
             viewModel.setGroupID(args.groupID)
         }
 
-        viewPager?.currentItem = 0
+        binding?.viewPager?.currentItem = 0
 
         setViewPagerAdapter()
         setFragments()
 
         arguments?.let {
             val args = GuildFragmentArgs.fromBundle(it)
-            viewPager?.currentItem = args.tabToOpen
+            binding?.viewPager?.currentItem = args.tabToOpen
         }
 
         if (viewModel.groupID == "f2db2a7f-13c5-454d-b3ee-ea1f5089e601") {
@@ -131,7 +130,7 @@ class GuildFragment : BaseMainFragment() {
     private fun setViewPagerAdapter() {
         val fragmentManager = childFragmentManager
 
-        viewPager?.adapter = object : FragmentPagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+        binding?.viewPager?.adapter = object : FragmentPagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
             override fun getItem(position: Int): Fragment {
                 val fragment: Fragment?
@@ -165,7 +164,7 @@ class GuildFragment : BaseMainFragment() {
             }
         }
 
-        viewPager?.addOnPageChangeListener(object : androidx.viewpager.widget.ViewPager.OnPageChangeListener {
+        binding?.viewPager?.addOnPageChangeListener(object : androidx.viewpager.widget.ViewPager.OnPageChangeListener {
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
                 if (position == 1) {
                     chatFragment?.setNavigatedToFragment()
@@ -181,7 +180,7 @@ class GuildFragment : BaseMainFragment() {
             override fun onPageScrollStateChanged(state: Int) { /* no-on */ }
         })
 
-        tabLayout?.setupWithViewPager(viewPager)
+        tabLayout?.setupWithViewPager(binding?.viewPager)
     }
 
     private fun displayEditForm() {

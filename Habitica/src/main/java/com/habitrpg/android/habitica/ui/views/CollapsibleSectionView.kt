@@ -7,30 +7,27 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.content.edit
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.databinding.ViewCollapsibleSectionBinding
 import com.habitrpg.android.habitica.extensions.getThemeColor
-import com.habitrpg.android.habitica.ui.helpers.bindView
+import com.habitrpg.android.habitica.extensions.layoutInflater
 
-class CollapsibleSectionView(context: Context?, attrs: AttributeSet?) : LinearLayout(context, attrs) {
-
-    private val separatorView: View by bindView(R.id.separator)
-    private val titleView: LinearLayout by bindView(R.id.title_view)
-    private val titleLabel: TextView by bindView(R.id.titleTextView)
-    private val caretView: ImageView by bindView(R.id.caretView)
-    val infoIconView: ImageView by bindView(R.id.infoIconView)
+class CollapsibleSectionView(context: Context, attrs: AttributeSet?) : LinearLayout(context, attrs) {
+    val infoIconView: ImageView
+    get() = binding.infoIconView
+    private val binding = ViewCollapsibleSectionBinding.inflate(context.layoutInflater, this)
     private var preferences: SharedPreferences? = null
-    private val padding = context?.resources?.getDimension(R.dimen.spacing_large)?.toInt() ?: 0
-    private val bottomPadding = context?.resources?.getDimension(R.dimen.collapsible_section_padding)?.toInt() ?: 0
+    private val padding = context.resources?.getDimension(R.dimen.spacing_large)?.toInt() ?: 0
+    private val bottomPadding = context.resources?.getDimension(R.dimen.collapsible_section_padding)?.toInt() ?: 0
 
     var title: CharSequence
     get() {
-        return titleLabel.text
+        return binding.titleTextView.text
     }
     set(value) {
-        titleLabel.text = value
+        binding.titleTextView.text = value
     }
 
     private var isCollapsed = false
@@ -53,17 +50,17 @@ class CollapsibleSectionView(context: Context?, attrs: AttributeSet?) : LinearLa
 
     var separatorColor: Int
     get() {
-        return (separatorView.background as? ColorDrawable)?.color ?: 0
+        return (binding.separator.background as? ColorDrawable)?.color ?: 0
     }
     set(value) {
-        separatorView.setBackgroundColor(value)
+        binding.separator.setBackgroundColor(value)
     }
 
     private fun showViews() {
         updatePreferences()
         setCaretImage()
         (2 until childCount)
-                .filter { getChildAt(it) != titleView }
+                .filter { getChildAt(it) != binding.titleView }
                 .forEach { getChildAt(it).visibility = View.VISIBLE }
     }
 
@@ -85,7 +82,7 @@ class CollapsibleSectionView(context: Context?, attrs: AttributeSet?) : LinearLa
     }
 
     private fun setCaretImage() {
-        caretView.setImageBitmap(HabiticaIconsHelper.imageOfCaret(caretColor, isCollapsed))
+        binding.caretView.setImageBitmap(HabiticaIconsHelper.imageOfCaret(caretColor, isCollapsed))
     }
 
     private fun setChildMargins() {
@@ -105,10 +102,10 @@ class CollapsibleSectionView(context: Context?, attrs: AttributeSet?) : LinearLa
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         var height = 0
-        measureChildWithMargins(separatorView, widthMeasureSpec, 0, heightMeasureSpec, height)
-        height += separatorView.measuredHeight
-        measureChildWithMargins(titleView, widthMeasureSpec, 0, heightMeasureSpec, height)
-        height += titleView.measuredHeight
+        measureChildWithMargins(binding.separator, widthMeasureSpec, 0, heightMeasureSpec, height)
+        height += binding.separator.measuredHeight
+        measureChildWithMargins(binding.titleTextView, widthMeasureSpec, 0, heightMeasureSpec, height)
+        height += binding.titleTextView.measuredHeight
         (2 until childCount)
                 .map { getChildAt(it) }
                 .forEach {
@@ -124,15 +121,12 @@ class CollapsibleSectionView(context: Context?, attrs: AttributeSet?) : LinearLa
     }
 
     init {
-        View.inflate(context, R.layout.view_collapsible_section, this)
-        context?.let {
-            caretColor = ContextCompat.getColor(it, R.color.black_50_alpha)
-        }
+        caretColor = ContextCompat.getColor(context, R.color.black_50_alpha)
         orientation = VERTICAL
-        titleView.setOnClickListener {
+        binding.titleTextView.setOnClickListener {
             isCollapsed = !isCollapsed
         }
-        val attributes = context?.theme?.obtainStyledAttributes(
+        val attributes = context.theme?.obtainStyledAttributes(
                 attrs,
                 R.styleable.CollapsibleSectionView,
                 0, 0)
@@ -142,13 +136,13 @@ class CollapsibleSectionView(context: Context?, attrs: AttributeSet?) : LinearLa
         val color = attributes?.getColor(R.styleable.CollapsibleSectionView_color, 0)
         if (color != null && color != 0) {
             caretColor = color
-            titleLabel.setTextColor(color)
+            binding.titleTextView.setTextColor(color)
         }
 
         if (attributes?.getBoolean(R.styleable.CollapsibleSectionView_hasAdditionalInfo, false) == true) {
-            infoIconView.setImageBitmap(HabiticaIconsHelper.imageOfInfoIcon(context.getThemeColor(R.attr.colorPrimaryOffset)))
+            binding.infoIconView.setImageBitmap(HabiticaIconsHelper.imageOfInfoIcon(context.getThemeColor(R.attr.colorPrimaryOffset)))
         } else {
-            infoIconView.visibility = View.GONE
+            binding.infoIconView.visibility = View.GONE
         }
     }
 
@@ -163,6 +157,6 @@ class CollapsibleSectionView(context: Context?, attrs: AttributeSet?) : LinearLa
     }
 
     fun setCaretOffset(offset: Int) {
-        caretView.setPadding(0, 0, offset, 0)
+        binding.caretView.setPadding(0, 0, offset, 0)
     }
 }

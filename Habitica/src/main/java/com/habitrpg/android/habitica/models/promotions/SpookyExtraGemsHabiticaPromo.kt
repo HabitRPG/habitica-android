@@ -106,25 +106,25 @@ class SpookyExtraGemsHabiticaPromotion: HabiticaPromotion() {
 
     override fun configureInfoFragment(fragment: PromoInfoFragment) {
         val context = fragment.context ?: return
-        fragment.binding.promoBanner.background = promoBackgroundDrawable(context)
-        fragment.binding.promoBannerLeftImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.spooky_promo_info_left))
-        fragment.binding.promoBannerRightImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.spooky_promo_info_right))
-        fragment.binding.promoBannerTitleImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.spooky_promo_title))
-        fragment.binding.promoBannerSubtitleView.setText(R.string.limited_event)
-        fragment.binding.promoBannerDurationView.setTextColor(ContextCompat.getColor(context, R.color.white))
+        fragment.binding?.promoBanner?.background = promoBackgroundDrawable(context)
+        fragment.binding?.promoBannerLeftImage?.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.spooky_promo_info_left))
+        fragment.binding?.promoBannerRightImage?.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.spooky_promo_info_right))
+        fragment.binding?.promoBannerTitleImage?.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.spooky_promo_title))
+        fragment.binding?.promoBannerSubtitleView?.setText(R.string.limited_event)
+        fragment.binding?.promoBannerDurationView?.setTextColor(ContextCompat.getColor(context, R.color.white))
         val formatter = SimpleDateFormat("MMM d", Locale.getDefault())
-        fragment.binding.promoBannerDurationView.text = context.getString(R.string.x_to_y,
+        fragment.binding?.promoBannerDurationView?.text = context.getString(R.string.x_to_y,
                 formatter.format(startDate),
                 formatter.format(endDate))
-        fragment.binding.promoBannerDurationView.setTextColor(ContextCompat.getColor(context, R.color.white))
-        fragment.binding.promptText.setText(R.string.spooky_promo_info_prompt)
-        fragment.binding.promptText.setTextColor(ContextCompat.getColor(context, R.color.orange_50))
-        fragment.binding.promptButton.background = buttonDrawable(context)
-        fragment.binding.promptButton.setText(R.string.view_gem_bundles)
-        fragment.binding.promptButton.setTextColor(ContextCompat.getColor(context, R.color.white))
-        fragment.binding.promptButton.setOnClickListener { MainNavigationController.navigate(R.id.gemPurchaseActivity) }
+        fragment.binding?.promoBannerDurationView?.setTextColor(ContextCompat.getColor(context, R.color.white))
+        fragment.binding?.promptText?.setText(R.string.spooky_promo_info_prompt)
+        fragment.binding?.promptText?.setTextColor(ContextCompat.getColor(context, R.color.orange_50))
+        fragment.binding?.promptButton?.background = buttonDrawable(context)
+        fragment.binding?.promptButton?.setText(R.string.view_gem_bundles)
+        fragment.binding?.promptButton?.setTextColor(ContextCompat.getColor(context, R.color.white))
+        fragment.binding?.promptButton?.setOnClickListener { MainNavigationController.navigate(R.id.gemPurchaseActivity) }
 
-        fragment.binding.instructionDescriptionView.setText(R.string.spooky_promo_info_instructions)
-        fragment.binding.limitationsDescriptionView.setText(R.string.spooky_promo_info_limitations)
+        fragment.binding?.instructionDescriptionView?.setText(R.string.spooky_promo_info_instructions)
+        fragment.binding?.limitationsDescriptionView?.setText(R.string.spooky_promo_info_limitations)
     }
 }

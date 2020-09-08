@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
@@ -17,7 +18,6 @@ import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.tasks.ChecklistItem
 import com.habitrpg.android.habitica.models.tasks.Task
-import com.habitrpg.android.habitica.ui.helpers.bindColor
 import com.habitrpg.android.habitica.ui.views.HabiticaEmojiTextView
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import io.reactivex.Observable
@@ -31,7 +31,7 @@ class YesterdailyDialog private constructor(context: Context, private val userRe
 
     private lateinit var yesterdailiesList: LinearLayout
 
-    private val taskGray: Int by bindColor(context, R.color.disabled_background)
+    private val taskGray: Int = ContextCompat.getColor(context, R.color.disabled_background)
 
     init {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as? LayoutInflater
@@ -49,7 +49,6 @@ class YesterdailyDialog private constructor(context: Context, private val userRe
             runCron()
         }
 
-        //Can't use by bindView() because the view doesn't seem to be available through that yet
         val listView = view?.findViewById(R.id.yesterdailies_list) as? LinearLayout
         if (listView != null) {
             yesterdailiesList = listView
@@ -88,8 +87,6 @@ class YesterdailyDialog private constructor(context: Context, private val userRe
             }
 
             if (task.checklist?.size ?: 0 > 0) {
-                val checklistDivider = taskView.findViewById<View>(R.id.checklistDivider)
-                checklistDivider.visibility = View.VISIBLE
                 val checklistContainer = taskView.findViewById<ViewGroup>(R.id.checklistView)
                 for (item in task.checklist ?: emptyList<ChecklistItem>()) {
                     val checklistView = inflater.inflate(R.layout.checklist_item_row, yesterdailiesList, false)

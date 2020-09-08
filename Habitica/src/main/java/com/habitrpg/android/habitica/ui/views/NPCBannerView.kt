@@ -9,19 +9,17 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.databinding.NpcBannerBinding
 import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
-import com.habitrpg.android.habitica.ui.helpers.bindView
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
 import kotlin.math.roundToInt
 
 class NPCBannerView(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs) {
-
-    private val backgroundView: ImageView by bindView(R.id.backgroundView)
-    private val sceneView: SimpleDraweeView by bindView(R.id.sceneView)
+    private val binding = NpcBannerBinding.inflate(context.layoutInflater, this)
 
     var shopSpriteSuffix: String = ""
         set(value) {
@@ -40,14 +38,10 @@ class NPCBannerView(context: Context, attrs: AttributeSet?) : FrameLayout(contex
         setImage()
     }
 
-    init {
-        context.layoutInflater.inflate(R.layout.npc_banner, this)
-    }
-
     private fun setImage() {
-        DataBindingUtils.loadImage(sceneView, identifier + "_scene" + shopSpriteSuffix)
+        DataBindingUtils.loadImage(binding.sceneView, identifier + "_scene" + shopSpriteSuffix)
 
-        backgroundView.scaleType = ImageView.ScaleType.FIT_START
+        binding.backgroundView.scaleType = ImageView.ScaleType.FIT_START
 
         DataBindingUtils.loadImage(identifier + "_background" + shopSpriteSuffix) {
             val aspectRatio = it.width / it.height.toFloat()
@@ -58,7 +52,7 @@ class NPCBannerView(context: Context, attrs: AttributeSet?) : FrameLayout(contex
             Observable.just(drawable)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
-                        backgroundView.background = it
+                        binding.backgroundView.background = it
                     }, RxErrorHandler.handleEmptyError())
         }
     }

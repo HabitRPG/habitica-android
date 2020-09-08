@@ -9,33 +9,29 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.databinding.BottomNavigationItemBinding
 import com.habitrpg.android.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.extensions.inflate
-import com.habitrpg.android.habitica.ui.helpers.bindView
-
+import com.habitrpg.android.habitica.extensions.layoutInflater
 class BottomNavigationItem @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : RelativeLayout(context, attrs, defStyleAttr) {
+    private val binding = BottomNavigationItemBinding.inflate(context.layoutInflater, this)
 
-    private val iconView: ImageView by bindView(R.id.icon_view)
-    private val selectedTitleView: TextView by bindView(R.id.selected_title_view)
-    private val titleView: TextView by bindView(R.id.title_view)
-    private val badge: TextView by bindView(R.id.badge)
-
-    var selectedVisibility = View.VISIBLE
-    var deselectedVisibility = View.VISIBLE
+    private var selectedVisibility = View.VISIBLE
+    private var deselectedVisibility = View.VISIBLE
 
     var isActive = false
     set(value) {
         field = value
         if (isActive) {
-            selectedTitleView.visibility = selectedVisibility
-            titleView.visibility = View.GONE
-            iconView.drawable.setColorFilter(ContextCompat.getColor(context, R.color.white), PorterDuff.Mode.MULTIPLY )
+            binding.selectedTitleView.visibility = selectedVisibility
+            binding.titleView.visibility = View.GONE
+            binding.iconView.drawable.setColorFilter(ContextCompat.getColor(context, R.color.white), PorterDuff.Mode.MULTIPLY )
         } else {
-            selectedTitleView.visibility = View.GONE
-            titleView.visibility = deselectedVisibility
-            iconView.drawable.setColorFilter(context.getThemeColor(R.attr.textColorPrimaryDark), PorterDuff.Mode.MULTIPLY )
+            binding.selectedTitleView.visibility = View.GONE
+            binding.titleView.visibility = deselectedVisibility
+            binding.iconView.drawable.setColorFilter(context.getThemeColor(R.attr.textColorPrimaryDark), PorterDuff.Mode.MULTIPLY )
         }
     }
 
@@ -43,24 +39,22 @@ class BottomNavigationItem @JvmOverloads constructor(
     set(value) {
         field = value
         if (value == 0) {
-            badge.visibility = View.INVISIBLE
+            binding.badge.visibility = View.INVISIBLE
         } else {
-            badge.visibility = View.VISIBLE
-            badge.text = value.toString()
+            binding.badge.visibility = View.VISIBLE
+            binding.badge.text = value.toString()
         }
     }
 
     init {
-        inflate(R.layout.bottom_navigation_item, true)
-
         val attributes = context.theme?.obtainStyledAttributes(
                 attrs,
                 R.styleable.BottomNavigationItem,
                 0, 0)
         if (attributes != null) {
-            iconView.setImageDrawable(attributes.getDrawable(R.styleable.BottomNavigationItem_iconDrawable))
-            titleView.text = attributes.getString(R.styleable.BottomNavigationItem_title)
-            selectedTitleView.text = attributes.getString(R.styleable.BottomNavigationItem_title)
+            binding.iconView.setImageDrawable(attributes.getDrawable(R.styleable.BottomNavigationItem_iconDrawable))
+            binding.titleView.text = attributes.getString(R.styleable.BottomNavigationItem_title)
+            binding.selectedTitleView.text = attributes.getString(R.styleable.BottomNavigationItem_title)
         }
     }
 

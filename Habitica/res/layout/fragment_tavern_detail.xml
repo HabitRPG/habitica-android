@@ -10,6 +10,7 @@
     android:layout_height="wrap_content"
     android:background="?attr/colorContentBackground">
     <include layout="@layout/shop_header"
+        android:id="@+id/shop_header"
         android:layout_marginBottom="@dimen/spacing_large"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"/>

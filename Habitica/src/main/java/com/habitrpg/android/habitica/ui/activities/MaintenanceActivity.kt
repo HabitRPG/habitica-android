@@ -12,8 +12,9 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.api.MaintenanceApiService
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ApiClient
+import com.habitrpg.android.habitica.databinding.ActivityMainBinding
+import com.habitrpg.android.habitica.databinding.ActivityMaintenanceBinding
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.helpers.setMarkdown
 import com.habitrpg.android.habitica.ui.views.HabiticaEmojiTextView
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -23,20 +24,23 @@ import javax.inject.Inject
 
 class MaintenanceActivity : BaseActivity() {
 
+    private lateinit var binding: ActivityMaintenanceBinding
+
     @Inject
     lateinit var maintenanceService: MaintenanceApiService
 
     @Inject
     lateinit var apiClient: ApiClient
 
-    internal val titleTextView: TextView by bindView(R.id.titleTextView)
-    internal val imageView: SimpleDraweeView by bindView(R.id.imageView)
-    internal val descriptionTextView: HabiticaEmojiTextView by bindView(R.id.descriptionTextView)
-    internal val playStoreButton: Button by bindView(R.id.playStoreButton)
     private var isDeprecationNotice: Boolean = false
 
     override fun getLayoutResId(): Int {
         return R.layout.activity_maintenance
+    }
+
+    override fun getContentView(): View {
+        binding = ActivityMaintenanceBinding.inflate(layoutInflater)
+        return binding.root
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,21 +48,21 @@ class MaintenanceActivity : BaseActivity() {
 
         val data = intent.extras ?: return
 
-        this.titleTextView.text = data.getString("title")
+        binding.titleTextView.text = data.getString("title")
 
         @Suppress("DEPRECATION")
-        imageView.setImageURI(data.getString("imageUrl")?.toUri())
-        this.descriptionTextView.setMarkdown(data.getString("description"))
-        this.descriptionTextView.movementMethod = LinkMovementMethod.getInstance()
+        binding.imageView.setImageURI(data.getString("imageUrl")?.toUri())
+        binding.descriptionTextView.setMarkdown(data.getString("description"))
+        binding.descriptionTextView.movementMethod = LinkMovementMethod.getInstance()
 
         isDeprecationNotice = data.getBoolean("deprecationNotice")
         if (isDeprecationNotice) {
-            this.playStoreButton.visibility = View.VISIBLE
+            binding.playStoreButton.visibility = View.VISIBLE
         } else {
-            this.playStoreButton.visibility = View.GONE
+            binding.playStoreButton.visibility = View.GONE
         }
 
-        playStoreButton.setOnClickListener { openInPlayStore() }
+        binding.playStoreButton.setOnClickListener { openInPlayStore() }
     }
 
     override fun injectActivity(component: UserComponent?) {

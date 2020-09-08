@@ -9,16 +9,16 @@ import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.UserRepository
+import com.habitrpg.android.habitica.databinding.DialogBulkAllocateBinding
 import com.habitrpg.android.habitica.extensions.getThemeColor
+import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.disposables.Disposable
-import io.reactivex.functions.Consumer
-import kotlinx.android.synthetic.main.dialog_bulk_allocate.*
 import javax.inject.Inject
 
 class BulkAllocateStatsDialog(context: Context, component: UserComponent?) : AlertDialog(context) {
-
+    private val binding = DialogBulkAllocateBinding.inflate(context.layoutInflater)
     @Inject
     lateinit var userRepository: UserRepository
 
@@ -27,10 +27,10 @@ class BulkAllocateStatsDialog(context: Context, component: UserComponent?) : Ale
     private val allocatedPoints: Int
         get() {
         var value = 0
-        value += strengthSliderView.currentValue
-        value += intelligenceSliderView.currentValue
-        value += constitutionSliderView.currentValue
-        value += perceptionSliderView.currentValue
+        value += binding.strengthSliderView.currentValue
+        value += binding.intelligenceSliderView.currentValue
+        value += binding.constitutionSliderView.currentValue
+        value += binding.perceptionSliderView.currentValue
         return value
     }
 
@@ -38,29 +38,26 @@ class BulkAllocateStatsDialog(context: Context, component: UserComponent?) : Ale
     set(value) {
         field = value
         updateTitle()
-        strengthSliderView.maxValue = pointsToAllocate
-        intelligenceSliderView.maxValue = pointsToAllocate
-        constitutionSliderView.maxValue = pointsToAllocate
-        perceptionSliderView.maxValue = pointsToAllocate
+        binding.strengthSliderView.maxValue = pointsToAllocate
+        binding.intelligenceSliderView.maxValue = pointsToAllocate
+        binding.constitutionSliderView.maxValue = pointsToAllocate
+        binding.perceptionSliderView.maxValue = pointsToAllocate
     }
 
     private var user: User? = null
     set(value) {
         field = value
         pointsToAllocate = user?.stats?.points ?: 0
-        strengthSliderView.previousValue = user?.stats?.strength ?: 0
-        intelligenceSliderView.previousValue = user?.stats?.intelligence ?: 0
-        constitutionSliderView.previousValue = user?.stats?.constitution ?: 0
-        perceptionSliderView.previousValue = user?.stats?.per ?: 0
+        binding.strengthSliderView.previousValue = user?.stats?.strength ?: 0
+        binding.intelligenceSliderView.previousValue = user?.stats?.intelligence ?: 0
+        binding.constitutionSliderView.previousValue = user?.stats?.constitution ?: 0
+        binding.perceptionSliderView.previousValue = user?.stats?.per ?: 0
     }
 
     init {
         component?.inject(this)
 
-        val inflater = LayoutInflater.from(context)
-        val view = inflater.inflate(R.layout.dialog_bulk_allocate, null)
-
-        setView(view)
+        setView(binding.root)
         this.setButton(BUTTON_POSITIVE, context.getString(R.string.save)) { _, _ ->
             saveChanges()
         }
@@ -72,7 +69,10 @@ class BulkAllocateStatsDialog(context: Context, component: UserComponent?) : Ale
     private fun saveChanges() {
         @Suppress("DEPRECATION")
         val progressDialog = ProgressDialog.show(context, context.getString(R.string.allocating_points), null, true)
-        userRepository.bulkAllocatePoints(user, strengthSliderView.currentValue, intelligenceSliderView.currentValue, constitutionSliderView.currentValue, perceptionSliderView.currentValue)
+        userRepository.bulkAllocatePoints(user, binding.strengthSliderView.currentValue,
+                binding.intelligenceSliderView.currentValue,
+                binding.constitutionSliderView.currentValue,
+                binding.perceptionSliderView.currentValue)
                 .subscribe({
                     progressDialog.dismiss()
                     this.dismiss()
@@ -89,20 +89,20 @@ class BulkAllocateStatsDialog(context: Context, component: UserComponent?) : Ale
             user = it
         }, RxErrorHandler.handleEmptyError())
 
-        strengthSliderView.allocateAction = {
-            checkRedistribution(strengthSliderView)
+        binding.strengthSliderView.allocateAction = {
+            checkRedistribution(binding.strengthSliderView)
             updateTitle()
         }
-        intelligenceSliderView.allocateAction = {
-            checkRedistribution(intelligenceSliderView)
+        binding.intelligenceSliderView.allocateAction = {
+            checkRedistribution(binding.intelligenceSliderView)
             updateTitle()
         }
-        constitutionSliderView.allocateAction = {
-            checkRedistribution(constitutionSliderView)
+        binding.constitutionSliderView.allocateAction = {
+            checkRedistribution(binding.constitutionSliderView)
             updateTitle()
         }
-        perceptionSliderView.allocateAction = {
-            checkRedistribution(perceptionSliderView)
+        binding.perceptionSliderView.allocateAction = {
+            checkRedistribution(binding.perceptionSliderView)
             updateTitle()
         }
     }
@@ -111,17 +111,17 @@ class BulkAllocateStatsDialog(context: Context, component: UserComponent?) : Ale
         val diff = allocatedPoints - pointsToAllocate
         if (diff > 0) {
             var highestSlider: StatsSliderView? = null
-            if (excludedSlider != strengthSliderView) {
-                highestSlider = getSliderWithHigherValue(highestSlider, strengthSliderView)
+            if (excludedSlider != binding.strengthSliderView) {
+                highestSlider = getSliderWithHigherValue(highestSlider, binding.strengthSliderView)
             }
-            if (excludedSlider != intelligenceSliderView) {
-                highestSlider = getSliderWithHigherValue(highestSlider, intelligenceSliderView)
+            if (excludedSlider != binding.intelligenceSliderView) {
+                highestSlider = getSliderWithHigherValue(highestSlider, binding.intelligenceSliderView)
             }
-            if (excludedSlider != constitutionSliderView) {
-                highestSlider = getSliderWithHigherValue(highestSlider, constitutionSliderView)
+            if (excludedSlider != binding.constitutionSliderView) {
+                highestSlider = getSliderWithHigherValue(highestSlider, binding.constitutionSliderView)
             }
-            if (excludedSlider != perceptionSliderView) {
-                highestSlider = getSliderWithHigherValue(highestSlider, perceptionSliderView)
+            if (excludedSlider != binding.perceptionSliderView) {
+                highestSlider = getSliderWithHigherValue(highestSlider, binding.perceptionSliderView)
             }
             if (highestSlider != null) {
                 highestSlider.currentValue -= diff
@@ -143,11 +143,11 @@ class BulkAllocateStatsDialog(context: Context, component: UserComponent?) : Ale
     }
 
     private fun updateTitle() {
-        allocatedTitle.text = "$allocatedPoints/$pointsToAllocate"
+        binding.allocatedTitle.text = "$allocatedPoints/$pointsToAllocate"
         if (allocatedPoints > 0) {
-            titleView.setBackgroundColor(context.getThemeColor(R.attr.colorAccent))
+            binding.titleView.setBackgroundColor(context.getThemeColor(R.attr.colorAccent))
         } else {
-            titleView.setBackgroundColor(ContextCompat.getColor(context, R.color.disabled_background))
+            binding.titleView.setBackgroundColor(ContextCompat.getColor(context, R.color.disabled_background))
         }
 
         getButton(BUTTON_POSITIVE).isEnabled = allocatedPoints > 0

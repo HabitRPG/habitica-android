@@ -49,7 +49,7 @@
         android:paddingTop="@dimen/spacing_small"
         android:paddingBottom="@dimen/spacing_small">
         <com.habitrpg.android.habitica.ui.views.navigation.BottomNavigationItem
-            android:id="@+id/tab_habits"
+            android:id="@+id/habits_tab"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -57,7 +57,7 @@
             app:iconDrawable="@drawable/icon_habits_selected"/>
         <com.habitrpg.android.habitica.ui.views.navigation.BottomNavigationItem
             android:layout_width="0dp"
-            android:id="@+id/tab_dailies"
+            android:id="@+id/dailies_tab"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             app:title="@string/dailies"
@@ -66,14 +66,14 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content" />
         <com.habitrpg.android.habitica.ui.views.navigation.BottomNavigationItem
-            android:id="@+id/tab_todos"
+            android:id="@+id/todos_tab"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             app:title="@string/todos"
             app:iconDrawable="@drawable/icon_todos_selected"/>
         <com.habitrpg.android.habitica.ui.views.navigation.BottomNavigationItem
-            android:id="@+id/tab_rewards"
+            android:id="@+id/rewards_tab"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -82,7 +82,7 @@
     </LinearLayout>
 
     <FrameLayout
-        android:id="@+id/add_wrapper"
+        android:id="@+id/add_button_background"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_centerHorizontal="true"
@@ -90,7 +90,7 @@
         android:layout_marginTop="-39dp"
         android:background="@drawable/fab_background">
         <ImageButton
-            android:id="@+id/add"
+            android:id="@+id/add_button"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:src="@drawable/fab_plus"
@@ -101,7 +101,7 @@
         android:id="@+id/submenu_wrapper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/add_wrapper"
+        android:layout_above="@id/add_button_background"
         android:orientation="vertical"
         android:gravity="center_horizontal"/>
 </merge>

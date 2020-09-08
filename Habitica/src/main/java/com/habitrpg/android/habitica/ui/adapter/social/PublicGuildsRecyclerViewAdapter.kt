@@ -2,21 +2,18 @@ package com.habitrpg.android.habitica.ui.adapter.social
 
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.Filter
 import android.widget.Filterable
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.SocialRepository
+import com.habitrpg.android.habitica.databinding.ItemPublicGuildBinding
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.ui.fragments.social.PublicGuildsFragmentDirections
-import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.helpers.setMarkdown
-import io.reactivex.functions.Consumer
 import io.realm.Case
 import io.realm.OrderedRealmCollection
 import io.realm.RealmRecyclerViewAdapter
@@ -38,7 +35,7 @@ class PublicGuildsRecyclerViewAdapter(data: OrderedRealmCollection<Group>?, auto
             directions.isMember = isInGroup(guild)
             MainNavigationController.navigate(directions)
         }
-        guildViewHolder.joinLeaveButton.setOnClickListener { v ->
+        guildViewHolder.binding.joinleaveButton.setOnClickListener { v ->
             val guild = v.tag as? Group ?: return@setOnClickListener
             val isMember = this.memberGuildIDs.contains(guild.id)
             if (isMember) {
@@ -69,7 +66,7 @@ class PublicGuildsRecyclerViewAdapter(data: OrderedRealmCollection<Group>?, auto
             val isInGroup = isInGroup(guild)
             holder.bind(guild, isInGroup)
             holder.itemView.tag = guild
-            holder.joinLeaveButton.tag = guild
+            holder.binding.joinleaveButton.tag = guild
         }
     }
 
@@ -109,21 +106,16 @@ class PublicGuildsRecyclerViewAdapter(data: OrderedRealmCollection<Group>?, auto
     }
 
     class GuildViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-        private val nameTextView: TextView by bindView(R.id.nameTextView)
-        private val memberCountTextView: TextView by bindView(R.id.memberCountTextView)
-        private val descriptionTextView: TextView by bindView(R.id.descriptionTextView)
-        internal val joinLeaveButton: Button by bindView(R.id.joinleaveButton)
-
+        val binding = ItemPublicGuildBinding.bind(itemView)
 
         fun bind(guild: Group, isInGroup: Boolean) {
-            this.nameTextView.text = guild.name
-            this.memberCountTextView.text = guild.memberCount.toString()
-            this.descriptionTextView.setMarkdown(guild.summary)
+            binding.nameTextView.text = guild.name
+            binding.memberCountTextView.text = guild.memberCount.toString()
+            binding.descriptionTextView.setMarkdown(guild.summary)
             if (isInGroup) {
-                this.joinLeaveButton.setText(R.string.leave)
+                binding.joinleaveButton.setText(R.string.leave)
             } else {
-                this.joinLeaveButton.setText(R.string.join)
+                binding.joinleaveButton.setText(R.string.join)
             }
         }
     }

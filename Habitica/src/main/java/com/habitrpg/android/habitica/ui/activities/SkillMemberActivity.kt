@@ -3,21 +3,21 @@ package com.habitrpg.android.habitica.ui.activities
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
+import com.habitrpg.android.habitica.databinding.ActivitySkillMembersBinding
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.ui.adapter.social.PartyMemberRecyclerViewAdapter
-import com.habitrpg.android.habitica.ui.helpers.bindView
 import io.reactivex.functions.Consumer
 import javax.inject.Inject
 
 class SkillMemberActivity : BaseActivity() {
-    private val recyclerView: RecyclerView by bindView(R.id.recyclerView)
-
+    private lateinit var binding: ActivitySkillMembersBinding
     private var viewAdapter: PartyMemberRecyclerViewAdapter? = null
 
     @Inject
@@ -33,6 +33,11 @@ class SkillMemberActivity : BaseActivity() {
         component?.inject(this)
     }
 
+    override fun getContentView(): View {
+        binding = ActivitySkillMembersBinding.inflate(layoutInflater)
+        return binding.root
+    }
+
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupToolbar(findViewById(R.id.toolbar))
@@ -40,7 +45,7 @@ class SkillMemberActivity : BaseActivity() {
     }
 
     private fun loadMemberList() {
-        recyclerView.layoutManager = LinearLayoutManager(this)
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
         viewAdapter = PartyMemberRecyclerViewAdapter(null, true)
         viewAdapter?.getUserClickedEvents()?.subscribe({ userId ->
             val resultIntent = Intent()
@@ -48,7 +53,7 @@ class SkillMemberActivity : BaseActivity() {
             setResult(Activity.RESULT_OK, resultIntent)
             finish()
         }, RxErrorHandler.handleEmptyError())?.let { compositeSubscription.add(it) }
-        recyclerView.adapter = viewAdapter
+        binding.recyclerView.adapter = viewAdapter
 
         compositeSubscription.add(userRepository.getUser()
                 .firstElement()

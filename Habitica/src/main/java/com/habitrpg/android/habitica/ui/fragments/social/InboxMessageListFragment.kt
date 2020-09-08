@@ -11,6 +11,7 @@ import com.habitrpg.android.habitica.MainNavDirections
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
+import com.habitrpg.android.habitica.databinding.FragmentGuildsOverviewBinding
 import com.habitrpg.android.habitica.databinding.FragmentInboxMessageListBinding
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
@@ -30,9 +31,13 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class InboxMessageListFragment : BaseMainFragment(), androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener {
+class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBinding>(), androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener {
 
-    private lateinit var binding: FragmentInboxMessageListBinding
+    override var binding: FragmentInboxMessageListBinding? = null
+
+    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentInboxMessageListBinding {
+        return FragmentInboxMessageListBinding.inflate(inflater, container, false)
+    }
 
     @Inject
     lateinit var socialRepository: SocialRepository
@@ -48,14 +53,12 @@ class InboxMessageListFragment : BaseMainFragment(), androidx.swiperefreshlayout
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         this.hidesToolbar = true
-        super.onCreateView(inflater, container, savedInstanceState)
-        binding = FragmentInboxMessageListBinding.inflate(inflater, container, false)
-        return binding.root
+        return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.swipeRefreshLayout.setOnRefreshListener(this)
+        binding?.swipeRefreshLayout?.setOnRefreshListener(this)
 
         arguments?.let {
             val args = InboxMessageListFragmentArgs.fromBundle(it)
@@ -64,15 +67,15 @@ class InboxMessageListFragment : BaseMainFragment(), androidx.swiperefreshlayout
         viewModel = ViewModelProvider(this, InboxViewModelFactory(replyToUserUUID, chatRoomUser)).get(InboxViewModel::class.java)
 
         val layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this.getActivity())
-        binding.recyclerView.layoutManager = layoutManager
+        binding?.recyclerView?.layoutManager = layoutManager
 
         chatAdapter = InboxAdapter(user)
         viewModel?.messages?.observe(this.viewLifecycleOwner, { chatAdapter?.submitList(it) })
         viewModel?.getMemberData()?.observe(this.viewLifecycleOwner, {
             activity?.binding?.toolbarTitle?.text = it?.profile?.name
         })
-        binding.recyclerView.adapter = chatAdapter
-        binding.recyclerView.itemAnimator = SafeDefaultItemAnimator()
+        binding?.recyclerView?.adapter = chatAdapter
+        binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
         chatAdapter?.let { adapter ->
             compositeSubscription.add(adapter.getUserLabelClickFlowable().subscribe({
                 FullProfileActivity.open(it)
@@ -82,10 +85,10 @@ class InboxMessageListFragment : BaseMainFragment(), androidx.swiperefreshlayout
             compositeSubscription.add(adapter.getCopyMessageFlowable().subscribe({ this.copyMessageToClipboard(it) }, RxErrorHandler.handleEmptyError()))
         }
 
-        binding.chatBarView.sendAction = { sendMessage(it) }
-        binding.chatBarView.maxChatLength = configManager.maxChatLength()
+        binding?.chatBarView?.sendAction = { sendMessage(it) }
+        binding?.chatBarView?.maxChatLength = configManager.maxChatLength()
 
-        binding.chatBarView.hasAcceptedGuidelines = true
+        binding?.chatBarView?.hasAcceptedGuidelines = true
     }
 
     override fun onResume() {
@@ -130,13 +133,13 @@ class InboxMessageListFragment : BaseMainFragment(), androidx.swiperefreshlayout
         if (viewModel?.memberID?.isNotBlank() != true) { return }
         compositeSubscription.add(this.socialRepository.retrieveInboxMessages(replyToUserUUID ?: "", 0)
                 .subscribe({}, RxErrorHandler.handleEmptyError(), {
-                    binding.swipeRefreshLayout.isRefreshing = false
+                    binding?.swipeRefreshLayout?.isRefreshing = false
                     viewModel?.invalidateDataSource()
                 }))
     }
 
     override fun onRefresh() {
-        binding.swipeRefreshLayout.isRefreshing = true
+        binding?.swipeRefreshLayout?.isRefreshing = true
         this.refreshConversation()
     }
 
@@ -146,11 +149,11 @@ class InboxMessageListFragment : BaseMainFragment(), androidx.swiperefreshlayout
                     .delay(200, TimeUnit.MILLISECONDS)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
-                        binding.recyclerView.scrollToPosition(0)
+                        binding?.recyclerView?.scrollToPosition(0)
                         viewModel?.invalidateDataSource()
             }, { error ->
                         RxErrorHandler.reportError(error)
-                        binding.chatBarView.message = chatText
+                        binding?.chatBarView?.message = chatText
                     })
             KeyboardUtil.dismissKeyboard(getActivity())
         }

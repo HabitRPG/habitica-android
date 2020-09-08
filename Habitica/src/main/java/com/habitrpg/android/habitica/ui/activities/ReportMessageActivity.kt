@@ -20,10 +20,10 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
+import com.habitrpg.android.habitica.databinding.ActivityReportMessageBinding
 import com.habitrpg.android.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.social.ChatMessage
-import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
 import com.habitrpg.android.habitica.ui.helpers.setMarkdown
 import io.reactivex.functions.Consumer
@@ -32,21 +32,11 @@ import javax.inject.Inject
 
 class ReportMessageActivity : BaseActivity() {
 
+    private lateinit var binding: ActivityReportMessageBinding
+
     @Inject
     lateinit var socialRepository: SocialRepository
 
-    private val toolbar: Toolbar by bindView(R.id.toolbar)
-    private val toolbarTextView: TextView by bindView(R.id.toolbar_title)
-    private val closeButton: ImageButton by bindView(R.id.close_button)
-    private val reportButton: Button by bindView(R.id.report_button)
-    private val appBar: AppBarLayout by bindView(R.id.app_bar)
-    private val bottomSheetView: View by bindView(R.id.bottom_sheet)
-    private val contentContainer: ViewGroup by bindView(R.id.content_container)
-    private val dismissTouchView: View by bindView(R.id.touch_outside)
-    private val titleTextView: TextView by bindView(R.id.title_text_view)
-    private val messageTextView: TextView by bindView(R.id.message_text_view)
-    private val additionInfoEditText: EditText by bindView(R.id.additional_info_edittext)
-    private val reportExplanationTextView: TextView by bindView(R.id.report_explanation_textview)
     private var raisedElevation = 0f
 
     private var messageID: String? = null
@@ -60,21 +50,26 @@ class ReportMessageActivity : BaseActivity() {
         component?.inject(this)
     }
 
+    override fun getContentView(): View {
+        binding = ActivityReportMessageBinding.inflate(layoutInflater)
+        return binding.root
+    }
+
     private var chatMessage: ChatMessage? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setSupportActionBar(toolbar)
+        setSupportActionBar(binding.toolbar)
         supportActionBar?.title = ""
-        raisedElevation = appBar.elevation
+        raisedElevation = binding.appBar.elevation
         setStatusBarDim(true)
 
-        contentContainer.setOnTouchListener { _, _ -> true }
-        dismissTouchView.setOnClickListener { finish() }
-        reportExplanationTextView.setMarkdown(getString(R.string.report_explanation))
+        binding.contentContainer.setOnTouchListener { _, _ -> true }
+        binding.touchOutside.setOnClickListener { finish() }
+        binding.reportExplanationTextview.setMarkdown(getString(R.string.report_explanation))
 
-        BottomSheetBehavior.from<View>(bottomSheetView)
-                .setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+        BottomSheetBehavior.from<View>(binding.bottomSheet)
+                .addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
                     @SuppressLint("SwitchIntDef")
                     override fun onStateChanged(bottomSheet: View, newState: Int) {
                         when (newState) {
@@ -91,8 +86,8 @@ class ReportMessageActivity : BaseActivity() {
 
         val args = navArgs<ReportMessageActivityArgs>().value
         messageID = args.messageID
-        titleTextView.text = getString(R.string.report_message_title, args.profileName)
-        messageTextView.text = args.text
+        binding.titleTextView.text = getString(R.string.report_message_title, args.profileName)
+        binding.messageTextView.text = args.text
 
         messageID?.let {messageID ->
             compositeSubscription.add(socialRepository.getChatmessage(messageID).subscribe({
@@ -100,8 +95,8 @@ class ReportMessageActivity : BaseActivity() {
             }, RxErrorHandler.handleEmptyError()))
         }
 
-        reportButton.setOnClickListener { reportMessage() }
-        closeButton.setOnClickListener { finish() }
+        binding.reportButton.setOnClickListener { reportMessage() }
+        binding.closeButton.setOnClickListener { finish() }
     }
 
     override fun onBackPressed() {
@@ -115,7 +110,7 @@ class ReportMessageActivity : BaseActivity() {
         }
         chatMessage?.let {
             isReporting = true
-            socialRepository.flagMessage(it, additionInfoEditText.text.toString())
+            socialRepository.flagMessage(it, binding.additionalInfoEdittext.text.toString())
                     .doOnError { isReporting = false }
                     .subscribe({
                 finish()
@@ -125,15 +120,15 @@ class ReportMessageActivity : BaseActivity() {
 
     private fun setStatusBarDim(dim: Boolean) {
         if (dim) {
-            appBar.elevation = 0f
+            binding.appBar.elevation = 0f
             window.statusBarColor = getThemeColor(R.attr.colorPrimaryDark)
-            closeButton.visibility = View.GONE
-            toolbarTextView.setTypeface(null, Typeface.BOLD)
+            binding.closeButton.visibility = View.GONE
+            binding.toolbarTitle.setTypeface(null, Typeface.BOLD)
         } else {
-            appBar.elevation = 8f
+            binding.appBar.elevation = 8f
             window.statusBarColor = ContextCompat.getColor(this, R.color.offset_background)
-            closeButton.visibility = View.VISIBLE
-            toolbarTextView.setTypeface(null, Typeface.NORMAL)
+            binding.closeButton.visibility = View.VISIBLE
+            binding.toolbarTitle.setTypeface(null, Typeface.NORMAL)
         }
 
         if (Build.VERSION.SDK_INT >= VERSION_CODES.M) {

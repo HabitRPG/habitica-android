@@ -170,10 +170,6 @@ android {
         abortOnError false
     }
 
-    viewBinding {
-        enabled true
-    }
-
     signingConfigs {
         release
     }

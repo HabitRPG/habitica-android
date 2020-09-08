@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
@@ -15,13 +16,14 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
+import com.habitrpg.android.habitica.databinding.ActivityGroupFormBinding
+import com.habitrpg.android.habitica.databinding.ActivityPartyInviteBinding
 import com.habitrpg.android.habitica.extensions.runDelayed
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.fragments.social.party.PartyInviteFragment
 import com.habitrpg.android.habitica.ui.helpers.ToolbarColorHelper
-import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.Companion.showSnackbar
@@ -35,16 +37,14 @@ import javax.inject.Named
 
 class GroupInviteActivity : BaseActivity() {
 
+    private lateinit var binding: ActivityPartyInviteBinding
+
     @field:[Inject Named(AppModule.NAMED_USER_ID)]
     lateinit var userId: String
     @Inject
     lateinit var socialRepository: SocialRepository
     @Inject
     lateinit var userRepository: UserRepository
-
-    internal val tabLayout: TabLayout by bindView(R.id.tab_layout)
-    internal val viewPager: ViewPager by bindView(R.id.viewPager)
-    private val snackbarView: ViewGroup by bindView(R.id.snackbar_view)
 
     internal var fragments: MutableList<PartyInviteFragment> = ArrayList()
     private var userIdToInvite: String? = null
@@ -53,10 +53,15 @@ class GroupInviteActivity : BaseActivity() {
         return R.layout.activity_party_invite
     }
 
+    override fun getContentView(): View {
+        binding = ActivityPartyInviteBinding.inflate(layoutInflater)
+        return binding.root
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupToolbar(findViewById(R.id.toolbar))
-        viewPager.currentItem = 0
+        binding.viewPager.currentItem = 0
 
         supportActionBar?.title = null
 
@@ -78,8 +83,8 @@ class GroupInviteActivity : BaseActivity() {
             R.id.action_send_invites -> {
                 setResult(Activity.RESULT_OK, createResultIntent())
                 dismissKeyboard()
-                if (fragments.size > viewPager.currentItem && fragments[viewPager.currentItem].values.isNotEmpty()) {
-                    showSnackbar(snackbarView, "Invite Sent!", HabiticaSnackbar.SnackbarDisplayType.SUCCESS)
+                if (fragments.size > binding.viewPager.currentItem && fragments[binding.viewPager.currentItem].values.isNotEmpty()) {
+                    showSnackbar(binding.snackbarView, "Invite Sent!", HabiticaSnackbar.SnackbarDisplayType.SUCCESS)
                     runDelayed(1, TimeUnit.SECONDS, this::finish)
                 } else {
                     finish()
@@ -97,7 +102,7 @@ class GroupInviteActivity : BaseActivity() {
     private fun createResultIntent(): Intent {
         val intent = Intent()
         if (fragments.size == 0) return intent
-        val fragment = fragments[viewPager.currentItem]
+        val fragment = fragments[binding.viewPager.currentItem]
         intent.putExtra(EMAILS_KEY, fragments[1].values)
         intent.putExtra(USER_IDS_KEY, fragments[0].values)
         return intent
@@ -106,7 +111,7 @@ class GroupInviteActivity : BaseActivity() {
     private fun setViewPagerAdapter() {
         val fragmentManager = supportFragmentManager
 
-        viewPager.adapter = object : FragmentPagerAdapter(fragmentManager) {
+        binding.viewPager.adapter = object : FragmentPagerAdapter(fragmentManager) {
 
             override fun getItem(position: Int): Fragment {
                 val fragment = PartyInviteFragment()
@@ -133,7 +138,7 @@ class GroupInviteActivity : BaseActivity() {
             }
         }
 
-        tabLayout.setupWithViewPager(viewPager)
+        binding.tabLayout.setupWithViewPager(binding.viewPager)
     }
 
     private fun handleUserReceived(user: User) {

@@ -4,45 +4,41 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
+import com.habitrpg.android.habitica.databinding.FragmentRecyclerviewBinding
 import com.habitrpg.android.habitica.extensions.getTranslatedType
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.Mount
-import com.habitrpg.android.habitica.models.inventory.Pet
 import com.habitrpg.android.habitica.models.inventory.StableSection
 import com.habitrpg.android.habitica.models.user.OwnedMount
-import com.habitrpg.android.habitica.models.user.OwnedObject
-import com.habitrpg.android.habitica.models.user.OwnedPet
 import com.habitrpg.android.habitica.ui.adapter.inventory.MountDetailRecyclerAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.helpers.MarginDecoration
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
-import com.habitrpg.android.habitica.ui.helpers.bindView
-import io.reactivex.functions.BiFunction
-import io.reactivex.functions.Consumer
-import io.realm.RealmResults
-
 import javax.inject.Inject
 
-class MountDetailRecyclerFragment : BaseMainFragment() {
+class MountDetailRecyclerFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
 
     @Inject
     internal lateinit var inventoryRepository: InventoryRepository
 
-    private val recyclerView: androidx.recyclerview.widget.RecyclerView by bindView(R.id.recyclerView)
     var adapter: MountDetailRecyclerAdapter? = null
     var animalType: String? = null
     var animalGroup: String? = null
     var animalColor: String? = null
     internal var layoutManager: androidx.recyclerview.widget.GridLayoutManager? = null
 
+    override var binding: FragmentRecyclerviewBinding? = null
+
+    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentRecyclerviewBinding {
+        return FragmentRecyclerviewBinding.inflate(inflater, container, false)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         this.usesTabLayout = false
-        super.onCreateView(inflater, container, savedInstanceState)
-        return inflater.inflate(R.layout.fragment_recyclerview, container, false)
+        return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     override fun onDestroy() {
@@ -77,14 +73,14 @@ class MountDetailRecyclerFragment : BaseMainFragment() {
                 }
             }
         }
-        recyclerView.layoutManager = layoutManager
-        recyclerView.addItemDecoration(MarginDecoration(activity))
+        binding?.recyclerView?.layoutManager = layoutManager
+        binding?.recyclerView?.addItemDecoration(MarginDecoration(activity))
 
-        adapter = recyclerView.adapter as? MountDetailRecyclerAdapter
+        adapter = binding?.recyclerView?.adapter as? MountDetailRecyclerAdapter
         if (adapter == null) {
             adapter = MountDetailRecyclerAdapter()
-            recyclerView.adapter = adapter
-            recyclerView.itemAnimator = SafeDefaultItemAnimator()
+            binding?.recyclerView?.adapter = adapter
+            binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
             this.loadItems()
 
             adapter?.getEquipFlowable()?.flatMap { key -> inventoryRepository.equip(user, "mount", key) }

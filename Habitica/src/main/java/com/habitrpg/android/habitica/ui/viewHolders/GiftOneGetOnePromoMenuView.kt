@@ -3,12 +3,12 @@ package com.habitrpg.android.habitica.ui.viewHolders
 import android.content.Context
 import android.content.Intent
 import android.util.AttributeSet
+import android.widget.Button
 import android.widget.RelativeLayout
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.ui.activities.GiftOneGetOneInfoActivity
-import kotlinx.android.synthetic.main.promo_subscription_buy_gems.view.*
 
 class GiftOneGetOnePromoMenuView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
@@ -20,7 +20,7 @@ class GiftOneGetOnePromoMenuView @JvmOverloads constructor(
         clipToPadding = false
         clipChildren = false
         clipToOutline = false
-        button.setOnClickListener {
+        findViewById<Button>(R.id.button).setOnClickListener {
             val intent = Intent(context, GiftOneGetOneInfoActivity::class.java)
             context.startActivity(intent)
         }

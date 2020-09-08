@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
+import androidx.viewbinding.ViewBinding
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.TutorialRepository
@@ -20,7 +21,9 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-abstract class BaseFragment : DialogFragment() {
+abstract class BaseFragment<VB: ViewBinding> : DialogFragment() {
+
+    abstract var binding: VB?
 
     @Inject
     lateinit var tutorialRepository: TutorialRepository
@@ -48,6 +51,8 @@ abstract class BaseFragment : DialogFragment() {
         super.onCreate(savedInstanceState)
     }
 
+    abstract fun createBinding(inflater: LayoutInflater, container: ViewGroup?): VB
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         compositeSubscription = CompositeDisposable()
 
@@ -62,7 +67,8 @@ abstract class BaseFragment : DialogFragment() {
         additionalData["page"] = this.javaClass.simpleName
         AmplitudeManager.sendEvent("navigate", AmplitudeManager.EVENT_CATEGORY_NAVIGATION, AmplitudeManager.EVENT_HITTYPE_PAGEVIEW, additionalData)
 
-        return null
+        binding = createBinding(inflater, container)
+        return binding?.root
     }
 
     abstract fun injectFragment(component: UserComponent)
