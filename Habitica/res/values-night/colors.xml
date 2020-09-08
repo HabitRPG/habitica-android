@@ -31,6 +31,9 @@
     <color name="inverted_background">@color/gray_10</color>
     <color name="inverted_background_offset">@color/gray_50</color>
 
+    <color name="checkbox_fill">#50ffffff</color>
+    <color name="taskform_gray">#3D3945</color>
+
     <color name="content_95_alpha">#f21A181D</color>
     <color name="content_80_alpha">#cc1A181D</color>
     <color name="content_75_alpha">#bf1A181D</color>

@@ -35,7 +35,7 @@
         <Button
             android:id="@+id/expand_notes_button"
             android:layout_width="match_parent"
-            android:layout_height="20dp"
+            android:layout_height="28dp"
             style="@style/Base.Widget.AppCompat.Button.Borderless"
             android:textSize="11sp"
             android:text="@string/expand_notes"

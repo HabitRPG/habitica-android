@@ -117,25 +117,25 @@ class FallExtraGemsHabiticaPromotion: HabiticaPromotion() {
 
     override fun configureInfoFragment(fragment: PromoInfoFragment) {
         val context = fragment.context ?: return
-        fragment.binding.promoBanner.background = promoBackgroundDrawable(context)
-        fragment.binding.promoBannerLeftImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.fall_promo_info_left))
-        fragment.binding.promoBannerRightImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.fall_promo_info_right))
-        fragment.binding.promoBannerTitleImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.fall_promo_title))
-        fragment.binding.promoBannerSubtitleView.setText(R.string.limited_event)
-        fragment.binding.promoBannerDurationView.setTextColor(Color.parseColor("#FEE2B6"))
+        fragment.binding?.promoBanner?.background = promoBackgroundDrawable(context)
+        fragment.binding?.promoBannerLeftImage?.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.fall_promo_info_left))
+        fragment.binding?.promoBannerRightImage?.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.fall_promo_info_right))
+        fragment.binding?.promoBannerTitleImage?.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.fall_promo_title))
+        fragment.binding?.promoBannerSubtitleView?.setText(R.string.limited_event)
+        fragment.binding?.promoBannerDurationView?.setTextColor(Color.parseColor("#FEE2B6"))
         val formatter = SimpleDateFormat("MMM d", Locale.getDefault())
-        fragment.binding.promoBannerDurationView.text = context.getString(R.string.x_to_y,
+        fragment.binding?.promoBannerDurationView?.text = context.getString(R.string.x_to_y,
                 formatter.format(startDate),
                 formatter.format(endDate))
-        fragment.binding.promoBannerDurationView.setTextColor(ContextCompat.getColor(context, R.color.white))
-        fragment.binding.promptText.setText(R.string.fall_promo_info_prompt)
-        fragment.binding.promptText.setTextColor(Color.parseColor("#F78E2F"))
-        fragment.binding.promptButton.background = buttonDrawable(context)
-        fragment.binding.promptButton.setText(R.string.view_gem_bundles)
-        fragment.binding.promptButton.setTextColor(ContextCompat.getColor(context, R.color.white))
-        fragment.binding.promptButton.setOnClickListener { MainNavigationController.navigate(R.id.gemPurchaseActivity) }
+        fragment.binding?.promoBannerDurationView?.setTextColor(ContextCompat.getColor(context, R.color.white))
+        fragment.binding?.promptText?.setText(R.string.fall_promo_info_prompt)
+        fragment.binding?.promptText?.setTextColor(Color.parseColor("#F78E2F"))
+        fragment.binding?.promptButton?.background = buttonDrawable(context)
+        fragment.binding?.promptButton?.setText(R.string.view_gem_bundles)
+        fragment.binding?.promptButton?.setTextColor(ContextCompat.getColor(context, R.color.white))
+        fragment.binding?.promptButton?.setOnClickListener { MainNavigationController.navigate(R.id.gemPurchaseActivity) }
 
-        fragment.binding.instructionDescriptionView.setText(R.string.fall_promo_info_instructions)
-        fragment.binding.limitationsDescriptionView.setText(R.string.fall_promo_info_limitations)
+        fragment.binding?.instructionDescriptionView?.setText(R.string.fall_promo_info_instructions)
+        fragment.binding?.limitationsDescriptionView?.setText(R.string.fall_promo_info_limitations)
     }
 }

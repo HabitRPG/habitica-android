@@ -12,26 +12,21 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.databinding.QuestProgressOldBinding
 import com.habitrpg.android.habitica.extensions.inflate
+import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.extensions.setScaledPadding
 import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.inventory.QuestProgress
 import com.habitrpg.android.habitica.models.inventory.QuestProgressCollect
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
-import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.views.HabiticaIcons
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.ValueBar
-import kotlinx.android.synthetic.main.value_bar.view.*
 
 class OldQuestProgressView : LinearLayout {
-
-    private val bossNameView: TextView by bindView(R.id.bossNameView)
-    private val bossHealthView: ValueBar by bindView(R.id.bossHealthView)
-    private val bossRageView: ValueBar by bindView(R.id.bossRageView)
-    private val collectionContainer: ViewGroup by bindView(R.id.collectionContainer)
-    private val collectedItemsNumberView: TextView by bindView(R.id.collectedItemsNumberView)
+    private val binding = QuestProgressOldBinding.inflate(context.layoutInflater, this)
 
     private val rect = RectF()
     private val displayDensity = context.resources.displayMetrics.density
@@ -55,9 +50,9 @@ class OldQuestProgressView : LinearLayout {
 
         setScaledPadding(context, 16, 16, 16, 16)
 
-        bossHealthView.setSecondaryIcon(HabiticaIconsHelper.imageOfHeartLightBg())
-        bossHealthView.setDescriptionIcon(HabiticaIconsHelper.imageOfDamage())
-        bossRageView.setSecondaryIcon(HabiticaIconsHelper.imageOfRage())
+        binding.bossHealthView.setSecondaryIcon(HabiticaIconsHelper.imageOfHeartLightBg())
+        binding.bossHealthView.setDescriptionIcon(HabiticaIconsHelper.imageOfDamage())
+        binding.bossRageView.setSecondaryIcon(HabiticaIconsHelper.imageOfRage())
     }
 
     override fun onDraw(canvas: Canvas?) {
@@ -71,32 +66,30 @@ class OldQuestProgressView : LinearLayout {
     }
 
     fun setData(quest: QuestContent, progress: QuestProgress?) {
-        collectionContainer.removeAllViews()
+        binding.collectionContainer.removeAllViews()
         if (quest.isBossQuest) {
-            bossNameView.text = quest.boss?.name
+            binding.bossNameView.text = quest.boss?.name
             if (progress != null) {
-                bossHealthView.set(progress.hp, quest.boss?.hp?.toDouble() ?: 0.0)
+                binding.bossHealthView.set(progress.hp, quest.boss?.hp?.toDouble() ?: 0.0)
             }
             if (quest.boss?.hasRage() == true) {
-                bossRageView.visibility = View.VISIBLE
-                bossRageView.set(progress?.rage ?: 0.0, quest.boss?.rage?.value ?: 0.0)
+                binding.bossRageView.visibility = View.VISIBLE
+                binding.bossRageView.set(progress?.rage ?: 0.0, quest.boss?.rage?.value ?: 0.0)
             } else {
-                bossRageView.visibility = View.GONE
+                binding.bossRageView.visibility = View.GONE
             }
-            bossNameView.visibility = View.VISIBLE
-            bossHealthView.visibility = View.VISIBLE
-            collectedItemsNumberView.visibility = View.GONE
+            binding.bossNameView.visibility = View.VISIBLE
+            binding.bossHealthView.visibility = View.VISIBLE
         } else {
-            bossNameView.visibility = View.GONE
-            bossHealthView.visibility = View.GONE
-            bossRageView.visibility = View.GONE
-            collectedItemsNumberView.visibility = View.VISIBLE
+            binding.bossNameView.visibility = View.GONE
+            binding.bossHealthView.visibility = View.GONE
+            binding.bossRageView.visibility = View.GONE
 
             if (progress != null) {
                 val inflater = LayoutInflater.from(context)
                 for (collect in progress.collect ?: emptyList<QuestProgressCollect>()) {
                     val contentCollect = quest.getCollectWithKey(collect.key) ?: continue
-                    val view = inflater.inflate(R.layout.quest_collect, collectionContainer, false)
+                    val view = inflater.inflate(R.layout.quest_collect, binding.collectionContainer, false)
                     val iconView = view.findViewById(R.id.icon_view) as? SimpleDraweeView
                     val nameView = view.findViewById(R.id.name_view) as? TextView
                     val valueView = view.findViewById(R.id.value_view) as? ValueBar
@@ -104,7 +97,7 @@ class OldQuestProgressView : LinearLayout {
                     nameView?.text = contentCollect.text
                     valueView?.set(collect.count.toDouble(), contentCollect.count.toDouble())
 
-                    collectionContainer.addView(view)
+                    binding.collectionContainer.addView(view)
                 }
             }
         }
@@ -112,17 +105,14 @@ class OldQuestProgressView : LinearLayout {
 
     fun configure(user: User, userOnQuest: Boolean?) {
         val value = (user.party?.quest?.progress?.up ?: 0F).toDouble()
-        val collectedItems = user.party?.quest?.progress?.collectedItems
         if (userOnQuest == true) {
-            bossHealthView.pendingValue = value
-            bossHealthView.description = String.format("%.01f dmg pending", value)
-            bossHealthView.descriptionIconView.visibility = View.VISIBLE
-            collectedItemsNumberView.text = context.getString(R.string.quest_items_found, collectedItems)
+            binding.bossHealthView.pendingValue = value
+            binding.bossHealthView.description = String.format("%.01f dmg pending", value)
+            binding.bossHealthView.descriptionIconVisibility = View.VISIBLE
         } else {
-            bossHealthView.pendingValue = 0.0
-            bossHealthView.description = ""
-            bossHealthView.descriptionIconView.visibility = View.GONE
-            collectedItemsNumberView.text = ""
+            binding.bossHealthView.pendingValue = 0.0
+            binding.bossHealthView.description = ""
+            binding.bossHealthView.descriptionIconVisibility = View.GONE
         }
     }
 

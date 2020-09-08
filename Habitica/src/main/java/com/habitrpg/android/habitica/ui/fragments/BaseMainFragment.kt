@@ -9,6 +9,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.viewbinding.ViewBinding
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.tabs.TabLayout
 import com.habitrpg.android.habitica.R
@@ -22,7 +23,7 @@ import com.habitrpg.android.habitica.ui.activities.MainActivity
 import io.reactivex.functions.Consumer
 import javax.inject.Inject
 
-abstract class BaseMainFragment : BaseFragment() {
+abstract class BaseMainFragment<VB: ViewBinding> : BaseFragment<VB>() {
 
     @Inject
     lateinit var apiClient: ApiClient
@@ -53,7 +54,6 @@ abstract class BaseMainFragment : BaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        super.onCreateView(inflater, container, savedInstanceState)
         compositeSubscription.add(userRepository.getUser().subscribe({ user = it }, RxErrorHandler.handleEmptyError()))
 
         if (this.usesBottomNavigation) {
@@ -74,7 +74,12 @@ abstract class BaseMainFragment : BaseFragment() {
             enableToolbarScrolling()
         }
 
-        return null
+        return super.onCreateView(inflater, container, savedInstanceState)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
     }
 
     override fun onResume() {

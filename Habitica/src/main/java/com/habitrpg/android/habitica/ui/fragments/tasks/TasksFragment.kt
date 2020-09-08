@@ -12,6 +12,8 @@ import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.TagRepository
+import com.habitrpg.android.habitica.databinding.FragmentSupportMainBinding
+import com.habitrpg.android.habitica.databinding.FragmentViewpagerBinding
 import com.habitrpg.android.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.AppConfigManager
@@ -29,9 +31,14 @@ import javax.inject.Inject
 import kotlin.collections.ArrayList
 
 
-class TasksFragment : BaseMainFragment(), SearchView.OnQueryTextListener {
+class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.OnQueryTextListener {
 
-    var viewPager: androidx.viewpager.widget.ViewPager? = null
+    override var binding: FragmentViewpagerBinding? = null
+
+    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentViewpagerBinding {
+        return FragmentViewpagerBinding.inflate(inflater, container, false)
+    }
+
     @Inject
     lateinit var taskFilterHelper: TaskFilterHelper
     @Inject
@@ -53,10 +60,10 @@ class TasksFragment : BaseMainFragment(), SearchView.OnQueryTextListener {
 
     private val activeFragment: TaskRecyclerViewFragment?
         get() {
-            var fragment = viewFragmentsDictionary?.get(viewPager?.currentItem)
+            var fragment = viewFragmentsDictionary?.get(binding?.viewPager?.currentItem)
             if (fragment == null) {
                 if (isAdded) {
-                    fragment = (childFragmentManager.findFragmentByTag("android:switcher:" + R.id.viewPager + ":" + viewPager?.currentItem) as? TaskRecyclerViewFragment)
+                    fragment = (childFragmentManager.findFragmentByTag("android:switcher:" + R.id.viewPager + ":" + binding?.viewPager?.currentItem) as? TaskRecyclerViewFragment)
                 }
             }
             return fragment
@@ -66,13 +73,12 @@ class TasksFragment : BaseMainFragment(), SearchView.OnQueryTextListener {
                               savedInstanceState: Bundle?): View? {
         this.usesTabLayout = false
         this.usesBottomNavigation = true
-        super.onCreateView(inflater, container, savedInstanceState)
-        val v = inflater.inflate(R.layout.fragment_viewpager, container, false)
+        return super.onCreateView(inflater, container, savedInstanceState)
+    }
 
-        viewPager = v.findViewById(R.id.viewPager)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         loadTaskLists()
-
-        return v
     }
 
     override fun onResume() {
@@ -86,10 +92,10 @@ class TasksFragment : BaseMainFragment(), SearchView.OnQueryTextListener {
                 Task.TYPE_REWARD -> 3
                 else -> 0
             }
-            if (newItem == viewPager?.currentItem) {
+            if (newItem == binding?.viewPager?.currentItem) {
                 refresh()
             } else {
-                viewPager?.currentItem = newItem
+                binding?.viewPager?.currentItem = newItem
             }
             updateBottomBarBadges()
         }
@@ -209,7 +215,7 @@ class TasksFragment : BaseMainFragment(), SearchView.OnQueryTextListener {
     private fun loadTaskLists() {
         val fragmentManager = childFragmentManager
 
-        viewPager?.adapter = object : FragmentPagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+        binding?.viewPager?.adapter = object : FragmentPagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
             override fun getItem(position: Int): androidx.fragment.app.Fragment {
                 val fragment: TaskRecyclerViewFragment = when (position) {
@@ -235,7 +241,7 @@ class TasksFragment : BaseMainFragment(), SearchView.OnQueryTextListener {
             }
         }
 
-        viewPager?.addOnPageChangeListener(object : androidx.viewpager.widget.ViewPager.OnPageChangeListener {
+        binding?.viewPager?.addOnPageChangeListener(object : androidx.viewpager.widget.ViewPager.OnPageChangeListener {
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) { /* no-op */ }
 
             override fun onPageSelected(position: Int) {
@@ -281,19 +287,19 @@ class TasksFragment : BaseMainFragment(), SearchView.OnQueryTextListener {
                 var id = -1
                 val taskType = when (step.identifier) {
                     "habits" -> {
-                        id = R.id.tab_habits
+                        id = R.id.habits_tab
                         Task.TYPE_HABIT
                     }
                     "dailies" -> {
-                        id = R.id.tab_dailies
+                        id = R.id.dailies_tab
                         Task.TYPE_DAILY
                     }
                     "todos" -> {
-                        id = R.id.tab_todos
+                        id = R.id.todos_tab
                         Task.TYPE_TODO
                     }
                     "rewards" -> {
-                        id = R.id.tab_rewards
+                        id = R.id.rewards_tab
                         Task.TYPE_REWARD
                     }
                     else -> ""
@@ -326,7 +332,7 @@ class TasksFragment : BaseMainFragment(), SearchView.OnQueryTextListener {
 
         val additionalData = HashMap<String, Any>()
         additionalData["created task type"] = type
-        additionalData["viewed task type"] = when (viewPager?.currentItem) {
+        additionalData["viewed task type"] = when (binding?.viewPager?.currentItem) {
             0 -> Task.TYPE_HABIT
             1 -> Task.TYPE_DAILY
             2 -> Task.TYPE_TODO
@@ -371,8 +377,8 @@ class TasksFragment : BaseMainFragment(), SearchView.OnQueryTextListener {
 
     private fun switchToTaskTab(taskType: String) {
         val index = indexForTaskType(taskType)
-        if (viewPager != null && index != -1) {
-            viewPager?.currentItem = index
+        if (binding?.viewPager != null && index != -1) {
+            binding?.viewPager?.currentItem = index
             updateBottomBarBadges()
         }
     }

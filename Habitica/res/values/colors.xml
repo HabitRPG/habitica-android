@@ -94,7 +94,6 @@
 
     <color name="cell_separator">@color/separator</color>
     <color name="checklist_separator">@color/offset_background</color>
-    <color name="checkbox_fill">#50ffffff</color>
     <color name="checkbox_checked_fill">#c8ffffff</color>
     <color name="checkbox_checklist_fill">#23000000</color>
 
@@ -186,6 +185,9 @@
     <color name="equipment_overview_background">@color/gray_50</color>
     <color name="inverted_background">@color/gray_100</color>
     <color name="inverted_background_offset">@color/gray_200</color>
+
+    <color name="checkbox_fill">#50ffffff</color>
+    <color name="taskform_gray">#99edecee</color>
 
     <color name="content_95_alpha">#f2ffffff</color>
     <color name="content_80_alpha">#ccffffff</color>

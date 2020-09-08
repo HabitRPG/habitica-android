@@ -7,6 +7,7 @@ import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
+import com.habitrpg.android.habitica.databinding.FragmentRecyclerviewBinding
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
@@ -14,24 +15,21 @@ import com.habitrpg.android.habitica.ui.adapter.social.PublicGuildsRecyclerViewA
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.helpers.KeyboardUtil
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
-import com.habitrpg.android.habitica.ui.helpers.bindView
-import com.habitrpg.android.habitica.ui.helpers.resetViews
 import io.reactivex.functions.Consumer
 import javax.inject.Inject
 
-class PublicGuildsFragment : BaseMainFragment(), SearchView.OnQueryTextListener {
+class PublicGuildsFragment : BaseMainFragment<FragmentRecyclerviewBinding>(), SearchView.OnQueryTextListener {
 
     @Inject
     lateinit var socialRepository: SocialRepository
 
-    private val recyclerView: androidx.recyclerview.widget.RecyclerView? by bindView(R.id.recyclerView)
+    override var binding: FragmentRecyclerviewBinding? = null
+
+    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentRecyclerviewBinding {
+        return FragmentRecyclerviewBinding.inflate(inflater, container, false)
+    }
 
     private var viewAdapter = PublicGuildsRecyclerViewAdapter(null, true)
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        super.onCreateView(inflater, container, savedInstanceState)
-        return container?.inflate(R.layout.fragment_recyclerview)
-    }
 
     override fun injectFragment(component: UserComponent) {
         component.inject(this)
@@ -40,17 +38,15 @@ class PublicGuildsFragment : BaseMainFragment(), SearchView.OnQueryTextListener 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        resetViews()
-
-        recyclerView?.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(activity)
-        recyclerView?.addItemDecoration(androidx.recyclerview.widget.DividerItemDecoration(activity, androidx.recyclerview.widget.DividerItemDecoration.VERTICAL))
+        binding?.recyclerView?.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(activity)
+        binding?.recyclerView?.addItemDecoration(androidx.recyclerview.widget.DividerItemDecoration(activity, androidx.recyclerview.widget.DividerItemDecoration.VERTICAL))
         viewAdapter = PublicGuildsRecyclerViewAdapter(null, true)
         compositeSubscription.add(socialRepository.getGroupMemberships()
                 .map { it.map { membership -> membership.groupID } }
                 .subscribeWithErrorHandler({ viewAdapter.setMemberGuildIDs(it) }))
         viewAdapter.socialRepository = socialRepository
-        recyclerView?.adapter = viewAdapter
-        recyclerView?.itemAnimator = SafeDefaultItemAnimator()
+        binding?.recyclerView?.adapter = viewAdapter
+        binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
         this.fetchGuilds()
     }
 

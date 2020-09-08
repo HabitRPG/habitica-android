@@ -8,26 +8,27 @@ import android.view.ViewGroup
 
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
+import com.habitrpg.android.habitica.databinding.FragmentRecyclerviewBinding
+import com.habitrpg.android.habitica.databinding.FragmentViewpagerBinding
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
-import com.habitrpg.android.habitica.ui.helpers.bindView
-import com.habitrpg.android.habitica.ui.helpers.resetViews
+class StableFragment : BaseMainFragment<FragmentViewpagerBinding>() {
 
-class StableFragment : BaseMainFragment() {
+    override var binding: FragmentViewpagerBinding? = null
 
-    private val viewPager: androidx.viewpager.widget.ViewPager? by bindView(R.id.viewPager)
+    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentViewpagerBinding {
+        return FragmentViewpagerBinding.inflate(inflater, container, false)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         this.usesTabLayout = true
         this.hidesToolbar = true
-        super.onCreateView(inflater, container, savedInstanceState)
-        return inflater.inflate(R.layout.fragment_viewpager, container, false)
+        return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        resetViews()
-        viewPager?.currentItem = 0
+        binding?.viewPager?.currentItem = 0
 
         setViewPagerAdapter()
     }
@@ -39,7 +40,7 @@ class StableFragment : BaseMainFragment() {
     private fun setViewPagerAdapter() {
         val fragmentManager = childFragmentManager
 
-        viewPager?.adapter = object : FragmentPagerAdapter(fragmentManager) {
+        binding?.viewPager?.adapter = object : FragmentPagerAdapter(fragmentManager) {
 
             override fun getItem(position: Int): androidx.fragment.app.Fragment {
 
@@ -71,7 +72,7 @@ class StableFragment : BaseMainFragment() {
                 } ?:  ""
             }
         }
-        tabLayout?.setupWithViewPager(viewPager)
+        tabLayout?.setupWithViewPager(binding?.viewPager)
     }
 
 

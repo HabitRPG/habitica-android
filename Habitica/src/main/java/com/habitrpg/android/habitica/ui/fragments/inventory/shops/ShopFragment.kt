@@ -10,6 +10,8 @@ import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
+import com.habitrpg.android.habitica.databinding.FragmentRecyclerviewBinding
+import com.habitrpg.android.habitica.databinding.FragmentViewpagerBinding
 import com.habitrpg.android.habitica.events.GearPurchasedEvent
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
@@ -21,13 +23,10 @@ import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.adapter.inventory.ShopRecyclerAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
-import io.reactivex.functions.BiFunction
-import io.reactivex.functions.Consumer
-import kotlinx.android.synthetic.main.fragment_recyclerview.*
 import org.greenrobot.eventbus.Subscribe
 import javax.inject.Inject
 
-class ShopFragment : BaseFragment() {
+class ShopFragment : BaseFragment<FragmentRecyclerviewBinding>() {
 
     var adapter: ShopRecyclerAdapter? = null
     var shopIdentifier: String? = null
@@ -46,9 +45,10 @@ class ShopFragment : BaseFragment() {
 
     private var gearCategories: MutableList<ShopCategory>? = null
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        super.onCreateView(inflater, container, savedInstanceState)
-        return inflater.inflate(R.layout.fragment_recyclerview, container, false)
+    override var binding: FragmentRecyclerviewBinding? = null
+
+    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentRecyclerviewBinding {
+        return FragmentRecyclerviewBinding.inflate(inflater, container, false)
     }
 
     override fun onDestroyView() {
@@ -59,17 +59,17 @@ class ShopFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        recyclerView.setBackgroundResource(R.color.content_background)
+        binding?.recyclerView?.setBackgroundResource(R.color.content_background)
 
-        adapter = recyclerView.adapter as? ShopRecyclerAdapter
+        adapter = binding?.recyclerView?.adapter as? ShopRecyclerAdapter
         if (adapter == null) {
             adapter = ShopRecyclerAdapter(configManager)
             adapter?.context = context
-            recyclerView.adapter = adapter
-            recyclerView.itemAnimator = SafeDefaultItemAnimator()
+            binding?.recyclerView?.adapter = adapter
+            binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
         }
 
-        if (recyclerView.layoutManager == null) {
+        if (binding?.recyclerView?.layoutManager == null) {
             layoutManager = GridLayoutManager(context, 2)
             layoutManager?.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
                 override fun getSpanSize(position: Int): Int {
@@ -80,7 +80,7 @@ class ShopFragment : BaseFragment() {
                     }
                 }
             }
-            recyclerView.layoutManager = layoutManager
+            binding?.recyclerView?.layoutManager = layoutManager
         }
 
         if (savedInstanceState != null) {

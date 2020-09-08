@@ -21,7 +21,6 @@ import com.habitrpg.android.habitica.ui.adapter.tasks.RewardsRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import io.reactivex.functions.Consumer
-import kotlinx.android.synthetic.main.fragment_refresh_recyclerview.*
 import java.util.*
 
 class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
@@ -48,9 +47,9 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
 
         view.post { setGridSpanCount(view.width) }
         context?.let {
-            recyclerView.setBackgroundColor(ContextCompat.getColor(it, R.color.white))
+            binding?.recyclerView?.setBackgroundColor(ContextCompat.getColor(it, R.color.white))
         }
-        recyclerView.itemAnimator = SafeDefaultItemAnimator()
+        binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
 
         compositeSubscription.add(inventoryRepository.getInAppRewards().subscribe({
             (recyclerAdapter as? RewardsRecyclerViewAdapter)?.updateItemRewards(it)
@@ -61,7 +60,7 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
             val intent = Intent(activity, SkillMemberActivity::class.java)
             startActivityForResult(intent, 11)
         }, RxErrorHandler.handleEmptyError())?.let { compositeSubscription.add(it) }
-        recyclerAdapter?.brokenTaskEvents?.subscribeWithErrorHandler({ showBrokenChallengeDialog(it) })?.let { compositeSubscription.add(it) }
+        recyclerAdapter?.brokenTaskEvents?.subscribeWithErrorHandler { showBrokenChallengeDialog(it) }?.let { compositeSubscription.add(it) }
     }
 
     override fun getLayoutManager(context: Context?): LinearLayoutManager {
@@ -69,11 +68,11 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
     }
 
     override fun onRefresh() {
-        refreshLayout.isRefreshing = true
+        binding?.refreshLayout?.isRefreshing = true
         compositeSubscription.add(userRepository.retrieveUser(true, true)
-                .flatMap<List<ShopItem>> { inventoryRepository.retrieveInAppRewards() }
+                .flatMap { inventoryRepository.retrieveInAppRewards() }
                 .doOnTerminate {
-                    refreshLayout?.isRefreshing = false
+                    binding?.refreshLayout?.isRefreshing = false
                 }.subscribe({ }, RxErrorHandler.handleEmptyError()))
     }
 

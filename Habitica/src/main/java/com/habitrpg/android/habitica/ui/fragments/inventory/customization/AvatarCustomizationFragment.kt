@@ -9,22 +9,24 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.CustomizationRepository
 import com.habitrpg.android.habitica.data.InventoryRepository
+import com.habitrpg.android.habitica.databinding.FragmentRecyclerviewBinding
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.android.habitica.models.inventory.Customization
-import com.habitrpg.android.habitica.models.responses.UnlockResponse
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.adapter.CustomizationRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.helpers.MarginDecoration
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import io.reactivex.Flowable
-import io.reactivex.functions.Consumer
-import io.realm.RealmResults
-import kotlinx.android.synthetic.main.fragment_recyclerview.*
 import javax.inject.Inject
 
-class AvatarCustomizationFragment : BaseMainFragment() {
+class AvatarCustomizationFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
+
+    override var binding: FragmentRecyclerviewBinding? = null
+
+    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentRecyclerviewBinding {
+        return FragmentRecyclerviewBinding.inflate(inflater, container, false)
+    }
 
     @Inject
     lateinit var customizationRepository: CustomizationRepository
@@ -40,8 +42,6 @@ class AvatarCustomizationFragment : BaseMainFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        super.onCreateView(inflater, container, savedInstanceState)
-        val view = inflater.inflate(R.layout.fragment_recyclerview, container, false)
 
         compositeSubscription.add(adapter.getSelectCustomizationEvents()
                 .flatMap { customization ->
@@ -74,7 +74,7 @@ class AvatarCustomizationFragment : BaseMainFragment() {
                 .subscribe({ }, RxErrorHandler.handleEmptyError()))
 
 
-        return view
+        return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -98,17 +98,17 @@ class AvatarCustomizationFragment : BaseMainFragment() {
             }
         }
         setGridSpanCount(view.width)
-        recyclerView.layoutManager = layoutManager
+        binding?.recyclerView?.layoutManager = layoutManager
 
-        recyclerView.addItemDecoration(MarginDecoration(context))
+        binding?.recyclerView?.addItemDecoration(MarginDecoration(context))
 
-        recyclerView.adapter = adapter
-        recyclerView.itemAnimator = SafeDefaultItemAnimator()
+        binding?.recyclerView?.adapter = adapter
+        binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
         this.loadCustomizations()
 
-        compositeSubscription.add(userRepository.getUser().subscribeWithErrorHandler({
+        compositeSubscription.add(userRepository.getUser().subscribeWithErrorHandler {
             updateUser(it)
-        }))
+        })
     }
 
     override fun onDestroy() {

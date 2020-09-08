@@ -7,23 +7,23 @@ import android.view.View
 import android.view.ViewGroup
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.databinding.FragmentIntroBinding
+import com.habitrpg.android.habitica.databinding.FragmentSetupTasksBinding
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 
-class IntroFragment : BaseFragment() {
+class IntroFragment : BaseFragment<FragmentIntroBinding>() {
 
-    private var binding: FragmentIntroBinding? = null
+    override var binding: FragmentIntroBinding? = null
+
+    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentIntroBinding {
+        return FragmentIntroBinding.inflate(inflater, container, false)
+    }
+
     private var image: Drawable? = null
     private var titleImage: Drawable? = null
     private var subtitle: String? = null
     private var title: String? = null
     private var description: String? = null
     private var backgroundColor: Int? = null
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        super.onCreateView(inflater, container, savedInstanceState)
-        binding = FragmentIntroBinding.inflate(layoutInflater, container, false)
-        return binding?.root
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

@@ -3,29 +3,17 @@ package com.habitrpg.android.habitica.ui.viewHolders
 import android.content.Context
 import android.graphics.drawable.BitmapDrawable
 import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.HabiticaBaseApplication
-import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.databinding.RowShopitemBinding
 import com.habitrpg.android.habitica.extensions.isUsingNightModeResources
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
-import com.habitrpg.android.habitica.ui.helpers.bindView
-import com.habitrpg.android.habitica.ui.views.CurrencyView
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.shops.PurchaseDialog
 
 class ShopItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
-
-    private val imageView: SimpleDraweeView by bindView(itemView, R.id.imageView)
-    private val buyButton: View by bindView(itemView, R.id.buyButton)
-    private val priceLabel: CurrencyView by bindView(itemView, R.id.priceLabel)
-    private val unlockLabel: TextView by bindView(itemView, R.id.unlockLabel)
-    private val itemDetailIndicator: TextView by bindView(itemView, R.id.item_detail_indicator)
-    private val pinIndicator: ImageView by bindView(itemView, R.id.pin_indicator)
-
+    private val binding = RowShopitemBinding.bind(itemView)
     var shopIdentifier: String? = null
     private var item: ShopItem? = null
 
@@ -37,64 +25,64 @@ class ShopItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), Vi
     set(value) {
         field = value
         if (value > 0) {
-            itemDetailIndicator.text = value.toString()
-            itemDetailIndicator.background = if (context.isUsingNightModeResources()) {
+            binding.itemDetailIndicator.text = value.toString()
+            binding.itemDetailIndicator.background = if (context.isUsingNightModeResources()) {
                 BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfItemIndicatorNumberDark())
             } else {
                 BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfItemIndicatorNumber())
             }
-            itemDetailIndicator.visibility = View.VISIBLE
+            binding.itemDetailIndicator.visibility = View.VISIBLE
         }
     }
 
     var isPinned = false
     set(value) {
         field =value
-        pinIndicator.visibility = if (isPinned) View.VISIBLE else View.GONE
+        binding.pinIndicator.visibility = if (isPinned) View.VISIBLE else View.GONE
     }
 
     init {
         itemView.setOnClickListener(this)
         itemView.isClickable = true
-        pinIndicator.setImageBitmap(HabiticaIconsHelper.imageOfPinnedItem())
+        binding.pinIndicator.setImageBitmap(HabiticaIconsHelper.imageOfPinnedItem())
     }
 
     fun bind(item: ShopItem, canBuy: Boolean) {
         this.item = item
-        buyButton.visibility = View.VISIBLE
+        binding.buyButton.visibility = View.VISIBLE
 
-        DataBindingUtils.loadImage(this.imageView, item.imageName?.replace("_locked", ""))
+        DataBindingUtils.loadImage(binding.imageView, item.imageName?.replace("_locked", ""))
 
-        itemDetailIndicator.text = null
-        itemDetailIndicator.visibility = View.GONE
+        binding.itemDetailIndicator.text = null
+        binding.itemDetailIndicator.visibility = View.GONE
 
         val lockedReason = item.shortLockedReason(context)
         if (!item.locked || lockedReason == null) {
-            priceLabel.text = item.value.toString()
-            priceLabel.currency = item.currency
+            binding.priceLabel.text = item.value.toString()
+            binding.priceLabel.currency = item.currency
             if (item.currency == null) {
-                buyButton.visibility = View.GONE
+                binding.buyButton.visibility = View.GONE
             }
-            priceLabel.visibility = View.VISIBLE
-            unlockLabel.visibility = View.GONE
+            binding.priceLabel.visibility = View.VISIBLE
+            binding.unlockLabel.visibility = View.GONE
         } else {
-            unlockLabel.text = lockedReason
-            priceLabel.visibility = View.GONE
-            unlockLabel.visibility = View.VISIBLE
+            binding.unlockLabel.text = lockedReason
+            binding.priceLabel.visibility = View.GONE
+            binding.unlockLabel.visibility = View.VISIBLE
         }
         if (item.locked) {
-            itemDetailIndicator.background = if (context.isUsingNightModeResources()) {
+            binding.itemDetailIndicator.background = if (context.isUsingNightModeResources()) {
                 BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfItemIndicatorLockedDark())
             } else {
                 BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfItemIndicatorLocked())
             }
-            itemDetailIndicator.visibility = View.VISIBLE
+            binding.itemDetailIndicator.visibility = View.VISIBLE
         } else if (item.isLimited) {
-            itemDetailIndicator.background = BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfItemIndicatorLimited())
-            itemDetailIndicator.visibility = View.VISIBLE
+            binding.itemDetailIndicator.background = BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfItemIndicatorLimited())
+            binding.itemDetailIndicator.visibility = View.VISIBLE
         }
 
-        priceLabel.isLocked = item.locked || !canBuy
+        binding.priceLabel.isLocked = item.locked || !canBuy
     }
 
     override fun onClick(view: View) {
@@ -111,6 +99,6 @@ class ShopItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), Vi
     }
 
     fun hidePinIndicator() {
-        pinIndicator.visibility = View.GONE
+        binding.pinIndicator.visibility = View.GONE
     }
 }

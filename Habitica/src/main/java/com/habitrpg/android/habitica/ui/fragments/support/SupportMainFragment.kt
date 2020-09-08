@@ -1,9 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments.support
 
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,7 +11,6 @@ import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.FAQRepository
 import com.habitrpg.android.habitica.databinding.FragmentSupportMainBinding
 import com.habitrpg.android.habitica.helpers.AppConfigManager
-import com.habitrpg.android.habitica.helpers.AppTestingLevel
 import com.habitrpg.android.habitica.helpers.DeviceName
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.modules.AppModule
@@ -24,10 +20,15 @@ import javax.inject.Inject
 import javax.inject.Named
 
 
-class SupportMainFragment : BaseMainFragment() {
+class SupportMainFragment : BaseMainFragment<FragmentSupportMainBinding>() {
     private var deviceInfo: DeviceName.DeviceInfo? = null
 
-    private lateinit var binding: FragmentSupportMainBinding
+    override var binding: FragmentSupportMainBinding? = null
+
+    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentSupportMainBinding {
+        return FragmentSupportMainBinding.inflate(inflater, container, false)
+    }
+
     @field:[Inject Named(AppModule.NAMED_USER_ID)]
     lateinit var userId: String
     @Inject
@@ -38,20 +39,18 @@ class SupportMainFragment : BaseMainFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         hidesToolbar = true
-        super.onCreateView(inflater, container, savedInstanceState)
-        binding = FragmentSupportMainBinding.inflate(inflater, container, false)
-        return binding.root
+        return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.usingHabiticaWrapper.setOnClickListener {
+        binding?.usingHabiticaWrapper?.setOnClickListener {
             MainNavigationController.navigate(R.id.FAQOverviewFragment)
         }
-        binding.bugsFixesWrapper.setOnClickListener {
+        binding?.bugsFixesWrapper?.setOnClickListener {
             MainNavigationController.navigate(R.id.bugFixFragment)
         }
-        binding.suggestionsFeedbackWrapper.setOnClickListener {
+        binding?.suggestionsFeedbackWrapper?.setOnClickListener {
             if (appConfigManager.feedbackURL().isNotBlank()) {
                 val uriUrl = appConfigManager.feedbackURL().toUri()
                 val launchBrowser = Intent(Intent.ACTION_VIEW, uriUrl)
@@ -63,7 +62,7 @@ class SupportMainFragment : BaseMainFragment() {
             deviceInfo = DeviceName.getDeviceInfo(context)
         }.subscribe())
 
-        binding.resetTutorialButton.setOnClickListener {
+        binding?.resetTutorialButton?.setOnClickListener {
             userRepository.resetTutorial(user)
         }
     }

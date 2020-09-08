@@ -19,7 +19,6 @@ import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import io.reactivex.functions.Action
 import io.reactivex.functions.Consumer
-import kotlinx.android.synthetic.main.activity_fixcharacter.*
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -114,19 +113,19 @@ class FixCharacterValuesActivity: BaseActivity() {
 
         when (stats.habitClass) {
             Stats.WARRIOR -> {
-                setIconBackground(levelIconBackgroundView, ContextCompat.getColor(this, R.color.red_500))
+                setIconBackground(binding.levelIconBackgroundView, ContextCompat.getColor(this, R.color.red_500))
                 binding.levelIconView.setImageBitmap(HabiticaIconsHelper.imageOfWarriorLightBg())
             }
             Stats.MAGE -> {
-                setIconBackground(levelIconBackgroundView, ContextCompat.getColor(this, R.color.blue_500))
+                setIconBackground(binding.levelIconBackgroundView, ContextCompat.getColor(this, R.color.blue_500))
                 binding.levelIconView.setImageBitmap(HabiticaIconsHelper.imageOfMageLightBg())
             }
             Stats.HEALER -> {
-                setIconBackground(levelIconBackgroundView, ContextCompat.getColor(this, R.color.yellow_500))
+                setIconBackground(binding.levelIconBackgroundView, ContextCompat.getColor(this, R.color.yellow_500))
                 binding.levelIconView.setImageBitmap(HabiticaIconsHelper.imageOfHealerLightBg())
             }
             Stats.ROGUE -> {
-                setIconBackground(levelIconBackgroundView, ContextCompat.getColor(this, R.color.brand_500))
+                setIconBackground(binding.levelIconBackgroundView, ContextCompat.getColor(this, R.color.brand_500))
                 binding.levelIconView.setImageBitmap(HabiticaIconsHelper.imageOfRogueLightBg())
             }
         }

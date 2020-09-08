@@ -48,7 +48,7 @@
             android:background="@drawable/edittext"
             android:textColorHint="@color/text_primary">
             <com.habitrpg.android.habitica.ui.views.HabiticaAutocompleteTextView
-                android:id="@+id/group_name_edittext"
+                android:id="@+id/group_name_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -75,7 +75,7 @@
                 android:textColorHint="@color/text_primary">
 
                 <com.habitrpg.android.habitica.ui.views.HabiticaAutocompleteTextView
-                    android:id="@+id/group_description_edittext"
+                    android:id="@+id/group_description_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"

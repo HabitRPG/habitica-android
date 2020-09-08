@@ -17,6 +17,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
+import com.habitrpg.android.habitica.databinding.DrawerMainBinding
 import com.habitrpg.android.habitica.extensions.getRemainingString
 import com.habitrpg.android.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.extensions.isUsingNightModeResources
@@ -39,7 +40,6 @@ import com.habitrpg.android.habitica.ui.menu.HabiticaDrawerItem
 import com.habitrpg.android.habitica.ui.viewmodels.NotificationsViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import io.reactivex.disposables.CompositeDisposable
-import kotlinx.android.synthetic.main.drawer_main.*
 import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -47,6 +47,8 @@ import kotlin.collections.ArrayList
 
 
 class NavigationDrawerFragment : DialogFragment() {
+
+    private var binding: DrawerMainBinding? = null
 
     @Inject
     lateinit var socialRepository: SocialRepository
@@ -87,11 +89,11 @@ class NavigationDrawerFragment : DialogFragment() {
         val quest = this.quest
         val questContent = this.questContent
         if (quest == null || questContent == null || !quest.active) {
-            questMenuView.visibility = View.GONE
+            binding?.questMenuView?.visibility = View.GONE
             context?.let {
                 adapter.tintColor = it.getThemeColor(R.attr.colorPrimary)
                 if (context?.isUsingNightModeResources() == true) {
-                    adapter.backgroundTintColor = ContextCompat.getColor(it, R.color.gray_50)
+                    adapter.backgroundTintColor = ContextCompat.getColor(it, R.color.gray_10)
                 } else {
                     adapter.backgroundTintColor = it.getThemeColor(R.attr.colorPrimary)
                 }
@@ -101,18 +103,18 @@ class NavigationDrawerFragment : DialogFragment() {
             }
             return
         }
-        questMenuView.visibility = View.VISIBLE
+        binding?.questMenuView?.visibility = View.VISIBLE
 
-        menuHeaderView.setBackgroundColor(questContent.colors?.darkColor ?: 0)
-        questMenuView.configure(quest)
-        questMenuView.configure(questContent)
+        binding?.menuHeaderView?.setBackgroundColor(questContent.colors?.darkColor ?: 0)
+        binding?.questMenuView?.configure(quest)
+        binding?.questMenuView?.configure(questContent)
         adapter.tintColor = questContent.colors?.extraLightColor ?: 0
         adapter.backgroundTintColor = questContent.colors?.darkColor ?: 0
 
 
-        messagesBadge.visibility = View.GONE
-        settingsBadge.visibility = View.GONE
-        notificationsBadge.visibility = View.GONE
+        binding?.messagesBadge?.visibility = View.GONE
+        binding?.settingsBadge?.visibility = View.GONE
+        binding?.notificationsBadge?.visibility = View.GONE
 
         /* Reenable this once the boss art can be displayed correctly.
 
@@ -122,14 +124,14 @@ class NavigationDrawerFragment : DialogFragment() {
         } else {
             questMenuView.showBossArt()
         }*/
-        questMenuView.hideBossArt()
+        binding?.questMenuView?.hideBossArt()
 
         adapter.items.filter { it.identifier == SIDEBAR_TAVERN }.forEach {
             it.subtitle = context?.getString(R.string.active_world_boss)
         }
         adapter.notifyDataSetChanged()
 
-        questMenuView.setOnClickListener {
+        binding?.questMenuView?.setOnClickListener {
             val context = this.context
             if (context != null) {
                 TavernDetailFragment.showWorldBossInfoDialog(context, questContent)
@@ -165,9 +167,10 @@ class NavigationDrawerFragment : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding = DrawerMainBinding.bind(view)
 
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
+        binding?.recyclerView?.adapter = adapter
+        binding?.recyclerView?.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
         initializeMenuItems()
 
         subscriptions?.add(adapter.getItemSelectionEvents().subscribe({
@@ -186,9 +189,9 @@ class NavigationDrawerFragment : DialogFragment() {
             updateUser(it)
         }, RxErrorHandler.handleEmptyError()))
 
-        messagesButtonWrapper.setOnClickListener { setSelection(R.id.inboxFragment) }
-        settingsButtonWrapper.setOnClickListener { setSelection(R.id.prefsActivity) }
-        notificationsButtonWrapper.setOnClickListener { startNotificationsActivity() }
+        binding?.messagesButtonWrapper?.setOnClickListener { setSelection(R.id.inboxFragment) }
+        binding?.settingsButtonWrapper?.setOnClickListener { setSelection(R.id.prefsActivity) }
+        binding?.notificationsButtonWrapper?.setOnClickListener { startNotificationsActivity() }
     }
 
     private fun updateUser(user: User) {
@@ -196,8 +199,8 @@ class NavigationDrawerFragment : DialogFragment() {
         setSettingsCount(if (user.flags?.isVerifiedUsername != true) 1 else 0 )
         setDisplayName(user.profile?.name)
         setUsername(user.formattedUsername)
-        avatarView.setAvatar(user)
-        questMenuView.configure(user)
+        binding?.avatarView?.setAvatar(user)
+        binding?.questMenuView?.configure(user)
 
         val tavernItem = getItemWithIdentifier(SIDEBAR_TAVERN)
         if (user.preferences?.sleep == true) {
@@ -459,17 +462,15 @@ class NavigationDrawerFragment : DialogFragment() {
     }
 
     private fun setDisplayName(name: String?) {
-        if (toolbarTitle != null) {
-            if (name != null && name.isNotEmpty()) {
-                toolbarTitle.text = name
-            } else {
-                toolbarTitle.text = context?.getString(R.string.app_name)
-            }
+        if (name != null && name.isNotEmpty()) {
+            binding?.toolbarTitle?.text = name
+        } else {
+            binding?.toolbarTitle?.text = context?.getString(R.string.app_name)
         }
     }
 
     private fun setUsername(name: String?) {
-        usernameTextView.text = name
+        binding?.usernameTextView?.text = name
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -479,10 +480,10 @@ class NavigationDrawerFragment : DialogFragment() {
 
     private fun setNotificationsCount(unreadNotifications: Int) {
         if (unreadNotifications == 0) {
-            notificationsBadge.visibility = View.GONE
+            binding?.notificationsBadge?.visibility = View.GONE
         } else {
-            notificationsBadge.visibility = View.VISIBLE
-            notificationsBadge.text = unreadNotifications.toString()
+            binding?.notificationsBadge?.visibility = View.VISIBLE
+            binding?.notificationsBadge?.text = unreadNotifications.toString()
         }
     }
 
@@ -494,26 +495,26 @@ class NavigationDrawerFragment : DialogFragment() {
                 it.getThemeColor(R.attr.colorAccent)
             }
 
-            val bg = notificationsBadge.background as? GradientDrawable
+            val bg = binding?.notificationsBadge?.background as? GradientDrawable
             bg?.color = ColorStateList.valueOf(color)
         }
     }
 
     private fun setMessagesCount(unreadMessages: Int) {
         if (unreadMessages == 0) {
-            messagesBadge.visibility = View.GONE
+            binding?.messagesBadge?.visibility = View.GONE
         } else {
-            messagesBadge.visibility = View.VISIBLE
-            messagesBadge.text = unreadMessages.toString()
+            binding?.messagesBadge?.visibility = View.VISIBLE
+            binding?.messagesBadge?.text = unreadMessages.toString()
         }
     }
 
     private fun setSettingsCount(count: Int) {
         if (count == 0) {
-            settingsBadge.visibility = View.GONE
+            binding?.settingsBadge?.visibility = View.GONE
         } else {
-            settingsBadge.visibility = View.VISIBLE
-            settingsBadge.text = count.toString()
+            binding?.settingsBadge?.visibility = View.VISIBLE
+            binding?.settingsBadge?.text = count.toString()
         }
     }
 

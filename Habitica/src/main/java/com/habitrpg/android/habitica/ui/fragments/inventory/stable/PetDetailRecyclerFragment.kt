@@ -7,50 +7,49 @@ import android.view.ViewGroup
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
+import com.habitrpg.android.habitica.databinding.FragmentRecyclerviewBinding
 import com.habitrpg.android.habitica.events.commands.FeedCommand
 import com.habitrpg.android.habitica.extensions.getTranslatedType
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.android.habitica.models.inventory.*
-import com.habitrpg.android.habitica.models.user.Items
+import com.habitrpg.android.habitica.models.inventory.Egg
+import com.habitrpg.android.habitica.models.inventory.HatchingPotion
+import com.habitrpg.android.habitica.models.inventory.Pet
+import com.habitrpg.android.habitica.models.inventory.StableSection
 import com.habitrpg.android.habitica.models.user.OwnedMount
-import com.habitrpg.android.habitica.models.user.OwnedObject
 import com.habitrpg.android.habitica.models.user.OwnedPet
 import com.habitrpg.android.habitica.ui.adapter.inventory.PetDetailRecyclerAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemRecyclerFragment
 import com.habitrpg.android.habitica.ui.helpers.MarginDecoration
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
-import com.habitrpg.android.habitica.ui.helpers.bindView
-import com.habitrpg.android.habitica.ui.helpers.resetViews
-import io.reactivex.functions.BiFunction
-import io.reactivex.functions.Consumer
 import io.reactivex.rxkotlin.combineLatest
-import io.realm.RealmResults
 import org.greenrobot.eventbus.Subscribe
-import java.util.ArrayList
 import javax.inject.Inject
 
-class PetDetailRecyclerFragment : BaseMainFragment() {
+class PetDetailRecyclerFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
 
     @Inject
     lateinit var inventoryRepository: InventoryRepository
 
-    private val recyclerView: androidx.recyclerview.widget.RecyclerView by bindView(R.id.recyclerView)
 
     var adapter: PetDetailRecyclerAdapter = PetDetailRecyclerAdapter()
-    var animalType: String? = null
-    var animalGroup: String? = null
-    var animalColor: String? = null
+    private var animalType: String? = null
+    private var animalGroup: String? = null
+    private var animalColor: String? = null
     internal var layoutManager: androidx.recyclerview.widget.GridLayoutManager? = null
+
+    override var binding: FragmentRecyclerviewBinding? = null
+
+    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentRecyclerviewBinding {
+        return FragmentRecyclerviewBinding.inflate(inflater, container, false)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         this.usesTabLayout = false
-        super.onCreateView(inflater, container, savedInstanceState)
         if (savedInstanceState != null) {
             this.animalType = savedInstanceState.getString(ANIMAL_TYPE_KEY, "")
         }
-
-        return inflater.inflate(R.layout.fragment_recyclerview, container, false)
+        return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     override fun onDestroy() {
@@ -75,9 +74,6 @@ class PetDetailRecyclerFragment : BaseMainFragment() {
             animalColor = args.color
         }
 
-
-        resetViews()
-
         layoutManager = androidx.recyclerview.widget.GridLayoutManager(getActivity(), 2)
         layoutManager?.spanSizeLookup = object : androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
@@ -88,19 +84,19 @@ class PetDetailRecyclerFragment : BaseMainFragment() {
                 }
             }
         }
-        recyclerView.layoutManager = layoutManager
-        recyclerView.addItemDecoration(MarginDecoration(getActivity()))
+        binding?.recyclerView?.layoutManager = layoutManager
+        binding?.recyclerView?.addItemDecoration(MarginDecoration(getActivity()))
         adapter.animalIngredientsRetriever = {
             val egg = inventoryRepository.getItems(Egg::class.java, arrayOf(it.animal)).firstElement().blockingGet().firstOrNull()
             val potion = inventoryRepository.getItems(HatchingPotion::class.java, arrayOf(it.color)).firstElement().blockingGet().firstOrNull()
             Pair(egg as? Egg, potion as? HatchingPotion)
         }
-        recyclerView.adapter = adapter
-        recyclerView.itemAnimator = SafeDefaultItemAnimator()
+        binding?.recyclerView?.adapter = adapter
+        binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
         this.loadItems()
 
         compositeSubscription.add(adapter.getEquipFlowable()
-                .flatMap<Items> { key -> inventoryRepository.equip(user, "pet", key) }
+                .flatMap { key -> inventoryRepository.equip(user, "pet", key) }
                 .subscribe({ }, RxErrorHandler.handleEmptyError()))
 
 
@@ -183,7 +179,7 @@ class PetDetailRecyclerFragment : BaseMainFragment() {
             fragment.isHatching = false
             fragment.itemType = "food"
             fragment.itemTypeText = getString(R.string.food)
-            fragmentManager?.let { fragment.show(it, "feedDialog") }
+            parentFragmentManager?.let { fragment.show(it, "feedDialog") }
         }
     }
 

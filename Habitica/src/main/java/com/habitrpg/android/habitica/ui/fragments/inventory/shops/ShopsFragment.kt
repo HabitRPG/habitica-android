@@ -10,17 +10,17 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
+import com.habitrpg.android.habitica.databinding.FragmentNoPartyBinding
+import com.habitrpg.android.habitica.databinding.FragmentViewpagerBinding
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.shops.Shop
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.views.CurrencyViews
-import io.reactivex.functions.Consumer
-import kotlinx.android.synthetic.main.fragment_viewpager.*
 import javax.inject.Inject
 
 
-open class ShopsFragment : BaseMainFragment() {
+open class ShopsFragment : BaseMainFragment<FragmentViewpagerBinding>() {
 
     protected var lockTab: Int? = null
     @Inject
@@ -31,16 +31,21 @@ open class ShopsFragment : BaseMainFragment() {
         view
     }
 
+    override var binding: FragmentViewpagerBinding? = null
+
+    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentViewpagerBinding {
+        return FragmentViewpagerBinding.inflate(inflater, container, false)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         this.usesTabLayout = true
         this.hidesToolbar = true
-        super.onCreateView(inflater, container, savedInstanceState)
-        return inflater.inflate(R.layout.fragment_viewpager, container, false)
+        return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewPager.currentItem = 0
+        binding?.viewPager?.currentItem = 0
         setViewPagerAdapter()
         toolbarAccessoryContainer?.addView(currencyView)
 
@@ -48,13 +53,13 @@ open class ShopsFragment : BaseMainFragment() {
             arguments?.let {
                 val args = ShopsFragmentArgs.fromBundle(it)
                 if (args.selectedTab > 0) {
-                    viewPager.currentItem = args.selectedTab
+                    binding?.viewPager?.currentItem = args.selectedTab
                 }
             }
         } else {
             this.usesTabLayout = false
             tabLayout?.visibility = View.GONE
-            viewPager.currentItem = lockTab ?: 0
+            binding?.viewPager?.currentItem = lockTab ?: 0
         }
 
         context?.let { FirebaseAnalytics.getInstance(it).logEvent("open_shop", bundleOf(Pair("shopIndex", lockTab))) }
@@ -79,7 +84,7 @@ open class ShopsFragment : BaseMainFragment() {
     private fun setViewPagerAdapter() {
         val fragmentManager = childFragmentManager
 
-        viewPager?.adapter = object : FragmentPagerAdapter(fragmentManager) {
+        binding?.viewPager?.adapter = object : FragmentPagerAdapter(fragmentManager) {
 
             override fun getItem(position: Int): androidx.fragment.app.Fragment {
 
@@ -110,8 +115,8 @@ open class ShopsFragment : BaseMainFragment() {
             }
         }
 
-        if (viewPager != null) {
-            tabLayout?.setupWithViewPager(viewPager)
+        if (binding?.viewPager != null) {
+            tabLayout?.setupWithViewPager(binding?.viewPager)
         }
     }
 

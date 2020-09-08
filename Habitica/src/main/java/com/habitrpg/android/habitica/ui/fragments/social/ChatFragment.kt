@@ -13,6 +13,7 @@ import com.habitrpg.android.habitica.MainNavDirections
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.databinding.FragmentChatBinding
+import com.habitrpg.android.habitica.databinding.FragmentViewpagerBinding
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
@@ -32,9 +33,14 @@ import io.realm.RealmResults
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class ChatFragment : BaseFragment() {
+class ChatFragment : BaseFragment<FragmentChatBinding>() {
 
-    private lateinit var binding: FragmentChatBinding
+    override var binding: FragmentChatBinding? = null
+
+    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentChatBinding {
+        return FragmentChatBinding.inflate(inflater, container, false)
+    }
+
     var viewModel: GroupViewModel? = null
 
     @Inject
@@ -50,19 +56,13 @@ class ChatFragment : BaseFragment() {
         component.inject(this)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        super.onCreateView(inflater, container, savedInstanceState)
-        binding = FragmentChatBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val layoutManager = LinearLayoutManager(context)
         layoutManager.reverseLayout = true
         layoutManager.stackFromEnd = false
-        binding.recyclerView.layoutManager = layoutManager
+        binding?.recyclerView?.layoutManager = layoutManager
 
         chatAdapter = ChatRecyclerViewAdapter(null, true, null, true)
         chatAdapter?.let {adapter ->
@@ -76,15 +76,15 @@ class ChatFragment : BaseFragment() {
             compositeSubscription.add(adapter.getLikeMessageFlowable().subscribe({ viewModel?.likeMessage(it) }, RxErrorHandler.handleEmptyError()))
         }
 
-        binding.chatBarView.sendAction = { sendChatMessage(it) }
-        binding.chatBarView.maxChatLength = configManager.maxChatLength()
-        binding.chatBarView.autocompleteContext = "party"
-        binding.chatBarView.groupID = viewModel?.getGroupData()?.value?.id
+        binding?.chatBarView?.sendAction = { sendChatMessage(it) }
+        binding?.chatBarView?.maxChatLength = configManager.maxChatLength()
+        binding?.chatBarView?.autocompleteContext = "party"
+        binding?.chatBarView?.groupID = viewModel?.getGroupData()?.value?.id
 
-        binding.recyclerView.adapter = chatAdapter
-        binding.recyclerView.itemAnimator = SafeDefaultItemAnimator()
+        binding?.recyclerView?.adapter = chatAdapter
+        binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
 
-        binding.recyclerView.addOnScrollListener(object : androidx.recyclerview.widget.RecyclerView.OnScrollListener() {
+        binding?.recyclerView?.addOnScrollListener(object : androidx.recyclerview.widget.RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: androidx.recyclerview.widget.RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 isScrolledToBottom = layoutManager.findFirstVisibleItemPosition() == 0
@@ -94,13 +94,13 @@ class ChatFragment : BaseFragment() {
         viewModel?.getChatMessages()?.subscribe({ this.setChatMessages(it) }, RxErrorHandler.handleEmptyError())?.let { compositeSubscription.add(it) }
 
 
-        binding.chatBarView.onCommunityGuidelinesAccepted =  {
+        binding?.chatBarView?.onCommunityGuidelinesAccepted =  {
             viewModel?.updateUser("flags.communityGuidelinesAccepted", true)
         }
 
         viewModel?.getUserData()?.observe(viewLifecycleOwner, {
             chatAdapter?.user = it
-            binding.chatBarView.hasAcceptedGuidelines = it?.flags?.isCommunityGuidelinesAccepted == true
+            binding?.chatBarView?.hasAcceptedGuidelines = it?.flags?.isCommunityGuidelinesAccepted == true
         })
     }
 
@@ -137,17 +137,17 @@ class ChatFragment : BaseFragment() {
     }
 
     private fun setReplyTo(username: String?) {
-        val previousMessage = binding.chatBarView.message
+        val previousMessage = binding?.chatBarView?.message ?: ""
         if (previousMessage.contains("@$username")) {
             return
         }
-        binding.chatBarView.message = "@$username $previousMessage"
+        binding?.chatBarView?.message = "@$username $previousMessage"
     }
 
     private fun refresh() {
         viewModel?.retrieveGroupChat {
             if (isScrolledToBottom) {
-                binding.recyclerView.scrollToPosition(0)
+                binding?.recyclerView?.scrollToPosition(0)
             }
         }
     }
@@ -192,7 +192,7 @@ class ChatFragment : BaseFragment() {
 
     private fun setChatMessages(chatMessages: RealmResults<ChatMessage>) {
         chatAdapter?.updateData(chatMessages)
-        viewModel?.socialRepository?.getUnmanagedCopy(chatMessages)?.let { binding.chatBarView.chatMessages = it }
+        viewModel?.socialRepository?.getUnmanagedCopy(chatMessages)?.let { binding?.chatBarView?.chatMessages = it }
 
         viewModel?.gotNewMessages = true
 
@@ -201,9 +201,9 @@ class ChatFragment : BaseFragment() {
 
     private fun sendChatMessage(chatText: String) {
         viewModel?.postGroupChat(chatText, {
-            binding.recyclerView.scrollToPosition(0)
+            binding?.recyclerView?.scrollToPosition(0)
         }) {
-            binding.chatBarView.message = chatText
+            binding?.chatBarView?.message = chatText
         }
     }
 }

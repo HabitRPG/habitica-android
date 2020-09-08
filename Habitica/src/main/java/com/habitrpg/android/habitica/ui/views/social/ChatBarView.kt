@@ -80,8 +80,6 @@ class ChatBarView : LinearLayout {
 
     private fun setupView(context: Context) {
         orientation = LinearLayout.VERTICAL
-        val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as? LayoutInflater
-        inflater?.inflate(R.layout.chat_bar_view, this)
         this.setBackgroundResource(R.color.white)
 
         HabiticaBaseApplication.userComponent?.inject(this)

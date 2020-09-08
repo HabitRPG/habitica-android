@@ -134,7 +134,7 @@
                     android:drawableStart="@drawable/challenge_gem_add_button"/>
 
                 <ImageView
-                    android:id="@+id/gem_icon"
+                    android:id="@+id/gem_icon_view"
                     android:layout_width="18dp"
                     android:layout_height="18dp"
                     android:layout_gravity="center"/>

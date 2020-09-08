@@ -18,7 +18,6 @@ import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.inventory.Customization
 import com.habitrpg.android.habitica.models.inventory.CustomizationSet
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
-import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import io.reactivex.BackpressureStrategy
@@ -225,7 +224,6 @@ class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerVi
     internal inner class SectionViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
         private val binding = CustomizationSectionHeaderBinding.bind(itemView)
-        private val label: TextView by bindView(itemView, R.id.label)
         var context: Context = itemView.context
         private var set: CustomizationSet? = null
 
@@ -235,7 +233,7 @@ class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerVi
 
         fun bind(set: CustomizationSet) {
             this.set = set
-            this.label.text = set.text
+            binding.label.text = set.text
             if (set.hasPurchasable && !set.identifier.contains("timeTravel")) {
                 binding.purchaseSetButton.visibility = View.VISIBLE
                 binding.setPriceLabel.value = set.price.toDouble()

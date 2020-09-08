@@ -18,15 +18,15 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.children
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.databinding.MainNavigationViewBinding
 import com.habitrpg.android.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.extensions.inflate
+import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.models.tasks.Task
-import com.habitrpg.android.habitica.ui.helpers.bindView
-
-
 class HabiticaBottomNavigationView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : RelativeLayout(context, attrs, defStyleAttr) {
+    private val binding = MainNavigationViewBinding.inflate(context.layoutInflater, this)
 
     var flipAddBehaviour = true
     private var isShowingSubmenu: Boolean = false
@@ -57,25 +57,14 @@ class HabiticaBottomNavigationView @JvmOverloads constructor(
     }
 
     val barHeight: Int
-        get() = itemWrapper.measuredHeight
-
-    private val cutoutBackgroundView: ImageView by bindView(R.id.cutout_background)
-    private val habitsTab: BottomNavigationItem by bindView(R.id.tab_habits)
-    private val dailiesTab: BottomNavigationItem by bindView(R.id.tab_dailies)
-    private val todosTab: BottomNavigationItem by bindView(R.id.tab_todos)
-    private val rewardsTab: BottomNavigationItem by bindView(R.id.tab_rewards)
-    private val addButton: ImageButton by bindView(R.id.add)
-    private val addButtonBackground: ViewGroup by bindView(R.id.add_wrapper)
-    private val submenuWrapper: LinearLayout by bindView(R.id.submenu_wrapper)
-    private val itemWrapper: ViewGroup by bindView(R.id.item_wrapper)
+        get() = binding.itemWrapper.measuredHeight
 
     init {
-        inflate(R.layout.main_navigation_view, true)
-        habitsTab.setOnClickListener { activeTaskType = Task.TYPE_HABIT }
-        dailiesTab.setOnClickListener { activeTaskType = Task.TYPE_DAILY }
-        todosTab.setOnClickListener { activeTaskType = Task.TYPE_TODO }
-        rewardsTab.setOnClickListener { activeTaskType = Task.TYPE_REWARD }
-        addButton.setOnClickListener {
+        binding.habitsTab.setOnClickListener { activeTaskType = Task.TYPE_HABIT }
+        binding.dailiesTab.setOnClickListener { activeTaskType = Task.TYPE_DAILY }
+        binding.todosTab.setOnClickListener { activeTaskType = Task.TYPE_TODO }
+        binding.rewardsTab.setOnClickListener { activeTaskType = Task.TYPE_REWARD }
+        binding.addButton.setOnClickListener {
             if (flipAddBehaviour) {
                 if (isShowingSubmenu) {
                     hideSubmenu()
@@ -87,7 +76,7 @@ class HabiticaBottomNavigationView @JvmOverloads constructor(
             }
             animateButtonTap()
         }
-        addButton.setOnLongClickListener {
+        binding.addButton.setOnLongClickListener {
             if (flipAddBehaviour) {
                 showSubmenu()
             } else {
@@ -96,52 +85,52 @@ class HabiticaBottomNavigationView @JvmOverloads constructor(
             animateButtonTap()
             true
         }
-        addButton.setOnTouchListener { view, event ->
+        binding.addButton.setOnTouchListener { view, event ->
             if (event.action == MotionEvent.ACTION_DOWN) {
-                val animX = ObjectAnimator.ofFloat(addButton, "scaleX", 1f, 1.1f)
+                val animX = ObjectAnimator.ofFloat(binding.addButton, "scaleX", 1f, 1.1f)
                 animX.duration = 100
                 animX.interpolator = LinearInterpolator()
                 animX.start()
-                val animY = ObjectAnimator.ofFloat(addButton, "scaleY", 1f, 1.1f)
+                val animY = ObjectAnimator.ofFloat(binding.addButton, "scaleY", 1f, 1.1f)
                 animY.duration = 100
                 animY.interpolator = LinearInterpolator()
                 animY.start()
-                val animXBackground = ObjectAnimator.ofFloat(addButtonBackground, "scaleX", 1f, 0.9f)
+                val animXBackground = ObjectAnimator.ofFloat(binding.addButtonBackground, "scaleX", 1f, 0.9f)
                 animXBackground.duration = 100
                 animXBackground.interpolator = LinearInterpolator()
                 animXBackground.start()
-                val animYBackground = ObjectAnimator.ofFloat(addButtonBackground, "scaleY", 1f, 0.9f)
+                val animYBackground = ObjectAnimator.ofFloat(binding.addButtonBackground, "scaleY", 1f, 0.9f)
                 animYBackground.duration = 100
                 animYBackground.interpolator = LinearInterpolator()
                 animYBackground.start()
             }
             false
         }
-        submenuWrapper.setOnClickListener { hideSubmenu() }
+        binding.submenuWrapper.setOnClickListener { hideSubmenu() }
         updateItemSelection()
 
         val cutout = ContextCompat.getDrawable(context, R.drawable.bottom_navigation_inset)
         cutout?.setColorFilter(context.getThemeColor(R.attr.barColor), PorterDuff.Mode.MULTIPLY)
-        cutoutBackgroundView.setImageDrawable(cutout)
+        binding.cutoutBackground.setImageDrawable(cutout)
         val fabBackground = ContextCompat.getDrawable(context, R.drawable.fab_background)
         fabBackground?.setColorFilter(context.getThemeColor(R.attr.colorAccent), PorterDuff.Mode.MULTIPLY)
-        addButtonBackground.background = fabBackground
+        binding.addButtonBackground.background = fabBackground
     }
 
     private fun animateButtonTap() {
-        val animX = ObjectAnimator.ofFloat(addButton, "scaleX", 1.3f, 1f)
+        val animX = ObjectAnimator.ofFloat(binding.addButton, "scaleX", 1.3f, 1f)
         animX.duration = 400
         animX.interpolator = BounceInterpolator()
         animX.start()
-        val animY = ObjectAnimator.ofFloat(addButton, "scaleY", 1.3f, 1f)
+        val animY = ObjectAnimator.ofFloat(binding.addButton, "scaleY", 1.3f, 1f)
         animY.duration = 400
         animY.interpolator = BounceInterpolator()
         animY.start()
-        val animXBackground = ObjectAnimator.ofFloat(addButtonBackground, "scaleX", 0.9f, 1f)
+        val animXBackground = ObjectAnimator.ofFloat(binding.addButtonBackground, "scaleX", 0.9f, 1f)
         animXBackground.duration = 600
         animXBackground.interpolator = BounceInterpolator()
         animXBackground.start()
-        val animYBackground = ObjectAnimator.ofFloat(addButtonBackground, "scaleY", 0.9f, 1f)
+        val animYBackground = ObjectAnimator.ofFloat(binding.addButtonBackground, "scaleY", 0.9f, 1f)
         animYBackground.duration = 600
         animYBackground.interpolator = BounceInterpolator()
         animYBackground.start()
@@ -155,10 +144,10 @@ class HabiticaBottomNavigationView @JvmOverloads constructor(
         rotate.duration = 250
         rotate.interpolator = LinearInterpolator()
         rotate.fillAfter = true
-        addButton.startAnimation(rotate)
+        binding.addButton.startAnimation(rotate)
 
         var pos = 4
-        submenuWrapper.removeAllViews()
+        binding.submenuWrapper.removeAllViews()
         for (taskType in listOf(Task.TYPE_HABIT, Task.TYPE_DAILY, Task.TYPE_TODO, Task.TYPE_REWARD)) {
             val view = BottomNavigationSubmenuItem(context)
             when (taskType) {
@@ -183,7 +172,7 @@ class HabiticaBottomNavigationView @JvmOverloads constructor(
                 onAddListener?.invoke(taskType)
                 hideSubmenu()
             }
-            submenuWrapper.addView(view)
+            binding.submenuWrapper.addView(view)
             view.alpha = 0f
             view.scaleY = 0.7f
             ViewCompat.animate(view).alpha(1f).setDuration(250.toLong()).startDelay = (100 * pos).toLong()
@@ -191,7 +180,7 @@ class HabiticaBottomNavigationView @JvmOverloads constructor(
             pos -= 1
         }
         var widestWidth = 0
-        for (view in submenuWrapper.children) {
+        for (view in binding.submenuWrapper.children) {
             if (view is BottomNavigationSubmenuItem) {
                 val width = view.measuredTitleWidth
                 if (widestWidth < width) {
@@ -199,7 +188,7 @@ class HabiticaBottomNavigationView @JvmOverloads constructor(
                 }
             }
         }
-        for (view in submenuWrapper.children) {
+        for (view in binding.submenuWrapper.children) {
             if (view is BottomNavigationSubmenuItem) {
                 view.setTitleWidth(widestWidth)
             }
@@ -214,31 +203,31 @@ class HabiticaBottomNavigationView @JvmOverloads constructor(
         rotate.duration = 250
         rotate.interpolator = LinearInterpolator()
         rotate.fillAfter = true
-        addButton.startAnimation(rotate)
+        binding.addButton.startAnimation(rotate)
 
-        for (view in submenuWrapper.children) {
+        for (view in binding.submenuWrapper.children) {
             view.alpha = 1f
             view.scaleY = 1f
             ViewCompat.animate(view).alpha(0f).setDuration(200.toLong()).startDelay = (150 * pos).toLong()
-            ViewCompat.animate(view).scaleY(0.7f).setDuration(250.toLong()).setStartDelay((100 * pos).toLong()).withEndAction { submenuWrapper.removeView(view) }
+            ViewCompat.animate(view).scaleY(0.7f).setDuration(250.toLong()).setStartDelay((100 * pos).toLong()).withEndAction { binding.submenuWrapper.removeView(view) }
             pos += 1
         }
     }
 
     fun tabWithId(id: Int): BottomNavigationItem? {
         return when(id) {
-            R.id.tab_habits -> habitsTab
-            R.id.tab_dailies -> dailiesTab
-            R.id.tab_todos -> rewardsTab
-            R.id.tab_rewards -> todosTab
+            R.id.habits_tab -> binding.habitsTab
+            R.id.dailies_tab -> binding.dailiesTab
+            R.id.todos_tab -> binding.rewardsTab
+            R.id.rewards_tab -> binding.todosTab
             else -> null
         }
     }
 
     private fun updateItemSelection() {
-        habitsTab.isActive = activeTaskType == Task.TYPE_HABIT
-        dailiesTab.isActive = activeTaskType == Task.TYPE_DAILY
-        todosTab.isActive = activeTaskType == Task.TYPE_TODO
-        rewardsTab.isActive = activeTaskType == Task.TYPE_REWARD
+        binding.habitsTab.isActive = activeTaskType == Task.TYPE_HABIT
+        binding.dailiesTab.isActive = activeTaskType == Task.TYPE_DAILY
+        binding.todosTab.isActive = activeTaskType == Task.TYPE_TODO
+        binding.rewardsTab.isActive = activeTaskType == Task.TYPE_REWARD
     }
 }

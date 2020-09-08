@@ -18,6 +18,7 @@ import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
+import com.habitrpg.android.habitica.databinding.FragmentFaqOverviewBinding
 import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBinding
 import com.habitrpg.android.habitica.extensions.setScaledPadding
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
@@ -46,8 +47,13 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Named
 
-open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener {
-    lateinit var binding: FragmentRefreshRecyclerviewBinding
+open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBinding>(), androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener {
+    override var binding: FragmentRefreshRecyclerviewBinding? = null
+
+    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentRefreshRecyclerviewBinding {
+        return FragmentRefreshRecyclerviewBinding.inflate(inflater, container, false)
+    }
+
     var recyclerAdapter: TaskRecyclerViewAdapter? = null
     var itemAnimator = SafeDefaultItemAnimator()
     @field:[Inject Named(AppModule.NAMED_USER_ID)]
@@ -95,7 +101,7 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
         }
 
         recyclerAdapter = adapter as? TaskRecyclerViewAdapter
-        binding.recyclerView.adapter = adapter
+        binding?.recyclerView?.adapter = adapter
 
         if (this.classType != null) {
             compositeSubscription.add(taskRepository.getTasks(this.classType ?: "", userID).firstElement().subscribe({
@@ -134,12 +140,30 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
 
     private fun allowReordering() {
         val itemTouchHelper = itemTouchCallback?.let { ItemTouchHelper(it) }
-        itemTouchHelper?.attachToRecyclerView(binding.recyclerView)
+        itemTouchHelper?.attachToRecyclerView(binding?.recyclerView)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        super.onCreateView(inflater, container, savedInstanceState)
+    protected open fun getLayoutManager(context: Context?): androidx.recyclerview.widget.LinearLayoutManager {
+        return androidx.recyclerview.widget.LinearLayoutManager(context)
+    }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        itemTouchCallback = null
+    }
+
+    override fun onDestroy() {
+        userRepository.close()
+        inventoryRepository.close()
+        super.onDestroy()
+    }
+
+    override fun injectFragment(component: UserComponent) {
+        component.inject(this)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         if (Task.TYPE_DAILY == classType) {
             if (user?.isValid == true && user?.preferences?.dailyDueDefaultView == true) {
                 taskFilterHelper.setActiveFilter(Task.TYPE_DAILY, Task.FILTER_ACTIVE)
@@ -156,7 +180,7 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
                 if (taskViewHolder != null) {
                     taskViewHolder.movingFromPosition = viewHolder.adapterPosition
                 }
-                binding.refreshLayout.isEnabled = false
+                binding?.refreshLayout?.isEnabled = false
             }
 
             override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
@@ -182,7 +206,7 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
 
             override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
                 super.clearView(recyclerView, viewHolder)
-                binding.refreshLayout.isEnabled = true
+                binding?.refreshLayout?.isEnabled = true
 
                 if (viewHolder.adapterPosition == NO_POSITION) return
                 val taskViewHolder = viewHolder as? BaseTaskViewHolder
@@ -211,40 +235,15 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
             this.classType = savedInstanceState.getString(CLASS_TYPE_KEY, "")
         }
 
-        binding = FragmentRefreshRecyclerviewBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-    protected open fun getLayoutManager(context: Context?): androidx.recyclerview.widget.LinearLayoutManager {
-        return androidx.recyclerview.widget.LinearLayoutManager(context)
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        itemTouchCallback = null
-    }
-
-    override fun onDestroy() {
-        userRepository.close()
-        inventoryRepository.close()
-        super.onDestroy()
-    }
-
-    override fun injectFragment(component: UserComponent) {
-        component.inject(this)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        binding.recyclerView.setScaledPadding(context, 0, 0, 0, 48)
-        binding.recyclerView.adapter = recyclerAdapter as? RecyclerView.Adapter<*>
+        binding?.recyclerView?.setScaledPadding(context, 0, 0, 0, 48)
+        binding?.recyclerView?.adapter = recyclerAdapter as? RecyclerView.Adapter<*>
         recyclerAdapter?.filter()
 
         layoutManager = getLayoutManager(context)
         layoutManager?.isItemPrefetchEnabled = false
-        binding.recyclerView.layoutManager = layoutManager
+        binding?.recyclerView?.layoutManager = layoutManager
 
-        if (binding.recyclerView.adapter == null) {
+        if (binding?.recyclerView?.adapter == null) {
             this.setInnerAdapter()
         }
 
@@ -254,29 +253,29 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
             recyclerAdapter?.errorButtonEvents?.subscribe({
                 taskRepository.syncErroredTasks().subscribe({}, RxErrorHandler.handleEmptyError())
             }, RxErrorHandler.handleEmptyError())?.let { compositeSubscription.add(it) }
-            recyclerAdapter?.taskOpenEvents?.subscribeWithErrorHandler({
+            recyclerAdapter?.taskOpenEvents?.subscribeWithErrorHandler {
                 openTaskForm(it)
-            })?.let { compositeSubscription.add(it) }
+            }?.let { compositeSubscription.add(it) }
             recyclerAdapter?.taskScoreEvents
                     ?.doOnNext { playSound(it.second) }
-                    ?.subscribeWithErrorHandler({ scoreTask(it.first, it.second) })?.let { compositeSubscription.add(it) }
+                    ?.subscribeWithErrorHandler { scoreTask(it.first, it.second) }?.let { compositeSubscription.add(it) }
             recyclerAdapter?.checklistItemScoreEvents
                     ?.flatMap { taskRepository.scoreChecklistItem(it.first.id ?: "", it.second.id ?: "")
                     }?.subscribeWithErrorHandler({})?.let { compositeSubscription.add(it) }
-            recyclerAdapter?.brokenTaskEvents?.subscribeWithErrorHandler({ showBrokenChallengeDialog(it) })?.let { compositeSubscription.add(it) }
+            recyclerAdapter?.brokenTaskEvents?.subscribeWithErrorHandler { showBrokenChallengeDialog(it) }?.let { compositeSubscription.add(it) }
         }
 
-        val bottomPadding = (binding.recyclerView.paddingBottom + TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 60f, resources.displayMetrics)).toInt()
-        binding.recyclerView.setPadding(0, 0, 0, bottomPadding)
-        binding.recyclerView.itemAnimator = itemAnimator
+        val bottomPadding = ((binding?.recyclerView?.paddingBottom ?: 0) + TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 60f, resources.displayMetrics)).toInt()
+        binding?.recyclerView?.setPadding(0, 0, 0, bottomPadding)
+        binding?.recyclerView?.itemAnimator = itemAnimator
 
-        binding.refreshLayout.setOnRefreshListener(this)
+        binding?.refreshLayout?.setOnRefreshListener(this)
 
-        binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        binding?.recyclerView?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    binding.refreshLayout.isEnabled = (activity as? MainActivity)?.isAppBarExpanded ?: false
+                    binding?.refreshLayout?.isEnabled = (activity as? MainActivity)?.isAppBarExpanded ?: false
                 }
             }
         })
@@ -313,50 +312,50 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
 
     private fun setEmptyLabels() {
         if (this.classType != null) {
-            binding.recyclerView.setEmptyView(binding.emptyView)
-            context?.let { binding.emptyIconView.setColorFilter(ContextCompat.getColor(it, R.color.text_dimmed), android.graphics.PorterDuff.Mode.MULTIPLY) }
+            binding?.recyclerView?.setEmptyView(binding?.emptyView)
+            context?.let { binding?.emptyIconView?.setColorFilter(ContextCompat.getColor(it, R.color.text_dimmed), android.graphics.PorterDuff.Mode.MULTIPLY) }
             if (taskFilterHelper.howMany(classType) > 0) {
                 when (this.classType) {
                     Task.TYPE_HABIT -> {
-                        binding.emptyIconView.setImageResource(R.drawable.icon_habits_selected)
-                        binding.emptyViewTitle.setText(R.string.empty_title_habits_filtered)
-                        binding.emptyViewDescription.setText(R.string.empty_description_habits_filtered)
+                        binding?.emptyIconView?.setImageResource(R.drawable.icon_habits_selected)
+                        binding?.emptyViewTitle?.setText(R.string.empty_title_habits_filtered)
+                        binding?.emptyViewDescription?.setText(R.string.empty_description_habits_filtered)
                     }
                     Task.TYPE_DAILY -> {
-                        binding.emptyIconView.setImageResource(R.drawable.icon_dailies_selected)
-                        binding.emptyViewTitle.setText(R.string.empty_title_dailies_filtered)
-                        binding.emptyViewDescription.setText(R.string.empty_description_dailies_filtered)
+                        binding?.emptyIconView?.setImageResource(R.drawable.icon_dailies_selected)
+                        binding?.emptyViewTitle?.setText(R.string.empty_title_dailies_filtered)
+                        binding?.emptyViewDescription?.setText(R.string.empty_description_dailies_filtered)
                     }
                     Task.TYPE_TODO -> {
-                        binding.emptyIconView.setImageResource(R.drawable.icon_todos_selected)
-                        binding.emptyViewTitle.setText(R.string.empty_title_todos_filtered)
-                        binding.emptyViewDescription.setText(R.string.empty_description_todos_filtered)
+                        binding?.emptyIconView?.setImageResource(R.drawable.icon_todos_selected)
+                        binding?.emptyViewTitle?.setText(R.string.empty_title_todos_filtered)
+                        binding?.emptyViewDescription?.setText(R.string.empty_description_todos_filtered)
                     }
                     Task.TYPE_REWARD -> {
-                        binding.emptyIconView.setImageResource(R.drawable.icon_rewards_selected)
-                        binding.emptyViewTitle.setText(R.string.empty_title_rewards)
+                        binding?.emptyIconView?.setImageResource(R.drawable.icon_rewards_selected)
+                        binding?.emptyViewTitle?.setText(R.string.empty_title_rewards)
                     }
                 }
             } else {
                 when (this.classType) {
                     Task.TYPE_HABIT -> {
-                        binding.emptyIconView.setImageResource(R.drawable.icon_habits_selected)
-                        binding.emptyViewTitle.setText(R.string.empty_title_habits)
-                        binding.emptyViewDescription.setText(R.string.empty_description_habits)
+                        binding?.emptyIconView?.setImageResource(R.drawable.icon_habits_selected)
+                        binding?.emptyViewTitle?.setText(R.string.empty_title_habits)
+                        binding?.emptyViewDescription?.setText(R.string.empty_description_habits)
                     }
                     Task.TYPE_DAILY -> {
-                        binding.emptyIconView.setImageResource(R.drawable.icon_dailies_selected)
-                        binding.emptyViewTitle.setText(R.string.empty_title_dailies)
-                        binding.emptyViewDescription.setText(R.string.empty_description_dailies)
+                        binding?.emptyIconView?.setImageResource(R.drawable.icon_dailies_selected)
+                        binding?.emptyViewTitle?.setText(R.string.empty_title_dailies)
+                        binding?.emptyViewDescription?.setText(R.string.empty_description_dailies)
                     }
                     Task.TYPE_TODO -> {
-                        binding.emptyIconView.setImageResource(R.drawable.icon_todos_selected)
-                        binding.emptyViewTitle.setText(R.string.empty_title_todos)
-                        binding.emptyViewDescription.setText(R.string.empty_description_todos)
+                        binding?.emptyIconView?.setImageResource(R.drawable.icon_todos_selected)
+                        binding?.emptyViewTitle?.setText(R.string.empty_title_todos)
+                        binding?.emptyViewDescription?.setText(R.string.empty_description_todos)
                     }
                     Task.TYPE_REWARD -> {
-                        binding.emptyIconView.setImageResource(R.drawable.icon_rewards_selected)
-                        binding.emptyViewTitle.setText(R.string.empty_title_rewards)
+                        binding?.emptyIconView?.setImageResource(R.drawable.icon_rewards_selected)
+                        binding?.emptyViewTitle?.setText(R.string.empty_title_rewards)
                     }
                 }
             }
@@ -378,10 +377,10 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
         get() = this.classType + super.displayedClassName
 
     override fun onRefresh() {
-        binding.refreshLayout.isRefreshing = true
+        binding?.refreshLayout?.isRefreshing = true
         compositeSubscription.add(userRepository.retrieveUser(true, true)
                 .doOnTerminate {
-                    binding.refreshLayout.isRefreshing = false
+                    binding?.refreshLayout?.isRefreshing = false
                 }.subscribe({ }, RxErrorHandler.handleEmptyError()))
     }
 
