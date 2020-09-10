@@ -8,14 +8,12 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.FragmentRecyclerviewBinding
-import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.ui.adapter.social.PublicGuildsRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.helpers.KeyboardUtil
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
-import io.reactivex.functions.Consumer
 import javax.inject.Inject
 
 class PublicGuildsFragment : BaseMainFragment<FragmentRecyclerviewBinding>(), SearchView.OnQueryTextListener {

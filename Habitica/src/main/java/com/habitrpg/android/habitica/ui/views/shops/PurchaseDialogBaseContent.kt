@@ -1,12 +1,8 @@
 package com.habitrpg.android.habitica.ui.views.shops
 
 import android.content.Context
-import android.util.AttributeSet
 import android.widget.TextView
 import com.facebook.drawee.view.SimpleDraweeView
-
-import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.databinding.DialogPurchaseContentGearBinding
 import com.habitrpg.android.habitica.databinding.DialogPurchaseContentItemBinding
 import com.habitrpg.android.habitica.extensions.layoutInflater
 

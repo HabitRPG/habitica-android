@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.ui.activities
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Typeface
@@ -9,21 +8,19 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.view.*
-import android.view.inputmethod.InputMethodManager
 import android.widget.CheckBox
-import android.widget.EditText
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatCheckBox
-import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import androidx.core.view.forEachIndexed
 import androidx.core.widget.NestedScrollView
-import com.google.android.material.textfield.TextInputLayout
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
-import com.habitrpg.android.habitica.data.*
+import com.habitrpg.android.habitica.data.ChallengeRepository
+import com.habitrpg.android.habitica.data.TagRepository
+import com.habitrpg.android.habitica.data.TaskRepository
+import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.ActivityTaskFormBinding
 import com.habitrpg.android.habitica.extensions.OnChangeTextWatcher
 import com.habitrpg.android.habitica.extensions.addCancelButton
@@ -38,8 +35,6 @@ import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
-import com.habitrpg.android.habitica.ui.views.tasks.form.*
-import io.reactivex.functions.Consumer
 import io.realm.RealmList
 import java.util.*
 import javax.inject.Inject

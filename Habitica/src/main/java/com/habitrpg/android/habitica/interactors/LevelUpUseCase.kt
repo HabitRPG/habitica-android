@@ -14,7 +14,6 @@ import com.habitrpg.android.habitica.ui.AvatarView
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import io.reactivex.Flowable
-import io.reactivex.functions.Consumer
 import org.greenrobot.eventbus.EventBus
 import javax.inject.Inject
 

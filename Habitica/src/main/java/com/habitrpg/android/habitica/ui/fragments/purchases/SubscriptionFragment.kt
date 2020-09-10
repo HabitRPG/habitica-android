@@ -2,7 +2,6 @@ package com.habitrpg.android.habitica.ui.fragments.purchases
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +12,6 @@ import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.UserRepository
-import com.habitrpg.android.habitica.databinding.FragmentSetupAvatarBinding
 import com.habitrpg.android.habitica.databinding.FragmentSubscriptionBinding
 import com.habitrpg.android.habitica.events.UserSubscribedEvent
 import com.habitrpg.android.habitica.extensions.addCancelButton
@@ -31,7 +29,6 @@ import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView
-import io.reactivex.functions.Consumer
 import org.greenrobot.eventbus.Subscribe
 import org.solovyev.android.checkout.Inventory
 import org.solovyev.android.checkout.Purchase

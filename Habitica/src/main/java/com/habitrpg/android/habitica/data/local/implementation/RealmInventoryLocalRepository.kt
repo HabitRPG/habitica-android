@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica.data.local.implementation
 
-import android.content.Context
 import com.habitrpg.android.habitica.data.local.InventoryLocalRepository
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.*
@@ -10,14 +9,13 @@ import com.habitrpg.android.habitica.models.user.OwnedMount
 import com.habitrpg.android.habitica.models.user.OwnedPet
 import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.Flowable
-import io.reactivex.functions.Consumer
 import io.realm.Realm
 import io.realm.RealmObject
 import io.realm.RealmResults
 import io.realm.Sort
 
 
-class RealmInventoryLocalRepository(realm: Realm, private val context: Context) : RealmContentLocalRepository(realm), InventoryLocalRepository {
+class RealmInventoryLocalRepository(realm: Realm) : RealmContentLocalRepository(realm), InventoryLocalRepository {
     override fun getQuestContent(keys: List<String>): Flowable<RealmResults<QuestContent>> {
         return realm.where(QuestContent::class.java)
                 .`in`("key", keys.toTypedArray())

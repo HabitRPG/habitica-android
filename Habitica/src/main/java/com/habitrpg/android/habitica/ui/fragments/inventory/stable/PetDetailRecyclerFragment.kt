@@ -179,7 +179,7 @@ class PetDetailRecyclerFragment : BaseMainFragment<FragmentRecyclerviewBinding>(
             fragment.isHatching = false
             fragment.itemType = "food"
             fragment.itemTypeText = getString(R.string.food)
-            parentFragmentManager?.let { fragment.show(it, "feedDialog") }
+            parentFragmentManager.let { fragment.show(it, "feedDialog") }
         }
     }
 

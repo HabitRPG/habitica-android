@@ -121,7 +121,7 @@ class LoginBackgroundView(context: Context, attrs: AttributeSet?) : RelativeLayo
         if (viewWidth <= 0 ||viewHeight <= 0 || didLayoutStars || starViews?.size == 0) {
             return
         }
-        for (view in starViews ?: emptyList<StarView>()) {
+        for (view in starViews ?: emptyList()) {
             view.layoutParams = starParams
         }
         didLayoutStars = true

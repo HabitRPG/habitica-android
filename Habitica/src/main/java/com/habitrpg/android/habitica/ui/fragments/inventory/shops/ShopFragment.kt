@@ -11,7 +11,6 @@ import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentRecyclerviewBinding
-import com.habitrpg.android.habitica.databinding.FragmentViewpagerBinding
 import com.habitrpg.android.habitica.events.GearPurchasedEvent
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
@@ -63,7 +62,7 @@ class ShopFragment : BaseFragment<FragmentRecyclerviewBinding>() {
 
         adapter = binding?.recyclerView?.adapter as? ShopRecyclerAdapter
         if (adapter == null) {
-            adapter = ShopRecyclerAdapter(configManager)
+            adapter = ShopRecyclerAdapter()
             adapter?.context = context
             binding?.recyclerView?.adapter = adapter
             binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()

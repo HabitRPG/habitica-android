@@ -3,14 +3,11 @@ package com.habitrpg.android.habitica.ui.views.tasks.form
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
-import android.widget.EditText
-import android.widget.ImageButton
 import android.widget.RelativeLayout
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.FormStepperValueBinding
 import com.habitrpg.android.habitica.extensions.OnChangeTextWatcher
 import com.habitrpg.android.habitica.extensions.asDrawable
-import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import java.text.DecimalFormat

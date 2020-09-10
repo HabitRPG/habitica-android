@@ -1,8 +1,6 @@
 package com.habitrpg.android.habitica.ui.adapter.inventory
 
 import android.view.ViewGroup
-import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.models.inventory.Mount
 import com.habitrpg.android.habitica.models.inventory.StableSection
 import com.habitrpg.android.habitica.models.user.OwnedMount

@@ -12,7 +12,6 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentGemPurchaseBinding
-import com.habitrpg.android.habitica.databinding.FragmentRecyclerviewBinding
 import com.habitrpg.android.habitica.extensions.addCancelButton
 import com.habitrpg.android.habitica.helpers.*
 import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
@@ -24,7 +23,6 @@ import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
-import io.reactivex.functions.Consumer
 import javax.inject.Inject
 
 class GemsPurchaseFragment : BaseFragment<FragmentGemPurchaseBinding>(), GemPurchaseActivity.CheckoutFragment {

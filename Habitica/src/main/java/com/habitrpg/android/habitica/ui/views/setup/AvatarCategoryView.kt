@@ -18,7 +18,7 @@ class AvatarCategoryView(context: Context, attrs: AttributeSet?) : LinearLayout(
     init {
         View.inflate(context, R.layout.avatar_category, this)
 
-        textView = findViewById(com.habitrpg.android.habitica.R.id.text_view)
+        textView = findViewById(R.id.text_view)
         val a = context.theme.obtainStyledAttributes(
                 attrs,
                 R.styleable.AvatarCategoryView,

@@ -4,12 +4,13 @@ import android.content.Context
 import android.graphics.Typeface
 import android.os.Bundle
 import android.view.*
-import android.widget.*
-import androidx.appcompat.widget.AppCompatImageView
+import android.widget.ProgressBar
+import android.widget.TableLayout
+import android.widget.TableRow
+import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
-import androidx.core.widget.NestedScrollView
 import com.facebook.drawee.backends.pipeline.Fresco
 import com.facebook.drawee.controller.BaseControllerListener
 import com.facebook.drawee.view.SimpleDraweeView
@@ -33,12 +34,14 @@ import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.ui.AvatarView
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel
 import com.habitrpg.android.habitica.ui.adapter.social.AchievementProfileAdapter
-import com.habitrpg.android.habitica.ui.helpers.*
+import com.habitrpg.android.habitica.ui.helpers.ToolbarColorHelper
+import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
+import com.habitrpg.android.habitica.ui.helpers.loadImage
+import com.habitrpg.android.habitica.ui.helpers.setMarkdown
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.SnackbarDisplayType
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import io.reactivex.Flowable
-import io.reactivex.functions.Consumer
 import io.realm.RealmResults
 import net.pherth.android.emoji_library.EmojiEditText
 import java.text.SimpleDateFormat
@@ -401,7 +404,8 @@ class FullProfileActivity : BaseActivity() {
         val buffs = stats.buffs
 
         addAttributeRow(getString(R.string.profile_allocated), stats.strength?.toFloat() ?: 0f, stats.intelligence?.toFloat() ?: 0f, stats.constitution?.toFloat() ?: 0f, stats.per?.toFloat() ?: 0f, true, false)
-        addAttributeRow(getString(R.string.buffs), buffs?.getStr() ?: 0f, buffs?.get_int() ?: 0f, buffs?.getCon() ?: 0f, buffs?.getPer() ?: 0f, roundDown = true, isSummary = false)
+        addAttributeRow(getString(R.string.buffs), buffs?.str
+                ?: 0f, buffs?.get_int() ?: 0f, buffs?.con ?: 0f, buffs?.per ?: 0f, roundDown = true, isSummary = false)
 
         // Summary row
         addAttributeRow("", attributeStrSum, attributeIntSum, attributeConSum, attributePerSum, roundDown = false, isSummary = true)

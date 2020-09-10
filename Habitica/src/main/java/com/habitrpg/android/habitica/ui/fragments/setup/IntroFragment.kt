@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.databinding.FragmentIntroBinding
-import com.habitrpg.android.habitica.databinding.FragmentSetupTasksBinding
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 
 class IntroFragment : BaseFragment<FragmentIntroBinding>() {

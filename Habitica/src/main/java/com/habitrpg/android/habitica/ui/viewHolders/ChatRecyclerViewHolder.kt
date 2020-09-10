@@ -6,10 +6,6 @@ import android.content.res.Resources
 import android.graphics.drawable.BitmapDrawable
 import android.text.method.LinkMovementMethod
 import android.view.View
-import android.view.ViewGroup
-import android.widget.Button
-import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
@@ -19,12 +15,9 @@ import com.habitrpg.android.habitica.extensions.getAgoString
 import com.habitrpg.android.habitica.extensions.setScaledPadding
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.user.User
-import com.habitrpg.android.habitica.ui.AvatarView
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
-import com.habitrpg.android.habitica.ui.views.HabiticaEmojiTextView
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
-import com.habitrpg.android.habitica.ui.views.social.UsernameLabel
 import io.reactivex.Maybe
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers

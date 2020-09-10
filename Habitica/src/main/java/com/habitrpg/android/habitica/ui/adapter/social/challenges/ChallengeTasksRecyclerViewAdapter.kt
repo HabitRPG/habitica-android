@@ -122,7 +122,7 @@ class ChallengeTasksRecyclerViewAdapter(taskFilterHelper: TaskFilterHelper?, lay
         }
     }
 
-    private inner class DividerViewHolder(itemView: View) : BindableViewHolder<Task>(itemView) {
+    private class DividerViewHolder(itemView: View) : BindableViewHolder<Task>(itemView) {
 
         private val dividerName: TextView = itemView.findViewById(R.id.divider_name)
 

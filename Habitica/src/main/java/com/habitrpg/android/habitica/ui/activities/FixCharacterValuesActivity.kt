@@ -17,8 +17,6 @@ import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
-import io.reactivex.functions.Action
-import io.reactivex.functions.Consumer
 import javax.inject.Inject
 import javax.inject.Named
 

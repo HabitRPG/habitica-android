@@ -7,7 +7,6 @@ import android.graphics.drawable.BitmapDrawable
 import android.util.AttributeSet
 import android.widget.FrameLayout
 import android.widget.ImageView
-import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.NpcBannerBinding
 import com.habitrpg.android.habitica.extensions.layoutInflater
@@ -15,7 +14,6 @@ import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.functions.Consumer
 import kotlin.math.roundToInt
 
 class NPCBannerView(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs) {

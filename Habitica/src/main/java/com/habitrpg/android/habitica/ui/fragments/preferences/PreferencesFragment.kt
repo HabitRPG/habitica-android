@@ -26,7 +26,6 @@ import com.habitrpg.android.habitica.ui.activities.ClassSelectionActivity
 import com.habitrpg.android.habitica.ui.activities.FixCharacterValuesActivity
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.activities.PrefsActivity
-import io.reactivex.functions.Consumer
 import java.util.*
 import javax.inject.Inject
 
@@ -202,7 +201,7 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                 @Suppress("DEPRECATION")
                 activity?.resources?.updateConfiguration(configuration, activity?.resources?.displayMetrics)
                 userRepository.updateLanguage(user, languageHelper.languageCode ?: "en")
-                        .flatMap<ContentResult> { contentRepository.retrieveContent(context,true) }
+                        .flatMap { contentRepository.retrieveContent(context,true) }
                         .subscribe({ }, RxErrorHandler.handleEmptyError())
 
                 if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) {

@@ -57,7 +57,7 @@ class NoPartyFragmentFragment : BaseMainFragment<FragmentNoPartyBinding>() {
             socialRepository.joinGroup(it)
                     .flatMap { userRepository.retrieveUser(false) }
                     .subscribe({
-                        parentFragmentManager?.popBackStack()
+                        parentFragmentManager.popBackStack()
                         MainNavigationController.navigate(R.id.partyFragment,
                                 bundleOf(Pair("partyID", user?.party?.id)))
                     }, RxErrorHandler.handleEmptyError())

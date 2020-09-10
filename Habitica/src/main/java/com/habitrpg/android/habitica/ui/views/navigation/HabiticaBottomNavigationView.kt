@@ -5,14 +5,10 @@ import android.content.Context
 import android.graphics.PorterDuff
 import android.util.AttributeSet
 import android.view.MotionEvent
-import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.BounceInterpolator
 import android.view.animation.LinearInterpolator
 import android.view.animation.RotateAnimation
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
@@ -20,9 +16,9 @@ import androidx.core.view.children
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.MainNavigationViewBinding
 import com.habitrpg.android.habitica.extensions.getThemeColor
-import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.models.tasks.Task
+
 class HabiticaBottomNavigationView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : RelativeLayout(context, attrs, defStyleAttr) {

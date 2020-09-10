@@ -3,7 +3,6 @@ package com.habitrpg.android.habitica.ui.views.stats
 import android.app.ProgressDialog
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R

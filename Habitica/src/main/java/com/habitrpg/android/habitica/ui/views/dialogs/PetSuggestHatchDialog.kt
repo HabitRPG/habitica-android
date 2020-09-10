@@ -4,7 +4,6 @@ import android.content.Context
 import android.graphics.drawable.BitmapDrawable
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -22,7 +21,6 @@ import com.habitrpg.android.habitica.ui.views.CurrencyView
 import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.functions.Consumer
 
 
 class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {

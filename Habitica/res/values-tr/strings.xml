@@ -372,9 +372,6 @@
   <string name="subscribe_prompt_thanks">Abone Olarak bu faydalardan yararlanıyorsun:</string>
   <string name="subscription_status">Abonelik Durumu</string>
     <string name="challenge_leave_title">Mücadeleden Ayrıl</string>
-  <string name="challenge_leave_text">\"%s\" Mücadelesinden ayrılmak istediğine emin misin\?</string>
-  <string name="challenge_remove_tasks_title">İşleri sil</string>
-  <string name="challenge_remove_tasks_text">İşleri silmek istiyor musun\?</string>
   <string name="remove_tasks">Sil</string>
   <string name="keep_tasks">Tut</string>
   <string name="my_challenges">Benim Mücadelelerim</string>
@@ -675,8 +672,6 @@
     <string name="gift_subscription_subtitle">Aşağıdan hediye etmek istediğin aboneliği seç! Bu satın alım otomatik olarak yenilenmeyecek.</string>
     <string name="server">Sunucu</string>
     <string name="gift_confirmation_title">Hediyen gönderildi!</string>
-    <string name="gift_confirmation_text_g1g1">Bir Hediye Et Bir Kazan promosyonuyla %s \'e/a %s-month Habitica aboneliği yolladın ve aynı abonelik sizin hesabınıza da uygulandı!</string>
-    <string name="gift_confirmation_text">%s \'e/a %s-month Habitica üyeliği gönderdin.</string>
     <string name="discover">Keşfet</string>
     <string name="damage_paused">Hasar Durduruldu</string>
     <string name="preference_push_important_announcements">Önemli Duyurular</string>

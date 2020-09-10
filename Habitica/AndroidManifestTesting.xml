@@ -115,7 +115,7 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <receiver  android:process=":remote" android:name=".NotificationPublisher" />
 
-        <receiver android:process=":remote" android:name=".receivers.TaskReceiver"></receiver>
+        <receiver android:process=":remote" android:name=".receivers.TaskReceiver" />
         <receiver android:name=".receivers.TaskAlarmBootReceiver" android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
             <intent-filter>
                 <action android:name="android.intent.action._BOOT_COMPLETED"/>

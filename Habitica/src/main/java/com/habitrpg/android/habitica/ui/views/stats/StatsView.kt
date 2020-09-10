@@ -64,7 +64,7 @@ class StatsView(context: Context, attrs: AttributeSet?) : LinearLayout(context, 
 
     init {
 
-        val attributes = context?.theme?.obtainStyledAttributes(
+        val attributes = context.theme?.obtainStyledAttributes(
                 attrs,
                 R.styleable.StatsView,
                 0, 0)

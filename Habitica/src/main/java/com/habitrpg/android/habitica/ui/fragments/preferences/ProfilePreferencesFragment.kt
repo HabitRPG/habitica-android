@@ -9,7 +9,6 @@ import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.Flowable
-import io.reactivex.functions.Consumer
 
 class ProfilePreferencesFragment: BasePreferencesFragment(), SharedPreferences.OnSharedPreferenceChangeListener {
 

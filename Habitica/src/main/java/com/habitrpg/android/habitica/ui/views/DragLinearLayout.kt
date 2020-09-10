@@ -77,7 +77,7 @@ open class DragLinearLayout @JvmOverloads constructor(context: Context, attrs: A
         fun onSwap(firstView: View?, firstPosition: Int, secondView: View, secondPosition: Int)
     }
 
-    private inner class DraggableChild {
+    private class DraggableChild {
         /**
          * If non-null, a reference to an on-going position animation.
          */

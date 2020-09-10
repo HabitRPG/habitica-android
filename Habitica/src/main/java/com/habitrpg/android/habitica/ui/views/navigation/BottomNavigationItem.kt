@@ -4,15 +4,13 @@ import android.content.Context
 import android.graphics.PorterDuff
 import android.util.AttributeSet
 import android.view.View
-import android.widget.ImageView
 import android.widget.RelativeLayout
-import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.BottomNavigationItemBinding
 import com.habitrpg.android.habitica.extensions.getThemeColor
-import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.extensions.layoutInflater
+
 class BottomNavigationItem @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : RelativeLayout(context, attrs, defStyleAttr) {

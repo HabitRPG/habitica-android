@@ -13,8 +13,6 @@ import com.habitrpg.android.habitica.models.social.*
 import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.Flowable
 import io.reactivex.Single
-import io.reactivex.functions.BiFunction
-import io.reactivex.functions.Consumer
 import io.realm.RealmResults
 import java.util.*
 import kotlin.collections.HashMap

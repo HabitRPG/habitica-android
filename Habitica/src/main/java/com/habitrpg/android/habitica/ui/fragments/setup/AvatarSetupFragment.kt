@@ -13,7 +13,6 @@ import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SetupCustomizationRepository
 import com.habitrpg.android.habitica.data.UserRepository
-import com.habitrpg.android.habitica.databinding.FragmentIntroBinding
 import com.habitrpg.android.habitica.databinding.FragmentSetupAvatarBinding
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.models.SetupCustomization

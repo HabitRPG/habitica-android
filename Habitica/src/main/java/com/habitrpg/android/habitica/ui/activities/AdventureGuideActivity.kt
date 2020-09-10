@@ -18,7 +18,6 @@ import com.habitrpg.android.habitica.databinding.AdventureGuideItemBinding
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
-import io.reactivex.functions.Consumer
 import javax.inject.Inject
 
 

@@ -37,11 +37,11 @@ abstract class ChecklistedViewHolder(itemView: View, scoreTaskFunc: ((Task, Task
     init {
         checklistIndicatorWrapper.isClickable = true
         checklistIndicatorWrapper.setOnClickListener { onChecklistIndicatorClicked() }
-        checkbox.setOnCheckedChangeListener(this)
         expandCheckboxTouchArea(checkboxHolder, checkbox)
     }
 
     override fun bind(newTask: Task, position: Int, displayMode: String) {
+        checkbox.setOnCheckedChangeListener(this)
         var completed = newTask.completed
         if (newTask.isPendingApproval) {
             completed = false

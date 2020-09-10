@@ -9,7 +9,6 @@ import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.User
-import io.reactivex.functions.Consumer
 import java.util.*
 
 class PushNotificationManager(var apiClient: ApiClient, private val sharedPreferences: SharedPreferences, private val context: Context) {

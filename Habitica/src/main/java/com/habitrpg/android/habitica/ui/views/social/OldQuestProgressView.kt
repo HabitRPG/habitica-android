@@ -6,14 +6,12 @@ import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.QuestProgressOldBinding
-import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.extensions.setScaledPadding
 import com.habitrpg.android.habitica.models.inventory.QuestContent

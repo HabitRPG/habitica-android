@@ -8,15 +8,12 @@ import android.os.Build
 import android.text.TextUtils
 import android.util.AttributeSet
 import android.view.View
-import android.view.ViewGroup
 import android.view.accessibility.AccessibilityEvent
 import android.widget.*
-import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.TaskFormTaskSchedulingBinding
 import com.habitrpg.android.habitica.extensions.dpToPx
-import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.models.tasks.Days
 import com.habitrpg.android.habitica.models.tasks.Task

@@ -6,13 +6,11 @@ import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.widget.SearchView
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentPagerAdapter
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.TagRepository
-import com.habitrpg.android.habitica.databinding.FragmentSupportMainBinding
 import com.habitrpg.android.habitica.databinding.FragmentViewpagerBinding
 import com.habitrpg.android.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
@@ -25,7 +23,6 @@ import com.habitrpg.android.habitica.ui.activities.TaskFormActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.views.tasks.TaskFilterDialog
 import io.reactivex.disposables.Disposable
-import io.reactivex.functions.Consumer
 import java.util.*
 import javax.inject.Inject
 import kotlin.collections.ArrayList

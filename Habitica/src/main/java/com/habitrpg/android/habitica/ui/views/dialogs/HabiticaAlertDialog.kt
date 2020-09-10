@@ -3,7 +3,6 @@ package com.habitrpg.android.habitica.ui.views.dialogs
 import android.app.Activity
 import android.content.Context
 import android.text.method.ScrollingMovementMethod
-import android.util.Log
 import android.view.*
 import android.view.animation.AccelerateInterpolator
 import android.widget.*
@@ -17,7 +16,6 @@ import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.extensions.setScaledPadding
 import com.plattysoft.leonids.ParticleSystem
 import java.lang.ref.WeakReference
-
 
 
 open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.HabiticaAlertDialogTheme) {
@@ -182,7 +180,7 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
 
 
     fun addButton(buttonView: View, autoDismiss: Boolean = true, function: ((HabiticaAlertDialog, Int) -> Unit)? = null): View {
-        val weakThis = WeakReference<HabiticaAlertDialog>(this)
+        val weakThis = WeakReference(this)
         val buttonIndex = buttonsWrapper.childCount
         buttonView.setOnClickListener {
             weakThis.get()?.let { it1 ->

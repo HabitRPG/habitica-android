@@ -3,13 +3,10 @@ package com.habitrpg.android.habitica.ui.views.navigation
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
-import android.widget.ImageView
 import android.widget.RelativeLayout
-import android.widget.TextView
-import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.BottomNavigationSubmenuBinding
-import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.extensions.layoutInflater
+
 class BottomNavigationSubmenuItem @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : RelativeLayout(context, attrs, defStyleAttr) {

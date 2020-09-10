@@ -358,9 +358,6 @@
     <string name="subscribe_prompt_thanks">정기구독을 함으로써 다음과 같은 혜택을 받고 있습니다:</string>
     <string name="subscription_status">구독상황</string>
     <string name="challenge_leave_title">도전 그만두기</string>
-    <string name="challenge_leave_text">정말로 “%s” 도전을 그만 두시겠습니까?</string>
-    <string name="challenge_remove_tasks_title">할일 제거</string>
-    <string name="challenge_remove_tasks_text">할일을 제거하고 싶으신가요?</string>
     <string name="remove_tasks">제거하기</string>
     <string name="keep_tasks">놔두기</string>
     <string name="my_challenges">나의 도전들</string>
@@ -683,8 +680,6 @@
     <string name="send_gift">선물하기</string>
     <string name="server">서버</string>
     <string name="gift_confirmation_title" formatted="false">선물이 전달되었습니다!</string>
-    <string name="gift_confirmation_text_g1g1" formatted="false">하나 주고 하나 받기 이벤트를 통해 %s에게 %s-개월 Habitica 정기구독을 선물하였고 같은 기간의 구독 혜택이 본인에게도 적용되었습니다!</string>
-    <string name="gift_confirmation_text">%s에게 %s-개월 Habitica 구독서비스가 전달되었습니다.</string>
     <string name="discover">찾아보기</string>
     <string name="damage_paused">피해 동결 중</string>
     <string name="preference_push_important_announcements">중대 발표</string>

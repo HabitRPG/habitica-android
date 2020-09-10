@@ -103,24 +103,10 @@ object DataBindingUtils {
         }
     }
 
-    fun setForegroundTintColor(view: TextView, color: Int) {
-        var thisColor = color
-        if (thisColor > 0) {
-            thisColor = ContextCompat.getColor(view.context, thisColor)
-        }
-        view.setTextColor(thisColor)
-    }
-
     fun setRoundedBackground(view: View, color: Int) {
         val drawable = ResourcesCompat.getDrawable(view.resources, R.drawable.layout_rounded_bg, null)
         drawable?.setColorFilter(color, PorterDuff.Mode.MULTIPLY)
         view.background = drawable
-    }
-
-    fun setRoundedBackgroundInt(view: View, color: Int) {
-        if (color != 0) {
-            setRoundedBackground(view, ContextCompat.getColor(view.context, color))
-        }
     }
 
     class LayoutWeightAnimation(internal var view: View, internal var targetWeight: Float) : Animation() {

@@ -7,21 +7,14 @@ import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.lifecycle.Observer
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.habitrpg.android.habitica.MainNavDirections
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.databinding.FragmentGuildDetailBinding
-import com.habitrpg.android.habitica.databinding.FragmentRecyclerviewBinding
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.Group
-import com.habitrpg.android.habitica.ui.AvatarView
 import com.habitrpg.android.habitica.ui.activities.GroupFormActivity
 import com.habitrpg.android.habitica.ui.activities.GroupInviteActivity
 import com.habitrpg.android.habitica.ui.activities.MainActivity
@@ -32,7 +25,6 @@ import com.habitrpg.android.habitica.ui.views.HabiticaIcons
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
-import com.habitrpg.android.habitica.ui.views.social.UsernameLabel
 import java.util.*
 import javax.inject.Inject
 

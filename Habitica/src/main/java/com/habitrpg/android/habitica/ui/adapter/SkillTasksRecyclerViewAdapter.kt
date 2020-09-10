@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.SkillTaskItemCardBinding
 import com.habitrpg.android.habitica.models.tasks.Task
-import com.habitrpg.android.habitica.ui.views.HabiticaEmojiTextView
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import io.reactivex.subjects.PublishSubject

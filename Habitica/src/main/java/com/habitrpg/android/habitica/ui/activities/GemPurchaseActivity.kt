@@ -15,7 +15,6 @@ import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
 import com.habitrpg.android.habitica.ui.fragments.purchases.GemsPurchaseFragment
 import com.habitrpg.android.habitica.ui.fragments.purchases.SubscriptionFragment
-import io.reactivex.functions.Consumer
 import org.greenrobot.eventbus.Subscribe
 import javax.inject.Inject
 

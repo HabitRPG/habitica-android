@@ -5,11 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.databinding.FragmentRecyclerviewBinding
-import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.modules.AppModule

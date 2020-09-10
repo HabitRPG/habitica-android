@@ -3,13 +3,11 @@ package com.habitrpg.android.habitica.ui.adapter.inventory
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.drawable.BitmapDrawable
-import androidx.core.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
 import android.widget.TextView
-import com.facebook.drawee.view.SimpleDraweeView
+import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.GearListItemBinding
 import com.habitrpg.android.habitica.models.inventory.Equipment
@@ -25,7 +23,7 @@ class EquipmentRecyclerViewAdapter(data: OrderedRealmCollection<Equipment>?, aut
     var isCostume: Boolean? = null
     var type: String? = null
 
-    val equipEvents: PublishSubject<String> = PublishSubject.create<String>()
+    val equipEvents: PublishSubject<String> = PublishSubject.create()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GearViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.gear_list_item, parent, false)

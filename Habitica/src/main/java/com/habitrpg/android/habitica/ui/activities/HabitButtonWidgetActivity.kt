@@ -8,7 +8,6 @@ import android.view.View
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.TaskRepository
@@ -18,7 +17,6 @@ import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.adapter.SkillTasksRecyclerViewAdapter
 import com.habitrpg.android.habitica.widget.HabitButtonWidgetProvider
-import io.reactivex.functions.Consumer
 import javax.inject.Inject
 import javax.inject.Named
 

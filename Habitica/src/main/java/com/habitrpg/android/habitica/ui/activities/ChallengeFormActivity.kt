@@ -7,11 +7,12 @@ import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.*
-import android.widget.*
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.EditText
 import androidx.appcompat.widget.AppCompatCheckedTextView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.appcompat.widget.Toolbar
-import com.google.android.material.textfield.TextInputLayout
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ChallengeRepository
@@ -30,7 +31,6 @@ import com.habitrpg.android.habitica.ui.helpers.ToolbarColorHelper
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import io.reactivex.Flowable
-import io.reactivex.functions.Consumer
 import io.reactivex.rxkotlin.zipWith
 import java.util.*
 import javax.inject.Inject
@@ -491,7 +491,7 @@ class ChallengeFormActivity : BaseActivity() {
         return editText.text.toString()
     }
 
-    private inner class GroupArrayAdapter(context: Context) : ArrayAdapter<Group>(context, android.R.layout.simple_spinner_item) {
+    private class GroupArrayAdapter(context: Context) : ArrayAdapter<Group>(context, android.R.layout.simple_spinner_item) {
 
         override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
             val checkedTextView = super.getView(position, convertView, parent) as? AppCompatTextView

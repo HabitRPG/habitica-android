@@ -37,7 +37,6 @@ import com.habitrpg.android.habitica.ui.views.tasks.form.StepperValueFormView
 import io.reactivex.Flowable
 import io.reactivex.Maybe
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.functions.Consumer
 import io.realm.RealmResults
 import org.greenrobot.eventbus.EventBus
 import java.util.*
