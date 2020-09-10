@@ -15,7 +15,6 @@ import com.habitrpg.android.habitica.receivers.TaskReceiver
 import com.habitrpg.shared.habitica.HLogger
 import com.habitrpg.shared.habitica.LogLevel
 import io.reactivex.Flowable
-import io.reactivex.functions.Consumer
 import java.util.*
 
 class TaskAlarmManager(private var context: Context, private var taskRepository: TaskRepository, private var userId: String) {
@@ -56,7 +55,7 @@ class TaskAlarmManager(private var context: Context, private var taskRepository:
         taskRepository.getTaskCopies(userId)
                 .firstElement()
                 .toFlowable()
-                .flatMap<Task> { Flowable.fromIterable(it) }
+                .flatMap { Flowable.fromIterable(it) }
                 .subscribe({ this.setAlarmsForTask(it) }, RxErrorHandler.handleEmptyError())
 
         if (!preventDailyReminder) {

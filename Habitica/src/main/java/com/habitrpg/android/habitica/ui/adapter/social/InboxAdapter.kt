@@ -42,10 +42,6 @@ class InboxAdapter(private var user: User?) : PagedListAdapter<ChatMessage, Chat
         holder.onDeleteMessage = { deleteMessageEvents.onNext(it) }
     }
 
-    fun getLikeMessageFlowable(): Flowable<ChatMessage> {
-        return likeMessageEvents.toFlowable(BackpressureStrategy.DROP)
-    }
-
     fun getUserLabelClickFlowable(): Flowable<String> {
         return userLabelClickEvents.toFlowable(BackpressureStrategy.DROP)
     }
@@ -56,10 +52,6 @@ class InboxAdapter(private var user: User?) : PagedListAdapter<ChatMessage, Chat
 
     fun getDeleteMessageFlowable(): Flowable<ChatMessage> {
         return deleteMessageEvents.toFlowable(BackpressureStrategy.DROP)
-    }
-
-    fun getReplyMessageEvents(): Flowable<String> {
-        return replyMessageEvents.toFlowable(BackpressureStrategy.DROP)
     }
 
     fun getCopyMessageFlowable(): Flowable<ChatMessage> {

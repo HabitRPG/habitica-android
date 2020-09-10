@@ -6,7 +6,6 @@ import android.graphics.PorterDuff
 import android.os.Build
 import android.util.AttributeSet
 import android.view.Gravity
-import android.view.View
 import android.widget.LinearLayout
 import android.widget.SeekBar
 import androidx.core.content.ContextCompat

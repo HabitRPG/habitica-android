@@ -21,7 +21,6 @@ import com.habitrpg.android.habitica.ui.viewHolders.SectionViewHolder
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import io.reactivex.subjects.PublishSubject
-import io.realm.RealmResults
 
 
 class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {

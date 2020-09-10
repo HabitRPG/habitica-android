@@ -14,7 +14,6 @@ import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.User
-import io.reactivex.functions.Consumer
 import javax.inject.Inject
 
 class LocalNotificationActionReceiver : BroadcastReceiver() {
@@ -90,7 +89,7 @@ class LocalNotificationActionReceiver : BroadcastReceiver() {
             }
             context?.getString(R.string.complete_task_action) -> {
                 intent?.extras?.getString("taskID")?.let {
-                    taskRepository.taskChecked(null, it, up = true, force = false) { _ ->
+                    taskRepository.taskChecked(null, it, up = true, force = false) {
                     }.subscribe({}, RxErrorHandler.handleEmptyError())
                 }
             }

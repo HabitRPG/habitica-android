@@ -18,7 +18,6 @@ import com.habitrpg.android.habitica.models.social.Group
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.functions.Consumer
 import io.reactivex.subjects.BehaviorSubject
 import io.realm.RealmResults
 import java.util.*

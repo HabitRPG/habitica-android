@@ -16,7 +16,6 @@ import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.BiFunction
-import io.reactivex.functions.Consumer
 import io.reactivex.subjects.BehaviorSubject
 import java.util.*
 import javax.inject.Inject

@@ -18,7 +18,6 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.TaskFormReminderItemBinding
 import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.extensions.getThemeColor
-import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.models.tasks.RemindersItem
 import com.habitrpg.android.habitica.models.tasks.Task

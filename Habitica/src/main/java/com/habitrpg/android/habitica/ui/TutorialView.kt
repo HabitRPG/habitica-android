@@ -3,12 +3,8 @@ package com.habitrpg.android.habitica.ui
 import android.content.Context
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.FrameLayout
-import android.widget.RelativeLayout
-import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.OverlayTutorialBinding
-import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.models.TutorialStep
 

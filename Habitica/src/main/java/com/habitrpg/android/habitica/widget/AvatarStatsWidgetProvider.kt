@@ -16,7 +16,6 @@ import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.AvatarView
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
-import io.reactivex.functions.Consumer
 
 class AvatarStatsWidgetProvider : BaseWidgetProvider() {
 

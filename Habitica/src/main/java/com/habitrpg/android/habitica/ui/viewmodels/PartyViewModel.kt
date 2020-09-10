@@ -10,7 +10,6 @@ import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import io.reactivex.BackpressureStrategy
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.functions.Consumer
 import io.realm.RealmResults
 import org.greenrobot.eventbus.EventBus
 

@@ -1,16 +1,15 @@
 package com.habitrpg.android.habitica.ui.fragments.inventory.stable
 
 import android.os.Bundle
-import androidx.fragment.app.FragmentPagerAdapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
+import androidx.fragment.app.FragmentPagerAdapter
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
-import com.habitrpg.android.habitica.databinding.FragmentRecyclerviewBinding
 import com.habitrpg.android.habitica.databinding.FragmentViewpagerBinding
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
+
 class StableFragment : BaseMainFragment<FragmentViewpagerBinding>() {
 
     override var binding: FragmentViewpagerBinding? = null

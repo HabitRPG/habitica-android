@@ -2,7 +2,6 @@ package com.habitrpg.android.habitica.ui.views.yesterdailies
 
 import android.app.Activity
 import android.content.Context
-import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup

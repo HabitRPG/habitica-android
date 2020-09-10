@@ -35,7 +35,6 @@ import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
 import io.reactivex.Flowable
 import io.reactivex.FlowableTransformer
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.functions.BiFunction
 import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
 import okhttp3.Cache

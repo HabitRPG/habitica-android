@@ -373,9 +373,6 @@
     <string name="subscribe_prompt_thanks">Vous avez ces bonus grâce à votre abonnement</string>
     <string name="subscription_status">Etat de l\'abonnement</string>
     <string name="challenge_leave_title">Quitter le défi</string>
-    <string name="challenge_leave_text">Voulez-vous vraiment quitter le défi \"%s\" ?</string>
-    <string name="challenge_remove_tasks_title">Supprimer les tâches</string>
-    <string name="challenge_remove_tasks_text">Voulez-vous supprimer les tâches ?</string>
     <string name="remove_tasks">Supprimer</string>
     <string name="keep_tasks">Conserver</string>
     <string name="my_challenges">Mes défis</string>
@@ -672,8 +669,6 @@
     <string name="send_gift">Offrir</string>
     <string name="server">Serveur</string>
     <string name="gift_confirmation_title">Votre cadeau a été envoyé !</string>
-    <string name="gift_confirmation_text_g1g1">Votre abonnement offert a été envoyé, et votre abonnement a été rattaché à votre compte !</string>
-    <string name="gift_confirmation_text">Votre abonnement offert a été envoyé, et votre abonnement a été rattaché à votre compte.</string>
     <string name="opting_out_progress">Ne pas choisir</string>
     <string name="delete_oauth_account_description">Cela va définitivement supprimer votre compte, et il ne pourra pas être restauré ! Les gemmes sur votre compte ou celles dépensées ne seront pas remboursées. Si vous confirmez définitivement, tapez DELETE dans le champ ci-dessous.</string>
     <string name="discover">Découvrir</string>
@@ -875,7 +870,6 @@
     <string name="g1g1_duration">17 Déc jusqu\'au 6 Jan</string>
     <string name="quest_completed">Quête terminée !</string>
     <string name="not_participating">Vous ne participez pas</string>
-    <string name="unlock_level_short">Niveau %d</string>
     <string name="unlock_previous_short">Finir la quête %d</string>
     <string name="unlock_level">Débloqué en atteignant le niveau %d</string>
     <string name="unlock_previous">Débloqué en finissant la quête %d</string>

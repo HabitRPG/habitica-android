@@ -4,12 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
-import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.navigation.navArgs
-import androidx.viewpager.widget.ViewPager
-import com.google.android.material.tabs.TabLayout
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
@@ -23,7 +20,6 @@ import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
 import com.habitrpg.android.habitica.ui.fragments.purchases.GiftBalanceGemsFragment
 import com.habitrpg.android.habitica.ui.fragments.purchases.GiftPurchaseGemsFragment
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
-import io.reactivex.functions.Consumer
 import org.greenrobot.eventbus.Subscribe
 import javax.inject.Inject
 

@@ -20,7 +20,6 @@ import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.Flowable
 import io.reactivex.Maybe
-import io.reactivex.functions.Consumer
 import io.realm.RealmResults
 import java.util.*
 import java.util.concurrent.TimeUnit

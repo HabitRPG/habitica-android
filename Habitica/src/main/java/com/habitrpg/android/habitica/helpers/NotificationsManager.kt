@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.helpers
 
 import android.content.Context
-import androidx.core.os.bundleOf
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.ApiClient
@@ -15,13 +14,9 @@ import com.habitrpg.android.habitica.models.notifications.FirstDropData
 import com.habitrpg.android.habitica.models.notifications.LoginIncentiveData
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
-import com.habitrpg.android.habitica.ui.views.dialogs.AchievementDialog
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Completable
 import io.reactivex.Flowable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.functions.Action
-import io.reactivex.functions.Consumer
 import io.reactivex.subjects.BehaviorSubject
 import org.greenrobot.eventbus.EventBus
 import java.util.*

@@ -16,7 +16,6 @@ import com.habitrpg.android.habitica.ui.menu.BottomSheetMenuItem
 import com.habitrpg.android.habitica.ui.views.dialogs.PetSuggestHatchDialog
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.functions.Consumer
 import io.reactivex.subjects.PublishSubject
 import org.greenrobot.eventbus.EventBus
 

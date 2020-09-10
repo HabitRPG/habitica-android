@@ -48,14 +48,12 @@
         app:npcDrawable="@drawable/justin_textbox"
         android:layout_marginLeft="@dimen/content_inset"
         android:layout_marginRight="@dimen/content_inset"
-        android:layout_above="@id/customization_drawer"
         android:layout_marginBottom="12dp"/>
 
     <com.habitrpg.android.habitica.ui.views.setup.AvatarCustomizationDrawer
             android:id="@+id/customization_drawer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             />
 
 </LinearLayout>

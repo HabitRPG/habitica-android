@@ -5,9 +5,7 @@ import android.content.Intent
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
 import org.solovyev.android.checkout.*
-import java.lang.NullPointerException
 import java.util.*
-import javax.annotation.Nonnull
 
 class PurchaseHandler(activity: Activity, val crashlyticsProxy: CrashlyticsProxy) {
     private val billing = HabiticaBaseApplication.getInstance(activity.applicationContext)?.billing

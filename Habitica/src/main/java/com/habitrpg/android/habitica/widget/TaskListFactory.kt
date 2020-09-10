@@ -17,7 +17,6 @@ import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.functions.Consumer
 import net.pherth.android.emoji_library.EmojiHandler
 import java.util.*
 import javax.inject.Inject

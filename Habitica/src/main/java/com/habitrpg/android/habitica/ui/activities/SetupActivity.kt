@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.Button
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.core.content.edit
@@ -31,11 +30,8 @@ import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.fragments.setup.AvatarSetupFragment
 import com.habitrpg.android.habitica.ui.fragments.setup.TaskSetupFragment
 import com.habitrpg.android.habitica.ui.fragments.setup.WelcomeFragment
-import com.habitrpg.android.habitica.ui.views.FadingViewPager
-import com.viewpagerindicator.IconPageIndicator
 import com.viewpagerindicator.IconPagerAdapter
 import io.reactivex.BackpressureStrategy
-import io.reactivex.functions.Consumer
 import java.util.*
 import javax.inject.Inject
 

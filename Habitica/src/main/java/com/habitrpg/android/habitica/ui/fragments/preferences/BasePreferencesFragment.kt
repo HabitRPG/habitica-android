@@ -8,7 +8,6 @@ import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.modules.AppModule
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.functions.Consumer
 import javax.inject.Inject
 import javax.inject.Named
 

@@ -373,9 +373,6 @@
   <string name="subscribe_prompt_thanks">За абонирането си получавате следните полезни неща:</string>
   <string name="subscription_status">Състояние на абонамента</string>
     <string name="challenge_leave_title">Напускане на предизвикателството</string>
-  <string name="challenge_leave_text">Наистина ли искате да напуснете предизвикателството „%s“?</string>
-  <string name="challenge_remove_tasks_title">Премахване на задачите</string>
-  <string name="challenge_remove_tasks_text">Искате ли да премахнете задачите?</string>
   <string name="remove_tasks">Премахване</string>
   <string name="keep_tasks">Задържане</string>
   <string name="my_challenges">Моите предизвикателства</string>
@@ -670,8 +667,6 @@
   <string name="send_gift">Изпращане на подаръка</string>
   <string name="server">Сървър</string>
   <string name="gift_confirmation_title">Подаръкът Ви беше изпратен!</string>
-  <string name="gift_confirmation_text_g1g1">Подареният от Вас абонамент беше изпратен, и Вие също получихте абонамент!</string>
-  <string name="gift_confirmation_text">Подареният от Вас абонамент беше изпратен, и Вие също получихте абонамент.</string>
   <string name="discover">Откриване</string>
   <string name="damage_paused">Щетите са спрени</string>
   <string name="notifications">Известия</string>

@@ -16,7 +16,8 @@ import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
-import android.widget.*
+import android.widget.EditText
+import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
@@ -48,8 +49,6 @@ import com.habitrpg.android.habitica.models.auth.UserAuthResponse
 import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
-import com.habitrpg.android.habitica.ui.views.login.LockableScrollView
-import com.habitrpg.android.habitica.ui.views.login.LoginBackgroundView
 import com.willowtreeapps.signinwithapplebutton.SignInWithAppleConfiguration
 import io.reactivex.Flowable
 import io.reactivex.exceptions.Exceptions

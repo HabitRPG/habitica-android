@@ -17,7 +17,6 @@ import com.habitrpg.android.habitica.databinding.ActivityIntroBinding
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.ui.fragments.setup.IntroFragment
 import com.viewpagerindicator.IconPagerAdapter
-import io.reactivex.functions.Consumer
 import javax.inject.Inject
 
 

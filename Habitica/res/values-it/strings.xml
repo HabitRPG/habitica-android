@@ -373,9 +373,6 @@
     <string name="subscribe_prompt_thanks">Otterrai questi vantaggi abbonandoti</string>
     <string name="subscription_status">Stato abbonamento</string>
     <string name="challenge_leave_title">Abbandona sfida</string>
-    <string name="challenge_leave_text">Vuoi davvero abbandonare la sfida \"%s\"?</string>
-    <string name="challenge_remove_tasks_title">Rimuovi attività</string>
-    <string name="challenge_remove_tasks_text">Vuoi rimuovere le attività?</string>
     <string name="remove_tasks">Rimuovi</string>
     <string name="keep_tasks">Tieni</string>
     <string name="my_challenges">Le mie sfide</string>
@@ -670,8 +667,6 @@
     <string name="send_gift">Invia un Regalo</string>
     <string name="server">Server</string>
     <string name="gift_confirmation_title">Il tuo regalo è stato inviato!</string>
-    <string name="gift_confirmation_text_g1g1">L\'abbonamento regalato è stato ricevuto e l\'abbonamento corrispondente applicato al tuo profilo.</string>
-    <string name="gift_confirmation_text">L\'abbonamento regalato è stato ricevuto e l\'abbonamento corrispondente applicato al tuo profilo.</string>
     <string name="discover">Scopri</string>
     <string name="damage_paused">Danni sospesi</string>
     <string name="notifications">Notifiche</string>

@@ -5,11 +5,8 @@ import android.appwidget.AppWidgetManager
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.preference.PreferenceManager
-import android.widget.Button
 import androidx.core.content.edit
-import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.databinding.ActivityMainBinding
+import androidx.preference.PreferenceManager
 import com.habitrpg.android.habitica.databinding.WidgetConfigureAddTaskBinding
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.widget.AddTaskWidgetProvider

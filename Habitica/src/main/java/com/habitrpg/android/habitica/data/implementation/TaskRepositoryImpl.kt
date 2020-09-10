@@ -15,7 +15,6 @@ import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.Flowable
 import io.reactivex.Maybe
 import io.reactivex.Single
-import io.reactivex.functions.Consumer
 import io.realm.Realm
 import io.realm.RealmResults
 import java.text.SimpleDateFormat

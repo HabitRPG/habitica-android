@@ -374,9 +374,6 @@
   <string name="subscribe_prompt_thanks">Za Pretplatu dobivaš ove korisne prednosti:</string>
   <string name="subscription_status">Status Pretplate</string>
     <string name="challenge_leave_title">Napusti Izazov</string>
-  <string name="challenge_leave_text">Jesi li siguran/na da želiš napustiti Izazov \"%s\"?</string>
-  <string name="challenge_remove_tasks_title">Ukloni zadatke</string>
-  <string name="challenge_remove_tasks_text">Želiš li ukloniti zadatke?</string>
   <string name="remove_tasks">Ukloni</string>
   <string name="keep_tasks">Zadrži</string>
   <string name="my_challenges">Moji Izazovi</string>
@@ -671,8 +668,6 @@
   <string name="send_gift">Pošalji poklon</string>
   <string name="server">Server</string>
   <string name="gift_confirmation_title">Tvoj poklon je poslan!</string>
-  <string name="gift_confirmation_text_g1g1">Tvoj poklon je poslan i tvoja pretplata je aktivirana na tvom računu.</string>
-  <string name="gift_confirmation_text">Tvoj poklon je poslan i tvoja pretplata je aktivirana na tvom računu.</string>
   <string name="discover">Otkrij</string>
   <string name="damage_paused">Šteta je pauzirana</string>
 </resources>

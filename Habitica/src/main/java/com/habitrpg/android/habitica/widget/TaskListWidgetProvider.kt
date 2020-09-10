@@ -12,7 +12,6 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.ui.activities.MainActivity
-import io.reactivex.functions.Consumer
 import javax.inject.Inject
 
 abstract class TaskListWidgetProvider : BaseWidgetProvider() {

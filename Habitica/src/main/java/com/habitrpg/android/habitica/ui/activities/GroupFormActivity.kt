@@ -4,12 +4,13 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.*
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.databinding.ActivityGroupFormBinding
-import com.habitrpg.android.habitica.ui.helpers.*
-import com.habitrpg.android.habitica.ui.views.HabiticaAutocompleteTextView
+import com.habitrpg.android.habitica.ui.helpers.AutocompleteAdapter
+import com.habitrpg.android.habitica.ui.helpers.AutocompleteTokenizer
+import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
+import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
 
 class GroupFormActivity : BaseActivity() {
 

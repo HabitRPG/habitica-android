@@ -8,7 +8,6 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.FragmentRecyclerviewBinding
-import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBinding
 import com.habitrpg.android.habitica.extensions.getTranslatedType
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
@@ -99,7 +98,7 @@ class StableRecyclerFragment : BaseFragment<FragmentRecyclerviewBinding>() {
 
             adapter?.let {
                 compositeSubscription.add(it.getEquipFlowable()
-                        .flatMap<Items> { key -> inventoryRepository.equip(user, if (itemType == "pets") "pet" else "mount", key) }
+                        .flatMap { key -> inventoryRepository.equip(user, if (itemType == "pets") "pet" else "mount", key) }
                         .subscribe({ }, RxErrorHandler.handleEmptyError()))
             }
         }

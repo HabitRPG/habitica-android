@@ -11,7 +11,6 @@ import com.habitrpg.android.habitica.MainNavDirections
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
-import com.habitrpg.android.habitica.databinding.FragmentGuildsOverviewBinding
 import com.habitrpg.android.habitica.databinding.FragmentInboxMessageListBinding
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController

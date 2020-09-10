@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
-import com.habitrpg.android.habitica.databinding.FragmentPartyInviteBinding
 import com.habitrpg.android.habitica.databinding.FragmentViewpagerBinding
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment

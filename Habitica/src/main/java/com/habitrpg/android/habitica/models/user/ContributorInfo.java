@@ -1,11 +1,8 @@
 package com.habitrpg.android.habitica.models.user;
 
-import android.util.SparseArray;
 import android.util.SparseIntArray;
 
 import com.habitrpg.android.habitica.R;
-
-import java.util.HashMap;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
@@ -77,10 +74,6 @@ public class ContributorInfo extends RealmObject {
         }
 
         return rColor;
-    }
-
-    public int getContributorForegroundColor() {
-        return android.R.color.white;
     }
 
     public String getUserId() {

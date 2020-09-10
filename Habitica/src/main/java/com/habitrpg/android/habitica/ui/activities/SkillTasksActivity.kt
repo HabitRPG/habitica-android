@@ -9,18 +9,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
-import androidx.viewpager.widget.ViewPager
-import com.google.android.material.tabs.TabLayout
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.TaskRepository
-import com.habitrpg.android.habitica.databinding.ActivitySkillMembersBinding
 import com.habitrpg.android.habitica.databinding.ActivitySkillTasksBinding
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.fragments.skills.SkillTasksRecyclerViewFragment
-import io.reactivex.functions.Consumer
 import javax.inject.Inject
 import javax.inject.Named
 

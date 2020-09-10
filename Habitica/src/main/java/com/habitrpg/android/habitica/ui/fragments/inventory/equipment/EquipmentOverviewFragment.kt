@@ -7,13 +7,11 @@ import android.view.ViewGroup
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.FragmentEquipmentOverviewBinding
-import com.habitrpg.android.habitica.databinding.FragmentSubscriptionBinding
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.Gear
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
-import io.reactivex.functions.Consumer
 import javax.inject.Inject
 
 class EquipmentOverviewFragment : BaseMainFragment<FragmentEquipmentOverviewBinding>() {

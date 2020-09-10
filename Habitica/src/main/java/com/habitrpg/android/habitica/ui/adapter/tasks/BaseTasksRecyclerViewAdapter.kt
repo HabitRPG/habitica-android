@@ -15,7 +15,6 @@ import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
 import com.habitrpg.android.habitica.ui.viewHolders.BindableViewHolder
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
 import java.util.*
 import javax.inject.Inject
@@ -98,7 +97,7 @@ abstract class BaseTasksRecyclerViewAdapter<VH : BindableViewHolder<Task>>(var t
     private fun loadContent(forced: Boolean) {
         if (this.content == null || forced) {
             taskRepository.getTasks(this.taskType, this.userID ?: "")
-                    .flatMap<Task> { Flowable.fromIterable(it) }
+                    .flatMap { Flowable.fromIterable(it) }
                     .map { task ->
                         task.parseMarkdown()
                         task
