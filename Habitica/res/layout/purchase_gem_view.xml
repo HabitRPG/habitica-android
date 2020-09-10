@@ -15,17 +15,21 @@
         android:contentDescription="@string/gems"
         android:layout_marginTop="20dp"/>
 
-    <FrameLayout
+    <LinearLayout
         android:id="@+id/amount_text_wrapper"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:gravity="center">
         <ImageView
-            android:id="@+id/amount_background"
-            android:layout_width="wrap_content"
+            android:id="@+id/amount_background_right"
+            android:layout_width="30dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center"
+            android:scaleType="fitStart"
+            android:layout_marginEnd="8dp"
+            />
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/gem_amount"
         android:textColor="@color/blue_10"
@@ -33,7 +37,15 @@
         android:layout_gravity="center"
         android:textSize="36sp"
         tools:text="21" />
-    </FrameLayout>
+        <ImageView
+            android:id="@+id/amount_background_left"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:scaleType="fitEnd"
+            android:layout_marginStart="8dp"
+            />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/gems_text_view"

@@ -79,8 +79,8 @@ class ChatBarView : LinearLayout {
     private var autocompleteAdapter: AutocompleteAdapter? = null
 
     private fun setupView(context: Context) {
-        orientation = LinearLayout.VERTICAL
-        this.setBackgroundResource(R.color.white)
+        orientation = VERTICAL
+        this.setBackgroundResource(R.color.content_background)
 
         HabiticaBaseApplication.userComponent?.inject(this)
 
