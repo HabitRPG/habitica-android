@@ -18,15 +18,13 @@ import com.habitrpg.android.habitica.ui.views.promo.PromoMenuView
 import java.text.SimpleDateFormat
 import java.util.*
 
-class SpookyExtraGemsHabiticaPromotion: HabiticaPromotion() {
+class SpookyExtraGemsHabiticaPromotion(startDate: Date?, endDate: Date?) : HabiticaPromotion() {
     override val identifier: String
         get() = "spooky_extra_gems"
     override val promoType: PromoType
         get() = PromoType.GEMS_AMOUNT
-    override val startDate: Date
-        get() = DateUtils.createDate(2020, 10, 29)
-    override val endDate: Date
-        get() = DateUtils.createDate(2020, 11, 2)
+    override val startDate: Date = startDate ?: DateUtils.createDate(2020, 10, 29)
+    override val endDate: Date = endDate ?: DateUtils.createDate(2020, 11, 2)
 
     override fun pillBackgroundDrawable(context: Context): Drawable {
         return ContextCompat.getDrawable(context, R.drawable.spooky_promo_pill_bg) ?: ShapeDrawable()
@@ -89,8 +87,10 @@ class SpookyExtraGemsHabiticaPromotion: HabiticaPromotion() {
         val context = binding.root.context
         binding.root.background = promoBackgroundDrawable(context)
         binding.purchaseButton.background = buttonDrawable(context)
-        binding.amountBackground.background = BitmapDrawable(context.resources,
+        val drawable = BitmapDrawable(context.resources,
                 HabiticaIconsHelper.imageOfSpookyGemPromoBG())
+        binding.amountBackgroundLeft.background = drawable
+        binding.amountBackgroundRight.background = drawable
         binding.gemAmount.setTextColor(Color.parseColor("#FEE2B6"))
         binding.gemsTextView.setTextColor(Color.parseColor("#FEE2B6"))
         binding.footerTextView.visibility = View.VISIBLE
@@ -124,7 +124,7 @@ class SpookyExtraGemsHabiticaPromotion: HabiticaPromotion() {
         fragment.binding?.promptButton?.setTextColor(ContextCompat.getColor(context, R.color.white))
         fragment.binding?.promptButton?.setOnClickListener { MainNavigationController.navigate(R.id.gemPurchaseActivity) }
 
-        fragment.binding?.instructionDescriptionView?.setText(R.string.spooky_promo_info_instructions)
-        fragment.binding?.limitationsDescriptionView?.setText(R.string.spooky_promo_info_limitations)
-    }
+        fragment.binding?.instructionDescriptionView?.text = context.getString(R.string.spooky_promo_info_instructions, formatter.format(startDate), formatter.format(endDate))
+        val limitationsFormatter = SimpleDateFormat.getDateTimeInstance()
+        fragment.binding?.limitationsDescriptionView?.text = context.getString(R.string.gems_promo_info_limitations, limitationsFormatter.format(startDate), limitationsFormatter.format(endDate))    }
 }

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="tavern.nolikes.background">#121212</color>
+    <color name="tavern.somelikes.background">#333333</color>
+    <color name="tavern.userliked.background">@color/text_green</color>
+    <color name="tavern.nolikes.foreground">#4D4D4D</color>
+    <color name="tavern.somelikes.foreground">#000000</color>
+    <color name="tavern.userliked.foreground">#000000</color>
+</resources>

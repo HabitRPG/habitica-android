@@ -77,7 +77,7 @@
                 <com.habitrpg.android.habitica.ui.views.HabiticaProgressBar
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:layout_height="13dp"
+                    android:layout_height="@dimen/bar_size"
                     android:id="@+id/health_bar"
                     app:barForegroundColor="@color/hpColor"
                     app:barBackgroundColor="@color/window_background"/>
@@ -95,7 +95,7 @@
                 <com.habitrpg.android.habitica.ui.views.HabiticaProgressBar
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:layout_height="13dp"
+                    android:layout_height="@dimen/bar_size"
                     android:id="@+id/experience_bar"
                     app:barForegroundColor="@color/xpColor"
                     app:barBackgroundColor="@color/window_background"/>
@@ -113,7 +113,7 @@
                 <com.habitrpg.android.habitica.ui.views.HabiticaProgressBar
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:layout_height="13dp"
+                    android:layout_height="@dimen/bar_size"
                     android:id="@+id/mana_bar"
                     app:barForegroundColor="@color/mpColor"
                     app:barBackgroundColor="@color/window_background"/>

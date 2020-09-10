@@ -18,15 +18,13 @@ import com.habitrpg.android.habitica.ui.views.promo.PromoMenuView
 import java.text.SimpleDateFormat
 import java.util.*
 
-class FallExtraGemsHabiticaPromotion: HabiticaPromotion() {
+class FallExtraGemsHabiticaPromotion(startDate: Date?, endDate: Date?) : HabiticaPromotion() {
     override val identifier: String
         get() = "fall_extra_gems"
     override val promoType: PromoType
         get() = PromoType.GEMS_AMOUNT
-    override val startDate: Date
-        get() = DateUtils.createDate(2020, 9, 22)
-    override val endDate: Date
-        get() = DateUtils.createDate(2020, 9, 30)
+    override val startDate: Date = startDate ?: DateUtils.createDate(2020, 9, 22)
+    override val endDate: Date = endDate ?: DateUtils.createDate(2020, 9, 30)
 
     override fun pillBackgroundDrawable(context: Context): Drawable {
         return ContextCompat.getDrawable(context, R.drawable.fall_promo_pill_bg) ?: ShapeDrawable()
@@ -95,13 +93,15 @@ class FallExtraGemsHabiticaPromotion: HabiticaPromotion() {
                 ContextCompat.getColor(context, R.color.green_50),
                 ContextCompat.getColor(context, R.color.brand_300)
         ).shuffled()
-        binding.amountBackground.background = BitmapDrawable(context.resources,
+        val drawable = BitmapDrawable(context.resources,
                 HabiticaIconsHelper.imageOfFallGemPromoBG(
                         colors[0],
                         colors[1],
                         colors[2],
                         colors[3]
                 ))
+        binding.amountBackgroundLeft.background = drawable
+        binding.amountBackgroundRight.background = drawable
         binding.gemAmount.setTextColor(Color.parseColor("#FEE2B6"))
         binding.gemsTextView.setTextColor(Color.parseColor("#FEE2B6"))
         binding.footerTextView.visibility = View.VISIBLE
@@ -135,7 +135,8 @@ class FallExtraGemsHabiticaPromotion: HabiticaPromotion() {
         fragment.binding?.promptButton?.setTextColor(ContextCompat.getColor(context, R.color.white))
         fragment.binding?.promptButton?.setOnClickListener { MainNavigationController.navigate(R.id.gemPurchaseActivity) }
 
-        fragment.binding?.instructionDescriptionView?.setText(R.string.fall_promo_info_instructions)
-        fragment.binding?.limitationsDescriptionView?.setText(R.string.fall_promo_info_limitations)
+        fragment.binding?.instructionDescriptionView?.text = context.getString(R.string.fall_promo_info_instructions, formatter.format(startDate), formatter.format(endDate))
+        val limitationsFormatter = SimpleDateFormat.getDateTimeInstance()
+        fragment.binding?.limitationsDescriptionView?.text = context.getString(R.string.gems_promo_info_limitations, limitationsFormatter.format(startDate), limitationsFormatter.format(endDate))
     }
 }
