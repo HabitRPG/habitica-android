@@ -1,9 +1,6 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="store_title">Zmień swoje cele i zadania w grę</string>
-  <string name="store_short_description">Traktuj swoje życie jak grę aby być zmotywowanym i zorganizowanym!</string>
-  <string name="store_description">Traktuj swoje życie jak grę aby być zmotywowanym i zorganizowanym! Dzięki Habitice osiąganie celów jest fajne. 
-Wprowadź swoje Nawyki, Codzienne oraz Do-zrobienia, a potem stwórz swojego awatara. Odhaczaj zadania by zwiększać poziom swojego awatara i odblokowywać takie opcje jak zbroja, chowańce, umiejętności a nawet misje! Zwalczaj potwory z przyjaciółmi by motywować siebie nawzajem i wydawaj złoto na wbudowane nagrody takie jak zbroja lub stworzone przez siebie, takie jak obejrzenie odcinka ulubionego serialu. Elastyczna, społecznościowa i zabawna - Habitica jest idealnym sposobem na zmotywowanie siebie do osiągnięcia celów.
-W razie jakichkolwiek pytań pisz śmiało na mobile@habitica.com. A jeśli podoba Ci się nasza aplikacja, bylibyśmy naprawdę wdzięczni za opinię.
-</string>
+    <string name="store_title">Gamifikuj swoje zadania</string>
+    <string name="store_short_description">Traktuj swoje życie jak grę, aby pozostać zmotywowanym i zorganizowanym!</string>
+    <string name="store_description">Traktuj swoje życie jak grę aby być zmotywowanym i zorganizowanym! Dzięki Habitica osiąganie celów jest fajne. Wprowadź swoje Nawyki, Codzienne oraz zadania Do Zrobienia, a potem stwórz swojego awatara. Odhaczaj zadania by zwiększać poziom swojego awatara i odblokowywać takie opcje jak zbroja, chowańce, umiejętności a nawet misje! Zwalczaj potwory z przyjaciółmi by motywować siebie nawzajem i wydawaj złoto na wbudowane nagrody takie jak zbroja lub stworzone przez siebie, takie jak obejrzenie odcinka ulubionego serialu. Elastyczna, społecznościowa i zabawna Habitica jest idealnym sposobem na zmotywowanie siebie do osiągnięcia celów. W razie jakichkolwiek pytań pisz śmiało na mobile@habitica.com. A jeśli podoba Ci się nasza aplikacja, bylibyśmy naprawdę wdzięczni za opinię.</string>
 </resources>

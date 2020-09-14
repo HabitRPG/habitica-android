@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="tutorial_overview">Nous y voilà ! J\'ai rempli certaines tâches pour vous, basé sur vos centres d\'intérêt. Essayez d\'en ajouter quelques-unes vous-même. Vous pouvez modifier une tâche en tapant sur son titre.</string>
+    <string name="tutorial_overview">Nous y voilà ! J\'ai rempli certaines tâches pour vous, basées sur vos centres d\'intérêt. Essayez d\'en ajouter quelques-unes vous-même. Vous pouvez modifier une tâche en tapant sur son titre.</string>
     <string name="tutorial_habits_1">Les habitudes en premier. Il s\'agira d\'habitudes positives que vous voulez améliorer, ou d\'habitudes négatives que vous voulez abandonner.</string>
     <string name="tutorial_habits_2">Chaque fois que vous achevez une habitude positive, touchez le + pour gagner de l\'expérience et de l\'or !</string>
     <string name="tutorial_habits_3">Si vous vous laissez aller à une mauvaise habitude, utiliser le - réduira la santé de votre avatar pour vous forcer à rester vigilant.</string>
-    <string name="tutorial_habits_4">Essayez ! Vous pouvez découvrir les autres types de tâches à travers la barre de navigation inférieure.</string>
+    <string name="tutorial_habits_4">Essayez ! Vous pouvez découvrir les autres types de tâches en utilisant la barre de navigation inférieure.</string>
     <string name="tutorial_dailies_1">Utilisez les quotidiennes pour les tâches qui doivent être faites selon un planning régulier.</string>
     <string name="tutorial_dailies_2">Faites attention — si vous en ratez une, votre avatar prendra des dégâts pendant la nuit. Les valider avec régularité vous apportera de grandes récompenses !</string>
-    <string name="tutorial_todos_1">Utilisez les tâches À faire pour garder trace des tâches qui doivent être réalisées une seule fois.</string>
-    <string name="tutorial_todos_2">Si votre tâche doit être réalisée suivant un délai précis, indiquez une date d\'échéance. On dirait que vous pouvez déjà en cocher une — allez-y !</string>
+    <string name="tutorial_todos_1">Utilisez les tâches à faire pour garder en mémoire des tâches qui doivent être réalisées une seule fois.</string>
+    <string name="tutorial_todos_2">Si votre tâche à faire doit être réalisée suivant un délai précis, indiquez une date d\'échéance. On dirait que vous pouvez déjà en cocher une — allez-y !</string>
     <string name="tutorial_rewards_1">Achetez de l\'équipement pour votre avatar avec l\'or que vous gagnez !</string>
     <string name="tutorial_rewards_2">Vous pouvez aussi créer des récompenses personnalisées en fonction de ce qui vous motive.</string>
     <string name="tutorial_tasks_complete">C\'est tout pour l\'instant. Si vous avez besoin d\'un rappel, consultez la section FAQ.</string>

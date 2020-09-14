@@ -1,20 +1,22 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="sidebar_tasks">İşler</string>
-  <string name="sidebar_skills">Yetenekler</string>
-  <string name="sidebar_section_social">Sosyal</string>
-  <string name="sidebar_inbox">Mesajlar</string>
-  <string name="sidebar_tavern">Taverna</string>
-  <string name="sidebar_party">Takım</string>
-  <string name="sidebar_purchaseGems">Elmas Satın Al</string>
-  <string name="sidebar_guilds">Loncalar</string>
-  <string name="sidebar_challenges">Mücadeleler</string>
-  <string name="sidebar_section_inventory">Envanter</string>
-  <string name="sidebar_avatar">Avatar</string>
-  <string name="sidebar_equipment">Ekipman</string>
-  <string name="sidebar_stable">Ahır</string>
-  <string name="sidebar_news">Haberler</string>
+    <string name="sidebar_tasks">İşler</string>
+    <string name="sidebar_skills">Yetenekler</string>
+    <string name="sidebar_section_social">Sosyal</string>
+    <string name="sidebar_inbox">Mesajlar</string>
+    <string name="sidebar_tavern">Taverna</string>
+    <string name="sidebar_party">Takım</string>
+    <string name="sidebar_purchaseGems">Elmas Satın Al</string>
+    <string name="sidebar_guilds">Loncalar</string>
+    <string name="sidebar_challenges">Mücadeleler</string>
+    <string name="sidebar_section_inventory">Envanter</string>
+    <string name="sidebar_avatar">Avatar Özelleştirme</string>
+    <string name="sidebar_equipment">Ekipman</string>
+    <string name="sidebar_stable">Ahır</string>
+    <string name="sidebar_news">Haberler</string>
     <string name="sidebar_about">Hakkında</string>
-  <string name="sidebar_shops">Dükkanlar</string>
-  <string name="sidebar_stats">İstatistikler</string>
+    <string name="sidebar_shops">Dükkanlar</string>
+    <string name="sidebar_stats">İstatistikler</string>
+    <string name="sidebar_gems">Elmas Satın Al</string>
+    <string name="sidebar_subscription">Abonelik</string>
 </resources>

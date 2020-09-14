@@ -7,8 +7,8 @@
     <string name="tutorial_habits_4">挑戦してみよう！下のほうのナビゲーションから、異なるタスクタイプも選ぶことができます。</string>
     <string name="tutorial_dailies_1">通常のスケジュールにしたがって行うべき期限付きのタスクは、日課に設定しましょう。</string>
     <string name="tutorial_dailies_2">気をつけて…もし一つでもやり逃すと、あなたのアバターは夜のうちにダメージを受けてしまいます。継続的にチェックを入れることで、素晴らしい報酬を手に入れましょう！</string>
-    <string name="tutorial_todos_1">単発のタスクをこなすために、To-Doを使いましょう。</string>
-    <string name="tutorial_todos_2">もしTo-Doに期限があるのなら、設定しましょう。あなたにはクリアできるはず…がんばって！</string>
+    <string name="tutorial_todos_1">単発のタスクをこなすために、To Doを使いましょう。</string>
+    <string name="tutorial_todos_2">もしTo Doに期限があるのなら、設定しましょう。あなたにはクリアできるはず…がんばって！</string>
     <string name="tutorial_rewards_1">得られたゴールドであなたのアバター用に装備を購入しましょう！</string>
     <string name="tutorial_rewards_2">あなた自身のモチベーションを上げるために、現実世界での報酬を登録することもできます。</string>
     <string name="tutorial_tasks_complete">これで説明は終わりです。もし説明を思い出したいときは、よくある質問をチェックしましょう。</string>

@@ -616,7 +616,7 @@
     <string name="next_day_reminder_title">Você marcou suas Diárias feitas hoje?</string>
     <string name="next_day_reminder_text">Há muito o que desbloquear e descobrir ao subir de nível, então, continue com suas tarefas e divirta-se!</string>
     <string name="daily_tip_0">Gostaria de tentar algo novo? Entre em um desafio para expandir sua lista de tarefas e ganhe algumas Gemas!</string>
-    <string name="daily_tip_1">Adicione listas em seus Afazeres para multiplicar suas recompensas!</string>
+    <string name="daily_tip_1">Adicione listas aos seus Afazeres para multiplicar suas recompensas!</string>
     <string name="daily_tip_2">Você pode mudar com que frequência cada Diária se repete. Mesmo tarefas menos frequentes podem ser programadas.</string>
     <string name="daily_tip_3">Você pode agendar lembretes específicos para Diárias também.</string>
     <string name="daily_tip_4">Conferir suas tarefas ocasionalmente pode ajudá-lo a ficar no caminho certo.</string>
@@ -637,8 +637,8 @@
     <string name="two_handed">Duas mãos</string>
     <string name="usernamePromptTitle">É hora de definir seu nome de usuário!</string>
     <string name="usernamePromptBody">Nomes de login agora são nomes de usuário únicos e estarão visíveis ao lado do seu nome de exibição e serão usados para convites, @menções em bate-papo e mensagens.</string>
-    <string name="usernamePromptWiki">Prefs</string>
-    <string name="usernamePromptDisclaimer">Nomes de usuários devem estar de acordo com os nossos <a href="https://habitica.com/static/terms">Termos de Serviço</a> e <a href="https://habitica_com/static/community-guidelines">Diretrizes da Comunidade</a>. Se você não definiu um nome de login anteriormente, seu nome de usuário foi gerado automaticamente.</string>
+    <string name="usernamePromptWiki">Se você quiser saber mais sobre essa mudança, <a href="https://habitica.wikia.com/wiki/Player_Names">visite nossa wiki.</a></string>
+    <string name="usernamePromptDisclaimer">Nomes de usuários devem estar de acordo com os nossos <a href="https://habitica.com/static/terms">Termos de Serviço</a> e <a href="https://habitica.com/static/community-guidelines">Diretrizes da Comunidade</a>. Se você não definiu um nome de login anteriormente, seu nome de usuário foi gerado automaticamente.</string>
     <string name="confirm_username_title">Você ter certeza que deseja confirmar seu nome de usuário atual?</string>
     <string name="confirm_username_description">Confirmar seu nome de usuário o tornará público para convites, @menções e mensagens. Você pode alterar seu nome de usuário nas configurações a qualquer momento.</string>
     <string name="cancel">Cancelar</string>
@@ -721,7 +721,7 @@
     <string name="local">local</string>
     <string name="authentication_methods">Métodos de autenticação</string>
     <string name="someone">Alguém</string>
-    <string name="invitation_title">%s te convidou para %s</string>
+    <string name="invitation_title">%s te convidou para se juntar ao grupo %s</string>
     <string name="password_too_short">Sua senha deve ter pelo menos %d caracteres</string>
     <string name="copy_username">Copiar nome do usuário</string>
     <string name="id_copied">ID do usuário copiado para a área de transferência</string>
@@ -815,7 +815,7 @@
     <string name="guild_summary">Resumo da Guilda</string>
     <string name="setup_task_habit_2_notes">Ou exclua isso na tela de edição</string>
     <string name="setup_task_habit_2">Toque aqui para transformar isso em um mau hábito que você gostaria de abandonar</string>
-    <string name="setup_task_habit_1_notes">Ou um Hábito, uma Diária ou um Afazer</string>
+    <string name="setup_task_habit_1_notes">Um Hábito, uma Diária ou um Afazer</string>
     <string name="setup_task_habit_1">Adicionar uma tarefa ao Habitica</string>
     <string name="cost">Custo</string>
     <string name="joined_guild">Você juntou-se à guilda</string>
@@ -925,11 +925,11 @@
     <string name="mana_description">Pontos de Mana são desbloqueados com o sistema de classe a partir do nível 10 e te permite **usar Habilidades** quando você começar a aprendê-las no nível 11.
 \n
 \nAlguns **PM são restaurados** na redefinição do dia todos os dias, mas você pode recuperar mais completando tarefas ou usando uma alguma habilidade da classe Mago(a).</string>
-    <string name="gold_description">"Ouro é a **principal forma de moeda** dentro de Habitica e te permite comprar certos equipamentos, missões, itens ou recompensas personalizadas que você criou para si mesmo(a).
+    <string name="gold_description">Ouro é a **principal forma de moeda** dentro do Habitica e te permite comprar certos equipamentos, missões, itens ou mesmo recompensas personalizadas que você cria para si mesmo(a).
 \n
-\n**Ganhe Ouro** ao completar tarefas ou missões, ou com algumas habilidades de Classe.  Pontos elevados no **atributo Percepção** irá aumentar a quantidade de Ouro que você ganha.
+\n**Ganhe Ouro** ao completar tarefas ou missões, ou com algumas habilidades de Classe. Pontos elevados no **atributo Percepção** aumentam a quantidade de Ouro que você ganha.
 \n
-\nSe você for assinante no Habitica, você pode até usar o Ouro para comprar várias Gemas determinadas pelo período em que tiver assinado."</string>
+\nSe você for assinante do Habitica, você pode até usar Ouro para comprar uma quantidade de Gemas determinada pelo período em que tiver assinado.</string>
     <string name="mana_points">Pontos de Mana</string>
     <string name="experience_description">Pontos de Experiência representa seu progresso e permite que você atinja outro nível. Você irá **obter EXP** ao completar, principalmente, tarefas ou missões, mas também existem algumas habilidades de classe que dão EXP.
 \n
@@ -1005,9 +1005,100 @@
     <string name="hourglasses_description">Ampulhetas Místicas são uma forma extremamente rara de moeda que você só pode receber se assinar o Habitica por três meses consecutivos ou mais. Elas são usadas na loja dos Viajantes do Tempo para comprar conjuntos de equipamentos lançados no passado, mascotes, montarias, cenários animados ou até mesmo missões especiais.
 \n
 \nVocê pode receber até quatro Ampulhetas Místicas por ano. O tempo de recompensa é baseado na sua programação de renovação de assinaturas. Elas são enviadas no primeiro dia de um novo mês após o seu último pagamento de assinatura que te qualificou a receber uma ampulheta. Veja a página [Assinatura] para mais detalhes.</string>
-    <string name="delete_checklist_entry">Excluir entrada da lista</string>
+    <string name="delete_checklist_entry">Excluir…</string>
     <string name="still_questions">Você ainda tem alguma pergunta\?</string>
     <string name="purchase_amount_error">Você não pode comprar essa quantidade.</string>
     <string name="avatar_accent">Acessório</string>
     <string name="premium_currency">Dinheiro premium</string>
+    <string name="mount_category">Montarias %s</string>
+    <string name="pet_category">Mascote %s</string>
+    <string name="challenge_task_name">Tarefa do Desafio %s</string>
+    <string name="delete_x_tasks">Remover %d Tarefas</string>
+    <string name="keep_x_tasks">Manter %d Tarefas</string>
+    <string name="broken_challenge_description">Esta é uma de %d tarefas que são parte de um Desafio que não existe mais. O que você gostaria de fazer com essas tarefas remanescentes\?</string>
+    <string name="broken_challenge">Desafio Interrompido</string>
+    <string name="leave_delete_x_tasks">Sair e Remover %d Tarefas</string>
+    <string name="leave_delete_task">Sair e Remover Tarefa</string>
+    <string name="delete_challenge_task_description">Esta é uma de %d tarefas que são parte do Desafio “%s”. Você precisa sair do Desafio para remover essa tarefa.</string>
+    <string name="delete_challenge_task_title">Deletar Tarefa do Desafio\?</string>
+    <string name="hatch">Chocar</string>
+    <string name="hatch_your_pet">Chocar seu Mascote</string>
+    <string name="use_saddle">Usar Sela</string>
+    <string name="magic_potion">Poção Mágica</string>
+    <string name="magic_potions">Poções Mágicas</string>
+    <string name="hatch_pet_again">Chocar Mascote de novo</string>
+    <string name="unhatched_pet">Mascote Não-Chocado</string>
+    <string name="hatch_pet">Chocar Mascote</string>
+    <string name="can_hatch_pet">Combine seu Ovo de %s e Poção de %s para chocar esse mascote!</string>
+    <string name="suggest_pet_hatch_missing_both">Você precisa de um(a) %s e uma Poção de %s para chocar esse mascote</string>
+    <string name="suggest_pet_hatch_again_missing_both">Você precisa de um(a) %s e uma Poção de %s para chocar esse mascote de novo</string>
+    <string name="suggest_pet_hatch_again_missing_potion">Você ainda precisa de uma Poção de %s para chocar esse mascote de novo</string>
+    <string name="suggest_pet_hatch_again_missing_egg">Você ainda precisa de um Ovo de %s para chocar esse mascote de novo</string>
+    <string name="suggest_pet_hatch_missing_potion">Você ainda precisa de uma Poção de %s para chocar esse mascote</string>
+    <string name="suggest_pet_hatch_missing_egg">Você ainda precisa de um Ovo de %s para chocar esse mascote</string>
+    <string name="view_onboarding_tasks">Ver Tarefas Iniciais</string>
+    <string name="equip">Equipar</string>
+    <string name="excessItemsNoneLeft">Você já tem tudo o que precisa para todos os %s mascotes. Você tem certeza que quer comprar %d %ss\?</string>
+    <string name="purchaseX">Comprar %d</string>
+    <string name="excessItemsXLeft">Você só precisa %d %s para chocar todos os mascotes possíveis. Você tem certeza que quer comprar %d\?</string>
+    <string name="excess_items">Itens em Excesso</string>
+    <string name="onboardingComplete_achievement_title">Você completou suas Tarefas Iniciais!</string>
+    <string name="onboardingCompleteDescription">Se você quiser ainda mais, confira suas Conquistas e comece a coletar!</string>
+    <string name="onboardingCompleteTitle">Você ganhou &lt;b&gt;5 Conquistas&lt;/b&gt; e &lt;font color=#EE9109&gt;&lt;b&gt;100 Ouro&lt;/b&gt;&lt;/font&gt; pelos seus esforços.</string>
+    <string name="first_drop_title">Você encontrou novos itens!</string>
+    <string name="go_to_items">Ir para Itens</string>
+    <string name="first_drop_explanation2">Vá para os seus itens e tente combinar seu(s) novo(s) Ovo e Poção de Eclosão!</string>
+    <string name="first_drop_explanation1">Completar tarefas te dá uma chance de encontrar ovos, poções de eclosão, e comida para mascote.</string>
+    <string name="purchasedEquipmentDescription">Equipamentos podem ser práticos ou apenas estéticos. Aumente seus atributos para conseguir todos os tipos de benefícios para o seu avatar</string>
+    <string name="fedPetDescription">Todo Mascote tem uma comida favorita! Experimente para descobrir qual fará seu Mascote crescer mais rápido</string>
+    <string name="hatchedPetDescription">Há tantos Mascotes para colecionar, você deve ter um favorito. Se você alimentá-los, eles podem até crescer…</string>
+    <string name="completedTaskDescription">Uma tarefa pode ser um Hábito, Diária ou Afazer. Continue completando-as para receber todos os tipos de recompensas!</string>
+    <string name="createdTaskDescription">Mantenha o ritmo! Se você precisar de ajuda para planejar tarefas, tente pensar sobre o que você gostaria de fazer durante um período específico do dia</string>
+    <string name="purchasedEquipmentTitle">Comprou Equipamento</string>
+    <string name="fedPetTitle">Alimentou um Mascote</string>
+    <string name="hatchedPetTitle">Chocou um Mascote</string>
+    <string name="completedTaskTitle">Completou uma tarefa</string>
+    <string name="createdTaskTitle">Criou sua primeira tarefa</string>
+    <string name="purchase_equipment_description">Equipamentos são uma forma de customizar seu avatar e melhorar seus atributos</string>
+    <string name="feedPet_description">Complete tarefas para ganhar comida! Você pode alimentar seu mascote em Mascotes e Montarias</string>
+    <string name="hatch_pet_description">Complete tarefas para ganhar uma Poção de Eclosão e Ovo e então choque seu Mascote!</string>
+    <string name="complete_task_description">Marque como feita qualquer uma das suas tarefas para ganhar recompensas</string>
+    <string name="create_task_description">Adicione uma tarefa para algo que você gostaria de realizar essa semana</string>
+    <string name="purchase_equipment_title">Comprar Equipamento</string>
+    <string name="feedPet_title">Alimentar um mascote</string>
+    <string name="hatch_pet_title">Chocar um novo mascote</string>
+    <string name="complete_task_title">Completar uma Tarefa</string>
+    <string name="create_task_title">Criar uma Tarefa</string>
+    <string name="percent_completed">%d%% Completo</string>
+    <string name="lets_get_started">Vamos iniciar</string>
+    <string name="your_progress">Seu Progresso</string>
+    <string name="adventure_guide_description">Complete essas tarefas iniciais e você vai ganhar &lt;b&gt;5 Conquistas&lt;/b&gt; e &lt;font color=#EE9109&gt;&lt;b&gt;100 Ouro&lt;/b&gt;&lt;/font&gt; quando terminar!</string>
+    <string name="onboarding_tasks">Tarefas Iniciais</string>
+    <string name="getting_started">Iniciando</string>
+    <string name="complete_for_gold">Complete para ganhar &lt;font color=#EE9109&gt;&lt;b&gt;100 Ouro&lt;/b&gt;&lt;/font&gt;!</string>
+    <string name="task_display">Exibição da lista de tarefas</string>
+    <string name="pet_ownership_fraction">%1$d / %2$d</string>
+    <string name="special_items">Itens especiais</string>
+    <string name="leave_delte_tasks">Sair e Deletar Tarefas</string>
+    <string name="leave_keep_tasks">Sair e Deixar Tarefas</string>
+    <string name="challenge_leave_description">Você pode escolher manter as tarefas deste Desafio no seu quadro pessoal de tarefas ou deletá-las quando você sair</string>
+    <string name="pms_disabled_description">Você ainda pode enviar mensagens, mas ninguém pode enviá-las para você. Você pode habilitar novamente em Configurações.</string>
+    <string name="pms_disabled">Mensagens Privadas estão desabilitadas</string>
+    <string name="disablePrivateMessages">Desabilitar Mensagens Privadas</string>
+    <string name="block">Bloquear</string>
+    <string name="block_user_description">Um usuário bloqueado não pode te enviar Mensagens Privadas, mas você ainda verá suas postagens na Taverna ou nas Guildas. Isso não terá efeito se a pessoa for moderadora agora ou no futuro.</string>
+    <string name="block_user_title">Bloquear %s\?</string>
+    <string name="unblock_user">Desbloquear Usuário</string>
+    <string name="block_user">Bloquear Usuário</string>
+    <string name="spooky_promo_info_prompt">A Promoção de Gemas está de volta para assombrar o final do Festival de Outono deste ano! Esta é a última chance de conseguir mais Gemas do que nunca, então estoque enquanto dura!</string>
+    <string name="spooky_promo_info_limitations">Esta promoção só se aplica durante o evento de tempo limitado. Este evento começa em 29 de Outubro às 8:00 AM EDT (12:00 UTC ou 9:00 Horário de Brasília) e terminará em 2 de Novembro às 20:00 EDT (00:00 UTC ou 21:00 Horário de Brasília). A oferta promocional está disponível apenas na compra de Gemas para você mesmo(a).</string>
+    <string name="spooky_promo_info_instructions">Entre 29 de Outubro e 2 de Novembro, basta comprar qualquer pacote de Gemas como de costume e sua conta será creditada com o valor promocional de joias. Mais Gemas para gastar, compartilhar ou economizar para lançamentos futuros!</string>
+    <string name="view_gem_bundles">Ver Pacotes de Gemas</string>
+    <string name="fall_promo_info_prompt">O Festival de Outono está em pleno andamento, então pensamos que era o momento perfeito para apresentar nossa primeira Promoção de Gemas! Agora você obterá mais Gemas com cada compra do que nunca.</string>
+    <string name="fall_promo_info_limitations">Esta promoção só se aplica durante o evento de tempo limitado. Este evento começa em 22 de setembro às 8:00 AM EDT (12:00 UTC ou 9:00 Horário de Brasília) e terminará em 30 de setembro às 20:00 EDT (00:00 UTC ou 21:00 Horário de Brasília). A oferta promocional está disponível apenas na compra de Gemas para você mesmo(a).</string>
+    <string name="fall_promo_info_instructions">Entre 22 e 30 de Setembro, basta comprar qualquer pacote de Gemas como de costume e sua conta será creditada com o valor promocional de Gemas. Mais Gemas para gastar, compartilhar ou economizar para lançamentos futuros!</string>
+    <string name="limitations">Limitações</string>
+    <string name="how_it_works">Como funciona</string>
+    <string name="x_to_y">%s a %s</string>
+    <string name="usually_x_gems">Usualmente %d Gemas</string>
 </resources>

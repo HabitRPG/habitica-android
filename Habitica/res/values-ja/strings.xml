@@ -428,8 +428,8 @@
     <string name="empty_description_habits">習慣は、タスクの中でもこなすスケジュールがきっちりと決まっていないものです。１日に何回チェックしてもいいし、チェックしない日があっても大丈夫です。</string>
     <string name="empty_title_dailies">日課を持っていません</string>
     <string name="empty_description_dailies">日課は一定のペースでこなすタスクです。自分に合ったスケジュールを組みましょう！</string>
-    <string name="empty_title_todos">To-Doがありません</string>
-    <string name="empty_description_todos">To-Doは1度きりで完了するタスクです。To-Doの報酬を増やすために、チェックリストを追加しましょう。</string>
+    <string name="empty_title_todos">To Doがありません</string>
+    <string name="empty_description_todos">To Doは1度きりで完了するタスクです。To Doの報酬を増やすために、チェックリストを追加しましょう。</string>
     <string name="empty_title_rewards">ごほうびがありません</string>
     <string name="reset_walkthrough">チュートリアルをリセット</string>
     <string name="read_community_guidelines">投稿する前に、私たちの<u>コミュニティガイドライン</u>を見直してください</string>
@@ -641,8 +641,8 @@
     <string name="two_handed">両手持ち</string>
     <string name="usernamePromptTitle">あなたのユーザー名を決める時間です！</string>
     <string name="usernamePromptBody">ログイン名は、現在は固有のユーザー名になりました。あなたの表示名の近くに表示されて、招待、チャットでの＠返信、メッセージのやりとりなどで使用されるでしょう。</string>
-    <string name="usernamePromptWiki">もしこの変更についてより詳しく知りたいときは、<a href="https://habitica.wikia_com/wiki/Player_Names">wiki</a>をご覧ください</string>
-    <string name="usernamePromptDisclaimer">ユーザー名は、私たちの<a href="https://habitica.com/static/terms">サービス利用規約</a>と<a href="https://habitica_com/static/community-guidelines">コミュニティガイドライン</a>を守ったものでなければなりません。もしあなたが以前にログイン名を設定していなかった場合、あなたのユーザー名は自動生成されました。</string>
+    <string name="usernamePromptWiki">もしこの変更についてより詳しく知りたいときは、<a href="https://habitica.wikia.com/wiki/Player_Names">wiki(英語)をご覧ください。</a></string>
+    <string name="usernamePromptDisclaimer">ユーザー名は、<a href="https://habitica.com/static/terms">サービス利用規約</a>と<a href="https://habitica.com/static/community-guidelines">コミュニティガイドライン</a>を守ったものでなければなりません。もしあなたがログイン名を設定していなかった場合、あなたのユーザー名は自動生成されたものになります。</string>
     <string name="confirm_username_title">本当に現在のユーザー名を承認しますか？</string>
     <string name="confirm_username_description">承認されたユーザー名は招待や@メンション、メッセージなどで公開されます。ユーザー名はいつでも「設定」から変更可能です。</string>
     <string name="cancel">キャンセル</string>
@@ -704,7 +704,7 @@
     <string name="authentication_error_body">ユーザー名かパスワードが間違っています。</string>
     <string name="network_error_no_network_body">インターネットに接続されていません。</string>
     <string name="x_months">%dヶ月</string>
-    <string name="create_account_short">アカウントを作成する</string>
+    <string name="create_account_short">アカウントを作成</string>
     <string name="login_incentive_count">Habiticaに%d回チェックインするとアンロックします。</string>
     <string name="ago_weeks">%d週間前</string>
     <string name="ago_1week">1週間前</string>
@@ -726,14 +726,14 @@
     <string name="register_btn_fb">Facebookでサインアップ</string>
     <string name="login_btn_apple">Appleでサインイン</string>
     <string name="empty_title_rewards_filtered">ごほうびがありません</string>
-    <string name="empty_title_todos_filtered">To-Doがありません</string>
+    <string name="empty_title_todos_filtered">To Doがありません</string>
     <string name="empty_title_dailies_filtered">日課がありません</string>
     <string name="subscribe_listitem5">落とし物が２倍</string>
     <string name="subscribe_listitem3_description_new">この%sを手に入れて、毎月の新しいアイテムを受け取るために、今すぐ寄付しましょう！</string>
     <string name="subscribe_listitem5_description">毎日の落とし物上限２倍ボーナスによってHabiticaでもっとたくさんのアイテムを発見しましょう。</string>
     <string name="empty_description_habits_filtered">現在のフィルターでは表示できる習慣がありません。</string>
     <string name="insufficientGoldTitle">ゴールドが足りません</string>
-    <string name="empty_description_todos_filtered">現在のフィルターでは表示できるTo-Doがありません。</string>
+    <string name="empty_description_todos_filtered">現在のフィルターでは表示できるTo Doがありません。</string>
     <string name="empty_description_dailies_filtered">現在のフィルターでは表示できる日課がありません。</string>
     <string name="streak">連続実行</string>
     <string name="weekly">週間</string>
@@ -788,7 +788,7 @@
     <string name="cost">価格</string>
     <string name="joined_guild">ギルドに参加しました</string>
     <string name="left_guild">ギルドを脱退しました</string>
-    <string name="leave_guild_confirmation">ギルドを脱退して、チャレンジを続けるか止めるかしますか？</string>
+    <string name="leave_guild_confirmation">ギルドを脱退しますか？（チャレンジは続けるか止めるか選べます）</string>
     <string name="not_selected">未選択</string>
     <string name="selected">選択中</string>
     <string name="wacky">へんてこ</string>
@@ -868,7 +868,7 @@
     <string name="take_me_back">戻る</string>
     <string name="setup_task_habit_2_notes">または編集画面から削除しましょう</string>
     <string name="setup_task_habit_2">ここをタップして、やめたい悪い習慣を入力しましょう</string>
-    <string name="setup_task_habit_1_notes">習慣、日課、To-Doのどれでも</string>
+    <string name="setup_task_habit_1_notes">習慣、日課、To Doのどれでも</string>
     <string name="report_violation">違反を報告する</string>
     <string name="need_help_header_description">%sにメッセージを投稿して、疑問について仲間のプレイヤーに答えてもらいましょう。</string>
     <string name="checklist_text">チェックリストのテキスト</string>
@@ -912,7 +912,7 @@
     <string name="local">ローカル</string>
     <string name="authentication_methods">認証方式</string>
     <string name="someone">誰か</string>
-    <string name="invitation_title">%sは%sにあなたを招待しました</string>
+    <string name="invitation_title">%sはあなたをグループ%sに招待しました</string>
     <string name="password_too_short">パスワードが短すぎます。あと%d文字必要です</string>
     <string name="copy_username">ユーザー名をコピーする</string>
     <string name="id_copied">ユーザーIDをクリップボードにコピーする</string>
@@ -941,7 +941,7 @@
     <string name="avatar_headband">ヘアバンド</string>
     <string name="avatar_accent">飾り</string>
     <string name="buy_all">全て購入する</string>
-    <string name="delete_checklist_entry">チェックリストを削除する</string>
+    <string name="delete_checklist_entry">削除する…</string>
     <string name="not_participating">あなたは参加していません</string>
     <string name="unlock_previous_short">「%d」完了で解放</string>
     <string name="unlock_level">レベル%dに達するとアンロックされます</string>

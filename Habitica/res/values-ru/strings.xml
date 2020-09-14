@@ -330,7 +330,7 @@
     <string name="has_reminder">Есть напоминание</string>
     <string name="has_tag">Отмечено тегом</string>
     <string name="subscribe_title">Подписка поддерживает разработчиков и помогает развивать Habitica</string>
-    <string name="subscribe_prompt">Став подписчиком вы получите эти полезные преимущества:</string>
+    <string name="subscribe_prompt">Станьте подписчиком, чтобы получить эти эксклюзивные преимущества!</string>
     <string name="subscribe_listitem1">Покупка самоцветов за золото</string>
     <string name="subscribe_listitem2">Эксклюзивные ежемесячные предметы</string>
     <string name="subscribe_listitem3">Сохраните дополнительные элементы истории</string>
@@ -340,8 +340,8 @@
     <string name="subscribe">Подписаться</string>
     <string name="subscribe_listitem1_description">Торговец Александр теперь будет продавать вам Драгоценные Камни за 20 золотых монет каждый!\n\nЕго месячная поставка сперва ограничится 25 Камнями в месяц, но может быть увеличена в зависимости от времени вашей подписки.\n\nРазмер поставки увеличивается на 5 Камней за каждые три месяца последовательной подписки вплоть до максимума в 50 Камней в месяц!</string>
     <string name="subscribe_listitem2_description">Зарабатывайте Таинственные Песочные Часы чтобы покупать предметы в Магазине Путешественника во Времени!</string>
-    <string name="subscribe_listitem3_description">Завершенный список дел и история доступны дольше.</string>
-    <string name="subscribe_listitem4_description">Удвоенный предел количества полученных трофеев позволит вам получить больше предметов посредством выполнения задач каждый день, помогая быстрее заполнить стойла!</string>
+    <string name="subscribe_listitem3_description">Подпишитесь сейчас, чтобы сразу же получить эксклюзивный набор, а также получать новые предметы каждый месяц!</string>
+    <string name="subscribe_listitem4_description">Получите Королевского пурпурного питомца Джекалопа при оформлении подписки.</string>
     <string name="subscription_hourglasses">+%d Мистических песочных часов</string>
     <string name="payment_method">Способ оплаты</string>
     <string name="subscription">Подписка</string>
@@ -361,7 +361,7 @@
     <string name="three_months">3 месяца</string>
     <string name="six_months">6 месяцев</string>
     <string name="twelve_months">12 месяцев</string>
-    <string name="subscribe_prompt_thanks">Как подписчик вы получаете эти полезные преимущества:</string>
+    <string name="subscribe_prompt_thanks">Вы получаете эти преимущества за подписку</string>
     <string name="subscription_status">Статус подписки</string>
     <string name="challenge_leave_title">Покинуть испытание</string>
     <string name="challenge_leave_text">Вы уверены, что хотите покинуть испытание “%s”?</string>
@@ -452,7 +452,7 @@
     <string name="welcome_back">C возвращением</string>
     <string name="yesterdaililes_prompt">Отметьте все ежедневные дела, которые вы сделали вчера:</string>
     <string name="start_day">Начать новый день</string>
-    <string name="leave_party_confirmation">Вы уверены что хотите покинуть команду?</string>
+    <string name="leave_party_confirmation">Хотели бы вы оставить или удалить испытания после выхода из команды\?</string>
     <string name="pending">Ожидает</string>
     <string name="accepted">Принято</string>
     <string name="declined">Отклонено</string>
@@ -630,7 +630,7 @@
     <string name="usernamePromptTitle">Время выбрать себе Имя пользователя!</string>
     <string name="usernamePromptBody">Имена для логина теперь являются уникальными Никами, которые будут отображаться рядом с вашим отображаемым именем и использоваться для приглашений, чата @упоминаний и обмена сообщениями.</string>
     <string name="usernamePromptWiki">Если хотите узнать более подробнее про изменения, то <a href="https://habitica.fandom.com/wiki/Player_Names">посетите вики.</a></string>
-    <string name="usernamePromptDisclaimer">Имя пользователя должно соответствовать нашим <a href="https://habitica.com/static/terms">Условиям обслуживания</a> и <a href="https://habitica_com/static/community-guidelines">Принципам сообщества</a>. Если вы ранее не выбирали имя для логина, то ваше Имя был автоматически сгенерировано.</string>
+    <string name="usernamePromptDisclaimer">Имя пользователя должно соответствовать нашим <a href="https://habitica.com/static/terms">Условиям обслуживания</a> и <a href="https://habitica.com/static/community-guidelines">Принципам сообщества</a>. Если вы ранее не выбирали имя для логина, то ваше имя было автоматически сгенерировано.</string>
     <string name="confirm_username_title">Вы уверены, что хотите выбрать такое Имя пользователя?</string>
     <string name="confirm_username_description">Подтверждая свое Имя пользователя, дает возможность принимать приглашения, @упоминания и сообщения. Вы можете сменить свое Имя пользователя в любое время в настройках.</string>
     <string name="cancel">Отменить</string>
@@ -642,7 +642,7 @@
     <string name="welcomeNameTitle">Как к вам обращаться?</string>
     <string name="display_name_length_error">Отображаемое имя должно быть от 1 до 30 символов</string>
     <string name="setup_task_join_habitica">Присоединиться к Habitica (Подписаться!)</string>
-    <string name="setup_task_join_habitica_notes">Вы можете завершить Задачу, редактировать или удалить её.</string>
+    <string name="setup_task_join_habitica_notes">Вы можете завершить Задачу, редактировать или удалить ее.</string>
     <string name="setup_task_reward">Вознаградите себя</string>
     <string name="setup_task_reward_notes">Посмотрите телевизор, поиграйте в игры, съешьте сладкое, все зависит только от вас!</string>
     <string name="equipment_str">СИЛ:</string>
@@ -867,7 +867,7 @@
     <string name="joinedChallengeTitle">Присоединился(-ась) к испытанию</string>
     <string name="joinedGuildDescription">Отважился(-ась) зайти на социальную сторону страны Habitica, присоединившись к Гильдии!</string>
     <string name="report_message_title">Сообщить о нарушении %s:</string>
-    <string name="delete_checklist_entry">Удалить пункт списка</string>
+    <string name="delete_checklist_entry">Удалить…</string>
     <string name="still_questions">Все еще есть вопросы\?</string>
     <string name="read_more">Подробнее</string>
     <string name="buy_all">Купить все</string>
@@ -902,4 +902,60 @@
     <string name="take_me_back">Вернуться</string>
     <string name="login_incentive_short">регулярное посещение сайта Habitica</string>
     <string name="login_incentive_count">Разблокируйте, зайдя в Habitica %d раз(а).</string>
+    <string name="percent_completed">%d%% завершено</string>
+    <string name="lets_get_started">Приступаем</string>
+    <string name="your_progress">Ваш прогресс</string>
+    <string name="getting_started">Подготовка к работе</string>
+    <string name="complete_for_gold">Выполните, чтобы получить &lt;font color=#EE9109&gt;&lt;b&gt;100 золота&lt;/b&gt;&lt;/font&gt;!</string>
+    <string name="onboarding_tasks">Первые задания</string>
+    <string name="special_items">Особые предметы</string>
+    <string name="leave_keep_tasks">Покинуть &amp; оставить задания</string>
+    <string name="leave_delte_tasks">Покинуть &amp; удалить задания</string>
+    <string name="leave_delete_task">Покинуть &amp; удалить задание</string>
+    <string name="delete_challenge_task_title">Удалить задание испытания\?</string>
+    <string name="hatch">Вылупить</string>
+    <string name="magic_potion">Волшебный эликсир</string>
+    <string name="magic_potions">Волшебные эликсиры</string>
+    <string name="view_onboarding_tasks">Посмотреть первые задания</string>
+    <string name="equip">Надеть</string>
+    <string name="purchaseX">Купить: %d</string>
+    <string name="excess_items">Лишние предметы</string>
+    <string name="onboardingComplete_achievement_title">Вы выполнили свои первые задания!</string>
+    <string name="onboardingCompleteDescription">Хотите больше\? Посмотрите список Достижений и начинайте собирать!</string>
+    <string name="onboardingCompleteTitle">Вы получили &lt;b&gt;5 достижений&lt;/b&gt; и &lt;font color=#EE9109&gt;&lt;b&gt;100 золота&lt;/b&gt;&lt;/font&gt; за ваши усилия.</string>
+    <string name="first_drop_title">Вы нашли новыйе предметы!</string>
+    <string name="purchasedEquipmentTitle">Купил(-а) снаряжение</string>
+    <string name="fedPetTitle">Покормил(-а) питомца</string>
+    <string name="completedTaskTitle">Выполни(-а) задание</string>
+    <string name="createdTaskTitle">Создать первое задание</string>
+    <string name="feedPet_description">Выполнайте ваши задачи чтобы получить корм! Им можно кормить своего питомца в разделе «Питомцы и Скакуны»</string>
+    <string name="hatch_pet_description">Выполнайте ваши задачи чтобы получить инкубационный эликсир и яйцо и потом вылупить питомца!</string>
+    <string name="complete_task_description">Отметить любую из своих задач, чтобы заработать награды</string>
+    <string name="purchase_equipment_title">Купить снаряжение</string>
+    <string name="complete_task_title">Завершить задание</string>
+    <string name="feedPet_title">Покормить питомца</string>
+    <string name="hatch_pet_title">Вылупить нового питомца</string>
+    <string name="create_task_title">Создать задание</string>
+    <string name="mount_category">%s скакуны</string>
+    <string name="pet_category">%s питомцы</string>
+    <string name="delete_x_tasks">Удалить задания: %d</string>
+    <string name="keep_x_tasks">Оставить задания: %d</string>
+    <string name="broken_challenge">Разорвана связь с испытанием</string>
+    <string name="leave_delete_x_tasks">Покинуть &amp; удалить задания: %d</string>
+    <string name="hatchedPetTitle">Вырастил(-а) питомца</string>
+    <string name="hatch_pet">Вырастить питомца</string>
+    <string name="adventure_guide_description">Выполните эти задания и в итоге получите &lt;b&gt;5 достижений&lt;/b&gt; и &lt;font color=#EE9109&gt;&lt;b&gt;100 золота&lt;/b&gt;&lt;/font&gt;!</string>
+    <string name="pet_ownership_fraction">%1$d / %2$d</string>
+    <string name="subscribe_listitem3_description_new">Подпишитесь сейчас, чтобы сразу же получить , а также получать новые предметы каждый месяц!</string>
+    <string name="subscribe_listitem5">Удвойте количество выпадающих предметов</string>
+    <string name="pms_disabled">Личные сообщения заблокированы</string>
+    <string name="disablePrivateMessages">Заблокировать получение личных сообщений</string>
+    <string name="block">Заблокировать</string>
+    <string name="block_user_title">Заблокировать %s\?</string>
+    <string name="unblock_user">Разблокировать пользователя</string>
+    <string name="block_user">Заблокировать пользователя</string>
+    <string name="limitations">Ограничения</string>
+    <string name="how_it_works">Как это делается</string>
+    <string name="x_to_y">%s до %s</string>
+    <string name="usually_x_gems">Обычно %d самоцветов</string>
 </resources>
