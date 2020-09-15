@@ -23,19 +23,19 @@ class SpookyExtraGemsHabiticaPromotion(startDate: Date?, endDate: Date?) : Habit
         get() = "spooky_extra_gems"
     override val promoType: PromoType
         get() = PromoType.GEMS_AMOUNT
-    override val startDate: Date = startDate ?: DateUtils.createDate(2020, 10, 29)
-    override val endDate: Date = endDate ?: DateUtils.createDate(2020, 11, 2)
+    override val startDate: Date = startDate ?: DateUtils.createDate(2020, 9, 29)
+    override val endDate: Date = endDate ?: DateUtils.createDate(2020, 10, 2)
 
     override fun pillBackgroundDrawable(context: Context): Drawable {
         return ContextCompat.getDrawable(context, R.drawable.spooky_promo_pill_bg) ?: ShapeDrawable()
     }
 
     override fun backgroundColor(context: Context): Int {
-        return ContextCompat.getColor(context, R.color.gray_1)
+        return ContextCompat.getColor(context, R.color.gray_10)
     }
 
     override fun promoBackgroundDrawable(context: Context): Drawable {
-        return ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_gray_1)
+        return ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_gray_10)
                 ?: ShapeDrawable()
     }
 

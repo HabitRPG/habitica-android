@@ -182,9 +182,9 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 val color = if (animal.type == "special") animal.color else null
                 if (animal.numberOwned > 0 || ownedEggs?.containsKey(animal.animal ?: "") == true) {
                     if (itemType == "pets") {
-                        MainNavigationController.navigate(StableFragmentDirections.openPetDetail(animal.animal, animal.type, color))
+                        MainNavigationController.navigate(StableFragmentDirections.openPetDetail(animal.animal ?: "", animal.type ?: "", color))
                     } else {
-                        MainNavigationController.navigate(StableFragmentDirections.openMountDetail(animal.animal, animal.type, color))
+                        MainNavigationController.navigate(StableFragmentDirections.openMountDetail(animal.animal ?: "", animal.type ?: "", color))
                     }
                 }
             }

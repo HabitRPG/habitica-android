@@ -131,7 +131,7 @@ class MountDetailRecyclerFragment : BaseMainFragment<FragmentRecyclerviewBinding
                         for (mount in unsortedAnimals) {
                             if (mount.type == "wacky" || mount.type == "special") continue
                             if (mount.type != lastMount?.type) {
-                                currentSection = StableSection(mount.type, mount.getTranslatedType(context))
+                                currentSection = StableSection(mount.type, mount.getTranslatedType(context) ?: "")
                                 items.add(currentSection)
                             }
                             currentSection?.let {

@@ -93,7 +93,7 @@ class NavigationDrawerFragment : DialogFragment() {
             context?.let {
                 adapter.tintColor = it.getThemeColor(R.attr.colorPrimary)
                 if (context?.isUsingNightModeResources() == true) {
-                    adapter.backgroundTintColor = ContextCompat.getColor(it, R.color.gray_10)
+                    adapter.backgroundTintColor = ContextCompat.getColor(it, R.color.gray_50)
                 } else {
                     adapter.backgroundTintColor = it.getThemeColor(R.attr.colorPrimary)
                 }
@@ -196,7 +196,7 @@ class NavigationDrawerFragment : DialogFragment() {
 
     private fun updateUser(user: User) {
         setMessagesCount(user.inbox?.newMessages ?: 0)
-        setSettingsCount(if (user.flags?.isVerifiedUsername != true) 1 else 0 )
+        setSettingsCount(if (user.flags?.verifiedUsername != true) 1 else 0 )
         setDisplayName(user.profile?.name)
         setUsername(user.formattedUsername)
         binding?.avatarView?.setAvatar(user)
@@ -312,7 +312,7 @@ class NavigationDrawerFragment : DialogFragment() {
     override fun onResume() {
         super.onResume()
 
-        activePromo = configManager.activePromo()
+        activePromo = context?.let { configManager.activePromo(it) }
         val promoItem = getItemWithIdentifier(SIDEBAR_PROMO) ?: return
         if (activePromo != null) {
             promoItem.isVisible = true
@@ -386,8 +386,9 @@ class NavigationDrawerFragment : DialogFragment() {
     }
 
     fun setSelection(transitionId: Int?, bundle: Bundle? = null, openSelection: Boolean = true) {
-        adapter.selectedItem = transitionId
         closeDrawer()
+        if (adapter.selectedItem == transitionId) return
+        adapter.selectedItem = transitionId
 
         if (!openSelection) {
             return

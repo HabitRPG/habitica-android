@@ -405,7 +405,7 @@ class FullProfileActivity : BaseActivity() {
 
         addAttributeRow(getString(R.string.profile_allocated), stats.strength?.toFloat() ?: 0f, stats.intelligence?.toFloat() ?: 0f, stats.constitution?.toFloat() ?: 0f, stats.per?.toFloat() ?: 0f, true, false)
         addAttributeRow(getString(R.string.buffs), buffs?.str
-                ?: 0f, buffs?.get_int() ?: 0f, buffs?.con ?: 0f, buffs?.per ?: 0f, roundDown = true, isSummary = false)
+                ?: 0f, buffs?._int ?: 0f, buffs?.con ?: 0f, buffs?.per ?: 0f, roundDown = true, isSummary = false)
 
         // Summary row
         addAttributeRow("", attributeStrSum, attributeIntSum, attributeConSum, attributePerSum, roundDown = false, isSummary = true)

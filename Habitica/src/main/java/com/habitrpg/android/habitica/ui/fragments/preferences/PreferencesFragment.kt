@@ -19,7 +19,6 @@ import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.ContentRepository
 import com.habitrpg.android.habitica.helpers.*
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
-import com.habitrpg.android.habitica.models.ContentResult
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.prefs.TimePreference
 import com.habitrpg.android.habitica.ui.activities.ClassSelectionActivity
@@ -76,10 +75,9 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
         serverUrlPreference?.isVisible = false
         serverUrlPreference?.summary = preferenceManager.sharedPreferences.getString("server_url", "")
         val themePreference = findPreference("theme_name") as? ListPreference
-        themePreference?.isVisible = configManager.testingLevel() == AppTestingLevel.ALPHA || configManager.testingLevel() == AppTestingLevel.STAFF || BuildConfig.DEBUG
         themePreference?.summary = themePreference?.entry ?: "Default"
         val themeModePreference = findPreference("theme_mode") as? ListPreference
-        themeModePreference?.summary = themePreference?.entry ?: "Follow System"
+        themeModePreference?.summary = themeModePreference?.entry ?: "Follow System"
 
 
         val taskDisplayPreference = findPreference("task_display") as? ListPreference
@@ -227,6 +225,10 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                 val activity = activity as? PrefsActivity ?: return
                 activity.reload()
             }
+            "theme_mode" -> {
+                val activity = activity as? PrefsActivity ?: return
+                activity.reload()
+            }
             "dailyDueDefaultView" -> userRepository.updateUser(user, "preferences.dailyDueDefaultView", sharedPreferences.getBoolean(key, false))
                     .subscribe({ }, RxErrorHandler.handleEmptyError())
             "server_url" -> {
@@ -250,18 +252,14 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
     override fun onDisplayPreferenceDialog(preference: Preference) {
         if (preference is TimePreference) {
             if (preference.getKey() == "cds_time") {
-                if (fragmentManager?.findFragmentByTag(DayStartPreferenceDialogFragment.TAG) == null) {
-                    fragmentManager?.let {
-                        DayStartPreferenceDialogFragment.newInstance(this, preference.getKey())
-                                .show(it, DayStartPreferenceDialogFragment.TAG)
-                    }
+                if (parentFragmentManager.findFragmentByTag(DayStartPreferenceDialogFragment.TAG) == null) {
+                    DayStartPreferenceDialogFragment.newInstance(this, preference.getKey())
+                                .show(parentFragmentManager, DayStartPreferenceDialogFragment.TAG)
                 }
             } else {
-                if (fragmentManager?.findFragmentByTag(TimePreferenceDialogFragment.TAG) == null) {
-                    fragmentManager?.let {
+                if (parentFragmentManager.findFragmentByTag(TimePreferenceDialogFragment.TAG) == null) {
                         TimePreferenceDialogFragment.newInstance(this, preference.getKey())
-                                .show(it, TimePreferenceDialogFragment.TAG)
-                    }
+                                .show(parentFragmentManager, TimePreferenceDialogFragment.TAG)
                 }
             }
         } else {
@@ -296,7 +294,7 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
         audioThemePreference?.summary = audioThemePreference?.entry
 
         val preference = findPreference("authentication")
-        if (user?.flags?.isVerifiedUsername == true) {
+        if (user?.flags?.verifiedUsername == true) {
             preference.layoutResource = R.layout.preference_child_summary
             preference.summary = context?.getString(R.string.authentication_summary)
         } else {
@@ -308,7 +306,7 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
         val inbox = user?.inbox
         disablePMsPreference?.isChecked = inbox?.optOut ?: true
 
-        if (user?.contributor?.admin == true) {
+        if (configManager.testingLevel() == AppTestingLevel.STAFF || BuildConfig.DEBUG) {
             serverUrlPreference?.isVisible = true
         }
     }

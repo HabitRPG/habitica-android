@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/gem_view_background"
+    android:background="@drawable/layout_rounded_bg_window"
     android:gravity="center"
               android:padding="14dp">
     <ImageView
@@ -20,14 +20,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center">
-        <ImageView
-            android:id="@+id/amount_background_right"
+        <FrameLayout
             android:layout_width="30dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:scaleType="fitStart"
             android:layout_marginEnd="8dp"
-            />
+            android:clipChildren="true"
+            android:clipToPadding="true">
+            <ImageView
+                android:id="@+id/amount_background_left"
+                android:layout_width="132dp"
+                android:layout_height="35dp"
+                android:layout_gravity="start"
+                />
+        </FrameLayout>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -37,14 +43,20 @@
         android:layout_gravity="center"
         android:textSize="36sp"
         tools:text="21" />
-        <ImageView
-            android:id="@+id/amount_background_left"
+        <FrameLayout
             android:layout_width="30dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:scaleType="fitEnd"
             android:layout_marginStart="8dp"
-            />
+            android:clipChildren="true"
+            android:clipToPadding="true">
+            <ImageView
+                android:id="@+id/amount_background_right"
+                android:layout_width="132dp"
+                android:layout_height="35dp"
+                android:layout_gravity="end"
+                />
+        </FrameLayout>
     </LinearLayout>
 
     <TextView
@@ -56,14 +68,18 @@
         android:gravity="center"
         android:layout_marginBottom="14dp" />
 
-    <Button
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="38dp"
         android:id="@+id/purchase_button"
         android:background="@drawable/purchase_button_background"
-        android:layout_marginHorizontal="8dp"
         android:textColor="@color/white"
-        style="@style/Body1"
+        android:gravity="center"
+        android:textSize="16sp"
+        android:letterSpacing="0.02"
+        android:layout_marginStart="@dimen/spacing_medium"
+        android:layout_marginEnd="@dimen/spacing_medium"
+        android:layout_marginBottom="@dimen/spacing_small"
         tools:text="$ 4.99"/>
     <TextView
         android:id="@+id/footer_text_view"
@@ -71,7 +87,6 @@
         android:layout_height="wrap_content"
         android:textColor="#CAC7CE"
         android:visibility="gone"
-        android:layout_marginTop="2dp"
         android:layout_marginBottom="4dp"
         android:layout_gravity="center"
         android:gravity="center"

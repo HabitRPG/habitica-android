@@ -76,10 +76,12 @@
             android:textSize="15sp"
             android:fontFamily="@string/font_family_medium"
             android:layout_marginBottom="@dimen/spacing_large"/>
-        <Button
+        <TextView
             android:id="@+id/prompt_button"
             android:layout_width="match_parent"
-            android:layout_height="38dp" />
+            android:layout_height="38dp"
+            android:textSize="16sp"
+            android:gravity="center" />
 
         <TextView
             android:id="@+id/instructions_title_view"

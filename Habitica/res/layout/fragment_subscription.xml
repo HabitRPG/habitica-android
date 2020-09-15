@@ -82,7 +82,7 @@
                 android:text="@string/subscribe_prompt"
                 android:gravity="center"
                 style="@style/Subheader1"
-                android:textColor="@color/brand_300"
+                android:textColor="@color/text_brand"
                 android:lineSpacingExtra="4dp"
                 android:layout_marginTop="8dp"
                 android:layout_gravity="center_horizontal"/>
@@ -286,7 +286,7 @@
                     android:layout_gravity="center_horizontal"
                     android:gravity="center_horizontal"
                     style="@style/Subheader1"
-                    android:textColor="@color/brand_300"
+                    android:textColor="@color/text_brand"
                     android:text="@string/subscribe_options_title"
                     android:layout_marginBottom="20dp"/>
 
@@ -350,7 +350,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/gift_subscription"
                 android:background="@color/transparent"
-                android:textColor="?colorAccent"
+                android:textColor="@color/text_brand_neon"
                 android:textAllCaps="false"/>
         </LinearLayout>
         <LinearLayout

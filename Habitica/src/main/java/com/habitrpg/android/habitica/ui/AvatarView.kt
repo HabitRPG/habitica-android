@@ -202,7 +202,7 @@ class AvatarView : View {
     private fun getAvatarLayerMap(avatar: Avatar, substitutions: Map<String, Map<String, String>>): EnumMap<LayerType, String> {
         val layerMap = EnumMap<LayerType, String>(LayerType::class.java)
 
-        if (!avatar.isValid) {
+        if (!avatar.isValid()) {
             return layerMap
         }
 
@@ -449,7 +449,7 @@ class AvatarView : View {
         initAvatarRectMatrix()
 
         // draw only when user is set
-        if (avatar?.isValid != true) return
+        if (avatar?.isValid() != true) return
 
         // request image layers if not yet processed
         if (multiDraweeHolder.size() == 0) {

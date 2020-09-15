@@ -4,8 +4,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingLeft="55dp"
-    android:paddingRight="@dimen/chat_horizontal_inset"
+    android:paddingStart="55dp"
+    android:paddingEnd="@dimen/chat_horizontal_inset"
     android:paddingTop="4dp"
     android:paddingBottom="4dp"
     android:background="@color/window_background">
@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="@dimen/spacing_large"
-        android:textColor="@color/brand_300"
+        android:textColor="@color/text_brand_neon"
         tools:text="System message"
         style="@style/Body1"/>
 </LinearLayout>

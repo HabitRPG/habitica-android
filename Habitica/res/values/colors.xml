@@ -99,8 +99,6 @@
 
     <color name="habit_inactive_gray">#F9F9F9</color>
 
-    <!-- Preferences -->
-    <color name="preference_fallback_accent_color">@color/colorAccent</color>
     <!-- buttons -->
     <color name="btn_success">@color/green_10</color>
     <color name="btn_danger">@color/red_10</color>
@@ -139,6 +137,7 @@
     <color name="hair_red">#EC720E</color>
     <color name="hair_black">#313131</color>
     <color name="reward_buy_button_bg">#4cfedead</color>
+    <color name="reward_buy_button_text">#D9784A00</color>
     <color name="ic_launcher_background">#331960</color>
     <color name="scrollbarThumb">@color/content_background_offset</color>
     <color name="setup_background">#efeff4</color>
@@ -151,8 +150,6 @@
     <color name="green_1">#005737</color>
     <color name="yellow_1">#794b00</color>
     <color name="orange_1">#7f3300</color>
-
-
 
 
     <color name="color_accent">@color/brand_400</color>
@@ -185,13 +182,30 @@
     <color name="equipment_overview_background">@color/gray_50</color>
     <color name="inverted_background">@color/gray_100</color>
     <color name="inverted_background_offset">@color/gray_200</color>
+    <color name="background_red">@color/red_50</color>
+    <color name="background_orange">@color/orange_50</color>
+    <color name="background_yellow">@color/yellow_10</color>
+    <color name="background_green">@color/green_50</color>
+    <color name="background_blue">@color/blue_50</color>
+    <color name="background_teal">@color/teal_50</color>
+    <color name="background_brand">@color/brand_300</color>
 
     <color name="checkbox_fill">#50ffffff</color>
     <color name="taskform_gray">#99edecee</color>
+    <color name="task_tint_overlay">#00000000</color>
 
     <color name="content_95_alpha">#f2ffffff</color>
     <color name="content_80_alpha">#ccffffff</color>
     <color name="content_75_alpha">#bfffffff</color>
     <color name="content_50_alpha">#7fffffff</color>
     <color name="content_15_alpha">#26ffffff</color>
+
+    <color name="text_red_white">@color/red_10</color>
+    <color name="text_orange_white">@color/orange_10</color>
+    <color name="text_yellow_white">@color/yellow_10</color>
+    <color name="text_green_white">@color/green_10</color>
+    <color name="text_blue_white">@color/blue_10</color>
+    <color name="text_teal_white">@color/teal_10</color>
+    <color name="text_brown_white">#7f3300</color>
+    <color name="text_brand_white">@color/brand_300</color>
 </resources>

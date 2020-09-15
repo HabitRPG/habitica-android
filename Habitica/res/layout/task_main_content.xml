@@ -47,6 +47,7 @@
             android:layout_height="wrap_content"
             style="@style/Caption4"
             android:text="@string/pending_approval"
+            android:textColor="@color/text_quad"
             />
         <Space
             android:layout_width="wrap_content"
@@ -62,16 +63,18 @@
                 android:layout_height="@dimen/task_icon_size"
                 android:scaleType="center"
                 app:srcCompat="@drawable/task_icon_calendar"
-                android:layout_marginEnd="2dp"/>
+                android:layout_marginEnd="2dp"
+                app:tint="@color/text_dimmed"
+                app:tintMode="multiply"/>
             <TextView
                 android:id="@+id/specialTaskText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textColor="@color/task_secondary_text"
                 android:visibility="invisible"
                 style="@style/Caption3"
                 tools:visibility="visible"
+                android:textColor="@color/text_quad"
                 tools:text="special"  />
 
             <TextView
@@ -79,9 +82,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/task_icon_size"
                 android:layout_marginStart="@dimen/task_icon_space"
-                android:drawableStart="@drawable/task_icon_streak"
+                app:drawableStartCompat="@drawable/task_icon_streak"
+                app:drawableTint="@color/text_dimmed"
+                app:drawableTintMode="multiply"
                 android:drawablePadding="2dp"
-                android:textColor="@color/task_secondary_text"
+                android:textColor="@color/text_quad"
                 tools:text="10"
                 android:gravity="center_vertical"
                 style="@style/Caption3" />
@@ -93,7 +98,9 @@
                 android:layout_marginStart="@dimen/task_icon_space"
                 android:contentDescription="@string/belongs_to_challenge"
                 android:scaleType="center"
-                app:srcCompat="@drawable/task_megaphone" />
+                app:srcCompat="@drawable/task_megaphone"
+                app:tint="@color/text_dimmed"
+                app:tintMode="multiply" />
             <ImageView
                 android:id="@+id/iconviewReminder"
                 android:layout_width="@dimen/task_icon_size"
@@ -101,12 +108,14 @@
                 android:layout_marginStart="@dimen/task_icon_space"
                 android:contentDescription="@string/has_reminder"
                 android:scaleType="center"
-                app:srcCompat="@drawable/task_icon_reminder" />
+                app:srcCompat="@drawable/task_icon_reminder"
+                app:tint="@color/text_dimmed"
+                app:tintMode="multiply"/>
             <TextView
                 android:id="@+id/reminder_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/task_secondary_text"
+                android:textColor="@color/text_quad"
                 style="@style/Caption3" />
         </LinearLayout>
 </LinearLayout>

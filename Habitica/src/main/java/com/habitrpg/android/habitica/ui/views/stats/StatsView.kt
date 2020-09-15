@@ -69,7 +69,7 @@ class StatsView(context: Context, attrs: AttributeSet?) : LinearLayout(context, 
                 R.styleable.StatsView,
                 0, 0)
 
-        val backgroundDrawable = ContextCompat.getDrawable(context, R.drawable.layout_top_rounded_bg)
+        val backgroundDrawable = ContextCompat.getDrawable(context, R.drawable.layout_top_rounded_bg_white)
         if (attributes != null) {
             statColor = attributes.getColor(R.styleable.StatsView_statsColor, 0)
             backgroundDrawable?.setColorFilter(attributes.getColor(R.styleable.StatsView_titleBackgroundColor, 0), PorterDuff.Mode.MULTIPLY)

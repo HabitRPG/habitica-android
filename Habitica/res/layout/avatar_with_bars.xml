@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_centerHorizontal="true"
-              android:adjustViewBounds="true"
-              android:background="?attr/headerBackgroundColor"
-              android:focusable="true"
-              android:focusableInTouchMode="true"
-              android:orientation="vertical">
+    android:layout_height="wrap_content"
+    android:layout_centerHorizontal="true"
+    android:adjustViewBounds="true"
+    android:background="?attr/headerBackgroundColor"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical"
+    android:layout_marginBottom="8dp">
 
     <LinearLayout
             android:layout_width="match_parent"
@@ -72,7 +73,7 @@
                 android:drawablePadding="6dp"
                 android:gravity="center"
                 android:textColor="?headerTextColor"
-                android:textSize="14sp"
+                android:textSize="12sp"
                 tools:text="Lvl 12 Warrior"/>
 
         <ImageView

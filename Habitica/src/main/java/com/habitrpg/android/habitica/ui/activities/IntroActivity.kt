@@ -39,7 +39,7 @@ class IntroActivity : BaseActivity(), View.OnClickListener, ViewPager.OnPageChan
         super.onCreate(savedInstanceState)
 
         setupIntro()
-        //binding.viewPagerIndicator.setViewPager(binding.viewPager)
+        binding.viewPagerIndicator.setViewPager(binding.viewPager)
 
         binding.skipButton.setOnClickListener(this)
         binding.finishButton.setOnClickListener(this)

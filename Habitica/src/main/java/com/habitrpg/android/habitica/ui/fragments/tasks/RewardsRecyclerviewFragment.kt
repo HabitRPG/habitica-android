@@ -47,7 +47,7 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
 
         view.post { setGridSpanCount(view.width) }
         context?.let {
-            binding?.recyclerView?.setBackgroundColor(ContextCompat.getColor(it, R.color.white))
+            binding?.recyclerView?.setBackgroundColor(ContextCompat.getColor(it, R.color.content_background))
         }
         binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
 

@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:scrollbarSize="3dp"
     android:scrollbarThumbVertical="@color/scrollbarThumb"
     android:scrollbars="vertical"
@@ -26,7 +25,8 @@
                 android:id="@+id/leftSparklesView"
                 android:layout_width="77dp"
                 android:layout_height="24dp"
-                android:scaleType="fitCenter"/>
+                android:scaleType="fitCenter"
+                android:contentDescription="@null" />
             <TextView
                 android:id="@+id/numberOfPointsTextView"
                 android:layout_width="wrap_content"
@@ -38,7 +38,8 @@
                 android:id="@+id/rightSparklesView"
                 android:layout_width="77dp"
                 android:layout_height="24dp"
-                android:scaleType="fitCenter"/>
+                android:scaleType="fitCenter"
+                android:contentDescription="@null" />
         </LinearLayout>
         <TextView
             android:id="@+id/unlock_at_level"
@@ -53,34 +54,34 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:statsTitle="@string/strength"
-            app:titleBackgroundColor="@color/red_50"
-            app:statsColor="@color/red_10"
+            app:titleBackgroundColor="@color/background_red"
+            app:statsColor="@color/text_red"
             android:layout_marginBottom="12dp"/>
         <com.habitrpg.android.habitica.ui.views.stats.StatsView
             android:id="@+id/intelligenceStatsView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:statsTitle="@string/intelligence"
-            app:titleBackgroundColor="@color/blue_50"
-            app:statsColor="@color/blue_10"
+            app:titleBackgroundColor="@color/background_blue"
+            app:statsColor="@color/text_blue"
             android:layout_marginBottom="12dp"/>
         <com.habitrpg.android.habitica.ui.views.stats.StatsView
             android:id="@+id/constitutionStatsView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:statsTitle="@string/constitution"
-            app:titleBackgroundColor="@color/yellow_10"
-            app:statsColor="@color/yellow_5"
+            app:titleBackgroundColor="@color/background_yellow"
+            app:statsColor="@color/text_yellow"
             android:layout_marginBottom="12dp"/>
         <com.habitrpg.android.habitica.ui.views.stats.StatsView
             android:id="@+id/perceptionStatsView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:statsTitle="@string/perception"
-            app:titleBackgroundColor="@color/brand_300"
-            app:statsColor="@color/brand_300"
+            app:titleBackgroundColor="@color/background_brand"
+            app:statsColor="@color/text_brand"
             android:layout_marginBottom="12dp"/>
-        <Switch
+        <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/automaticAllocationSwitch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -113,7 +114,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/transparent"
-                    android:layout_marginLeft="12dp"/>
+                    android:layout_marginStart="12dp"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -130,7 +131,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/transparent"
-                    android:layout_marginLeft="12dp"/>
+                    android:layout_marginStart="12dp"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -146,7 +147,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/transparent"
-                    android:layout_marginLeft="12dp"/>
+                    android:layout_marginStart="12dp"/>
             </LinearLayout>
         </LinearLayout>
         <View

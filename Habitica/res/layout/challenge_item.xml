@@ -7,7 +7,6 @@
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
     android:clickable="true"
-    android:background="#fff"
     android:orientation="horizontal"
     android:baselineAligned="false"
     android:paddingEnd="16dp">
@@ -36,7 +35,6 @@
             android:textColor="@color/gem_icon_color"
             android:textSize="17sp"
             android:textStyle="bold"/>
-
     </LinearLayout>
 
     <LinearLayout
@@ -54,6 +52,7 @@
             style="@style/ChallengeName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/text_primary"
             android:maxLines="3"
             tools:text="Name" />
 

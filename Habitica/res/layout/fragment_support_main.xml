@@ -152,7 +152,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="38dp"
-                android:text="@string/contact_us"
+                android:text="@string/submit_feedback"
                 android:gravity="center"
                 android:layout_marginStart="@dimen/spacing_medium"
                 android:layout_marginEnd="@dimen/spacing_medium"

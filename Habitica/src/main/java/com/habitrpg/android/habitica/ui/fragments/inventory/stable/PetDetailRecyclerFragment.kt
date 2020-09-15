@@ -151,7 +151,7 @@ class PetDetailRecyclerFragment : BaseMainFragment<FragmentRecyclerviewBinding>(
                         for (pet in it.first) {
                             if (pet.type == "wacky" || pet.type == "special") continue
                             if (pet.type != lastPet?.type) {
-                                currentSection = StableSection(pet.type, pet.getTranslatedType(context))
+                                currentSection = StableSection(pet.type, pet.getTranslatedType(context) ?: "")
                                 items.add(currentSection)
                             }
                             currentSection?.let {section ->

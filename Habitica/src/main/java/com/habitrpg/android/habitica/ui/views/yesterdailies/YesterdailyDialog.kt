@@ -124,6 +124,7 @@ class YesterdailyDialog private constructor(context: Context, private val userRe
         val checkbox = taskView.findViewById(R.id.checkBox) as? CheckBox
         val checkboxHolder = taskView.findViewById<View>(R.id.checkBoxHolder)
         checkbox?.isChecked = completed
+        checkbox?.buttonTintList = ContextCompat.getColorStateList(context, R.color.checkbox_fill)
         if (completed) {
             checkboxHolder.setBackgroundColor(this.taskGray)
         } else {

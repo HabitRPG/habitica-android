@@ -417,7 +417,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
             displayDeathDialogIfNeeded()
             YesterdailyDialog.showDialogIfNeeded(this, user?.id, userRepository, taskRepository)
 
-            if (user?.flags?.isVerifiedUsername == false && isActivityVisible) {
+            if (user?.flags?.verifiedUsername == false && isActivityVisible) {
                 val intent = Intent(this, VerifyUsernameActivity::class.java)
                 startActivity(intent)
             }
@@ -595,7 +595,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                         pushNotificationManager.addPushDeviceUsingStoredToken()
                     }
                     .flatMap { contentRepository.retrieveContent(this,false) }
-                    .flatMap { contentRepository.retrieveWorldState() }
+                    .flatMap { contentRepository.retrieveWorldState(this) }
                     .subscribe({ }, RxErrorHandler.handleEmptyError()))
         }
     }

@@ -26,7 +26,6 @@ class GemPurchaseActivity : BaseActivity() {
     lateinit var userRepository: UserRepository
 
     internal var fragment: CheckoutFragment? = null
-    var isActive = false
     var purchaseHandler: PurchaseHandler? = null
 
     override fun getLayoutResId(): Int {
@@ -74,16 +73,6 @@ class GemPurchaseActivity : BaseActivity() {
         purchaseHandler?.startListening()
     }
 
-    override fun onResume() {
-        super.onResume()
-        isActive = true
-    }
-
-    override fun onPause() {
-        super.onPause()
-        isActive = false
-    }
-
     public override fun onStop() {
         purchaseHandler?.stopListening()
         super.onStop()
@@ -113,7 +102,7 @@ class GemPurchaseActivity : BaseActivity() {
 
     @Subscribe
     fun onConsumablePurchased(event: ConsumablePurchasedEvent) {
-        if (isActive) {
+        if (isActivityVisible) {
             purchaseHandler?.consumePurchase(event.purchase)
             compositeSubscription.add(userRepository.retrieveUser(false).subscribe({}, RxErrorHandler.handleEmptyError()))
         }

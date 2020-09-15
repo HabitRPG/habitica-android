@@ -110,7 +110,7 @@
                 <Button
                     android:text="@string/send_gift"
                     android:layout_width="match_parent"
-                    android:layout_height="36dp"
+                    android:layout_height="wrap_content"
                     android:id="@+id/subscription_button"
                     style="@style/HabiticaButton.Purple.Small"
                     android:textAllCaps="false"

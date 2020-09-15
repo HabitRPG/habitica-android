@@ -63,8 +63,8 @@ class RewardViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> 
 
         if (canBuy) {
             binding.goldIcon.alpha = 1.0f
-            binding.priceLabel.setTextColor(ContextCompat.getColor(context, R.color.yellow_1))
-            binding.buyButton.setBackgroundColor(ContextCompat.getColor(context, R.color.yellow_500))
+            binding.priceLabel.setTextColor(ContextCompat.getColor(context, R.color.reward_buy_button_text))
+            binding.buyButton.setBackgroundColor(ContextCompat.getColor(context, R.color.reward_buy_button_bg))
         } else {
             binding.goldIcon.alpha = 0.6f
             binding.priceLabel.setTextColor(ContextCompat.getColor(context, R.color.text_quad))

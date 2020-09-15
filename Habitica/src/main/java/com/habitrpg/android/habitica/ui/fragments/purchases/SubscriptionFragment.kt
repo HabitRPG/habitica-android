@@ -15,6 +15,7 @@ import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentSubscriptionBinding
 import com.habitrpg.android.habitica.events.UserSubscribedEvent
 import com.habitrpg.android.habitica.extensions.addCancelButton
+import com.habitrpg.android.habitica.extensions.isUsingNightModeResources
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.PurchaseHandler
 import com.habitrpg.android.habitica.helpers.PurchaseTypes
@@ -78,10 +79,10 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>(), GemPur
         binding?.giftSubscriptionContainer?.setOnClickListener { showGiftSubscriptionDialog() }
         binding?.giftSubscriptionButton?.setOnClickListener { showGiftSubscriptionDialog() }
 
-        binding?.subscription1month?.setOnPurchaseClickListener({ selectSubscription(PurchaseTypes.Subscription1Month) })
-        binding?.subscription3month?.setOnPurchaseClickListener({ selectSubscription(PurchaseTypes.Subscription3Month) })
-        binding?.subscription6month?.setOnPurchaseClickListener({ selectSubscription(PurchaseTypes.Subscription6Month) })
-        binding?.subscription12month?.setOnPurchaseClickListener({ selectSubscription(PurchaseTypes.Subscription12Month) })
+        binding?.subscription1month?.setOnPurchaseClickListener { selectSubscription(PurchaseTypes.Subscription1Month) }
+        binding?.subscription3month?.setOnPurchaseClickListener { selectSubscription(PurchaseTypes.Subscription3Month) }
+        binding?.subscription6month?.setOnPurchaseClickListener { selectSubscription(PurchaseTypes.Subscription6Month) }
+        binding?.subscription12month?.setOnPurchaseClickListener { selectSubscription(PurchaseTypes.Subscription12Month) }
 
         binding?.subscribeButton?.setOnClickListener { subscribeUser() }
 
@@ -204,14 +205,22 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>(), GemPur
             }
 
             if (isSubscribed) {
-                binding?.headerImageView?.setImageResource(R.drawable.subscriber_header)
+                if (context?.isUsingNightModeResources() == true) {
+                    binding?.headerImageView?.setImageResource(R.drawable.subscribe_header_dark)
+                } else {
+                    binding?.headerImageView?.setImageResource(R.drawable.subscriber_header)
+                }
                 binding?.subscriptionDetails?.visibility = View.VISIBLE
                 binding?.subscriptionDetails?.currentUserID = user?.id
                 user?.purchased?.plan?.let { binding?.subscriptionDetails?.setPlan(it) }
                 binding?.subscribeBenefitsTitle?.setText(R.string.subscribe_prompt_thanks)
                 binding?.subscriptionOptions?.visibility = View.GONE
             } else {
-                binding?.headerImageView?.setImageResource(R.drawable.subscribe_header)
+                if (context?.isUsingNightModeResources() == true) {
+                    binding?.headerImageView?.setImageResource(R.drawable.subscribe_header_dark)
+                } else {
+                    binding?.headerImageView?.setImageResource(R.drawable.subscribe_header)
+                }
                 if (!hasLoadedSubscriptionOptions) {
                     return
                 }

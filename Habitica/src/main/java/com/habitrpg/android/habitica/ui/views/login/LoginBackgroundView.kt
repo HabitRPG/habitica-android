@@ -46,11 +46,11 @@ class LoginBackgroundView(context: Context, attrs: AttributeSet?) : RelativeLayo
 
     override fun onFinishInflate() {
         super.onFinishInflate()
+        leftCloudView = findViewById(R.id.left_cloud_view)
+        rightCloudView = findViewById(R.id.right_cloud_view)
         starViews = ArrayList()
         generateStars()
         animateClouds()
-        leftCloudView = findViewById(R.id.left_cloud_view)
-        rightCloudView = findViewById(R.id.right_cloud_view)
     }
 
     private fun animateClouds() {

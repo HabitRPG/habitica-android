@@ -56,7 +56,7 @@ class MountViewHolder(parent: ViewGroup, private val equipEvents: PublishSubject
         menu.setTitle(animal?.text)
         menu.addMenuItem(BottomSheetMenuItem(resources.getString(R.string.equip)))
         menu.setSelectionRunnable {
-            animal?.let { equipEvents.onNext(it.key) }
+            animal?.let { equipEvents.onNext(it.key ?: "") }
         }
         menu.show()
     }

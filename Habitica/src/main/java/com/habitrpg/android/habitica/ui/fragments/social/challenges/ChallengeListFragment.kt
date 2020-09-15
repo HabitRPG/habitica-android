@@ -76,7 +76,7 @@ class ChallengeListFragment : BaseFragment<FragmentChallengeslistBinding>(), and
         binding?.recyclerView?.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this.activity)
         binding?.recyclerView?.adapter = challengeAdapter
         if (!viewUserChallengesOnly) {
-            binding?.recyclerView?.setBackgroundResource(R.color.white)
+            binding?.recyclerView?.setBackgroundResource(R.color.content_background)
         }
 
         compositeSubscription.add(socialRepository.getGroup(Group.TAVERN_ID).combineLatest(socialRepository.getUserGroups("guild")).subscribe({

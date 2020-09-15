@@ -242,7 +242,7 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
     }
 
     private fun openMarket() {
-        MainNavigationController.navigate(R.id.shopsFragment)
+        MainNavigationController.navigate(R.id.marketFragment)
     }
 
     companion object {

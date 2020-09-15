@@ -124,7 +124,7 @@ class ScoreTaskLocallyInteractor {
             var totalPerception = levelStat
 
             totalStrength += user.stats?.buffs?.str?.toInt() ?: 0
-            totalIntelligence += user.stats?.buffs?.get_int()?.toInt() ?: 0
+            totalIntelligence += user.stats?.buffs?._int?.toInt() ?: 0
             totalConstitution += user.stats?.buffs?.con?.toInt() ?: 0
             totalPerception += user.stats?.buffs?.per?.toInt() ?: 0
 

@@ -46,7 +46,7 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
         super.onCreate(savedInstanceState)
 
         findPreference("login_name").title = context?.getString(R.string.username)
-        findPreference("confirm_username").isVisible = user?.flags?.isVerifiedUsername != true
+        findPreference("confirm_username").isVisible = user?.flags?.verifiedUsername != true
     }
 
     private fun updateUserFields() {
@@ -54,7 +54,7 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
         configurePreference(findPreference("email"), user?.authentication?.localAuthentication?.email, true)
         findPreference("change_password").isVisible = user?.authentication?.localAuthentication?.email?.isNotEmpty() == true
         findPreference("add_local_auth").isVisible = user?.authentication?.localAuthentication?.email?.isNotEmpty() != true
-        findPreference("confirm_username").isVisible = user?.flags?.isVerifiedUsername != true
+        findPreference("confirm_username").isVisible = user?.flags?.verifiedUsername != true
         val preference = findPreference("authentication_methods")
         val methods = mutableListOf<String>()
         if (user?.authentication?.localAuthentication?.email != null) {

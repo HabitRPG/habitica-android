@@ -130,7 +130,7 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : AlertDialo
                     verticalPadding,
                     tagCheckbox.paddingRight,
                     verticalPadding)
-            tagCheckbox.setTextColor(ContextCompat.getColor(context, R.color.textColorLight))
+            tagCheckbox.setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
             CompoundButtonCompat.setButtonTintList(tagCheckbox, colorStateList)
             tagCheckbox.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked) {
@@ -155,7 +155,7 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : AlertDialo
         button.setOnClickListener { createTag() }
         button.setCompoundDrawablesWithIntrinsicBounds(addIcon, null, null, null)
         button.setBackgroundResource(R.drawable.layout_rounded_bg_lighter_gray)
-        button.setTextColor(ContextCompat.getColor(context, R.color.text_light))
+        button.setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
         tagsList.addView(button)
     }
 
