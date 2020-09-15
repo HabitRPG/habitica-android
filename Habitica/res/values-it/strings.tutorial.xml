@@ -5,15 +5,15 @@
     <string name="tutorial_habits_2">Ogni volta che porti a termine un\'abitudine positiva, tocca il + per ottenere esperienza ed oro!</string>
     <string name="tutorial_habits_3">Se ti fai tentare da un\'abitudine negativa, toccando - (il simbolo del meno) il tuo avatar perderà punti salute, così da ricordarti di fare attenzione.</string>
     <string name="tutorial_habits_4">Ora provaci tu! Puoi trovare altri tipi di attività usando la barra di navigazione in basso.</string>
-    <string name="tutorial_dailies_1">Crea Daily per attività che devono essere svolte periodicamente.</string>
+    <string name="tutorial_dailies_1">Crea Attività Giornaliere per attività che devono essere svolte periodicamente.</string>
     <string name="tutorial_dailies_2">Sta attento - se ne salti una il tuo avatar subirà dei danni durante la notte. Completale con regolarità e otterrai grandi premi!</string>
-    <string name="tutorial_todos_1">Usa le To-do per tenere traccia delle cose che devi fare soltanto una volta.</string>
-    <string name="tutorial_todos_2">Se le tue To-do devono essere completate entro un certo giorno, imposta una data di scadenza. Pare che tu possa completarne una, prova!</string>
+    <string name="tutorial_todos_1">Usa le Cose da Fare per tenere traccia delle cose che devi fare soltanto una volta.</string>
+    <string name="tutorial_todos_2">Se le tue Cose da Fare devono essere completate entro un certo giorno, imposta una data di scadenza. Pare che tu possa completarne una, prova!</string>
     <string name="tutorial_rewards_1">Compra oggetti per il tuo avatar con l\'oro che ottieni!</string>
     <string name="tutorial_rewards_2">Puoi anche creare delle ricompense reali, basate su ciò che ti motiva.</string>
     <string name="tutorial_tasks_complete">Per ora è tutto. Se hai bisogno di un ripasso, consulta la sezione FAQ.</string>
     <string name="tutorial_skills">Le Abilità sono dei poteri con straordinari effetti! Tocca un\'abilità per utilizzarla. Costerà punti Mana (la barra blu), che puoi ottenere usando Habitica ogni giorno e completando le attività. Dai un\'occhiata alle FAQ nel menù per avere maggiori informazioni!</string>
     <string name="tutorial_party">Qui è dove tu e i tuoi amici potete motivarvi a vicenda e combattere i mostri con le vostre attività!</string>
     <string name="tutorial_tavern">Benvenuto nella Taverna, una chat pubblica per tutte le età! Qui puoi chiacchierare e fare delle domande. Divertiti!</string>
-    <string name="tutorial_stats">Premi sul bottone grigio per assegnare un più punti stat in una volta, oppure usa le frecce per aggiungere un punto alla volta.</string>
+    <string name="tutorial_stats">Premi sul pulsante grigio per assegnare più punti statistica in una volta, oppure usa le frecce per aggiungerne uno alla volta.</string>
 </resources>

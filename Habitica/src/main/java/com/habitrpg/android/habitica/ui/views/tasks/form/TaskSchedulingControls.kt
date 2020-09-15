@@ -174,7 +174,7 @@ class TaskSchedulingControls @JvmOverloads constructor(
             generateSummary()
         }
         monthlyRepeatWeeksButton.setOnClickListener {
-            weeksOfMonth = mutableListOf(startDateCalendar.get(Calendar.WEEK_OF_MONTH))
+            weeksOfMonth = mutableListOf(startDateCalendar.get(Calendar.WEEK_OF_MONTH) - 1)
             daysOfMonth = null
             generateSummary()
         }

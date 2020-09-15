@@ -338,6 +338,9 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
         } else {
             oldUser
         }
+        if (newUser.inbox != null) {
+            copiedUser.inbox = newUser.inbox
+        }
         if (newUser.items != null) {
             copiedUser.items = newUser.items
         }

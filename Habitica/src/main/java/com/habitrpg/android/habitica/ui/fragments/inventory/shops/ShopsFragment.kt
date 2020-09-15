@@ -27,7 +27,9 @@ open class ShopsFragment : BaseMainFragment() {
     lateinit var inventoryRepository: InventoryRepository
 
     private val currencyView: CurrencyViews by lazy {
-        CurrencyViews(context)
+        val view = CurrencyViews(context)
+        view.lightBackground = true
+        view
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -54,7 +56,6 @@ open class ShopsFragment : BaseMainFragment() {
             this.usesTabLayout = false
             tabLayout?.visibility = View.GONE
             viewPager.currentItem = lockTab ?: 0
-            viewPager.setOnTouchListener { _, _ -> true }
         }
 
         context?.let { FirebaseAnalytics.getInstance(it).logEvent("open_shop", bundleOf(Pair("shopIndex", lockTab))) }
@@ -85,7 +86,7 @@ open class ShopsFragment : BaseMainFragment() {
 
                 val fragment = ShopFragment()
 
-                fragment.shopIdentifier = when (position) {
+                fragment.shopIdentifier = when (lockTab ?: position) {
                     0 -> Shop.MARKET
                     1 -> Shop.QUEST_SHOP
                     2 -> Shop.SEASONAL_SHOP
@@ -97,7 +98,7 @@ open class ShopsFragment : BaseMainFragment() {
                 return fragment
             }
 
-            override fun getCount(): Int = 4
+            override fun getCount(): Int = if (lockTab != null) 1 else 4
 
             override fun getPageTitle(position: Int): CharSequence? {
                 return when (position) {

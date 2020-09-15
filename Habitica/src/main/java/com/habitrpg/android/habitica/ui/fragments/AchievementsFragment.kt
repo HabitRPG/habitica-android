@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.ui.fragments
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.*
+import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -14,6 +15,7 @@ import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.Achievement
 import com.habitrpg.android.habitica.ui.adapter.AchievementsAdapter
+import com.habitrpg.android.habitica.ui.helpers.ToolbarColorHelper
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.helpers.resetViews
 import io.reactivex.functions.Action
@@ -132,12 +134,17 @@ class AchievementsFragment: BaseMainFragment(), SwipeRefreshLayout.OnRefreshList
             menuID = menuItem?.itemId ?: 0
             menuItem?.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
             menuItem?.setIcon(R.drawable.ic_round_view_list_24px)
+            tintMenuIcon(menuItem)
 
         } else {
             val menuItem = menu.add(R.string.switch_to_grid_view)
             menuID = menuItem?.itemId ?: 0
             menuItem?.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
             menuItem?.setIcon(R.drawable.ic_round_view_module_24px)
+            tintMenuIcon(menuItem)
+        }
+        activity?.findViewById<Toolbar>(R.id.toolbar)?.let {
+            ToolbarColorHelper.colorizeToolbar(it, activity, null)
         }
         super.onCreateOptionsMenu(menu, inflater)
     }

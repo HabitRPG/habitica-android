@@ -25,12 +25,14 @@ import com.habitrpg.shared.habitica.models.tasks.Task
 import com.habitrpg.shared.habitica.models.user.User
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.adapter.social.challenges.ChallengeTasksRecyclerViewAdapter
+import com.habitrpg.android.habitica.ui.helpers.ToolbarColorHelper
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.shared.habitica.models.tasks.TaskType
 import io.reactivex.Flowable
 import io.reactivex.functions.Consumer
+import io.reactivex.rxkotlin.zipWith
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Named
@@ -72,6 +74,7 @@ class ChallengeFormActivity : BaseActivity() {
     private val updatedTasks = HashMap<String, Task>()
     private val removedTasks = HashMap<String, Task>()
 
+    override var overrideModernHeader: Boolean? = true
     // Add {*} Items
     private var addHabit: Task? = null
     private var addDaily: Task? = null
@@ -118,6 +121,7 @@ class ChallengeFormActivity : BaseActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val inflater = menuInflater
         inflater.inflate(R.menu.menu_create_challenge, menu)
+        findViewById<Toolbar>(R.id.toolbar).let { ToolbarColorHelper.colorizeToolbar(it, this, overrideModernHeader) }
         return true
     }
 
@@ -320,15 +324,26 @@ class ChallengeFormActivity : BaseActivity() {
         }
 
         locationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        compositeSubscription.add(socialRepository.getGroups("guild").subscribe(Consumer { groups ->
-            val mutableGroups = groups.toMutableList()
-            if (groups.firstOrNull { it.id == "00000000-0000-4000-A000-000000000000" } == null) {
+        compositeSubscription.add(socialRepository.getUserGroups("guild").zipWith(userRepository.getUser()
+                .map { "" }
+                .distinctUntilChanged()
+                .flatMap {
+                    if (it.isBlank()) {
+                        return@flatMap Flowable.empty<Group>()
+                    }
+                    socialRepository.retrieveGroup(it)
+                })
+                .subscribe(Consumer { groups ->
+            val mutableGroups = groups.first.toMutableList()
+            if (groups.first.firstOrNull { it.id == "00000000-0000-4000-A000-000000000000" } == null) {
                 val tavern = Group()
                 tavern.id = "00000000-0000-4000-A000-000000000000"
                 tavern.name = getString(R.string.public_challenge)
                 mutableGroups.add(0, tavern)
             }
-
+            if (groups.second != null) {
+                mutableGroups.add(groups.second)
+            }
             locationAdapter.clear()
             locationAdapter.addAll(mutableGroups)
         }, RxErrorHandler.handleEmptyError()))
@@ -460,6 +475,11 @@ class ChallengeFormActivity : BaseActivity() {
                 TaskType.TYPE_DAILY -> addDaily
                 TaskType.TYPE_TODO -> addTodo
                 else -> addReward
+            }
+            if(!isExistingTask){
+                // If the task is new we create a unique id for it
+                // Doing it we solve the issue #1278
+                task.id = UUID.randomUUID().toString()
             }
 
             challengeTasks.addTaskUnder(task, taskAbove)

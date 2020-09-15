@@ -97,7 +97,7 @@ class GiftPurchaseGemsFragment : BaseFragment() {
     }
 
     private fun purchaseGems(identifier: String) {
-        HabiticaPurchaseVerifier.pendingGifts[identifier] = giftedMember?.id
+        HabiticaPurchaseVerifier.addGift(identifier, giftedMember?.id)
         purchaseHandler?.purchaseGems(identifier)
     }
 }

@@ -28,7 +28,7 @@ public class HabiticaIconsHelper {
         if (imageOfExperience != null)
             return imageOfExperience;
 
-        int size = scaleSize(18);
+        int size = scaleSize(24);
         imageOfExperience = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(imageOfExperience);
         canvas.scale(displayDensity, displayDensity);
@@ -42,7 +42,7 @@ public class HabiticaIconsHelper {
         if (imageOfMagic != null)
             return imageOfMagic;
 
-        int size = scaleSize(18);
+        int size = scaleSize(24);
         imageOfMagic = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(imageOfMagic);
         canvas.scale(displayDensity, displayDensity);
@@ -164,7 +164,7 @@ public class HabiticaIconsHelper {
         if (imageOfHeartLightBg != null)
             return imageOfHeartLightBg;
 
-        int size = scaleSize(18);
+        int size = scaleSize(24);
         imageOfHeartLightBg = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(imageOfHeartLightBg);
         canvas.scale(displayDensity, displayDensity);
@@ -785,5 +785,23 @@ public class HabiticaIconsHelper {
         HabiticaIcons.drawStats(canvas);
 
         return imageOfHabitControlMinus;
+    }
+
+    public static Bitmap imageOfFallGemPromoBG(int redGemColor, int greenGemColor, int blueGemColor, int purpleGemColor) {
+        Bitmap imageOfFallGemPromoBG = Bitmap.createBitmap(scaleSize(132), scaleSize(35), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(imageOfFallGemPromoBG);
+        canvas.scale(displayDensity, displayDensity);
+        HabiticaIcons.drawFallGemPromoBG(canvas, redGemColor, greenGemColor, blueGemColor, purpleGemColor);
+
+        return imageOfFallGemPromoBG;
+    }
+
+    public static Bitmap imageOfSpookyGemPromoBG() {
+        Bitmap imageOfSpookyGemPromoBG = Bitmap.createBitmap(scaleSize(132), scaleSize(35), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(imageOfSpookyGemPromoBG);
+        canvas.scale(displayDensity, displayDensity);
+        HabiticaIcons.drawSpookyGemPromoBG(canvas);
+
+        return imageOfSpookyGemPromoBG;
     }
 }

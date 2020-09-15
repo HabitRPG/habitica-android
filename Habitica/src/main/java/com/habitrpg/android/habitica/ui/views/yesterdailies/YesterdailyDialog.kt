@@ -81,9 +81,7 @@ class YesterdailyDialog private constructor(context: Context, private val userRe
     private fun createTaskViews(inflater: LayoutInflater) {
         for (task in tasks) {
             val taskView = createNewTaskView(inflater)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                taskView.clipToOutline = true
-            }
+            taskView.clipToOutline = true
             configureTaskView(taskView, task)
             val taskContainer = taskView.findViewById<View>(R.id.taskHolder)
             taskContainer.setOnClickListener {

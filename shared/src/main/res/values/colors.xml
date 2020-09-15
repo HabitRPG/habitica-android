@@ -23,7 +23,7 @@
     <color name="red_50">#F74E52</color>
     <color name="red_10">#F23035</color>
     <color name="red_5">#BF262B</color>
-    <color name="red_1">#6C0406</color>
+    <color name="red_1">#6c0406</color>
 
     <color name="orange_500">#ffc8a7</color>
     <color name="orange_100">#FF944C</color>
@@ -56,6 +56,7 @@
     <color name="blue_5">#217AA6</color>
 
 
+    <color name="gray_1">#1A181D</color>
     <color name="gray_10">#34313a</color>
     <color name="gray_50">#4e4a57</color>
     <color name="gray_100">#686274</color>
@@ -151,4 +152,9 @@
     <color name="animalitem_all_eggs">#6ECDB2</color>
 
     <color name="dark_brown">#794b00</color>
+    <color name="blue_1">#033f5e</color>
+    <color name="teal_1">#005158</color>
+    <color name="green_1">#005737</color>
+    <color name="yellow_1">#794b00</color>
+    <color name="orange_1">#7f3300</color>
 </resources>

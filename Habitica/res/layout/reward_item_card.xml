@@ -6,67 +6,23 @@
     android:background="@color/white">
 
     <LinearLayout
+        android:id="@+id/main_task_wrapper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clickable="false"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginHorizontal="@dimen/task_spacing_horizontal"
+        android:layout_marginVertical="@dimen/task_spacing_vertical"
+        android:background="@drawable/task_background"
+        android:clipChildren="true"
+        android:minHeight="@dimen/task_min_height">
 
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="30dp"
-            android:layout_gravity="center_vertical"
-            android:layout_margin="12dp"
-            android:scaleType="center"
-            android:src="@drawable/icon_custom_reward" />
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:paddingBottom="@dimen/task_top_bottom_padding"
-            android:paddingEnd="@dimen/reward_spacing"
-            android:paddingRight="@dimen/reward_spacing"
-            android:paddingTop="@dimen/task_top_bottom_padding">
-
-            <com.habitrpg.android.habitica.ui.views.EllipsisTextView
-                android:id="@+id/checkedTextView"
-                style="@style/Subheader3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="#000"
-                tools:text="Title" />
-
-            <com.habitrpg.android.habitica.ui.views.EllipsisTextView
-                android:id="@+id/notesTextView"
-                style="@style/Caption2.Regular"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:text="Notes"/>
-
-            <Button
-                android:id="@+id/expand_notes_button"
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                style="@style/Base.Widget.AppCompat.Button.Borderless"
-                android:text="@string/expand_notes"
-                android:padding="0dp"
-                android:textColor="?colorAccent"/>
-            <TextView
-                    android:id="@+id/approvalRequiredTextField"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/Caption4"
-                    android:text="@string/pending_approval"
-                    />
-
-        </LinearLayout>
+        <include layout="@layout/task_main_content" />
 
         <LinearLayout
             android:id="@+id/buyButton"
-            android:layout_width="48dp"
-            android:layout_height="match_parent"
+            android:layout_width="56dp"
+            android:layout_height="fill_parent"
             android:background="@color/reward_buy_button_bg"
             android:gravity="center"
             android:orientation="vertical">
@@ -74,7 +30,7 @@
                 android:id="@+id/gold_icon"
                 android:layout_width="22dp"
                 android:layout_height="22dp"
-                android:paddingBottom="8dp"/>
+                android:paddingBottom="2dp"/>
             <TextView
                 android:id="@+id/priceLabel"
                 android:layout_width="match_parent"
@@ -85,10 +41,4 @@
                 style="@style/Body1"/>
         </LinearLayout>
     </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_gravity="bottom"
-        android:background="@color/task_border_gray" />
 </FrameLayout>

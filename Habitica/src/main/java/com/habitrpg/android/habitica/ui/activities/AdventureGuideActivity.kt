@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.activities
 
 import android.graphics.Paint
+import android.graphics.PorterDuff
 import android.os.Build
 import android.os.Bundle
 import android.text.Html
@@ -94,6 +95,9 @@ class AdventureGuideActivity : BaseActivity() {
         val completed = achievements.count { it.earned }
         binding.progressBar.max = achievements.size
         binding.progressBar.progress = completed
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1) {
+            binding.progressBar.progressBackgroundTintMode = PorterDuff.Mode.SRC_OVER
+        }
 
         if (completed > 0) {
             binding.progressTextview.text = getString(R.string.percent_completed, ((completed / achievements.size.toFloat()) * 100).toInt())

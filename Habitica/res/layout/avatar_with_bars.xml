@@ -6,14 +6,10 @@
               android:layout_height="wrap_content"
               android:layout_centerHorizontal="true"
               android:adjustViewBounds="true"
-              android:background="?colorPrimary"
+              android:background="?attr/headerBackgroundColor"
               android:focusable="true"
               android:focusableInTouchMode="true"
-              android:orientation="vertical"
-              android:paddingEnd="@dimen/header_border_spacing"
-              android:paddingLeft="@dimen/header_border_spacing"
-              android:paddingRight="@dimen/header_border_spacing"
-              android:paddingStart="@dimen/header_border_spacing">
+              android:orientation="vertical">
 
     <LinearLayout
             android:layout_width="match_parent"
@@ -24,8 +20,7 @@
                 android:layout_width="@dimen/avatar_header_width"
                 android:layout_height="@dimen/avatar_header_height"
                 android:layout_gravity="center_vertical"
-                android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp"
+                android:layout_marginEnd="20dp"
                 android:contentDescription="@string/sidebar_avatar"
                 app:showBackground="true"
                 app:showMount="true"
@@ -42,6 +37,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/header_bar_spacing"
                     app:barForegroundColor="@color/hpColor"
+                app:lightBackground="true"
                     app:description="@string/HP_default"/>
 
             <com.habitrpg.android.habitica.ui.views.ValueBar
@@ -50,6 +46,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/header_bar_spacing"
                     app:barForegroundColor="@color/xpColor"
+                app:lightBackground="true"
                     app:description="@string/XP_default"/>
 
             <com.habitrpg.android.habitica.ui.views.ValueBar
@@ -57,6 +54,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:barForegroundColor="@color/mpColor"
+                app:lightBackground="true"
                     app:description="@string/MP_default"/>
 
         </LinearLayout>
@@ -65,9 +63,7 @@
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:paddingBottom="6dp"
-            android:paddingTop="2dp">
+            android:gravity="center_vertical">
 
         <TextView
                 android:id="@+id/lvl_tv"
@@ -75,7 +71,7 @@
                 android:layout_height="36dp"
                 android:drawablePadding="6dp"
                 android:gravity="center"
-                android:textColor="?textColorSecondaryDark"
+                android:textColor="?headerTextColor"
                 android:textSize="14sp"
                 tools:text="Lvl 12 Warrior"/>
 
@@ -96,6 +92,6 @@
                 android:id="@+id/currencyView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:hasLightBackground="false"/>
+                app:hasLightBackground="true"/>
     </LinearLayout>
 </LinearLayout>

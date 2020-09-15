@@ -70,6 +70,7 @@ class ContentDeserializer : JsonDeserializer<ContentResult> {
             mount.animal = mountObj.getAsString("egg")
             mount.color = mountObj.getAsString("potion")
             mount.key = mountObj.getAsString("key")
+            mount.text = mountObj.getAsString("text")
             mount.type = mountObj.getAsString("type")
             if (mount.type == "special") {
                 mount.animal = mount.key.split("-")[0]

@@ -21,8 +21,12 @@ import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.content.FileProvider
 import androidx.core.content.edit
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import com.facebook.drawee.view.SimpleDraweeView
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.perf.FirebasePerformance
@@ -36,6 +40,7 @@ import com.habitrpg.android.habitica.databinding.ActivityMainBinding
 import com.habitrpg.android.habitica.events.*
 import com.habitrpg.android.habitica.events.commands.FeedCommand
 import com.habitrpg.android.habitica.extensions.dpToPx
+import com.habitrpg.android.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.*
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
@@ -133,7 +138,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     private var sideAvatarView: AvatarView? = null
     private var activeTutorialView: TutorialView? = null
     private var drawerFragment: NavigationDrawerFragment? = null
-    private var drawerToggle: ActionBarDrawerToggle? = null
+    var drawerToggle: ActionBarDrawerToggle? = null
     private var resumeFromActivity = false
     private var userIsOnQuest = false
 
@@ -159,7 +164,11 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
     @SuppressLint("ObsoleteSdkInt")
     public override fun onCreate(savedInstanceState: Bundle?) {
-        launchTrace = FirebasePerformance.getInstance().newTrace("MainActivityLaunch")
+        try {
+            launchTrace = FirebasePerformance.getInstance().newTrace("MainActivityLaunch")
+        } catch (_: IllegalStateException) {
+
+        }
         launchTrace?.start()
         super.onCreate(savedInstanceState)
 
@@ -187,7 +196,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                 .get(NotificationsViewModel::class.java)
         notificationsViewModel = viewModel
 
-        val drawerLayout = findViewById<androidx.drawerlayout.widget.DrawerLayout>(R.id.drawer_layout)
+        val drawerLayout = findViewById<DrawerLayout>(R.id.drawer_layout)
 
         drawerFragment = supportFragmentManager.findFragmentById(R.id.navigation_drawer) as? NavigationDrawerFragment
 
@@ -202,18 +211,53 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         drawerToggle?.drawerArrowDrawable = drawerIcon
         // Set the drawer toggle as the DrawerListener
         drawerToggle?.let { drawerLayout.addDrawerListener(it) }
+        drawerLayout.addDrawerListener(object : DrawerLayout.DrawerListener {
+            private var isOpeningDrawer: Boolean? = null
+
+            override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
+                val modernHeaderStyle = sharedPreferences.getBoolean("modern_header_style", true)
+                if (modernHeaderStyle && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    if (slideOffset < 0.5f && isOpeningDrawer == null) {
+                        window.statusBarColor = getThemeColor(R.attr.colorPrimaryDark)
+                        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE
+                        isOpeningDrawer = true
+                    } else if (slideOffset > 0.5f && isOpeningDrawer == null) {
+                        window.statusBarColor = getThemeColor(R.attr.headerBackgroundColor)
+                        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+                        isOpeningDrawer = false
+                    }
+                }
+            }
+
+            override fun onDrawerOpened(drawerView: View) {
+                val modernHeaderStyle = sharedPreferences.getBoolean("modern_header_style", true)
+                if (modernHeaderStyle && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    window.statusBarColor = getThemeColor(R.attr.colorPrimaryDark)
+                    window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE
+                }
+                isOpeningDrawer = null
+            }
+
+            override fun onDrawerClosed(drawerView: View) {
+                val modernHeaderStyle = sharedPreferences.getBoolean("modern_header_style", true)
+                if (modernHeaderStyle && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    window.statusBarColor = getThemeColor(R.attr.headerBackgroundColor)
+                    window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+                }
+                isOpeningDrawer = null
+            }
+
+            override fun onDrawerStateChanged(newState: Int) {
+
+            }
+        })
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeButtonEnabled(true)
 
         val navigationController = findNavController(R.id.nav_host_fragment)
-        navigationController.addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.label.isNullOrEmpty() && user?.isValid == true) {
-                binding.toolbarTitle.text = user?.profile?.name
-            } else if (user?.isValid == true && user?.profile != null) {
-                binding.toolbarTitle.text = destination.label
-            }
-            drawerFragment?.setSelection(destination.id, null, false)
+        navigationController.addOnDestinationChangedListener { _, destination, arguments ->
+            updateToolbarTitle(destination, arguments)
         }
         MainNavigationController.setup(navigationController)
 
@@ -225,6 +269,33 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         } catch (e: Exception) {
             crashlyticsProxy.logException(e)
         }
+    }
+
+    private fun updateToolbarTitle(destination: NavDestination, arguments: Bundle?) {
+        binding.toolbarTitle.text = if (destination.id == R.id.petDetailRecyclerFragment || destination.id == R.id.mountDetailRecyclerFragment) {
+            arguments?.getString("type")
+        } else if (destination.label.isNullOrEmpty() && user?.isValid == true) {
+            user?.profile?.name
+        } else if (user?.isValid == true && user?.profile != null) {
+            destination.label
+        } else {
+            ""
+        }
+        if (destination.id == R.id.petDetailRecyclerFragment || destination.id == R.id.mountDetailRecyclerFragment) {
+            compositeSubscription.add(inventoryRepository.getItem("egg", arguments?.getString("type") ?: "").firstElement().subscribe(Consumer {
+                binding.toolbarTitle.text = if (destination.id == R.id.petDetailRecyclerFragment) {
+                    (it as? Egg)?.text
+                } else {
+                    (it as? Egg)?.mountText
+                }
+            }, RxErrorHandler.handleEmptyError()))
+        }
+        drawerFragment?.setSelection(destination.id, null, false)
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 
     private fun setupNotifications() {
@@ -358,11 +429,15 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
             val quest = user?.party?.quest
             if (quest?.completed?.isNotBlank() == true) {
-                compositeSubscription.add(inventoryRepository.getQuestContent(user?.party?.quest?.completed ?: "").firstElement().subscribe {
+                compositeSubscription.add(inventoryRepository.getQuestContent(user?.party?.quest?.completed ?: "").firstElement().subscribe(Consumer {
                     QuestCompletedDialog.showWithQuest(this, it)
 
                     userRepository.updateUser(user, "party.quest.completed", "").subscribe(Consumer {}, RxErrorHandler.handleEmptyError())
-                })
+                }, RxErrorHandler.handleEmptyError()))
+            }
+
+            if (user?.flags?.welcomed == false) {
+                compositeSubscription.add(userRepository.updateUser(user, "flags.welcomed", true).subscribe(Consumer {}, RxErrorHandler.handleEmptyError()))
             }
 
             if (appConfigManager.enableAdventureGuide()) {

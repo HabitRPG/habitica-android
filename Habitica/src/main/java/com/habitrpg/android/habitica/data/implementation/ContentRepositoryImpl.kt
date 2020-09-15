@@ -22,7 +22,7 @@ abstract class ContentRepositoryImpl<T : ContentLocalRepository>(localRepository
 
     override fun retrieveContent(context: Context?, forced: Boolean): Flowable<ContentResult> {
         val now = Date().time
-        return if (forced || now - this.lastContentSync > 3) {
+        return if (forced || now - this.lastContentSync > 300000) {
             lastContentSync = now
             apiClient.content.doOnNext {
                 context?.let {context ->

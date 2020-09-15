@@ -194,7 +194,7 @@ class GiftSubscriptionActivity : BaseActivity() {
         if (giftedUserID?.isNotEmpty() != true) {
             return
         }
-        HabiticaPurchaseVerifier.pendingGifts[sku.id.code] = giftedUserID
+        HabiticaPurchaseVerifier.addGift(sku.id.code, giftedUserID)
         purchaseHandler?.purchaseNoRenewSubscription(sku)
     }
 

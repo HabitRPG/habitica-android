@@ -2,10 +2,8 @@ package com.habitrpg.android.habitica.ui.viewHolders.tasks
 
 import android.content.Context
 import android.view.View
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.view.ViewGroup
+import android.widget.*
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.ui.helpers.*
@@ -23,24 +21,28 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc: ((Task, TaskDirection) -> Unit), var openTaskFunc: ((Task) -> Unit)) : BindableViewHolder<Task>(itemView), View.OnClickListener {
+abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc: ((Task, TaskDirection) -> Unit), var openTaskFunc: ((Task) -> Unit), var brokenTaskFunc: ((Task) -> Unit)) : BindableViewHolder<Task>(itemView), View.OnClickListener {
 
 
     var task: Task? = null
     var movingFromPosition: Int? = null
     var errorButtonClicked: Action? = null
     protected var context: Context
+    private val mainTaskWrapper: ViewGroup by bindView(itemView, R.id.main_task_wrapper)
     private val titleTextView: EllipsisTextView by bindView(itemView, R.id.checkedTextView)
     private val notesTextView: EllipsisTextView? by bindView(itemView, R.id.notesTextView)
-    internal val rightBorderView: View? by bindOptionalView(itemView, R.id.rightBorderView)
+    protected val calendarIconView: ImageView? by bindView(itemView, R.id.iconViewCalendar)
     protected val specialTaskTextView: TextView? by bindOptionalView(itemView, R.id.specialTaskText)
     private val iconViewChallenge: ImageView? by bindView(itemView, R.id.iconviewChallenge)
     private val iconViewReminder: ImageView? by bindOptionalView(itemView, R.id.iconviewReminder)
-    private val iconViewTag: ImageView? by bindView(itemView, R.id.iconviewTag)
     private val taskIconWrapper: LinearLayout? by bindView(itemView, R.id.taskIconWrapper)
     private val approvalRequiredTextView: TextView? by bindView(itemView, R.id.approvalRequiredTextField)
     private val expandNotesButton: Button? by bindOptionalView(R.id.expand_notes_button)
-    protected val taskGray: Int by bindColor(itemView.context, R.color.task_gray)
+    private val syncingView: ProgressBar? by bindOptionalView(R.id.syncing_view)
+    private val errorIconView: ImageButton? by bindOptionalView(R.id.error_icon)
+    protected val taskGray: Int by bindColor(itemView.context, R.color.gray_600)
+    protected val streakTextView: TextView by bindView(itemView, R.id.streakTextView)
+    protected val reminderTextView: TextView by bindView(itemView, R.id.reminder_textview)
 
     private var openTaskDisabled: Boolean = false
     private var taskActionsDisabled: Boolean = false
@@ -53,9 +55,6 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
             if (iconViewReminder?.visibility == View.VISIBLE) {
                 isVisible = true
             }
-            if (iconViewTag?.visibility == View.VISIBLE) {
-                isVisible = true
-            }
             if (iconViewChallenge?.visibility == View.VISIBLE) {
                 isVisible = true
             }
@@ -65,12 +64,16 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
             if (specialTaskTextView?.visibility == View.VISIBLE) {
                 isVisible = true
             }
+            if (this.streakTextView.visibility == View.VISIBLE) {
+                isVisible = true
+            }
             return isVisible
         }
 
     init {
         itemView.setOnClickListener { onClick(it) }
         itemView.isClickable = true
+        mainTaskWrapper.clipToOutline = true
 
         titleTextView.setOnClickListener { onClick(it) }
         notesTextView?.setOnClickListener { onClick(it) }
@@ -80,6 +83,11 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
         //titleTextView.movementMethod = LinkMovementMethod.getInstance()
 
         expandNotesButton?.setOnClickListener { expandTask() }
+        iconViewChallenge?.setOnClickListener {
+            task?.let { t ->
+                if (task?.challengeBroken?.isNotBlank() == true) brokenTaskFunc(t)
+            }
+        }
         notesTextView?.addEllipsesListener(object : EllipsisTextView.EllipsisListener {
             override fun ellipsisStateChanged(ellipses: Boolean) {
                 GlobalScope.launch(Dispatchers.Main.immediate) {
@@ -167,10 +175,8 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
             }
         }
 
-        rightBorderView?.setBackgroundResource(data.lightTaskColor)
         if (displayMode == "standard") {
             iconViewReminder?.visibility = if (data.reminders?.size ?: 0 > 0) View.VISIBLE else View.GONE
-            iconViewTag?.visibility = if (data.tags?.size ?: 0 > 0) View.VISIBLE else View.GONE
 
             iconViewChallenge?.visibility = if (task?.challengeID != null) View.VISIBLE else View.GONE
             if (task?.challengeID != null) {
@@ -194,6 +200,7 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
 
     protected open fun configureSpecialTaskTextView(task: Task) {
         specialTaskTextView?.visibility = View.INVISIBLE
+        calendarIconView?.visibility = View.GONE
     }
 
     override fun onClick(v: View) {

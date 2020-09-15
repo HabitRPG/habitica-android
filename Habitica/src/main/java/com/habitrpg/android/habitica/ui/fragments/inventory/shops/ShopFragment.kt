@@ -234,7 +234,7 @@ class ShopFragment : BaseFragment() {
     fun onItemPurchased(event: GearPurchasedEvent) {
         if (Shop.MARKET == shopIdentifier) {
             loadMarketGear()
-        } else if (Shop.TIME_TRAVELERS_SHOP == shopIdentifier) {
+        } else {
             loadShopInventory()
         }
     }

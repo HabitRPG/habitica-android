@@ -3,18 +3,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="65dp"
-    android:paddingTop="16dp"
-    android:gravity="bottom"
-    android:layout_marginStart="20dp"
-    android:layout_marginEnd="20dp">
+    android:layout_height="55dp"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    android:gravity="bottom">
 <TextView
     android:id="@+id/label"
     android:layout_width="0dp"
     android:layout_height="wrap_content"
     android:layout_weight="1"
-    android:textAppearance="?android:attr/textAppearanceMedium"/>
-
+    tools:text="Test header"
+    style="@style/Overline"
+    android:textColor="@color/gray_200"/>
+<TextView
+    android:id="@+id/count_pill"
+    android:layout_width="wrap_content"
+    android:layout_height="24dp"
+    android:visibility="gone"
+    style="@style/Pill.Gray700"
+    android:textSize="10sp"
+    android:textAllCaps="true"
+    android:letterSpacing="0.15"
+    android:gravity="center"
+    />
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="40dp"

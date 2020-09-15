@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'io.fabric'
+apply plugin: 'com.google.firebase.crashlytics'
 apply plugin: 'com.noveogroup.android.check'
 apply plugin: 'realm-android'
 apply plugin: 'androidx.navigation.safeargs'
@@ -13,12 +13,10 @@ buildscript {
         mavenLocal()
         google()
         mavenCentral()
-        maven { url 'https://maven.fabric.io/public' }
         jcenter()
     }
     dependencies {
-        classpath 'io.fabric.tools:gradle:1.+'
-        classpath 'com.android.tools.build:gradle:4.0.0'
+        classpath 'com.android.tools.build:gradle:4.0.1'
         classpath('com.noveogroup.android:check:1.2.5') {
             exclude module: 'checkstyle'
             exclude module: 'pmd-java'
@@ -33,7 +31,6 @@ repositories {
     mavenCentral()
     google()
     maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
-    maven { url 'https://maven.fabric.io/public' }
 
     // Material View Pager
     maven { url "https://dl.bintray.com/florent37/maven" }
@@ -54,16 +51,15 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.7.1'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.7.1'
     //Crash Logging
-    releaseImplementation('com.crashlytics.sdk.android:crashlytics:2.10.1@aar') {
-        transitive = true
-    }
+    implementation 'com.google.firebase:firebase-crashlytics:17.2.1'
+
     //Dependency Injection
-    implementation 'com.google.dagger:dagger:2.25.4'
+    implementation 'com.google.dagger:dagger:2.27'
     kapt 'com.google.dagger:dagger-compiler:2.25.4'
     compileOnly 'javax.annotation:javax.annotation-api:1.3.2'
     compileOnly 'com.github.pengrad:jdk9-deps:1.0'
     //App Compatibility and Material Design
-    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'androidx.legacy:legacy-preference-v14:1.0.0'
@@ -104,7 +100,7 @@ dependencies {
     }
     //Tests
     testImplementation 'junit:junit:4.12'
-    testImplementation 'androidx.test:core:1.0.0'
+    testImplementation 'androidx.test:core:1.3.0'
     testImplementation "com.google.truth:truth:1.0.1"
     testImplementation 'org.assertj:assertj-core:2.6.0'
     testImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.2'
@@ -119,21 +115,21 @@ dependencies {
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.2'
     releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.2'
     //Push Notifications
-    implementation 'com.google.firebase:firebase-core:17.2.2'
-    implementation 'com.google.firebase:firebase-messaging:20.1.0'
-    implementation 'com.google.firebase:firebase-config:19.1.1'
-    implementation 'com.google.firebase:firebase-perf:19.0.5'
-    implementation 'com.google.android.gms:play-services-auth:17.0.0'
+    implementation 'com.google.firebase:firebase-core:17.5.0'
+    implementation 'com.google.firebase:firebase-messaging:20.2.4'
+    implementation 'com.google.firebase:firebase-config:19.2.0'
+    implementation 'com.google.firebase:firebase-perf:19.0.8'
+    implementation 'com.google.android.gms:play-services-auth:18.1.0'
     implementation 'io.realm:android-adapters:3.1.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.multidex:multidex:2.0.1'
     implementation 'com.nex3z:flow-layout:1.2.2'
 
-    implementation 'androidx.core:core-ktx:1.3.0'
+    implementation 'androidx.core:core-ktx:1.3.1'
     implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
     implementation "androidx.lifecycle:lifecycle-common-java8:2.2.0"
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.2.2'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.2.2'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.0'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.3.0'
     implementation "androidx.paging:paging-runtime-ktx:2.1.2"
     implementation 'com.plattysoft.leonids:LeonidsLib:1.3.2'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.3'
@@ -162,8 +158,8 @@ android {
         multiDexEnabled true
         resConfigs "en", "bg", "de", "en-rGB", "es", "fr", "hr-rHR", "in", "it", "iw", "ja", "ko", "lt", "nl", "pl", "pt-rBR", "pt-rPT", "ru", "tr", "zh", "zh-rTW"
 
-        versionCode 2462
-        versionName "2.7"
+        versionCode 2519
+        versionName "2.8"
     }
 
     viewBinding {

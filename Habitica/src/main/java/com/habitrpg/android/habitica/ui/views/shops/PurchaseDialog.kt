@@ -32,8 +32,7 @@ import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientG
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientGoldDialog
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientHourglassesDialog
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientSubscriberGemsDialog
-import com.habitrpg.shared.habitica.models.user.OwnedItem
-import com.habitrpg.shared.habitica.models.user.User
+import com.habitrpg.android.habitica.ui.views.tasks.form.StepperValueFormView
 import io.reactivex.Flowable
 import io.reactivex.Maybe
 import io.reactivex.disposables.CompositeDisposable
@@ -98,19 +97,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
 
             val contentView: PurchaseDialogContent
             when {
-                shopItem.isTypeItem -> {
-                    val itemContent = PurchaseDialogItemContent(context)
-                    if (shopItem.canPurchaseBulk) {
-                        itemContent.stepperView.visibility = View.VISIBLE
-                        itemContent.stepperView.onValueChanged = {
-                            purchaseQuantity = it.toInt()
-                            updatePurchaseTotal()
-                        }
-                    } else {
-                        itemContent.stepperView.visibility = View.GONE
-                    }
-                    contentView = itemContent
-                }
+                shopItem.isTypeItem -> contentView = PurchaseDialogItemContent(context)
                 shopItem.isTypeQuest -> {
                     contentView = PurchaseDialogQuestContent(context)
                     inventoryRepository.getQuestContent(shopItem.key).firstElement().subscribe(Consumer { contentView.setQuestContent(it) }, RxErrorHandler.handleEmptyError())
@@ -120,15 +107,21 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
                     inventoryRepository.getEquipment(shopItem.key).firstElement().subscribe(Consumer { contentView.setEquipment(it) }, RxErrorHandler.handleEmptyError())
                     checkGearClass()
                 }
-                "gems" == shopItem.purchaseType -> {
-                    val gemContent = PurchaseDialogGemsContent(context)
-                    gemContent.stepperView.onValueChanged = {
+                "gems" == shopItem.purchaseType -> contentView = PurchaseDialogGemsContent(context)
+                else -> contentView = PurchaseDialogBaseContent(context)
+            }
+
+            val stepperView = contentView.findViewById<StepperValueFormView>(R.id.stepper_view)
+            if (stepperView != null) {
+                if (shopItem.canPurchaseBulk) {
+                    stepperView.visibility = View.VISIBLE
+                    stepperView.onValueChanged = {
                         purchaseQuantity = it.toInt()
                         updatePurchaseTotal()
                     }
-                    contentView = gemContent
+                } else {
+                    stepperView.visibility = View.GONE
                 }
-                else -> contentView = PurchaseDialogBaseContent(context)
             }
 
             amountErrorLabel = contentView.findViewById(R.id.amount_error_label)
@@ -299,6 +292,8 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
             }
         } else if (shopItem.purchaseType == "quests" && shopItem.currency == "gold") {
             observable = inventoryRepository.purchaseQuest(shopItem.key)
+        } else if (shopItem.purchaseType == "debuffPotion") {
+            observable = userRepository.useSkill(user, shopItem.key, null).cast(Any::class.java)
         } else if (shopItem.purchaseType == "card") {
             purchaseCardAction?.invoke(shopItem)
             dismiss()

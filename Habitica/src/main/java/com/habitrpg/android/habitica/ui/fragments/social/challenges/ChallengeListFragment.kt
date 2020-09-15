@@ -89,7 +89,7 @@ class ChallengeListFragment : BaseFragment(), androidx.swiperefreshlayout.widget
             this.recyclerView?.setBackgroundResource(R.color.white)
         }
 
-        compositeSubscription.add(socialRepository.getGroup(Group.TAVERN_ID).combineLatest(socialRepository.getUserGroups()).subscribe(Consumer {
+        compositeSubscription.add(socialRepository.getGroup(Group.TAVERN_ID).combineLatest(socialRepository.getUserGroups("guild")).subscribe(Consumer {
             this.filterGroups = mutableListOf()
             filterGroups?.add(it.first)
             filterGroups?.addAll(it.second)

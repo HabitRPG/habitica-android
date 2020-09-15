@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sidebar_subscription">Prenumeration</string>
+    <string name="sidebar_gems">Köp Gems</string>
+    <string name="sidebar_about">Om</string>
+    <string name="sidebar_news">Nyheter</string>
+    <string name="sidebar_stable">Sällskapsdjur &amp; Riddjur</string>
+    <string name="sidebar_equipment">Utrustning</string>
+    <string name="sidebar_avatar">Karaktär</string>
+    <string name="sidebar_section_inventory">Förråd</string>
+    <string name="sidebar_challenges">Utmaningar</string>
+    <string name="sidebar_guilds">Gillen</string>
+    <string name="sidebar_party">Sällskap</string>
+    <string name="sidebar_tavern">Värdshus</string>
+    <string name="sidebar_inbox">Meddelanden</string>
+    <string name="sidebar_section_social">Social</string>
+    <string name="sidebar_skills">Förmågor</string>
+    <string name="sidebar_tasks">Uppgifter</string>
+    <string name="sidebar_stats">Statistik</string>
+    <string name="sidebar_shops">Affärer</string>
+</resources>

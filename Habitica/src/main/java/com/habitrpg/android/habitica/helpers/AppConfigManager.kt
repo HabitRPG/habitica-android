@@ -6,6 +6,8 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.habitrpg.android.habitica.BuildConfig
+import com.habitrpg.android.habitica.models.promotions.HabiticaPromotion
+import com.habitrpg.android.habitica.models.promotions.getHabiticaPromotionFromKey
 import java.util.*
 
 class AppConfigManager {
@@ -104,5 +106,13 @@ class AppConfigManager {
 
     fun enableAdventureGuide(): Boolean {
         return remoteConfig.getBoolean("enableAdventureGuide")
+    }
+
+    fun activePromo(): HabiticaPromotion? {
+        val key = remoteConfig.getString("activePromo")
+        if (key.isNotBlank()) {
+            return getHabiticaPromotionFromKey(key)
+        }
+        return null
     }
 }

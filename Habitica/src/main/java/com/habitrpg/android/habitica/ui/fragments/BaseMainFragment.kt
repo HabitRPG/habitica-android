@@ -1,9 +1,11 @@
 package com.habitrpg.android.habitica.ui.fragments
 
 import android.content.Context
+import android.graphics.PorterDuff
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -12,6 +14,7 @@ import com.google.android.material.tabs.TabLayout
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.UserRepository
+import com.habitrpg.android.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.SoundManager
 import com.habitrpg.shared.habitica.models.user.User
@@ -27,6 +30,8 @@ abstract class BaseMainFragment : BaseFragment() {
     lateinit var userRepository: UserRepository
     @Inject
     lateinit var soundManager: SoundManager
+
+    protected var showsBackButton: Boolean = false
 
     open val activity get() = getActivity() as? MainActivity
     val tabLayout get() = activity?.binding?.detailTabs
@@ -72,6 +77,12 @@ abstract class BaseMainFragment : BaseFragment() {
         return null
     }
 
+    override fun onResume() {
+        super.onResume()
+        activity?.drawerToggle?.isDrawerIndicatorEnabled = !showsBackButton
+        activity?.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
     private fun updateTabLayoutVisibility() {
         if (this.usesTabLayout) {
             tabLayout?.removeAllTabs()
@@ -103,5 +114,13 @@ abstract class BaseMainFragment : BaseFragment() {
     private fun enableToolbarScrolling() {
         val params = collapsingToolbar?.layoutParams as? AppBarLayout.LayoutParams
         params?.scrollFlags = AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL or AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED
+    }
+
+
+    protected fun tintMenuIcon(item: MenuItem?) {
+        context?.getThemeColor(R.attr.headerTextColor)?.let {
+            item?.icon?.setTint(it)
+            item?.icon?.setTintMode(PorterDuff.Mode.MULTIPLY)
+        }
     }
 }

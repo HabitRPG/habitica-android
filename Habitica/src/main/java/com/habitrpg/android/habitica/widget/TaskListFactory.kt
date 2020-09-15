@@ -37,6 +37,9 @@ abstract class TaskListFactory internal constructor(val context: Context, intent
     }
 
     private fun loadData() {
+        if (!this::taskRepository.isInitialized) {
+            return
+        }
         val mainHandler = Handler(context.mainLooper)
         mainHandler.post {
             taskRepository.getCurrentUserTasks(taskType)

@@ -254,4 +254,12 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
         val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZZZZZ", Locale.US)
         return apiClient.getTasks(TaskType.TYPE_DAILY, formatter.format(date))
     }
+
+    override fun unlinkAllTasks(challengeID: String?, keepOption: String): Flowable<Void> {
+        return apiClient.unlinkAllTasks(challengeID, keepOption)
+    }
+
+    override fun getTasksForChallenge(challengeID: String?): Flowable<RealmResults<Task>> {
+        return localRepository.getTasksForChallenge(challengeID, userID)
+    }
 }

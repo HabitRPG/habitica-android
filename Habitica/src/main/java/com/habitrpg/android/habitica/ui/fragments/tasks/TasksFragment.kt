@@ -6,6 +6,7 @@ import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.widget.SearchView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentPagerAdapter
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
@@ -78,11 +79,17 @@ class TasksFragment : BaseMainFragment(), SearchView.OnQueryTextListener {
         super.onResume()
 
         bottomNavigation?.onTabSelectedListener = {
-            when (it) {
+            val newItem = when (it) {
                 TaskType.TYPE_HABIT -> viewPager?.currentItem = 0
                 TaskType.TYPE_DAILY -> viewPager?.currentItem = 1
                 TaskType.TYPE_TODO -> viewPager?.currentItem = 2
                 TaskType.TYPE_REWARD -> viewPager?.currentItem = 3
+                else -> 0
+            }
+            if (newItem == viewPager?.currentItem) {
+                refresh()
+            } else {
+                viewPager?.currentItem = newItem
             }
             updateBottomBarBadges()
         }
@@ -115,6 +122,7 @@ class TasksFragment : BaseMainFragment(), SearchView.OnQueryTextListener {
         updateFilterIcon()
 
         val item = menu.findItem(R.id.action_search)
+        tintMenuIcon(item)
         val sv = item.actionView as? SearchView
         sv?.setOnQueryTextListener(this)
         sv?.setIconifiedByDefault(false)
@@ -249,6 +257,11 @@ class TasksFragment : BaseMainFragment(), SearchView.OnQueryTextListener {
         }
         if (filterCount == 0) {
             filterMenuItem?.setIcon(R.drawable.ic_action_filter_list)
+            context?.let {
+                val filterIcon = it.getDrawable(R.drawable.ic_action_filter_list)
+                filterIcon?.setColorFilter(it.getThemeColor(R.attr.headerTextColor), PorterDuff.Mode.MULTIPLY)
+                filterMenuItem?.setIcon(filterIcon)
+            }
         } else {
             context?.let {
                 val filterIcon = it.getDrawable(R.drawable.ic_filters_active)

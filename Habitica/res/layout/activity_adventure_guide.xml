@@ -89,7 +89,6 @@
         android:layout_marginBottom="@dimen/spacing_medium"
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
         android:progressBackgroundTint="@color/gray_600"
-        android:progressBackgroundTintMode="src_over"
         android:progressTint="@color/yellow_50"/>
 
     <LinearLayout

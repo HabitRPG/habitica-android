@@ -39,6 +39,7 @@ class GuildsOverviewFragment : BaseMainFragment(), androidx.swiperefreshlayout.w
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
+        this.hidesToolbar = true
         super.onCreateView(inflater, container, savedInstanceState)
         binding = FragmentGuildsOverviewBinding.inflate(inflater, container, false)
         return binding?.root
@@ -53,7 +54,7 @@ class GuildsOverviewFragment : BaseMainFragment(), androidx.swiperefreshlayout.w
         binding?.publicGuildsButton?.setOnClickListener {
             MainNavigationController.navigate(GuildsOverviewFragmentDirections.openPublicGuilds())
         }
-        compositeSubscription.add(socialRepository.getUserGroups().subscribe(Consumer { this.setGuilds(it) }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(socialRepository.getUserGroups("guild").subscribe(Consumer { this.setGuilds(it) }, RxErrorHandler.handleEmptyError()))
     }
     override fun onDestroy() {
         socialRepository.close()

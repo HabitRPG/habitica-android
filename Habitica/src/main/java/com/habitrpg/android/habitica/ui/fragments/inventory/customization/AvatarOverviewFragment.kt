@@ -26,6 +26,7 @@ class AvatarOverviewFragment : BaseMainFragment(), AdapterView.OnItemSelectedLis
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        showsBackButton = true
         super.onViewCreated(view, savedInstanceState)
         binding.avatarSizeSpinner.onItemSelectedListener = this
 

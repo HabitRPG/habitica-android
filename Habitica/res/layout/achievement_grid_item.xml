@@ -25,7 +25,7 @@
             android:layout_height="66dp">
             <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/achievement_icon"
-                android:layout_width="52dp"
+                android:layout_width="64dp"
                 android:layout_height="56dp"
                 app:actualImageScaleType="fitCenter"
                 android:layout_gravity="center"/>

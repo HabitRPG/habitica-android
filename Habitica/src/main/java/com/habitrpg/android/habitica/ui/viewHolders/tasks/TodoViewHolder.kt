@@ -8,25 +8,24 @@ import com.habitrpg.shared.habitica.models.tasks.Task
 
 import java.text.DateFormat
 
-class TodoViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> Unit), scoreChecklistItemFunc: ((Task, ChecklistItem) -> Unit), openTaskFunc: ((Task) -> Unit)) : ChecklistedViewHolder(itemView, scoreTaskFunc, scoreChecklistItemFunc, openTaskFunc) {
+class TodoViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> Unit), scoreChecklistItemFunc: ((Task, ChecklistItem) -> Unit), openTaskFunc: ((Task) -> Unit), brokenTaskFunc: ((Task) -> Unit)) : ChecklistedViewHolder(itemView, scoreTaskFunc, scoreChecklistItemFunc, openTaskFunc, brokenTaskFunc) {
 
     private val dateFormatter: DateFormat = android.text.format.DateFormat.getDateFormat(context)
 
     override fun bind(newTask: Task, position: Int, displayMode: String) {
         this.task = newTask
-        if (newTask.completed) {
-            checklistIndicatorWrapper.setBackgroundColor(taskGray)
-        } else {
-            checklistIndicatorWrapper.setBackgroundColor(newTask.lightTaskColor)
-        }
+        setChecklistIndicatorBackgroundActive(!newTask.completed)
+        reminderTextView.visibility = View.GONE
+        this.streakTextView.visibility = View.GONE
         super.bind(newTask, position, displayMode)
     }
 
     override fun configureSpecialTaskTextView(task: Task) {
-        val taskDueDate = task.dueDate
-        if (taskDueDate != null) {
-            this.specialTaskTextView?.text = dateFormatter.format(taskDueDate)
+        super.configureSpecialTaskTextView(task)
+        if (task.dueDate != null) {
+            task.dueDate?.let { specialTaskTextView?.text = dateFormatter.format(it) }
             this.specialTaskTextView?.visibility = View.VISIBLE
+            calendarIconView?.visibility = View.VISIBLE
         } else {
             this.specialTaskTextView?.visibility = View.INVISIBLE
         }

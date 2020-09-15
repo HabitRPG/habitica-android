@@ -15,16 +15,28 @@
         android:contentDescription="@string/gems"
         android:layout_marginTop="20dp"/>
 
+    <FrameLayout
+        android:id="@+id/amount_text_wrapper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/amount_background"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/gem_amount"
         android:textColor="@color/blue_10"
         android:gravity="center"
+        android:layout_gravity="center"
         android:textSize="36sp"
         tools:text="21" />
+    </FrameLayout>
 
     <TextView
+        android:id="@+id/gems_text_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/gems"
@@ -34,10 +46,22 @@
 
     <Button
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="38dp"
         android:id="@+id/purchase_button"
         android:background="@drawable/purchase_button_background"
+        android:layout_marginHorizontal="8dp"
         android:textColor="@color/white"
         style="@style/Body1"
         tools:text="$ 4.99"/>
+    <TextView
+        android:id="@+id/footer_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#CAC7CE"
+        android:visibility="gone"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="4dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        style="@style/Caption1"/>
 </LinearLayout>

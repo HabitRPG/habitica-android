@@ -2,18 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card_view"
-    android:layout_height="96dp"
+    android:layout_height="88dp"
     android:layout_width="76dp"
     android:background="@drawable/layout_rounded_bg_gray_700"
     android:orientation="vertical"
     android:padding="8dp">
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/imageView"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="68dp"
+        android:layout_height="68dp"
         android:layout_gravity="center"
         app:actualImageScaleType="fitCenter"/>
-
     <ProgressBar
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
@@ -21,7 +20,39 @@
         android:id="@+id/trainedProgressBar"
         android:progressTint="@color/green_100"
         android:progressBackgroundTint="@color/gray_600"
-        android:progressBackgroundTintMode="src_over"
-        android:layout_marginTop="4dp"
+        android:layout_marginStart="7dp"
+        android:layout_marginEnd="7dp"
         android:max="50" />
+    <RelativeLayout
+        android:id="@+id/item_wrapper"
+        android:layout_width="86dp"
+        android:layout_height="68dp"
+        android:layout_gravity="center">
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/hatchingPotion_view"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true" />
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/egg_view"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true" />
+    </RelativeLayout>
+    <ImageView
+        android:id="@+id/checkmark_view"
+        android:layout_width="12dp"
+        android:layout_height="10dp"
+        android:src="@drawable/pet_checkmark"
+        android:layout_gravity="center" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/titleTextView"
+        android:textSize="12sp"
+        android:gravity="center"
+        style="@style/RowTitle" />
 </LinearLayout>

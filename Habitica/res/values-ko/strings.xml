@@ -20,7 +20,7 @@
     <string name="pref_reminder_checkbox">알림 활성화 하기</string>
     <string name="pref_reminder_picker">알림 시간 설정</string>
     <string name="pref_cds_header">하루 시작 시간</string>
-    <string name="pref_push_notifications_checkbox">사용자 알림</string>
+    <string name="pref_push_notifications_checkbox">푸쉬 알림 사용</string>
     <string name="push_notifications">푸쉬 알림</string>
     <string name="push_notifications_sum">푸쉬 알림 설정</string>
     <string name="preference_push_you_won_challenge">도전 과제에서 우승하였습니다!</string>
@@ -197,8 +197,8 @@
     <string name="outfit_armor">방어구</string>
     <string name="outfit_back">등</string>
     <string name="outfit_body">몸</string>
-    <string name="outfit_shield">방패</string>
-    <string name="outfit_weapon">무기</string>
+    <string name="outfit_shield">보조무기</string>
+    <string name="outfit_weapon">주무기</string>
     <string name="wear_costume">의상 착용하기</string>
     <string name="equipped">착용됨</string>
     <string name="quest_cancel_message">정말로 이 퀘스트를 취소하시겠습니까\? 모든 초대장과 승인들을 잃을 것입니다. 퀘스트 스크롤은 주인에게 돌아갑니다.</string>
@@ -264,9 +264,9 @@
     <string name="add_invites">초대 더하기</string>
     <string name="email">이메일</string>
     <string name="share_using">공유하기</string>
-    <string name="share_levelup">일상생활의 습관을 개선하여 해비티카에서 레벨 %d이(가) 되었어요!</string>
-    <string name="share_hatched">일상생활의 과제들을 달성하여 해비티카에서 %1$s %2$s 펫을 부화시켰어요!</string>
-    <string name="share_raised">일상생활의 과제들을 달성하여 %1$s 탑승펫을 얻었어요!</string>
+    <string name="share_levelup">일상생활의 습관을 개선하여 #Habitica 에서 레벨 %d이(가) 되었어요!</string>
+    <string name="share_hatched">일상생활의 과제들을 달성하여 #Habitica 에서 %1$s %2$s 펫을 부화시켰어요!</string>
+    <string name="share_raised">일상생활의 과제들을 달성하여 #Habitica 에서 %1$s 탑승펫을 얻었어요!</string>
     <string name="open_in_store">플레이스토어로 열기</string>
     <string name="change_class_confirmation">정말로 직업을 바꾸시겠습니까\? 보석 3개가 소모됩니다.</string>
     <string name="change_class_equipment_warning">주의: 더 이상 %s 직업의 장비를 구입할 수 없게됩니다.</string>
@@ -301,7 +301,7 @@
     <string name="google_services_missing">구글 플레이 서비스를 찾을 수 없습니다.</string>
     <string name="gem_purchase_toolbartitle">구매</string>
     <string name="gem_purchase_title">보석을 구매하시면 개발자를 지원하고 Habitica가 계속될 수 있도록 도울 수 있습니다</string>
-    <string name="gem_purchase_subtitle">보석들은 당신의 계정에 다양한 요소를 추가해줍니다. 예를들어:</string>
+    <string name="gem_purchase_subtitle">보석들은 당신의 계정에 다양한 요소를 추가해줍니다, 예를 들어:</string>
     <string name="gem_purchase_listitem1">아바타를 위한 멋진 의상</string>
     <string name="gem_purchase_listitem2">환상적인 배경들</string>
     <string name="gem_purchase_listitem3">펫알을 얻을 수 있는 재미있는 퀘스트들</string>
@@ -320,11 +320,11 @@
     <string name="has_reminder">알림 있음</string>
     <string name="has_tag">태그 있음</string>
     <string name="subscribe_title">정기구독은 개발자를 후원하고 Habitica를 유지하는 데 도움이 됩니다</string>
-    <string name="subscribe_prompt">정기구독자가 되면 다음과 같은 혜택을 얻을 수 있습니다:</string>
+    <string name="subscribe_prompt">정기구독자가 되어서 다음과 같은 혜택을 받으세요!</string>
     <string name="subscribe_listitem1">골드로 보석 구매</string>
-    <string name="subscribe_listitem2">월별 한정 아이템</string>
-    <string name="subscribe_listitem3">더 많은 기록 보관</string>
-    <string name="subscribe_listitem4">일일 획득 가능한 아이템 개수 두 배</string>
+    <string name="subscribe_listitem2">신비한 모래시계</string>
+    <string name="subscribe_listitem3">월간 미스터리 아이템</string>
+    <string name="subscribe_listitem4">스페셜 구독자 펫</string>
     <string name="subscriptions">구독</string>
     <string name="subscription_duration">자동이체: 매 %s</string>
     <string name="subscribe">구독하기</string>
@@ -333,9 +333,7 @@
 \n처음에는 매달 구비량이 한 달에 25개로 제한되어 있지만, 후원 기간에 따라 올라갈 수 있습니다.
 \n
 \n연속 정기후원 3개월마다 보석 제한개수가 5개씩, 최대 월 50개까지 올라갑니다!</string>
-    <string name="subscribe_listitem2_description">매달 당신의 아바타를 위한 독특한 의상 아이템을 드립니다!
-\n
-\n더불어, 정기 후원을 해주시는 매 3달마다, 미스터리 시간 여행자가 전통적인 (그리고 미래지향적인!) 꾸미기 아이템을 소개해 줄 겁니다.</string>
+    <string name="subscribe_listitem2_description">신비한 모래시계를 얻어서 시간 여행자 상점에서 아이템을 구입하세요!</string>
     <string name="subscribe_listitem3_description">완료한 할 일과 과제 기록이 더 오래 남습니다.</string>
     <string name="subscribe_listitem4_description">드롭 제한 두 배로 인하여 매일 과제를 수행하며 펫 컬렉션 완성을 도울 더 많은 아이템을 얻을 수 있습니다!</string>
     <string name="subscription_hourglasses">신비한 모래시계 +%d개</string>
@@ -499,9 +497,9 @@
     <string name="int_abbrv">Int</string>
     <string name="con_abbrv">Con</string>
     <string name="reset_account">계정 리셋</string>
-    <string name="reset_account_description">경고! 본 계정의 많은 부분이 리셋됩니다. 하지 않는 것을 권장하지만, 일부 유저들은 짧은 시간 앱을 사용해본 후 처음부터 다시 시작하는 것을 유용하게 생각합니다.
-\n
-\n모든 레벨과 골드 그리고 경험치를 잃게 됩니다. 도전을 제외한 모든 과제들이 지워지고 그동안의 기록도 사라집니다. 모든 장비도 잃게 되지만, 한정판 장비 및 이미 보유한 미스터리 아이템을 포함해서 모두 다시 구입할 수 있습니다 (직업 특정 장비를 사려면 그 직업으로 전직해야 합니다). 현재 직업과 펫과 탑승펫들은 유지됩니다. 이 방법 대신 부활의 오브를 사용하는 것이 과제와 장비도 유지할 수 있는 더 안전한 방법입니다.</string>
+    <string name="reset_account_description">경고! 본 계정의 많은 부분이 리셋됩니다. 하지 않는 것을 권장하지만, 일부 유저들은 짧은 시간 앱을 사용해본 후 처음부터 다시 시작하는 것을 유용하게 생각합니다. 
+\n 
+\n모든 레벨과 골드 그리고 경험치를 잃게 됩니다. 도전을 제외한 모든 과제들이 지워지고 그동안의 기록도 사라집니다. 모든 장비도 잃게 되지만, 한정판 장비 및 이미 보유한 미스터리 아이템을 포함해서 모두 다시 구입할 수 있습니다 (직업 특정 장비를 사려면 그 직업으로 전직해야 합니다). 현재 직업과 펫과 탑승펫들은 유지됩니다. 이 방법 대신 환생의 구슬을 사용하는 것이 과제와 장비도 유지할 수 있는 더 안전한 방법입니다.</string>
     <string name="delete_account">계정 삭제</string>
     <string name="delete_account_description">정말로 계정을 삭제하시겠습니까\? 본인의 계정이 영구적으로 삭제되며 복구가 불가능합니다! Habitica를 다시 사용하려면 새로운 계정을 등록해야 합니다. 저장하거나 사용한 보석들도 환불되지 않습니다. 정말로 확신하신다면, 아래의 칸에 계정 암호를 적으세요.</string>
     <string name="delete_oauth_account_description">정말로 계정을 삭제하시겠습니까\? 본인의 계정이 영구적으로 삭제되며 복구가 불가능합니다! Habitica를 다시 사용하려면 새로운 계정을 등록해야 합니다. 저장하거나 사용한 보석들도 환불되지 않습니다. 정말로 확신하신다면, 아래의 칸에 DELETE 라고 적으세요.</string>
@@ -515,8 +513,8 @@
     <string name="purchase_gems">보석 구매하기</string>
     <string name="insufficientHourglasses">이 아이템을 구입하려면 더 많은 신비한 모래시계가 필요합니다!</string>
     <string name="get_hourglasses">모래시계 받기</string>
-    <string name="subscribe_for_hourglasses">모래시계를 얻으려면 정기 후원을 해주세요</string>
-    <string name="timetravelers_closed_description">연속 정기후원 3달마다 신비한 모래시계 한 개씩을 얻을 수 있고 그것을 사용해서 과거와... 그리고 미래의 한정판 아이템, 펫, 그리고 탑승펫 등을 열 수 있습니다!</string>
+    <string name="subscribe_for_hourglasses">모래시계를 얻으려면 정기 구독을 해주세요</string>
+    <string name="timetravelers_closed_description">연속 정기구독 3달마다 신비한 모래시계 한 개씩을 얻을 수 있고 그것을 사용해서 과거와... 그리고 미래의 한정판 아이템, 펫, 그리고 탑승펫 등을 열 수 있습니다!</string>
     <string name="want_to_subscribe">정기후원 하고 싶어요</string>
     <string name="seasonal_closed_description">그랜드 갈라는 춘분, 하지, 추분 그리고 동지 즈음에 열리니 그 때마다 재미있는 여러 계절별 특별 아이템을 찾으러 오세요!</string>
     <string name="come_back_soon">어서 다시 만나요!</string>
@@ -785,4 +783,34 @@
     <string name="insufficientGoldTitle">골드가 부족합니다</string>
     <string name="notifications">알림</string>
     <string name="x_months">%d 개월</string>
+    <string name="remaining_1hour">1시간 남음</string>
+    <string name="remaining_1Minute">1분 남음</string>
+    <string name="remaining_1day">1일 남음</string>
+    <string name="remaining_1week">1주 남음</string>
+    <string name="remaining_1month">1달 남음</string>
+    <string name="ago_1week">1주 전</string>
+    <string name="ago_1month">1달 전</string>
+    <string name="not_selected">선택되지 않음</string>
+    <string name="selected">선택됨</string>
+    <string name="off">끄기</string>
+    <string name="on">켜기</string>
+    <string name="remaining_hours">%d시간 남음</string>
+    <string name="remaining_minutes">%d분 남음</string>
+    <string name="remaining_days">%d일 남음</string>
+    <string name="remaining_weeks">%d 주 남음</string>
+    <string name="remaining_months">%d 달 남음</string>
+    <string name="ago_weeks">%d주 전</string>
+    <string name="ago_months">%d 개월 전</string>
+    <string name="gold_capitalilzed">골드</string>
+    <string name="login_incentive_short_count">체크인 %d 회</string>
+    <string name="login_incentive_short">해비티카에 정기적으로 접속하세요</string>
+    <string name="login_incentive_count">해비티카에 %d 회 접속해서 잠금해제하세요.</string>
+    <string name="user_level_with_class_unabbreviated">레벨 %1$d %2$s</string>
+    <string name="create_account_short">계정 생성</string>
+    <string name="party_invite_short">친구 초대</string>
+    <string name="hourglasses_description">신비한 모래시계는 해비티카를 매 3개월 연속 구독당 1개씩만 받을 수 있는 희귀한 화폐입니다. 시간 여행자의 상점에서 이전에 출시되었던 장비세트나, 펫, 탑승펫, 움직이는 배경, 혹은 특수 퀘스트등을 사는 데 이용됩니다.
+\n
+\n1년에 최대 네 개의 모래시계를 받을 수 있습니다. 받는 시간은 구독 갱신 스케쥴에 따라 정해집니다. 모래시계 획득 자격을 얻게 되는 달의 구독료 지불 다음 달의 첫 날 받게됩니다. 자세한 설명은 [구독] 페이지를 참고하세요.</string>
+    <string name="mystic_hourglasses">신비한 모래시계</string>
+    <string name="subscribe_listitem5">아이템 드롭이 두 배</string>
 </resources>

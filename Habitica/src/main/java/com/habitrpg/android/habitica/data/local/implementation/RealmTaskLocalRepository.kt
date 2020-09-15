@@ -217,6 +217,17 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
         }
     }
 
+    override fun getErroredTasks(userID: String): Flowable<RealmResults<Task>> {
+        return realm.where(Task::class.java)
+                .equalTo("userId", userID)
+                .equalTo("hasErrored", true)
+                .sort("position")
+                .findAll()
+                .asFlowable()
+                .filter { it.isLoaded }
+                .retry(1)
+    }
+
     override fun getUser(userID: String): Flowable<User> {
         return realm.where(User::class.java)
                 .equalTo("id", userID)
@@ -224,5 +235,15 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
                 .asFlowable()
                 .filter { realmObject -> realmObject.isLoaded && realmObject.isValid && !realmObject.isEmpty() }
                 .map { users -> users.first() }
+    }
+
+    override fun getTasksForChallenge(challengeID: String?, userID: String?): Flowable<RealmResults<Task>> {
+        return realm.where(Task::class.java)
+                .equalTo("challengeID", challengeID)
+                .equalTo("userId", userID)
+                .findAll()
+                .asFlowable()
+                .filter { it.isLoaded }
+                .retry(1)
     }
 }

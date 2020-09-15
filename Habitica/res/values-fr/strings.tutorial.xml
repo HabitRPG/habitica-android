@@ -1,19 +1,19 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="tutorial_overview">Nous y voilà ! J\'ai rempli certaines tâches en fonction de vos centres d\'intérêt. Essayez d\'en ajouter quelques unes. Vous pouvez modifier une tâche en sélectionnant son titre.</string>
-  <string name="tutorial_habits_1">D\'abord les habitudes. Il peut s\'agir d\'habitudes positives que vous voudriez améliorer, ou d\'habitudes négatives que vous voulez perdre.</string>
-  <string name="tutorial_habits_2">Chaque fois que vous réalisez une habitude positive, utilisez le + pour gagner de l\'expérience et de l\'or !</string>
-  <string name="tutorial_habits_3">Si vous vous laissez aller à une mauvaise habitude, utiliser le - réduira la santé de votre avatar pour vous forcer à rester vigilant.</string>
-  <string name="tutorial_habits_4">Essayez ! Vous pouvez découvrir les autres types de tâches à travers la barre de navigation inférieure.</string>
-  <string name="tutorial_dailies_1">Utilisez les quotidiennes pour les tâches qui doivent être faites selon un planning régulier.</string>
-  <string name="tutorial_dailies_2">Faites attention — si vous en ratez une, votre avatar prendra des dégâts pendant la nuit. Les valider avec régularité vous apportera de grandes récompenses !</string>
-  <string name="tutorial_todos_1">Utilisez les tâches à faire pour garder trace des tâches qui doivent être réalisées une seule fois.</string>
-  <string name="tutorial_todos_2">Si votre tâche doit être réalisée suivant un délai précis, indiquez une date d\'échéance. On dirait que vous pouvez déjà en cocher une — allez-y !</string>
-  <string name="tutorial_rewards_1">Achetez de l\'équipement pour votre avatar avec l\'or que vous gagnez !</string>
-  <string name="tutorial_rewards_2">Vous pouvez aussi créer des récompenses personnalisées en fonction de ce qui vous motive.</string>
-  <string name="tutorial_tasks_complete">C\'est tout pour l\'instant. Si vous avez besoin d\'un rappel, consultez la section FAQ.</string>
-    <string name="tutorial_skills">Les compétences sont des capacités spéciales qui ont des effets puissants ! Tapez sur une compétence pour l\'utiliser. Cela vous coûtera de la Mana (la barre bleue), que vous gagnez en faisant le point tous les jours et en accomplissant des tâches dans la vie réelle. Allez voir les FAQ dans le menu pour plus d\'infos !</string>
-  <string name="tutorial_party">Voici l\'endroit où vos amis et vous pouvez vous tenir mutuellement responsables de vos buts et combattre des monstres grâce à vos tâches !</string>
-  <string name="tutorial_tavern">Bienvenue à la Taverne, un salon de discussion public pour tous les âges ! Ici, vous pouvez discuter de productivité et poser des questions. Amusez-vous bien !</string>
+    <string name="tutorial_overview">Nous y voilà ! J\'ai rempli certaines tâches pour vous, basé sur vos centres d\'intérêt. Essayez d\'en ajouter quelques-unes vous-même. Vous pouvez modifier une tâche en tapant sur son titre.</string>
+    <string name="tutorial_habits_1">Les habitudes en premier. Il s\'agira d\'habitudes positives que vous voulez améliorer, ou d\'habitudes négatives que vous voulez abandonner.</string>
+    <string name="tutorial_habits_2">Chaque fois que vous achevez une habitude positive, touchez le + pour gagner de l\'expérience et de l\'or !</string>
+    <string name="tutorial_habits_3">Si vous vous laissez aller à une mauvaise habitude, utiliser le - réduira la santé de votre avatar pour vous forcer à rester vigilant.</string>
+    <string name="tutorial_habits_4">Essayez ! Vous pouvez découvrir les autres types de tâches à travers la barre de navigation inférieure.</string>
+    <string name="tutorial_dailies_1">Utilisez les quotidiennes pour les tâches qui doivent être faites selon un planning régulier.</string>
+    <string name="tutorial_dailies_2">Faites attention — si vous en ratez une, votre avatar prendra des dégâts pendant la nuit. Les valider avec régularité vous apportera de grandes récompenses !</string>
+    <string name="tutorial_todos_1">Utilisez les tâches À faire pour garder trace des tâches qui doivent être réalisées une seule fois.</string>
+    <string name="tutorial_todos_2">Si votre tâche doit être réalisée suivant un délai précis, indiquez une date d\'échéance. On dirait que vous pouvez déjà en cocher une — allez-y !</string>
+    <string name="tutorial_rewards_1">Achetez de l\'équipement pour votre avatar avec l\'or que vous gagnez !</string>
+    <string name="tutorial_rewards_2">Vous pouvez aussi créer des récompenses personnalisées en fonction de ce qui vous motive.</string>
+    <string name="tutorial_tasks_complete">C\'est tout pour l\'instant. Si vous avez besoin d\'un rappel, consultez la section FAQ.</string>
+    <string name="tutorial_skills">Les compétences sont des capacités spéciales qui ont des effets puissants ! Tapez sur une compétence pour l\'utiliser. Cela vous coûtera du Mana (la barre bleue), que vous gagnez en faisant le point tous les jours et en accomplissant des tâches dans la vie réelle. Allez voir les FAQ dans le menu pour plus d\'infos !</string>
+    <string name="tutorial_party">Voici l\'endroit où vos amis et vous pouvez vous tenir mutuellement responsables de vos buts et combattre des monstres grâce à vos tâches !</string>
+    <string name="tutorial_tavern">Bienvenue à la Taverne, un salon de discussion public pour tous les âges ! Ici, vous pouvez discuter de productivité et poser des questions. Amusez-vous bien !</string>
     <string name="tutorial_stats">Utilisez le bouton gris pour allouer plusieurs points à la fois, ou utilisez les flèches pour en ajouter un à la fois.</string>
 </resources>

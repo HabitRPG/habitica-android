@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools">
     <LinearLayout
         android:orientation="horizontal" android:layout_width="match_parent"
         android:layout_height="fill_parent"
@@ -9,14 +10,22 @@
         <FrameLayout
             android:id="@+id/checkBoxHolder"
             android:layout_width="@dimen/button_width"
-            android:layout_height="match_parent">
-        <CheckBox
-            android:id="@+id/checkBox"
-            android:layout_width="@dimen/checkbox_size"
-            android:layout_height="@dimen/checkbox_size"
-            android:gravity="center"
-            android:button="@drawable/checklist_checkbox"
-            android:layout_gravity="center" />
+            android:layout_height="match_parent"
+            tools:background="@color/red_10">
+            <FrameLayout
+                android:id="@+id/checkBoxBackground"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:gravity="center"
+                android:background="@drawable/checklist_unchecked"
+                android:layout_gravity="center">
+                <ImageView
+                    android:id="@+id/checkmark"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/checkmark" />
+            </FrameLayout>
         </FrameLayout>
         <com.habitrpg.android.habitica.ui.views.HabiticaEmojiTextView
             android:id="@+id/checkedTextView"
@@ -27,8 +36,4 @@
             android:paddingStart="16dp"
             android:layout_gravity="center_vertical"/>
     </LinearLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/hairline_height"
-        android:background="@color/cell_separator"/>
-</LinearLayout>
+</FrameLayout>

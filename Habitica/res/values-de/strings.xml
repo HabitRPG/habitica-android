@@ -20,7 +20,7 @@
     <string name="pref_reminder_checkbox">Erinnerung aktivieren</string>
     <string name="pref_reminder_picker">Erinnerungszeit einstellen</string>
     <string name="pref_cds_header">Persönlicher Tagesstart</string>
-    <string name="pref_push_notifications_checkbox">Push-Benachrichtigungen des Benutzers</string>
+    <string name="pref_push_notifications_checkbox">Push-Benachrichtigungen nutzen</string>
     <string name="push_notifications">Push-Benachrichtigungen</string>
     <string name="push_notifications_sum">Stelle Deine Push-Benachrichtigungen ein</string>
     <string name="preference_push_you_won_challenge">Du hast eine Herausforderung gewonnen!</string>
@@ -52,7 +52,7 @@
     <string name="about_bugreport">Melde einen Fehler</string>
     <string name="about_source_code">Quellcode</string>
     <!--Network Errors-->
-    <string name="internal_error_api">Es scheint ein Problem mit dem Server zu geben. Versuche es später noch mal.</string>
+    <string name="internal_error_api">Die Verbindung zum Server ist abgebrochen</string>
     <string name="authentication_error_title">Authentifikationsfehler</string>
     <string name="login_validation_error_title">Validierungsfehler</string>
     <string name="login_validation_error_fieldsmissing">Bitte fülle alle Felder aus.</string>
@@ -86,7 +86,7 @@
     <string name="sunday">Sonntag</string>
     <string name="levelup_header">Du hast Level %1$d erreicht!</string>
     <string name="levelup_detail">Durch das Erfüllen Deiner Lebensziele bist Du ein Level aufgestiegen und bist nun vollständig geheilt!</string>
-    <string name="onwards">Hurra!</string>
+    <string name="onwards">Vorwärts!</string>
     <string name="faint_subtitle">Nicht verzweifeln!</string>
     <string name="faint_penalty_body">Du hast ein Level, Dein Gold und ein Teil Deiner Ausrüstung verloren, aber Du kannst mit harter Arbeit alles wieder zurückbekommen! Viel Glück - Du schaffst das.</string>
     <string name="faint_header">Du hast alle Deine Lebenspunkte verloren!</string>
@@ -106,7 +106,7 @@
     <string name="members">Mitglieder</string>
     <string name="habits">Gewohnheiten</string>
     <string name="dailies">Tagesaufgaben</string>
-    <string name="todos">To-Dos</string>
+    <string name="todos">To Do\'s</string>
     <string name="rewards">Belohnungen</string>
     <string name="yes">Ja</string>
     <string name="no">Nein</string>
@@ -201,8 +201,8 @@
     <string name="outfit_armor">Rüstung</string>
     <string name="outfit_back">Rücken</string>
     <string name="outfit_body">Körper</string>
-    <string name="outfit_shield">Schild</string>
-    <string name="outfit_weapon">Waffe</string>
+    <string name="outfit_shield">Nebenhand</string>
+    <string name="outfit_weapon">Haupthand</string>
     <string name="wear_costume">Kostüm tragen</string>
     <string name="equipped">Ausgerüstet</string>
     <string name="quest_cancel_message">Bist Du sicher, dass Du diese Quest abbrechen willst? Alle angenommenen Einladungen gehen verloren. Der Questbesitzer erhält die Questschriftrolle zurück.</string>
@@ -221,7 +221,7 @@
     <string name="quests">Quests</string>
     <string name="pets">Haustiere</string>
     <string name="mounts">Reittiere</string>
-    <string name="armoireEquipment">Du hast einen seltenen Ausrüstungsgegenstand im Schrank gefunden: %s! Großartig!</string>
+    <string name="armoireEquipment">Du hast %s im Schrank gefunden</string>
     <string name="armoireFood">Du wühlst im Schrank herum und findest %1$s %2$s. Was macht das denn hier?</string>
     <string name="armoireExp">Du ringst mit dem verzauberten Schrank und gewinnst Erfahrung. Nimm das!</string>
     <string name="sell">Verkaufen (%d Gold)</string>
@@ -252,10 +252,10 @@
     <string name="rogue">Schurke</string>
     <string name="mage">Magier</string>
     <string name="healer">Heiler</string>
-    <string name="warrior_description">Krieger verursachen mehr und stärkere \"kritische Treffer\", die zufällig Bonus Gold, Erfahrung und größere Chance auf Beute beim Erfüllen einer Aufgabe geben. Sie teilen außerdem schweren Schaden gegen Boss-Monster aus. Spiele einen Krieger, wenn es Dich anspornt, unvorhergesehene Chancen auf große Belohnungen zu haben und Du in Endgegner-Quests besonders viel Schaden austeilen möchtest!</string>
-    <string name="mage_description">Magier lernen rasch und erhalten schneller Erfahrung und Level als andere Klassen. Sie bekommen zudem eine große Menge Mana, um ihre Spezialfähigkeiten einzusetzen. Spiele einen Magier, wenn Dir die taktischen Aspekte des Spiels Spaß bereiten, oder wenn Du motiviert wirst durch schnellen Level-Aufstieg und das Freischalten fortgeschrittener Funktionen!</string>
-    <string name="rogue_description">Schurken lieben es Reichtümer anzuhäufen, indem sie mehr Gold als andere verdienen und geschickt darin sind, neue Gegenstände zu finden. Ihre typische Fähigkeit sich im verborgenen zu bewegen erlaubt Dir gelegentlich, die Folgen verpasster täglicher Aufgaben zu vermeiden. Spiele einen Schurken, wenn Dich Spielbelohnungen und Erfolge besonders reizen und Du nach Beute und Abzeichen trachtest!</string>
-    <string name="healer_description">Heiler stehen Schaden unbeeindruckt gegenüber und erweitern diesen Schutz auf andere. Verpasste tägliche Aufgaben und schlechte Angewohnheiten schaden ihnen nicht viel und sie haben Mittel und Wege Lebenspunkte wiederherzustellen. Spiele einen Heiler, wenn Du gerne Anderen in Deiner Party hilfst, oder wenn es Dich besonders reizt, dem Tod durch harte Arbeit zu entkommen!</string>
+    <string name="warrior_description">Krieger erzielen mehr \"kritische Treffer\" und fügen bei Bosskämpfen mehr Schaden zu. Spiele einen Krieger, wenn Du Monster mit Leichtigkeit besiegen willst! Krieger profitieren von hohen Werten bei Stärke.</string>
+    <string name="mage_description">Magier lernen Fähigkeiten, die Bossmonstern Schaden zufügen, und Erfahrung und Mana erhöhen. Spiele einen Magier, wenn ein schnelles Aufsteigen im Level Dich motiviert! Magier profitieren von hohen Werten bei Intelligenz.</string>
+    <string name="rogue_description">Schurken lernen Spezialfähigkeiten, die es Ihrer Party erlauben, mehr Gold und zufällige Gegenstände zu finden. Spiele einen Schurken, wenn Du jede Menge Gegenstände und Gold haben willst! Schurken profitieren von hohen Wahrnehmungspunkten.</string>
+    <string name="healer_description">Heiler lernen Fähigkeiten, die sie und ihre Party heilen und schützen. Spiele einen Heiler wenn es Dir Freude bereitet, anderen beizustehen oder Schaden zu vermeiden! Heiler profitieren von hohen Werten bei Ausdauer.</string>
     <string name="select_class">Klasse wählen</string>
     <string name="opt_out_class">Später entscheiden</string>
     <string name="class_confirmation">Bist Du sicher, dass Du %s werden willst?</string>
@@ -277,8 +277,8 @@
     <string name="add_invites">Einladungen hinzufügen</string>
     <string name="email">E-Mail</string>
     <string name="share_using">Teilen via</string>
-    <string name="share_levelup">Ich habe durch das Verbessern meiner realen Lebensgewohnheiten Level %d in Habitica erreicht!</string>
-    <string name="share_hatched">Durch das Erfüllen meiner Real-Life-Aufgaben habe ich ein %1$s %2$s Haustier in Habitica ausgebrütet!</string>
+    <string name="share_levelup">Ich habe durch das Verbessern meiner realen Lebensgewohnheiten Level %d in #Habitica erreicht!</string>
+    <string name="share_hatched">Durch das Erfüllen meiner Real-Life-Aufgaben habe ich ein %1$s %2$s Haustier in #Habitica ausgebrütet!</string>
     <string name="share_raised">Durch das Erfüllen meiner Real-Life-Aufgaben habe ich ein %s Reittier in Habitica erhalten!</string>
     <string name="open_in_store">Im Play Store öffnen</string>
     <string name="change_class_confirmation">Bist Du sicher, dass Du Deine Klasse ändern willst? Es kostet 3 Edelsteine.</string>
@@ -289,7 +289,7 @@
     <string name="seasonalShop">Jahreszeitenmarkt</string>
     <string name="empty_inbox">Du hast keine Nachrichten. Du kannst einem anderen Benutzer eine neue Nachricht von deren öffentlichen Chatnachrichten aus senden!</string>
     <string name="party_invite">Durch Einladen von Freunden freischalten</string>
-    <string name="login_incentive">Freischalten durch regelmäßiges einloggen bei Habitica</string>
+    <string name="login_incentive">Freischalten durch regelmäßiges Einloggen bei Habitica</string>
     <string name="create_account">Freischalten durch die Erstellung eines Kontos</string>
     <string name="successful_purchase">%1$s gekauft</string>
     <string name="gold_plural">Gold</string>
@@ -305,22 +305,22 @@
     <string name="add_task">Neue Aufgabe hinzufügen</string>
     <string name="add_habit">Neue Gewohnheit hinzufügen</string>
     <string name="add_daily">Neue Tagesaufgabe hinzufügen</string>
-    <string name="add_todo">Neues To-Do hinzufügen</string>
+    <string name="add_todo">Neues To Do hinzufügen</string>
     <string name="add_reward">Neue Belohnung hinzufügen</string>
     <string name="all_dailies_completed">Du hast alle Deine Tagesaufgaben erledigt. Gut gemacht!</string>
     <string name="widget_habit_button">Habitica: Gewohnheit</string>
     <string name="widget_dailies">Habitica: Tagesaufgaben</string>
-    <string name="widget_todo_list">Habitica To-Do-Liste</string>
+    <string name="widget_todo_list">Habitica To Do-Liste</string>
     <string name="google_services_missing">Google Play Dienste konnten nicht gefunden werden.</string>
     <string name="gem_purchase_toolbartitle">Kaufen</string>
     <string name="gem_purchase_title">Das Erwerben von Edelsteinen unterstützt die Entwickler und hilft Habitica am Laufen zu halten</string>
-    <string name="gem_purchase_subtitle">Edelsteine erlaubes es Dir spaßige Extras für Deinen Account zu erwerben, inklusive:</string>
+    <string name="gem_purchase_subtitle">Edelsteine erlauben es Dir, spaßige Extras für Dein Konto zu erwerben, inklusive:</string>
     <string name="gem_purchase_listitem1">Coole Kostüme für Deinen Avatar</string>
     <string name="gem_purchase_listitem2">Fantastische Hintergründe</string>
     <string name="gem_purchase_listitem3">Quest, welche Dich mit Haustiereiern belohnt</string>
     <string name="gem_purchase_listitem4">Die Fähigkeit Deine Klasse vor dem Erreichen von Level 100 zu ändern</string>
     <string name="support_habitica">Unterstütze Habitica</string>
-    <string name="skill_transformation_use">benutzen</string>
+    <string name="skill_transformation_use">Benutzen</string>
     <string name="hatching_market_info">Kriegst Du nicht die richtige Beute? Besuche den Marktplatz!</string>
     <string name="feeding_market_info">Brauchst Du anderes Futter? Kaufe mehr auf dem Marktplatz!</string>
     <string name="open_market">Marktplatz öffnen</string>
@@ -333,27 +333,27 @@
     <string name="has_reminder">Hat eine Benachrichtigung</string>
     <string name="has_tag">Hat einen Tag</string>
     <string name="subscribe_title">Mit einem Abonnement unterstützt Du die Entwickler und den Betrieb von Habitica</string>
-    <string name="subscribe_prompt">Werde Abonnent und Du bekommst diese nützlichen Vorteile:</string>
-    <string name="subscribe_listitem1">Kaufe Edelsteine mit Gold</string>
-    <string name="subscribe_listitem2">Exklusive monatliche Gegenstände</string>
-    <string name="subscribe_listitem3">Zusätzliche Verlaufseinträge sichern</string>
-    <string name="subscribe_listitem4">Tägliches Beute-Limit verdoppelt</string>
+    <string name="subscribe_prompt">Abonniere, um diese exklusiven Vorteile zu erhalten!</string>
+    <string name="subscribe_listitem1">Gold gegen Edelsteine</string>
+    <string name="subscribe_listitem2">Mystische Sanduhren</string>
+    <string name="subscribe_listitem3">Monatliche Überraschungsgegenstände</string>
+    <string name="subscribe_listitem4">Spezielles Haustier für Abonnenten</string>
     <string name="subscriptions">Abonnements</string>
     <string name="subscription_duration">Alle %s wiederholen</string>
     <string name="subscription_duration_norenew">Für %s</string>
     <string name="subscribe">Abonnieren</string>
-    <string name="subscribe_listitem1_description">Alexander der Händler wird Dir nun Edelsteine für jeweils 20 Goldmünzen pro Stück verkaufen.\n\nSeine monatlichen Lieferungen sind zunächst auf 25 Edelsteine pro Monat beschränkt, welche jedoch durch die Dauer Deines Abonnements erhöht werden.\n\nDas Limit steigt um 5 Edelsteine für jeweils drei durchgehend abonnierte Monate, bis zu einem Maximum von 50 Edelsteinen pro Monat!</string>
-    <string name="subscribe_listitem2_description">Jeden Monat wirst Du einen einzigartigen optischen Gegenstand für Deinen Avatar erhalten.\n\nAußerdem gewährt Dir der Mysteriöse Zeitreisende für jeweils drei durchgehend abonnierte Monate Zugang zu historischen (und futuristischen!) optischen Gegenständen.</string>
-    <string name="subscribe_listitem3_description">Verlängert die Historie erledigter To-Dos und Aufgaben.</string>
-    <string name="subscribe_listitem4_description">Verdoppelte Beute-Limits ermöglichen es Dir, täglich von erledigten Aufgaben mehr Gegenstände zu finden und deinen Stall schneller zu vervollständigen!</string>
+    <string name="subscribe_listitem1_description">Du wirst auf dem Markt für jeweils 20 Goldstücke Edelsteine kaufen können!</string>
+    <string name="subscribe_listitem2_description">Verdiene Dir Mystische Sanduhren, um im Laden der Zeitreisenden Gegenstände zu erwerben!</string>
+    <string name="subscribe_listitem3_description">Abonniere jetzt, um direkt ein einzigartiges Set zu bekommen und jeden Monat neue Gegenstände zu erhalten!</string>
+    <string name="subscribe_listitem4_description">Erhalte das Königlich purpurfarbene Wolpertinger Haustier wenn Du ein Abonnement abschließt.</string>
     <string name="subscription_hourglasses">+%d Mystische Sanduhr</string>
     <string name="payment_method">Zahlungsmethode</string>
     <string name="subscription">Abonnement</string>
     <string name="active">Aktiv</string>
     <string name="due">Fällig</string>
     <string name="cancel_subscription">Abonnement kündigen</string>
-    <string name="cancel_subscription_google_description">Du willst nicht länger Abonnent sein? Du findest die Option zum Kündigen im Google Play Store unter \"Meine Apps und Spiele\".</string>
-    <string name="cancel_subscription_notgoogle_description">Du möchtest Dein Abonnement beenden? Aufgrund Deiner Zahlungsmethode kannst Du Dein Abonnement nur über die Webseite beenden. Benutze die Schaltfläche unten, um die Seite in Deinem Browser zu öffnen!</string>
+    <string name="cancel_subscription_google_description">Du willst nicht länger Abonnent sein\? Du findest die Option zum Kündigen im Google Play Store unter \"Meine Apps und Spiele\". Deine zusätzlichen Abonnementguthaben-Monate werden nach Ablauf Deines Abonnements verwendet.</string>
+    <string name="cancel_subscription_notgoogle_description">Du möchtest Dein Abonnement beenden\? Aufgrund Deiner Zahlungsmethode kannst Du Dein Abonnement nur über die Webseite beenden. Benutze die Schaltfläche unten, um die Seite in Deinem Browser zu öffnen und logge Dich in Deinen Account ein. Drücke das User Icon oben rechts und wähle \"Abonnement\". Übrige Abonnement-Credits werden übernommen, wenn Dein Abonnement endet. Wir vermissen Dich jetzt schon!</string>
     <string name="visit_habitica_website">Habitica-Internetseite besuchen</string>
     <string name="current_bonuses">Aktuelle Boni</string>
     <string name="months_subscribed">Abonnierte Monate</string>
@@ -366,7 +366,7 @@
     <string name="three_months">3 Monate</string>
     <string name="six_months">6 Monate</string>
     <string name="twelve_months">12 Monate</string>
-    <string name="subscribe_prompt_thanks">Für das Abonnieren bekommst Du diese nützlichen Vorteile: </string>
+    <string name="subscribe_prompt_thanks">Du erhälst diese Vorteile für Dein Abonnement</string>
     <string name="subscription_status">Abonnement Status</string>
     <string name="challenge_leave_title">Herausforderung abbrechen</string>
     <string name="challenge_leave_text">Bist Du Dir sicher, dass Du die Herausforderung \"%s\" abbrechen willst\?</string>
@@ -378,7 +378,7 @@
     <string name="daily">Tagesaufgabe</string>
     <string name="habit">Gewohnheit</string>
     <string name="reward">Belohnung</string>
-    <string name="todo">To-Do</string>
+    <string name="todo">To Do</string>
     <string name="official">Offiziell</string>
     <string name="challenge">Herausforderung</string>
     <string name="not_part_of_a_challenge">Du nimmst im Moment an keiner Herausforderung teil!</string>
@@ -426,11 +426,11 @@
     <string name="empty_description_habits">Gewohnheiten sind Aufgaben ohne festen Zeitplan. Du kannst sie mehrmals am Tag oder gar nicht abhaken.</string>
     <string name="empty_title_dailies">Du hast keine Tagesaufgaben</string>
     <string name="empty_description_dailies">Tagesaufgaben sind sich regelmäßig wiederholende Aufgaben. Such Dir den Zeitplan aus, der Dir am besten passt!</string>
-    <string name="empty_title_todos">Du hast keine To-Dos</string>
-    <string name="empty_description_todos">To-Dos sind Aufgaben, die nur einmal abgehakt werden. Füge Unteraufgaben zu den To-Dos hinzu, um deren Wert zu steigern.</string>
+    <string name="empty_title_todos">Du hast keine To Do\'s</string>
+    <string name="empty_description_todos">To Do\'s sind Aufgaben, die nur einmal abgehakt werden. Füge Unteraufgaben zu den To Do\'s hinzu, um deren Wert zu steigern.</string>
     <string name="empty_title_rewards">Du hast keine Belohnungen</string>
     <string name="reset_walkthrough">Setze Justins Einführung zurück</string>
-    <string name="read_community_guidelines">Bitte lies Dir unsere Community-Richtlinien durch, bevor du etwas postest</string>
+    <string name="read_community_guidelines">Lies unsere <u>Community-Richtlinien</u> durch, bevor du etwas postest</string>
     <string name="maintenance">Wartung</string>
     <string name="reload_content">Inhalt erneut laden</string>
     <string name="dailyDueDefaultView">Setze die Standards der Tagesaufgaben auf \"fällig\"</string>
@@ -457,7 +457,7 @@
     <string name="party_description">Party-Beschreibung</string>
     <string name="number_participants">%1$d Teilnehmer</string>
     <string name="welcome_back">Willkommen zurück</string>
-    <string name="yesterdaililes_prompt">Hast Du gestern einige Deiner Tagesaufgaben gemacht\?</string>
+    <string name="yesterdaililes_prompt">Hake alle Tagesaufgaben ab, die Du gestern erledigt hast:</string>
     <string name="start_day">Starte meinen Tag</string>
     <string name="leave_party_confirmation">Bist Du sicher, dass Du die Party verlassen willst?</string>
     <string name="pending">Ausstehend</string>
@@ -494,7 +494,7 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
 \n
 \nDu verlierst alle Deine Levels, Gold und Erfahrungspunkte. Alle Deine Aufgaben (außer denjenigen aus Herausforderungen) werden dauerhaft gelöscht und Du verlierst alle historischen Daten dazu. Du verlierst Deine komplette Ausrüstung, hast aber die Möglichkeit, alles wieder zurückzukaufen, inklusive Ausrüstung aus der limitierten Ausgabe oder Mysteriösen Gegenständen für Abonnenten, die Dir bereits gehören (Du musst der passenden Klasse angehören, um klassenspezifische Ausrüstung zurückzukaufen). Eventuell ziehst Du es vor, stattdessen eine Sphäre der Wiedergeburt zu benutzen, das ist eine viel sicherere Option und erhält Deine Aufgaben und Deine Ausrüstung.</string>
     <string name="delete_account">Konto löschen</string>
-    <string name="delete_account_description">Bist Du Dir sicher? Dies wird Dein Konto für immer löschen, und es kann nicht wiederhergestellt werden! Du wirst ein neues Konto erstellen müssen, wenn Du Habitica wieder nutzen möchtest. Vorhandene oder ausgegebene Edelsteine werden nicht zurückerstattet. Wenn Du Dir absolut sicher bist, tippe Dein Passwort in das Textfeld ein.</string>
+    <string name="delete_account_description">Dies wird Dein Konto für immer löschen, und es kann nicht wiederhergestellt werden! Vorhandene oder ausgegebene Edelsteine werden nicht zurückerstattet. Wenn Du Dir absolut sicher bist, tippe Dein Passwort in das Textfeld ein.</string>
     <string name="reset_account_confirmation">Konto zurücksetzen</string>
     <string name="delete_account_confirmation">Mein Konto löschen</string>
     <string name="danger_zone">Gefahrenzone</string>
@@ -620,7 +620,7 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="next_day_reminder_title">Hast Du Deine Aufgaben heute abgehakt\?</string>
     <string name="next_day_reminder_text">Es gibt eine Menge freizuschalten und zu entdecken während Du in den Leveln aufsteigst, also bleib an Deinen Aufgaben dran und hab Spaß!</string>
     <string name="daily_tip_0">Willst Du etwas Neues ausprobieren\? Tritt einer Herausforderung bei um Deine Aufgabenliste zu erweitern und ein paar Edelsteine zu gewinnen!</string>
-    <string name="daily_tip_1">Erweitere Deine To-Dos mit Kontrolllisten um Deine Belohnungen zu vervielfachen!</string>
+    <string name="daily_tip_1">Erweitere Deine To Do\'s mit Kontrolllisten um Deine Belohnungen zu vervielfachen!</string>
     <string name="daily_tip_2">Du kannst verändern wie oft sich eine Tagesaufgabe wiederholt. Sogar gelegentliche Aufgaben können festgelegt werden.</string>
     <string name="daily_tip_3">Du kannst auch Erinnerungen für Deine Tagesaufgaben einplanen.</string>
     <string name="daily_tip_4">Deine Aufgaben hin und wieder zu überdenken hilft Dir auf dem richtigen Weg zu bleiben. </string>
@@ -643,7 +643,7 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="welcomeNameTitle">Wie sollen wir Dich nennen?</string>
     <string name="display_name_length_error">Anzeigenamen müssen zwischen 1 und 30 Zeichen lang sein</string>
     <string name="setup_task_join_habitica">Tritt Habitica bei (Hak mich ab!)</string>
-    <string name="setup_task_join_habitica_notes">Du kannst dieses To-Do erledigen, bearbeiten oder entfernen.</string>
+    <string name="setup_task_join_habitica_notes">Du kannst dieses To Do erledigen, bearbeiten oder entfernen.</string>
     <string name="setup_task_reward">Belohne Dich</string>
     <string name="setup_task_reward_notes">Schau Fernsehen, spiel ein Spiel, iss etwas Süßes, es liegt ganz an Dir!</string>
     <string name="visit_website">Internetseite besuchen</string>
@@ -676,12 +676,11 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="subscribe3month_gemcap">30 Edelstein-Grenze</string>
     <string name="subscribe6month_gemcap">35 Edelstein Grenze</string>
     <string name="subscribe12month_gemcap">45 Edelstein Grenze</string>
-    <string name="delete_oauth_account_description">Bist Du Dir sicher\? Dies wird Dein Konto für immer löschen und es kann nicht wiederhergestellt werden! Du wirst ein neues Konto erstellen müssen, wenn Du Habitica erneut nutzen möchtest. Vorhandene und ausgegebene Edelsteine werden nicht rückerstattet. Wenn Du Dir absolut sicher bist, schreibe DELETE in die untere Textbox.</string>
+    <string name="delete_oauth_account_description">Dies wird Dein Konto für immer löschen und es kann nicht wiederhergestellt werden! Vorhandene und ausgegebene Edelsteine werden nicht zurückerstattet. Wenn Du Dir absolut sicher bist, schreibe DELETE in das untere Textfeld.</string>
     <string name="daily_tip_7">Versuche Gegenstände aus dem Marktplatz an Deine Belohnungen anzuheften, um Dich zu motivieren sie Dir zu verdienen!</string>
     <string name="week_reminder_text">Pausen sind gesund, dennoch kannst Du mit einfachen Aufgaben Punkte verdienen um Level aufzusteigen und coole Ausrüstung zu bekommen!</string>
     <string name="usernamePromptBody">Loginnamen sind jetzt einzigartige Benutzernamen, welche neben Deinem Anzeigenamen sichtbar sind und für Einladungen, Chat @Erwähnungen und Nachrichten benutzt werden.</string>
-    <string name="usernamePromptWiki">Wenn Du mehr über diese Änderung erfahren möchtest, <a href="https://habitica.wikia.com/wiki/Player_Names">geh auf unsere Wiki.</a>
-    </string>
+    <string name="usernamePromptWiki">Wenn Du mehr über diese Änderung erfahren möchtest, <a href="https://habitica.fandom.com/wiki/Player_Names">geh auf unsere Wiki.</a></string>
     <string name="usernamePromptDisclaimer">Benutzernamen sollten mit unseren <a href="https://habitica.com/static/terms">Servicebedingungen</a> und <a href="https://habitica.com/static/community-guidelines">Community-Richtlinien</a> übereinstimmen. Falls Du vorher keinen Loginnamen festgelegt hast, wurde Dein Benutzername auto-generiert.</string>
     <string name="confirm_username_description">Das Bestätigen Deines Nutzernamens wird diesen für Einladungen, @Erwähnungen und Nachrichten öffentlich machen. Du kannst Deinen Benutzernamen jederzeit in den Einstellungen ändern.</string>
     <string name="equipment_str">STR:</string>
@@ -698,11 +697,327 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="unallocated_stats_points"><![CDATA[Du kannst <b>%1$s Attributpunkt(e)</b> verteilen]]></string>
     <string name="new_subscriber_item"><![CDATA[Du hast einen neuen <b>Überraschungsgegenstand</b>]]></string>
     <string name="invited_to_party_notification"><![CDATA[Du wurdest zu der Gruppe <b>%1$s</b> eingeladen]]></string>
-    <string name="invited_to_private_guild"><![CDATA[Du wurdest eingeladen, der privaten Gilde <b>%1$s</b> beizutreten.]]></string>
-    <string name="invited_to_public_guild"><![CDATA[Du wurdest eingeladen, der Gilde <b>%1$s</b> beizutreten.]]></string>
+    <string name="invited_to_private_guild">Du wurdest eingeladen, der privaten Gilde <b>%1$s</b> beizutreten</string>
+    <string name="invited_to_public_guild">Du wurdest eingeladen, der Gilde <b>%1$s</b> beizutreten</string>
     <string name="invited_to_quest"><![CDATA[Du wurdest zur Quest <b>%1$s</b> eingeladen]]></string>
     <string name="repeat_summary" translatable="false">%1$s wird jeden %2$s %3$s %4$s wiederholt</string>
     <string name="skill_progress_title">Fertigkeiten benutzen</string>
     <string name="authentication_error_body">Ungültiger Benutzername und/oder Passwort.</string>
     <string name="network_error_no_network_body">Keine Internetverbindung.</string>
+    <string name="quest_completed">Quest abgeschlossen!</string>
+    <string name="not_participating">Du nimmst nicht teil</string>
+    <string name="unlock_level_short">Level %d</string>
+    <string name="unlock_previous_short">Schließe Quest %d ab</string>
+    <string name="unlock_level">Freischalten durch Erreichen des Levels %d</string>
+    <string name="unlock_previous">Freischalten durch Abschluss der Quest %d</string>
+    <string name="locked">Gesperrt</string>
+    <string name="skill_unlocks_at">Fähigkeit wird ab Level %d freigeschaltet</string>
+    <string name="preference_email_kicked_group">Aus Gruppe entfernt</string>
+    <string name="preference_email_subscription_reminder">Abonnement Erinnerungen</string>
+    <string name="pref_emails_checkbox">E-Mail Benachrichtigungen nutzen</string>
+    <string name="emails">E-Mail Benachrichtigungen</string>
+    <string name="go_shopping">Gehe Einkaufen</string>
+    <string name="learn_more">Erfahre mehr</string>
+    <string name="g1g1_duration">17. Dezember bis 6. Januar</string>
+    <string name="limited_event">Event mit eingeschränkter Laufzeit</string>
+    <string name="g1g1_info_3">Einschränkungen</string>
+    <string name="g1g1_info_2_text">Tippe auf \"Abonnement verschenken\" und trage den Benutzernamen des Benutzerkontos, an das Du verschenken möchtest, ein. Wähle anschließend die Abo-Länge, die du verschenken möchtest und geh zur Kasse. Dein Benutzerkonto erhält automatisch das gleiche Abonnement.</string>
+    <string name="g1g1_info_2">So funktioniert es</string>
+    <string name="gift_a_subscription">Abonnement verschenken</string>
+    <string name="sale">Angebot</string>
+    <string name="promo_g1g1_prompt">Verschenke eins, bekomme eins-Event</string>
+    <string name="promo_g1g1_description">Verschenke jetzt ein Abonnement und erhalte für Dich selbst das gleiche Abonnement kostenlos!</string>
+    <string name="event">Event</string>
+    <string name="member_group_plan">Mitglied eines Gruppenplans</string>
+    <string name="member">Mitglied</string>
+    <string name="owner">Inhabende</string>
+    <string name="cancel_subscription_group_plan_owner">Du hast ein konstenloses Abonnement, weil Du eine Party oder Gilde mit Gruppenplan leitest. Dieses endet, wenn Du den Gruppenplan kündigst. Deine zusätzlichen Abonnementguthaben-Monate aus anderen Abonnements werden nach Ablauf des Gruppenplans fortgesetzt. Du kannst auf der Habitica Website kündigen.</string>
+    <string name="cancel_subscription_group_plan">Du hast ein konstenloses Abonnement, weil Du Mitglied in einer Party oder Gilde mit Gruppenplan bist. Dieses endet, wenn Du austrittst oder der Gruppenplan von der innehabenden Person gekündigt wird. Deine zusätzlichen Abonnementguthaben-Monate aus anderen Abonnements werden nach Ablauf des Gruppenplans fortgesetzt.</string>
+    <string name="group_plan">Gruppenplan</string>
+    <string name="save_20">Spare 20%</string>
+    <string name="gifted">Geschenkt</string>
+    <string name="resubscribe_description">Willst Du weiter Deine Vorteile genießen\? Du kannst ein neues Abonnement abschließen, bevor dieses ausläuft, um Deine Vorteile zu behalten.</string>
+    <string name="resubscribe">Erneut abonnieren</string>
+    <string name="renew_subscription">Abonnement erneuern</string>
+    <string name="thanks_for_subscribing">Danke für das Abonnieren</string>
+    <string name="subscribe_options_title">Wähle die Abonnementlänge, die für Dich passt</string>
+    <string name="ending_on">Endet am %s</string>
+    <string name="not_recurring">Einmalig</string>
+    <string name="cancelled">Gekündigt</string>
+    <string name="send_invites">Einladungen verschicken</string>
+    <string name="google">Google</string>
+    <string name="apple_sign_in">Mit Apple einloggen</string>
+    <string name="facebook">Facebook</string>
+    <string name="local">lokale</string>
+    <string name="authentication_methods">Authentifizierungsmethoden</string>
+    <string name="someone">Jemand</string>
+    <string name="invitation_title">%s hat Dich zur %s eingeladen</string>
+    <string name="password_too_short">Das Passwort muss mindestens %d Zeichen haben</string>
+    <string name="copy_username">Benutzernamen kopieren</string>
+    <string name="id_copied">Benutzer-ID in die Zwischenablage kopiert</string>
+    <string name="copy_userid">Benutzer-ID kopieren</string>
+    <string name="preference_push_unjoined_guild_mention">\@Erwähnung in nicht beigetretenen Gilden</string>
+    <string name="preference_push_joined_guild_mention">\@Erwähnung in beigetretenen Gilden</string>
+    <string name="gems_to_gift">Zu schenkende Edelsteine</string>
+    <string name="gift_gems_balance_subtitle">Gib unten ein, wie viele Deiner Edelsteine Du schicken möchtest, oder wechsle den Tab, um Edelsteine zum Verschenken zu kaufen</string>
+    <string name="from_balance">Vom Saldo</string>
+    <string name="purchase">Kaufen</string>
+    <string name="preference_push_party_mention">\@Erwähnung in der Party</string>
+    <string name="more_out_of_habitica">Profitiere mehr von Habitica</string>
+    <string name="gift_gems_disclaimer">Habitica würde von Dir niemals verlangen anderen Usern Edelsteine zu schenken. Um Edelsteine zu bitten stellt einen Verstoß gegen die Community-Richtlinien dar und sollte an admin@habitica.com gemeldet werden.</string>
+    <string name="profile_gift_subscription">Abonnement
+\nVerschenken</string>
+    <string name="profile_gift_gems">Edelsteine
+\nSchenken</string>
+    <string name="profile_send_message">Nachricht
+\nSenden</string>
+    <string name="gift_gems">Edelsteine Schenken</string>
+    <string name="see_other_options">Weitere Möglichkeiten anzeigen</string>
+    <string name="promo_subscription_buy_gems_description">Schließe ein Abonnement ab, um Edelsteine mit Gold zu kaufen, monatlich Überraschungsgegenstände zu erhalten, die Obergrenze für Beutefunde zu erhöhen und vieles mehr!</string>
+    <string name="promo_subscription_buy_gems_prompt">Edelsteine benötigt\?</string>
+    <string name="preference_push_party_activity">Party-Aktivität</string>
+    <string name="search_hint">Aufgaben suchen</string>
+    <string name="search">Suchen</string>
+    <string name="repeat_daily">Täglich</string>
+    <string name="complete">Erledigen</string>
+    <string name="reject">Ablehnen</string>
+    <string name="accept">Akzeptieren</string>
+    <string name="equip_automatically">Neue Ausrüstung automatisch anziehen</string>
+    <string name="leave_challenges">Herausforderung verlassen</string>
+    <string name="keep_challenges">Herausforderungen behalten</string>
+    <string name="inviteFriendDescription">Du hast einen Freund oder Freunde eingeladen, die Dich auf Deinem Abenteuer begleiten!</string>
+    <string name="inviteFriendTitle">Einen Freund eingeladen</string>
+    <string name="joinedChallengeDescription">Hat sich selbst durch den Beitritt zu einer Herausforderung auf die Probe gestellt!</string>
+    <string name="joinedChallengeTitle">Einer Herausforderung beigetreten</string>
+    <string name="joinedGuildDescription">Wagte sich durch den Beitritt in eine Gilde auf die soziale Seite von Habitica!</string>
+    <string name="joinedGuildTitle">Einer Gilde beigetreten</string>
+    <string name="triadBingoDescription">Du hast den Erfolg \"Triaden-Bingo\" erhalten für das Sammeln aller Haustiere, das Zähmen aller Reittiere und das erneute Sammeln aller Haustiere!</string>
+    <string name="triadBingoTitle">Triaden-Bingo</string>
+    <string name="mountMasterDescription">Du hast den Erfolg \"Meister aller Reittiere\" erhalten für das Sammeln aller Reittiere!</string>
+    <string name="mountMasterTitle">Meister aller Reittiere</string>
+    <string name="beastMasterDescription">Du hast für das Sammeln aller Haustiere den Erfolg \"Bezwinger der Bestien\" erhalten!</string>
+    <string name="beastMasterTitle">Bezwinger der Bestien</string>
+    <string name="partyOnDescription">Deine Party ist auf 4 Mitglieder gewachsen!</string>
+    <string name="partyOnTitle">Riesenparty</string>
+    <string name="partyUpDescription">Du hast Dich mit einem Party-Mitglied zusammengetan!</string>
+    <string name="partyUpTitle">Bring Schwung in die Party</string>
+    <string name="achievement_title">Du hast einen Erfolg erzielt!</string>
+    <string name="view_achievements">Erfolge anzeigen</string>
+    <string name="see_what_s_new">Schau, was es Neues gibt</string>
+    <string name="mystery_item_received">Du öffnest das Paket und erhältst: %s</string>
+    <string name="removed_member">%s wurde aus der Gruppe entfernt</string>
+    <string name="transfer">Übertragen</string>
+    <string name="remove_member_confirm">Bist Du Dir sicher, dass Du %s aus der Gruppe entfernen willst\?</string>
+    <string name="transfer_ownership_confirm_message">Das macht %s zur neuen Partyleitung</string>
+    <string name="transfer_ownership_confirm">Leitungsfunktion übertragen\?</string>
+    <string name="transferred_ownership">Gruppenleitung wurde an %s übertragen</string>
+    <string name="send_message">Nachricht senden</string>
+    <string name="remove_member">Mitglied entfernen</string>
+    <string name="mystery_sets">Überraschungssets</string>
+    <string name="transfer_ownership">Gruppenleitung übertragen</string>
+    <string name="remove">Entfernen</string>
+    <string name="inbox_messages_title_nosender">Du hast %d Nachrichten erhalten</string>
+    <string name="inbox_messages_title">Du hast %d Nachricht(en) von %s erhalten</string>
+    <string name="sent_card">Du hast eine %s gesendet</string>
+    <string name="app_theme">App Musik</string>
+    <string name="share_challenge_with">Herausforderung teilen mit</string>
+    <string name="details">Details</string>
+    <string name="create_task">%s erstellen</string>
+    <string name="new_task">Neue Aufgabe</string>
+    <string name="confirm_deletion">Löschen bestätigen</string>
+    <string name="switch_to_grid_view">Zur Kachelansicht wechseln</string>
+    <string name="switch_to_list_view">Zur Listenansicht wechseln</string>
+    <string name="special_achievements">Spezielle Erfolge</string>
+    <string name="seasonal_achievements">Saisonale Erfolge</string>
+    <string name="basic_achievements">Einfache Erfolge</string>
+    <string name="sidebar_achievements">Erfolge</string>
+    <string name="take_me_back">Ich will zurück</string>
+    <string name="unpin">Entfernen</string>
+    <string name="pin">Anpinnen</string>
+    <string name="levelup_title_10">Klassensystem freigeschaltet!</string>
+    <string name="levelup_detail_10">Wähle eine Klasse, die zu Deinem Spielstil passt, und schalte spezielle Fähigkeiten und Ausrüstung frei, die Dir auf Deiner Reise helfen</string>
+    <string name="not_now">Jetzt nicht</string>
+    <string name="delete_task">Aufgabe löschen</string>
+    <string name="are_you_sure">Bist Du sicher\?</string>
+    <string name="invite_to_party">In Party einladen</string>
+    <string name="guild_bank">Gilden-Bank</string>
+    <string name="guild_members">Gilden-Mitlgieder</string>
+    <string name="guild_summary">Gilden-Zusammenfassung</string>
+    <string name="setup_task_habit_2_notes">Oder lösche es über die Bearbeiten-Ansicht</string>
+    <string name="setup_task_habit_2">Tippe hier um dies in eine schlechte Gewohnheit umzuwandeln, die Du loswerden willst</string>
+    <string name="setup_task_habit_1_notes">Entweder eine Gewohnheit, eine Tagesaufgabe oder ein To-Do</string>
+    <string name="setup_task_habit_1">Füge Habitica eine Aufgabe hinzu</string>
+    <string name="cost">Kosten</string>
+    <string name="joined_guild">Du bist der Gilde beigetreten</string>
+    <string name="left_guild">Du hast die Gilde verlassen</string>
+    <string name="leave_guild_confirmation">Willst Du die Gilde verlassen und die Herausforderungen behalten oder verlassen\?</string>
+    <string name="leave_guild">Gilde verlassen</string>
+    <string name="trillion_abbrev">Bio.</string>
+    <string name="report_violation">Verstoß melden</string>
+    <string name="i_agree_to_follow_the_guidelines">Ich stimme der Befolgung der Richtlinien zu</string>
+    <string name="garden">Garten</string>
+    <string name="join_guild">Gilde beitreten</string>
+    <string name="invite_to_guild">In Gilde einladen</string>
+    <string name="guild_description">Gildenbeschreibung</string>
+    <string name="reason_for_report">Grund für die Meldung (optional)</string>
+    <string name="report_message_title">Melde %s wegen eines Verstoßes:</string>
+    <string name="report_explanation">Melde einen Post **nur**, wenn er die [Community-Richtlinien](https://habitica.com/static/community-guidelines) und/oder die [Allgemeinen Geschäftsbedingungen](https://habitica.com/static/terms) verletzt. Zweckwidrige Meldungen können Dir eine Rüge einbringen.</string>
+    <string name="x_class">%s-Klasse</string>
+    <string name="become_x">Werde %s</string>
+    <string name="need_more_help">Brauchst Du mehr Hilfe\?</string>
+    <string name="need_help_header_description">Poste eine Nachricht in der %s um Deine Fragen von Mitspielern beantworten zu lassen.</string>
+    <string name="update_available">Update verfügbar: %1$s (%2$d)</string>
+    <string name="streak">Strähne</string>
+    <string name="new_reminder">Neue Erinnerung</string>
+    <string name="checklist_text">Checklisten-Text</string>
+    <string name="years">Jahre</string>
+    <string name="weeks">Wochen</string>
+    <string name="days">Tage</string>
+    <string name="scheduling">Planung</string>
+    <string name="every">Alle</string>
+    <string name="repeats">Wiederholt sich</string>
+    <string name="weekly">Wöchentlich</string>
+    <string name="monthly">Monatlich</string>
+    <string name="assigned_stat">Statuswert zugewiesen</string>
+    <string name="password_changed">Passwort erfolgreich geändert</string>
+    <string name="adjust_streak">Strähne anpassen</string>
+    <string name="new_password_repeat">Neues Passwort wiederholen</string>
+    <string name="new_password">Neues Passwort</string>
+    <string name="old_password">Altes Passwort</string>
+    <string name="task_title">Aufgaben-Titel</string>
+    <string name="add_local_authentication">Lokale Authentifizierung hinzufügen</string>
+    <string name="defeat">Niederlage</string>
+    <string name="gift_confirmation_text_gems">Du hast %s einige Edelsteine geschickt.</string>
+    <string name="gift_confirmation_text_sub">Du hast %s ein %s-monatiges Abo für Habitica geschickt.</string>
+    <string name="gift_confirmation_text_sub_g1g1">Du hast %s ein %s-monatiges Abo für Habitica geschickt und das gleiche Abo wurde Deinem Konto gutgeschrieben, dank unserer \"Verschenke ein Abo und erhalte eins gratis\"-Aktion!</string>
+    <string name="join_party_description_guild">Gib den untenstehenden Benutzernamen einem Freund, oder geh zur %s um potenzielle Verbündete zu treffen!</string>
+    <string name="empty_title_rewards_filtered">Keine Belohnungen</string>
+    <string name="empty_title_todos_filtered">Keine To-Dos</string>
+    <string name="empty_title_dailies_filtered">Keine Täglichen Aufgaben</string>
+    <string name="empty_title_habits_filtered">Keine Gewohnheiten</string>
+    <string name="register_btn_google">Mit Google anmelden</string>
+    <string name="register_btn_fb">Mit Facebook einloggen</string>
+    <string name="login_btn_apple">Mit Apple einloggen</string>
+    <string name="x_months">%d Monate</string>
+    <string name="subscribe_listitem5_description">Finde noch mehr Gegenstände in Habitica mit einem 2-fach Bonus auf die tägliche Beuteobergrenze.</string>
+    <string name="subscribe_listitem3_description_new">Abonniere jetzt, um dieses %s gleich zu bekommen und jeden Monat neue Gegenstände zu erhalten!</string>
+    <string name="subscribe_listitem5">Verdopple die Beute</string>
+    <string name="create_account_short">Konto erstellen</string>
+    <string name="login_incentive_short_count">%d Anmeldungen</string>
+    <string name="login_incentive_short">regelmäßig bei Habitica einloggen</string>
+    <string name="party_invite_short">Freunde Einladen</string>
+    <string name="login_incentive_count">Freischalten durch %d-maliges Einloggen bei Habitica.</string>
+    <string name="remaining_1hour">1 Stunde verbleibend</string>
+    <string name="remaining_hours">%d Stunden verbleibend</string>
+    <string name="remaining_minutes">%d Minuten verbleibend</string>
+    <string name="remaining_1Minute">1 Minute verbleibend</string>
+    <string name="remaining_days">%d Tage verbleibend</string>
+    <string name="remaining_1day">1 Tag verbleibend</string>
+    <string name="remaining_weeks">%d Wochen verbleibend</string>
+    <string name="remaining_1week">1 Woche verbleibend</string>
+    <string name="remaining_months">%d Monate verbleibend</string>
+    <string name="remaining_1month">1 Monat verbleibend</string>
+    <string name="ago_weeks">vor %d Wochen</string>
+    <string name="ago_1week">vor einer Woche</string>
+    <string name="ago_months">vor %d Monat(en)</string>
+    <string name="ago_1month">vor einem Monat</string>
+    <string name="gems_gift_description">Möchtest Du jemandem eine glänzende Edelsteinbeute zuteil werden lassen\?</string>
+    <string name="empty_description_todos_filtered">Mit Deinen aktuellen Filtern sind keine To-Dos sichtbar.</string>
+    <string name="empty_description_dailies_filtered">Mit Deinen aktuellen Filtern sind keine Tagesaufgaben sichtbar.</string>
+    <string name="empty_description_habits_filtered">Mit Deinen aktuellen Filtern sind keine Gewohnheiten sichtbar.</string>
+    <string name="gift_gems_subtitle">Wähle unten das Edelstein-Paket aus, das Du schenken möchtest!</string>
+    <string name="subscription_credit">Abonnement-Guthaben</string>
+    <string name="preference_email_onboarding">Unterstützung bei der Einrichtung Deines Habitica Kontos</string>
+    <string name="purchase_from_timetravel_shop">Du kannst diese Anpassung im Laden der Zeitreisenden erwerben</string>
+    <string name="g1g1_info_3_text">Diese Aktion wird nur angewandt, wenn Du eine andere Person aus Habitica beschenkst. Wenn Du oder die beschenkte Person bereits ein Abonnement abgeschlossen habt, wird die geschenkte Anzahl an Monaten dem Abonnement-Guthaben angerechnet, welches erst nach Beendigung oder Ablauf des aktuellen Abonnements verwendet wird.</string>
+    <string name="g1g1_info_1">Zu Ehren der Jahreszeit des Gebens, präsentieren wir wieder eine ganz besondere Aktion. Wenn Du jetzt ein Abonnement verschenkst, erhältst Du für Dich selbst das gleiche Abo kostenlos!</string>
+    <string name="avatar_headband">Haarreif</string>
+    <string name="animal_ears">Tierohren</string>
+    <string name="could_not_find_user">Benutzer konnte nicht gefunden werden</string>
+    <string name="wacky">Durchgeknallt</string>
+    <string name="update_app">App aktualisieren</string>
+    <string name="clear_cache">Cache leeren</string>
+    <string name="mystic_hourglasses">Mystische Sanduhren</string>
+    <string name="game_mechanics">Spielmechanismen</string>
+    <string name="common_questions">Übliche Fragen</string>
+    <string name="currency">Zahlungsmittel</string>
+    <string name="standard">Standard</string>
+    <string name="mana_points">Manapunkte</string>
+    <string name="experience_points">Erfahrungspunkte</string>
+    <string name="health_points">Lebenspunkte</string>
+    <string name="overview">Übersicht</string>
+    <string name="suggestions_feedback">Vorschläge &amp; Feedback</string>
+    <string name="get_help">Erhalte Hilfe</string>
+    <string name="contact_us">Kontaktiere uns</string>
+    <string name="using_habitica_description">Wir werden die Grundlagen erklären und die üblichen Fragen beantworten, um Dich auf den Stand der Dinge zu bringen</string>
+    <string name="using_habitica">Habitica nutzen</string>
+    <string name="level_unabbreviated">Level %d</string>
+    <string name="delete_reminder">Erinnerung löschen</string>
+    <string name="gold_capitalilzed">Gold</string>
+    <string name="user_level_with_class_unabbreviated">Level %1$d %2$s</string>
+    <string name="selected">Ausgewählt</string>
+    <string name="off">Aus</string>
+    <string name="on">An</string>
+    <string name="manual_sync_restart">Manuell Synchronisieren oder Neustarten</string>
+    <string name="clear_cache_description">Um Deinen Cache zu leeren, öffne die Einstellungen Deines Gerätes. Gehe zu Speicher &gt; Apps &gt; Habitica und tippe Cache Leeren.</string>
+    <string name="subscriber_currency">Abonnentenzahlungsmittel</string>
+    <string name="premium_currency">Premiumzahlungsmittel</string>
+    <string name="stat_allocation">Attributpunktezuweisung</string>
+    <string name="stats_currency">Attribute &amp; Zahlungsmittel</string>
+    <string name="how_best_habitica">Nicht sicher, wie man Habitica am besten nutzen kann\?</string>
+    <string name="send_bug_prompt">Sende uns einen Fehlerbericht und wir kommen auf Dich zurück!</string>
+    <string name="common_fixes">Übliche Methoden zur Fehlerbehebung</string>
+    <string name="support_bug_title">Wir bemühen uns fortwährend die App, basierend auf den Rückmeldungen der Spielenden, zu verbessern, aber manchmal tauchen ein paar Programmfehler auf…</string>
+    <string name="lets_go">Los geht\'s</string>
+    <string name="bugs_fixes_description">Ist etwas schiefgelaufen\? Finde hier Antworten oder kontaktiere uns, um Hilfe zu erhalten.</string>
+    <string name="bugs_fixes">Programmfehler &amp; Fehlerbehebung</string>
+    <string name="suggestions_feedback_description">Hast Du Vorschläge, wie Funktionen besser gestaltet werden können, oder Ideen für etwas Neues\? Erzähle es uns!</string>
+    <string name="not_selected">Nicht ausgewählt</string>
+    <string name="delete_checklist_entry">Checklisteneintrag löschen</string>
+    <string name="still_questions">Hast Du weitere Fragen\?</string>
+    <string name="purchase_amount_error">Du bist nicht in der Lage, so viele zu kaufen.</string>
+    <string name="read_more">Mehr Erfahren</string>
+    <string name="buy_all">Alle Kaufen</string>
+    <string name="avatar_accent">Akzent</string>
+    <string name="animal_tail">Tierschwanz</string>
+    <string name="habitica_questions">Habitica Fragen</string>
+    <string name="support">Support</string>
+    <string name="manual_sync_restart_description">Manchmal aktualisiert die App Inhalte nicht automatisch. Versuche sie durch Ziehen zu aktualisieren oder schließe die App und öffne sie erneut.</string>
+    <string name="experience_description">Erfahrungspunkte zeigen Deinen Fortschritt und ermöglichen Dir, ein Level aufzusteigen. Du kannst hauptsächlich **EXP gewinnen**, indem Du Aufgaben erledigst oder Quests abschliesst, aber es gibt auch einige Klassenfähigkeiten, die EXP geben.
+\n
+\nSchwierigere Aufgaben und auch rot gefärbte Aufgaben geben Dir ** mehr EXP**. Der **Intelligenz-Wert** erhöht Deinen EXP-Gewinn ebenfalls.</string>
+    <string name="health_description">Dies stellt das Leben Deines Avatars dar. Eine Tagesaufgabe zu verpassen oder einer schlechten Gewohnheit nachzugehen **senkt Deine HP**.
+\n
+\n**Erhöhe HP** indem Du ein Level aufsteigst, durch einen Heiltrank, oder mit einer Klassenfähigkeit, die heilt.
+\n
+\nWenn Deine **HP 0 erreichen**, wirst Du ein Level verlieren, sowie alles Gold und ein Stück Deiner Ausrüstung. Verlorene Ausrüstung kann wieder gekauft werden.</string>
+    <string name="number_responded">%1$d/%2$d haben geantwortet</string>
+    <string name="mana_description">Mana-Punkte werden mit dem Klassensystem ab Level 10 freigeschaltet und ermöglichen Dir **Fähigkeiten zu verwenden**, sobald Du ab Level 11 welche erlernt hat.
+\n
+\nEtwas **Mana wird aufgefüllt** bei Deinem Tageswechsel, aber Du kannst mehr Mana dazugewinnen, indem Du Aufgaben erledigst oder Fähigkeiten eines Magiers anwendest.</string>
+    <string name="gold_description">Gold ist die **Hauptwährung** in Habitica und ermöglicht Dir, Ausrüstung, Quests, Gegenstände oder sogar maßgeschneiderte Belohnungen zu kaufen.
+\n
+\n**Verdiene Gold** durch das Abschliessen von Quests oder mittels Klassenfähigkeiten. Höhere **Wahrnehmungswerte** erhöhen die Menge an Gold, die Du verdienst.
+\n
+\nWen Du Habitica abonnierst, kannst Du mit Gold sogar eine beschränkte Anzahl Edelsteine kaufen, je nachdem, wie lange Du schon Abonnent bist.</string>
+    <string name="update_app_description">Wir lassen immer wieder neue Bugfixes raus. Deshalb solltest Du regelmäßig im Play-Store nach Aktualisierungen ausschau halten.</string>
+    <string name="hourglasses_description">Mystische Sanduhren sind eine extrem seltene Währung, die Du nur durch ein Habitica-Abonnement von mindestens drei aufeinanderfolgenden Monaten erhalten kannst. Du brauchst die Sanduhren im Shop der Mystischen Zeitreisenden, um Ausrüstungssets aus vergangenen Zeiten zu kaufen, oder auch Haustiere, Reittiere, animierte Hintergründe oder spezielle Quests.
+\n
+\nDu kannst bis zu vier Mystische Sanduhren pro Jahr erhalten. Der Zeitpunkt, wann das passiert, hängt von Deiner Abonnements-Erneuerung ab. Die Sanduhren trudeln am ersten Tag des neuen Monats nach der Abonnementszahlung ein, für die Dir eine Sanduhr zusteht. Sie auf der [Abonnement]-Seite nach, wenn Du mehr wissen willst.</string>
+    <string name="gems_description">Edelsteine sind eine Währung, die Du mit echtem Geld kaufst. Sie ermöglichen Dir, zusätzliche Inhalte in Habitica zu kaufen und sind neben Abonnementen eine der Haupteinnahmequellen für das Habitica-Team.
+\n
+\nAlle Inhalte, die mit Edelsteinen gekauft werden, sind rein kosmetischer Natur oder können mit der Zeit auch kostenlos erhalten werden.
+\n
+\nDu kannst Edelsteine auch als Geschenk von anderen Spielern erhalten, als Preis einer Herausforderung, durch Mitarbeit an Habitica oder durch ein Abonnement.</string>
+    <string name="stat_description">Alle Habitica-Charaktere haben vier Eigenschaften, die Habiticas Spielablauf beeinflussen.
+\n
+\n**Stärke (STR)** beeinflusst kritische Treffer und erhöht den Schaden, den Du einem Quest Boss zufügst. Krieger und Schurken erhalten STR von Ihrer Klassenausrüstung.
+\n
+\n**Ausdauer (CON)** erhöht Deine HP und sorgt dafür, dass Du weniger Schaden nimmst. Heiler und Krieger erhalten CON von Ihrer Klassenausrüstung.
+\n
+\n**Intelligenz (INT)** steigert die Menge an EXP, die Du verdienst und gibt Dir mehr Mana. Magier und Heiler erhalten INT von Ihrer Klassenausrüstung.
+\n
+\n**Wahrnehmung (PER)** erhöht die Goldmenge, die Du erhältst und die Rate Deiner Fundgegenstände. Schurken und Magier erhalten PER von Ihrer Klassenausrüstung.
+\n
+\nAb Level 10 verdienst Du einen Eigenschaften-Punkt für jedes Level, das Du aufsteigst. Diesen Punkt kannst Du in eine beliebige Eigenschaft stecken. Ausserdem kannst Du Ausrüstung anziehen, die unterschiedliche Eigenschaften-Boni gewährt.</string>
 </resources>

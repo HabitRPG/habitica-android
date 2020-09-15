@@ -2,13 +2,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.habitrpg.android.habitica.TaskActivity">
-
-    <item
-        android:id="@+id/action_reload"
-        android:icon="@drawable/ic_refresh_white"
-        android:title="@string/action_refresh"
-        app:showAsAction="never"
-        app:actionViewClass="android.widget.ImageButton"/>
     <item android:id="@+id/action_search"
         android:title="@string/search"
         android:icon="@drawable/ic_search"

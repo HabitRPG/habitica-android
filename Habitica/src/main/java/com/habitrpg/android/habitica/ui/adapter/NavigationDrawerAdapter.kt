@@ -8,10 +8,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.extensions.inflate
+import com.habitrpg.android.habitica.models.promotions.HabiticaPromotion
 import com.habitrpg.android.habitica.ui.helpers.bindOptionalView
 import com.habitrpg.android.habitica.ui.menu.HabiticaDrawerItem
 import com.habitrpg.android.habitica.ui.viewHolders.GiftOneGetOnePromoMenuView
 import com.habitrpg.android.habitica.ui.views.adventureGuide.AdventureGuideMenuBanner
+import com.habitrpg.android.habitica.ui.views.promo.PromoMenuView
+import com.habitrpg.android.habitica.ui.views.promo.PromoMenuViewHolder
 import com.habitrpg.android.habitica.ui.views.promo.SubscriptionBuyGemsPromoView
 import com.habitrpg.android.habitica.ui.views.promo.SubscriptionBuyGemsPromoViewHolder
 import io.reactivex.BackpressureStrategy
@@ -43,6 +46,7 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int): Recycle
 
     private val itemSelectedEvents = PublishSubject.create<HabiticaDrawerItem>()
 
+    var activePromo: HabiticaPromotion? = null
 
     fun getItemSelectionEvents(): Flowable<HabiticaDrawerItem> = itemSelectedEvents.toFlowable(BackpressureStrategy.DROP)
 
@@ -85,7 +89,11 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int): Recycle
             getItemViewType(position) == 4 -> {
                 drawerItem.user?.let { (holder.itemView as? AdventureGuideMenuBanner)?.updateData(it) }
                 holder.itemView.setOnClickListener { itemSelectedEvents.onNext(drawerItem) }
-
+            }
+            getItemViewType(position) == 5 -> {
+                activePromo?.let { promo ->
+                    (holder as? PromoMenuViewHolder)?.bind(promo)
+                }
             }
         }
     }
@@ -127,6 +135,14 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int): Recycle
                         104.dpToPx(parent.context)
                 )
                 SubscriptionBuyGemsPromoViewHolder(itemView)
+            }
+            5 -> {
+                val promoView = PromoMenuView(parent.context)
+                promoView.layoutParams = ViewGroup.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        148.dpToPx(parent.context)
+                )
+                PromoMenuViewHolder(promoView)
             }
             1 -> SectionHeaderViewHolder(parent.inflate(R.layout.drawer_main_section_header))
             else -> DrawerItemViewHolder(parent.inflate(R.layout.drawer_main_item))

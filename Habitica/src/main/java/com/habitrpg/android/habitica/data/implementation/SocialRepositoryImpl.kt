@@ -43,6 +43,10 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
         return localRepository.getChatMessage(messageID)
     }
 
+    override fun blockMember(userID: String): Flowable<List<String>> {
+        return apiClient.blockMember(userID)
+    }
+
     override fun getGroupMembership(id: String): Flowable<GroupMembership> {
         return localRepository.getGroupMembership(userID, id)
     }
@@ -72,7 +76,7 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
 
     override fun flagMessage(chatMessage: ChatMessage, additionalInfo: String): Flowable<Void> {
         return when {
-            chatMessage.id == "" -> Flowable.empty()
+            chatMessage.id.isBlank() -> Flowable.empty()
             userID == BuildConfig.ANDROID_TESTING_UUID -> Flowable.empty()
             else -> {
                 val data = mutableMapOf<String, String>()
@@ -87,7 +91,7 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
     }
 
     override fun likeMessage(chatMessage: ChatMessage): Flowable<ChatMessage> {
-        if (chatMessage.id == "") {
+        if (chatMessage.id.isBlank()) {
             return Flowable.empty()
         }
         val liked = chatMessage.userLikesMessage(userID)
@@ -133,14 +137,14 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
     }
 
     override fun getGroup(id: String?): Flowable<Group> {
-        if (id == null) {
+        if (id?.isNotBlank() != true) {
             return Flowable.empty()
         }
         return localRepository.getGroup(id)
     }
 
     override fun leaveGroup(id: String?, keepChallenges: Boolean): Flowable<Group> {
-        if (id == null) {
+        if (id?.isNotBlank() != true) {
             return Flowable.empty()
         }
         return apiClient.leaveGroup(id, if (keepChallenges) "remain-in-challenges" else "leave-challenges")
@@ -149,7 +153,7 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
     }
 
     override fun joinGroup(id: String?): Flowable<Group> {
-        if (id == null) {
+        if (id?.isNotBlank() != true) {
             return Flowable.empty()
         }
         return apiClient.joinGroup(id)
@@ -269,7 +273,7 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
                 }
     }
 
-    override fun getUserGroups(): Flowable<RealmResults<Group>> = localRepository.getUserGroups(userID)
+    override fun getUserGroups(type: String?): Flowable<RealmResults<Group>> = localRepository.getUserGroups(userID, type)
 
     override fun acceptQuest(user: User?, partyId: String): Flowable<Void> {
         return apiClient.acceptQuest(partyId)

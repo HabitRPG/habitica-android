@@ -2,41 +2,47 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:clickable="true"
     android:background="@color/white"
     android:focusable="true">
 
     <LinearLayout
         android:id="@+id/card_view"
-        android:layout_width="127dp"
-        android:layout_height="140dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="6dp"
+        android:layout_width="104dp"
+        android:layout_height="96dp"
+        android:layout_centerInParent="true"
         android:background="@drawable/layout_rounded_bg_shopitem"
-        android:orientation="vertical">
-        style="@style/CardContent">
+        android:orientation="vertical"
+        android:gravity="center">
 
-        <com.facebook.drawee.view.SimpleDraweeView
-            android:id="@+id/imageView"
-            android:layout_width="79dp"
-            android:layout_height="94dp"
-            android:layout_gravity="center_horizontal"
-            android:scaleType="fitEnd" />
+        <FrameLayout
+            android:layout_width="68dp"
+            android:layout_height="66dp"
+            android:layout_gravity="center">
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/imageView"
+                android:layout_width="68dp"
+                android:layout_height="68dp"
+                android:layout_gravity="center"
+                app:actualImageScaleType="fitCenter"
+                />
+        </FrameLayout>
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="3.5dp"
+            android:layout_height="18dp"
             android:layout_gravity="center_horizontal"
             android:id="@+id/titleTextView"
-            android:textSize="13sp"
+            android:textSize="12sp"
             android:gravity="center"
+            android:layout_marginTop="-8dp"
             style="@style/RowTitle"/>
         <TextView
             android:id="@+id/ownedTextView"
             style="@style/RowText"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="20dp"
             android:layout_gravity="center_horizontal"
             android:background="@drawable/layout_rounded_bg_shopitem_price"
             android:gravity="center"

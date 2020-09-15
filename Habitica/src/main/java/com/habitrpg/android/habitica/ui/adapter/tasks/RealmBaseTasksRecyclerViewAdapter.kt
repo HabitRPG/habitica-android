@@ -112,6 +112,8 @@ abstract class RealmBaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(
     override val checklistItemScoreEvents: Flowable<Pair<Task, ChecklistItem>> = checklistItemScoreSubject.toFlowable(BackpressureStrategy.DROP)
     protected var taskOpenEventsSubject = PublishSubject.create<Task>()
     override val taskOpenEvents: Flowable<Task> = taskOpenEventsSubject.toFlowable(BackpressureStrategy.DROP)
+    protected var brokenTaskEventsSubject = PublishSubject.create<Task>()
+    override val brokenTaskEvents: Flowable<Task> = brokenTaskEventsSubject.toFlowable(BackpressureStrategy.DROP)
 
     private val isDataValid: Boolean
         get() = data?.isValid ?: false

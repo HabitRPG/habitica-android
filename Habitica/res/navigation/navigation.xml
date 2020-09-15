@@ -304,8 +304,7 @@
     </activity>
     <fragment
         android:id="@+id/petDetailRecyclerFragment"
-        android:name="com.habitrpg.android.habitica.ui.fragments.inventory.stable.PetDetailRecyclerFragment"
-        android:label="@string/pets">
+        android:name="com.habitrpg.android.habitica.ui.fragments.inventory.stable.PetDetailRecyclerFragment">
         <argument
             android:name="type"
             app:argType="string" />
@@ -319,8 +318,7 @@
     </fragment>
     <fragment
         android:id="@+id/mountDetailRecyclerFragment"
-        android:name="com.habitrpg.android.habitica.ui.fragments.inventory.stable.MountDetailRecyclerFragment"
-        android:label="@string/mounts" >
+        android:name="com.habitrpg.android.habitica.ui.fragments.inventory.stable.MountDetailRecyclerFragment">
         <argument
             android:name="type"
             app:argType="string" />
@@ -433,4 +431,8 @@
         android:id="@+id/adventureGuideActivity"
         android:name="com.habitrpg.android.habitica.ui.activities.AdventureGuideActivity"
         android:label="" />
+    <fragment
+        android:id="@+id/promoInfoFragment"
+        android:name="com.habitrpg.android.habitica.ui.fragments.PromoInfoFragment"
+        android:label="PromoInfoFragment" />
 </navigation>
