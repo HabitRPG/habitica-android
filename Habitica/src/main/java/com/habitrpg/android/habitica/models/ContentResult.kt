@@ -1,6 +1,8 @@
 package com.habitrpg.android.habitica.models
 
 import com.habitrpg.android.habitica.models.inventory.*
+import com.habitrpg.shared.habitica.models.inventory.Customization
+import com.habitrpg.shared.habitica.models.inventory.Equipment
 import io.realm.RealmList
 
 /**

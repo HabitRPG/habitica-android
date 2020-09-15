@@ -33,6 +33,7 @@ import com.habitrpg.android.habitica.ui.activities.IntroActivity
 import com.habitrpg.android.habitica.ui.activities.LoginActivity
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
+import com.habitrpg.shared.habitica.MultiplatformRealmLibrary
 import com.squareup.leakcanary.LeakCanary
 import com.squareup.leakcanary.RefWatcher
 import io.realm.Realm
@@ -110,6 +111,7 @@ abstract class HabiticaBaseApplication : MultiDexApplication() {
         Realm.init(this)
         val builder = RealmConfiguration.Builder()
                 .schemaVersion(1)
+                .modules(Realm.getDefaultModule()!!, MultiplatformRealmLibrary())
                 .deleteRealmIfMigrationNeeded()
         try {
             Realm.setDefaultConfiguration(builder.build())

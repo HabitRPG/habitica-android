@@ -3,7 +3,7 @@ package com.habitrpg.android.habitica.data.local.implementation
 import com.habitrpg.android.habitica.data.local.ContentLocalRepository
 import com.habitrpg.android.habitica.models.ContentResult
 import com.habitrpg.android.habitica.models.WorldState
-import com.habitrpg.android.habitica.models.inventory.Quest
+import com.habitrpg.shared.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.social.Group
 
 import io.realm.Realm
@@ -13,8 +13,8 @@ open class RealmContentLocalRepository(realm: Realm) : RealmBaseLocalRepository(
 
     override fun saveContent(contentResult: ContentResult) {
         executeTransactionAsync { realm1 ->
-            contentResult.potion?.let { realm1.insertOrUpdate(it) }
-            contentResult.armoire?.let { realm1.insertOrUpdate(it) }
+            contentResult.potion.let { realm1.insertOrUpdate(it) }
+            contentResult.armoire.let { realm1.insertOrUpdate(it) }
             contentResult.gear?.flat?.let { realm1.insertOrUpdate(it) }
 
             realm1.insertOrUpdate(contentResult.quests)

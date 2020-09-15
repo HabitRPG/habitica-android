@@ -6,8 +6,8 @@
 //import com.habitrpg.android.habitica.BaseTestCase;
 //import com.habitrpg.android.habitica.data.TaskRepository;
 //import com.habitrpg.android.habitica.data.UserRepository;
-//import com.habitrpg.android.habitica.models.tasks.Task;
-//import com.habitrpg.android.habitica.models.user.User;
+//import com.habitrpg.shared.habitica.models.tasks.Task;
+//import com.habitrpg.shared.habitica.models.user.User;
 //
 //import org.junit.Before;
 //import org.junit.Test;

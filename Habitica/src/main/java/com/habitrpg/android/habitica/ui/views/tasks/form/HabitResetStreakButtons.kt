@@ -50,7 +50,7 @@ class HabitResetStreakButtons @JvmOverloads constructor(
             button.layoutParams = layoutParams
             addView(button)
             if (resetOption == selectedResetOption) {
-                selectedButton = button;
+                selectedButton = button
             }
         }
     }

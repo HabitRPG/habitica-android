@@ -20,14 +20,8 @@ import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.android.habitica.models.inventory.Egg
-import com.habitrpg.android.habitica.models.inventory.Equipment
-import com.habitrpg.android.habitica.models.inventory.HatchingPotion
-import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.shops.Shop
 import com.habitrpg.android.habitica.models.shops.ShopItem
-import com.habitrpg.android.habitica.models.user.OwnedItem
-import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.views.CurrencyView
 import com.habitrpg.android.habitica.ui.views.CurrencyViews
@@ -39,6 +33,8 @@ import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientG
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientHourglassesDialog
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientSubscriberGemsDialog
 import com.habitrpg.android.habitica.ui.views.tasks.form.StepperValueFormView
+import com.habitrpg.shared.habitica.models.user.OwnedItem
+import com.habitrpg.shared.habitica.models.user.User
 import io.reactivex.Flowable
 import io.reactivex.Maybe
 import io.reactivex.disposables.CompositeDisposable
@@ -53,8 +49,10 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
 
     @Inject
     lateinit var userRepository: UserRepository
+
     @Inject
     lateinit var inventoryRepository: InventoryRepository
+
     @Inject
     lateinit var configManager: AppConfigManager
 
@@ -147,7 +145,8 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
             buyLabel.setTextColor(ContextCompat.getColor(context, R.color.gray_100))
         }
 
-        if (purchaseQuantity < 1 || (shopItem.limitedNumberLeft != null && (shopItem.limitedNumberLeft ?: 0) < purchaseQuantity)) {
+        if (purchaseQuantity < 1 || (shopItem.limitedNumberLeft != null && (shopItem.limitedNumberLeft
+                        ?: 0) < purchaseQuantity)) {
             amountErrorLabel?.visibility = View.VISIBLE
         } else {
             amountErrorLabel?.visibility = View.GONE
@@ -210,8 +209,8 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
     private fun setUser(user: User) {
         this.user = user
         currencyView.gold = user.stats?.gp ?: 0.0
-        currencyView.gems = user.gemCount.toDouble()
-        currencyView.hourglasses = user.hourglassCount.toDouble()
+        currencyView.gems = user.gemCount?.toDouble() ?: 0.0
+        currencyView.hourglasses = user.hourglassCount?.toDouble() ?: 0.0
 
         if ("gems" == shopItem.purchaseType) {
             val maxGems = user.purchased?.plan?.totalNumberOfGems() ?: 0
@@ -228,7 +227,8 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
                 limitedTextView.setBackgroundColor(ContextCompat.getColor(context, R.color.green_10))
             }
             val gemContent = additionalContentView as? PurchaseDialogGemsContent
-            gemContent?.stepperView?.maxValue = (user?.purchased?.plan?.numberOfGemsLeft() ?: 1).toDouble()
+            gemContent?.stepperView?.maxValue = (user.purchased?.plan?.numberOfGemsLeft()
+                    ?: 1).toDouble()
         }
 
         buyButton.elevation = 0f
@@ -305,7 +305,8 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
                 if (shopItem.key == "armoire") {
                     snackbarText[0] = when {
                         buyResponse.armoire["type"] == "gear" -> context.getString(R.string.armoireEquipment, buyResponse.armoire["dropText"])
-                        buyResponse.armoire["type"] == "food" -> context.getString(R.string.armoireFood, buyResponse.armoire["dropArticle"] ?: "", buyResponse.armoire["dropText"])
+                        buyResponse.armoire["type"] == "food" -> context.getString(R.string.armoireFood, buyResponse.armoire["dropArticle"]
+                                ?: "", buyResponse.armoire["dropText"])
                         else -> context.getString(R.string.armoireExp)
                     }
                 }
@@ -394,7 +395,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
         } else if (item.purchaseType == "hatchingPotions") {
             totalCount = 18
             maybe = inventoryRepository.getPets().firstElement().filter {
-                val filteredPets = it.filter {pet ->
+                val filteredPets = it.filter { pet ->
                     pet.type == "premium" || pet.type == "wacky"
                 }
                 shouldWarn = filteredPets.isNotEmpty()
@@ -410,18 +411,19 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
                         val remaining = 18 - ownedCount
                         onResult(max(0, remaining))
                     }.flatMap {
-                for (thisItem in it) {
-                    if (thisItem.key == item.key) {
-                        ownedCount += thisItem.numberOwned
+                        for (thisItem in it) {
+                            if (thisItem.key == item.key) {
+                                ownedCount += thisItem.numberOwned
+                            }
+                        }
+                        inventoryRepository.getOwnedMounts().firstElement()
                     }
-                }
-                inventoryRepository.getOwnedMounts().firstElement() }
                     .flatMapPublisher {
                         for (mount in it) {
-                        if (mount.key?.contains(item.key) == true) {
-                            ownedCount += if (mount.owned) 1 else 0
+                            if (mount.key?.contains(item.key) == true) {
+                                ownedCount += if (mount.owned) 1 else 0
+                            }
                         }
-                    }
                         inventoryRepository.getOwnedPets()
                     }.firstElement().subscribe(Consumer {
                         for (pet in it) {

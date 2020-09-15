@@ -61,7 +61,7 @@ abstract class RealmBaseLocalRepository internal constructor(protected var realm
         realm.executeTransactionAsync { realm1 -> realm1.insertOrUpdate(objects) }
     }
 
-    override fun <T : RealmObject> saveSyncronous(`object`: T) {
+    override fun <T : RealmObject> saveSynchronous(`object`: T) {
         if (isClosed) { return }
         realm.executeTransaction { realm1 -> realm1.insertOrUpdate(`object`) }
     }

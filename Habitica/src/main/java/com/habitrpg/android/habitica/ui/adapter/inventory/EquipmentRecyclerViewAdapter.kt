@@ -12,7 +12,7 @@ import android.widget.TextView
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.ui.helpers.bindView
-import com.habitrpg.android.habitica.models.inventory.Equipment
+import com.habitrpg.shared.habitica.models.inventory.Equipment
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import io.reactivex.subjects.PublishSubject

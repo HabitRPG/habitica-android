@@ -17,11 +17,11 @@ import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.TaskFilterHelper
-import com.habitrpg.android.habitica.models.tasks.Task
-import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.TaskFormActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.views.tasks.TaskFilterDialog
+import com.habitrpg.shared.habitica.models.tasks.TaskType
+import com.habitrpg.shared.habitica.models.user.User
 import io.reactivex.disposables.Disposable
 import io.reactivex.functions.Consumer
 import java.util.*
@@ -80,10 +80,10 @@ class TasksFragment : BaseMainFragment(), SearchView.OnQueryTextListener {
 
         bottomNavigation?.onTabSelectedListener = {
             val newItem = when (it) {
-                Task.TYPE_HABIT -> 0
-                Task.TYPE_DAILY -> 1
-                Task.TYPE_TODO -> 2
-                Task.TYPE_REWARD -> 3
+                TaskType.TYPE_HABIT -> 0
+                TaskType.TYPE_DAILY -> 1
+                TaskType.TYPE_TODO -> 2
+                TaskType.TYPE_REWARD -> 3
                 else -> 0
             }
             if (newItem == viewPager?.currentItem) {
@@ -195,7 +195,7 @@ class TasksFragment : BaseMainFragment(), SearchView.OnQueryTextListener {
             })
             dialog.setOnDismissListener {
                 if (disposable?.isDisposed == false) {
-                    disposable?.dispose()
+                    disposable.dispose()
                 }
             }
             dialog.show()
@@ -213,10 +213,10 @@ class TasksFragment : BaseMainFragment(), SearchView.OnQueryTextListener {
 
             override fun getItem(position: Int): androidx.fragment.app.Fragment {
                 val fragment: TaskRecyclerViewFragment = when (position) {
-                    0 -> TaskRecyclerViewFragment.newInstance(context, user, Task.TYPE_HABIT)
-                    1 -> TaskRecyclerViewFragment.newInstance(context, user, Task.TYPE_DAILY)
-                    3 -> RewardsRecyclerviewFragment.newInstance(context, user, Task.TYPE_REWARD)
-                    else -> TaskRecyclerViewFragment.newInstance(context, user, Task.TYPE_TODO)
+                    0 -> TaskRecyclerViewFragment.newInstance(context, user, TaskType.TYPE_HABIT)
+                    1 -> TaskRecyclerViewFragment.newInstance(context, user, TaskType.TYPE_DAILY)
+                    3 -> RewardsRecyclerviewFragment.newInstance(context, user, TaskType.TYPE_REWARD)
+                    else -> TaskRecyclerViewFragment.newInstance(context, user, TaskType.TYPE_TODO)
                 }
 
                 viewFragmentsDictionary?.put(position, fragment)
@@ -282,19 +282,19 @@ class TasksFragment : BaseMainFragment(), SearchView.OnQueryTextListener {
                 val taskType = when (step.identifier) {
                     "habits" -> {
                         id = R.id.tab_habits
-                        Task.TYPE_HABIT
+                        TaskType.TYPE_HABIT
                     }
                     "dailies" -> {
                         id = R.id.tab_dailies
-                        Task.TYPE_DAILY
+                        TaskType.TYPE_DAILY
                     }
                     "todos" -> {
                         id = R.id.tab_todos
-                        Task.TYPE_TODO
+                        TaskType.TYPE_TODO
                     }
                     "rewards" -> {
                         id = R.id.tab_rewards
-                        Task.TYPE_REWARD
+                        TaskType.TYPE_REWARD
                     }
                     else -> ""
                 }
@@ -327,10 +327,10 @@ class TasksFragment : BaseMainFragment(), SearchView.OnQueryTextListener {
         val additionalData = HashMap<String, Any>()
         additionalData["created task type"] = type
         additionalData["viewed task type"] = when (viewPager?.currentItem) {
-            0 -> Task.TYPE_HABIT
-            1 -> Task.TYPE_DAILY
-            2 -> Task.TYPE_TODO
-            3 -> Task.TYPE_REWARD
+            0 -> TaskType.TYPE_HABIT
+            1 -> TaskType.TYPE_DAILY
+            2 -> TaskType.TYPE_TODO
+            3 -> TaskType.TYPE_REWARD
             else -> ""
         }
         AmplitudeManager.sendEvent("open create task form", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT, additionalData)

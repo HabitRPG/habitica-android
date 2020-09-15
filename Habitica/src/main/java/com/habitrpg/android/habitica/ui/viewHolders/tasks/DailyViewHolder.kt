@@ -3,10 +3,10 @@ package com.habitrpg.android.habitica.ui.viewHolders.tasks
 import android.view.View
 import android.widget.TextView
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.models.responses.TaskDirection
-import com.habitrpg.android.habitica.models.tasks.ChecklistItem
-import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.helpers.bindView
+import com.habitrpg.shared.habitica.models.responses.TaskDirection
+import com.habitrpg.shared.habitica.models.tasks.ChecklistItem
+import com.habitrpg.shared.habitica.models.tasks.Task
 import java.text.DateFormat
 import java.util.*
 
@@ -40,8 +40,9 @@ class DailyViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> U
             } ?: newTask.reminders?.first()
 
             var reminderString = ""
-            if (nextReminder?.time != null) {
-                reminderString += formatter.format(nextReminder.time)
+            val reminderTime = nextReminder?.time
+            if (reminderTime != null) {
+                reminderString += formatter.format(reminderTime)
             }
             if ((newTask.reminders?.size ?: 0) > 1) {
                 reminderString = "$reminderString (+${(newTask.reminders?.size ?: 0)-1})"

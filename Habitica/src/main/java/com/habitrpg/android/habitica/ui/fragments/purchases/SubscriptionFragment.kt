@@ -2,7 +2,6 @@ package com.habitrpg.android.habitica.ui.fragments.purchases
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,7 +19,7 @@ import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.PurchaseHandler
 import com.habitrpg.android.habitica.helpers.PurchaseTypes
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.shared.habitica.models.user.User
 import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
 import com.habitrpg.android.habitica.ui.activities.GemPurchaseActivity
 import com.habitrpg.android.habitica.ui.activities.GiftOneGetOneInfoActivity
@@ -154,7 +153,7 @@ class SubscriptionFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
         val subscriptionOptionButton = buttonForSku(this.selectedSubscriptionSku)
         subscriptionOptionButton?.setIsPurchased(true)
         if (binding.subscribeButton != null) {
-            binding.subscribeButton?.isEnabled = true
+            binding.subscribeButton.isEnabled = true
         }
     }
 
@@ -208,7 +207,7 @@ class SubscriptionFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
             }
 
             if (isSubscribed) {
-                binding.headerImageView?.setImageResource(R.drawable.subscriber_header)
+                binding.headerImageView.setImageResource(R.drawable.subscriber_header)
                 binding.subscriptionDetails.visibility = View.VISIBLE
                 binding.subscriptionDetails.currentUserID = user?.id
                 user?.purchased?.plan?.let { binding.subscriptionDetails.setPlan(it) }

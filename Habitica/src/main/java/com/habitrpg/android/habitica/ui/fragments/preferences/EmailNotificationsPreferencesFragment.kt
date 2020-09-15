@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.preference.CheckBoxPreference
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.shared.habitica.models.user.User
 import io.reactivex.functions.Consumer
 
 class EmailNotificationsPreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnSharedPreferenceChangeListener {

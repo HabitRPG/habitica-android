@@ -12,7 +12,7 @@ import com.habitrpg.android.habitica.databinding.ShopHeaderBinding
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.inventory.*
-import com.habitrpg.android.habitica.models.user.OwnedItem
+import com.habitrpg.shared.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.ui.fragments.inventory.stable.StableFragmentDirections
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.helpers.loadImage
@@ -25,7 +25,7 @@ import io.reactivex.subjects.PublishSubject
 import io.realm.RealmResults
 
 
-class StableRecyclerAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var shopSpriteSuffix: String? = null
     private var eggs: Map<String, Egg> = mapOf()

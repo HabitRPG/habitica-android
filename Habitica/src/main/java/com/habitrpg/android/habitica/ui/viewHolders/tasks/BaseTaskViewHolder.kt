@@ -6,11 +6,11 @@ import android.view.ViewGroup
 import android.widget.*
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.android.habitica.models.responses.TaskDirection
-import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.helpers.*
 import com.habitrpg.android.habitica.ui.viewHolders.BindableViewHolder
 import com.habitrpg.android.habitica.ui.views.EllipsisTextView
+import com.habitrpg.shared.habitica.models.responses.TaskDirection
+import com.habitrpg.shared.habitica.models.tasks.Task
 import io.noties.markwon.utils.NoCopySpannableFactory
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -77,7 +77,6 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
 
         titleTextView.setOnClickListener { onClick(it) }
         notesTextView?.setOnClickListener { onClick(it) }
-        errorIconView?.setOnClickListener { errorButtonClicked?.run()}
 
         //Re enable when we find a way to only react when a link is tapped.
         //notesTextView.movementMethod = LinkMovementMethod.getInstance()
@@ -196,9 +195,6 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
         } else {
             approvalRequiredTextView?.visibility = View.GONE
         }
-
-        syncingView?.visibility = if (task?.isSaving == true) View.VISIBLE else View.GONE
-        errorIconView?.visibility = if (task?.hasErrored == true) View.VISIBLE else View.GONE
     }
 
 

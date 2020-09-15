@@ -11,7 +11,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.AdventureGuideMenuBannerBinding
 import com.habitrpg.android.habitica.databinding.EquipmentOverviewItemBinding
 import com.habitrpg.android.habitica.extensions.layoutInflater
-import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.shared.habitica.models.user.User
 
 class AdventureGuideMenuBanner @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0

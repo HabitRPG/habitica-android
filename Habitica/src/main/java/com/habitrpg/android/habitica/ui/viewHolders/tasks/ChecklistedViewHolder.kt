@@ -13,12 +13,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.android.habitica.models.responses.TaskDirection
-import com.habitrpg.android.habitica.models.tasks.ChecklistItem
-import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.views.HabiticaEmojiTextView
+import com.habitrpg.shared.habitica.models.responses.TaskDirection
+import com.habitrpg.shared.habitica.models.tasks.ChecklistItem
+import com.habitrpg.shared.habitica.models.tasks.Task
+import com.habitrpg.shared.habitica.models.tasks.TaskType
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
@@ -77,7 +78,7 @@ abstract class ChecklistedViewHolder(itemView: View, scoreTaskFunc: ((Task, Task
                 for (item in this.task?.checklist ?: emptyList<ChecklistItem>()) {
                     val itemView = layoutInflater?.inflate(R.layout.checklist_item_row, this.checklistView, false)
                     val checkboxBackground = itemView?.findViewById<FrameLayout>(R.id.checkBoxBackground)
-                    if (task?.type == Task.TYPE_TODO) {
+                    if (task?.type == TaskType.TYPE_TODO) {
                         checkboxBackground?.setBackgroundResource(R.drawable.round_checklist_unchecked)
                     }
                     val textView = itemView?.findViewById<HabiticaEmojiTextView>(R.id.checkedTextView)
@@ -97,7 +98,7 @@ abstract class ChecklistedViewHolder(itemView: View, scoreTaskFunc: ((Task, Task
                     checkboxHolder?.setOnClickListener { _ ->
                         task?.let { scoreChecklistItemFunc(it, item) }
                     }
-                    val color = ContextCompat.getColor(context, if (task?.completed == true || (task?.type == Task.TYPE_DAILY && task?.isDue == false)) {
+                    val color = ContextCompat.getColor(context, if (task?.completed == true || (task?.type == TaskType.TYPE_DAILY && task?.isDue == false)) {
                         checkmark?.drawable?.setTint(ContextCompat.getColor(context, R.color.gray_400))
                         R.color.gray_600
                     } else {

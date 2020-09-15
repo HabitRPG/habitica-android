@@ -3,18 +3,21 @@ package com.habitrpg.android.habitica.data
 import com.habitrpg.android.habitica.api.HostConfig
 import com.habitrpg.android.habitica.models.*
 import com.habitrpg.android.habitica.models.auth.UserAuthResponse
-import com.habitrpg.android.habitica.models.inventory.Equipment
-import com.habitrpg.android.habitica.models.inventory.Quest
-import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.responses.*
 import com.habitrpg.android.habitica.models.shops.Shop
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.models.social.*
-import com.habitrpg.android.habitica.models.tasks.Task
-import com.habitrpg.android.habitica.models.tasks.TaskList
-import com.habitrpg.android.habitica.models.user.Items
-import com.habitrpg.android.habitica.models.user.Stats
-import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.shared.habitica.models.Tag
+import com.habitrpg.shared.habitica.models.inventory.Equipment
+import com.habitrpg.shared.habitica.models.inventory.Quest
+import com.habitrpg.shared.habitica.models.members.Member
+import com.habitrpg.shared.habitica.models.responses.TaskDirection
+import com.habitrpg.shared.habitica.models.responses.TaskDirectionData
+import com.habitrpg.shared.habitica.models.tasks.Task
+import com.habitrpg.shared.habitica.models.tasks.TaskList
+import com.habitrpg.shared.habitica.models.user.Items
+import com.habitrpg.shared.habitica.models.user.Stats
+import com.habitrpg.shared.habitica.models.user.User
 import io.reactivex.Flowable
 import io.reactivex.FlowableTransformer
 import retrofit2.HttpException
@@ -79,11 +82,11 @@ interface ApiClient {
 
     fun getTask(id: String): Flowable<Task>
 
-    fun postTaskDirection(id: String, direction: String): Flowable<TaskDirectionData>
+    fun postTaskDirection(user: User, task: Task, direction: TaskDirection): Flowable<TaskDirectionData>
 
-    fun postTaskNewPosition(id: String, position: Int): Flowable<List<String>>
+    fun postTaskNewPosition(id: String, position: Int, tasks: MutableList<String>): Flowable<List<String>>
 
-    fun scoreChecklistItem(taskId: String, itemId: String): Flowable<Task>
+    fun scoreChecklistItem(task: Task, itemId: String): Flowable<Task>
 
     fun createTask(item: Task): Flowable<Task>
 
@@ -91,14 +94,13 @@ interface ApiClient {
 
     fun updateTask(id: String, item: Task): Flowable<Task>
 
-    fun deleteTask(id: String): Flowable<Void>
-
+    fun deleteTask(id: String): Flowable<Unit>
 
     fun createTag(tag: Tag): Flowable<Tag>
 
     fun updateTag(id: String, tag: Tag): Flowable<Tag>
 
-    fun deleteTag(id: String): Flowable<Void>
+    fun deleteTag(id: String): Flowable<Unit>
 
     fun registerUser(username: String, email: String, password: String, confirmPassword: String): Flowable<UserAuthResponse>
 
@@ -109,7 +111,7 @@ interface ApiClient {
 
     fun sleep(): Flowable<Boolean>
 
-    fun revive(): Flowable<User>
+    fun revive(user: User): Flowable<User>
 
     fun useSkill(skillName: String, targetType: String, targetId: String): Flowable<SkillResponse>
 
@@ -180,6 +182,7 @@ interface ApiClient {
 
     //Members URL
     fun getMember(memberId: String): Flowable<Member>
+
     fun getMemberWithUsername(username: String): Flowable<Member>
 
     fun getMemberAchievements(memberId: String): Flowable<List<Achievement>>
@@ -215,6 +218,7 @@ interface ApiClient {
 
     // Notifications
     fun readNotification(notificationId: String): Flowable<List<*>>
+
     fun readNotifications(notificationIds: Map<String, List<String>>): Flowable<List<*>>
     fun seeNotifications(notificationIds: Map<String, List<String>>): Flowable<List<*>>
 
@@ -229,6 +233,9 @@ interface ApiClient {
     fun retrieveInboxConversations(): Flowable<List<InboxConversation>>
 
     fun <T> configureApiCallObserver(): FlowableTransformer<HabitResponse<T>, T>
+    fun <T> configureApiOnlineErrorHandler(): FlowableTransformer<T, T>
+    fun configureApiOfflineErrorHandler(apiCall: () -> Flowable<HabitResponse<Void>>): FlowableTransformer<Void, Unit>
+    fun <T : Any> configureApiOfflineErrorHandler(apiCall: () -> Flowable<HabitResponse<T>>, offlineObjectCreator: (() -> T?)?): FlowableTransformer<T, T>
 
     fun openMysteryItem(): Flowable<Equipment>
 
@@ -260,4 +267,8 @@ interface ApiClient {
     fun transferGems(giftedID: String, amount: Int): Flowable<Void>
     fun unlinkAllTasks(challengeID: String?, keepOption: String): Flowable<Void>
     fun blockMember(userID: String): Flowable<List<String>>
+
+    // Offline
+    fun syncOfflineChanges()
+
 }

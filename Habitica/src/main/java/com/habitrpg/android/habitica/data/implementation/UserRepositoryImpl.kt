@@ -7,16 +7,16 @@ import com.habitrpg.android.habitica.data.local.UserLocalRepository
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.Achievement
-import com.habitrpg.android.habitica.models.QuestAchievement
 import com.habitrpg.android.habitica.models.Skill
-import com.habitrpg.android.habitica.models.inventory.Customization
 import com.habitrpg.android.habitica.models.inventory.CustomizationSet
 import com.habitrpg.android.habitica.models.responses.SkillResponse
 import com.habitrpg.android.habitica.models.responses.UnlockResponse
 import com.habitrpg.android.habitica.models.responses.VerifyUsernameResponse
-import com.habitrpg.android.habitica.models.tasks.Task
-import com.habitrpg.android.habitica.models.user.Stats
-import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.shared.habitica.models.QuestAchievement
+import com.habitrpg.shared.habitica.models.inventory.Customization
+import com.habitrpg.shared.habitica.models.tasks.Task
+import com.habitrpg.shared.habitica.models.user.Stats
+import com.habitrpg.shared.habitica.models.user.User
 import io.reactivex.Flowable
 import io.reactivex.Maybe
 import io.reactivex.functions.Consumer
@@ -43,14 +43,14 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
         return updateUser(user, updateData)
     }
 
-    override fun retrieveUser(withTasks: Boolean): Flowable<User> =
-            retrieveUser(withTasks, false)
-
     @Suppress("ReturnCount")
     override fun retrieveUser(withTasks: Boolean, forced: Boolean): Flowable<User> {
         // Only retrieve again after 3 minutes or it's forced.
         if (forced || this.lastSync == null || Date().time - (this.lastSync?.time ?: 0) > 180000) {
             lastSync = Date()
+            if (withTasks) {
+                apiClient.syncOfflineChanges()
+            }
             return apiClient.retrieveUser(withTasks)
                     .doOnNext { localRepository.saveUser(it) }
                     .doOnNext { user ->
@@ -79,7 +79,7 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
     }
 
     override fun revive(user: User): Flowable<User> =
-            apiClient.revive().map { newUser -> mergeUser(user, newUser) }
+            apiClient.revive(localRepository.getUnmanagedCopy(user)).map { newUser -> mergeUser(user, newUser) }
 
     override fun resetTutorial(user: User?) {
         localRepository.getTutorialSteps()
@@ -96,7 +96,7 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
     }
 
     override fun sleep(user: User): Flowable<User> {
-        localRepository.executeTransaction { user.preferences?.isSleep = !(user.preferences?.sleep ?: false) }
+        localRepository.executeTransaction { user.preferences?.sleep = !(user.preferences?.sleep ?: false) }
         return apiClient.sleep().map { user }
     }
 
@@ -291,8 +291,8 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
         if (user != null && appConfigManager.enableLocalChanges()) {
             localRepository.executeTransaction {
                 when (type) {
-                    "skin" -> user.preferences?.setSkin(identifier)
-                    "shirt" -> user.preferences?.setShirt(identifier)
+                    "skin" -> user.preferences?.skin = identifier
+                    "shirt" -> user.preferences?.shirt = identifier
                     "hair" -> {
                         when (category) {
                             "color" -> user.preferences?.hair?.color = identifier
@@ -303,8 +303,8 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
                             "base" -> user.preferences?.hair?.base = identifier.toInt()
                         }
                     }
-                    "background" -> user.preferences?.setBackground(identifier)
-                    "chair" -> user.preferences?.setChair(identifier)
+                    "background" -> user.preferences?.background = identifier
+                    "chair" -> user.preferences?.chair = identifier
                 }
             }
         }

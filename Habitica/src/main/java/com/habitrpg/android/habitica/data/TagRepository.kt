@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.data
 
-import com.habitrpg.android.habitica.models.Tag
+import com.habitrpg.shared.habitica.models.Tag
 
 import io.reactivex.Flowable
 import io.reactivex.Single
@@ -13,12 +13,12 @@ interface TagRepository : BaseRepository {
 
     fun createTag(tag: Tag): Flowable<Tag>
     fun updateTag(tag: Tag): Flowable<Tag>
-    fun deleteTag(id: String): Flowable<Void>
+    fun deleteTag(id: String): Flowable<Unit>
 
 
     fun createTags(tags: Collection<Tag>): Single<List<Tag>>
     fun updateTags(tags: Collection<Tag>): Single<List<Tag>>
-    fun deleteTags(tagIds: Collection<String>): Single<List<Void>>
+    fun deleteTags(tagIds: Collection<String>): Single<List<Unit>>
 
     fun removeOldTags(onlineTags: List<Tag>, userID: String)
 }

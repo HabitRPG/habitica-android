@@ -48,13 +48,11 @@ import com.habitrpg.android.habitica.interactors.CheckClassSelectionUseCase
 import com.habitrpg.android.habitica.interactors.DisplayItemDropUseCase
 import com.habitrpg.android.habitica.interactors.NotifyUserUseCase
 import com.habitrpg.android.habitica.models.Notification
-import com.habitrpg.android.habitica.models.TutorialStep
 import com.habitrpg.android.habitica.models.inventory.Egg
 import com.habitrpg.android.habitica.models.inventory.HatchingPotion
 import com.habitrpg.android.habitica.models.notifications.LoginIncentiveData
 import com.habitrpg.android.habitica.models.responses.MaintenanceResponse
 import com.habitrpg.android.habitica.models.responses.TaskScoringResult
-import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
 import com.habitrpg.android.habitica.ui.AvatarView
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel
@@ -77,6 +75,8 @@ import com.habitrpg.android.habitica.widget.AvatarStatsWidgetProvider
 import com.habitrpg.android.habitica.widget.DailiesWidgetProvider
 import com.habitrpg.android.habitica.widget.HabitButtonWidgetProvider
 import com.habitrpg.android.habitica.widget.TodoListWidgetProvider
+import com.habitrpg.shared.habitica.models.TutorialStep
+import com.habitrpg.shared.habitica.models.user.User
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Action
@@ -671,7 +671,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         sharingIntent.type = "*/*"
         sharingIntent.putExtra(Intent.EXTRA_TEXT, event.sharedMessage)
         BitmapUtils.clearDirectoryContent("$filesDir/shared_images")
-        val f = BitmapUtils.saveToShareableFile("$filesDir/shared_images", "${Date().toString()}.png", event.shareImage)
+        val f = BitmapUtils.saveToShareableFile("$filesDir/shared_images", "${Date()}.png", event.shareImage)
         val fileUri = f?.let { FileProvider.getUriForFile(this, getString(R.string.content_provider), it) }
         if (fileUri != null) {
             sharingIntent.putExtra(Intent.EXTRA_STREAM, fileUri)

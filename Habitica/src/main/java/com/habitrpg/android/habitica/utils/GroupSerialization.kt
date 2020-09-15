@@ -2,9 +2,9 @@ package com.habitrpg.android.habitica.utils
 
 import com.google.gson.*
 import com.google.gson.reflect.TypeToken
-import com.habitrpg.android.habitica.models.inventory.Quest
-import com.habitrpg.android.habitica.models.inventory.QuestRageStrike
-import com.habitrpg.android.habitica.models.members.Member
+import com.habitrpg.shared.habitica.models.inventory.Quest
+import com.habitrpg.shared.habitica.models.inventory.QuestRageStrike
+import com.habitrpg.shared.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.Group
 import io.realm.Realm
 import io.realm.RealmList

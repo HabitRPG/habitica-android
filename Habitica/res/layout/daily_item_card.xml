@@ -61,6 +61,7 @@
                     android:layout_marginRight="@dimen/spacing_small"/>
                 <include layout="@layout/checklist_indicator" />
             </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/checklistView"
                 android:layout_width="match_parent"

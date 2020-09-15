@@ -1,7 +1,7 @@
 //package com.habitrpg.android.habitica.api;
 //
 //import com.habitrpg.android.habitica.BuildConfig;
-//import com.habitrpg.android.habitica.models.Tag;
+//import com.habitrpg.shared.habitica.models.Tag;
 //
 //import junit.framework.Assert;
 //

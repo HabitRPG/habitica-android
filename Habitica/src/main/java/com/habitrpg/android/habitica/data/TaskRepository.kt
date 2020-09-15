@@ -1,11 +1,11 @@
 package com.habitrpg.android.habitica.data
 
 import com.habitrpg.android.habitica.models.responses.TaskScoringResult
-import com.habitrpg.android.habitica.models.tasks.RemindersItem
-import com.habitrpg.android.habitica.models.tasks.Task
-import com.habitrpg.android.habitica.models.tasks.TaskList
-import com.habitrpg.android.habitica.models.tasks.TasksOrder
-import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.shared.habitica.models.tasks.RemindersItem
+import com.habitrpg.shared.habitica.models.tasks.Task
+import com.habitrpg.shared.habitica.models.tasks.TaskList
+import com.habitrpg.shared.habitica.models.tasks.TasksOrder
+import com.habitrpg.shared.habitica.models.user.User
 import io.reactivex.Flowable
 import io.reactivex.Maybe
 import io.reactivex.Single
@@ -25,13 +25,13 @@ interface TaskRepository : BaseRepository {
 
     fun taskChecked(user: User?, task: Task, up: Boolean, force: Boolean, notifyFunc: ((TaskScoringResult) -> Unit)?): Flowable<TaskScoringResult?>
     fun taskChecked(user: User?, taskId: String, up: Boolean, force: Boolean, notifyFunc: ((TaskScoringResult) -> Unit)?): Maybe<TaskScoringResult?>
-    fun scoreChecklistItem(taskId: String, itemId: String): Flowable<Task>
+    fun scoreChecklistItem(task: Task, itemId: String): Flowable<Task>
 
     fun getTask(taskId: String): Flowable<Task>
     fun getTaskCopy(taskId: String): Flowable<Task>
     fun createTask(task: Task, force: Boolean = false): Flowable<Task>
     fun updateTask(task: Task, force: Boolean = false): Maybe<Task>?
-    fun deleteTask(taskId: String): Flowable<Void>
+    fun deleteTask(taskId: String): Flowable<Unit>
     fun saveTask(task: Task)
 
     fun createTasks(newTasks: List<Task>): Flowable<List<Task>>

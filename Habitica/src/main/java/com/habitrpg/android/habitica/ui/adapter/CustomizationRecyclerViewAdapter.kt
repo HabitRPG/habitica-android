@@ -14,12 +14,12 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.CustomizationGridItemBinding
 import com.habitrpg.android.habitica.databinding.CustomizationSectionHeaderBinding
 import com.habitrpg.android.habitica.helpers.MainNavigationController
-import com.habitrpg.android.habitica.models.inventory.Customization
 import com.habitrpg.android.habitica.models.inventory.CustomizationSet
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
+import com.habitrpg.shared.habitica.models.inventory.Customization
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import io.reactivex.subjects.PublishSubject
@@ -32,16 +32,16 @@ class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerVi
     var gemBalance: Int = 0
     var unsortedCustomizations: List<Customization> = ArrayList()
     var customizationList: MutableList<Any> = ArrayList()
-    set(value) {
-        field = value
-        notifyDataSetChanged()
-    }
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
     var additionalSetItems: List<Customization> = ArrayList()
     var activeCustomization: String? = null
-    set(value) {
-        field = value
-        this.notifyDataSetChanged()
-    }
+        set(value) {
+            field = value
+            this.notifyDataSetChanged()
+        }
 
     var ownedCustomiztations: List<String> = listOf()
 

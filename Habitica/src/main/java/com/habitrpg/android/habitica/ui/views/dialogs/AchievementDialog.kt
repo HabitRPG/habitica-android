@@ -12,8 +12,8 @@ import com.habitrpg.android.habitica.databinding.DialogAchievementDetailBinding
 import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.Notification
-import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
+import com.habitrpg.shared.habitica.models.user.User
 
 class AchievementDialog(context: Context) : HabiticaAlertDialog(context) {
     var isLastOnboardingAchievement: Boolean = false
@@ -50,13 +50,13 @@ class AchievementDialog(context: Context) : HabiticaAlertDialog(context) {
         DataBindingUtils.loadImage(binding.iconView, "achievement-${iconName}2x")
         if (iconName == "onboardingComplete") {
             setTitle(R.string.onboardingComplete_achievement_title)
-            binding.titleView.setTextSize(TypedValue.COMPLEX_UNIT_SP,14f)
+            binding.titleView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14f)
             binding.achievementWrapper.visibility = View.GONE
             binding.onboardingDoneIcon.visibility = View.VISIBLE
             binding.titleView.typeface = Typeface.DEFAULT
             val titleText = context.getString(titleID)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                binding.titleView.setText(Html.fromHtml(titleText,  Html.FROM_HTML_MODE_LEGACY), TextView.BufferType.SPANNABLE)
+                binding.titleView.setText(Html.fromHtml(titleText, Html.FROM_HTML_MODE_LEGACY), TextView.BufferType.SPANNABLE)
             } else {
                 binding.titleView.setText(Html.fromHtml(titleText), TextView.BufferType.SPANNABLE)
             }
