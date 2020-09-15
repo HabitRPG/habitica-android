@@ -80,10 +80,10 @@ class TasksFragment : BaseMainFragment(), SearchView.OnQueryTextListener {
 
         bottomNavigation?.onTabSelectedListener = {
             val newItem = when (it) {
-                TaskType.TYPE_HABIT -> viewPager?.currentItem = 0
-                TaskType.TYPE_DAILY -> viewPager?.currentItem = 1
-                TaskType.TYPE_TODO -> viewPager?.currentItem = 2
-                TaskType.TYPE_REWARD -> viewPager?.currentItem = 3
+                TaskType.TYPE_HABIT -> 0
+                TaskType.TYPE_DAILY -> 1
+                TaskType.TYPE_TODO -> 2
+                TaskType.TYPE_REWARD -> 3
                 else -> 0
             }
             if (newItem == viewPager?.currentItem) {
@@ -195,7 +195,7 @@ class TasksFragment : BaseMainFragment(), SearchView.OnQueryTextListener {
             })
             dialog.setOnDismissListener {
                 if (disposable?.isDisposed == false) {
-                    disposable?.dispose()
+                    disposable.dispose()
                 }
             }
             dialog.show()

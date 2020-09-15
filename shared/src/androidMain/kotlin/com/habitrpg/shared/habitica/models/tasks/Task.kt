@@ -78,6 +78,10 @@ actual open class Task : RealmObject, Parcelable {
 
     actual var nextDue: RealmList<Date>? = null
 
+    actual var isSaving: Boolean = false
+    actual var hasErrored: Boolean = false
+    actual var isCreating: Boolean = false
+
     actual var yesterDaily: Boolean = true
 
     actual var daysOfMonthString: String? = null

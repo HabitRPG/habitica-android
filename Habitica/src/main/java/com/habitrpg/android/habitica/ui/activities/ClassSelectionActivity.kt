@@ -120,7 +120,7 @@ class ClassSelectionActivity : BaseActivity(), Consumer<User> {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item?.itemId) {
+        when (item.itemId) {
             R.id.opt_out -> optOutSelected()
         }
         return super.onOptionsItemSelected(item)

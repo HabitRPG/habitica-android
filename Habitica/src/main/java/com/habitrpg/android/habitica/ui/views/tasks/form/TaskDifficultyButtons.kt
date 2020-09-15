@@ -48,7 +48,7 @@ class TaskDifficultyButtons @JvmOverloads constructor(
                 addView(space)
             }
             if (difficulty.value == selectedDifficulty) {
-                selectedButton = button;
+                selectedButton = button
             }
         }
     }

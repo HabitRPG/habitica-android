@@ -44,6 +44,10 @@ expect open class Task {
     var isDue: Boolean?
     var nextDue: NativeList<NativeDate>?
 
+    var isSaving: Boolean
+    var hasErrored: Boolean
+    var isCreating: Boolean
+
     //Needed for offline creating/updating
     var yesterDaily: Boolean
 

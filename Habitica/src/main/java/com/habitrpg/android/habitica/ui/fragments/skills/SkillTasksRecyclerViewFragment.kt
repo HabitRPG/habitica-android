@@ -25,7 +25,7 @@ import io.reactivex.subjects.PublishSubject
 import javax.inject.Inject
 import javax.inject.Named
 
-class SkillTasksRecyclerViewFragment() : BaseFragment() {
+class SkillTasksRecyclerViewFragment : BaseFragment() {
     @Inject
     lateinit var taskRepository: TaskRepository
     @field:[Inject Named(AppModule.NAMED_USER_ID)]

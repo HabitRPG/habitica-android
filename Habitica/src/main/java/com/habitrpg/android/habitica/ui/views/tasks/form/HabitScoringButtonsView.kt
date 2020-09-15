@@ -75,7 +75,7 @@ class HabitScoringButtonsView @JvmOverloads constructor(
         }
         negativeView.setOnClickListener {
             isNegative = !isNegative
-            sendAccessibilityEvent(AccessibilityEvent.CONTENT_CHANGE_TYPE_CONTENT_DESCRIPTION);
+            sendAccessibilityEvent(AccessibilityEvent.CONTENT_CHANGE_TYPE_CONTENT_DESCRIPTION)
         }
 
         isPositive = true

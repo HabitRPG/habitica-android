@@ -22,7 +22,7 @@ open class Inbox : NativeRealmObject() {
      * @value blocks The blocks
      */
     @IgnoreAnnotation
-    var blocks: List<Any> = ArrayList()
+    var blocks: List<String> = ArrayList()
 
     /**
      * @return The newMessages

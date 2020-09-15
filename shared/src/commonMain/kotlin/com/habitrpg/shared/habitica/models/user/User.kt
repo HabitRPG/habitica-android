@@ -54,7 +54,7 @@ open class User : NativeRealmObject(), Avatar, VersionedObject {
             for (test in abTests ?: emptyList<ABTest>()) {
                 test.userID = id
             }
-            for (achievement in achievements ?: emptyList<UserAchievement>()) {
+            for (achievement in achievements) {
                 achievement.userId = id
             }
         }

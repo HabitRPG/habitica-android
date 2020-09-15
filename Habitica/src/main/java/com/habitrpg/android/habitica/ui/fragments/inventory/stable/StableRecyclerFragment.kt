@@ -16,10 +16,11 @@ import com.habitrpg.android.habitica.models.inventory.Animal
 import com.habitrpg.android.habitica.models.inventory.Egg
 import com.habitrpg.android.habitica.models.inventory.HatchingPotion
 import com.habitrpg.android.habitica.models.inventory.StableSection
-import com.habitrpg.android.habitica.models.user.*
+import com.habitrpg.shared.habitica.models.user.*
 import com.habitrpg.android.habitica.ui.adapter.inventory.StableRecyclerAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.helpers.*
+import com.habitrpg.shared.habitica.models.user.Items
 import com.habitrpg.shared.habitica.models.user.OwnedObject
 import io.reactivex.Maybe
 import io.reactivex.functions.BiFunction

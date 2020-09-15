@@ -153,7 +153,7 @@ class SubscriptionFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
         val subscriptionOptionButton = buttonForSku(this.selectedSubscriptionSku)
         subscriptionOptionButton?.setIsPurchased(true)
         if (binding.subscribeButton != null) {
-            binding.subscribeButton?.isEnabled = true
+            binding.subscribeButton.isEnabled = true
         }
     }
 
@@ -207,7 +207,7 @@ class SubscriptionFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
             }
 
             if (isSubscribed) {
-                binding.headerImageView?.setImageResource(R.drawable.subscriber_header)
+                binding.headerImageView.setImageResource(R.drawable.subscriber_header)
                 binding.subscriptionDetails.visibility = View.VISIBLE
                 binding.subscriptionDetails.currentUserID = user?.id
                 user?.purchased?.plan?.let { binding.subscriptionDetails.setPlan(it) }

@@ -94,7 +94,7 @@ class FullProfileActivity : BaseActivity() {
     private val attributeRows = ArrayList<TableRow>()
     private val dateFormatter = SimpleDateFormat.getDateInstance()
     private var avatarWithBars: AvatarWithBarsViewModel? = null
-    lateinit private var binding: ActivityFullProfileBinding
+    private lateinit var binding: ActivityFullProfileBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
