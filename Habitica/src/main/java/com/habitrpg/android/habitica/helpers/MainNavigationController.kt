@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.helpers
 
 import android.os.Bundle
+import android.util.Log
 import androidx.navigation.NavController
 import androidx.navigation.NavDirections
 import java.lang.ref.WeakReference
@@ -21,7 +22,11 @@ object MainNavigationController {
             lastNavigation = Date()
             try {
                 navController?.get()?.navigate(transactionId, args)
-            } catch (_: IllegalArgumentException) {}
+            } catch (e: IllegalArgumentException) {
+                Log.e("Main Navigation", e.localizedMessage)
+            } catch (error: Exception) {
+                Log.e("Main Navigation", error.localizedMessage)
+            }
         }
     }
 

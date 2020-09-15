@@ -30,8 +30,8 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
     var errorButtonClicked: Action? = null
     protected var context: Context
     private val mainTaskWrapper: ViewGroup = itemView.findViewById(R.id.main_task_wrapper)
-    private val titleTextView: EllipsisTextView = itemView.findViewById(R.id.checkedTextView)
-    private val notesTextView: EllipsisTextView? = itemView.findViewById(R.id.notesTextView)
+    protected val titleTextView: EllipsisTextView = itemView.findViewById(R.id.checkedTextView)
+    protected val notesTextView: EllipsisTextView? = itemView.findViewById(R.id.notesTextView)
     protected val calendarIconView: ImageView? = itemView.findViewById(R.id.iconViewCalendar)
     protected val specialTaskTextView: TextView? = itemView.findViewById(R.id.specialTaskText)
     private val iconViewChallenge: ImageView? = itemView.findViewById(R.id.iconviewChallenge)
@@ -115,6 +115,7 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
     }
 
     override fun bind(data: Task, position: Int, displayMode: String) {
+        notesExpanded = false
         task = data
         itemView.setBackgroundColor(context.getThemeColor(R.attr.colorContentBackground))
 
@@ -123,6 +124,7 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
         notesTextView?.maxLines = 5
         if (data.notes?.isNotEmpty() == true) {
             notesTextView?.visibility = View.VISIBLE
+            notesTextView?.setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
             //expandNotesButton.visibility = if (notesTextView.hadEllipses() || notesExpanded) View.VISIBLE else View.GONE
         } else {
             notesTextView?.visibility = View.GONE

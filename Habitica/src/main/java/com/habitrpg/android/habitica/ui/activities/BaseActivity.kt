@@ -87,6 +87,7 @@ abstract class BaseActivity : AppCompatActivity() {
         loadTheme(PreferenceManager.getDefaultSharedPreferences(this))
     }
 
+
     override fun onPause() {
         isActivityVisible = false
         super.onPause()

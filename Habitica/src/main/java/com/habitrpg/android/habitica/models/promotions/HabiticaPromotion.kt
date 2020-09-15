@@ -38,8 +38,8 @@ abstract class HabiticaPromotion {
 
 fun getHabiticaPromotionFromKey(key: String, startDate: Date?, endDate: Date?): HabiticaPromotion? {
     return when (key) {
-        "fall_extra_gems" -> FallExtraGemsHabiticaPromotion(startDate, endDate)
-        "spooky_extra_gems" -> SpookyExtraGemsHabiticaPromotion(startDate, endDate)
+        "fall_extra_gems", "fall2020", "testFall2020" -> FallExtraGemsHabiticaPromotion(startDate, endDate)
+        "spooky_extra_gems", "fall2020SecondPromo", "spooky2020" -> SpookyExtraGemsHabiticaPromotion(startDate, endDate)
         else -> null
     }
 }

@@ -258,12 +258,20 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
         if (this.isRegistering) {
             binding.loginBtn.text = getString(R.string.register_btn)
             binding.username.setHint(R.string.username)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                binding.username.setAutofillHints("newUsername")
+                binding.password.setAutofillHints("newPassword")
+            }
             binding.password.imeOptions = EditorInfo.IME_ACTION_NEXT
             binding.fbLoginButton.setText(R.string.register_btn_fb)
             binding.googleLoginButton.setText(R.string.register_btn_google)
         } else {
             binding.loginBtn.text = getString(R.string.login_btn)
             binding.username.setHint(R.string.email_username)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                binding.username.setAutofillHints("username")
+                binding.password.setAutofillHints("password")
+            }
             binding.password.imeOptions = EditorInfo.IME_ACTION_DONE
             binding.fbLoginButton.setText(R.string.login_btn_fb)
             binding.googleLoginButton.setText(R.string.login_btn_google)

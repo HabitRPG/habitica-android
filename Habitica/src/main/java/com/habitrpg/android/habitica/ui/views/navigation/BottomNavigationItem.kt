@@ -25,7 +25,7 @@ class BottomNavigationItem @JvmOverloads constructor(
         if (isActive) {
             binding.selectedTitleView.visibility = selectedVisibility
             binding.titleView.visibility = View.GONE
-            binding.iconView.drawable.setColorFilter(ContextCompat.getColor(context, R.color.white), PorterDuff.Mode.MULTIPLY )
+            binding.iconView.drawable.setColorFilter(context.getThemeColor(R.attr.colorPrimaryDistinct), PorterDuff.Mode.MULTIPLY )
         } else {
             binding.selectedTitleView.visibility = View.GONE
             binding.titleView.visibility = deselectedVisibility

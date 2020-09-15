@@ -15,9 +15,11 @@ class HabitViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> U
 
     private val btnPlusWrapper: FrameLayout = itemView.findViewById(R.id.btnPlusWrapper)
     private val btnPlusIconView: ImageView = itemView.findViewById(R.id.btnPlusIconView)
+    private val btnPlusCircleView: View = itemView.findViewById(R.id.button_plus_circle_view)
     private val btnPlus: Button = itemView.findViewById(R.id.btnPlus)
     private val btnMinusWrapper: FrameLayout = itemView.findViewById(R.id.btnMinusWrapper)
     private val btnMinusIconView: ImageView = itemView.findViewById(R.id.btnMinusIconView)
+    private val btnMinusCircleView: View = itemView.findViewById(R.id.button_minus_circle_view)
     private val btnMinus: Button = itemView.findViewById(R.id.btnMinus)
 
     init {
@@ -33,26 +35,23 @@ class HabitViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> U
             plusIcon?.setTintMode(PorterDuff.Mode.MULTIPLY)
             this.btnPlusIconView.setImageDrawable(plusIcon)
             val drawable = ContextCompat.getDrawable(context, R.drawable.habit_circle)
-            if (context.isUsingNightModeResources()) {
-                this.btnPlusWrapper.setBackgroundResource(data.mediumTaskColor)
-                drawable?.setTint(ContextCompat.getColor(context, data.darkTaskColor))
-            } else {
-                this.btnPlusWrapper.setBackgroundResource(data.lightTaskColor)
-                drawable?.setTint(ContextCompat.getColor(context, data.mediumTaskColor))
-            }
+            this.btnPlusWrapper.setBackgroundResource(data.lightTaskColor)
+            drawable?.setTint(ContextCompat.getColor(context, data.mediumTaskColor))
             drawable?.setTintMode(PorterDuff.Mode.MULTIPLY)
-            btnPlusIconView.background = drawable
+            btnPlusCircleView.background = drawable
             this.btnPlus.visibility = View.VISIBLE
             this.btnPlus.isClickable = true
+            btnPlusIconView.background.alpha = 255
         } else {
             this.btnPlusWrapper.setBackgroundResource(R.color.habit_inactive_gray)
             val plusIcon = ContextCompat.getDrawable(context, R.drawable.habit_plus)
             plusIcon?.setTint(ContextCompat.getColor(context, R.color.content_background_offset))
             plusIcon?.setTintMode(PorterDuff.Mode.MULTIPLY)
             this.btnPlusIconView.setImageDrawable(plusIcon)
-            btnPlusIconView.background = ContextCompat.getDrawable(context, R.drawable.habit_circle_disabled)
+            btnPlusCircleView.background = ContextCompat.getDrawable(context, R.drawable.habit_circle_disabled)
             this.btnPlus.visibility = View.GONE
             this.btnPlus.isClickable = false
+            btnPlusIconView.background.alpha = 0
         }
 
         if (data.down == true) {
@@ -62,26 +61,23 @@ class HabitViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> U
             minusIcon?.setTintMode(PorterDuff.Mode.MULTIPLY)
             this.btnMinusIconView.setImageDrawable(minusIcon)
             val drawable = ContextCompat.getDrawable(context, R.drawable.habit_circle)
-            if (context.isUsingNightModeResources()) {
-                this.btnMinusWrapper.setBackgroundResource(data.mediumTaskColor)
-                drawable?.setTint(ContextCompat.getColor(context, data.darkTaskColor))
-            } else {
-                this.btnMinusWrapper.setBackgroundResource(data.lightTaskColor)
-                drawable?.setTint(ContextCompat.getColor(context, data.mediumTaskColor))
-            }
+            this.btnMinusWrapper.setBackgroundResource(data.lightTaskColor)
+            drawable?.setTint(ContextCompat.getColor(context, data.mediumTaskColor))
             drawable?.setTintMode(PorterDuff.Mode.MULTIPLY)
-            btnMinusIconView.background = drawable
+            btnMinusCircleView.background = drawable
             this.btnMinus.visibility = View.VISIBLE
             this.btnMinus.isClickable = true
+            btnMinusIconView.background.alpha = 255
         } else {
             this.btnMinusWrapper.setBackgroundResource(R.color.habit_inactive_gray)
             val minusIcon = ContextCompat.getDrawable(context, R.drawable.habit_minus)
             minusIcon?.setTint(ContextCompat.getColor(context, R.color.content_background_offset))
             minusIcon?.setTintMode(PorterDuff.Mode.MULTIPLY)
             this.btnMinusIconView.setImageDrawable(minusIcon)
-            btnMinusIconView.background = ContextCompat.getDrawable(context, R.drawable.habit_circle_disabled)
+            btnMinusCircleView.background = ContextCompat.getDrawable(context, R.drawable.habit_circle_disabled)
             this.btnMinus.visibility = View.GONE
             this.btnMinus.isClickable = false
+            btnMinusIconView.background.alpha = 0
         }
 
         var streakString = ""

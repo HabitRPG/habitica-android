@@ -34,7 +34,7 @@
             android:id="@+id/selected_title_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
+            android:textColor="?colorPrimaryDistinct"
             tools:text="@string/habits"
             android:layout_gravity="center"
             android:textSize="12sp"

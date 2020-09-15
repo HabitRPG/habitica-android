@@ -33,7 +33,6 @@
                         android:textColor="@color/text_quad"
                         tools:text="150"
                         style="@style/Body1"
-                        app:hasLightBackground="true"
                         android:textSize="15sp"
                         android:layout_gravity="center" />
         </FrameLayout>

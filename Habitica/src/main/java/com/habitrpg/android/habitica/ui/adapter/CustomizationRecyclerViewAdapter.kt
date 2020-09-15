@@ -177,7 +177,7 @@ class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerVi
                     val dialog = HabiticaAlertDialog(itemView.context)
                     dialog.setMessage(R.string.purchase_from_timetravel_shop)
                     dialog.addButton(R.string.go_shopping, true) { _, _ ->
-                        MainNavigationController.navigate(R.id.shopsFragment, bundleOf(Pair("selectedTab", 3)))
+                        MainNavigationController.navigate(R.id.timeTravelersShopFragment)
                     }
                     dialog.addButton(R.string.reward_dialog_dismiss, false)
                     dialog.show()

@@ -46,6 +46,7 @@
                         android:layout_marginTop="?attr/actionBarSize"
                         android:layout_marginEnd="@dimen/header_border_spacing"
                         android:layout_marginStart="@dimen/header_border_spacing"
+                        android:layout_marginBottom="@dimen/spacing_medium"
                         app:layout_collapseMode="parallax" />
 
                     <androidx.appcompat.widget.Toolbar

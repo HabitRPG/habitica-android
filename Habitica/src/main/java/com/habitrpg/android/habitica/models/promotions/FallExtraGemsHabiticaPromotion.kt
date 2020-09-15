@@ -23,8 +23,8 @@ class FallExtraGemsHabiticaPromotion(startDate: Date?, endDate: Date?) : Habitic
         get() = "fall_extra_gems"
     override val promoType: PromoType
         get() = PromoType.GEMS_AMOUNT
-    override val startDate: Date = startDate ?: DateUtils.createDate(2020, 9, 22)
-    override val endDate: Date = endDate ?: DateUtils.createDate(2020, 9, 30)
+    override val startDate: Date = startDate ?: DateUtils.createDate(2020, 8, 22)
+    override val endDate: Date = endDate ?: DateUtils.createDate(2020, 8, 30)
 
     override fun pillBackgroundDrawable(context: Context): Drawable {
         return ContextCompat.getDrawable(context, R.drawable.fall_promo_pill_bg) ?: ShapeDrawable()
@@ -57,7 +57,7 @@ class FallExtraGemsHabiticaPromotion(startDate: Date?, endDate: Date?) : Habitic
                 ContextCompat.getDrawable(context, R.drawable.fall_promo_menu_right)
         )
 
-        view.binding.button.background = ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_gray_1)
+        view.binding.button.backgroundTintList = ContextCompat.getColorStateList(context, R.color.gray_1)
         view.binding.button.setText(R.string.learn_more)
         view.binding.button.setTextColor(ContextCompat.getColor(context, R.color.white))
         view.binding.button.setOnClickListener {
@@ -136,7 +136,7 @@ class FallExtraGemsHabiticaPromotion(startDate: Date?, endDate: Date?) : Habitic
         fragment.binding?.promptButton?.setOnClickListener { MainNavigationController.navigate(R.id.gemPurchaseActivity) }
 
         fragment.binding?.instructionDescriptionView?.text = context.getString(R.string.fall_promo_info_instructions, formatter.format(startDate), formatter.format(endDate))
-        val limitationsFormatter = SimpleDateFormat.getDateTimeInstance()
+        val limitationsFormatter = SimpleDateFormat.getDateTimeInstance(SimpleDateFormat.LONG, SimpleDateFormat.LONG)
         fragment.binding?.limitationsDescriptionView?.text = context.getString(R.string.gems_promo_info_limitations, limitationsFormatter.format(startDate), limitationsFormatter.format(endDate))
     }
 }

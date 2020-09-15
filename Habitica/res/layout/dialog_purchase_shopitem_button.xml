@@ -23,6 +23,5 @@
         tools:text="10"
         tools:textColor="@color/green_10"
         style="@style/Subheader1"
-        app:hasLightBackground="true"
         android:layout_marginStart="12dp"/>
 </LinearLayout>

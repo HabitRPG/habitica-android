@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.SkillListItemBinding
 import com.habitrpg.android.habitica.extensions.inflate
+import com.habitrpg.android.habitica.extensions.isUsingNightModeResources
 import com.habitrpg.android.habitica.models.Skill
 import com.habitrpg.android.habitica.models.user.SpecialItems
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
@@ -85,7 +86,11 @@ class SkillsRecyclerViewAdapter : RecyclerView.Adapter<SkillsRecyclerViewAdapter
                 binding.countLabel.visibility = View.VISIBLE
                 binding.countLabel.text = getOwnedCount(skill.key).toString()
                 binding.priceLabel.setText(R.string.skill_transformation_use)
-                binding.priceLabel.setTextColor(ContextCompat.getColor(context, R.color.color_accent))
+                if (context.isUsingNightModeResources()) {
+                    binding.priceLabel.setTextColor(ContextCompat.getColor(context, R.color.brand_500))
+                } else {
+                    binding.priceLabel.setTextColor(ContextCompat.getColor(context, R.color.color_accent))
+                }
                 binding.buttonIconView.setImageDrawable(null)
                 binding.buttonWrapper.setBackgroundColor(ContextCompat.getColor(context, R.color.offset_background))
                 binding.buttonIconView.alpha = 1.0f
@@ -93,7 +98,11 @@ class SkillsRecyclerViewAdapter : RecyclerView.Adapter<SkillsRecyclerViewAdapter
             } else {
                 binding.countLabel.visibility = View.GONE
                 binding.priceLabel.text = skill.mana?.toString()
-                binding.priceLabel.setTextColor(ContextCompat.getColor(context, R.color.blue_10))
+                if (context.isUsingNightModeResources()) {
+                    binding.priceLabel.setTextColor(ContextCompat.getColor(context, R.color.blue_500))
+                } else {
+                    binding.priceLabel.setTextColor(ContextCompat.getColor(context, R.color.blue_10))
+                }
                 binding.buttonIconView.setImageDrawable(magicDrawable)
 
                 if (skill.mana ?: 0 > mana) {

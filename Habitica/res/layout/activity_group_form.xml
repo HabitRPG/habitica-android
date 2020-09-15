@@ -104,7 +104,7 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="@string/only_leader_create_challenge"/>
-            <Switch
+            <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/leader_create_challenge_switch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

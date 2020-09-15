@@ -210,9 +210,9 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
     }
 
     override fun feedPet(pet: Pet, food: Food): Flowable<FeedResponse> {
-        return apiClient.feedPet(pet.key, food.key)
+        return apiClient.feedPet(pet.key ?: "", food.key)
                 .doOnNext { feedResponse ->
-                    localRepository.feedPet(food.key, pet.key, feedResponse.value ?: 0, userID)
+                    localRepository.feedPet(food.key, pet.key ?: "", feedResponse.value ?: 0, userID)
                 }
     }
 

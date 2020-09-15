@@ -12,10 +12,10 @@ interface Avatar {
     val sleep: Boolean
     val stats: Stats?
     val preferences: AvatarPreferences?
-    val gemCount: Int?
-    val hourglassCount: Int?
+    val gemCount: Int
+    val hourglassCount: Int
     val costume: Outfit?
     val equipped: Outfit?
     fun hasClass(): Boolean
-    val isValid: Boolean
+    fun isValid(): Boolean
 }

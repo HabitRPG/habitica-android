@@ -47,9 +47,12 @@ class HabiticaBottomNavigationView @JvmOverloads constructor(
     var onAddListener:  ((String) -> Unit)? = null
     var activeTaskType: String = Task.TYPE_HABIT
     set(value) {
+        val wasChanged = field != value
         field = value
-        updateItemSelection()
-        onTabSelectedListener?.invoke(value)
+        if (wasChanged) {
+            updateItemSelection()
+            onTabSelectedListener?.invoke(value)
+        }
     }
 
     val barHeight: Int

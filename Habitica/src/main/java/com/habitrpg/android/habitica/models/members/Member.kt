@@ -10,7 +10,6 @@ import io.realm.annotations.PrimaryKey
 
 open class Member : RealmObject(), Avatar {
 
-
     @PrimaryKey
     @SerializedName("_id")
     var id: String? = null
@@ -27,7 +26,7 @@ open class Member : RealmObject(), Avatar {
                 this.inbox?.userId = subID
             }
             if (preferences != null && preferences?.isManaged != true) {
-                preferences?.setUserId(subID)
+                preferences?.userId = subID
             }
             if (this.profile != null && this.profile?.isManaged != true) {
                 this.profile?.userId = subID
@@ -45,7 +44,13 @@ open class Member : RealmObject(), Avatar {
                 this.authentication?.userId = subID
             }
         }
-    private var stats: Stats? = null
+    override var stats: Stats? = null
+        set(value) {
+            field = value
+            if (value != null && this.id != null && !value.isManaged) {
+                field?.userId = this.id
+            }
+        }
     var inbox: Inbox? = null
         set(inbox) {
             field = inbox
@@ -53,7 +58,17 @@ open class Member : RealmObject(), Avatar {
                 inbox.userId = this.id
             }
         }
-    private var preferences: MemberPreferences? = null
+    override var preferences: MemberPreferences? = null
+        set(value) {
+            field = value
+            if (value != null && this.id != null && !value.isManaged) {
+                field?.userId = this.id
+            }
+        }
+    override val gemCount: Int
+        get() = 0
+    override val hourglassCount: Int
+        get() = 0
     var profile: Profile? = null
         set(profile) {
             field = profile
@@ -96,11 +111,23 @@ open class Member : RealmObject(), Avatar {
                 items.userId = this.id
             }
         }
-    private var costume: Outfit? = null
-    private var equipped: Outfit? = null
+    override var costume: Outfit? = null
+    set(value) {
+        field = value
+        if (value != null && this.id != null) {
+            field?.userId = this.id + "costume"
+        }
+    }
+    override var equipped: Outfit? = null
+    set(value) {
+        field = value
+        if (value != null && this.id != null) {
+            field?.userId = this.id + "equipped"
+        }
+    }
 
-    private var currentMount: String? = null
-    private var currentPet: String? = null
+    override var currentMount: String? = null
+    override var currentPet: String? = null
 
     var participatesInQuest: Boolean? = null
     var loginIncentives: Int = 0
@@ -120,79 +147,10 @@ open class Member : RealmObject(), Avatar {
     val formattedUsername: String?
         get() = if (username != null) "@$username" else null
 
-    override fun getPreferences(): MemberPreferences? {
-        return preferences
-    }
-
-    fun setPreferences(preferences: MemberPreferences?) {
-        this.preferences = preferences
-        if (preferences != null && this.id != null && !preferences.isManaged) {
-            preferences.setUserId(this.id ?: "")
-        }
-    }
-
-    override fun getStats(): Stats? {
-        return stats
-    }
-
-    fun setStats(stats: Stats?) {
-        this.stats = stats
-        if (stats != null && this.id != null && !stats.isManaged) {
-            stats.userId = this.id
-        }
-    }
-
-    override fun getGemCount(): Int? {
-        return 0
-    }
-
-    override fun getHourglassCount(): Int? {
-        return 0
-    }
-
-    override fun getCostume(): Outfit? {
-        return costume
-    }
-
-    fun setCostume(costume: Outfit?) {
-        this.costume = costume
-        if (costume != null && this.id != null) {
-            costume.userId = this.id + "costume"
-        }
-    }
-
-    override fun getEquipped(): Outfit? {
-        return equipped
-    }
-
     override fun hasClass(): Boolean {
         return preferences?.disableClasses == false && stats?.habitClass?.isNotEmpty() == true
     }
 
-    fun setEquipped(equipped: Outfit?) {
-        this.equipped = equipped
-        if (equipped != null && this.id != null) {
-            equipped.userId = this.id + "equipped"
-        }
-    }
-
-    override fun getCurrentMount(): String? {
-        return currentMount
-    }
-
-    fun setCurrentMount(currentMount: String) {
-        this.currentMount = currentMount
-    }
-
-    override fun getCurrentPet(): String? {
-        return currentPet
-    }
-
-    fun setCurrentPet(currentPet: String) {
-        this.currentPet = currentPet
-    }
-
-    override fun getSleep(): Boolean {
-        return getPreferences()?.sleep ?: false
-    }
+    override val sleep: Boolean
+        get() = preferences?.sleep ?: false
 }

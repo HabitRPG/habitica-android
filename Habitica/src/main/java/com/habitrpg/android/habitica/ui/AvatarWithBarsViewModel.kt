@@ -78,8 +78,8 @@ class AvatarWithBarsViewModel(private val context: Context, private val binding:
 
         binding.currencyView.gold = stats.gp ?: 0.0
         if (user is User) {
-            binding.currencyView.hourglasses = user.hourglassCount.toDouble()
-            binding.currencyView.gems = user.gemCount.toDouble()
+            binding.currencyView.hourglasses = user.hourglassCount?.toDouble() ?: 0.0
+            binding.currencyView.gems = user.gemCount?.toDouble() ?: 0.0
         }
 
         binding.currencyView.setOnClickListener {

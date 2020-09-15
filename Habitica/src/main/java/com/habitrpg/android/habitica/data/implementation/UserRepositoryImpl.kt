@@ -96,7 +96,7 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
     }
 
     override fun sleep(user: User): Flowable<User> {
-        localRepository.executeTransaction { user.preferences?.isSleep = !(user.preferences?.sleep ?: false) }
+        localRepository.executeTransaction { user.preferences?.sleep = !(user.preferences?.sleep ?: false) }
         return apiClient.sleep().map { user }
     }
 
@@ -212,7 +212,7 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
                 .doOnNext { user ->
                     localRepository.executeTransaction {
                         user.authentication?.localAuthentication?.username = newLoginName
-                        user.flags?.isVerifiedUsername = true
+                        user.flags?.verifiedUsername = true
                     }
                 }
                 .firstElement()
@@ -291,8 +291,8 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
         if (user != null && appConfigManager.enableLocalChanges()) {
             localRepository.executeTransaction {
                 when (type) {
-                    "skin" -> user.preferences?.setSkin(identifier)
-                    "shirt" -> user.preferences?.setShirt(identifier)
+                    "skin" -> user.preferences?.skin =identifier
+                    "shirt" -> user.preferences?.shirt = identifier
                     "hair" -> {
                         when (category) {
                             "color" -> user.preferences?.hair?.color = identifier
@@ -303,8 +303,8 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
                             "base" -> user.preferences?.hair?.base = identifier.toInt()
                         }
                     }
-                    "background" -> user.preferences?.setBackground(identifier)
-                    "chair" -> user.preferences?.setChair(identifier)
+                    "background" -> user.preferences?.background = identifier
+                    "chair" -> user.preferences?.chair = identifier
                 }
             }
         }

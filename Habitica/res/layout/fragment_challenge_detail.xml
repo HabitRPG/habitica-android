@@ -38,10 +38,10 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
-                    android:background="@drawable/layout_rounded_bg"
+                    android:background="@drawable/layout_rounded_bg_window"
                     android:padding="@dimen/spacing_medium"
                     android:orientation="vertical"
-                    android:layout_marginRight="@dimen/spacing_medium">
+                    android:layout_marginEnd="@dimen/spacing_medium">
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -58,7 +58,7 @@
                             android:textSize="17sp"
                             android:textColor="@color/text_secondary"
                             tools:text="5"
-                            android:layout_marginLeft="@dimen/spacing_small"
+                            android:layout_marginStart="@dimen/spacing_small"
                             />
                     </LinearLayout>
                     <TextView
@@ -73,10 +73,10 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
-                    android:background="@drawable/layout_rounded_bg"
+                    android:background="@drawable/layout_rounded_bg_window"
                     android:padding="@dimen/spacing_medium"
                     android:orientation="vertical"
-                    android:layout_marginLeft="@dimen/spacing_medium">
+                    android:layout_marginStart="@dimen/spacing_medium">
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -93,7 +93,7 @@
                             android:textSize="17sp"
                             android:textColor="@color/text_secondary"
                             tools:text="5"
-                            android:layout_marginLeft="@dimen/spacing_small"
+                            android:layout_marginStart="@dimen/spacing_small"
                             />
                     </LinearLayout>
                     <TextView

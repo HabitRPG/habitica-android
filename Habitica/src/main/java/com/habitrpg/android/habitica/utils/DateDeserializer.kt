@@ -17,18 +17,20 @@ import java.util.TimeZone
 
 class DateDeserializer : JsonDeserializer<Date>, JsonSerializer<Date> {
 
-    private val dateFormat: DateFormat
-    private val alternativeFormat: DateFormat
-    private val nextDueFormat: DateFormat
+    private var dateFormats = mutableListOf<DateFormat>()
 
     init {
-        dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US)
-        dateFormat.timeZone = TimeZone.getTimeZone("UTC")
-        alternativeFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US)
-        alternativeFormat.timeZone = TimeZone.getTimeZone("UTC")
-        nextDueFormat = SimpleDateFormat("E MMM dd yyyy HH:mm:ss zzzz", Locale.US)
-        nextDueFormat.timeZone = TimeZone.getTimeZone("UTC")
+        addFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+        addFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
+        addFormat("E MMM dd yyyy HH:mm:ss zzzz")
+        addFormat("yyyy-MM-dd'T'HH:mm:sszzz")
+        addFormat("yyyy-MM-dd")
+    }
 
+    private fun addFormat(s: String) {
+        val dateFormat = SimpleDateFormat(s, Locale.US)
+        dateFormat.timeZone = TimeZone.getTimeZone("UTC")
+        dateFormats.add(dateFormat)
     }
 
     @Synchronized
@@ -45,37 +47,18 @@ class DateDeserializer : JsonDeserializer<Date>, JsonSerializer<Date> {
             return null
         }
         val jsonString = element.asString
-        return try {
-            dateFormat.parse(jsonString)
-        } catch (e: ParseException) {
-            try {
-                alternativeFormat.parse(jsonString)
-            } catch (e1: ParseException) {
-                try {
-                    nextDueFormat.parse(jsonString)
-                } catch (e2: ParseException) {
-                    try {
-                        val timestamp = jsonElement.asLong
-                        if (timestamp > 0) {
-                            Date(timestamp)
-                        } else {
-                            null
-                        }
-                    } catch (e3: NumberFormatException) {
-                        null
-                    }
-
-                }
-
-            }
-
+        var date: Date? = null
+        var index = 0
+        while (index < dateFormats.size && date != null) {
+            date = dateFormats[index].parse(jsonString)
+            index += 1
         }
-
+        return date
     }
 
     override fun serialize(src: Date?, typeOfSrc: Type, context: JsonSerializationContext): JsonElement {
         return if (src == null) {
             JsonPrimitive("")
-        } else JsonPrimitive(this.dateFormat.format(src))
+        } else JsonPrimitive(this.dateFormats[0].format(src))
     }
 }

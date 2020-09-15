@@ -217,11 +217,11 @@ class StatsFragment: BaseMainFragment<FragmentStatsBinding>() {
         binding?.perceptionStatsView?.levelValue = levelStat
 
         totalStrength += currentUser.stats?.buffs?.str?.toInt() ?: 0
-        totalIntelligence += currentUser.stats?.buffs?.get_int()?.toInt() ?: 0
+        totalIntelligence += currentUser.stats?.buffs?._int?.toInt() ?: 0
         totalConstitution += currentUser.stats?.buffs?.con?.toInt() ?: 0
         totalPerception += currentUser.stats?.buffs?.per?.toInt() ?: 0
         binding?.strengthStatsView?.buffValue = currentUser.stats?.buffs?.str?.toInt() ?: 0
-        binding?.intelligenceStatsView?.buffValue = currentUser.stats?.buffs?.get_int()?.toInt() ?: 0
+        binding?.intelligenceStatsView?.buffValue = currentUser.stats?.buffs?._int?.toInt() ?: 0
         binding?.constitutionStatsView?.buffValue = currentUser.stats?.buffs?.con?.toInt() ?: 0
         binding?.perceptionStatsView?.buffValue = currentUser.stats?.buffs?.per?.toInt() ?: 0
 

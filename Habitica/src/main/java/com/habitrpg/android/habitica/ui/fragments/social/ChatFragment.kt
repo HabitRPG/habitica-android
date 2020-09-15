@@ -99,7 +99,7 @@ class ChatFragment : BaseFragment<FragmentChatBinding>() {
 
         viewModel?.getUserData()?.observe(viewLifecycleOwner, {
             chatAdapter?.user = it
-            binding?.chatBarView?.hasAcceptedGuidelines = it?.flags?.isCommunityGuidelinesAccepted == true
+            binding?.chatBarView?.hasAcceptedGuidelines = it?.flags?.communityGuidelinesAccepted == true
         })
     }
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mrge xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -26,7 +26,7 @@
         android:background="@drawable/name_plate"
         android:gravity="center_vertical"
         android:textColor="@color/white"
-        android:layout_marginLeft="45dp"
+        android:layout_marginStart="45dp"
         android:layout_marginTop="83dp"
         android:textStyle="bold" />
     <TextView
@@ -39,4 +39,4 @@
         android:layout_marginBottom="4dp"
         style="@style/Body1"
         tools:text="Welcome to the Market! Stock up on new gear or buy rare eggs and potions. Check in periodically for new stock." />
-</mrge>
+</FrameLayout>

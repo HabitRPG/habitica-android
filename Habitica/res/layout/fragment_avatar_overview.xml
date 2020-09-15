@@ -11,7 +11,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/spacing_medium">
 
         <TextView
             android:layout_width="wrap_content"
@@ -20,10 +21,10 @@
             android:text="@string/avatar_body"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        <androidx.cardview.widget.CardView
+        <FrameLayout
+            android:background="@drawable/layout_rounded_bg_window"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/CardView.Default">
+            android:layout_height="wrap_content">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -67,7 +68,7 @@
                     android:id="@+id/avatarSkinView"
                     app:equipmentTitle="@string/avatar_skin"/>
             </LinearLayout>
-        </androidx.cardview.widget.CardView>
+        </FrameLayout>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -75,10 +76,10 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             style="@style/SectionTitle"/>
 
-        <androidx.cardview.widget.CardView
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/CardView.Default">
+            android:background="@drawable/layout_rounded_bg_window">
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
@@ -118,7 +119,7 @@
                     android:id="@+id/avatar_headband_view"
                     app:equipmentTitle="@string/avatar_headband"/>
             </LinearLayout>
-        </androidx.cardview.widget.CardView>
+        </FrameLayout>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -126,10 +127,10 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             style="@style/SectionTitle"/>
 
-        <androidx.cardview.widget.CardView
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/CardView.Default">
+            android:background="@drawable/layout_rounded_bg_window">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -162,7 +163,7 @@
                     android:id="@+id/avatarHairMustacheView"
                     app:equipmentTitle="@string/avatar_mustache" />
             </LinearLayout>
-        </androidx.cardview.widget.CardView>
+        </FrameLayout>
 
         <TextView
             android:layout_width="wrap_content"
@@ -171,10 +172,10 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             style="@style/SectionTitle"/>
 
-        <androidx.cardview.widget.CardView
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/CardView.Default">
+            android:background="@drawable/layout_rounded_bg_window">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -185,6 +186,6 @@
                     android:id="@+id/avatarBackgroundView"
                     app:equipmentTitle="@string/avatar_background" />
             </LinearLayout>
-        </androidx.cardview.widget.CardView>
+        </FrameLayout>
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

@@ -1106,4 +1106,5 @@
     <string name="dark_mode">Dark Mode</string>
     <string name="theme_mode">Theme Mode</string>
     <string name="theme_color">Theme Color</string>
+    <string name="submit_feedback">Submit Feedback</string>
 </resources>

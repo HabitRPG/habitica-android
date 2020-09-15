@@ -45,23 +45,25 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="48dp"
-        android:layout_alignParentBottom="true"
-        android:paddingTop="@dimen/spacing_small"
-        android:paddingBottom="@dimen/spacing_small">
+        android:layout_alignParentBottom="true">
         <com.habitrpg.android.habitica.ui.views.navigation.BottomNavigationItem
             android:id="@+id/habits_tab"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             app:title="@string/habits"
-            app:iconDrawable="@drawable/icon_habits_selected"/>
+            app:iconDrawable="@drawable/icon_habits_selected"
+            android:paddingTop="@dimen/spacing_small"
+            android:paddingBottom="@dimen/spacing_small"/>
         <com.habitrpg.android.habitica.ui.views.navigation.BottomNavigationItem
             android:layout_width="0dp"
             android:id="@+id/dailies_tab"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             app:title="@string/dailies"
-            app:iconDrawable="@drawable/icon_dailies_selected"/>
+            app:iconDrawable="@drawable/icon_dailies_selected"
+            android:paddingTop="@dimen/spacing_small"
+            android:paddingBottom="@dimen/spacing_small"/>
         <androidx.legacy.widget.Space
             android:layout_width="50dp"
             android:layout_height="wrap_content" />
@@ -71,14 +73,18 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             app:title="@string/todos"
-            app:iconDrawable="@drawable/icon_todos_selected"/>
+            app:iconDrawable="@drawable/icon_todos_selected"
+            android:paddingTop="@dimen/spacing_small"
+            android:paddingBottom="@dimen/spacing_small"/>
         <com.habitrpg.android.habitica.ui.views.navigation.BottomNavigationItem
             android:id="@+id/rewards_tab"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             app:title="@string/rewards"
-            app:iconDrawable="@drawable/icon_rewards_selected"/>
+            app:iconDrawable="@drawable/icon_rewards_selected"
+            android:paddingTop="@dimen/spacing_small"
+            android:paddingBottom="@dimen/spacing_small"/>
     </LinearLayout>
 
     <FrameLayout

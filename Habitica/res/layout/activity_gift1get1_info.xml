@@ -106,7 +106,7 @@
             <Button
                 android:id="@+id/gift_button"
                 android:layout_width="match_parent"
-                android:layout_height="38dp"
+                android:layout_height="wrap_content"
                 style="@style/HabiticaButton.Purple"
                 android:text="@string/gift_a_subscription"
                 android:layout_marginTop="24dp"

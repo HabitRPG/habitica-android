@@ -13,6 +13,7 @@ import com.habitrpg.android.habitica.extensions.isUsingNightModeResources
 import com.habitrpg.android.habitica.helpers.NumberAbbreviator
 
 class CurrencyView : androidx.appcompat.widget.AppCompatTextView {
+    var hideWhenEmpty: Boolean = false
     var lightBackground: Boolean = false
         set(value) {
             field = value
@@ -32,8 +33,9 @@ class CurrencyView : androidx.appcompat.widget.AppCompatTextView {
                 attrs,
                 R.styleable.CurrencyViews,
                 0, 0)
+        val fallBackLight = !context.isUsingNightModeResources()
         lightBackground = try {
-            attributes?.getBoolean(R.styleable.CurrencyView_hasLightBackground, true) ?: true
+            attributes?.getBoolean(R.styleable.CurrencyView_hasLightBackground, fallBackLight) ?: fallBackLight
         } catch (_: ArrayIndexOutOfBoundsException) {
             !context.isUsingNightModeResources()
         }
@@ -79,6 +81,7 @@ class CurrencyView : androidx.appcompat.widget.AppCompatTextView {
                 setTextColor(ContextCompat.getColor(context, R.color.brand_500))
             }
         }
+        hideWhenEmpty = "hourglasses" == currency
     }
 
     private var drawable: BitmapDrawable? = null
@@ -135,7 +138,7 @@ class CurrencyView : androidx.appcompat.widget.AppCompatTextView {
     }
 
     private fun updateVisibility() {
-        visibility = if ("hourglasses" == this.currency) {
+        visibility = if (hideWhenEmpty) {
             if ("0" == text) View.GONE else View.VISIBLE
         } else {
             View.VISIBLE

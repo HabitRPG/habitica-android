@@ -122,7 +122,7 @@ class PetViewHolder(parent: ViewGroup, private val equipEvents: PublishSubject<S
             when (index) {
                 0 -> {
                     animal?.let {
-                        equipEvents.onNext(it.key)
+                        equipEvents.onNext(it.key ?: "")
                     }
                 }
                 1 -> {

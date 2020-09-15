@@ -28,7 +28,7 @@
         <RadioGroup
             android:id="@+id/task_filter_wrapper"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:orientation="horizontal"
             android:layout_marginTop="12dp"
             android:layout_marginBottom="24dp">

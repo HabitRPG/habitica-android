@@ -32,8 +32,8 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <androidx.cardview.widget.CardView
-                style="@style/CardView.Default"
+            <FrameLayout
+                android:background="@drawable/layout_rounded_bg_window"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -116,10 +116,10 @@
                             tools:text="100"/>
                     </LinearLayout>
                 </LinearLayout>
-            </androidx.cardview.widget.CardView>
+            </FrameLayout>
 
-            <androidx.cardview.widget.CardView
-                style="@style/CardView.Default"
+            <FrameLayout
+                android:background="@drawable/layout_rounded_bg_window"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <LinearLayout
@@ -157,10 +157,10 @@
                         android:textSize="13sp"
                         android:drawableTop="@drawable/icon_gift_subscription"/>
                 </LinearLayout>
-            </androidx.cardview.widget.CardView>
+            </FrameLayout>
 
-            <androidx.cardview.widget.CardView
-                style="@style/CardView.Default"
+            <FrameLayout
+                android:background="@drawable/layout_rounded_bg_window"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -183,11 +183,11 @@
                         android:shrinkColumns="1"
                         android:stretchColumns="0" />
                 </LinearLayout>
-            </androidx.cardview.widget.CardView>
+            </FrameLayout>
 
-            <androidx.cardview.widget.CardView
+            <FrameLayout
+                android:background="@drawable/layout_rounded_bg_window"
                 android:id="@+id/costume_card"
-                style="@style/CardView.Default"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -210,11 +210,11 @@
                         android:shrinkColumns="1"
                         android:stretchColumns="0" />
                 </LinearLayout>
-            </androidx.cardview.widget.CardView>
+            </FrameLayout>
 
-            <androidx.cardview.widget.CardView
+            <FrameLayout
+                android:background="@drawable/layout_rounded_bg_window"
                 android:id="@+id/attributes_card_view"
-                style="@style/CardView.Default"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:clickable="true"
@@ -279,11 +279,11 @@
 
                     </TableLayout>
                 </LinearLayout>
-            </androidx.cardview.widget.CardView>
+            </FrameLayout>
 
 
-            <androidx.cardview.widget.CardView
-                style="@style/CardView.Default"
+            <FrameLayout
+                android:background="@drawable/layout_rounded_bg_window"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -348,12 +348,12 @@
                         </TableRow>
                     </TableLayout>
                 </LinearLayout>
-            </androidx.cardview.widget.CardView>
+            </FrameLayout>
 
 
-            <androidx.cardview.widget.CardView
+            <FrameLayout
+                android:background="@drawable/layout_rounded_bg_window"
                 android:id="@+id/profile_achievements_card"
-                style="@style/CardView.Default"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -384,7 +384,7 @@
                         android:scrollbarThumbVertical="@color/scrollbarThumb"
                         android:scrollbars="vertical" />
                 </LinearLayout>
-            </androidx.cardview.widget.CardView>
+            </FrameLayout>
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

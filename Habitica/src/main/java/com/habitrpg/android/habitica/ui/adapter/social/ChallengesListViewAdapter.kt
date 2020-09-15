@@ -89,7 +89,7 @@ class ChallengesListViewAdapter(data: OrderedRealmCollection<Challenge>?, autoUp
             binding.gemIcon.setImageBitmap(HabiticaIconsHelper.imageOfGem())
 
             if (!viewUserChallengesOnly) {
-                binding.challengeName.setTextColor(ContextCompat.getColor(itemView.context, R.color.brand_200))
+                binding.challengeName.setTextColor(ContextCompat.getColor(itemView.context, R.color.text_brand))
             }
         }
 

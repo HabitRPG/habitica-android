@@ -19,7 +19,7 @@ open class Flags : RealmObject() {
     var armoireEnabled = false
     var armoireOpened = false
     var armoireEmpty = false
-    var isCommunityGuidelinesAccepted = false
-    var isVerifiedUsername = false
+    var communityGuidelinesAccepted = false
+    var verifiedUsername = false
     var isWarnedLowHealth = false
 }

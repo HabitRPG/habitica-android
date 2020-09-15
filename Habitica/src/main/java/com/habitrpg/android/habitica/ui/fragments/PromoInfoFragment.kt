@@ -31,7 +31,7 @@ class PromoInfoFragment : BaseMainFragment<FragmentPromoInfoBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val promo = configManager.activePromo()
+        val promo = context?.let { configManager.activePromo(it) }
         promo?.configureInfoFragment(this)
     }
 }
