@@ -13,6 +13,7 @@ import com.habitrpg.android.habitica.extensions.setTintWith
 import com.habitrpg.android.habitica.models.SetupCustomization
 import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.BackpressureStrategy
+import io.reactivex.Flowable
 import io.reactivex.subjects.PublishSubject
 
 internal class CustomizationSetupAdapter : RecyclerView.Adapter<CustomizationSetupAdapter.CustomizationViewHolder>() {
@@ -22,9 +23,9 @@ internal class CustomizationSetupAdapter : RecyclerView.Adapter<CustomizationSet
     private var customizationList: List<SetupCustomization> = emptyList()
 
     private val equipGearEventSubject = PublishSubject.create<String>()
-    val equipGearEvents = equipGearEventSubject.toFlowable(BackpressureStrategy.DROP)
-    private val updateUserEventsSubject = PublishSubject.create<HashMap<String, Any>>()
-    val updateUserEvents = updateUserEventsSubject.toFlowable(BackpressureStrategy.DROP)
+    val equipGearEvents: Flowable<String> = equipGearEventSubject.toFlowable(BackpressureStrategy.DROP)
+    private val updateUserEventsSubject = PublishSubject.create<Map<String, Any>>()
+    val updateUserEvents: Flowable<Map<String, Any>> = updateUserEventsSubject.toFlowable(BackpressureStrategy.DROP)
 
     fun setCustomizationList(newCustomizationList: List<SetupCustomization>) {
         this.customizationList = newCustomizationList

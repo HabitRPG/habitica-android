@@ -51,7 +51,7 @@ open class GroupViewModel : BaseViewModel() {
     }
 
     protected val groupIDSubject = BehaviorSubject.create<Optional<String>>()
-    val groupIDFlowable = groupIDSubject.toFlowable(BackpressureStrategy.BUFFER)
+    val groupIDFlowable: Flowable<Optional<String>> = groupIDSubject.toFlowable(BackpressureStrategy.BUFFER)
     var gotNewMessages: Boolean = false
 
     init {

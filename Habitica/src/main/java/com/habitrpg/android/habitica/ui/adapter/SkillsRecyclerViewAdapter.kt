@@ -16,12 +16,13 @@ import com.habitrpg.android.habitica.models.user.SpecialItems
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import io.reactivex.BackpressureStrategy
+import io.reactivex.Flowable
 import io.reactivex.subjects.PublishSubject
 
 class SkillsRecyclerViewAdapter : RecyclerView.Adapter<SkillsRecyclerViewAdapter.SkillViewHolder>() {
 
     private val useSkillSubject = PublishSubject.create<Skill>()
-    val useSkillEvents = useSkillSubject.toFlowable(BackpressureStrategy.DROP)
+    val useSkillEvents: Flowable<Skill> = useSkillSubject.toFlowable(BackpressureStrategy.DROP)
 
     var mana: Double = 0.0
         set(value) {

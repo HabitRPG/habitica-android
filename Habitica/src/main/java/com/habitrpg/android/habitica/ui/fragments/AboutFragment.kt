@@ -15,19 +15,16 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.databinding.FragmentAboutBinding
 import com.habitrpg.android.habitica.helpers.AppConfigManager
-import com.habitrpg.android.habitica.helpers.DeviceName
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.plattysoft.leonids.ParticleSystem
-import io.reactivex.Completable
 import javax.inject.Inject
 import javax.inject.Named
 
 
 class AboutFragment : BaseMainFragment<FragmentAboutBinding>() {
 
-    private var deviceInfo: DeviceName.DeviceInfo? = null
     @field:[Inject Named(AppModule.NAMED_USER_ID)]
     lateinit var userId: String
 
@@ -55,11 +52,6 @@ class AboutFragment : BaseMainFragment<FragmentAboutBinding>() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         this.hidesToolbar = true
-
-        compositeSubscription.add(Completable.fromAction {
-            deviceInfo = DeviceName.getDeviceInfo(context)
-        }.subscribe())
-
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 

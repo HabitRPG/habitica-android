@@ -165,7 +165,7 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             ownedTextView.visibility = View.VISIBLE
             imageView.loadImage(imageName)
 
-            val alpha = if (item.numberOwned <= 0 && ownedEggs?.containsKey(item.animal ?: "") != true) 0.2f else 1.0f
+            val alpha = if (item.numberOwned <= 0 && ownedEggs?.containsKey(item.animal) != true) 0.2f else 1.0f
             this.imageView.alpha = alpha
             this.titleView.alpha = alpha
             this.ownedTextView.alpha = alpha
@@ -180,11 +180,11 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             val animal = this.animal
             if (animal != null) {
                 val color = if (animal.type == "special") animal.color else null
-                if (animal.numberOwned > 0 || ownedEggs?.containsKey(animal.animal ?: "") == true) {
+                if (animal.numberOwned > 0 || ownedEggs?.containsKey(animal.animal) == true) {
                     if (itemType == "pets") {
-                        MainNavigationController.navigate(StableFragmentDirections.openPetDetail(animal.animal ?: "", animal.type ?: "", color))
+                        MainNavigationController.navigate(StableFragmentDirections.openPetDetail(animal.animal, animal.type ?: "", color))
                     } else {
-                        MainNavigationController.navigate(StableFragmentDirections.openMountDetail(animal.animal ?: "", animal.type ?: "", color))
+                        MainNavigationController.navigate(StableFragmentDirections.openMountDetail(animal.animal, animal.type ?: "", color))
                     }
                 }
             }

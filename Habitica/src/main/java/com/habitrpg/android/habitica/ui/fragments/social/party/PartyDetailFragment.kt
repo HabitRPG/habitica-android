@@ -361,18 +361,6 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
         viewModel?.rejectQuest()
     }
 
-    private fun onPartyInviteAccepted() {
-        viewModel?.getUserData()?.value?.invitations?.party?.id?.let {
-            viewModel?.joinGroup(it)
-        }
-    }
-
-    private fun onPartyInviteRejected() {
-        viewModel?.getUserData()?.value?.invitations?.party?.id?.let {
-            viewModel?.rejectGroupInvite(it)
-        }
-    }
-
     private fun questDetailButtonClicked() {
         viewModel?.getGroupData()?.value?.let { party ->
             MainNavigationController.navigate(PartyFragmentDirections.openQuestDetail(party.id, party.quest?.key ?: ""))

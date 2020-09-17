@@ -767,7 +767,7 @@
     <string name="login_incentive_short">Accedi ad Habitica regolarmente</string>
     <string name="party_invite_short">Invita degli Amici</string>
     <string name="login_incentive_count">Sbloccalo accedendo ad Habitica %d volte.</string>
-    <string name="user_level_with_class_unabbreviated">Livello %1$d &amp;2$s</string>
+    <string name="user_level_with_class_unabbreviated">Livello %1$d &amp;%2$s</string>
     <string name="remaining_1hour">1 ora rimanente</string>
     <string name="remaining_hours">%d ore rimanenti</string>
     <string name="remaining_days">%d giorni rimanenti</string>

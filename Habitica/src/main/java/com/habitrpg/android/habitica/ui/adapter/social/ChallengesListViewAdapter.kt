@@ -2,7 +2,6 @@ package com.habitrpg.android.habitica.ui.adapter.social
 
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ChallengeItemBinding

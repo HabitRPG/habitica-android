@@ -21,6 +21,7 @@ import com.habitrpg.android.habitica.ui.views.CurrencyView
 import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
+import java.util.*
 
 
 class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
@@ -45,8 +46,8 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
         binding.eggView.alpha = if (hasEgg) 1.0f else 0.5f
         binding.hatchingPotionView.alpha = if (hasPotion) 1.0f else 0.5f
 
-        val eggName = egg?.text ?: pet.animal.capitalize()
-        val potionName = potion?.text ?: pet.color.capitalize()
+        val eggName = egg?.text ?: pet.animal.capitalize(Locale.getDefault())
+        val potionName = potion?.text ?: pet.color.capitalize(Locale.getDefault())
 
         if (hasEgg) {
             binding.eggCountView.visibility = View.VISIBLE

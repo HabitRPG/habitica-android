@@ -106,7 +106,7 @@ class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerVi
                 val set = CustomizationSet()
                 set.identifier = customization.customizationSet
                 set.text = customization.customizationSetName
-                set.price = customization.setPrice
+                set.price = customization.setPrice ?: 0
                 set.hasPurchasable = !customization.isUsable(ownedCustomiztations.contains(customization.identifier))
                 lastSet = set
                 customizationList.add(set)
@@ -234,7 +234,7 @@ class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerVi
         fun bind(set: CustomizationSet) {
             this.set = set
             binding.label.text = set.text
-            if (set.hasPurchasable && !set.identifier.contains("timeTravel")) {
+            if (set.hasPurchasable && set.identifier?.contains("timeTravel") != true) {
                 binding.purchaseSetButton.visibility = View.VISIBLE
                 binding.setPriceLabel.value = set.price.toDouble()
                 binding.setPriceLabel.currency = "gems"

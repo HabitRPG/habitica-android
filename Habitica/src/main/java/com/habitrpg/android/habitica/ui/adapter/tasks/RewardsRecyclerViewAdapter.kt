@@ -19,11 +19,11 @@ import io.reactivex.Flowable
 import io.reactivex.subjects.PublishSubject
 import io.realm.OrderedRealmCollection
 
-class RewardsRecyclerViewAdapter(private var customRewards: OrderedRealmCollection<Task>?, private val layoutResource: Int, private val user: User?, private val configManager: AppConfigManager) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), TaskRecyclerViewAdapter {
+class RewardsRecyclerViewAdapter(private var customRewards: OrderedRealmCollection<Task>?, private val layoutResource: Int, private val user: User?) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), TaskRecyclerViewAdapter {
     private var inAppRewards: OrderedRealmCollection<ShopItem>? = null
 
-    val errorButtonEventsSubject = PublishSubject.create<String>()
-    override val errorButtonEvents = errorButtonEventsSubject.toFlowable(BackpressureStrategy.DROP)
+    private val errorButtonEventsSubject = PublishSubject.create<String>()
+    override val errorButtonEvents: Flowable<String> = errorButtonEventsSubject.toFlowable(BackpressureStrategy.DROP)
     private var taskScoreEventsSubject = PublishSubject.create<Pair<Task, TaskDirection>>()
     override val taskScoreEvents: Flowable<Pair<Task, TaskDirection>> = taskScoreEventsSubject.toFlowable(BackpressureStrategy.LATEST)
     private var checklistItemScoreSubject = PublishSubject.create<Pair<Task, ChecklistItem>>()
@@ -137,7 +137,6 @@ class RewardsRecyclerViewAdapter(private var customRewards: OrderedRealmCollecti
 
     companion object {
         private const val VIEWTYPE_CUSTOM_REWARD = 0
-        private const val VIEWTYPE_HEADER = 1
         private const val VIEWTYPE_IN_APP_REWARD = 2
     }
 }

@@ -56,8 +56,4 @@ class FixValuesEditText(context: Context, attrs: AttributeSet) : FrameLayout(con
             "streak" -> binding.iconView.setImageResource(R.drawable.achievement_thermometer)
         }
     }
-
-    fun setIconBitmap(icon: Bitmap) {
-        binding.iconView.setImageBitmap(icon)
-    }
 }

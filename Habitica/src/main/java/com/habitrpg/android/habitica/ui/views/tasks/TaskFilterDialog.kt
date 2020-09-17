@@ -4,14 +4,12 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.drawable.Drawable
-import android.os.Bundle
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
 import android.widget.*
 import androidx.annotation.IdRes
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatCheckBox
 import androidx.core.content.ContextCompat
 import androidx.core.widget.CompoundButtonCompat
@@ -333,9 +331,9 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : HabiticaAl
     private fun filtersChanged() {
         clearButton.isEnabled = hasActiveFilters()
         clearButton.setTextColor(if (clearButton.isEnabled) {
-            context.getThemeColor(R.color.colorAccent)
+            context.getThemeColor(R.attr.colorAccent)
         } else {
-            context.getThemeColor(R.color.text_dimmed)
+            ContextCompat.getColor(context, R.color.text_dimmed)
         })
     }
 

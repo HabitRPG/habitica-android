@@ -47,7 +47,7 @@ class BugFixFragment: BaseMainFragment<FragmentSupportBugFixBinding>() {
         super.onViewCreated(view, savedInstanceState)
 
         compositeSubscription.add(Completable.fromAction {
-            deviceInfo = DeviceName.getDeviceInfo(context)
+            deviceInfo = context?.let { DeviceName.getDeviceInfo(it) }
         }.subscribe())
 
         binding?.reportBugButton?.setOnClickListener {
@@ -75,7 +75,7 @@ class BugFixFragment: BaseMainFragment<FragmentSupportBugFixBinding>() {
 
     private fun sendEmail(subject: String) {
         val version = Build.VERSION.SDK_INT
-        val deviceName = deviceInfo?.name ?: DeviceName.getDeviceName()
+        val deviceName = deviceInfo?.name ?: DeviceName.deviceName
         val manufacturer = deviceInfo?.manufacturer ?: Build.MANUFACTURER
         var bodyOfEmail = Uri.encode("Device: $manufacturer $deviceName") +
                 "%0D%0A" + Uri.encode("Android Version: $version") +

@@ -3,7 +3,6 @@ package com.habitrpg.android.habitica.ui.views
 import android.content.Context
 import android.util.AttributeSet
 import android.util.TypedValue
-import android.view.View
 import android.widget.LinearLayout
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.isUsingNightModeResources
