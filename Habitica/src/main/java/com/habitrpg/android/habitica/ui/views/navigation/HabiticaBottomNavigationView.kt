@@ -217,8 +217,8 @@ class HabiticaBottomNavigationView @JvmOverloads constructor(
         return when(id) {
             R.id.habits_tab -> binding.habitsTab
             R.id.dailies_tab -> binding.dailiesTab
-            R.id.todos_tab -> binding.rewardsTab
-            R.id.rewards_tab -> binding.todosTab
+            R.id.todos_tab -> binding.todosTab
+            R.id.rewards_tab -> binding.rewardsTab
             else -> null
         }
     }
