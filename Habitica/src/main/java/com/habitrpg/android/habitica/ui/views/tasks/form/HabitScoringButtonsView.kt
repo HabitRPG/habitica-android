@@ -66,6 +66,10 @@ class HabitScoringButtonsView @JvmOverloads constructor(
             isNegative = !isNegative
             sendAccessibilityEvent(AccessibilityEvent.CONTENT_CHANGE_TYPE_CONTENT_DESCRIPTION)
         }
+    }
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
 
         isPositive = true
         isNegative = true

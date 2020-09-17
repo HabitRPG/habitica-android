@@ -99,7 +99,6 @@
                     android:fillViewport="false"
                     app:layout_anchor="@+id/collapsing_toolbar"
                     app:layout_anchorGravity="bottom"
-
                     app:layout_collapseMode="pin"
                     app:tabGravity="fill"
                     app:tabIndicatorColor="?colorPrimary"

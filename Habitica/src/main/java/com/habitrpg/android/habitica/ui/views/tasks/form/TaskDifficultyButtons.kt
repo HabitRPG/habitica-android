@@ -31,7 +31,8 @@ class TaskDifficultyButtons @JvmOverloads constructor(
     }
     private lateinit var selectedButton: View
 
-    init {
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
         addAllButtons()
     }
 

@@ -47,7 +47,8 @@
                     android:layout_height="wrap_content"
                     style="@style/TaskFormTextInputLayoutAppearance"
                     app:boxStrokeColor="?attr/colorPrimary"
-                    android:backgroundTint="?attr/colorPrimary"
+                    app:hintTextColor="?colorPrimaryText"
+                    android:backgroundTint="?attr/colorPrimaryText"
                     android:alpha="0.75">
                     <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/text_edit_text"
@@ -63,7 +64,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:boxStrokeColor="?attr/colorPrimary"
-                    android:backgroundTint="?attr/colorPrimary"
+                    android:backgroundTint="?attr/colorPrimaryText"
+                    app:hintTextColor="?colorPrimaryText"
                     android:layout_marginTop="@dimen/spacing_large"
                     android:alpha="0.75">
                     <androidx.appcompat.widget.AppCompatEditText
