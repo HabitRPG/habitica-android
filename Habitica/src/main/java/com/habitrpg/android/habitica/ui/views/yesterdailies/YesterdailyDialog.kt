@@ -2,10 +2,12 @@ package com.habitrpg.android.habitica.ui.views.yesterdailies
 
 import android.app.Activity
 import android.content.Context
+import android.graphics.PorterDuff
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -88,23 +90,22 @@ class YesterdailyDialog private constructor(context: Context, private val userRe
             if (task.checklist?.size ?: 0 > 0) {
                 val checklistContainer = taskView.findViewById<ViewGroup>(R.id.checklistView)
                 for (item in task.checklist ?: emptyList<ChecklistItem>()) {
-                    val checklistView = inflater.inflate(R.layout.checklist_item_row, yesterdailiesList, false)
+                    val checklistView = inflater.inflate(R.layout.checklist_item_row, checklistContainer, false) as ViewGroup
                     configureChecklistView(checklistView, task, item)
                     checklistContainer.addView(checklistView)
                 }
             }
-            val checkBox = taskView.findViewById(R.id.checkBox) as? CheckBox
-            checkBox?.isEnabled = false
-            checkBox?.isClickable = false
             yesterdailiesList.addView(taskView)
         }
     }
 
-    private fun configureChecklistView(checklistView: View, task: Task, item: ChecklistItem) {
-        val checkbox = checklistView.findViewById(R.id.checkBox) as? CheckBox
-        checkbox?.isChecked = item.completed
-        checkbox?.setOnCheckedChangeListener { _, isChecked ->
-            item.completed = isChecked
+    private fun configureChecklistView(checklistView: ViewGroup, task: Task, item: ChecklistItem) {
+        val checkmark = checklistView.findViewById<ImageView>(R.id.checkmark)
+        checkmark?.drawable?.setTintMode(PorterDuff.Mode.SRC_ATOP)
+        checkmark?.visibility = if (item.completed) View.VISIBLE else View.GONE
+        val checkboxHolder = checklistView.findViewById<View>(R.id.checkBoxHolder) as? ViewGroup
+        checkboxHolder?.setOnClickListener { _ ->
+            item.completed = !item.completed
             taskRepository.scoreChecklistItem(task.id ?: "", item.id ?: "").subscribe({ }, RxErrorHandler.handleEmptyError())
             configureChecklistView(checklistView, task, item)
         }
@@ -113,27 +114,24 @@ class YesterdailyDialog private constructor(context: Context, private val userRe
             taskRepository.scoreChecklistItem(task.id ?: "", item.id ?: "").subscribe({ }, RxErrorHandler.handleEmptyError())
             configureChecklistView(checklistView, task, item)
         }
-        val checkboxHolder = checklistView.findViewById<View>(R.id.checkBoxHolder)
-        checkboxHolder.setBackgroundResource(R.color.window_background)
+        checkboxHolder?.setBackgroundResource(R.color.window_background)
         val textView = checklistView.findViewById(R.id.checkedTextView) as? TextView
         textView?.text = item.text
     }
 
     private fun configureTaskView(taskView: View, task: Task) {
         val completed = !task.isDisplayedActive
-        val checkbox = taskView.findViewById(R.id.checkBox) as? CheckBox
+        val checkmark = taskView.findViewById<View>(R.id.checkmark)
         val checkboxHolder = taskView.findViewById<View>(R.id.checkBoxHolder)
-        checkbox?.isChecked = completed
-        checkbox?.buttonTintList = ContextCompat.getColorStateList(context, R.color.checkbox_fill)
+        checkmark?.visibility = if (completed) View.VISIBLE else View.GONE
         if (completed) {
-            checkboxHolder.setBackgroundColor(this.taskGray)
+            checkboxHolder.setBackgroundResource(R.color.window_background)
         } else {
             checkboxHolder.setBackgroundResource(task.lightTaskColor)
         }
 
         val emojiView = taskView.findViewById<View>(R.id.text_view) as? HabiticaEmojiTextView
         emojiView?.text = task.markdownText { emojiView?.text = it }
-
     }
 
 

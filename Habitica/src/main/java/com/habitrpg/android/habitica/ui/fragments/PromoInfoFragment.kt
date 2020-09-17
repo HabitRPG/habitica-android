@@ -33,5 +33,6 @@ class PromoInfoFragment : BaseMainFragment<FragmentPromoInfoBinding>() {
         super.onViewCreated(view, savedInstanceState)
         val promo = context?.let { configManager.activePromo(it) }
         promo?.configureInfoFragment(this)
+        activity?.title = ""
     }
 }

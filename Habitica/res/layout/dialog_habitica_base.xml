@@ -60,7 +60,8 @@
             android:scrollbars = "vertical"
             style="@style/Body2"
             />
-        <androidx.core.widget.NestedScrollView
+        <com.habitrpg.android.habitica.ui.views.login.LockableScrollView
+            android:id="@+id/main_scroll_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1">
@@ -70,7 +71,7 @@
                 android:layout_height="wrap_content"
                 android:paddingStart="@dimen/alert_side_padding"
                 android:paddingEnd="@dimen/alert_side_padding"/>
-        </androidx.core.widget.NestedScrollView>
+        </com.habitrpg.android.habitica.ui.views.login.LockableScrollView>
         <View
             android:id="@+id/scrolling_separator"
             android:layout_width="match_parent"

@@ -151,7 +151,7 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
         AmplitudeManager.sendEvent("navigate", AmplitudeManager.EVENT_CATEGORY_NAVIGATION, AmplitudeManager.EVENT_HITTYPE_PAGEVIEW, additionalData)
 
         binding.backgroundContainer.post { binding.backgroundContainer.scrollTo(0, binding.backgroundContainer.bottom) }
-        binding.backgroundContainer.setScrollingEnabled(false)
+        binding.backgroundContainer.isScrollable = false
 
         val window = window
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -375,8 +375,8 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
                     if (userAuthResponse.newUser) {
                         this.startSetupActivity()
                     } else {
-                        AmplitudeManager.sendEvent("login", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT)
                         this.startMainActivity()
+                        AmplitudeManager.sendEvent("login", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT)
                     }
                 }, RxErrorHandler.handleEmptyError()))
     }

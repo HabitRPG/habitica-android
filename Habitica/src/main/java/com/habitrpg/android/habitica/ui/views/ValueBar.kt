@@ -136,7 +136,7 @@ class ValueBar(context: Context, attrs: AttributeSet?) : FrameLayout(context, at
     fun setLightBackground(lightBackground: Boolean) {
         val textColor: Int
         if (lightBackground) {
-            textColor = ContextCompat.getColor(context, R.color.text_primary)
+            textColor = ContextCompat.getColor(context, R.color.text_ternary)
             binding.progressBar.setBackgroundResource(R.drawable.layout_rounded_bg_light_gray)
         } else {
             textColor = context.getThemeColor(R.attr.textColorPrimaryDark)

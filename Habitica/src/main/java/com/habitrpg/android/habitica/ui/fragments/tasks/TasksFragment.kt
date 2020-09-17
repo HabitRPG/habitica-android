@@ -6,6 +6,7 @@ import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.widget.SearchView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentPagerAdapter
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
@@ -13,6 +14,7 @@ import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.TagRepository
 import com.habitrpg.android.habitica.databinding.FragmentViewpagerBinding
 import com.habitrpg.android.habitica.extensions.getThemeColor
+import com.habitrpg.android.habitica.extensions.setTintWith
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
@@ -89,11 +91,7 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
                 Task.TYPE_REWARD -> 3
                 else -> 0
             }
-            if (newItem == binding?.viewPager?.currentItem) {
-                refresh()
-            } else {
-                binding?.viewPager?.currentItem = newItem
-            }
+            binding?.viewPager?.currentItem = newItem
             updateBottomBarBadges()
         }
         bottomNavigation?.onAddListener = { type ->
@@ -261,14 +259,14 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
         if (filterCount == 0) {
             filterMenuItem?.setIcon(R.drawable.ic_action_filter_list)
             context?.let {
-                val filterIcon = it.getDrawable(R.drawable.ic_action_filter_list)
-                filterIcon?.setColorFilter(it.getThemeColor(R.attr.headerTextColor), PorterDuff.Mode.MULTIPLY)
+                val filterIcon = ContextCompat.getDrawable(it, R.drawable.ic_action_filter_list)
+                filterIcon?.setTintWith(it.getThemeColor(R.attr.headerTextColor), PorterDuff.Mode.MULTIPLY)
                 filterMenuItem?.setIcon(filterIcon)
             }
         } else {
             context?.let {
-                val filterIcon = it.getDrawable(R.drawable.ic_filters_active)
-                filterIcon?.setColorFilter(it.getThemeColor(R.attr.textColorPrimaryDark), PorterDuff.Mode.MULTIPLY)
+                val filterIcon = ContextCompat.getDrawable(it, R.drawable.ic_filters_active)
+                filterIcon?.setTintWith(it.getThemeColor(R.attr.textColorPrimaryDark), PorterDuff.Mode.MULTIPLY)
                 filterMenuItem?.setIcon(filterIcon)
             }
         }

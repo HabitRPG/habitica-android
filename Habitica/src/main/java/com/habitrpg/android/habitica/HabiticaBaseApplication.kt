@@ -235,10 +235,12 @@ abstract class HabiticaBaseApplication : MultiDexApplication() {
             val preferences = PreferenceManager.getDefaultSharedPreferences(context)
             val useReminder = preferences.getBoolean("use_reminder", false)
             val reminderTime = preferences.getString("reminder_time", "19:00")
+            val lightMode = preferences.getString("theme_mode", "system")
             preferences.edit {
                 clear()
                 putBoolean("use_reminder", useReminder)
                 putString("reminder_time", reminderTime)
+                putString("theme_mode", lightMode)
             }
             reloadUserComponent()
             getInstance(context)?.lazyApiHelper?.updateAuthenticationCredentials(null, null)

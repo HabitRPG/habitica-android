@@ -39,6 +39,8 @@
     <color name="background_brand">@color/brand_200</color>
 
     <color name="checkbox_fill">#40000000</color>
+    <color name="checkbox_fill_inactive">#80000000</color>
+    <color name="checkbox_fill_selected">#40ffffff</color>
     <color name="taskform_gray">#3D3945</color>
     <color name="reward_buy_button_text">#FFFFB445</color>
     <color name="task_tint_overlay">#4D19171C</color>
@@ -57,4 +59,6 @@
     <color name="text_teal_white">@color/white</color>
     <color name="text_brown_white">@color/white</color>
     <color name="text_brand_white">@color/white</color>
+    <color name="lightly_tinted_background">@color/brand_50</color>
+    <color name="dialog_background">@color/gray_10</color>
 </resources>

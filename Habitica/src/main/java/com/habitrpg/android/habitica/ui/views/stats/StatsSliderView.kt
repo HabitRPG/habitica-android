@@ -13,6 +13,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.StatsSliderViewBinding
 import com.habitrpg.android.habitica.extensions.AfterChangeTextWatcher
 import com.habitrpg.android.habitica.extensions.layoutInflater
+import com.habitrpg.android.habitica.extensions.setTintWith
 import com.habitrpg.android.habitica.extensions.styledAttributes
 
 class StatsSliderView(context: Context, attrs: AttributeSet?) : LinearLayout(context, attrs) {
@@ -54,10 +55,10 @@ class StatsSliderView(context: Context, attrs: AttributeSet?) : LinearLayout(con
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 binding.statsSeekBar.progressTintList = ColorStateList.valueOf(statColor)
             } else {
-                binding.statsSeekBar.progressDrawable.setColorFilter(statColor, PorterDuff.Mode.SRC_IN)
+                binding.statsSeekBar.progressDrawable.setTintWith(statColor, PorterDuff.Mode.SRC_IN)
             }
             val thumbDrawable = ContextCompat.getDrawable(context, R.drawable.seekbar_thumb)
-            thumbDrawable?.setColorFilter(statColor, PorterDuff.Mode.MULTIPLY)
+            thumbDrawable?.setTintWith(statColor, PorterDuff.Mode.MULTIPLY)
             binding.statsSeekBar.thumb = thumbDrawable
         }
 

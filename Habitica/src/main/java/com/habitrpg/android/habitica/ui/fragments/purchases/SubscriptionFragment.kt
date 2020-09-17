@@ -206,7 +206,7 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>(), GemPur
 
             if (isSubscribed) {
                 if (context?.isUsingNightModeResources() == true) {
-                    binding?.headerImageView?.setImageResource(R.drawable.subscribe_header_dark)
+                    binding?.headerImageView?.setImageResource(R.drawable.subscriber_banner_dark)
                 } else {
                     binding?.headerImageView?.setImageResource(R.drawable.subscriber_header)
                 }

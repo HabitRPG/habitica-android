@@ -1,14 +1,19 @@
 package com.habitrpg.android.habitica.ui.views.shops
 
 import android.content.Context
+import android.graphics.PorterDuff
 import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toDrawable
 import androidx.core.os.bundleOf
+import com.google.android.material.button.MaterialButton
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
@@ -17,6 +22,7 @@ import com.habitrpg.android.habitica.events.GearPurchasedEvent
 import com.habitrpg.android.habitica.events.ShowSnackbarEvent
 import com.habitrpg.android.habitica.extensions.addCancelButton
 import com.habitrpg.android.habitica.extensions.addCloseButton
+import com.habitrpg.android.habitica.extensions.setTintWith
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
@@ -61,7 +67,9 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
     private val priceLabel: CurrencyView
     private val buyLabel: TextView
     private var amountErrorLabel: TextView? = null
-    private val pinButton: Button
+    private val pinButton: LinearLayout
+    private val pinIcon: ImageView
+    private val pinTextView: TextView
 
     private var purchaseQuantity = 1
 
@@ -171,13 +179,15 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
         set(value) {
             field = value
             if (isPinned) {
-                pinButton.setCompoundDrawablesWithIntrinsicBounds(BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfUnpinItem()), null, null, null)
-                pinButton.setTextColor(ContextCompat.getColor(context, R.color.text_red))
-                pinButton.text = context.getText(R.string.unpin)
+                pinIcon.setImageDrawable(BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfUnpinItem()))
+                pinIcon.imageTintList = ContextCompat.getColorStateList(context, R.color.text_red)
+                pinTextView.setTextColor(ContextCompat.getColor(context, R.color.text_red))
+                pinTextView.text = context.getText(R.string.unpin)
             } else {
-                pinButton.setCompoundDrawablesWithIntrinsicBounds(BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfPinItem()), null, null, null)
-                pinButton.setTextColor(ContextCompat.getColor(context, R.color.text_brand))
-                pinButton.text = context.getText(R.string.pin)
+                pinIcon.setImageDrawable(BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfPinItem()))
+                pinIcon.imageTintList = ContextCompat.getColorStateList(context, R.color.text_brand)
+                pinTextView.setTextColor(ContextCompat.getColor(context, R.color.text_brand))
+                pinTextView.text = context.getText(R.string.pin)
             }
         }
 
@@ -190,6 +200,8 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
         currencyView = customHeader.findViewById(R.id.currencyView)
         limitedTextView = customHeader.findViewById(R.id.limitedTextView)
         pinButton = customHeader.findViewById(R.id.pin_button)
+        pinIcon = customHeader.findViewById(R.id.pin_icon)
+        pinTextView = customHeader.findViewById(R.id.pin_text)
 
         addCloseButton()
         buyButton = addButton(layoutInflater.inflate(R.layout.dialog_purchase_shopitem_button, null), autoDismiss = false) { _, _ ->

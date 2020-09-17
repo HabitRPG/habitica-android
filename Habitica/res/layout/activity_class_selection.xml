@@ -109,7 +109,7 @@
                     android:layout_height="43dp"
                     android:text="@string/rogue"
                     style="@style/ClassSelectionClassButton"
-                    android:textColor="@color/brand_300" />
+                    android:textColor="@color/text_brand" />
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/warriorWrapper"

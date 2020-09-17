@@ -28,7 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/Body2"
-        android:textColor="@color/text_secondary"
+        android:textColor="@color/text_ternary"
         tools:text="These are the notes"
         android:gravity="center"/>
 

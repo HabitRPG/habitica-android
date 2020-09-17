@@ -82,7 +82,8 @@
                 android:persistent="false"
                 android:shouldDisableView="false"
                 android:layout="@layout/preference_child_summary"/>
-            <PreferenceCategory android:title="@string/danger_zone">
+            <PreferenceCategory android:title="@string/danger_zone"
+                android:layout="@layout/preference_category">
                 <Preference android:title="@string/reset_account"
                     android:key="reset_account"
                     android:layout="@layout/preference_child_summary" />
@@ -223,7 +224,8 @@
             android:summary="@string/push_notifications_sum"
             android:layout="@layout/preference_child_summary">
 
-            <PreferenceCategory android:title="Push Notifications">
+            <PreferenceCategory android:title="Push Notifications"
+                android:layout="@layout/preference_category">
                 <CheckBoxPreference
                     android:key="preference_push_you_won_challenge"
                     android:defaultValue="true"
@@ -309,7 +311,8 @@
             android:title="@string/emails"
             android:layout="@layout/preference_child_summary">
 
-            <PreferenceCategory android:title="@string/emails">
+            <PreferenceCategory android:title="@string/emails"
+                android:layout="@layout/preference_category">
                 <CheckBoxPreference
                     android:key="preference_email_you_won_challenge"
                     android:defaultValue="true"

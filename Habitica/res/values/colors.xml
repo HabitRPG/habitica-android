@@ -7,6 +7,7 @@
     <color name="brand_300">#6133B4</color>
     <color name="brand_400">#925CF3</color>
     <color name="brand_500">#bda8ff</color>
+    <color name="brand_600">#D5C8FF</color>
     <color name="brand_700">#ede7f6</color>
     <color name="brand">@color/brand_100</color>
 
@@ -154,7 +155,7 @@
 
     <color name="color_accent">@color/brand_400</color>
 
-    <color name="text_primary">@color/gray_50</color>
+    <color name="text_primary">@color/gray_10</color>
     <color name="text_secondary">@color/gray_100</color>
     <color name="text_ternary">@color/gray_200</color>
     <color name="text_quad">@color/gray_300</color>
@@ -178,7 +179,7 @@
     <color name="dimmed_background">@color/gray_300</color>
     <color name="disabled_background">@color/gray_400</color>
     <color name="separator">@color/gray_400</color>
-    <color name="system_bars">@color/brand_50</color>
+    <color name="system_bars">@color/brand_200</color>
     <color name="equipment_overview_background">@color/gray_50</color>
     <color name="inverted_background">@color/gray_100</color>
     <color name="inverted_background_offset">@color/gray_200</color>
@@ -191,6 +192,8 @@
     <color name="background_brand">@color/brand_300</color>
 
     <color name="checkbox_fill">#50ffffff</color>
+    <color name="checkbox_fill_inactive">#99FFFFFF</color>
+    <color name="checkbox_fill_selected">@color/gray_600</color>
     <color name="taskform_gray">#99edecee</color>
     <color name="task_tint_overlay">#00000000</color>
 
@@ -208,4 +211,6 @@
     <color name="text_teal_white">@color/teal_10</color>
     <color name="text_brown_white">#7f3300</color>
     <color name="text_brand_white">@color/brand_300</color>
+    <color name="lightly_tinted_background">@color/brand_700</color>
+    <color name="dialog_background">@color/white</color>
 </resources>

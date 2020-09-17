@@ -42,13 +42,14 @@
                     android:id="@+id/promo_banner_title_image"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="2dp"/>
+                    android:layout_marginBottom="6dp"/>
                 <TextView
                     android:id="@+id/promo_banner_subtitle_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/Caption2"
+                    style="@style/Overline"
                     android:textAllCaps="true"
+                    android:layout_marginBottom="4dp"
                     />
                 <TextView
                     android:id="@+id/promo_banner_duration_view"

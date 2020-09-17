@@ -41,7 +41,7 @@ class HabitViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> U
             btnPlusCircleView.background = drawable
             this.btnPlus.visibility = View.VISIBLE
             this.btnPlus.isClickable = true
-            btnPlusIconView.background.alpha = 255
+            //btnPlusIconView.background.alpha = 255
         } else {
             this.btnPlusWrapper.setBackgroundResource(R.color.habit_inactive_gray)
             val plusIcon = ContextCompat.getDrawable(context, R.drawable.habit_plus)
@@ -67,7 +67,7 @@ class HabitViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> U
             btnMinusCircleView.background = drawable
             this.btnMinus.visibility = View.VISIBLE
             this.btnMinus.isClickable = true
-            btnMinusIconView.background.alpha = 255
+            //btnMinusIconView.background.alpha = 255
         } else {
             this.btnMinusWrapper.setBackgroundResource(R.color.habit_inactive_gray)
             val minusIcon = ContextCompat.getDrawable(context, R.drawable.habit_minus)
@@ -80,6 +80,7 @@ class HabitViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> U
             btnMinusIconView.background.alpha = 0
         }
 
+
         var streakString = ""
         if (data.counterUp != null && data.counterUp ?: 0 > 0 && data.counterDown != null && data.counterDown ?: 0 > 0) {
             streakString = streakString + "+" + data.counterUp.toString() + " | -" + data.counterDown?.toString()
@@ -91,12 +92,18 @@ class HabitViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> U
         if (streakString.isNotEmpty()) {
             streakTextView.text = streakString
             streakTextView.visibility = View.VISIBLE
+            streakIconView.visibility = View.VISIBLE
         } else {
             streakTextView.visibility = View.GONE
+            streakIconView.visibility = View.GONE
         }
         reminderTextView.visibility = View.GONE
         calendarIconView?.visibility = View.GONE
         super.bind(data, position, displayMode)
+        if (data.up == false && data.down == false) {
+            titleTextView.setTextColor(ContextCompat.getColor(context, R.color.text_quad))
+            notesTextView?.setTextColor(ContextCompat.getColor(context, R.color.text_quad))
+        }
     }
 
     private fun onPlusButtonClicked() {

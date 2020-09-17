@@ -231,6 +231,8 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                     window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE
                 }
                 isOpeningDrawer = null
+
+                drawerFragment?.updatePromo()
             }
 
             override fun onDrawerClosed(drawerView: View) {

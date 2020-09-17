@@ -23,11 +23,14 @@ import com.habitrpg.android.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.Tag
 import com.habitrpg.android.habitica.models.tasks.Task
+import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import io.reactivex.Observable
 import java.util.*
 import javax.inject.Inject
 
-class TaskFilterDialog(context: Context, component: UserComponent?) : AlertDialog(context), RadioGroup.OnCheckedChangeListener {
+class TaskFilterDialog(context: Context, component: UserComponent?) : HabiticaAlertDialog(context), RadioGroup.OnCheckedChangeListener {
+
+    private var clearButton: Button
 
     @Inject
     lateinit var repository: TagRepository
@@ -60,7 +63,7 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : AlertDialo
         val inflater = LayoutInflater.from(context)
         val view = inflater.inflate(R.layout.dialog_task_filter, null)
         setTitle(R.string.filters)
-        setView(view)
+        this.setAdditionalContentView(view)
 
         taskTypeTitle = view.findViewById(R.id.task_type_title)
         taskFilters = view.findViewById(R.id.task_filter_wrapper)
@@ -80,24 +83,18 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : AlertDialo
             this.dismiss()
         }
 
-        setButton(BUTTON_NEUTRAL, getContext().getString(R.string.clear)) { _, _ -> }
+        clearButton = addButton(R.string.clear, false, false, false) { _, _ ->
+            if (isEditing) {
+                stopEditing()
+            }
+            setActiveFilter(null)
+            setActiveTags(null)
+        }
+
+        addButton(R.string.done, false)
+        buttonAxis = LinearLayout.HORIZONTAL
 
         tagsEditButton.setOnClickListener { editButtonClicked() }
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        val clearButton = getButton(BUTTON_NEUTRAL)
-        if (clearButton != null) {
-            clearButton.setOnClickListener {
-                if (isEditing) {
-                    stopEditing()
-                }
-                setActiveFilter(null)
-                setActiveTags(null)
-            }
-            clearButton.isEnabled = hasActiveFilters()
-        }
     }
 
     override fun show() {
@@ -334,10 +331,12 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : AlertDialo
     }
 
     private fun filtersChanged() {
-        val clearButton = getButton(BUTTON_NEUTRAL)
-        if (clearButton != null) {
-            clearButton.isEnabled = hasActiveFilters()
-        }
+        clearButton.isEnabled = hasActiveFilters()
+        clearButton.setTextColor(if (clearButton.isEnabled) {
+            context.getThemeColor(R.color.colorAccent)
+        } else {
+            context.getThemeColor(R.color.text_dimmed)
+        })
     }
 
     private fun hasActiveFilters(): Boolean {
@@ -349,7 +348,6 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : AlertDialo
     }
 
     interface OnFilterCompletedListener {
-
         fun onFilterCompleted(activeTaskFilter: String?, activeTags: MutableList<String>)
     }
 }

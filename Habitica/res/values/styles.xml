@@ -29,11 +29,11 @@
 
         <item name="textColorPrimary">@color/text_primary</item>
         <item name="textColorSecondary">@color/text_secondary</item>
-        <item name="textColorPrimaryDark">#D5C8FF</item>
+        <item name="textColorPrimaryDark">@color/brand_600</item>
         <item name="textColorSecondaryDark">@color/brand_500</item>
         <item name="android:textColorPrimary">@color/text_primary</item>
         <item name="android:textColorSecondary">@color/text_ternary</item>
-        <item name="barColor">@color/brand_100</item>
+        <item name="barColor">@color/brand_200</item>
 
         <item name="colorContentBackground">@color/content_background</item>
         <item name="colorWindowBackground">@color/window_background</item>
@@ -359,6 +359,7 @@
         <item name="buttonBarNegativeButtonStyle">@style/NegativeButtonStyle</item>
         <item name="buttonBarNeutralButtonStyle">@style/PositiveButtonStyle</item>
         <item name="buttonBarPositiveButtonStyle">@style/PositiveButtonStyle</item>
+        <item name="backgroundTint">@color/dialog_background</item>
     </style>
 
 
@@ -618,8 +619,11 @@
         <item name="android:shadowColor">@color/disabled_background</item>
         <item name="android:paddingStart">@dimen/spacing_large</item>
         <item name="android:paddingEnd">@dimen/spacing_large</item>
+        <item name="android:paddingTop">@dimen/spacing_small</item>
+        <item name="android:paddingBottom">@dimen/spacing_small</item>
         <item name="android:elevation">0dp</item>
         <item name="android:minWidth">147dp</item>
+        <item name="cornerRadius">@dimen/rounded_button_radius</item>
     </style>
 
     <style name="HabiticaButton.Borderless" parent="@style/Widget.AppCompat.Button.Borderless">
@@ -795,5 +799,4 @@
     <style name="PreferenceThemeOverlay.v14" tools:override="true">
         <item name="android:background">@color/content_background</item>
     </style>
-
 </resources>

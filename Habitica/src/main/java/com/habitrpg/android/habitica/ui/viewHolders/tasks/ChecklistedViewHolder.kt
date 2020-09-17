@@ -28,6 +28,7 @@ abstract class ChecklistedViewHolder(itemView: View, scoreTaskFunc: ((Task, Task
 
     private val checkboxHolder: ViewGroup = itemView.findViewById(R.id.checkBoxHolder)
     internal val checkmarkView: ImageView = itemView.findViewById(R.id.checkmark)
+    internal val checkboxBackground: View = itemView.findViewById(R.id.checkBoxBackground)
     internal val checklistView: LinearLayout = itemView.findViewById(R.id.checklistView)
     internal val checklistIndicatorWrapper: ViewGroup = itemView.findViewById(R.id.checklistIndicatorWrapper)
     private val checklistCompletedTextView: TextView = itemView.findViewById(R.id.checkListCompletedTextView)
@@ -56,15 +57,23 @@ abstract class ChecklistedViewHolder(itemView: View, scoreTaskFunc: ((Task, Task
 
         this.checklistIndicatorWrapper.visibility = if (data.checklist?.size == 0) View.GONE else View.VISIBLE
         super.bind(data, position, displayMode)
-
+        val regularBoxBackground = if (task?.type == Task.TYPE_DAILY) R.drawable.daily_unchecked else R.drawable.todo_unchecked
+        val completedBoxBackground = if (task?.type == Task.TYPE_DAILY) R.drawable.daily_checked else R.drawable.todo_checked
+        val inactiveBoxBackground = R.drawable.daily_inactive
         if (this.shouldDisplayAsActive(data) && !data.isPendingApproval) {
             this.checkboxHolder.setBackgroundResource(data.lightTaskColor)
+            checkboxBackground.setBackgroundResource(regularBoxBackground)
         } else {
-            notesTextView?.setTextColor(ContextCompat.getColor(context, R.color.text_ternary))
             if (data.completed) {
+                titleTextView.setTextColor(ContextCompat.getColor(context, R.color.text_quad))
+                notesTextView?.setTextColor(ContextCompat.getColor(context, R.color.text_quad))
                 this.checkboxHolder.setBackgroundColor(context.getThemeColor(R.attr.colorWindowBackground))
+                checkboxBackground.setBackgroundResource(completedBoxBackground)
             } else {
                 this.checkboxHolder.setBackgroundColor(this.taskGray)
+                notesTextView?.setTextColor(ContextCompat.getColor(context, R.color.text_ternary))
+                checkboxBackground.setBackgroundResource(regularBoxBackground)
+                checkboxBackground.setBackgroundResource(inactiveBoxBackground)
             }
         }
     }

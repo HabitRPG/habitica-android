@@ -59,7 +59,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/see_what_s_new"
                 android:gravity="center"
-                android:textColor="@color/brand_300"
+                android:textColor="@color/text_brand"
                 />
         </LinearLayout>
 

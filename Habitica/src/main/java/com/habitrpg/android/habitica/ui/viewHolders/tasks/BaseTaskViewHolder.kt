@@ -42,6 +42,7 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
     private val syncingView: ProgressBar? = itemView.findViewById(R.id.syncing_view)
     private val errorIconView: ImageButton? = itemView.findViewById(R.id.error_icon)
     protected val taskGray: Int = ContextCompat.getColor(itemView.context, R.color.offset_background)
+    protected val streakIconView: ImageView = itemView.findViewById(R.id.iconViewStreak)
     protected val streakTextView: TextView = itemView.findViewById(R.id.streakTextView)
     protected val reminderTextView: TextView = itemView.findViewById(R.id.reminder_textview)
 
@@ -124,7 +125,7 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
         notesTextView?.maxLines = 5
         if (data.notes?.isNotEmpty() == true) {
             notesTextView?.visibility = View.VISIBLE
-            notesTextView?.setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
+            notesTextView?.setTextColor(ContextCompat.getColor(context, R.color.text_ternary))
             //expandNotesButton.visibility = if (notesTextView.hadEllipses() || notesExpanded) View.VISIBLE else View.GONE
         } else {
             notesTextView?.visibility = View.GONE
@@ -178,6 +179,7 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
                 notesTextView?.visibility = View.GONE
             }
         }
+        titleTextView.setTextColor(ContextCompat.getColor(context, R.color.text_primary))
 
         if (displayMode == "standard") {
             iconViewReminder?.visibility = if (data.reminders?.size ?: 0 > 0) View.VISIBLE else View.GONE

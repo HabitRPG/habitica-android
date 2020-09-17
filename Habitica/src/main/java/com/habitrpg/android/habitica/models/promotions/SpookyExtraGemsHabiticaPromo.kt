@@ -57,7 +57,7 @@ class SpookyExtraGemsHabiticaPromotion(startDate: Date?, endDate: Date?) : Habit
                 ContextCompat.getDrawable(context, R.drawable.spooky_promo_menu_right)
         )
 
-        view.binding.button.background = ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_gray_10)
+        view.binding.button.backgroundTintList = ContextCompat.getColorStateList(context, R.color.gray_1)
         view.binding.button.setText(R.string.learn_more)
         view.binding.button.setTextColor(ContextCompat.getColor(context, R.color.white))
         view.binding.button.setOnClickListener {

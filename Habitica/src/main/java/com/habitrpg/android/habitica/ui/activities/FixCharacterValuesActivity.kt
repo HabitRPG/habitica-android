@@ -12,6 +12,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.ActivityFixcharacterBinding
+import com.habitrpg.android.habitica.extensions.setTintWith
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
@@ -131,7 +132,7 @@ class FixCharacterValuesActivity: BaseActivity() {
 
     private fun setIconBackground(view: View, color: Int) {
         val backgroundDrawable = ContextCompat.getDrawable(this, R.drawable.layout_rounded_bg)
-        backgroundDrawable?.setColorFilter(color, PorterDuff.Mode.MULTIPLY)
+        backgroundDrawable?.setTintWith(color, PorterDuff.Mode.MULTIPLY)
         backgroundDrawable?.alpha = 50
         view.background = backgroundDrawable
     }

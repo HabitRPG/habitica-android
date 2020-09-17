@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.ui.views.navigation
 
 import android.content.Context
 import android.graphics.PorterDuff
+import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.view.View
 import android.widget.RelativeLayout
@@ -9,11 +10,15 @@ import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.BottomNavigationItemBinding
 import com.habitrpg.android.habitica.extensions.getThemeColor
+import com.habitrpg.android.habitica.extensions.isUsingNightModeResources
 import com.habitrpg.android.habitica.extensions.layoutInflater
+import com.habitrpg.android.habitica.extensions.setTintWith
 
 class BottomNavigationItem @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : RelativeLayout(context, attrs, defStyleAttr) {
+    private var selectedIcon: Drawable? = null
+    private var icon: Drawable? = null
     private val binding = BottomNavigationItemBinding.inflate(context.layoutInflater, this)
 
     private var selectedVisibility = View.VISIBLE
@@ -25,11 +30,17 @@ class BottomNavigationItem @JvmOverloads constructor(
         if (isActive) {
             binding.selectedTitleView.visibility = selectedVisibility
             binding.titleView.visibility = View.GONE
-            binding.iconView.drawable.setColorFilter(context.getThemeColor(R.attr.colorPrimaryDistinct), PorterDuff.Mode.MULTIPLY )
+            binding.iconView.setImageDrawable(selectedIcon)
+            if (context.isUsingNightModeResources()) {
+                binding.iconView.drawable.setTintWith(context.getThemeColor(R.attr.colorPrimaryDistinct), PorterDuff.Mode.SRC_ATOP )
+            } else {
+                binding.iconView.drawable.setTintWith(ContextCompat.getColor(context, R.color.white), PorterDuff.Mode.SRC_ATOP )
+            }
         } else {
             binding.selectedTitleView.visibility = View.GONE
+            binding.iconView.setImageDrawable(icon)
             binding.titleView.visibility = deselectedVisibility
-            binding.iconView.drawable.setColorFilter(context.getThemeColor(R.attr.textColorPrimaryDark), PorterDuff.Mode.MULTIPLY )
+            binding.iconView.drawable.setTintWith(context.getThemeColor(R.attr.textColorPrimaryDark), PorterDuff.Mode.SRC_ATOP )
         }
     }
 
@@ -50,7 +61,9 @@ class BottomNavigationItem @JvmOverloads constructor(
                 R.styleable.BottomNavigationItem,
                 0, 0)
         if (attributes != null) {
-            binding.iconView.setImageDrawable(attributes.getDrawable(R.styleable.BottomNavigationItem_iconDrawable))
+            icon = attributes.getDrawable(R.styleable.BottomNavigationItem_iconDrawable)
+            selectedIcon = attributes.getDrawable(R.styleable.BottomNavigationItem_selectedIconDrawable)
+            binding.iconView.setImageDrawable(icon)
             binding.titleView.text = attributes.getString(R.styleable.BottomNavigationItem_title)
             binding.selectedTitleView.text = attributes.getString(R.styleable.BottomNavigationItem_title)
         }
