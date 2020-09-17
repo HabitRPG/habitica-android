@@ -24,6 +24,7 @@ import com.facebook.imagepipeline.image.CloseableImage
 import com.facebook.imagepipeline.image.ImageInfo
 import com.facebook.imagepipeline.request.ImageRequestBuilder
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.extensions.setTintWith
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import java.util.*
 import kotlin.collections.HashMap
@@ -105,7 +106,7 @@ object DataBindingUtils {
 
     fun setRoundedBackground(view: View, color: Int) {
         val drawable = ResourcesCompat.getDrawable(view.resources, R.drawable.layout_rounded_bg, null)
-        drawable?.setColorFilter(color, PorterDuff.Mode.MULTIPLY)
+        drawable?.setTintWith(color, PorterDuff.Mode.MULTIPLY)
         view.background = drawable
     }
 

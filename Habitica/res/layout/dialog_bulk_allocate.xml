@@ -63,7 +63,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:statsTitle="@string/per_abbrv"
-        app:statsColor="@color/brand_300"
+        app:statsColor="@color/text_brand_neon"
         app:statsTextColor="@color/text_brand"/>
     </LinearLayout>
 </LinearLayout>

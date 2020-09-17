@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.StatsViewBinding
 import com.habitrpg.android.habitica.extensions.layoutInflater
+import com.habitrpg.android.habitica.extensions.setTintWith
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 
 class StatsView(context: Context, attrs: AttributeSet?) : LinearLayout(context, attrs) {
@@ -72,7 +73,7 @@ class StatsView(context: Context, attrs: AttributeSet?) : LinearLayout(context, 
         val backgroundDrawable = ContextCompat.getDrawable(context, R.drawable.layout_top_rounded_bg_white)
         if (attributes != null) {
             statColor = attributes.getColor(R.styleable.StatsView_statsColor, 0)
-            backgroundDrawable?.setColorFilter(attributes.getColor(R.styleable.StatsView_titleBackgroundColor, 0), PorterDuff.Mode.MULTIPLY)
+            backgroundDrawable?.setTintWith(attributes.getColor(R.styleable.StatsView_titleBackgroundColor, 0), PorterDuff.Mode.MULTIPLY)
             binding.titleTextView.text = attributes.getString(R.styleable.StatsView_statsTitle)
         }
         binding.titleWrapper.background = backgroundDrawable

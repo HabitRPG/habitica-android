@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <corners android:radius="@dimen/daily_checkbox_corner_radius"/>
+    <solid android:color="@color/checkbox_fill_inactive" />
+    <size android:height="@dimen/checkbox_size" android:width="@dimen/checkbox_size" />
+    <padding android:left="0dip" android:top="0dip" android:right="0dip" android:bottom="0dip" />
+</shape>

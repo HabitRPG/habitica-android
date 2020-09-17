@@ -225,7 +225,7 @@
                 style="@style/Subheader3"
                 android:layout_marginBottom="8dp"
                 android:layout_marginTop="28dp"
-                android:textColor="@color/brand_300"/>
+                android:textColor="@color/text_brand"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

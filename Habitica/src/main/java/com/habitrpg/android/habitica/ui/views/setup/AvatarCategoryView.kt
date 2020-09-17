@@ -10,6 +10,8 @@ import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.extensions.setTintWith
+
 class AvatarCategoryView(context: Context, attrs: AttributeSet?) : LinearLayout(context, attrs) {
 
     private val icon: Drawable?
@@ -41,7 +43,7 @@ class AvatarCategoryView(context: Context, attrs: AttributeSet?) : LinearLayout(
         }
         textView.setTextColor(color)
         if (icon != null) {
-            icon.setColorFilter(color, PorterDuff.Mode.MULTIPLY)
+            icon.setTintWith(color, PorterDuff.Mode.MULTIPLY)
             textView.setCompoundDrawablesWithIntrinsicBounds(null, icon, null, null)
         }
     }

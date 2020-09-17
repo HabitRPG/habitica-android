@@ -17,6 +17,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.MainNavigationViewBinding
 import com.habitrpg.android.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.extensions.layoutInflater
+import com.habitrpg.android.habitica.extensions.setTintWith
 import com.habitrpg.android.habitica.models.tasks.Task
 
 class HabiticaBottomNavigationView @JvmOverloads constructor(
@@ -109,10 +110,10 @@ class HabiticaBottomNavigationView @JvmOverloads constructor(
         updateItemSelection()
 
         val cutout = ContextCompat.getDrawable(context, R.drawable.bottom_navigation_inset)
-        cutout?.setColorFilter(context.getThemeColor(R.attr.barColor), PorterDuff.Mode.MULTIPLY)
+        cutout?.setTintWith(context.getThemeColor(R.attr.barColor), PorterDuff.Mode.MULTIPLY)
         binding.cutoutBackground.setImageDrawable(cutout)
         val fabBackground = ContextCompat.getDrawable(context, R.drawable.fab_background)
-        fabBackground?.setColorFilter(context.getThemeColor(R.attr.colorAccent), PorterDuff.Mode.MULTIPLY)
+        fabBackground?.setTintWith(context.getThemeColor(R.attr.colorAccent), PorterDuff.Mode.MULTIPLY)
         binding.addButtonBackground.background = fabBackground
     }
 

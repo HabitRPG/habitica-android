@@ -316,44 +316,44 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
             if (taskFilterHelper.howMany(classType) > 0) {
                 when (this.classType) {
                     Task.TYPE_HABIT -> {
-                        binding?.emptyIconView?.setImageResource(R.drawable.icon_habits_selected)
+                        binding?.emptyIconView?.setImageResource(R.drawable.icon_habits)
                         binding?.emptyViewTitle?.setText(R.string.empty_title_habits_filtered)
                         binding?.emptyViewDescription?.setText(R.string.empty_description_habits_filtered)
                     }
                     Task.TYPE_DAILY -> {
-                        binding?.emptyIconView?.setImageResource(R.drawable.icon_dailies_selected)
+                        binding?.emptyIconView?.setImageResource(R.drawable.icon_dailies)
                         binding?.emptyViewTitle?.setText(R.string.empty_title_dailies_filtered)
                         binding?.emptyViewDescription?.setText(R.string.empty_description_dailies_filtered)
                     }
                     Task.TYPE_TODO -> {
-                        binding?.emptyIconView?.setImageResource(R.drawable.icon_todos_selected)
+                        binding?.emptyIconView?.setImageResource(R.drawable.icon_todos)
                         binding?.emptyViewTitle?.setText(R.string.empty_title_todos_filtered)
                         binding?.emptyViewDescription?.setText(R.string.empty_description_todos_filtered)
                     }
                     Task.TYPE_REWARD -> {
-                        binding?.emptyIconView?.setImageResource(R.drawable.icon_rewards_selected)
+                        binding?.emptyIconView?.setImageResource(R.drawable.icon_rewards)
                         binding?.emptyViewTitle?.setText(R.string.empty_title_rewards)
                     }
                 }
             } else {
                 when (this.classType) {
                     Task.TYPE_HABIT -> {
-                        binding?.emptyIconView?.setImageResource(R.drawable.icon_habits_selected)
+                        binding?.emptyIconView?.setImageResource(R.drawable.icon_habits)
                         binding?.emptyViewTitle?.setText(R.string.empty_title_habits)
                         binding?.emptyViewDescription?.setText(R.string.empty_description_habits)
                     }
                     Task.TYPE_DAILY -> {
-                        binding?.emptyIconView?.setImageResource(R.drawable.icon_dailies_selected)
+                        binding?.emptyIconView?.setImageResource(R.drawable.icon_dailies)
                         binding?.emptyViewTitle?.setText(R.string.empty_title_dailies)
                         binding?.emptyViewDescription?.setText(R.string.empty_description_dailies)
                     }
                     Task.TYPE_TODO -> {
-                        binding?.emptyIconView?.setImageResource(R.drawable.icon_todos_selected)
+                        binding?.emptyIconView?.setImageResource(R.drawable.icon_todos)
                         binding?.emptyViewTitle?.setText(R.string.empty_title_todos)
                         binding?.emptyViewDescription?.setText(R.string.empty_description_todos)
                     }
                     Task.TYPE_REWARD -> {
-                        binding?.emptyIconView?.setImageResource(R.drawable.icon_rewards_selected)
+                        binding?.emptyIconView?.setImageResource(R.drawable.icon_rewards)
                         binding?.emptyViewTitle?.setText(R.string.empty_title_rewards)
                     }
                 }

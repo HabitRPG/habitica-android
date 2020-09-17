@@ -100,7 +100,7 @@ abstract class BaseActivity : AppCompatActivity() {
         super.onStop()
     }
 
-    private fun loadTheme(sharedPreferences: SharedPreferences, forced: Boolean = false) {
+    internal open fun loadTheme(sharedPreferences: SharedPreferences, forced: Boolean = false) {
         val theme = forcedTheme ?: sharedPreferences.getString("theme_name", "purple")
         val modernHeaderStyle = overrideModernHeader ?: sharedPreferences.getBoolean("modern_header_style", true)
         if (theme != currentTheme || forced) {

@@ -28,6 +28,15 @@ import java.util.*
 class ReminderItemFormView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr), TimePickerDialog.OnTimeSetListener, DatePickerDialog.OnDateSetListener {
+    private val formattedTime: CharSequence?
+    get() {
+        val time = item.time
+        return if (time != null) {
+            formatter.format(time)
+        } else {
+            ""
+        }
+    }
     private val binding = TaskFormReminderItemBinding.inflate(context.layoutInflater, this)
 
     private val formatter: DateFormat
@@ -43,7 +52,7 @@ class ReminderItemFormView @JvmOverloads constructor(
     var item: RemindersItem = RemindersItem()
         set(value) {
             field = value
-            binding.textView.text = formatter.format(item.time)
+            binding.textView.text = formattedTime
         }
 
     var tintColor: Int = context.getThemeColor(R.attr.taskFormTint)
@@ -52,7 +61,7 @@ class ReminderItemFormView @JvmOverloads constructor(
     var isAddButton: Boolean = true
         set(value) {
             field = value
-            binding.textView.text = if (value) context.getString(R.string.new_reminder) else formatter.format(item.time)
+            binding.textView.text = if (value) context.getString(R.string.new_reminder) else formattedTime
             if (value) {
                 val rotate = RotateAnimation(135f, 0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f)
                 rotate.duration = animDuration
@@ -114,7 +123,7 @@ class ReminderItemFormView @JvmOverloads constructor(
             calendar.set(Calendar.HOUR_OF_DAY, hourOfDay)
             calendar.set(Calendar.MINUTE, minute)
             item.time = calendar.time
-            binding.textView.text = formatter.format(item.time)
+            binding.textView.text = formattedTime
             item.time?.let { date -> it(date) }
         }
     }
@@ -127,7 +136,7 @@ class ReminderItemFormView @JvmOverloads constructor(
             calendar.set(Calendar.MONTH, month)
             calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
             item.time = calendar.time
-            binding.textView.text = formatter.format(item.time)
+            binding.textView.text = formattedTime
             item.time?.let { date -> it(date) }
 
             val timePickerDialog = TimePickerDialog(context, this,

@@ -9,6 +9,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.SetupCustomizationRepository
 import com.habitrpg.android.habitica.databinding.SetupCustomizationItemBinding
 import com.habitrpg.android.habitica.extensions.inflate
+import com.habitrpg.android.habitica.extensions.setTintWith
 import com.habitrpg.android.habitica.models.SetupCustomization
 import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.BackpressureStrategy
@@ -90,7 +91,7 @@ internal class CustomizationSetupAdapter : RecyclerView.Adapter<CustomizationSet
                 customization.drawableId != null -> binding.imageView.setImageResource(customization.drawableId ?: 0)
                 customization.colorId != null -> {
                     val drawable = ContextCompat.getDrawable(itemView.context, R.drawable.setup_customization_circle)
-                    drawable?.setColorFilter(ContextCompat.getColor(itemView.context, customization.colorId ?: 0), PorterDuff.Mode.MULTIPLY)
+                    drawable?.setTintWith(ContextCompat.getColor(itemView.context, customization.colorId ?: 0), PorterDuff.Mode.MULTIPLY)
                     binding.imageView.setImageDrawable(drawable)
                 }
                 else -> binding.imageView.setImageDrawable(null)

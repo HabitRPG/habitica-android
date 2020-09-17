@@ -131,6 +131,7 @@
     <declare-styleable name="BottomNavigationItem">
         <attr name="title" />
         <attr name="iconDrawable" />
+        <attr name="selectedIconDrawable" format="integer" />
     </declare-styleable>
     <declare-styleable name="EquipmentOverviewItem">
         <attr name="title" />

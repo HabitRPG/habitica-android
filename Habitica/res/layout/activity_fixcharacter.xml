@@ -56,10 +56,9 @@
                             android:layout_width="0dp"
                             android:layout_weight="1"
                             android:background="@drawable/layout_rounded_bg_window"
-                            android:paddingTop="8dp"
                             android:hint="@string/health"
                             android:paddingStart="16dp">
-                            <EditText
+                            <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/healthEditText"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
@@ -99,10 +98,9 @@
                                 android:layout_width="0dp"
                                 android:layout_weight="1"
                                 android:background="@drawable/layout_rounded_bg_window"
-                                android:paddingTop="8dp"
                                 android:hint="@string/experience_points"
                                 android:paddingStart="16dp">
-                                <EditText
+                                <com.google.android.material.textfield.TextInputEditText
                                     android:id="@+id/experienceEditText"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
@@ -142,10 +140,9 @@
                                 android:layout_width="0dp"
                                 android:layout_weight="1"
                                 android:background="@drawable/layout_rounded_bg_window"
-                                android:paddingTop="8dp"
                                 android:hint="@string/mana_points"
                                 android:paddingStart="16dp">
-                                <EditText
+                                <com.google.android.material.textfield.TextInputEditText
                                     android:id="@+id/manaEditText"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
@@ -185,10 +182,9 @@
                                 android:layout_width="0dp"
                                 android:layout_weight="1"
                                 android:background="@drawable/layout_rounded_bg_window"
-                                android:paddingTop="8dp"
                                 android:hint="@string/gold_capitalilzed"
                                 android:paddingStart="16dp">
-                                <EditText
+                                <com.google.android.material.textfield.TextInputEditText
                                     android:id="@+id/goldEditText"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
@@ -228,10 +224,9 @@
                                 android:layout_width="0dp"
                                 android:layout_weight="1"
                                 android:background="@drawable/layout_rounded_bg_window"
-                                android:paddingTop="8dp"
                                 android:hint="@string/character_level"
                                 android:paddingStart="16dp">
-                                <EditText
+                                <com.google.android.material.textfield.TextInputEditText
                                     android:id="@+id/levelEditText"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
@@ -272,10 +267,9 @@
                                 android:layout_width="0dp"
                                 android:layout_weight="1"
                                 android:background="@drawable/layout_rounded_bg_window"
-                                android:paddingTop="8dp"
                                 android:hint="@string/streak_label"
                                 android:paddingStart="16dp">
-                                <EditText
+                                <com.google.android.material.textfield.TextInputEditText
                                     android:id="@+id/streakEditText"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"

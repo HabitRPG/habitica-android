@@ -56,8 +56,10 @@ class DailyViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> U
         if (task.streak ?: 0 > 0) {
             this.streakTextView.text = task.streak.toString()
             this.streakTextView.visibility = View.VISIBLE
+            this.streakIconView.visibility = View.VISIBLE
         } else {
             this.streakTextView.visibility = View.GONE
+            this.streakIconView.visibility = View.GONE
         }
     }
 

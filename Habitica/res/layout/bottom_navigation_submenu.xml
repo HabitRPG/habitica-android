@@ -16,7 +16,7 @@
         android:textSize="10sp"
         android:fontFamily="@string/font_family_medium"
         android:letterSpacing="0.15"
-        android:textColor="@color/brand_300"
+        android:textColor="@color/background_brand"
         android:layout_marginStart="36dp"
         android:layout_alignStart="@id/icon_view"
         android:paddingStart="41dp"

@@ -256,7 +256,7 @@ public class HabiticaIconsHelper {
         if (imageOfPinItem != null)
             return imageOfPinItem;
 
-        int size = scaleSize(40);
+        int size = scaleSize(24);
         imageOfPinItem = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(imageOfPinItem);
         canvas.scale(displayDensity, displayDensity);
@@ -270,7 +270,7 @@ public class HabiticaIconsHelper {
         if (imageOfUnpinItem != null)
             return imageOfUnpinItem;
 
-        int size = scaleSize(40);
+        int size = scaleSize(24);
         imageOfUnpinItem = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(imageOfUnpinItem);
         canvas.scale(displayDensity, displayDensity);

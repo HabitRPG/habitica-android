@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/layout_rounded_bg_window"
     android:gravity="center"
-              android:padding="14dp">
+    android:padding="14dp">
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="65dp"
@@ -34,11 +36,12 @@
                 android:layout_gravity="start"
                 />
         </FrameLayout>
-    <TextView
+    <com.habitrpg.android.habitica.ui.views.DayNightTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/gem_amount"
-        android:textColor="@color/blue_10"
+        app:dayTextColor="@color/blue_10"
+        app:nightTextColor="@color/white"
         android:gravity="center"
         android:layout_gravity="center"
         android:textSize="36sp"
@@ -59,12 +62,13 @@
         </FrameLayout>
     </LinearLayout>
 
-    <TextView
+    <com.habitrpg.android.habitica.ui.views.DayNightTextView
         android:id="@+id/gems_text_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/gems"
-        android:textColor="@color/blue_10"
+        app:dayTextColor="@color/blue_10"
+        app:nightTextColor="@color/white"
         android:gravity="center"
         android:layout_marginBottom="14dp" />
 

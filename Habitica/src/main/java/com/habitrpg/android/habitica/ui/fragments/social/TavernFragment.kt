@@ -45,9 +45,8 @@ class TavernFragment : BaseMainFragment<FragmentViewpagerBinding>() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel = ViewModelProvider(this).get(GroupViewModel::class.java)
-        viewModel.groupViewType = GroupViewType.TAVERN
+        viewModel.groupViewType = GroupViewType.GUILD
         viewModel.setGroupID(Group.TAVERN_ID)
-        viewModel.getIsMemberData().observe(viewLifecycleOwner, { activity?.invalidateOptionsMenu() })
 
         setViewPagerAdapter()
         binding?.viewPager?.currentItem = 0

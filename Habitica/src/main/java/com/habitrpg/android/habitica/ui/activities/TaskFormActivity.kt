@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.ui.activities
 
 import android.app.Activity
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.res.ColorStateList
 import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
@@ -56,8 +57,6 @@ class TaskFormActivity : BaseActivity() {
     @Inject
     lateinit var challengeRepository: ChallengeRepository
 
-    override var overrideModernHeader: Boolean? = false
-
     private var challenge: Challenge? = null
 
     private var isCreating = true
@@ -100,6 +99,7 @@ class TaskFormActivity : BaseActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        overrideModernHeader = false
         val bundle = intent.extras ?: return
 
         val taskId = bundle.getString(TASK_ID_KEY)
@@ -120,8 +120,11 @@ class TaskFormActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
 
         if (forcedTheme == "yellow") {
-            binding.taskDifficultyButtons.textTintColor = ContextCompat.getColor(this, R.color.yellow_5)
-            binding.habitScoringButtons.textTintColor = ContextCompat.getColor(this, R.color.yellow_5)
+            binding.taskDifficultyButtons.textTintColor = ContextCompat.getColor(this, R.color.text_yellow)
+            binding.habitScoringButtons.textTintColor = ContextCompat.getColor(this, R.color.text_yellow)
+        } else if (forcedTheme == "purple") {
+            binding.taskDifficultyButtons.textTintColor = ContextCompat.getColor(this, R.color.text_brand_neon)
+            binding.habitScoringButtons.textTintColor = ContextCompat.getColor(this, R.color.text_brand_neon)
         }
 
         setSupportActionBar(binding.toolbar)
@@ -154,11 +157,11 @@ class TaskFormActivity : BaseActivity() {
             checkCanSave()
         })
         binding.textEditText.onFocusChangeListener = View.OnFocusChangeListener { _, isFocused ->
-            binding.textInputLayout.alpha = if (isFocused) 1.0f else 0.75f
+            binding.textInputLayout.alpha = if (isFocused) 0.8f else 0.6f
             window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)
         }
         binding.notesEditText.onFocusChangeListener = View.OnFocusChangeListener { _, isFocused ->
-            binding.notesInputLayout.alpha = if (isFocused) 1.0f else 0.75f
+            binding.notesInputLayout.alpha = if (isFocused) 0.8f else 0.6f
         }
         binding.statStrengthButton.setOnClickListener { selectedStat = Stats.STRENGTH }
         binding.statIntelligenceButton.setOnClickListener { selectedStat = Stats.INTELLIGENCE }
@@ -205,6 +208,12 @@ class TaskFormActivity : BaseActivity() {
             }))
         }
         configureForm()
+    }
+
+    override fun loadTheme(sharedPreferences: SharedPreferences, forced: Boolean) {
+        super.loadTheme(sharedPreferences, forced)
+        val upperTintColor = if (forcedTheme == "purple") getThemeColor(R.attr.taskFormTint) else getThemeColor(R.attr.colorAccent)
+        window.statusBarColor = upperTintColor
     }
 
     override fun onStart() {

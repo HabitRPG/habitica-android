@@ -17,6 +17,7 @@ import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentTavernDetailBinding
+import com.habitrpg.android.habitica.extensions.setTintWith
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
@@ -179,7 +180,7 @@ class TavernDetailFragment : BaseFragment<FragmentTavernDetailBinding>() {
             promptView?.text = context.getString(R.string.world_boss_action_prompt, bossName)
             promptView?.setTextColor(quest.colors?.lightColor ?: 0)
             val background = ContextCompat.getDrawable(context, R.drawable.rounded_border)
-            background?.setColorFilter(quest.colors?.extraLightColor ?: 0, PorterDuff.Mode.MULTIPLY)
+            background?.setTintWith(quest.colors?.extraLightColor ?: 0, PorterDuff.Mode.MULTIPLY)
             promptView?.background = background
 
             alert.setButton(AlertDialog.BUTTON_POSITIVE, context.getString(R.string.close)) { dialog, _ ->

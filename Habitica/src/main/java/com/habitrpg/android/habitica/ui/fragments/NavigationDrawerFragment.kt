@@ -309,19 +309,6 @@ class NavigationDrawerFragment : DialogFragment() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-
-        activePromo = context?.let { configManager.activePromo(it) }
-        val promoItem = getItemWithIdentifier(SIDEBAR_PROMO) ?: return
-        if (activePromo != null) {
-            promoItem.isVisible = true
-            adapter.activePromo = activePromo
-        } else {
-            promoItem.isVisible = false
-        }
-    }
-
     override fun onDestroy() {
         subscriptions?.dispose()
         socialRepository.close()
@@ -387,7 +374,7 @@ class NavigationDrawerFragment : DialogFragment() {
 
     fun setSelection(transitionId: Int?, bundle: Bundle? = null, openSelection: Boolean = true) {
         closeDrawer()
-        if (adapter.selectedItem == transitionId) return
+        if (adapter.selectedItem != null && adapter.selectedItem == transitionId) return
         adapter.selectedItem = transitionId
 
         if (!openSelection) {
@@ -516,6 +503,17 @@ class NavigationDrawerFragment : DialogFragment() {
         } else {
             binding?.settingsBadge?.visibility = View.VISIBLE
             binding?.settingsBadge?.text = count.toString()
+        }
+    }
+
+    fun updatePromo() {
+        activePromo = context?.let { configManager.activePromo(it) }
+        val promoItem = getItemWithIdentifier(SIDEBAR_PROMO) ?: return
+        if (activePromo != null) {
+            promoItem.isVisible = true
+            adapter.activePromo = activePromo
+        } else {
+            promoItem.isVisible = false
         }
     }
 

@@ -49,9 +49,18 @@ class DateDeserializer : JsonDeserializer<Date>, JsonSerializer<Date> {
         val jsonString = element.asString
         var date: Date? = null
         var index = 0
-        while (index < dateFormats.size && date != null) {
-            date = dateFormats[index].parse(jsonString)
+        while (index < dateFormats.size && date == null) {
+            try {
+                date = dateFormats[index].parse(jsonString)
+            } catch (_: ParseException) {}
             index += 1
+        }
+        if (date == null) {
+            date = try {
+                Date(element.asLong)
+            } catch (e3: NumberFormatException) {
+                null
+            }
         }
         return date
     }
