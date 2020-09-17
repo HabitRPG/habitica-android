@@ -218,7 +218,7 @@
                             android:layout_weight="1"
                             android:layout_height="wrap_content"
                             android:text="@string/strength"
-                            android:layout_marginRight="@dimen/spacing_large"/>
+                            android:layout_marginEnd="@dimen/spacing_large"/>
                         <TextView
                             android:id="@+id/stat_constitution_button"
                             style="@style/TaskFormToggle"
@@ -237,7 +237,7 @@
                             android:layout_weight="1"
                             android:layout_height="wrap_content"
                             android:text="@string/intelligence"
-                            android:layout_marginRight="@dimen/spacing_large"/>
+                            android:layout_marginEnd="@dimen/spacing_large"/>
                         <TextView
                             android:id="@+id/stat_perception_button"
                             style="@style/TaskFormToggle"

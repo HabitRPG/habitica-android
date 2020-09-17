@@ -14,7 +14,7 @@
         android:layout_width="48dp"
         android:layout_height="match_parent"
         android:background="@color/window_background"
-        android:layout_marginRight="@dimen/spacing_large"
+        android:layout_marginEnd="@dimen/spacing_large"
         android:layout_marginTop="0.5dp"
         android:layout_marginBottom="0.5dp">
         <ImageView
@@ -49,7 +49,7 @@
         android:layout_width="48dp"
         android:layout_height="match_parent"
         android:background="@color/window_background"
-        android:layout_marginLeft="@dimen/spacing_large"
+        android:layout_marginStart="@dimen/spacing_large"
         android:layout_marginTop="0.5dp"
         android:layout_marginBottom="0.5dp">
         <ImageView

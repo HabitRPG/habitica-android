@@ -22,8 +22,8 @@
             android:layout_weight="1"
             style="@style/Overline"
             tools:text="Section Header"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp" />
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp" />
         <Spinner
             android:id="@+id/classSelectionSpinner"
             android:layout_width="wrap_content"

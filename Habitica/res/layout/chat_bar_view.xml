@@ -7,8 +7,8 @@
             android:layout_width="match_parent"
             android:orientation="horizontal"
             android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/spacing_medium"
-            android:paddingRight="@dimen/spacing_medium"
+            android:paddingStart="@dimen/spacing_medium"
+            android:paddingEnd="@dimen/spacing_medium"
             android:baselineAligned="false">
 
             <com.google.android.material.textfield.TextInputLayout
@@ -29,8 +29,8 @@
                     android:inputType="textCapSentences|textMultiLine"
                     android:lineSpacingExtra="2dp"
                     android:background="@drawable/rounded_border"
-                    android:paddingLeft="@dimen/spacing_medium"
-                    android:paddingRight="@dimen/spacing_medium"
+                    android:paddingStart="@dimen/spacing_medium"
+                    android:paddingEnd="@dimen/spacing_medium"
                     android:paddingTop="4dp"
                     android:paddingBottom="4dp"
                     tools:height="200dp"/>

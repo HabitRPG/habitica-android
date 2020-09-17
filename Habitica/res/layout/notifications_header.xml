@@ -5,9 +5,9 @@
     android:layout_height="wrap_content"
     android:background="?attr/colorContentBackground"
     android:orientation="horizontal"
-    android:paddingLeft="20dp"
+    android:paddingStart="20dp"
     android:paddingTop="10dp"
-    android:paddingRight="20dp">
+    android:paddingEnd="20dp">
 
     <LinearLayout
         android:layout_width="0dp"

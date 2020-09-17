@@ -60,8 +60,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="60dp"
-                android:layout_marginRight="60dp"
+                android:layout_marginStart="60dp"
+                android:layout_marginEnd="60dp"
                 android:gravity="center_horizontal"
                 android:textColor="@color/white"
                 android:textSize="16sp"

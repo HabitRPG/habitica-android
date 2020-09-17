@@ -29,8 +29,8 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="18dp"
-            android:layout_marginLeft="@dimen/spacing_medium"
-            android:layout_marginRight="@dimen/spacing_medium">
+            android:layout_marginStart="@dimen/spacing_medium"
+            android:layout_marginEnd="@dimen/spacing_medium">
             <ImageView
                 android:id="@+id/infoIconView"
                 android:layout_width="18dp"

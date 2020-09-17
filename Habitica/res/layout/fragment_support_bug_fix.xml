@@ -24,8 +24,8 @@
         android:padding="19dp"
         android:orientation="vertical"
         android:background="@drawable/layout_rounded_bg_window"
-        android:layout_marginLeft="@dimen/spacing_medium"
-        android:layout_marginRight="@dimen/spacing_medium"
+        android:layout_marginStart="@dimen/spacing_medium"
+        android:layout_marginEnd="@dimen/spacing_medium"
         android:layout_marginBottom="@dimen/spacing_medium">
         <TextView
             android:layout_width="wrap_content"
@@ -46,8 +46,8 @@
         android:padding="19dp"
         android:orientation="vertical"
         android:background="@drawable/layout_rounded_bg_window"
-        android:layout_marginLeft="@dimen/spacing_medium"
-        android:layout_marginRight="@dimen/spacing_medium"
+        android:layout_marginStart="@dimen/spacing_medium"
+        android:layout_marginEnd="@dimen/spacing_medium"
         android:layout_marginBottom="@dimen/spacing_medium">
         <TextView
             android:layout_width="wrap_content"
@@ -68,8 +68,8 @@
         android:padding="19dp"
         android:orientation="vertical"
         android:background="@drawable/layout_rounded_bg_window"
-        android:layout_marginLeft="@dimen/spacing_medium"
-        android:layout_marginRight="@dimen/spacing_medium"
+        android:layout_marginStart="@dimen/spacing_medium"
+        android:layout_marginEnd="@dimen/spacing_medium"
         android:layout_marginBottom="@dimen/spacing_medium">
         <TextView
             android:layout_width="wrap_content"

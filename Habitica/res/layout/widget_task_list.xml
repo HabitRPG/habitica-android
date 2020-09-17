@@ -14,8 +14,8 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingLeft="4dp"
-        android:paddingRight="4dp">
+        android:paddingStart="4dp"
+        android:paddingEnd="4dp">
     <ListView
         android:id="@+id/list_view"
         android:layout_width="match_parent"

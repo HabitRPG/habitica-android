@@ -43,8 +43,8 @@
             android:layout_height="match_parent"
             app:hintTextAppearance="@style/TextAppearance.AppCompat"
             android:layout_marginTop="@dimen/spacing_small"
-            android:layout_marginLeft="@dimen/spacing_large"
-            android:layout_marginRight="@dimen/spacing_large"
+            android:layout_marginStart="@dimen/spacing_large"
+            android:layout_marginEnd="@dimen/spacing_large"
             android:background="@drawable/edittext"
             android:textColorHint="@color/text_primary">
             <com.habitrpg.android.habitica.ui.views.HabiticaAutocompleteTextView
@@ -69,8 +69,8 @@
                 android:layout_height="match_parent"
                 app:hintTextAppearance="@style/TextAppearance.AppCompat"
                 android:layout_marginTop="@dimen/spacing_large"
-                android:layout_marginLeft="@dimen/spacing_large"
-                android:layout_marginRight="@dimen/spacing_large"
+                android:layout_marginStart="@dimen/spacing_large"
+                android:layout_marginEnd="@dimen/spacing_large"
                 android:background="@drawable/edittext"
                 android:textColorHint="@color/text_primary">
 
@@ -97,8 +97,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_large"
-            android:layout_marginLeft="@dimen/spacing_large"
-            android:layout_marginRight="@dimen/spacing_large">
+            android:layout_marginStart="@dimen/spacing_large"
+            android:layout_marginEnd="@dimen/spacing_large">
             <TextView
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -123,8 +123,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/privacyWrapper"
-            android:layout_marginLeft="@dimen/spacing_large"
-            android:layout_marginRight="@dimen/spacing_large"
+            android:layout_marginStart="@dimen/spacing_large"
+            android:layout_marginEnd="@dimen/spacing_large"
             tools:visibility="gone">
 
             <TextView

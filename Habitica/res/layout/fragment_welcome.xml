@@ -10,8 +10,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingLeft="@dimen/spacing_large"
-    android:paddingRight="@dimen/spacing_large"
+    android:paddingStart="@dimen/spacing_large"
+    android:paddingEnd="@dimen/spacing_large"
     android:paddingTop="32dp"
     android:paddingBottom="16dp">
 
@@ -42,9 +42,9 @@
             <TextView
                 android:layout_height="42dp"
                 android:text="@string/display_name"
-                android:paddingLeft="@dimen/spacing_medium"
-                android:paddingRight="@dimen/spacing_medium"
-                android:layout_marginLeft="1dp"
+                android:paddingStart="@dimen/spacing_medium"
+                android:paddingEnd="@dimen/spacing_medium"
+                android:layout_marginStart="1dp"
                 android:background="@color/setup_label_background"
                 android:gravity="center_vertical"
                 android:textSize="14sp"
@@ -55,8 +55,8 @@
             <EditText android:id="@+id/display_name_edit_text"
                 android:background="@color/transparent"
                 android:layout_height="42dp"
-                android:layout_marginLeft="@dimen/spacing_large"
-                android:layout_marginRight="@dimen/spacing_large"
+                android:layout_marginStart="@dimen/spacing_large"
+                android:layout_marginEnd="@dimen/spacing_large"
                 android:textSize="14sp"
                 android:lines="1"/>
         </TableRow>
@@ -69,17 +69,17 @@
             <TextView android:text="@string/username"
                 android:background="@color/setup_label_background"
                 android:layout_height="41dp"
-                android:paddingLeft="@dimen/spacing_medium"
-                android:paddingRight="@dimen/spacing_medium"
-                android:layout_marginLeft="1dp"
+                android:paddingStart="@dimen/spacing_medium"
+                android:paddingEnd="@dimen/spacing_medium"
+                android:layout_marginStart="1dp"
                 android:gravity="center_vertical"
                 android:textSize="14sp"/>
             <View android:background="@color/offset_background"
                 android:layout_width="1dp"
                 android:layout_height="42dp"/>
             <LinearLayout
-                android:layout_marginLeft="@dimen/spacing_large"
-                android:layout_marginRight="@dimen/spacing_large">
+                android:layout_marginStart="@dimen/spacing_large"
+                android:layout_marginEnd="@dimen/spacing_large">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -92,7 +92,7 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="42dp"
-                    android:layout_marginLeft="@dimen/spacing_small"
+                    android:layout_marginStart="@dimen/spacing_small"
                     android:lines="1"
                     android:textSize="14sp"/>
             </LinearLayout>
