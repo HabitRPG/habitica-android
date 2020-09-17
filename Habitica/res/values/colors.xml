@@ -160,6 +160,7 @@
     <color name="text_ternary">@color/gray_200</color>
     <color name="text_quad">@color/gray_300</color>
     <color name="text_dimmed">@color/gray_400</color>
+    <color name="text_inverted">@color/gray_700</color>
     <color name="text_brand">@color/brand_300</color>
     <color name="text_brand_neon">@color/brand_400</color>
     <color name="text_red">@color/red_10</color>

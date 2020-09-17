@@ -64,7 +64,7 @@
         <item name="colorPrimary">@color/gray_500</item>
         <item name="barColor">@color/gray_1</item>
         <item name="colorPrimaryOffset">@color/gray_10</item>
-        <item name="textColorPrimaryDark">@color/gray_400</item>
+        <item name="textColorPrimaryDark">@color/brand_500</item>
     </style>
 
     <style name="MainAppTheme.Red">
@@ -641,7 +641,7 @@
 
     <style name="HabiticaButton.Primary" parent="HabiticaButton">
         <item name="android:backgroundTint">@color/color_accent</item>
-        <item name="android:textColor">?textColorPrimaryDark</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 
     <style name="HabiticaButton.Small" parent="HabiticaButton">
@@ -720,16 +720,19 @@
         <!-- reference our hint & error styles -->
         <item name="boxBackgroundColor">@color/white</item>
         <item name="android:textColor">?attr/colorPrimaryText</item>
-        <item name="android:textColorHint">@color/textColorLight</item>
+        <item name="android:textColorHint">?colorPrimaryText</item>
         <item name="colorControlNormal">?attr/colorPrimary</item>
         <item name="colorControlActivated">?attr/colorPrimary</item>
         <item name="colorControlHighlight">?attr/colorPrimary</item>
-        <item name="colorAccent">?attr/colorPrimary</item>
+        <item name="colorAccent">?attr/colorPrimaryText</item>
+        <item name="colorPrimary">?attr/colorPrimaryText</item>
         <item name="hintTextAppearance">@style/TaskFormHintTextAppearance</item>
     </style>
 
     <style name="TaskFormHintTextAppearance">
+        <item name="android:colorPrimary">?attr/colorPrimaryText</item>
         <item name="colorPrimary">?attr/colorPrimaryText</item>
+        <item name="textColorPrimary">?attr/colorPrimaryText</item>
         <item name="android:textSize">12sp</item>
         <item name="android:fontFamily">@string/font_family_medium</item>
         <item name="fontFamily">@string/font_family_medium</item>
@@ -742,7 +745,7 @@
         <item name="android:colorControlNormal">?attr/colorPrimary</item>
         <item name="android:colorControlActivated">?attr/colorPrimary</item>
         <item name="android:colorControlHighlight">?attr/colorPrimary</item>
-        <item name="android:colorAccent">@color/brand_400</item>
+        <item name="android:colorAccent">?colorPrimaryText</item>
     </style>
 
     <style name="TextInputLayoutAppearance" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
