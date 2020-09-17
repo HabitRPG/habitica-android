@@ -39,8 +39,8 @@
             android:gravity="center_horizontal"
             android:text="@string/gift_gems_balance_subtitle"
             android:textColor="@color/text_quad"
-            android:layout_marginLeft="@dimen/spacing_large"
-            android:layout_marginRight="@dimen/spacing_large"
+            android:layout_marginStart="@dimen/spacing_large"
+            android:layout_marginEnd="@dimen/spacing_large"
             android:layout_marginBottom="@dimen/spacing_large"/>
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"

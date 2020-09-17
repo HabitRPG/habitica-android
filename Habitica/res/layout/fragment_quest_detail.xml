@@ -13,8 +13,8 @@
             android:background="@color/content_background"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/content_border"
-            android:paddingRight="@dimen/content_border"
+            android:paddingStart="@dimen/content_border"
+            android:paddingEnd="@dimen/content_border"
             android:paddingTop="12dp"
             android:paddingBottom="12dp"
             >
@@ -55,8 +55,8 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingTop="12dp"
-            android:paddingLeft="@dimen/content_border"
-            android:paddingRight="@dimen/content_border"
+            android:paddingStart="@dimen/content_border"
+            android:paddingEnd="@dimen/content_border"
             android:paddingBottom="12dp">
             <TextView
                 android:layout_width="match_parent"
@@ -88,7 +88,7 @@
                     style="@style/Body1"
                     tools:text="3"
                     android:textColor="@color/text_quad"
-                    android:layout_marginLeft="6dp"/>
+                    android:layout_marginStart="6dp"/>
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/quest_participant_list"
@@ -115,7 +115,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/quest_accept"
                 style="@style/HabiticaButton.Green"
-                android:layout_marginRight="16dp" />
+                android:layout_marginEnd="16dp" />
 
             <Button
                 android:id="@+id/quest_reject_button"
@@ -139,7 +139,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/quest_begin"
                 style="@style/HabiticaButton.Yellow"
-                android:layout_marginRight="16dp" />
+                android:layout_marginEnd="16dp" />
 
             <Button
                 android:id="@+id/quest_cancel_button"

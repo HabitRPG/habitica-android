@@ -16,9 +16,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_centerVertical="true"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:paddingEnd="16dp"
+                android:paddingStart="@dimen/spacing_large"
+                android:paddingEnd="@dimen/spacing_large"
                 android:paddingBottom="20dp"
                 android:paddingTop="20dp">
                 <com.habitrpg.android.habitica.ui.views.HabiticaEmojiTextView
@@ -39,7 +38,6 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:layout_alignParentTop="true"
-                android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true" />
         </RelativeLayout>
     </LinearLayout>

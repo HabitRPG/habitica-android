@@ -80,20 +80,19 @@
                 style="@style/ChallengeTaskDetails"
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"
-                android:layout_marginLeft="4dp"
-                android:layout_marginStart="4dp"
+                android:layout_marginStart="@dimen/spacing_small"
                 android:gravity="center_vertical"
                 tools:text="12334" />
             <TextView
                 android:id="@+id/official_challenge_view"
-                android:layout_marginLeft="@dimen/spacing_small"
+                android:layout_marginStart="@dimen/spacing_small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/Pill.Purple"
                 android:text="@string/official"/>
             <TextView
                 android:id="@+id/is_joined_label"
-                android:layout_marginLeft="@dimen/spacing_small"
+                android:layout_marginStart="@dimen/spacing_small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/Pill.Selected.Green"

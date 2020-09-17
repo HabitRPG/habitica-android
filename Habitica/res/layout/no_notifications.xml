@@ -5,9 +5,9 @@
     android:layout_height="wrap_content"
     android:layout_weight="1"
     android:orientation="vertical"
-    android:paddingLeft="@dimen/spacing_medium"
+    android:paddingStart="@dimen/spacing_medium"
     android:paddingTop="44dp"
-    android:paddingRight="@dimen/spacing_medium">
+    android:paddingEnd="@dimen/spacing_medium">
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -20,9 +20,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingLeft="40dp"
+            android:paddingStart="40dp"
             android:paddingTop="26dp"
-            android:paddingRight="40dp">
+            android:paddingEnd="40dp">
 
             <TextView
                 style="@style/SectionTitle"

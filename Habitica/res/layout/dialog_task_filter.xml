@@ -37,8 +37,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/weak"
                 style="@style/TaskFilterRadioButton"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp" />
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp" />
             <RadioButton
                 android:id="@+id/third_task_filter"
                 android:layout_width="wrap_content"

@@ -39,7 +39,7 @@
                 android:background="@color/transparent"
                 android:layout_width="30dp"
                 android:layout_height="20dp"
-                android:layout_gravity="right"/>
+                android:layout_gravity="end"/>
         </LinearLayout>
         <TableLayout
             android:layout_width="match_parent"

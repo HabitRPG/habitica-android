@@ -26,8 +26,8 @@
             android:layout_gravity="bottom|end"
             tools:text="2"
             android:background="@drawable/layout_rounded_bg_primary"
-            android:paddingLeft="2dp"
-            android:paddingRight="2dp"
+            android:paddingStart="2dp"
+            android:paddingEnd="2dp"
             android:textSize="12sp"
             android:textColor="@color/white" />
     </FrameLayout>

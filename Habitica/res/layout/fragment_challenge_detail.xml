@@ -18,8 +18,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp">
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp">
             <com.habitrpg.android.habitica.ui.views.HabiticaEmojiTextView
                 android:id="@+id/challenge_name"
                 android:layout_width="match_parent"
@@ -110,8 +110,8 @@
             android:id="@+id/join_button_wrapper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/spacing_large"
-            android:paddingRight="@dimen/spacing_large"
+            android:paddingStart="@dimen/spacing_large"
+            android:paddingEnd="@dimen/spacing_large"
             android:paddingTop="@dimen/spacing_medium"
             android:paddingBottom="@dimen/spacing_medium"
             android:background="?attr/colorContentBackground">
@@ -126,8 +126,8 @@
             android:id="@+id/challenge_creator_wrapper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/spacing_large"
-            android:paddingRight="@dimen/spacing_large"
+            android:paddingStart="@dimen/spacing_large"
+            android:paddingEnd="@dimen/spacing_large"
             android:paddingTop="@dimen/spacing_medium"
             android:paddingBottom="@dimen/spacing_medium"
             android:background="?attr/colorContentBackground"
@@ -136,7 +136,6 @@
                 android:layout_width="@dimen/avatar_chat_size"
                 android:layout_height="@dimen/avatar_chat_size"
                 android:clipChildren="true"
-                android:layout_marginRight="@dimen/spacing_medium"
                 android:layout_marginEnd="@dimen/spacing_medium"
                 android:background="@drawable/rounded_avatar_bg">
                 <com.habitrpg.android.habitica.ui.AvatarView
@@ -195,8 +194,8 @@
             android:id="@+id/leave_button_wrapper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/spacing_large"
-            android:paddingRight="@dimen/spacing_large"
+            android:paddingStart="@dimen/spacing_large"
+            android:paddingEnd="@dimen/spacing_large"
             android:paddingTop="@dimen/spacing_medium"
             android:paddingBottom="@dimen/spacing_large">
             <Button

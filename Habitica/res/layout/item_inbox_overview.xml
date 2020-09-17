@@ -10,7 +10,6 @@
         android:layout_width="@dimen/avatar_chat_size"
         android:layout_height="@dimen/avatar_chat_size"
         android:clipChildren="true"
-        android:layout_marginRight="@dimen/spacing_medium"
         android:layout_marginEnd="@dimen/spacing_medium"
         android:background="@drawable/rounded_avatar_bg">
         <com.habitrpg.android.habitica.ui.AvatarView
@@ -26,7 +25,7 @@
         android:layout_weight="1"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingLeft="@dimen/spacing_medium">
+        android:paddingStart="@dimen/spacing_medium">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

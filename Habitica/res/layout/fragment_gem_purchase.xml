@@ -40,8 +40,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/gift_one_get_one_description"
-                android:layout_marginLeft="60dp"
-                android:layout_marginRight="60dp"
+                android:layout_marginStart="60dp"
+                android:layout_marginEnd="60dp"
                 android:gravity="center_horizontal"
                 android:textColor="@color/white"
                 android:textSize="16sp"
@@ -96,8 +96,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="60dp"
-                android:layout_marginRight="60dp"
+                android:layout_marginStart="60dp"
+                android:layout_marginEnd="60dp"
                 android:gravity="center_horizontal"
                 android:textColor="@color/white"
                 android:textSize="16sp"
@@ -187,8 +187,7 @@
                         android:layout_weight="1"
                         app:gemAmount="4"
                         app:gemDrawable="@drawable/gems_4"
-                        android:layout_marginRight="16dp"
-                        android:layout_marginEnd="16dp"
+                        android:layout_marginEnd="@dimen/spacing_large"
                         />
                     <com.habitrpg.android.habitica.ui.GemPurchaseOptionsView
                         android:id="@+id/gems_21_view"
@@ -212,8 +211,7 @@
                         android:layout_weight="1"
                         app:gemAmount="42"
                         app:gemDrawable="@drawable/gems_42"
-                        android:layout_marginRight="16dp"
-                        android:layout_marginEnd="16dp" />
+                        android:layout_marginEnd="@dimen/spacing_large" />
                     <com.habitrpg.android.habitica.ui.GemPurchaseOptionsView
                         android:id="@+id/gems_84_view"
                         android:layout_width="0dp"
@@ -237,8 +235,8 @@
                 android:textColor="@color/text_quad"
                 android:text="@string/gems_gift_description"
                 android:gravity="center_horizontal"
-                android:layout_marginLeft="@dimen/spacing_large"
-                android:layout_marginRight="@dimen/spacing_large"/>
+                android:layout_marginStart="@dimen/spacing_large"
+                android:layout_marginEnd="@dimen/spacing_large"/>
             <Button
                 android:id="@+id/gift_gems_button"
                 android:layout_width="match_parent"
@@ -252,8 +250,8 @@
         <TextView android:id="@+id/supportTextView"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:paddingLeft="41dp"
-            android:paddingRight="41dp"
+            android:paddingStart="41dp"
+            android:paddingEnd="41dp"
             android:paddingBottom="20dp"
             android:paddingTop="20dp"
             android:text="@string/gem_purchase_title"

@@ -10,8 +10,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/support_faq"
-        android:layout_marginLeft="26dp"
-        android:layout_marginRight="29dp"/>
+        android:layout_marginStart="26dp"
+        android:layout_marginEnd="29dp"/>
     <TextView
         android:id="@+id/text_view"
         android:layout_width="wrap_content"
@@ -19,7 +19,7 @@
         android:textSize="14sp"
         android:textColor="@color/text_secondary"
         tools:text="Title"
-        android:layout_marginRight="@dimen/spacing_large"
+        android:layout_marginEnd="@dimen/spacing_large"
         android:layout_marginTop="@dimen/spacing_medium"
         android:layout_marginBottom="@dimen/spacing_medium"
         />

@@ -8,12 +8,12 @@
     </item>
     <item>
         <bitmap
-            android:gravity="left|top"
+            android:gravity="start|top"
             android:src="@drawable/gold_coins_left" />
     </item>
     <item>
         <bitmap
-            android:gravity="right|bottom"
+            android:gravity="end|bottom"
             android:src="@drawable/gold_coins_right" />
     </item>
 </layer-list>
