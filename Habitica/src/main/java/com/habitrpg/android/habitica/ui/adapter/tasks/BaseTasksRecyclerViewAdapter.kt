@@ -47,10 +47,6 @@ abstract class BaseTasksRecyclerViewAdapter<VH : BindableViewHolder<Task>>(var t
         if (item != null) {
             holder.bind(item, position, "normal")
         }
-        /*if (this.displayedChecklist != null && ChecklistedViewHolder.class.isAssignableFrom(holder.getClass())) {
-            ChecklistedViewHolder checklistedHolder = (ChecklistedViewHolder) holder;
-            checklistedHolder.setDisplayChecklist(this.displayedChecklist == position);
-        }*/
     }
 
     override fun getItemId(position: Int): Long {

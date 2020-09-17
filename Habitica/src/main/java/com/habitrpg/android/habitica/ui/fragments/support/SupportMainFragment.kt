@@ -59,7 +59,7 @@ class SupportMainFragment : BaseMainFragment<FragmentSupportMainBinding>() {
         }
 
         compositeSubscription.add(Completable.fromAction {
-            deviceInfo = DeviceName.getDeviceInfo(context)
+            deviceInfo = context?.let { DeviceName.getDeviceInfo(it) }
         }.subscribe())
 
         binding?.resetTutorialButton?.setOnClickListener {

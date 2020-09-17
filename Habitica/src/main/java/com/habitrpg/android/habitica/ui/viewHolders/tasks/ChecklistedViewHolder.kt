@@ -169,15 +169,7 @@ abstract class ChecklistedViewHolder(itemView: View, scoreTaskFunc: ((Task, Task
         return expandedChecklistRow != null && adapterPosition == expandedChecklistRow
     }
 
-    private fun expandCheckboxTouchArea(expandedView: View?, checkboxView: View?) {
-        expandedView?.post {
-            val rect = Rect()
-            expandedView.getHitRect(rect)
-            expandedView.touchDelegate = TouchDelegate(rect, checkboxView)
-        }
-    }
-
-    fun onCheckedChanged(isChecked: Boolean) {
+    private fun onCheckedChanged(isChecked: Boolean) {
         if (task?.isValid != true) {
             return
         }

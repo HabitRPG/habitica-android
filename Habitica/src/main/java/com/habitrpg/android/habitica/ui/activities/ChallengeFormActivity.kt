@@ -209,7 +209,7 @@ class ChallengeFormActivity : BaseActivity() {
         val intent = intent
         val bundle = intent.extras
 
-        challengeTasks = ChallengeTasksRecyclerViewAdapter(null, 0, this, "", null, false, true)
+        challengeTasks = ChallengeTasksRecyclerViewAdapter(null, 0, this, "", false, true)
         compositeSubscription.add(challengeTasks.taskOpenEvents.subscribe {
             if (it.isValid) {
                 openNewTaskActivity(it.type, it)

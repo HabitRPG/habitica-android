@@ -59,8 +59,8 @@ class ItemRecyclerAdapter(data: OrderedRealmCollection<OwnedItem>?, autoUpdate: 
         return openMysteryItemEvents.toFlowable(BackpressureStrategy.DROP)
     }
 
-    val startHatchingEvents = startHatchingSubject.toFlowable(BackpressureStrategy.DROP)
-    val hatchPetEvents = hatchPetSubject.toFlowable(BackpressureStrategy.DROP)
+    val startHatchingEvents: Flowable<Item> = startHatchingSubject.toFlowable(BackpressureStrategy.DROP)
+    val hatchPetEvents: Flowable<Pair<HatchingPotion, Egg>> = hatchPetSubject.toFlowable(BackpressureStrategy.DROP)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         return ItemViewHolder(ItemItemBinding.inflate(context.layoutInflater, parent, false))
@@ -84,7 +84,7 @@ class ItemRecyclerAdapter(data: OrderedRealmCollection<OwnedItem>?, autoUpdate: 
     }
 
     inner class ItemViewHolder(val binding: ItemItemBinding) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
-        var ownedItem: OwnedItem? = null
+        private var ownedItem: OwnedItem? = null
         var item: Item? = null
 
         var resources: Resources = itemView.resources
@@ -113,7 +113,7 @@ class ItemRecyclerAdapter(data: OrderedRealmCollection<OwnedItem>?, autoUpdate: 
             var disabled = false
             val imageName: String?
             if (item is QuestContent) {
-                imageName = "inventory_quest_scroll_" + item.getKey()
+                imageName = "inventory_quest_scroll_" + item.key
             } else if (item is SpecialItem) {
                 val sdf = SimpleDateFormat("MM", Locale.getDefault())
                 val month = sdf.format(Date())

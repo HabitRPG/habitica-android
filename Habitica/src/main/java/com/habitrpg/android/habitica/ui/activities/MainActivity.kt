@@ -13,7 +13,6 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.os.Build
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import android.view.*
 import android.widget.FrameLayout
@@ -37,10 +36,7 @@ import com.habitrpg.android.habitica.data.*
 import com.habitrpg.android.habitica.databinding.ActivityMainBinding
 import com.habitrpg.android.habitica.events.*
 import com.habitrpg.android.habitica.events.commands.FeedCommand
-import com.habitrpg.android.habitica.extensions.dpToPx
-import com.habitrpg.android.habitica.extensions.getThemeColor
-import com.habitrpg.android.habitica.extensions.isUsingNightModeResources
-import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
+import com.habitrpg.android.habitica.extensions.*
 import com.habitrpg.android.habitica.helpers.*
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
 import com.habitrpg.android.habitica.interactors.CheckClassSelectionUseCase
@@ -77,12 +73,14 @@ import com.habitrpg.android.habitica.widget.DailiesWidgetProvider
 import com.habitrpg.android.habitica.widget.HabitButtonWidgetProvider
 import com.habitrpg.android.habitica.widget.TodoListWidgetProvider
 import io.reactivex.Completable
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import java.util.*
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
@@ -137,8 +135,6 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     var drawerToggle: ActionBarDrawerToggle? = null
     private var resumeFromActivity = false
     private var userIsOnQuest = false
-
-    private var connectionIssueHandler: Handler? = null
 
     val userID: String
         get() = user?.id ?: ""
@@ -211,14 +207,12 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
             override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
                 val modernHeaderStyle = sharedPreferences.getBoolean("modern_header_style", true)
-                if (!isUsingNightModeResources() && modernHeaderStyle && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (!isUsingNightModeResources() && modernHeaderStyle) {
                     if (slideOffset < 0.5f && isOpeningDrawer == null) {
-                        window.statusBarColor = getThemeColor(R.attr.colorPrimaryDark)
-                        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE
+                        window.updateStatusBarColor(getThemeColor(R.attr.colorPrimaryDark), false)
                         isOpeningDrawer = true
                     } else if (slideOffset > 0.5f && isOpeningDrawer == null) {
-                        window.statusBarColor = getThemeColor(R.attr.headerBackgroundColor)
-                        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+                        window.updateStatusBarColor(getThemeColor(R.attr.headerBackgroundColor), true)
                         isOpeningDrawer = false
                     }
                 }
@@ -226,9 +220,8 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
             override fun onDrawerOpened(drawerView: View) {
                 val modernHeaderStyle = sharedPreferences.getBoolean("modern_header_style", true)
-                if (!isUsingNightModeResources() && modernHeaderStyle && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    window.statusBarColor = getThemeColor(R.attr.colorPrimaryDark)
-                    window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE
+                if (!isUsingNightModeResources() && modernHeaderStyle) {
+                    window.updateStatusBarColor(getThemeColor(R.attr.colorPrimaryDark), false)
                 }
                 isOpeningDrawer = null
 
@@ -237,9 +230,8 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
             override fun onDrawerClosed(drawerView: View) {
                 val modernHeaderStyle = sharedPreferences.getBoolean("modern_header_style", true)
-                if (!isUsingNightModeResources() && modernHeaderStyle && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    window.statusBarColor = getThemeColor(R.attr.headerBackgroundColor)
-                    window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+                if (!isUsingNightModeResources() && modernHeaderStyle) {
+                    window.updateStatusBarColor(getThemeColor(R.attr.headerBackgroundColor), true)
                 }
                 isOpeningDrawer = null
             }
@@ -770,8 +762,8 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     fun showAchievementDialog(event: ShowAchievementDialog) {
         if (User.ONBOARDING_ACHIEVEMENT_KEYS.contains(event.type) || event.type == Notification.Type.ACHIEVEMENT_ONBOARDING_COMPLETE.type) {
             if (!appConfigManager.enableAdventureGuide()) {
-                apiClient.readNotification(event.id)
-                        .subscribe({ }, RxErrorHandler.handleEmptyError())
+                compositeSubscription.add(apiClient.readNotification(event.id)
+                        .subscribe({ }, RxErrorHandler.handleEmptyError()))
                 return
             }
         }
@@ -811,13 +803,13 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         if (event.title != null) {
             super.onEvent(event)
         } else {
-            connectionIssueHandler?.removeCallbacksAndMessages(null)
             binding.connectionIssueTextview.visibility = View.VISIBLE
             binding.connectionIssueTextview.text = event.message
-            connectionIssueHandler = Handler()
-            connectionIssueHandler?.postDelayed({
-                binding.connectionIssueTextview.visibility = View.GONE
-            }, 5000)
+            compositeSubscription.add(Observable.just("")
+                    .delay(500, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
+                    .subscribe( {
+                        binding.connectionIssueTextview.visibility = View.GONE
+                    }, {}))
         }
     }
 

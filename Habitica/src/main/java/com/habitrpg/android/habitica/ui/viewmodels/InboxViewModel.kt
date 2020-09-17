@@ -52,7 +52,7 @@ class InboxViewModel(recipientID: String?, recipientUsername: String?) : BaseVie
     }
 
     protected var memberIDSubject = BehaviorSubject.create<Optional<String>>()
-    val memberIDFlowable = memberIDSubject.toFlowable(BackpressureStrategy.BUFFER)
+    val memberIDFlowable: Flowable<Optional<String>> = memberIDSubject.toFlowable(BackpressureStrategy.BUFFER)
 
     fun setMemberID(groupID: String) {
         if (groupID == memberIDSubject.value?.value) return

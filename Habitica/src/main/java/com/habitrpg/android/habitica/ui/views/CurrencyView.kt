@@ -123,20 +123,6 @@ class CurrencyView : androidx.appcompat.widget.AppCompatTextView {
         }
     }
 
-    var cantAfford = false
-    set(value) {
-        if (field != value) {
-            field = value
-            if (value) {
-                this.setTextColor(ContextCompat.getColor(context, R.color.red_50))
-                drawable?.alpha = 127
-            } else {
-                drawable?.alpha = 255
-            }
-            this.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null)
-        }
-    }
-
     private fun updateVisibility() {
         visibility = if (hideWhenEmpty) {
             if ("0" == text) View.GONE else View.VISIBLE

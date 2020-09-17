@@ -93,7 +93,7 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
                 TodosRecyclerViewAdapter(null, true, R.layout.todo_item_card, taskFilterHelper)
             }
             Task.TYPE_REWARD -> {
-                RewardsRecyclerViewAdapter(null, R.layout.reward_item_card, user, configManager)
+                RewardsRecyclerViewAdapter(null, R.layout.reward_item_card, user)
             }
             else -> null
         }
@@ -260,7 +260,7 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
                     ?.subscribeWithErrorHandler { scoreTask(it.first, it.second) }?.let { compositeSubscription.add(it) }
             recyclerAdapter?.checklistItemScoreEvents
                     ?.flatMap { taskRepository.scoreChecklistItem(it.first.id ?: "", it.second.id ?: "")
-                    }?.subscribeWithErrorHandler({})?.let { compositeSubscription.add(it) }
+                    }?.subscribeWithErrorHandler {}?.let { compositeSubscription.add(it) }
             recyclerAdapter?.brokenTaskEvents?.subscribeWithErrorHandler { showBrokenChallengeDialog(it) }?.let { compositeSubscription.add(it) }
         }
 
@@ -364,7 +364,7 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
     private fun scoreTask(task: Task, direction: TaskDirection) {
         compositeSubscription.add(taskRepository.taskChecked(user, task, direction == TaskDirection.UP, false) { result ->
             handleTaskResult(result, task.value.toInt())
-        }.subscribeWithErrorHandler({}))
+        }.subscribeWithErrorHandler {})
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

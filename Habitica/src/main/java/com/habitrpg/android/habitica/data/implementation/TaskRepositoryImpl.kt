@@ -48,9 +48,7 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
         return this.apiClient.getTasks("completedTodos")
                 .doOnNext { taskList ->
                     val tasks = taskList.tasks
-                    if (tasks != null) {
-                        this.localRepository.saveCompletedTodos(userId, tasks.values)
-                    }
+                    this.localRepository.saveCompletedTodos(userId, tasks.values)
                 }
     }
 

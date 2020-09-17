@@ -133,24 +133,7 @@ class GroupInviteActivity : BaseActivity() {
         binding.tabLayout.setupWithViewPager(binding.viewPager)
     }
 
-    private fun handleUserReceived(user: User) {
-        if (this.userIdToInvite == null) {
-            return
-        }
-
-        val inviteData = HashMap<String, Any>()
-        val invites = ArrayList<String>()
-        userIdToInvite?.let {
-            invites.add(it)
-        }
-        inviteData["uuids"] = invites
-
-        compositeSubscription.add(this.socialRepository.inviteToGroup(user.party?.id ?: "", inviteData)
-                .subscribe({ }, RxErrorHandler.handleEmptyError()))
-    }
-
     companion object {
-
         const val RESULT_SEND_INVITES = 100
         const val USER_IDS_KEY = "userIDs"
         const val IS_EMAIL_KEY = "isEmail"

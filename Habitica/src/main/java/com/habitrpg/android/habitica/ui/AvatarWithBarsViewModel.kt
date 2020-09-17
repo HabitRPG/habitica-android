@@ -65,7 +65,7 @@ class AvatarWithBarsViewModel(private val context: Context, private val binding:
         if (!user.hasClass()) {
             setUserLevel(context, binding.lvlTv, stats.lvl)
         } else {
-            setUserLevelWithClass(context, binding.lvlTv, stats.lvl, capitalize(userClass), stats.habitClass)
+            setUserLevelWithClass(context, binding.lvlTv, stats.lvl, userClass.capitalize(Locale.getDefault()), stats.habitClass)
         }
 
         setHpBarData(stats.hp?.toFloat() ?: 0.toFloat(), stats.maxHealth ?: 0)
@@ -78,8 +78,8 @@ class AvatarWithBarsViewModel(private val context: Context, private val binding:
 
         binding.currencyView.gold = stats.gp ?: 0.0
         if (user is User) {
-            binding.currencyView.hourglasses = user.hourglassCount?.toDouble() ?: 0.0
-            binding.currencyView.gems = user.gemCount?.toDouble() ?: 0.0
+            binding.currencyView.hourglasses = user.hourglassCount.toDouble()
+            binding.currencyView.gems = user.gemCount.toDouble()
         }
 
         binding.currencyView.setOnClickListener {
@@ -138,8 +138,5 @@ class AvatarWithBarsViewModel(private val context: Context, private val binding:
             drawable?.setBounds(0, 0, drawable.minimumWidth, drawable.minimumHeight)
             textView.setCompoundDrawables(drawable, null, null, null)
         }
-
-        private fun capitalize(s: String) =
-                s.substring(0, 1).toUpperCase(Locale.getDefault()) + s.substring(1)
     }
 }

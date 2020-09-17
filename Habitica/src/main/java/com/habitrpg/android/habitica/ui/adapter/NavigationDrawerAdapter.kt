@@ -49,13 +49,9 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int): Recycle
 
     fun getItemSelectionEvents(): Flowable<HabiticaDrawerItem> = itemSelectedEvents.toFlowable(BackpressureStrategy.DROP)
 
-    fun getItemWithTransitionId(transitionId: Int): HabiticaDrawerItem? =
-            items.find { it.transitionId == transitionId }
     fun getItemWithIdentifier(identifier: String): HabiticaDrawerItem? =
             items.find { it.identifier == identifier }
 
-    private fun getItemPosition(transitionId: Int): Int =
-            items.indexOfFirst { it.transitionId == transitionId }
     private fun getItemPosition(identifier: String): Int =
             items.indexOfFirst { it.identifier == identifier }
 

@@ -3,7 +3,7 @@ package com.habitrpg.android.habitica.ui.activities
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.Configuration
-import android.os.Build
+import android.content.res.Resources
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -19,6 +19,7 @@ import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.events.ShowConnectionProblemEvent
 import com.habitrpg.android.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.extensions.isUsingNightModeResources
+import com.habitrpg.android.habitica.extensions.updateStatusBarColor
 import com.habitrpg.android.habitica.helpers.LanguageHelper
 import com.habitrpg.android.habitica.ui.helpers.ToolbarColorHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
@@ -57,10 +58,7 @@ abstract class BaseActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         val languageHelper = LanguageHelper(sharedPreferences.getString("language", "en"))
-        Locale.setDefault(languageHelper.locale)
-        val configuration = Configuration()
-        configuration.setLocale(languageHelper.locale)
-        resources.updateConfiguration(configuration, resources.displayMetrics)
+        resources.forceLocale(languageHelper.locale)
         delegate.localNightMode = when (sharedPreferences.getString("theme_mode", "system")) {
             "light" -> AppCompatDelegate.MODE_NIGHT_NO
             "dark" -> AppCompatDelegate.MODE_NIGHT_YES
@@ -134,12 +132,10 @@ abstract class BaseActivity : AppCompatActivity() {
         } else {
             window.navigationBarColor = getThemeColor(R.attr.colorPrimaryDark)
         }
-        if (!isNightMode && modernHeaderStyle && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            window.statusBarColor = getThemeColor(R.attr.headerBackgroundColor)
-            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+        if (!isNightMode && modernHeaderStyle) {
+            window.updateStatusBarColor(getThemeColor(R.attr.headerBackgroundColor), true)
         } else {
-            window.statusBarColor = getThemeColor(R.attr.statusBarBackground)
-            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE
+            window.updateStatusBarColor(getThemeColor(R.attr.statusBarBackground), false)
         }
 
         if (currentTheme != null && theme != currentTheme) {
@@ -200,4 +196,11 @@ abstract class BaseActivity : AppCompatActivity() {
         overridePendingTransition(R.anim.activity_fade_in, R.anim.activity_fade_out)
         startActivity(intent)
     }
+}
+
+private fun Resources.forceLocale(locale: Locale) {
+    Locale.setDefault(locale)
+    val configuration = Configuration()
+    configuration.setLocale(locale)
+    updateConfiguration(configuration, displayMetrics)
 }

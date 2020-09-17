@@ -96,7 +96,7 @@ class PetDetailRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapt
 
     fun setOwnedItems(ownedItems: Map<String, OwnedItem>) {
         this.ownedItems = ownedItems
-        ownsSaddles = ownedItems.containsKey("Saddle-food")
+        ownsSaddles = if (ownedItems.containsKey("Saddle-food")) (ownedItems["Saddle-food"]?.numberOwned ?: 0)> 0 else false
         notifyDataSetChanged()
     }
 }

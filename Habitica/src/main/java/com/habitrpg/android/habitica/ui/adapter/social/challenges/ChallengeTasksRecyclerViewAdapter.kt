@@ -9,7 +9,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.helpers.TaskFilterHelper
 import com.habitrpg.android.habitica.models.tasks.Task
-import com.habitrpg.android.habitica.ui.adapter.tasks.SortableTasksRecyclerViewAdapter
+import com.habitrpg.android.habitica.ui.adapter.tasks.BaseTasksRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.viewHolders.BindableViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.*
 import io.reactivex.BackpressureStrategy
@@ -17,8 +17,8 @@ import io.reactivex.Flowable
 import io.reactivex.subjects.PublishSubject
 
 class ChallengeTasksRecyclerViewAdapter(taskFilterHelper: TaskFilterHelper?, layoutResource: Int,
-                                        newContext: Context, userID: String, sortCallback: SortTasksCallback?,
-                                        private val openTaskDisabled: Boolean, private val taskActionsDisabled: Boolean) : SortableTasksRecyclerViewAdapter<BindableViewHolder<Task>>("", taskFilterHelper, layoutResource, newContext, userID, sortCallback) {
+                                        newContext: Context, userID: String,
+                                        private val openTaskDisabled: Boolean, private val taskActionsDisabled: Boolean) :  BaseTasksRecyclerViewAdapter<BindableViewHolder<Task>>("", taskFilterHelper, layoutResource, newContext, userID) {
 
     private val addItemSubject = PublishSubject.create<Task>()
 

@@ -70,9 +70,7 @@ class TimePreferenceDialogFragment : PreferenceDialogFragmentCompat() {
     }
 
     companion object {
-
         val TAG = TimePreferenceDialogFragment::class.java.simpleName
-
         fun newInstance(
                 preferenceFragment: PreferenceFragmentCompat, key: String): TimePreferenceDialogFragment {
             val fragment = TimePreferenceDialogFragment()

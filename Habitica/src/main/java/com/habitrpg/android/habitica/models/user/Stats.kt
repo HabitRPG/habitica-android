@@ -3,7 +3,6 @@ package com.habitrpg.android.habitica.models.user
 import android.content.Context
 import com.google.gson.annotations.SerializedName
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.models.HabitRpgClass
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
@@ -100,10 +99,6 @@ open class Stats : RealmObject() {
         this.toNextLevel = if (stats.toNextLevel != null) stats.toNextLevel else this.toNextLevel
         this.maxHealth = if (stats.maxHealth != null) stats.maxHealth else this.maxHealth
         this.maxMP = if (stats.maxMP != null) stats.maxMP else this.maxMP
-    }
-
-    fun setHabitClass(habitRpgClass: HabitRpgClass) {
-        habitClass = habitRpgClass.toString()
     }
 
     companion object {
