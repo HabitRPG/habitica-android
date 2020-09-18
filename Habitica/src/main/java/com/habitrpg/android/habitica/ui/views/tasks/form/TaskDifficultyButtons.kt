@@ -33,6 +33,7 @@ class TaskDifficultyButtons @JvmOverloads constructor(
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
+        removeAllViews()
         addAllButtons()
     }
 

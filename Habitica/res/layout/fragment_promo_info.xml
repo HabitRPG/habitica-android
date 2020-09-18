@@ -11,7 +11,7 @@
         <RelativeLayout
             android:id="@+id/promo_banner"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="103dp"
             android:layout_marginStart="4dp"
             android:layout_marginEnd="4dp"
             android:layout_marginBottom="16dp"
@@ -55,7 +55,7 @@
                     android:id="@+id/promo_banner_duration_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/Subheader2"/>
+                    style="@style/Subheader1"/>
             </LinearLayout>
             <TextView
                 android:layout_width="wrap_content"

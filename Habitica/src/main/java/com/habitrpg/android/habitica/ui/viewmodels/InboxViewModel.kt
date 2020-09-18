@@ -97,13 +97,10 @@ private class MessagesDataSource(val socialRepository: SocialRepository, var rec
             if (recipientID?.isNotBlank() != true) { return@launch }
             val page = ceil(params.startPosition.toFloat() / params.loadSize.toFloat()).toInt()
             socialRepository.retrieveInboxMessages(recipientID ?: "", page)
-                    .subscribe(Consumer {
+                    .subscribe( {
                         if (it.size < 10) {
                             lastFetchWasEnd = true
-                            if (footer != null)
-                                callback.onResult(it.plusElement(footer!!))
-                            else
-                                callback.onResult(it)
+                            callback.onResult(it)
                         }
                         else
                             callback.onResult(it)
@@ -130,7 +127,7 @@ private class MessagesDataSource(val socialRepository: SocialRepository, var rec
                             Flowable.just(it)
                         }
                     }
-                    .subscribe(Consumer {
+                    .subscribe( {
                         if (it.size < 10 && footer != null)
                             callback.onResult(it.plusElement(footer!!), 0)
                         else

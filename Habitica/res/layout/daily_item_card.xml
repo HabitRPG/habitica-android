@@ -40,10 +40,6 @@
                         android:gravity="center"
                         android:background="@drawable/daily_checked"
                         android:layout_gravity="center" />
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@color/task_tint_overlay"/>
                     <ImageView
                         android:id="@+id/checkmark"
                         android:layout_width="24dp"

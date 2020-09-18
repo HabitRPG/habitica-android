@@ -73,14 +73,6 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : HabiticaAl
 
         taskFilters.setOnCheckedChangeListener(this)
 
-        this.setButton(BUTTON_POSITIVE, context.getString(R.string.done)) { _, _ ->
-            if (isEditing) {
-                stopEditing()
-            }
-            listener?.onFilterCompleted(filterType, activeTags)
-            this.dismiss()
-        }
-
         clearButton = addButton(R.string.clear, false, false, false) { _, _ ->
             if (isEditing) {
                 stopEditing()
@@ -89,7 +81,13 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : HabiticaAl
             setActiveTags(null)
         }
 
-        addButton(R.string.done, false)
+        addButton(R.string.done, false) { _, _ ->
+            if (isEditing) {
+                stopEditing()
+            }
+            listener?.onFilterCompleted(filterType, activeTags)
+            this.dismiss()
+        }
         buttonAxis = LinearLayout.HORIZONTAL
 
         tagsEditButton.setOnClickListener { editButtonClicked() }

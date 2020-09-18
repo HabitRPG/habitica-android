@@ -20,10 +20,10 @@
                 style="@style/SectionTitle"
                 android:text="@string/my_guilds"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
-            <androidx.cardview.widget.CardView
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/CardView.Default">
+                style="@style/FlatCardView">
                 <LinearLayout
                     android:id="@+id/my_guilds_listview"
                     android:layout_width="match_parent"
@@ -33,7 +33,7 @@
                     tools:layout_height="50dp"
                     android:showDividers="middle">
                 </LinearLayout>
-            </androidx.cardview.widget.CardView>
+            </FrameLayout>
             <Button
                 android:id="@+id/publicGuildsButton"
                 android:layout_width="match_parent"

@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ChatItemBinding
+import com.habitrpg.android.habitica.databinding.TavernChatIntroItemBinding
 import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.extensions.getAgoString
 import com.habitrpg.android.habitica.extensions.setScaledPadding
@@ -23,7 +24,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import com.habitrpg.android.habitica.models.members.Member
 
-open class ChatRecyclerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {}
+open class ChatRecyclerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
 class ChatRecyclerIntroViewHolder(itemView: View, replyToUUID: String) : ChatRecyclerViewHolder(itemView) {
     private val binding = TavernChatIntroItemBinding.bind(itemView)
@@ -40,7 +41,7 @@ class ChatRecyclerIntroViewHolder(itemView: View, replyToUUID: String) : ChatRec
         binding.avatarView.setAvatar(member)
         binding.displayNameTextview.username = member.displayName
         binding.displayNameTextview.tier = member.contributor?.level ?: 0
-        binding.sublineTextview.text = "@" + member.username
+        binding.sublineTextview.text = member.formattedUsername
     }
 }
 

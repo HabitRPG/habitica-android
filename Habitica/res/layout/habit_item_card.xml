@@ -31,8 +31,7 @@
                 android:layout_height="match_parent"
                 android:scaleType="center"
                 android:layout_gravity="center"
-                android:src="@drawable/habit_plus"
-                android:background="@color/task_tint_overlay" />
+                android:src="@drawable/habit_plus" />
 
             <Button
                 android:id="@+id/btnPlus"
@@ -75,8 +74,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:scaleType="center"
-                android:src="@drawable/habit_minus"
-                android:background="@color/task_tint_overlay" />
+                android:src="@drawable/habit_minus"/>
             <Button
                 android:id="@+id/btnMinus"
                 style="@style/HabitButton"

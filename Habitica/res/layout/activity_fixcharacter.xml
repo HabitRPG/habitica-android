@@ -61,7 +61,7 @@
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/healthEditText"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
+                                android:layout_height="wrap_content"
                                 android:inputType="numberDecimal"
                                 android:background="@android:color/transparent"/>
                         </com.google.android.material.textfield.TextInputLayout>
@@ -103,7 +103,7 @@
                                 <com.google.android.material.textfield.TextInputEditText
                                     android:id="@+id/experienceEditText"
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
+                                    android:layout_height="wrap_content"
                                     android:inputType="numberDecimal"
                                     android:background="@android:color/transparent"/>
                             </com.google.android.material.textfield.TextInputLayout>
@@ -145,7 +145,7 @@
                                 <com.google.android.material.textfield.TextInputEditText
                                     android:id="@+id/manaEditText"
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
+                                    android:layout_height="wrap_content"
                                     android:inputType="numberDecimal"
                                     android:background="@android:color/transparent"/>
                             </com.google.android.material.textfield.TextInputLayout>
@@ -187,7 +187,7 @@
                                 <com.google.android.material.textfield.TextInputEditText
                                     android:id="@+id/goldEditText"
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
+                                    android:layout_height="wrap_content"
                                     android:inputType="numberDecimal"
                                     android:background="@android:color/transparent"/>
                             </com.google.android.material.textfield.TextInputLayout>
@@ -229,7 +229,7 @@
                                 <com.google.android.material.textfield.TextInputEditText
                                     android:id="@+id/levelEditText"
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
+                                    android:layout_height="wrap_content"
                                     android:inputType="number"
                                     android:background="@android:color/transparent"/>
                             </com.google.android.material.textfield.TextInputLayout>
@@ -266,13 +266,13 @@
                                 android:layout_height="match_parent"
                                 android:layout_width="0dp"
                                 android:layout_weight="1"
-                                android:background="@drawable/layout_rounded_bg_window"
+                                android:background="@color/transparent"
                                 android:hint="@string/streak_label"
                                 android:paddingStart="16dp">
                                 <com.google.android.material.textfield.TextInputEditText
                                     android:id="@+id/streakEditText"
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
+                                    android:layout_height="wrap_content"
                                     android:inputType="number"
                                     android:background="@android:color/transparent"/>
                             </com.google.android.material.textfield.TextInputLayout>

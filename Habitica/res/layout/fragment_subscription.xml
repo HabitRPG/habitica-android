@@ -75,14 +75,15 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/subscriptionDetails"/>
 
-            <TextView
+            <com.habitrpg.android.habitica.ui.views.DayNightTextView
                 android:id="@+id/subscribeBenefitsTitle"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:text="@string/subscribe_prompt"
                 android:gravity="center"
                 style="@style/Subheader1"
-                android:textColor="@color/text_brand"
+                app:dayTextColor="@color/text_brand"
+                app:nightTextColor="@color/gray_400"
                 android:lineSpacingExtra="4dp"
                 android:layout_marginTop="8dp"
                 android:layout_gravity="center_horizontal"/>

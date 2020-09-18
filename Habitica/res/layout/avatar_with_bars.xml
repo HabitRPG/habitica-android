@@ -13,68 +13,68 @@
     android:layout_marginBottom="8dp">
 
     <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <com.habitrpg.android.habitica.ui.AvatarView
-                android:id="@+id/avatarView"
-                android:layout_width="@dimen/avatar_header_width"
-                android:layout_height="@dimen/avatar_header_height"
-                android:layout_gravity="center_vertical"
-                android:layout_marginEnd="20dp"
-                android:contentDescription="@string/sidebar_avatar"
-                app:showBackground="true"
-                app:showMount="true"
-                app:showPet="true"/>
+            android:id="@+id/avatarView"
+            android:layout_width="@dimen/avatar_header_width"
+            android:layout_height="@dimen/avatar_header_height"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="20dp"
+            android:contentDescription="@string/sidebar_avatar"
+            app:showBackground="true"
+            app:showMount="true"
+            app:showPet="true"/>
 
         <LinearLayout
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.habitrpg.android.habitica.ui.views.ValueBar
+                android:id="@+id/hpBar"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_marginBottom="@dimen/header_bar_spacing"
+                app:barForegroundColor="@color/background_red"
+                app:barBackgroundColor="@color/window_background"
+                app:description="@string/HP_default"/>
 
             <com.habitrpg.android.habitica.ui.views.ValueBar
-                    android:id="@+id/hpBar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/header_bar_spacing"
-                    app:barForegroundColor="@color/hpColor"
+                android:id="@+id/xpBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/header_bar_spacing"
+                app:barForegroundColor="@color/background_yellow"
                 app:barBackgroundColor="@color/window_background"
-                    app:description="@string/HP_default"/>
+                app:description="@string/XP_default"/>
 
             <com.habitrpg.android.habitica.ui.views.ValueBar
-                    android:id="@+id/xpBar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/header_bar_spacing"
-                    app:barForegroundColor="@color/xpColor"
+                android:id="@+id/mpBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:barForegroundColor="@color/background_blue"
                 app:barBackgroundColor="@color/window_background"
-                    app:description="@string/XP_default"/>
-
-            <com.habitrpg.android.habitica.ui.views.ValueBar
-                    android:id="@+id/mpBar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:barForegroundColor="@color/mpColor"
-                app:barBackgroundColor="@color/window_background"
-                    app:description="@string/MP_default"/>
+                app:description="@string/MP_default"/>
 
         </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical">
 
         <TextView
-                android:id="@+id/lvl_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="36dp"
-                android:drawablePadding="6dp"
-                android:gravity="center"
-                android:textColor="@color/text_secondary"
-                android:textSize="12sp"
-                tools:text="Lvl 12 Warrior"/>
+            android:id="@+id/lvl_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:drawablePadding="6dp"
+            android:gravity="center"
+            android:textColor="@color/text_secondary"
+            android:textSize="12sp"
+            tools:text="Lvl 12 Warrior"/>
 
         <ImageView
             android:id="@+id/buffImageView"
@@ -85,13 +85,13 @@
             tools:srcCompat="@tools:sample/avatars" />
 
         <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1"/>
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
 
         <com.habitrpg.android.habitica.ui.views.CurrencyViews
-                android:id="@+id/currencyView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+            android:id="@+id/currencyView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 </LinearLayout>

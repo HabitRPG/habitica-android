@@ -1,8 +1,6 @@
 package com.habitrpg.android.habitica.ui.adapter.social
 
 import android.view.ViewGroup
-import androidx.paging.DataSource
-import androidx.paging.PagedList
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import com.habitrpg.android.habitica.R
