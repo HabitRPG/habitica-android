@@ -21,8 +21,31 @@ import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import io.reactivex.Maybe
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import com.habitrpg.android.habitica.models.members.Member
 
-class ChatRecyclerViewHolder(itemView: View, private var userId: String, private val isTavern: Boolean) : RecyclerView.ViewHolder(itemView) {
+open class ChatRecyclerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {}
+
+class ChatRecyclerIntroViewHolder(itemView: View, replyToUUID: String) : ChatRecyclerViewHolder(itemView) {
+    private val binding = TavernChatIntroItemBinding.bind(itemView)
+
+    var onOpenProfile: ((String) -> Unit)? = null
+
+    init {
+        binding.avatarView.setOnClickListener { onOpenProfile?.invoke(replyToUUID) }
+        binding.displayNameTextview.setOnClickListener { onOpenProfile?.invoke(replyToUUID) }
+        binding.sublineTextview.setOnClickListener { onOpenProfile?.invoke(replyToUUID) }
+    }
+
+    fun bind(member: Member) {
+        binding.avatarView.setAvatar(member)
+        binding.displayNameTextview.username = member.displayName
+        binding.displayNameTextview.tier = member.contributor?.level ?: 0
+        binding.sublineTextview.text = "@" + member.username
+    }
+}
+
+
+class ChatRecyclerMessageViewHolder(itemView: View, private var userId: String, private val isTavern: Boolean) : ChatRecyclerViewHolder(itemView) {
     val binding = ChatItemBinding.bind(itemView)
 
     val context: Context = itemView.context

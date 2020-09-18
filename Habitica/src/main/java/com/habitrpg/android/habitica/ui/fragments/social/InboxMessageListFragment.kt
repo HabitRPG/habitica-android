@@ -6,7 +6,10 @@ import android.content.Context
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AlertDialog
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.paging.DataSource
+import androidx.paging.PagedList
 import com.habitrpg.android.habitica.MainNavDirections
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
@@ -27,6 +30,9 @@ import com.habitrpg.android.habitica.ui.viewmodels.InboxViewModelFactory
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.Companion.showSnackbar
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.functions.Action
+import io.reactivex.functions.Consumer
+import java.lang.Exception
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -67,22 +73,22 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
 
         val layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this.getActivity())
         binding?.recyclerView?.layoutManager = layoutManager
+        compositeSubscription.add(apiClient.getMember(replyToUserUUID!!).subscribe( Consumer
+        { member ->
+            chatAdapter = InboxAdapter(user, member)
+            viewModel?.messages?.observe(this.viewLifecycleOwner, Observer { chatAdapter?.submitList(it) })
 
-        chatAdapter = InboxAdapter(user)
-        viewModel?.messages?.observe(this.viewLifecycleOwner, { chatAdapter?.submitList(it) })
-        viewModel?.getMemberData()?.observe(this.viewLifecycleOwner, {
-            activity?.binding?.toolbarTitle?.text = it?.profile?.name
-        })
         binding?.recyclerView?.adapter = chatAdapter
         binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
-        chatAdapter?.let { adapter ->
-            compositeSubscription.add(adapter.getUserLabelClickFlowable().subscribe({
-                FullProfileActivity.open(it)
-            }, RxErrorHandler.handleEmptyError()))
-            compositeSubscription.add(adapter.getDeleteMessageFlowable().subscribe({ this.showDeleteConfirmationDialog(it) }, RxErrorHandler.handleEmptyError()))
-            compositeSubscription.add(adapter.getFlagMessageClickFlowable().subscribe({ this.showFlagConfirmationDialog(it) }, RxErrorHandler.handleEmptyError()))
-            compositeSubscription.add(adapter.getCopyMessageFlowable().subscribe({ this.copyMessageToClipboard(it) }, RxErrorHandler.handleEmptyError()))
-        }
+            chatAdapter?.let { adapter ->
+                compositeSubscription.add(adapter.getUserLabelClickFlowable().subscribe(Consumer<String> {
+                    FullProfileActivity.open(it)
+                }, RxErrorHandler.handleEmptyError()))
+                compositeSubscription.add(adapter.getDeleteMessageFlowable().subscribe(Consumer { this.showDeleteConfirmationDialog(it) }, RxErrorHandler.handleEmptyError()))
+                compositeSubscription.add(adapter.getFlagMessageClickFlowable().subscribe(Consumer { this.showFlagConfirmationDialog(it) }, RxErrorHandler.handleEmptyError()))
+                compositeSubscription.add(adapter.getCopyMessageFlowable().subscribe(Consumer { this.copyMessageToClipboard(it) }, RxErrorHandler.handleEmptyError()))
+            }
+        }))
 
         binding?.chatBarView?.sendAction = { sendMessage(it) }
         binding?.chatBarView?.maxChatLength = configManager.maxChatLength()

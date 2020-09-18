@@ -1,6 +1,8 @@
 package com.habitrpg.android.habitica.ui.adapter.social
 
 import android.view.ViewGroup
+import androidx.paging.DataSource
+import androidx.paging.PagedList
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import com.habitrpg.android.habitica.R
@@ -8,13 +10,18 @@ import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.viewHolders.ChatRecyclerViewHolder
+import com.habitrpg.android.habitica.ui.viewHolders.ChatRecyclerIntroViewHolder
+import com.habitrpg.android.habitica.ui.viewHolders.ChatRecyclerMessageViewHolder
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import io.reactivex.subjects.PublishSubject
+import com.habitrpg.android.habitica.models.members.Member
 
-class InboxAdapter(private var user: User?) : PagedListAdapter<ChatMessage, ChatRecyclerViewHolder>(DIFF_CALLBACK) {
+class InboxAdapter(private var user: User?, private var replyToUser : Member) : PagedListAdapter<ChatMessage, ChatRecyclerViewHolder>(DIFF_CALLBACK) {
+    private val FIRST_MESSAGE = 0
+    private val NORMAL_MESSAGE = 1
+
     private var expandedMessageId: String? = null
-
     private val likeMessageEvents = PublishSubject.create<ChatMessage>()
     private val userLabelClickEvents = PublishSubject.create<String>()
     private val deleteMessageEvents = PublishSubject.create<ChatMessage>()
@@ -22,24 +29,49 @@ class InboxAdapter(private var user: User?) : PagedListAdapter<ChatMessage, Chat
     private val replyMessageEvents = PublishSubject.create<String>()
     private val copyMessageEvents = PublishSubject.create<ChatMessage>()
 
+    private fun isPositionIntroMessage(position: Int) : Boolean {
+        return (position == super.getItemCount() - 1)
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return if (isPositionIntroMessage(position)) FIRST_MESSAGE else NORMAL_MESSAGE
+    }
+
+    override fun getItemId(position: Int): Long {
+        return if (isPositionIntroMessage(position)) -1 else super.getItemId(position)
+    }
+
+    override fun getItem(position: Int) : ChatMessage? {
+        return if (isPositionIntroMessage(position)) ChatMessage() else super.getItem(position)
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatRecyclerViewHolder {
-        return ChatRecyclerViewHolder(parent.inflate(R.layout.chat_item), user?.id ?: "", false)
+        return if (viewType == FIRST_MESSAGE) ChatRecyclerIntroViewHolder(parent.inflate(R.layout.tavern_chat_intro_item), replyToUser.id!!)
+        else ChatRecyclerMessageViewHolder(parent.inflate(R.layout.chat_item), user?.id ?: "", false)
     }
 
     override fun onBindViewHolder(holder: ChatRecyclerViewHolder, position: Int) {
-        val message = getItem(position) ?: return
-
-        holder.bind(message,
+        val firstMessage : Boolean = getItemViewType(position) == FIRST_MESSAGE
+        if (firstMessage) {
+            val introHolder = holder as ChatRecyclerIntroViewHolder
+            introHolder.bind(replyToUser)
+            introHolder.onOpenProfile = { userLabelClickEvents.onNext(it) }
+        }
+        else {
+            val message : ChatMessage = getItem(position) ?: return
+            val messageHolder = holder as ChatRecyclerMessageViewHolder
+            messageHolder.bind(message,
                 user?.id ?: "",
                 user,
                 expandedMessageId == message.id)
-        holder.onShouldExpand = { expandMessage(message.id, position) }
-        holder.onLikeMessage = { likeMessageEvents.onNext(it) }
-        holder.onOpenProfile = { userLabelClickEvents.onNext(it) }
-        holder.onReply = { replyMessageEvents.onNext(it) }
-        holder.onCopyMessage = { copyMessageEvents.onNext(it) }
-        holder.onFlagMessage = { flagMessageEvents.onNext(it) }
-        holder.onDeleteMessage = { deleteMessageEvents.onNext(it) }
+            messageHolder.onShouldExpand = { expandMessage(message.id, position) }
+            messageHolder.onLikeMessage = { likeMessageEvents.onNext(it) }
+            messageHolder.onOpenProfile = { userLabelClickEvents.onNext(it) }
+            messageHolder.onReply = { replyMessageEvents.onNext(it) }
+            messageHolder.onCopyMessage = { copyMessageEvents.onNext(it) }
+            messageHolder.onFlagMessage = { flagMessageEvents.onNext(it) }
+            messageHolder.onDeleteMessage = { deleteMessageEvents.onNext(it) }
+        }
     }
 
     fun getUserLabelClickFlowable(): Flowable<String> {
@@ -59,6 +91,8 @@ class InboxAdapter(private var user: User?) : PagedListAdapter<ChatMessage, Chat
     }
 
     private fun expandMessage(id: String, position: Int) {
+        if (isPositionIntroMessage(position))
+            return
         expandedMessageId = if (expandedMessageId == id) {
             null
         } else {
