@@ -16,6 +16,8 @@ import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
+import com.habitrpg.android.habitica.databinding.FragmentTavernDetailBinding
+import com.habitrpg.android.habitica.extensions.setTintWith
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
@@ -27,13 +29,10 @@ import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.social.UsernameLabel
-import io.reactivex.functions.Consumer
-import kotlinx.android.synthetic.main.fragment_tavern_detail.*
-import kotlinx.android.synthetic.main.shop_header.*
 import javax.inject.Inject
 import javax.inject.Named
 
-class TavernDetailFragment : BaseFragment() {
+class TavernDetailFragment : BaseFragment<FragmentTavernDetailBinding>() {
 
     @Inject
     lateinit var userRepository: UserRepository
@@ -48,39 +47,39 @@ class TavernDetailFragment : BaseFragment() {
 
     private var shopSpriteSuffix = ""
 
-    private var user: User? = null
+    override var binding: FragmentTavernDetailBinding? = null
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        super.onCreateView(inflater, container, savedInstanceState)
-        return inflater.inflate(R.layout.fragment_tavern_detail, container, false)
+    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentTavernDetailBinding {
+        return FragmentTavernDetailBinding.inflate(inflater, container, false)
     }
+
+    private var user: User? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         shopSpriteSuffix = configManager.shopSpriteSuffix()
 
-        compositeSubscription.add(userRepository.getUser(userId).subscribe(Consumer {
+        compositeSubscription.add(userRepository.getUser(userId).subscribe({
             this.user = it
             this.updatePausedState()
         }, RxErrorHandler.handleEmptyError()))
 
-        descriptionView.setText(R.string.tavern_description)
-        namePlate.setText(R.string.tavern_owner)
+        binding?.shopHeader?.descriptionView?.setText(R.string.tavern_description)
+        binding?.shopHeader?.namePlate?.setText(R.string.tavern_owner)
 
-        npcBannerView.shopSpriteSuffix = configManager.shopSpriteSuffix()
-        npcBannerView.identifier = "tavern"
+        binding?.shopHeader?.npcBannerView?.shopSpriteSuffix = configManager.shopSpriteSuffix()
+        binding?.shopHeader?.npcBannerView?.identifier = "tavern"
 
         addPlayerTiers()
         bindButtons()
 
         compositeSubscription.add(socialRepository.getGroup(Group.TAVERN_ID)
-                .doOnNext {  if (!it.hasActiveQuest) worldBossSection.visibility = View.GONE }
+                .doOnNext {  if (!it.hasActiveQuest) binding?.worldBossSection?.visibility = View.GONE }
                 .filter { it.hasActiveQuest }
                 .doOnNext {
-                    questProgressView.progress = it.quest
-                    descriptionView.setText(R.string.tavern_description_world_boss)
+                    binding?.questProgressView?.progress = it.quest
+                    binding?.shopHeader?.descriptionView?.setText(R.string.tavern_description_world_boss)
                     val filtered = it.quest?.rageStrikes?.filter { strike -> strike.key == "tavern" }
                     if (filtered?.size ?: 0 > 0 && filtered?.get(0)?.wasHit == true) {
                         val key = it.quest?.key
@@ -90,14 +89,14 @@ class TavernDetailFragment : BaseFragment() {
                     }
                 }
                 .flatMapMaybe { inventoryRepository.getQuestContent(it.quest?.key ?: "").firstElement() }
-                .subscribe(Consumer {
-                    questProgressView.quest = it
-                    worldBossSection.visibility = View.VISIBLE
+                .subscribe({
+                    binding?.questProgressView?.quest = it
+                    binding?.worldBossSection?.visibility = View.VISIBLE
                 }, RxErrorHandler.handleEmptyError()))
 
-        compositeSubscription.add(socialRepository.retrieveGroup(Group.TAVERN_ID).subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(socialRepository.retrieveGroup(Group.TAVERN_ID).subscribe({ }, RxErrorHandler.handleEmptyError()))
 
-        user?.let { questProgressView.configure(it) }
+        user?.let { binding?.questProgressView?.configure(it) }
     }
 
     override fun onDestroy() {
@@ -108,22 +107,22 @@ class TavernDetailFragment : BaseFragment() {
     }
 
     private fun bindButtons() {
-        innButton.setOnClickListener {
-            user?.let { user -> userRepository.sleep(user).subscribe(Consumer { }, RxErrorHandler.handleEmptyError()) }
+        binding?.innButton?.setOnClickListener {
+            user?.let { user -> userRepository.sleep(user).subscribe({ }, RxErrorHandler.handleEmptyError()) }
         }
-        guidelinesButton.setOnClickListener {
+        binding?.guidelinesButton?.setOnClickListener {
             MainNavigationController.navigate(R.id.guidelinesActivity)
         }
-        faqButton.setOnClickListener {
+        binding?.faqButton?.setOnClickListener {
             MainNavigationController.navigate(R.id.FAQOverviewFragment)
         }
-        reportButton.setOnClickListener {
+        binding?.reportButton?.setOnClickListener {
             MainNavigationController.navigate(R.id.aboutFragment)
         }
 
-        worldBossSection.infoIconView.setOnClickListener {
+        binding?.worldBossSection?.infoIconView?.setOnClickListener {
             val context = this.context
-            val quest = questProgressView.quest
+            val quest = binding?.questProgressView?.quest
             if (context != null && quest != null) {
                 showWorldBossInfoDialog(context, quest)
             }
@@ -132,13 +131,13 @@ class TavernDetailFragment : BaseFragment() {
 
 
     private fun updatePausedState() {
-        if (innButton == null) {
+        if (binding?.innButton == null) {
             return
         }
         if (user?.preferences?.sleep == true) {
-            innButton .setText(R.string.tavern_inn_checkOut)
+            binding?.innButton?.setText(R.string.tavern_inn_checkOut)
         } else {
-            innButton.setText(R.string.tavern_inn_rest)
+            binding?.innButton?.setText(R.string.tavern_inn_rest)
         }
     }
 
@@ -146,7 +145,7 @@ class TavernDetailFragment : BaseFragment() {
         for (tier in PlayerTier.getTiers()) {
             context?.let {
                 val container = FrameLayout(it)
-                container.background = ContextCompat.getDrawable(it, R.drawable.layout_rounded_bg_gray_700)
+                container.background = ContextCompat.getDrawable(it, R.drawable.layout_rounded_bg_window)
                 val label = UsernameLabel(context, null)
                 label.tier = tier.id
                 label.username = tier.title
@@ -155,12 +154,12 @@ class TavernDetailFragment : BaseFragment() {
                         FrameLayout.LayoutParams.WRAP_CONTENT,
                         Gravity.CENTER)
                 container.addView(label, params)
-                playerTiersView.addView(container)
+                binding?.playerTiersView?.addView(container)
                 val padding = context?.resources?.getDimension(R.dimen.spacing_medium)?.toInt() ?: 0
                 container.setPadding(0, padding, 0, padding)
             }
         }
-        (playerTiersView.parent as? ViewGroup)?.invalidate()
+        (binding?.playerTiersView?.parent as? ViewGroup)?.invalidate()
     }
 
     override fun injectFragment(component: UserComponent) {
@@ -181,7 +180,7 @@ class TavernDetailFragment : BaseFragment() {
             promptView?.text = context.getString(R.string.world_boss_action_prompt, bossName)
             promptView?.setTextColor(quest.colors?.lightColor ?: 0)
             val background = ContextCompat.getDrawable(context, R.drawable.rounded_border)
-            background?.setColorFilter(quest.colors?.extraLightColor ?: 0, PorterDuff.Mode.MULTIPLY)
+            background?.setTintWith(quest.colors?.extraLightColor ?: 0, PorterDuff.Mode.MULTIPLY)
             promptView?.background = background
 
             alert.setButton(AlertDialog.BUTTON_POSITIVE, context.getString(R.string.close)) { dialog, _ ->

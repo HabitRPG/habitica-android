@@ -24,7 +24,6 @@ import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionDetailsView
-import io.reactivex.functions.Consumer
 import javax.inject.Inject
 
 class AuthenticationPreferenceFragment: BasePreferencesFragment() {
@@ -47,7 +46,7 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
         super.onCreate(savedInstanceState)
 
         findPreference("login_name").title = context?.getString(R.string.username)
-        findPreference("confirm_username").isVisible = user?.flags?.isVerifiedUsername != true
+        findPreference("confirm_username").isVisible = user?.flags?.verifiedUsername != true
     }
 
     private fun updateUserFields() {
@@ -55,7 +54,7 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
         configurePreference(findPreference("email"), user?.authentication?.localAuthentication?.email, true)
         findPreference("change_password").isVisible = user?.authentication?.localAuthentication?.email?.isNotEmpty() == true
         findPreference("add_local_auth").isVisible = user?.authentication?.localAuthentication?.email?.isNotEmpty() != true
-        findPreference("confirm_username").isVisible = user?.flags?.isVerifiedUsername != true
+        findPreference("confirm_username").isVisible = user?.flags?.verifiedUsername != true
         val preference = findPreference("authentication_methods")
         val methods = mutableListOf<String>()
         if (user?.authentication?.localAuthentication?.email != null) {
@@ -115,7 +114,7 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
             dialog.setTitle(R.string.change_password)
             dialog.addButton(R.string.change, true) { _, _ ->
                 userRepository.updatePassword(oldPasswordEditText?.text.toString(), passwordEditText?.text.toString(), passwordRepeatEditText?.text.toString())
-                        .subscribe(Consumer {
+                        .subscribe({
                             Toast.makeText(activity, R.string.password_changed, Toast.LENGTH_SHORT).show()
                         }, RxErrorHandler.handleEmptyError())
             }
@@ -138,7 +137,7 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
             dialog.setTitle(R.string.change_email)
             dialog.addButton(R.string.change, true) { _, _ ->
                 userRepository.updateEmail(emailEditText?.text.toString(), passwordEditText?.text.toString())
-                        .subscribe(Consumer {
+                        .subscribe({
                             configurePreference(findPreference("email"), emailEditText?.text.toString(), true)
                         }, RxErrorHandler.handleEmptyError())
             }
@@ -160,7 +159,7 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
             dialog.setTitle(R.string.change_username)
             dialog.addButton(R.string.save, true) { _, _ ->
                 userRepository.updateLoginName(loginNameEditText?.text.toString())
-                        .subscribe(Consumer {
+                        .subscribe({
                             configurePreference(findPreference("login_name"), loginNameEditText?.text.toString(), true)
                         }, RxErrorHandler.handleEmptyError())
             }
@@ -212,7 +211,7 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
                 thisDialog.dismiss()
                 apiClient.registerUser(user?.username ?: "", emailEditText?.text.toString(), passwordEditText?.text.toString(), passwordRepeatEditText?.text.toString())
                         .flatMap { userRepository.retrieveUser(false) }
-                        .subscribe(Consumer {
+                        .subscribe({
                             configurePreference(findPreference("email"), emailEditText?.text.toString(), true)
                         }, RxErrorHandler.handleEmptyError())
             }
@@ -256,7 +255,7 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
         dialog.setMessage(R.string.confirm_username_description)
         dialog.addButton(R.string.confirm, true) { _, _ ->
             userRepository.updateLoginName(user?.authentication?.localAuthentication?.username ?: "")
-                    .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+                    .subscribe({ }, RxErrorHandler.handleEmptyError())
         }
         dialog.addCancelButton()
         dialog.show()

@@ -237,9 +237,10 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
                 .map { users -> users.first() }
     }
 
-    override fun getTasksForChallenge(challengeID: String?): Flowable<RealmResults<Task>> {
+    override fun getTasksForChallenge(challengeID: String?, userID: String?): Flowable<RealmResults<Task>> {
         return realm.where(Task::class.java)
                 .equalTo("challengeID", challengeID)
+                .equalTo("userId", userID)
                 .findAll()
                 .asFlowable()
                 .filter { it.isLoaded }

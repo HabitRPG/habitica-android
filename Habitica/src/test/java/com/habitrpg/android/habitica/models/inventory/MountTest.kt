@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica.models.inventory;
+package com.habitrpg.android.habitica.models.inventory
 
 import android.content.Context
 import com.google.common.truth.Truth.assertThat
@@ -22,7 +22,7 @@ class MountTest {
         mount.type = "drop"
         `when`(mockContext.getString(R.string.standard)).thenReturn(FAKE_STANDARD)
 
-        val result: String = mount.getTranslatedType(mockContext)
+        val result = mount.getTranslatedType(mockContext)
 
         assertThat(result).isEqualTo(FAKE_STANDARD)
     }
@@ -31,7 +31,7 @@ class MountTest {
     fun testGetTranslatedStringReturnsPremiumWhenContextIsNull() {
         mount.type = "premium"
 
-        val result: String = mount.getTranslatedType(null)
+        val result = mount.getTranslatedType(null)
 
         assertThat(result).isEqualTo(FAKE_PREMIUM)
     }

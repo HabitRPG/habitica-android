@@ -35,7 +35,6 @@ import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
 import io.reactivex.Flowable
 import io.reactivex.FlowableTransformer
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.functions.BiFunction
 import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
 import okhttp3.Cache
@@ -87,7 +86,6 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
 
         HabiticaBaseApplication.userComponent?.inject(this)
         crashlyticsProxy.setUserIdentifier(this.hostConfig.userID)
-        crashlyticsProxy.setUserName(this.hostConfig.userID)
         Amplitude.getInstance().userId = this.hostConfig.userID
         buildRetrofit()
     }
@@ -244,7 +242,7 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
             val tasksObservable = this.tasks
 
             userObservable = Flowable.zip(userObservable, tasksObservable,
-                    BiFunction { habitRPGUser, tasks ->
+                    { habitRPGUser, tasks ->
                         habitRPGUser.tasks = tasks
                         habitRPGUser
                     })
@@ -290,7 +288,6 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
         this.hostConfig.userID = userID ?: ""
         this.hostConfig.apiKey = apiToken ?: ""
         crashlyticsProxy.setUserIdentifier(this.hostConfig.userID)
-        crashlyticsProxy.setUserName(this.hostConfig.userID)
         Amplitude.getInstance().userId = this.hostConfig.userID
     }
 
@@ -334,6 +331,10 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
 
     override fun unlinkAllTasks(challengeID: String?, keepOption: String): Flowable<Void> {
         return apiService.unlinkAllTasks(challengeID, keepOption).compose(configureApiCallObserver())
+    }
+
+    override fun blockMember(userID: String): Flowable<List<String>> {
+        return apiService.blockMember(userID).compose(configureApiCallObserver())
     }
 
     override fun purchaseItem(type: String, itemKey: String, purchaseQuantity: Int): Flowable<Any> {

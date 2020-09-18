@@ -4,19 +4,15 @@
     <string name="XP_default">Điểm Kinh nghiệm</string>
     <string name="HP_default">Máu</string>
     <string name="MP_default">Mana</string>
-    <string name="ERR_pb_barcode">Không thể tải Prefs từ mã vạch</string>
     <!--Prefs-->
     <string name="PS_settings_title">Cài Đặt</string>
-    <string name="SP_address_hint">Server Tự Tạo Của Bạn</string>
     <string name="SP_userID_title">ID Người Chơi</string>
     <string name="SP_userID_summary">ID Người Chơi của Bạn</string>
     <string name="SP_APIToken_title">Mã API</string>
     <string name="SP_APIToken_summary">Mã API của Bạn</string>
     <string name="Language_title">Ngôn Ngữ</string>
     <string name="Language_summary">Thay đổi Ngôn Ngữ của Habitica</string>
-    <string name="SP_user_qr_code">Mã QR Của Bạn</string>
     <string name="PS_contact_title">Liên hệ với tôi</string>
-    <string name="unknown_error">Đã xảy ra lỗi...</string>
     <string name="pref_account_header">Tài Khoản</string>
     <string name="pref_first_day_of_the_week_title">Ngày Đầu tiên trong Tuần</string>
     <string name="pref_first_day_of_the_week_summary">Ngày Đầu tiên trong Tuần trên tất cả các lịch</string>
@@ -24,7 +20,6 @@
     <string name="pref_reminder_checkbox">Kích hoạt Nhắc Nhở</string>
     <string name="pref_reminder_picker">Thiết lập Thời gian Nhắc nhở</string>
     <string name="pref_cds_header">Tùy chỉnh Ngày Bắt đầu</string>
-    <string name="pref_cds_picker">Đặt thời gian ngày tùy chỉnh bắt đầu</string>
     <string name="pref_push_notifications_checkbox">Sử dụng thông báo đẩy</string>
     <string name="push_notifications">Thông báo Đẩy</string>
     <string name="push_notifications_sum">Thiếp lập Cài đặt Thông báo Đẩy của bạn</string>
@@ -37,13 +32,7 @@
     <string name="preference_push_your_quest_has_begun">Quest của bạn đã Bắt đầu</string>
     <string name="preference_push_invited_to_quest">Đã mời tham gia Quest</string>
     <!--Adding tasks-->
-    <string name="task_value">Giá trị</string>
-    <string name="new_todo">Việc Cần Làm mới</string>
-    <string name="new_reward">Phần Thưởng mới</string>
-    <string name="new_daily">Công Việc Hằng Ngày mới</string>
-    <string name="new_habit">Thói Quen mới</string>
     <string name="action_edit">Chỉnh sửa</string>
-    <string name="action_delete">Xóa</string>
     <string name="action_cancel">Hủy</string>
     <string name="login_btn">Đăng nhập</string>
     <string name="register_btn">Đăng ký</string>
@@ -54,20 +43,8 @@
     <string name="confirmpassword">Xác nhận mật khẩu</string>
     <string name="logout">Đăng xuất</string>
     <string name="logout_description">Thoát tài khoản của bạn</string>
-    <string name="account_details">Chi tiết Tài khoản</string>
     <string name="LoginActivityName">Chào Mừng</string>
-    <string name="string_revive">Hồi sinh</string>
-    <string name="about.title">Về chúng tôi</string>
-    <string name="about.libraries">Thư viện</string>
-    <string name="about.versionhistory">Lịch sử phiên bản</string>
-    <string name="about.habitica_open_source">Habitica là một phần mềm mã nguồn mở trên Github</string>
-    <string name="about.rate_our_app">Đánh giá Ứng dụng của chúng tôi</string>
-    <string name="about.give_us_feedback">Phản hồi cho chúng tôi!</string>
-    <string name="about.bugreport">Báo lỗi</string>
-    <string name="about.source_code">Mã Nguồn</string>
-    <string name="repeatEvery">Lặp lại mỗi</string>
     <!--Network Errors-->
-    <string name="network_error_title">Lỗi Kết nối</string>
     <string name="network_error_no_network_body">Không có kết nối Internet.</string>
     <string name="internal_error_api">Mất kết nối với máy chủ</string>
     <string name="authentication_error_title">Lỗi Ủy quyền</string>
@@ -76,7 +53,6 @@
     <string name="save_changes">Lưu</string>
     <string name="copy">Sao chép</string>
     <string name="notes">Ghi chú</string>
-    <string name="text">Văn bản</string>
     <string name="difficulty">Độ khó</string>
     <string name="tags">Thẻ/Nhãn</string>
     <string name="trivial">Không đáng kể</string>
@@ -88,18 +64,7 @@
     <string name="negative_habit_form">Tiêu cực ( - )</string>
     <string name="checklist">Danh mục</string>
     <string name="reminders">Nhắc nhở</string>
-    <string name="actions">Hành động</string>
     <string name="attributes">Thuộc tính</string>
-    <string name="physical">STR</string>
-    <string name="mental">INT</string>
-    <string name="social">CON</string>
-    <string name="other">PER</string>
-    <string name="frequency">Tần suất</string>
-    <string name="frequency_weekly">Vào những Ngày cụ thể trong Tuần</string>
-    <string name="frequency_daily">Mỗi X ngày</string>
-    <string name="repeatables_summary_title">Tóm lại</string>
-    <string name="repeatables_title">Lặp lại</string>
-    <string name="repeatables_on_title">Lặp lại vào</string>
     <string name="repeatables_frequency_daily">Mỗi ngày</string>
     <string name="repeatables_frequency_weekly">Mỗi tuần</string>
     <string name="repeatables_frequency_monthly">Mỗi tháng</string>
@@ -113,28 +78,15 @@
     <string name="friday">Thứ 6</string>
     <string name="saturday">Thứ 7</string>
     <string name="sunday">Chủ nhật</string>
-    <string name="levelup_button">Hoan hô!</string>
     <string name="faint_subtitle">Đừng tuyệt vọng!</string>
     <string name="faint_header">Bạn đã hết Máu!</string>
     <string name="faint_button">Hồi máu &amp; Thử Lại</string>
     <string name="filter">Màng lọc</string>
-    <string name="profile_image">Hình đại diện</string>
-    <string name="mana_price_button">%d MP</string>
-    <string name="used_skill">Bạn dùng %1$s tốn %2$d mana.</string>
     <string name="used_skill_without_mana">Bạn dùng %1$s.</string>
     <string name="new_checklist_item">mục mới trong danh mục</string>
-    <string name="add_checklist_item">Thêm</string>
     <string name="skill_progress_title">Sử dụng Kĩ Năng</string>
-    <string name="coming_soon">Sắp có mặt</string>
-    <string name="chat_flag_confirmation">Bạn có chắc tin nhắn này vi phạm nội quy không?</string>
-    <string name="flag_confirm">Gắn Cờ </string>
     <string name="unlock_lvl_11">Mở khóa ở Cấp 11</string>
-    <string name="no_party_message">Bạn không ở trong nhóm nào cả. Để tham gia một nhóm, vui lòng ghé thăm trang web.</string>
     <string name="forgot_pw_btn">Quên Mật khẩu</string>
-    <string name="tavern.inn.checkOut">Tái kích hoạt Công Việc Hằng Ngày</string>
-    <string name="tavern.inn.rest">Tạm dừng Công Việc Hằng Ngày</string>
-    <string name="reward.dialog.buy">Mua</string>
-    <string name="reward.dialog.dismiss">Giải tán</string>
     <string name="party">Party</string>
     <string name="chat">Chat</string>
     <string name="members">Thành viên</string>
@@ -142,8 +94,6 @@
     <string name="dailies"> Công Việc Hằng Ngày</string>
     <string name="todos">Việc Cần Làm</string>
     <string name="rewards">Phần Thưởng</string>
-    <string name="taskform.delete.title">Bạn chắc chứ?</string>
-    <string name="taskform.delete.message">Bạn có chắc là muốn xóa không?</string>
     <string name="yes">Có</string>
     <string name="no">Không</string>
     <string name="quest">Nhiệm vụ</string>
@@ -151,7 +101,6 @@
     <string name="avatar_hair">Tóc</string>
     <string name="avatar_shirt">Áo</string>
     <string name="avatar_skin">Da</string>
-    <string name="avatar_ears">Tai Động vật</string>
     <string name="avatar_base">Thân cơ thể</string>
     <string name="avatar_color">Màu da</string>
     <string name="avatar_beard">Râu</string>
@@ -165,28 +114,16 @@
     <string name="purchase_set_button">Mở khóa set với %d Đá Quý </string>
     <string name="purchase_button">Mua</string>
     <string name="purchase_set_title">Mua set %s</string>
-    <string name="quest.accept">Chấp nhận</string>
-    <string name="quest.reject">Từ chối</string>
-    <string name="quest.begin">Bắt đầu Quest</string>
-    <string name="quest.cancel">Hủy lời mời</string>
-    <string name="quest.abort">Hủy Quest</string>
-    <string name="quest.leave">Rời Quest</string>
-    <string name="quest.pending">Đang chờ</string>
-    <string name="quest.accepted">Đã chấp nhận</string>
-    <string name="quest.rejected">Đã từ chối</string>
-    <string name="quest.participants">Người tham gia</string>
     <string name="version_info">Phiên bản %1$s (%2$d)</string>
     <string name="sidebar_help">Giúp đỡ &amp; Những câu hỏi thường gặp</string>
     <string name="complete_tutorial">Đã hiểu!</string>
     <string name="dismiss_tutorial">Nhắc tôi lại lần nữa</string>
     <string name="intro_1_subtitle">Chào mừng đến</string>
-    <string name="intro_1_title">Habitica</string>
     <string name="intro_1_description">Giờ là lúc có được niềm vui khi hoàn thành công việc. Tham gia với %s người khác đang cải thiện cuộc sống của họ với một nhiệm vụ mỗi lần.</string>
     <string name="intro_2_subtitle">Tiến trình trong trò chơi</string>
     <string name="intro_2_title">Tiến trình ngoài đời thực</string>
     <string name="intro_3_subtitle">Chiến đấu quái vật</string>
     <string name="intro_finish_button">Bắt đầu nào!</string>
-    <string name="setup_welcome_description">Chào mừng tới Habitica, nơi mà tiến bộ trong game sẽ cải thiện cuộc sống thực! Khi bạn hoàn thành mục tiêu đời thực, bạn sẽ mở khóa Trang bị, Thú cưng, Nhiệm vụ, và nhiều hơn thế nữa.</string>
     <string name="setup_group_work">Việc làm</string>
     <string name="setup_group_exercise">Thể dục</string>
     <string name="setup_group_health">Sức khỏe</string>
@@ -207,10 +144,7 @@
     <string name="guild">Bang hội</string>
     <string name="leave">Rời</string>
     <string name="join">Tham gia</string>
-    <string name="leader">Người đứng đầu</string>
     <string name="gems">Đá Quý</string>
-    <string name="send_pm">Gửi Tin nhắn riêng</string>
-    <string name="flag">Gắn cờ</string>
     <string name="delete">Xóa</string>
     <string name="name">Tên</string>
     <string name="description">Mô tả</string>
@@ -228,7 +162,6 @@
     <string name="mounts">Thú cưỡi</string>
     <string name="sell">Bán (%d vàng)</string>
     <string name="hatch_with_potion">Ấp bằng Thuốc</string>
-    <string name="feed_to_pet">Cho thú cưng ăn</string>
     <string name="hatch_egg">Ấp bằng trứng</string>
     <string name="dialog_feeding">Cho %s ăn:</string>
     <string name="feed">Cho ăn</string>
@@ -464,9 +397,6 @@
     <string name="my_challenges">Những thử thách của tôi</string>
     <string name="keep_tasks">Giữ</string>
     <string name="remove_tasks">Xóa</string>
-    <string name="challenge_remove_tasks_text">Bạn có muốn xóa những công việc\?</string>
-    <string name="challenge_remove_tasks_title">Xóa công việc</string>
-    <string name="challenge_leave_text">Bạn có chắc muốn rời Thử thách \"%s\"\?</string>
     <string name="challenge_leave_title">Rời Thử thách</string>
     <string name="subscription_status">Trạng thái Gói đăng ký</string>
     <string name="subscribe_prompt_thanks">Bạn có những lợi ích này khi trở thành một Người đăng ký</string>
@@ -522,7 +452,7 @@
     <string name="dailyDueDefaultView">Đặt Việc hằng ngày mặc định ở mục \'thời hạn\'</string>
     <string name="reload_content">Tải lại Nội dung</string>
     <string name="maintenance">Bảo trì</string>
-    <string name="read_community_guidelines">Prefs</string>
+    <string name="read_community_guidelines">Xem xét <u>Nội quy Cộng đồng</u> của chúng tôi trước khi đăng bài</string>
     <string name="reset_walkthrough">Đặt lại Hướng dẫn</string>
     <string name="empty_title_rewards_filtered">Không Phần thưởng</string>
     <string name="empty_description_todos_filtered">Hiện không có Việc cần làm nào hiện ra với Bộ lọc hiện tại của bạn.</string>
@@ -741,7 +671,7 @@
     <string name="joined">Đã tham gia</string>
     <string name="created_challenge">Đã tạo Thử thách</string>
     <string name="challenge_categories">Chuyên mục của Thử thách</string>
-    <string name="usernamePromptWiki">Prefs</string>
+    <string name="usernamePromptWiki">Nếu bạn muốn tìm hiểu thêm về sự thay đổi này, <a href="https://habitica.wikia_com/wiki/Player_Names">ghé thăm trang wiki của chúng tôi.</a></string>
     <string name="usernamePromptBody">Tên đăng nhập bây giờ là những cái tên độc nhất mà sẽ được nhìn thấy bên cạnh tên hiển thị của bạn và được dùng cho lời mời, @mentions khi nói chuyện, và nhắn tin.</string>
     <string name="usernamePromptTitle">Bây giờ là lúc thiết lập tên đăng nhập của bạn!</string>
     <string name="two_handed">Hai tay</string>
@@ -785,14 +715,14 @@
     <string name="only_leader_create_challenge">Chỉ có Lãnh đạo có thể tạo Thử thách</string>
     <string name="create">Tạo</string>
     <string name="defeat">Đánh bại</string>
-    <string name="invited_to_quest">Prefs</string>
-    <string name="invited_to_public_guild">Prefs</string>
-    <string name="invited_to_private_guild">Prefs</string>
-    <string name="invited_to_party_notification">Prefs</string>
-    <string name="new_subscriber_item">Prefs</string>
-    <string name="unallocated_stats_points">Prefs</string>
-    <string name="new_msg_party">Prefs</string>
-    <string name="new_msg_guild">Prefs</string>
+    <string name="invited_to_quest">Bạn đã được mời tham gia vào Nhiệm vụ <b>%1$s</b></string>
+    <string name="invited_to_public_guild">Bạn đã được mời tham gia vào Bang hội <b>%1$s</b></string>
+    <string name="invited_to_private_guild">Bạn đã được mời tham gia vào Bang hội kín <b>%1$s</b></string>
+    <string name="invited_to_party_notification">Bạn đã được mời tham gia vào Tổ đội <b>%1$s</b></string>
+    <string name="new_subscriber_item">Bạn có <b>Vật phẩm Bí ẩn</b> mới</string>
+    <string name="unallocated_stats_points">Bạn có <b>%1$s Điểm Chỉ số chưa phân bổ</b></string>
+    <string name="new_msg_party">Tổ đội của bạn, <b>%1$s</b>, có bài viết mới</string>
+    <string name="new_msg_guild"><b>%1$s</b> có bài viết mới</string>
     <string name="new_bailey_update">Cập nhập mới từ Bailey!</string>
     <string name="dismiss_all">Bỏ qua Tất cả</string>
     <string name="no_notifications_text">Những nàng tiên thông báo đã gửi tặng bạn một tràng pháo tay nồng nhiệt! Làm tốt lắm!</string>
@@ -833,7 +763,7 @@
     <string name="cancel">Hủy</string>
     <string name="confirm_username_description">Xác nhận tên đăng nhập của bạn sẽ khiến nó công khai cho lời mời, @mentions và nhắn tin. Bạn có thể thay đổi tên đăng nhập của mình từ Cài đặt bất cứ lúc nào.</string>
     <string name="confirm_username_title">Bạn có chắc xác nhận tên đăng nhập hiện tại của mình chứ\?</string>
-    <string name="usernamePromptDisclaimer">Prefs</string>
+    <string name="usernamePromptDisclaimer">Tên người dùng nên tuân thủ <a href="https://habitica.com/static/terms">Điều khoản Dịch vụ</a> và <a href="https://habitica_com/static/community-guidelines"> Nội quy Cộng đồng</a> của chúng tôi. Nếu bạn chưa đặt tên đăng nhập, tên người dùng của bạn đã được tự động tạo ra.</string>
     <string name="mountMasterDescription">Bạn đã kiếm được Thành tựu \"Bậc thầy Thú cưỡi\" cho việc thuần hóa tất cả thú cưỡi!</string>
     <string name="mountMasterTitle">Bậc thầy Thú cưỡi</string>
     <string name="beastMasterDescription">Bạn đã kiếm được Thành tựu \"Bậc thầy Huấn luyện thú\" cho việc sưu tầm tất cả thú cưng!</string>
@@ -902,7 +832,6 @@
     <string name="gift_gems_balance_subtitle">Nhập số lượng Gem bạn muốn gửi ở dưới hoặc đổi qua mục khác để mua Gem rồi tặng</string>
     <string name="quest_completed">Nhiệm vụ hoàn thành!</string>
     <string name="not_participating">Bạn không tham gia</string>
-    <string name="unlock_level_short">Cấp độ %d</string>
     <string name="unlock_previous_short">Hoàn thành Nhiệm vụ %d</string>
     <string name="unlock_level">Mở khóa bằng cách đạt tới cấp độ %d</string>
     <string name="unlock_previous">Mở khóa bằng cách hoàn thành Nhiệm vụ %d</string>
@@ -994,4 +923,93 @@
     <string name="joinedGuildTitle">Đã tham gia một Bang hội</string>
     <string name="triadBingoDescription">Bạn đã kiếm được Thành tựu \"Tuyệt hảo Ba lần\" cho việc sưu tầm tất cả thú cưng, thuần hóa tất cả thú cưỡi, và sưu tầm tất cả thú cưng lại một lần nữa!</string>
     <string name="triadBingoTitle">Tuyệt hảo Ba lần</string>
+    <string name="lets_go">Tiến lên nào</string>
+    <string name="bugs_fixes_description">Có việc gì đó sai sai\? Tìm câu trả lời ở đây hoặc liên lạc với chúng tôi để được giúp đỡ.</string>
+    <string name="bugs_fixes">Lỗi &amp; Sửa chữa</string>
+    <string name="suggestions_feedback">Gợi ý &amp; Phản hồi</string>
+    <string name="get_help">Trợ giúp</string>
+    <string name="contact_us">Liên lạc</string>
+    <string name="suggestions_feedback_description">Có suy nghĩ gì để cải tiến những chức năng hay một ý tưởng mới lạ\? Nói với chúng tôi!</string>
+    <string name="using_habitica_description">Chúng tôi sẽ giải thích và trả lời những câu hỏi thường gặp để giúp bạn tăng tốc</string>
+    <string name="using_habitica">Dùng Habitica</string>
+    <string name="level_unabbreviated">Cấp độ %d</string>
+    <string name="delete_reminder">Xóa Nhắc nhở</string>
+    <string name="number_responded">%1$d/%2$d Phản hồi</string>
+    <string name="gold_capitalilzed">Vàng</string>
+    <string name="user_level_with_class_unabbreviated">Cấp độ %1$d %2$s</string>
+    <string name="not_selected">Không chọn</string>
+    <string name="selected">Đã chọn</string>
+    <string name="off">Tắt</string>
+    <string name="on">Bật</string>
+    <string name="gold_description">Vàng là **dạng đơn vị tiền tệ chính** trong Habitica và giúp bạn mua trang bị, nhiệm vụ, vật phẩm nhất định, hoặc thậm chí Phần thưởng tự chọn bạn tự làm cho mình.
+\n
+\n**Kiếm Vàng** thông qua việc hoàn thành công việc hoặc nhiệm vụ, hoặc thông qua một vài Kĩ năng chức nghiệp. **Chỉ số Trực giác** tăng lượng Vàng bạn kiếm được.
+\n
+\nNếu bạn đăng kí Habitica, bạn thậm chí có thể dùng Vàng để mua một lượng Gem nhất định dựa vào thời gian bạn đã đăng kí.</string>
+    <string name="mana_points">Điểm Mana</string>
+    <string name="experience_description">Điểm Kinh nghiệp thể hiện tiến trình của bạn và giúp bạn lên cấp. Bạn sẽ đa phần **kiếm Kinh nghiệm** từ việc hoàn thành những công việc hay nhiệm vụ, nhưng cũng có một vài Kĩ năng chức nghiệp cho Kinh nghiệm.
+\n
+\nNhững công việc có độ khó cao hơn, hoặc những công việc có màu đỏ sẽ cho bạn **nhiều Kinh nghiệm hơn**. **Chỉ số Trí tuệ** cũng sẽ tăng tỷ lệ kiếm Kinh nghiệm của bạn.</string>
+    <string name="experience_points">Điểm Kinh nghiệm</string>
+    <string name="health_description">Điều này sẽ thể hiện sức sống Nhân vật đại diện của bạn. Quên một Việc hằng ngày hoặc làm một Thói quen xấu sẽ **giảm Máu của bạn**.
+\n
+\n**Hồi lại Máu** bằng việc lên cấp, sử dụng Lọ thuốc Hồi máu, hoặc một Kĩ năng chức nghiệp với khả năng hồi phục.
+\n
+\nNếu **Máu của bạn chạm số 0** bạn sẽ mất một cấp độ, tất cả Vàng, và một mảnh trang bị. Trang bị bị mất có thể mua lại.</string>
+    <string name="health_points">Điểm Máu</string>
+    <string name="stats_currency">Chỉ số &amp; Tiền tệ</string>
+    <string name="how_best_habitica">Không chắc làm thế nào để dùng Habitica tốt nhất\?</string>
+    <string name="overview">Tổng quan</string>
+    <string name="send_bug_prompt">Gửi báo cáo lỗi tới chúng tôi và chúng tôi sẽ quay lại với bạn!</string>
+    <string name="common_fixes">Sửa chữa phổ biến</string>
+    <string name="support_bug_title">Chúng tôi liên tục cố gắng để làm cho ứng dụng của chúng ta tốt hơn dựa vào phản hồi của người chơi nhưng đôi khi một vài lỗi hiện ra…</string>
+    <string name="stat_description">Tất cả nhân vật của Habitica có bốn chỉ số mà ảnh hưởng tới phương diện trò chơi của Habitica.
+\n
+\n**Sức mạnh (SM)** ảnh hưởng tới đòn đánh chí mạng và tăng sát thương tới Nhiệm vụ Quái vật. Chiến binh và Đạo tặc nhận SM từ trang bị chức nghiệp của họ.
+\n
+\n**Thể chất (TC)** tăng Máu của bạn và giúp bạn nhận ít sát thương hơn. Phục hồi sư và Chiến binh nhận TC từ trang bị chức nghiệp của họ.
+\n
+\n**Trí tuệ (TT)** tăng lượng Kinh nghiệm bạn kiếm được và giúp bạn có nhiều Mana hơn. Pháp sư và Phục hồi sư nhận INT từ trang bị chức nghiệp của họ.
+\n
+\n**Trực giác (TG)** tăng lượng Vàng bạn kiếm được và tỉ lệ nhặt được vật phẩm rơi ngẫu nhiên. Đạo tặc và Pháp sư nhận TG từ trang bị chức nghiệp của họ.
+\n
+\nSau cấp độ 10, bạn nhận được 1 điểm Chỉ số cho mỗi cấp độ bạn kiếm được và bạn có thể đặt thêm nó vào một Chỉ số mà bạn thích. Bạn còn có thể mặc những trang bị có cộng thêm chỉ số nhiều loại khác nhau.</string>
+    <string name="stat_allocation">Phân bổ Chỉ số</string>
+    <string name="mana_description">Điểm Mana được mở khóa với hệ thống chức nghiệp ở cấp độ 10 và cho phép bạn **sử dụng Kĩ năng** một khí bạn bắt đầu học được chúng ở cấp độ 11.
+\n
+\nMột vài **Mana được phục hồi** khi bắt đầu ngày mới, nhưng bạn có thể kiếm lại nhiều hơn bằng việc hoàn thành công việc hay sử dụng Kĩ năng của chức nghiệp Pháp sư.</string>
+    <string name="clear_cache">Xóa bộ nhớ lưu trữ của bạn</string>
+    <string name="hourglasses_description">Đồng hồ Cát bí ẩn là một dạng tiền tệ vô cùng hiếm mà bạn chỉ có thể nhận được cho việc đăng ký Habitica ba tháng liền hoặc nhiều hơn. Chúng được dùng trong cửa hàng của Nhà du hành thời gian để mua những bộ trang bị, thú cưng, thú cưỡi, hình nền động, hay thậm chí là những Nhiệm vụ đặc biệt.
+\n
+\nBạn có thể nhận được tối đa bốn Đồng hồ Cát bí ẩn mỗi năm. Thời gian chúng được thưởng dựa vào lịch làm mới lại Gói đăng ký của bạn. Chúng được gửi vào ngày đầu tiên của tháng mới sau lần thanh toán Gói đăng ký cuối cùng mà bạn đủ điều kiện để nhận một cái. Xem thêm trang [Gói đăng ký] để thêm nhiều thông tin chi tiết.</string>
+    <string name="mystic_hourglasses">Đồng hồ cát bí ẩn</string>
+    <string name="subscriber_currency">Đơn vị tiền tệ của Người đăng ký</string>
+    <string name="game_mechanics">Cơ chế trò chơi</string>
+    <string name="common_questions">Câu hỏi thường gặp</string>
+    <string name="gems_description">Gem là một Đơn vị tiền tệ được thanh toán bằng tiền thật cho phép bạn mua những nội dung đặc biệt của Habitica và một trong những nguồn hỗ trợ tài chính chính cho Đội ngũ Habitica bên cạnh Gói đăng ký.
+\n
+\nTất cả nội dung được thanh toán bằng Gem đơn thuần là kèm thêm hoặc có thể đạt được miễn phí bằng thời gian.
+\n
+\nBạn cũng có thể nhận Gem bằng quà từ những người chơi khác, giải thưởng Thử thách, cống hiến cho Habitica, hoặc đăng ký.</string>
+    <string name="currency">Đơn vị tiền tệ</string>
+    <string name="premium_currency">Đơn vị Tiền tệ Cao cấp</string>
+    <string name="standard">Tiêu chuẩn</string>
+    <string name="delete_checklist_entry">Xóa Danh mục</string>
+    <string name="still_questions">Vẫn còn thắc mắc\?</string>
+    <string name="purchase_amount_error">Bạn không thể mua số lượng đó.</string>
+    <string name="read_more">Đọc thêm</string>
+    <string name="buy_all">Mua Tất cả</string>
+    <string name="avatar_accent">Cài hoa</string>
+    <string name="avatar_headband">Băng đeo đầu</string>
+    <string name="animal_tail">Đuôi động vật</string>
+    <string name="animal_ears">Tai động vật</string>
+    <string name="could_not_find_user">Không thể tìm thấy người dùng</string>
+    <string name="habitica_questions">Những câu hỏi về Habitica</string>
+    <string name="wacky">Kì quặc</string>
+    <string name="support">Hỗ trợ</string>
+    <string name="update_app_description">Chúng tôi đang liên tục đưa ra những sửa chữa mới nhất, vì vậy hãy chắc là mình đã ghé Cửa hàng Play và xem có bản cập nhập nào mới chưa nhé.</string>
+    <string name="update_app">Cập nhập Ứng dụng</string>
+    <string name="manual_sync_restart_description">Đôi khi ứng dụng không tự động cập nhập nội dung. Thử kéo xuống để tải lại hoặc buộc đóng ứng dụng và mở lại.</string>
+    <string name="manual_sync_restart">Đồng bộ hóa Thủ công hay Khởi động lại</string>
+    <string name="clear_cache_description">Để xóa bộ nhớ tạm của bạn, mở ứng dụng Cài đặt trên điện thoại. Tới Lưu trữ &gt; Ứng dụng &gt; Habitica, sau đó chạm Xóa bộ nhớ tạm.</string>
 </resources>

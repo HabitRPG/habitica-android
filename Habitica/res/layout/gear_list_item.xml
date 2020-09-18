@@ -12,7 +12,7 @@
         android:id="@+id/gear_icon_background_view"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:layout_marginRight="@dimen/row_padding">
+        android:layout_marginEnd="@dimen/row_padding">
         <com.facebook.drawee.view.SimpleDraweeView
             android:layout_width="@dimen/gear_image_size"
             android:layout_height="@dimen/gear_image_size"
@@ -61,14 +61,14 @@
                 android:layout_height="wrap_content"
                 android:text="@string/equipment_str"
                 android:textSize="14sp"
-                android:textColor="@color/gray_200"
-                android:layout_marginRight="5dp"/>
+                android:textColor="@color/text_ternary"
+                android:layout_marginEnd="5dp"/>
             <TextView
                 android:id="@+id/str_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="+1"
-                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
                 android:textColor="@color/green_50"/>
             <TextView
                 android:id="@+id/con_label"
@@ -76,14 +76,14 @@
                 android:layout_height="wrap_content"
                 android:text="@string/equipment_con"
                 android:textSize="14sp"
-                android:textColor="@color/gray_200"
-                android:layout_marginRight="5dp"/>
+                android:textColor="@color/text_ternary"
+                android:layout_marginEnd="5dp"/>
             <TextView
                 android:id="@+id/con_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="+1"
-                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
                 android:textColor="@color/green_50"/>
             <TextView
                 android:id="@+id/int_label"
@@ -91,14 +91,14 @@
                 android:layout_height="wrap_content"
                 android:text="@string/equipment_int"
                 android:textSize="14sp"
-                android:textColor="@color/gray_200"
-                android:layout_marginRight="5dp"/>
+                android:textColor="@color/text_ternary"
+                android:layout_marginEnd="5dp"/>
             <TextView
                 android:id="@+id/int_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="+1"
-                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
                 android:textColor="@color/green_50"/>
             <TextView
                 android:id="@+id/per_label"
@@ -106,14 +106,14 @@
                 android:layout_height="wrap_content"
                 android:text="@string/equipment_per"
                 android:textSize="14sp"
-                android:textColor="@color/gray_200"
-                android:layout_marginRight="5dp"/>
+                android:textColor="@color/text_ternary"
+                android:layout_marginEnd="5dp"/>
             <TextView
                 android:id="@+id/per_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="+1"
-                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
                 android:textColor="@color/green_50"/>
         </com.nex3z.flowlayout.FlowLayout>
     </LinearLayout>

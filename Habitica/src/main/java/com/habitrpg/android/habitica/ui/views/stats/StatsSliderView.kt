@@ -6,62 +6,63 @@ import android.graphics.PorterDuff
 import android.os.Build
 import android.util.AttributeSet
 import android.view.Gravity
-import android.view.View
 import android.widget.LinearLayout
 import android.widget.SeekBar
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.databinding.StatsSliderViewBinding
 import com.habitrpg.android.habitica.extensions.AfterChangeTextWatcher
+import com.habitrpg.android.habitica.extensions.layoutInflater
+import com.habitrpg.android.habitica.extensions.setTintWith
 import com.habitrpg.android.habitica.extensions.styledAttributes
-import kotlinx.android.synthetic.main.stats_slider_view.view.*
 
 class StatsSliderView(context: Context, attrs: AttributeSet?) : LinearLayout(context, attrs) {
+    private val binding = StatsSliderViewBinding.inflate(context.layoutInflater, this)
 
     var previousValue = 0
     set(value) {
         field = value
-        previousValueTextView.text = value.toString()
+        binding.previousValueTextView.text = value.toString()
     }
 
     var maxValue = 0
     set(value) {
         field = value
-        statsSeekBar.max = field
+        binding.statsSeekBar.max = field
     }
 
     var currentValue = 0
     set(value) {
         field = value
-        statsSeekBar.progress = value
-        valueEditText.setText(value.toString())
-        if (valueEditText.isFocused) {
-            valueEditText.setSelection(valueEditText.length())
+        binding.statsSeekBar.progress = value
+        binding.valueEditText.setText(value.toString())
+        if (binding.valueEditText.isFocused) {
+            binding.valueEditText.setSelection(binding.valueEditText.length())
         }
     }
 
     var allocateAction: ((Int) -> Unit)? = null
 
     init {
-        View.inflate(context, R.layout.stats_slider_view, this)
         gravity = Gravity.CENTER_VERTICAL
 
         val attributes = attrs?.styledAttributes(context, R.styleable.StatsSliderView)
 
         if (attributes != null) {
-            statTypeTitle.text = attributes.getString(R.styleable.StatsSliderView_statsTitle)
+            binding.statTypeTitle.text = attributes.getString(R.styleable.StatsSliderView_statsTitle)
             val statColor = attributes.getColor(R.styleable.StatsSliderView_statsColor, 0)
-            statTypeTitle.setTextColor(attributes.getColor(R.styleable.StatsSliderView_statsTextColor, 0))
+            binding.statTypeTitle.setTextColor(attributes.getColor(R.styleable.StatsSliderView_statsTextColor, 0))
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                statsSeekBar.progressTintList = ColorStateList.valueOf(statColor)
+                binding.statsSeekBar.progressTintList = ColorStateList.valueOf(statColor)
             } else {
-                statsSeekBar.progressDrawable.setColorFilter(statColor, PorterDuff.Mode.SRC_IN)
+                binding.statsSeekBar.progressDrawable.setTintWith(statColor, PorterDuff.Mode.SRC_IN)
             }
             val thumbDrawable = ContextCompat.getDrawable(context, R.drawable.seekbar_thumb)
-            thumbDrawable?.setColorFilter(statColor, PorterDuff.Mode.MULTIPLY)
-            statsSeekBar.thumb = thumbDrawable
+            thumbDrawable?.setTintWith(statColor, PorterDuff.Mode.MULTIPLY)
+            binding.statsSeekBar.thumb = thumbDrawable
         }
 
-        valueEditText.addTextChangedListener(AfterChangeTextWatcher {s ->
+        binding.valueEditText.addTextChangedListener(AfterChangeTextWatcher {s ->
                 val newValue = try {
                     s.toString().toInt()
                 } catch (e: NumberFormatException) {
@@ -71,12 +72,12 @@ class StatsSliderView(context: Context, attrs: AttributeSet?) : LinearLayout(con
                     currentValue = newValue
                     allocateAction?.invoke(currentValue)
                 } else if (newValue > maxValue || newValue < 0) {
-                    valueEditText.setText(currentValue.toString())
-                    valueEditText.setSelection(valueEditText.length())
+                    binding.valueEditText.setText(currentValue.toString())
+                    binding.valueEditText.setSelection(binding.valueEditText.length())
                 }
         })
 
-        statsSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+        binding.statsSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 currentValue = progress
                 if (fromUser) {

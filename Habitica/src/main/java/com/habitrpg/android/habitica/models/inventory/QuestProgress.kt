@@ -11,6 +11,7 @@ open class QuestProgress : RealmObject() {
     var key: String? = null
     var hp: Double = 0.0
     var rage: Double = 0.0
+    var collectedItems: Int = 0
     var collect: RealmList<QuestProgressCollect>? = null
     var down: Float = 0.0f
     var up: Float = 0.0f

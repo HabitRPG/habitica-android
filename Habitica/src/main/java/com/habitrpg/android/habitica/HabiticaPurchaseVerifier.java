@@ -43,8 +43,8 @@ public class HabiticaPurchaseVerifier extends BasePurchaseVerifier {
     private static final String PENDING_GIFTS_KEY = "PENDING_GIFTS";
     private final ApiClient apiClient;
     private Set<String> purchasedOrderList = new HashSet<>();
-    public static Map<String, String> pendingGifts = new HashMap<>();
-    private SharedPreferences preferences;
+    private static Map<String, String> pendingGifts = new HashMap<>();
+    private static SharedPreferences preferences;
     private Context context;
 
     public HabiticaPurchaseVerifier(Context context, ApiClient apiClient) {
@@ -76,7 +76,6 @@ public class HabiticaPurchaseVerifier extends BasePurchaseVerifier {
                     if (pendingGifts.containsKey(purchase.sku)) {
                         validationRequest.setGift(new IAPGift());
                         validationRequest.getGift().uuid = pendingGifts.get(purchase.sku);
-                        pendingGifts.remove(purchase.sku);
                     }
 
                     apiClient.validatePurchase(validationRequest).subscribe(purchaseValidationResult -> {
@@ -84,8 +83,9 @@ public class HabiticaPurchaseVerifier extends BasePurchaseVerifier {
 
                         requestListener.onSuccess(verifiedPurchases);
                         EventBus.getDefault().post(new ConsumablePurchasedEvent(purchase));
+                        removeGift(purchase.sku);
                     }, throwable -> {
-                        if (throwable.getClass().equals(retrofit2.adapter.rxjava2.HttpException.class)) {
+                        if (throwable.getClass().equals(retrofit2.HttpException.class)) {
                             HttpException error = (HttpException) throwable;
                             ErrorResponse res = apiClient.getErrorResponse((HttpException) throwable);
                             if (error.code() == 401) {
@@ -94,6 +94,7 @@ public class HabiticaPurchaseVerifier extends BasePurchaseVerifier {
 
                                     requestListener.onSuccess(verifiedPurchases);
                                     EventBus.getDefault().post(new ConsumablePurchasedEvent(purchase));
+                                    removeGift(purchase.sku);
                                     return;
                                 }
                             }
@@ -109,16 +110,15 @@ public class HabiticaPurchaseVerifier extends BasePurchaseVerifier {
                     if (pendingGifts.containsKey(purchase.sku)) {
                         validationRequest.setGift(new IAPGift());
                         validationRequest.getGift().uuid = pendingGifts.get(purchase.sku);
-                        pendingGifts.remove(purchase.sku);
                     }
 
                     apiClient.validateNoRenewSubscription(validationRequest).subscribe(purchaseValidationResult -> {
                         purchasedOrderList.add(purchase.orderId);
-                        pendingGifts.remove(purchase.sku);
                         requestListener.onSuccess(verifiedPurchases);
                         EventBus.getDefault().post(new ConsumablePurchasedEvent(purchase));
+                        removeGift(purchase.sku);
                     }, throwable -> {
-                        if (throwable.getClass().equals(retrofit2.adapter.rxjava2.HttpException.class)) {
+                        if (throwable.getClass().equals(retrofit2.HttpException.class)) {
                             HttpException error = (HttpException)throwable;
                             ErrorResponse res = apiClient.getErrorResponse((HttpException) throwable);
                             if (error.code() == 401) {
@@ -127,6 +127,7 @@ public class HabiticaPurchaseVerifier extends BasePurchaseVerifier {
 
                                     requestListener.onSuccess(verifiedPurchases);
                                     EventBus.getDefault().post(new ConsumablePurchasedEvent(purchase));
+                                    removeGift(purchase.sku);
                                     return;
                                 }
                             }
@@ -148,7 +149,7 @@ public class HabiticaPurchaseVerifier extends BasePurchaseVerifier {
                         FirebaseAnalytics.getInstance(context).logEvent("user_subscribed", null);
                         EventBus.getDefault().post(new UserSubscribedEvent());
                     }, throwable -> {
-                        if (throwable.getClass().equals(retrofit2.adapter.rxjava2.HttpException.class)) {
+                        if (throwable.getClass().equals(retrofit2.HttpException.class)) {
                             HttpException error = (HttpException) throwable;
                             ErrorResponse res = apiClient.getErrorResponse((HttpException) throwable);
                             if (error.code() == 401) {
@@ -175,7 +176,17 @@ public class HabiticaPurchaseVerifier extends BasePurchaseVerifier {
         savePendingGifts();
     }
 
-    private void savePendingGifts(){
+    public static void addGift(String sku, String userID) {
+        pendingGifts.put(sku, userID);
+        savePendingGifts();
+    }
+
+    private static void removeGift(String sku) {
+        pendingGifts.remove(sku);
+        savePendingGifts();
+    }
+
+    private static void savePendingGifts(){
         JSONObject jsonObject = new JSONObject(pendingGifts);
         String jsonString = jsonObject.toString();
         SharedPreferences.Editor editor = preferences.edit();

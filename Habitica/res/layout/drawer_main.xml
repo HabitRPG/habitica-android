@@ -68,7 +68,8 @@
                 android:background="@color/transparent"
                 android:src="@drawable/menu_notifications"
                 android:layout_centerVertical="true"
-                android:clickable="false" />
+                android:clickable="false"
+                android:contentDescription="@string/notifications" />
 
             <TextView
                 android:id="@+id/notificationsBadge"
@@ -82,7 +83,7 @@
                 android:gravity="center"
                 android:minWidth="20dp"
                 android:paddingTop="0dp"
-                android:textColor="#FFF"
+                android:textColor="@color/text_inverted"
                 android:textSize="12sp"
                 android:visibility="gone"
                 tools:text="1"
@@ -100,7 +101,8 @@
                 android:background="@color/transparent"
                 android:src="@drawable/menu_messages"
                 android:layout_centerVertical="true"
-                android:clickable="false" />
+                android:clickable="false"
+                android:contentDescription="@string/inbox" />
 
             <TextView
                 android:id="@+id/messagesBadge"
@@ -131,8 +133,8 @@
                 android:layout_height="wrap_content"
                 android:background="@color/transparent"
                 android:src="@drawable/menu_settings"
-                android:layout_centerVertical="true"/>
-
+                android:layout_centerVertical="true"
+                android:contentDescription="@string/PS_settings_title" />
             <TextView
                 android:id="@+id/settingsBadge"
                 android:layout_width="wrap_content"
@@ -146,7 +148,7 @@
                 android:gravity="center"
                 android:minWidth="20dp"
                 android:paddingTop="0dp"
-                android:textColor="#FFF"
+                android:textColor="@color/white"
                 android:textSize="12sp"
                 android:visibility="gone"
                 tools:text="1"
@@ -163,5 +165,5 @@
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"/>
+        android:background="?attr/colorContentBackground"/>
 </LinearLayout>

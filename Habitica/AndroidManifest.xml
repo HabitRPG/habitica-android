@@ -32,7 +32,8 @@
             android:name=".ui.activities.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/LaunchAppTheme"
-            android:windowSoftInputMode="stateHidden|adjustResize">
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            android:configChanges="orientation|screenSize">
             <nav-graph android:value="@navigation/navigation" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -46,6 +47,7 @@
                     android:host="habitica.com"
                     android:pathPattern="/"/>
             </intent-filter>
+
         </activity>
         <activity
             android:name=".ui.activities.PrefsActivity"
@@ -126,8 +128,6 @@
         <meta-data
                 android:name="com.facebook.sdk.AutoLogAppEventsEnabled"
                 android:value="false"/>
-        <activity
-            android:name=".ui.activities.AboutActivity" />
         <activity
             android:name=".ui.activities.TaskFormActivity"
             android:parentActivityName=".ui.activities.MainActivity"

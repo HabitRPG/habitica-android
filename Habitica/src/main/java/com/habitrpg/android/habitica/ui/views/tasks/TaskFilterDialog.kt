@@ -4,14 +4,12 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.drawable.Drawable
-import android.os.Bundle
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
 import android.widget.*
 import androidx.annotation.IdRes
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatCheckBox
 import androidx.core.content.ContextCompat
 import androidx.core.widget.CompoundButtonCompat
@@ -23,12 +21,14 @@ import com.habitrpg.android.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.Tag
 import com.habitrpg.android.habitica.models.tasks.Task
+import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import io.reactivex.Observable
-import io.reactivex.functions.Consumer
 import java.util.*
 import javax.inject.Inject
 
-class TaskFilterDialog(context: Context, component: UserComponent?) : AlertDialog(context), RadioGroup.OnCheckedChangeListener {
+class TaskFilterDialog(context: Context, component: UserComponent?) : HabiticaAlertDialog(context), RadioGroup.OnCheckedChangeListener {
+
+    private var clearButton: Button
 
     @Inject
     lateinit var repository: TagRepository
@@ -61,7 +61,7 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : AlertDialo
         val inflater = LayoutInflater.from(context)
         val view = inflater.inflate(R.layout.dialog_task_filter, null)
         setTitle(R.string.filters)
-        setView(view)
+        this.setAdditionalContentView(view)
 
         taskTypeTitle = view.findViewById(R.id.task_type_title)
         taskFilters = view.findViewById(R.id.task_filter_wrapper)
@@ -81,24 +81,18 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : AlertDialo
             this.dismiss()
         }
 
-        setButton(BUTTON_NEUTRAL, getContext().getString(R.string.clear)) { _, _ -> }
+        clearButton = addButton(R.string.clear, false, false, false) { _, _ ->
+            if (isEditing) {
+                stopEditing()
+            }
+            setActiveFilter(null)
+            setActiveTags(null)
+        }
+
+        addButton(R.string.done, false)
+        buttonAxis = LinearLayout.HORIZONTAL
 
         tagsEditButton.setOnClickListener { editButtonClicked() }
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        val clearButton = getButton(BUTTON_NEUTRAL)
-        if (clearButton != null) {
-            clearButton.setOnClickListener {
-                if (isEditing) {
-                    stopEditing()
-                }
-                setActiveFilter(null)
-                setActiveTags(null)
-            }
-            clearButton.isEnabled = hasActiveFilters()
-        }
     }
 
     override fun show() {
@@ -131,7 +125,7 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : AlertDialo
                     verticalPadding,
                     tagCheckbox.paddingRight,
                     verticalPadding)
-            tagCheckbox.setTextColor(ContextCompat.getColor(context, R.color.textColorLight))
+            tagCheckbox.setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
             CompoundButtonCompat.setButtonTintList(tagCheckbox, colorStateList)
             tagCheckbox.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked) {
@@ -156,7 +150,7 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : AlertDialo
         button.setOnClickListener { createTag() }
         button.setCompoundDrawablesWithIntrinsicBounds(addIcon, null, null, null)
         button.setBackgroundResource(R.drawable.layout_rounded_bg_lighter_gray)
-        button.setTextColor(ContextCompat.getColor(context, R.color.text_light))
+        button.setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
         tagsList.addView(button)
     }
 
@@ -182,9 +176,9 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : AlertDialo
         createTagViews()
         tagsEditButton.setText(R.string.edit_tag_btn_edit)
         this.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
-        repository.updateTags(editedTags.values).toObservable().flatMap { tags -> Observable.fromIterable(tags) }.subscribe(Consumer { tag -> editedTags.remove(tag.id) }, RxErrorHandler.handleEmptyError())
-        repository.createTags(createdTags.values).toObservable().flatMap { tags -> Observable.fromIterable(tags) }.subscribe(Consumer { tag -> createdTags.remove(tag.id) }, RxErrorHandler.handleEmptyError())
-        repository.deleteTags(deletedTags).subscribe(Consumer { deletedTags.clear() }, RxErrorHandler.handleEmptyError())
+        repository.updateTags(editedTags.values).toObservable().flatMap { tags -> Observable.fromIterable(tags) }.subscribe({ tag -> editedTags.remove(tag.id) }, RxErrorHandler.handleEmptyError())
+        repository.createTags(createdTags.values).toObservable().flatMap { tags -> Observable.fromIterable(tags) }.subscribe({ tag -> createdTags.remove(tag.id) }, RxErrorHandler.handleEmptyError())
+        repository.deleteTags(deletedTags).subscribe({ deletedTags.clear() }, RxErrorHandler.handleEmptyError())
     }
 
     private fun createTagEditViews() {
@@ -335,10 +329,12 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : AlertDialo
     }
 
     private fun filtersChanged() {
-        val clearButton = getButton(BUTTON_NEUTRAL)
-        if (clearButton != null) {
-            clearButton.isEnabled = hasActiveFilters()
-        }
+        clearButton.isEnabled = hasActiveFilters()
+        clearButton.setTextColor(if (clearButton.isEnabled) {
+            context.getThemeColor(R.attr.colorAccent)
+        } else {
+            ContextCompat.getColor(context, R.color.text_dimmed)
+        })
     }
 
     private fun hasActiveFilters(): Boolean {
@@ -350,7 +346,6 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : AlertDialo
     }
 
     interface OnFilterCompletedListener {
-
         fun onFilterCompleted(activeTaskFilter: String?, activeTags: MutableList<String>)
     }
 }

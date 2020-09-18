@@ -9,7 +9,6 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.AdventureGuideMenuBannerBinding
-import com.habitrpg.android.habitica.databinding.EquipmentOverviewItemBinding
 import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.models.user.User
 
@@ -34,6 +33,6 @@ class AdventureGuideMenuBanner @JvmOverloads constructor(
         val completed = achievements.count { it.earned }
         binding.progressBar.max = achievements.size
         binding.progressBar.progress = completed
-        binding.countView.text = "${completed} / ${achievements.size}"
+        binding.countView.text = "$completed / ${achievements.size}"
     }
 }

@@ -6,61 +6,62 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager.widget.ViewPager
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
+import com.habitrpg.android.habitica.databinding.FragmentViewpagerBinding
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.ui.activities.GroupFormActivity
 import com.habitrpg.android.habitica.ui.activities.GroupInviteActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.fragments.social.ChatFragment
-import com.habitrpg.android.habitica.ui.helpers.bindView
-import com.habitrpg.android.habitica.ui.helpers.resetViews
 import com.habitrpg.android.habitica.ui.viewmodels.GroupViewType
 import com.habitrpg.android.habitica.ui.viewmodels.PartyViewModel
 import java.util.*
 
 
-class PartyFragment : BaseMainFragment() {
+class PartyFragment : BaseMainFragment<FragmentViewpagerBinding>() {
 
     private var detailFragment: PartyDetailFragment? = null
-    private val viewPager: ViewPager? by bindView(R.id.viewPager)
     private var chatFragment: ChatFragment? = null
     private var viewPagerAdapter: FragmentPagerAdapter? = null
 
     internal lateinit var viewModel: PartyViewModel
 
+    override var binding: FragmentViewpagerBinding? = null
+
+    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentViewpagerBinding {
+        return FragmentViewpagerBinding.inflate(inflater, container, false)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         this.usesTabLayout = true
         this.hidesToolbar = true
-        super.onCreateView(inflater, container, savedInstanceState)
-        return inflater.inflate(R.layout.fragment_viewpager, container, false)
+        return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        resetViews()
 
-        viewModel = ViewModelProviders.of(this)
+        viewModel = ViewModelProvider(this)
                 .get(PartyViewModel::class.java)
         viewModel.groupViewType = GroupViewType.PARTY
 
         viewModel.getGroupData().observe(viewLifecycleOwner,
-                Observer {
+                {
                     updateGroupUI(it)
                 })
 
 
-        viewPager?.currentItem = 0
+        binding?.viewPager?.currentItem = 0
 
         setViewPagerAdapter()
 
         arguments?.let {
             val args = PartyFragmentArgs.fromBundle(it)
-            viewPager?.currentItem = args.tabToOpen
+            binding?.viewPager?.currentItem = args.tabToOpen
             if (args.partyID?.isNotBlank() == true) {
                 viewModel.setGroupID(args.partyID ?: "")
             }
@@ -159,20 +160,21 @@ class PartyFragment : BaseMainFragment() {
                 if (resultCode == Activity.RESULT_OK) {
                     val inviteData = HashMap<String, Any>()
                     inviteData["inviter"] = user?.profile?.name ?: ""
-                    if (data?.getBooleanExtra(GroupInviteActivity.IS_EMAIL_KEY, false) == true) {
-                        val emails = data.getStringArrayExtra(GroupInviteActivity.EMAILS_KEY)
+                    val emails = data?.getStringArrayExtra(GroupInviteActivity.EMAILS_KEY)
+                    if (emails != null && emails.isNotEmpty()) {
                         val invites = ArrayList<HashMap<String, String>>()
-                        emails?.forEach { email ->
+                        emails.forEach { email ->
                             val invite = HashMap<String, String>()
                             invite["name"] = ""
                             invite["email"] = email
                             invites.add(invite)
                         }
                         inviteData["emails"] = invites
-                    } else {
-                        val userIDs = data?.getStringArrayExtra(GroupInviteActivity.USER_IDS_KEY)
+                    }
+                    val userIDs = data?.getStringArrayExtra(GroupInviteActivity.USER_IDS_KEY)
+                    if (userIDs != null && userIDs.isNotEmpty()){
                         val invites = ArrayList<String>()
-                        userIDs?.forEach { invites.add(it) }
+                        userIDs.forEach { invites.add(it) }
                         inviteData["usernames"] = invites
                     }
                     viewModel.inviteToGroup(inviteData)
@@ -220,9 +222,9 @@ class PartyFragment : BaseMainFragment() {
                 } ?: ""
             }
         }
-        this.viewPager?.adapter = viewPagerAdapter
+        binding?.viewPager?.adapter = viewPagerAdapter
 
-        viewPager?.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+        binding?.viewPager?.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
                 if (position == 1) {
                     chatFragment?.setNavigatedToFragment()
@@ -237,6 +239,6 @@ class PartyFragment : BaseMainFragment() {
 
             override fun onPageScrollStateChanged(state: Int) { /* no-op */ }
         })
-        tabLayout?.setupWithViewPager(viewPager)
+        tabLayout?.setupWithViewPager(binding?.viewPager)
     }
 }

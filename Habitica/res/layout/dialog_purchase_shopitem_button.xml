@@ -6,9 +6,9 @@
     android:layout_width="wrap_content"
     android:layout_height="40dp"
     android:gravity="center"
-    android:background="@drawable/layout_rounded_bg_gray_700"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp">
+    android:background="@drawable/layout_rounded_bg_window"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp">
     <TextView
         android:id="@+id/buy_label"
         android:layout_width="wrap_content"
@@ -23,6 +23,5 @@
         tools:text="10"
         tools:textColor="@color/green_10"
         style="@style/Subheader1"
-        app:hasLightBackground="true"
         android:layout_marginStart="12dp"/>
 </LinearLayout>

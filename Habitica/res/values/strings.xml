@@ -271,6 +271,7 @@
     <string name="pets">Pets</string>
     <string name="mounts">Mounts</string>
 
+    <string name="quest_items_found">You\'ve found %d quest items</string>
     <string name="armoireEquipment">You found %s in the Armoire</string>
     <string name="armoireFood">You rummage in the Armoire and find %1$s %2$s. What\'s that doing in here?</string>
     <string name="armoireExp">You wrestle with the Armoire and gain Experience. Take that!</string>
@@ -1015,7 +1016,7 @@
     <string name="read_more">Read More</string>
     <string name="purchase_amount_error">You are unable to buy that amount.</string>
     <string name="still_questions">Still have a question?</string>
-    <string name="pet_ownership_fraction">%1$d/%2$d</string>
+    <string name="pet_ownership_fraction">%1$d / %2$d</string>
     <string name="task_display">Task list display</string>
     <string name="onboarding_tasks">Onboarding Tasks</string>
     <string name="complete_for_gold"><![CDATA[Complete to earn <font color="#EE9109"><b>100 Gold</b></font>!]]></string>
@@ -1082,4 +1083,28 @@
     <string name="keep_x_tasks">Keep %d Tasks</string>
     <string name="delete_x_tasks">Delete %d Tasks</string>
     <string name="challenge_task_name">%s Challenge Task</string>
+    <string name="pet_category">%s Pets</string>
+    <string name="mount_category">%s Mounts</string>
+    <string name="block_user">Block User</string>
+    <string name="unblock_user">Unblock User</string>
+    <string name="block_user_title">Block %s?</string>
+    <string name="block_user_description">A blocked user cannot send you Private Messages but you will still see their posts in Tavern or Guilds. This will have no effect if the person is a moderator now or in the future.</string>
+    <string name="block">Block</string>
+    <string name="disablePrivateMessages">Disable Private Messages</string>
+    <string name="pms_disabled">Private Messages are disabled</string>
+    <string name="pms_disabled_description">You can still send messages, but no one can send them to you. You can enable again from Settings.</string>
+    <string name="usually_x_gems">Usually %d Gems</string>
+    <string name="x_to_y">%s to %s</string>
+    <string name="how_it_works">How it works</string>
+    <string name="limitations">Limitations</string>
+    <string name="fall_promo_info_instructions">Between %s and %s, simply purchase any Gem bundle like usual and your account will be credited with the promotional amount of Gems. More Gems to spend, share, or save for any future releases!</string>
+    <string name="fall_promo_info_prompt">The Fall Gala is in full swing so we thought it was the perfect time to introduce our first ever Gem Sale! Now you will get more Gems with each purchase than ever before.</string>
+    <string name="view_gem_bundles">View Gem Bundles</string>
+    <string name="spooky_promo_info_instructions">Between %s and %s, simply purchase any Gem bundle like usual and your account will be credited with the promotional amount of Gems. More Gems to spend, share, or save for any future releases!</string>
+    <string name="gems_promo_info_limitations">This promotion only applies during the limited time event. This event starts on %s (12:00 UTC) and will end %s (00:00 UTC). The promo offer is only available when buying Gems for yourself.</string>
+    <string name="spooky_promo_info_prompt">The Gem Sale is back to haunt the very end of this year’s Fall Gala! This is one last chance to get more Gems than ever, so stock up while it lasts!</string>
+    <string name="dark_mode">Dark Mode</string>
+    <string name="theme_mode">Theme Mode</string>
+    <string name="theme_color">Theme Color</string>
+    <string name="submit_feedback">Submit Feedback</string>
 </resources>

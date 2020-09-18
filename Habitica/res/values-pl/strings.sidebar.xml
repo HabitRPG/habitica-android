@@ -1,20 +1,21 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="sidebar_tasks">Zadania</string>
-  <string name="sidebar_skills">Umiejętności</string>
-  <string name="sidebar_section_social">Społeczność</string>
-  <string name="sidebar_inbox">Wiadomości</string>
-  <string name="sidebar_tavern">Karczma</string>
-  <string name="sidebar_party">Drużyna</string>
-  <string name="sidebar_purchaseGems">Kup Klejnoty</string>
-  <string name="sidebar_guilds">Gildie</string>
-  <string name="sidebar_challenges">Wyzwania</string>
-  <string name="sidebar_section_inventory">Ekwipunek</string>
-  <string name="sidebar_avatar">Awatar</string>
-  <string name="sidebar_equipment">Ekwipunek</string>
-  <string name="sidebar_stable">Stajnia</string>
-  <string name="sidebar_news">Aktualności</string>
+    <string name="sidebar_tasks">Zadania</string>
+    <string name="sidebar_skills">Umiejętności</string>
+    <string name="sidebar_section_social">Społeczność</string>
+    <string name="sidebar_inbox">Wiadomości</string>
+    <string name="sidebar_tavern">Karczma</string>
+    <string name="sidebar_party">Drużyna</string>
+    <string name="sidebar_guilds">Gildie</string>
+    <string name="sidebar_challenges">Wyzwania</string>
+    <string name="sidebar_section_inventory">Ekwipunek</string>
+    <string name="sidebar_avatar">Personalizacja Awatara</string>
+    <string name="sidebar_equipment">Ekwipunek</string>
+    <string name="sidebar_stable">Chowańce i Wierzchowce</string>
+    <string name="sidebar_news">Aktualności</string>
     <string name="sidebar_about">O programie</string>
-  <string name="sidebar_shops">Sklepy</string>
-  <string name="sidebar_stats">Statystyki</string>
+    <string name="sidebar_shops">Sklepy</string>
+    <string name="sidebar_stats">Statystyki</string>
+    <string name="sidebar_subscription">Subskrypcja</string>
+    <string name="sidebar_gems">Zakup Klejnotów</string>
 </resources>

@@ -17,7 +17,6 @@ import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.functions.Consumer
 import net.pherth.android.emoji_library.EmojiHandler
 import java.util.*
 import javax.inject.Inject
@@ -50,7 +49,7 @@ abstract class TaskListFactory internal constructor(val context: Context, intent
                     .flatMapMaybe { tasks -> taskRepository.getTaskCopies(tasks).firstElement() }
                     .subscribeOn(AndroidSchedulers.mainThread())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(Consumer { tasks ->
+                    .subscribe({ tasks ->
                         reloadData = false
                         taskList = tasks
                         AppWidgetManager.getInstance(context).notifyAppWidgetViewDataChanged(widgetId, R.id.list_view)

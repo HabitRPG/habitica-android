@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/white">
+    android:background="@color/content_background">
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -22,7 +22,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/spacing_large"
-                android:background="@color/white"
+                android:background="@color/content_background"
                 android:orientation="vertical">
                 <TextView
                     android:layout_width="match_parent"
@@ -36,7 +36,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/gray_100"
+                    android:textColor="@color/text_secondary"
                     android:text="@string/usernamePromptBody"
                     android:gravity="center"
                     android:textSize="14sp"
@@ -45,7 +45,7 @@
                     android:id="@+id/wiki_text_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/gray_100"
+                    android:textColor="@color/text_secondary"
                     android:text="@string/usernamePromptWiki"
                     android:gravity="center"
                     android:textSize="14sp"
@@ -60,10 +60,10 @@
                         <TextView
                             android:layout_height="42dp"
                             android:text="@string/display_name"
-                            android:paddingLeft="@dimen/spacing_medium"
-                            android:paddingRight="@dimen/spacing_medium"
-                            android:layout_marginLeft="1dp"
-                            android:background="@color/gray_700"
+                            android:paddingStart="@dimen/spacing_medium"
+                            android:paddingEnd="@dimen/spacing_medium"
+                            android:layout_marginStart="1dp"
+                            android:background="@color/window_background"
                             android:gravity="center_vertical"
                             />
                         <View android:background="@color/gray_600"
@@ -72,41 +72,41 @@
                         <EditText android:id="@+id/display_name_edit_text"
                             android:background="@color/transparent"
                             android:layout_height="42dp"
-                            android:layout_marginLeft="@dimen/spacing_large"
-                            android:layout_marginRight="@dimen/spacing_large"
+                            android:layout_marginStart="@dimen/spacing_large"
+                            android:layout_marginEnd="@dimen/spacing_large"
                             android:lines="1"/>
                     </TableRow>
                     <TableRow>
                         <View android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:background="@color/gray_600" android:layout_span="3" />
+                            android:background="@color/offset_background" android:layout_span="3" />
                     </TableRow>
                     <TableRow>
                         <TextView android:text="@string/username"
-                            android:background="@color/gray_700"
+                            android:background="@color/window_background"
                             android:layout_height="41dp"
-                            android:paddingLeft="@dimen/spacing_medium"
-                            android:paddingRight="@dimen/spacing_medium"
-                            android:layout_marginLeft="1dp"
+                            android:paddingStart="@dimen/spacing_medium"
+                            android:paddingEnd="@dimen/spacing_medium"
+                            android:layout_marginStart="1dp"
                             android:gravity="center_vertical"/>
-                        <View android:background="@color/gray_600"
+                        <View android:background="@color/offset_background"
                             android:layout_width="1dp"
                             android:layout_height="42dp"/>
                         <LinearLayout
-                            android:layout_marginLeft="@dimen/spacing_large"
-                            android:layout_marginRight="@dimen/spacing_large">
+                            android:layout_marginStart="@dimen/spacing_large"
+                            android:layout_marginEnd="@dimen/spacing_large">
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:text="\@"
                                 android:gravity="center_vertical"
-                                android:textColor="@color/gray_400"/>
+                                android:textColor="@color/text_dimmed"/>
                             <EditText android:id="@+id/username_edit_text"
                                 android:background="@color/transparent"
                                 android:layout_width="0dp"
                                 android:layout_weight="1"
                                 android:layout_height="42dp"
-                                android:layout_marginLeft="@dimen/spacing_small"
+                                android:layout_marginStart="@dimen/spacing_small"
                                 android:lines="1"/>
                         </LinearLayout>
                     </TableRow>
@@ -140,10 +140,10 @@
                     android:gravity="center"
                     android:layout_marginTop="@dimen/spacing_large"
                     android:layout_marginBottom="@dimen/spacing_medium"
-                    android:layout_marginLeft="@dimen/spacing_large"
-                    android:layout_marginRight="@dimen/spacing_large"
+                    android:layout_marginStart="@dimen/spacing_large"
+                    android:layout_marginEnd="@dimen/spacing_large"
                     android:textSize="12sp"
-                    android:textColor="@color/gray_200"/>
+                    android:textColor="@color/text_ternary"/>
                 <ImageView
                     android:layout_width="121dp"
                     android:layout_height="31dp"
@@ -158,7 +158,7 @@
                 android:text="@string/usernamePromptDisclaimer"
                 android:gravity="center"
                 android:textSize="12sp"
-                android:textColor="@color/gray_300"/>
+                android:textColor="@color/text_quad"/>
         </LinearLayout>
     </ScrollView>
     <FrameLayout

@@ -36,7 +36,7 @@ class EquipmentOverviewItem @JvmOverloads constructor(
             DataBindingUtils.loadImage(binding.iconView, "shop_$key")
             binding.localIconView.visibility = View.GONE
             binding.iconView.visibility = View.VISIBLE
-            binding.iconWrapper.background = ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_white)
+            binding.iconWrapper.background = ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_content)
             if (isTwoHanded) {
                 binding.twoHandedIndicator.setImageDrawable(BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfTwoHandedIcon()))
             }
@@ -44,7 +44,7 @@ class EquipmentOverviewItem @JvmOverloads constructor(
             binding.localIconView.visibility = View.VISIBLE
             binding.iconView.visibility = View.GONE
             if (isDisabledFromTwoHand) {
-                binding.iconWrapper.background = ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_white)
+                binding.iconWrapper.background = ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_content)
                 binding.localIconView.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.equipment_two_handed))
             } else {
                 binding.iconWrapper.background = ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_gray_10)

@@ -3,7 +3,7 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 xmlns:tools="http://schemas.android.com/tools"
-                android:layout_gravity="right|end"
+                android:layout_gravity="end"
         tools:background="?colorPrimary"
                 android:clickable="true">
 
@@ -17,7 +17,7 @@
             android:id="@+id/badge_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:padding="4dp"
             tools:text="99"
             android:textColor="@color/white"

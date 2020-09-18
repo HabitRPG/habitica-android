@@ -1,211 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="?attr/colorContentBackground"
     android:foreground="?selectableItemBackground"
     android:orientation="vertical">
 
     <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <LinearLayout
-            android:id="@+id/card_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:baselineAligned="false"
-            android:minHeight="@dimen/task_min_height">
-
-            <FrameLayout
-                android:id="@+id/checkBoxHolder"
-                android:layout_width="@dimen/button_width"
-                android:layout_height="match_parent">
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="end"
-                    android:layout_marginBottom="1dp"
-                    android:background="@color/task_border_gray" />
-
-                <CheckBox
-                    android:id="@+id/checkBox"
-                    android:layout_width="@dimen/checkbox_size"
-                    android:layout_height="@dimen/checkbox_size"
-                    android:layout_gravity="center"
-                    android:button="@drawable/todo_checkbox"
-                    android:gravity="center" />
-            </FrameLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:paddingBottom="@dimen/task_top_bottom_padding"
-                android:paddingEnd="@dimen/task_text_padding"
-                android:paddingLeft="@dimen/task_text_padding"
-                android:paddingRight="@dimen/task_text_padding"
-                android:paddingStart="@dimen/task_text_padding"
-                android:paddingTop="@dimen/task_top_bottom_padding">
-
-                <com.habitrpg.android.habitica.ui.views.EllipsisTextView
-                    android:id="@+id/checkedTextView"
-                    style="@style/Subheader3"
-                    android:textColor="#000"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    tools:text="To Do Title" />
-
-                <com.habitrpg.android.habitica.ui.views.EllipsisTextView
-                    android:id="@+id/notesTextView"
-                    style="@style/Caption2.Regular"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:maxLines="3"
-                    android:ellipsize="end"
-                    tools:text="Notes" />
-
-                <Button
-                    android:id="@+id/expand_notes_button"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    style="@style/Base.Widget.AppCompat.Button.Borderless"
-                    android:text="@string/expand_notes"
-                    android:padding="0dp"
-                    android:textColor="?colorAccent"/>
-                <TextView
-                        android:id="@+id/approvalRequiredTextField"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        style="@style/Caption4"
-                        android:text="@string/pending_approval"
-                        />
-
-                <LinearLayout
-                    android:id="@+id/taskIconWrapper"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/task_icon_space"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/specialTaskText"
-                        style="@style/Caption3"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:drawableStart="@drawable/task_icon_calendar"
-                        android:drawableLeft="@drawable/task_icon_calendar"
-                        android:textColor="@color/task_secondary_text"
-                        android:visibility="invisible"
-                        tools:visibility="visible"
-                        android:scaleType="center"
-                        tools:text="special"  />
-
-                    <ImageView
-                        android:id="@+id/iconviewChallenge"
-                        android:layout_width="@dimen/task_icon_size"
-                        android:layout_height="@dimen/task_icon_size"
-                        android:layout_marginStart="@dimen/task_icon_space"
-                        android:layout_marginLeft="@dimen/task_icon_space"
-                        android:contentDescription="@string/belongs_to_challenge"
-                        android:scaleType="center"
-                        app:srcCompat="@drawable/task_megaphone" />
-
-                    <ImageView
-                        android:id="@+id/iconviewReminder"
-                        android:layout_width="@dimen/task_icon_size"
-                        android:layout_height="@dimen/task_icon_size"
-                        android:layout_marginStart="@dimen/task_icon_space"
-                        android:layout_marginLeft="@dimen/task_icon_space"
-                        android:contentDescription="@string/has_reminder"
-                        android:scaleType="center"
-                        app:srcCompat="@drawable/task_icon_reminder" />
-
-                    <ImageView
-                        android:id="@+id/iconviewTag"
-                        android:layout_width="@dimen/task_icon_size"
-                        android:layout_height="@dimen/task_icon_size"
-                        android:layout_marginStart="@dimen/task_icon_space"
-                        android:layout_marginLeft="@dimen/task_icon_space"
-                        android:contentDescription="@string/has_tag"
-                        android:scaleType="center"
-                        app:srcCompat="@drawable/task_icon_tag" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <ProgressBar
-                android:id="@+id/syncing_view"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="@dimen/spacing_small"
-                android:layout_marginRight="@dimen/spacing_small"
-                style="@style/Widget.AppCompat.ProgressBar"/>
-            <ImageButton
-                android:id="@+id/error_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:background="@color/transparent"
-                android:src="@drawable/ic_warning_black"
-                android:layout_marginLeft="@dimen/spacing_small"
-                android:layout_marginRight="@dimen/spacing_small"/>
-            <LinearLayout
-                android:id="@+id/checklistIndicatorWrapper"
-                android:layout_width="@dimen/checklist_wrapper_width"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/checkListCompletedTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:textColor="@color/white"
-                    style="@style/Body3"
-                    tools:text="1"/>
-
-                <View
-                    android:id="@+id/checklistDivider"
-                    android:layout_width="@dimen/checklist_divider_width"
-                    android:layout_height="@dimen/hairline_height"
-                    android:background="@color/white" />
-
-                <TextView
-                    android:id="@+id/checkListAllTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:textColor="@color/white"
-                    style="@style/Body3"
-                    tools:text="13" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_gravity="bottom"
-            android:background="@color/task_border_gray" />
-    </FrameLayout>
-
-    <LinearLayout
-        android:id="@+id/checklistView"
+        android:id="@+id/main_task_wrapper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" />
+        android:layout_marginHorizontal="@dimen/task_spacing_horizontal"
+        android:layout_marginVertical="@dimen/task_spacing_vertical"
+        android:background="@drawable/task_background"
+        android:clipChildren="true"
+        android:minHeight="@dimen/task_min_height">
 
-    <View
-        android:id="@+id/checklistBottomSpace"
-        android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:background="@color/checklist_separator" />
-
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:id="@+id/card_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:baselineAligned="false"
+                android:minHeight="@dimen/task_min_height">
+                <FrameLayout
+                    android:id="@+id/checkBoxHolder"
+                    android:layout_width="@dimen/button_width"
+                    android:layout_height="match_parent"
+                    tools:background="@color/red_10">
+                    <View
+                        android:id="@+id/checkBoxBackground"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:gravity="center"
+                        android:background="@drawable/todo_unchecked"
+                        android:layout_gravity="center" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/task_tint_overlay"/>
+                    <ImageView
+                        android:id="@+id/checkmark"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_gravity="center"
+                        android:scaleType="center"
+                        android:src="@drawable/checkmark" />
+                </FrameLayout>
+                <include layout="@layout/task_main_content" />
+                <ProgressBar
+                    android:id="@+id/syncing_view"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/spacing_small"
+                    android:layout_marginEnd="@dimen/spacing_small"
+                    style="@style/Widget.AppCompat.ProgressBar"/>
+                <ImageButton
+                    android:id="@+id/error_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:background="@color/transparent"
+                    android:src="@drawable/ic_warning_black"
+                    android:layout_marginStart="@dimen/spacing_small"
+                    android:layout_marginEnd="@dimen/spacing_small"/>
+                <include layout="@layout/checklist_indicator" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/checklistView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+        </LinearLayout>
+    </FrameLayout>
 </LinearLayout>

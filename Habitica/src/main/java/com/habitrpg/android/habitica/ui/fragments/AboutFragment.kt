@@ -8,36 +8,28 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AccelerateInterpolator
-import android.widget.TextView
 import android.widget.Toast
 import androidx.core.net.toUri
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
+import com.habitrpg.android.habitica.databinding.FragmentAboutBinding
 import com.habitrpg.android.habitica.helpers.AppConfigManager
-import com.habitrpg.android.habitica.helpers.DeviceName
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
-import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.plattysoft.leonids.ParticleSystem
-import io.reactivex.Completable
-import kotlinx.android.synthetic.main.fragment_about.*
 import javax.inject.Inject
 import javax.inject.Named
 
 
-class AboutFragment : BaseMainFragment() {
+class AboutFragment : BaseMainFragment<FragmentAboutBinding>() {
 
-    private var deviceInfo: DeviceName.DeviceInfo? = null
     @field:[Inject Named(AppModule.NAMED_USER_ID)]
     lateinit var userId: String
 
     @Inject
     lateinit var appConfigManager: AppConfigManager
-
-    private val updateAvailableWrapper: ViewGroup by bindView(R.id.update_available_wrapper)
-    private val updateAvailableTextView: TextView by bindView(R.id.update_available_textview)
 
     override fun injectFragment(component: UserComponent) {
         component.inject(this)
@@ -54,21 +46,19 @@ class AboutFragment : BaseMainFragment() {
         startActivity(intent)
     }
 
+    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentAboutBinding {
+        return FragmentAboutBinding.inflate(layoutInflater, container, false)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         this.hidesToolbar = true
-        super.onCreateView(inflater, container, savedInstanceState)
-
-        compositeSubscription.add(Completable.fromAction {
-            deviceInfo = DeviceName.getDeviceInfo(context)
-        }.subscribe())
-
-        return inflater.inflate(R.layout.fragment_about, container, false)
+        return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        versionInfo.setOnClickListener {
+        binding?.versionInfo?.setOnClickListener {
             versionNumberTappedCount += 1
             when (versionNumberTappedCount) {
                 1 -> context?.let { context ->
@@ -108,21 +98,21 @@ class AboutFragment : BaseMainFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        versionInfo.text = getString(R.string.version_info, versionName, versionCode)
+        binding?.versionInfo?.text = getString(R.string.version_info, versionName, versionCode)
 
         if (appConfigManager.lastVersionCode() > versionCode) {
-            updateAvailableWrapper.visibility = View.VISIBLE
-            updateAvailableTextView.text = getString(R.string.update_available, appConfigManager.lastVersionNumber(), appConfigManager.lastVersionCode())
+            binding?.updateAvailableWrapper?.visibility = View.VISIBLE
+            binding?.updateAvailableTextview?.text = getString(R.string.update_available, appConfigManager.lastVersionNumber(), appConfigManager.lastVersionCode())
         } else {
-            updateAvailableWrapper.visibility = View.GONE
+            binding?.updateAvailableWrapper?.visibility = View.GONE
         }
 
-        sourceCodeLink.setOnClickListener { openBrowserLink(androidSourceCodeLink) }
-        twitter.setOnClickListener { openBrowserLink(twitterLink) }
-        sourceCodeButton.setOnClickListener { openBrowserLink(androidSourceCodeLink) }
-        reportBug.setOnClickListener { MainNavigationController.navigate(R.id.bugFixFragment) }
-        googlePlayStoreButton.setOnClickListener { openGooglePlay() }
-        updateAvailableWrapper.setOnClickListener { openGooglePlay() }
+        binding?.sourceCodeLink?.setOnClickListener { openBrowserLink(androidSourceCodeLink) }
+        binding?.twitter?.setOnClickListener { openBrowserLink(twitterLink) }
+        binding?.sourceCodeButton?.setOnClickListener { openBrowserLink(androidSourceCodeLink) }
+        binding?.reportBug?.setOnClickListener { MainNavigationController.navigate(R.id.bugFixFragment) }
+        binding?.googlePlayStoreButton?.setOnClickListener { openGooglePlay() }
+        binding?.updateAvailableWrapper?.setOnClickListener { openGooglePlay() }
     }
 
     private fun openBrowserLink(url: String) {
@@ -141,7 +131,7 @@ class AboutFragment : BaseMainFragment() {
                             .setSpeedByComponentsRange(-0.08f, 0.08f, 0.05f, 0.1f)
                             .setFadeOut(200, AccelerateInterpolator())
                             .setRotationSpeed(100f)
-                            .emitWithGravity(anchor, Gravity.BOTTOM, 20, 10000)
+                            .emitWithGravity(binding?.anchor, Gravity.BOTTOM, 20, 10000)
                 }
             }
         }
@@ -153,7 +143,7 @@ class AboutFragment : BaseMainFragment() {
                             .setSpeedByComponentsRange(-0.08f, 0.08f, 0.05f, 0.1f)
                             .setFadeOut(200, AccelerateInterpolator())
                             .setRotationSpeed(100f)
-                            .emitWithGravity(anchor, Gravity.BOTTOM, 20, 10000)
+                            .emitWithGravity(binding?.anchor, Gravity.BOTTOM, 20, 10000)
                 }
             }
         }
@@ -165,9 +155,11 @@ class AboutFragment : BaseMainFragment() {
                             .setSpeedByComponentsRange(-0.08f, 0.08f, 0.05f, 0.1f)
                             .setFadeOut(200, AccelerateInterpolator())
                             .setRotationSpeed(100f)
-                            .emitWithGravity(anchor, Gravity.BOTTOM, 20, 10000)
+                            .emitWithGravity(binding?.anchor, Gravity.BOTTOM, 20, 10000)
                 }
             }
         }
     }
+
+    override var binding: FragmentAboutBinding? = null
 }

@@ -106,14 +106,14 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
             .asFlowable()
             .filter { it.isLoaded }
 
-    override fun getUserGroups(userID: String): Flowable<RealmResults<Group>> = realm.where(GroupMembership::class.java)
+    override fun getUserGroups(userID: String, type: String?): Flowable<RealmResults<Group>> = realm.where(GroupMembership::class.java)
             .equalTo("userID", userID)
             .findAll()
             .asFlowable()
             .filter { it.isLoaded }
             .flatMap {memberships ->
                 realm.where(Group::class.java)
-                        .equalTo("type", "guild")
+                        .equalTo("type", type ?: "guild")
                         .notEqualTo("id", Group.TAVERN_ID)
                         .`in`("id", memberships.map {
                             return@map it.groupID
@@ -254,20 +254,20 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
         return party != null && party.isValid
     }
 
-    override fun getInboxMessages(userID: String, replyToUserID: String?): Flowable<RealmResults<ChatMessage>> {
+    override fun getInboxMessages(userId: String, replyToUserID: String?): Flowable<RealmResults<ChatMessage>> {
         return realm.where(ChatMessage::class.java)
                 .equalTo("isInboxMessage", true)
                 .equalTo("uuid", replyToUserID)
-                .equalTo("userID", userID)
+                .equalTo("userID", userId)
                 .sort("timestamp", Sort.DESCENDING)
                 .findAll()
                 .asFlowable()
                 .filter { it.isLoaded }
     }
 
-    override fun getInboxConversation(userID: String): Flowable<RealmResults<InboxConversation>> {
+    override fun getInboxConversation(userId: String): Flowable<RealmResults<InboxConversation>> {
         return realm.where(InboxConversation::class.java)
-                .equalTo("userID", userID)
+                .equalTo("userID", userId)
                 .sort("timestamp", Sort.DESCENDING)
                 .findAll()
                 .asFlowable()

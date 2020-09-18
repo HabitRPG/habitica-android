@@ -20,10 +20,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textAppearance="?android:attr/textAppearanceMedium"
+            style="@style/Overline"
             tools:text="Section Header"
-            android:layout_marginLeft="24dp"
-            android:layout_marginRight="24dp" />
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp" />
         <Spinner
             android:id="@+id/classSelectionSpinner"
             android:layout_width="wrap_content"
@@ -40,7 +40,7 @@
         android:gravity="center"
         android:layout_marginBottom="12dp"
         android:textSize="12sp"
-        android:textColor="@color/gray_300"
+        android:textColor="@color/text_quad"
         android:visibility="gone"
         tools:visibility="visible"
         tools:text="@string/class_gear_disclaimer"/>

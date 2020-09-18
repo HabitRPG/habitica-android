@@ -18,7 +18,6 @@ import com.habitrpg.android.habitica.models.social.Group
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.functions.Consumer
 import io.reactivex.subjects.BehaviorSubject
 import io.realm.RealmResults
 import java.util.*
@@ -52,7 +51,7 @@ open class GroupViewModel : BaseViewModel() {
     }
 
     protected val groupIDSubject = BehaviorSubject.create<Optional<String>>()
-    val groupIDFlowable = groupIDSubject.toFlowable(BackpressureStrategy.BUFFER)
+    val groupIDFlowable: Flowable<Optional<String>> = groupIDSubject.toFlowable(BackpressureStrategy.BUFFER)
     var gotNewMessages: Boolean = false
 
     init {
@@ -80,7 +79,7 @@ open class GroupViewModel : BaseViewModel() {
         } }
                 .filter { it.isNotEmpty() }
                 .flatMapPublisher { userRepository.readNotification(it.first().id) }
-                .subscribe(Consumer {
+                .subscribe({
                 }, RxErrorHandler.handleEmptyError()))
     }
 
@@ -101,7 +100,7 @@ open class GroupViewModel : BaseViewModel() {
                 .flatMap { socialRepository.getGroup(it) }
                 .map { socialRepository.getUnmanagedCopy(it) }
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(Consumer { group.value = it }, RxErrorHandler.handleEmptyError()))
+                .subscribe({ group.value = it }, RxErrorHandler.handleEmptyError()))
     }
 
     private fun loadLeaderFromLocal() {
@@ -111,7 +110,7 @@ open class GroupViewModel : BaseViewModel() {
                 .distinctUntilChanged { group1, group2 -> group1.id == group2.id }
                 .flatMap { socialRepository.getMember(it.leaderID) }
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(Consumer { leader.value = it }, RxErrorHandler.handleEmptyError()))
+                .subscribe({ leader.value = it }, RxErrorHandler.handleEmptyError()))
     }
 
     private fun loadMembershipFromLocal() {
@@ -119,7 +118,7 @@ open class GroupViewModel : BaseViewModel() {
                 .filterOptionalDoOnEmpty { isMemberData.value = null }
                 .flatMap { socialRepository.getGroupMemberships() }
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(Consumer {
+                .subscribe({
                     isMemberData.value = it.firstOrNull { membership -> membership.groupID == groupID } != null
                 }, RxErrorHandler.handleEmptyError()))
     }
@@ -138,13 +137,13 @@ open class GroupViewModel : BaseViewModel() {
                         socialRepository.retrieveGroupMembers(group1.id, true)
                     }
                     .doOnComplete { function?.invoke() }
-                    .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+                    .subscribe({ }, RxErrorHandler.handleEmptyError()))
         }
     }
 
     fun inviteToGroup(inviteData: HashMap<String, Any>) {
         disposable.add(socialRepository.inviteToGroup(group.value?.id ?: "", inviteData)
-                .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+                .subscribe({ }, RxErrorHandler.handleEmptyError()))
     }
 
     fun updateOrCreateGroup(bundle: Bundle?) {
@@ -160,27 +159,27 @@ open class GroupViewModel : BaseViewModel() {
                     bundle?.getString("description"),
                     bundle?.getString("leader"),
                     bundle?.getBoolean("leaderCreateChallenge"))
-                    .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+                    .subscribe({ }, RxErrorHandler.handleEmptyError()))
         }
     }
 
     fun leaveGroup(keepChallenges: Boolean = true, function: (() -> Unit)? = null) {
         disposable.add(socialRepository.leaveGroup(this.group.value?.id ?: "", keepChallenges)
                 .flatMap { userRepository.retrieveUser(withTasks = false, forced = true) }
-                .subscribe(Consumer {
+                .subscribe({
                     function?.invoke()
                 }, RxErrorHandler.handleEmptyError()))
     }
 
     fun joinGroup(id: String? = null, function: (() -> Unit)? = null) {
-        disposable.add(socialRepository.joinGroup(id ?: groupID).subscribe(Consumer {
+        disposable.add(socialRepository.joinGroup(id ?: groupID).subscribe({
             function?.invoke()
         }, RxErrorHandler.handleEmptyError()))
     }
 
     fun rejectGroupInvite(id: String? = null) {
         groupID?.let {
-            disposable.add(socialRepository.rejectGroupInvite(id ?: it).subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+            disposable.add(socialRepository.rejectGroupInvite(id ?: it).subscribe({ }, RxErrorHandler.handleEmptyError()))
         }
     }
 
@@ -193,11 +192,11 @@ open class GroupViewModel : BaseViewModel() {
     }
 
     fun likeMessage(message: ChatMessage) {
-        disposable.add(socialRepository.likeMessage(message).subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+        disposable.add(socialRepository.likeMessage(message).subscribe({ }, RxErrorHandler.handleEmptyError()))
     }
 
     fun deleteMessage(chatMessage: ChatMessage) {
-        disposable.add(socialRepository.deleteMessage(chatMessage).subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+        disposable.add(socialRepository.deleteMessage(chatMessage).subscribe({ }, RxErrorHandler.handleEmptyError()))
     }
 
     fun postGroupChat(chatText: String, onComplete: () -> Unit, onError: () -> Unit) {
@@ -217,7 +216,7 @@ open class GroupViewModel : BaseViewModel() {
             onComplete()
             return
         }
-        disposable.add(socialRepository.retrieveGroupChat(groupID).subscribe(Consumer {
+        disposable.add(socialRepository.retrieveGroupChat(groupID).subscribe({
             onComplete()
         }, RxErrorHandler.handleEmptyError()))
     }
@@ -228,6 +227,6 @@ open class GroupViewModel : BaseViewModel() {
                 bundle?.getString("description"),
                 bundle?.getString("leader"),
                 bundle?.getBoolean("leaderOnlyChallenges"))
-                .subscribe(Consumer {}, RxErrorHandler.handleEmptyError()))
+                .subscribe({}, RxErrorHandler.handleEmptyError()))
     }
 }

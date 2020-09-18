@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:minHeight="60dp"
     android:elevation="2dp"
     android:layout_margin="4dp"
-    android:background="@drawable/layout_rounded_bg"
+    android:background="@drawable/task_background"
     android:orientation="vertical"
     android:padding="0dp">
     <LinearLayout
@@ -17,36 +19,35 @@
         <FrameLayout
             android:id="@+id/checkBoxHolder"
             android:layout_width="@dimen/button_width"
-            android:layout_height="match_parent">
-
+            android:layout_height="match_parent"
+            tools:background="@color/red_10">
             <View
-                android:layout_width="1dp"
+                android:id="@+id/checkBoxBackground"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:gravity="center"
+                android:background="@drawable/daily_checked"
+                android:layout_gravity="center" />
+            <View
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_gravity="end"
-                android:layout_marginBottom="1dp"
-                android:background="@color/task_border_gray" />
-
-            <CheckBox
-                android:id="@+id/checkBox"
-                android:layout_width="@dimen/checkbox_size"
-                android:layout_height="@dimen/checkbox_size"
+                android:background="@color/task_tint_overlay"/>
+            <ImageView
+                android:id="@+id/checkmark"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:layout_gravity="center"
-                android:button="@drawable/daily_checkbox"
-                android:gravity="center" />
+                android:scaleType="center"
+                android:src="@drawable/checkmark" />
         </FrameLayout>
         <com.habitrpg.android.habitica.ui.views.HabiticaEmojiTextView
             android:id="@+id/text_view"
             style="@style/Subheader3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="12dp" />
+            android:layout_margin="12dp"
+            tools:text="Title"/>
     </LinearLayout>
-    <View
-        android:id="@+id/checklistDivider"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/gray_500"
-        android:visibility="gone"/>
     <LinearLayout
         android:id="@+id/checklistView"
         android:layout_width="match_parent"

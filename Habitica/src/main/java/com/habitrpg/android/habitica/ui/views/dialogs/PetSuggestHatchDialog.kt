@@ -3,7 +3,7 @@ package com.habitrpg.android.habitica.ui.views.dialogs
 import android.content.Context
 import android.graphics.drawable.BitmapDrawable
 import android.view.LayoutInflater
-import android.widget.FrameLayout
+import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -21,7 +21,7 @@ import com.habitrpg.android.habitica.ui.views.CurrencyView
 import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.functions.Consumer
+import java.util.*
 
 
 class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
@@ -35,16 +35,32 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
         setAdditionalContentView(binding.root)
     }
 
-    fun configure(pet: Animal, egg: Egg?, potion: HatchingPotion?, hasEgg: Boolean, hasPotion: Boolean, hasUnlockedEgg: Boolean, hasUnlockedPotion: Boolean, hasMount: Boolean) {
+    fun configure(pet: Animal, egg: Egg?, potion: HatchingPotion?, eggCount: Int, potionCount: Int, hasUnlockedEgg: Boolean, hasUnlockedPotion: Boolean, hasMount: Boolean) {
         DataBindingUtils.loadImage(binding.eggView, "Pet_Egg_${pet.animal}")
         DataBindingUtils.loadImage(binding.hatchingPotionView, "Pet_HatchingPotion_${pet.color}")
         binding.petTitleView.text = pet.text
 
+        val hasEgg = eggCount > 0
+        val hasPotion = potionCount > 0
+
         binding.eggView.alpha = if (hasEgg) 1.0f else 0.5f
         binding.hatchingPotionView.alpha = if (hasPotion) 1.0f else 0.5f
 
-        val eggName = egg?.text ?: pet.animal.capitalize()
-        val potionName = potion?.text ?: pet.color.capitalize()
+        val eggName = egg?.text ?: pet.animal.capitalize(Locale.getDefault())
+        val potionName = potion?.text ?: pet.color.capitalize(Locale.getDefault())
+
+        if (hasEgg) {
+            binding.eggCountView.visibility = View.VISIBLE
+            binding.eggCountView.text = eggCount.toString()
+        } else {
+            binding.eggCountView.visibility = View.GONE
+        }
+        if (hasPotion) {
+            binding.potionCountView.visibility = View.VISIBLE
+            binding.potionCountView.text = potionCount.toString()
+        } else {
+            binding.potionCountView.visibility = View.GONE
+        }
 
         if (hasEgg && hasPotion) {
             binding.descriptionView.text = context.getString(R.string.can_hatch_pet,
@@ -116,7 +132,7 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
                     if (!hasPotion) {
                         observable = observable.flatMap { activity.inventoryRepository.purchaseItem("hatchingPotions", thisPotion.key, 1) }
                     }
-                    observable.subscribe(Consumer {
+                    observable.subscribe({
                         (getActivity() as? MainActivity)?.hatchPet(thisPotion, thisEgg)
                     }, RxErrorHandler.handleEmptyError())
                 }
@@ -126,13 +142,13 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
         }
 
 
-        val imageName = "social_Pet-${pet.animal}-${pet.color}"
+        val imageName = "stable_Pet-${pet.animal}-${pet.color}"
         DataBindingUtils.loadImage(imageName) {
             val resources = context.resources ?: return@loadImage
             val drawable = BitmapDrawable(resources, if (hasMount) it else it.extractAlpha())
             Observable.just(drawable)
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(Consumer {
+                    .subscribe({
                         binding.petView.background = drawable
                     }, RxErrorHandler.handleEmptyError())
         }

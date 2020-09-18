@@ -25,5 +25,5 @@
         android:text="@string/levelup_detail"
         style="@style/Body2"
         android:gravity="center_horizontal"
-        android:textColor="@color/gray_200"/>
+        android:textColor="@color/text_ternary"/>
 </LinearLayout>

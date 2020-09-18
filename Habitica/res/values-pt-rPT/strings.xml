@@ -206,7 +206,7 @@
     <string name="quests">Missões</string>
     <string name="pets">Animais de Estimação</string>
     <string name="mounts">Montarias</string>
-    <string name="armoireEquipment">Encontraste uma peça rara de Equipamento no Armário: %s! Fenomenal!</string>
+    <string name="armoireEquipment">Encontraste uma peça rara de Equipamento no Armário Encantado: %s! Fenomenal!</string>
     <string name="armoireFood">Vasculhas o Armário e encontras %1$s %2$s. Que é que isto está aqui a fazer?</string>
     <string name="armoireExp">Lutas com o Armário e ganhas experiência. Boa!</string>
     <string name="sell">Vender (%d Ouro)</string>
@@ -230,7 +230,7 @@
     <string name="rogue">Bandido</string>
     <string name="mage">Mago</string>
     <string name="healer">Curandeiro</string>
-    <string name="mage_description">Magos aprendem rapidamente, ganhando Experiência e Níveis mais rápido que as outras classes. Eles também possuem uma grande quantidade de Mana para usar habilidades especiais. Joga como Mago se gostas dos aspectos táticos do Habitica, ou se possuires grande motivação em subir níveis e desbloquear funcionalidades avançadas!</string>
+    <string name="mage_description">Os Magos aprendem rápido, ganhando Experiência e Níveis mais depressa que as outras classes. Também possuem uma grande quantidade de Mana para usar habilidades especiais. Joga como Mago se gostas dos aspectos tácitos de Habitica, ou se te motivas ao subir níveis e desbloquear funcionalidades avançadas!</string>
     <string name="rogue_description">Os bandidos gostam de acumular riqueza, ganhando mais Ouro do que qualquer um, e são peritos em encontrar objetos aleatórios. A sua capacidade de atuação furtiva icónica permite-lhes evitar as consequências das Tarefas Diárias perdidas. Jogue como Bandido se se sentir uma motivação forte das Recompensas e Conquistas, lutando por espólios e medalhas!</string>
     <string name="healer_description">Curandeiros são impenetráveis contra o mal, e extendem essa protecção aos outros. Tarefas Diárias falhadas e maus Hábitos não incomodam muito, e eles têm formas de recuperar Vida quando falham. Joga como Curandeiro se gostares de ajudar os teus colegas de Equipe, ou se a ideia de enganar a Morte através de trabalho duro inspira-te!</string>
     <string name="select_class">Selecionar Classe</string>
@@ -322,8 +322,6 @@
     <string name="twelve_months">12 meses</string>
     <string name="subscription_status">Estado da Subscrição</string>
     <string name="challenge_leave_title">Sair do Desafio</string>
-    <string name="challenge_remove_tasks_title">Remover tarefas</string>
-    <string name="challenge_remove_tasks_text">Deseja remover as tarefas?</string>
     <string name="remove_tasks">Remover</string>
     <string name="keep_tasks">Manter</string>
     <string name="my_challenges">Os Meus Desafios</string>
@@ -397,7 +395,7 @@
 \n • Tarefas não perdem listras ou decaem em cores
 \n • Chefes não causam dano por suas diárias perdidas
 \n • Seus itens de missão de dano ou coleta de chefe permanecerão pendentes até o check-out</string>
-    <string name="warrior_description">Os guerreiros obtêm mais e melhores acertos críticos, que dão aleatoriamente bônus de ouro, experiência e chance de queda para marcar uma tarefa. Eles também causam grandes danos a monstros chefes. Jogue um Guerreiro se você encontrar motivação de recompensas imprevisíveis ao estilo de um jackpot, ou quiser distribuir a mágoa em missões de patrão!</string>
+    <string name="warrior_description">Os Guerreiros obtêm mais e melhores Golpes Críticos, que oferecem Ouro, Experiência e chance de Brinde aleatoriamente ao marcar uma Tarefa. Também causam maior dano a Monstros. Joga como Guerreiro se te motivas mais com recompensas imprevisíveis do tipo jackpot, ou se quiseres dar cabo de Monstros nas Jornadas.</string>
     <string name="opting_out_progress">Optando por</string>
     <string name="class_changed_description">Você tem um novo Battle Gear padrão que pode ser alterado em Equipamento!</string>
     <string name="change_class_description">Mude sua classe e devolva seus pontos de status por 3 gemas.</string>
@@ -414,4 +412,10 @@
     <string name="invited_to_private_guild"><![CDATA[Foi convidado a juntar-se à Guilda privada <b>%1$s</b>]]></string>
     <string name="invited_to_public_guild"><![CDATA[Foi convidado a juntar-se à Guilda <b>%1$s</b>]]></string>
     <string name="invited_to_quest"><![CDATA[Foste convidado para a Missão <b>%1$s</b>]]></string>
+    <string name="special_achievements">Conquistas Especiais</string>
+    <string name="seasonal_achievements">Conquistas Sazonais</string>
+    <string name="basic_achievements">Conquistas Básicas</string>
+    <string name="sidebar_achievements">Conquistas</string>
+    <string name="usernamePromptDisclaimer">Prefs</string>
+    <string name="usernamePromptWiki">Prefs</string>
 </resources>

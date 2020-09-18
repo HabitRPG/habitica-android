@@ -4,7 +4,7 @@ import android.view.ViewGroup
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.models.members.Member
-import com.habitrpg.android.habitica.ui.viewHolders.GroupMemberViewHolder.GroupMemberViewHolder
+import com.habitrpg.android.habitica.ui.viewHolders.GroupMemberViewHolder
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import io.reactivex.subjects.PublishSubject

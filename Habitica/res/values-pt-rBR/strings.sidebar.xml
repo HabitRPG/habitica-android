@@ -6,15 +6,16 @@
     <string name="sidebar_inbox">Mensagens</string>
     <string name="sidebar_tavern">Taverna</string>
     <string name="sidebar_party">Grupo</string>
-    <string name="sidebar_purchaseGems">Gemas &amp; Inscrição</string>
     <string name="sidebar_guilds">Guildas</string>
     <string name="sidebar_challenges">Desafios</string>
     <string name="sidebar_section_inventory">Inventário</string>
-    <string name="sidebar_avatar">Avatar</string>
+    <string name="sidebar_avatar">Personalização do Avatar</string>
     <string name="sidebar_equipment">Equipamento</string>
-    <string name="sidebar_stable">Estábulo</string>
-    <string name="sidebar_news">Noticias</string>
+    <string name="sidebar_stable">Mascotes e Montarias</string>
+    <string name="sidebar_news">Notícias</string>
     <string name="sidebar_about">Sobre</string>
     <string name="sidebar_shops">Lojas</string>
     <string name="sidebar_stats">Atributos</string>
+    <string name="sidebar_subscription">Assinatura</string>
+    <string name="sidebar_gems">Comprar Gemas</string>
 </resources>

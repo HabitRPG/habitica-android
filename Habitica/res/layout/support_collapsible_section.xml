@@ -32,7 +32,7 @@
                 android:id="@+id/subtitle_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/gray_200"
+                android:textColor="@color/text_ternary"
                 style="@style/Body2"
                 tools:text="Subtitle" />
         </LinearLayout>

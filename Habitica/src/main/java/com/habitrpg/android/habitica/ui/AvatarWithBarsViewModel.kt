@@ -18,7 +18,6 @@ import com.habitrpg.android.habitica.models.Avatar
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
-import com.habitrpg.android.habitica.ui.views.ValueBar
 import io.reactivex.disposables.Disposable
 import org.greenrobot.eventbus.Subscribe
 import java.util.*
@@ -66,7 +65,7 @@ class AvatarWithBarsViewModel(private val context: Context, private val binding:
         if (!user.hasClass()) {
             setUserLevel(context, binding.lvlTv, stats.lvl)
         } else {
-            setUserLevelWithClass(context, binding.lvlTv, stats.lvl, capitalize(userClass), stats.habitClass)
+            setUserLevelWithClass(context, binding.lvlTv, stats.lvl, userClass.capitalize(Locale.getDefault()), stats.habitClass)
         }
 
         setHpBarData(stats.hp?.toFloat() ?: 0.toFloat(), stats.maxHealth ?: 0)
@@ -119,23 +118,7 @@ class AvatarWithBarsViewModel(private val context: Context, private val binding:
         binding.currencyView.gems = gems.toDouble()
     }
 
-    fun valueBarLabelsToBlack() {
-        binding.hpBar.setLightBackground(true)
-        binding.xpBar.setLightBackground(true)
-        binding.mpBar.setLightBackground(true)
-    }
-
     companion object {
-        fun setHpBarData(valueBar: ValueBar, stats: Stats) {
-            var maxHP = stats.maxHealth
-            if (maxHP == null || maxHP == 0) {
-                maxHP = 50
-            }
-
-            val hp = stats.hp?.let { HealthFormatter.format(it) } ?: 0.0
-            valueBar.set(hp, maxHP.toDouble())
-        }
-
         private fun setUserLevel(context: Context, textView: TextView, level: Int?) {
             textView.text = context.getString(R.string.user_level, level)
             textView.contentDescription = context.getString(R.string.level_unabbreviated, level)
@@ -155,8 +138,5 @@ class AvatarWithBarsViewModel(private val context: Context, private val binding:
             drawable?.setBounds(0, 0, drawable.minimumWidth, drawable.minimumHeight)
             textView.setCompoundDrawables(drawable, null, null, null)
         }
-
-        private fun capitalize(s: String) =
-                s.substring(0, 1).toUpperCase(Locale.getDefault()) + s.substring(1)
     }
 }

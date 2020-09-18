@@ -9,13 +9,39 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+        <LinearLayout
+            android:id="@+id/opt_out_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="32dp"
+            android:paddingVertical="12dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/pms_disabled"
+                android:gravity="center"
+                style="@style/Subheader1"
+                android:textColor="@color/text_primary"
+                android:layout_marginBottom="4dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/pms_disabled_description"
+                android:gravity="center"
+                style="@style/Body3" />
+        </LinearLayout>
                 <LinearLayout
                     android:id="@+id/inbox_messages"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:divider="?android:listDivider"
-                    android:showDividers="middle">
-                </LinearLayout>
+                    android:showDividers="middle" />
+        </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

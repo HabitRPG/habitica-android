@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.models.user
 
 import com.google.gson.annotations.SerializedName
+import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.models.*
 import com.habitrpg.android.habitica.models.invitations.Invitations
 import com.habitrpg.android.habitica.models.social.ChallengeMembership
@@ -53,7 +54,7 @@ open class User : RealmObject(), Avatar, VersionedObject {
             for (test in abTests ?: emptyList<ABTest>()) {
                 test.userID = id
             }
-            for (achievement in achievements ?: emptyList<UserAchievement>()) {
+            for (achievement in achievements) {
                 achievement.userId = id
             }
         }
@@ -62,7 +63,13 @@ open class User : RealmObject(), Avatar, VersionedObject {
     override var versionNumber: Int = 0
 
     var balance: Double = 0.toDouble()
-    private var stats: Stats? = null
+    override var stats: Stats? = null
+        set(value) {
+            field = value
+            if (value != null && this.id != null && !value.isManaged) {
+                field?.userId = this.id
+            }
+        }
     var inbox: Inbox? = null
         set(inbox) {
             field = inbox
@@ -70,7 +77,13 @@ open class User : RealmObject(), Avatar, VersionedObject {
                 inbox.userId = this.id
             }
         }
-    private var preferences: Preferences? = null
+    override var preferences: Preferences? = null
+    set(value) {
+        field = value
+        if (value != null && this.id != null && !value.isManaged) {
+            field?.userId = this.id
+        }
+    }
     var profile: Profile? = null
         set(profile) {
             field = profile
@@ -167,65 +180,35 @@ open class User : RealmObject(), Avatar, VersionedObject {
         get() = this.items?.mounts?.size ?: 0
 
     val contributorColor: Int
-        get() = this.contributor?.contributorColor ?: android.R.color.black
+        get() = this.contributor?.contributorColor ?: R.color.text_primary
     val username: String?
     get() = authentication?.localAuthentication?.username
     val formattedUsername: String?
         get() = if (username != null) "@$username" else null
 
-    override fun getPreferences(): Preferences? {
-        return preferences
-    }
+    override val gemCount: Int
+        get() = (this.balance * 4).toInt()
 
-    fun setPreferences(preferences: Preferences?) {
-        this.preferences = preferences
-        if (preferences != null && this.id != null && !preferences.isManaged) {
-            preferences.userId = this.id
-        }
-    }
+    override val hourglassCount: Int
+        get() = purchased?.plan?.consecutive?.trinkets ?: 0
 
-    override fun getStats(): Stats? {
-        return stats
-    }
+    override val costume: Outfit?
+        get() = items?.gear?.costume
 
-    fun setStats(stats: Stats?) {
-        this.stats = stats
-        if (stats != null && this.id != null && !stats.isManaged) {
-            stats.userId = this.id
-        }
-    }
-
-    override fun getGemCount(): Int {
-        return (this.balance * 4).toInt()
-    }
-
-    override fun getHourglassCount(): Int {
-        return purchased?.plan?.consecutive?.trinkets ?: 0
-    }
-
-    override fun getCostume(): Outfit? {
-        return items?.gear?.costume
-    }
-
-    override fun getEquipped(): Outfit? {
-        return items?.gear?.equipped
-    }
+    override val equipped: Outfit?
+        get() = items?.gear?.equipped
 
     override fun hasClass(): Boolean {
         return preferences?.disableClasses != true && flags?.classSelected == true && stats?.habitClass?.isNotEmpty() == true
     }
 
-    override fun getCurrentMount(): String? {
-        return items?.currentMount ?: ""
-    }
+    override val currentMount: String?
+        get() = items?.currentMount ?: ""
+    override val currentPet: String?
+        get() = items?.currentPet ?: ""
 
-    override fun getCurrentPet(): String? {
-        return items?.currentPet ?: ""
-    }
-
-    override fun getSleep(): Boolean {
-        return preferences?.sleep ?: false
-    }
+    override val sleep: Boolean
+        get() = preferences?.sleep ?: false
 
     fun hasParty(): Boolean {
         return this.party?.id?.length ?: 0 > 0

@@ -3,15 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="24dip"
     android:paddingEnd="24dip"
-    android:paddingStart="24dip"
-    android:paddingRight="24dip">
-
-
+    android:paddingStart="24dip">
     <com.habitrpg.android.habitica.ui.views.ValueBar
         android:id="@+id/hpBar"
-        layout="@layout/value_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/header_bar_spacing"
@@ -38,5 +33,4 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/faint_penalty_body" />
-
 </LinearLayout>

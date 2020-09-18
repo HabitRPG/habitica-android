@@ -52,7 +52,7 @@
     <string name="about_bugreport">Segnala un bug</string>
     <string name="about_source_code">Codice sorgente</string>
     <!--Network Errors-->
-    <string name="internal_error_api">Connessione persa</string>
+    <string name="internal_error_api">Connessione al server persa</string>
     <string name="authentication_error_title">Errore di autenticazione</string>
     <string name="login_validation_error_title">Errore di validazione</string>
     <string name="login_validation_error_fieldsmissing">Devi compilare tutti i campi.</string>
@@ -97,16 +97,16 @@
     <string name="reminder_title">Ricordati di completare le tue attività</string>
     <string name="unlock_lvl_11">Disponibile al liv. 11</string>
     <string name="forgot_pw_btn">Password dimenticata</string>
-    <string name="tavern_inn_checkOut">Riattiva le tue Daily</string>
-    <string name="tavern_inn_rest">Sospendi le tue Daily</string>
+    <string name="tavern_inn_checkOut">Riattiva le tue Attività Giornaliere</string>
+    <string name="tavern_inn_rest">Sospendi le tue Attività Giornaliere</string>
     <string name="reward_dialog_buy">Compra</string>
     <string name="reward_dialog_dismiss">Annulla</string>
     <string name="party">Squadra</string>
     <string name="chat">Chat</string>
     <string name="members">Membri</string>
     <string name="habits">Abitudini</string>
-    <string name="dailies">Daily</string>
-    <string name="todos">To Do</string>
+    <string name="dailies">Attività Giornaliere</string>
+    <string name="todos">Cose da Fare</string>
     <string name="rewards">Ricompense</string>
     <string name="yes">Sì</string>
     <string name="no">No</string>
@@ -201,8 +201,8 @@
     <string name="outfit_armor">Armatura</string>
     <string name="outfit_back">Schiena</string>
     <string name="outfit_body">Corpo</string>
-    <string name="outfit_shield">Scudo</string>
-    <string name="outfit_weapon">Arma</string>
+    <string name="outfit_shield">Mano secondaria</string>
+    <string name="outfit_weapon">Mano principale</string>
     <string name="wear_costume">Indossa Costume</string>
     <string name="equipped">Equipaggiato</string>
     <string name="quest_cancel_message">Vuoi davvero annullare questa missione? Tutti gli inviti accettati andranno persi. Il proprietario della missione tornerà in possesso della Pergamena.</string>
@@ -216,13 +216,13 @@
     <string name="today">Oggi</string>
     <string name="sidebar_items">Oggetti</string>
     <string name="eggs">Uova</string>
-    <string name="hatching_potions">Pozioni di schiusura</string>
+    <string name="hatching_potions">Pozioni di Schiusa</string>
     <string name="food">Cibo</string>
     <string name="quests">Missioni</string>
     <string name="pets">Animali</string>
     <string name="mounts">Cavalcature</string>
-    <string name="armoireEquipment">Hai trovato un equipaggiamento raro nello Scrigno Incantato: %s! Fantastico !</string>
-    <string name="armoireFood">Frughi nello Scrigno e trovi %1$s %2$s. Cosa ci fa qui dentro?</string>
+    <string name="armoireEquipment">Hai trovato %s nell\'Armadio</string>
+    <string name="armoireFood">Frughi nell\'Armadio e trovi %1$s %2$s. Cosa ci fa qui dentro\?</string>
     <string name="armoireExp">Fai a botte con lo Scrigno e ottieni Esperienza. Prendi questo!</string>
     <string name="sell">Vendi (%d Oro)</string>
     <string name="hatch_with_potion">Schiudi con pozione</string>
@@ -239,23 +239,23 @@
     <string name="notification_pet_fed">Hai dato da mangiare al tuo %s!</string>
     <string name="notification_purchase_reward">Hai comprato una ricompensa</string>
     <string name="world_quest">Missione Mondiale</string>
-    <string name="inn_description">Bisogno di una pausa ? Riposati alla locanda di Daniel per mettere in pausa le meccaniche di gioco più difficili di Habitica:\n\n
-• Le Daily non completate non faranno diminuire la tua salute\n
-• Le attività non perderanno serie e non cambieranno colore\n
-• I boss non ti attaccheranno per Daily non completate\n
-• I danni fatti ai boss e gli oggetti missione raccolta resteranno in attesa finché non uscirai dalla locanda</string>
+    <string name="inn_description">Bisogno di una pausa \? Riposati alla locanda di Daniel per mettere in pausa le meccaniche di gioco più difficili di Habitica:
+\n
+\n • Le Attività Giornaliere non completate non faranno diminuire la tua salute
+\n • Le attività non perderanno serie e non cambieranno colore
+\n • I boss non ti attaccheranno per delle Attività Giornaliere non completate
+\n • I danni fatti ai boss e gli oggetti missione raccolta resteranno in attesa finché non uscirai dalla locanda</string>
     <string name="empty_items">Non hai alcun %s</string>
     <string name="user_level">LV %d</string>
     <string name="user_level_with_class">LV %1$d - %2$s</string>
     <string name="warrior">Guerriero</string>
-    <string name="rogue">Assassino</string>
+    <string name="rogue">Ladro</string>
     <string name="mage">Mago</string>
     <string name="healer">Guaritore</string>
-    <string name="warrior_description">I Guerrieri possono eseguire un numero maggiore di \\"colpi critici\\" e con più potenza, che forniscono un bonus di Oro ed Esperienza (e a volte degli oggetti) casualmente al completamento di una attività. Inoltre, infliggono ingenti danni ai mostri Boss. Diventa un Guerriero se trovi accattivanti le imprevedibili ricompense in stile jackpot, o se vuoi dimenticarti del dolore durante le missioni Boss!</string>
-    <string name="mage_description">I Maghi imparano più velocemente, guadagnano Esperienza e Livelli più velocemente delle altre classi. Hanno anche a loro disposizione molto mana per l\'utilizzo di abilità speciali. Utilizza il Mago se ti piace giocare tatticamente su Habit, o se sei fortemente motivato dal livellare e sbloccare opzioni aggiuntive!</string>
-    <string name="rogue_description">Gli Assassini amano accumulare ricchezza: guadagnano più Oro di chiunque altro, e sono inclini al trovare oggetti casuali. La loro iconica abilità Furtività li rende in grado di prendersi gioco delle conseguenze delle Daily mancate. Diventa un Assassino se trovi una forte motivazione nelle Ricompense e nelle Medaglie, lottando per un bottino e dei riconoscimenti!</string>
-    <string name="healer_description">I Guaritori resistono fortemente ai danni, ed estendono la loro protezione agli altri.
-Le Dailies mancate e le cattive Abitudini non li danneggiano molto, e hanno sempre modo di recuperare Vita dagli sbagli. Gioca come Guaritore se vuoi aiutare gli altri giocatori della tua squadra, o se l\'idea di fregare la morte con il duro lavoro ti ispira!</string>
+    <string name="warrior_description">I Guerrieri possono eseguire un numero maggiore di colpi critici ed infliggono ingenti danni ai mostri Boss. Diventa un Guerriero se vuoi sconfiggere mostri facilmente! I guerrieri beneficiano di una stat di Forza elevata.</string>
+    <string name="mage_description">I Maghi imparano abilità speciali che danneggiano i Boss ed aumentano EXP e Mana. Utilizza il Mago se sei fortemente motivato dal livellare velocemente! I Maghi beneficiano di una stat di Intelligenza elevata.</string>
+    <string name="rogue_description">I Ladri imparano abilita che permettono a loro e alla loro Squadra di trovare più oro e oggetti casuali. Diventa un Ladro se vuoi tanti oggetti ed Oro! I Ladri beneficiano di una stat di Percezione elevata.</string>
+    <string name="healer_description">I Guaritori imparano Abilità che possono guarire e proteggere se stessi e la loro Squadra. Gioca come Guaritore se vuoi aiutare gli altri o evitare danni! I Guaritori beneficiano di una stat di Costituzione elevata.</string>
     <string name="select_class">Seleziona classe</string>
     <string name="opt_out_class">Rinuncia</string>
     <string name="class_confirmation">Vuoi davvero essere un %s?</string>
@@ -277,9 +277,9 @@ Le Dailies mancate e le cattive Abitudini non li danneggiano molto, e hanno semp
     <string name="add_invites">Aggiungi inviti</string>
     <string name="email">E-mail</string>
     <string name="share_using">Condividi con</string>
-    <string name="share_levelup">Ho raggiunto il livello %d su Habitica migliorando le mie abitudini nella vita reale!</string>
-    <string name="share_hatched">Ho appena schiuso un %1$s %2$s in Habitica completando le mie attività nella vita reale!</string>
-    <string name="share_raised">Ho appena ottenuto un %1$s in Habitica completando le mie attività nella vita reale!</string>
+    <string name="share_levelup">Ho raggiunto il livello %d su #Habitica migliorando le mie abitudini nella vita reale!</string>
+    <string name="share_hatched">Ho appena schiuso un %1$s %2$s in #Habitica completando le mie attività nella vita reale!</string>
+    <string name="share_raised">Ho appena ottenuto un %1$s in #Habitica completando le mie attività nella vita reale!</string>
     <string name="open_in_store">Apri nel Play Store</string>
     <string name="change_class_confirmation">Vuoi davvero cambiare la tua classe? Costerà 3 gemme.</string>
     <string name="change_class_equipment_warning">Attenzione: non potrai più comprare equipaggiamento per la classe %s.</string>
@@ -304,13 +304,13 @@ Le Dailies mancate e le cattive Abitudini non li danneggiano molto, e hanno semp
     <string name="stats_widget_label">Statistiche Habitica</string>
     <string name="add_task">Aggiungi Attività</string>
     <string name="add_habit">Aggiungi Abitudine</string>
-    <string name="add_daily">Aggiungi Daily</string>
-    <string name="add_todo">Aggiungi To Do</string>
+    <string name="add_daily">Aggiungi Attività Giornaliera</string>
+    <string name="add_todo">Aggiungi una Cosa da Fare</string>
     <string name="add_reward">Aggiungi Ricompensa</string>
-    <string name="all_dailies_completed">Hai completato tutte le tue Daily. Ottimo lavoro!</string>
+    <string name="all_dailies_completed">Hai completato tutte le tue Attività Giornaliere. Ottimo lavoro!</string>
     <string name="widget_habit_button">Habitica esegui Abitudine</string>
-    <string name="widget_dailies">Habitica Daily</string>
-    <string name="widget_todo_list">Habitica lista To Do</string>
+    <string name="widget_dailies">Habitica Attività Giornaliere</string>
+    <string name="widget_todo_list">Habitica lista Cose da Fare</string>
     <string name="google_services_missing">Impossibile trovare Google Play Services.</string>
     <string name="gem_purchase_toolbartitle">Compra</string>
     <string name="gem_purchase_title">Comprando gemme supporti gli sviluppatori e tieni in vita Habitica</string>
@@ -320,11 +320,11 @@ Le Dailies mancate e le cattive Abitudini non li danneggiano molto, e hanno semp
     <string name="gem_purchase_listitem3">Missioni che ti premiano con uova di animali</string>
     <string name="gem_purchase_listitem4">La possibilità di cambiare classe prima del livello 100</string>
     <string name="support_habitica">Supporta Habitica</string>
-    <string name="skill_transformation_use">usa</string>
+    <string name="skill_transformation_use">Usa</string>
     <string name="hatching_market_info">Non trovi i drop giusti? Dai un\'occhiata al Mercato!</string>
     <string name="feeding_market_info">Hai bisogno di cibo diverso? Comprane un po\' nel Mercato!</string>
     <string name="open_market">Vai nel Mercato</string>
-    <string name="cds_description">Le tue Daily saranno resettate la prima volta che userai Habitica dopo %1$s. Assicurati di aver completato le tue Daily prima di allora!</string>
+    <string name="cds_description">Le tue Attività Giornaliere saranno resettate la prima volta che userai Habitica dopo %1$s. Assicurati di aver completato le tue Attività Giornaliere prima di allora!</string>
     <string name="AudioTheme_title">Tema sonoro</string>
     <string name="AudioTheme_summary">Cambia il tema sonoro di Habitica</string>
     <!--Login Incentives-->
@@ -333,19 +333,19 @@ Le Dailies mancate e le cattive Abitudini non li danneggiano molto, e hanno semp
     <string name="has_reminder">Ha promemoria</string>
     <string name="has_tag">Ha etichetta</string>
     <string name="subscribe_title">Gli abbonamenti aiutano a supportare gli sviluppatori e a tenere Habitica in vita </string>
-    <string name="subscribe_prompt">Abbonati per ottenere questi utili benefici:</string>
-    <string name="subscribe_listitem1">Compra gemme con l\'oro</string>
-    <string name="subscribe_listitem2">Oggetti mensili esclusivi</string>
-    <string name="subscribe_listitem3">Più elementi nella cronologia attività</string>
-    <string name="subscribe_listitem4">Limite di drop giornaliero raddoppiato</string>
+    <string name="subscribe_prompt">Abbonati per ottenere questi vantaggi esclusivi!</string>
+    <string name="subscribe_listitem1">Oro per gemme</string>
+    <string name="subscribe_listitem2">Clessidre Mistiche</string>
+    <string name="subscribe_listitem3">Oggetti Misteriosi Mensili</string>
+    <string name="subscribe_listitem4">Animale Speciale per Abbonati</string>
     <string name="subscriptions">Abbonamenti</string>
     <string name="subscription_duration">Ricorrente ogni %s</string>
     <string name="subscription_duration_norenew">Per %s</string>
     <string name="subscribe">Abbonati</string>
-    <string name="subscribe_listitem1_description">Ora Alexander il Mercante ti venderà Gemme al prezzo di 20 Oro l\'una!\n\nLe sue consegne mensili sono inizialmente limitate a 25 Gemme al mese, ma possono aumentare a seconda della durata del tuo abbonamento.\n\nIl limite aumenta di 5 Gemme ogni tre mesi di abbonamento consecutivi, fino ad un massimo di 50 Gemme al mese!</string>
-    <string name="subscribe_listitem2_description">Ogni mese riceverai un oggetto davvero unico per il tuo avatar!\n\nIn più, ogni tre mesi di abbonamento consecutivi, i misteriosi Viaggiatori del Tempo ti permetteranno di ottenere oggetti antichi (e futuri!).</string>
-    <string name="subscribe_listitem3_description">Rende le To Do completate e la cronologia dei progressi delle attività disponibili più a lungo.</string>
-    <string name="subscribe_listitem4_description">Raddoppiare il numero massimo di drop giornalieri ti farà ricevere più oggetti dalle attività completate ogni giorno, aiutandoti a completare la tua scuderia più velocemente!</string>
+    <string name="subscribe_listitem1_description">Potrai acquistare gemme al Mercato per 20 Oro ciascuna!</string>
+    <string name="subscribe_listitem2_description">Guadagna Clessidre Mistiche per comprare oggetti nel Negozio dei Viaggiatori del Tempo!</string>
+    <string name="subscribe_listitem3_description">Abbonati ora per avere un\'esclusivo set e ricevere nuovi oggetti ogni mese!</string>
+    <string name="subscribe_listitem4_description">Riceverai l\'Animale Royal Purple Jackalope quando diventerai un nuovo abbonato.</string>
     <string name="subscribe1month_gemcap">Limite di 25 Gemme</string>
     <string name="subscribe3month_gemcap">Limite di 30 Gemme</string>
     <string name="subscribe6month_gemcap">Limite di 35 Gemme</string>
@@ -356,8 +356,8 @@ Le Dailies mancate e le cattive Abitudini non li danneggiano molto, e hanno semp
     <string name="active">Attivo</string>
     <string name="due">Oggi</string>
     <string name="cancel_subscription">Annulla abbonamento</string>
-    <string name="cancel_subscription_google_description">Vuoi interrompere il tuo abbonamento? Puoi trovare l\'opzione per annullare l\'abbonamento nella sezione \"Le mie app\" nel Google Play Store.</string>
-    <string name="cancel_subscription_notgoogle_description">Vuoi interrompere il tuo abbonamento? A causa del tuo metodo di pagamento, puoi completare questa operazione solo attraverso il sito web. Clicca sul bottone qui sotto per aprire il sito nel tuo browser!</string>
+    <string name="cancel_subscription_google_description">Vuoi interrompere il tuo abbonamento\? Puoi trovare l\'opzione per annullare l\'abbonamento nella sezione \"Le mie app\" nel Google Play Store. Eventuali mesi di credito verranno applicati al termine dell\'abbonamento.</string>
+    <string name="cancel_subscription_notgoogle_description">Vuoi interrompere il tuo abbonamento\? A causa di vincoli sui pagamenti su dispositivi portatili dovrai annullare l\'iscrizione tramite il nostro sito Web. Clicca sul pulsante qui sotto, accedi al tuo account , clicca sull\'icona Utente in alto a destra e vai in Abbonamento. Eventuali mesi di credito verranno applicati al termine dell\'abbonamento. Ci mancherai!</string>
     <string name="visit_habitica_website">Visita il sito web di Habitica</string>
     <string name="current_bonuses">Bonus attivi</string>
     <string name="months_subscribed">Mesi come abbonato</string>
@@ -370,19 +370,16 @@ Le Dailies mancate e le cattive Abitudini non li danneggiano molto, e hanno semp
     <string name="three_months">3 mesi</string>
     <string name="six_months">6 mesi</string>
     <string name="twelve_months">12 mesi</string>
-    <string name="subscribe_prompt_thanks">Come abbonato hai questi utili benefici:</string>
+    <string name="subscribe_prompt_thanks">Otterrai questi vantaggi abbonandoti</string>
     <string name="subscription_status">Stato abbonamento</string>
     <string name="challenge_leave_title">Abbandona sfida</string>
-    <string name="challenge_leave_text">Vuoi davvero abbandonare la sfida \"%s\"?</string>
-    <string name="challenge_remove_tasks_title">Rimuovi attività</string>
-    <string name="challenge_remove_tasks_text">Vuoi rimuovere le attività?</string>
     <string name="remove_tasks">Rimuovi</string>
     <string name="keep_tasks">Tieni</string>
     <string name="my_challenges">Le mie sfide</string>
-    <string name="daily">Daily</string>
+    <string name="daily">Attività Giornaliera</string>
     <string name="habit">Abitudine</string>
     <string name="reward">Ricompensa</string>
-    <string name="todo">To Do</string>
+    <string name="todo">Cosa da Fare</string>
     <string name="official">Ufficiale</string>
     <string name="challenge">Sfida</string>
     <string name="not_part_of_a_challenge">Al momento non stai partecipando a nessuna sfida!</string>
@@ -396,7 +393,7 @@ Le Dailies mancate e le cattive Abitudini non li danneggiano molto, e hanno semp
     <string name="myster_item_notes">Ogni mese, gli abbonati ricevono un oggetto misterioso. Questo oggetto in genere viene rilasciato circa una settimana prima della fine del mese.</string>
     <string name="open">Apri</string>
     <string name="checkInRewardEarned">Hai meritato %1$s come premio per la tua costanza nel migliorare la tua vita.</string>
-    <string name="nextPrizeUnlocks" tools:ignore="PluralsCandidate">Il prossimo premio verrà sbloccato a %1$d accessi</string>
+    <string name="nextPrizeUnlocks" tools:ignore="PluralsCandidate">Prossimo premio tra %1$d accessi</string>
     <string name="pending_approval">in attesa di approvazione</string>
     <string name="filters">Filtri</string>
     <string name="done">Fatto</string>
@@ -424,19 +421,19 @@ Le Dailies mancate e le cattive Abitudini non li danneggiano molto, e hanno semp
     <string name="completed">Completate</string>
     <string name="setuP_group_other">Altro</string>
     <string name="clear">Deseleziona</string>
-    <string name="empty_title_habits">Non hai alcuna Abitudine.</string>
+    <string name="empty_title_habits">Non hai alcuna Abitudine</string>
     <string name="empty_description_habits">Le Abitudini sono attività che possono essere svolte in modo molto flessibile. Puoi usarle diverse volte al giorno, o non usarle affatto.</string>
-    <string name="empty_title_dailies">Non hai nessuna Daily</string>
-    <string name="empty_description_dailies">Le Daily sono delle attività che vanno svolte regolarmente. Scegli la frequenza con cui ti trovi meglio!</string>
-    <string name="empty_title_todos">Non hai alcuna To Do.</string>
-    <string name="empty_description_todos">Le To Do sono attività da completare solo una volta. Aggiungi una checklist alle tue To Do per aumentarne il valore.</string>
+    <string name="empty_title_dailies">Non hai nessuna Attività Giornaliera</string>
+    <string name="empty_description_dailies">Le Attività Giornaliere sono delle attività che vanno svolte regolarmente. Scegli la frequenza migliore per te!</string>
+    <string name="empty_title_todos">Non hai alcuna Cosa da Fare</string>
+    <string name="empty_description_todos">Le Cose da Fare sono attività da completare solo una volta. Aggiungi una checklist alle tue Cose da Fare per aumentarne il valore.</string>
     <string name="empty_title_rewards">Non hai nessuna Ricompensa</string>
-    <string name="reset_walkthrough">Ripristina la spiegazione introduttiva di Justin</string>
-    <string name="read_community_guidelines">Per favore, leggi le Linee guida della community prima di scrivere un post.</string>
+    <string name="reset_walkthrough">Ripristina i Tutorial</string>
+    <string name="read_community_guidelines">Leggi le <u>Linee guida della community</u> prima di scrivere un post</string>
     <string name="maintenance">Manutenzione</string>
     <string name="reload_content">Ricarica contenuti</string>
-    <string name="dailyDueDefaultView">Visualizza lista Daily incomplete di default</string>
-    <string name="dailyDueDefaultViewDescription">Con questa opzione selezionata, le Daily mostrate saranno quelle della lista \'incomplete\' invece che \'tutte\'.</string>
+    <string name="dailyDueDefaultView">Visualizza di default la lista delle Attività Giornaliere incomplete</string>
+    <string name="dailyDueDefaultViewDescription">Con questa opzione selezionata, le Attività Giornaliere mostrate saranno quelle della lista \'incomplete\' invece che \'tutte\'</string>
     <string name="no_billing_gems">Il tuo dispositivo non dispone di alcuno dei metodi di pagamento supportati. Per favore usa il sito web di Habitica se vuoi acquistare delle Gemme.</string>
     <string name="no_billing_subscriptions">Il tuo dispositivo non dispone di alcuno dei metodi di pagamento supportati. Per favore usa il sito web di Habitica se vuoi acquistare un abbonamento.</string>
     <string name="save">Salva</string>
@@ -459,9 +456,9 @@ Le Dailies mancate e le cattive Abitudini non li danneggiano molto, e hanno semp
     <string name="party_description">Descrizione squadra</string>
     <string name="number_participants">%1$d Partecipanti</string>
     <string name="welcome_back">Bentornato</string>
-    <string name="yesterdaililes_prompt">Hai completato qualcuna di queste Daily ieri?</string>
+    <string name="yesterdaililes_prompt">Controlla tutte le Attività Giornaliere che hai completato ieri:</string>
     <string name="start_day">Inizia la mia giornata</string>
-    <string name="leave_party_confirmation">Vuoi davvero lasciare la Squadra?</string>
+    <string name="leave_party_confirmation">Vuoi lasciare la Squadra e mantenere o lasciare le sfide\?</string>
     <string name="pending">In attesa</string>
     <string name="accepted">Accettato</string>
     <string name="declined">Rifiutato</string>
@@ -492,9 +489,9 @@ Le Dailies mancate e le cattive Abitudini non li danneggiano molto, e hanno semp
     <string name="reset_account">Resetta account</string>
     <string name="reset_account_description">ATTENZIONE! Questo resetterà diversi aspetti del tuo account. È altamente sconsigliato, ma qualcuno trova questa opzione utile all\'inizio, dopo aver provato il sito per un po\' di tempo.\n\nPerderai tutti i tuoi livelli, l\'oro e i punti esperienza. Tutte le tue attività (eccetto quelle delle sfide) verranno cancellate in modo permanente, insieme alla loro cronologia dei progressi. Perderai inoltre tutto il tuo equipaggiamento, ma potrai recuperare ogni cosa, compresi gli oggetti in edizione limitata e gli Oggetti Misteriosi che già possiedi (alcuni oggetti potrebbero richiedere l\'appartenenza ad una determinata classe per essere acquistati). Manterrai la tua classe, i tuoi animali e le cavalcature. Potresti forse preferire la Sfera della Rinascita, un\'alternativa molto più sicura che ti permette di tenere le tue attività e il tuo equipaggiamento.</string>
     <string name="delete_account">Elimina account</string>
-    <string name="delete_account_description">Sei sicuro/a? Questo cancellerà per sempre il tuo account, e non potrà mai essere ripristinato! Dovrai registrarti con un nuovo account per usare ancora Habitica. Le Gemme che possiedi e quelle spese non verranno rimborsate. Se sei assolutamente certo/a, digita la tua password nella casella di testo qui sotto.</string>
-    <string name="reset_account_confirmation">resetta il mio account</string>
-    <string name="delete_account_confirmation">elimina il mio account</string>
+    <string name="delete_account_description">Questo cancellerà per sempre il tuo account, e non potrà mai essere ripristinato! Le Gemme che possiedi e quelle spese non verranno rimborsate. Se sei assolutamente certo/a, digita la tua password nella casella di testo qui sotto.</string>
+    <string name="reset_account_confirmation">Resetta il mio Account</string>
+    <string name="delete_account_confirmation">Elimina il mio Account</string>
     <string name="danger_zone">Zona pericolosa</string>
     <string name="resetting_account">Resettando l\'account</string>
     <string name="deleting_account">Cancellazione account</string>
@@ -559,7 +556,7 @@ Le Dailies mancate e le cattive Abitudini non li danneggiano molto, e hanno semp
     <string name="equipment_empty">Hai già tutto l\'equipaggiamento! Nuovi oggetti saranno disponibili durante i Gran Galà, nei periodi dei solstizi e degli equinozi.</string>
     <string name="classless">Nessuna classe</string>
     <string name="class_equipment_shop_dialog">Questo oggetto è disponibile solo per una specifica classe.\nPuoi cambiare la tua classe nelle Impostazioni.</string>
-    <string name="class_gear_disclaimer">Puoi comprare solo equipaggiamento per la Classe a cui appartieni.</string>
+    <string name="class_gear_disclaimer">Puoi comprare solo equipaggiamento per la Classe a cui appartieni</string>
     <string name="tavern_description">Benvenuto nella Taverna! Siediti vicino a noi per fare due chiacchiere, o prenditi una pausa dalle tue attività.</string>
     <string name="check_into_inn">Entra nella Locanda</string>
     <string name="community_guidelines">Linee guida della community</string>
@@ -589,15 +586,15 @@ Le Dailies mancate e le cattive Abitudini non li danneggiano molto, e hanno semp
     <string name="active_world_boss">Boss Mondiale attivo</string>
     <string name="no_party_description">Intraprendi missioni da solo o con amici. Combatti mostri, crea Sfide, e responsabilizzati raggiungendo Squadre.</string>
     <string name="no_party_title">Gioca ad Habitica con una Squadra</string>
-    <string name="join_party_description">Dai a un membro squadra il nome utente che troverai sotto e potranno mandarti un invito.</string>
+    <string name="join_party_description">Dai a un membro squadra il nome utente che troverai sotto e potranno mandarti un invito</string>
     <string name="join_party_title">Vuoi unirti ad una squadra?</string>
     <string name="insufficientSubscriberGems">Hai comprato tutte le Gemme possibili per questo mese. Ulteriori gemme diventano disponibili nei primi tre giorni di ogni mese. Grazie per esserti abbonato/a!</string>
     <string name="world_boss_description_title">Cos\'è un Boss Mondiale?</string>
     <string name="world_boss_description_intro">Un Boss Mondiale è un evento speciale che unisce tutta la community di Habitica per sconfiggere un potente mostro con le loro attività!</string>
     <string name="world_boss_description_1">Completa delle attività per danneggiare il Boss</string>
     <string name="world_boss_description_2">Il Boss Mondiale non ti danneggerà per le attività non completate, ma la sua Furia aumenterà. Se la barra della Furia si riempie, il Boss attaccherà uno dei negozianti!</string>
-    <string name="world_boss_description_3">Puoi continuare con normali Boss di Missioni, i danni saranno applicati ad entrambi.</string>
-    <string name="world_boss_description_4">Vai nella Taverna per vedere i progressi con il Boss Mondiale e gli attacchi Furia.</string>
+    <string name="world_boss_description_3">Puoi continuare con normali Boss di Missioni, i danni saranno applicati ad entrambi</string>
+    <string name="world_boss_description_4">Vai nella Taverna per vedere i progressi con il Boss Mondiale e gli attacchi Furia</string>
     <string name="world_boss_action_prompt">Sconfiggi il Boss per ottenere delle ricompense speciali e salvare Habitica dal terrore di %s!</string>
     <string name="questShop_owner_long">Ian la Guida Missione</string>
     <string name="seasonalShop_owner_long">Maga Stagionale</string>
@@ -617,9 +614,9 @@ Le Dailies mancate e le cattive Abitudini non li danneggiano molto, e hanno semp
     <string name="next_day_reminder_title">Hai completato le tue attività oggi?</string>
     <string name="next_day_reminder_text">Sbloccherai e scoprirai cose nuove man mano che salirai di livello, quindi continua a completare le tue attività e divertiti!</string>
     <string name="daily_tip_0">Vuoi provare qualcosa di nuovo? Unisciti ad una Sfida per espandere la tua lista delle attività e vincere qualche Gemma!</string>
-    <string name="daily_tip_1">Aggiungi delle checklist alle tue To Do perché le tue ricompense si moltiplichino!</string>
-    <string name="daily_tip_2">Puoi regolare la frequenza di ripetizione di ogni Daily. Perfino la data delle attività infrequenti può essere programmata.</string>
-    <string name="daily_tip_3">Puoi impostare dei promemoria specifici anche per le Daily.</string>
+    <string name="daily_tip_1">Aggiungi delle checklist alle tue Cose da Fare perché le tue ricompense si moltiplichino!</string>
+    <string name="daily_tip_2">Puoi regolare la frequenza di ripetizione di ogni Attività Giornaliera. Perfino la data delle attività infrequenti può essere programmata.</string>
+    <string name="daily_tip_3">Puoi impostare dei promemoria specifici anche per le Attività Giornaliere.</string>
     <string name="daily_tip_4">Rivalutare occasionalmente le tue attività può aiutarti a mantenere la giusta strada.</string>
     <string name="daily_tip_5">Fai dei respiri profondi per concentrarti meglio. Puoi farcela!</string>
     <string name="daily_tip_6">Prova ad impostare un timer per dieci minuti e a vedere quanto riesci a fare!</string>
@@ -638,8 +635,7 @@ Le Dailies mancate e le cattive Abitudini non li danneggiano molto, e hanno semp
     <string name="two_handed">Due mani</string>
     <string name="usernamePromptTitle">È giunta l\'ora di scegliere il tuo nome utente!</string>
     <string name="usernamePromptBody">I login sono nuovi, unici nomi utente, che appariranno accanto al tuo nome pubblico e che verranno usati per gli inviti, i @richiami nel chat, e i messaggi.</string>
-    <string name="usernamePromptWiki">Per più ampie informazioni su questo cambiamento, <a href="https://habitica.wikia_com/wiki/Player_Names">visita il wiki.</a>
-    </string>
+    <string name="usernamePromptWiki">Per più ampie informazioni su questo cambiamento, <a href="https://habitica.wikia_com/wiki/Player_Names">visita il wiki.</a></string>
     <string name="usernamePromptDisclaimer">I nomi utente devono rispettare i nostri <a href="https://habitica.com/static/terms">Termini di servizio</a> e le <a href="https://habitica_com/static/community-guidelines">Linee guida Comunitarie</a>. Se non hai ancora fissato il tuo login, il tuo nome utente è stato generato automaticamente.</string>
     <string name="confirm_username_title">Sei sicuro di voler confermare il tuo nome utente attuale?</string>
     <string name="confirm_username_description">Confermando il tuo nome utente, lo renderai pubblico per gli inviti, le @menzioni e i messaggi. Puoi cambiare il tuo nome utente andando nei parametri quando vuoi.</string>
@@ -647,13 +643,13 @@ Le Dailies mancate e le cattive Abitudini non li danneggiano molto, e hanno semp
     <string name="confirm_username">Conferma Nome Utente</string>
     <string name="username_not_confirmed">Nome Utente non confermato</string>
     <string name="username_confirmed">Nome Utente Confermato</string>
-    <string name="enter_recipient_username">Inserisci @username del Destinatario</string>
+    <string name="enter_recipient_username">Inserisci @nome_utente del Destinatario</string>
     <string name="username_copied">Nome Utente copiato negli appunti</string>
     <string name="verification_pet">Uno di questi Animali Veterani ti aspetterà dopo che avrai confermato!</string>
     <string name="welcomeNameTitle">Come dovremmo chiamarti?</string>
-    <string name="display_name_length_error">Il nome pubblico dev\'essere tra 1 e 30 caratteri.</string>
+    <string name="display_name_length_error">Il nome pubblico dev\'essere tra 1 e 30 caratteri</string>
     <string name="setup_task_join_habitica">Raggiungi Habitica (spunta questa casella!)</string>
-    <string name="setup_task_join_habitica_notes">Puoi completare questa To Do, modificarla, o rimuoverla.</string>
+    <string name="setup_task_join_habitica_notes">Puoi completare questa Cosa da Fare, modificarla, o rimuoverla.</string>
     <string name="setup_task_reward">Premiati</string>
     <string name="setup_task_reward_notes">Guarda la TV, divertiti con un videogioco, mangia un dolcetto, a te la scelta!</string>
     <string name="equipment_str">FOR:</string>
@@ -661,18 +657,16 @@ Le Dailies mancate e le cattive Abitudini non li danneggiano molto, e hanno semp
     <string name="equipment_int">INT:</string>
     <string name="equipment_per">PER:</string>
     <string name="visit_website">Visita il sito web</string>
-    <string name="subscribe_gift_description">Vuoi dare i benefici di un abbonamento a qualcun altro?</string>
-    <string name="gift_subscription">Regala un Abbonamento</string>
+    <string name="subscribe_gift_description">Vuoi dare i vantaggi di un abbonamento a qualcun altro\?</string>
+    <string name="gift_subscription">Regala Abbonamento</string>
     <string name="gift_one_get_one_description">Evento Regala un Abbonamento e Ricevi un Abbonamento Gratuito in corso ora!</string>
     <string name="gift_title">A chi vorresti regalarlo?</string>
     <string name="gift_one_get_one">Regalane uno, Ottienine uno per te!</string>
     <string name="gift_one_get_one_detailed_description">Mentre questa promozione è attiva, riceverai un abbonamento corrispondente dopo aver mandato il tuo regalo.</string>
     <string name="gift_subscription_subtitle">Scegli l\'abbonamento che vorresti regalare qua sotto! Questo acquisto non si rinnoverà automaticamente.</string>
-    <string name="send_gift">Manda un Regalo</string>
+    <string name="send_gift">Invia un Regalo</string>
     <string name="server">Server</string>
     <string name="gift_confirmation_title">Il tuo regalo è stato inviato!</string>
-    <string name="gift_confirmation_text_g1g1">L\'abbonamento regalato è stato ricevuto e l\'abbonamento corrispondente applicato al tuo profilo.</string>
-    <string name="gift_confirmation_text">L\'abbonamento regalato è stato ricevuto e l\'abbonamento corrispondente applicato al tuo profilo.</string>
     <string name="discover">Scopri</string>
     <string name="damage_paused">Danni sospesi</string>
     <string name="notifications">Notifiche</string>
@@ -708,7 +702,7 @@ Le Dailies mancate e le cattive Abitudini non li danneggiano molto, e hanno semp
     <string name="guild_summary">Riepilogo della Gilda</string>
     <string name="setup_task_habit_2_notes">O cancellala dalla schermata di modifica</string>
     <string name="setup_task_habit_2">Clicca qui per modificarla in una cattiva abitudine che vorresti perdere</string>
-    <string name="setup_task_habit_1_notes">Può essere un\'Abitudine, una Daily o una To Do</string>
+    <string name="setup_task_habit_1_notes">Può essere un\'Abitudine, una Attività Giornaliera o una Cosa da Fare</string>
     <string name="setup_task_habit_1">Aggiungi un\'attività su Habitica</string>
     <string name="cost">Costo</string>
     <string name="joined_guild">Ti sei unito alla Gilda</string>
@@ -755,7 +749,262 @@ Le Dailies mancate e le cattive Abitudini non li danneggiano molto, e hanno semp
     <string name="defeat">Sconfiggi</string>
     <string name="preference_push_important_announcements">Annunci Importanti</string>
     <string name="insufficientGoldTitle">Non hai abbastanza Oro</string>
-    <string name="delete_oauth_account_description">Sei sicuro\? Così cancellerai per sempre il tuo account, e non potrai ripristinarlo! Dovrai registrarti con un nuovo account se vorrai usare nuovamente Habitica. Le gemme conservate o spese non verranno rimborsate. Se ne sei assolutamente sicuro, scrivi CANCELLA sulla casella qui sotto.</string>
+    <string name="delete_oauth_account_description">Così cancellerai per sempre il tuo account, e non potrai ripristinarlo! Le gemme conservate o spese non verranno rimborsate. Se ne sei assolutamente sicuro, scrivi CANCELLA sulla casella qui sotto.</string>
     <string name="x_months">%d Mesi</string>
     <string name="opting_out_progress">Rinuncia</string>
+    <string name="empty_title_dailies_filtered">Nessuna Attività Giornaliera</string>
+    <string name="empty_description_habits_filtered">Non ci sono Abitudini visibili con i filtri attuali.</string>
+    <string name="empty_title_habits_filtered">Nessuna Abitudine</string>
+    <string name="register_btn_google">Accedi con Google</string>
+    <string name="register_btn_fb">Accedi con Facebook</string>
+    <string name="login_btn_apple">Accedi con Apple</string>
+    <string name="subscribe_listitem5_description">Scopri ancora più oggetti in Habitica con un bonus 2x sul limite di bottini giornalieri.</string>
+    <string name="subscribe_listitem3_description_new">Abbonati ora per ottenere %s e ricevere nuovi articoli ogni mese!</string>
+    <string name="subscribe_listitem5">Raddoppia il Bottino</string>
+    <string name="gold_capitalilzed">Oro</string>
+    <string name="create_account_short">Crea un Account</string>
+    <string name="login_incentive_short_count">%d Accessi</string>
+    <string name="login_incentive_short">Accedi ad Habitica regolarmente</string>
+    <string name="party_invite_short">Invita degli Amici</string>
+    <string name="login_incentive_count">Sbloccalo accedendo ad Habitica %d volte.</string>
+    <string name="user_level_with_class_unabbreviated">Livello %1$d &amp;%2$s</string>
+    <string name="remaining_1hour">1 ora rimanente</string>
+    <string name="remaining_hours">%d ore rimanenti</string>
+    <string name="remaining_days">%d giorni rimanenti</string>
+    <string name="remaining_minutes">%d mesi rimanenti</string>
+    <string name="remaining_1Minute">1 mese rimanente</string>
+    <string name="remaining_1day">1 giorno rimanente</string>
+    <string name="remaining_weeks">%d settimane rimanenti</string>
+    <string name="remaining_1week">1 settimana rimanente</string>
+    <string name="remaining_months">%d mesi rimanenti</string>
+    <string name="remaining_1month">1 mese rimanente</string>
+    <string name="ago_weeks">%d settimane fa</string>
+    <string name="ago_1week">1 settimana fa</string>
+    <string name="ago_months">%d mesi fa</string>
+    <string name="ago_1month">1 mese fa</string>
+    <string name="not_selected">Non selezionato</string>
+    <string name="selected">Selezionato</string>
+    <string name="off">Spento</string>
+    <string name="on">Acceso</string>
+    <string name="authentication_error_body">Il tuo Nome utente e/o la tua Password non sono corretti.</string>
+    <string name="network_error_no_network_body">Non sei connesso a Internet.</string>
+    <string name="empty_description_dailies_filtered">Non ci sono Attività Giornaliere visibili con i filtri attuali.</string>
+    <string name="delete_checklist_entry">Elimina la checklist</string>
+    <string name="still_questions">Hai altre domande\?</string>
+    <string name="purchase_amount_error">Non ne puoi acquistare in questo numero.</string>
+    <string name="read_more">Leggi di più</string>
+    <string name="buy_all">Acquista tutti</string>
+    <string name="avatar_accent">Accessori</string>
+    <string name="animal_tail">Coda</string>
+    <string name="animal_ears">Orecchiette</string>
+    <string name="avatar_headband">Fascia per capelli</string>
+    <string name="could_not_find_user">Impossibile trovare l\'utente</string>
+    <string name="habitica_questions">Domande su Habitica</string>
+    <string name="wacky">Stravagante</string>
+    <string name="support">Supporto</string>
+    <string name="update_app_description">Siamo costantemente alla ricerca di nuove soluzioni, quindi assicurati di controllare il Play Store per controllare se ci sono aggiornamenti disponibili.</string>
+    <string name="update_app">Aggiorna l\'App</string>
+    <string name="manual_sync_restart_description">A volte l\'app non aggiorna automaticamente i contenuti. Prova a scorrere verso il basso per aggiornare o forza la chiusura dell\'app e riaprila.</string>
+    <string name="manual_sync_restart">Sincronizzazione o riavvio</string>
+    <string name="clear_cache_description">Per cancellare la cache, apri le impostazioni del telefono. Vai su Archiviazione &gt; App &gt; Habitica e quindi tocca Cancella cache.</string>
+    <string name="clear_cache">Cancella la cache</string>
+    <string name="hourglasses_description">Le Clessidre Mistiche sono una forma di valuta estremamente rara che puoi ricevere solo con un abbonamento a Habitica per tre mesi consecutivi o di più. Vengono utilizzati nel negozio del Viaggiatore del Tempo per acquistare equipaggiamenti, animali, cavalcature, sfondi animati o anche missioni speciali.
+\n
+\nPuoi ricevere fino a quattro Clessidre Mistiche all\'anno. Ti vengono donate in base alla data del rinnovo dell\'abbonamento. Vengono inviate il primo giorno di un nuovo mese dopo l\'ultimo pagamento dell\'abbonamento che ha diritto ad una clessidra. Vedi la pagina [Abbonamento] per maggiori dettagli.</string>
+    <string name="mystic_hourglasses">Clessidre Mistiche</string>
+    <string name="subscriber_currency">Valuta dell\'Abbonato</string>
+    <string name="game_mechanics">Meccaniche del gioco</string>
+    <string name="common_questions">Domande frequenti</string>
+    <string name="gems_description">Le Gemme sono una valuta acquistata con denaro reale che ti consente di acquistare contenuti extra all\'interno di Habitica e sono una delle principali fonti di supporto finanziario per il team di Habitica oltre che agli abbonamenti.
+\n
+\nTutto ciò che si acquista con le Gemme è puramente estetico o può essere ottenuto gratuitamente con il tempo.
+\n
+\nPuoi anche ricevere gemme attraverso regali di altri giocatori, premi Sfida, contribuire ad Habitica o iscriverti.</string>
+    <string name="currency">Valuta</string>
+    <string name="premium_currency">Valuta Premium</string>
+    <string name="standard">Standard</string>
+    <string name="stat_description">Tutti i personaggi di Habitica hanno quattro statistiche che influenzano gli aspetti del gioco.
+\n
+\n**Forza (STR) ** influenza colpi critici e aumenta i danni inflitti al Boss di una Missione. Guerrieri e Ladri ottengono STR dalla loro equipaggiamento di classe.
+\n
+\n**Costituzione (CON)** aumenta i tuoi HP e ti fa subire meno danni. Guaritori e Guerrieri ottengono CON dal loro equipaggiamento di classe.
+\n
+\n**Intelligenza (INT)** aumenta la quantità di EXP che guadagni e ti dà più Mana. Maghi e Guaritori ottengono INT dal loro equipaggiamento di classe.
+\n
+\n**Percezione (PER)** aumenta l\'Oro che guadagni e la probabilità di trovare oggetti. I Ladri e i Maghi guadagnano il PER dal loro equipaggiamento di classe.
+\n
+\nDopo il livello 10, guadagni 1 Punto Stat per ogni aumento di livello e lo puoi assegnare in qualsiasi Stat tu desideri. Puoi anche indossare equipaggiamento con diverse combinazioni per aumentare le tue statistiche.</string>
+    <string name="stat_allocation">Assegnazione delle Statistiche</string>
+    <string name="gold_description">L\'Oro è la **principale forma di valuta** all\'interno di Habitica e ti consente di acquistare determinati equipaggiamenti, missioni, oggetti o persino premi personalizzati che puoi crearti da solo.
+\n
+\n**Guadagna Oro** completando attività, missioni o attraverso alcune abilità di classe. Le **statistiche di percezione** aumentano la quantità di oro che guadagni.
+\n
+\nSe ti abboni ad Habitica, puoi persino usare l\'Oro per acquistare un numero di Gemme in base al periodo di abbonamento.</string>
+    <string name="experience_description">I punti esperienza (EXP) rappresentano i tuoi progressi e ti consentono di salire di livello. Principalmente ** otterrai EXP ** completando compiti o missioni, ma ci sono anche alcune abilità di classe che danno EXP.
+\n
+\nAttività più difficili o attività di colore rosso ti daranno ** più EXP**. La **statistica dell\'Intelligenza** aumenta anche la quantita di EXP guadagnata.</string>
+    <string name="mana_description">I punti mana (MP) vengono sbloccati con il sistema di classe al livello 10 e ti consentono di **usare le Abilità** una volta imparate al livello 11.
+\n
+\nAlcuni **MP vengono ripristinati** allo scadere di ogni giorno, ma puoi riguadagnarne di più completando le attività o usando un\'abilità della classe Mago.</string>
+    <string name="mana_points">Punti Mana</string>
+    <string name="experience_points">Punti esperienza</string>
+    <string name="health_description">Rappresentano la vita del tuo avatar. Una Attività giornaliera non completata o un\'abitudine negativa ** riducono i tuoi HP **.
+\n
+\n** Riacquista HP ** aumentando di livello, usando una Pozione di salute o un\'abilità di classe con abilità curativa.
+\n
+\nSe il tuo ** HP raggiunge lo 0 ** perderai un livello, tutto l\'oro e un pezzo di equipaggiamento. Le attrezzature perse possono essere riacquistate.</string>
+    <string name="health_points">Punti salute</string>
+    <string name="stats_currency">Statistiche e valuta</string>
+    <string name="how_best_habitica">Non sai come utilizzare al meglio Habitica\?</string>
+    <string name="overview">Panoramica</string>
+    <string name="send_bug_prompt">Inviaci una segnalazione di un bug e ti risponderemo!</string>
+    <string name="common_fixes">Correzioni comuni</string>
+    <string name="support_bug_title">Cerchiamo costantemente di migliorare le nostre app in base al feedback dei giocatori, ma a volte compaiono alcuni bug …</string>
+    <string name="lets_go">Partiamo</string>
+    <string name="bugs_fixes_description">Qualcosa è andato storto\? Controlla qui se ci sono le risposte che cerchi o contattaci per chiedere aiuto.</string>
+    <string name="bugs_fixes">Bug &amp; Correzioni</string>
+    <string name="suggestions_feedback">Suggerimenti e feedback</string>
+    <string name="get_help">Ottieni Aiuto</string>
+    <string name="contact_us">Contattaci</string>
+    <string name="suggestions_feedback_description">Hai suggerimenti su dei miglioramenti o su un\'idea per qualcosa di nuovo\? Raccontacelo!</string>
+    <string name="using_habitica_description">Ti spiegheremo le basi e risponderemo alle domande più comuni per metterti in carreggiata</string>
+    <string name="using_habitica">Utilizzo di Habitica</string>
+    <string name="quest_completed">Missione completata!</string>
+    <string name="not_participating">Non stai partecipando</string>
+    <string name="level_unabbreviated">Livello %d</string>
+    <string name="unlock_previous_short">Termina la Missione %d</string>
+    <string name="unlock_level">Sbloccalo raggiungendo il livello %d</string>
+    <string name="unlock_previous">Sbloccalo completando la Sfida %d</string>
+    <string name="locked">Bloccato</string>
+    <string name="skill_unlocks_at">L\'abilità si sblocca al livello %d</string>
+    <string name="preference_email_onboarding">Guida alla configurazione del tuo account Habitica</string>
+    <string name="preference_email_kicked_group">Espulso dal gruppo</string>
+    <string name="preference_email_subscription_reminder">Promemoria Abbonamento</string>
+    <string name="emails">Notifiche e-mail</string>
+    <string name="pref_emails_checkbox">Usa notifiche e-mail</string>
+    <string name="go_shopping">Vai a fare shopping</string>
+    <string name="purchase_from_timetravel_shop">Puoi acquistare questa personalizzazione nel negozio Viaggiatori del tempo</string>
+    <string name="learn_more">Per saperne di più</string>
+    <string name="g1g1_duration">Dal 17 dicembre al 6 gennaio</string>
+    <string name="limited_event">Evento limitato</string>
+    <string name="g1g1_info_3_text">Questa promozione si applica solo quando fai un regalo ad un altro Habiticante. Se tu o il tuo destinatario del regalo avete già un abbonamento, l\'abbonamento donato aggiungerà mesi di credito che verranno utilizzati solo dopo l\'annullamento o la scadenza dell\'abbonamento preesistente.</string>
+    <string name="g1g1_info_3">Limitazioni</string>
+    <string name="g1g1_info_2_text">Tocca \"Regala un abbonamento\" e digita il nome utente dell\'account a cui lo desideri regalare. Da lì, scegli la durata che desideri regalare e prosegui. Il tuo account verrà automaticamente ricompensato con lo stesso livello di abbonamento che hai appena regalato.</string>
+    <string name="g1g1_info_2">Come funziona</string>
+    <string name="gift_a_subscription">Regala un Abbonamento</string>
+    <string name="g1g1_info_1">In onore della stagione dei regali, stiamo riproponendo una promozione molto speciale. Ora, quando regali a qualcuno un abbonamento ne riceverai uno identico anche tu!</string>
+    <string name="sale">Vendita</string>
+    <string name="promo_g1g1_prompt">Evento Regalane uno, Prendine Uno</string>
+    <string name="promo_g1g1_description">Regala subito un abbonamento e ne otterrai uno anche tu gratis!</string>
+    <string name="event">Evento</string>
+    <string name="member_group_plan">Membro di un Piano di Gruppo</string>
+    <string name="member">Membro</string>
+    <string name="owner">Proprietario</string>
+    <string name="cancel_subscription_group_plan_owner">Hai un abbonamento gratuito perché sei il proprietario di una Squadra o di una Gilda che ha un Piano di Gruppo. Questo terminerà se annulli il piano. Eventuali mesi di credito aggiuntivo per l\'abbonamento verranno applicati alla fine del Piano di Gruppo. È possibile annullare dal sito di Habitica.</string>
+    <string name="cancel_subscription_group_plan">Hai un abbonamento gratuito perché sei un membro di una Squadra o di una Gilda che ha un Piano di gruppo. Questo terminerà se si esce dalla gilda o se il Piano di gruppo viene annullato dal proprietario. Eventuali mesi di credito aggiuntivo per l\'abbonamento verranno applicati alla fine del Piano di Gruppo.</string>
+    <string name="group_plan">Piano di gruppo</string>
+    <string name="subscription_credit">Credito di abbonamento</string>
+    <string name="save_20">Risparmia il 20%</string>
+    <string name="gifted">Regalato</string>
+    <string name="resubscribe_description">Vuoi continuare ad avere i tuoi vantaggi\? Puoi iniziare un nuovo abbonamento prima che questo scada per mantenerli attivi.</string>
+    <string name="resubscribe">Riabbonati</string>
+    <string name="renew_subscription">Rinnova l\'Abbonamento</string>
+    <string name="thanks_for_subscribing">Grazie per esserti iscritto</string>
+    <string name="subscribe_options_title">Scegli la durata dell\'abbonamento che fa per te</string>
+    <string name="ending_on">Termina il %s</string>
+    <string name="not_recurring">Non ricorrente</string>
+    <string name="cancelled">Annullato</string>
+    <string name="send_invites">Invia Inviti</string>
+    <string name="google">Google</string>
+    <string name="apple_sign_in">Accedi con Apple</string>
+    <string name="facebook">Facebook</string>
+    <string name="local">locale</string>
+    <string name="authentication_methods">Metodi di autenticazione</string>
+    <string name="someone">Qualcuno</string>
+    <string name="invitation_title">%s ti ha invitato a %s</string>
+    <string name="password_too_short">La tua password deve essere lunga almeno %d caratteri</string>
+    <string name="copy_username">Copia Nome Utente</string>
+    <string name="id_copied">ID Utente copiato negli appunti</string>
+    <string name="copy_userid">Copia ID Utente</string>
+    <string name="preference_push_unjoined_guild_mention">\@Mensioni nelle altre Gilde</string>
+    <string name="preference_push_joined_guild_mention">\@Menzioni nelle tue Gilde</string>
+    <string name="gems_to_gift">Gemme da regalare</string>
+    <string name="gift_gems_balance_subtitle">Inserisci qui di seguito il numero di Gemme che desideri inviare o cambia scheda per acquistare Gemme da regalare</string>
+    <string name="from_balance">Dal Saldo</string>
+    <string name="purchase">Acquista</string>
+    <string name="preference_push_party_mention">\@Menzioni nella Squadra</string>
+    <string name="more_out_of_habitica">Ottieni di più da Habitica</string>
+    <string name="gift_gems_disclaimer">Habitica non ti chiederà mai di regalare gemme ad altri giocatori. Chiedere gemme è una violazione delle Norme della Community e deve essere segnalato a admin@habitica.com.</string>
+    <string name="gems_gift_description">Ti piacerebbe regalare un gruzzolo di Gemme brillanti e luccicose a qualcuno\?</string>
+    <string name="profile_gift_subscription">Regala
+\nAbbonamento</string>
+    <string name="profile_gift_gems">Regala
+\nGemme</string>
+    <string name="profile_send_message">Invia
+\nMessaggio</string>
+    <string name="gift_gems">Regala Gemme</string>
+    <string name="see_other_options">Vedi altre Opzioni</string>
+    <string name="promo_subscription_buy_gems_description">Diventa un abbonato per acquistare Gemme con l\'oro, ottenere oggetti misteriosi ogni mese, aumentare il limite del bottino e molto altro!</string>
+    <string name="promo_subscription_buy_gems_prompt">Hai bisogno di Gemme\?</string>
+    <string name="preference_push_party_activity">Attività della Squadra</string>
+    <string name="search_hint">Cerca attività</string>
+    <string name="search">Cerca</string>
+    <string name="repeat_daily">Quotidianamente</string>
+    <string name="complete">Completa</string>
+    <string name="reject">Declina</string>
+    <string name="accept">Accettta</string>
+    <string name="equip_automatically">Indossa automaticamente il nuovo equipaggiamento</string>
+    <string name="leave_challenges">Abbandona le Sfide</string>
+    <string name="keep_challenges">Mantieni le Sfide</string>
+    <string name="inviteFriendDescription">Hai invitato un amico (o amici) che si sono uniti a te in questa avventura!</string>
+    <string name="inviteFriendTitle">Invita un Amico</string>
+    <string name="joinedChallengeDescription">Ti sei messo alla prova partecipando a una Sfida!</string>
+    <string name="joinedChallengeTitle">Partecipa ad una Sfida</string>
+    <string name="joinedGuildDescription">Avventurati nella parte sociale di Habitica entrando a far parte di una Gilda!</string>
+    <string name="joinedGuildTitle">Unisciti ad una Gilda</string>
+    <string name="mountMasterDescription">Hai ottenuto la medaglia “A cavallo!” per aver domato tutte le cavalcature!</string>
+    <string name="triadBingoDescription">Hai ottenuto la medaglia “Triplo Bingo” per aver collezionato tutti gli animali, domato tutte le cavalcature e trovato nuovamente tutti gli animali!</string>
+    <string name="triadBingoTitle">Triplo Bingo</string>
+    <string name="mountMasterTitle">A cavallo!</string>
+    <string name="beastMasterDescription">Hai ottenuto la medaglia “Domatore” per aver collezionato tutti gli animali!</string>
+    <string name="beastMasterTitle">Re delle Bestie</string>
+    <string name="partyOnDescription">La tua squadra ha raggiunto i 4 membri!</string>
+    <string name="partyOnTitle">Una squadra spumeggiante</string>
+    <string name="partyUpDescription">Hai collaborato con un membro della squadra!</string>
+    <string name="partyUpTitle">Una squadra felice</string>
+    <string name="achievement_title">Hai ricevuto una Medaglia!</string>
+    <string name="view_achievements">Mostra Medaglie</string>
+    <string name="see_what_s_new">Guarda le novità</string>
+    <string name="mystery_item_received">Apri la scatola e ricevi un %s</string>
+    <string name="removed_member">%s è stato rimosso dal gruppo</string>
+    <string name="transfer">Trasferire</string>
+    <string name="remove_member_confirm">Vuoi veramente rimuovere %s dal gruppo\?</string>
+    <string name="transfer_ownership_confirm_message">Ciò renderà %s il nuovo leader della Squadra</string>
+    <string name="transfer_ownership_confirm">Vuoi trasferire la Leadership\?</string>
+    <string name="transferred_ownership">Leadership trasferita a %s</string>
+    <string name="send_message">Invia Messaggio</string>
+    <string name="remove_member">Rimuovi Membro</string>
+    <string name="transfer_ownership">Trasferisci Leadership</string>
+    <string name="remove">Elimina</string>
+    <string name="inbox_messages_title_nosender">Hai ricevuto %d messaggi</string>
+    <string name="inbox_messages_title">Hai ricevuto %d messaggi da %s</string>
+    <string name="sent_card">Hai inviato una %s</string>
+    <string name="app_theme">Tema dell\'App</string>
+    <string name="share_challenge_with">Condividi la Sfida con</string>
+    <string name="details">Dettagli</string>
+    <string name="create_task">Crea %s</string>
+    <string name="new_task">Nuova Attività</string>
+    <string name="confirm_deletion">Conferma l\'eliminazione</string>
+    <string name="switch_to_grid_view">Passa alla vista griglia</string>
+    <string name="switch_to_list_view">Passa alla vista elenco</string>
+    <string name="delete_reminder">Elimina Promemoria</string>
+    <string name="leave_guild_confirmation">Vuoi lasciare la gilda e mantenere o lasciare le sfide\?</string>
+    <string name="gift_confirmation_text_gems">Hai inviato alcune gemme a %s.</string>
+    <string name="gift_confirmation_text_sub">Hai inviato a %s un abbonamento Habitica per %s mesi.</string>
+    <string name="gift_confirmation_text_sub_g1g1">Hai inviato a %s un abbonamento Habitica per %s mesi e lo stesso abbonamento è stato aggiunto al tuo account per la nostra promozione Regalane uno Prendine Uno!</string>
+    <string name="gift_gems_subtitle">Scegli qui di seguito il pacchetto di gemme che vuoi regalare!</string>
+    <string name="number_responded">%1$d/%2$d risposte</string>
+    <string name="empty_title_rewards_filtered">Nessuna Ricompensa</string>
+    <string name="empty_description_todos_filtered">Non ci sono Cose da Fare visibili con i filtri specificati.</string>
+    <string name="empty_title_todos_filtered">Nessuna Cosa da fare</string>
 </resources>

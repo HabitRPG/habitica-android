@@ -13,7 +13,7 @@
         tools:text="Title"
         android:gravity="center"
         style="@style/Subheader1"
-        android:background="@color/gray_700"
+        android:background="@color/window_background"
         android:padding="8dp"/>
     <LinearLayout
         android:id="@+id/menu_items"

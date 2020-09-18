@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica.data.local.implementation
 
-import android.content.Context
 import com.habitrpg.android.habitica.data.local.InventoryLocalRepository
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.*
@@ -10,14 +9,13 @@ import com.habitrpg.android.habitica.models.user.OwnedMount
 import com.habitrpg.android.habitica.models.user.OwnedPet
 import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.Flowable
-import io.reactivex.functions.Consumer
 import io.realm.Realm
 import io.realm.RealmObject
 import io.realm.RealmResults
 import io.realm.Sort
 
 
-class RealmInventoryLocalRepository(realm: Realm, private val context: Context) : RealmContentLocalRepository(realm), InventoryLocalRepository {
+class RealmInventoryLocalRepository(realm: Realm) : RealmContentLocalRepository(realm), InventoryLocalRepository {
     override fun getQuestContent(keys: List<String>): Flowable<RealmResults<QuestContent>> {
         return realm.where(QuestContent::class.java)
                 .`in`("key", keys.toTypedArray())
@@ -92,8 +90,13 @@ class RealmInventoryLocalRepository(realm: Realm, private val context: Context) 
                 .filter { it.isLoaded }
     }
 
-    override fun getItems(itemClass: Class<out Item>, keys: Array<String>, user: User?): Flowable<out RealmResults<out Item>> {
+    override fun getItems(itemClass: Class<out Item>, keys: Array<String>): Flowable<out RealmResults<out Item>> {
         return realm.where(itemClass).`in`("key", keys).findAll().asFlowable()
+                .filter { it.isLoaded }
+    }
+
+    override fun getItems(itemClass: Class<out Item>): Flowable<out RealmResults<out Item>> {
+        return realm.where(itemClass).findAll().asFlowable()
                 .filter { it.isLoaded }
     }
 
@@ -132,11 +135,15 @@ class RealmInventoryLocalRepository(realm: Realm, private val context: Context) 
                 .filter { it.isLoaded }
     }
 
-    override fun getMounts(type: String, group: String, color: String?): Flowable<RealmResults<Mount>> {
+    override fun getMounts(type: String?, group: String?, color: String?): Flowable<RealmResults<Mount>> {
         var query = realm.where(Mount::class.java)
-                .sort("color", Sort.ASCENDING)
-                .equalTo("type", group)
-                .equalTo("animal", type)
+                .sort("type", Sort.ASCENDING, if (color == null) "color" else "animal", Sort.ASCENDING)
+        if (type != null) {
+            query = query.equalTo("animal", type)
+        }
+        if (group != null) {
+            query = query.equalTo("type", group)
+        }
         if (color != null) {
             query = query.equalTo("color", color)
         }
@@ -162,11 +169,15 @@ class RealmInventoryLocalRepository(realm: Realm, private val context: Context) 
                 .filter { it.isLoaded }
     }
 
-    override fun getPets(type: String, group: String, color: String?): Flowable<RealmResults<Pet>> {
+    override fun getPets(type: String?, group: String?, color: String?): Flowable<RealmResults<Pet>> {
         var query = realm.where(Pet::class.java)
-                .sort("color", Sort.ASCENDING)
-                .equalTo("type", group)
-                .equalTo("animal", type)
+                .sort("type", Sort.ASCENDING, if (color == null) "color" else "animal", Sort.ASCENDING)
+        if (type != null) {
+            query = query.equalTo("animal", type)
+        }
+        if (group != null) {
+            query = query.equalTo("type", group)
+        }
         if (color != null) {
             query = query.equalTo("color", color)
         }
@@ -189,7 +200,7 @@ class RealmInventoryLocalRepository(realm: Realm, private val context: Context) 
     }
 
     override fun changeOwnedCount(type: String, key: String, userID: String, amountToAdd: Int) {
-        getOwnedItem(userID, type, key, true).firstElement().subscribe( Consumer { changeOwnedCount(it, amountToAdd)}, RxErrorHandler.handleEmptyError())
+        getOwnedItem(userID, type, key, true).firstElement().subscribe({ changeOwnedCount(it, amountToAdd)}, RxErrorHandler.handleEmptyError())
     }
 
     override fun changeOwnedCount(item: OwnedItem, amountToAdd: Int?) {

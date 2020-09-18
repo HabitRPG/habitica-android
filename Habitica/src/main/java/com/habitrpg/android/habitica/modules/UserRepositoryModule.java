@@ -112,7 +112,7 @@ public class UserRepositoryModule {
 
     @Provides
     InventoryLocalRepository providesInventoryLocalRepository(Realm realm, Context context) {
-        return new RealmInventoryLocalRepository(realm, context);
+        return new RealmInventoryLocalRepository(realm);
     }
 
     @Provides

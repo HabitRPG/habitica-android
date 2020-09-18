@@ -20,5 +20,5 @@ public interface AppComponent {
 
     UserComponent plus(UserModule userModule, UserRepositoryModule userRepositoryModule);
 
-    void inject(@NotNull HabiticaBaseApplication habiticaBaseApplication);
+    void inject(HabiticaBaseApplication habiticaBaseApplication);
 }

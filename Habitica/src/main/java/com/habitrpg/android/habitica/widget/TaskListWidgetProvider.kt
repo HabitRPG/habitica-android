@@ -12,7 +12,6 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.ui.activities.MainActivity
-import io.reactivex.functions.Consumer
 import javax.inject.Inject
 
 abstract class TaskListWidgetProvider : BaseWidgetProvider() {
@@ -42,7 +41,7 @@ abstract class TaskListWidgetProvider : BaseWidgetProvider() {
 
             if (taskId != null) {
                 userRepository.getUser().firstElement().flatMap { user -> taskRepository.taskChecked(user, taskId, up = true, force = false, notifyFunc = null) }
-                        .subscribe(Consumer { taskDirectionData ->
+                        .subscribe({ taskDirectionData ->
                             showToastForTaskDirection(context, taskDirectionData)
                             AppWidgetManager.getInstance(context).notifyAppWidgetViewDataChanged(appWidgetId, R.id.list_view)
                         }, RxErrorHandler.handleEmptyError())

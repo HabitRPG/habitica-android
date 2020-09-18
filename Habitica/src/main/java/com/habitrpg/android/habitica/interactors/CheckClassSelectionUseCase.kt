@@ -32,7 +32,7 @@ constructor(threadExecutor: ThreadExecutor, postExecutionThread: PostExecutionTh
                 displayClassSelectionActivity(requestValues.isInitialSelection, requestValues.currentClass, requestValues.activity)
             }
 
-            Flowable.empty<Void>()
+            Flowable.empty()
         }
     }
 

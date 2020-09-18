@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbarSize="3dp"
+        android:scrollbarThumbVertical="@color/scrollbarThumb"
+        android:scrollbars="vertical"
+        android:clipToPadding="false"
+        android:background="@color/content_background"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/emptyView"
+        style="@style/EmptyView"
+        android:visibility="gone"/>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

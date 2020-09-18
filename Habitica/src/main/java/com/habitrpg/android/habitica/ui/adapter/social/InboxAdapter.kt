@@ -47,7 +47,7 @@ class InboxAdapter(private var user: User?, private var replyToUser : Member) : 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatRecyclerViewHolder {
         return if (viewType == FIRST_MESSAGE) ChatRecyclerIntroViewHolder(parent.inflate(R.layout.tavern_chat_intro_item), replyToUser.id!!)
-        else ChatRecyclerMessageViewHolder(parent.inflate(R.layout.tavern_chat_item), user?.id ?: "", false)
+        else ChatRecyclerMessageViewHolder(parent.inflate(R.layout.chat_item), user?.id ?: "", false)
     }
 
     override fun onBindViewHolder(holder: ChatRecyclerViewHolder, position: Int) {
@@ -74,10 +74,6 @@ class InboxAdapter(private var user: User?, private var replyToUser : Member) : 
         }
     }
 
-    fun getLikeMessageFlowable(): Flowable<ChatMessage> {
-        return likeMessageEvents.toFlowable(BackpressureStrategy.DROP)
-    }
-
     fun getUserLabelClickFlowable(): Flowable<String> {
         return userLabelClickEvents.toFlowable(BackpressureStrategy.DROP)
     }
@@ -88,10 +84,6 @@ class InboxAdapter(private var user: User?, private var replyToUser : Member) : 
 
     fun getDeleteMessageFlowable(): Flowable<ChatMessage> {
         return deleteMessageEvents.toFlowable(BackpressureStrategy.DROP)
-    }
-
-    fun getReplyMessageEvents(): Flowable<String> {
-        return replyMessageEvents.toFlowable(BackpressureStrategy.DROP)
     }
 
     fun getCopyMessageFlowable(): Flowable<ChatMessage> {

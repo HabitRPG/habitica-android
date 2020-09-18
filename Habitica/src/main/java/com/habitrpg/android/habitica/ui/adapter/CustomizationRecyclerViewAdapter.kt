@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
@@ -17,7 +18,6 @@ import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.inventory.Customization
 import com.habitrpg.android.habitica.models.inventory.CustomizationSet
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
-import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import io.reactivex.BackpressureStrategy
@@ -106,7 +106,7 @@ class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerVi
                 val set = CustomizationSet()
                 set.identifier = customization.customizationSet
                 set.text = customization.customizationSetName
-                set.price = customization.setPrice
+                set.price = customization.setPrice ?: 0
                 set.hasPurchasable = !customization.isUsable(ownedCustomiztations.contains(customization.identifier))
                 lastSet = set
                 customizationList.add(set)
@@ -165,9 +165,9 @@ class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerVi
             }
 
             if (activeCustomization == customization.identifier) {
-                binding.wrapper.background = itemView.context.getDrawable(R.drawable.layout_rounded_bg_gray_700_brand_border)
+                binding.wrapper.background = ContextCompat.getDrawable(itemView.context, R.drawable.layout_rounded_bg_window_tint_border)
             } else {
-                binding.wrapper.background = itemView.context.getDrawable(R.drawable.layout_rounded_bg_gray_700)
+                binding.wrapper.background = ContextCompat.getDrawable(itemView.context, R.drawable.layout_rounded_bg_window)
             }
         }
 
@@ -177,7 +177,7 @@ class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerVi
                     val dialog = HabiticaAlertDialog(itemView.context)
                     dialog.setMessage(R.string.purchase_from_timetravel_shop)
                     dialog.addButton(R.string.go_shopping, true) { _, _ ->
-                        MainNavigationController.navigate(R.id.shopsFragment, bundleOf(Pair("selectedTab", 3)))
+                        MainNavigationController.navigate(R.id.timeTravelersShopFragment)
                     }
                     dialog.addButton(R.string.reward_dialog_dismiss, false)
                     dialog.show()
@@ -224,7 +224,6 @@ class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerVi
     internal inner class SectionViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
         private val binding = CustomizationSectionHeaderBinding.bind(itemView)
-        private val label: TextView by bindView(itemView, R.id.label)
         var context: Context = itemView.context
         private var set: CustomizationSet? = null
 
@@ -234,8 +233,8 @@ class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerVi
 
         fun bind(set: CustomizationSet) {
             this.set = set
-            this.label.text = set.text
-            if (set.hasPurchasable && !set.identifier.contains("timeTravel")) {
+            binding.label.text = set.text
+            if (set.hasPurchasable && set.identifier?.contains("timeTravel") != true) {
                 binding.purchaseSetButton.visibility = View.VISIBLE
                 binding.setPriceLabel.value = set.price.toDouble()
                 binding.setPriceLabel.currency = "gems"

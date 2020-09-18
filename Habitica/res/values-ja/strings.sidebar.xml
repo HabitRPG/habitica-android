@@ -1,20 +1,21 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="sidebar_tasks">タスク</string>
-  <string name="sidebar_skills">スキル</string>
-  <string name="sidebar_section_social">コミュニティー</string>
-  <string name="sidebar_inbox">メッセージ</string>
-  <string name="sidebar_tavern">キャンプ場</string>
-  <string name="sidebar_party">パーティー</string>
-  <string name="sidebar_purchaseGems">ジェムの購入</string>
-  <string name="sidebar_guilds">ギルド</string>
-  <string name="sidebar_challenges">チャレンジ</string>
-  <string name="sidebar_section_inventory">所持品</string>
-  <string name="sidebar_avatar">アバター</string>
-  <string name="sidebar_equipment">装備</string>
-  <string name="sidebar_stable">動物小屋</string>
-  <string name="sidebar_news">お知らせ</string>
-    <string name="sidebar_about">Habitica について</string>
-  <string name="sidebar_shops">ショップ</string>
-  <string name="sidebar_stats">ステータス</string>
+    <string name="sidebar_tasks">タスク</string>
+    <string name="sidebar_skills">スキル</string>
+    <string name="sidebar_section_social">コミュニティ</string>
+    <string name="sidebar_inbox">メッセージ</string>
+    <string name="sidebar_tavern">キャンプ場</string>
+    <string name="sidebar_party">パーティー</string>
+    <string name="sidebar_guilds">ギルド</string>
+    <string name="sidebar_challenges">チャレンジ</string>
+    <string name="sidebar_section_inventory">所持品</string>
+    <string name="sidebar_avatar">アバターカスタマイズ</string>
+    <string name="sidebar_equipment">装備</string>
+    <string name="sidebar_stable">ペットと乗騎</string>
+    <string name="sidebar_news">お知らせ</string>
+    <string name="sidebar_about">Habiticaについて</string>
+    <string name="sidebar_shops">ショップ</string>
+    <string name="sidebar_stats">ステータス</string>
+    <string name="sidebar_subscription">寄付</string>
+    <string name="sidebar_gems">ジェムを買う</string>
 </resources>

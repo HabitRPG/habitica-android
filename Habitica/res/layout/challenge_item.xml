@@ -7,7 +7,6 @@
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
     android:clickable="true"
-    android:background="#fff"
     android:orientation="horizontal"
     android:baselineAligned="false"
     android:paddingEnd="16dp">
@@ -36,7 +35,6 @@
             android:textColor="@color/gem_icon_color"
             android:textSize="17sp"
             android:textStyle="bold"/>
-
     </LinearLayout>
 
     <LinearLayout
@@ -54,6 +52,7 @@
             style="@style/ChallengeName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/text_primary"
             android:maxLines="3"
             tools:text="Name" />
 
@@ -61,7 +60,7 @@
             android:id="@+id/challenge_shorttext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/gray_200"
+            android:textColor="@color/text_ternary"
             android:textSize="12sp"
             tools:text="Description"
             android:layout_marginTop="@dimen/spacing_small"
@@ -81,20 +80,19 @@
                 style="@style/ChallengeTaskDetails"
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"
-                android:layout_marginLeft="4dp"
-                android:layout_marginStart="4dp"
+                android:layout_marginStart="@dimen/spacing_small"
                 android:gravity="center_vertical"
                 tools:text="12334" />
             <TextView
                 android:id="@+id/official_challenge_view"
-                android:layout_marginLeft="@dimen/spacing_small"
+                android:layout_marginStart="@dimen/spacing_small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/Pill.Purple"
                 android:text="@string/official"/>
             <TextView
                 android:id="@+id/is_joined_label"
-                android:layout_marginLeft="@dimen/spacing_small"
+                android:layout_marginStart="@dimen/spacing_small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/Pill.Selected.Green"

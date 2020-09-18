@@ -41,8 +41,8 @@ interface InventoryRepository : BaseRepository {
     fun openMysteryItem(user: User?): Flowable<Equipment>
 
     fun saveEquipment(equipment: Equipment)
-    fun getMounts(type: String, group: String, color: String?): Flowable<RealmResults<Mount>>
-    fun getPets(type: String, group: String, color: String?): Flowable<RealmResults<Pet>>
+    fun getMounts(type: String?, group: String?, color: String?): Flowable<RealmResults<Mount>>
+    fun getPets(type: String?, group: String?, color: String?): Flowable<RealmResults<Pet>>
 
     fun updateOwnedEquipment(user: User)
 
@@ -75,6 +75,8 @@ interface InventoryRepository : BaseRepository {
     fun purchaseItem(purchaseType: String, key: String, purchaseQuantity: Int): Flowable<Any>
 
     fun togglePinnedItem(item: ShopItem): Flowable<List<ShopItem>>
-    fun getItems(itemClass: Class<out Item>, keys: Array<String>, user: User?): Flowable<out RealmResults<out Item>>
+    fun getItems(itemClass: Class<out Item>, keys: Array<String>): Flowable<out RealmResults<out Item>>
+    fun getItems(itemClass: Class<out Item>): Flowable<out RealmResults<out Item>>
     fun getLatestMysteryItem(): Flowable<Equipment>
+    fun getItem(type: String, key: String): Flowable<Item>
 }

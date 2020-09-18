@@ -11,12 +11,7 @@ public class RemindersManagerTest {
 
     @Test
     public void itCreatesRemindersItemFromDateString() {
- //       RemindersManager remindersManager = new RemindersManager("habits");
 
-//        RemindersItem remindersItem = remindersManager.createReminderFromDateString("dd MMMM yyyy HH:mm:ss")
-
-        // assert statements
-        assertEquals("10 x 0 must be 0", 0, 10 * 0 );
     }
 
 }

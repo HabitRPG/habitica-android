@@ -4,14 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/white">
+    android:background="@color/content_background">
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="30dp"
-        android:background="@color/white">
+        android:background="@color/content_background">
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -106,7 +106,7 @@
             <Button
                 android:id="@+id/gift_button"
                 android:layout_width="match_parent"
-                android:layout_height="38dp"
+                android:layout_height="wrap_content"
                 style="@style/HabiticaButton.Purple"
                 android:text="@string/gift_a_subscription"
                 android:layout_marginTop="24dp"
@@ -124,7 +124,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/g1g1_info_2_text"
                 android:gravity="center"
-                android:textColor="@color/gray_300"
+                android:textColor="@color/text_quad"
                 android:lineSpacingExtra="1dp"
                 android:layout_marginBottom="22dp"
                 android:layout_marginStart="15dp"
@@ -142,7 +142,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/g1g1_info_3_text"
                 android:gravity="center"
-                android:textColor="@color/gray_300"
+                android:textColor="@color/text_quad"
                 android:lineSpacingExtra="1dp"
                 android:layout_marginStart="15dp"
                 android:layout_marginEnd="15dp"/>

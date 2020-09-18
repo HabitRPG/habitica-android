@@ -2,12 +2,9 @@ package com.habitrpg.android.habitica.ui.views.dialogs
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
-import android.widget.TextView
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.helpers.MainNavigationController
-import com.habitrpg.android.habitica.models.Notification
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 
 class FirstDropDialog(context: Context) : HabiticaAlertDialog(context) {

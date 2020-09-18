@@ -4,11 +4,11 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/gray_700"
+    android:background="@color/window_background"
     android:paddingTop="@dimen/spacing_large"
     android:paddingBottom="@dimen/spacing_large"
-    android:paddingLeft="@dimen/spacing_large"
-    android:paddingRight="@dimen/spacing_large">
+    android:paddingStart="@dimen/spacing_large"
+    android:paddingEnd="@dimen/spacing_large">
 <TextView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"

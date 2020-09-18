@@ -1,20 +1,21 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="sidebar_tasks">Задачи</string>
-  <string name="sidebar_skills">Навыки</string>
-  <string name="sidebar_section_social">Общение</string>
-  <string name="sidebar_inbox">Сообщения</string>
-  <string name="sidebar_tavern">Таверна</string>
-  <string name="sidebar_party">Команда</string>
-  <string name="sidebar_purchaseGems">Покупка самоцветов</string>
-  <string name="sidebar_guilds">Гильдии</string>
-  <string name="sidebar_challenges">Испытания</string>
-  <string name="sidebar_section_inventory">Инвентарь</string>
-  <string name="sidebar_avatar">Аватар</string>
-  <string name="sidebar_equipment">Снаряжение</string>
-  <string name="sidebar_stable">Стойла</string>
-  <string name="sidebar_news">Новости</string>
+    <string name="sidebar_tasks">Задачи</string>
+    <string name="sidebar_skills">Навыки</string>
+    <string name="sidebar_section_social">Общение</string>
+    <string name="sidebar_inbox">Сообщения</string>
+    <string name="sidebar_tavern">Таверна</string>
+    <string name="sidebar_party">Команда</string>
+    <string name="sidebar_guilds">Гильдии</string>
+    <string name="sidebar_challenges">Испытания</string>
+    <string name="sidebar_section_inventory">Инвентарь</string>
+    <string name="sidebar_avatar">Персонализация аватара</string>
+    <string name="sidebar_equipment">Снаряжение</string>
+    <string name="sidebar_stable">Питомцы и Скакуны</string>
+    <string name="sidebar_news">Новости</string>
     <string name="sidebar_about">О приложении</string>
-  <string name="sidebar_shops">Магазины</string>
-  <string name="sidebar_stats">Статистика</string>
+    <string name="sidebar_shops">Магазины</string>
+    <string name="sidebar_stats">Статистика</string>
+    <string name="sidebar_subscription">Подписка</string>
+    <string name="sidebar_gems">Приобрести самоцветы</string>
 </resources>

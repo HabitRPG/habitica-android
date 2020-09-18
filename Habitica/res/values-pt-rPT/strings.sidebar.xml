@@ -1,20 +1,21 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="sidebar_tasks">Tarefas</string>
-  <string name="sidebar_skills">Habilidades</string>
-  <string name="sidebar_section_social">Social</string>
-  <string name="sidebar_inbox">Mensagens</string>
-  <string name="sidebar_tavern">Taberna</string>
-  <string name="sidebar_party">Equipa</string>
-  <string name="sidebar_purchaseGems">Comprar Gemas</string>
-  <string name="sidebar_guilds">Guildas</string>
-  <string name="sidebar_challenges">Desafios</string>
-  <string name="sidebar_section_inventory">Inventário</string>
-  <string name="sidebar_avatar">Avatar</string>
-  <string name="sidebar_equipment">Equipamento</string>
-  <string name="sidebar_stable">Estábulo</string>
-  <string name="sidebar_news">Noticias</string>
+    <string name="sidebar_tasks">Tarefas</string>
+    <string name="sidebar_skills">Habilidades</string>
+    <string name="sidebar_section_social">Social</string>
+    <string name="sidebar_inbox">Mensagens</string>
+    <string name="sidebar_tavern">Taberna</string>
+    <string name="sidebar_party">Equipa</string>
+    <string name="sidebar_guilds">Guildas</string>
+    <string name="sidebar_challenges">Desafios</string>
+    <string name="sidebar_section_inventory">Inventário</string>
+    <string name="sidebar_avatar">Avatar</string>
+    <string name="sidebar_equipment">Equipamento</string>
+    <string name="sidebar_stable">Crias e Montadas</string>
+    <string name="sidebar_news">Notícias</string>
     <string name="sidebar_about">Sobre</string>
-  <string name="sidebar_shops">Lojas</string>
-  <string name="sidebar_stats">Estatísticas</string>
+    <string name="sidebar_shops">Lojas</string>
+    <string name="sidebar_stats">Atributos</string>
+    <string name="sidebar_subscription">Assinatura</string>
+    <string name="sidebar_gems">Comprar Gemas</string>
 </resources>

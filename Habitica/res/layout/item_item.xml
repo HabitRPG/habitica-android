@@ -11,7 +11,7 @@
         android:layout_width="@dimen/gear_image_size"
         android:layout_height="@dimen/gear_image_size"
         bind:actualImageScaleType="fitCenter"
-        android:layout_marginRight="@dimen/row_padding"/>
+        android:layout_marginEnd="@dimen/row_padding"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -22,12 +22,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="Title"
+            android:textColor="@color/text_primary"
             style="@style/RowTitle"/>
         <TextView
             android:id="@+id/ownedTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="Value"
+            android:textColor="@color/text_secondary"
             style="@style/RowText" />
     </LinearLayout>
 </LinearLayout>

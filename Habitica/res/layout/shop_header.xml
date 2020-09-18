@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -9,7 +8,9 @@
     <com.habitrpg.android.habitica.ui.views.NPCBannerView
         android:id="@+id/npcBannerView"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/shop_scene_height"/>
+        android:layout_height="@dimen/shop_scene_height"
+        android:paddingStart="-8dp"
+        android:paddingEnd="-8dp"/>
 
     <View
         android:layout_width="match_parent"
@@ -25,15 +26,15 @@
         android:background="@drawable/name_plate"
         android:gravity="center_vertical"
         android:textColor="@color/white"
-        android:layout_marginLeft="45dp"
+        android:layout_marginStart="45dp"
         android:layout_marginTop="83dp"
         android:textStyle="bold" />
     <TextView
         android:id="@+id/descriptionView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginTop="120dp"
         android:layout_marginBottom="4dp"
         style="@style/Body1"

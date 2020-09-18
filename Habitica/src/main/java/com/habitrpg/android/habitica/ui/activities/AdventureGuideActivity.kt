@@ -18,7 +18,6 @@ import com.habitrpg.android.habitica.databinding.AdventureGuideItemBinding
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
-import io.reactivex.functions.Consumer
 import javax.inject.Inject
 
 
@@ -85,7 +84,7 @@ class AdventureGuideActivity : BaseActivity() {
 
     override fun onStart() {
         super.onStart()
-        compositeSubscription.add(userRepository.getUser().subscribe(Consumer {
+        compositeSubscription.add(userRepository.getUser().subscribe({
             updateUser(it)
         }, RxErrorHandler.handleEmptyError()))
     }
@@ -118,11 +117,11 @@ class AdventureGuideActivity : BaseActivity() {
             DataBindingUtils.loadImage(itemBinding.iconView, iconName)
             if (achievement.earned) {
                 itemBinding.titleView.paintFlags = itemBinding.titleView.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
-                itemBinding.titleView.setTextColor(ContextCompat.getColor(this, R.color.gray_200))
-                itemBinding.descriptionView.setTextColor(ContextCompat.getColor(this, R.color.gray_200))
+                itemBinding.titleView.setTextColor(ContextCompat.getColor(this, R.color.text_ternary))
+                itemBinding.descriptionView.setTextColor(ContextCompat.getColor(this, R.color.text_ternary))
             } else {
-                itemBinding.titleView.setTextColor(ContextCompat.getColor(this, R.color.gray_50))
-                itemBinding.descriptionView.setTextColor(ContextCompat.getColor(this, R.color.gray_50))
+                itemBinding.titleView.setTextColor(ContextCompat.getColor(this, R.color.text_primary))
+                itemBinding.descriptionView.setTextColor(ContextCompat.getColor(this, R.color.text_primary))
                 itemBinding.iconView.alpha = 0.5f
             }
         }

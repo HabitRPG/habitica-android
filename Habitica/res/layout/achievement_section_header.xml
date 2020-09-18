@@ -6,8 +6,8 @@
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
     android:layout_marginTop="@dimen/spacing_medium"
-    android:paddingLeft="@dimen/spacing_large"
-    android:paddingRight="@dimen/spacing_large">
+    android:paddingStart="@dimen/spacing_large"
+    android:paddingEnd="@dimen/spacing_large">
     <TextView
         android:id="@+id/title"
         android:layout_width="0dp"
@@ -24,7 +24,7 @@
         android:background="@drawable/achievement_section_badge_bg"
         android:paddingStart="2dp"
         android:paddingEnd="2dp"
-        android:textColor="@color/gray_200"
+        android:textColor="@color/text_ternary"
         style="@style/Overline"
         tools:text="1"/>
 </LinearLayout>

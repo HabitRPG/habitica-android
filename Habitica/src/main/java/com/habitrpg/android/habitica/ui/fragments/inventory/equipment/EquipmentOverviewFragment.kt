@@ -12,27 +12,24 @@ import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.Gear
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
-import io.reactivex.functions.Consumer
 import javax.inject.Inject
 
-class EquipmentOverviewFragment : BaseMainFragment() {
+class EquipmentOverviewFragment : BaseMainFragment<FragmentEquipmentOverviewBinding>() {
 
-    private lateinit var binding: FragmentEquipmentOverviewBinding
+    override var binding: FragmentEquipmentOverviewBinding? = null
+
+    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentEquipmentOverviewBinding {
+        return FragmentEquipmentOverviewBinding.inflate(inflater, container, false)
+    }
+
     @Inject
     lateinit var inventoryRepository: InventoryRepository
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        super.onCreateView(inflater, container, savedInstanceState)
-        binding = FragmentEquipmentOverviewBinding.inflate(inflater, container, false)
-        return binding.root
-    }
 
     override var user: User?
         get() = super.user
         set(value) {
             super.user = value
-            if (this::binding.isInitialized) {
+            if (this::inventoryRepository.isInitialized) {
                 value?.items?.gear?.let {
                     updateGearData(it)
                 }
@@ -42,18 +39,18 @@ class EquipmentOverviewFragment : BaseMainFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.battlegearView.onNavigate = { type, equipped ->
+        binding?.battlegearView?.onNavigate = { type, equipped ->
             displayEquipmentDetailList(type, equipped, false)
         }
-        binding.costumeView.onNavigate = { type, equipped ->
+        binding?.costumeView?.onNavigate = { type, equipped ->
             displayEquipmentDetailList(type, equipped, true)
         }
 
-        binding.autoEquipSwitch.isChecked = user?.preferences?.autoEquip ?: false
-        binding.costumeSwitch.isChecked = user?.preferences?.costume ?: false
+        binding?.autoEquipSwitch?.isChecked = user?.preferences?.autoEquip ?: false
+        binding?.costumeSwitch?.isChecked = user?.preferences?.costume ?: false
 
-        binding.autoEquipSwitch.setOnCheckedChangeListener { _, isChecked -> userRepository.updateUser(user, "preferences.autoEquip", isChecked).subscribe(Consumer { }, RxErrorHandler.handleEmptyError()) }
-        binding.costumeSwitch.setOnCheckedChangeListener { _, isChecked -> userRepository.updateUser(user, "preferences.costume", isChecked).subscribe(Consumer { }, RxErrorHandler.handleEmptyError()) }
+        binding?.autoEquipSwitch?.setOnCheckedChangeListener { _, isChecked -> userRepository.updateUser(user, "preferences.autoEquip", isChecked).subscribe({ }, RxErrorHandler.handleEmptyError()) }
+        binding?.costumeSwitch?.setOnCheckedChangeListener { _, isChecked -> userRepository.updateUser(user, "preferences.costume", isChecked).subscribe({ }, RxErrorHandler.handleEmptyError()) }
 
         user?.items?.gear?.let {
             updateGearData(it)
@@ -76,19 +73,19 @@ class EquipmentOverviewFragment : BaseMainFragment() {
     private fun updateGearData(gear: Gear) {
         if (gear.equipped?.weapon?.isNotEmpty() == true) {
             compositeSubscription.add(inventoryRepository.getEquipment(gear.equipped?.weapon ?: "").firstElement()
-                    .subscribe(Consumer {
-                        binding.battlegearView.updateData(gear.equipped, it.twoHanded)
+                    .subscribe({
+                        binding?.battlegearView?.updateData(gear.equipped, it.twoHanded)
                     }, RxErrorHandler.handleEmptyError()))
         } else {
-            binding.battlegearView.updateData(gear.equipped)
+            binding?.battlegearView?.updateData(gear.equipped)
         }
         if (gear.costume?.weapon?.isNotEmpty() == true) {
             compositeSubscription.add(inventoryRepository.getEquipment(gear.costume?.weapon ?: "").firstElement()
-                    .subscribe(Consumer {
-                        binding.costumeView.updateData(gear.costume, it.twoHanded)
+                    .subscribe({
+                        binding?.costumeView?.updateData(gear.costume, it.twoHanded)
                     }, RxErrorHandler.handleEmptyError()))
         } else {
-            binding.costumeView.updateData(gear.costume)
+            binding?.costumeView?.updateData(gear.costume)
         }
     }
 }

@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.habitrpg.android.habitica.ui.activities.MainActivity"
-    android:background="@color/gray_700">
+    android:background="@color/content_background">
 
     <!-- As the main content view, the view below consumes the entire
          space available using match_parent in both dimensions. -->
@@ -32,7 +32,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:titleEnabled="false"
-                    app:contentScrim="?attr/colorPrimaryDark"
+                    app:contentScrim="?attr/headerBackgroundColor"
+                    android:background="?attr/headerBackgroundColor"
                     app:expandedTitleMarginEnd="?attr/actionBarSize"
                     app:expandedTitleMarginStart="0dp"
                     app:layout_scrollFlags="scroll|exitUntilCollapsed">
@@ -43,6 +44,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="?attr/actionBarSize"
+                        android:layout_marginEnd="@dimen/header_border_spacing"
+                        android:layout_marginStart="@dimen/header_border_spacing"
+                        android:layout_marginBottom="@dimen/spacing_medium"
                         app:layout_collapseMode="parallax" />
 
                     <androidx.appcompat.widget.Toolbar
@@ -50,10 +54,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:minHeight="?attr/actionBarSize"
-                        android:theme="@style/Toolbar"
-                        android:background="?attr/colorPrimaryDark"
+                        style="@style/Toolbar.Modern"
+                        android:background="?attr/headerBackgroundColor"
                         app:layout_collapseMode="pin"
-                        app:popupTheme="@style/Theme.AppCompat.Light">
+                        app:popupTheme="@style/Theme.AppCompat.DayNight">
                         <RelativeLayout
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
@@ -67,6 +71,8 @@
                                 android:ellipsize="end"
                                 android:maxLines="1"
                                 android:singleLine="true"
+                                android:layout_toStartOf="@id/toolbar_accessory_container"
+                                android:layout_alignParentStart="true"
                                 style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
                                 tools:text="Habitica"/>
 
@@ -88,24 +94,21 @@
                     android:layout_width="match_parent"
                     android:layout_height="54dp"
                     android:layout_gravity="bottom"
-                    android:background="?colorPrimary"
+                    android:background="?headerOffsetColor"
                     android:elevation="0dp"
                     android:fillViewport="false"
-
-                    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                     app:layout_anchor="@+id/collapsing_toolbar"
                     app:layout_anchorGravity="bottom"
-
                     app:layout_collapseMode="pin"
                     app:tabGravity="fill"
-                    app:tabIndicatorColor="?colorContentBackground"
+                    app:tabIndicatorColor="?colorPrimary"
                     app:tabMode="fixed" />
                 <TextView
                     android:id="@+id/connection_issue_textview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
-                    android:background="@color/gray_50"
+                    android:background="@color/text_primary"
                     android:textSize="14sp"
                     android:gravity="center_horizontal"
                     android:padding="@dimen/spacing_small"
