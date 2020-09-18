@@ -297,7 +297,7 @@
     <string name="all_dailies_completed">오늘의 모든 일일과제를 달성하셨습니다. 잘 했어요!</string>
     <string name="widget_habit_button">해비티카 습관</string>
     <string name="widget_dailies">해비티카 일일과제</string>
-    <string name="widget_todo_list">해비티카 할일 목록</string>
+    <string name="widget_todo_list">해비티카 할 일 목록</string>
     <string name="google_services_missing">구글 플레이 서비스를 찾을 수 없습니다.</string>
     <string name="gem_purchase_toolbartitle">구매</string>
     <string name="gem_purchase_title">보석을 구매하시면 개발자를 지원하고 Habitica가 계속될 수 있도록 도울 수 있습니다</string>
@@ -334,7 +334,7 @@
 \n
 \n연속 정기후원 3개월마다 보석 제한개수가 5개씩, 최대 월 50개까지 올라갑니다!</string>
     <string name="subscribe_listitem2_description">신비한 모래시계를 얻어서 시간 여행자 상점에서 아이템을 구입하세요!</string>
-    <string name="subscribe_listitem3_description">완료한 할 일과 과제 기록이 더 오래 남습니다.</string>
+    <string name="subscribe_listitem3_description">지금 구독하시면 바로 구독자 한정 세트를 받을 수 있고 매 달 새로운 아이템들을 추가로 받게 됩니다!</string>
     <string name="subscribe_listitem4_description">드롭 제한 두 배로 인하여 매일 과제를 수행하며 펫 컬렉션 완성을 도울 더 많은 아이템을 얻을 수 있습니다!</string>
     <string name="subscription_hourglasses">신비한 모래시계 +%d개</string>
     <string name="payment_method">결제수단</string>
