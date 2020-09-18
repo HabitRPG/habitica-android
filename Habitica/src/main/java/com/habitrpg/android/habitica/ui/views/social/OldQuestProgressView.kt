@@ -76,10 +76,12 @@ class OldQuestProgressView : LinearLayout {
             }
             binding.bossNameView.visibility = View.VISIBLE
             binding.bossHealthView.visibility = View.VISIBLE
+            binding.collectedItemsNumberView.visibility = View.GONE
         } else {
             binding.bossNameView.visibility = View.GONE
             binding.bossHealthView.visibility = View.GONE
             binding.bossRageView.visibility = View.GONE
+            binding.collectedItemsNumberView.visibility = View.VISIBLE
 
             if (progress != null) {
                 val inflater = LayoutInflater.from(context)
@@ -101,14 +103,17 @@ class OldQuestProgressView : LinearLayout {
 
     fun configure(user: User, userOnQuest: Boolean?) {
         val value = (user.party?.quest?.progress?.up ?: 0F).toDouble()
+        val collectedItems = user.party?.quest?.progress?.collectedItems
         if (userOnQuest == true) {
             binding.bossHealthView.pendingValue = value
             binding.bossHealthView.description = String.format("%.01f dmg pending", value)
             binding.bossHealthView.descriptionIconVisibility = View.VISIBLE
+            binding.collectedItemsNumberView.text = context.getString(R.string.quest_items_found, collectedItems)
         } else {
             binding.bossHealthView.pendingValue = 0.0
             binding.bossHealthView.description = ""
             binding.bossHealthView.descriptionIconVisibility = View.GONE
+            binding.collectedItemsNumberView.text = ""
         }
     }
 

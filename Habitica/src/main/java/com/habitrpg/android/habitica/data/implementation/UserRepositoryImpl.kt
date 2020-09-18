@@ -4,6 +4,7 @@ import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.data.local.UserLocalRepository
+import com.habitrpg.android.habitica.data.local.UserQuestStatus
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.Achievement
@@ -171,8 +172,8 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
     }
 
     override fun readNotification(id: String): Flowable<List<*>> = apiClient.readNotification(id)
-    override fun getIsUserOnQuest(): Flowable<Boolean> {
-        return localRepository.getIsUserOnQuest(userID)
+    override fun getUserQuestStatus(): Flowable<UserQuestStatus> {
+        return localRepository.getUserQuestStatus(userID)
     }
 
     override fun readNotifications(notificationIds: Map<String, List<String>>): Flowable<List<*>> =

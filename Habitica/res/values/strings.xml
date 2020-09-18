@@ -271,6 +271,7 @@
     <string name="pets">Pets</string>
     <string name="mounts">Mounts</string>
 
+    <string name="quest_items_found">You\'ve found %d quest items</string>
     <string name="armoireEquipment">You found %s in the Armoire</string>
     <string name="armoireFood">You rummage in the Armoire and find %1$s %2$s. What\'s that doing in here?</string>
     <string name="armoireExp">You wrestle with the Armoire and gain Experience. Take that!</string>

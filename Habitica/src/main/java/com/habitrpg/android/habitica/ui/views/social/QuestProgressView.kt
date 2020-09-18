@@ -119,6 +119,7 @@ class QuestProgressView : LinearLayout {
             binding.bossNameView.visibility = View.VISIBLE
             binding.bossHealthView.visibility = View.VISIBLE
             binding.bossHealthView.set(progress.progress?.hp ?: 0.0, quest.boss?.hp?.toDouble() ?: 0.0)
+            binding.collectedItemsNumberView.visibility = View.GONE
 
             if (quest.boss?.hasRage() == true) {
                 binding.rageMeterView.visibility = View.VISIBLE
@@ -141,6 +142,7 @@ class QuestProgressView : LinearLayout {
             binding.rageMeterView.visibility = View.GONE
             binding.bossRageView.visibility = View.GONE
             binding.rageStrikeDescriptionView.visibility = View.GONE
+            binding.collectedItemsNumberView.visibility = View.VISIBLE
 
             val collection = progress.progress?.collect
             if (collection != null) {
@@ -168,6 +170,8 @@ class QuestProgressView : LinearLayout {
 
     fun configure(user: User) {
         binding.pendingDamageTextView.text = String.format("%.01f dmg pending", (user.party?.quest?.progress?.up ?: 0F) )
+        val collectedItems = user.party?.quest?.progress?.collectedItems ?: 0
+        binding.collectedItemsNumberView.text = context.getString(R.string.quest_items_found, collectedItems)
     }
 
     private fun setupRageStrikeViews() {
