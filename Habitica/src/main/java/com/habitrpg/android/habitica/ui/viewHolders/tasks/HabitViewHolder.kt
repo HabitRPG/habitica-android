@@ -40,7 +40,6 @@ class HabitViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> U
             btnPlusCircleView.background = drawable
             this.btnPlus.visibility = View.VISIBLE
             this.btnPlus.isClickable = true
-            //btnPlusIconView.background.alpha = 255
         } else {
             this.btnPlusWrapper.setBackgroundResource(R.color.habit_inactive_gray)
             val plusIcon = ContextCompat.getDrawable(context, R.drawable.habit_plus)
@@ -50,7 +49,6 @@ class HabitViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> U
             btnPlusCircleView.background = ContextCompat.getDrawable(context, R.drawable.habit_circle_disabled)
             this.btnPlus.visibility = View.GONE
             this.btnPlus.isClickable = false
-            btnPlusIconView.background.alpha = 0
         }
 
         if (data.down == true) {
@@ -66,7 +64,6 @@ class HabitViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> U
             btnMinusCircleView.background = drawable
             this.btnMinus.visibility = View.VISIBLE
             this.btnMinus.isClickable = true
-            //btnMinusIconView.background.alpha = 255
         } else {
             this.btnMinusWrapper.setBackgroundResource(R.color.habit_inactive_gray)
             val minusIcon = ContextCompat.getDrawable(context, R.drawable.habit_minus)
@@ -76,7 +73,6 @@ class HabitViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> U
             btnMinusCircleView.background = ContextCompat.getDrawable(context, R.drawable.habit_circle_disabled)
             this.btnMinus.visibility = View.GONE
             this.btnMinus.isClickable = false
-            btnMinusIconView.background.alpha = 0
         }
 
 

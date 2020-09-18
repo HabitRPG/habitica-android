@@ -32,8 +32,8 @@
         <item name="textColorPrimaryDark">@color/brand_600</item>
         <item name="textColorSecondaryDark">@color/brand_500</item>
         <item name="android:textColorPrimary">@color/text_primary</item>
-        <item name="android:textColorSecondary">@color/text_ternary</item>
-        <item name="barColor">@color/brand_200</item>
+        <item name="android:textColorSecondary">@color/text_ternary</item>te
+        <item name="barColor">@color/brand_300</item>
 
         <item name="colorContentBackground">@color/content_background</item>
         <item name="colorWindowBackground">@color/window_background</item>
@@ -64,7 +64,7 @@
         <item name="colorPrimary">@color/gray_500</item>
         <item name="barColor">@color/gray_1</item>
         <item name="colorPrimaryOffset">@color/gray_10</item>
-        <item name="textColorPrimaryDark">@color/brand_500</item>
+        <item name="textColorPrimaryDark">@color/gray_200</item>
     </style>
 
     <style name="MainAppTheme.Red">
@@ -87,7 +87,7 @@
     </style>
 
     <style name="MainAppTheme.Red.Dark">
-        <item name="barColor">@color/gray_10</item>
+        <item name="barColor">@color/gray_1</item>
         <item name="colorPrimaryOffset">@color/gray_10</item>
         <item name="textColorPrimaryDark">@color/gray_200</item>
     </style>
@@ -111,7 +111,7 @@
     </style>
 
     <style name="MainAppTheme.Maroon.Dark">
-        <item name="barColor">@color/gray_10</item>
+        <item name="barColor">@color/gray_1</item>
         <item name="colorPrimaryOffset">@color/gray_10</item>
         <item name="textColorPrimaryDark">@color/gray_200</item>
     </style>
@@ -136,7 +136,7 @@
     </style>
 
     <style name="MainAppTheme.Orange.Dark">
-        <item name="barColor">@color/gray_10</item>
+        <item name="barColor">@color/gray_1</item>
         <item name="colorPrimaryOffset">@color/gray_10</item>
         <item name="textColorPrimaryDark">@color/gray_200</item>
     </style>
@@ -161,7 +161,7 @@
     </style>
 
     <style name="MainAppTheme.Yellow.Dark">
-        <item name="barColor">@color/gray_10</item>
+        <item name="barColor">@color/gray_1</item>
         <item name="colorPrimaryOffset">@color/gray_10</item>
         <item name="textColorPrimaryDark">@color/gray_200</item>
     </style>
@@ -186,7 +186,7 @@
     </style>
 
     <style name="MainAppTheme.Green.Dark">
-        <item name="barColor">@color/gray_10</item>
+        <item name="barColor">@color/gray_1</item>
         <item name="colorPrimaryOffset">@color/gray_10</item>
         <item name="textColorPrimaryDark">@color/gray_200</item>
     </style>
@@ -211,7 +211,7 @@
     </style>
 
     <style name="MainAppTheme.Teal.Dark">
-        <item name="barColor">@color/gray_10</item>
+        <item name="barColor">@color/gray_1</item>
         <item name="colorPrimaryOffset">@color/gray_10</item>
         <item name="textColorPrimaryDark">@color/gray_200</item>
     </style>
@@ -236,7 +236,7 @@
     </style>
 
     <style name="MainAppTheme.Blue.Dark">
-        <item name="barColor">@color/gray_10</item>
+        <item name="barColor">@color/gray_1</item>
         <item name="colorPrimaryOffset">@color/gray_10</item>
         <item name="textColorPrimaryDark">@color/gray_200</item>
     </style>
@@ -278,11 +278,6 @@
 
     <style name="CardContent.Compact" parent="CardContent">
         <item name="android:padding">@dimen/card_padding_compact</item>
-    </style>
-
-    <style name="CardView.Default" parent="Widget.MaterialComponents.CardView">
-        <item name="android:layout_margin">@dimen/card_margin</item>
-        <item name="android:backgroundTint">@color/window_background</item>
     </style>
 
     <style name="RowWrapper">
@@ -750,7 +745,7 @@
 
     <style name="TextInputLayoutAppearance" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
         <item name="boxBackgroundColor">@color/taskform_gray</item>
-        <item name="android:textColor">@color/textColorLight</item>
+        <item name="android:textColor">@color/text_primary</item>
         <item name="android:textColorHint">@color/text_quad</item>
     </style>
 
@@ -801,5 +796,10 @@
 
     <style name="PreferenceThemeOverlay.v14" tools:override="true">
         <item name="android:background">@color/content_background</item>
+    </style>
+
+    <style name="FlatCardView">
+        <item name="android:background">@drawable/layout_rounded_bg_window</item>
+        <item name="android:layout_margin">@dimen/spacing_medium</item>
     </style>
 </resources>

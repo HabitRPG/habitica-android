@@ -13,10 +13,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             >
-            <androidx.cardview.widget.CardView
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/CardView.Default"
+                style="@style/FlatCardView"
                 android:id="@+id/party_invitation_wrapper">
 
                 <com.habitrpg.android.habitica.ui.views.social.InvitationsView
@@ -24,7 +24,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/CardContent" />
-            </androidx.cardview.widget.CardView>
+            </FrameLayout>
 
             <TextView
                 android:id="@+id/title_view"

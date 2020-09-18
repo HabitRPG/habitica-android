@@ -33,7 +33,38 @@
             android:orientation="vertical">
 
             <FrameLayout
-                android:background="@drawable/layout_rounded_bg_window"
+                android:id="@+id/blocked_disclaimer_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/FlatCardView"
+                android:background="@drawable/layout_rounded_bg_red"
+                android:visibility="gone">
+                <LinearLayout
+                    style="@style/CardContent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/CardTitle"
+                        android:text="@string/user_is_blocked"
+                        android:textColor="@color/white"
+                        android:layout_gravity="center" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/CardText"
+                        android:text="@string/user_is_blocked_explanation"
+                        android:textColor="@color/white"
+                        android:gravity="center"
+                        android:layout_gravity="center" />
+                </LinearLayout>
+            </FrameLayout>
+
+            <FrameLayout
+                style="@style/FlatCardView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -119,7 +150,7 @@
             </FrameLayout>
 
             <FrameLayout
-                android:background="@drawable/layout_rounded_bg_window"
+                style="@style/FlatCardView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <LinearLayout
@@ -134,6 +165,7 @@
                         android:text="@string/profile_send_message"
                         style="?android:attr/buttonBarButtonStyle"
                         android:textAllCaps="false"
+                        android:drawableTint="?colorPrimary"
                         android:textSize="13sp"
                         android:drawableTop="@drawable/icon_messages"/>
                     <Button
@@ -143,6 +175,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/profile_gift_gems"
                         style="?android:attr/buttonBarButtonStyle"
+                        android:drawableTint="?colorPrimary"
                         android:textAllCaps="false"
                         android:textSize="13sp"
                         android:drawableTop="@drawable/icon_gift_gems"/>
@@ -153,6 +186,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/profile_gift_subscription"
                         style="?android:attr/buttonBarButtonStyle"
+                        android:drawableTint="?colorPrimary"
                         android:textAllCaps="false"
                         android:textSize="13sp"
                         android:drawableTop="@drawable/icon_gift_subscription"/>
@@ -160,10 +194,9 @@
             </FrameLayout>
 
             <FrameLayout
-                android:background="@drawable/layout_rounded_bg_window"
+                style="@style/FlatCardView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
                 <LinearLayout
                     style="@style/CardContent"
                     android:layout_width="match_parent"
@@ -186,7 +219,7 @@
             </FrameLayout>
 
             <FrameLayout
-                android:background="@drawable/layout_rounded_bg_window"
+                style="@style/FlatCardView"
                 android:id="@+id/costume_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -213,7 +246,7 @@
             </FrameLayout>
 
             <FrameLayout
-                android:background="@drawable/layout_rounded_bg_window"
+                style="@style/FlatCardView"
                 android:id="@+id/attributes_card_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -283,7 +316,7 @@
 
 
             <FrameLayout
-                android:background="@drawable/layout_rounded_bg_window"
+                style="@style/FlatCardView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -352,7 +385,7 @@
 
 
             <FrameLayout
-                android:background="@drawable/layout_rounded_bg_window"
+                style="@style/FlatCardView"
                 android:id="@+id/profile_achievements_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">

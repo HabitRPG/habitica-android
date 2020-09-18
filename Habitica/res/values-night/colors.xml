@@ -31,12 +31,12 @@
     <color name="equipment_overview_background">@color/gray_10</color>
     <color name="inverted_background">@color/gray_10</color>
     <color name="inverted_background_offset">@color/gray_50</color>
-    <color name="background_red">@color/red_10</color>
-    <color name="background_orange">@color/orange_10</color>
-    <color name="background_yellow">@color/yellow_5</color>
-    <color name="background_green">@color/green_10</color>
-    <color name="background_blue">@color/blue_10</color>
-    <color name="background_teal">@color/teal_10</color>
+    <color name="background_red">@color/red_50</color>
+    <color name="background_orange">@color/orange_50</color>
+    <color name="background_yellow">@color/yellow_10</color>
+    <color name="background_green">@color/green_50</color>
+    <color name="background_blue">@color/blue_50</color>
+    <color name="background_teal">@color/teal_50</color>
     <color name="background_brand">@color/brand_200</color>
 
     <color name="checkbox_fill">#40000000</color>
@@ -44,7 +44,6 @@
     <color name="checkbox_fill_selected">#40ffffff</color>
     <color name="taskform_gray">#3D3945</color>
     <color name="reward_buy_button_text">#FFFFB445</color>
-    <color name="task_tint_overlay">#4D19171C</color>
 
     <color name="content_95_alpha">#f21A181D</color>
     <color name="content_80_alpha">#cc1A181D</color>

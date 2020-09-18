@@ -16,10 +16,10 @@
             android:orientation="vertical"
             android:paddingBottom="?android:actionBarSize">
 
-            <androidx.cardview.widget.CardView
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/CardView.Default"
+                style="@style/FlatCardView"
                 android:id="@+id/invitationWrapper">
 
                 <com.habitrpg.android.habitica.ui.views.social.InvitationsView
@@ -27,7 +27,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/CardContent" />
-            </androidx.cardview.widget.CardView>
+            </FrameLayout>
 
             <LinearLayout
                 android:id="@+id/noPartyWrapper"

@@ -1107,4 +1107,6 @@
     <string name="theme_mode">Theme Mode</string>
     <string name="theme_color">Theme Color</string>
     <string name="submit_feedback">Submit Feedback</string>
+    <string name="user_is_blocked">You blocked this user</string>
+    <string name="user_is_blocked_explanation">A blocked user cannot send you Private Messages but you will still see their posts in Tavern or Guilds.</string>
 </resources>

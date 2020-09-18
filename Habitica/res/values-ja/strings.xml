@@ -858,7 +858,7 @@
     <string name="sent_card">%sを送りました</string>
     <string name="share_challenge_with">チャレンジをシェアする</string>
     <string name="details">詳細</string>
-    <string name="create_task">%sを作成する</string>
+    <string name="create_task">%s を作成する</string>
     <string name="confirm_deletion">削除を承認する</string>
     <string name="take_me_back">戻る</string>
     <string name="setup_task_habit_2_notes">または編集画面から削除しましょう</string>

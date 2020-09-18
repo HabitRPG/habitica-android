@@ -83,7 +83,7 @@
                 android:layout_height="wrap_content"
                 android:checked="true"
                 android:text="@string/owned"
-                android:textColor="@color/textColorLight"
+                android:textColor="@color/text_primary"
                 android:paddingStart="8dp" />
 
             <CheckBox
@@ -93,7 +93,7 @@
                 android:layout_height="wrap_content"
                 android:checked="true"
                 android:text="@string/not_owned"
-                android:textColor="@color/textColorLight"
+                android:textColor="@color/text_primary"
                 android:paddingStart="8dp"/>
     </LinearLayout>
 </com.habitrpg.android.habitica.ui.MaxHeightLinearLayout>

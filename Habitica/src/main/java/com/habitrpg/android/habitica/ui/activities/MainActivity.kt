@@ -261,11 +261,13 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     }
 
     private fun updateToolbarTitle(destination: NavDestination, arguments: Bundle?) {
-        binding.toolbarTitle.text = if (destination.id == R.id.petDetailRecyclerFragment || destination.id == R.id.mountDetailRecyclerFragment) {
+        binding.toolbarTitle.text = if (destination.id == R.id.promoInfoFragment) {
+            ""
+        } else if (destination.id == R.id.petDetailRecyclerFragment || destination.id == R.id.mountDetailRecyclerFragment) {
             arguments?.getString("type")
         } else if (destination.label.isNullOrEmpty() && user?.isValid == true) {
             user?.profile?.name
-        } else if (user?.isValid == true && user?.profile != null) {
+        } else if (destination.label != null) {
             destination.label
         } else {
             ""
@@ -360,6 +362,9 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
         launchTrace?.stop()
         launchTrace = null
+
+        val navigationController = findNavController(R.id.nav_host_fragment)
+        navigationController.currentDestination?.let { updateToolbarTitle(it, null) }
     }
 
     override fun onPause() {

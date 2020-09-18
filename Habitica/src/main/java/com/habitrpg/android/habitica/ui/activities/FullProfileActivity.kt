@@ -23,6 +23,7 @@ import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.ActivityFullProfileBinding
 import com.habitrpg.android.habitica.extensions.addCancelButton
+import com.habitrpg.android.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.UserStatComputer
@@ -91,6 +92,9 @@ class FullProfileActivity : BaseActivity() {
         avatarWithBars = AvatarWithBarsViewModel(this, binding.avatarWithBars)
 
         binding.avatarWithBars.root.setBackgroundColor(ContextCompat.getColor(this, R.color.transparent))
+        binding.avatarWithBars.hpBar.barBackgroundColor = getThemeColor(R.color.content_background)
+        binding.avatarWithBars.xpBar.barBackgroundColor = getThemeColor(R.color.content_background)
+        binding.avatarWithBars.mpBar.barBackgroundColor = getThemeColor(R.color.content_background)
 
         attributeRows.clear()
         binding.attributesCardView.setOnClickListener { toggleAttributeDetails() }
@@ -100,6 +104,7 @@ class FullProfileActivity : BaseActivity() {
         binding.giftSubscriptionButton.setOnClickListener { MainNavigationController.navigate(R.id.giftSubscriptionActivity, bundleOf(Pair("userID", userID), Pair("username", null))) }
         compositeSubscription.add(userRepository.getUser().subscribe({
             blocks = it.inbox?.blocks ?: listOf()
+            binding.blockedDisclaimerView.visibility = if (isUserBlocked()) View.VISIBLE else View.GONE
         }, RxErrorHandler.handleEmptyError()))
     }
 
@@ -112,13 +117,17 @@ class FullProfileActivity : BaseActivity() {
         val inflater = menuInflater
         inflater.inflate(R.menu.menu_full_profile, menu)
         val item = menu?.findItem(R.id.block_user)
-        if (blocks.contains(userID)) {
+        if (isUserBlocked()) {
             item?.title = getString(R.string.unblock_user)
         } else {
             item?.title = getString(R.string.block)
         }
         findViewById<Toolbar>(R.id.toolbar).let { ToolbarColorHelper.colorizeToolbar(it, this, overrideModernHeader) }
         return super.onCreateOptionsMenu(menu)
+    }
+
+    private fun isUserBlocked(): Boolean {
+        return blocks.contains(userID)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

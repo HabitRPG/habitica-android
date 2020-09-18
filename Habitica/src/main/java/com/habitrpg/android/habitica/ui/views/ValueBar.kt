@@ -13,6 +13,7 @@ import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.extensions.isUsingNightModeResources
 import com.habitrpg.android.habitica.extensions.layoutInflater
+import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import java.math.RoundingMode
 import java.text.NumberFormat
 
@@ -30,6 +31,24 @@ class ValueBar(context: Context, attrs: AttributeSet?) : FrameLayout(context, at
 
     private var currentValue: Double = 0.0
     private var maxValue: Double = 0.0
+
+    var barForegroundColor: Int
+        get() = binding.progressBar.barForegroundColor
+        set(value) {
+            binding.progressBar.barForegroundColor = value
+        }
+
+    var barPendingColor: Int
+        get() = binding.progressBar.barPendingColor
+        set(value) {
+            binding.progressBar.barPendingColor = value
+        }
+
+    var barBackgroundColor: Int
+        get() = binding.progressBar.barBackgroundColor
+        set(value) {
+            binding.progressBar.barBackgroundColor = value
+        }
 
     var pendingValue: Double = 0.0
         set(value) {
