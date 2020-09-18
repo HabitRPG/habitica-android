@@ -32,20 +32,20 @@
 
     <!-- Widget -->
 
-    <dimen name="button_width">54dp</dimen>
-    <dimen name="button_compact_width">50dp</dimen>
+    <dimen name="button_width">40dp</dimen>
+    <dimen name="button_compact_width">36dp</dimen>
 
     <dimen name="hairline_height">0.5dp</dimen>
     <dimen name="checklist_divider_width">14dp</dimen>
-    <dimen name="checklist_wrapper_width">36dp</dimen>
+    <dimen name="checklist_wrapper_width">24dp</dimen>
     <dimen name="checklist_item_min_height">50dp</dimen>
 
     <dimen name="daily_checkbox_corner_radius">2dp</dimen>
-    <dimen name="checkbox_size">30dp</dimen>
-    <dimen name="checkbox_compact_size">25dp</dimen>
+    <dimen name="checkbox_size">24dp</dimen>
+    <dimen name="checkbox_compact_size">20dp</dimen>
 
-    <dimen name="task_top_bottom_padding">16dp</dimen>
-    <dimen name="task_top_bottom_compact_padding">16dp</dimen>
+    <dimen name="task_top_bottom_padding">10dp</dimen>
+    <dimen name="task_top_bottom_compact_padding">8dp</dimen>
     <dimen name="reward_spacing">8dp</dimen>
     <dimen name="grid_item_margin">6dp</dimen>
     <dimen name="avatar_small_width">90dp</dimen>
@@ -65,7 +65,7 @@
     <dimen name="mount_image_height">99dp</dimen>
     <dimen name="shop_height">124dp</dimen>
     <dimen name="bar_icon_padding">4dp</dimen>
-    <dimen name="task_text_padding">16dp</dimen>
+    <dimen name="task_text_padding">15dp</dimen>
     <dimen name="header_bar_spacing">9dp</dimen>
     <dimen name="bar_size_slim">13dp</dimen>
 
@@ -86,7 +86,7 @@
     <dimen name="diamond_button_height">40dp</dimen>
     <dimen name="setup_customization_size">56dp</dimen>
     <dimen name="outer_inset">16dp</dimen>
-	<dimen name="rounded_button_radius">6dp</dimen>
+	<dimen name="rounded_button_radius">8dp</dimen>
     <dimen name="content_border">18dp</dimen>
 	<dimen name="content_section_spacing">21dp</dimen>
 	<dimen name="header_spacing">6dp</dimen>
@@ -96,7 +96,7 @@
     <dimen name="currency_icon_size">24dp</dimen>
     <dimen name="shopitem_dialog_content_inset">24dp</dimen>
     <dimen name="reward_width">84dp</dimen>
-    <dimen name="task_min_height">60dp</dimen>
+    <dimen name="task_min_height">50dp</dimen>
 
     <!-- Per the design guidelines, navigation drawers should be between 240dp and 320dp:
          https://developer.android.com/design/patterns/navigation-drawer.html -->
@@ -113,10 +113,12 @@
     <dimen name="content_inset">21dp</dimen>
     <dimen name="header_border_spacing">16dp</dimen>
 
-    <dimen name="button_height">38dp</dimen>
+    <dimen name="button_height">53dp</dimen>
     <dimen name="button_height_small">24dp</dimen>
     <dimen name="alert_side_padding">26dp</dimen>
     <dimen name="downwards_drop_shadow_height">16dp</dimen>
     <dimen name="collapsible_section_padding">12dp</dimen>
     <dimen name="widget_rounding">5dp</dimen>
+    <dimen name="task_spacing_vertical">4dp</dimen>
+    <dimen name="task_spacing_horizontal">10dp</dimen>
 </resources>

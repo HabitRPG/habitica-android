@@ -2,9 +2,7 @@ package com.habitrpg.android.habitica.ui.menu
 
 import android.content.Context
 import android.view.View
-import android.widget.LinearLayout
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.MenuBottomSheetBinding
 
 class BottomSheetMenu(context: Context) : BottomSheetDialog(context), View.OnClickListener {
@@ -20,12 +18,6 @@ class BottomSheetMenu(context: Context) : BottomSheetDialog(context), View.OnCli
         this.runnable = runnable
     }
 
-    fun addMenuItems(vararg menuItems: BottomSheetMenuItem) {
-        for (menuItem in menuItems) {
-            this.addMenuItem(menuItem)
-        }
-    }
-
     override fun setTitle(title: CharSequence?) {
         binding.titleView.text = title
         binding.titleView.visibility = View.VISIBLE
@@ -35,10 +27,6 @@ class BottomSheetMenu(context: Context) : BottomSheetDialog(context), View.OnCli
         val item = menuItem.inflate(this.context, layoutInflater, this.binding.menuItems)
         item.setOnClickListener(this)
         this.binding.menuItems.addView(item)
-    }
-
-    fun removeMenuItem(index: Int) {
-        this.binding.menuItems.removeViewAt(index)
     }
 
     override fun onClick(v: View) {

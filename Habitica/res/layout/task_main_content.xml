@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:layout_gravity="center_vertical"
+    android:paddingTop="@dimen/task_top_bottom_padding"
+    android:paddingBottom="@dimen/task_top_bottom_padding"
+    android:paddingEnd="@dimen/task_text_padding"
+    android:paddingStart="@dimen/task_text_padding">
+        <com.habitrpg.android.habitica.ui.views.EllipsisTextView
+            android:id="@+id/checkedTextView"
+            style="@style/Subheader3"
+            android:textColor="?attr/textColorPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:lineSpacingExtra="2sp"
+            android:textSize="14sp"
+            android:letterSpacing="0.025"
+            tools:text="Habit Title" />
+
+        <com.habitrpg.android.habitica.ui.views.EllipsisTextView
+            android:id="@+id/notesTextView"
+            style="@style/Caption2.Regular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_ternary"
+            android:maxLines="3"
+            android:ellipsize="end"
+            android:textSize="12sp"
+            tools:text="Notes"/>
+
+        <Button
+            android:id="@+id/expand_notes_button"
+            android:layout_width="match_parent"
+            android:layout_height="28dp"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
+            android:textSize="11sp"
+            android:text="@string/expand_notes"
+            android:padding="0dp"
+            android:textColor="?colorAccent" />
+        <TextView
+            android:id="@+id/approvalRequiredTextField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Caption4"
+            android:text="@string/pending_approval"
+            android:textColor="@color/text_quad"
+            />
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="7dp" />
+        <LinearLayout
+            android:id="@+id/taskIconWrapper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageView
+                android:id="@+id/iconViewCalendar"
+                android:layout_width="@dimen/task_icon_size"
+                android:layout_height="@dimen/task_icon_size"
+                android:scaleType="center"
+                app:srcCompat="@drawable/task_icon_calendar"
+                android:layout_marginEnd="2dp"
+                app:tint="@color/text_ternary"
+                android:alpha="0.25"
+                app:tintMode="multiply"/>
+            <TextView
+                android:id="@+id/specialTaskText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:visibility="invisible"
+                style="@style/Caption3"
+                tools:visibility="visible"
+                android:textColor="@color/text_ternary"
+                tools:text="special"  />
+            <ImageView
+                android:id="@+id/iconViewStreak"
+                android:layout_width="@dimen/task_icon_size"
+                android:layout_height="@dimen/task_icon_size"
+                android:scaleType="center"
+                app:srcCompat="@drawable/task_icon_streak"
+                android:layout_marginStart="@dimen/task_icon_space"
+                android:layout_marginEnd="2dp"
+                app:tint="@color/text_ternary"
+                android:alpha="0.25"
+                app:tintMode="multiply"/>
+            <TextView
+                android:id="@+id/streakTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/task_icon_size"
+                android:textColor="@color/text_quad"
+                tools:text="10"
+                android:gravity="center_vertical"
+                style="@style/Caption3" />
+
+            <ImageView
+                android:id="@+id/iconviewChallenge"
+                android:layout_width="@dimen/task_icon_size"
+                android:layout_height="@dimen/task_icon_size"
+                android:layout_marginStart="@dimen/task_icon_space"
+                android:contentDescription="@string/belongs_to_challenge"
+                android:scaleType="center"
+                app:srcCompat="@drawable/task_megaphone"
+                app:tint="@color/text_ternary"
+                android:alpha="0.25"
+                app:tintMode="multiply" />
+            <ImageView
+                android:id="@+id/iconviewReminder"
+                android:layout_width="@dimen/task_icon_size"
+                android:layout_height="@dimen/task_icon_size"
+                android:layout_marginStart="@dimen/task_icon_space"
+                android:contentDescription="@string/has_reminder"
+                android:scaleType="center"
+                app:srcCompat="@drawable/task_icon_reminder"
+                app:tint="@color/text_ternary"
+                android:alpha="0.25"
+                app:tintMode="multiply"/>
+            <TextView
+                android:id="@+id/reminder_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_quad"
+                style="@style/Caption3" />
+        </LinearLayout>
+</LinearLayout>

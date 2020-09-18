@@ -16,7 +16,8 @@ import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
-import android.widget.*
+import android.widget.EditText
+import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
@@ -39,17 +40,15 @@ import com.habitrpg.android.habitica.api.HostConfig
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.UserRepository
+import com.habitrpg.android.habitica.databinding.ActivityLoginBinding
 import com.habitrpg.android.habitica.extensions.addCancelButton
 import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.extensions.addOkButton
 import com.habitrpg.android.habitica.helpers.*
 import com.habitrpg.android.habitica.models.auth.UserAuthResponse
 import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
-import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
-import com.habitrpg.android.habitica.ui.views.login.LockableScrollView
-import com.habitrpg.android.habitica.ui.views.login.LoginBackgroundView
 import com.willowtreeapps.signinwithapplebutton.SignInWithAppleConfiguration
 import io.reactivex.Flowable
 import io.reactivex.exceptions.Exceptions
@@ -59,6 +58,8 @@ import java.io.IOException
 import javax.inject.Inject
 
 class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
+
+    private lateinit var binding: ActivityLoginBinding
 
     @Inject
     lateinit var apiClient: ApiClient
@@ -79,36 +80,17 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
     private var isRegistering: Boolean = false
     private var isShowingForm: Boolean = false
 
-    private val backgroundContainer: LockableScrollView by bindView(R.id.background_container)
-    internal val backgroundView: LoginBackgroundView by bindView(R.id.background_view)
-    internal val newGameButton: Button by bindView(R.id.new_game_button)
-    internal val showLoginButton: Button by bindView(R.id.show_login_button)
-    internal val scrollView: ScrollView by bindView(R.id.login_scrollview)
-    private val formWrapper: LinearLayout by bindView(R.id.login_linear_layout)
-    private val backButton: Button by bindView(R.id.back_button)
-    private val logoView: ImageView by bindView(R.id.logo_view)
-    private val mLoginNormalBtn: Button by bindView(R.id.login_btn)
-    private val mProgressBar: ProgressBar by bindView(R.id.PB_AsyncTask)
-    private val mUsernameET: EditText by bindView(R.id.username)
-    private val mPasswordET: EditText by bindView(R.id.password)
-    private val mEmail: EditText by bindView(R.id.email)
-    private val mConfirmPassword: EditText by bindView(R.id.confirm_password)
-    private val forgotPasswordButton: Button by bindView(R.id.forgot_password)
-    private val facebookLoginButton: Button by bindView(R.id.fb_login_button)
-    private val googleLoginButton: Button by bindView(R.id.google_login_button)
-    private val appleLoginButton: Button by bindView(R.id.apple_login_button)
-
     private var callbackManager = CallbackManager.Factory.create()
     private var googleEmail: String? = null
     private var loginManager = LoginManager.getInstance()
 
     private val loginClick = View.OnClickListener {
-        mProgressBar.visibility = View.VISIBLE
+        binding.PBAsyncTask.visibility = View.VISIBLE
         if (isRegistering) {
-            val username: String = mUsernameET.text.toString().trim { it <= ' ' }
-            val email: String = mEmail.text.toString().trim { it <= ' ' }
-            val password: String = mPasswordET.text.toString()
-            val confirmPassword: String = mConfirmPassword.text.toString()
+            val username: String = binding.username.text.toString().trim { it <= ' ' }
+            val email: String = binding.email.text.toString().trim { it <= ' ' }
+            val password: String = binding.password.text.toString()
+            val confirmPassword: String = binding.confirmPassword.text.toString()
             if (username.isEmpty() || password.isEmpty() || email.isEmpty() || confirmPassword.isEmpty()) {
                 showValidationError(R.string.login_validation_error_fieldsmissing)
                 return@OnClickListener
@@ -119,19 +101,19 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
             }
             apiClient.registerUser(username, email, password, confirmPassword)
                     .subscribe(this@LoginActivity,
-                            Consumer {
+                            {
                                 hideProgress()
                                 RxErrorHandler.reportError(it)
                             })
         } else {
-            val username: String = mUsernameET.text.toString().trim { it <= ' ' }
-            val password: String = mPasswordET.text.toString()
+            val username: String = binding.username.text.toString().trim { it <= ' ' }
+            val password: String = binding.password.text.toString()
             if (username.isEmpty() || password.isEmpty()) {
                 showValidationError(R.string.login_validation_error_fieldsmissing)
                 return@OnClickListener
             }
             apiClient.connectUser(username, password).subscribe(this@LoginActivity,
-                    Consumer {
+                    {
                         hideProgress()
                         RxErrorHandler.reportError(it)
                     })
@@ -143,6 +125,11 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
         return R.layout.activity_login
     }
 
+    override fun getContentView(): View {
+        binding = ActivityLoginBinding.inflate(layoutInflater)
+        return binding.root
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
             supportActionBar?.hide()
@@ -151,11 +138,11 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
 
         setupFacebookLogin()
 
-        mLoginNormalBtn.setOnClickListener(loginClick)
+        binding.loginBtn.setOnClickListener(loginClick)
 
-        val content = SpannableString(forgotPasswordButton.text)
+        val content = SpannableString(binding.forgotPassword.text)
         content.setSpan(UnderlineSpan(), 0, content.length, 0)
-        forgotPasswordButton.text = content
+        binding.forgotPassword.text = content
 
         this.isRegistering = true
 
@@ -163,8 +150,8 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
         additionalData["page"] = this.javaClass.simpleName
         AmplitudeManager.sendEvent("navigate", AmplitudeManager.EVENT_CATEGORY_NAVIGATION, AmplitudeManager.EVENT_HITTYPE_PAGEVIEW, additionalData)
 
-        backgroundContainer.post { backgroundContainer.scrollTo(0, backgroundContainer.bottom) }
-        backgroundContainer.setScrollingEnabled(false)
+        binding.backgroundContainer.post { binding.backgroundContainer.scrollTo(0, binding.backgroundContainer.bottom) }
+        binding.backgroundContainer.isScrollable = false
 
         val window = window
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -172,13 +159,13 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
         }
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
 
-        newGameButton.setOnClickListener { newGameButtonClicked() }
-        showLoginButton.setOnClickListener { showLoginButtonClicked() }
-        backButton.setOnClickListener { backButtonClicked() }
-        forgotPasswordButton.setOnClickListener { onForgotPasswordClicked() }
-        facebookLoginButton.setOnClickListener { handleFacebookLogin() }
-        googleLoginButton.setOnClickListener { handleGoogleLogin() }
-        appleLoginButton.setOnClickListener {
+        binding.newGameButton.setOnClickListener { newGameButtonClicked() }
+        binding.showLoginButton.setOnClickListener { showLoginButtonClicked() }
+        binding.backButton.setOnClickListener { backButtonClicked() }
+        binding.forgotPassword.setOnClickListener { onForgotPasswordClicked() }
+        binding.fbLoginButton.setOnClickListener { handleFacebookLogin() }
+        binding.googleLoginButton.setOnClickListener { handleGoogleLogin() }
+        binding.appleLoginButton.setOnClickListener {
             val configuration = SignInWithAppleConfiguration(
                     clientId = BuildConfig.APPLE_AUTH_CLIENT_ID,
                     redirectUri = "${hostConfig.address}/api/v4/user/auth/apple",
@@ -232,18 +219,18 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
 
     private fun resetLayout() {
         if (this.isRegistering) {
-            if (this.mEmail.visibility == View.GONE) {
-                show(this.mEmail)
+            if (binding.email.visibility == View.GONE) {
+                show(binding.email)
             }
-            if (this.mConfirmPassword.visibility == View.GONE) {
-                show(this.mConfirmPassword)
+            if (binding.confirmPassword.visibility == View.GONE) {
+                show(binding.confirmPassword)
             }
         } else {
-            if (this.mEmail.visibility == View.VISIBLE) {
-                hide(this.mEmail)
+            if (binding.email.visibility == View.VISIBLE) {
+                hide(binding.email)
             }
-            if (this.mConfirmPassword.visibility == View.VISIBLE) {
-                hide(this.mConfirmPassword)
+            if (binding.confirmPassword.visibility == View.VISIBLE) {
+                hide(binding.confirmPassword)
             }
         }
     }
@@ -269,17 +256,25 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
 
     private fun setRegistering() {
         if (this.isRegistering) {
-            this.mLoginNormalBtn.text = getString(R.string.register_btn)
-            mUsernameET.setHint(R.string.username)
-            mPasswordET.imeOptions = EditorInfo.IME_ACTION_NEXT
-            facebookLoginButton.setText(R.string.register_btn_fb)
-            googleLoginButton.setText(R.string.register_btn_google)
+            binding.loginBtn.text = getString(R.string.register_btn)
+            binding.username.setHint(R.string.username)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                binding.username.setAutofillHints("newUsername")
+                binding.password.setAutofillHints("newPassword")
+            }
+            binding.password.imeOptions = EditorInfo.IME_ACTION_NEXT
+            binding.fbLoginButton.setText(R.string.register_btn_fb)
+            binding.googleLoginButton.setText(R.string.register_btn_google)
         } else {
-            this.mLoginNormalBtn.text = getString(R.string.login_btn)
-            mUsernameET.setHint(R.string.email_username)
-            mPasswordET.imeOptions = EditorInfo.IME_ACTION_DONE
-            facebookLoginButton.setText(R.string.login_btn_fb)
-            googleLoginButton.setText(R.string.login_btn_google)
+            binding.loginBtn.text = getString(R.string.login_btn)
+            binding.username.setHint(R.string.email_username)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                binding.username.setAutofillHints("username")
+                binding.password.setAutofillHints("password")
+            }
+            binding.password.imeOptions = EditorInfo.IME_ACTION_DONE
+            binding.fbLoginButton.setText(R.string.login_btn_fb)
+            binding.googleLoginButton.setText(R.string.login_btn_google)
         }
         this.resetLayout()
     }
@@ -307,7 +302,7 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
             val accessToken = AccessToken.getCurrentAccessToken()
             if (accessToken != null && accessToken.token != null) {
                 compositeSubscription.add(apiClient.connectSocial("facebook", accessToken.userId, accessToken.token)
-                        .subscribe(this@LoginActivity, Consumer { hideProgress() }))
+                        .subscribe(this@LoginActivity, { hideProgress() }))
             }
         }
     }
@@ -343,7 +338,7 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
 
     private fun hideProgress() {
         runOnUiThread {
-            mProgressBar.visibility = View.GONE
+            binding.PBAsyncTask.visibility = View.GONE
         }
     }
 
@@ -352,7 +347,7 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
     }
 
     private fun showValidationError(message: String) {
-        mProgressBar.visibility = View.GONE
+        binding.PBAsyncTask.visibility = View.GONE
         val alert = HabiticaAlertDialog(this)
         alert.setTitle(R.string.login_validation_error_title)
         alert.setMessage(message)
@@ -376,12 +371,12 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
         }
 
         compositeSubscription.add(userRepository.retrieveUser(true)
-                .subscribe(Consumer {
+                .subscribe({
                     if (userAuthResponse.newUser) {
                         this.startSetupActivity()
                     } else {
-                        AmplitudeManager.sendEvent("login", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT)
                         this.startMainActivity()
+                        AmplitudeManager.sendEvent("login", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT)
                     }
                 }, RxErrorHandler.handleEmptyError()))
     }
@@ -412,7 +407,7 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
     private fun handleGoogleLoginResult() {
         val scopesString = Scopes.PROFILE + " " + Scopes.EMAIL
         val scopes = "oauth2:$scopesString"
-        Flowable.defer<String> {
+        compositeSubscription.add(Flowable.defer {
             try {
                 @Suppress("Deprecation")
                 return@defer Flowable.just(GoogleAuthUtil.getToken(this, googleEmail, scopes))
@@ -424,7 +419,7 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
         }
                 .subscribeOn(Schedulers.io())
                 .flatMap { token -> apiClient.connectSocial("google", googleEmail ?: "", token) }
-                .subscribe(this@LoginActivity, Consumer { throwable ->
+                .subscribe(this@LoginActivity, { throwable ->
                     throwable.printStackTrace()
                     hideProgress()
                     throwable.cause?.let {
@@ -433,7 +428,7 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
                         }
                     }
 
-                })
+                }))
     }
 
     private fun handleGoogleAuthException(e: Exception) {
@@ -493,15 +488,15 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
 
     private fun showForm() {
         isShowingForm = true
-        val panAnimation = ObjectAnimator.ofInt(backgroundContainer, "scrollY", 0).setDuration(1000)
-        val newGameAlphaAnimation = ObjectAnimator.ofFloat<View>(newGameButton, View.ALPHA, 0.toFloat())
-        val showLoginAlphaAnimation = ObjectAnimator.ofFloat<View>(showLoginButton, View.ALPHA, 0.toFloat())
-        val scaleLogoAnimation = ValueAnimator.ofInt(logoView.measuredHeight, (logoView.measuredHeight * 0.75).toInt())
+        val panAnimation = ObjectAnimator.ofInt(binding.backgroundContainer, "scrollY", 0).setDuration(1000)
+        val newGameAlphaAnimation = ObjectAnimator.ofFloat(binding.newGameButton, View.ALPHA, 0.toFloat())
+        val showLoginAlphaAnimation = ObjectAnimator.ofFloat(binding.showLoginButton, View.ALPHA, 0.toFloat())
+        val scaleLogoAnimation = ValueAnimator.ofInt(binding.logoView.measuredHeight, (binding.logoView.measuredHeight * 0.75).toInt())
         scaleLogoAnimation.addUpdateListener { valueAnimator ->
             val value = valueAnimator.animatedValue as? Int ?: 0
-            val layoutParams = logoView.layoutParams
+            val layoutParams = binding.logoView.layoutParams
             layoutParams.height = value
-            logoView.layoutParams = layoutParams
+            binding.logoView.layoutParams = layoutParams
         }
         if (isRegistering) {
             newGameAlphaAnimation.startDelay = 600
@@ -509,10 +504,10 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
             showLoginAlphaAnimation.duration = 400
             newGameAlphaAnimation.addListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationEnd(animation: Animator) {
-                    newGameButton.visibility = View.GONE
-                    showLoginButton.visibility = View.GONE
-                    scrollView.visibility = View.VISIBLE
-                    scrollView.alpha = 1f
+                    binding.newGameButton.visibility = View.GONE
+                    binding.showLoginButton.visibility = View.GONE
+                    binding.loginScrollview.visibility = View.VISIBLE
+                    binding.loginScrollview.alpha = 1f
                 }
             })
         } else {
@@ -521,21 +516,21 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
             newGameAlphaAnimation.duration = 400
             showLoginAlphaAnimation.addListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationEnd(animation: Animator) {
-                    newGameButton.visibility = View.GONE
-                    showLoginButton.visibility = View.GONE
-                    scrollView.visibility = View.VISIBLE
-                    scrollView.alpha = 1f
+                    binding.newGameButton.visibility = View.GONE
+                    binding.showLoginButton.visibility = View.GONE
+                    binding.loginScrollview.visibility = View.VISIBLE
+                    binding.loginScrollview.alpha = 1f
                 }
             })
         }
-        val backAlphaAnimation = ObjectAnimator.ofFloat<View>(backButton, View.ALPHA, 1.toFloat()).setDuration(800)
+        val backAlphaAnimation = ObjectAnimator.ofFloat(binding.backButton, View.ALPHA, 1.toFloat()).setDuration(800)
         val showAnimation = AnimatorSet()
         showAnimation.playTogether(panAnimation, newGameAlphaAnimation, showLoginAlphaAnimation, scaleLogoAnimation)
         showAnimation.play(backAlphaAnimation).after(panAnimation)
-        for (i in 0 until formWrapper.childCount) {
-            val view = formWrapper.getChildAt(i)
+        for (i in 0 until binding.formWrapper.childCount) {
+            val view = binding.formWrapper.getChildAt(i)
             view.alpha = 0f
-            val animator = ObjectAnimator.ofFloat<View>(view, View.ALPHA, 1.toFloat()).setDuration(400)
+            val animator = ObjectAnimator.ofFloat(view, View.ALPHA, 1.toFloat()).setDuration(400)
             animator.startDelay = (100 * i).toLong()
             showAnimation.play(animator).after(panAnimation)
         }
@@ -545,26 +540,26 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
 
     private fun hideForm() {
         isShowingForm = false
-        val panAnimation = ObjectAnimator.ofInt(backgroundContainer, "scrollY", backgroundContainer.bottom).setDuration(1000)
-        val newGameAlphaAnimation = ObjectAnimator.ofFloat<View>(newGameButton, View.ALPHA, 1.toFloat()).setDuration(700)
-        val showLoginAlphaAnimation = ObjectAnimator.ofFloat<View>(showLoginButton, View.ALPHA, 1.toFloat()).setDuration(700)
-        val scaleLogoAnimation = ValueAnimator.ofInt(logoView.measuredHeight, (logoView.measuredHeight * 1.333333).toInt())
+        val panAnimation = ObjectAnimator.ofInt(binding.backgroundContainer, "scrollY", binding.backgroundContainer.bottom).setDuration(1000)
+        val newGameAlphaAnimation = ObjectAnimator.ofFloat(binding.newGameButton, View.ALPHA, 1.toFloat()).setDuration(700)
+        val showLoginAlphaAnimation = ObjectAnimator.ofFloat(binding.showLoginButton, View.ALPHA, 1.toFloat()).setDuration(700)
+        val scaleLogoAnimation = ValueAnimator.ofInt(binding.logoView.measuredHeight, (binding.logoView.measuredHeight * 1.333333).toInt())
         scaleLogoAnimation.addUpdateListener { valueAnimator ->
             val value = valueAnimator.animatedValue as? Int
-            val layoutParams = logoView.layoutParams
+            val layoutParams = binding.logoView.layoutParams
             layoutParams.height = value ?: 0
-            logoView.layoutParams = layoutParams
+            binding.logoView.layoutParams = layoutParams
         }
         showLoginAlphaAnimation.startDelay = 300
-        val scrollViewAlphaAnimation = ObjectAnimator.ofFloat<View>(scrollView, View.ALPHA, 0.toFloat()).setDuration(800)
+        val scrollViewAlphaAnimation = ObjectAnimator.ofFloat(binding.loginScrollview, View.ALPHA, 0.toFloat()).setDuration(800)
         scrollViewAlphaAnimation.addListener(object : AnimatorListenerAdapter() {
             override fun onAnimationEnd(animation: Animator) {
-                newGameButton.visibility = View.VISIBLE
-                showLoginButton.visibility = View.VISIBLE
-                scrollView.visibility = View.INVISIBLE
+                binding.newGameButton.visibility = View.VISIBLE
+                binding.showLoginButton.visibility = View.VISIBLE
+                binding.loginScrollview.visibility = View.INVISIBLE
             }
         })
-        val backAlphaAnimation = ObjectAnimator.ofFloat<View>(backButton, View.ALPHA, 0.toFloat()).setDuration(800)
+        val backAlphaAnimation = ObjectAnimator.ofFloat(binding.backButton, View.ALPHA, 0.toFloat()).setDuration(800)
         val showAnimation = AnimatorSet()
         showAnimation.playTogether(panAnimation, scrollViewAlphaAnimation, backAlphaAnimation, scaleLogoAnimation)
         showAnimation.play(newGameAlphaAnimation).after(scrollViewAlphaAnimation)
@@ -588,7 +583,7 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
         alertDialog.setMessage(R.string.forgot_password_description)
         alertDialog.setAdditionalContentView(input)
         alertDialog.addButton(R.string.send, true) { _, _ ->
-                    userRepository.sendPasswordResetEmail(input.text.toString()).subscribe(Consumer { showPasswordEmailConfirmation() }, RxErrorHandler.handleEmptyError())
+                    userRepository.sendPasswordResetEmail(input.text.toString()).subscribe({ showPasswordEmailConfirmation() }, RxErrorHandler.handleEmptyError())
                 }
         alertDialog.addCancelButton()
         alertDialog.show()

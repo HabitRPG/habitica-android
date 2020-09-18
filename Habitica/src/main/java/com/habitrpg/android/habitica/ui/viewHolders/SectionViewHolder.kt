@@ -11,14 +11,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.models.inventory.StableSection
-import com.habitrpg.android.habitica.ui.helpers.bindView
 
 class SectionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    private val label: TextView by bindView(itemView, R.id.label)
-    private val selectionSpinner: Spinner? by bindView(itemView, R.id.classSelectionSpinner)
-    internal val notesView: TextView? by bindView(itemView, R.id.headerNotesView)
-    private val countPill: TextView? by bindView(itemView, R.id.count_pill)
+    private val label: TextView = itemView.findViewById(R.id.label)
+    private val selectionSpinner: Spinner? = itemView.findViewById(R.id.classSelectionSpinner)
+    internal val notesView: TextView? = itemView.findViewById(R.id.headerNotesView)
+    private val countPill: TextView? = itemView.findViewById(R.id.count_pill)
     var context: Context = itemView.context
 
     var spinnerSelectionChanged: (() -> Unit)? = null

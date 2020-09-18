@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.habitrpg.android.habitica.ui.activities.FixCharacterValuesActivity"
-    android:background="@color/white">
+    android:background="?attr/colorContentBackground">
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -32,14 +32,14 @@
                         android:layout_height="wrap_content"
                         android:padding="@dimen/outer_inset"
                         android:text="@string/fix_character_description"
-                        android:background="@color/gray_700"
+                        android:background="@color/window_background"
                         android:layout_marginBottom="16dp"
                         />
                     <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="16dp"
-                        android:layout_marginRight="16dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
                         android:layout_marginBottom="12dp" >
                     <View
                         android:id="@+id/healthIconBackgroundView"
@@ -55,11 +55,10 @@
                             android:layout_height="match_parent"
                             android:layout_width="0dp"
                             android:layout_weight="1"
-                            android:background="@drawable/layout_rounded_bg_gray_700"
-                            android:paddingTop="8dp"
+                            android:background="@drawable/layout_rounded_bg_window"
                             android:hint="@string/health"
                             android:paddingStart="16dp">
-                            <EditText
+                            <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/healthEditText"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
@@ -76,14 +75,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="2dp"
                         android:layout_gravity="bottom"
-                        android:background="@color/gray_500"
+                        android:background="@color/content_background_offset"
                         android:layout_marginEnd="56dp"/>
                     </FrameLayout>
                     <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="16dp"
-                        android:layout_marginRight="16dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
                         android:layout_marginBottom="12dp" >
                         <View
                             android:id="@+id/experienceIconBackgroundView"
@@ -98,11 +97,10 @@
                                 android:layout_height="match_parent"
                                 android:layout_width="0dp"
                                 android:layout_weight="1"
-                                android:background="@drawable/layout_rounded_bg_gray_700"
-                                android:paddingTop="8dp"
+                                android:background="@drawable/layout_rounded_bg_window"
                                 android:hint="@string/experience_points"
                                 android:paddingStart="16dp">
-                                <EditText
+                                <com.google.android.material.textfield.TextInputEditText
                                     android:id="@+id/experienceEditText"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
@@ -119,14 +117,14 @@
                             android:layout_width="match_parent"
                             android:layout_height="2dp"
                             android:layout_gravity="bottom"
-                            android:background="@color/gray_500"
+                            android:background="@color/content_background_offset"
                             android:layout_marginEnd="56dp"/>
                     </FrameLayout>
                     <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="16dp"
-                        android:layout_marginRight="16dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
                         android:layout_marginBottom="12dp" >
                         <View
                             android:id="@+id/manaIconBackgroundView"
@@ -141,11 +139,10 @@
                                 android:layout_height="match_parent"
                                 android:layout_width="0dp"
                                 android:layout_weight="1"
-                                android:background="@drawable/layout_rounded_bg_gray_700"
-                                android:paddingTop="8dp"
+                                android:background="@drawable/layout_rounded_bg_window"
                                 android:hint="@string/mana_points"
                                 android:paddingStart="16dp">
-                                <EditText
+                                <com.google.android.material.textfield.TextInputEditText
                                     android:id="@+id/manaEditText"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
@@ -162,14 +159,14 @@
                             android:layout_width="match_parent"
                             android:layout_height="2dp"
                             android:layout_gravity="bottom"
-                            android:background="@color/gray_500"
+                            android:background="@color/content_background_offset"
                             android:layout_marginEnd="56dp"/>
                     </FrameLayout>
                     <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="16dp"
-                        android:layout_marginRight="16dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
                         android:layout_marginBottom="12dp" >
                         <View
                             android:id="@+id/goldIconBackgroundView"
@@ -184,11 +181,10 @@
                                 android:layout_height="match_parent"
                                 android:layout_width="0dp"
                                 android:layout_weight="1"
-                                android:background="@drawable/layout_rounded_bg_gray_700"
-                                android:paddingTop="8dp"
+                                android:background="@drawable/layout_rounded_bg_window"
                                 android:hint="@string/gold_capitalilzed"
                                 android:paddingStart="16dp">
-                                <EditText
+                                <com.google.android.material.textfield.TextInputEditText
                                     android:id="@+id/goldEditText"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
@@ -205,14 +201,14 @@
                             android:layout_width="match_parent"
                             android:layout_height="2dp"
                             android:layout_gravity="bottom"
-                            android:background="@color/gray_500"
+                            android:background="@color/content_background_offset"
                             android:layout_marginEnd="56dp"/>
                     </FrameLayout>
                     <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="16dp"
-                        android:layout_marginRight="16dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
                         android:layout_marginBottom="12dp" >
                         <View
                             android:id="@+id/levelIconBackgroundView"
@@ -227,11 +223,10 @@
                                 android:layout_height="match_parent"
                                 android:layout_width="0dp"
                                 android:layout_weight="1"
-                                android:background="@drawable/layout_rounded_bg_gray_700"
-                                android:paddingTop="8dp"
+                                android:background="@drawable/layout_rounded_bg_window"
                                 android:hint="@string/character_level"
                                 android:paddingStart="16dp">
-                                <EditText
+                                <com.google.android.material.textfield.TextInputEditText
                                     android:id="@+id/levelEditText"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
@@ -248,14 +243,14 @@
                             android:layout_width="match_parent"
                             android:layout_height="2dp"
                             android:layout_gravity="bottom"
-                            android:background="@color/gray_500"
+                            android:background="@color/content_background_offset"
                             android:layout_marginEnd="56dp"/>
                     </FrameLayout>
                     <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="16dp"
-                        android:layout_marginRight="16dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
                         android:layout_marginBottom="12dp" >
                         <View
                             android:id="@+id/streakIconBackgroundView"
@@ -271,11 +266,10 @@
                                 android:layout_height="match_parent"
                                 android:layout_width="0dp"
                                 android:layout_weight="1"
-                                android:background="@drawable/layout_rounded_bg_gray_700"
-                                android:paddingTop="8dp"
+                                android:background="@drawable/layout_rounded_bg_window"
                                 android:hint="@string/streak_label"
                                 android:paddingStart="16dp">
-                                <EditText
+                                <com.google.android.material.textfield.TextInputEditText
                                     android:id="@+id/streakEditText"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
@@ -292,7 +286,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="2dp"
                             android:layout_gravity="bottom"
-                            android:background="@color/gray_500"
+                            android:background="@color/content_background_offset"
                             android:layout_marginEnd="56dp"/>
                     </FrameLayout>
                 </LinearLayout>

@@ -8,32 +8,33 @@ import androidx.fragment.app.FragmentPagerAdapter
 import com.google.android.material.tabs.TabLayout
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
+import com.habitrpg.android.habitica.databinding.FragmentViewpagerBinding
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
-import com.habitrpg.android.habitica.ui.helpers.bindView
-import com.habitrpg.android.habitica.ui.helpers.resetViews
 
-class ItemsFragment : BaseMainFragment() {
+class ItemsFragment : BaseMainFragment<FragmentViewpagerBinding>() {
 
-    private val viewPager: androidx.viewpager.widget.ViewPager? by bindView(R.id.viewPager)
+    override var binding: FragmentViewpagerBinding? = null
+
+    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentViewpagerBinding {
+        return FragmentViewpagerBinding.inflate(inflater, container, false)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         this.usesTabLayout = true
-        super.onCreateView(inflater, container, savedInstanceState)
-        return inflater.inflate(R.layout.fragment_viewpager, container, false)
+        this.hidesToolbar = true
+        return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        resetViews()
-
-        viewPager?.currentItem = 0
+        binding?.viewPager?.currentItem = 0
         setViewPagerAdapter()
 
         arguments?.let {
             val args = ItemsFragmentArgs.fromBundle(it)
-                viewPager?.currentItem = when (args.itemType) {
+            binding?.viewPager?.currentItem = when (args.itemType) {
                     "hatchingPotions" -> 1
                     "food" -> 2
                     "quests" -> 3
@@ -50,7 +51,7 @@ class ItemsFragment : BaseMainFragment() {
     private fun setViewPagerAdapter() {
         val fragmentManager = childFragmentManager
 
-        viewPager?.adapter = object : FragmentPagerAdapter(fragmentManager) {
+        binding?.viewPager?.adapter = object : FragmentPagerAdapter(fragmentManager) {
 
             override fun getItem(position: Int): androidx.fragment.app.Fragment {
                 val fragment = ItemRecyclerFragment()
@@ -88,7 +89,7 @@ class ItemsFragment : BaseMainFragment() {
                 } ?: ""
             }
         }
-        tabLayout?.setupWithViewPager(viewPager)
+        tabLayout?.setupWithViewPager(binding?.viewPager)
         tabLayout?.tabMode = TabLayout.MODE_SCROLLABLE
     }
 }

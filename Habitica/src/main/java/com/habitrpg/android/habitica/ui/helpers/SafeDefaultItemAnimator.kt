@@ -33,15 +33,15 @@ class SafeDefaultItemAnimator : SimpleItemAnimator() {
 
     var skipAnimations: Boolean = false
 
-    private class MoveInfo internal constructor(var holder: RecyclerView.ViewHolder?, internal var fromX: Int, internal var fromY: Int, internal var toX: Int, internal var toY: Int)
+    private class MoveInfo(var holder: RecyclerView.ViewHolder?, var fromX: Int, var fromY: Int, var toX: Int, var toY: Int)
 
-    private class ChangeInfo private constructor(internal var oldHolder: RecyclerView.ViewHolder?, internal var newHolder: RecyclerView.ViewHolder?) {
-        internal var fromX: Int = 0
-        internal var fromY: Int = 0
-        internal var toX: Int = 0
-        internal var toY: Int = 0
+    private class ChangeInfo private constructor(var oldHolder: RecyclerView.ViewHolder?, var newHolder: RecyclerView.ViewHolder?) {
+        var fromX: Int = 0
+        var fromY: Int = 0
+        var toX: Int = 0
+        var toY: Int = 0
 
-        internal constructor(oldHolder: RecyclerView.ViewHolder, newHolder: RecyclerView.ViewHolder,
+        constructor(oldHolder: RecyclerView.ViewHolder, newHolder: RecyclerView.ViewHolder,
                              fromX: Int, fromY: Int, toX: Int, toY: Int) : this(oldHolder, newHolder) {
             this.fromX = fromX
             this.fromY = fromY

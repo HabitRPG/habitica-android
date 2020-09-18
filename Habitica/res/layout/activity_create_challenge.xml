@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.activities.PrefsActivity"
     android:orientation="vertical"
-    android:background="@color/white">
+    android:background="?attr/colorContentBackground">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -40,8 +40,8 @@
             android:layout_height="wrap_content"
             android:background="?colorPrimaryOffset"
             android:orientation="vertical"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingStart="@dimen/activity_horizontal_margin"
+            android:paddingEnd="@dimen/activity_horizontal_margin"
             android:paddingTop="22dp">
 
 
@@ -93,8 +93,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingRight="@dimen/activity_horizontal_margin">
+            android:paddingStart="@dimen/activity_horizontal_margin"
+            android:paddingEnd="@dimen/activity_horizontal_margin">
             <LinearLayout
                 android:id="@+id/challenge_creation_views"
                 android:layout_width="match_parent"
@@ -134,7 +134,7 @@
                     android:drawableStart="@drawable/challenge_gem_add_button"/>
 
                 <ImageView
-                    android:id="@+id/gem_icon"
+                    android:id="@+id/gem_icon_view"
                     android:layout_width="18dp"
                     android:layout_height="18dp"
                     android:layout_gravity="center"/>
@@ -202,7 +202,7 @@
 
                     android:hint="@string/identify_your_challenge_with_a_tag"
                     android:maxLines="1"
-                    android:textColor="@color/gray_100"
+                    android:textColor="@color/text_secondary"
                     android:textColorHint="#61000000" />
             </com.google.android.material.textfield.TextInputLayout>
 

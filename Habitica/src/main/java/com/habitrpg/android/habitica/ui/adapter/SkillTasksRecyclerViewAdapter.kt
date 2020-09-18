@@ -5,9 +5,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.databinding.SkillTaskItemCardBinding
 import com.habitrpg.android.habitica.models.tasks.Task
-import com.habitrpg.android.habitica.ui.helpers.bindView
-import com.habitrpg.android.habitica.ui.views.HabiticaEmojiTextView
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import io.reactivex.subjects.PublishSubject
@@ -47,12 +46,8 @@ class SkillTasksRecyclerViewAdapter(data: OrderedRealmCollection<Task>?, autoUpd
     }
 
     inner class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
-
+        private val binding = SkillTaskItemCardBinding.bind(itemView)
         var task: Task? = null
-
-        private val titleTextView: HabiticaEmojiTextView by bindView(R.id.titleTextView)
-        private val notesTextView: HabiticaEmojiTextView by bindView(R.id.notesTextView)
-        private val rightBorderView: View by bindView(R.id.rightBorderView)
 
         init {
             itemView.setOnClickListener(this)
@@ -61,14 +56,14 @@ class SkillTasksRecyclerViewAdapter(data: OrderedRealmCollection<Task>?, autoUpd
 
         internal fun bindHolder(task: Task) {
             this.task = task
-            titleTextView.text = task.markdownText { titleTextView.text = it }
+            binding.titleTextView.text = task.markdownText { binding.titleTextView.text = it }
             if (task.notes?.isEmpty() == true) {
-                notesTextView.visibility = View.GONE
+                binding.notesTextView.visibility = View.GONE
             } else {
-                notesTextView.visibility = View.VISIBLE
-                notesTextView.text = task.markdownNotes { notesTextView.text = it }
+                binding.notesTextView.visibility = View.VISIBLE
+                binding.notesTextView.text = task.markdownNotes { binding.notesTextView.text = it }
             }
-            rightBorderView.setBackgroundResource(task.lightTaskColor)
+            binding.rightBorderView.setBackgroundResource(task.lightTaskColor)
         }
 
         override fun onClick(v: View) {

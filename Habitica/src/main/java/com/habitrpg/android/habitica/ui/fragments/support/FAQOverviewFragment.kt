@@ -21,9 +21,13 @@ import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import io.reactivex.functions.Consumer
 import javax.inject.Inject
 
-class FAQOverviewFragment : BaseMainFragment() {
+class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
 
-    private lateinit var binding: FragmentFaqOverviewBinding
+    override var binding: FragmentFaqOverviewBinding? = null
+
+    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentFaqOverviewBinding {
+        return FragmentFaqOverviewBinding.inflate(inflater, container, false)
+    }
 
     @Inject
     lateinit var faqRepository: FAQRepository
@@ -31,24 +35,23 @@ class FAQOverviewFragment : BaseMainFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         hidesToolbar = true
-        super.onCreateView(inflater, container, savedInstanceState)
-        binding = FragmentFaqOverviewBinding.inflate(inflater, container, false)
-        binding.healthSection.findViewById<ImageView>(R.id.icon_view).setImageBitmap(HabiticaIconsHelper.imageOfHeartLarge())
-        binding.experienceSection.findViewById<ImageView>(R.id.icon_view).setImageBitmap(HabiticaIconsHelper.imageOfExperienceReward())
-        binding.manaSection.findViewById<ImageView>(R.id.icon_view).setImageBitmap(HabiticaIconsHelper.imageOfMagicLarge())
-        binding.goldSection.findViewById<ImageView>(R.id.icon_view).setImageBitmap(HabiticaIconsHelper.imageOfGoldReward())
-        binding.gemsSection.findViewById<ImageView>(R.id.icon_view).setImageBitmap(HabiticaIconsHelper.imageOfGem())
-        binding.hourglassesSection.findViewById<ImageView>(R.id.icon_view).setImageBitmap(HabiticaIconsHelper.imageOfHourglassLarge())
-        binding.statsSection.findViewById<ImageView>(R.id.icon_view).setImageBitmap(HabiticaIconsHelper.imageOfStats())
-
-        binding.moreHelpTextView.setMarkdown(context?.getString(R.string.need_help_header_description, "[Habitica Help Guild](https://habitica.com/groups/guild/5481ccf3-5d2d-48a9-a871-70a7380cee5a)"))
-        binding.moreHelpTextView.setOnClickListener { MainNavigationController.navigate(R.id.guildFragment, bundleOf("groupID" to "5481ccf3-5d2d-48a9-a871-70a7380cee5a")) }
-        binding.moreHelpTextView.movementMethod = LinkMovementMethod.getInstance()
-        return binding.root
+        return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding?.healthSection?.findViewById<ImageView>(R.id.icon_view)?.setImageBitmap(HabiticaIconsHelper.imageOfHeartLarge())
+        binding?.experienceSection?.findViewById<ImageView>(R.id.icon_view)?.setImageBitmap(HabiticaIconsHelper.imageOfExperienceReward())
+        binding?.manaSection?.findViewById<ImageView>(R.id.icon_view)?.setImageBitmap(HabiticaIconsHelper.imageOfMagicLarge())
+        binding?.goldSection?.findViewById<ImageView>(R.id.icon_view)?.setImageBitmap(HabiticaIconsHelper.imageOfGoldReward())
+        binding?.gemsSection?.findViewById<ImageView>(R.id.icon_view)?.setImageBitmap(HabiticaIconsHelper.imageOfGem())
+        binding?.hourglassesSection?.findViewById<ImageView>(R.id.icon_view)?.setImageBitmap(HabiticaIconsHelper.imageOfHourglassLarge())
+        binding?.statsSection?.findViewById<ImageView>(R.id.icon_view)?.setImageBitmap(HabiticaIconsHelper.imageOfStats())
+
+        binding?.moreHelpTextView?.setMarkdown(context?.getString(R.string.need_help_header_description, "[Habitica Help Guild](https://habitica.com/groups/guild/5481ccf3-5d2d-48a9-a871-70a7380cee5a)"))
+        binding?.moreHelpTextView?.setOnClickListener { MainNavigationController.navigate(R.id.guildFragment, bundleOf("groupID" to "5481ccf3-5d2d-48a9-a871-70a7380cee5a")) }
+        binding?.moreHelpTextView?.movementMethod = LinkMovementMethod.getInstance()
 
         this.loadArticles()
     }
@@ -66,7 +69,7 @@ class FAQOverviewFragment : BaseMainFragment() {
         compositeSubscription.add(faqRepository.getArticles().subscribe(Consumer {
             val context = context ?: return@Consumer
             for (article in it) {
-                val binding = SupportFaqItemBinding.inflate(context.layoutInflater, binding.faqLinearLayout, true)
+                val binding = SupportFaqItemBinding.inflate(context.layoutInflater, binding?.faqLinearLayout, true)
                 binding.textView.text = article.question
                 binding.root.setOnClickListener {
                     MainNavigationController.navigate(FAQOverviewFragmentDirections.openFAQDetail(article.position ?: 0))

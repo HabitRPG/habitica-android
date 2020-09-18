@@ -1,19 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_centerHorizontal="true"
-              android:adjustViewBounds="true"
-              android:background="?colorPrimaryDark"
-              android:focusable="true"
-              android:focusableInTouchMode="true"
-              android:orientation="vertical"
-              android:paddingEnd="@dimen/header_border_spacing"
-              android:paddingLeft="@dimen/header_border_spacing"
-              android:paddingRight="@dimen/header_border_spacing"
-              android:paddingStart="@dimen/header_border_spacing">
+    android:layout_height="wrap_content"
+    android:layout_centerHorizontal="true"
+    android:adjustViewBounds="true"
+    android:background="?attr/headerBackgroundColor"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical"
+    android:layout_marginBottom="8dp">
 
     <LinearLayout
             android:layout_width="match_parent"
@@ -25,7 +22,6 @@
                 android:layout_height="@dimen/avatar_header_height"
                 android:layout_gravity="center_vertical"
                 android:layout_marginEnd="20dp"
-            android:layout_marginStart="2dp"
                 android:contentDescription="@string/sidebar_avatar"
                 app:showBackground="true"
                 app:showMount="true"
@@ -42,6 +38,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/header_bar_spacing"
                     app:barForegroundColor="@color/hpColor"
+                app:barBackgroundColor="@color/window_background"
                     app:description="@string/HP_default"/>
 
             <com.habitrpg.android.habitica.ui.views.ValueBar
@@ -50,6 +47,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/header_bar_spacing"
                     app:barForegroundColor="@color/xpColor"
+                app:barBackgroundColor="@color/window_background"
                     app:description="@string/XP_default"/>
 
             <com.habitrpg.android.habitica.ui.views.ValueBar
@@ -57,6 +55,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:barForegroundColor="@color/mpColor"
+                app:barBackgroundColor="@color/window_background"
                     app:description="@string/MP_default"/>
 
         </LinearLayout>
@@ -65,9 +64,7 @@
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:paddingBottom="6dp"
-            android:paddingTop="2dp">
+            android:gravity="center_vertical">
 
         <TextView
                 android:id="@+id/lvl_tv"
@@ -75,8 +72,8 @@
                 android:layout_height="36dp"
                 android:drawablePadding="6dp"
                 android:gravity="center"
-                android:textColor="?textColorSecondaryDark"
-                android:textSize="14sp"
+                android:textColor="@color/text_secondary"
+                android:textSize="12sp"
                 tools:text="Lvl 12 Warrior"/>
 
         <ImageView
@@ -95,7 +92,6 @@
         <com.habitrpg.android.habitica.ui.views.CurrencyViews
                 android:id="@+id/currencyView"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:hasLightBackground="false"/>
+                android:layout_height="wrap_content"/>
     </LinearLayout>
 </LinearLayout>

@@ -11,7 +11,7 @@
     android:layout_height="86dp">
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/achievement_icon"
-        android:layout_width="52dp"
+        android:layout_width="64dp"
         android:layout_height="56dp"
         app:actualImageScaleType="fitCenter"
         android:layout_centerInParent="true"/>
@@ -43,12 +43,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/Body1"
-            android:textColor="@color/gray_100"/>
+            android:textColor="@color/text_primary"/>
         <TextView
             android:id="@+id/achievement_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/Caption3"
-            android:textColor="@color/gray_100"/>
+            android:textColor="@color/text_secondary"/>
     </LinearLayout>
 </LinearLayout>

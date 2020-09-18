@@ -386,4 +386,7 @@ interface ApiService {
 
     @POST("tasks/unlink-all/{challengeID}")
     fun unlinkAllTasks(@Path("challengeID") challengeID: String?, @Query("keep") keepOption: String): Flowable<HabitResponse<Void>>
+
+    @POST("user/block/{userID}")
+    fun blockMember(@Path("userID") userID: String): Flowable<HabitResponse<List<String>>>
 }

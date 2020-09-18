@@ -43,7 +43,7 @@ class HabiticaClassArrayAdapter(context: Context, resource: Int, objects: List<C
             }
             Stats.ROGUE -> {
                 textView?.text = context.getString(R.string.rogue)
-                textView?.setTextColor(ContextCompat.getColor(context, R.color.brand_300))
+                textView?.setTextColor(ContextCompat.getColor(context, R.color.text_brand))
                 imageView?.setImageBitmap(HabiticaIconsHelper.imageOfRogueLightBg())
             }
             else -> {

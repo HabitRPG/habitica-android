@@ -85,7 +85,7 @@ public class HabiticaPurchaseVerifier extends BasePurchaseVerifier {
                         EventBus.getDefault().post(new ConsumablePurchasedEvent(purchase));
                         removeGift(purchase.sku);
                     }, throwable -> {
-                        if (throwable.getClass().equals(retrofit2.adapter.rxjava2.HttpException.class)) {
+                        if (throwable.getClass().equals(retrofit2.HttpException.class)) {
                             HttpException error = (HttpException) throwable;
                             ErrorResponse res = apiClient.getErrorResponse((HttpException) throwable);
                             if (error.code() == 401) {
@@ -118,7 +118,7 @@ public class HabiticaPurchaseVerifier extends BasePurchaseVerifier {
                         EventBus.getDefault().post(new ConsumablePurchasedEvent(purchase));
                         removeGift(purchase.sku);
                     }, throwable -> {
-                        if (throwable.getClass().equals(retrofit2.adapter.rxjava2.HttpException.class)) {
+                        if (throwable.getClass().equals(retrofit2.HttpException.class)) {
                             HttpException error = (HttpException)throwable;
                             ErrorResponse res = apiClient.getErrorResponse((HttpException) throwable);
                             if (error.code() == 401) {
@@ -149,7 +149,7 @@ public class HabiticaPurchaseVerifier extends BasePurchaseVerifier {
                         FirebaseAnalytics.getInstance(context).logEvent("user_subscribed", null);
                         EventBus.getDefault().post(new UserSubscribedEvent());
                     }, throwable -> {
-                        if (throwable.getClass().equals(retrofit2.adapter.rxjava2.HttpException.class)) {
+                        if (throwable.getClass().equals(retrofit2.HttpException.class)) {
                             HttpException error = (HttpException) throwable;
                             ErrorResponse res = apiClient.getErrorResponse((HttpException) throwable);
                             if (error.code() == 401) {

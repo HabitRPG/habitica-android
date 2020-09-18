@@ -119,9 +119,9 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
                 .flatMap { item -> sellItem(user, item) }
     }
 
-    override fun sellItem(user: User?, ownedItem: OwnedItem): Flowable<User> {
-        return localRepository.getItem(ownedItem.itemType ?: "", ownedItem.key ?: "")
-                .flatMap { item -> sellItem(user, item, ownedItem) }
+    override fun sellItem(user: User?, item: OwnedItem): Flowable<User> {
+        return localRepository.getItem(item.itemType ?: "", item.key ?: "")
+                .flatMap { newItem -> sellItem(user, newItem, item) }
     }
 
     override fun getLatestMysteryItem(): Flowable<Equipment> {
@@ -210,9 +210,9 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
     }
 
     override fun feedPet(pet: Pet, food: Food): Flowable<FeedResponse> {
-        return apiClient.feedPet(pet.key, food.key)
+        return apiClient.feedPet(pet.key ?: "", food.key)
                 .doOnNext { feedResponse ->
-                    localRepository.feedPet(food.key, pet.key, feedResponse.value ?: 0, userID)
+                    localRepository.feedPet(food.key, pet.key ?: "", feedResponse.value ?: 0, userID)
                 }
     }
 

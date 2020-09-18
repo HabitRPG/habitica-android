@@ -3,11 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
+    android:background="?attr/colorContentBackground"
     android:orientation="horizontal"
-    android:paddingLeft="20dp"
+    android:paddingStart="20dp"
     android:paddingTop="10dp"
-    android:paddingRight="20dp">
+    android:paddingEnd="20dp">
 
     <LinearLayout
         android:layout_width="0dp"
@@ -26,18 +26,18 @@
             android:background="@color/transparent"
             android:text="@string/notifications"
             android:textAllCaps="true"
-            android:textColor="@color/gray_300"
+            android:textColor="@color/text_quad"
             android:textSize="12sp" />
 
         <TextView
             android:id="@+id/notifications_title_badge"
             android:layout_width="wrap_content"
             android:layout_height="24dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:background="@drawable/badge_gray"
             android:gravity="center"
             android:minWidth="24dp"
-            android:textColor="@color/gray_300"
+            android:textColor="@color/text_quad"
             android:textSize="12sp"
             tools:text="1" />
     </LinearLayout>
@@ -48,6 +48,6 @@
         android:layout_height="wrap_content"
         android:background="@color/transparent"
         android:text="@string/dismiss_all"
-        android:textColor="?colorAccent" />
+        android:textColor="@color/text_brand" />
 
 </LinearLayout>

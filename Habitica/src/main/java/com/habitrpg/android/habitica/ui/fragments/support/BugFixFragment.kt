@@ -20,11 +20,14 @@ import io.reactivex.Completable
 import javax.inject.Inject
 import javax.inject.Named
 
-class BugFixFragment: BaseMainFragment() {
+class BugFixFragment: BaseMainFragment<FragmentSupportBugFixBinding>() {
     private var deviceInfo: DeviceName.DeviceInfo? = null
 
-    private lateinit var binding: FragmentSupportBugFixBinding
+    override var binding: FragmentSupportBugFixBinding? = null
 
+    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentSupportBugFixBinding {
+        return FragmentSupportBugFixBinding.inflate(inflater, container, false)
+    }
     @field:[Inject Named(AppModule.NAMED_USER_ID)]
     lateinit var userId: String
     @Inject
@@ -37,19 +40,17 @@ class BugFixFragment: BaseMainFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         hidesToolbar = true
-        super.onCreateView(inflater, container, savedInstanceState)
-        binding = FragmentSupportBugFixBinding.inflate(inflater, container, false)
-        return binding.root
+        return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         compositeSubscription.add(Completable.fromAction {
-            deviceInfo = DeviceName.getDeviceInfo(context)
+            deviceInfo = context?.let { DeviceName.getDeviceInfo(it) }
         }.subscribe())
 
-        binding.reportBugButton.setOnClickListener {
+        binding?.reportBugButton?.setOnClickListener {
             sendEmail("[Android] Bugreport")
         }
     }
@@ -74,14 +75,14 @@ class BugFixFragment: BaseMainFragment() {
 
     private fun sendEmail(subject: String) {
         val version = Build.VERSION.SDK_INT
-        val deviceName = deviceInfo?.name ?: DeviceName.getDeviceName()
+        val deviceName = deviceInfo?.name ?: DeviceName.deviceName
         val manufacturer = deviceInfo?.manufacturer ?: Build.MANUFACTURER
         var bodyOfEmail = Uri.encode("Device: $manufacturer $deviceName") +
                 "%0D%0A" + Uri.encode("Android Version: $version") +
                 "%0D%0A" + Uri.encode("AppVersion: " + getString(R.string.version_info, versionName, versionCode))
 
         if (appConfigManager.testingLevel().name != AppTestingLevel.PRODUCTION.name) {
-            bodyOfEmail += "%0D%0A" + Uri.encode("${appConfigManager.testingLevel().name}")
+            bodyOfEmail += "%0D%0A" + Uri.encode(appConfigManager.testingLevel().name)
         }
         bodyOfEmail += "%0D%0A" + Uri.encode("User ID: $userId")
 

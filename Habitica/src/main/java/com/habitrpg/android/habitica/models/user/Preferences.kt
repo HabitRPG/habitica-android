@@ -11,23 +11,41 @@ import java.util.*
 open class Preferences : RealmObject(), AvatarPreferences {
 
     @PrimaryKey
-    private var userId: String? = null
+    override var userId: String? = null
+    set(value) {
+        field = value
+        if (hair?.isManaged == false) {
+            hair?.userId = value
+        }
+        if (suppressModals?.isManaged == false) {
+            suppressModals?.userId = value
+        }
+    }
 
-    private var hair: Hair? = null
+    override var hair: Hair? = null
     var suppressModals: SuppressedModals? = null
-    private var costume: Boolean = false
+    override var costume: Boolean = false
     @SerializedName("disableClasses")
-    var isDisableClasses: Boolean = false
+    override var disableClasses: Boolean = false
     @SerializedName("sleep")
-    var isSleep: Boolean = false
+    override var sleep: Boolean = false
     var dailyDueDefaultView: Boolean = false
     var automaticAllocation: Boolean = false
     var allocationMode: String? = null
-    private var shirt: String? = null
-    private var skin: String? = null
-    private var size: String? = null
-    private var background: String? = null
-    private var chair: String? = null
+    override var shirt: String? = null
+    override var skin: String? = null
+    override var size: String? = null
+    override var background: String? = null
+    override var chair: String? = null
+    get() {
+        return if (field != null && field != "none") {
+            if (field?.contains("chair_") == true) {
+                field
+            } else {
+                "chair_" + field!!
+            }
+        } else null
+    }
     var language: String? = null
     var sound: String? = null
     var dayStart: Int = 0
@@ -36,90 +54,6 @@ open class Preferences : RealmObject(), AvatarPreferences {
     var pushNotifications: PushNotificationsPreference? = null
     var emailNotifications: EmailNotificationsPreference? = null
     var autoEquip: Boolean = true
-
-    override fun getBackground(): String? {
-        return background
-    }
-
-    fun setBackground(background: String) {
-        this.background = background
-    }
-
-    override fun getCostume(): Boolean {
-        return costume
-    }
-
-    fun setCostume(costume: Boolean) {
-        this.costume = costume
-    }
-
-    override fun getDisableClasses(): Boolean {
-        return isDisableClasses
-    }
-
-    override fun getSleep(): Boolean {
-        return isSleep
-    }
-
-    override fun getShirt(): String? {
-        return shirt
-    }
-
-    fun setShirt(shirt: String) {
-        this.shirt = shirt
-    }
-
-    override fun getSkin(): String? {
-        return skin
-    }
-
-    fun setSkin(skin: String) {
-        this.skin = skin
-    }
-
-    override fun getSize(): String? {
-        return size
-    }
-
-    fun setSize(size: String) {
-        this.size = size
-    }
-
-    override fun getHair(): Hair? {
-        return hair
-    }
-
-    fun setHair(hair: Hair) {
-        this.hair = hair
-    }
-
-    override fun getChair(): String? {
-        return if (chair != null && chair != "none") {
-            if (chair?.contains("chair_") == true) {
-                chair
-            } else {
-                "chair_" + chair!!
-            }
-        } else null
-    }
-
-    fun setChair(chair: String) {
-        this.chair = chair
-    }
-
-    override fun getUserId(): String? {
-        return userId
-    }
-
-    fun setUserId(userId: String?) {
-        this.userId = userId
-        if (hair?.isManaged == false) {
-            hair?.userId = userId
-        }
-        if (suppressModals?.isManaged == false) {
-            suppressModals?.userId = userId
-        }
-    }
 
     fun hasTaskBasedAllocation(): Boolean {
         return allocationMode?.toLowerCase(Locale.ROOT) == "taskbased" && automaticAllocation

@@ -29,8 +29,6 @@
             android:id="@+id/bar"
             android:layout_width="0dip"
             android:layout_height="match_parent" />
-
-
         <View
             android:id="@+id/emptyBarSpace"
             android:layout_width="0dip"

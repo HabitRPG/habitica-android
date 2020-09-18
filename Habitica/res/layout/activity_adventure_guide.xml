@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activities.PrefsActivity"
+    android:background="?attr/colorContentBackground"
     android:orientation="vertical"
-    android:background="@color/white">
+    tools:context=".ui.activities.PrefsActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -16,86 +16,97 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="?attr/colorContentBackground"
             android:minHeight="?attr/actionBarSize"
             app:layout_scrollFlags="scroll|enterAlways"
-            app:popupTheme="@style/Theme.AppCompat.Light"
-            android:background="@color/white"/>
+            app:popupTheme="@style/Theme.AppCompat.Light" />
 
     </com.google.android.material.appbar.AppBarLayout>
-    <androidx.core.widget.NestedScrollView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:scrollbarSize="3dp"
-    android:scrollbarThumbVertical="@color/scrollbarThumb"
-    android:scrollbars="vertical">
-<LinearLayout
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center_horizontal">
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/adventure_guide_art"
-        android:layout_marginBottom="@dimen/spacing_medium"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/getting_started"
-        style="@style/Subheader1"
-        android:textColor="@color/gray_50"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginBottom="@dimen/spacing_medium"/>
-    <TextView
-        android:id="@+id/description_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:text="@string/adventure_guide_description"
-        style="@style/Body2"
-        android:textColor="@color/gray_50"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"/>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/your_progress"
-            android:textColor="@color/gray_100"
-            style="@style/Caption1"/>
-        <Space
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:id="@+id/progress_textview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/Caption2.Regular"
-            android:textColor="@color/gray_300"
-            android:text="@string/lets_get_started"/>
-    </LinearLayout>
-    <ProgressBar
-        android:id="@+id/progress_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginBottom="@dimen/spacing_medium"
-        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-        android:progressBackgroundTint="@color/gray_600"
-        android:progressTint="@color/yellow_50"/>
 
-    <LinearLayout
-        android:id="@+id/achievement_container"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"/>
-</LinearLayout>
-</androidx.core.widget.NestedScrollView>
+        android:layout_height="match_parent"
+        android:scrollbarSize="3dp"
+        android:scrollbarThumbVertical="@color/scrollbarThumb"
+        android:scrollbars="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/spacing_medium"
+                android:src="@drawable/adventure_guide_art" />
+
+            <TextView
+                style="@style/Subheader1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginBottom="@dimen/spacing_medium"
+                android:text="@string/getting_started"
+                android:textColor="@color/text_primary" />
+
+            <TextView
+                android:id="@+id/description_view"
+                style="@style/Body2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:gravity="center_horizontal"
+                android:text="@string/adventure_guide_description"
+                android:textColor="@color/text_primary" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="30dp">
+
+                <TextView
+                    style="@style/Caption1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/your_progress"
+                    android:textColor="@color/text_secondary" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/progress_textview"
+                    style="@style/Caption2.Regular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lets_get_started"
+                    android:textColor="@color/text_quad" />
+            </LinearLayout>
+
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginBottom="@dimen/spacing_medium"
+                android:progressBackgroundTint="@color/offset_background"
+                android:progressTint="@color/yellow_50" />
+
+            <LinearLayout
+                android:id="@+id/achievement_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 </LinearLayout>

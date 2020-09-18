@@ -3,15 +3,11 @@ package com.habitrpg.android.habitica.ui.views.login
 import android.content.Context
 import android.util.AttributeSet
 import android.view.MotionEvent
-import android.widget.ScrollView
+import androidx.core.widget.NestedScrollView
 
-class LockableScrollView(context: Context, attrs: AttributeSet) : ScrollView(context, attrs) {
+class LockableScrollView(context: Context, attrs: AttributeSet) : NestedScrollView(context, attrs) {
 
-    private var isScrollable = true
-
-    fun setScrollingEnabled(enabled: Boolean) {
-        isScrollable = enabled
-    }
+    var isScrollable = true
 
     override fun onTouchEvent(ev: MotionEvent): Boolean {
         return if (ev.action == MotionEvent.ACTION_DOWN) {

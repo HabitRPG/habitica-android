@@ -7,6 +7,7 @@
     <color name="brand_300">#6133B4</color>
     <color name="brand_400">#925CF3</color>
     <color name="brand_500">#bda8ff</color>
+    <color name="brand_600">#D5C8FF</color>
     <color name="brand_700">#ede7f6</color>
     <color name="brand">@color/brand_100</color>
 
@@ -56,6 +57,7 @@
     <color name="blue_5">#217AA6</color>
 
 
+    <color name="gray_1">#1A181D</color>
     <color name="gray_10">#34313a</color>
     <color name="gray_50">#4e4a57</color>
     <color name="gray_100">#686274</color>
@@ -65,8 +67,6 @@
     <color name="gray_500">#e1e0e3</color>
     <color name="gray_600">#edecee</color>
     <color name="gray_700">#f9f9f9</color>
-
-    <color name="gray_600_30">#4cedecee</color>
 
     <color name="hpColor">@color/red_100</color>
     <color name="xpColor">@color/yellow_100</color>
@@ -80,8 +80,8 @@
 
     <!-- Cards -->
     <color name="text_light">#66000000</color>
-    <color name="card_text">@color/gray_200</color>
-    <color name="card_title_text">@color/gray_100</color>
+    <color name="card_text">@color/text_ternary</color>
+    <color name="card_title_text">@color/text_secondary</color>
 
     <!-- dialog -->
     <color name="primary_text_light">#000000</color>
@@ -93,29 +93,24 @@
 
     <color name="white">#ffffff </color>
 
-    <color name="cell_separator">@color/gray_400</color>
-    <color name="checklist_separator">@color/gray_600</color>
-    <color name="task_gray">@color/gray_400</color>
-    <color name="checkbox_fill">#50ffffff</color>
+    <color name="cell_separator">@color/separator</color>
+    <color name="checklist_separator">@color/offset_background</color>
     <color name="checkbox_checked_fill">#c8ffffff</color>
     <color name="checkbox_checklist_fill">#23000000</color>
 
     <color name="habit_inactive_gray">#F9F9F9</color>
 
-    <!-- Preferences -->
-    <color name="preference_fallback_accent_color">@color/colorAccent</color>
     <!-- buttons -->
     <color name="btn_success">@color/green_10</color>
     <color name="btn_danger">@color/red_10</color>
 
     <color name="widget_background">#c8432874</color>
 
-    <color name="gem_view_background">@color/gray_700</color>
+    <color name="gem_view_background">@color/window_background</color>
     <color name="task_border_gray">#1a000000</color>
     <color name="task_secondary_text">#B2B2B2</color>
     <color name="gem_icon_color">#24cc8f</color>
     <color name="subscription_description_text">#b1000000</color>
-    <color name="pill_gray">#efefef</color>
     <color name="white_95_alpha">#f2ffffff</color>
     <color name="white_80_alpha">#ccffffff</color>
     <color name="white_75_alpha">#bfffffff</color>
@@ -143,9 +138,9 @@
     <color name="hair_red">#EC720E</color>
     <color name="hair_black">#313131</color>
     <color name="reward_buy_button_bg">#4cfedead</color>
+    <color name="reward_buy_button_text">#D9784A00</color>
     <color name="ic_launcher_background">#331960</color>
-    <color name="scrollbarThumb">@color/gray_500</color>
-    <color name="black">#000</color>
+    <color name="scrollbarThumb">@color/content_background_offset</color>
     <color name="setup_background">#efeff4</color>
     <color name="setup_label_background">#fafaff</color>
     <color name="animalitem_all_eggs">#6ECDB2</color>
@@ -156,4 +151,67 @@
     <color name="green_1">#005737</color>
     <color name="yellow_1">#794b00</color>
     <color name="orange_1">#7f3300</color>
+
+
+    <color name="color_accent">@color/brand_400</color>
+
+    <color name="text_primary">@color/gray_10</color>
+    <color name="text_secondary">@color/gray_100</color>
+    <color name="text_ternary">@color/gray_200</color>
+    <color name="text_quad">@color/gray_300</color>
+    <color name="text_dimmed">@color/gray_400</color>
+    <color name="text_inverted">@color/gray_700</color>
+    <color name="text_brand">@color/brand_300</color>
+    <color name="text_brand_neon">@color/brand_400</color>
+    <color name="text_red">@color/red_10</color>
+    <color name="text_orange">@color/orange_10</color>
+    <color name="text_yellow">@color/yellow_10</color>
+    <color name="text_green">@color/green_10</color>
+    <color name="text_blue">@color/blue_10</color>
+    <color name="text_teal">@color/teal_10</color>
+
+    <color name="content_background">@color/white</color>
+    <color name="window_background">@color/gray_700</color>
+    <color name="offset_background">@color/gray_600</color>
+    <color name="offset_background_30">#4cedecee</color>
+    <color name="content_background_offset">@color/gray_500</color>
+    <color name="brand_background">@color/brand_300</color>
+    <color name="brand_background_dark">@color/brand_200</color>
+    <color name="dimmed_background">@color/gray_300</color>
+    <color name="disabled_background">@color/gray_400</color>
+    <color name="separator">@color/gray_400</color>
+    <color name="system_bars">@color/brand_200</color>
+    <color name="equipment_overview_background">@color/gray_50</color>
+    <color name="inverted_background">@color/gray_100</color>
+    <color name="inverted_background_offset">@color/gray_200</color>
+    <color name="background_red">@color/red_50</color>
+    <color name="background_orange">@color/orange_50</color>
+    <color name="background_yellow">@color/yellow_10</color>
+    <color name="background_green">@color/green_50</color>
+    <color name="background_blue">@color/blue_50</color>
+    <color name="background_teal">@color/teal_50</color>
+    <color name="background_brand">@color/brand_300</color>
+
+    <color name="checkbox_fill">#50ffffff</color>
+    <color name="checkbox_fill_inactive">#99FFFFFF</color>
+    <color name="checkbox_fill_selected">@color/gray_600</color>
+    <color name="taskform_gray">#99edecee</color>
+    <color name="task_tint_overlay">#00000000</color>
+
+    <color name="content_95_alpha">#f2ffffff</color>
+    <color name="content_80_alpha">#ccffffff</color>
+    <color name="content_75_alpha">#bfffffff</color>
+    <color name="content_50_alpha">#7fffffff</color>
+    <color name="content_15_alpha">#26ffffff</color>
+
+    <color name="text_red_white">@color/red_10</color>
+    <color name="text_orange_white">@color/orange_10</color>
+    <color name="text_yellow_white">@color/yellow_10</color>
+    <color name="text_green_white">@color/green_10</color>
+    <color name="text_blue_white">@color/blue_10</color>
+    <color name="text_teal_white">@color/teal_10</color>
+    <color name="text_brown_white">#7f3300</color>
+    <color name="text_brand_white">@color/brand_300</color>
+    <color name="lightly_tinted_background">@color/brand_700</color>
+    <color name="dialog_background">@color/white</color>
 </resources>

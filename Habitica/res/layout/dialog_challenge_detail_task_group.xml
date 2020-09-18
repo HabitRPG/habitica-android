@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:layout_marginLeft="@dimen/spacing_large"
+        android:layout_marginStart="@dimen/spacing_large"
         android:layout_marginTop="24dp"
         android:layout_marginBottom="@dimen/spacing_large"
         >
@@ -23,9 +23,9 @@
             android:id="@+id/task_count_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/spacing_medium"
-            style="@style/Pill.White"
-            android:textColor="@color/gray_400"
+            android:layout_marginStart="@dimen/spacing_medium"
+            style="@style/Pill.Content"
+            android:textColor="@color/text_dimmed"
             tools:text="2"/>
     </LinearLayout>
 

@@ -20,7 +20,6 @@ import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.Flowable
 import io.reactivex.Maybe
-import io.reactivex.functions.Consumer
 import io.realm.RealmResults
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -93,11 +92,11 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
                     updateData
                 }
                 .flatMap { updateData -> updateUser(user, updateData).firstElement() }
-                .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+                .subscribe({ }, RxErrorHandler.handleEmptyError())
     }
 
     override fun sleep(user: User): Flowable<User> {
-        localRepository.executeTransaction { user.preferences?.isSleep = !(user.preferences?.sleep ?: false) }
+        localRepository.executeTransaction { user.preferences?.sleep = !(user.preferences?.sleep ?: false) }
         return apiClient.sleep().map { user }
     }
 
@@ -213,7 +212,7 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
                 .doOnNext { user ->
                     localRepository.executeTransaction {
                         user.authentication?.localAuthentication?.username = newLoginName
-                        user.flags?.isVerifiedUsername = true
+                        user.flags?.verifiedUsername = true
                     }
                 }
                 .firstElement()
@@ -285,15 +284,15 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
         }
         observable.flatMap { apiClient.runCron().firstElement() }
                 .flatMap { this.retrieveUser(withTasks = true, forced = true).firstElement() }
-                .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+                .subscribe({ }, RxErrorHandler.handleEmptyError())
     }
 
     override fun useCustomization(user: User?, type: String, category: String?, identifier: String): Flowable<User> {
         if (user != null && appConfigManager.enableLocalChanges()) {
             localRepository.executeTransaction {
                 when (type) {
-                    "skin" -> user.preferences?.setSkin(identifier)
-                    "shirt" -> user.preferences?.setShirt(identifier)
+                    "skin" -> user.preferences?.skin =identifier
+                    "shirt" -> user.preferences?.shirt = identifier
                     "hair" -> {
                         when (category) {
                             "color" -> user.preferences?.hair?.color = identifier
@@ -304,8 +303,8 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
                             "base" -> user.preferences?.hair?.base = identifier.toInt()
                         }
                     }
-                    "background" -> user.preferences?.setBackground(identifier)
-                    "chair" -> user.preferences?.setChair(identifier)
+                    "background" -> user.preferences?.background = identifier
+                    "chair" -> user.preferences?.chair = identifier
                 }
             }
         }
@@ -338,6 +337,9 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
             localRepository.getUnmanagedCopy(oldUser)
         } else {
             oldUser
+        }
+        if (newUser.inbox != null) {
+            copiedUser.inbox = newUser.inbox
         }
         if (newUser.items != null) {
             copiedUser.items = newUser.items

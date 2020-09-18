@@ -11,5 +11,5 @@ interface ContentRepository {
     fun retrieveContent(context: Context?): Flowable<ContentResult>
     fun retrieveContent(context: Context?, forced: Boolean): Flowable<ContentResult>
 
-    fun retrieveWorldState(): Flowable<WorldState>
+    fun retrieveWorldState(context: Context?): Flowable<WorldState>
 }

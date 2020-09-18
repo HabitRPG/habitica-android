@@ -45,8 +45,8 @@
         android:layout_height="wrap_content"
         app:namePlate="Justin"
         app:npcDrawable="@drawable/justin_textbox"
-        android:layout_marginLeft="@dimen/content_inset"
-        android:layout_marginRight="@dimen/content_inset"
+        android:layout_marginStart="@dimen/content_inset"
+        android:layout_marginEnd="@dimen/content_inset"
         android:layout_marginBottom="12dp"/>
     <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"

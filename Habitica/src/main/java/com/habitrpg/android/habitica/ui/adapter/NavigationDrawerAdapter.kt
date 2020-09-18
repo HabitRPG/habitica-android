@@ -8,10 +8,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.extensions.inflate
-import com.habitrpg.android.habitica.ui.helpers.bindOptionalView
+import com.habitrpg.android.habitica.models.promotions.HabiticaPromotion
 import com.habitrpg.android.habitica.ui.menu.HabiticaDrawerItem
 import com.habitrpg.android.habitica.ui.viewHolders.GiftOneGetOnePromoMenuView
 import com.habitrpg.android.habitica.ui.views.adventureGuide.AdventureGuideMenuBanner
+import com.habitrpg.android.habitica.ui.views.promo.PromoMenuView
+import com.habitrpg.android.habitica.ui.views.promo.PromoMenuViewHolder
 import com.habitrpg.android.habitica.ui.views.promo.SubscriptionBuyGemsPromoView
 import com.habitrpg.android.habitica.ui.views.promo.SubscriptionBuyGemsPromoViewHolder
 import io.reactivex.BackpressureStrategy
@@ -43,16 +45,13 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int): Recycle
 
     private val itemSelectedEvents = PublishSubject.create<HabiticaDrawerItem>()
 
+    var activePromo: HabiticaPromotion? = null
 
     fun getItemSelectionEvents(): Flowable<HabiticaDrawerItem> = itemSelectedEvents.toFlowable(BackpressureStrategy.DROP)
 
-    fun getItemWithTransitionId(transitionId: Int): HabiticaDrawerItem? =
-            items.find { it.transitionId == transitionId }
     fun getItemWithIdentifier(identifier: String): HabiticaDrawerItem? =
             items.find { it.identifier == identifier }
 
-    private fun getItemPosition(transitionId: Int): Int =
-            items.indexOfFirst { it.transitionId == transitionId }
     private fun getItemPosition(identifier: String): Int =
             items.indexOfFirst { it.identifier == identifier }
 
@@ -85,7 +84,11 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int): Recycle
             getItemViewType(position) == 4 -> {
                 drawerItem.user?.let { (holder.itemView as? AdventureGuideMenuBanner)?.updateData(it) }
                 holder.itemView.setOnClickListener { itemSelectedEvents.onNext(drawerItem) }
-
+            }
+            getItemViewType(position) == 5 -> {
+                activePromo?.let { promo ->
+                    (holder as? PromoMenuViewHolder)?.bind(promo)
+                }
             }
         }
     }
@@ -128,6 +131,14 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int): Recycle
                 )
                 SubscriptionBuyGemsPromoViewHolder(itemView)
             }
+            5 -> {
+                val promoView = PromoMenuView(parent.context)
+                promoView.layoutParams = ViewGroup.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        148.dpToPx(parent.context)
+                )
+                PromoMenuViewHolder(promoView)
+            }
             1 -> SectionHeaderViewHolder(parent.inflate(R.layout.drawer_main_section_header))
             else -> DrawerItemViewHolder(parent.inflate(R.layout.drawer_main_item))
         }
@@ -138,20 +149,21 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int): Recycle
         var tintColor: Int = 0
         var backgroundTintColor: Int = 0
 
-        private val titleTextView: TextView? by bindOptionalView(itemView, R.id.titleTextView)
-        private val pillView: TextView? by bindOptionalView(itemView, R.id.pillView)
-        private val bubbleView: View? by bindOptionalView(itemView, R.id.bubble_view)
-        private val additionalInfoView: TextView? by bindOptionalView(itemView, R.id.additionalInfoView)
+        private val titleTextView: TextView? = itemView.findViewById(R.id.titleTextView)
+        private val pillView: TextView? = itemView.findViewById(R.id.pillView)
+        private val bubbleView: View? = itemView.findViewById(R.id.bubble_view)
+        private val additionalInfoView: TextView? = itemView.findViewById(R.id.additionalInfoView)
 
         fun bind(drawerItem: HabiticaDrawerItem, isSelected: Boolean) {
             titleTextView?.text = drawerItem.text
 
             if (isSelected) {
-                itemView.setBackgroundColor(ContextCompat.getColor(itemView.context, R.color.gray_600))
+                itemView.setBackgroundColor(ContextCompat.getColor(itemView.context, R.color.offset_background))
+                itemView.background.alpha = 69
                 titleTextView?.setTextColor(tintColor)
             } else {
-                itemView.setBackgroundColor(ContextCompat.getColor(itemView.context, R.color.white))
-                titleTextView?.setTextColor(ContextCompat.getColor(itemView.context, R.color.gray_10))
+                itemView.setBackgroundColor(ContextCompat.getColor(itemView.context, R.color.content_background))
+                titleTextView?.setTextColor(ContextCompat.getColor(itemView.context, R.color.text_primary))
             }
 
             if (drawerItem.pillText != null) {

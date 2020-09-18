@@ -14,7 +14,6 @@ import com.habitrpg.android.habitica.ui.menu.BottomSheetMenu
 import com.habitrpg.android.habitica.ui.menu.BottomSheetMenuItem
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.functions.Consumer
 import io.reactivex.subjects.PublishSubject
 
 class MountViewHolder(parent: ViewGroup, private val equipEvents: PublishSubject<String>) : androidx.recyclerview.widget.RecyclerView.ViewHolder(parent.inflate(R.layout.mount_overview_item)), View.OnClickListener {
@@ -43,7 +42,7 @@ class MountViewHolder(parent: ViewGroup, private val equipEvents: PublishSubject
             val drawable = BitmapDrawable(itemView.context.resources, if (owned) it else it.extractAlpha())
             Observable.just(drawable)
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(Consumer {
+                    .subscribe({
                         binding.imageView.background = drawable
                     }, RxErrorHandler.handleEmptyError())
         }
@@ -57,7 +56,7 @@ class MountViewHolder(parent: ViewGroup, private val equipEvents: PublishSubject
         menu.setTitle(animal?.text)
         menu.addMenuItem(BottomSheetMenuItem(resources.getString(R.string.equip)))
         menu.setSelectionRunnable {
-            animal?.let { equipEvents.onNext(it.key) }
+            animal?.let { equipEvents.onNext(it.key ?: "") }
         }
         menu.show()
     }

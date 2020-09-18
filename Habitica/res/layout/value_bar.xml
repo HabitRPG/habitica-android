@@ -7,7 +7,7 @@
                 android:orientation="horizontal">
 
     <ImageView
-            android:id="@+id/ic_header"
+            android:id="@+id/icon_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/progressBar"
@@ -20,7 +20,7 @@
             android:id="@+id/progressBar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/bar_size"
-            android:layout_toEndOf="@id/ic_header"
+            android:layout_toEndOf="@id/icon_view"
             android:orientation="horizontal"/>
 
     <LinearLayout
@@ -28,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/progressBar"
-            android:layout_toEndOf="@id/ic_header"
+            android:layout_toEndOf="@id/icon_view"
             android:paddingTop="2dp">
 
         <ImageView
@@ -39,7 +39,7 @@
                 android:visibility="gone"/>
 
         <TextView
-                android:id="@+id/valueLabel"
+                android:id="@+id/value_text_view"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -47,14 +47,14 @@
                 tools:text="50/50"/>
 
         <ImageView
-                android:id="@+id/descriptionIconView"
+                android:id="@+id/description_icon_view"
                 android:layout_width="@dimen/icon_size"
                 android:layout_height="@dimen/icon_size"
                 android:layout_marginEnd="@dimen/spacing_small"
                 android:visibility="gone"/>
 
         <TextView
-                android:id="@+id/descriptionLabel"
+                android:id="@+id/description_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center|end"

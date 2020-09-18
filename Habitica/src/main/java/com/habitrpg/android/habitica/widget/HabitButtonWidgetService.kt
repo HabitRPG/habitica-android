@@ -20,7 +20,6 @@ import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.responses.TaskDirection
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
-import io.reactivex.functions.Consumer
 import net.pherth.android.emoji_library.EmojiHandler
 import java.util.*
 import javax.inject.Inject
@@ -45,12 +44,12 @@ class HabitButtonWidgetService : Service() {
         makeTaskMapping()
 
         for (taskid in this.taskMapping.keys) {
-            taskRepository.getUnmanagedTask(taskid).firstElement().subscribe(Consumer<Task> { this.updateData(it) }, RxErrorHandler.handleEmptyError())
+            taskRepository.getUnmanagedTask(taskid).firstElement().subscribe({ this.updateData(it) }, RxErrorHandler.handleEmptyError())
         }
 
         stopSelf()
 
-        return Service.START_STICKY
+        return START_STICKY
     }
 
     private fun updateData(task: Task?) {

@@ -5,8 +5,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="4dp"
-    android:paddingRight="4dp"
+    android:paddingStart="4dp"
+    android:paddingEnd="4dp"
     android:paddingTop="4dp"
     android:paddingBottom="8dp">
     <LinearLayout
@@ -15,8 +15,8 @@
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/spacing_large"
         android:paddingBottom="@dimen/spacing_large"
-        android:paddingLeft="@dimen/spacing_large"
-        android:paddingRight="12dp"
+        android:paddingStart="@dimen/spacing_large"
+        android:paddingEnd="12dp"
         android:gravity="center_vertical">
         <TextView
             android:layout_width="0dp"
@@ -29,10 +29,10 @@
             android:id="@+id/artCreditTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="By @AnnDeLune"
+            tools:text="By @AnnDeLune"
             android:textColor="@color/white"
             android:textSize="12sp"
-            android:layout_marginRight="@dimen/spacing_medium"/>
+            android:layout_marginEnd="@dimen/spacing_medium"/>
         <ImageView
             android:id="@+id/caretView"
             android:layout_width="wrap_content"
@@ -53,8 +53,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_large"
             android:paddingBottom="@dimen/spacing_large"
-            android:paddingLeft="@dimen/spacing_large"
-            android:paddingRight="@dimen/spacing_large"
+            android:paddingStart="@dimen/spacing_large"
+            android:paddingEnd="@dimen/spacing_large"
             android:layout_gravity="center_horizontal" />
         <com.habitrpg.android.habitica.ui.views.WrapContentDraweeView
             android:id="@+id/questFlourishesImageView"
@@ -62,16 +62,16 @@
             android:layout_height="219dp"
             android:layout_marginTop="@dimen/spacing_large"
             android:paddingBottom="@dimen/spacing_large"
-            android:paddingLeft="@dimen/spacing_large"
-            android:paddingRight="@dimen/spacing_large"
+            android:paddingStart="@dimen/spacing_large"
+            android:paddingEnd="@dimen/spacing_large"
             android:layout_gravity="center_horizontal" />
     </FrameLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/spacing_medium"
-        android:paddingLeft="@dimen/spacing_large"
-        android:paddingRight="@dimen/spacing_large"
+        android:paddingStart="@dimen/spacing_large"
+        android:paddingEnd="@dimen/spacing_large"
         android:layout_marginTop="@dimen/spacing_large">
         <TextView
             android:id="@+id/bossNameView"
@@ -85,7 +85,7 @@
             android:id="@+id/pendingDamageIconView"
             android:layout_width="@dimen/icon_size"
             android:layout_height="@dimen/icon_size"
-            android:layout_marginRight="@dimen/spacing_small"/>
+            android:layout_marginEnd="@dimen/spacing_small"/>
         <TextView
             android:id="@+id/pendingDamageTextView"
             android:layout_width="wrap_content"
@@ -99,19 +99,19 @@
         android:layout_height="wrap_content"
         app:barForegroundColor="@color/red_50"
         app:valueTextColor="@color/white"
-        app:barBackgroundColor="@color/white_15_alpha"
+        app:barBackgroundColor="@color/content_15_alpha"
         app:barHeight="8dp"
         app:labelSpacing="@dimen/spacing_medium"
-        android:paddingLeft="@dimen/spacing_large"
-        android:paddingRight="@dimen/spacing_large" />
+        android:paddingStart="@dimen/spacing_large"
+        android:paddingEnd="@dimen/spacing_large" />
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/spacing_medium"
         android:layout_marginTop="@dimen/spacing_large"
-        android:paddingLeft="@dimen/spacing_large"
-        android:paddingRight="@dimen/spacing_large">
+        android:paddingStart="@dimen/spacing_large"
+        android:paddingEnd="@dimen/spacing_large">
 
         <TextView
             android:layout_width="wrap_content"
@@ -125,7 +125,7 @@
             android:layout_height="wrap_content"
             tools:text="Boss Rage"
             android:textSize="14sp"
-            android:layout_marginLeft="@dimen/spacing_medium"
+            android:layout_marginStart="@dimen/spacing_medium"
             android:textColor="@color/white"/>
     </LinearLayout>
     <com.habitrpg.android.habitica.ui.views.ValueBar
@@ -134,19 +134,19 @@
         android:layout_height="wrap_content"
         app:barForegroundColor="@color/orange_100"
         app:valueTextColor="@color/white"
-        app:barBackgroundColor="@color/white_15_alpha"
+        app:barBackgroundColor="@color/content_15_alpha"
         app:barHeight="8dp"
         app:labelSpacing="@dimen/spacing_medium"
-        android:paddingLeft="@dimen/spacing_large"
-        android:paddingRight="@dimen/spacing_large"
+        android:paddingStart="@dimen/spacing_large"
+        android:paddingEnd="@dimen/spacing_large"
         android:layout_marginBottom="@dimen/spacing_large"/>
     <LinearLayout
         android:id="@+id/collectionContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingLeft="@dimen/spacing_large"
-        android:paddingRight="@dimen/spacing_large"/>
+        android:paddingStart="@dimen/spacing_large"
+        android:paddingEnd="@dimen/spacing_large"/>
     <TextView
         android:id="@+id/collectedItemsNumberView"
         android:layout_width="match_parent"
@@ -159,13 +159,13 @@
         android:layout_height="wrap_content"
         tools:text="Rage Strikes: 1/3"
         style="@style/Body1"
-        android:background="@drawable/layout_rounded_bg_white_15"
+        android:background="@drawable/layout_rounded_bg_content_15"
         android:gravity="center"
         android:paddingTop="@dimen/spacing_small"
         android:paddingBottom="@dimen/spacing_small"
         android:textColor="@color/orange_500"
-        android:layout_marginLeft="@dimen/spacing_large"
-        android:layout_marginRight="@dimen/spacing_large"/>
+        android:layout_marginStart="@dimen/spacing_large"
+        android:layout_marginEnd="@dimen/spacing_large"/>
     <LinearLayout
         android:id="@+id/rageStrikeContainer"
         android:layout_width="wrap_content"
@@ -180,7 +180,7 @@
         android:layout_height="wrap_content"
         app:title="@string/world_boss_description"
         app:identifier="questDescription"
-        app:color="@color/white">
+        app:color="@color/content_background">
     <TextView
         android:id="@+id/questDescription"
         android:layout_width="match_parent"

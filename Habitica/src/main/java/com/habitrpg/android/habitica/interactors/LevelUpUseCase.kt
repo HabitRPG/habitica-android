@@ -14,7 +14,6 @@ import com.habitrpg.android.habitica.ui.AvatarView
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import io.reactivex.Flowable
-import io.reactivex.functions.Consumer
 import org.greenrobot.eventbus.EventBus
 import javax.inject.Inject
 
@@ -64,7 +63,7 @@ constructor(private val soundManager: SoundManager, threadExecutor: ThreadExecut
                 event.sharedMessage = requestValues.activity.getString(R.string.share_levelup, requestValues.newLevel)
                 val avatarView = AvatarView(requestValues.activity, showBackground = true, showMount = true, showPet = true)
                 avatarView.setAvatar(requestValues.user)
-                avatarView.onAvatarImageReady(Consumer { t -> event.shareImage = t })
+                avatarView.onAvatarImageReady({ t -> event.shareImage = t })
 
                 val alert = HabiticaAlertDialog(requestValues.activity)
                 alert.setTitle(requestValues.activity.getString(R.string.levelup_header, requestValues.newLevel))
@@ -87,7 +86,7 @@ constructor(private val soundManager: SoundManager, threadExecutor: ThreadExecut
 
     private fun showClassSelection(requestValues: RequestValues) {
         checkClassSelectionUseCase.observable(CheckClassSelectionUseCase.RequestValues(requestValues.user, true, null, requestValues.activity))
-                .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+                .subscribe({ }, RxErrorHandler.handleEmptyError())
     }
 
     class RequestValues(val user: User, val activity: AppCompatActivity) : UseCase.RequestValues {

@@ -372,9 +372,6 @@
     <string name="subscribe_prompt_thanks">Siendo suscriptor, obtienes estos beneficios.</string>
     <string name="subscription_status">Estado de Suscripción</string>
     <string name="challenge_leave_title">Abandonar Desafío</string>
-    <string name="challenge_leave_text">¿Seguro que quieres abandonar el Desafio \"%s\"?</string>
-    <string name="challenge_remove_tasks_title">Eliminar tareas</string>
-    <string name="challenge_remove_tasks_text">¿Quieres eliminar las tareas?</string>
     <string name="remove_tasks">Eliminar</string>
     <string name="keep_tasks">Mantener</string>
     <string name="my_challenges">Mis Desafíos</string>
@@ -670,8 +667,6 @@
     <string name="send_gift">Enviar Regalo</string>
     <string name="server">Servidor</string>
     <string name="gift_confirmation_title">¡Tu regalo se envió!</string>
-    <string name="gift_confirmation_text_g1g1">Tu suscripción regalo ha sido enviada y tu suscripción ha sido aplicada a tu cuenta.</string>
-    <string name="gift_confirmation_text">Tu suscripción regalo ha sido enviada y tu suscripción ha sido aplicada a tu cuenta.</string>
     <string name="discover">Descubre</string>
     <string name="damage_paused">Daño pausado</string>
     <string name="opting_out_progress">optar por no</string>

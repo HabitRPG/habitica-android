@@ -10,13 +10,13 @@
         android:layout_height="wrap_content"
         style="@style/FragmentDialogTitle"
         android:id="@+id/titleTextView"
-        android:background="?colorPrimary"
-        android:textColor="@android:color/white" />
+        android:background="@color/window_background"
+        android:textColor="@color/text_primary" />
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/gray_700"
+        android:background="@color/content_background"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
             <com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport
                 android:id="@+id/recyclerView"
@@ -27,8 +27,6 @@
                 android:scrollbarThumbVertical="@color/scrollbarThumb"
                 android:scrollbars="vertical" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

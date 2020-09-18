@@ -60,10 +60,10 @@ class MemberSerialization : JsonDeserializer<Member> {
 
             val items = obj.getAsJsonObject("items")
             if (items.has("currentMount") && items.get("currentMount").isJsonPrimitive) {
-                member.setCurrentMount(items.get("currentMount").asString)
+                member.currentMount = items.get("currentMount").asString
             }
             if (items.has("currentPet") && items.get("currentPet").isJsonPrimitive) {
-                member.setCurrentPet(items.get("currentPet").asString)
+                member.currentPet = items.get("currentPet").asString
             }
             if (items.has("gear")) {
                 val gear = items.getAsJsonObject("gear")

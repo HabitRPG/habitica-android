@@ -23,6 +23,9 @@
     <attr name="barForegroundColor" format="color" />
     <attr name="barPendingColor" format="color" />
     <attr name="barBackgroundColor" format="color" />
+    <attr name="headerBackgroundColor" format="color" />
+    <attr name="headerOffsetColor" format="color" />
+    <attr name="headerTextColor" format="color" />
     <declare-styleable name="AvatarView">
         <attr name="showBackground" format="boolean" />
         <attr name="showMount" format="boolean" />
@@ -128,6 +131,7 @@
     <declare-styleable name="BottomNavigationItem">
         <attr name="title" />
         <attr name="iconDrawable" />
+        <attr name="selectedIconDrawable" format="integer" />
     </declare-styleable>
     <declare-styleable name="EquipmentOverviewItem">
         <attr name="title" />
@@ -144,5 +148,9 @@
         <attr name="iconDrawable" />
         <attr name="maxValue" format="integer" />
         <attr name="minValue" format="integer" />
+    </declare-styleable>
+    <declare-styleable name="DayNightTextView">
+        <attr name="dayTextColor" format="color" />
+        <attr name="nightTextColor" format="color" />
     </declare-styleable>
 </resources>

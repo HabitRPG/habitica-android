@@ -5,7 +5,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@color/white">
+        android:background="@color/content_background">
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -16,10 +16,10 @@
             android:layout_height="wrap_content"
             android:minHeight="?attr/actionBarSize"
             android:theme="@style/Toolbar"
-            android:background="@color/white"
+            android:background="@color/content_background"
             app:layout_scrollFlags="scroll|enterAlways"
             app:title="@string/choose_class"
-            app:titleTextColor="@color/gray_50"
+            app:titleTextColor="@color/text_primary"
             app:theme="@style/ToolbarDarkBackArrow"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"/>
 
@@ -109,7 +109,7 @@
                     android:layout_height="43dp"
                     android:text="@string/rogue"
                     style="@style/ClassSelectionClassButton"
-                    android:textColor="@color/brand_300" />
+                    android:textColor="@color/text_brand" />
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/warriorWrapper"
@@ -137,7 +137,7 @@
             </LinearLayout>
         </LinearLayout>
         <LinearLayout
-            android:id="@+id/selected_wrapper"
+            android:id="@+id/selected_wrapper_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1.7"
@@ -156,7 +156,7 @@
                 android:rotation="90"
                 android:src="@drawable/class_selection_inset_arrow"/>
             <TextView
-                android:id="@+id/selected_title_textview"
+                android:id="@+id/selected_title_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="Healer"
@@ -167,7 +167,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1">
                 <TextView
-                    android:id="@+id/selected_description_textview"
+                    android:id="@+id/selected_description_text_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     tools:text="@string/healer_description"

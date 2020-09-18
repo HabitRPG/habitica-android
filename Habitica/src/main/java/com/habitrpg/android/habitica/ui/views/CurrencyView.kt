@@ -9,9 +9,11 @@ import android.view.Gravity
 import android.view.View
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.extensions.isUsingNightModeResources
 import com.habitrpg.android.habitica.helpers.NumberAbbreviator
 
 class CurrencyView : androidx.appcompat.widget.AppCompatTextView {
+    var hideWhenEmpty: Boolean = false
     var lightBackground: Boolean = false
         set(value) {
             field = value
@@ -31,10 +33,11 @@ class CurrencyView : androidx.appcompat.widget.AppCompatTextView {
                 attrs,
                 R.styleable.CurrencyViews,
                 0, 0)
+        val fallBackLight = !context.isUsingNightModeResources()
         lightBackground = try {
-            attributes?.getBoolean(R.styleable.CurrencyView_hasLightBackground, true) ?: true
+            attributes?.getBoolean(R.styleable.CurrencyView_hasLightBackground, fallBackLight) ?: fallBackLight
         } catch (_: ArrayIndexOutOfBoundsException) {
-            true
+            !context.isUsingNightModeResources()
         }
         visibility = GONE
     }
@@ -59,7 +62,7 @@ class CurrencyView : androidx.appcompat.widget.AppCompatTextView {
         if ("gold" == currency) {
             icon = HabiticaIconsHelper.imageOfGold()
             if (lightBackground) {
-                setTextColor(ContextCompat.getColor(context, R.color.yellow_5))
+                setTextColor(ContextCompat.getColor(context, R.color.yellow_1))
             } else {
                 setTextColor(ContextCompat.getColor(context, R.color.yellow_100))
             }
@@ -78,6 +81,7 @@ class CurrencyView : androidx.appcompat.widget.AppCompatTextView {
                 setTextColor(ContextCompat.getColor(context, R.color.brand_500))
             }
         }
+        hideWhenEmpty = "hourglasses" == currency
     }
 
     private var drawable: BitmapDrawable? = null
@@ -110,21 +114,7 @@ class CurrencyView : androidx.appcompat.widget.AppCompatTextView {
         if (field != value) {
             field = value
             if (isLocked) {
-                this.setTextColor(ContextCompat.getColor(context, R.color.gray_300))
-                drawable?.alpha = 127
-            } else {
-                drawable?.alpha = 255
-            }
-            this.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null)
-        }
-    }
-
-    var cantAfford = false
-    set(value) {
-        if (field != value) {
-            field = value
-            if (value) {
-                this.setTextColor(ContextCompat.getColor(context, R.color.red_50))
+                this.setTextColor(ContextCompat.getColor(context, R.color.text_quad))
                 drawable?.alpha = 127
             } else {
                 drawable?.alpha = 255
@@ -134,7 +124,7 @@ class CurrencyView : androidx.appcompat.widget.AppCompatTextView {
     }
 
     private fun updateVisibility() {
-        visibility = if ("hourglasses" == this.currency) {
+        visibility = if (hideWhenEmpty) {
             if ("0" == text) View.GONE else View.VISIBLE
         } else {
             View.VISIBLE

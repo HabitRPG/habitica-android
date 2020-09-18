@@ -16,7 +16,6 @@ import com.habitrpg.android.habitica.ui.menu.BottomSheetMenuItem
 import com.habitrpg.android.habitica.ui.views.dialogs.PetSuggestHatchDialog
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.functions.Consumer
 import io.reactivex.subjects.PublishSubject
 import org.greenrobot.eventbus.EventBus
 
@@ -68,7 +67,7 @@ class PetViewHolder(parent: ViewGroup, private val equipEvents: PublishSubject<S
         binding.titleTextView.visibility = View.GONE
 
         val imageName = "stable_Pet-${item.animal}-${item.color}"
-        itemView.setBackgroundResource(R.drawable.layout_rounded_bg_gray_700)
+        itemView.setBackgroundResource(R.drawable.layout_rounded_bg_window)
         if (trained > 0) {
             if (this.canRaiseToMount) {
                 binding.trainedProgressBar.visibility = View.VISIBLE
@@ -83,7 +82,7 @@ class PetViewHolder(parent: ViewGroup, private val equipEvents: PublishSubject<S
                 binding.imageView.visibility = View.GONE
                 binding.itemWrapper.visibility = View.VISIBLE
                 binding.checkmarkView.visibility = View.VISIBLE
-                itemView.setBackgroundResource(R.drawable.layout_rounded_bg_gray_700_brand_border)
+                itemView.setBackgroundResource(R.drawable.layout_rounded_bg_window_tint_border)
                 DataBindingUtils.loadImage(binding.eggView, "Pet_Egg_${item.animal}")
                 DataBindingUtils.loadImage(binding.hatchingPotionView, "Pet_HatchingPotion_${item.color}")
             }
@@ -98,7 +97,7 @@ class PetViewHolder(parent: ViewGroup, private val equipEvents: PublishSubject<S
             val drawable = BitmapDrawable(resources, if (trained  == 0) it.extractAlpha() else it)
             Observable.just(drawable)
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(Consumer {
+                    .subscribe({
                         binding.imageView.background = drawable
                     }, RxErrorHandler.handleEmptyError())
         }
@@ -123,7 +122,7 @@ class PetViewHolder(parent: ViewGroup, private val equipEvents: PublishSubject<S
             when (index) {
                 0 -> {
                     animal?.let {
-                        equipEvents.onNext(it.key)
+                        equipEvents.onNext(it.key ?: "")
                     }
                 }
                 1 -> {

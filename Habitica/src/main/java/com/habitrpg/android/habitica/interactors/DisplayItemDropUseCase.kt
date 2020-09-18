@@ -37,7 +37,7 @@ constructor(private val soundManager: SoundManager, threadExecutor: ThreadExecut
                 }, 3000L)
             }
 
-            Flowable.empty<Void>()
+            Flowable.empty()
         }
     }
 

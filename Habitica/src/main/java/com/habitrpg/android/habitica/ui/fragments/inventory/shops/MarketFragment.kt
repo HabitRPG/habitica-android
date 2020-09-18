@@ -4,10 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.habitrpg.android.habitica.models.shops.Shop
 
-class MarketFragment: ShopsFragment() {
+class MarketFragment: ShopFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        lockTab = 0
+        shopIdentifier = Shop.MARKET
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 }

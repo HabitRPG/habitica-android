@@ -5,23 +5,33 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="?attr/colorContentBackground">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="12dp"
-        android:paddingRight="12dp"
-        android:background="@color/gray_700">
-        <Button
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:background="@color/window_background"
+        android:gravity="center_vertical">
+        <LinearLayout
             android:id="@+id/pin_button"
             android:layout_width="wrap_content"
             android:layout_height="52dp"
-            android:maxLines="1"
-            android:text="@string/pin"
-            android:background="@color/transparent"
-            android:layout_gravity="center_vertical"
-            android:gravity="start|center_vertical"/>
+            android:gravity="center_vertical"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp">
+            <ImageView
+                android:id="@+id/pin_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="6dp"/>
+            <TextView
+                android:id="@+id/pin_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"/>
+        </LinearLayout>
         <androidx.legacy.widget.Space
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -30,7 +40,6 @@
             android:id="@+id/currencyView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:hasLightBackground="true"
             android:paddingTop="12dp"
             android:paddingBottom="12dp"
             android:layout_gravity="center_vertical"/>

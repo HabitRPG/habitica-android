@@ -19,7 +19,6 @@ import com.habitrpg.android.habitica.models.social.ChatMessage
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.functions.Consumer
 import io.reactivex.subjects.BehaviorSubject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -49,11 +48,11 @@ class InboxViewModel(recipientID: String?, recipientUsername: String?) : BaseVie
                 .filterOptionalDoOnEmpty { member.value = null }
                 .flatMap { socialRepository.getMember(it) }
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(Consumer { member.value = it }, RxErrorHandler.handleEmptyError()))
+                .subscribe({ member.value = it }, RxErrorHandler.handleEmptyError()))
     }
 
     protected var memberIDSubject = BehaviorSubject.create<Optional<String>>()
-    val memberIDFlowable = memberIDSubject.toFlowable(BackpressureStrategy.BUFFER)
+    val memberIDFlowable: Flowable<Optional<String>> = memberIDSubject.toFlowable(BackpressureStrategy.BUFFER)
 
     fun setMemberID(groupID: String) {
         if (groupID == memberIDSubject.value?.value) return
@@ -76,7 +75,7 @@ class InboxViewModel(recipientID: String?, recipientUsername: String?) : BaseVie
             setMemberID(recipientID)
             loadMemberFromLocal()
         } else if (recipientUsername?.isNotBlank() == true) {
-            socialRepository.getMemberWithUsername(recipientUsername).subscribe(Consumer {
+            socialRepository.getMemberWithUsername(recipientUsername).subscribe({
                 setMemberID(it.id ?: "")
                 member.value = it
                 dataSourceFactory.updateRecipientID(memberIDSubject.value?.value)
@@ -98,7 +97,7 @@ private class MessagesDataSource(val socialRepository: SocialRepository, var rec
             if (recipientID?.isNotBlank() != true) { return@launch }
             val page = ceil(params.startPosition.toFloat() / params.loadSize.toFloat()).toInt()
             socialRepository.retrieveInboxMessages(recipientID ?: "", page)
-                    .subscribe(Consumer {
+                    .subscribe({
                         if (it.size != 10) lastFetchWasEnd = true
                         callback.onResult(it)
                     }, RxErrorHandler.handleEmptyError())
@@ -122,7 +121,7 @@ private class MessagesDataSource(val socialRepository: SocialRepository, var rec
                             Flowable.just(it)
                         }
                     }
-                    .subscribe(Consumer {
+                    .subscribe({
                         callback.onResult(it, 0)
                     }, RxErrorHandler.handleEmptyError())
         }

@@ -369,9 +369,6 @@
     <string name="subscribe_prompt_thanks">Du erhälst diese Vorteile für Dein Abonnement</string>
     <string name="subscription_status">Abonnement Status</string>
     <string name="challenge_leave_title">Herausforderung abbrechen</string>
-    <string name="challenge_leave_text">Bist Du Dir sicher, dass Du die Herausforderung \"%s\" abbrechen willst\?</string>
-    <string name="challenge_remove_tasks_title">Aufgaben entfernen</string>
-    <string name="challenge_remove_tasks_text">Willst Du Deine Aufgaben wirklich entfernen\?</string>
     <string name="remove_tasks">Entfernen</string>
     <string name="keep_tasks">Behalten</string>
     <string name="my_challenges">Meine Herausforderungen</string>
@@ -664,8 +661,6 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="send_gift">Geschenk abschicken</string>
     <string name="server">Server</string>
     <string name="gift_confirmation_title">Dein Geschenk wurde verschickt!</string>
-    <string name="gift_confirmation_text_g1g1">Du hast %s ein %s-monatiges Abo für Habitica geschickt und das gleiche Abo wurde Deinem Konto gutgeschrieben dank unserer \"Verschenke ein Abo und erhalte eins gratis\"-Aktion!</string>
-    <string name="gift_confirmation_text">Du hast %s ein %s-monatiges Abo für Habitica geschickt.</string>
     <string name="discover">Entdecken</string>
     <string name="damage_paused">Schaden pausiert</string>
     <string name="preference_push_important_announcements">Wichtige Ankündigungen</string>
@@ -706,7 +701,6 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="network_error_no_network_body">Keine Internetverbindung.</string>
     <string name="quest_completed">Quest abgeschlossen!</string>
     <string name="not_participating">Du nimmst nicht teil</string>
-    <string name="unlock_level_short">Level %d</string>
     <string name="unlock_previous_short">Schließe Quest %d ab</string>
     <string name="unlock_level">Freischalten durch Erreichen des Levels %d</string>
     <string name="unlock_previous">Freischalten durch Abschluss der Quest %d</string>

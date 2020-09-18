@@ -7,36 +7,22 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.facebook.drawee.backends.pipeline.Fresco
 import com.facebook.drawee.view.SimpleDraweeView
-import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
-import com.habitrpg.android.habitica.ui.helpers.bindView
 
+abstract class PurchaseDialogContent @JvmOverloads constructor(
+        context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+) : LinearLayout(context, attrs, defStyleAttr) {
 
-abstract class PurchaseDialogContent : LinearLayout {
+    abstract val imageView: SimpleDraweeView
+    abstract val titleTextView: TextView
 
-    private val imageView: SimpleDraweeView by bindView(R.id.imageView)
-    private val titleTextView: TextView by bindView(R.id.titleTextView)
-
-    protected abstract val viewId: Int
-
-    constructor(context: Context) : super(context) {
-        setupView()
-    }
-
-    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
-        setupView()
-    }
-
-    private fun setupView() {
+    init {
         orientation = VERTICAL
         gravity = Gravity.CENTER
-
-        inflate(context, viewId, this)
     }
-
 
     open fun setItem(item: ShopItem) {
         if (item.path?.contains("timeTravelBackgrounds") == true) {

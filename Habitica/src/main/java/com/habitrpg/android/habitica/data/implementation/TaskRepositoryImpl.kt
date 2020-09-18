@@ -15,7 +15,6 @@ import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.Flowable
 import io.reactivex.Maybe
 import io.reactivex.Single
-import io.reactivex.functions.Consumer
 import io.realm.Realm
 import io.realm.RealmResults
 import java.text.SimpleDateFormat
@@ -49,9 +48,7 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
         return this.apiClient.getTasks("completedTodos")
                 .doOnNext { taskList ->
                     val tasks = taskList.tasks
-                    if (tasks != null) {
-                        this.localRepository.saveCompletedTodos(userId, tasks.values)
-                    }
+                    this.localRepository.saveCompletedTodos(userId, tasks.values)
                 }
     }
 
@@ -279,11 +276,11 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
             getTask(taskid).map { localRepository.getUnmanagedCopy(it) }
 
     override fun updateTaskInBackground(task: Task) {
-        updateTask(task).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+        updateTask(task).subscribe({ }, RxErrorHandler.handleEmptyError())
     }
 
     override fun createTaskInBackground(task: Task) {
-        createTask(task).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+        createTask(task).subscribe({ }, RxErrorHandler.handleEmptyError())
     }
 
     override fun getTaskCopies(userId: String): Flowable<List<Task>> =

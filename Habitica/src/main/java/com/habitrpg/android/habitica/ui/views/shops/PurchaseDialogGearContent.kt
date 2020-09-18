@@ -1,57 +1,46 @@
 package com.habitrpg.android.habitica.ui.views.shops
 
 import android.content.Context
-import androidx.core.content.ContextCompat
-import android.util.AttributeSet
 import android.widget.TextView
+import androidx.core.content.ContextCompat
+import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.ui.helpers.bindView
+import com.habitrpg.android.habitica.databinding.DialogPurchaseContentGearBinding
+import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.models.inventory.Equipment
 import com.habitrpg.android.habitica.models.shops.ShopItem
 
-internal class PurchaseDialogGearContent : PurchaseDialogContent {
-
-    private val notesTextView: TextView by bindView(R.id.notesTextView)
-    private val strLabel: TextView by bindView(R.id.str_label)
-    private val strValueTextView: TextView by bindView(R.id.str_value)
-    private val perLabel: TextView by bindView(R.id.per_label)
-    private val perValueTextView: TextView by bindView(R.id.per_value)
-    private val conLabel: TextView by bindView(R.id.con_label)
-    private val conValueTextView: TextView by bindView(R.id.con_value)
-    private val intLabel: TextView by bindView(R.id.int_label)
-    private val intValueTextView: TextView by bindView(R.id.int_value)
-
-    override val viewId: Int
-        get() = R.layout.dialog_purchase_content_gear
-
-    constructor(context: Context) : super(context)
-
-    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
+internal class PurchaseDialogGearContent(context: Context) : PurchaseDialogContent(context) {
+    val binding = DialogPurchaseContentGearBinding.inflate(context.layoutInflater, this)
+    override val imageView: SimpleDraweeView
+        get() = binding.imageView
+    override val titleTextView: TextView
+        get() = binding.titleTextView
 
     override fun setItem(item: ShopItem) {
         super.setItem(item)
-        notesTextView.text = item.notes
+        binding.notesTextView.text = item.notes
     }
 
     fun setEquipment(equipment: Equipment) {
         if (equipment.isValid) {
-            configureFieldsForValue(strLabel, strValueTextView, equipment.str)
-            configureFieldsForValue(perLabel, perValueTextView, equipment.per)
-            configureFieldsForValue(conLabel, conValueTextView, equipment.con)
-            configureFieldsForValue(intLabel, intValueTextView, equipment._int)
+            configureFieldsForValue(binding.strLabel, binding.strValue, equipment.str)
+            configureFieldsForValue(binding.perLabel, binding.perValue, equipment.per)
+            configureFieldsForValue(binding.conLabel, binding.conValue, equipment.con)
+            configureFieldsForValue(binding.intLabel, binding.intValue, equipment._int)
         } else {
-            configureFieldsForValue(strLabel, strValueTextView, 0)
-            configureFieldsForValue(perLabel, perValueTextView, 0)
-            configureFieldsForValue(conLabel, conValueTextView, 0)
-            configureFieldsForValue(intLabel, intValueTextView, 0)
+            configureFieldsForValue(binding.strLabel, binding.strValue, 0)
+            configureFieldsForValue(binding.perLabel, binding.perValue, 0)
+            configureFieldsForValue(binding.conLabel, binding.conValue, 0)
+            configureFieldsForValue(binding.intLabel, binding.intValue, 0)
         }
     }
 
     private fun configureFieldsForValue(labelView: TextView?, valueTextView: TextView?, value: Int) {
         valueTextView?.text = "+$value"
         if (value == 0) {
-            labelView?.setTextColor(ContextCompat.getColor(context, R.color.gray_400))
-            valueTextView?.setTextColor(ContextCompat.getColor(context, R.color.gray_400))
+            labelView?.setTextColor(ContextCompat.getColor(context, R.color.text_dimmed))
+            valueTextView?.setTextColor(ContextCompat.getColor(context, R.color.text_dimmed))
         }
     }
 }

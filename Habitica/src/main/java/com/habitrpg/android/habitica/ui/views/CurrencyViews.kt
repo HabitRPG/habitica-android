@@ -5,6 +5,7 @@ import android.util.AttributeSet
 import android.util.TypedValue
 import android.widget.LinearLayout
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.extensions.isUsingNightModeResources
 
 class CurrencyViews : LinearLayout {
     var lightBackground: Boolean = false
@@ -28,6 +29,19 @@ class CurrencyViews : LinearLayout {
         get() = hourglassTextView.value
         set(value) { hourglassTextView.value = value }
 
+    var hourglassVisibility
+        get() = hourglassTextView.visibility
+        set(value) {
+            hourglassTextView.visibility = value
+            hourglassTextView.hideWhenEmpty = false
+        }
+    var goldVisibility: Int
+        get() = goldTextView.visibility
+        set(value) { goldTextView.visibility = value }
+    var gemVisibility
+        get() = gemTextView.visibility
+        set(value) { gemTextView.visibility = value }
+
 
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {
         val attributes = context?.theme?.obtainStyledAttributes(
@@ -35,7 +49,8 @@ class CurrencyViews : LinearLayout {
                 R.styleable.CurrencyViews,
                 0, 0)
         setupViews()
-        lightBackground = attributes?.getBoolean(R.styleable.CurrencyViews_hasLightBackground, true) ?: true
+        val fallBackLight = context?.isUsingNightModeResources() != true
+        lightBackground = attributes?.getBoolean(R.styleable.CurrencyViews_hasLightBackground, fallBackLight) ?: fallBackLight
     }
 
     constructor(context: Context?) : super(context) {
@@ -51,6 +66,7 @@ class CurrencyViews : LinearLayout {
 
     private fun setupView(view: CurrencyView, margin: Int) {
         this.addView(view)
+        view.textSize = 12f
         val params = view.layoutParams as? LayoutParams
         params?.marginStart = margin
         view.layoutParams = params

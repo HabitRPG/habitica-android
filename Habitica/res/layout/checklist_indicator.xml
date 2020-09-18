@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/checklistIndicatorWrapper"
+    android:layout_width="@dimen/checklist_wrapper_width"
+    android:layout_height="43dp"
+    android:gravity="center"
+    android:layout_gravity="center"
+    android:layout_marginEnd="12dp"
+    android:layout_marginTop="12dp"
+    android:layout_marginBottom="12dp"
+    android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/checkListCompletedTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/white"
+            style="@style/Body1"
+            android:textSize="11sp"
+            tools:text="1" />
+
+        <View
+            android:id="@+id/checklistDivider"
+            android:layout_width="@dimen/checklist_divider_width"
+            android:layout_height="1.5dp"
+            android:background="@color/white" />
+
+        <TextView
+            android:id="@+id/checkListAllTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/white"
+            style="@style/Body1"
+            android:textSize="11sp"
+            tools:text="13" />
+</LinearLayout>

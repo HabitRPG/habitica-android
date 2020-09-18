@@ -14,7 +14,7 @@ import java.util.*
 interface SocialRepository : BaseRepository {
     fun getPublicGuilds(): Flowable<RealmResults<Group>>
 
-    fun getUserGroups(): Flowable<RealmResults<Group>>
+    fun getUserGroups(type: String?): Flowable<RealmResults<Group>>
     fun retrieveGroupChat(groupId: String): Single<List<ChatMessage>>
     fun getGroupChat(groupId: String): Flowable<RealmResults<ChatMessage>>
 
@@ -87,4 +87,5 @@ interface SocialRepository : BaseRepository {
     fun getGroupMembership(id: String): Flowable<GroupMembership>
     fun getGroupMemberships(): Flowable<RealmResults<GroupMembership>>
     fun getChatmessage(messageID: String): Flowable<ChatMessage>
+    fun blockMember(userID: String): Flowable<List<String>>
 }

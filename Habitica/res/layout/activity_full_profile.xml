@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.habitrpg.android.habitica.ui.activities.FixCharacterValuesActivity"
-    android:background="@color/white">
+    android:background="?attr/colorContentBackground">
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -17,13 +17,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="?attr/actionBarSize"
-            android:theme="@style/Toolbar"
+            android:theme="@style/Toolbar.Modern"
             app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/Theme.AppCompat.Light"/>
 
     </com.google.android.material.appbar.AppBarLayout>
     <androidx.core.widget.NestedScrollView
-        android:id="@+id/fullprofile_scrollview"
+        android:id="@+id/scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -32,8 +32,8 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <androidx.cardview.widget.CardView
-                style="@style/CardView.Default"
+            <FrameLayout
+                android:background="@drawable/layout_rounded_bg_window"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -50,7 +50,7 @@
                         android:layout_height="wrap_content" />
 
                     <TextView
-                        android:id="@+id/profile_blurb"
+                        android:id="@+id/blurb_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textIsSelectable="true"
@@ -116,10 +116,10 @@
                             tools:text="100"/>
                     </LinearLayout>
                 </LinearLayout>
-            </androidx.cardview.widget.CardView>
+            </FrameLayout>
 
-            <androidx.cardview.widget.CardView
-                style="@style/CardView.Default"
+            <FrameLayout
+                android:background="@drawable/layout_rounded_bg_window"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <LinearLayout
@@ -157,10 +157,10 @@
                         android:textSize="13sp"
                         android:drawableTop="@drawable/icon_gift_subscription"/>
                 </LinearLayout>
-            </androidx.cardview.widget.CardView>
+            </FrameLayout>
 
-            <androidx.cardview.widget.CardView
-                style="@style/CardView.Default"
+            <FrameLayout
+                android:background="@drawable/layout_rounded_bg_window"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -177,17 +177,17 @@
                         android:text="@string/battle_gear"
                         android:textStyle="bold" />
                     <TableLayout
-                        android:id="@+id/equipment_table"
+                        android:id="@+id/equipment_table_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:shrinkColumns="1"
                         android:stretchColumns="0" />
                 </LinearLayout>
-            </androidx.cardview.widget.CardView>
+            </FrameLayout>
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/profile_costume_card"
-                style="@style/CardView.Default"
+            <FrameLayout
+                android:background="@drawable/layout_rounded_bg_window"
+                android:id="@+id/costume_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -204,17 +204,17 @@
                         android:text="@string/costume"
                         android:textStyle="bold" />
                     <TableLayout
-                        android:id="@+id/costume_table"
+                        android:id="@+id/costume_table_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:shrinkColumns="1"
                         android:stretchColumns="0" />
                 </LinearLayout>
-            </androidx.cardview.widget.CardView>
+            </FrameLayout>
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/profile_attributes_card"
-                style="@style/CardView.Default"
+            <FrameLayout
+                android:background="@drawable/layout_rounded_bg_window"
+                android:id="@+id/attributes_card_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:clickable="true"
@@ -228,7 +228,7 @@
                     android:weightSum="1">
 
                     <TableLayout
-                        android:id="@+id/attributes_table"
+                        android:id="@+id/attributes_table_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:stretchColumns="0,1,2,3,4">
@@ -279,11 +279,11 @@
 
                     </TableLayout>
                 </LinearLayout>
-            </androidx.cardview.widget.CardView>
+            </FrameLayout>
 
 
-            <androidx.cardview.widget.CardView
-                style="@style/CardView.Default"
+            <FrameLayout
+                android:background="@drawable/layout_rounded_bg_window"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -316,7 +316,7 @@
                                 android:text="@string/profile_pets_found" />
 
                             <TextView
-                                android:id="@+id/profile_pets_found_count"
+                                android:id="@+id/pets_found_count"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 tools:text="#" />
@@ -336,7 +336,7 @@
                                 android:text="@string/profile_mounts_tamed" />
 
                             <TextView
-                                android:id="@+id/profile_mounts_tamed_count"
+                                android:id="@+id/mounts_tamed_count"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 tools:text="#" />
@@ -348,12 +348,12 @@
                         </TableRow>
                     </TableLayout>
                 </LinearLayout>
-            </androidx.cardview.widget.CardView>
+            </FrameLayout>
 
 
-            <androidx.cardview.widget.CardView
+            <FrameLayout
+                android:background="@drawable/layout_rounded_bg_window"
                 android:id="@+id/profile_achievements_card"
-                style="@style/CardView.Default"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -371,20 +371,20 @@
                         android:textStyle="bold" />
 
                     <ProgressBar
-                        android:id="@+id/avatar_achievements_progress"
+                        android:id="@+id/achievement_progress"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:indeterminate="true" />
 
                     <com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport
-                        android:id="@+id/recyclerView"
+                        android:id="@+id/achievement_group_list"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scrollbarSize="3dp"
                         android:scrollbarThumbVertical="@color/scrollbarThumb"
                         android:scrollbars="vertical" />
                 </LinearLayout>
-            </androidx.cardview.widget.CardView>
+            </FrameLayout>
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

@@ -50,7 +50,7 @@ class HabitResetStreakButtons @JvmOverloads constructor(
             button.layoutParams = layoutParams
             addView(button)
             if (resetOption == selectedResetOption) {
-                selectedButton = button;
+                selectedButton = button
             }
         }
     }
@@ -62,7 +62,7 @@ class HabitResetStreakButtons @JvmOverloads constructor(
         val buttonText = context.getString(resetOption.nameRes)
         button.text = buttonText
         button.contentDescription = toContentDescription(buttonText, isActive)
-        button.background = ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_white)
+        button.background = ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_content)
 
         if (isActive) {
             button.background.setTint(tintColor)
@@ -70,7 +70,7 @@ class HabitResetStreakButtons @JvmOverloads constructor(
             button.typeface = Typeface.create("sans-serif-medium", Typeface.NORMAL)
         } else {
             button.background.setTint(ContextCompat.getColor(context, R.color.taskform_gray))
-            button.setTextColor(ContextCompat.getColor(context, R.color.gray_100))
+            button.setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
             button.typeface = Typeface.create("sans-serif", Typeface.NORMAL)
         }
         button.setOnClickListener {

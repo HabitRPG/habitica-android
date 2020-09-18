@@ -3,9 +3,8 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:clickable="true"
-                android:background="@color/white"
+                android:background="@color/content_background"
                 android:focusable="true">
     <LinearLayout
         android:id="@+id/container"
@@ -33,10 +32,9 @@
                 android:id="@+id/priceLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/gray_300"
+                android:textColor="@color/text_quad"
                 tools:text="150"
                 style="@style/Body1"
-                app:hasLightBackground="true"
                 android:textSize="15sp" />
             <TextView
                 android:id="@+id/unlockLabel"
@@ -46,9 +44,9 @@
                 android:layout_gravity="center"
                 style="@style/Body1"
                 android:textSize="11sp"
-                android:textColor="@color/gray_300"
+                android:textColor="@color/text_quad"
                 android:paddingStart="2dp"
-                android:paddingRight="2dp"
+                android:paddingEnd="2dp"
                 />
         </LinearLayout>
     </LinearLayout>
@@ -58,7 +56,7 @@
         android:layout_height="@dimen/shopitem_status_size"
         android:visibility="gone"
         tools:visibility="visible"
-        android:layout_alignLeft="@id/container"
+        android:layout_alignStart="@id/container"
         android:layout_alignTop="@id/container"
         android:gravity="center"
         android:scaleType="center"
@@ -67,11 +65,11 @@
         android:id="@+id/item_detail_indicator"
         android:layout_width="@dimen/shopitem_status_size"
         android:layout_height="@dimen/shopitem_status_size"
-        android:layout_gravity="right"
+        android:layout_gravity="end"
         android:visibility="gone"
-        android:layout_alignRight="@id/container"
+        android:layout_alignEnd="@id/container"
         android:gravity="center"
         android:textColor="@color/white"
-        android:layout_marginRight="-4dp"
+        android:layout_marginEnd="-4dp"
         android:textSize="12sp" />
 </RelativeLayout>

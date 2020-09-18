@@ -2,7 +2,6 @@ package com.habitrpg.android.habitica.helpers
 
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import io.reactivex.Maybe
-import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
@@ -48,7 +47,7 @@ class SoundManager {
             val soundFiles = ArrayList<SoundFile>()
 
             soundFiles.add(SoundFile(soundTheme, type))
-            soundFileLoader.download(soundFiles).observeOn(Schedulers.newThread()).subscribe(Consumer {
+            soundFileLoader.download(soundFiles).observeOn(Schedulers.newThread()).subscribe({
                 val file = soundFiles[0]
                 loadedSoundFiles[type] = file
                 file.play()

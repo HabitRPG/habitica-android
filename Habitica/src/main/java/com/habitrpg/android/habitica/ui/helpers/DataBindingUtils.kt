@@ -8,8 +8,6 @@ import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.Transformation
 import android.widget.LinearLayout
-import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.net.toUri
 import com.facebook.common.executors.CallerThreadExecutor
@@ -24,6 +22,7 @@ import com.facebook.imagepipeline.image.CloseableImage
 import com.facebook.imagepipeline.image.ImageInfo
 import com.facebook.imagepipeline.request.ImageRequestBuilder
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.extensions.setTintWith
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import java.util.*
 import kotlin.collections.HashMap
@@ -103,24 +102,10 @@ object DataBindingUtils {
         }
     }
 
-    fun setForegroundTintColor(view: TextView, color: Int) {
-        var thisColor = color
-        if (thisColor > 0) {
-            thisColor = ContextCompat.getColor(view.context, thisColor)
-        }
-        view.setTextColor(thisColor)
-    }
-
     fun setRoundedBackground(view: View, color: Int) {
         val drawable = ResourcesCompat.getDrawable(view.resources, R.drawable.layout_rounded_bg, null)
-        drawable?.setColorFilter(color, PorterDuff.Mode.MULTIPLY)
+        drawable?.setTintWith(color, PorterDuff.Mode.MULTIPLY)
         view.background = drawable
-    }
-
-    fun setRoundedBackgroundInt(view: View, color: Int) {
-        if (color != 0) {
-            setRoundedBackground(view, ContextCompat.getColor(view.context, color))
-        }
     }
 
     class LayoutWeightAnimation(internal var view: View, internal var targetWeight: Float) : Animation() {
@@ -178,7 +163,7 @@ object DataBindingUtils {
         tempMap["Mount_Body_Gryphon-Gryphatrice"] = "gif"
         tempMap["background_clocktower"] = "gif"
         tempMap["background_airship"] = "gif"
-        tempMap["background_steamwork"] = "gif"
+        tempMap["background_steamworks"] = "gif"
         tempMap["Pet_HatchingPotion_Veggie"] = "gif"
         tempMap["Pet_HatchingPotion_Dessert"] = "gif"
         tempMap["Pet-HatchingPotion-Dessert"] = "gif"

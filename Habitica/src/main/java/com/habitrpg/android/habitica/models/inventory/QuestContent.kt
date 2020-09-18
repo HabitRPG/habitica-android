@@ -7,17 +7,17 @@ import io.realm.annotations.PrimaryKey
 open class QuestContent : RealmObject(), Item {
 
     @PrimaryKey
-    internal var key: String = ""
+    override var key: String = ""
     set(value) {
         field = value
         drop?.key = value
         colors?.key = value
         boss?.key = value
     }
-    internal var text: String = ""
+    override var text: String = ""
     var notes: String = ""
     var completion: String = ""
-    internal var value: Int = 0
+    override var value: Int = 0
     var previous: String? = null
     var lvl: Int = 0
     var isCanBuy: Boolean = false
@@ -49,33 +49,8 @@ open class QuestContent : RealmObject(), Item {
     val isBossQuest: Boolean
         get() = this.boss != null
 
-    override fun getType(): String {
-        return "quests"
-    }
-
-    override fun getKey(): String {
-        return key
-    }
-
-    override fun getText(): String {
-        return text
-    }
-
-    override fun getValue(): Int? {
-        return value
-    }
-
-    fun setText(text: String) {
-        this.text = text
-    }
-
-    fun setValue(value: Int) {
-        this.value = value
-    }
-
-    fun setKey(key: String) {
-        this.key = key
-    }
+    override val type: String
+        get() =  "quests"
 
     fun getCollectWithKey(key: String): QuestCollect? {
         for (collect in this.collect ?: emptyList<QuestCollect>()) {

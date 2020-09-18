@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="@color/white">
+    android:background="@color/content_background">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         app:subtitle="HP"
         app:title="@string/health_points"
-        app:titleColor="@color/red_10"
+        app:titleColor="@color/text_red_white"
         android:layout_marginStart="@dimen/spacing_medium"
         android:layout_marginEnd="@dimen/spacing_medium"
         android:layout_marginBottom="@dimen/spacing_medium"
@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         app:subtitle="EXP"
         app:title="@string/experience_points"
-        app:titleColor="@color/yellow_50"
+        app:titleColor="@color/text_yellow_white"
         android:layout_marginStart="@dimen/spacing_medium"
         android:layout_marginEnd="@dimen/spacing_medium"
         android:layout_marginBottom="@dimen/spacing_medium"
@@ -44,7 +44,7 @@
         android:layout_height="wrap_content"
         app:subtitle="MP"
         app:title="@string/mana_points"
-        app:titleColor="@color/blue_10"
+        app:titleColor="@color/text_blue_white"
         android:layout_marginStart="@dimen/spacing_medium"
         android:layout_marginEnd="@dimen/spacing_medium"
         android:layout_marginBottom="@dimen/spacing_medium"
@@ -55,7 +55,7 @@
         android:layout_height="wrap_content"
         app:subtitle="@string/currency"
         app:title="@string/gold_capitalilzed"
-        app:titleColor="@color/orange_10"
+        app:titleColor="@color/text_orange_white"
         android:layout_marginStart="@dimen/spacing_medium"
         android:layout_marginEnd="@dimen/spacing_medium"
         android:layout_marginBottom="@dimen/spacing_medium"
@@ -66,7 +66,7 @@
         android:layout_height="wrap_content"
         app:subtitle="@string/premium_currency"
         app:title="@string/gems"
-        app:titleColor="@color/green_10"
+        app:titleColor="@color/text_green_white"
         android:layout_marginStart="@dimen/spacing_medium"
         android:layout_marginEnd="@dimen/spacing_medium"
         android:layout_marginBottom="@dimen/spacing_medium"
@@ -77,7 +77,7 @@
         android:layout_height="wrap_content"
         app:subtitle="@string/subscriber_currency"
         app:title="@string/mystic_hourglasses"
-        app:titleColor="@color/brand_300"
+        app:titleColor="@color/text_brand_white"
         android:layout_marginStart="@dimen/spacing_medium"
         android:layout_marginEnd="@dimen/spacing_medium"
         android:layout_marginBottom="@dimen/spacing_medium"
@@ -88,7 +88,7 @@
         android:layout_height="wrap_content"
         app:subtitle="STR, CON, INT, PER"
         app:title="@string/stat_allocation"
-        app:titleColor="#7f3300"
+        app:titleColor="@color/text_brown_white"
         android:layout_marginStart="@dimen/spacing_medium"
         android:layout_marginEnd="@dimen/spacing_medium"
         android:layout_marginBottom="@dimen/spacing_medium"
@@ -115,14 +115,14 @@
         android:paddingEnd="32dp"
         android:paddingBottom="32dp"
         android:orientation="vertical"
-        android:background="@color/gray_700"
+        android:background="@color/window_background"
         android:layout_marginTop="@dimen/spacing_large"
         android:gravity="center">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/still_questions"
-            android:textColor="@color/black"
+            android:textColor="@color/text_primary"
             style="@style/Subheader3"
             android:layout_marginBottom="@dimen/spacing_small"/>
     <TextView
@@ -130,7 +130,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="14sp"
-        android:textColor="@color/gray_100"
+        android:textColor="@color/text_secondary"
         android:gravity="center"/>
 </LinearLayout>
 </LinearLayout>
