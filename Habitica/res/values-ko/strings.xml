@@ -335,14 +335,14 @@
 \n연속 정기후원 3개월마다 보석 제한개수가 5개씩, 최대 월 50개까지 올라갑니다!</string>
     <string name="subscribe_listitem2_description">신비한 모래시계를 얻어서 시간 여행자 상점에서 아이템을 구입하세요!</string>
     <string name="subscribe_listitem3_description">지금 구독하시면 바로 구독자 한정 세트를 받을 수 있고 매 달 새로운 아이템들을 추가로 받게 됩니다!</string>
-    <string name="subscribe_listitem4_description">드롭 제한 두 배로 인하여 매일 과제를 수행하며 펫 컬렉션 완성을 도울 더 많은 아이템을 얻을 수 있습니다!</string>
+    <string name="subscribe_listitem4_description">신규 구독자가 되시면 로얄 퍼플 재칼로프 펫을 드립니다.</string>
     <string name="subscription_hourglasses">신비한 모래시계 +%d개</string>
     <string name="payment_method">결제수단</string>
     <string name="subscription">정기구독</string>
     <string name="active">활성중</string>
     <string name="cancel_subscription">구독 취소하기</string>
-    <string name="cancel_subscription_google_description">구독을 취소하고 싶으신가요\? 구글 플레이 스토어의 \"내 애플리케이션\" 메뉴에 구독취소 옵션이 있습니다.</string>
-    <string name="cancel_subscription_notgoogle_description">더 이상 구독하고 싶지 않으세요\? 결제 수단으로 인해 웹사이트에서만 취소가 가능합니다. 아래 버튼을 클릭하면, 브라우저에서 사이트가 열립니다!</string>
+    <string name="cancel_subscription_google_description">구독을 취소하고 싶으신가요\? 구글 플레이 스토어의 \"내 애플리케이션\" 메뉴에 구독취소 옵션이 있습니다. 구독을 취소하신 후에도 남아있는 구독시간은 그대로 사용하실 수 있습니다.</string>
+    <string name="cancel_subscription_notgoogle_description">더 이상 구독하고 싶지 않으세요\? 모바일 결제 제한으로 인해 웹사이트에서만 취소가 가능합니다. 아래 버튼을 클릭하셔서 로그인 하시고 오른쪽 상단에 있는 유저 아이콘을 탭하신 후 구독란으로 들어가세요. 구독을 취소하신 후에도 남아있는 구독시간은 그대로 사용하실 수 있습니다. 보고싶을 거에요!</string>
     <string name="visit_habitica_website">Habitica 웹사이트 가기</string>
     <string name="current_bonuses">현재 발동중인 보너스</string>
     <string name="months_subscribed">구독한 기간</string>
@@ -355,7 +355,7 @@
     <string name="three_months">3개월</string>
     <string name="six_months">6개월</string>
     <string name="twelve_months">12개월</string>
-    <string name="subscribe_prompt_thanks">정기구독을 함으로써 다음과 같은 혜택을 받고 있습니다:</string>
+    <string name="subscribe_prompt_thanks">구독자가 되시면 다음과 같은 혜택을 받을 수 있습니다:</string>
     <string name="subscription_status">구독상황</string>
     <string name="challenge_leave_title">도전 그만두기</string>
     <string name="challenge_leave_text">정말로 “%s” 도전을 그만 두시겠습니까?</string>
@@ -620,8 +620,7 @@
     <string name="total_checkins">전체 접속 수</string>
     <string name="two_handed">양 손</string>
     <string name="usernamePromptTitle">당신의 유저아이디를 설정할 차례입니다!</string>
-    <string name="usernamePromptWiki">이 변경된 사항에 대해 더 알고 싶다면, <a href="https://habitica.wikia.com/wiki/Player_Names">저희 위키백과를 참고해 주세요.</a>
-    </string>
+    <string name="usernamePromptWiki">이 변경된 사항에 대해 더 알고 싶다면, <a href="https://habitica.wikia.com/wiki/Player_Names">저희 위키백과를 참고해 주세요.</a></string>
     <string name="confirm_username_title">정말로 현재 유저아이디를 저장하시겠습니까\?</string>
     <string name="cancel">취소</string>
     <string name="confirm_username">유저아이디 저장</string>
@@ -814,4 +813,25 @@
     <string name="mystic_hourglasses">신비한 모래시계</string>
     <string name="subscribe_listitem5">아이템 드롭이 두 배</string>
     <string name="subscribe_listitem3_description_new">지금 %s를 받고 매달 새로운 아이템을 받으려면 구독하세요!</string>
+    <string name="leave_guild_confirmation">길드를 탈퇴하고 도전을 계속하거나 그만두시겠습니까\?</string>
+    <string name="gift_confirmation_text_gems">%s 에게 보석을 선물했습니다.</string>
+    <string name="gift_confirmation_text_sub">%s 에게 %s-개월 해비티카 구독권을 선물했습니다.</string>
+    <string name="gift_confirmation_text_sub_g1g1">원 플러스 원 프로모션을 통해 %s 에게 %s-개월 해비티카 구독권을 선물하고 동일한 구독 기간이 본인의 계정에도 적용되었습니다!</string>
+    <string name="gift_gems_subtitle">선물하고 싶은 보석 꾸러미를 선택하세요!</string>
+    <string name="number_responded">%1$d/%2$d 수락함</string>
+    <string name="empty_title_todos_filtered">할 일 없음</string>
+    <string name="empty_title_habits_filtered">습관 없음</string>
+    <string name="empty_title_dailies_filtered">일일 과제 없음</string>
+    <string name="empty_title_rewards_filtered">보상 없음</string>
+    <string name="empty_description_todos_filtered">현재 적용된 필터에 표시되는 해야 할 일이 없습니다.</string>
+    <string name="empty_description_dailies_filtered">현재 적용된 필터에 표시되는 일일 과제가 없습니다.</string>
+    <string name="empty_description_habits_filtered">현재 적용된 필터에 표시되는 습관이 없습니다.</string>
+    <string name="register_btn_fb">페이스북 계정으로 가입</string>
+    <string name="login_btn_apple">애플 계정으로 로그인하기</string>
+    <string name="register_btn_google">구글 계정으로 가입</string>
+    <string name="special_items">스페셜 아이템</string>
+    <string name="leave_delte_tasks">나가기 &amp; 과제 지우기</string>
+    <string name="leave_keep_tasks">나가기 &amp; 과제 킵하기</string>
+    <string name="challenge_leave_description">이 도전의 과제들을 본인의 목록에 그대로 남기셔도 되고 나가면서 지우셔도 됩니다.</string>
+    <string name="subscribe_listitem5_description">매일 두 배의 아이템 획득 제한으로 해비티카에서 더 많은 아이템을 발견하세요.</string>
 </resources>
