@@ -44,6 +44,7 @@ import com.habitrpg.android.habitica.databinding.ActivityLoginBinding
 import com.habitrpg.android.habitica.extensions.addCancelButton
 import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.extensions.addOkButton
+import com.habitrpg.android.habitica.extensions.updateStatusBarColor
 import com.habitrpg.android.habitica.helpers.*
 import com.habitrpg.android.habitica.models.auth.UserAuthResponse
 import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
@@ -184,6 +185,11 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
                 }
             }.show()
         }
+    }
+
+    override fun loadTheme(sharedPreferences: SharedPreferences, forced: Boolean) {
+        super.loadTheme(sharedPreferences, forced)
+        window.updateStatusBarColor(R.color.black_20_alpha, false)
     }
 
     private fun setupFacebookLogin() {

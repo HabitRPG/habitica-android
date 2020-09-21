@@ -108,7 +108,7 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
             notesTextView?.maxLines = 100
             expandNotesButton?.text = context.getString(R.string.collapse_notes)
         } else {
-            notesTextView?.maxLines = 5
+            notesTextView?.maxLines = 8
             expandNotesButton?.text = context.getString(R.string.expand_notes)
         }
     }
@@ -120,7 +120,7 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
 
         expandNotesButton?.visibility = View.GONE
         notesExpanded = false
-        notesTextView?.maxLines = 5
+        notesTextView?.maxLines = 8
         if (data.notes?.isNotEmpty() == true) {
             notesTextView?.visibility = View.VISIBLE
             notesTextView?.setTextColor(ContextCompat.getColor(context, R.color.text_ternary))
