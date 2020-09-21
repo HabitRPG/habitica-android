@@ -269,17 +269,6 @@ class NavigationDrawerFragment : DialogFragment() {
             subscriptionItem?.pillText = context?.getString(R.string.sale)
             context?.let { subscriptionItem?.pillBackground = ContextCompat.getDrawable(it, R.drawable.pill_bg_teal) }
         }
-        if (activePromo != null) {
-            var promotedItem: HabiticaDrawerItem? = null
-            if (activePromo?.promoType == PromoType.GEMS_AMOUNT || activePromo?.promoType == PromoType.GEMS_PRICE) {
-                promotedItem = getItemWithIdentifier(SIDEBAR_GEMS)
-            }
-            if (activePromo?.promoType == PromoType.SUBSCRIPTION) {
-                promotedItem = getItemWithIdentifier(SIDEBAR_GEMS)
-            }
-            promotedItem?.pillText = context?.getString(R.string.sale)
-            promotedItem?.pillBackground = context?.let { activePromo?.pillBackgroundDrawable(it) }
-        }
         subscriptionItem?.let { updateItem(it) }
 
         val promoItem = getItemWithIdentifier(SIDEBAR_SUBSCRIPTION_PROMO)
@@ -512,9 +501,21 @@ class NavigationDrawerFragment : DialogFragment() {
         if (activePromo != null) {
             promoItem.isVisible = true
             adapter.activePromo = activePromo
+
+            var promotedItem: HabiticaDrawerItem? = null
+            if (activePromo?.promoType == PromoType.GEMS_AMOUNT || activePromo?.promoType == PromoType.GEMS_PRICE) {
+                promotedItem = getItemWithIdentifier(SIDEBAR_GEMS)
+            }
+            if (activePromo?.promoType == PromoType.SUBSCRIPTION) {
+                promotedItem = getItemWithIdentifier(SIDEBAR_SUBSCRIPTION)
+            }
+            promotedItem?.pillText = context?.getString(R.string.sale)
+            promotedItem?.pillBackground = context?.let { activePromo?.pillBackgroundDrawable(it) }
+            promotedItem?.let { updateItem(it) }
         } else {
             promoItem.isVisible = false
         }
+        updateItem(promoItem)
     }
 
     companion object {

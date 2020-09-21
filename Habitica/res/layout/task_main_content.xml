@@ -31,7 +31,8 @@
             android:maxLines="3"
             android:ellipsize="end"
             android:textSize="12sp"
-            tools:text="Notes"/>
+            tools:text="Notes"
+            android:layout_marginBottom="7dp"/>
 
         <Button
             android:id="@+id/expand_notes_button"
@@ -50,9 +51,6 @@
             android:text="@string/pending_approval"
             android:textColor="@color/text_quad"
             />
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="7dp" />
         <LinearLayout
             android:id="@+id/taskIconWrapper"
             android:layout_width="match_parent"
@@ -88,6 +86,7 @@
                 android:layout_marginEnd="2dp"
                 app:tint="@color/text_ternary"
                 android:alpha="0.25"
+                android:visibility="gone"
                 app:tintMode="multiply"/>
             <TextView
                 android:id="@+id/streakTextView"
