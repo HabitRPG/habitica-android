@@ -8,6 +8,7 @@ import android.widget.ProgressBar
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
@@ -44,7 +45,6 @@ import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.SnackbarDisplayTy
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import io.reactivex.Flowable
 import io.realm.RealmResults
-import net.pherth.android.emoji_library.EmojiEditText
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
@@ -113,16 +113,15 @@ class FullProfileActivity : BaseActivity() {
         super.onDestroy()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val inflater = menuInflater
         inflater.inflate(R.menu.menu_full_profile, menu)
-        val item = menu?.findItem(R.id.block_user)
+        val item = menu.findItem(R.id.block_user)
         if (isUserBlocked()) {
             item?.title = getString(R.string.unblock_user)
         } else {
             item?.title = getString(R.string.block)
         }
-        findViewById<Toolbar>(R.id.toolbar).let { ToolbarColorHelper.colorizeToolbar(it, this, overrideModernHeader) }
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -187,7 +186,7 @@ class FullProfileActivity : BaseActivity() {
         val factory = LayoutInflater.from(this)
         val newMessageView = factory.inflate(R.layout.profile_new_message_dialog, null)
 
-        val emojiEditText = newMessageView.findViewById<EmojiEditText>(R.id.edit_new_message_text)
+        val emojiEditText = newMessageView.findViewById<AppCompatEditText>(R.id.edit_new_message_text)
 
         val newMessageTitle = newMessageView.findViewById<TextView>(R.id.new_message_title)
         newMessageTitle.text = String.format(getString(R.string.profile_send_message_to), userDisplayName)
@@ -360,7 +359,6 @@ class FullProfileActivity : BaseActivity() {
 
     private fun addLevelAttributes(user: Member) {
         val byLevelStat = min((user.stats?.lvl ?: 0) / 2.0f, 50f)
-
         addAttributeRow(getString(R.string.profile_level), byLevelStat, byLevelStat, byLevelStat, byLevelStat, true, false)
     }
 

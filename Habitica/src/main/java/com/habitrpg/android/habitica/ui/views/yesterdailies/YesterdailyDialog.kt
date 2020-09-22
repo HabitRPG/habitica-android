@@ -109,7 +109,7 @@ class YesterdailyDialog private constructor(context: Context, private val userRe
             taskRepository.scoreChecklistItem(task.id ?: "", item.id ?: "").subscribe({ }, RxErrorHandler.handleEmptyError())
             configureChecklistView(checklistView, task, item)
         }
-        checkboxHolder?.setBackgroundResource(R.color.window_background)
+        checkboxHolder?.setBackgroundResource(task.extraLightTaskColor)
         val textView = checklistView.findViewById(R.id.checkedTextView) as? TextView
         textView?.text = item.text
     }

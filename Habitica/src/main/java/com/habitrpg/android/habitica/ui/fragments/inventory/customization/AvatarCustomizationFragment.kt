@@ -162,6 +162,7 @@ class AvatarCustomizationFragment : BaseMainFragment<FragmentRecyclerviewBinding
             "skin" -> prefs?.skin
             "shirt" -> prefs?.shirt
             "background" -> prefs?.background
+            "chair" -> prefs?.chair
             "hair" -> when (this.category) {
                 "bangs" -> prefs?.hair?.bangs.toString()
                 "base" -> prefs?.hair?.base.toString()

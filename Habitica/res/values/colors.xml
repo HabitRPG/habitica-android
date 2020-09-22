@@ -140,8 +140,8 @@
     <color name="reward_buy_button_text">#D9784A00</color>
     <color name="ic_launcher_background">#331960</color>
     <color name="scrollbarThumb">@color/content_background_offset</color>
-    <color name="setup_background">#efeff4</color>
-    <color name="setup_label_background">#fafaff</color>
+    <color name="setup_background">@color/window_background</color>
+    <color name="setup_label_background">@color/offset_background_30</color>
     <color name="animalitem_all_eggs">#6ECDB2</color>
 
     <color name="dark_brown">#794b00</color>

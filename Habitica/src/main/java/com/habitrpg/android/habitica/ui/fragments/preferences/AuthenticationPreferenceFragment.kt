@@ -7,6 +7,7 @@ import android.content.Context
 import android.os.Bundle
 import android.text.InputType
 import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.preference.Preference
@@ -185,12 +186,13 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
             val dialog = HabiticaAlertDialog(context)
             dialog.setTitle(R.string.delete_account)
             dialog.setMessage(deleteMessage)
-            dialog.addButton(R.string.delete_account_confirmation, isPrimary = true, isDestructive = true) { _, _ ->
+            dialog.addCancelButton()
+            dialog.addButton(R.string.delete, isPrimary = true, isDestructive = true) { _, _ ->
                 deleteAccount(editText?.text?.toString() ?: "")
             }
-            dialog.addCancelButton()
             dialog.setAdditionalContentView(view)
             dialog.setAdditionalContentSidePadding(12.dpToPx(context))
+            dialog.buttonAxis = LinearLayout.HORIZONTAL
             dialog.show()
         }
     }

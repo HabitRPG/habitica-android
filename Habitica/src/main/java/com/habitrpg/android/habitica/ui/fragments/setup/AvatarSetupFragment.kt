@@ -56,8 +56,8 @@ class AvatarSetupFragment : BaseFragment<FragmentSetupAvatarBinding>() {
 
         this.adapter = CustomizationSetupAdapter()
         this.adapter?.userSize = this.user?.preferences?.size ?: "slim"
-        adapter?.updateUserEvents?.flatMap { userRepository.updateUser(user, it) }?.subscribeWithErrorHandler({})?.let { compositeSubscription.add(it) }
-        adapter?.equipGearEvents?.flatMap { inventoryRepository.equip(user, "equipped", it) }?.subscribeWithErrorHandler({})?.let { compositeSubscription.add(it) }
+        adapter?.updateUserEvents?.flatMap { userRepository.updateUser(user, it) }?.subscribeWithErrorHandler {}?.let { compositeSubscription.add(it) }
+        adapter?.equipGearEvents?.flatMap { inventoryRepository.equip(user, "equipped", it) }?.subscribeWithErrorHandler {}?.let { compositeSubscription.add(it) }
 
         this.adapter?.user = this.user
         val layoutManager = LinearLayoutManager(activity)

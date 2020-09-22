@@ -27,7 +27,7 @@ import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.helpers.setMarkdown
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
-import net.pherth.android.emoji_library.EmojiParser
+import com.habitrpg.android.habitica.ui.helpers.EmojiParser
 import java.util.*
 import javax.inject.Inject
 

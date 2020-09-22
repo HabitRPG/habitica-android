@@ -107,12 +107,13 @@
             tools:text="This is a small label"
             tools:visibility="visible"/>
     </LinearLayout>
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/close_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/close"
         android:background="@drawable/alert_dialog_background"
+        android:backgroundTint="@color/content_background"
         android:layout_marginTop="@dimen/spacing_large"
         android:visibility="gone"
         tools:visibility="visible"

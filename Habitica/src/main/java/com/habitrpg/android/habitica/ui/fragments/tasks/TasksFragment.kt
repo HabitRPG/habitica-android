@@ -366,6 +366,12 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
             val taskType = data?.getStringExtra(TaskFormActivity.TASK_TYPE_KEY)
             if (taskType != null) {
                 switchToTaskTab(taskType)
+
+                val index = indexForTaskType(taskType)
+                if (index != -1) {
+                    val fragment = viewFragmentsDictionary?.get(index)
+                    fragment?.binding?.recyclerView?.scrollToPosition(0)
+                }
             }
         }
     }

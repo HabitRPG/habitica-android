@@ -33,10 +33,16 @@ class FAQDetailFragment : BaseMainFragment<FragmentFaqDetailBinding>() {
 
         arguments?.let {
             val args = FAQDetailFragmentArgs.fromBundle(it)
-            compositeSubscription.add(faqRepository.getArticle(args.position).subscribe({ faq ->
-                binding?.questionTextView?.text = faq.question
-                binding?.answerTextView?.text = MarkdownParser.parseMarkdown(faq.answer)
-            }, RxErrorHandler.handleEmptyError()))
+            if (args.question != null) {
+                binding?.questionTextView?.text = args.question
+                binding?.answerTextView?.text = MarkdownParser.parseMarkdown(args.answer)
+            } else {
+                compositeSubscription.add(faqRepository.getArticle(args.position).subscribe({ faq ->
+                    binding?.questionTextView?.text = faq.question
+                    binding?.answerTextView?.text = MarkdownParser.parseMarkdown(faq.answer)
+                }, RxErrorHandler.handleEmptyError()))
+            }
+
         }
 
         binding?.answerTextView?.movementMethod = LinkMovementMethod.getInstance()

@@ -19,6 +19,27 @@
         />
 
     <LinearLayout
+        android:id="@+id/known_issues_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/layout_rounded_bg_window"
+        android:layout_marginStart="@dimen/spacing_medium"
+        android:layout_marginEnd="@dimen/spacing_medium"
+        android:divider="?android:listDivider"
+        android:orientation="vertical"
+        android:showDividers="middle" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/common_fixes"
+        android:layout_marginStart="@dimen/spacing_large"
+        android:layout_marginTop="@dimen/spacing_large"
+        android:layout_marginBottom="12dp"
+        style="@style/SectionHeaderCaps"
+        />
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="19dp"

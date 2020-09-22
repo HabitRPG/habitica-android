@@ -65,9 +65,9 @@ class FixCharacterValuesActivity: BaseActivity() {
         binding.streakIconView.setImageResource(R.drawable.achievement_thermometer)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_save, menu)
-        return true
+        return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

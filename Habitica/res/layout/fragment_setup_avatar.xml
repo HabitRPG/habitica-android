@@ -9,11 +9,11 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="1" />
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/randomize_button"
         android:layout_width="wrap_content"
         android:text="@string/randomize"
-        style="@style/DiamondButton" />
+        style="@style/DiamondButton"/>
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
