@@ -186,7 +186,7 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
             }
             isLastPage -> {
                 this.setPreviousButtonEnabled(true)
-                binding.nextButton.text = this.getString(R.string.intro_finish_button)
+                binding.nextButton.text = this.getString(R.string.finish)
             }
             else -> {
                 this.setPreviousButtonEnabled(true)

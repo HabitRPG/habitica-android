@@ -110,11 +110,12 @@ class ChallengeFormActivity : BaseActivity() {
         component?.inject(this)
     }
 
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val inflater = menuInflater
         inflater.inflate(R.menu.menu_create_challenge, menu)
         findViewById<Toolbar>(R.id.toolbar).let { ToolbarColorHelper.colorizeToolbar(it, this, overrideModernHeader) }
-        return true
+        return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

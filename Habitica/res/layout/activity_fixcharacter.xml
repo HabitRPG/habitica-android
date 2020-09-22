@@ -16,9 +16,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="?attr/actionBarSize"
-            android:theme="@style/Toolbar"
-            app:layout_scrollFlags="scroll|enterAlways"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"/>
+            android:theme="@style/Toolbar.Modern"
+            app:layout_scrollFlags="scroll|enterAlways"/>
 
     </com.google.android.material.appbar.AppBarLayout>
             <ScrollView android:layout_width="match_parent"
@@ -266,7 +265,7 @@
                                 android:layout_height="match_parent"
                                 android:layout_width="0dp"
                                 android:layout_weight="1"
-                                android:background="@color/transparent"
+                                android:background="@drawable/layout_rounded_bg_window"
                                 android:hint="@string/streak_label"
                                 android:paddingStart="16dp">
                                 <com.google.android.material.textfield.TextInputEditText

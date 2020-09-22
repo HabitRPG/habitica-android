@@ -23,10 +23,11 @@
         android:layout_marginBottom="@dimen/spacing_large"
         />
 
-    <TextView
+    <com.habitrpg.android.habitica.ui.views.DayNightTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/brand_200"
+        app:dayTextColor="@color/brand_200"
+        app:nightTextColor="@color/brand_500"
         android:text="@string/welcomeNameTitle"
         android:gravity="center"
         android:textSize="16sp"

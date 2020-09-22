@@ -21,6 +21,7 @@
                 app:tabIndicatorHeight="2dp"
                 app:tabTextColor="@color/white_50_alpha"
                 app:tabSelectedTextColor="@color/white"
+            android:background="@color/brand"
                 app:tabGravity="center"
                 app:tabPaddingEnd="24dp"
                 app:tabPaddingStart="24dp"

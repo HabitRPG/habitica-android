@@ -20,7 +20,6 @@ import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.responses.TaskDirection
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
-import net.pherth.android.emoji_library.EmojiHandler
 import java.util.*
 import javax.inject.Inject
 
@@ -58,7 +57,6 @@ class HabitButtonWidgetService : Service() {
             val parsedText = MarkdownParser.parseMarkdown(task.text)
 
             val builder = SpannableStringBuilder(parsedText)
-            EmojiHandler.addEmojis(this.context, builder, 16, DynamicDrawableSpan.ALIGN_BASELINE, 16, 0, -1, false)
 
             remoteViews.setTextViewText(R.id.habit_title, builder)
 

@@ -34,9 +34,6 @@ class EquipmentDetailFragment : BaseMainFragment<FragmentRecyclerviewBinding>() 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        this.adapter.equippedGear = this.equippedGear
-        this.adapter.isCostume = this.isCostume
-        this.adapter.type = this.type
         compositeSubscription.add(this.adapter.equipEvents.flatMapMaybe { key -> inventoryRepository.equipGear(user, key, isCostume ?: false).firstElement() }
                 .subscribe({ }, RxErrorHandler.handleEmptyError()))
         return super.onCreateView(inflater, container, savedInstanceState)
@@ -52,6 +49,10 @@ class EquipmentDetailFragment : BaseMainFragment<FragmentRecyclerviewBinding>() 
             isCostume = args.isCostume
             equippedGear = args.equippedGear
         }
+
+        this.adapter.equippedGear = this.equippedGear
+        this.adapter.isCostume = this.isCostume
+        this.adapter.type = this.type
 
         binding?.recyclerView?.adapter = this.adapter
         binding?.recyclerView?.layoutManager = LinearLayoutManager(activity)

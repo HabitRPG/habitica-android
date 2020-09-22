@@ -15,7 +15,7 @@ import io.reactivex.Flowable
 import io.reactivex.subjects.PublishSubject
 import io.realm.OrderedRealmCollection
 import io.realm.RealmRecyclerViewAdapter
-import net.pherth.android.emoji_library.EmojiParser
+import com.habitrpg.android.habitica.ui.helpers.EmojiParser
 
 class ChallengesListViewAdapter(data: OrderedRealmCollection<Challenge>?, autoUpdate: Boolean, private val viewUserChallengesOnly: Boolean, private val userId: String) : RealmRecyclerViewAdapter<Challenge, ChallengesListViewAdapter.ChallengeViewHolder>(data, autoUpdate) {
     private var unfilteredData: OrderedRealmCollection<Challenge>? = null

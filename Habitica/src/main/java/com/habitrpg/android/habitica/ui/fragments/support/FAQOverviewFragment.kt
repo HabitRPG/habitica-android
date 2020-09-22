@@ -72,7 +72,9 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
                 val binding = SupportFaqItemBinding.inflate(context.layoutInflater, binding?.faqLinearLayout, true)
                 binding.textView.text = article.question
                 binding.root.setOnClickListener {
-                    MainNavigationController.navigate(FAQOverviewFragmentDirections.openFAQDetail(article.position ?: 0))
+                    val direction = FAQOverviewFragmentDirections.openFAQDetail(null, null)
+                    direction.position = article.position ?: 0
+                    MainNavigationController.navigate(direction)
                 }
             }
         }, RxErrorHandler.handleEmptyError()))

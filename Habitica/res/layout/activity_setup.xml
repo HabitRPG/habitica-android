@@ -17,9 +17,7 @@
         android:layout_centerHorizontal="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:background="@color/brand_300"
-        android:paddingStart="@dimen/content_inset"
-        android:paddingEnd="@dimen/content_inset"
+        android:background="@color/background_brand"
         android:gravity="center_vertical"
         android:elevation="8dp">
         <Button
@@ -40,7 +38,6 @@
             android:textColor="@color/white"
             android:drawableEnd="@drawable/forward_arrow_enabled"
             android:background="@color/transparent"
-            android:layout_alignEnd="@id/previousButton"
             android:layout_alignParentEnd="true"/>
 
         <com.viewpagerindicator.IconPageIndicator

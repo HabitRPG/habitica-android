@@ -69,11 +69,10 @@ object ToolbarColorHelper {
                     if (innerView is ActionMenuItemView) {
                         innerView.setTextColor(toolbarIconsColor)
                         for (k in innerView.compoundDrawables.indices) {
-                            if (innerView.compoundDrawables[k] != null) {
-
-                                //Important to set the color filter in seperate thread, by adding it to the message queue
-                                //Won't work otherwise.
-                                innerView.post { innerView.compoundDrawables[k].colorFilter = colorFilter }
+                            innerView.post {
+                                if (innerView.compoundDrawables[k] != null) {
+                                    innerView.compoundDrawables[k].colorFilter = colorFilter
+                                }
                             }
                         }
                     }

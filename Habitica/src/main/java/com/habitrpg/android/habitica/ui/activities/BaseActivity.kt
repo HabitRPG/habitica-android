@@ -6,6 +6,7 @@ import android.content.res.Configuration
 import android.content.res.Resources
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -37,6 +38,8 @@ abstract class BaseActivity : AppCompatActivity() {
     private var destroyed: Boolean = false
 
     open var overrideModernHeader: Boolean? = null
+
+    internal var toolbar: Toolbar? = null
 
     protected abstract fun getLayoutResId(): Int
 
@@ -148,6 +151,7 @@ abstract class BaseActivity : AppCompatActivity() {
     protected abstract fun injectActivity(component: UserComponent?)
 
     protected fun setupToolbar(toolbar: Toolbar?) {
+        this.toolbar = toolbar
         if (toolbar != null) {
             setSupportActionBar(toolbar)
 
@@ -161,6 +165,12 @@ abstract class BaseActivity : AppCompatActivity() {
             }
         }
         toolbar?.let { ToolbarColorHelper.colorizeToolbar(it, this, overrideModernHeader) }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val ret = super.onCreateOptionsMenu(menu)
+        toolbar?.let { ToolbarColorHelper.colorizeToolbar(it, this, overrideModernHeader) }
+        return ret
     }
 
     override fun onDestroy() {

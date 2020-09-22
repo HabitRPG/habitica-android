@@ -257,6 +257,10 @@ class TaskFormActivity : BaseActivity() {
         binding.habitResetStreakTitleView.visibility = habitViewsVisibility
         binding.habitResetStreakButtons.visibility = habitViewsVisibility
         binding.habitAdjustNegativeStreakView.visibility = habitViewsVisibility
+        if (taskType == Task.TYPE_HABIT) {
+            binding.habitScoringButtons.isPositive = true
+            binding.habitScoringButtons.isNegative = false
+        }
 
         val habitDailyVisibility = if (taskType == Task.TYPE_DAILY || taskType == Task.TYPE_HABIT) View.VISIBLE else View.GONE
         binding.adjustStreakTitleView.visibility = habitDailyVisibility

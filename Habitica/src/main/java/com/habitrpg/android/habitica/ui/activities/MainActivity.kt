@@ -78,6 +78,7 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
+import io.realm.kotlin.isValid
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import java.util.*
@@ -275,6 +276,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         }
         if (destination.id == R.id.petDetailRecyclerFragment || destination.id == R.id.mountDetailRecyclerFragment) {
             compositeSubscription.add(inventoryRepository.getItem("egg", arguments?.getString("type") ?: "").firstElement().subscribe({
+                if (!it.isValid()) return@subscribe
                 binding.toolbarTitle.text = if (destination.id == R.id.petDetailRecyclerFragment) {
                     (it as? Egg)?.text
                 } else {

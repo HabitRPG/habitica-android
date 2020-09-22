@@ -8,12 +8,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.core.os.bundleOf
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.databinding.FragmentSupportBugFixBinding
+import com.habitrpg.android.habitica.databinding.KnownIssueBinding
+import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.AppTestingLevel
 import com.habitrpg.android.habitica.helpers.DeviceName
+import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import io.reactivex.Completable
@@ -52,6 +57,15 @@ class BugFixFragment: BaseMainFragment<FragmentSupportBugFixBinding>() {
 
         binding?.reportBugButton?.setOnClickListener {
             sendEmail("[Android] Bugreport")
+        }
+
+        appConfigManager.knownIssues().forEach { issue ->
+            val issueBinding = KnownIssueBinding.inflate(view.context.layoutInflater)
+            issueBinding.root.text = issue["title"]
+            issueBinding.root.setOnClickListener {
+                MainNavigationController.navigate(R.id.FAQDetailFragment, bundleOf(Pair("question", issue["title"]), Pair("answer", issue["text"])))
+            }
+            binding?.knownIssuesLayout?.addView(issueBinding.root)
         }
     }
 

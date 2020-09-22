@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import com.habitrpg.android.habitica.R
@@ -39,7 +40,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import net.pherth.android.emoji_library.EmojiEditText
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -267,7 +267,7 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
         val factory = LayoutInflater.from(context)
         val newMessageView = factory.inflate(R.layout.profile_new_message_dialog, null)
 
-        val emojiEditText = newMessageView.findViewById<EmojiEditText>(R.id.edit_new_message_text)
+        val emojiEditText = newMessageView.findViewById<AppCompatEditText>(R.id.edit_new_message_text)
 
         val newMessageTitle = newMessageView.findViewById<TextView>(R.id.new_message_title)
         newMessageTitle.text = String.format(getString(R.string.profile_send_message_to), username)
