@@ -483,7 +483,10 @@ class TaskFormActivity : BaseActivity() {
     }
 
     private fun deleteTask() {
-        if (task?.challengeID?.isNotBlank() == true) {
+        if (task?.challengeBroken?.isNotBlank() == true) {
+            showBrokenChallengeDialog()
+            return
+        } else if (task?.challengeID?.isNotBlank() == true) {
             showChallengeDeleteTask()
             return
         }
@@ -525,6 +528,31 @@ class TaskFormActivity : BaseActivity() {
             }
             alert.setExtraCloseButtonVisibility(View.VISIBLE)
             alert.show()
+        }, RxErrorHandler.handleEmptyError()))
+    }
+
+    private fun showBrokenChallengeDialog() {
+        val task = task ?: return
+        if (!task.isValid) {
+            return
+        }
+        compositeSubscription.add(taskRepository.getTasksForChallenge(task.challengeID).subscribe({ tasks ->
+            val taskCount = tasks.size
+            val dialog = HabiticaAlertDialog(this)
+            dialog.setTitle(R.string.broken_challenge)
+            dialog.setMessage(this.getString(R.string.broken_challenge_description, taskCount))
+            dialog.addButton(this.getString(R.string.keep_x_tasks, taskCount), true) { _, _ ->
+                taskRepository.unlinkAllTasks(task.challengeID, "keep-all").subscribe({
+                    finish()
+                }, RxErrorHandler.handleEmptyError())
+            }
+            dialog.addButton(this.getString(R.string.delete_x_tasks, taskCount), false, true) { _, _ ->
+                taskRepository.unlinkAllTasks(task.challengeID, "remove-all").subscribe({
+                    finish()
+                }, RxErrorHandler.handleEmptyError())
+            }
+            dialog.setExtraCloseButtonVisibility(View.VISIBLE)
+            dialog.show()
         }, RxErrorHandler.handleEmptyError()))
     }
 
