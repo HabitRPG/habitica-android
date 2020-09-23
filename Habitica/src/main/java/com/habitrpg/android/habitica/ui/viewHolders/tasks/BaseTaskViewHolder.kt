@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.getThemeColor
@@ -32,7 +33,7 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
     protected val notesTextView: EllipsisTextView? = itemView.findViewById(R.id.notesTextView)
     protected val calendarIconView: ImageView? = itemView.findViewById(R.id.iconViewCalendar)
     protected val specialTaskTextView: TextView? = itemView.findViewById(R.id.specialTaskText)
-    private val iconViewChallenge: ImageView? = itemView.findViewById(R.id.iconviewChallenge)
+    private val iconViewChallenge: AppCompatImageView? = itemView.findViewById(R.id.iconviewChallenge)
     private val iconViewReminder: ImageView? = itemView.findViewById(R.id.iconviewReminder)
     private val taskIconWrapper: LinearLayout? = itemView.findViewById(R.id.taskIconWrapper)
     private val approvalRequiredTextView: TextView? = itemView.findViewById(R.id.approvalRequiredTextField)
@@ -184,7 +185,15 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
 
             iconViewChallenge?.visibility = if (task?.challengeID != null) View.VISIBLE else View.GONE
             if (task?.challengeID != null) {
-                iconViewChallenge?.setImageResource(if (task?.challengeBroken?.isNotBlank() == true) R.drawable.task_broken_megaphone else R.drawable.task_megaphone)
+                if (task?.challengeBroken?.isNotBlank() == true) {
+                    iconViewChallenge?.alpha = 1.0f
+                    iconViewChallenge?.imageTintList = ContextCompat.getColorStateList(context, R.color.white)
+                    iconViewChallenge?.setImageResource(R.drawable.task_broken_megaphone)
+                } else {
+                    iconViewChallenge?.alpha = 0.3f
+                    iconViewChallenge?.imageTintList = ContextCompat.getColorStateList(context, R.color.text_ternary)
+                    iconViewChallenge?.setImageResource(R.drawable.task_megaphone)
+                }
             }
             configureSpecialTaskTextView(data)
 
