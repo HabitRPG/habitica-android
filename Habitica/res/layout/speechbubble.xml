@@ -11,17 +11,17 @@
             android:layout_height="wrap_content"
             tools:src="@drawable/justin_textbox"
             android:layout_gravity="right"
-            android:layout_marginRight="30dp"/>
+            android:layout_marginEnd="30dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="46dp"
-        android:background="@drawable/white_rounded_bg"
+        android:background="@drawable/layout_rounded_bg_content"
         android:orientation="vertical"
         android:paddingBottom="16dp"
-        android:paddingLeft="21dp"
-        android:paddingRight="21dp"
+        android:paddingStart="21dp"
+        android:paddingEnd="21dp"
         android:paddingTop="24dp"
         android:layout_marginBottom="10dp">
 
@@ -80,7 +80,7 @@
             android:background="@drawable/name_plate"
             android:gravity="center_vertical"
             android:textColor="@color/white"
-            android:layout_marginLeft="21dp"
+            android:layout_marginStart="21dp"
             android:layout_marginTop="32dp"
             android:textStyle="bold" />
 </FrameLayout>

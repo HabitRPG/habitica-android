@@ -12,7 +12,7 @@
         android:text="@string/chat"
         android:id="@+id/new_message_title"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/gray_50" />
+        android:textColor="@color/text_primary" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -27,7 +27,7 @@
             android:layout_weight="1"
             app:hintTextAppearance="@style/TextAppearance.AppCompat">
 
-            <net.pherth.android.emoji_library.EmojiEditText
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/edit_new_message_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

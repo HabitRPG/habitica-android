@@ -2,11 +2,11 @@ package com.habitrpg.android.habitica.ui.views.yesterdailies
 
 import android.app.Activity
 import android.content.Context
-import android.os.Build
+import android.graphics.PorterDuff
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.habitrpg.android.habitica.R
@@ -15,8 +15,8 @@ import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.android.habitica.ui.helpers.TaskTextParser
-import com.habitrpg.android.habitica.ui.helpers.bindColor
+import com.habitrpg.android.habitica.models.tasks.ChecklistItem
+import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.views.HabiticaEmojiTextView
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.shared.habitica.models.tasks.ChecklistItem
@@ -32,9 +32,6 @@ import kotlin.math.abs
 class YesterdailyDialog private constructor(context: Context, private val userRepository: UserRepository, private val taskRepository: TaskRepository, private val tasks: List<Task>) : HabiticaAlertDialog(context) {
 
     private lateinit var yesterdailiesList: LinearLayout
-
-    private val taskGray: Int by bindColor(context, R.color.task_gray)
-
     init {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as? LayoutInflater
         val view = inflater?.inflate(R.layout.dialog_yesterdaily, null)
@@ -51,7 +48,6 @@ class YesterdailyDialog private constructor(context: Context, private val userRe
             runCron()
         }
 
-        //Can't use by bindView() because the view doesn't seem to be available through that yet
         val listView = view?.findViewById(R.id.yesterdailies_list) as? LinearLayout
         if (listView != null) {
             yesterdailiesList = listView
@@ -90,55 +86,53 @@ class YesterdailyDialog private constructor(context: Context, private val userRe
             }
 
             if (task.checklist?.size ?: 0 > 0) {
-                val checklistDivider = taskView.findViewById<View>(R.id.checklistDivider)
-                checklistDivider.visibility = View.VISIBLE
                 val checklistContainer = taskView.findViewById<ViewGroup>(R.id.checklistView)
                 for (item in task.checklist ?: emptyList<ChecklistItem>()) {
-                    val checklistView = inflater.inflate(R.layout.checklist_item_row, yesterdailiesList, false)
+                    val checklistView = inflater.inflate(R.layout.checklist_item_row, checklistContainer, false) as ViewGroup
                     configureChecklistView(checklistView, task, item)
                     checklistContainer.addView(checklistView)
                 }
             }
-            val checkBox = taskView.findViewById(R.id.checkBox) as? CheckBox
-            checkBox?.isEnabled = false
-            checkBox?.isClickable = false
             yesterdailiesList.addView(taskView)
         }
     }
 
-    private fun configureChecklistView(checklistView: View, task: Task, item: ChecklistItem) {
-        val checkbox = checklistView.findViewById(R.id.checkBox) as? CheckBox
-        checkbox?.isChecked = item.completed
-        checkbox?.setOnCheckedChangeListener { _, isChecked ->
-            item.completed = isChecked
-            taskRepository.scoreChecklistItem(task, item.id ?: "").subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+    private fun configureChecklistView(checklistView: ViewGroup, task: Task, item: ChecklistItem) {
+        val checkmark = checklistView.findViewById<ImageView>(R.id.checkmark)
+        checkmark?.drawable?.setTintMode(PorterDuff.Mode.SRC_ATOP)
+        checkmark?.visibility = if (item.completed) View.VISIBLE else View.GONE
+        val checkboxHolder = checklistView.findViewById<View>(R.id.checkBoxHolder) as? ViewGroup
+        checkboxHolder?.setOnClickListener { _ ->
+            item.completed = !item.completed
+            taskRepository.scoreChecklistItem(task.id ?: "", item.id ?: "").subscribe({ }, RxErrorHandler.handleEmptyError())
             configureChecklistView(checklistView, task, item)
         }
         checklistView.setOnClickListener {
             item.completed = !item.completed
-            taskRepository.scoreChecklistItem(task, item.id ?: "").subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+            taskRepository.scoreChecklistItem(task.id ?: "", item.id ?: "").subscribe({ }, RxErrorHandler.handleEmptyError())
             configureChecklistView(checklistView, task, item)
         }
-        val checkboxHolder = checklistView.findViewById<View>(R.id.checkBoxHolder)
-        checkboxHolder.setBackgroundResource(R.color.gray_700)
+        checkboxHolder?.setBackgroundResource(task.extraLightTaskColor)
         val textView = checklistView.findViewById(R.id.checkedTextView) as? TextView
         textView?.text = item.text
     }
 
     private fun configureTaskView(taskView: View, task: Task) {
         val completed = !task.isDisplayedActive
-        val checkbox = taskView.findViewById(R.id.checkBox) as? CheckBox
+        val checkmark = taskView.findViewById<View>(R.id.checkmark)
         val checkboxHolder = taskView.findViewById<View>(R.id.checkBoxHolder)
-        checkbox?.isChecked = completed
+        var checkboxBackground = taskView.findViewById<View>(R.id.checkbox_background)
+        checkmark?.visibility = if (completed) View.VISIBLE else View.GONE
         if (completed) {
-            checkboxHolder.setBackgroundColor(this.taskGray)
+            checkboxHolder.setBackgroundResource(R.color.window_background)
+            checkboxBackground.setBackgroundResource(R.drawable.daily_checked)
         } else {
             checkboxHolder.setBackgroundResource(task.lightTaskColor)
+            checkboxBackground.setBackgroundResource(R.drawable.daily_unchecked)
         }
 
         val emojiView = taskView.findViewById<View>(R.id.text_view) as? HabiticaEmojiTextView
-        emojiView?.text = TaskTextParser.markdownText(task) { emojiView?.text = it }
-
+        emojiView?.text = task.markdownText { emojiView?.text = it }
     }
 
 

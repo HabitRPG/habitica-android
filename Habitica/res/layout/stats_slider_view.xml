@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         tools:text="STR"
         tools:textColor="@color/red_50"
-        android:layout_marginRight="4dp"
+        android:layout_marginEnd="4dp"
         style="@style/Body3"
         android:textSize="16sp"
         android:textAllCaps="true" />
@@ -24,10 +24,10 @@
         android:minWidth="28dp"
         android:layout_height="wrap_content"
         tools:text="10"
-        android:textColor="@color/gray_100"
+        android:textColor="@color/text_secondary"
         style="@style/Body3"
         android:textSize="16sp"
-        android:gravity="right"/>
+        android:gravity="end"/>
 
     <SeekBar
         android:id="@+id/statsSeekBar"
@@ -40,7 +40,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="+"
-        android:textColor="@color/gray_100"
+        android:textColor="@color/text_secondary"
         android:textSize="16sp"/>
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/valueEditText"
@@ -48,9 +48,9 @@
         android:layout_height="wrap_content"
         tools:text="0"
         android:gravity="center_horizontal"
-        android:textColor="@color/gray_100"
+        android:textColor="@color/text_secondary"
         style="@style/Body1"
-        app:backgroundTint="@color/gray_500"
+        app:backgroundTint="@color/content_background_offset"
         android:textSize="16sp"
         android:inputType="number"/>
 </merge>

@@ -4,6 +4,7 @@ import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.data.local.UserLocalRepository
+import com.habitrpg.android.habitica.data.local.UserQuestStatus
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.Achievement
@@ -19,7 +20,6 @@ import com.habitrpg.shared.habitica.models.user.Stats
 import com.habitrpg.shared.habitica.models.user.User
 import io.reactivex.Flowable
 import io.reactivex.Maybe
-import io.reactivex.functions.Consumer
 import io.realm.RealmResults
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -92,7 +92,7 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
                     updateData
                 }
                 .flatMap { updateData -> updateUser(user, updateData).firstElement() }
-                .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+                .subscribe({ }, RxErrorHandler.handleEmptyError())
     }
 
     override fun sleep(user: User): Flowable<User> {
@@ -172,8 +172,8 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
     }
 
     override fun readNotification(id: String): Flowable<List<*>> = apiClient.readNotification(id)
-    override fun getIsUserOnQuest(): Flowable<Boolean> {
-        return localRepository.getIsUserOnQuest(userID)
+    override fun getUserQuestStatus(): Flowable<UserQuestStatus> {
+        return localRepository.getUserQuestStatus(userID)
     }
 
     override fun readNotifications(notificationIds: Map<String, List<String>>): Flowable<List<*>> =
@@ -212,7 +212,7 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
                 .doOnNext { user ->
                     localRepository.executeTransaction {
                         user.authentication?.localAuthentication?.username = newLoginName
-                        user.flags?.isVerifiedUsername = true
+                        user.flags?.verifiedUsername = true
                     }
                 }
                 .firstElement()
@@ -284,14 +284,14 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
         }
         observable.flatMap { apiClient.runCron().firstElement() }
                 .flatMap { this.retrieveUser(withTasks = true, forced = true).firstElement() }
-                .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+                .subscribe({ }, RxErrorHandler.handleEmptyError())
     }
 
     override fun useCustomization(user: User?, type: String, category: String?, identifier: String): Flowable<User> {
         if (user != null && appConfigManager.enableLocalChanges()) {
             localRepository.executeTransaction {
                 when (type) {
-                    "skin" -> user.preferences?.skin = identifier
+                    "skin" -> user.preferences?.skin =identifier
                     "shirt" -> user.preferences?.shirt = identifier
                     "hair" -> {
                         when (category) {

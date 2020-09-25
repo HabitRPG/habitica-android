@@ -17,8 +17,8 @@ import com.habitrpg.shared.habitica.models.user.Authentication
 import com.habitrpg.shared.habitica.models.user.Profile
 import com.habitrpg.android.habitica.ui.views.HabiticaEmojiTextView
 import com.habitrpg.android.habitica.ui.views.social.UsernameLabel
-import net.pherth.android.emoji_library.EmojiMap
-import net.pherth.android.emoji_library.EmojiParser
+import com.habitrpg.android.habitica.ui.helpers.EmojiMap
+import com.habitrpg.android.habitica.ui.helpers.EmojiParser
 import java.util.*
 
 class AutocompleteAdapter(val context: Context, val socialRepository: SocialRepository? = null, var autocompleteContext: String? = null, var groupID: String? = null, val remoteAutocomplete: Boolean = false) : BaseAdapter(), Filterable {

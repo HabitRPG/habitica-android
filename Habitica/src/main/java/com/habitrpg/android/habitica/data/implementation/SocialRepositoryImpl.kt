@@ -13,8 +13,6 @@ import com.habitrpg.android.habitica.models.social.*
 import com.habitrpg.shared.habitica.models.user.User
 import io.reactivex.Flowable
 import io.reactivex.Single
-import io.reactivex.functions.BiFunction
-import io.reactivex.functions.Consumer
 import io.realm.RealmResults
 import java.util.*
 import kotlin.collections.HashMap
@@ -71,7 +69,7 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
     }
 
     override fun markMessagesSeen(seenGroupId: String) {
-        apiClient.seenMessages(seenGroupId).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+        apiClient.seenMessages(seenGroupId).subscribe({ }, RxErrorHandler.handleEmptyError())
     }
 
     override fun flagMessage(chatMessage: ChatMessage, additionalInfo: String): Flowable<Void> {
@@ -130,7 +128,7 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
     override fun retrieveGroup(id: String): Flowable<Group> {
         return Flowable.zip(apiClient.getGroup(id).doOnNext { localRepository.saveSynchronous(it) }, retrieveGroupChat(id)
                 .toFlowable(),
-                BiFunction<Group, List<ChatMessage>, Group> { group, _ ->
+                { group, _ ->
                     group
                 }
         )

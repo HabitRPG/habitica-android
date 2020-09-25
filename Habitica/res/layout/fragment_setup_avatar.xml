@@ -9,11 +9,11 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="1" />
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/randomize_button"
         android:layout_width="wrap_content"
         android:text="@string/randomize"
-        style="@style/DiamondButton" />
+        style="@style/DiamondButton"/>
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -46,16 +46,14 @@
         android:layout_height="wrap_content"
         app:namePlate="Justin"
         app:npcDrawable="@drawable/justin_textbox"
-        android:layout_marginLeft="@dimen/content_inset"
-        android:layout_marginRight="@dimen/content_inset"
-        android:layout_above="@id/customization_drawer"
+        android:layout_marginStart="@dimen/content_inset"
+        android:layout_marginEnd="@dimen/content_inset"
         android:layout_marginBottom="12dp"/>
 
     <com.habitrpg.android.habitica.ui.views.setup.AvatarCustomizationDrawer
             android:id="@+id/customization_drawer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             />
 
 </LinearLayout>

@@ -42,7 +42,6 @@ import com.habitrpg.shared.habitica.models.user.User
 import io.reactivex.Flowable
 import io.reactivex.FlowableTransformer
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.functions.BiFunction
 import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
 import okhttp3.Cache
@@ -264,7 +263,7 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
             val tasksObservable = this.tasks
 
             userObservable = Flowable.zip(userObservable, tasksObservable,
-                    BiFunction { habitRPGUser, tasks ->
+                    { habitRPGUser, tasks ->
                         habitRPGUser.tasks = tasks
                         habitRPGUser
                     })

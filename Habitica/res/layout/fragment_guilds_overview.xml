@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/refresh_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -12,32 +12,36 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/spacing_medium">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/SectionTitle"
                 android:text="@string/my_guilds"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
-            <androidx.cardview.widget.CardView
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/CardView.Default">
+                style="@style/FlatCardView">
                 <LinearLayout
                     android:id="@+id/my_guilds_listview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:divider="?android:listDivider"
+                    tools:layout_height="50dp"
                     android:showDividers="middle">
                 </LinearLayout>
-            </androidx.cardview.widget.CardView>
+            </FrameLayout>
             <Button
                 android:id="@+id/publicGuildsButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/card_horizontal_padding"
-                android:text="@string/public_guilds" />
+                style="@style/HabiticaButton.Offset"
+                android:textColor="@color/text_primary"
+                android:text="@string/public_guilds"
+                android:layout_marginTop="@dimen/spacing_large"/>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

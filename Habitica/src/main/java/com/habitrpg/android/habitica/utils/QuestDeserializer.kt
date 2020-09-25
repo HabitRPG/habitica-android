@@ -33,6 +33,9 @@ class QuestDeserializer : JsonDeserializer<Quest> {
             if (progressObj.has("down")) {
                 progress.down = progressObj.get("down").asFloat
             }
+            if (progressObj.has("collectedItems")) {
+                progress.collectedItems = progressObj.get("collectedItems").asInt
+            }
             if (progressObj.has("collect")) {
                 progress.collect = RealmList()
                 for ((key, value) in progressObj.getAsJsonObject("collect").entrySet()) {

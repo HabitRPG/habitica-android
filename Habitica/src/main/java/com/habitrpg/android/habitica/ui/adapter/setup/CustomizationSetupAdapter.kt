@@ -1,20 +1,19 @@
 package com.habitrpg.android.habitica.ui.adapter.setup
 
-import android.content.Context
 import android.graphics.PorterDuff
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.SetupCustomizationRepository
+import com.habitrpg.android.habitica.databinding.SetupCustomizationItemBinding
 import com.habitrpg.android.habitica.extensions.inflate
+import com.habitrpg.android.habitica.extensions.setTintWith
 import com.habitrpg.android.habitica.models.SetupCustomization
-import com.habitrpg.shared.habitica.models.user.User
-import com.habitrpg.android.habitica.ui.helpers.bindView
+import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.BackpressureStrategy
+import io.reactivex.Flowable
 import io.reactivex.subjects.PublishSubject
 
 internal class CustomizationSetupAdapter : RecyclerView.Adapter<CustomizationSetupAdapter.CustomizationViewHolder>() {
@@ -24,9 +23,9 @@ internal class CustomizationSetupAdapter : RecyclerView.Adapter<CustomizationSet
     private var customizationList: List<SetupCustomization> = emptyList()
 
     private val equipGearEventSubject = PublishSubject.create<String>()
-    val equipGearEvents = equipGearEventSubject.toFlowable(BackpressureStrategy.DROP)
-    private val updateUserEventsSubject = PublishSubject.create<HashMap<String, Any>>()
-    val updateUserEvents = updateUserEventsSubject.toFlowable(BackpressureStrategy.DROP)
+    val equipGearEvents: Flowable<String> = equipGearEventSubject.toFlowable(BackpressureStrategy.DROP)
+    private val updateUserEventsSubject = PublishSubject.create<Map<String, Any>>()
+    val updateUserEvents: Flowable<Map<String, Any>> = updateUserEventsSubject.toFlowable(BackpressureStrategy.DROP)
 
     fun setCustomizationList(newCustomizationList: List<SetupCustomization>) {
         this.customizationList = newCustomizationList
@@ -78,46 +77,40 @@ internal class CustomizationSetupAdapter : RecyclerView.Adapter<CustomizationSet
     }
 
     internal inner class CustomizationViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
-
-        private val imageView: ImageView by bindView(R.id.imageView)
-        private val textView: TextView by bindView(R.id.textView)
+        private val binding = SetupCustomizationItemBinding.bind(itemView)
 
         var customization: SetupCustomization? = null
 
-        var context: Context
-
         init {
             itemView.setOnClickListener(this)
-
-            context = itemView.context
         }
 
         fun bind(customization: SetupCustomization) {
             this.customization = customization
 
             when {
-                customization.drawableId != null -> imageView.setImageResource(customization.drawableId ?: 0)
+                customization.drawableId != null -> binding.imageView.setImageResource(customization.drawableId ?: 0)
                 customization.colorId != null -> {
-                    val drawable = ContextCompat.getDrawable(context, R.drawable.setup_customization_circle)
-                    drawable?.setColorFilter(ContextCompat.getColor(context, customization.colorId ?: 0), PorterDuff.Mode.MULTIPLY)
-                    imageView.setImageDrawable(drawable)
+                    val drawable = ContextCompat.getDrawable(itemView.context, R.drawable.setup_customization_circle)
+                    drawable?.setTintWith(ContextCompat.getColor(itemView.context, customization.colorId ?: 0), PorterDuff.Mode.MULTIPLY)
+                    binding.imageView.setImageDrawable(drawable)
                 }
-                else -> imageView.setImageDrawable(null)
+                else -> binding.imageView.setImageDrawable(null)
             }
-            textView.text = customization.text
+            binding.textView.text = customization.text
             if ("0" != customization.key && "flower" == customization.subcategory) {
                 if (isCustomizationActive(customization)) {
-                    imageView.setBackgroundResource(R.drawable.setup_customization_flower_bg_selected)
+                    binding.imageView.setBackgroundResource(R.drawable.setup_customization_flower_bg_selected)
                 } else {
-                    imageView.setBackgroundResource(R.drawable.setup_customization_flower_bg)
+                    binding.imageView.setBackgroundResource(R.drawable.setup_customization_flower_bg)
                 }
             } else {
                 if (isCustomizationActive(customization)) {
-                    imageView.setBackgroundResource(R.drawable.setup_customization_bg_selected)
-                    textView.setTextColor(ContextCompat.getColor(context, R.color.white))
+                    binding.imageView.setBackgroundResource(R.drawable.setup_customization_bg_selected)
+                    binding.textView.setTextColor(ContextCompat.getColor(itemView.context, R.color.white))
                 } else {
-                    imageView.setBackgroundResource(R.drawable.setup_customization_bg)
-                    textView.setTextColor(ContextCompat.getColor(context, R.color.white_50_alpha))
+                    binding.imageView.setBackgroundResource(R.drawable.setup_customization_bg)
+                    binding.textView.setTextColor(ContextCompat.getColor(itemView.context, R.color.white_50_alpha))
                 }
             }
         }

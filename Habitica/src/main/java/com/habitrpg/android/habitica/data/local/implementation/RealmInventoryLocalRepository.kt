@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica.data.local.implementation
 
-import android.content.Context
 import com.habitrpg.android.habitica.data.local.InventoryLocalRepository
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.*
@@ -11,14 +10,13 @@ import com.habitrpg.shared.habitica.models.user.OwnedMount
 import com.habitrpg.shared.habitica.models.user.OwnedPet
 import com.habitrpg.shared.habitica.models.user.User
 import io.reactivex.Flowable
-import io.reactivex.functions.Consumer
 import io.realm.Realm
 import io.realm.RealmObject
 import io.realm.RealmResults
 import io.realm.Sort
 
 
-class RealmInventoryLocalRepository(realm: Realm, private val context: Context) : RealmContentLocalRepository(realm), InventoryLocalRepository {
+class RealmInventoryLocalRepository(realm: Realm) : RealmContentLocalRepository(realm), InventoryLocalRepository {
     override fun getQuestContent(keys: List<String>): Flowable<RealmResults<QuestContent>> {
         return realm.where(QuestContent::class.java)
                 .`in`("key", keys.toTypedArray())
@@ -203,7 +201,7 @@ class RealmInventoryLocalRepository(realm: Realm, private val context: Context) 
     }
 
     override fun changeOwnedCount(type: String, key: String, userID: String, amountToAdd: Int) {
-        getOwnedItem(userID, type, key, true).firstElement().subscribe( Consumer { changeOwnedCount(it, amountToAdd)}, RxErrorHandler.handleEmptyError())
+        getOwnedItem(userID, type, key, true).firstElement().subscribe({ changeOwnedCount(it, amountToAdd)}, RxErrorHandler.handleEmptyError())
     }
 
     override fun changeOwnedCount(item: OwnedItem, amountToAdd: Int?) {

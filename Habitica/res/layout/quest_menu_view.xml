@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="120dp"
         android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:background="@color/red_10"
         android:layout_marginTop="-30dp"
         />
@@ -19,8 +19,8 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true">
         <LinearLayout
             android:id="@+id/topView"
@@ -28,8 +28,8 @@
             android:layout_height="wrap_content"
             android:minHeight="40dp"
             android:orientation="vertical"
-            android:paddingLeft="@dimen/spacing_large"
-            android:paddingRight="@dimen/spacing_large"
+            android:paddingStart="@dimen/spacing_large"
+            android:paddingEnd="@dimen/spacing_large"
             android:paddingTop="@dimen/spacing_medium"
             android:paddingBottom="@dimen/spacing_medium">
             <ImageButton
@@ -39,12 +39,12 @@
                 app:srcCompat="@drawable/ic_close_white_24dp"
                 android:background="@color/transparent"
                 android:contentDescription="@string/hide_boss_art"
-                android:layout_gravity="right"/>
+                android:layout_gravity="end"/>
             <TextView
                 android:id="@+id/bossNameView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
+                android:layout_gravity="end"
                 android:textColor="@color/white"
                 android:textSize="14sp"
                 android:textStyle="bold"
@@ -55,7 +55,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/world_boss"
-                android:layout_gravity="right|center_vertical"
+                android:layout_gravity="end|center_vertical"
                 android:textColor="@color/white"
                 android:textSize="12sp"/>
         </LinearLayout>
@@ -66,13 +66,13 @@
             android:gravity="center_vertical"
             android:orientation="horizontal"
             tools:background="?colorPrimaryDark"
-            android:paddingLeft="@dimen/spacing_medium"
-            android:paddingRight="@dimen/spacing_large">
+            android:paddingStart="@dimen/spacing_medium"
+            android:paddingEnd="@dimen/spacing_large">
             <ImageView
                 android:id="@+id/heartIconView"
                 android:layout_width="@dimen/icon_size"
                 android:layout_height="@dimen/icon_size"
-                android:layout_marginRight="@dimen/spacing_small"/>
+                android:layout_marginEnd="@dimen/spacing_small"/>
             <com.habitrpg.android.habitica.ui.views.HabiticaProgressBar
                 android:id="@+id/healthBarView"
                 android:layout_width="0dp"
@@ -81,13 +81,13 @@
                 android:paddingTop="@dimen/spacing_medium"
                 android:paddingBottom="@dimen/spacing_small"
                 app:barForegroundColor="@color/red_50"
-                app:barBackgroundColor="@color/white_15_alpha"/>
+                app:barBackgroundColor="@color/content_15_alpha"/>
             <ImageView
                 android:id="@+id/pendingDamageIconView"
                 android:layout_width="18dp"
                 android:layout_height="18dp"
-                android:layout_marginLeft="@dimen/spacing_medium"
-                android:layout_marginRight="@dimen/spacing_small"/>
+                android:layout_marginStart="@dimen/spacing_medium"
+                android:layout_marginEnd="@dimen/spacing_small"/>
             <TextView
                 android:id="@+id/pendingDamageTextView"
                 android:layout_width="wrap_content"

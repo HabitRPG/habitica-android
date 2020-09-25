@@ -4,13 +4,13 @@ import java.util.*
 
 class LanguageHelper(languageSharedPref: String?) {
 
-    lateinit var locale: Locale
+    var locale: Locale
         private set
     var languageCode: String? = null
         private set
 
     init {
-        when (languageSharedPref) {
+        when (val pref = languageSharedPref ?: "en") {
             "iw" -> {
                 locale = Locale("iw")
                 languageCode = "he"
@@ -28,13 +28,11 @@ class LanguageHelper(languageSharedPref: String?) {
                 languageCode = "pt"
             }
             else -> {
-                languageSharedPref?.let { pref ->
-                    locale = if (pref.contains("_")) {
-                        val languageCodeParts = pref.split("_".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-                        Locale(languageCodeParts[0], languageCodeParts[1])
-                    } else {
-                        Locale(languageSharedPref)
-                    }
+                locale = if (pref.contains("_")) {
+                    val languageCodeParts = pref.split("_".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+                    Locale(languageCodeParts[0], languageCodeParts[1])
+                } else {
+                    Locale(pref)
                 }
                 languageCode = languageSharedPref
             }

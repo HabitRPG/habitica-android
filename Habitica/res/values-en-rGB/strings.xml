@@ -342,9 +342,6 @@
     <string name="subscribe_prompt_thanks">You get these benefits for being a Subscriber</string>
     <string name="subscription_status">Subscription Status</string>
     <string name="challenge_leave_title">Leave Challenge</string>
-    <string name="challenge_leave_text">Are you sure you want to leave the Challenge “%s”?</string>
-    <string name="challenge_remove_tasks_title">Remove tasks</string>
-    <string name="challenge_remove_tasks_text">Do you want to remove the tasks?</string>
     <string name="remove_tasks">Remove</string>
     <string name="keep_tasks">Keep</string>
     <string name="my_challenges">My Challenges</string>
@@ -397,7 +394,7 @@
     <string name="empty_title_todos">You don&amp;rsquo;t have any To-Dos</string>
     <string name="empty_description_todos">To-Dos are tasks that only need to be completed once. Add checklists to your To-Dos to increase their value.</string>
     <string name="empty_title_rewards">You don&amp;rsquo;t have any Rewards</string>
-    <string name="reset_walkthrough">Reset Justin&amp;rsquo;s Walkthrough</string>
+    <string name="reset_walkthrough">Reset Tutorials</string>
     <string name="read_community_guidelines">Review our <u>Community Guidelines</u> before posting</string>
     <string name="maintenance">Maintenance</string>
     <string name="reload_content">Reload Content</string>
@@ -675,8 +672,6 @@
     <string name="send_gift">Send Gift</string>
     <string name="server">Server</string>
     <string name="gift_confirmation_title">Your gift was sent!</string>
-    <string name="gift_confirmation_text_g1g1">You sent %s a %s-month Habitica subscription and the same subscription was applied to your account for our Gift One Get One promotion!</string>
-    <string name="gift_confirmation_text">You sent %s a %s-month Habitica subscription.</string>
     <string name="discover">Discover</string>
     <string name="damage_paused">Damage paused</string>
     <string name="preference_push_important_announcements">Important Announcements</string>
@@ -882,7 +877,6 @@
     <string name="unlock_previous">Unlock by finishing Quest %d</string>
     <string name="unlock_level">Unlock by reaching level %d</string>
     <string name="unlock_previous_short">Finish Quest %d</string>
-    <string name="unlock_level_short">Level %d</string>
     <string name="not_participating">You are not participating</string>
     <string name="quest_completed">Quest completed!</string>
     <string name="gift_confirmation_text_gems">You sent %s some gems.</string>

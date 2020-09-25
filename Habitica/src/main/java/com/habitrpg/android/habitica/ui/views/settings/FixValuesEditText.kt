@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.FixvaluesEdittextBinding
 import com.habitrpg.android.habitica.extensions.layoutInflater
+import com.habitrpg.android.habitica.extensions.setTintWith
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 
 class FixValuesEditText(context: Context, attrs: AttributeSet) : FrameLayout(context, attrs) {
@@ -27,7 +28,7 @@ class FixValuesEditText(context: Context, attrs: AttributeSet) : FrameLayout(con
     set(value) {
         field = value
         val backgroundDrawable = ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg)
-        backgroundDrawable?.setColorFilter(field, PorterDuff.Mode.MULTIPLY)
+        backgroundDrawable?.setTintWith(field, PorterDuff.Mode.MULTIPLY)
         backgroundDrawable?.alpha = 50
         binding.iconBackgroundView.background = backgroundDrawable
     }
@@ -54,9 +55,5 @@ class FixValuesEditText(context: Context, attrs: AttributeSet) : FrameLayout(con
             "level" -> binding.iconView.setImageBitmap(HabiticaIconsHelper.imageOfRogueLightBg())
             "streak" -> binding.iconView.setImageResource(R.drawable.achievement_thermometer)
         }
-    }
-
-    fun setIconBitmap(icon: Bitmap) {
-        binding.iconView.setImageBitmap(icon)
     }
 }

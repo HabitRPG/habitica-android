@@ -4,8 +4,8 @@
               android:layout_height="match_parent"
               xmlns:tools="http://schemas.android.com/tools"
               android:gravity="center_vertical"
-              android:paddingLeft="6dp"
-              android:paddingRight="6dp"
+              android:paddingStart="6dp"
+              android:paddingEnd="6dp"
         tools:background="?colorPrimaryOffset">
     <ImageView
             android:id="@+id/imageView"
@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="Slim"
-            android:layout_marginLeft="6dp"
+            android:layout_marginStart="6dp"
             android:textColor="@color/white_50_alpha"
             android:textSize="16sp"/>
 </LinearLayout>

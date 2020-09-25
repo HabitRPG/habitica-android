@@ -4,10 +4,10 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.cardview.widget.CardView
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/CardView.Default"
+        style="@style/FlatCardView"
         android:id="@+id/party_invitation_wrapper">
         <LinearLayout
             android:orientation="horizontal"
@@ -67,5 +67,5 @@
                     android:background="@drawable/party_invite_reject" />
             </LinearLayout>
         </LinearLayout>
-    </androidx.cardview.widget.CardView>
+    </FrameLayout>
 </LinearLayout>

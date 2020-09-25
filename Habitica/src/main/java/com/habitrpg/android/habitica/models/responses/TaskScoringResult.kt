@@ -11,4 +11,5 @@ class TaskScoringResult {
     var manaDelta: Double? = null
     var hasLeveledUp: Boolean = false
     var questDamage: Double? = null
+    var questItemsFound: Int? = null
 }

@@ -44,7 +44,7 @@ class Typewriter : androidx.appcompat.widget.AppCompatTextView {
     }
 
     private fun setupTextColors(context: Context) {
-        visibleSpan = ForegroundColorSpan(ContextCompat.getColor(context, R.color.textColorLight))
+        visibleSpan = ForegroundColorSpan(ContextCompat.getColor(context, R.color.text_primary))
         hiddenSpan = ForegroundColorSpan(ContextCompat.getColor(context, R.color.transparent))
     }
 

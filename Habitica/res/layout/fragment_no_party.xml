@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/refreshLayout"
-    android:background="@color/white">
+    android:background="?attr/colorContentBackground">
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -16,10 +16,10 @@
             android:orientation="vertical"
             android:paddingBottom="?android:actionBarSize">
 
-            <androidx.cardview.widget.CardView
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/CardView.Default"
+                style="@style/FlatCardView"
                 android:id="@+id/invitationWrapper">
 
                 <com.habitrpg.android.habitica.ui.views.social.InvitationsView
@@ -27,7 +27,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/CardContent" />
-            </androidx.cardview.widget.CardView>
+            </FrameLayout>
 
             <LinearLayout
                 android:id="@+id/noPartyWrapper"
@@ -64,7 +64,7 @@
                         android:layout_height="wrap_content"
                         style="@style/Headline"
                         android:textSize="16sp"
-                        android:textColor="@color/gray_200"
+                        android:textColor="@color/text_ternary"
                         android:text="@string/no_party_title"
                         android:gravity="center"
                         android:layout_marginBottom="@dimen/spacing_medium"/>
@@ -73,16 +73,16 @@
                         android:layout_height="wrap_content"
                         style="@style/Body2"
                         android:text="@string/no_party_description"
-                        android:textColor="@color/gray_300"
+                        android:textColor="@color/text_quad"
                         android:gravity="center"
-                        android:layout_marginLeft="@dimen/spacing_large"
-                        android:layout_marginRight="@dimen/spacing_large"/>
+                        android:layout_marginStart="@dimen/spacing_large"
+                        android:layout_marginEnd="@dimen/spacing_large"/>
                     <Button
                         android:id="@+id/createPartyButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        style="@style/HabiticaButton.Gray.600"
-                        android:background="@drawable/layout_rounded_bg_gray_700"
+                        style="@style/HabiticaButton.Offset"
+                        android:background="@drawable/layout_rounded_bg_window"
                         android:text="@string/create_party"
                         android:layout_marginTop="@dimen/spacing_large"/>
                 </LinearLayout>
@@ -105,18 +105,18 @@
                         android:layout_height="wrap_content"
                         style="@style/Body2"
                         android:text="@string/join_party_description"
-                        android:textColor="@color/gray_300"
+                        android:textColor="@color/text_quad"
                         android:gravity="center"
-                        android:layout_marginLeft="@dimen/spacing_large"
-                        android:layout_marginRight="@dimen/spacing_large"/>
+                        android:layout_marginStart="@dimen/spacing_large"
+                        android:layout_marginEnd="@dimen/spacing_large"/>
 
                     <Button
                         android:id="@+id/username_textview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="?colorAccent"
-                        style="@style/HabiticaButton.Gray.600"
-                        android:background="@drawable/layout_rounded_bg_gray_700"
+                        style="@style/HabiticaButton.Offset"
+                        android:background="@drawable/layout_rounded_bg_window"
                         android:layout_marginTop="@dimen/spacing_large"
                         android:layout_marginBottom="@dimen/spacing_large"/>
 

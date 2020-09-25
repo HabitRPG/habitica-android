@@ -5,34 +5,32 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.TaskRepository
-import com.habitrpg.android.habitica.extensions.inflate
+import com.habitrpg.android.habitica.databinding.FragmentRecyclerviewBinding
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.shared.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.adapter.SkillTasksRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
-import com.habitrpg.android.habitica.ui.helpers.bindView
-import com.habitrpg.android.habitica.ui.helpers.resetViews
-import com.habitrpg.shared.habitica.models.tasks.TaskType
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
-import io.reactivex.functions.Consumer
 import io.reactivex.subjects.PublishSubject
 import javax.inject.Inject
 import javax.inject.Named
 
-class SkillTasksRecyclerViewFragment : BaseFragment() {
+class SkillTasksRecyclerViewFragment : BaseFragment<FragmentRecyclerviewBinding>() {
     @Inject
     lateinit var taskRepository: TaskRepository
     @field:[Inject Named(AppModule.NAMED_USER_ID)]
     lateinit var userId: String
     var taskType: String? = null
 
-    private val recyclerView: RecyclerView? by bindView(R.id.recyclerView)
+    override var binding: FragmentRecyclerviewBinding? = null
+
+    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentRecyclerviewBinding {
+        return FragmentRecyclerviewBinding.inflate(inflater, container, false)
+    }
 
     var adapter: SkillTasksRecyclerViewAdapter = SkillTasksRecyclerViewAdapter(null, true)
     internal var layoutManager: LinearLayoutManager? = null
@@ -43,11 +41,6 @@ class SkillTasksRecyclerViewFragment : BaseFragment() {
         return taskSelectionEvents.toFlowable(BackpressureStrategy.DROP)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        super.onCreateView(inflater, container, savedInstanceState)
-        return container?.inflate(R.layout.fragment_recyclerview)
-    }
-
     override fun injectFragment(component: UserComponent) {
         component.inject(this)
     }
@@ -55,16 +48,14 @@ class SkillTasksRecyclerViewFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        resetViews()
-
         val layoutManager = LinearLayoutManager(context)
-        recyclerView?.layoutManager = layoutManager
+        binding?.recyclerView?.layoutManager = layoutManager
 
         adapter = SkillTasksRecyclerViewAdapter(null, true)
-        compositeSubscription.add(adapter.getTaskSelectionEvents().subscribe(Consumer {
+        compositeSubscription.add(adapter.getTaskSelectionEvents().subscribe({
             taskSelectionEvents.onNext(it)
         }, RxErrorHandler.handleEmptyError()))
-        recyclerView?.adapter = adapter
+        binding?.recyclerView?.adapter = adapter
     }
 
     override fun onResume() {
@@ -74,7 +65,7 @@ class SkillTasksRecyclerViewFragment : BaseFragment() {
         if (taskType == TaskType.TYPE_TODO) {
             tasks = tasks.map { it.where().equalTo("completed", false).findAll() }
         }
-        compositeSubscription.add(tasks.subscribe(Consumer {
+        compositeSubscription.add(tasks.subscribe({
             adapter.updateData(it)
         }, RxErrorHandler.handleEmptyError()))
     }

@@ -4,8 +4,8 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="48dp"
-    android:paddingLeft="@dimen/drawer_padding"
-    android:paddingRight="@dimen/drawer_padding"
+    android:paddingStart="@dimen/drawer_padding"
+    android:paddingEnd="@dimen/drawer_padding"
     android:gravity="center_vertical">
     <LinearLayout
         android:layout_width="0dp"
@@ -17,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/Body1"
-            android:textColor="@color/gray_50"
+            android:textColor="@color/text_primary"
             tools:text="Tasks"/>
         <TextView
             android:id="@+id/additionalInfoView"

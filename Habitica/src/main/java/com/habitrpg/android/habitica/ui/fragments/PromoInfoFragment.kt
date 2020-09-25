@@ -4,15 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.databinding.FragmentPromoInfoBinding
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import javax.inject.Inject
 
-class PromoInfoFragment : BaseMainFragment() {
+class PromoInfoFragment : BaseMainFragment<FragmentPromoInfoBinding>() {
 
-    internal lateinit var binding: FragmentPromoInfoBinding
+    override var binding: FragmentPromoInfoBinding? = null
+
+    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentPromoInfoBinding {
+        return FragmentPromoInfoBinding.inflate(inflater, container, false)
+    }
 
     @Inject
     lateinit var configManager: AppConfigManager
@@ -23,14 +26,17 @@ class PromoInfoFragment : BaseMainFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         this.hidesToolbar = true
-        super.onCreateView(inflater, container, savedInstanceState)
-        binding = FragmentPromoInfoBinding.inflate(inflater, container, false)
-        return binding.root
+        return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val promo = configManager.activePromo()
+        val promo = context?.let { configManager.activePromo(it) }
         promo?.configureInfoFragment(this)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        activity?.title = ""
     }
 }

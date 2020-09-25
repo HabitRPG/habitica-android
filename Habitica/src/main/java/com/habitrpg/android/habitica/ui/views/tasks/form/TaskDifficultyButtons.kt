@@ -31,7 +31,9 @@ class TaskDifficultyButtons @JvmOverloads constructor(
     }
     private lateinit var selectedButton: View
 
-    init {
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        removeAllViews()
         addAllButtons()
     }
 
@@ -63,8 +65,8 @@ class TaskDifficultyButtons @JvmOverloads constructor(
             view.findViewById<TextView>(R.id.text_view).typeface = Typeface.create("sans-serif-medium", Typeface.NORMAL)
         } else {
             view.findViewById<ImageView>(R.id.image_view).background.mutate().setTint(ContextCompat.getColor(context, R.color.taskform_gray))
-            view.findViewById<TextView>(R.id.text_view).setTextColor(ContextCompat.getColor(context, R.color.gray_100))
-            difficultyColor = ContextCompat.getColor(context, R.color.gray_400)
+            view.findViewById<TextView>(R.id.text_view).setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
+            difficultyColor = ContextCompat.getColor(context, R.color.disabled_background)
             view.findViewById<TextView>(R.id.text_view).typeface = Typeface.create("sans-serif", Typeface.NORMAL)
         }
         val drawable = HabiticaIconsHelper.imageOfTaskDifficultyStars(difficultyColor, difficulty.value, true).asDrawable(resources)

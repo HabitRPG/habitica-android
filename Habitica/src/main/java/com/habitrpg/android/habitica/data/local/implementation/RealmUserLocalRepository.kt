@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.data.local.implementation
 
 import com.habitrpg.android.habitica.data.local.UserLocalRepository
+import com.habitrpg.android.habitica.data.local.UserQuestStatus
 import com.habitrpg.android.habitica.models.*
 import com.habitrpg.shared.habitica.models.social.ChallengeMembership
 import com.habitrpg.android.habitica.models.social.ChatMessage
@@ -16,7 +17,7 @@ import io.realm.Realm
 import io.realm.RealmResults
 
 class RealmUserLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), UserLocalRepository {
-    override fun getIsUserOnQuest(userID: String): Flowable<Boolean> {
+    override fun getUserQuestStatus(userID: String): Flowable<UserQuestStatus> {
         return getUser(userID)
                 .map { it.party?.id ?: "" }
                 .filter { it.isNotBlank() }
@@ -28,7 +29,12 @@ class RealmUserLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
                             .filter { groups -> groups.size > 0 }
                             .map { groups -> groups.first() }
                 }
-                .map { it.quest?.members?.find { questMember -> questMember.key == userID } != null }
+                .map { when {
+                    it.quest?.members?.find { questMember -> questMember.key == userID } === null -> UserQuestStatus.NO_QUEST
+                    it.quest?.progress?.collect?.isNotEmpty() ?: false -> UserQuestStatus.QUEST_COLLECT
+                    it.quest?.progress?.hp ?: 0.0 > 0.0 -> UserQuestStatus.QUEST_BOSS
+                    else -> UserQuestStatus.QUEST_UNKNOWN
+                }}
     }
 
     override fun getAchievements(): Flowable<RealmResults<Achievement>> {

@@ -1,8 +1,6 @@
 package com.habitrpg.android.habitica.proxy.implementation
 
 
-import android.content.Context
-
 import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
 
 class EmptyCrashlyticsProxy : CrashlyticsProxy {

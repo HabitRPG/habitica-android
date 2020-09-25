@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
+    android:background="?attr/colorContentBackground"
     android:foreground="?selectableItemBackground"
     android:orientation="vertical">
 
@@ -31,15 +31,22 @@
                 <FrameLayout
                     android:id="@+id/checkBoxHolder"
                     android:layout_width="@dimen/button_width"
-                    android:layout_height="match_parent">
-
-                    <CheckBox
-                        android:id="@+id/checkBox"
-                        android:layout_width="@dimen/checkbox_size"
-                        android:layout_height="@dimen/checkbox_size"
+                    android:layout_height="match_parent"
+                    tools:background="@color/red_10">
+                    <View
+                        android:id="@+id/checkBoxBackground"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:gravity="center"
+                        android:background="@drawable/daily_checked"
+                        android:layout_gravity="center" />
+                    <ImageView
+                        android:id="@+id/checkmark"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
                         android:layout_gravity="center"
-                        android:button="@drawable/daily_checkbox"
-                        android:gravity="center" />
+                        android:scaleType="center"
+                        android:src="@drawable/checkmark" />
                 </FrameLayout>
                 <include layout="@layout/task_main_content" />
                 <ProgressBar
@@ -47,8 +54,8 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="@dimen/spacing_small"
-                    android:layout_marginRight="@dimen/spacing_small"
+                    android:layout_marginStart="@dimen/spacing_small"
+                    android:layout_marginEnd="@dimen/spacing_small"
                     style="@style/Widget.AppCompat.ProgressBar"/>
                 <ImageButton
                     android:id="@+id/error_icon"
@@ -57,8 +64,8 @@
                     android:layout_gravity="center_vertical"
                     android:background="@color/transparent"
                     android:src="@drawable/ic_warning_black"
-                    android:layout_marginLeft="@dimen/spacing_small"
-                    android:layout_marginRight="@dimen/spacing_small"/>
+                    android:layout_marginStart="@dimen/spacing_small"
+                    android:layout_marginEnd="@dimen/spacing_small"/>
                 <include layout="@layout/checklist_indicator" />
             </LinearLayout>
 

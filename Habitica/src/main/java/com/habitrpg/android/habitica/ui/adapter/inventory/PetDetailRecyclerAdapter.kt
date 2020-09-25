@@ -1,8 +1,6 @@
 package com.habitrpg.android.habitica.ui.adapter.inventory
 
 import android.view.ViewGroup
-import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.models.inventory.*
 import com.habitrpg.shared.habitica.models.user.OwnedItem
 import com.habitrpg.shared.habitica.models.user.OwnedMount
@@ -98,12 +96,7 @@ class PetDetailRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapt
 
     fun setOwnedItems(ownedItems: Map<String, OwnedItem>) {
         this.ownedItems = ownedItems
-        ownsSaddles = ownedItems.containsKey("Saddle-food")
-        notifyDataSetChanged()
-    }
-
-    fun setOwnsSaddles(ownsSaddles: Boolean) {
-        this.ownsSaddles = ownsSaddles
+        ownsSaddles = if (ownedItems.containsKey("Saddle-food")) (ownedItems["Saddle-food"]?.numberOwned ?: 0)> 0 else false
         notifyDataSetChanged()
     }
 }

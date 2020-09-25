@@ -14,7 +14,6 @@ import com.habitrpg.shared.habitica.models.user.User
 import io.reactivex.Flowable
 import io.reactivex.Maybe
 import io.reactivex.Single
-import io.reactivex.functions.Consumer
 import io.realm.Realm
 import io.realm.RealmResults
 import java.text.SimpleDateFormat
@@ -60,6 +59,25 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
 
     @Suppress("ReturnCount")
     override fun taskChecked(user: User?, task: Task, up: Boolean, force: Boolean, notifyFunc: ((TaskScoringResult) -> Unit)?): Flowable<TaskScoringResult?> {
+        val localData = if (user != null && appConfigManager.enableLocalTaskScoring()) {
+             ScoreTaskLocallyInteractor.score(user, task, if (up) TaskDirection.UP else TaskDirection.DOWN)
+        } else null
+        if (user != null && localData != null) {
+            val stats = user.stats
+            val result = TaskScoringResult()
+
+            result.healthDelta = localData.hp - (stats?.hp ?: 0.0)
+            result.experienceDelta = localData.exp - (stats?.exp ?: 0.0)
+            result.manaDelta = localData.mp - (stats?.mp ?: 0.0)
+            result.goldDelta = localData.gp - (stats?.gp ?: 0.0)
+            result.hasLeveledUp = localData.lvl > stats?.lvl ?: 0
+            result.questDamage = localData._tmp?.quest?.progressDelta
+            result.questItemsFound = localData._tmp?.quest?.collection
+            result.drop = localData._tmp?.drop
+            notifyFunc?.invoke(result)
+
+            handleTaskResponse(user, localData, task, up, 0f)
+        }
         val now = Date().time
         val id = task.id
         if (lastTaskAction > now - 500 && !force || id == null) {
@@ -67,24 +85,20 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
         }
         lastTaskAction = now
 
-        // There are cases where the user object is not set correctly. So the app refetches it as a fallback
-        val fetchedUser = user ?: localRepository.getUser(userID).blockingFirst()
-        return this.apiClient.postTaskDirection(fetchedUser, task, (if (up) TaskDirection.UP else TaskDirection.DOWN)).map { res ->
-            // save local task changes
-            val result = TaskScoringResult()
-            val stats = fetchedUser.stats
-
-            result.healthDelta = res.hp - (stats?.hp ?: 0.0)
-            result.experienceDelta = res.exp - (stats?.exp ?: 0.0)
-            result.manaDelta = res.mp - (stats?.mp ?: 0.0)
-            result.goldDelta = res.gp - (stats?.gp ?: 0.0)
-            result.hasLeveledUp = res.lvl > stats?.lvl ?: 0
-            result.questDamage = res._tmp?.quest?.progressDelta
-            result.drop = res._tmp?.drop
-            notifyFunc?.invoke(result)
-            handleTaskResponse(fetchedUser, res, task, up)
-            result
-        }
+                    result.healthDelta = res.hp - (stats?.hp ?: 0.0)
+                    result.experienceDelta = res.exp - (stats?.exp ?: 0.0)
+                    result.manaDelta = res.mp - (stats?.mp ?: 0.0)
+                    result.goldDelta = res.gp - (stats?.gp ?: 0.0)
+                    result.hasLeveledUp = res.lvl > stats?.lvl ?: 0
+                    result.questDamage = res._tmp?.quest?.progressDelta
+                    result.questItemsFound = res._tmp?.quest?.collection
+                    result.drop = res._tmp?.drop
+                    if (localData == null) {
+                        notifyFunc?.invoke(result)
+                    }
+                    handleTaskResponse(user, res, task, up, localData?.delta ?: 0f)
+                    result
+                }
     }
 
     private fun handleTaskResponse(user: User, res: TaskDirectionData, task: Task, up: Boolean) {
@@ -238,11 +252,11 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
             getTask(taskid).map { localRepository.getUnmanagedCopy(it) }
 
     override fun updateTaskInBackground(task: Task) {
-        updateTask(task).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+        updateTask(task).subscribe({ }, RxErrorHandler.handleEmptyError())
     }
 
     override fun createTaskInBackground(task: Task) {
-        createTask(task).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+        createTask(task).subscribe({ }, RxErrorHandler.handleEmptyError())
     }
 
     override fun getTaskCopies(userId: String): Flowable<List<Task>> =

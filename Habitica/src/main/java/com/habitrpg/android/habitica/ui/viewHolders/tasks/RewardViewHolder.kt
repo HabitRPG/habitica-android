@@ -1,33 +1,26 @@
 package com.habitrpg.android.habitica.ui.viewHolders.tasks
 
-import android.content.DialogInterface
 import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.databinding.RewardItemCardBinding
 import com.habitrpg.android.habitica.helpers.NumberAbbreviator
 import com.habitrpg.shared.habitica.models.responses.TaskDirection
 import com.habitrpg.shared.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.ItemDetailDialog
-import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 
 class RewardViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> Unit), openTaskFunc: ((Task) -> Unit), brokenTaskFunc: ((Task) -> Unit)) : BaseTaskViewHolder(itemView, scoreTaskFunc, openTaskFunc, brokenTaskFunc) {
-
-    private val buyButton: View by bindView(itemView, R.id.buyButton)
-    internal val priceLabel: TextView by bindView(itemView, R.id.priceLabel)
-    private val goldIconView: ImageView by bindView(itemView, R.id.gold_icon)
-
+    private val binding = RewardItemCardBinding.bind(itemView)
 
     private val isItem: Boolean
         get() = this.task?.specialTag == "item"
 
     init {
-        goldIconView.setImageBitmap(HabiticaIconsHelper.imageOfGold())
+        binding.goldIcon.setImageBitmap(HabiticaIconsHelper.imageOfGold())
 
-        buyButton.setOnClickListener {
+        binding.buyButton.setOnClickListener {
             buyReward()
         }
     }
@@ -51,7 +44,7 @@ class RewardViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> 
             dialog.setImage("shop_" + this.task?.id)
             dialog.setCurrency("gold")
             dialog.setValue(task?.value)
-            dialog.setBuyListener( DialogInterface.OnClickListener { _, _ -> this.buyReward() })
+            dialog.setBuyListener { _, _ -> this.buyReward() }
             dialog.show()
         } else {
             super.onClick(v)
@@ -60,23 +53,22 @@ class RewardViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> 
 
     override fun setDisabled(openTaskDisabled: Boolean, taskActionsDisabled: Boolean) {
         super.setDisabled(openTaskDisabled, taskActionsDisabled)
-
-        this.buyButton.isEnabled = !taskActionsDisabled
+        binding.buyButton.isEnabled = !taskActionsDisabled
     }
 
     fun bind(reward: Task, position: Int, canBuy: Boolean, displayMode: String) {
         this.task = reward
         super.bind(reward, position, displayMode)
-        this.priceLabel.text = NumberAbbreviator.abbreviate(itemView.context, this.task?.value ?: 0.0)
+        binding.priceLabel.text = NumberAbbreviator.abbreviate(itemView.context, this.task?.value ?: 0.0)
 
         if (canBuy) {
-            goldIconView.alpha = 1.0f
-            priceLabel.setTextColor(ContextCompat.getColor(context, R.color.yellow_1))
-            buyButton.setBackgroundColor(ContextCompat.getColor(context, R.color.yellow_500))
+            binding.goldIcon.alpha = 1.0f
+            binding.priceLabel.setTextColor(ContextCompat.getColor(context, R.color.reward_buy_button_text))
+            binding.buyButton.setBackgroundColor(ContextCompat.getColor(context, R.color.reward_buy_button_bg))
         } else {
-            goldIconView.alpha = 0.6f
-            priceLabel.setTextColor(ContextCompat.getColor(context, R.color.gray_300))
-            buyButton.setBackgroundColor(ColorUtils.setAlphaComponent(ContextCompat.getColor(context, R.color.gray_600), 127))
+            binding.goldIcon.alpha = 0.6f
+            binding.priceLabel.setTextColor(ContextCompat.getColor(context, R.color.text_quad))
+            binding.buyButton.setBackgroundColor(ColorUtils.setAlphaComponent(ContextCompat.getColor(context, R.color.offset_background), 127))
         }
         streakTextView.visibility = View.GONE
     }

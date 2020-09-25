@@ -19,7 +19,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
+            android:textColor="@color/text_primary"
             style="@style/Headline6"
             android:id="@+id/questionTextView"
             android:layout_gravity="center_horizontal"/>
@@ -30,7 +30,7 @@
             android:id="@+id/answerTextView"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="12dp"
-            android:textColor="@color/gray_200"
+            android:textColor="@color/text_ternary"
             style="@style/Subheader3"
             />
     </LinearLayout>

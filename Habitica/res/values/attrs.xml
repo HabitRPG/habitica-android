@@ -131,6 +131,7 @@
     <declare-styleable name="BottomNavigationItem">
         <attr name="title" />
         <attr name="iconDrawable" />
+        <attr name="selectedIconDrawable" format="integer" />
     </declare-styleable>
     <declare-styleable name="EquipmentOverviewItem">
         <attr name="title" />
@@ -147,5 +148,9 @@
         <attr name="iconDrawable" />
         <attr name="maxValue" format="integer" />
         <attr name="minValue" format="integer" />
+    </declare-styleable>
+    <declare-styleable name="DayNightTextView">
+        <attr name="dayTextColor" format="color" />
+        <attr name="nightTextColor" format="color" />
     </declare-styleable>
 </resources>

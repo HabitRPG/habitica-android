@@ -12,8 +12,6 @@
             android:id="@+id/editText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="16dp"
-            android:paddingTop="16dp"
             android:paddingStart="@dimen/spacing_large"
             android:paddingEnd="@dimen/spacing_large" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -28,8 +26,6 @@
             android:id="@+id/passwordEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="16dp"
-            android:paddingTop="16dp"
             android:paddingStart="@dimen/spacing_large"
             android:paddingEnd="@dimen/spacing_large" />
     </com.google.android.material.textfield.TextInputLayout>

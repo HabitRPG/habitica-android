@@ -12,13 +12,13 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
         android:paddingBottom="24dp"
         android:layout_alignParentBottom="true"
                 android:layout_marginBottom="?actionBarSize">
         <com.habitrpg.android.habitica.ui.SpeechBubbleView
-            android:id="@+id/speech_bubble"
+            android:id="@+id/speech_bubble_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:namePlate="Justin"

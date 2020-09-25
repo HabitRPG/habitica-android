@@ -1,10 +1,9 @@
 package com.habitrpg.android.habitica.helpers;
 
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.models.HabitRpgClass;
-import com.habitrpg.shared.habitica.models.inventory.Equipment;
-import com.habitrpg.shared.habitica.models.members.Member;
-import com.habitrpg.shared.habitica.models.user.Stats;
+import com.habitrpg.android.habitica.models.inventory.Equipment;
+import com.habitrpg.android.habitica.models.members.Member;
+import com.habitrpg.android.habitica.models.user.Stats;
 
 import junit.framework.Assert;
 
@@ -61,8 +60,8 @@ public class UserStatComputerTest {
 
     @Test
     public void shouldReturnClassBonusRowWhenClassMatches () {
-        user.getStats().setHabitClass(HabitRpgClass.rogue);
-        equipment.setKlass(HabitRpgClass.rogue.toString());
+        user.getStats().setHabitClass(Stats.ROGUE);
+        equipment.setKlass(Stats.ROGUE);
 
         List<UserStatComputer.StatsRow> statsRows = userStatComputer.computeClassBonus(equipmentList, user);
         UserStatComputer.AttributeRow attributeRow = (UserStatComputer.AttributeRow) statsRows.get(2);
@@ -78,9 +77,9 @@ public class UserStatComputerTest {
 
     @Test
     public void ShouldReturnClassBonusRowWhenSpecialClassMatches () {
-        user.getStats().setHabitClass(HabitRpgClass.rogue);
+        user.getStats().setHabitClass(Stats.ROGUE);
         equipment.setKlass("");
-        equipment.setSpecialClass(HabitRpgClass.rogue.toString());
+        equipment.setSpecialClass(Stats.ROGUE);
 
         List<UserStatComputer.StatsRow> statsRows = userStatComputer.computeClassBonus(equipmentList, user);
         UserStatComputer.AttributeRow attributeRow = (UserStatComputer.AttributeRow) statsRows.get(2);
@@ -96,7 +95,7 @@ public class UserStatComputerTest {
 
     @Test
     public void shouldNotReturnClassBonusWhenClassDoesNotMatch () {
-        user.getStats().setHabitClass(HabitRpgClass.rogue);
+        user.getStats().setHabitClass(Stats.ROGUE);
         equipment.setKlass("");
         equipment.setSpecialClass("");
 

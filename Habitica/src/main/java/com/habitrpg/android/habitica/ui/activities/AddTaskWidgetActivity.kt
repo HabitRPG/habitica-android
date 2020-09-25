@@ -5,12 +5,10 @@ import android.appwidget.AppWidgetManager
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.preference.PreferenceManager
-import android.widget.Button
 import androidx.core.content.edit
-import com.habitrpg.android.habitica.R
-import com.habitrpg.shared.habitica.models.tasks.Task
-import com.habitrpg.android.habitica.ui.helpers.bindView
+import androidx.preference.PreferenceManager
+import com.habitrpg.android.habitica.databinding.WidgetConfigureAddTaskBinding
+import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.widget.AddTaskWidgetProvider
 import com.habitrpg.shared.habitica.models.tasks.TaskType
 
@@ -18,15 +16,13 @@ class AddTaskWidgetActivity : AppCompatActivity() {
 
     private var widgetId: Int = 0
 
-    private val addHabitButton: Button by bindView(R.id.add_habit_button)
-    private val addDailyButton: Button by bindView(R.id.add_daily_button)
-    private val addToDoButton: Button by bindView(R.id.add_todo_button)
-    private val addRewardButton: Button by bindView(R.id.add_reward_button)
+    private lateinit var binding: WidgetConfigureAddTaskBinding
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setResult(Activity.RESULT_CANCELED)
-        setContentView(R.layout.widget_configure_add_task)
+        binding = WidgetConfigureAddTaskBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         val intent = intent
         val extras = intent.extras
@@ -40,10 +36,10 @@ class AddTaskWidgetActivity : AppCompatActivity() {
             finish()
         }
 
-        addHabitButton.setOnClickListener { addHabitSelected() }
-        addDailyButton.setOnClickListener { addDailySelected() }
-        addToDoButton.setOnClickListener { addToDoSelected() }
-        addRewardButton.setOnClickListener { addRewardSelected() }
+        binding.addHabitButton.setOnClickListener { addHabitSelected() }
+        binding.addDailyButton.setOnClickListener { addDailySelected() }
+        binding.addTodoButton.setOnClickListener { addToDoSelected() }
+        binding.addRewardButton.setOnClickListener { addRewardSelected() }
     }
 
     private fun addHabitSelected() {

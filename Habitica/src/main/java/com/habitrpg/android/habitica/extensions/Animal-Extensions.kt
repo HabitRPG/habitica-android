@@ -4,7 +4,7 @@ import android.content.Context
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.models.inventory.Animal
 
-fun Animal.getTranslatedType(c: Context?): String {
+fun Animal.getTranslatedType(c: Context?): String? {
     if (c == null) {
         return type
     }
@@ -15,7 +15,7 @@ fun Animal.getTranslatedType(c: Context?): String {
         "wacky"   -> c.getString(R.string.wacky)
         "special" -> c.getString(R.string.special)
         "premium" -> c.getString(R.string.magic_potion)
-        else      -> {
+        else -> {
             type
         }
     }

@@ -213,6 +213,7 @@
     <string name="quests">Misje</string>
     <string name="pets">Zwierzaki</string>
     <string name="mounts">Wierzchowce</string>
+    <string name="quest_items_found">Znalazłeś %d przedmiot(y/ów) z zadania</string>
     <string name="armoireEquipment">Znalazłeś element rzadkiego Ekwipunku w Skrzyni: %s! Super!</string>
     <string name="armoireFood">Przeszukujesz Skrzynię i znajdujesz %1$s %2$s. Co to tam robi?</string>
     <string name="armoireExp">Mocujesz się ze Skrzynią i zyskujesz Doświadczenie. A masz!</string>
@@ -353,9 +354,6 @@
     <string name="subscribe_prompt_thanks">Za subskrypcję otrzymasz te użyteczne korzyści:</string>
     <string name="subscription_status">Status Subskrypcji</string>
     <string name="challenge_leave_title">Opuść wyzwanie</string>
-    <string name="challenge_leave_text">Jesteś pewien, że chcesz opuścić wyzwanie “%s”?</string>
-    <string name="challenge_remove_tasks_title">Usuń zadania</string>
-    <string name="challenge_remove_tasks_text">Czy chcesz usunąć zadania\?</string>
     <string name="remove_tasks">Usuń</string>
     <string name="keep_tasks">Zachowaj</string>
     <string name="my_challenges">Moje wyzwania</string>

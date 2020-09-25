@@ -38,7 +38,7 @@
             android:layout_height="32dp"
             android:minWidth="110dp"
             android:text="@string/learn_more"
-            style="@style/HabiticaButton.White"
+            style="@style/HabiticaButton.Content"
             android:textSize="14sp"
             android:textColor="@color/teal_50"
             android:layout_marginTop="14dp"/>

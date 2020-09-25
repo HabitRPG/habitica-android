@@ -385,7 +385,4 @@
     <string name="subscription_status">Prenumeratos būsena</string>
 
     <string name="challenge_leave_title">Palikite iššūkį</string>
-    <string name="challenge_leave_text">Ar tikrai norite palikti iššūkį „%s“\?</string>
-    <string name="challenge_remove_tasks_title">Pašalinkite užduotis</string>
-    <string name="challenge_remove_tasks_text">Ar norite pašalinti užduotis\?</string>
     </resources>

@@ -17,15 +17,18 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
+import com.habitrpg.android.habitica.databinding.DrawerMainBinding
 import com.habitrpg.android.habitica.extensions.getRemainingString
 import com.habitrpg.android.habitica.extensions.getThemeColor
+import com.habitrpg.android.habitica.extensions.isUsingNightModeResources
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.models.inventory.Quest
+import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.promotions.HabiticaPromotion
 import com.habitrpg.android.habitica.models.promotions.PromoType
-import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.shared.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.MainActivity
@@ -38,20 +41,15 @@ import com.habitrpg.android.habitica.ui.viewmodels.NotificationsViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.shared.habitica.models.inventory.Quest
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.functions.Consumer
-import kotlinx.android.synthetic.main.drawer_main.*
 import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import kotlin.collections.ArrayList
 
 
-/**
- * Fragment used for managing interactions for and presentation of a navigation drawer.
- * See the [
- * design guidelines](https://developer.android.com/design/patterns/navigation-drawer.html#Interaction) for a complete explanation of the behaviors implemented here.
- */
 class NavigationDrawerFragment : DialogFragment() {
+
+    private var binding: DrawerMainBinding? = null
 
     @Inject
     lateinit var socialRepository: SocialRepository
@@ -62,7 +60,7 @@ class NavigationDrawerFragment : DialogFragment() {
     @Inject
     lateinit var configManager: AppConfigManager
 
-    var activePromo: HabiticaPromotion? = null
+    private var activePromo: HabiticaPromotion? = null
 
     private var drawerLayout: androidx.drawerlayout.widget.DrawerLayout? = null
     private var fragmentContainerView: View? = null
@@ -92,28 +90,32 @@ class NavigationDrawerFragment : DialogFragment() {
         val quest = this.quest
         val questContent = this.questContent
         if (quest == null || questContent == null || !quest.active) {
-            questMenuView.visibility = View.GONE
+            binding?.questMenuView?.visibility = View.GONE
             context?.let {
                 adapter.tintColor = it.getThemeColor(R.attr.colorPrimary)
-                adapter.backgroundTintColor = it.getThemeColor(R.attr.colorPrimary)
+                if (context?.isUsingNightModeResources() == true) {
+                    adapter.backgroundTintColor = ContextCompat.getColor(it, R.color.gray_50)
+                } else {
+                    adapter.backgroundTintColor = it.getThemeColor(R.attr.colorPrimary)
+                }
             }
             adapter.items.filter { it.identifier == SIDEBAR_TAVERN }.forEach {
                 it.subtitle = null
             }
             return
         }
-        questMenuView.visibility = View.VISIBLE
+        binding?.questMenuView?.visibility = View.VISIBLE
 
-        menuHeaderView.setBackgroundColor(questContent.colors?.darkColor ?: 0)
-        questMenuView.configure(quest)
-        questMenuView.configure(questContent)
+        binding?.menuHeaderView?.setBackgroundColor(questContent.colors?.darkColor ?: 0)
+        binding?.questMenuView?.configure(quest)
+        binding?.questMenuView?.configure(questContent)
         adapter.tintColor = questContent.colors?.extraLightColor ?: 0
         adapter.backgroundTintColor = questContent.colors?.darkColor ?: 0
 
 
-        messagesBadge.visibility = View.GONE
-        settingsBadge.visibility = View.GONE
-        notificationsBadge.visibility = View.GONE
+        binding?.messagesBadge?.visibility = View.GONE
+        binding?.settingsBadge?.visibility = View.GONE
+        binding?.notificationsBadge?.visibility = View.GONE
 
         /* Reenable this once the boss art can be displayed correctly.
 
@@ -123,14 +125,14 @@ class NavigationDrawerFragment : DialogFragment() {
         } else {
             questMenuView.showBossArt()
         }*/
-        questMenuView.hideBossArt()
+        binding?.questMenuView?.hideBossArt()
 
         adapter.items.filter { it.identifier == SIDEBAR_TAVERN }.forEach {
             it.subtitle = context?.getString(R.string.active_world_boss)
         }
         adapter.notifyDataSetChanged()
 
-        questMenuView.setOnClickListener {
+        binding?.questMenuView?.setOnClickListener {
             val context = this.context
             if (context != null) {
                 TavernDetailFragment.showWorldBossInfoDialog(context, questContent)
@@ -166,12 +168,13 @@ class NavigationDrawerFragment : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding = DrawerMainBinding.bind(view)
 
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
+        binding?.recyclerView?.adapter = adapter
+        binding?.recyclerView?.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
         initializeMenuItems()
 
-        subscriptions?.add(adapter.getItemSelectionEvents().subscribe(Consumer {
+        subscriptions?.add(adapter.getItemSelectionEvents().subscribe({
             setSelection(it.transitionId, it.bundle, true)
         }, RxErrorHandler.handleEmptyError()))
 
@@ -179,26 +182,26 @@ class NavigationDrawerFragment : DialogFragment() {
                 .doOnNext {  quest = it.quest }
                 .filter { it.hasActiveQuest }
                 .flatMapMaybe { inventoryRepository.getQuestContent(it.quest?.key ?: "").firstElement() }
-                .subscribe(Consumer {
+                .subscribe({
                    questContent = it
                 }, RxErrorHandler.handleEmptyError()))
 
-        subscriptions?.add(userRepository.getUser().subscribe(Consumer {
+        subscriptions?.add(userRepository.getUser().subscribe({
             updateUser(it)
         }, RxErrorHandler.handleEmptyError()))
 
-        messagesButtonWrapper.setOnClickListener { setSelection(R.id.inboxFragment) }
-        settingsButtonWrapper.setOnClickListener { setSelection(R.id.prefsActivity) }
-        notificationsButtonWrapper.setOnClickListener { startNotificationsActivity() }
+        binding?.messagesButtonWrapper?.setOnClickListener { setSelection(R.id.inboxFragment) }
+        binding?.settingsButtonWrapper?.setOnClickListener { setSelection(R.id.prefsActivity) }
+        binding?.notificationsButtonWrapper?.setOnClickListener { startNotificationsActivity() }
     }
 
     private fun updateUser(user: User) {
         setMessagesCount(user.inbox?.newMessages ?: 0)
-        setSettingsCount(if (user.flags?.isVerifiedUsername != true) 1 else 0 )
+        setSettingsCount(if (user.flags?.verifiedUsername != true) 1 else 0 )
         setDisplayName(user.profile?.name)
         setUsername(user.formattedUsername)
-        avatarView.setAvatar(user)
-        questMenuView.configure(user)
+        binding?.avatarView?.setAvatar(user)
+        binding?.questMenuView?.configure(user)
 
         val tavernItem = getItemWithIdentifier(SIDEBAR_TAVERN)
         if (user.preferences?.sleep == true) {
@@ -267,17 +270,6 @@ class NavigationDrawerFragment : DialogFragment() {
             subscriptionItem?.pillText = context?.getString(R.string.sale)
             context?.let { subscriptionItem?.pillBackground = ContextCompat.getDrawable(it, R.drawable.pill_bg_teal) }
         }
-        if (activePromo != null) {
-            var item: HabiticaDrawerItem? = null
-            if (activePromo?.promoType == PromoType.GEMS_AMOUNT || activePromo?.promoType == PromoType.GEMS_PRICE) {
-                item = getItemWithIdentifier(SIDEBAR_GEMS)
-            }
-            if (activePromo?.promoType == PromoType.SUBSCRIPTION) {
-                item = getItemWithIdentifier(SIDEBAR_GEMS)
-            }
-            item?.pillText = context?.getString(R.string.sale)
-            item?.pillBackground = context?.let { activePromo?.pillBackgroundDrawable(it) }
-        }
         subscriptionItem?.let { updateItem(it) }
 
         val promoItem = getItemWithIdentifier(SIDEBAR_SUBSCRIPTION_PROMO)
@@ -304,19 +296,6 @@ class NavigationDrawerFragment : DialogFragment() {
             adventureGuideItem?.user = user
         } else {
             adventureGuideItem?.isVisible = false
-        }
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        activePromo = configManager.activePromo()
-        val promoItem = getItemWithIdentifier(SIDEBAR_PROMO) ?: return
-        if (activePromo != null) {
-            promoItem.isVisible = true
-            adapter.activePromo = activePromo
-        } else {
-            promoItem.isVisible = false
         }
     }
 
@@ -384,8 +363,9 @@ class NavigationDrawerFragment : DialogFragment() {
     }
 
     fun setSelection(transitionId: Int?, bundle: Bundle? = null, openSelection: Boolean = true) {
-        adapter.selectedItem = transitionId
         closeDrawer()
+        if (adapter.selectedItem != null && adapter.selectedItem == transitionId) return
+        adapter.selectedItem = transitionId
 
         if (!openSelection) {
             return
@@ -426,16 +406,16 @@ class NavigationDrawerFragment : DialogFragment() {
         this.drawerLayout?.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START)
         // set UP the drawer's list view with items and click listener
 
-        subscriptions?.add(viewModel.getNotificationCount().subscribeWithErrorHandler(Consumer {
+        subscriptions?.add(viewModel.getNotificationCount().subscribeWithErrorHandler {
             setNotificationsCount(it)
-        }))
-        subscriptions?.add(viewModel.allNotificationsSeen().subscribeWithErrorHandler(Consumer {
+        })
+        subscriptions?.add(viewModel.allNotificationsSeen().subscribeWithErrorHandler {
             setNotificationsSeen(it)
-        }))
-        subscriptions?.add(viewModel.getHasPartyNotification().subscribeWithErrorHandler(Consumer {
+        })
+        subscriptions?.add(viewModel.getHasPartyNotification().subscribeWithErrorHandler {
             val partyMenuItem = getItemWithIdentifier(SIDEBAR_PARTY)
             partyMenuItem?.showBubble = it
-        }))
+        })
     }
 
     fun openDrawer() {
@@ -460,17 +440,15 @@ class NavigationDrawerFragment : DialogFragment() {
     }
 
     private fun setDisplayName(name: String?) {
-        if (toolbarTitle != null) {
-            if (name != null && name.isNotEmpty()) {
-                toolbarTitle.text = name
-            } else {
-                toolbarTitle.text = context?.getString(R.string.app_name)
-            }
+        if (name != null && name.isNotEmpty()) {
+            binding?.toolbarTitle?.text = name
+        } else {
+            binding?.toolbarTitle?.text = context?.getString(R.string.app_name)
         }
     }
 
     private fun setUsername(name: String?) {
-        usernameTextView.text = name
+        binding?.usernameTextView?.text = name
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -480,42 +458,65 @@ class NavigationDrawerFragment : DialogFragment() {
 
     private fun setNotificationsCount(unreadNotifications: Int) {
         if (unreadNotifications == 0) {
-            notificationsBadge.visibility = View.GONE
+            binding?.notificationsBadge?.visibility = View.GONE
         } else {
-            notificationsBadge.visibility = View.VISIBLE
-            notificationsBadge.text = unreadNotifications.toString()
+            binding?.notificationsBadge?.visibility = View.VISIBLE
+            binding?.notificationsBadge?.text = unreadNotifications.toString()
         }
     }
 
     private fun setNotificationsSeen(allSeen: Boolean) {
         context?.let {
             val color = if (allSeen) {
-                ContextCompat.getColor(it, R.color.gray_200)
+                ContextCompat.getColor(it, R.color.text_ternary)
             } else {
                 it.getThemeColor(R.attr.colorAccent)
             }
 
-            val bg = notificationsBadge.background as? GradientDrawable
+            val bg = binding?.notificationsBadge?.background as? GradientDrawable
             bg?.color = ColorStateList.valueOf(color)
         }
     }
 
     private fun setMessagesCount(unreadMessages: Int) {
         if (unreadMessages == 0) {
-            messagesBadge.visibility = View.GONE
+            binding?.messagesBadge?.visibility = View.GONE
         } else {
-            messagesBadge.visibility = View.VISIBLE
-            messagesBadge.text = unreadMessages.toString()
+            binding?.messagesBadge?.visibility = View.VISIBLE
+            binding?.messagesBadge?.text = unreadMessages.toString()
         }
     }
 
     private fun setSettingsCount(count: Int) {
         if (count == 0) {
-            settingsBadge.visibility = View.GONE
+            binding?.settingsBadge?.visibility = View.GONE
         } else {
-            settingsBadge.visibility = View.VISIBLE
-            settingsBadge.text = count.toString()
+            binding?.settingsBadge?.visibility = View.VISIBLE
+            binding?.settingsBadge?.text = count.toString()
         }
+    }
+
+    fun updatePromo() {
+        activePromo = context?.let { configManager.activePromo(it) }
+        val promoItem = getItemWithIdentifier(SIDEBAR_PROMO) ?: return
+        if (activePromo != null) {
+            promoItem.isVisible = true
+            adapter.activePromo = activePromo
+
+            var promotedItem: HabiticaDrawerItem? = null
+            if (activePromo?.promoType == PromoType.GEMS_AMOUNT || activePromo?.promoType == PromoType.GEMS_PRICE) {
+                promotedItem = getItemWithIdentifier(SIDEBAR_GEMS)
+            }
+            if (activePromo?.promoType == PromoType.SUBSCRIPTION) {
+                promotedItem = getItemWithIdentifier(SIDEBAR_SUBSCRIPTION)
+            }
+            promotedItem?.pillText = context?.getString(R.string.sale)
+            promotedItem?.pillBackground = context?.let { activePromo?.pillBackgroundDrawable(it) }
+            promotedItem?.let { updateItem(it) }
+        } else {
+            promoItem.isVisible = false
+        }
+        updateItem(promoItem)
     }
 
     companion object {

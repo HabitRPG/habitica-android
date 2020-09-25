@@ -17,7 +17,6 @@ import com.habitrpg.android.habitica.databinding.ActivityIntroBinding
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.ui.fragments.setup.IntroFragment
 import com.viewpagerindicator.IconPagerAdapter
-import io.reactivex.functions.Consumer
 import javax.inject.Inject
 
 
@@ -40,12 +39,12 @@ class IntroActivity : BaseActivity(), View.OnClickListener, ViewPager.OnPageChan
         super.onCreate(savedInstanceState)
 
         setupIntro()
-        //binding.viewPagerIndicator.setViewPager(binding.viewPager)
+        binding.viewPagerIndicator.setViewPager(binding.viewPager)
 
         binding.skipButton.setOnClickListener(this)
         binding.finishButton.setOnClickListener(this)
 
-        compositeSubscription.add(contentRepository.retrieveContent(this).subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(contentRepository.retrieveContent(this).subscribe({ }, RxErrorHandler.handleEmptyError()))
     }
 
     override fun injectActivity(component: UserComponent?) {

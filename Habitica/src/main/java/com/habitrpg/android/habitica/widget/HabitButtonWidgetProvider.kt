@@ -9,9 +9,7 @@ import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.shared.habitica.models.responses.TaskDirection
-import io.reactivex.functions.Action
-import io.reactivex.functions.Consumer
+import com.habitrpg.android.habitica.models.responses.TaskDirection
 import javax.inject.Inject
 
 class HabitButtonWidgetProvider : BaseWidgetProvider() {
@@ -65,7 +63,7 @@ class HabitButtonWidgetProvider : BaseWidgetProvider() {
 
             if (taskId != null) {
                 userRepository.getUser().firstElement().flatMap { user -> taskRepository.taskChecked(user, taskId, TaskDirection.UP.text == direction, false, null) }
-                        .subscribe(Consumer { taskDirectionData -> showToastForTaskDirection(context, taskDirectionData) }, RxErrorHandler.handleEmptyError(), Action { this.onUpdate(context, mgr, ids) })
+                        .subscribe({ taskDirectionData -> showToastForTaskDirection(context, taskDirectionData) }, RxErrorHandler.handleEmptyError(), { this.onUpdate(context, mgr, ids) })
             }
         }
         super.onReceive(context, intent)

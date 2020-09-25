@@ -11,7 +11,7 @@ import androidx.core.app.RemoteInput
 import androidx.core.os.bundleOf
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.receivers.LocalNotificationActionReceiver
-import net.pherth.android.emoji_library.EmojiParser
+import com.habitrpg.android.habitica.ui.helpers.EmojiParser
 import java.text.SimpleDateFormat
 import java.util.*
 
