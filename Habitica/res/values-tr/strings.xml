@@ -305,7 +305,7 @@
     <string name="all_dailies_completed">Tüm günlük işlerini tamamladın. Tebrikler!</string>
     <string name="widget_habit_button">Habitica Alışkanlığı Yap</string>
     <string name="widget_dailies">Habitica Günlük İşler</string>
-    <string name="widget_todo_list">Habitica Yapılacak İşler Listesi</string>
+    <string name="widget_todo_list">Habitica Yapılacaklar Listesi</string>
     <string name="google_services_missing">Google play services bulunamadı.</string>
     <string name="gem_purchase_toolbartitle">Satın al</string>
     <string name="gem_purchase_title">Elmas satın almak geliştiricilere destek verir ve Habitica\'nın çalışmaya devam etmesine yardım eder</string>
@@ -389,7 +389,7 @@
     <string name="myster_item_notes">Her ay, aboneler gizemli bir eşya alırlar. Bu genelde ayın son haftasından önce açıklanır.</string>
     <string name="open">Aç</string>
     <string name="checkInRewardEarned">Kendini hayatını geliştirmeye adadığın için ödül olarak %1$s kazandın.</string>
-    <string name="nextPrizeUnlocks" tools:ignore="PluralsCandidate">Bir sonraki ödülün %1$d Girişten sonra açılacak</string>
+    <string name="nextPrizeUnlocks" tools:ignore="PluralsCandidate">Bir sonraki ödülün %1$d girişten sonra açılacak</string>
     <string name="pending_approval">onay bekleniyor</string>
     <string name="filters">Filtreler</string>
     <string name="done">Tamam</string>
@@ -423,8 +423,8 @@
     <string name="empty_description_habits">Alışkanlıklar katı bir zamanlamaya sahip olmayan işlerdir. Onları günde birçok kez yapabilir ya da hiç yapmayabilirsin.</string>
     <string name="empty_title_dailies">Hiç Günlük İşin yok</string>
     <string name="empty_description_dailies">Günlük İşler, düzenli olarak tekrar eden işlerdir. Senin için uygun olan program seç!</string>
-    <string name="empty_title_todos">Hiç Yapılacak İşin yok</string>
-    <string name="empty_description_todos">Yapılacak İşler yalnızca bir kez tamamlanması gereken işlerdir. Değerlerini artırmak için Yapılacak İşlerine kontrol listeleri ekle.</string>
+    <string name="empty_title_todos">Yapılacaklar listen boş</string>
+    <string name="empty_description_todos">Yapılacak işler yalnızca bir kez tamamlanması gereken işlerdir. Değerlerini artırmak için Yapılacak işlerine adımlar ekle.</string>
     <string name="empty_title_rewards">Hiç Ödülün yok</string>
     <string name="reset_walkthrough">Justin\'in Rehberliğini Sıfırla</string>
     <string name="read_community_guidelines">Lütfen mesaj göndermeden önce Topluluk Kuralları\'mızı oku</string>
@@ -612,7 +612,7 @@
     <string name="next_day_reminder_title">Bugün işlerini işaretledin mi?</string>
     <string name="next_day_reminder_text">Kilidini açacağın ve keşfedeceğin çok şey var, bu yüzden işlerinde geri kalma ve eğlenmene bak!</string>
     <string name="daily_tip_0">Yeni bir şey denemek ister misin? İş listeni genişletmek için bir Mücadeleye katıl ve biraz Elmas kazan!</string>
-    <string name="daily_tip_1">Ödüllerini çoğaltmak için Yapılacak İşlerine yapılacak iş maddesi ekle!</string>
+    <string name="daily_tip_1">Ödüllerini çoğaltmak için Yapılacak İşlerine adımlar ekle!</string>
     <string name="daily_tip_2">Bir Günlük İşin ne sıklıkla tekrar edeceğini değiştirebilirsin. Nadir yapılan işler bile programlanabilir.</string>
     <string name="daily_tip_3">Günlük İşlerin için özel hatırlatmalar da ayarlayabilirsin.</string>
     <string name="daily_tip_4">Ara sıra işlerini yeniden değerlendirmenin seni doğru yolda tutma konusunda yardımı olabilir.</string>
@@ -720,4 +720,44 @@
     <string name="remaining_1week">1 hafta kaldı</string>
     <string name="remaining_months">%d ay kaldı</string>
     <string name="remaining_1month">1 ay kaldı</string>
+    <string name="need_more_help">Daha fazla yardıma mı ihtiyacın var\?</string>
+    <string name="new_reminder">Yeni anımsatıcı</string>
+    <string name="checklist_text">Adım Metni</string>
+    <string name="years">yılda bir</string>
+    <string name="days">günde bir</string>
+    <string name="weeks">haftada bir</string>
+    <string name="scheduling">Planlama</string>
+    <string name="every">Her</string>
+    <string name="repeats">Tekrar</string>
+    <string name="weekly">Haftalık</string>
+    <string name="monthly">Aylık</string>
+    <string name="password_changed">Şifre başarıyla değiştirildi</string>
+    <string name="new_password_repeat">Yeni Şifreyi Tekrarla</string>
+    <string name="new_password">Yeni Şifre</string>
+    <string name="old_password">Eski Şifre</string>
+    <string name="task_title">Görev Başlığı</string>
+    <string name="add_local_authentication">Yerel Kimlik Doğrulama Ekle</string>
+    <string name="defeat">Yenilgi</string>
+    <string name="gift_confirmation_text_gems">%s elmas gönderdin.</string>
+    <string name="gift_confirmation_text_sub_g1g1">%s kullanıcısına %s aylık Habitica üyeliği hediye ettin ve aynı üyeliği sen de kazandın!</string>
+    <string name="gift_confirmation_text_sub">%s kullanıcısına %s aylık Habitica üyeliği hediye ettin.</string>
+    <string name="gift_gems_subtitle">Hediye etmek istediğin elmas paketini seç!</string>
+    <string name="insufficientGoldTitle">Yetersiz Altın</string>
+    <string name="challenge_leave_description">Ayrılırken bu mücadelenin görevlerini kişisel görev tablonda tutabilirsin veya silebilirsin</string>
+    <string name="login_incentive_count">Habitica\'ya %d kez giriş yaparak kilidi aç.</string>
+    <string name="login_incentive_short_count">%d Giriş</string>
+    <string name="number_responded">%1$d/%2$d Yanıtlandı</string>
+    <string name="empty_title_rewards_filtered">Ödül yok</string>
+    <string name="empty_description_todos_filtered">Filtrene uygun bir yapılacak iş yok.</string>
+    <string name="empty_title_todos_filtered">Yapılacak iş yok</string>
+    <string name="empty_description_dailies_filtered">Filtrene uygun bir günlük iş yok.</string>
+    <string name="empty_title_dailies_filtered">Günlük iş yok</string>
+    <string name="empty_description_habits_filtered">Filtrene uygun bir Alışkanlık yok.</string>
+    <string name="empty_title_habits_filtered">Alışkanlık yok</string>
+    <string name="register_btn_google">Google ile Kaydol</string>
+    <string name="register_btn_fb">Facebook ile Kaydol</string>
+    <string name="login_btn_apple">Apple Hesabı ile Giriş Yap</string>
+    <string name="special_items">Özel eşyalar</string>
+    <string name="leave_delte_tasks">Ayrıl &amp; Görevleri Sil</string>
+    <string name="leave_keep_tasks">Ayrıl &amp; Görevleri Koru</string>
 </resources>
