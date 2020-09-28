@@ -1096,5 +1096,16 @@
     <string name="block_user_title">确定屏蔽%s？</string>
     <string name="block_user">屏蔽该用户</string>
     <string name="unblock_user">解除屏蔽该用户</string>
-    <string name="pms_disabled_description">你依旧能给别人发送消息，但没人能发给你。设置中可重启接收消息。</string>
+    <string name="pms_disabled_description">你依旧能正常发送私信给他人，但没人能发送私信给你。在设置中可重启接收私信功能。</string>
+    <string name="spooky_promo_info_prompt">今年在秋季庆典的宝石特卖会步入尾声！这是最后一次获得更多宝石的机会，请趁早囤货！</string>
+    <string name="spooky_promo_info_limitations">本促销活动仅适用于限时活动期间。本次活动从美国东部时间9月22日上午8:00(12:00UTC)开始，将于美国东部时间9月30日晚上8:00(00:00UTC)结束。该优惠活动仅适用于个人购买宝石。</string>
+    <string name="spooky_promo_info_instructions">在9月22日至30日期间，只需像往常一样购买任何宝石捆绑包，你的账户就会记入促销金额赠送的宝石数。获得的更多宝石可以用来消费、赠送或未来使用！</string>
+    <string name="view_gem_bundles">查看宝石捆绑包</string>
+    <string name="fall_promo_info_prompt">秋季盛典正在如火如荼的进行中，所以我们认为这是我们首次推出宝石特卖会的最佳时机！现在你每次购买都会获得比以往更多的宝石。现在你每次购买都将获得比以往更多的宝石。</string>
+    <string name="fall_promo_info_limitations">本促销活动仅适用于限时活动期间。本次活动从美国东部时间9月22日上午8:00(12:00UTC)开始，将于美国东部时间9月30日晚上8:00(00:00UTC)结束。该优惠活动仅适用于个人购买宝石。</string>
+    <string name="fall_promo_info_instructions">在9月22日至30日期间，只需像往常一样购买任何宝石捆绑包，你的账户就会记入促销金额赠送的宝石数。获得的更多宝石可以用来消费、赠送或未来使用！</string>
+    <string name="limitations">限制</string>
+    <string name="how_it_works">如何工作</string>
+    <string name="x_to_y">%s到%s</string>
+    <string name="usually_x_gems">通常%d颗宝石</string>
 </resources>
