@@ -1096,4 +1096,5 @@
     <string name="block_user_title">确定屏蔽%s？</string>
     <string name="block_user">屏蔽该用户</string>
     <string name="unblock_user">解除屏蔽该用户</string>
+    <string name="pms_disabled_description">你依旧能给别人发送消息，但没人能发给你。设置中可重启接收消息。</string>
 </resources>
