@@ -1089,4 +1089,11 @@
     <string name="suggest_pet_hatch_again_missing_potion">你还需要一瓶%s药水才能再次孵化这个宠物</string>
     <string name="suggest_pet_hatch_again_missing_egg">你还需要一个%s蛋才能再次孵化这个宠物</string>
     <string name="suggest_pet_hatch_missing_both">你需要一个%s和一瓶%s药水才能孵化这个宠物</string>
+    <string name="pms_disabled">私信已停用</string>
+    <string name="disablePrivateMessages">禁用私信</string>
+    <string name="block">屏蔽</string>
+    <string name="block_user_description">被屏蔽用户不能发送私信给你, 但你仍然可以在酒馆或公会看到他们发表的内容。但如果此人是现在或未来的管理员，那么屏蔽无法生效。</string>
+    <string name="block_user_title">确定屏蔽%s？</string>
+    <string name="block_user">屏蔽该用户</string>
+    <string name="unblock_user">解除屏蔽该用户</string>
 </resources>
