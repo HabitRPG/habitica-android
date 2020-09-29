@@ -115,14 +115,14 @@ class TaskFormActivity : BaseActivity() {
                 else -> "blue"
             }
         } else {
-            "purple"
+            "taskform"
         }
         super.onCreate(savedInstanceState)
 
         if (forcedTheme == "yellow") {
             binding.taskDifficultyButtons.textTintColor = ContextCompat.getColor(this, R.color.text_yellow)
             binding.habitScoringButtons.textTintColor = ContextCompat.getColor(this, R.color.text_yellow)
-        } else if (forcedTheme == "purple") {
+        } else if (forcedTheme == "taskform") {
             binding.taskDifficultyButtons.textTintColor = ContextCompat.getColor(this, R.color.text_brand_neon)
             binding.habitScoringButtons.textTintColor = ContextCompat.getColor(this, R.color.text_brand_neon)
         }
@@ -185,7 +185,7 @@ class TaskFormActivity : BaseActivity() {
                     task = it
                     //tintColor = ContextCompat.getColor(this, it.mediumTaskColor)
                     fillForm(it)
-                    task?.challengeID?.let { challengeID ->
+                    it.challengeID?.let { challengeID ->
                         compositeSubscription.add(challengeRepository.retrieveChallenge(challengeID)
                                 .subscribe({ challenge ->
                             this.challenge = challenge

@@ -19,7 +19,7 @@
             android:minHeight="?attr/actionBarSize"
             android:theme="@style/Toolbar.Modern"
             app:layout_scrollFlags="scroll|enterAlways"
-            app:popupTheme="@style/Theme.AppCompat.Light"/>
+            app:popupTheme="@style/PopupTheme"/>
 
     </com.google.android.material.appbar.AppBarLayout>
     <androidx.core.widget.NestedScrollView

@@ -232,7 +232,7 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
                 .subscribe({  }, RxErrorHandler.handleEmptyError()))
     }
 
-    private inner class ViewPageAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm), IconPagerAdapter {
+    private inner class ViewPageAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT), IconPagerAdapter {
 
         override fun getItem(position: Int): Fragment {
             return when (position) {

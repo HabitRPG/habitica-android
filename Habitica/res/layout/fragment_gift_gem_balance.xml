@@ -55,8 +55,7 @@
                 android:id="@+id/gift_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="number"
-                android:paddingTop="@dimen/spacing_small"/>
+                android:inputType="number"/>
         </com.google.android.material.textfield.TextInputLayout>
         <TextView
             android:layout_width="match_parent"

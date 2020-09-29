@@ -137,7 +137,7 @@ class ChallengeListFragment : BaseFragment<FragmentChallengeslistBinding>(), and
     }
 
     internal fun retrieveChallengesPage(forced: Boolean = false) {
-        if ((!forced && binding?.refreshLayout?.isRefreshing == true) || loadedAllData) {
+        if ((!forced && binding?.refreshLayout?.isRefreshing == true) || loadedAllData || !this::challengeRepository.isInitialized) {
             return
         }
         setRefreshing(true)

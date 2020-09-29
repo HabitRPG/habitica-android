@@ -5,12 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_vertical">
-    <Button
+    <ImageButton
         android:id="@+id/delete_button"
         android:layout_width="45dp"
         android:layout_height="wrap_content"
         android:padding="0dp"
-        android:drawableStart="@drawable/ic_close_purple_300_36dp"
+        android:src="@drawable/ic_close_purple_300_36dp"
+        android:tint="?colorPrimary"
+        android:tintMode="src_atop"
         style="@style/Base.Widget.AppCompat.Button.Borderless"/>
     <EditText
         android:id="@+id/edit_text"

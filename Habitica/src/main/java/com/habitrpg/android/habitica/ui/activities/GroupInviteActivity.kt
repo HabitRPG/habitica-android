@@ -103,7 +103,7 @@ class GroupInviteActivity : BaseActivity() {
     private fun setViewPagerAdapter() {
         val fragmentManager = supportFragmentManager
 
-        binding.viewPager.adapter = object : FragmentPagerAdapter(fragmentManager) {
+        binding.viewPager.adapter = object : FragmentPagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
             override fun getItem(position: Int): Fragment {
                 val fragment = PartyInviteFragment()

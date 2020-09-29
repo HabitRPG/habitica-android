@@ -39,7 +39,9 @@ abstract class ChecklistedViewHolder(itemView: View, scoreTaskFunc: ((Task, Task
         checklistIndicatorWrapper.isClickable = true
         checklistIndicatorWrapper.setOnClickListener { onChecklistIndicatorClicked() }
         checkboxHolder.setOnClickListener {
-            onCheckedChanged(!(task?.completed ?: false))
+            if (task?.isValid == true) {
+                onCheckedChanged(!(task?.completed ?: false))
+            }
         }
     }
 
@@ -92,9 +94,11 @@ abstract class ChecklistedViewHolder(itemView: View, scoreTaskFunc: ((Task, Task
                     if (task?.type == Task.TYPE_TODO) {
                         checkboxBackground?.setBackgroundResource(R.drawable.round_checklist_unchecked)
                     }
+                    checkboxBackground?.backgroundTintList = ContextCompat.getColorStateList(context, (if (context.isUsingNightModeResources()) task?.lightTaskColor else R.color.checkbox_fill) ?: R.color.checkbox_fill)
                     val textView = itemView?.findViewById<HabiticaEmojiTextView>(R.id.checkedTextView)
                     // Populate the data into the template view using the data object
                     textView?.text = item.text
+                    textView?.setTextColor(ContextCompat.getColor(context, if (item.completed) R.color.text_dimmed else R.color.text_secondary))
                     if (item.text != null) {
                         Observable.just(item.text)
                                 .map { MarkdownParser.parseMarkdown(it) }
@@ -113,7 +117,8 @@ abstract class ChecklistedViewHolder(itemView: View, scoreTaskFunc: ((Task, Task
                         checkmark?.drawable?.setTint(ContextCompat.getColor(context, R.color.text_dimmed))
                         R.color.offset_background
                     } else {
-                        checkmark?.drawable?.setTint(ContextCompat.getColor(context, task?.darkTaskColor ?: R.color.text_dimmed))
+                        val color = if (context.isUsingNightModeResources()) task?.darkestTaskColor else task?.darkTaskColor
+                        checkmark?.drawable?.setTint(ContextCompat.getColor(context, color ?: R.color.text_dimmed))
                         task?.extraLightTaskColor ?: R.color.offset_background
                     })
                     color.let { checkboxHolder?.setBackgroundColor(it) }

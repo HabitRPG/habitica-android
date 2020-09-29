@@ -51,9 +51,9 @@ class TaskSetupFragment : BaseFragment<FragmentSetupTasksBinding>() {
         binding?.heartIcon?.setImageDrawable(BitmapDrawable(HabiticaIconsHelper.imageOfHeartLightBg()))
     }
 
-    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
-        super.setUserVisibleHint(isVisibleToUser)
-        if (isVisibleToUser && context != null) {
+    override fun onResume() {
+        super.onResume()
+        if (context != null) {
             binding?.speechBubble?.animateText(context?.getString(R.string.task_setup_description) ?: "")
         }
     }

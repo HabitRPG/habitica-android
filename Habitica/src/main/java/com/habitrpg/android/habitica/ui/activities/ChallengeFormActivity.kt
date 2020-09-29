@@ -32,6 +32,7 @@ import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import io.reactivex.Flowable
 import io.reactivex.rxkotlin.zipWith
+import java.lang.NumberFormatException
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Named
@@ -89,9 +90,11 @@ class ChallengeFormActivity : BaseActivity() {
             if (groupID != null) {
                 c.groupId = groupID
             } else {
-                val locationGroup = locationAdapter.getItem(locationPos)
-                if (locationGroup != null) {
-                    c.groupId = locationGroup.id
+                if (locationAdapter.count > locationPos) {
+                    val locationGroup = locationAdapter.getItem(locationPos)
+                    if (locationGroup != null) {
+                        c.groupId = locationGroup.id
+                    }
                 }
             }
             c.name = binding.createChallengeTitle.text.toString()
@@ -277,7 +280,11 @@ class ChallengeFormActivity : BaseActivity() {
             inputValue = "0"
         }
 
-        val currentVal = Integer.parseInt(inputValue)
+        val currentVal = try {
+            Integer.parseInt(inputValue)
+        } catch (_: NumberFormatException) {
+            0
+        }
 
         // 0 is Tavern
         val selectedLocation = binding.challengeLocationSpinner.selectedItemPosition

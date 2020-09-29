@@ -10,6 +10,7 @@ import android.os.Build
 import android.os.Bundle
 import android.text.InputType
 import android.text.SpannableString
+import android.text.method.LinkMovementMethod
 import android.text.style.UnderlineSpan
 import android.view.MenuItem
 import android.view.View
@@ -144,6 +145,7 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
         val content = SpannableString(binding.forgotPassword.text)
         content.setSpan(UnderlineSpan(), 0, content.length, 0)
         binding.forgotPassword.text = content
+        binding.privacyPolicy.movementMethod = LinkMovementMethod.getInstance()
 
         this.isRegistering = true
 

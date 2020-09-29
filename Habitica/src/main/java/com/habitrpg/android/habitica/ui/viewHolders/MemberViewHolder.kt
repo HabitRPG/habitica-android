@@ -53,8 +53,10 @@ class GroupMemberViewHolder(itemView: View) : androidx.recyclerview.widget.Recyc
         this.currentUserID = userID
 
         if (user.id == userID) {
+            binding.youPill.visibility = View.VISIBLE
             binding.moreButton.visibility = View.GONE
         } else {
+            binding.youPill.visibility = View.GONE
             binding.moreButton.visibility = View.VISIBLE
         }
 

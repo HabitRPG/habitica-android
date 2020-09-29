@@ -37,7 +37,7 @@
                     android:minHeight="?attr/actionBarSize"
                     android:background="?attr/colorContentBackground"
                     app:layout_collapseMode="pin"
-                    app:popupTheme="@style/Theme.AppCompat.Light" />
+                    app:popupTheme="@style/PopupTheme" />
             </com.google.android.material.appbar.AppBarLayout>
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -37,9 +37,16 @@
                 android:id="@+id/more_button"
                 android:src="@drawable/ic_more_horiz_black_18dp"
                 android:background="@color/transparent"
+                android:tint="?textColorPrimary"
                 android:layout_width="30dp"
                 android:layout_height="20dp"
                 android:layout_gravity="end"/>
+            <TextView
+                android:id="@+id/you_pill"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Pill"
+                android:text="@string/you"/>
         </LinearLayout>
         <TableLayout
             android:layout_width="match_parent"

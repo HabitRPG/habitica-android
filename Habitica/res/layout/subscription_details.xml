@@ -217,7 +217,7 @@
         <Button
             android:id="@+id/change_subscription_button"
             android:layout_width="match_parent"
-            android:layout_height="32dp"
+            android:layout_height="wrap_content"
             android:text="@string/visit_website"
             android:layout_gravity="center"
             style="@style/HabiticaButton.Purple"

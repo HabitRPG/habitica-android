@@ -830,7 +830,7 @@
     <string name="register_btn_google">Registrarse con Google</string>
     <string name="register_btn_fb">Registrarse con Facebook</string>
     <string name="login_btn_apple">Registrarse con Apple</string>
-    <string name="x_months">Meses</string>
+    <string name="x_months">%d Meses</string>
     <string name="inbox_messages_title_nosender">Recibiste %d mensajes</string>
     <string name="inbox_messages_title">Recibiste %d mensajes de %s</string>
     <string name="create_task">Crear %s</string>

@@ -38,11 +38,6 @@ abstract class BaseFragment<VB: ViewBinding> : DialogFragment() {
     open val displayedClassName: String?
         get() = this.javaClass.simpleName
 
-    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
-        super.setUserVisibleHint(isVisibleToUser)
-        showTutorialIfNeeded()
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         HabiticaBaseApplication.userComponent?.let {
             injectFragment(it)

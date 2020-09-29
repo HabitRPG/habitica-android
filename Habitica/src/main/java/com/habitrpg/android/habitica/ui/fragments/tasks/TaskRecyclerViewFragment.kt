@@ -298,9 +298,11 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
                 dialog.setTitle(R.string.broken_challenge)
                 dialog.setMessage(it.getString(R.string.broken_challenge_description, taskCount))
                 dialog.addButton(it.getString(R.string.keep_x_tasks, taskCount), true) { _, _ ->
+                    if (!task.isValid) return@addButton
                     taskRepository.unlinkAllTasks(task.challengeID, "keep-all").subscribe({}, RxErrorHandler.handleEmptyError())
                 }
                 dialog.addButton(it.getString(R.string.delete_x_tasks, taskCount), false, true) { _, _ ->
+                    if (!task.isValid) return@addButton
                     taskRepository.unlinkAllTasks(task.challengeID, "remove-all").subscribe({}, RxErrorHandler.handleEmptyError())
                 }
                 dialog.setExtraCloseButtonVisibility(View.VISIBLE)

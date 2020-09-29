@@ -13,8 +13,7 @@
             android:orientation="horizontal"
             android:layout_gravity="center_vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            style="@style/CardContent">
+            android:layout_height="match_parent">
 
             <com.habitrpg.android.habitica.ui.RoundedFrameLayout
                 android:layout_width="@dimen/party_invite_avatar"
@@ -38,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="@dimen/party_invite_separator"
-                android:text="@string/invitation_title" />
+                android:text="@string/invitation_title_no_leader" />
 
             <Space
                 android:layout_width="0dp"
@@ -52,19 +51,21 @@
                 android:layout_marginEnd="@dimen/party_invite_separator"
                 android:layout_gravity="end|center_vertical|fill_horizontal">
 
-                <Button
+                <ImageButton
                     android:id="@+id/accept_button"
-                    android:layout_width="@dimen/party_invite_button"
-                    android:layout_height="@dimen/party_invite_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/party_accept_button_start_margin"
-                    android:background="@drawable/party_invite_accept" />
+                    android:src="@drawable/party_invite_accept"
+                    android:background="@color/transparent" />
 
-                <Button
+                <ImageButton
                     android:id="@+id/reject_button"
-                    android:layout_width="@dimen/party_invite_button"
-                    android:layout_height="@dimen/party_invite_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/party_accept_button_start_margin"
-                    android:background="@drawable/party_invite_reject" />
+                    android:src="@drawable/party_invite_reject"
+                    android:background="@color/transparent" />
             </LinearLayout>
         </LinearLayout>
     </FrameLayout>
