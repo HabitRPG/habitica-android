@@ -269,7 +269,7 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
                 dialogQueue.removeAt(0)
             }
             if (dialogQueue.size > 0) {
-                if ((dialogQueue[0].context as? Activity) == null || (dialogQueue[0].context as? Activity)?.isFinishing == false) {
+                if ((dialogQueue[0].context as? Activity)?.isFinishing == false) {
                     dialogQueue[0].show()
                 }
             }

@@ -73,7 +73,7 @@ class NoPartyFragmentFragment : BaseMainFragment<FragmentNoPartyBinding>() {
                     socialRepository.getMember(leader)
                             .subscribe({
                                 binding?.root?.findViewById<AvatarView>(R.id.groupleader_avatar_view)?.setAvatar(it)
-                                binding?.root?.findViewById<TextView>(R.id.groupleader_avatar_view)?.text = getString(R.string.invitation_title,it.displayName, binding?.invitationsView?.groupName)
+                                binding?.root?.findViewById<TextView>(R.id.groupleader_text_view)?.text = getString(R.string.invitation_title,it.displayName, binding?.invitationsView?.groupName)
                             }, RxErrorHandler.handleEmptyError())
             )
         }

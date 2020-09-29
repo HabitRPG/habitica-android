@@ -59,9 +59,9 @@ class CollapsibleSectionView(context: Context, attrs: AttributeSet?) : LinearLay
     private fun showViews() {
         updatePreferences()
         setCaretImage()
-        (2 until childCount)
-                .filter { getChildAt(it) != binding.titleView }
-                .forEach { getChildAt(it).visibility = View.VISIBLE }
+        (0 until childCount)
+                .map { getChildAt(it) }
+                .forEach { it.visibility = View.VISIBLE }
     }
 
     private fun hideViews() {
@@ -69,6 +69,7 @@ class CollapsibleSectionView(context: Context, attrs: AttributeSet?) : LinearLay
         setCaretImage()
         (2 until childCount)
                 .map { getChildAt(it) }
+                .filter { it != binding.sectionTitleView }
                 .forEach {
                     it.visibility = View.GONE
                 }
@@ -88,6 +89,7 @@ class CollapsibleSectionView(context: Context, attrs: AttributeSet?) : LinearLay
     private fun setChildMargins() {
         (2 until childCount)
                 .map { getChildAt(it) }
+                .filter { it != binding.sectionTitleView }
                 .forEach {
                     val lp = it.layoutParams as? LayoutParams
                     lp?.setMargins(padding, 0, padding, bottomPadding)
@@ -104,8 +106,8 @@ class CollapsibleSectionView(context: Context, attrs: AttributeSet?) : LinearLay
         var height = 0
         measureChildWithMargins(binding.separator, widthMeasureSpec, 0, heightMeasureSpec, height)
         height += binding.separator.measuredHeight
-        measureChildWithMargins(binding.titleTextView, widthMeasureSpec, 0, heightMeasureSpec, height)
-        height += binding.titleTextView.measuredHeight
+        measureChildWithMargins(binding.sectionTitleView, widthMeasureSpec, 0, heightMeasureSpec, height)
+        height += binding.sectionTitleView.measuredHeight
         (2 until childCount)
                 .map { getChildAt(it) }
                 .forEach {
@@ -123,7 +125,7 @@ class CollapsibleSectionView(context: Context, attrs: AttributeSet?) : LinearLay
     init {
         caretColor = ContextCompat.getColor(context, R.color.black_50_alpha)
         orientation = VERTICAL
-        binding.titleTextView.setOnClickListener {
+        binding.sectionTitleView.setOnClickListener {
             isCollapsed = !isCollapsed
         }
         val attributes = context.theme?.obtainStyledAttributes(

@@ -99,11 +99,7 @@ class AvatarSetupFragment : BaseFragment<FragmentSetupAvatarBinding>() {
             this.updateAvatar()
         }
         this.selectedBodyCategory()
-    }
-
-    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
-        super.setUserVisibleHint(isVisibleToUser)
-        if (isVisibleToUser && context != null) {
+        if (context != null) {
             binding?.speechBubble?.animateText(context?.getString(R.string.avatar_setup_description) ?: "")
         }
     }

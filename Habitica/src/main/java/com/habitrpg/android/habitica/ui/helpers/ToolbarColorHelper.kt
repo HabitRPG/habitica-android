@@ -16,12 +16,14 @@ limitations under the License.
 package com.habitrpg.android.habitica.ui.helpers
 
 import android.app.Activity
+import android.graphics.Color
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.os.Build
 import android.view.View
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.widget.ImageButton
+import android.widget.TextView
 import androidx.appcompat.view.menu.ActionMenuItemView
 import androidx.appcompat.widget.ActionMenuView
 import androidx.appcompat.widget.Toolbar
@@ -59,8 +61,7 @@ object ToolbarColorHelper {
             if (v is ImageButton) {
                 //Action Bar back button
                 v.drawable.colorFilter = colorFilter
-            }
-            if (v is ActionMenuView) {
+            } else if (v is ActionMenuView) {
                 for (j in 0 until v.childCount) {
 
                     //Step 2: Changing the color of any ActionMenuViews - icons that are not back button, nor text, nor overflow menu icon.
@@ -77,6 +78,8 @@ object ToolbarColorHelper {
                         }
                     }
                 }
+            } else if (v is TextView) {
+                v.setTextColor(toolbarIconsColor)
             }
         }
 

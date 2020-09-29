@@ -234,6 +234,19 @@
                         android:textColor="@color/white_75_alpha"
                         android:background="@color/transparent" />
 
+                    <TextView
+                        android:id="@+id/privacy_policy"
+                        android:layout_width="match_parent"
+                        android:layout_marginTop="@dimen/spacing_large"
+                        android:layout_marginBottom="@dimen/spacing_xlarge"
+                        android:gravity="center_horizontal"
+                        android:layout_height="wrap_content"
+                        android:text="@string/login_disclaimer"
+                        android:linksClickable="true"
+                        android:layout_gravity="center_horizontal"
+                        android:textColor="@color/white_75_alpha"
+                        android:background="@color/transparent" />
+
                 </LinearLayout>
 
             </ScrollView>

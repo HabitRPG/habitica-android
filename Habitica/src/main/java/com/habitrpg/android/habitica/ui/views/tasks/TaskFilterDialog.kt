@@ -147,6 +147,9 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : HabiticaAl
         button.setText(R.string.add_tag)
         button.setOnClickListener { createTag() }
         button.setCompoundDrawablesWithIntrinsicBounds(addIcon, null, null, null)
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            button.compoundDrawableTintList = ColorStateList.valueOf(context.getThemeColor(R.attr.colorPrimary))
+        }
         button.setBackgroundResource(R.drawable.layout_rounded_bg_lighter_gray)
         button.setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
         tagsList.addView(button)

@@ -20,7 +20,7 @@ import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.BehaviorSubject
 import io.realm.RealmResults
-import java.util.*
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 enum class GroupViewType(internal val order: String) {
@@ -216,7 +216,10 @@ open class GroupViewModel : BaseViewModel() {
             onComplete()
             return
         }
-        disposable.add(socialRepository.retrieveGroupChat(groupID).subscribe({
+        disposable.add(socialRepository.retrieveGroupChat(groupID)
+                .delay(500, TimeUnit.MILLISECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
             onComplete()
         }, RxErrorHandler.handleEmptyError()))
     }

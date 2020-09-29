@@ -61,7 +61,6 @@ class FixCharacterValuesActivity: BaseActivity() {
         binding.experienceIconView.setImageBitmap(HabiticaIconsHelper.imageOfExperience())
         binding.manaIconView.setImageBitmap(HabiticaIconsHelper.imageOfMagic())
         binding.goldIconView.setImageBitmap(HabiticaIconsHelper.imageOfGold())
-        binding.levelIconView.setImageBitmap(HabiticaIconsHelper.imageOfRogueLightBg())
         binding.streakIconView.setImageResource(R.drawable.achievement_thermometer)
     }
 

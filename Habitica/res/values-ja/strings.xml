@@ -900,7 +900,7 @@
     <string name="renew_subscription">寄付を再開する</string>
     <string name="thanks_for_subscribing">寄付に感謝します</string>
     <string name="subscribe_options_title">あなたのご都合にあった寄付の期間を選びましょう</string>
-    <string name="ending_on">%@に止める</string>
+    <string name="ending_on">%sに止める</string>
     <string name="not_recurring">くり返さない</string>
     <string name="cancelled">キャンセルしました</string>
     <string name="send_invites">招待状を送る</string>

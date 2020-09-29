@@ -1110,4 +1110,7 @@
     <string name="user_is_blocked">You blocked this user</string>
     <string name="user_is_blocked_explanation">A blocked user cannot send you Private Messages but you will still see their posts in Tavern or Guilds.</string>
     <string name="finish">Finish</string>
+    <string name="login_disclaimer">By signing up, you are indicating that you have read and agree to the <a href="https://habitica.com/static/terms">Terms of Service</a> and <a href="https://habitica.com/static/privacy">Privacy Policy.</a></string>
+    <string name="you">You</string>
+    <string name="invitation_title_no_leader">You were invited to join a party</string>
 </resources>

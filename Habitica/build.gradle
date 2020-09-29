@@ -156,8 +156,8 @@ android {
         multiDexEnabled true
         resConfigs "en", "bg", "de", "en-rGB", "es", "fr", "hr-rHR", "in", "it", "iw", "ja", "ko", "lt", "nl", "pl", "pt-rBR", "pt-rPT", "ru", "tr", "zh", "zh-rTW"
 
-        versionCode 2561
-        versionName "3.0"
+        versionCode 2571
+        versionName "3.0.1"
     }
 
     viewBinding {

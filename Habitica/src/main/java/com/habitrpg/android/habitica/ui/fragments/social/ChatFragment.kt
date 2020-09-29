@@ -48,6 +48,7 @@ class ChatFragment : BaseFragment<FragmentChatBinding>() {
     private var chatAdapter: ChatRecyclerViewAdapter? = null
     private var navigatedOnceToFragment = false
     private var isScrolledToBottom = true
+    private var isFirstRefresh = true
     private var refreshDisposable: Disposable? = null
     var autocompleteContext: String = ""
 
@@ -108,13 +109,14 @@ class ChatFragment : BaseFragment<FragmentChatBinding>() {
         stopAutoRefreshing()
     }
 
-    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
-        super.setUserVisibleHint(isVisibleToUser)
-        if (isVisibleToUser) {
-            startAutoRefreshing()
-        } else {
-            stopAutoRefreshing()
-        }
+    override fun onResume() {
+        super.onResume()
+        startAutoRefreshing()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        stopAutoRefreshing()
     }
 
     private fun startAutoRefreshing() {
@@ -126,6 +128,7 @@ class ChatFragment : BaseFragment<FragmentChatBinding>() {
                 .subscribe({
             refresh()
         }, RxErrorHandler.handleEmptyError())
+        refresh()
     }
 
     private fun stopAutoRefreshing() {
@@ -145,9 +148,10 @@ class ChatFragment : BaseFragment<FragmentChatBinding>() {
 
     private fun refresh() {
         viewModel?.retrieveGroupChat {
-            if (isScrolledToBottom) {
+            if (isScrolledToBottom || isFirstRefresh) {
                 binding?.recyclerView?.scrollToPosition(0)
             }
+            isFirstRefresh = false
         }
     }
 
