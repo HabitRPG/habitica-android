@@ -597,7 +597,7 @@
     <string name="join_party_title">Vous voulez rejoindre une équipe ?</string>
     <string name="insufficientSubscriberGems">Vous avez acheté toutes les gemmes possibles de ce mois. D\'autres seront disponibles dans les trois premiers jours de chaque mois. Merci pour votre abonnement !</string>
     <string name="world_boss_description_title">Qu\'est-ce qu\'un boss mondial ?</string>
-    <string name="world_boss_description_intro">Un boss mondial est un événement spécial où toute la communauté travaille ensemble pour combattre avec ses tâches un puissant monstre !</string>
+    <string name="world_boss_description_intro">Un boss mondial est un événement spécial où toute la communauté travaille coude à coude pour combattre un puissant monstre grâce à la réalisation des tâches !</string>
     <string name="world_boss_description_1">Réalisez vos tâches pour infliger des dégâts au boss</string>
     <string name="world_boss_description_2">Le boss ne vous infligera pas de dégâts pour les tâches non réalisées, mais sa jauge de rage augmentera. Si la barre se remplit, le boss attaquera l\'un des marchands !</string>
     <string name="world_boss_description_3">Vous pouvez continuer à faire vos quêtes de boss habituelles, vos dégâts s\'appliqueront aux deux</string>
@@ -613,8 +613,8 @@
     <string name="challenge_categories">Catégories du défi</string>
     <string name="created_challenge">Défi créé</string>
     <string name="joined">Rejoint</string>
-    <string name="public_challenge">Défi publique</string>
-    <string name="short_name">Nom court</string>
+    <string name="public_challenge">Défi public</string>
+    <string name="short_name">Titre</string>
     <string name="unlock_attribute_points">L\'allocation de points d\'attributs se déverrouille au niveau 10</string>
     <string name="same_day_reminder_title">Avez-vous déjà ajouté vos tâches ?</string>
     <string name="same_day_reminder_text">Le plus vous en ajoutez, le plus vous aurez de récompenses. Même les petites habitudes mènent à de grands changements.</string>
