@@ -336,7 +336,7 @@
     <string name="subscribe_listitem1">De l\'or pour les gemmes</string>
     <string name="subscribe_listitem2">Sabliers mystiques</string>
     <string name="subscribe_listitem3">Objets mystère mensuels</string>
-    <string name="subscribe_listitem4">Un familier spécial</string>
+    <string name="subscribe_listitem4">Familier spécial d\'abonnement</string>
     <string name="subscriptions">Abonnements</string>
     <string name="subscription_duration">Périodique tous les %s</string>
     <string name="subscription_duration_norenew">Pour %s</string>
