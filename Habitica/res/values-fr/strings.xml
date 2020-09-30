@@ -614,7 +614,7 @@
     <string name="created_challenge">Défi créé</string>
     <string name="joined">Rejoint</string>
     <string name="public_challenge">Défi public</string>
-    <string name="short_name">Titre</string>
+    <string name="short_name">Nom court</string>
     <string name="unlock_attribute_points">L\'allocation de points d\'attributs se déverrouille au niveau 10</string>
     <string name="same_day_reminder_title">Avez-vous déjà ajouté vos tâches ?</string>
     <string name="same_day_reminder_text">Le plus vous en ajoutez, le plus vous aurez de récompenses. Même les petites habitudes mènent à de grands changements.</string>
