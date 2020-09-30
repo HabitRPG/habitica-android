@@ -617,7 +617,7 @@
     <string name="short_name">Nom court</string>
     <string name="unlock_attribute_points">L\'allocation de points d\'attributs se déverrouille au niveau 10</string>
     <string name="same_day_reminder_title">Avez-vous déjà ajouté vos tâches ?</string>
-    <string name="same_day_reminder_text">Le plus vous en ajoutez, le plus vous aurez de récompenses. Même les petites habitudes mènent à de grands changements.</string>
+    <string name="same_day_reminder_text">Plus vous en ajoutez, plus vous aurez de récompenses. Même les petites habitudes mènent à de grands changements.</string>
     <string name="next_day_reminder_title">Avez-vous validé vos tâches quotidiennes aujourd\'hui ?</string>
     <string name="next_day_reminder_text">Il y a beaucoup à découvrir en gagnant des niveaux, alors continuez avec vos tâches et amusez-vous !</string>
     <string name="daily_tip_0">Vous voulez essayer quelque chose de nouveau ? Rejoignez un défi pour augmenter votre liste de tâches et gagnez des gemmes !</string>
@@ -628,7 +628,7 @@
     <string name="daily_tip_5">Respirez profondément pour vous aider à vous concentrer. Vous pouvez le faire !</string>
     <string name="daily_tip_6">Réglez un chronomètre sur 10 minutes et regardez combien vous pouvez en faire dans ce temps !</string>
     <string name="daily_tip_7">Essayez d\'épingler des objets depuis le marché dans vos récompenses pour vous aider à vous motiver à les obtenir !</string>
-    <string name="daily_tip_8">Vous pouvez changer la difficulté de votre tâche pour vous récompenser un peu plus pour les tâches difficiles !</string>
+    <string name="daily_tip_8">Vous pouvez modifier le niveau de difficulté de votre tâche pour vous récompenser un peu plus pour les tâches difficiles !</string>
     <string name="daily_tip_9">Si vous rencontrez des difficultés, essayez de diviser vos tâches en plus petites tâches.</string>
     <string name="moderator">Modérateur</string>
     <string name="staff">Administrateur</string>
@@ -640,21 +640,21 @@
     <string name="last_login">Dernière connexion</string>
     <string name="total_checkins">Total de connexions</string>
     <string name="two_handed">Deux mains</string>
-    <string name="usernamePromptTitle">Il est temps de choisir votre nom d\'utilisateur !</string>
-    <string name="usernamePromptBody">Les noms de connexion sont maintenant uniques, seront visibles à côté de votre nom affiché, et seront utilisés pour les invitations, les @mentions et les discussions.</string>
+    <string name="usernamePromptTitle">Il est temps de choisir votre identifiant !</string>
+    <string name="usernamePromptBody">Les identifiants sont maintenant uniques. Ils seront visibles sous votre pseudo, et seront utilisés pour les invitations, les @mentions et les discussions.</string>
     <string name="usernamePromptWiki">Si vous souhaitez en savoir plus sur ce changement, <a href="https://habitica.wikia.com/wiki/Player_Names">visitez notre wiki.</a></string>
-    <string name="usernamePromptDisclaimer">Les Noms d\'Utilisateurs doivent respecter nos <a href="https://habitica.com/static/terms">Conditions d\'Utilisation</a> et nos <a href="https://habitica.com/static/community-guidelines">règles de vie en communauté</a>. Si vous n\'avez pas choisi un pseudo de connexion précédemment, votre nom d\'utilisateur a été généré automatiquement.</string>
-    <string name="confirm_username_title">Êtes-vous sûr(e) de vouloir confirmer votre nom d\'utilisateur actuel ?</string>
-    <string name="confirm_username_description">Confirmer votre nom d\'utilisateur le rendra public pour les invitations, les @mentions et les messages. Vous pouvez changer votre nom d\'utilisateur depuis les paramètres à n\'importe quel moment.</string>
+    <string name="usernamePromptDisclaimer">Les identifiants doivent respecter nos <a href="https://habitica.com/static/terms">Conditions d\'Utilisation</a> et nos <a href="https://habitica.com/static/community-guidelines">règles de vie en communauté</a>. Si vous n\'avez pas choisi un pseudo précédemment, votre identifiant a été généré automatiquement.</string>
+    <string name="confirm_username_title">Êtes-vous sûr(e) de vouloir confirmer votre identifiant actuel \?</string>
+    <string name="confirm_username_description">Confirmer votre identifiant le rendra public pour les invitations, les @mentions et les messages. Vous pouvez le changer depuis les paramètres à n\'importe quel moment.</string>
     <string name="cancel">Annuler</string>
-    <string name="confirm_username">Confirmer le Nom d\'Utilisateur</string>
-    <string name="username_not_confirmed">Nom d\'Utilisateur non confirmé</string>
-    <string name="username_confirmed">Nom d\'utilisateur confirmé</string>
-    <string name="enter_recipient_username">Entrez le @ nom d\'utilisateur du destinataire</string>
-    <string name="username_copied">Nom d\'utilisateur copié dans le presse papier</string>
-    <string name="verification_pet">Un de ces Familiers Vétérans vous attendra une fois la confirmation effectuée !</string>
+    <string name="confirm_username">Confirmer votre identifiant</string>
+    <string name="username_not_confirmed">Identifiant non confirmé</string>
+    <string name="username_confirmed">Identifiant confirmé</string>
+    <string name="enter_recipient_username">Entrez le @ identifiant du destinataire</string>
+    <string name="username_copied">identifiant copié dans le presse papier</string>
+    <string name="verification_pet">Un de ces familiers vétérans vous attendra une fois la confirmation effectuée !</string>
     <string name="welcomeNameTitle">Comment devrions-nous vous appeler \?</string>
-    <string name="display_name_length_error">Les noms affichés doivent comporter entre 1 et 30 caractères</string>
+    <string name="display_name_length_error">Les pseudos doivent comporter entre 1 et 30 caractères</string>
     <string name="setup_task_join_habitica">Rejoindre Habitica (Cochez-moi!)</string>
     <string name="setup_task_join_habitica_notes">Vous pouvez réaliser cette tâche, l\'éditer ou la supprimer.</string>
     <string name="setup_task_reward">Récompensez-vous</string>
@@ -664,7 +664,7 @@
     <string name="equipment_int">INT :</string>
     <string name="equipment_per">PER :</string>
     <string name="visit_website">Rendez vous sur le site</string>
-    <string name="subscribe_gift_description">Vous souhaitez donner les bénéfices de l\'abonnement à quelqu\'un d\'autre ?</string>
+    <string name="subscribe_gift_description">Vous souhaitez offrir les bénéfices de l\'abonnement à quelqu\'un d\'autre \?</string>
     <string name="gift_subscription">Offrir un Abonnement</string>
     <string name="gift_one_get_one_description">Un événement \"Offrez un abonnement et recevez un abonnement gratuit\" est en cours !</string>
     <string name="gift_title">A qui souhaitez-vous l\'offrir ?</string>
@@ -720,7 +720,7 @@
     <string name="accept">Accepter</string>
     <string name="equip_automatically">Équiper automatiquement les nouveaux équipements</string>
     <string name="leave_challenges">Quitter les défis</string>
-    <string name="keep_challenges">Conserver les Défis</string>
+    <string name="keep_challenges">Conserver les défis</string>
     <string name="inviteFriendDescription">Vous avez invité un ou des amis qui vous ont rejoint dans vos aventures !</string>
     <string name="inviteFriendTitle">A invité un ami</string>
     <string name="joinedChallengeDescription">Vous vous êtes mis à l\'épreuve en rejoignant un défi !</string>
@@ -740,7 +740,7 @@
     <string name="achievement_title">Vous avez obtenu un succès !</string>
     <string name="view_achievements">Voir les succès</string>
     <string name="see_what_s_new">Voir les nouveautés</string>
-    <string name="mystery_item_received">Vous ouvrez la boite et trouvez %@</string>
+    <string name="mystery_item_received">Vous ouvrez la boîte et trouvez %@</string>
     <string name="removed_member">%s ne fait plus partie du groupe</string>
     <string name="transfer">Transférer</string>
     <string name="remove_member_confirm">Confirmez-vous vouloir retirer %s du groupe \?</string>
@@ -766,7 +766,7 @@
     <string name="basic_achievements">Succès de base</string>
     <string name="sidebar_achievements">Succès</string>
     <string name="take_me_back">Revenir en arrière</string>
-    <string name="unpin">Des-épingler</string>
+    <string name="unpin">Désépingler</string>
     <string name="pin">Épingler</string>
     <string name="levelup_title_10">Le système de classe est débloqué !</string>
     <string name="levelup_detail_10">Choisissez une classe qui correspond à votre style de jeu, et débloquez des compétences et des armures pour vous aider dans votre aventure</string>
@@ -778,7 +778,7 @@
     <string name="guild_members">Membres de la guilde</string>
     <string name="guild_summary">Description de la guilde</string>
     <string name="setup_task_habit_2_notes">ou supprimez la depuis la fenêtre d\'édition</string>
-    <string name="setup_task_habit_2">Cliquez ici pour éditer ceci en une mauvaise habitude que vous voudriez perdre</string>
+    <string name="setup_task_habit_2">Cliquez ici pour éditer une mauvaise habitude que vous voudriez perdre</string>
     <string name="setup_task_habit_1_notes">Soit une habitude, soit une quotidienne ou encore une tâche à faire</string>
     <string name="setup_task_habit_1">Ajoutez une tâche à Habitica</string>
     <string name="cost">Prix</string>
@@ -804,7 +804,7 @@
     <string name="update_available">Mise à jour disponible : %1$s (%2$d)</string>
     <string name="streak">Combo</string>
     <string name="new_reminder">Nouveau rappel</string>
-    <string name="checklist_text">Texte de liste</string>
+    <string name="checklist_text">Liste de vérification</string>
     <string name="years">Années</string>
     <string name="weeks">Semaines</string>
     <string name="days">Jours</string>
@@ -833,12 +833,12 @@
     <string name="preference_push_unjoined_guild_mention">\@mentions dans des guildes</string>
     <string name="preference_push_joined_guild_mention">\@mentions dans vos guildes</string>
     <string name="gems_to_gift">Gemmes à offrir</string>
-    <string name="gift_gems_balance_subtitle">Indiquez ci-dessous combien de vos propres gemmes vous voudriez envoyer, ou changez d\'onglet pour acheter des gemmes à offrir</string>
+    <string name="gift_gems_balance_subtitle">Indiquez ci-dessous combien de vos propres gemmes vous voulez envoyer, ou changez d\'onglet pour acheter des gemmes à offrir</string>
     <string name="from_balance">Offrir vos propres gemmes</string>
     <string name="purchase">Acheter</string>
     <string name="preference_push_party_mention">\@mentions dans l\'équipe</string>
     <string name="more_out_of_habitica">Profitez encore plus d\'Habitica</string>
-    <string name="gift_gems_disclaimer">Habitica ne vous demandera jamais d\'offrir des gemmes aux autres joueurs. Supplier qu\'on vous donne des gemmes est une violation de nos règles de vie en communauté, et toute fois où cela se produit doit être signalée à admin@habitica.com.</string>
+    <string name="gift_gems_disclaimer">Habitica ne vous obligera jamais à offrir des gemmes à d\'autres personnes. Réclamer des gemmes est une violation de notre guide de vie en communauté qui doit être reportée à admin@habitica.com.</string>
     <string name="gems_gift_description">Vous voulez octroyer un butin scintillant à quelqu\'un d\'autre \?</string>
     <string name="profile_gift_subscription">Offrir
 \nun abonnement</string>
@@ -848,7 +848,7 @@
 \nun message</string>
     <string name="gift_gems">Offrir des gemmes</string>
     <string name="see_other_options">Voir les autres options</string>
-    <string name="promo_subscription_buy_gems_description">Abonnez-vous pour acheter des gemmes avec de l\'or,obtenir des objets mystères tous les mois, augmenter le taux de butin et plus encore !</string>
+    <string name="promo_subscription_buy_gems_description">Abonnez-vous pour acheter des gemmes avec de l\'or, obtenir des objets mystères tous les mois, augmenter le taux de butin et plus encore !</string>
     <string name="promo_subscription_buy_gems_prompt">Besoin de gemmes \?</string>
     <string name="transfer_ownership_confirm_message">Cela fera de %s le nouveau responsable de l\'équipe</string>
     <string name="gift_confirmation_text_gems">Vous avez envoyé des gemmes à %s.</string>
@@ -894,7 +894,7 @@
     <string name="limited_event">Événement limité</string>
     <string name="g1g1_info_3_text">Cette promotion s\'applique seulement lors vous faites un cadeau à une autre personne. Si vous ou le bénéficiaire du cadeau possédez déjà un abonnement, l\'abonnement cadeau ajoutera des mois de crédit qui ne pourront être utilisés que lorsque l\'abonnement actuel sera annulé ou arrivera à expiration.</string>
     <string name="g1g1_info_3">Limitations</string>
-    <string name="g1g1_info_2_text">Choisissez \"Offrir un abonnement\", et entrez l\'identifiant du compte auquel vous voulez faire un cadeau. A partir de là, choisissez la durée d\'abonnement que vous voulez offrir et validez. Votre accès recevra automatiquement la même durée d\'abonnement que vous venez d\'offrir.</string>
+    <string name="g1g1_info_2_text">"Choisissez \"Offrir un abonnement\", et entrez l\'identifiant du compte auquel vous voulez faire un cadeau. puis choisissez la durée d\'abonnement que vous voulez offrir et validez. Vous recevrez automatiquement la même durée d\'abonnement que  celle que vous venez d\'offrir."</string>
     <string name="g1g1_info_2">Comment ça marche</string>
     <string name="gift_a_subscription">Offrez un abonnement</string>
     <string name="g1g1_info_1">En l\'honneur de la saison des cadeaux, nous reprenons une promotion très spéciale. Désormais, lorsque vous offrez un abonnement à quelqu\'un, vous recevrez le même abonnement pour vous même !</string>
@@ -905,15 +905,15 @@
     <string name="member_group_plan">Membre d\'une offre de groupe</string>
     <string name="member">Membre</string>
     <string name="owner">Propriétaire</string>
-    <string name="cancel_subscription_group_plan_owner">Vous bénéficiez d\'un abonnement gratuit parce que vous détenez à une équipe ou une guilde qui a une offre de groupe. Cela s\'arrêtera si vous annulez l\'offre de groupe. Chaque mois de crédit d\'abonnement que vous avez sera appliqué à la fin de l\'offre de groupe. Vous pouvez l\'annuler depuis le site Habitica.</string>
+    <string name="cancel_subscription_group_plan_owner">Vous bénéficiez d\'un abonnement gratuit parce que vous appartenez à une équipe ou une guilde qui a une offre de groupe. Cela s\'arrêtera si vous annulez l\'offre de groupe. Chaque mois de crédit d\'abonnement que vous avez sera appliqué à la fin de l\'offre de groupe. Vous pouvez l\'annuler depuis le site Habitica.</string>
     <string name="cancel_subscription_group_plan">Vous bénéficiez d\'un abonnement gratuit parce que vous appartenez à une équipe ou une guilde qui a une offre de groupe. Cet abonnement se terminera si vous quittez l\'équipe ou la guilde, ou si son propriétaire annule l\'offre de groupe. Tous les mois d\'abonnements dont vous disposiez déjà seront appliqués à la fin de l\'offre de groupe.</string>
     <string name="group_plan">Offre de groupe</string>
     <string name="subscription_credit">Crédit d\'abonnement</string>
     <string name="save_20">Économiser 20%</string>
     <string name="gifted">offert</string>
-    <string name="resubscribe_description">Vous voulez encore profiter des bonus \? Vous pouvez commencer un nouvel abonnement avant que celui-ci se termine pour les conserver.</string>
+    <string name="resubscribe_description">Vous voulez encore profiter des bonus \? Vous pouvez commencer un nouvel abonnement avant que celui-ci ne se termine pour les conserver.</string>
     <string name="resubscribe">Se réinscrire</string>
-    <string name="renew_subscription">Renouvellement l\'abonnement</string>
+    <string name="renew_subscription">Renouveler l\'abonnement</string>
     <string name="thanks_for_subscribing">Merci d\'avoir souscrit un abonnement</string>
     <string name="subscribe_options_title">Choisissez la durée d\'abonnement qui marche pour vous</string>
     <string name="ending_on">Termine le %s</string>
