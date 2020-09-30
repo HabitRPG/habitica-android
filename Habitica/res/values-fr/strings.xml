@@ -1059,7 +1059,7 @@
     <string name="onboardingCompleteDescription">Si vous en voulez plus, allez regarder les succès et commencez à les collectionner !</string>
     <string name="onboardingCompleteTitle">Vous avez reçu <b>5 Accomplissements</b> et <font color="#EE9109"><b>100 pièces d’or</b></font> pour vos efforts.</string>
     <string name="first_drop_title">Vous avez trouvé de nouveaux objets !</string>
-    <string name="go_to_items">Allez voir vos Objets</string>
+    <string name="go_to_items">Allez voir vos objets</string>
     <string name="first_drop_explanation2">Allez voir vos objets et essayez de combiner votre nouvel œuf et potion d’éclosion !</string>
     <string name="first_drop_explanation1">Accomplir des tâches vous donne la chance d’obtenir des œufs, des potions d’éclosion, et de la nourriture pour familiers.</string>
     <string name="purchasedEquipmentDescription">L’équipement peut être pratique ou juste élégant. Augmentez vos caractéristiques pour donner toutes sortes d’avantages à votre avatar</string>
