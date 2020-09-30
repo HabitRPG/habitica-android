@@ -894,7 +894,7 @@
     <string name="limited_event">Événement limité</string>
     <string name="g1g1_info_3_text">Cette promotion s\'applique seulement lors vous faites un cadeau à une autre personne. Si vous ou le bénéficiaire du cadeau possédez déjà un abonnement, l\'abonnement cadeau ajoutera des mois de crédit qui ne pourront être utilisés que lorsque l\'abonnement actuel sera annulé ou arrivera à expiration.</string>
     <string name="g1g1_info_3">Limitations</string>
-    <string name="g1g1_info_2_text">"Choisissez \"Offrir un abonnement\", et entrez l\'identifiant du compte auquel vous voulez faire un cadeau. puis choisissez la durée d\'abonnement que vous voulez offrir et validez. Vous recevrez automatiquement la même durée d\'abonnement que  celle que vous venez d\'offrir."</string>
+    <string name="g1g1_info_2_text">"Choisissez \"Offrir un abonnement\", et entrez l\'identifiant du compte auquel vous voulez faire un cadeau. Puis choisissez la durée d\'abonnement que vous voulez offrir et validez. Vous recevrez automatiquement la même durée d\'abonnement que  celle que vous venez d\'offrir."</string>
     <string name="g1g1_info_2">Comment ça marche</string>
     <string name="gift_a_subscription">Offrez un abonnement</string>
     <string name="g1g1_info_1">En l\'honneur de la saison des cadeaux, nous reprenons une promotion très spéciale. Désormais, lorsque vous offrez un abonnement à quelqu\'un, vous recevrez le même abonnement pour vous même !</string>
