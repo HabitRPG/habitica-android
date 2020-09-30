@@ -546,7 +546,7 @@
     <string name="constitution">Constitution</string>
     <string name="constitution_description">Diminue la quantité de dégâts reçue de vos tâches. Ne diminue pas les dégâts reçus des boss.</string>
     <string name="perception">Perception</string>
-    <string name="perception_description">Augmente la probabilité de trouver du butin lorsqu\'une tâche est validée, la limite de bulletin quotidienne, le bonus des combos, et la quantité d\'or reçue par les tâches.</string>
+    <string name="perception_description">Augmente la probabilité de trouver du butin lorsqu\'une tâche est validée, la quantité de butin quotidien, le bonus des combos, et la quantité d\'or reçue par les tâches.</string>
     <string name="buffs">Bonus</string>
     <string name="allocated">Alloué</string>
     <string name="distribute_evenly">Répartir équitablement</string>
@@ -559,20 +559,21 @@
     <string name="distribute_task_help">Assigner les points en fonction des catégories de force, intelligence, constitution et perception associées aux tâches que vous réalisez.</string>
     <string name="allocating_points">Allocation des points</string>
     <string name="class_equipment">Équipement</string>
-    <string name="equipment_empty">Vous avez déjà tout l\'équipement ! D\'autre objets seront disponibles pendant les Grand Galas, lors des solstices et des équinoxes.</string>
+    <string name="equipment_empty">Vous avez déjà tout l\'équipement ! D\'autres objets seront disponibles pendant les grands galas, lors des solstices et des équinoxes.</string>
     <string name="classless">Sans classe</string>
-    <string name="class_equipment_shop_dialog">Cet objet n\'est disponible que pour une classe spécifique.\nVous pouvez changer de classe depuis les paramètres.</string>
+    <string name="class_equipment_shop_dialog">Cet objet est disponible pour une classe spécifique.
+\nVous pouvez changer de classe depuis les paramètres.</string>
     <string name="class_gear_disclaimer">Vous ne pouvez acheter de l\'équipement que pour votre classe actuelle</string>
-    <string name="tavern_description">Bienvenu à l\'auberge ! Prenez une chaise pour vous joindre à la conversation, ou faite une pause de vos tâches.</string>
+    <string name="tavern_description">Bienvenue à la taverne ! Prenez une chaise pour vous joindre à la conversation, ou faites une pause de vos tâches à l\'auberge.</string>
     <string name="check_into_inn">Se reposer à l\'auberge</string>
     <string name="community_guidelines">Règles de vie en communauté</string>
     <string name="view_community_guidelines">Voir les règles de vie en communauté</string>
-    <string name="guidelines_description">Habitica essaye de créer un environnement bienveillant pour les personnes de tout âge et de toute origine qui y participent, en particulier dans les espaces publics comme la taverne. Si vous avez une question, veuillez consulter nos règles.</string>
+    <string name="guidelines_description">Habitica essaye de créer un environnement bienveillant pour les personnes de tout âge et de toute origine qui y participent, en particulier dans les espaces publics comme la taverne. Si vous avez une question, veuillez consulter nos règles de vie en communauté.</string>
     <string name="helpful_links">Liens utiles</string>
     <string name="view_faq">Voir la FAQ</string>
-    <string name="report_bug">Rapporter un bug</string>
+    <string name="report_bug">Signaler un bug</string>
     <string name="player_tiers">Paliers de contribution</string>
-    <string name="staff_moderators">Équipe d\'administration</string>
+    <string name="staff_moderators">Équipe d\'administration et modérateurs</string>
     <string name="tiers_descriptions">Les pseudos de couleur que vous pouvez voir dans les discussion représentent le palier de contribution d\'une personne. Plus le palier est élevé, plus la personne a contribué à Habitica avec de l\'art, du code, du temps ou plus !</string>
     <string name="navigation_drawer_open">Ouvrir le volet de navigation</string>
     <string name="navigation_drawer_close">Fermer le volet de navigation</string>
