@@ -221,8 +221,8 @@
     <string name="pets">Familiers</string>
     <string name="mounts">Montures</string>
     <string name="armoireEquipment">Vous avez trouvé %s dans l\'armoire enchantée</string>
-    <string name="armoireFood">Vous farfouillez dans l\'Armoire et trouvez une %1$s %2$s. Qu\'est-ce que ça fait là ?</string>
-    <string name="armoireExp">Vous luttez contre l\'Armoire et gagnez de l\'expérience. Prends ça !</string>
+    <string name="armoireFood">Vous farfouillez dans l\'armoire enchantée et trouvez une %1$s %2$s. Qu\'est-ce que ça fait là \?</string>
+    <string name="armoireExp">Vous luttez contre l\'armoire enchantée et gagnez de l\'expérience. Prends ça !</string>
     <string name="sell">Vendre (%d pièces d\'or)</string>
     <string name="hatch_with_potion">Faire éclore avec la potion</string>
     <string name="hatch_egg">Faire éclore avec l\'œuf</string>
@@ -238,11 +238,11 @@
     <string name="notification_pet_fed">Vous avez nourri votre %s !</string>
     <string name="notification_purchase_reward">Vous avez acheté une récompense</string>
     <string name="world_quest">Quête mondiale</string>
-    <string name="inn_description">Besoin de repos \? Reposez vous à l\'Auberge de Daniel pour faire une pause des effets de jeu les plus compliqués :
-\n
-\n • Les quotidiennes manquées ne vous infligeront pas de dégâts
-\n • Les tâches ne perdront pas de combo ni ne changeront de couleur
-\n • Les boss ne vous infligeront pas de dégâts pour vos quotidiennes manquées
+    <string name="inn_description">Besoin de repos \? Reposez vous à l\'auberge de Daniel pour faire une pause des effets de jeu les plus compliqués : 
+\n 
+\n • Les quotidiennes manquées ne vous infligeront pas de dégâts 
+\n • Les tâches ne perdront pas de combo ni ne changeront de couleur 
+\n • Les boss ne vous infligeront pas de dégâts pour vos quotidiennes manquées 
 \n • Vos dégâts de boss ou objets de quêtes collectés resteront en cours jusqu\'à ce que vous quittiez l\'auberge</string>
     <string name="empty_items">Vous n\'avez pas de %s</string>
     <string name="user_level">Niv %d</string>
@@ -251,9 +251,9 @@
     <string name="rogue">Voleur</string>
     <string name="mage">Mage</string>
     <string name="healer">Guérisseur</string>
-    <string name="warrior_description">Les guerriers font plus de coups critiques et infligent également de lourds dégâts aux boss. Jouez un guerrier si vous voulez vaincre facilement les monstres ! Les guerrier bénéficient d\'une force élevée.</string>
-    <string name="mage_description">Les Mages apprennent des compétences qui infligent des dégâts aux boss et augmentent l\'expérience et le mana. Jouez un Mage si vous voulez gagner des niveaux rapidement ! Les mages bénéficient d\'une grande intelligence.</string>
-    <string name="rogue_description">Les Voleurs apprennent des compétences qui leur font gagner ainsi qu\'à leur équipe plus d\'or et de butin aléatoire. Jouez un Voleur si vous êtes fortement motivé par les récompenses et les succès, à la recherche de butin et de badges !</string>
+    <string name="warrior_description">Les guerriers assènent plus de coups critiques et infligent de lourds dégâts aux boss. Jouez un guerrier si vous voulez vaincre facilement les monstres ! Les guerriers bénéficient d\'une force élevée.</string>
+    <string name="mage_description">Les Mages usent de sortilèges qui infligent des dégâts aux boss et augmentent leur expérience et leur mana. Jouez un Mage si vous voulez gagner des niveaux rapidement ! Les mages bénéficient d\'une grande intelligence.</string>
+    <string name="rogue_description">Les Voleurs sont dotés d\'une adresse prodigieuse, ce qui leur font gagner ainsi qu\'à leur équipe plus d\'or et de butins aléatoires. Jouez un Voleur si vous êtes fortement motivé par les récompenses et les succès, à la recherche de butins et de badges !</string>
     <string name="healer_description">Les Guérisseurs apprennent des compétences qui permettent de se protéger et se soigner, ainsi que leur équipe. Jouez un Guérisseur si vous aimez assister les membres de votre équipe, ou juste tromper la mort. Les guérisseurs bénéficient d\'une constitution élevée.</string>
     <string name="select_class">Sélectionner une classe</string>
     <string name="opt_out_class">Désactiver</string>
@@ -271,7 +271,7 @@
     <string name="invite_existing_users">Inviter des utilisateurs•trices existant•e•s</string>
     <string name="send">Envoyer</string>
     <string name="invite">Inviter des proches</string>
-    <string name="invite_username_description">Si vous avez des amis qui utilisent déjà Habitica, invitez les ici avec leur nom d\'utilisateur.</string>
+    <string name="invite_username_description">Si vous avez des amis qui utilisent déjà Habitica, invitez les ici avec leur identifiant.</string>
     <string name="invite_email_description">Si un•e ami•e rejoint Habitica via votre email, il ou elle sera automatiquement invité•e à rejoindre votre équipe !</string>
     <string name="add_invites">Ajouter des invitations</string>
     <string name="email">Email</string>
@@ -286,7 +286,7 @@
     <string name="market">Marché</string>
     <string name="timeTravelers">Voyageurs temporels</string>
     <string name="seasonalShop">Boutique saisonnière</string>
-    <string name="empty_inbox">Vous n\'avez pas de message. Vous pouvez envoyer un nouveau message à quelqu\'un à partir de ses message de discussion publics !</string>
+    <string name="empty_inbox">Vous n\'avez pas de message. Vous pouvez envoyer un nouveau message à quelqu\'un à partir de ses messages de discussion publics !</string>
     <string name="party_invite">Débloquer en invitant des ami•e•s</string>
     <string name="login_incentive">Débloquez en vous connectant régulièrement à Habitica</string>
     <string name="create_account">Débloquez en créant un compte</string>
@@ -323,7 +323,7 @@
     <string name="hatching_market_info">Vous ne recevez pas le bon butin ? Allez voir au marché !</string>
     <string name="feeding_market_info">Besoin de plus de nourriture ? Achetez-en au marché !</string>
     <string name="open_market">Ouvrir le Marché</string>
-    <string name="cds_description">Vos Quotidiennes se réinitialiseront la première fois que vous utiliserez Habitica après %1$s. Faites attention à les accomplir avant cette heure !</string>
+    <string name="cds_description">Vos quotidiennes se réinitialiseront la première fois que vous utiliserez Habitica après %1$s. Faites attention à les accomplir avant cette heure !</string>
     <string name="AudioTheme_title">Thème audio</string>
     <string name="AudioTheme_summary">Changer le thème audio d\'Habitica</string>
     <!--Login Incentives-->
@@ -332,11 +332,11 @@
     <string name="has_reminder">A un rappel</string>
     <string name="has_tag">A une étiquette</string>
     <string name="subscribe_title">L\'abonnement aide l\'équipe de développement et permet à Habitica de fonctionner</string>
-    <string name="subscribe_prompt">Abonnez vous pour obtenir ces bénéfices utiles !</string>
+    <string name="subscribe_prompt">Abonnez vous pour obtenir des avantages exclusifs !</string>
     <string name="subscribe_listitem1">De l\'or pour les gemmes</string>
     <string name="subscribe_listitem2">Sabliers mystiques</string>
     <string name="subscribe_listitem3">Objets mystère mensuels</string>
-    <string name="subscribe_listitem4">Familier d\'abonnement exclusif</string>
+    <string name="subscribe_listitem4">Un familier spécial</string>
     <string name="subscriptions">Abonnements</string>
     <string name="subscription_duration">Périodique tous les %s</string>
     <string name="subscription_duration_norenew">Pour %s</string>
