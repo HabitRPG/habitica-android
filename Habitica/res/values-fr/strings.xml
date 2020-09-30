@@ -491,15 +491,17 @@
     <string name="int_abbrv">Int</string>
     <string name="con_abbrv">Con</string>
     <string name="reset_account">Réinitialiser le compte</string>
-    <string name="reset_account_description">ATTENTION ! Cette action va réinitialiser de nombreux aspects de votre compte. Cela est hautement déconseillé, mais certaines personnes peuvent trouver utile de le faire après avoir joué un peu avec le site.\n\nVous perdrez tous vos niveau, votre or et vos points d\'expérience. Toutes vos tâches (à l\'exception de celles des défis) seront détruites de façon permanente et vous perdrez leur historique. Vous perdrez tout votre équipement, mais vous pourrez le racheter, y compris l\'équipement en édition limité et les objets mystères d\'abonnement que vous possédez déjà (vous aurez besoin d\'être de la classe correspondant à l\'équipement spécifique à une classe). Vous conserverez votre classe actuelle ainsi que vos familiers et montures. Vous voudrez peut-être utiliser l\'orbe de renaissance à la place, qui est une option plus sûre et conservera vos tâches et votre équipement.</string>
+    <string name="reset_account_description">ATTENTION ! Cette action va réinitialiser de nombreux aspects de votre compte. Cela est hautement déconseillé, mais certaines personnes peuvent trouver utile de le faire après avoir joué un peu avec le site.
+\n
+\nVous perdrez tous vos niveaux, votre or et vos points d\'expérience. Toutes vos tâches (à l\'exception de celles des défis) seront détruites de façon permanente et vous perdrez leur historique. Vous perdrez tout votre équipement, mais vous pourrez le racheter, y compris l\'équipement en édition limitée et les objets mystères déjà obtenu lors de votre abonnement (vous aurez besoin d\'être de la classe correspondant à l\'équipement spécifique à une classe). Vous conserverez votre classe actuelle ainsi que vos familiers et montures. Vous voudrez peut-être utiliser l\'orbe de renaissance à la place, qui est une option plus sûre et conservera vos tâches et votre équipement.</string>
     <string name="delete_account">Supprimer le compte</string>
     <string name="delete_account_description">Cela va supprimer votre compte définitivement et il ne pourra pas être restauré ! Les gemmes sur votre compte ou celles dépensées ne seront pas remboursées. Si vous confirmez définitivement, tapez votre mot de passe dans le champ de texte ci-dessous.</string>
-    <string name="reset_account_confirmation">réinitialiser mon compte</string>
-    <string name="delete_account_confirmation">supprimer mon compte</string>
+    <string name="reset_account_confirmation">Réinitialiser mon compte</string>
+    <string name="delete_account_confirmation">Supprimer mon compte</string>
     <string name="danger_zone">Zone de danger</string>
     <string name="resetting_account">Réinitialisation du compte</string>
     <string name="deleting_account">Suppression du compte</string>
-    <string name="insufficientGold">Vous devez compléter plus de taches avant de pouvoir vous offrir cet objet ! </string>
+    <string name="insufficientGold">Vous devez compléter plus de tâches avant de pouvoir vous offrir cet objet !</string>
     <string name="insufficientGems">Vous n\'avez pas assez de gemmes pour acheter cet objet !</string>
     <string name="purchase_gems">Acheter des gemmes</string>
     <string name="insufficientHourglasses">Vous n\'avez pas assez de sabliers mystiques pour acheter cet objet !</string>
@@ -512,18 +514,18 @@
     <string name="level">Niveau</string>
     <string name="streak_label">Combo de 21 jours</string>
     <string name="stats">Stats</string>
-    <string name="fix_character_description">Si vous avez eu affaire à un bug, ou fait une erreur qui a injustement changé votre personnage, vous pouvez corriger manuellement ces chiffres ici.</string>
+    <string name="fix_character_description">Si vous avez subi un bug, ou commis une erreur qui a injustement changé votre personnage, vous pouvez corriger manuellement ses valeurs ici.</string>
     <string name="fix_character_values">Corriger les valeurs du personnage</string>
     <string name="saving">Enregistrement</string>
     <string name="forgot_password_title">Envoyer par email un lien de réinitialisation de mot de passe</string>
-    <string name="forgot_password_description">Indiquez l\'adresse mail que vous avez utilisé pour vous inscrire sur Habitica.</string>
+    <string name="forgot_password_description">Indiquez l\'adresse mail que vous avez utilisée pour vous inscrire sur Habitica.</string>
     <string name="forgot_password_confirmation">Si votre email est dans nos bases, les instructions pour définir un nouveau mot de passe vous ont été envoyées à cette adresse.</string>
     <string name="ok">OK</string>
     <string name="profile">Profil</string>
     <string name="profile_summary">Modifiez votre profil public.</string>
-    <string name="display_name">Nom affiché</string>
+    <string name="display_name">Pseudo</string>
     <string name="photo_url">URL de photo</string>
-    <string name="login_name">Nom de connexion</string>
+    <string name="login_name">identifiant</string>
     <string name="about">A propos</string>
     <string name="app_settings">Paramètres de l\'application</string>
     <string name="authentication">Authentification</string>
@@ -674,7 +676,7 @@
     <string name="gift_confirmation_text_g1g1">Votre abonnement offert a été envoyé, et votre abonnement a été rattaché à votre compte !</string>
     <string name="gift_confirmation_text">Votre abonnement offert a été envoyé, et votre abonnement a été rattaché à votre compte.</string>
     <string name="opting_out_progress">Ne pas choisir</string>
-    <string name="delete_oauth_account_description">Cela va définitivement supprimer votre compte, et il ne pourra pas être restauré ! Les gemmes sur votre compte ou celles dépensées ne seront pas remboursées. Si vous confirmez définitivement, tapez DELETE dans le champ ci-dessous.</string>
+    <string name="delete_oauth_account_description">Cela va définitivement supprimer votre compte, et il ne pourra pas être restauré ! Les gemmes sur votre compte ou celles dépensées ne seront pas remboursées. Si vous êtes absolument certain, tapez DELETE dans le champ ci-dessous.</string>
     <string name="discover">Découvrir</string>
     <string name="damage_paused">Dommages en pause</string>
     <string name="preference_push_important_announcements">Annonces importantes</string>
@@ -820,7 +822,7 @@
     <string name="add_local_authentication">Ajouter l\'authentification locale</string>
     <string name="defeat">Défaire</string>
     <string name="join_party_description_guild">Donnez l\'identifiant ci-dessous à un ami ou rendez-vous sur %s pour rencontrer des camarades potentiels !</string>
-    <string name="insufficientGoldTitle">Pas assez d\'Or</string>
+    <string name="insufficientGoldTitle">Pas assez d\'or</string>
     <string name="x_months">%d mois</string>
     <string name="skill_progress_title">Utilisation de compétence</string>
     <string name="onwards">En avant !</string>
