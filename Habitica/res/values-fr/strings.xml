@@ -342,13 +342,13 @@
     <string name="subscription_duration_norenew">Pour %s</string>
     <string name="subscribe">S\'abonner</string>
     <string name="subscribe_listitem1_description">Vous pourrez acheter des gemmes au marché pour 20 pièces d\'or chacune !</string>
-    <string name="subscribe_listitem2_description">Obtenez des Sabliers mystiques pour acheter des objets dans la boutique des Voyageurs Temporels !</string>
+    <string name="subscribe_listitem2_description">Obtenez des sabliers mystiques pour acheter des objets dans la boutique des voyageurs temporels !</string>
     <string name="subscribe_listitem3_description">Abonnez-vous pour recevoir un ensemble exclusif et de nouveaux objets tous les mois !</string>
     <string name="subscribe_listitem4_description">Obtenez le familier jackalope pourpre royal lorsque vous vous abonnez.</string>
-    <string name="subscribe1month_gemcap">Plafond de 25 gemmes</string>
-    <string name="subscribe3month_gemcap">Plafond de 30 gemmes</string>
-    <string name="subscribe6month_gemcap">Plafond de 35 gemmes</string>
-    <string name="subscribe12month_gemcap">Plafond de 45 gemmes</string>
+    <string name="subscribe1month_gemcap">25 gemmes max</string>
+    <string name="subscribe3month_gemcap">30 gemmes max</string>
+    <string name="subscribe6month_gemcap">35 gemmes max</string>
+    <string name="subscribe12month_gemcap">45 gemmes max</string>
     <string name="subscription_hourglasses">+%d sabliers mystiques</string>
     <string name="payment_method">Méthode de paiement</string>
     <string name="subscription">Abonnement</string>
@@ -356,8 +356,8 @@
     <string name="due">Echéance</string>
     <string name="cancel_subscription">Annuler l\'inscription</string>
     <string name="cancel_subscription_google_description">Vous ne voulez plus vous abonner \? Vous trouverez l\'option pour vous désabonner dans la section \"Mes applications\" de Google Play Store. Le crédit des mois d\'abonnement restant sera appliqué dès que votre abonnement aura pris fin.</string>
-    <string name="cancel_subscription_notgoogle_description">Vous ne voulez plus vous abonner \? A cause de contraintes sur les paiements mobiles, vous ne pouvez vous désinscrire qu\'à travers le site. Pour cela, cliquez sur le bouton ci-dessous, et connectez-vous avec votre compte, cliquez sur l\'icône utilisateur en haut à droite, puis allez dans \"Abonnement). Tous les crédits de mois d\'abonnement restants seront appliqués lorsque l\'abonnement aura pris fin. Vous allez nous manquer !</string>
-    <string name="visit_habitica_website">Rendez vous sur le site Habitica</string>
+    <string name="cancel_subscription_notgoogle_description">Vous ne voulez plus vous abonner \? A cause de contraintes sur les paiements mobiles, vous ne pouvez vous désinscrire qu\'à travers le site. Pour cela, cliquez sur le bouton ci-dessous, et connectez-vous avec votre compte, cliquez sur l\'icône utilisateur en haut à droite, puis allez dans \"Abonnement\". Tous les crédits de mois d\'abonnement restants seront appliqués lorsque l\'abonnement aura pris fin. Vous allez nous manquer !</string>
+    <string name="visit_habitica_website">Rendez-vous sur le site Habitica</string>
     <string name="current_bonuses">Bonus actuels</string>
     <string name="months_subscribed">Mois souscrits</string>
     <string name="current_hourclasses">Sabliers mystiques actuels</string>
@@ -386,7 +386,7 @@
     <string name="challenge">Défi</string>
     <string name="not_part_of_a_challenge">Vous ne faites pas encore partie de ce défi !</string>
     <string name="join_a_challenge">Rejoignez un défi pour ajouter une sélection de tâches à votre liste, puis affrontez les autres participants pour gagner des succès ou même des gemmes !</string>
-    <string name="check_the_public_challenge_tab">Sélectionnez l\'onglet \"Publique\" pour trouver les défi créés par la communauté qui vous sont le plus adaptés !</string>
+    <string name="check_the_public_challenge_tab">Sélectionnez l\'onglet \"Découvrir\" pour trouver les défi créés par la communauté qui vous sont le plus adaptés !</string>
     <string name="inbox">Messages</string>
     <string name="special">Spécial</string>
     <string name="gem_for_gold_description">Grâce à votre abonnement, vous pouvez acheter des gemmes chaque mois en utilisant de l\'or.</string>
@@ -394,7 +394,7 @@
     <string name="mystery_item">Objet mystère</string>
     <string name="myster_item_notes">Chaque mois, votre abonnement vous donnera accès à un objet mystère. Il est généralement disponible une semaine avant la fin du mois.</string>
     <string name="open">Ouvrir</string>
-    <string name="checkInRewardEarned">Vous avez mérité cette récompense : %1$s pour votre dévotion à améliorer votre vie.</string>
+    <string name="checkInRewardEarned">Vous avez mérité cette récompense : %1$s pour votre engagement à améliorer votre vie.</string>
     <string name="nextPrizeUnlocks" tools:ignore="PluralsCandidate">Votre prochain prix sera débloqué à %1$d connexions</string>
     <string name="pending_approval">En attente de validation</string>
     <string name="filters">Filtres</string>
@@ -407,9 +407,9 @@
     <string name="login_btn_fb">Se connecter via Facebook</string>
     <string name="login_btn_google">Se connecter via Google</string>
     <string name="action_back">Retour</string>
-    <string name="welcome_text">Oh, vous devez débuter. Je m\'appelle Justin et je vais vous guider dans Habitica.
-\n
-\nPour commencer, comment devons-nous vous appeler\? Sentez-vous libre de changer ce que j\'ai choisi. Quand vous êtes prêt, créons votre avatar !</string>
+    <string name="welcome_text">Oh, vous venez d\'arriver \? Je m\'appelle Justin et je vais vous guider dans Habitica. 
+\n 
+\nPour commencer, comment devons-nous vous appeler\? Sentez-vous libre de changer ce que j\'ai choisi. Quand vous êtes prêt.e, créons votre avatar !</string>
     <string name="randomize">Aléatoire</string>
     <string name="avatar_extras">Bonus</string>
     <string name="avatar_skin_color">Couleur de peau</string>
@@ -430,16 +430,16 @@
     <string name="empty_title_dailies">Vous n\'avez aucune tâche quotidienne</string>
     <string name="empty_description_dailies">Les quotidiennes sont des tâches qui se répètent de façon régulière. Choisissez la planification qui vous convient !</string>
     <string name="empty_title_todos">Vous n\'avez aucune tâche à faire</string>
-    <string name="empty_description_todos">Les tâches à faire sont des tâches qui ne doivent être validées qu\'une seule fois. Ajoutez des listes de vérifications pour augmenter leur valeur.</string>
+    <string name="empty_description_todos">Les tâches à faire sont des tâches qui ne sont validées qu\'une seule fois. Ajoutez des listes de vérifications pour augmenter leur valeur.</string>
     <string name="empty_title_rewards">Vous n\'avez aucune récompense</string>
     <string name="reset_walkthrough">Recommencer la visite de Justin</string>
     <string name="read_community_guidelines">Veuillez lire nos <u>règles de vie en communauté</u> avant de publier un message</string>
     <string name="maintenance">Maintenance</string>
     <string name="reload_content">Recharger le contenu</string>
-    <string name="dailyDueDefaultView">Passez le quotidiennes sur l\'onglet \'échéance\' par défaut</string>
-    <string name="dailyDueDefaultViewDescription">Une fois cette option définie, les quotidiennes seront par défait sur l\'onglet \'échéance\' à la place de \'toutes\'</string>
-    <string name="no_billing_gems">Votre appareil ne dispose pas de méthode de paiement supportée. Veuillez utiliser le site habitica si vous voulez acheter des gemmes.</string>
-    <string name="no_billing_subscriptions">Votre appareil ne dispose pas de méthode de paiement supportée. Veuillez utiliser le site habitica si vous voulez payer un abonnement.</string>
+    <string name="dailyDueDefaultView">Passez les quotidiennes sur l\'onglet \'échéance\' par défaut</string>
+    <string name="dailyDueDefaultViewDescription">Une fois cette option définie, les quotidiennes seront organisées par défaut sur l\'onglet \'échéance\' à la place de \'toutes\'</string>
+    <string name="no_billing_gems">Votre appareil ne dispose pas de méthode de paiement supportée. Utilisez le site Habitica pour acheter des gemmes.</string>
+    <string name="no_billing_subscriptions">"Votre appareil ne dispose pas de méthode de paiement supportée. Utilisez le site d\'Habitica  pour souscrire un abonnement."</string>
     <string name="save">Enregistrer</string>
     <string name="location">Localisation</string>
     <string name="gem_reward">Récompense en gemmes</string>
@@ -857,14 +857,14 @@
     <string name="empty_title_todos_filtered">Pas de tâches</string>
     <string name="empty_description_dailies_filtered">Il n\'y a pas de quotidienne visible avec vos filtres actuels.</string>
     <string name="empty_title_dailies_filtered">Aucune quotidienne</string>
-    <string name="empty_description_habits_filtered">Il n\'y a pas d\'habitudes visibles avec vos filtres actuels.</string>
+    <string name="empty_description_habits_filtered">Il n\'y a pas d\'habitude visible avec vos filtres actuels.</string>
     <string name="empty_title_habits_filtered">Pas d\'habitudes</string>
     <string name="register_btn_google">S\'inscrire avec Google</string>
     <string name="register_btn_fb">S\'inscrire avec Facebook</string>
     <string name="login_btn_apple">Se connecter avec Apple</string>
     <string name="subscribe_listitem5_description">Trouvez encore plus d\'objets dans Habitica avec un bonus de 2x la limite de butin habituelle.</string>
     <string name="subscribe_listitem3_description_new">Abonnez-vous maintenant pour obtenir %s et pour recevoir de nouveaux objets chaque mois !</string>
-    <string name="subscribe_listitem5">Double le butin</string>
+    <string name="subscribe_listitem5">Un butin doublé</string>
     <string name="create_account_short">Créer un compte</string>
     <string name="login_incentive_short_count">%d connexions</string>
     <string name="login_incentive_short">Connectez-vous régulièrement à Habitica</string>
@@ -1018,7 +1018,7 @@
     <string name="leave_delte_tasks">Quitter et supprimer les tâches</string>
     <string name="leave_keep_tasks">Quitter et conserver les tâches</string>
     <string name="leave_delete_task">Quitter et supprimer la tâche</string>
-    <string name="challenge_leave_description">Vous pouvez choisir de conserver les tâches de ce défi sur votre tableau de tâches personnel ou de les supprimer lorsque vous quittez</string>
+    <string name="challenge_leave_description">Vous pouvez choisir de conserver les tâches de ce défi sur votre tableau de tâches personnel ou les supprimer lorsque vous le quittez</string>
     <string name="create_task_description">Ajoutez une tâche pour quelque chose que vous aimeriez accomplir cette semaine</string>
     <string name="purchase_equipment_title">Acheter un équipement</string>
     <string name="mount_category">Montures %s</string>
