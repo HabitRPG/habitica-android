@@ -971,7 +971,7 @@
 \n**Retrouvez des points de vie** en montant de niveau, en utilisant une potion, ou une compétence de classe de régénération.
 \n
 \nSi vos **points de vie tombent à 0**, vous perdrez un niveau, tout votre or, et une pièce d\'équipement. L\'équipement perdu peut être racheté.</string>
-    <string name="health_points">Points de santé</string>
+    <string name="health_points">Points de vie</string>
     <string name="stats_currency">Stats &amp; monnaie</string>
     <string name="how_best_habitica">Des doutes sur la meilleure façon d\'utiliser Habitica \?</string>
     <string name="overview">Vue d\'ensemble</string>
