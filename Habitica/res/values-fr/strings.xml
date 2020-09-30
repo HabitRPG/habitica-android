@@ -461,7 +461,7 @@
     <string name="number_participants">%1$d participants</string>
     <string name="welcome_back">Bienvenue à nouveau</string>
     <string name="yesterdaililes_prompt">Cochez les quotidiennes accomplies hier :</string>
-    <string name="start_day">Démarrer ma journée</string>
+    <string name="start_day">Commencer ma journée</string>
     <string name="leave_party_confirmation">Voulez-vous vraiment quitter l\'équipe ?</string>
     <string name="pending">En cours</string>
     <string name="accepted">Accepté</string>
