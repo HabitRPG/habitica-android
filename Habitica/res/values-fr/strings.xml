@@ -1056,7 +1056,7 @@
     <string name="excessItemsXLeft">Vous avez seulement besoin de %d %@s pour faire éclore tous les familiers possibles. Voulez-vous vraiment acheter %d \?</string>
     <string name="excess_items">Objets en surplus</string>
     <string name="onboardingComplete_achievement_title">Vous avez terminé vos tâches de démarrage !</string>
-    <string name="onboardingCompleteDescription">Si vous en voulez plus, allez regarder les succès et commencez à les collectionner !</string>
+    <string name="onboardingCompleteDescription">Si vous en voulez plus, allez regarder vos succès et commencez à les collectionner !</string>
     <string name="onboardingCompleteTitle">Vous avez reçu <b>5 Accomplissements</b> et <font color="#EE9109"><b>100 pièces d’or</b></font> pour vos efforts.</string>
     <string name="first_drop_title">Vous avez trouvé de nouveaux objets !</string>
     <string name="go_to_items">Allez voir vos objets</string>
