@@ -448,7 +448,7 @@
     <string name="challenge_create_error_tavern_one_gem">Il vous faut au moins 1 gemme pour créer un défi public.</string>
     <string name="challenge_create_error_enough_gems">Vous ne possédez pas assez de gemmes pour créer un défi.</string>
     <string name="identify_your_challenge_with_a_tag">Identifiez votre défi avec une étiquette</string>
-    <string name="challenge_create_error_tag">Il vous faut un nom nom court pour créer ce défi.</string>
+    <string name="challenge_create_error_tag">Il faut ajouter un titre pour créer ce défi.</string>
     <string name="challenge_create_error_no_tasks">Vous devez ajouter au moins une tâche pour créer ce défi.</string>
     <string name="challenge_create_error_title">Il vous faut un titre pour créer ce défi.</string>
     <string name="description_optional">Description (optionnel)</string>
