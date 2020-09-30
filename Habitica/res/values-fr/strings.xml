@@ -85,10 +85,10 @@
     <string name="saturday">Samedi</string>
     <string name="sunday">Dimanche</string>
     <string name="levelup_header">Vous avez atteint le niveau %1$d !</string>
-    <string name="levelup_detail">En atteignant vos buts dans la vie réelle, vous avez gagné un niveau et êtes maintenant complètement guéri !</string>
+    <string name="levelup_detail">En atteignant vos buts dans la vie réelle, vous avez gagné un niveau et vous êtes maintenant complètement guéri !</string>
     <string name="faint_subtitle">Ne désespérez pas !</string>
-    <string name="faint_penalty_body">Vous avez perdu un niveau, votre or, et une pièce d\'équipement, mais vous pouvez tous les récupérer en travaillant dur ! Bonne chance—vous y arriverez.</string>
-    <string name="faint_header">Vous n\'avez plus de points de vie !</string>
+    <string name="faint_penalty_body">Vous avez perdu un niveau, votre or, et une pièce d\'équipement, mais vous pouvez tous les récupérer en travaillant dur ! Bonne chance — vous y arriverez.</string>
+    <string name="faint_header">Votre santé est à zéro !</string>
     <string name="faint_button">Reprendre des forces &amp; réessayer</string>
     <string name="filter">Filtrer</string>
     <string name="used_skill_without_mana">Vous avez utilisé %1$s.</string>
@@ -176,7 +176,7 @@
     <string name="setup_task_chores_1">10 minutes de nettoyage</string>
     <string name="setup_task_chores_2">Faire la vaisselle</string>
     <string name="setup_task_chores_3">Organiser mon placard</string>
-    <string name="setup_task_creativity_1">Étudier un maître de l\'art</string>
+    <string name="setup_task_creativity_1">inspirez-vous du travail d\'un mentor</string>
     <string name="setup_task_creativity_2">Travailler sur un projet créatif</string>
     <string name="setup_task_creativity_3">Finir un projet créatif</string>
     <string name="my_guilds">Mes guildes</string>
