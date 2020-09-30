@@ -889,10 +889,10 @@
     <string name="pref_emails_checkbox">Utiliser les notifications par courriel</string>
     <string name="emails">Notifications par courriel</string>
     <string name="go_shopping">Faire des emplettes</string>
-    <string name="purchase_from_timetravel_shop">Vous pouvez achetez cette customisation depuis la boutique des voyageurs temporels</string>
+    <string name="purchase_from_timetravel_shop">Vous pouvez acheter cette personnalisation dans la boutique des voyageurs temporels</string>
     <string name="learn_more">En savoir plus</string>
     <string name="limited_event">Événement limité</string>
-    <string name="g1g1_info_3_text">Cette promotion s\'applique seulement lors vous faites un cadeau à une autre personne. Si vous ou le bénéficiaire du cadeau possédez déjà un abonnement, l\'abonnement cadeau ajoutera des mois de crédit qui ne pourront être utilisés que lorsque l\'abonnement actuel sera annulé ou arrivera à expiration.</string>
+    <string name="g1g1_info_3_text">Cette promotion s\'applique seulement lorsque vous faites un cadeau à une autre personne. Si vous ou le bénéficiaire du cadeau possédez déjà un abonnement, l\'abonnement cadeau ajoutera des mois de crédit qui pourront être utilisés lorsque l\'abonnement actuel sera annulé ou arrivera à expiration.</string>
     <string name="g1g1_info_3">Limitations</string>
     <string name="g1g1_info_2_text">"Choisissez \"Offrir un abonnement\", et entrez l\'identifiant du compte auquel vous voulez faire un cadeau. Puis choisissez la durée d\'abonnement que vous voulez offrir et validez. Vous recevrez automatiquement la même durée d\'abonnement que  celle que vous venez d\'offrir."</string>
     <string name="g1g1_info_2">Comment ça marche</string>
@@ -971,15 +971,15 @@
 \n**Retrouvez des points de vie** en montant de niveau, en utilisant une potion, ou une compétence de classe de régénération.
 \n
 \nSi vos **points de vie tombent à 0**, vous perdrez un niveau, tout votre or, et une pièce d\'équipement. L\'équipement perdu peut être racheté.</string>
-    <string name="health_points">Points de vie</string>
+    <string name="health_points">Points de santé</string>
     <string name="stats_currency">Stats &amp; monnaie</string>
     <string name="how_best_habitica">Des doutes sur la meilleure façon d\'utiliser Habitica \?</string>
     <string name="overview">Vue d\'ensemble</string>
-    <string name="send_bug_prompt">Envoyez-nous un rapport d\'erreur et nous vous reviendrons !</string>
+    <string name="send_bug_prompt">Envoyez-nous un rapport d\'erreur et nous reviendrons vers vous !</string>
     <string name="common_fixes">Solutions courantes</string>
     <string name="support_bug_title">Nous essayons constamment d\'améliorer notre application en nous basant sur vos commentaires, mais parfois quelques bugs apparaissent…</string>
     <string name="lets_go">Allons-y</string>
-    <string name="bugs_fixes_description">Quelque chose s\'est mal passé \? Trouvez des réponses ici ou contacter nous pour de l\'aide.</string>
+    <string name="bugs_fixes_description">Quelque chose s\'est mal passé \? Trouvez des réponses ici ou contactez-nous pour de l\'aide.</string>
     <string name="bugs_fixes">Anomalies &amp; corrections</string>
     <string name="suggestions_feedback">Suggestions &amp; retours</string>
     <string name="get_help">Obtenir de l\'aide</string>
