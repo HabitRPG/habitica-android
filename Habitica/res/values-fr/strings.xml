@@ -525,7 +525,7 @@
     <string name="profile_summary">Modifiez votre profil public.</string>
     <string name="display_name">Pseudo</string>
     <string name="photo_url">URL de photo</string>
-    <string name="login_name">identifiant</string>
+    <string name="login_name">Identifiant</string>
     <string name="about">A propos</string>
     <string name="app_settings">Paramètres de l\'application</string>
     <string name="authentication">Authentification</string>
