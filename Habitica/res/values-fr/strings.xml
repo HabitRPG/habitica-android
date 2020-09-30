@@ -573,7 +573,7 @@
     <string name="view_faq">Voir la FAQ</string>
     <string name="report_bug">Signaler un bug</string>
     <string name="player_tiers">Paliers de contribution</string>
-    <string name="staff_moderators">Équipe d\'administration et modérateurs</string>
+    <string name="staff_moderators">Équipes d\'administration et de modération</string>
     <string name="tiers_descriptions">Les pseudos de couleur que vous pouvez voir dans les discussion représentent le palier de contribution d\'une personne. Plus le palier est élevé, plus la personne a contribué à Habitica avec de l\'art, du code, du temps ou plus !</string>
     <string name="navigation_drawer_open">Ouvrir le volet de navigation</string>
     <string name="navigation_drawer_close">Fermer le volet de navigation</string>
