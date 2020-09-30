@@ -584,7 +584,7 @@
     <string name="pending_strike_title">Attaque en cours</string>
     <string name="strike_description_title">Qu\'est-ce qu\'une attaque de rage ?</string>
     <string name="strike_active_title">%s a été attaqué !</string>
-    <string name="strike_active_description">Notre %s a eu le cœur brisé lorsque %s a fracassé %s. Vite, réalisez vos quotidiennes pour vaincre le monstre et aider à reconstruire Habitica !!</string>
+    <string name="strike_active_description">Notre %s a eu le cœur brisé lorsque %s a fracassé %s. Vite, réalisez vos quotidiennes pour vaincre le monstre et aider à reconstruire Habitica ! !</string>
     <string name="questShop">Magasin de quêtes</string>
     <string name="market_owner_long">Alex le marchand</string>
     <string name="tavern_owner_long">Daniel l\'aubergiste</string>
