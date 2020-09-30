@@ -532,7 +532,7 @@
     <string name="authentication_summary">Modifiez vos options d\'authentification.</string>
     <string name="change_password">Changer le mot de passe</string>
     <string name="change_email">Changer votre adresse de courriel</string>
-    <string name="change_username">Changer son Nom d\'Utilisateur</string>
+    <string name="change_username">Changer son identifiant</string>
     <string name="change">Changer</string>
     <string name="character_level">Niveau du personnage</string>
     <string name="auto_allocate_points">Attribuer automatiquement les points</string>
