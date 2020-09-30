@@ -933,10 +933,10 @@
     <string name="subscriber_currency">Monnaie d\'abonnement</string>
     <string name="game_mechanics">Mécaniques de jeu</string>
     <string name="common_questions">Questions habituelles</string>
-    <string name="gems_description">Les gemmes sont une monnaie achetée avec de l\'argent, et qui vous permet d\'acheter plus de contenu dans Habitica et est une principale source de soutient financier pour l\'équipe d\'Habitica, avec les abonnements.
-\n
-\nTout le contenu acheté avec des gemmes est purement cosmétique ou peut être obtenu gratuitement avec le temps.
-\n
+    <string name="gems_description">Les gemmes sont une monnaie achetée avec de l\'argent, qui vous permet d\'acheter plus de contenu dans Habitica et est la principale source de soutien financier pour l\'équipe d\'Habitica, avec les abonnements. 
+\n 
+\nTout le contenu acheté avec des gemmes est purement esthétique ou peut être obtenu gratuitement avec le temps. 
+\n 
 \nVous pouvez aussi recevoir des gemmes offertes par d\'autres personnes, par des récompenses de défi, en contribuant à Habitica ou en vous abonnant.</string>
     <string name="currency">Monnaie</string>
     <string name="premium_currency">Monnaie premium</string>
@@ -1061,29 +1061,29 @@
     <string name="first_drop_title">Vous avez trouvé de nouveaux objets !</string>
     <string name="go_to_items">Allez voir vos Objets</string>
     <string name="first_drop_explanation2">Allez voir vos Objets et essayez de combiner votre nouvel Œuf et Potion d’Éclosion !</string>
-    <string name="first_drop_explanation1">Accomplir des tâches vous donne la chance d’obtenir des Œufs, des Potions d’Éclosion, et de la nourriture pour Familiers.</string>
-    <string name="purchasedEquipmentDescription">L’équipement peut être pratique ou juste élégant. Augmentez vos caractéristiques pour donner toutes sortes d’avantages à votre Avatar</string>
-    <string name="fedPetDescription">Chaque familier a une nourriture spécifique qu’il adore ! Expérimentez pour trouver laquelle fera grandir votre familier le plus rapidement</string>
+    <string name="first_drop_explanation1">Accomplir des tâches vous donne la chance d’obtenir des oeufs, des potions d’éclosion, et de la nourriture pour familiers.</string>
+    <string name="purchasedEquipmentDescription">L’équipement peut être pratique ou juste élégant. Augmentez vos caractéristiques pour donner toutes sortes d’avantages à votre avatar</string>
+    <string name="fedPetDescription">Chaque familier a une nourriture spécifique qu’il adore ! Expérimentez pour trouver laquelle fera grandir votre familier plus rapidement</string>
     <string name="hatchedPetDescription">Il y a tellement de familiers à collectionner, vous êtes sûr d’avoir des favoris. Si vous les nourrissez, petit familier pourra peut-être devenir grand…</string>
-    <string name="completedTaskDescription">Une tâche peut être une Habitude, une tâche Quotidienne, ou un Liste à Faire. Continuez de les accomplir pour recevoir toutes sortes de récompenses !</string>
-    <string name="createdTaskDescription">Continuez ! Si vous avez besoin d’aide pour planifier vos tâches, essayer de réfléchir à ce que vous aimeriez faire à un moment donné de la journée</string>
-    <string name="purchasedEquipmentTitle">Avez acheté de l’équipement</string>
-    <string name="fedPetTitle">Nourrissez un Familier</string>
-    <string name="hatchedPetTitle">Avez Fait Éclore un Familier</string>
+    <string name="completedTaskDescription">Une tâche peut être une habitude, une tâche quotidienne, ou un liste à faire. Continuez de les accomplir pour recevoir toutes sortes de récompenses !</string>
+    <string name="createdTaskDescription">C\'est parti ! Si vous avez besoin d’aide pour planifier vos tâches, essayez de réfléchir à ce que vous aimeriez faire à un moment donné de la journée</string>
+    <string name="purchasedEquipmentTitle">Équipement acheté</string>
+    <string name="fedPetTitle">Nourrissez un familier</string>
+    <string name="hatchedPetTitle">Eclosion de familier</string>
     <string name="completedTaskTitle">Complétez une tâche</string>
     <string name="createdTaskTitle">Avez créé votre première tâche</string>
     <string name="purchase_equipment_description">L’équipement est une manière de personnaliser votre avatar et améliorer vos caractéristiques</string>
     <string name="feedPet_description">Complétez des tâches pour obtenir de la nourriture ! Vous pourrez ainsi nourrir votre familier</string>
-    <string name="hatch_pet_description">Complétez des tâches pour obtenir une Potion d\'Éclosion et un Œuf, puis faites éclore votre Familier !</string>
+    <string name="hatch_pet_description">Complétez des tâches pour obtenir une potion d\'éclosion et un oeuf, puis faites éclore votre familier !</string>
     <string name="complete_task_description">Valider n\'importe laquelle de vos tâches pour remporter des récompenses</string>
-    <string name="feedPet_title">Nourrissez un Familier</string>
+    <string name="feedPet_title">Nourrissez un familier</string>
     <string name="hatch_pet_title">Faire éclore un nouveau familier</string>
     <string name="complete_task_title">Valider une tâche</string>
     <string name="create_task_title">Créer une tâche</string>
     <string name="percent_completed">%d%% Complété</string>
     <string name="lets_get_started">Commençons</string>
     <string name="your_progress">Votre progression</string>
-    <string name="adventure_guide_description">Remplissez ces tâches d\'intégration et vous gagnerez &lt;b&gt;5 succès&lt;/b&gt; et &lt;font color=#EE9109&gt;&lt;b&gt;100 pièces d\'or&lt;/b&gt;&lt;/font&gt; une fois terminé !</string>
+    <string name="adventure_guide_description">Remplissez ces tâches d\'initiation et vous gagnerez &lt;b&gt;5 succès&lt;/b&gt; et &lt;font color=#EE9109&gt;&lt;b&gt;100 pièces d\'or&lt;/b&gt;&lt;/font&gt; une fois terminé !</string>
     <string name="getting_started">Pour commencer</string>
     <string name="complete_for_gold">Remplissez cette tâche pour gagner &lt;font color=#EE9109&gt;&lt;b&gt;100 or&lt;/b&gt;&lt;/font&gt; !</string>
     <string name="onboarding_tasks">Tâches d\'Intégration</string>
