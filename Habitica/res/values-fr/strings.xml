@@ -439,7 +439,7 @@
     <string name="dailyDueDefaultView">Passez les quotidiennes sur l\'onglet \'échéance\' par défaut</string>
     <string name="dailyDueDefaultViewDescription">Une fois cette option définie, les quotidiennes seront organisées par défaut sur l\'onglet \'échéance\' à la place de \'toutes\'</string>
     <string name="no_billing_gems">Votre appareil ne dispose pas de méthode de paiement supportée. Utilisez le site Habitica pour acheter des gemmes.</string>
-    <string name="no_billing_subscriptions">"Votre appareil ne dispose pas de méthode de paiement supportée. Utilisez le site d\'Habitica  pour souscrire un abonnement."</string>
+    <string name="no_billing_subscriptions">Votre appareil ne dispose pas de méthode de paiement supportée. Utilisez le site d\'Habitica pour souscrire un abonnement.</string>
     <string name="save">Enregistrer</string>
     <string name="location">Localisation</string>
     <string name="gem_reward">Récompense en gemmes</string>
