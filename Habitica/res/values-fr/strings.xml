@@ -6,7 +6,7 @@
     <string name="MP_default">Mana</string>
     <!--Prefs-->
     <string name="PS_settings_title">Paramètres</string>
-    <string name="SP_userID_title">ID d\'utilisateur</string>
+    <string name="SP_userID_title">ID utilisateur</string>
     <string name="SP_userID_summary">Votre identifiant</string>
     <string name="SP_APIToken_title">Jeton d\'API</string>
     <string name="SP_APIToken_summary">Votre jeton d\'API</string>
