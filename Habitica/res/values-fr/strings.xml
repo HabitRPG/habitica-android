@@ -253,7 +253,7 @@
     <string name="healer">Guérisseur</string>
     <string name="warrior_description">Les guerriers assènent plus de coups critiques et infligent de lourds dégâts aux boss. Jouez un guerrier si vous voulez vaincre facilement les monstres ! Les guerriers bénéficient d\'une force élevée.</string>
     <string name="mage_description">Les Mages usent de sortilèges qui infligent des dégâts aux boss et augmentent leur expérience et leur mana. Jouez un Mage si vous voulez gagner des niveaux rapidement ! Les mages bénéficient d\'une grande intelligence.</string>
-    <string name="rogue_description">Les Voleurs sont dotés d\'une adresse prodigieuse, ce qui leur font gagner ainsi qu\'à leur équipe plus d\'or et de butins aléatoires. Jouez un Voleur si vous êtes fortement motivé par les récompenses et les succès, à la recherche de butins et de badges !</string>
+    <string name="rogue_description">Les Voleurs sont dotés d\'une adresse prodigieuse, ce qui leur font gagner ainsi qu\'à leur équipe plus d\'or et de butins aléatoires. Jouez un Voleur si vous êtes fortement motivé par les récompenses et les succès, à la recherche de butins et de badges.</string>
     <string name="healer_description">Les Guérisseurs apprennent des compétences qui permettent de se protéger et se soigner, ainsi que leur équipe. Jouez un Guérisseur si vous aimez assister les membres de votre équipe, ou juste tromper la mort. Les guérisseurs bénéficient d\'une constitution élevée.</string>
     <string name="select_class">Sélectionner une classe</string>
     <string name="opt_out_class">Désactiver</string>
@@ -407,9 +407,9 @@
     <string name="login_btn_fb">Se connecter via Facebook</string>
     <string name="login_btn_google">Se connecter via Google</string>
     <string name="action_back">Retour</string>
-    <string name="welcome_text">Oh, vous venez d\'arriver \? Je m\'appelle Justin et je vais vous guider dans Habitica. 
+    <string name="welcome_text">Oh, vous venez d\'arriver \? Je m\'appelle Justin et je vais vous guider dans Habitica. 
 \n 
-\nPour commencer, comment devons-nous vous appeler\? Sentez-vous libre de changer ce que j\'ai choisi. Quand vous êtes prêt.e, créons votre avatar !</string>
+\nPour commencer, comment devons-nous vous appeler \? Sentez-vous libre de changer ce que j\'ai choisi. Quand vous aurez finis, nous créerons votre avatar !</string>
     <string name="randomize">Aléatoire</string>
     <string name="avatar_extras">Bonus</string>
     <string name="avatar_skin_color">Couleur de peau</string>
@@ -894,7 +894,7 @@
     <string name="limited_event">Événement limité</string>
     <string name="g1g1_info_3_text">Cette promotion s\'applique seulement lorsque vous faites un cadeau à une autre personne. Si vous ou le bénéficiaire du cadeau possédez déjà un abonnement, l\'abonnement cadeau ajoutera des mois de crédit qui pourront être utilisés lorsque l\'abonnement actuel sera annulé ou arrivera à expiration.</string>
     <string name="g1g1_info_3">Limitations</string>
-    <string name="g1g1_info_2_text">"Choisissez \"Offrir un abonnement\", et entrez l\'identifiant du compte auquel vous voulez faire un cadeau. Puis choisissez la durée d\'abonnement que vous voulez offrir et validez. Vous recevrez automatiquement la même durée d\'abonnement que  celle que vous venez d\'offrir."</string>
+    <string name="g1g1_info_2_text">Choisissez \"Offrir un abonnement\", et entrez l\'identifiant du compte auquel vous voulez faire un cadeau. Puis choisissez la durée d\'abonnement que vous voulez offrir et validez. Vous recevrez automatiquement la même durée d\'abonnement que celle que vous venez d\'offrir.</string>
     <string name="g1g1_info_2">Comment ça marche</string>
     <string name="gift_a_subscription">Offrez un abonnement</string>
     <string name="g1g1_info_1">En l\'honneur de la saison des cadeaux, nous reprenons une promotion très spéciale. Désormais, lorsque vous offrez un abonnement à quelqu\'un, vous recevrez le même abonnement pour vous même !</string>
