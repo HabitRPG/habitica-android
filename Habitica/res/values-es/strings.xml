@@ -860,4 +860,7 @@
     <string name="join_party_description_guild">Da el usuario a continuación a un amigo o ve al %s para conocer a posibles compañeros.</string>
     <string name="number_responded">%1$d/%2$d respondió</string>
     <string name="spooky_promo_info_limitations">Esta promoción solo se aplica durante el evento de tiempo limitado. Este evento comienza el 29 de Octubre a las 8:00 am (12:00 UTC) y terminará el 2 de Noviembre a las 8:00 pm (00:00 UTC). La oferta de la promoción solo está disponible cuando compres Gemas para ti.</string>
+    <string name="fall_promo_info_limitations">Esta promoción solo se aplica durante el evento de tiempo limitado. Este evento empieza el 22 de Septiembre a las 8:00 am (12:00 UTC) y terminará el 30 de Septiembre a las 8:00 pm (00:00 UTC). La oferta de la promoción solo está disponible cuando compras Gemas para ti</string>
+    <string name="fall_promo_info_instructions">Entre el 22 y el 30 de septiembre, simplemente compra cualquier paquete de gemas como de costumbre y tu cuenta será acreditada con la cantidad promocional de Gemas. ¡Más Gemas para gastar, compartir o ahorrar para cualquier evento futuro!</string>
+    <string name="spooky_promo_info_prompt">¡La Venta de Gemas está de vuelta para atormentar el final de la Gala de Otoño de este año! Esta es la última oportunidad de conseguir más Gemas que nunca ¡así que aprovecha mientras dure!</string>
 </resources>
