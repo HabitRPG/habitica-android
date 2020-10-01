@@ -865,4 +865,17 @@
     <string name="spooky_promo_info_prompt">¡La Venta de Gemas está de vuelta para atormentar el final de la Gala de Otoño de este año! Esta es la última oportunidad de conseguir más Gemas que nunca ¡así que aprovecha mientras dure!</string>
     <string name="preference_email_onboarding">Orientación para establecer tu cuenta de Habitica</string>
     <string name="game_mechanics">Mecánicas del Juego</string>
+    <string name="x_to_y">%s a %s</string>
+    <string name="preference_email_subscription_reminder">Recordatorios de Suscripciones</string>
+    <string name="pref_emails_checkbox">Usar Notificaciones de Email</string>
+    <string name="emails">Notificaciones de Email</string>
+    <string name="go_shopping">Ir de compras</string>
+    <string name="purchase_from_timetravel_shop">Puedes comprar esta personalización desde la tienda de los Viajeros del Tiempo</string>
+    <string name="learn_more">Aprende más</string>
+    <string name="experience_points">Puntos de Experiencia</string>
+    <string name="purchaseX">Comprar %d</string>
+    <string name="excessItemsXLeft">Solo necesitas %d %s para eclosionar todas las mascotas posibles. ¿Estás seguro de que quieres comprar %d\?</string>
+    <string name="spooky_promo_info_instructions">Entre el 29 de Octubre y el 2 de Noviembre, simplemente compra cualquier paquete de Gemas como de costumbre y tu cuenta será acreditada con la cantidad promocional de Gemas. ¡Más Gemas para gastar, compartir o guardar para cualquier evento futuro!</string>
+    <string name="view_gem_bundles">Ver paquetes de Gemas</string>
+    <string name="fall_promo_info_prompt">La Gala de Otoño está en pleno apogeo, así que pensamos que era el momento perfecto para presentar nuestra primera Venta de Gemas! Ahora obtendrás más gemas con cada compra como nunca antes.</string>
 </resources>
