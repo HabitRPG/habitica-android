@@ -284,7 +284,7 @@
     <string name="google_services_missing">Os serviços Google play não pode ser achado.</string>
     <string name="gem_purchase_toolbartitle">Comprar</string>
     <string name="gem_purchase_title">Ao comprar gemas apoia os programadores e ajuda a manter o Habitica em funcionamento</string>
-    <string name="gem_purchase_subtitle">As gemas permitem-lhe comprar extras engraçados para a sua conta, incluindo:</string>
+    <string name="gem_purchase_subtitle">As gemas permitem-te comprar extras divertidos para a tua conta, incluindo:</string>
     <string name="gem_purchase_listitem1">Disfarces divertidos para o teu avatar</string>
     <string name="gem_purchase_listitem2">Fundos de Ecrã fantásticos</string>
     <string name="gem_purchase_listitem3">Missões que recompensam com ovos de animal</string>
@@ -452,7 +452,7 @@
     <string name="see_what_s_new">Veja o que há de novo</string>
     <string name="off">Desligado</string>
     <string name="authentication_error_body">Nome de utilizador e/ou palavra-passe estão incorretos</string>
-    <string name="network_error_no_network_body">Tu não estás conectado a internet</string>
+    <string name="network_error_no_network_body">Não estás ligado à internet.</string>
     <string name="subscribe_prompt_thanks">Tu consegues estes benefícios por ser um Subscrito</string>
     <string name="x_months">%d Meses</string>
     <string name="monthly_gem_cap">Capacidade máxima atual de Gemas</string>
@@ -602,5 +602,6 @@
     <string name="dailyDueDefaultViewDescription">Com esta opção definida, as Tarefas Diárias irão estar por defeito no separador \'previsto\' em vez de \'todas\'</string>
     <string name="read_community_guidelines">Lê as nossas <u>Regras da Comunidade</u> antes de publicar uma mensagem</string>
     <string name="reset_walkthrough">Reiniciar Tutoriais</string>
-    <string name="empty_description_dailies">Tarefas Diárias são tarefas que se repetem regularmente. Escolhe o horário melhor para ti!</string>
+    <string name="empty_description_dailies">Tarefas Diárias são tarefas que repetem regularmente. Escolhe o melhor horário para ti!</string>
+    <string name="leave_party_confirmation">Queres deixar a equipa e manter ou deixar os desafios\?</string>
 </resources>
