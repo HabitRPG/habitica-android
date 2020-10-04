@@ -567,7 +567,7 @@
     <string name="view_community_guidelines">Ver diretrizes da comunidade</string>
     <string name="community_guidelines">Diretrizes da comunidade</string>
     <string name="check_into_inn">Faça check-in no Inn</string>
-    <string name="avatar_hair_ponytail">Rabo-de-Cavalo</string>
+    <string name="avatar_hair_ponytail">Rabo de Cavalo</string>
     <string name="avatar_hair_bangs">Franja</string>
     <string name="welcome_text">Oh, deves ser novo por aqui. O meu nome é Justin e sou o teu guia no Habitica.
 \n
@@ -577,4 +577,6 @@
     <string name="nextPrizeUnlocks" tools:ignore="PluralsCandidate">O próximo prémio será desbloqueado em %1$d check-ins</string>
     <string name="checkInRewardEarned">Por te dedicares a melhorar a tua vida, ganhaste a seguinte recompensa: %1$s.</string>
     <string name="check_the_public_challenge_tab">Selecciona o separador \"Público\" para encontrar os Desafios criados pela comunidade que melhor se adaptam a ti!</string>
+    <string name="gray">Cinzento</string>
+    <string name="avatar_wheelchair">Cadeira de rodas</string>
 </resources>
