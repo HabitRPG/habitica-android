@@ -20,7 +20,7 @@
     <string name="pref_reminder_checkbox">Ativar Lembrete</string>
     <string name="pref_reminder_picker">Definir Hora do Lembrete</string>
     <string name="pref_cds_header">Início do Dia Personalizado</string>
-    <string name="pref_push_notifications_checkbox">Enviar Notificações do Utilizador</string>
+    <string name="pref_push_notifications_checkbox">Usar Notificações Push</string>
     <string name="push_notifications">Enviar Notificações</string>
     <string name="push_notifications_sum">Defina as suas definições das notificações de \'envio\'</string>
     <string name="preference_push_you_won_challenge">Ganhou um Desafio!</string>
@@ -136,7 +136,7 @@
     <string name="complete_tutorial">Percebi!</string>
     <string name="dismiss_tutorial">Lembrar-me novamente</string>
     <string name="intro_1_subtitle">Bem-vindo ao</string>
-    <string name="intro_1_description">É hora de se divertir enquanto faz as coisas. Junte-se a mais de %s de outros, melhorando as suas vidas com uma tarefa de cada vez.</string>
+    <string name="intro_1_description">É hora de te divertires enquanto fazes coisas. Junta-te a mais %s outros, a melhorar as suas vidas uma tarefa de cada vez.</string>
     <string name="intro_2_subtitle">Progresso no jogo</string>
     <string name="intro_3_description">Mantém os teus objectivos sob vigilância com a ajuda dos teus amigos. Suportem-se uns aos outros na vida e lutem enquanto melhoram simultâneamente!</string>
     <string name="intro_finish_button">Vamos começar!</string>
@@ -190,8 +190,8 @@
     <string name="outfit_armor">Armadura</string>
     <string name="outfit_back">Costas</string>
     <string name="outfit_body">Corpo</string>
-    <string name="outfit_shield">Escudo</string>
-    <string name="outfit_weapon">Arma</string>
+    <string name="outfit_shield">Mão Secundária</string>
+    <string name="outfit_weapon">Mão Principal</string>
     <string name="wear_costume">Usar Traje</string>
     <string name="equipped">Equipado</string>
     <string name="quest_cancel_message">Tem a certeza que deseja cancelar esta missão? Todos os convites aceites serão perdidos. O dono da missão manterá a posse do pergaminho da missão.</string>
@@ -397,7 +397,7 @@
 \n • Tarefas não perdem listras ou decaem em cores
 \n • Chefes não causam dano por suas diárias perdidas
 \n • Seus itens de missão de dano ou coleta de chefe permanecerão pendentes até o check-out</string>
-    <string name="warrior_description">Os Guerreiros obtêm mais e melhores Golpes Críticos, que oferecem Ouro, Experiência e chance de Brinde aleatoriamente ao marcar uma Tarefa. Também causam maior dano a Monstros. Joga como Guerreiro se te motivas mais com recompensas imprevisíveis do tipo jackpot, ou se quiseres dar cabo de Monstros nas Jornadas.</string>
+    <string name="warrior_description">Guerreiros obtêm mais Golpes Críticos e inflingem maior dano aos Monstros. Joga como Guerreiro se quiseres derrotar Monstros mais facilmente! Guerreiros beneficiam de uma elevada estatística de Força.</string>
     <string name="opting_out_progress">Optando por</string>
     <string name="class_changed_description">Você tem um novo Battle Gear padrão que pode ser alterado em Equipamento!</string>
     <string name="change_class_description">Mude sua classe e devolva seus pontos de status por 3 gemas.</string>
@@ -567,4 +567,14 @@
     <string name="view_community_guidelines">Ver diretrizes da comunidade</string>
     <string name="community_guidelines">Diretrizes da comunidade</string>
     <string name="check_into_inn">Faça check-in no Inn</string>
+    <string name="avatar_hair_ponytail">Rabo de cavalo</string>
+    <string name="avatar_hair_bangs">Franja</string>
+    <string name="welcome_text">Oh, deves ser novo por aqui. O meu nome é Justin e sou o teu guia no Habitica.
+\n
+\nPara começar, por que nome é que te devo chamar\? Podes mudar o que escolhi. Quando estiveres pronto, vamos criar o teu avatar!</string>
+    <string name="not_owned">Não Adquiridos</string>
+    <string name="owned">Adquiridos</string>
+    <string name="nextPrizeUnlocks" tools:ignore="PluralsCandidate">O próximo prémio será desbloqueado em %1$d check-ins</string>
+    <string name="checkInRewardEarned">Por te dedicares a melhorar a tua vida, ganhaste a seguinte recompensa: %1$s.</string>
+    <string name="check_the_public_challenge_tab">Selecciona o separador \"Público\" para encontrar os Desafios criados pela comunidade que melhor se adaptam a ti!</string>
 </resources>
