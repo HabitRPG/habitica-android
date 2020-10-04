@@ -602,4 +602,5 @@
     <string name="dailyDueDefaultViewDescription">Com esta opção definida, as Tarefas Diárias irão estar por defeito no separador \'previsto\' em vez de \'todas\'</string>
     <string name="read_community_guidelines">Lê as nossas <u>Regras da Comunidade</u> antes de publicar uma mensagem</string>
     <string name="reset_walkthrough">Reiniciar Tutoriais</string>
+    <string name="empty_description_dailies">Tarefas Diárias são tarefas que se repetem regularmente. Escolhe o horário melhor para ti!</string>
 </resources>
