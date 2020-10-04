@@ -579,4 +579,7 @@
     <string name="check_the_public_challenge_tab">Selecciona o separador \"Público\" para encontrar os Desafios criados pela comunidade que melhor se adaptam a ti!</string>
     <string name="gray">Cinzento</string>
     <string name="avatar_wheelchair">Cadeira de rodas</string>
+    <string name="empty_description_todos">To-Dos são tarefas que apenas precisam de ser feitas uma vez. Adiciona listas ao To-Do para aumentar o valor.</string>
+    <string name="clear">Apagar</string>
+    <string name="dated">Programado</string>
 </resources>
