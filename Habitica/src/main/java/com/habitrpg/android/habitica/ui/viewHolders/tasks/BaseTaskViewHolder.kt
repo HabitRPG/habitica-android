@@ -1,12 +1,14 @@
 package com.habitrpg.android.habitica.ui.viewHolders.tasks
 
 import android.content.Context
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.responses.TaskDirection
@@ -23,7 +25,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc: ((Task, TaskDirection) -> Unit), var openTaskFunc: ((Task) -> Unit), var brokenTaskFunc: ((Task) -> Unit)) : BindableViewHolder<Task>(itemView), View.OnClickListener {
+abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc: ((Task, TaskDirection) -> Unit), var openTaskFunc: ((Task) -> Unit), var brokenTaskFunc: ((Task) -> Unit)) : BindableViewHolder<Task>(itemView), View.OnTouchListener {
     var task: Task? = null
     var movingFromPosition: Int? = null
     var errorButtonClicked: Action? = null
@@ -72,12 +74,12 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
         }
 
     init {
-        itemView.setOnClickListener { onClick(it) }
+        itemView.setOnTouchListener(this)
         itemView.isClickable = true
         mainTaskWrapper.clipToOutline = true
 
-        titleTextView.setOnClickListener { onClick(it) }
-        notesTextView?.setOnClickListener { onClick(it) }
+        titleTextView.setOnClickListener { onTouch(it, null) }
+        notesTextView?.setOnClickListener { onTouch(it, null) }
         errorIconView?.setOnClickListener { errorButtonClicked?.run()}
 
         //Re enable when we find a way to only react when a link is tapped.
@@ -219,8 +221,24 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
         calendarIconView?.visibility = View.GONE
     }
 
-    override fun onClick(v: View) {
+    open fun onLeftActionTouched() {}
+    open fun onRightActionTouched() {}
+
+    override fun onTouch(view: View?, motionEvent: MotionEvent?): Boolean {
+        if (motionEvent != null) {
+            if (motionEvent.action != MotionEvent.ACTION_UP) return true
+            if (motionEvent.y <= mainTaskWrapper.height + 20.dpToPx(context)) {
+                if (motionEvent.x <= 60.dpToPx(context)) {
+                    onLeftActionTouched()
+                    return true
+                } else if ((itemView.width - motionEvent.x <= 60.dpToPx(context))) {
+                    onRightActionTouched()
+                    return true
+                }
+            }
+        }
         task?.let { openTaskFunc(it) }
+        return true
     }
 
     open fun canContainMarkdown(): Boolean {
