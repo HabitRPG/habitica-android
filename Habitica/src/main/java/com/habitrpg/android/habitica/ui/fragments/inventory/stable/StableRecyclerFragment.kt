@@ -20,7 +20,7 @@ import com.habitrpg.android.habitica.ui.adapter.inventory.StableRecyclerAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.helpers.MarginDecoration
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
-import io.reactivex.Maybe
+import io.reactivex.rxjava3.core.Maybe
 import io.realm.RealmResults
 import java.util.*
 import javax.inject.Inject

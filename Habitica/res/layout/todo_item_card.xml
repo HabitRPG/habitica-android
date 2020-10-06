@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,7 +7,7 @@
     android:foreground="?selectableItemBackground"
     android:orientation="vertical">
 
-    <FrameLayout
+    <LinearLayout
         android:id="@+id/main_task_wrapper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,12 +15,8 @@
         android:layout_marginVertical="@dimen/task_spacing_vertical"
         android:background="@drawable/task_background"
         android:clipChildren="true"
-        android:minHeight="@dimen/task_min_height">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+        android:minHeight="@dimen/task_min_height"
+        android:orientation="vertical">
             <LinearLayout
                 android:id="@+id/card_view"
                 android:layout_width="match_parent"
@@ -76,6 +72,5 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical" />
-        </LinearLayout>
-    </FrameLayout>
-</LinearLayout>
+    </LinearLayout>
+</FrameLayout>

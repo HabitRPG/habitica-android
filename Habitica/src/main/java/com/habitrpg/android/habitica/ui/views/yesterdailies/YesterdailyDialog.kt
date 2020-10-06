@@ -9,19 +9,21 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.dpToPx
+import com.habitrpg.android.habitica.extensions.isUsingNightModeResources
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.tasks.ChecklistItem
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.views.HabiticaEmojiTextView
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.functions.Consumer
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.functions.Consumer
 import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.math.abs
@@ -96,7 +98,7 @@ class YesterdailyDialog private constructor(context: Context, private val userRe
 
     private fun configureChecklistView(checklistView: ViewGroup, task: Task, item: ChecklistItem) {
         val checkmark = checklistView.findViewById<ImageView>(R.id.checkmark)
-        checkmark?.drawable?.setTintMode(PorterDuff.Mode.SRC_ATOP)
+        checkmark?.drawable?.setTint(task.darkestTaskColor)
         checkmark?.visibility = if (item.completed) View.VISIBLE else View.GONE
         val checkboxHolder = checklistView.findViewById<View>(R.id.checkBoxHolder) as? ViewGroup
         checkboxHolder?.setOnClickListener { _ ->
@@ -109,9 +111,23 @@ class YesterdailyDialog private constructor(context: Context, private val userRe
             taskRepository.scoreChecklistItem(task.id ?: "", item.id ?: "").subscribe({ }, RxErrorHandler.handleEmptyError())
             configureChecklistView(checklistView, task, item)
         }
-        checkboxHolder?.setBackgroundResource(task.extraLightTaskColor)
+        checkboxHolder?.setBackgroundResource(if (task.completed) {
+            R.color.offset_background
+        } else {
+            task.extraLightTaskColor
+        })
         val textView = checklistView.findViewById(R.id.checkedTextView) as? TextView
         textView?.text = item.text
+        val checkboxBackground = checklistView.findViewById<View>(R.id.checkBoxBackground)
+        checkboxBackground?.backgroundTintList = ContextCompat.getColorStateList(context, (if (context.isUsingNightModeResources()) {
+            if (task.completed) {
+                R.color.checkbox_fill
+            } else {
+                task.lightTaskColor
+            }
+        } else {
+            R.color.checkbox_fill
+        }))
     }
 
     private fun configureTaskView(taskView: View, task: Task) {

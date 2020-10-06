@@ -30,8 +30,7 @@ import com.habitrpg.android.habitica.ui.adapter.social.challenges.ChallengeTasks
 import com.habitrpg.android.habitica.ui.helpers.ToolbarColorHelper
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
-import io.reactivex.Flowable
-import io.reactivex.rxkotlin.zipWith
+import io.reactivex.rxjava3.core.Flowable
 import java.lang.NumberFormatException
 import java.util.*
 import javax.inject.Inject
@@ -332,7 +331,7 @@ class ChallengeFormActivity : BaseActivity() {
                         return@flatMap Flowable.empty<Group>()
                     }
                     socialRepository.retrieveGroup(it)
-                })
+                }, { user, groups -> Pair(user, groups) })
                 .subscribe({ groups ->
             val mutableGroups = groups.first.toMutableList()
             if (groups.first.firstOrNull { it.id == "00000000-0000-4000-A000-000000000000" } == null) {

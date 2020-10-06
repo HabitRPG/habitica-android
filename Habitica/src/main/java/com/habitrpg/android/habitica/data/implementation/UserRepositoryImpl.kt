@@ -18,8 +18,8 @@ import com.habitrpg.android.habitica.models.responses.VerifyUsernameResponse
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
-import io.reactivex.Flowable
-import io.reactivex.Maybe
+import io.reactivex.rxjava3.core.Flowable
+import io.reactivex.rxjava3.core.Maybe
 import io.realm.RealmResults
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -171,15 +171,15 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
         runCron(ArrayList())
     }
 
-    override fun readNotification(id: String): Flowable<List<*>> = apiClient.readNotification(id)
+    override fun readNotification(id: String): Flowable<List<Any>> = apiClient.readNotification(id)
     override fun getUserQuestStatus(): Flowable<UserQuestStatus> {
         return localRepository.getUserQuestStatus(userID)
     }
 
-    override fun readNotifications(notificationIds: Map<String, List<String>>): Flowable<List<*>> =
+    override fun readNotifications(notificationIds: Map<String, List<String>>): Flowable<List<Any>> =
             apiClient.readNotifications(notificationIds)
 
-    override fun seeNotifications(notificationIds: Map<String, List<String>>): Flowable<List<*>> =
+    override fun seeNotifications(notificationIds: Map<String, List<String>>): Flowable<List<Any>> =
             apiClient.seeNotifications(notificationIds)
 
     override fun changeCustomDayStart(dayStartTime: Int): Flowable<User> {

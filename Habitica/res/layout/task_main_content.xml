@@ -9,8 +9,8 @@
     android:layout_gravity="center_vertical"
     android:paddingTop="@dimen/task_top_bottom_padding"
     android:paddingBottom="@dimen/task_top_bottom_padding"
-    android:paddingEnd="@dimen/task_text_padding"
-    android:paddingStart="@dimen/task_text_padding">
+    android:layout_marginEnd="@dimen/task_text_padding"
+    android:layout_marginStart="@dimen/task_text_padding">
         <com.habitrpg.android.habitica.ui.views.EllipsisTextView
             android:id="@+id/checkedTextView"
             style="@style/Subheader3"
@@ -32,6 +32,7 @@
             android:ellipsize="end"
             android:textSize="13sp"
             tools:text="Notes"
+            android:layout_marginTop="1dp"
             android:layout_marginBottom="7dp"/>
 
         <Button

@@ -22,7 +22,7 @@ import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.stats.BulkAllocateStatsDialog
-import io.reactivex.functions.Consumer
+import io.reactivex.rxjava3.functions.Consumer
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Named

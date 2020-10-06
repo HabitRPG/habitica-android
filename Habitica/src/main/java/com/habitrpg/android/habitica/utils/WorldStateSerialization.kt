@@ -46,11 +46,13 @@ class WorldStateSerialization: JsonDeserializer<WorldState> {
             }
         }
 
-        val event = json?.asJsonObject?.getAsJsonObject("currentEvent")
-        if (event != null) {
-            state.currentEventKey = event.getAsString("event")
-            state.currentEventStartDate = context?.deserialize(event.get("start"), Date::class.java)
-            state.currentEventEndDate = context?.deserialize(event.get("end"), Date::class.java)
+        if (json?.asJsonObject?.has("currentEvent") == true) {
+            val event = json.asJsonObject?.getAsJsonObject("currentEvent")
+            if (event != null) {
+                state.currentEventKey = event.getAsString("event")
+                state.currentEventStartDate = context?.deserialize(event.get("start"), Date::class.java)
+                state.currentEventEndDate = context?.deserialize(event.get("end"), Date::class.java)
+            }
         }
 
         return state

@@ -11,7 +11,7 @@ import com.habitrpg.android.habitica.executors.ThreadExecutor
 import com.habitrpg.android.habitica.helpers.SoundManager
 import com.habitrpg.android.habitica.models.responses.TaskScoringResult
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
-import io.reactivex.Flowable
+import io.reactivex.rxjava3.core.Flowable
 import java.lang.StringBuilder
 import javax.inject.Inject
 

@@ -14,7 +14,7 @@ class TodoViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> Un
 
     override fun bind(newTask: Task, position: Int, displayMode: String) {
         this.task = newTask
-        setChecklistIndicatorBackgroundActive(!newTask.completed)
+        setChecklistIndicatorBackgroundActive(newTask.isChecklistDisplayActive)
         reminderTextView.visibility = View.GONE
         this.streakTextView.visibility = View.GONE
         super.bind(newTask, position, displayMode)
@@ -31,7 +31,7 @@ class TodoViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> Un
         }
     }
 
-    override fun shouldDisplayAsActive(newTask: Task): Boolean {
-        return !newTask.completed
+    override fun shouldDisplayAsActive(newTask: Task?): Boolean {
+        return newTask?.completed != true
     }
 }

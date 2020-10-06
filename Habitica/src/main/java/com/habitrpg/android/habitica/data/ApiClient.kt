@@ -15,8 +15,8 @@ import com.habitrpg.android.habitica.models.tasks.TaskList
 import com.habitrpg.android.habitica.models.user.Items
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
-import io.reactivex.Flowable
-import io.reactivex.FlowableTransformer
+import io.reactivex.rxjava3.core.Flowable
+import io.reactivex.rxjava3.core.FlowableTransformer
 import retrofit2.HttpException
 
 
@@ -54,17 +54,17 @@ interface ApiClient {
 
     fun buyItem(itemKey: String, purchaseQuantity: Int): Flowable<BuyResponse>
 
-    fun purchaseItem(type: String, itemKey: String, purchaseQuantity: Int): Flowable<Any>
+    fun purchaseItem(type: String, itemKey: String, purchaseQuantity: Int): Flowable<Void>
 
-    fun purchaseHourglassItem(type: String, itemKey: String): Flowable<Any>
+    fun purchaseHourglassItem(type: String, itemKey: String): Flowable<Void>
 
-    fun purchaseMysterySet(itemKey: String): Flowable<Any>
+    fun purchaseMysterySet(itemKey: String): Flowable<Void>
 
-    fun purchaseQuest(key: String): Flowable<Any>
-    fun purchaseSpecialSpell(key: String): Flowable<Any>
+    fun purchaseQuest(key: String): Flowable<Void>
+    fun purchaseSpecialSpell(key: String): Flowable<Void>
     fun validateSubscription(request: SubscriptionValidationRequest): Flowable<Any>
     fun validateNoRenewSubscription(request: PurchaseValidationRequest): Flowable<Any>
-    fun cancelSubscription(): Flowable<Any>
+    fun cancelSubscription(): Flowable<Void>
 
     fun sellItem(itemType: String, itemKey: String): Flowable<User>
 
@@ -214,9 +214,9 @@ interface ApiClient {
     fun debugAddTenGems(): Flowable<Void>
 
     // Notifications
-    fun readNotification(notificationId: String): Flowable<List<*>>
-    fun readNotifications(notificationIds: Map<String, List<String>>): Flowable<List<*>>
-    fun seeNotifications(notificationIds: Map<String, List<String>>): Flowable<List<*>>
+    fun readNotification(notificationId: String): Flowable<List<Any>>
+    fun readNotifications(notificationIds: Map<String, List<String>>): Flowable<List<Any>>
+    fun seeNotifications(notificationIds: Map<String, List<String>>): Flowable<List<Any>>
 
     fun getErrorResponse(throwable: HttpException): ErrorResponse
 

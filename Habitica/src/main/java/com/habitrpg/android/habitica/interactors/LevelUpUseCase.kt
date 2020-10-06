@@ -13,7 +13,7 @@ import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.AvatarView
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
-import io.reactivex.Flowable
+import io.reactivex.rxjava3.core.Flowable
 import org.greenrobot.eventbus.EventBus
 import javax.inject.Inject
 

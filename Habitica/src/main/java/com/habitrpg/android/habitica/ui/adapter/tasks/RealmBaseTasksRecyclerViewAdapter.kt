@@ -9,10 +9,10 @@ import com.habitrpg.android.habitica.models.responses.TaskDirection
 import com.habitrpg.android.habitica.models.tasks.ChecklistItem
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.BaseTaskViewHolder
-import io.reactivex.BackpressureStrategy
-import io.reactivex.Flowable
-import io.reactivex.functions.Action
-import io.reactivex.subjects.PublishSubject
+import io.reactivex.rxjava3.core.BackpressureStrategy
+import io.reactivex.rxjava3.core.Flowable
+import io.reactivex.rxjava3.functions.Action
+import io.reactivex.rxjava3.subjects.PublishSubject
 import io.realm.*
 
 abstract class RealmBaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(
@@ -83,8 +83,8 @@ abstract class RealmBaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(
     }
 
     override fun updateData(tasks: OrderedRealmCollection<Task>?) {
-        data?.takeIf { it.isValid }?.removeListener()
-        tasks?.takeIf { it.isValid }?.addListener()
+        data?.takeIf { it.isValid && !it.isFrozen }?.removeListener()
+        tasks?.takeIf { it.isValid && !it.isFrozen }?.addListener()
         super.updateData(tasks)
     }
 

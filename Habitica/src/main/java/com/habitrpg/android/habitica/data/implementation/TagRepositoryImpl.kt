@@ -4,8 +4,8 @@ import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.TagRepository
 import com.habitrpg.android.habitica.data.local.TagLocalRepository
 import com.habitrpg.android.habitica.models.Tag
-import io.reactivex.Flowable
-import io.reactivex.Single
+import io.reactivex.rxjava3.core.Flowable
+import io.reactivex.rxjava3.core.Single
 import io.realm.RealmResults
 
 

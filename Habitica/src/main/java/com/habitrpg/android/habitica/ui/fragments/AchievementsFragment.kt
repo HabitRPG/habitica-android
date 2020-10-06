@@ -15,7 +15,7 @@ import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.ui.adapter.AchievementsAdapter
 import com.habitrpg.android.habitica.ui.helpers.ToolbarColorHelper
-import io.reactivex.rxkotlin.combineLatest
+import io.reactivex.rxjava3.kotlin.Flowables
 import javax.inject.Inject
 
 class AchievementsFragment: BaseMainFragment<FragmentRefreshRecyclerviewBinding>(), SwipeRefreshLayout.OnRefreshListener {
@@ -106,8 +106,7 @@ class AchievementsFragment: BaseMainFragment<FragmentRefreshRecyclerviewBinding>
             adapter.entries = entries
             adapter.notifyDataSetChanged()
         }, RxErrorHandler.handleEmptyError()))
-        compositeSubscription.add(userRepository.getQuestAchievements()
-                .combineLatest(userRepository.getQuestAchievements()
+        compositeSubscription.add(Flowables.combineLatest(userRepository.getQuestAchievements(), userRepository.getQuestAchievements()
                         .map { it.mapNotNull { achievement -> achievement.questKey } }
                         .flatMap { inventoryRepository.getQuestContent(it) })
                 .subscribeWithErrorHandler { result ->

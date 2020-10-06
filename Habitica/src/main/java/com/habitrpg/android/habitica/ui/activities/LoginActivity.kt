@@ -52,10 +52,10 @@ import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.willowtreeapps.signinwithapplebutton.SignInWithAppleConfiguration
-import io.reactivex.Flowable
-import io.reactivex.exceptions.Exceptions
-import io.reactivex.functions.Consumer
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.rxjava3.core.Flowable
+import io.reactivex.rxjava3.exceptions.Exceptions
+import io.reactivex.rxjava3.functions.Consumer
+import io.reactivex.rxjava3.schedulers.Schedulers
 import java.io.IOException
 import javax.inject.Inject
 

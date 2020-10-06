@@ -11,9 +11,8 @@
         android:layout_height="wrap_content"
         android:padding="0dp"
         android:src="@drawable/ic_close_purple_300_36dp"
-        android:tint="?colorPrimary"
-        android:tintMode="src_atop"
-        style="@style/Base.Widget.AppCompat.Button.Borderless"/>
+        android:tint="@color/color_accent"
+        android:background="@color/transparent"/>
     <EditText
         android:id="@+id/edit_text"
         android:layout_width="0dp"

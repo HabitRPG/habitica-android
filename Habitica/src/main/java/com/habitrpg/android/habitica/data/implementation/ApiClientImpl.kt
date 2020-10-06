@@ -32,11 +32,11 @@ import com.habitrpg.android.habitica.models.user.Items
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
-import io.reactivex.Flowable
-import io.reactivex.FlowableTransformer
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.functions.Consumer
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.rxjava3.core.Flowable
+import io.reactivex.rxjava3.core.FlowableTransformer
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.functions.Consumer
+import io.reactivex.rxjava3.schedulers.Schedulers
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -44,7 +44,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import org.greenrobot.eventbus.EventBus
 import retrofit2.HttpException
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
+import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.IOException
 import java.net.SocketException
@@ -125,9 +125,9 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
                     if (BuildConfig.STAGING_KEY.isNotEmpty()) {
                         builder = builder.header("Authorization", "Basic " + BuildConfig.STAGING_KEY)
                     }
-                    val request = builder.method(original.method(), original.body())
+                    val request = builder.method(original.method, original.body)
                             .build()
-                    lastAPICallURL = original.url().toString()
+                    lastAPICallURL = original.url.toString()
                     chain.proceed(request)
                 }
                 .readTimeout(2400, TimeUnit.SECONDS)
@@ -138,7 +138,7 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
         retrofitAdapter = Retrofit.Builder()
                 .client(client)
                 .baseUrl(server.toString())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
                 .addConverterFactory(gsonConverter)
                 .build()
 
@@ -193,12 +193,12 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
             this.showConnectionProblemDialog(R.string.internal_error_api)
         } else if (throwableClass == SocketTimeoutException::class.java || UnknownHostException::class.java == throwableClass) {
             this.showConnectionProblemDialog(R.string.network_error_no_network_body)
-        } else if (throwableClass == retrofit2.adapter.rxjava2.HttpException::class.java) {
+        } else if (throwableClass == retrofit2.adapter.rxjava3.HttpException::class.java) {
             val error = throwable as HttpException
             val res = getErrorResponse(error)
             val status = error.code()
 
-            if (status == 404 || error.response()?.raw()?.request()?.url()?.toString()?.endsWith("/user/push-devices") == true) {
+            if (status == 404 || error.response()?.raw()?.request?.url?.toString()?.endsWith("/user/push-devices") == true) {
                 //workaround for an error that sometimes displays that the user already has this push device
                 return
             }
@@ -337,7 +337,7 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
         return apiService.blockMember(userID).compose(configureApiCallObserver())
     }
 
-    override fun purchaseItem(type: String, itemKey: String, purchaseQuantity: Int): Flowable<Any> {
+    override fun purchaseItem(type: String, itemKey: String, purchaseQuantity: Int): Flowable<Void> {
         return apiService.purchaseItem(type, itemKey, mapOf(Pair("quantity", purchaseQuantity))).compose(configureApiCallObserver())
     }
 
@@ -359,23 +359,23 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
         }
     }
 
-    override fun cancelSubscription(): Flowable<Any> {
+    override fun cancelSubscription(): Flowable<Void> {
         return apiService.cancelSubscription().compose(configureApiCallObserver())
     }
 
-    override fun purchaseHourglassItem(type: String, itemKey: String): Flowable<Any> {
+    override fun purchaseHourglassItem(type: String, itemKey: String): Flowable<Void> {
         return apiService.purchaseHourglassItem(type, itemKey).compose(configureApiCallObserver())
     }
 
-    override fun purchaseMysterySet(itemKey: String): Flowable<Any> {
+    override fun purchaseMysterySet(itemKey: String): Flowable<Void> {
         return apiService.purchaseMysterySet(itemKey).compose(configureApiCallObserver())
     }
 
-    override fun purchaseQuest(key: String): Flowable<Any> {
+    override fun purchaseQuest(key: String): Flowable<Void> {
         return apiService.purchaseQuest(key).compose(configureApiCallObserver())
     }
 
-    override fun purchaseSpecialSpell(key: String): Flowable<Any> {
+    override fun purchaseSpecialSpell(key: String): Flowable<Void> {
         return apiService.purchaseSpecialSpell(key).compose(configureApiCallObserver())
     }
 
@@ -690,15 +690,15 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
         return apiService.debugAddTenGems().compose(configureApiCallObserver())
     }
 
-    override fun readNotification(notificationId: String): Flowable<List<*>> {
+    override fun readNotification(notificationId: String): Flowable<List<Any>> {
         return apiService.readNotification(notificationId).compose(configureApiCallObserver())
     }
 
-    override fun readNotifications(notificationIds: Map<String, List<String>>): Flowable<List<*>> {
+    override fun readNotifications(notificationIds: Map<String, List<String>>): Flowable<List<Any>> {
         return apiService.readNotifications(notificationIds).compose(configureApiCallObserver())
     }
 
-    override fun seeNotifications(notificationIds: Map<String, List<String>>): Flowable<List<*>> {
+    override fun seeNotifications(notificationIds: Map<String, List<String>>): Flowable<List<Any>> {
         return apiService.seeNotifications(notificationIds).compose(configureApiCallObserver())
     }
 

@@ -5,7 +5,7 @@ import com.habitrpg.android.habitica.data.FAQRepository
 import com.habitrpg.android.habitica.data.local.FAQLocalRepository
 import com.habitrpg.android.habitica.models.FAQArticle
 
-import io.reactivex.Flowable
+import io.reactivex.rxjava3.core.Flowable
 import io.realm.RealmResults
 
 

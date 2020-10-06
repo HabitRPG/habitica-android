@@ -101,11 +101,23 @@ class HabitViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> U
         }
     }
 
+    override fun onLeftActionTouched() {
+        super.onLeftActionTouched()
+        onPlusButtonClicked()
+    }
+
+    override fun onRightActionTouched() {
+        super.onRightActionTouched()
+        onMinusButtonClicked()
+    }
+
     private fun onPlusButtonClicked() {
+        if (task?.up != true) return
         task?.let { scoreTaskFunc.invoke(it, TaskDirection.UP) }
     }
 
     private fun onMinusButtonClicked() {
+        if (task?.down != true) return
         task?.let { scoreTaskFunc.invoke(it, TaskDirection.DOWN) }
     }
 

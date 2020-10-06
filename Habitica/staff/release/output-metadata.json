@@ -11,8 +11,8 @@
       "type": "SINGLE",
       "filters": [],
       "properties": [],
-      "versionCode": 2560,
-      "versionName": "3.0",
+      "versionCode": 2581,
+      "versionName": "3.0.1",
       "enabled": true,
       "outputFile": "Habitica-staff-release.apk"
     }

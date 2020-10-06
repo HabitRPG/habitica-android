@@ -75,15 +75,15 @@ object DataBindingUtils {
         val dataSource = imagePipeline.fetchDecodedImage(imageRequest, this)
 
         dataSource.subscribe(object : BaseBitmapDataSubscriber() {
-            override fun onFailureImpl(dataSource: DataSource<CloseableReference<CloseableImage>>?) {
-                dataSource?.close()
-            }
-
             public override fun onNewResultImpl(bitmap: Bitmap?) {
                 if (dataSource.isFinished && bitmap != null) {
                     imageResult(bitmap)
                     dataSource.close()
                 }
+            }
+
+            override fun onFailureImpl(dataSource: DataSource<CloseableReference<CloseableImage>>) {
+                dataSource?.close()
             }
         }, CallerThreadExecutor.getInstance())
     }

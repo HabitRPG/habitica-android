@@ -73,11 +73,11 @@ import com.habitrpg.android.habitica.widget.AvatarStatsWidgetProvider
 import com.habitrpg.android.habitica.widget.DailiesWidgetProvider
 import com.habitrpg.android.habitica.widget.HabitButtonWidgetProvider
 import com.habitrpg.android.habitica.widget.TodoListWidgetProvider
-import io.reactivex.Completable
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.functions.Consumer
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.functions.Consumer
+import io.reactivex.rxjava3.schedulers.Schedulers
 import io.realm.kotlin.isValid
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -836,7 +836,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
             val petWrapper = View.inflate(this, R.layout.pet_imageview, null) as? FrameLayout
             val petImageView = petWrapper?.findViewById(R.id.pet_imageview) as? SimpleDraweeView
 
-            DataBindingUtils.loadImage(petImageView, "social_Pet-" + egg.key + "-" + potion.key)
+            DataBindingUtils.loadImage(petImageView, "stable_Pet-" + egg.key + "-" + potion.key)
             val potionName = potion.text
             val eggName = egg.text
             val dialog = HabiticaAlertDialog(this)

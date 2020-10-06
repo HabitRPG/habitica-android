@@ -22,7 +22,7 @@ import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemRecyclerFragment
 import com.habitrpg.android.habitica.ui.helpers.MarginDecoration
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
-import io.reactivex.rxkotlin.combineLatest
+import io.reactivex.rxjava3.kotlin.Flowables
 import org.greenrobot.eventbus.Subscribe
 import javax.inject.Inject
 
@@ -137,7 +137,7 @@ class PetDetailRecyclerFragment : BaseMainFragment<FragmentRecyclerviewBinding>(
                     }
                     .subscribe({ adapter.setOwnedMounts(it) }, RxErrorHandler.handleEmptyError()))
             compositeSubscription.add(inventoryRepository.getOwnedItems(true).subscribe({ adapter.setOwnedItems(it) }, RxErrorHandler.handleEmptyError()))
-            compositeSubscription.add(inventoryRepository.getPets(animalType, animalGroup, animalColor).combineLatest(inventoryRepository.getOwnedPets()
+            compositeSubscription.add(Flowables.combineLatest(inventoryRepository.getPets(animalType, animalGroup, animalColor), inventoryRepository.getOwnedPets()
                     .map { ownedPets ->
                         val petMap = mutableMapOf<String, OwnedPet>()
                         ownedPets.forEach { petMap[it.key ?: ""] = it }

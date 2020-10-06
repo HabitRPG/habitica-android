@@ -39,7 +39,7 @@ import com.habitrpg.android.habitica.ui.fragments.social.TavernDetailFragment
 import com.habitrpg.android.habitica.ui.menu.HabiticaDrawerItem
 import com.habitrpg.android.habitica.ui.viewmodels.NotificationsViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
-import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -474,6 +474,11 @@ class NavigationDrawerFragment : DialogFragment() {
 
             val bg = binding?.notificationsBadge?.background as? GradientDrawable
             bg?.color = ColorStateList.valueOf(color)
+            binding?.notificationsBadge?.setTextColor(if (allSeen) {
+                ContextCompat.getColor(it, R.color.gray_10)
+            } else {
+                ContextCompat.getColor(it, R.color.white)
+            })
         }
     }
 

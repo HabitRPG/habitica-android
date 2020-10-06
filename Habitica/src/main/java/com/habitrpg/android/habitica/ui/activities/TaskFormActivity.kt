@@ -103,6 +103,7 @@ class TaskFormActivity : BaseActivity() {
         val bundle = intent.extras ?: return
 
         val taskId = bundle.getString(TASK_ID_KEY)
+        forcedIsNight = false
         forcedTheme = if (taskId != null) {
             val taskValue = bundle.getDouble(TASK_VALUE_KEY)
             when {
@@ -131,7 +132,7 @@ class TaskFormActivity : BaseActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         tintColor = getThemeColor(R.attr.taskFormTint)
-        val upperTintColor = if (forcedTheme == "purple") getThemeColor(R.attr.taskFormTint) else getThemeColor(R.attr.colorAccent)
+        val upperTintColor = if (forcedTheme == "taskform") getThemeColor(R.attr.taskFormTint) else getThemeColor(R.attr.colorAccent)
         supportActionBar?.setBackgroundDrawable(ColorDrawable(upperTintColor))
         binding.upperTextWrapper.setBackgroundColor(upperTintColor)
 
@@ -212,7 +213,7 @@ class TaskFormActivity : BaseActivity() {
 
     override fun loadTheme(sharedPreferences: SharedPreferences, forced: Boolean) {
         super.loadTheme(sharedPreferences, forced)
-        val upperTintColor = if (forcedTheme == "purple") getThemeColor(R.attr.taskFormTint) else getThemeColor(R.attr.colorAccent)
+        val upperTintColor = if (forcedTheme == "taskform") getThemeColor(R.attr.taskFormTint) else getThemeColor(R.attr.colorAccent)
         window.statusBarColor = upperTintColor
     }
 

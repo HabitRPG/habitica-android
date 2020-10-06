@@ -15,10 +15,10 @@ import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.notifications.NewChatMessageData
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.social.Group
-import io.reactivex.BackpressureStrategy
-import io.reactivex.Flowable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.subjects.BehaviorSubject
+import io.reactivex.rxjava3.core.BackpressureStrategy
+import io.reactivex.rxjava3.core.Flowable
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.realm.RealmResults
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject

@@ -156,10 +156,10 @@ open class Task : RealmObject, Parcelable {
         }
 
     val isDisplayedActive: Boolean
-        get() = isDue == true && !completed
+        get() = ((isDue == true && type == Task.TYPE_DAILY) || type == TYPE_TODO) && !completed
 
     val isChecklistDisplayActive: Boolean
-        get() = this.isDisplayedActive && this.checklist?.size != this.completedChecklistCount
+        get() = this.checklist?.size != this.completedChecklistCount
 
     val isGroupTask: Boolean
         get() = group?.approvalApproved == true
@@ -211,10 +211,10 @@ open class Task : RealmObject, Parcelable {
             return this.parsedText ?: ""
         }
 
-        MarkdownParser.parseMarkdownAsync(this.text, { parsedText ->
+        MarkdownParser.parseMarkdownAsync(this.text) { parsedText ->
             this.parsedText = parsedText
             callback(parsedText)
-        })
+        }
 
         return this.text
     }
@@ -225,10 +225,10 @@ open class Task : RealmObject, Parcelable {
         }
 
         if (notes?.isNotEmpty() == true) {
-            MarkdownParser.parseMarkdownAsync(notes, { parsedText ->
+            MarkdownParser.parseMarkdownAsync(notes) { parsedText ->
                 parsedNotes = parsedText
                 callback(parsedText)
-            })
+            }
         }
         return notes
     }

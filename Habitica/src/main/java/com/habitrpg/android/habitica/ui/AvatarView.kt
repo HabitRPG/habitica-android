@@ -20,7 +20,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.models.Avatar
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
-import io.reactivex.functions.Consumer
+import io.reactivex.rxjava3.functions.Consumer
 import java.util.*
 import java.util.concurrent.atomic.AtomicInteger
 

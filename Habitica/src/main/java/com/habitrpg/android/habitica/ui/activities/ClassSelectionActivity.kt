@@ -18,7 +18,7 @@ import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.*
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
-import io.reactivex.functions.Consumer
+import io.reactivex.rxjava3.functions.Consumer
 import javax.inject.Inject
 
 class ClassSelectionActivity : BaseActivity(), Consumer<User> {

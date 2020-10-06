@@ -18,7 +18,7 @@ import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.helpers.setMarkdown
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
-import io.reactivex.functions.Consumer
+import io.reactivex.rxjava3.functions.Consumer
 import javax.inject.Inject
 
 class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {

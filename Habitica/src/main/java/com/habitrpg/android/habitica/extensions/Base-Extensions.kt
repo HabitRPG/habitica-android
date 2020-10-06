@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.extensions
 
-import io.reactivex.Completable
+import io.reactivex.rxjava3.core.Completable
 import java.util.concurrent.TimeUnit
 
 /**

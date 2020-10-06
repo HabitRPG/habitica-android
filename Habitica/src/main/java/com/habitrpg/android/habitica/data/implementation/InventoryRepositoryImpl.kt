@@ -10,7 +10,7 @@ import com.habitrpg.android.habitica.models.responses.FeedResponse
 import com.habitrpg.android.habitica.models.shops.Shop
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.models.user.*
-import io.reactivex.Flowable
+import io.reactivex.rxjava3.core.Flowable
 import io.realm.RealmResults
 
 class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClient: ApiClient, userID: String, var appConfigManager: AppConfigManager) : BaseRepositoryImpl<InventoryLocalRepository>(localRepository, apiClient, userID), InventoryRepository {
@@ -276,23 +276,23 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
         return apiClient.retrieveMarketGear()
     }
 
-    override fun purchaseMysterySet(categoryIdentifier: String): Flowable<Any> {
+    override fun purchaseMysterySet(categoryIdentifier: String): Flowable<Void> {
         return apiClient.purchaseMysterySet(categoryIdentifier)
     }
 
-    override fun purchaseHourglassItem(purchaseType: String, key: String): Flowable<Any> {
+    override fun purchaseHourglassItem(purchaseType: String, key: String): Flowable<Void> {
         return apiClient.purchaseHourglassItem(purchaseType, key)
     }
 
-    override fun purchaseQuest(key: String): Flowable<Any> {
+    override fun purchaseQuest(key: String): Flowable<Void> {
         return apiClient.purchaseQuest(key)
     }
 
-    override fun purchaseSpecialSpell(key: String): Flowable<Any> {
+    override fun purchaseSpecialSpell(key: String): Flowable<Void> {
         return apiClient.purchaseSpecialSpell(key)
     }
 
-    override fun purchaseItem(purchaseType: String, key: String, purchaseQuantity: Int): Flowable<Any> {
+    override fun purchaseItem(purchaseType: String, key: String, purchaseQuantity: Int): Flowable<Void> {
         return apiClient.purchaseItem(purchaseType, key, purchaseQuantity)
     }
 

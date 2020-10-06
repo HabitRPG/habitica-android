@@ -3,7 +3,7 @@ package com.habitrpg.android.habitica.interactors;
 import com.habitrpg.android.habitica.executors.PostExecutionThread;
 import com.habitrpg.android.habitica.executors.ThreadExecutor;
 
-import io.reactivex.Flowable;
+import io.reactivex.rxjava3.core.Flowable;
 
 public abstract class UseCase<Q extends UseCase.RequestValues, T> {
 

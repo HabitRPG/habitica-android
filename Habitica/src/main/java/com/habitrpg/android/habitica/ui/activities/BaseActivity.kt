@@ -24,7 +24,7 @@ import com.habitrpg.android.habitica.extensions.updateStatusBarColor
 import com.habitrpg.android.habitica.helpers.LanguageHelper
 import com.habitrpg.android.habitica.ui.helpers.ToolbarColorHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
-import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import java.util.*
@@ -35,6 +35,7 @@ abstract class BaseActivity : AppCompatActivity() {
     private var currentTheme: String? = null
     private var isNightMode: Boolean = false
     internal var forcedTheme: String? = null
+    internal var forcedIsNight: Boolean? = null
     private var destroyed: Boolean = false
 
     open var overrideModernHeader: Boolean? = null
@@ -105,7 +106,7 @@ abstract class BaseActivity : AppCompatActivity() {
         val theme = forcedTheme ?: sharedPreferences.getString("theme_name", "purple")
         val modernHeaderStyle = overrideModernHeader ?: sharedPreferences.getBoolean("modern_header_style", true)
         if (theme != currentTheme || forced) {
-            if (isNightMode) {
+            if (forcedIsNight ?: isNightMode) {
                 setTheme(when (theme) {
                     "maroon" -> R.style.MainAppTheme_Maroon_Dark
                     "red" -> R.style.MainAppTheme_Red_Dark
@@ -131,12 +132,12 @@ abstract class BaseActivity : AppCompatActivity() {
             }
         }
 
-        if (isNightMode) {
-            window.navigationBarColor = ContextCompat.getColor(this, R.color.system_bars)
+        window.navigationBarColor = if (forcedIsNight ?: isNightMode) {
+            ContextCompat.getColor(this, R.color.system_bars)
         } else {
-            window.navigationBarColor = getThemeColor(R.attr.colorPrimaryDark)
+            getThemeColor(R.attr.colorPrimaryDark)
         }
-        if (!isNightMode && modernHeaderStyle) {
+        if (!(forcedIsNight ?: isNightMode) && modernHeaderStyle) {
             window.updateStatusBarColor(getThemeColor(R.attr.headerBackgroundColor), true)
         } else {
             window.updateStatusBarColor(getThemeColor(R.attr.statusBarBackground), false)

@@ -20,9 +20,9 @@ import com.habitrpg.android.habitica.models.tasks.ChecklistItem
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
 import com.habitrpg.android.habitica.ui.views.HabiticaEmojiTextView
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.schedulers.Schedulers
 
 abstract class ChecklistedViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> Unit), var scoreChecklistItemFunc: ((Task, ChecklistItem) -> Unit), openTaskFunc: ((Task) -> Unit), brokenTaskFunc: ((Task) -> Unit)) : BaseTaskViewHolder(itemView, scoreTaskFunc, openTaskFunc, brokenTaskFunc) {
 
@@ -38,11 +38,6 @@ abstract class ChecklistedViewHolder(itemView: View, scoreTaskFunc: ((Task, Task
     init {
         checklistIndicatorWrapper.isClickable = true
         checklistIndicatorWrapper.setOnClickListener { onChecklistIndicatorClicked() }
-        checkboxHolder.setOnClickListener {
-            if (task?.isValid == true) {
-                onCheckedChanged(!(task?.completed ?: false))
-            }
-        }
     }
 
     override fun bind(data: Task, position: Int, displayMode: String) {
@@ -51,6 +46,7 @@ abstract class ChecklistedViewHolder(itemView: View, scoreTaskFunc: ((Task, Task
             completed = false
         }
         this.checkmarkView.visibility = if (completed) View.VISIBLE else View.GONE
+        checkmarkView.drawable.setTint(ContextCompat.getColor(context, R.color.gray_400))
         this.checklistCompletedTextView.text = data.completedChecklistCount.toString()
         this.checklistAllTextView.text = data.checklist?.size.toString()
 
@@ -80,7 +76,7 @@ abstract class ChecklistedViewHolder(itemView: View, scoreTaskFunc: ((Task, Task
         }
     }
 
-    abstract fun shouldDisplayAsActive(newTask: Task): Boolean
+    abstract fun shouldDisplayAsActive(newTask: Task?): Boolean
 
     private fun updateChecklistDisplay() {
         //This needs to be a LinearLayout, as ListViews can not be inside other ListViews.
@@ -94,7 +90,15 @@ abstract class ChecklistedViewHolder(itemView: View, scoreTaskFunc: ((Task, Task
                     if (task?.type == Task.TYPE_TODO) {
                         checkboxBackground?.setBackgroundResource(R.drawable.round_checklist_unchecked)
                     }
-                    checkboxBackground?.backgroundTintList = ContextCompat.getColorStateList(context, (if (context.isUsingNightModeResources()) task?.lightTaskColor else R.color.checkbox_fill) ?: R.color.checkbox_fill)
+                    checkboxBackground?.backgroundTintList = ContextCompat.getColorStateList(context, (if (context.isUsingNightModeResources()) {
+                        if (task?.completed == true || (task?.type == Task.TYPE_DAILY && task?.isDue == false)) {
+                            R.color.checkbox_fill
+                        } else {
+                            task?.lightTaskColor
+                        }
+                    } else {
+                        R.color.checkbox_fill
+                    }) ?: R.color.checkbox_fill)
                     val textView = itemView?.findViewById<HabiticaEmojiTextView>(R.id.checkedTextView)
                     // Populate the data into the template view using the data object
                     textView?.text = item.text
@@ -135,13 +139,9 @@ abstract class ChecklistedViewHolder(itemView: View, scoreTaskFunc: ((Task, Task
     protected fun setChecklistIndicatorBackgroundActive(isActive: Boolean) {
         val drawable = ContextCompat.getDrawable(context, R.drawable.checklist_indicator_background)
         if (isActive) {
-            if (context.isUsingNightModeResources()) {
-                drawable?.setTint(ContextCompat.getColor(context, R.color.gray_100))
-            } else {
-                drawable?.setTint(ContextCompat.getColor(context, R.color.gray_200))
-            }
+            drawable?.setTint(ContextCompat.getColor(context, R.color.gray_200))
             val textColor = if (context.isUsingNightModeResources()) {
-                ContextCompat.getColor(context, R.color.gray_10)
+                ContextCompat.getColor(context, R.color.gray_600)
             } else {
                 ContextCompat.getColor(context, R.color.gray_500)
             }
@@ -150,7 +150,7 @@ abstract class ChecklistedViewHolder(itemView: View, scoreTaskFunc: ((Task, Task
             checklistDivider.setBackgroundColor(textColor)
         } else {
             drawable?.setTint(ContextCompat.getColor(context, R.color.offset_background))
-            val textColor = ContextCompat.getColor(context, R.color.text_ternary)
+            val textColor = ContextCompat.getColor(context, R.color.text_quad)
             checklistCompletedTextView.setTextColor(textColor)
             checklistAllTextView.setTextColor(textColor)
             checklistDivider.setBackgroundColor(textColor)
@@ -167,7 +167,18 @@ abstract class ChecklistedViewHolder(itemView: View, scoreTaskFunc: ((Task, Task
             layoutManager?.scrollToPositionWithOffset(this.adapterPosition, 15)
         }
         updateChecklistDisplay()
+    }
 
+    override fun onLeftActionTouched() {
+        super.onLeftActionTouched()
+        if (task?.isValid == true) {
+            onCheckedChanged(!(task?.completed ?: false))
+        }
+    }
+
+    override fun onRightActionTouched() {
+        super.onRightActionTouched()
+        onChecklistIndicatorClicked()
     }
 
     private fun shouldDisplayExpandedChecklist(): Boolean {

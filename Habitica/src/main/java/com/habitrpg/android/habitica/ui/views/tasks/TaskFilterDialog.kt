@@ -22,7 +22,7 @@ import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.Tag
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
-import io.reactivex.Observable
+import io.reactivex.rxjava3.core.Observable
 import java.util.*
 import javax.inject.Inject
 

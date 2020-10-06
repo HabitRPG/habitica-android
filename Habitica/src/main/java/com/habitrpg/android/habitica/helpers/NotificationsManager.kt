@@ -14,10 +14,10 @@ import com.habitrpg.android.habitica.models.notifications.FirstDropData
 import com.habitrpg.android.habitica.models.notifications.LoginIncentiveData
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
-import io.reactivex.BackpressureStrategy
-import io.reactivex.Completable
-import io.reactivex.Flowable
-import io.reactivex.subjects.BehaviorSubject
+import io.reactivex.rxjava3.core.BackpressureStrategy
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Flowable
+import io.reactivex.rxjava3.subjects.BehaviorSubject
 import org.greenrobot.eventbus.EventBus
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -42,8 +42,7 @@ class NotificationsManager (private val context: Context) {
     }
 
     fun getNotifications(): Flowable<List<Notification>> {
-        return this.notifications
-                .startWith(emptyList<Notification>())
+        return this.notifications.startWithArray(emptyList())
                 .toFlowable(BackpressureStrategy.LATEST)
     }
 

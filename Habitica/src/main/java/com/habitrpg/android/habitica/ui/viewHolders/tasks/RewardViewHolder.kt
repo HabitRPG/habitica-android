@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.viewHolders.tasks
 
+import android.view.MotionEvent
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
@@ -33,9 +34,9 @@ class RewardViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> 
         task?.let { scoreTaskFunc(it, TaskDirection.DOWN) }
     }
 
-    override fun onClick(v: View) {
+    override fun onTouch(view: View?, motionEvent: MotionEvent?): Boolean {
         if (task?.isValid != true) {
-            return
+            return true
         }
         if (isItem) {
             val dialog = ItemDetailDialog(context)
@@ -47,8 +48,9 @@ class RewardViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> 
             dialog.setBuyListener { _, _ -> this.buyReward() }
             dialog.show()
         } else {
-            super.onClick(v)
+            super.onTouch(view, motionEvent)
         }
+        return true
     }
 
     override fun setDisabled(openTaskDisabled: Boolean, taskActionsDisabled: Boolean) {

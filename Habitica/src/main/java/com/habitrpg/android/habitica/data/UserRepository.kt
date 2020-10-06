@@ -12,8 +12,8 @@ import com.habitrpg.android.habitica.models.responses.VerifyUsernameResponse
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
-import io.reactivex.Flowable
-import io.reactivex.Maybe
+import io.reactivex.rxjava3.core.Flowable
+import io.reactivex.rxjava3.core.Maybe
 import io.realm.RealmResults
 
 interface UserRepository : BaseRepository {
@@ -52,9 +52,9 @@ interface UserRepository : BaseRepository {
     fun runCron(tasks: MutableList<Task>)
     fun runCron()
 
-    fun readNotification(id: String): Flowable<List<*>>
-    fun readNotifications(notificationIds: Map<String, List<String>>): Flowable<List<*>>
-    fun seeNotifications(notificationIds: Map<String, List<String>>): Flowable<List<*>>
+    fun readNotification(id: String): Flowable<List<Any>>
+    fun readNotifications(notificationIds: Map<String, List<String>>): Flowable<List<Any>>
+    fun seeNotifications(notificationIds: Map<String, List<String>>): Flowable<List<Any>>
 
     fun changeCustomDayStart(dayStartTime: Int): Flowable<User>
 

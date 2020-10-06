@@ -35,9 +35,9 @@ import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientG
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientHourglassesDialog
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientSubscriberGemsDialog
 import com.habitrpg.android.habitica.ui.views.tasks.form.StepperValueFormView
-import io.reactivex.Flowable
-import io.reactivex.Maybe
-import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxjava3.core.Flowable
+import io.reactivex.rxjava3.core.Maybe
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.realm.RealmResults
 import org.greenrobot.eventbus.EventBus
 import java.util.*
@@ -292,12 +292,12 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
         val observable: Flowable<Any>
         if (shopIdentifier != null && shopIdentifier == Shop.TIME_TRAVELERS_SHOP || "mystery_set" == shopItem.purchaseType || shopItem.currency == "hourglasses") {
             observable = if (shopItem.purchaseType == "gear") {
-                inventoryRepository.purchaseMysterySet(shopItem.key)
+                inventoryRepository.purchaseMysterySet(shopItem.key).cast(Any::class.java)
             } else {
-                inventoryRepository.purchaseHourglassItem(shopItem.purchaseType, shopItem.key)
+                inventoryRepository.purchaseHourglassItem(shopItem.purchaseType, shopItem.key).cast(Any::class.java)
             }
         } else if (shopItem.purchaseType == "quests" && shopItem.currency == "gold") {
-            observable = inventoryRepository.purchaseQuest(shopItem.key)
+            observable = inventoryRepository.purchaseQuest(shopItem.key).cast(Any::class.java)
         } else if (shopItem.purchaseType == "debuffPotion") {
             observable = userRepository.useSkill(user, shopItem.key, null).cast(Any::class.java)
         } else if (shopItem.purchaseType == "card") {
@@ -316,7 +316,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
                 buyResponse
             }
         } else {
-            observable = inventoryRepository.purchaseItem(shopItem.purchaseType, shopItem.key, quantity)
+            observable = inventoryRepository.purchaseItem(shopItem.purchaseType, shopItem.key, quantity).cast(Any::class.java)
         }
         val subscription = observable
                 .doOnNext {

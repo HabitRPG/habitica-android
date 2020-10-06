@@ -21,7 +21,7 @@ import com.habitrpg.android.habitica.helpers.TaskAlarmManager
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.MainActivity
-import io.reactivex.functions.BiFunction
+import io.reactivex.rxjava3.functions.BiFunction
 import io.realm.RealmResults
 import java.util.*
 import javax.inject.Inject

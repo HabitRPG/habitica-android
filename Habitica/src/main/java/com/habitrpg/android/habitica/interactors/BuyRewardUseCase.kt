@@ -10,7 +10,7 @@ import com.habitrpg.android.habitica.models.user.User
 
 import javax.inject.Inject
 
-import io.reactivex.Flowable
+import io.reactivex.rxjava3.core.Flowable
 
 class BuyRewardUseCase @Inject
 constructor(private val taskRepository: TaskRepository, private val soundManager: SoundManager,

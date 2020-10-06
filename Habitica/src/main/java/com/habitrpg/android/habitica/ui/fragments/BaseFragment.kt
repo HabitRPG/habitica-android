@@ -12,9 +12,9 @@ import com.habitrpg.android.habitica.data.TutorialRepository
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.ui.activities.MainActivity
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.functions.Consumer
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.functions.Consumer
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.EventBusException
 import java.util.*
@@ -102,10 +102,6 @@ abstract class BaseFragment<VB: ViewBinding> : DialogFragment() {
         }
 
         super.onDestroyView()
-        context?.let {
-            val refWatcher = HabiticaBaseApplication.getInstance(it)?.refWatcher
-            refWatcher?.watch(this)
-        }
     }
 
     override fun onDestroy() {

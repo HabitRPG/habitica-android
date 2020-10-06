@@ -47,8 +47,8 @@ class DailyViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> U
         super.bind(newTask, position, displayMode)
     }
 
-    override fun shouldDisplayAsActive(newTask: Task): Boolean {
-        return newTask.isDisplayedActive
+    override fun shouldDisplayAsActive(newTask: Task?): Boolean {
+        return newTask?.isDisplayedActive ?: false
     }
 
     override fun configureSpecialTaskTextView(task: Task) {
