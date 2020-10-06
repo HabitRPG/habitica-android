@@ -115,7 +115,6 @@ dependencies {
     implementation 'com.google.firebase:firebase-config:19.2.0'
     implementation 'com.google.firebase:firebase-perf:19.0.9'
     implementation 'com.google.android.gms:play-services-auth:18.1.0'
-    implementation 'io.realm:android-adapters:4.0.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.nex3z:flow-layout:1.2.2'
 

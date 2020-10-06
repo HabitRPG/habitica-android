@@ -14,8 +14,15 @@ import io.realm.annotations.Ignore
 import io.realm.annotations.PrimaryKey
 import java.util.*
 
-open class User : RealmObject(), Avatar, VersionedObject {
+open class User : RealmObject(), BaseObject, Avatar, VersionedObject {
 
+    override val realmClass: Class<User>
+        get() = User::class.java
+    override val primaryIdentifier: String?
+        get() = id
+    override val primaryIdentifierName: String
+        get() = "id"
+    
     @Ignore
     var tasks: TaskList? = null
 

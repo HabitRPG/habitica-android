@@ -10,21 +10,17 @@ import com.habitrpg.android.habitica.models.tasks.Task
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.subjects.PublishSubject
-import io.realm.OrderedRealmCollection
-import io.realm.RealmRecyclerViewAdapter
 import java.util.*
 
 
-class SkillTasksRecyclerViewAdapter(data: OrderedRealmCollection<Task>?, autoUpdate: Boolean) : RealmRecyclerViewAdapter<Task, SkillTasksRecyclerViewAdapter.TaskViewHolder>(data, autoUpdate) {
+class SkillTasksRecyclerViewAdapter : BaseRecyclerViewAdapter<Task, SkillTasksRecyclerViewAdapter.TaskViewHolder>() {
 
     private val taskSelectionEvents = PublishSubject.create<Task>()
 
     override fun getItemId(position: Int): Long {
-        if (data != null) {
-            val task = data?.get(position)
-            if (task?.id?.length == 36) {
-                return UUID.fromString(task.id).mostSignificantBits
-            }
+        val task = getItem(position)
+        if (task?.id?.length == 36) {
+            return UUID.fromString(task.id).mostSignificantBits
         }
         return UUID.randomUUID().mostSignificantBits
     }

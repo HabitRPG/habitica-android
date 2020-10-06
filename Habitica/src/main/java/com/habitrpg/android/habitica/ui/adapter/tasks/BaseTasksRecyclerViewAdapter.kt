@@ -12,6 +12,7 @@ import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.TaskFilterHelper
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
+import com.habitrpg.android.habitica.ui.adapter.BaseRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.viewHolders.BindableViewHolder
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -20,18 +21,16 @@ import java.util.*
 import javax.inject.Inject
 
 abstract class BaseTasksRecyclerViewAdapter<VH : BindableViewHolder<Task>>(var taskType: String, private val taskFilterHelper: TaskFilterHelper?, private val layoutResource: Int,
-                                                                     newContext: Context, private val userID: String?) : RecyclerView.Adapter<VH>() {
+                                                                     newContext: Context, private val userID: String?) : BaseRecyclerViewAdapter<Task, VH>() {
     @Inject
     lateinit var crashlyticsProxy: CrashlyticsProxy
     @Inject
     lateinit var taskRepository: TaskRepository
     protected var content: MutableList<Task>? = null
     protected var filteredContent: MutableList<Task>? = null
-    internal var context: Context
+    internal var context: Context = newContext.applicationContext
 
     init {
-        this.setHasStableIds(true)
-        this.context = newContext.applicationContext
         this.filteredContent = ArrayList()
         HabiticaBaseApplication.userComponent?.let { injectThis(it) }
 
@@ -54,7 +53,7 @@ abstract class BaseTasksRecyclerViewAdapter<VH : BindableViewHolder<Task>>(var t
         return task?.id?.hashCode()?.toLong() ?: 0
     }
 
-    override fun getItemCount(): Int =filteredContent?.size ?: 0
+    override fun getItemCount(): Int = filteredContent?.size ?: 0
 
     internal fun getContentView(parent: ViewGroup): View = getContentView(parent, layoutResource)
 

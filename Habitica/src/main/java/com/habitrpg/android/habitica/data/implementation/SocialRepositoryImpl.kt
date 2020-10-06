@@ -266,7 +266,7 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
         return apiClient.markPrivateMessagesRead()
                 .doOnNext {
                     if (user?.isManaged == true) {
-                        localRepository.executeTransaction { user.inbox?.newMessages = 0 }
+                        localRepository.modify(user) { it.inbox?.newMessages = 0 }
                     }
                 }
     }

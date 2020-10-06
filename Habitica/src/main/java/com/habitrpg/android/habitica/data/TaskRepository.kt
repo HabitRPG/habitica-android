@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.data
 
+import com.habitrpg.android.habitica.models.BaseObject
 import com.habitrpg.android.habitica.models.responses.TaskScoringResult
 import com.habitrpg.android.habitica.models.tasks.RemindersItem
 import com.habitrpg.android.habitica.models.tasks.Task
@@ -40,7 +41,7 @@ interface TaskRepository : BaseRepository {
 
     fun saveReminder(remindersItem: RemindersItem)
 
-    fun executeTransaction(transaction: Realm.Transaction)
+    fun <T: BaseObject> modify(obj: T, transaction: (T) -> Unit)
 
     fun swapTaskPosition(firstPosition: Int, secondPosition: Int)
 

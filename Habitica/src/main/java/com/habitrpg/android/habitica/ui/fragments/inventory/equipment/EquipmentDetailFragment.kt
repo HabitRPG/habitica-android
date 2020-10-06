@@ -30,7 +30,7 @@ class EquipmentDetailFragment : BaseMainFragment<FragmentRecyclerviewBinding>() 
     var equippedGear: String? = null
     var isCostume: Boolean? = null
 
-    private var adapter: EquipmentRecyclerViewAdapter = EquipmentRecyclerViewAdapter(null, true)
+    private var adapter: EquipmentRecyclerViewAdapter = EquipmentRecyclerViewAdapter()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -59,7 +59,7 @@ class EquipmentDetailFragment : BaseMainFragment<FragmentRecyclerviewBinding>() 
         binding?.recyclerView?.addItemDecoration(DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL))
         binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
 
-        type?.let { type -> inventoryRepository.getOwnedEquipment(type).firstElement().subscribe({ this.adapter.updateData(it) }, RxErrorHandler.handleEmptyError()) }
+        type?.let { type -> inventoryRepository.getOwnedEquipment(type).subscribe({ this.adapter.data = it }, RxErrorHandler.handleEmptyError()) }
     }
 
     override fun onDestroy() {

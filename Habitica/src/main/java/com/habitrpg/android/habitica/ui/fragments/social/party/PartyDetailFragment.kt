@@ -131,7 +131,6 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
             GlobalScope.launch(Dispatchers.Main) {
                 delay(500)
                 inventoryRepository.getQuestContent(party.quest?.key ?: "")
-                        .firstElement()
                         .subscribe({ this@PartyDetailFragment.updateQuestContent(it) }, RxErrorHandler.handleEmptyError())
             }
         } else {

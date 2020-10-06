@@ -6,6 +6,7 @@ import com.habitrpg.android.habitica.data.local.TaskLocalRepository
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.interactors.ScoreTaskLocallyInteractor
+import com.habitrpg.android.habitica.models.BaseObject
 import com.habitrpg.android.habitica.models.responses.TaskDirection
 import com.habitrpg.android.habitica.models.responses.TaskDirectionData
 import com.habitrpg.android.habitica.models.responses.TaskScoringResult
@@ -117,11 +118,9 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
     }
 
     private fun handleTaskResponse(user: User, res: TaskDirectionData, task: Task, up: Boolean, localDelta: Float) {
-        val userID = user.id
-        val taskID = task.id
         this.localRepository.executeTransaction {
-            val bgTask = it.where(Task::class.java).equalTo("id", taskID).findFirst() ?: return@executeTransaction
-            val bgUser = it.where(User::class.java).equalTo("id", userID).findFirst() ?: return@executeTransaction
+            val bgTask = localRepository.getLiveObject(task) ?: return@executeTransaction
+            val bgUser = localRepository.getLiveObject(user) ?: return@executeTransaction
             if (bgTask.type != "reward" && (bgTask.value - localDelta) + res.delta != bgTask.value) {
                 bgTask.value = (bgTask.value - localDelta) + res.delta
                 if (Task.TYPE_DAILY == bgTask.type || Task.TYPE_TODO == bgTask.type) {
@@ -177,7 +176,7 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
                 .doOnNext { task ->
                     val updatedItem: ChecklistItem? = task.checklist?.lastOrNull { itemId == it.id }
                     if (updatedItem != null) {
-                        localRepository.executeTransaction { updatedItem.completed = !updatedItem.completed }
+                        localRepository.modify(updatedItem) { liveItem -> liveItem.completed = !liveItem.completed }
                     }
                 }
     }
@@ -259,8 +258,8 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
         localRepository.saveReminder(remindersItem)
     }
 
-    override fun executeTransaction(transaction: Realm.Transaction) {
-        localRepository.executeTransaction(transaction)
+    override fun <T: BaseObject> modify(obj: T, transaction: (T) -> Unit) {
+        localRepository.modify(obj, transaction)
     }
 
     override fun swapTaskPosition(firstPosition: Int, secondPosition: Int) {

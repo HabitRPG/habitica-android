@@ -214,7 +214,7 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
                             } else {
                                 items
                             }
-                            adapter?.updateData(filteredItems)
+                            adapter?.data = filteredItems
                         }
                     }
                     .map { items -> items.mapNotNull { it.key } }
@@ -232,7 +232,7 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
         }
 
         compositeSubscription.add(inventoryRepository.getPets().subscribe({ adapter?.setExistingPets(it) }, RxErrorHandler.handleEmptyError()))
-        compositeSubscription.add(inventoryRepository.getOwnedPets().firstElement()
+        compositeSubscription.add(inventoryRepository.getOwnedPets()
                 .map { ownedMounts ->
                     val mountMap = mutableMapOf<String, OwnedPet>()
                     ownedMounts.forEach { mountMap[it.key ?: ""] = it }

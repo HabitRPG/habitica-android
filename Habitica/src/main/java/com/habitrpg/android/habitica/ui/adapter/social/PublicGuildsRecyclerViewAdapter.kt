@@ -12,13 +12,13 @@ import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.social.Group
+import com.habitrpg.android.habitica.ui.adapter.BaseRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.fragments.social.PublicGuildsFragmentDirections
 import com.habitrpg.android.habitica.ui.helpers.setMarkdown
 import io.realm.Case
 import io.realm.OrderedRealmCollection
-import io.realm.RealmRecyclerViewAdapter
 
-class PublicGuildsRecyclerViewAdapter(data: OrderedRealmCollection<Group>?, autoUpdate: Boolean) : RealmRecyclerViewAdapter<Group, PublicGuildsRecyclerViewAdapter.GuildViewHolder>(data, autoUpdate), Filterable {
+class PublicGuildsRecyclerViewAdapter : BaseRecyclerViewAdapter<Group, PublicGuildsRecyclerViewAdapter.GuildViewHolder>(), Filterable {
 
     var socialRepository: SocialRepository? = null
     private var memberGuildIDs: List<String> = listOf()
@@ -41,18 +41,14 @@ class PublicGuildsRecyclerViewAdapter(data: OrderedRealmCollection<Group>?, auto
             if (isMember) {
                 this@PublicGuildsRecyclerViewAdapter.socialRepository?.leaveGroup(guild.id, true)
                         ?.subscribe({
-                            if (data != null) {
-                                val indexOfGroup = data?.indexOf(guild)
-                                notifyItemChanged(indexOfGroup ?: 0)
-                            }
+                            val indexOfGroup = data.indexOf(guild)
+                            notifyItemChanged(indexOfGroup)
                         }, RxErrorHandler.handleEmptyError())
             } else {
                 this@PublicGuildsRecyclerViewAdapter.socialRepository?.joinGroup(guild.id)
                         ?.subscribe({ group ->
-                            if (data != null) {
-                                val indexOfGroup = data?.indexOf(group)
-                                notifyItemChanged(indexOfGroup ?: 0)
-                            }
+                            val indexOfGroup = data.indexOf(group)
+                            notifyItemChanged(indexOfGroup)
                         }, RxErrorHandler.handleEmptyError())
             }
 
@@ -61,13 +57,11 @@ class PublicGuildsRecyclerViewAdapter(data: OrderedRealmCollection<Group>?, auto
     }
 
     override fun onBindViewHolder(holder: GuildViewHolder, position: Int) {
-        data?.let {
-            val guild = it[position]
-            val isInGroup = isInGroup(guild)
-            holder.bind(guild, isInGroup)
-            holder.itemView.tag = guild
-            holder.binding.joinleaveButton.tag = guild
-        }
+        val guild = data[position]
+        val isInGroup = isInGroup(guild)
+        holder.bind(guild, isInGroup)
+        holder.itemView.tag = guild
+        holder.binding.joinleaveButton.tag = guild
     }
 
     private fun isInGroup(guild: Group): Boolean {
@@ -77,7 +71,7 @@ class PublicGuildsRecyclerViewAdapter(data: OrderedRealmCollection<Group>?, auto
     private var unfilteredData: OrderedRealmCollection<Group>? = null
 
     fun setUnfilteredData(data: OrderedRealmCollection<Group>?) {
-        updateData(data)
+        this.data = data ?: emptyList()
         unfilteredData = data
     }
 
@@ -92,13 +86,13 @@ class PublicGuildsRecyclerViewAdapter(data: OrderedRealmCollection<Group>?, auto
             override fun publishResults(constraint: CharSequence, results: FilterResults) {
                 unfilteredData?.let {
                     if (constraint.isNotEmpty()) {
-                        updateData(it.where()
+                        data = it.where()
                                 .beginGroup()
                                 .contains("name", constraint.toString(), Case.INSENSITIVE)
                                 .or()
                                 .contains("summary", constraint.toString(), Case.INSENSITIVE)
                                 .endGroup()
-                                .findAll())
+                                .findAll()
                     }
                 }
             }

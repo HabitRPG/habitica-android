@@ -102,7 +102,7 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
         binding?.recyclerView?.adapter = adapter
 
         if (this.classType != null) {
-            compositeSubscription.add(taskRepository.getTasks(this.classType ?: "", userID).firstElement().subscribe({
+            compositeSubscription.add(taskRepository.getTasks(this.classType ?: "", userID).subscribe({
                 this.recyclerAdapter?.updateUnfilteredData(it)
                 this.recyclerAdapter?.filter()
             }, RxErrorHandler.handleEmptyError()))
@@ -283,7 +283,7 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
 
         if (Task.TYPE_REWARD == className) {
             compositeSubscription.add(taskRepository.getTasks(this.className, userID)
-                    .subscribe({ recyclerAdapter?.updateData(it) }, RxErrorHandler.handleEmptyError()))
+                    .subscribe({ recyclerAdapter?.data = it }, RxErrorHandler.handleEmptyError()))
         }
     }
 

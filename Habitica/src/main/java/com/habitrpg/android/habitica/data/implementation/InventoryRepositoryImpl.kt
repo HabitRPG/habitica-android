@@ -135,21 +135,23 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
     private fun sellItem(user: User?, item: Item, ownedItem: OwnedItem): Flowable<User> {
         if (user != null && appConfigManager.enableLocalChanges()) {
             localRepository.executeTransaction {
-                ownedItem.numberOwned -= 1
-                user.stats?.gp = (user.stats?.gp ?: 0.0) + item.value
+                val liveItem = localRepository.getLiveObject(ownedItem)
+                val liveUser = localRepository.getLiveObject(user)
+                liveItem?.numberOwned = 1 + (liveItem?.numberOwned ?: 0)
+                liveUser?.stats?.gp = (user.stats?.gp ?: 0.0) + item.value
             }
         }
         return apiClient.sellItem(item.type, item.key)
                 .map { user1 ->
-                    localRepository.executeTransaction { realm ->
+                    localRepository.modifyWithRealm(user1) { realm, liveUser ->
                         if (user != null) {
-                            val items = user1.items
+                            val items = liveUser.items
                             if (items != null) {
                                 items.userId = user.id
                                 val newItems = realm.copyToRealmOrUpdate(items)
                                 user.items = newItems
                             }
-                            val stats = user1.stats
+                            val stats = liveUser.stats
                             if (stats != null) {
                                 stats.userId = user.id
                                 val newStats = realm.copyToRealmOrUpdate(stats)
@@ -167,16 +169,16 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
 
     override fun equip(user: User?, type: String, key: String): Flowable<Items> {
         if (user != null && appConfigManager.enableLocalChanges()) {
-            localRepository.executeTransaction {
+            localRepository.modify(user) { liveUser ->
                 if (type == "mount") {
-                    user.items?.currentMount = key
+                    liveUser.items?.currentMount = key
                 } else if (type == "pet") {
-                    user.items?.currentPet = key
+                    liveUser.items?.currentPet = key
                 }
                 val outfit = if (type == "costume") {
-                    user.items?.gear?.costume
+                    liveUser.items?.gear?.costume
                 } else {
-                    user.items?.gear?.equipped
+                    liveUser.items?.gear?.equipped
                 }
                 when (key.split("_").firstOrNull()) {
                     "weapon" -> outfit?.weapon = key
@@ -195,16 +197,16 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
                     if (user == null) {
                         return@doOnNext
                     }
-                    localRepository.executeTransaction {
+                    localRepository.modify(user) { liveUser ->
                         val newEquipped = items.gear?.equipped
-                        val oldEquipped = user.items?.gear?.equipped
+                        val oldEquipped = liveUser.items?.gear?.equipped
                         val newCostume = items.gear?.costume
-                        val oldCostume = user.items?.gear?.costume
+                        val oldCostume = liveUser.items?.gear?.costume
                         newEquipped?.let { equipped -> oldEquipped?.updateWith(equipped) }
                         newCostume?.let { costume -> oldCostume?.updateWith(costume) }
-                        user.items?.currentMount = items.currentMount
-                        user.items?.currentPet = items.currentPet
-                        user.balance = user.balance
+                        liveUser.items?.currentMount = items.currentMount
+                        liveUser.items?.currentPet = items.currentPet
+                        liveUser.balance = liveUser.balance
                     }
                 }
     }

@@ -27,7 +27,7 @@ class PublicGuildsFragment : BaseMainFragment<FragmentRecyclerviewBinding>(), Se
         return FragmentRecyclerviewBinding.inflate(inflater, container, false)
     }
 
-    private var viewAdapter = PublicGuildsRecyclerViewAdapter(null, true)
+    private var viewAdapter = PublicGuildsRecyclerViewAdapter()
 
     override fun injectFragment(component: UserComponent) {
         component.inject(this)
@@ -38,10 +38,9 @@ class PublicGuildsFragment : BaseMainFragment<FragmentRecyclerviewBinding>(), Se
 
         binding?.recyclerView?.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(activity)
         binding?.recyclerView?.addItemDecoration(androidx.recyclerview.widget.DividerItemDecoration(activity, androidx.recyclerview.widget.DividerItemDecoration.VERTICAL))
-        viewAdapter = PublicGuildsRecyclerViewAdapter(null, true)
         compositeSubscription.add(socialRepository.getGroupMemberships()
                 .map { it.map { membership -> membership.groupID } }
-                .subscribeWithErrorHandler({ viewAdapter.setMemberGuildIDs(it) }))
+                .subscribeWithErrorHandler { viewAdapter.setMemberGuildIDs(it) })
         viewAdapter.socialRepository = socialRepository
         binding?.recyclerView?.adapter = viewAdapter
         binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
@@ -55,7 +54,6 @@ class PublicGuildsFragment : BaseMainFragment<FragmentRecyclerviewBinding>(), Se
 
     private fun fetchGuilds() {
         compositeSubscription.add(this.socialRepository.getPublicGuilds()
-                .firstElement()
                 .subscribe({ groups ->
                     this@PublicGuildsFragment.viewAdapter.setUnfilteredData(groups)
                 }, RxErrorHandler.handleEmptyError()))

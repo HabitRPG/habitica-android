@@ -661,7 +661,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     }
 
     override fun onTutorialDeferred(step: TutorialStep) {
-        taskRepository.executeTransaction { step.displayedOn = Date() }
+        taskRepository.modify(step) { it.displayedOn = Date() }
         this.removeActiveTutorialView()
     }
 

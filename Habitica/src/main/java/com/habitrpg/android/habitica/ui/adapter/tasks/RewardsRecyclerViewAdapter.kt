@@ -12,6 +12,7 @@ import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.models.tasks.ChecklistItem
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.android.habitica.ui.adapter.BaseRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.viewHolders.ShopItemViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.RewardViewHolder
 import io.reactivex.rxjava3.core.BackpressureStrategy
@@ -19,7 +20,7 @@ import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.subjects.PublishSubject
 import io.realm.OrderedRealmCollection
 
-class RewardsRecyclerViewAdapter(private var customRewards: OrderedRealmCollection<Task>?, private val layoutResource: Int, private val user: User?) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), TaskRecyclerViewAdapter {
+class RewardsRecyclerViewAdapter(private var customRewards: OrderedRealmCollection<Task>?, private val layoutResource: Int, private val user: User?) : BaseRecyclerViewAdapter<Task, RecyclerView.ViewHolder>(), TaskRecyclerViewAdapter {
     private var inAppRewards: OrderedRealmCollection<ShopItem>? = null
 
     private val errorButtonEventsSubject = PublishSubject.create<String>()
@@ -113,7 +114,7 @@ class RewardsRecyclerViewAdapter(private var customRewards: OrderedRealmCollecti
         return rewardCount
     }
 
-    override fun updateData(tasks: OrderedRealmCollection<Task>?) {
+    fun updateData(tasks: OrderedRealmCollection<Task>?) {
         this.customRewards = tasks
         notifyDataSetChanged()
     }

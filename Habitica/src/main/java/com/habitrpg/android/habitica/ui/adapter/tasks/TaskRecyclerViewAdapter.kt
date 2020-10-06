@@ -5,15 +5,15 @@ import com.habitrpg.android.habitica.models.tasks.ChecklistItem
 import com.habitrpg.android.habitica.models.tasks.Task
 import io.reactivex.rxjava3.core.Flowable
 import io.realm.OrderedRealmCollection
+import io.realm.RealmResults
 
 interface TaskRecyclerViewAdapter {
+    var data: List<Task>
     var ignoreUpdates: Boolean
 
     val errorButtonEvents: Flowable<String>
 
     var taskDisplayMode: String
-
-    fun updateData(tasks: OrderedRealmCollection<Task>?)
 
     fun filter()
 

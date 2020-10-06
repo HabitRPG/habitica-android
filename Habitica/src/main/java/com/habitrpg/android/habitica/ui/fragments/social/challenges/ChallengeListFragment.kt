@@ -67,7 +67,7 @@ class ChallengeListFragment : BaseFragment<FragmentChallengeslistBinding>(), and
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        challengeAdapter = ChallengesListViewAdapter(null, true, viewUserChallengesOnly, userId)
+        challengeAdapter = ChallengesListViewAdapter(viewUserChallengesOnly, userId)
         challengeAdapter?.getOpenDetailFragmentFlowable()?.subscribe({ openDetailFragment(it) }, RxErrorHandler.handleEmptyError())
                 ?.let { compositeSubscription.add(it) }
 
@@ -127,7 +127,7 @@ class ChallengeListFragment : BaseFragment<FragmentChallengeslistBinding>(), and
             challengeRepository.getChallenges()
         }
 
-        compositeSubscription.add(observable.firstElement().subscribe({ challenges ->
+        compositeSubscription.add(observable.subscribe({ challenges ->
             if (challenges.size == 0) {
                 retrieveChallengesPage()
             }

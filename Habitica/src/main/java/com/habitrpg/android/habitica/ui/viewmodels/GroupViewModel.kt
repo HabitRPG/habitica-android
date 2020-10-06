@@ -126,7 +126,7 @@ open class GroupViewModel : BaseViewModel() {
     fun getChatMessages(): Flowable<RealmResults<ChatMessage>> {
         return groupIDFlowable
                 .filterMapEmpty()
-                .flatMapMaybe { socialRepository.getGroupChat(it).firstElement() }
+                .flatMap { socialRepository.getGroupChat(it) }
     }
 
     fun retrieveGroup(function: (() -> Unit)?) {

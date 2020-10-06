@@ -8,14 +8,14 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.android.habitica.ui.adapter.BaseRecyclerViewAdapter
+import com.habitrpg.android.habitica.ui.viewHolders.BindableViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.ChatRecyclerMessageViewHolder
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.subjects.PublishSubject
-import io.realm.OrderedRealmCollection
-import io.realm.RealmRecyclerViewAdapter
 
-class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUpdate: Boolean, user: User?, private val isTavern: Boolean) : RealmRecyclerViewAdapter<ChatMessage, RecyclerView.ViewHolder>(data, autoUpdate) {
+class ChatRecyclerViewAdapter(user: User?, private val isTavern: Boolean) : BaseRecyclerViewAdapter<ChatMessage, RecyclerView.ViewHolder>() {
     internal var user = user
     set(value) {
         field = value
@@ -44,29 +44,27 @@ class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUp
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        data?.let { data ->
-            if (data[position].isSystemMessage) {
-                (holder as? SystemChatMessageViewHolder)?.bind(data[position])
-            } else {
-                val chatHolder = holder as? ChatRecyclerMessageViewHolder ?: return
-                val message = data[position]
-                chatHolder.bind(message,
-                        uuid,
-                        user,
-                        expandedMessageId == message.id)
-                chatHolder.onShouldExpand = { expandMessage(message.id, position) }
-                chatHolder.onLikeMessage = { likeMessageEvents.onNext(it) }
-                chatHolder.onOpenProfile = { userLabelClickEvents.onNext(it) }
-                chatHolder.onReply = { replyMessageEvents.onNext(it) }
-                chatHolder.onCopyMessage = { copyMessageEvents.onNext(it) }
-                chatHolder.onFlagMessage = { flagMessageEvents.onNext(it) }
-                chatHolder.onDeleteMessage = { deleteMessageEvents.onNext(it) }
-            }
+        if (data[position].isSystemMessage) {
+            (holder as? SystemChatMessageViewHolder)?.bind(data[position])
+        } else {
+            val chatHolder = holder as? ChatRecyclerMessageViewHolder ?: return
+            val message = data[position]
+            chatHolder.bind(message,
+                    uuid,
+                    user,
+                    expandedMessageId == message.id)
+            chatHolder.onShouldExpand = { expandMessage(message.id, position) }
+            chatHolder.onLikeMessage = { likeMessageEvents.onNext(it) }
+            chatHolder.onOpenProfile = { userLabelClickEvents.onNext(it) }
+            chatHolder.onReply = { replyMessageEvents.onNext(it) }
+            chatHolder.onCopyMessage = { copyMessageEvents.onNext(it) }
+            chatHolder.onFlagMessage = { flagMessageEvents.onNext(it) }
+            chatHolder.onDeleteMessage = { deleteMessageEvents.onNext(it) }
         }
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (data?.get(position)?.isSystemMessage == true) 0 else 1
+        return if (data[position].isSystemMessage) 0 else 1
     }
 
     fun getLikeMessageFlowable(): Flowable<ChatMessage> {

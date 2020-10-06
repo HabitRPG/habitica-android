@@ -96,7 +96,7 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
     }
 
     override fun sleep(user: User): Flowable<User> {
-        localRepository.executeTransaction { user.preferences?.sleep = !(user.preferences?.sleep ?: false) }
+        localRepository.modify(user) { it.preferences?.sleep = !(it.preferences?.sleep ?: false) }
         return apiClient.sleep().map { user }
     }
 
@@ -210,9 +210,9 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
             apiClient.updateUsername(newLoginName.trim())
         }).flatMapMaybe { localRepository.getUser(userID).firstElement() }
                 .doOnNext { user ->
-                    localRepository.executeTransaction {
-                        user.authentication?.localAuthentication?.username = newLoginName
-                        user.flags?.verifiedUsername = true
+                    localRepository.modify(user) { liveUser ->
+                        liveUser.authentication?.localAuthentication?.username = newLoginName
+                        liveUser.flags?.verifiedUsername = true
                     }
                 }
                 .firstElement()
@@ -228,26 +228,26 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
 
     override fun allocatePoint(user: User?, stat: String): Flowable<Stats> {
         if (user != null && user.isManaged) {
-            localRepository.executeTransaction {
+            localRepository.modify(user) { liveUser ->
                 when (stat) {
-                    Stats.STRENGTH -> user.stats?.strength = user.stats?.strength?.inc()
-                    Stats.INTELLIGENCE -> user.stats?.intelligence = user.stats?.intelligence?.inc()
-                    Stats.CONSTITUTION -> user.stats?.constitution= user.stats?.constitution?.inc()
-                    Stats.PERCEPTION -> user.stats?.per = user.stats?.per?.inc()
+                    Stats.STRENGTH -> liveUser.stats?.strength = liveUser.stats?.strength?.inc()
+                    Stats.INTELLIGENCE -> liveUser.stats?.intelligence = liveUser.stats?.intelligence?.inc()
+                    Stats.CONSTITUTION -> liveUser.stats?.constitution= liveUser.stats?.constitution?.inc()
+                    Stats.PERCEPTION -> liveUser.stats?.per = liveUser.stats?.per?.inc()
                 }
-                user.stats?.points = user.stats?.points?.dec()
+                liveUser.stats?.points = liveUser.stats?.points?.dec()
             }
         }
         return apiClient.allocatePoint(stat)
                 .doOnNext { stats ->
                     if (user != null && user.isManaged) {
-                        localRepository.executeTransaction {
-                            user.stats?.strength = stats.strength
-                            user.stats?.constitution = stats.constitution
-                            user.stats?.per = stats.per
-                            user.stats?.intelligence = stats.intelligence
-                            user.stats?.points = stats.points
-                            user.stats?.mp = stats.mp
+                        localRepository.modify(user) { liveUser ->
+                            liveUser.stats?.strength = stats.strength
+                            liveUser.stats?.constitution = stats.constitution
+                            liveUser.stats?.per = stats.per
+                            liveUser.stats?.intelligence = stats.intelligence
+                            liveUser.stats?.points = stats.points
+                            liveUser.stats?.mp = stats.mp
                         }
                     }
                 }
@@ -257,13 +257,13 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
             apiClient.bulkAllocatePoints(strength, intelligence, constitution, perception)
                     .doOnNext { stats ->
                         if (user != null && user.isManaged) {
-                            localRepository.executeTransaction {
-                                user.stats?.strength = stats.strength
-                                user.stats?.constitution = stats.constitution
-                                user.stats?.per = stats.per
-                                user.stats?.intelligence = stats.intelligence
-                                user.stats?.points = stats.points
-                                user.stats?.mp = stats.mp
+                            localRepository.modify(user) { liveUser ->
+                                liveUser.stats?.strength = stats.strength
+                                liveUser.stats?.constitution = stats.constitution
+                                liveUser.stats?.per = stats.per
+                                liveUser.stats?.intelligence = stats.intelligence
+                                liveUser.stats?.points = stats.points
+                                liveUser.stats?.mp = stats.mp
                             }
                         }
                     }
@@ -271,10 +271,11 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
     override fun runCron(tasks: MutableList<Task>) {
         var observable: Maybe<Any> = localRepository.getUser(userID).firstElement()
                 .filter { it.needsCron }
-                .map {  user -> localRepository.executeTransaction {
-                    user.needsCron = false
-                    user.lastCron = Date()
-                }
+                .map {  user ->
+                    localRepository.modify(user) { liveUser ->
+                        liveUser.needsCron = false
+                        liveUser.lastCron = Date()
+                    }
                     user
                 }
         if (tasks.isNotEmpty()) {
@@ -289,22 +290,22 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
 
     override fun useCustomization(user: User?, type: String, category: String?, identifier: String): Flowable<User> {
         if (user != null && appConfigManager.enableLocalChanges()) {
-            localRepository.executeTransaction {
+            localRepository.modify(user) { liveUser ->
                 when (type) {
-                    "skin" -> user.preferences?.skin =identifier
-                    "shirt" -> user.preferences?.shirt = identifier
+                    "skin" -> liveUser.preferences?.skin =identifier
+                    "shirt" -> liveUser.preferences?.shirt = identifier
                     "hair" -> {
                         when (category) {
-                            "color" -> user.preferences?.hair?.color = identifier
-                            "flower" -> user.preferences?.hair?.flower = identifier.toInt()
-                            "mustache" -> user.preferences?.hair?.mustache = identifier.toInt()
-                            "beard" -> user.preferences?.hair?.beard = identifier.toInt()
-                            "bangs" -> user.preferences?.hair?.bangs = identifier.toInt()
-                            "base" -> user.preferences?.hair?.base = identifier.toInt()
+                            "color" -> liveUser.preferences?.hair?.color = identifier
+                            "flower" -> liveUser.preferences?.hair?.flower = identifier.toInt()
+                            "mustache" -> liveUser.preferences?.hair?.mustache = identifier.toInt()
+                            "beard" -> liveUser.preferences?.hair?.beard = identifier.toInt()
+                            "bangs" -> liveUser.preferences?.hair?.bangs = identifier.toInt()
+                            "base" -> liveUser.preferences?.hair?.base = identifier.toInt()
                         }
                     }
-                    "background" -> user.preferences?.background = identifier
-                    "chair" -> user.preferences?.chair = identifier
+                    "background" -> liveUser.preferences?.background = identifier
+                    "chair" -> liveUser.preferences?.chair = identifier
                 }
             }
         }

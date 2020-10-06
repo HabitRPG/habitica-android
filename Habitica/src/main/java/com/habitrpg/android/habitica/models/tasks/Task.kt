@@ -6,6 +6,7 @@ import android.text.Spanned
 import androidx.annotation.StringDef
 import com.google.gson.annotations.SerializedName
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.models.BaseObject
 import com.habitrpg.android.habitica.models.Tag
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
@@ -17,7 +18,15 @@ import org.json.JSONArray
 import org.json.JSONException
 import java.util.*
 
-open class Task : RealmObject, Parcelable {
+open class Task : RealmObject, BaseObject, Parcelable {
+
+    override val realmClass: Class<Task>
+        get() = Task::class.java
+    override val primaryIdentifier: String?
+        get() = id
+    override val primaryIdentifierName: String
+        get() = "id"
+
     @PrimaryKey
     @SerializedName("_id")
     var id: String? = null

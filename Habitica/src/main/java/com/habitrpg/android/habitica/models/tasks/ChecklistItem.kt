@@ -2,16 +2,20 @@ package com.habitrpg.android.habitica.models.tasks
 
 import android.os.Parcel
 import android.os.Parcelable
-
-import java.util.UUID
-
+import com.habitrpg.android.habitica.models.BaseObject
+import io.realm.RealmModel
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
+import java.util.*
 
-/**
- * Created by viirus on 06/07/15.
- */
-open class ChecklistItem : RealmObject, Parcelable {
+open class ChecklistItem : RealmObject, BaseObject, Parcelable {
+
+    override val realmClass: Class<ChecklistItem>
+        get() = ChecklistItem::class.java
+    override val primaryIdentifier: String?
+        get() = id
+    override val primaryIdentifierName: String
+        get() = "id"
 
     @PrimaryKey
     var id: String? = null
@@ -56,7 +60,7 @@ open class ChecklistItem : RealmObject, Parcelable {
         dest.writeInt(position)
     }
 
-    companion object CREATOR : Parcelable.Creator<ChecklistItem> {
+    companion object CREATOR : Parcelable.Creator<ChecklistItem>, RealmModel {
         override fun createFromParcel(source: Parcel): ChecklistItem = ChecklistItem(source)
 
         override fun newArray(size: Int): Array<ChecklistItem?> = arrayOfNulls(size)

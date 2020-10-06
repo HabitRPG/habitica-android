@@ -11,13 +11,12 @@ import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.GearListItemBinding
 import com.habitrpg.android.habitica.models.inventory.Equipment
+import com.habitrpg.android.habitica.ui.adapter.BaseRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import io.reactivex.rxjava3.subjects.PublishSubject
-import io.realm.OrderedRealmCollection
-import io.realm.RealmRecyclerViewAdapter
 
-class EquipmentRecyclerViewAdapter(data: OrderedRealmCollection<Equipment>?, autoUpdate: Boolean) : RealmRecyclerViewAdapter<Equipment, EquipmentRecyclerViewAdapter.GearViewHolder>(data, autoUpdate) {
+class EquipmentRecyclerViewAdapter : BaseRecyclerViewAdapter<Equipment, EquipmentRecyclerViewAdapter.GearViewHolder>() {
 
     var equippedGear: String? = null
     var isCostume: Boolean? = null
@@ -31,9 +30,7 @@ class EquipmentRecyclerViewAdapter(data: OrderedRealmCollection<Equipment>?, aut
     }
 
     override fun onBindViewHolder(holder: GearViewHolder, position: Int) {
-        data?.let {
-            holder.bind(it[position])
-        }
+        holder.bind(data[position])
     }
 
     inner class GearViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {

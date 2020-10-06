@@ -64,7 +64,7 @@ class ChatFragment : BaseFragment<FragmentChatBinding>() {
         layoutManager.stackFromEnd = false
         binding?.recyclerView?.layoutManager = layoutManager
 
-        chatAdapter = ChatRecyclerViewAdapter(null, true, null, true)
+        chatAdapter = ChatRecyclerViewAdapter(null, true)
         chatAdapter?.let {adapter ->
             compositeSubscription.add(adapter.getUserLabelClickFlowable().subscribe({ userId ->
                 FullProfileActivity.open(userId)
@@ -194,7 +194,7 @@ class ChatFragment : BaseFragment<FragmentChatBinding>() {
     }
 
     private fun setChatMessages(chatMessages: RealmResults<ChatMessage>) {
-        chatAdapter?.updateData(chatMessages)
+        chatAdapter?.data = chatMessages
         viewModel?.socialRepository?.getUnmanagedCopy(chatMessages)?.let { binding?.chatBarView?.chatMessages = it }
 
         viewModel?.gotNewMessages = true

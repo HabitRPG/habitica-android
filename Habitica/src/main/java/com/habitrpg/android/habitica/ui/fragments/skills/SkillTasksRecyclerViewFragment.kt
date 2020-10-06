@@ -32,7 +32,7 @@ class SkillTasksRecyclerViewFragment : BaseFragment<FragmentRecyclerviewBinding>
         return FragmentRecyclerviewBinding.inflate(inflater, container, false)
     }
 
-    var adapter: SkillTasksRecyclerViewAdapter = SkillTasksRecyclerViewAdapter(null, true)
+    var adapter: SkillTasksRecyclerViewAdapter = SkillTasksRecyclerViewAdapter()
     internal var layoutManager: LinearLayoutManager? = null
 
     private val taskSelectionEvents = PublishSubject.create<Task>()
@@ -51,7 +51,7 @@ class SkillTasksRecyclerViewFragment : BaseFragment<FragmentRecyclerviewBinding>
         val layoutManager = LinearLayoutManager(context)
         binding?.recyclerView?.layoutManager = layoutManager
 
-        adapter = SkillTasksRecyclerViewAdapter(null, true)
+        adapter = SkillTasksRecyclerViewAdapter()
         compositeSubscription.add(adapter.getTaskSelectionEvents().subscribe({
             taskSelectionEvents.onNext(it)
         }, RxErrorHandler.handleEmptyError()))
@@ -66,7 +66,7 @@ class SkillTasksRecyclerViewFragment : BaseFragment<FragmentRecyclerviewBinding>
             tasks = tasks.map { it.where().equalTo("completed", false).findAll() }
         }
         compositeSubscription.add(tasks.subscribe({
-            adapter.updateData(it)
+            adapter.data = it
         }, RxErrorHandler.handleEmptyError()))
     }
 }

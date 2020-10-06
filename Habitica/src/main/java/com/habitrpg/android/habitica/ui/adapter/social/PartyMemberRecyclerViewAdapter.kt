@@ -4,14 +4,13 @@ import android.view.ViewGroup
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.models.members.Member
+import com.habitrpg.android.habitica.ui.adapter.BaseRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.viewHolders.GroupMemberViewHolder
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.subjects.PublishSubject
-import io.realm.OrderedRealmCollection
-import io.realm.RealmRecyclerViewAdapter
 
-class PartyMemberRecyclerViewAdapter(data: OrderedRealmCollection<Member>?, autoUpdate: Boolean) : RealmRecyclerViewAdapter<Member, GroupMemberViewHolder>(data, autoUpdate) {
+class PartyMemberRecyclerViewAdapter : BaseRecyclerViewAdapter<Member, GroupMemberViewHolder>() {
 
     var leaderID: String? = null
 
@@ -22,11 +21,9 @@ class PartyMemberRecyclerViewAdapter(data: OrderedRealmCollection<Member>?, auto
     }
 
     override fun onBindViewHolder(holder: GroupMemberViewHolder, position: Int) {
-        data?.let {
-            holder.bind(it[position], leaderID, null)
-            holder.onClickEvent = {
-                userClickedEvents.onNext(it[position].id ?: "")
-            }
+        holder.bind(data[position], leaderID, null)
+        holder.onClickEvent = {
+            userClickedEvents.onNext(data[position].id ?: "")
         }
     }
 

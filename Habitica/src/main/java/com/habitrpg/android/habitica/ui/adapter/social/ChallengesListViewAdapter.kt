@@ -8,16 +8,16 @@ import com.habitrpg.android.habitica.databinding.ChallengeItemBinding
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.social.ChallengeMembership
+import com.habitrpg.android.habitica.ui.adapter.BaseRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengeFilterOptions
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.subjects.PublishSubject
-import io.realm.OrderedRealmCollection
-import io.realm.RealmRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.helpers.EmojiParser
+import io.realm.OrderedRealmCollection
 
-class ChallengesListViewAdapter(data: OrderedRealmCollection<Challenge>?, autoUpdate: Boolean, private val viewUserChallengesOnly: Boolean, private val userId: String) : RealmRecyclerViewAdapter<Challenge, ChallengesListViewAdapter.ChallengeViewHolder>(data, autoUpdate) {
+class ChallengesListViewAdapter(private val viewUserChallengesOnly: Boolean, private val userId: String) : BaseRecyclerViewAdapter<Challenge, ChallengesListViewAdapter.ChallengeViewHolder>() {
     private var unfilteredData: OrderedRealmCollection<Challenge>? = null
     private var challengeMemberships: OrderedRealmCollection<ChallengeMembership>? = null
 
@@ -41,7 +41,7 @@ class ChallengesListViewAdapter(data: OrderedRealmCollection<Challenge>?, autoUp
     }
 
     fun updateUnfilteredData(data: OrderedRealmCollection<Challenge>?) {
-        super.updateData(data)
+        this.data = data ?: emptyList()
         unfilteredData = data
     }
 
@@ -71,7 +71,7 @@ class ChallengesListViewAdapter(data: OrderedRealmCollection<Challenge>?, autoUp
         }
 
         query?.let {
-            this.updateData(it.findAll())
+            data = it.findAll()
         }
     }
 

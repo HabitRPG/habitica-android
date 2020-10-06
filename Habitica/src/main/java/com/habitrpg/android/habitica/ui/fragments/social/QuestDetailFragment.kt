@@ -90,7 +90,7 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
         party = group
         quest = group.quest
         setQuestParticipants(group.quest?.participants)
-        compositeSubscription.add(socialRepository.getMember(quest?.leader).firstElement().subscribe({ member ->
+        compositeSubscription.add(socialRepository.getMember(quest?.leader).subscribe({ member ->
             if (context != null && binding?.questLeaderView != null && member != null) {
                 binding?.questLeaderView?.text = context?.getString(R.string.quest_leader_header, member.displayName)
             }
