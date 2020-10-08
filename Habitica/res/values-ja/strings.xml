@@ -26,7 +26,7 @@
     <string name="preference_push_you_won_challenge">チャレンジで優勝しました！</string>
     <string name="preference_push_received_a_private_message">プライベートメッセージを受信しました</string>
     <string name="preference_push_gifted_gems">ジェムが贈られました</string>
-    <string name="preference_push_gifted_subscription">寄付会員権特典が贈られました</string>
+    <string name="preference_push_gifted_subscription">有料プランをプレゼントされました</string>
     <string name="preference_push_invited_to_party">パーティーに招待されました</string>
     <string name="preference_push_invited_to_guild">ギルドに招待されました</string>
     <string name="preference_push_your_quest_has_begun">クエストが始まりました</string>
