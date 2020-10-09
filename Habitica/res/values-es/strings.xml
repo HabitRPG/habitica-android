@@ -427,7 +427,7 @@
     <string name="empty_description_habits">Los hábitos son tareas que no tienen un horario rígido. Puedes comprobar ellos fuera muchas veces al día, o no en absoluto.</string>
     <string name="empty_title_dailies">No tienes ningún Tareas Diarios</string>
     <string name="empty_description_dailies">Tareas Diarias son tareas que se repiten sobre una base regular. Elija el horario que funciona para ti!</string>
-    <string name="empty_title_todos">No tienes ninguna tarea</string>
+    <string name="empty_title_todos">No tienes ninguna tarea pendiente</string>
     <string name="empty_description_todos">Tareas son tareas que sólo se deben completar una vez. Añade listas a tus Tareas para aumentar su valor.</string>
     <string name="empty_title_rewards">No tienes Premios</string>
     <string name="reset_walkthrough">Restablecer el tutorial de Justin</string>
@@ -675,7 +675,7 @@
     <string name="discover">Descubre</string>
     <string name="damage_paused">Daño pausado</string>
     <string name="opting_out_progress">optar por no</string>
-    <string name="delete_oauth_account_description">¿Estás seguro/a\? Esto eliminará tu cuenta permanentemente, ¡y no podrá ser restaurada! Necesitarás registrar una nueva cuenta para utilizar Habitica de nuevo. Las Gemas que hayas gastado o que tengas en el banco no serán reembolsadas. Si estás absolutamente seguro/a, escribe ELIMINAR en el cuadro de texto de abajo.</string>
+    <string name="delete_oauth_account_description">¿Estás segure\? Esto eliminará tu cuenta permanentemente, ¡y no podrá ser restaurada! Necesitarás registrar una nueva cuenta para utilizar Habitica de nuevo. Las Gemas que hayas gastado o que tengas en el banco no serán reembolsadas. Si estás absolutamente segure, escribe ELIMINAR en el cuadro de texto de abajo.</string>
     <string name="preference_push_important_announcements">Anuncios Importantes</string>
     <string name="only_leader_create_challenge">Sólo el/la líder puede crear Desafíos</string>
     <string name="create_party">Crear Equipo</string>
@@ -826,8 +826,8 @@
     <string name="add_local_authentication">Agregar autentificación local</string>
     <string name="gift_gems_subtitle">Elige el pack de gemas que te gustaría regalar a continuación!</string>
     <string name="empty_title_rewards_filtered">Sin recompensas</string>
-    <string name="empty_description_todos_filtered">Ninguna tarea coincide con los filtros seleccionados.</string>
-    <string name="empty_title_todos_filtered">Sin tareas</string>
+    <string name="empty_description_todos_filtered">Ninguna tarea pendiente coincide con los filtros seleccionados.</string>
+    <string name="empty_title_todos_filtered">Sin tareas pendientes</string>
     <string name="empty_description_dailies_filtered">Ninguna tarea diaria coincide con los filtros seleccionados.</string>
     <string name="empty_title_dailies_filtered">Sin tareas diarias</string>
     <string name="empty_description_habits_filtered">Ningún hábito coincide con los filtros seleccionados.</string>
@@ -878,4 +878,10 @@
     <string name="spooky_promo_info_instructions">Entre el 29 de Octubre y el 2 de Noviembre, simplemente compra cualquier paquete de Gemas como de costumbre y tu cuenta será acreditada con la cantidad promocional de Gemas. ¡Más Gemas para gastar, compartir o guardar para cualquier evento futuro!</string>
     <string name="view_gem_bundles">Ver paquetes de Gemas</string>
     <string name="fall_promo_info_prompt">La Gala de Otoño está en pleno apogeo, así que pensamos que era el momento perfecto para presentar nuestra primera Venta de Gemas! Ahora obtendrás más gemas con cada compra como nunca antes.</string>
+    <string name="defeat">Derrotar</string>
+    <string name="gift_confirmation_text_gems">Has enviado algunas gemas a %s.</string>
+    <string name="special_items">Artículos especiales</string>
+    <string name="leave_delte_tasks">Abandonar y eliminar las tareas</string>
+    <string name="leave_keep_tasks">Abandonar manteniendo las tareas</string>
+    <string name="challenge_leave_description">Puedes elegir mantener las tareas de este desafío en tu tablero personal o eliminarlas cuando lo abandones</string>
 </resources>
