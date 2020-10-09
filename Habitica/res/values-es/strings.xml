@@ -428,7 +428,7 @@
     <string name="empty_title_dailies">No tienes ningún Tareas Diarios</string>
     <string name="empty_description_dailies">Tareas Diarias son tareas que se repiten sobre una base regular. Elija el horario que funciona para ti!</string>
     <string name="empty_title_todos">No tienes ninguna tarea pendiente</string>
-    <string name="empty_description_todos">Tareas son tareas que sólo se deben completar una vez. Añade listas a tus Tareas para aumentar su valor.</string>
+    <string name="empty_description_todos">Tareas son cometidos que sólo se deben completar una vez. Añade listas a tus Tareas para aumentar su valor.</string>
     <string name="empty_title_rewards">No tienes Premios</string>
     <string name="reset_walkthrough">Restablecer el tutorial de Justin</string>
     <string name="read_community_guidelines">Por favor, lea nuestras directrices de la Comunidad antes de publicar</string>
