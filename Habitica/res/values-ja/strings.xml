@@ -505,7 +505,7 @@
     <string name="purchase_gems">ジェムを購入する</string>
     <string name="insufficientHourglasses">このアイテムを購入するにはもっと神秘の砂時計が必要です！</string>
     <string name="get_hourglasses">神秘の砂時計を手に入れる</string>
-    <string name="subscribe_for_hourglasses">寄付して神秘の砂時計を手に入れる</string>
+    <string name="subscribe_for_hourglasses">有料プランに加入して神秘の砂時計を手に入れる</string>
     <string name="timetravelers_closed_description">三ヶ月の連続ログインごとに一つ神秘の砂時計が手に入るので、これを使って、過去や未来の限定版アイテム、ペット、乗騎を開放しましょう！</string>
     <string name="want_to_subscribe">有料プランに加入したい</string>
     <string name="seasonal_closed_description">大祭は夏至と冬至、春分や秋分の頃に開催されるので、その頃にまた季節の特別アイテムたちを確認してみましょう！</string>
@@ -664,7 +664,7 @@
     <string name="equipment_per">知覚：</string>
     <string name="visit_website">ウェブサイトを訪れる</string>
     <string name="subscribe_gift_description">寄付会員特典を誰かに贈りたいですか？</string>
-    <string name="gift_subscription">寄付会員特典を贈る</string>
+    <string name="gift_subscription">有料プランをプレゼントする</string>
     <string name="gift_one_get_one_description">寄付会員特典を贈って、無料で寄付会員特典をもらおう！</string>
     <string name="gift_title">誰にプレゼントを贈りたいですか？</string>
     <string name="gift_one_get_one">１つ贈って、１つ無料で手に入れよう！</string>
@@ -879,8 +879,8 @@
     <string name="more_out_of_habitica">Habiticaをさらに楽しみましょう</string>
     <string name="gift_gems_disclaimer">Habiticaはプレイヤー間のジェムの贈答を強制しません。他のプレイヤーにジェムを要求することはコミュニティガイドラインに違反します。この行為を見かけた方はadmin@habitica.comまでご連絡ください。</string>
     <string name="gems_gift_description">どなたかに輝くジェムを送りたいですか？</string>
-    <string name="profile_gift_subscription">寄付会員特典を
-\n贈る</string>
+    <string name="profile_gift_subscription">有料プランを
+\nプレゼントする</string>
     <string name="profile_gift_gems">ジェムを
 \n送る</string>
     <string name="profile_send_message">メッセージを
@@ -901,10 +901,10 @@
     <string name="cancel_subscription_group_plan">あなたはグループプランに加入したパーティーかギルドのメンバーであるため、無料の寄付会員特典が付与されています。これはあなたがグループを離れるか、オーナーによってグループプランがキャンセルされた場合に終了します。グループプランの終了の際には、あなたが持つ寄付会員特典の残りの月が適用されます。</string>
     <string name="gifted">贈りました</string>
     <string name="resubscribe_description">特典を継続して受けたいですか？ 特典を有効にしたままにするために、あなたに贈られた寄付会員特典の期限が切れる前に次の新しい寄付をはじめることができます。</string>
-    <string name="resubscribe">寄付の再開</string>
-    <string name="renew_subscription">寄付を再開する</string>
-    <string name="thanks_for_subscribing">寄付に感謝します</string>
-    <string name="subscribe_options_title">あなたのご都合にあった寄付の期間を選びましょう</string>
+    <string name="resubscribe">有料プランの再開</string>
+    <string name="renew_subscription">有料プランを再開する</string>
+    <string name="thanks_for_subscribing">有料プランにご加入いただきありがとうございます</string>
+    <string name="subscribe_options_title">有料プランの期間をあなたのご都合に合わせて選びましょう</string>
     <string name="ending_on">%@に止める</string>
     <string name="not_recurring">くり返さない</string>
     <string name="cancelled">キャンセルしました</string>
@@ -922,7 +922,7 @@
     <string name="gems_to_gift">ジェムを贈る</string>
     <string name="gift_gems_balance_subtitle">贈りたいジェムの数を記入するか、タブを切り替えて贈るためのジェムを購入してください</string>
     <string name="g1g1_info_2">機能説明</string>
-    <string name="gift_a_subscription">寄付会員特典を贈る</string>
+    <string name="gift_a_subscription">有料プランをプレゼントする</string>
     <string name="g1g1_info_1">贈り物の季節を祝して、特別なプロモーションが戻ってきます。いま寄付会員特典を贈ると、無料であなた自身も同じ寄付会員特典を受けることができます！</string>
     <string name="promo_g1g1_prompt">誰かに寄付会員特典を贈ると、自分も無料で同じ寄付会員特典を受けられるイベント</string>
     <string name="promo_g1g1_description">いま寄付会員特典を贈ると、無料であなた自身も同じ寄付会員特典を受けることができます！</string>
@@ -950,14 +950,14 @@
     <string name="skill_unlocks_at">レベル%dでスキル機能が解除されます</string>
     <string name="preference_email_onboarding">あなたのHabiticaアカウントの設定の手引き</string>
     <string name="preference_email_kicked_group">グループから追い出されました</string>
-    <string name="preference_email_subscription_reminder">寄付についてのリマインダー</string>
+    <string name="preference_email_subscription_reminder">有料プランについてのリマインダー</string>
     <string name="pref_emails_checkbox">メール通知を使用する</string>
     <string name="emails">メール通知</string>
     <string name="go_shopping">買い物に行く</string>
     <string name="purchase_from_timetravel_shop">タイムトラベラーの店でこのカスタマイズを購入できます</string>
     <string name="learn_more">もっと詳しく知る</string>
     <string name="limited_event">限定イベント</string>
-    <string name="g1g1_info_2_text">「寄付会員特典を贈る」をタップして、贈る相手のユーザーネームを入力し、贈る寄付会員特典の期間を選択してください。あなたのアカウントにあなたが贈ったのと同じ寄付会員特典が贈られます。</string>
+    <string name="g1g1_info_2_text">「有料プランをプレゼントする」をタップして、贈る相手のユーザーネームを入力し、プレゼントする有料プランの期間を選択してください。自動的にあなたのアカウントにもプレゼントした分と同じ期間の有料プランが無料で適用されます。</string>
     <string name="lets_go">レッツゴー</string>
     <string name="bugs_fixes_description">何か問題が起こりましたか？　解決方法をチェックするか、サポートを受けるために我々に連絡してください。</string>
     <string name="bugs_fixes">バグとバグの修正</string>
@@ -1016,4 +1016,5 @@
     <string name="hourglasses_description">神秘の砂時計は極めてレアなゲーム内通貨で、Habiticaの寄付会員を3ヶ月以上継続することで受け取れます。タイムトラベラーの店で神秘の砂時計を使い、過去の装備セット・ペット・乗騎・動く背景・特別なクエストなどが購入できます。
 \n
 \nあなたは神秘の砂時計を年に4つ受け取れます。入手のタイミングは寄付会員の更新スケジュールに基づいています。砂時計を入手できる期間の寄付を支払った、次の月の最初の日に発送されます。詳しくは[寄付]のページをご覧ください。</string>
+    <string name="subscription_credit">有料プランの有効期間</string>
 </resources>
