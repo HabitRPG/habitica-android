@@ -71,11 +71,11 @@
     <string name="checklist">チェックリスト</string>
     <string name="reminders">通知</string>
     <string name="attributes">属性</string>
-    <string name="repeatables_frequency_daily">日課</string>
-    <string name="repeatables_frequency_weekly">週間</string>
-    <string name="repeatables_frequency_monthly">月間</string>
-    <string name="repeatables_frequency_yearly">年間</string>
-    <string name="repeatables_frequency_day_of_month">日にち</string>
+    <string name="repeatables_frequency_daily">日ごと</string>
+    <string name="repeatables_frequency_weekly">毎週</string>
+    <string name="repeatables_frequency_monthly">毎月</string>
+    <string name="repeatables_frequency_yearly">毎年</string>
+    <string name="repeatables_frequency_day_of_month">月の特定の日</string>
     <string name="repeatables_frequency_day_of_week">曜日</string>
     <string name="monday">月</string>
     <string name="tuesday">火</string>
@@ -736,8 +736,8 @@
     <string name="empty_description_todos_filtered">現在のフィルターでは表示できるTo Doがありません。</string>
     <string name="empty_description_dailies_filtered">現在のフィルターでは表示できる日課がありません。</string>
     <string name="streak">連続実行</string>
-    <string name="weekly">週間</string>
-    <string name="monthly">月間</string>
+    <string name="weekly">毎週</string>
+    <string name="monthly">毎月</string>
     <string name="gift_confirmation_text_sub">%sに%sヶ月分のHabitica寄付会員特典を送りました。</string>
     <string name="gift_gems_subtitle">下から贈りたいジェムの量を選びましょう！</string>
     <string name="join_party_description_guild">友達に下のユーザー名を教えるか、%sに行って未来の仲間たちに出会いましょう！</string>
@@ -814,7 +814,7 @@
     <string name="preference_push_party_activity">パーティーの活動</string>
     <string name="search_hint">タスクを検索する</string>
     <string name="search">検索</string>
-    <string name="repeat_daily">日課</string>
+    <string name="repeat_daily">毎日</string>
     <string name="complete">完了</string>
     <string name="joinedGuildTitle">ギルドに参加する</string>
     <string name="beastMasterTitle">獣使い</string>
@@ -863,7 +863,7 @@
     <string name="sent_card">%sを送りました</string>
     <string name="share_challenge_with">チャレンジをシェアする</string>
     <string name="details">詳細</string>
-    <string name="create_task">%sを作成する</string>
+    <string name="create_task">%sの作成</string>
     <string name="confirm_deletion">削除を承認する</string>
     <string name="take_me_back">戻る</string>
     <string name="setup_task_habit_2_notes">または編集画面から削除しましょう</string>
@@ -1017,4 +1017,5 @@
 \n 
 \nあなたは神秘の砂時計を年に4つ受け取れます。入手のタイミングは有料会員の更新スケジュールに基づいています。砂時計を入手できる期間の有料プランを支払うと、その翌月の最初の日に配布されます。詳しくは [有料プラン] のページをご覧ください。</string>
     <string name="subscription_credit">有料プランの有効期間</string>
+    <string name="create_task_title">タスクの作成</string>
 </resources>
