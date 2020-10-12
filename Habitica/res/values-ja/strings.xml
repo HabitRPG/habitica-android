@@ -1018,4 +1018,6 @@
 \nあなたは神秘の砂時計を年に4つ受け取れます。入手のタイミングは有料会員の更新スケジュールに基づいています。砂時計を入手できる期間の有料プランを支払うと、その翌月の最初の日に配布されます。詳しくは [有料プラン] のページをご覧ください。</string>
     <string name="subscription_credit">有料プランの有効期間</string>
     <string name="create_task_title">タスクの作成</string>
+    <string name="percent_completed">%d%%完了</string>
+    <string name="pet_ownership_fraction">%1$d / %2$d</string>
 </resources>
