@@ -663,7 +663,7 @@
     <string name="equipment_int">知能：</string>
     <string name="equipment_per">知覚：</string>
     <string name="visit_website">ウェブサイトを訪れる</string>
-    <string name="subscribe_gift_description">寄付会員特典を誰かに贈りたいですか？</string>
+    <string name="subscribe_gift_description">有料プランの特典を誰かに贈りたいですか？</string>
     <string name="gift_subscription">有料プランをプレゼントする</string>
     <string name="gift_one_get_one_description">寄付会員特典を贈って、無料で寄付会員特典をもらおう！</string>
     <string name="gift_title">誰にプレゼントを贈りたいですか？</string>
