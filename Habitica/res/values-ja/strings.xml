@@ -1020,4 +1020,7 @@
     <string name="create_task_title">タスクの作成</string>
     <string name="percent_completed">%d%%完了</string>
     <string name="pet_ownership_fraction">%1$d / %2$d</string>
+    <string name="leave_delte_tasks">辞める、タスクも削除する</string>
+    <string name="leave_keep_tasks">辞める、タスクはこのまま</string>
+    <string name="challenge_leave_description">このチャレンジのタスクをあなたのタスクボードに残すか、削除するかこのチャレンジを辞めるときに選べます</string>
 </resources>
