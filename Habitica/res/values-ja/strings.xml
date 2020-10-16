@@ -665,7 +665,7 @@
     <string name="visit_website">ウェブサイトを訪れる</string>
     <string name="subscribe_gift_description">有料プランの特典を誰かに贈りたいですか？</string>
     <string name="gift_subscription">有料プランをプレゼントする</string>
-    <string name="gift_one_get_one_description">寄付会員特典を贈って、無料で寄付会員特典をもらおう！</string>
+    <string name="gift_one_get_one_description">有料プランをプレゼントすると、有料プランに無料で加入できるイベントが開催中です！</string>
     <string name="gift_title">誰にプレゼントを贈りたいですか？</string>
     <string name="gift_one_get_one">１つ贈って、１つ無料で手に入れよう！</string>
     <string name="gift_subscription_subtitle">下の方から贈りたい寄付会員特典を選んでください！ この購入では、自動的に更新はされません。</string>
