@@ -677,7 +677,7 @@
     <string name="opting_out_progress">選ばない</string>
     <string name="subscription_duration_norenew">%sの間</string>
     <string name="delete_oauth_account_description">この操作であなたのアカウントは完全に削除され、決して復元はできません！ 貯めているジェム、使ったジェムは、返金できません。本当にアカウントを削除するなら、下のテキストボックスに DELETE と入力してください。</string>
-    <string name="gift_one_get_one_detailed_description">このプロモーションが開催されている間は、贈り物を送った後に自動的に同じ寄付会員特典を受けることができます。</string>
+    <string name="gift_one_get_one_detailed_description">このプロモーションが開催されている間は、プレゼントを送った後に自動的に同じ期間の有料プランを無料で受けることができます。</string>
     <string name="gift_confirmation_text_g1g1">%s に %sヶ月分のHabitica寄付会員特典を送りました。そして、１つ贈って１つ無料で手に入れようキャンペーンによって、あなたのアカウントにも同じ寄付会員特典が適用されました！</string>
     <string name="gift_confirmation_text">%s に %sヶ月分のHabitica寄付会員特典を送りました。</string>
     <string name="damage_paused">ダメージを一時停止する</string>
