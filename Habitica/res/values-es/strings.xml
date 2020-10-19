@@ -364,7 +364,7 @@
     <string name="monthly_gem_cap">Límite mensual de gemas</string>
     <string name="inactive">Inactiva</string>
     <string name="one_month">1 Mes</string>
-    <string name="months">%d Meses</string>
+    <string name="months">Meses</string>
     <string name="month">mes</string>
     <string name="three_months">3 meses</string>
     <string name="six_months">6 meses</string>
@@ -850,7 +850,7 @@
     <string name="streak">Racha</string>
     <string name="years">Años</string>
     <string name="weeks">Semanas</string>
-    <string name="days">días</string>
+    <string name="days">Días</string>
     <string name="every">Cada</string>
     <string name="repeats">Repite</string>
     <string name="monthly">Mensual</string>
@@ -887,4 +887,7 @@
     <string name="report_message_title">Reportar a %s por violación:</string>
     <string name="need_help_header_description">Publica un mensaje en el %s para que tus preguntas sean respondidas por otros jugadores.</string>
     <string name="assigned_stat">Atributo Asignado</string>
+    <string name="report_explanation">**Únicamente** denuncia una publicación que viole las [Directrices de la comunidad](https://habitica.com/static/community-guidelines) y/o [Términos de servicio](https://habitica.com/static/terms). Denunciar inadecuadamente una publicación puede conllevarte una infracción</string>
+    <string name="reason_for_report">Motivo de la denuncia (opcional)</string>
+    <string name="checklist_text">Texto de la lista</string>
 </resources>
