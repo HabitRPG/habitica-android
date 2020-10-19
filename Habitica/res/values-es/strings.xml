@@ -638,8 +638,8 @@
     <string name="two_handed">A dos manos</string>
     <string name="usernamePromptTitle">¡Hora de establecer tu nombre de usuario!</string>
     <string name="usernamePromptBody">Los nombre de inicio de sesión ahora son nombres de usuario únicos, que se mostrarán al lado de tu nombre público y se usará para invitaciones, @menciones en los chats, y mensajes. </string>
-    <string name="usernamePromptWiki">Si quieres saber más de este cambio, <a href="https://habitica.wikia_com/wiki/Player_Names">visita nuestra wiki.</a></string>
-    <string name="usernamePromptDisclaimer">Los nombres de usuario deben conformarse a nuestros <a href="https://habitica.com/static/terms">Términos de Servicio</a> y <a href="https://habitica_com/static/community-guidelines">Normas de Comunidad</a>. Si no habías establecido previamente un nombre de inicio de sesión, tu nombre de usuario ha sido autogenerado.</string>
+    <string name="usernamePromptWiki">Si quieres saber más de este cambio, <a href="https://habitica.wikia.com/wiki/Player_Names">visita nuestra wiki.</a></string>
+    <string name="usernamePromptDisclaimer">Los nombres de usuario deben ajustarse a nuestros <a href="https://habitica.com/static/terms">Términos de Servicio</a> y <a href="https://habitica.com/static/community-guidelines">Normas de Comunidad</a>. Si no habías establecido previamente un nombre de inicio de sesión, tu nombre de usuario ha sido autogenerado.</string>
     <string name="confirm_username_title">¿Estás seguro de que quieres confirmar tu nombre de usuario actual?</string>
     <string name="confirm_username_description">Confirmar tu nombre de usuario lo hará público para invitations, @menciones y mensajes. Puedes cambiar tu nombre de usuario en los ajustes en cualquier momento.</string>
     <string name="cancel">Cancelar</string>
@@ -844,7 +844,7 @@
     <string name="setup_task_habit_1">Añade un pendiente a Habitica</string>
     <string name="cost">Costo</string>
     <string name="x_class">Clase de %s</string>
-    <string name="become_x">Vuélvete %s</string>
+    <string name="become_x">Conviértete en un %s</string>
     <string name="need_more_help">¿Necesitas más ayuda\?</string>
     <string name="update_available">Actualización disponible: %1$s (%2$d)</string>
     <string name="streak">Racha</string>
@@ -884,4 +884,7 @@
     <string name="leave_delte_tasks">Abandonar y eliminar las tareas</string>
     <string name="leave_keep_tasks">Abandonar manteniendo las tareas</string>
     <string name="challenge_leave_description">Puedes elegir mantener las tareas de este desafío en tu tablero personal o eliminarlas cuando lo abandones</string>
+    <string name="report_message_title">Reportar a %s por violación:</string>
+    <string name="need_help_header_description">Publica un mensaje en el %s para que tus preguntas sean respondidas por otros jugadores.</string>
+    <string name="assigned_stat">Atributo Asignado</string>
 </resources>
