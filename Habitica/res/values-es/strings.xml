@@ -733,7 +733,7 @@
     <string name="facebook">Facebook</string>
     <string name="authentication_methods">Métodos de autentificación</string>
     <string name="someone">Alguien</string>
-    <string name="invitation_title">%s te invitó a %s</string>
+    <string name="invitation_title">%s te invitó a unirte a su grupo %s</string>
     <string name="copy_username">Copiar nombre de usuario</string>
     <string name="id_copied">Copiar ID de usuario al portapapeles</string>
     <string name="copy_userid">Copiar ID de usuario</string>
@@ -801,7 +801,7 @@
     <string name="levelup_detail_10">Elige una clase que se ajuste a tu estilo de juego y desbloquea habilidades especiales y equipamiento para ayudar con tu viaje</string>
     <string name="delete_reminder">Eliminar recordatorio</string>
     <string name="delete_task">Eliminar tarea</string>
-    <string name="are_you_sure">¿Estás segure\?</string>
+    <string name="are_you_sure">¿Estás seguro\?</string>
     <string name="invite_to_party">Invitar al equipo</string>
     <string name="guild_bank">Banco del gremio</string>
     <string name="guild_members">Miembros del gremio</string>
@@ -809,7 +809,7 @@
     <string name="setup_task_habit_2">Presiona aquí para cambiar esto por un mal hábito que quieres remover</string>
     <string name="joined_guild">Te uniste al gremio</string>
     <string name="left_guild">Has abandonado el gremio</string>
-    <string name="leave_guild_confirmation">Quieres abandonar el gremio conservando sus desafíos o prefieres abandonarlos\?</string>
+    <string name="leave_guild_confirmation">¿Quieres abandonar el gremio conservando sus desafíos o prefieres abandonarlos\?</string>
     <string name="leave_guild">Abandonar gremio</string>
     <string name="garden">Jardín</string>
     <string name="join_guild">Unirse al gremio</string>
@@ -887,7 +887,15 @@
     <string name="report_message_title">Reportar a %s por violación:</string>
     <string name="need_help_header_description">Publica un mensaje en el %s para que tus preguntas sean respondidas por otros jugadores.</string>
     <string name="assigned_stat">Atributo Asignado</string>
-    <string name="report_explanation">**Únicamente** denuncia una publicación que viole las [Directrices de la comunidad](https://habitica.com/static/community-guidelines) y/o [Términos de servicio](https://habitica.com/static/terms). Denunciar inadecuadamente una publicación puede conllevarte una infracción</string>
+    <string name="report_explanation">**Únicamente** reporta una publicación que viole las [Normas de la comunidad](https://habitica.com/static/community-guidelines) y/o los [Términos de servicio](https://habitica.com/static/terms). Reportar inadecuadamente una publicación puede conllevarte una infracción.</string>
     <string name="reason_for_report">Motivo de la denuncia (opcional)</string>
     <string name="checklist_text">Texto de la lista</string>
+    <string name="preference_push_party_activity">Actividad del equipo</string>
+    <string name="partyUpDescription">¡Te agrupaste con un miembro del equipo!</string>
+    <string name="partyUpTitle">Formar Equipo</string>
+    <string name="unpin">Desmarcar</string>
+    <string name="pin">Marcar</string>
+    <string name="setup_task_habit_2_notes">O elimínalo desde la pantalla de edición</string>
+    <string name="i_agree_to_follow_the_guidelines">Estoy de acuerdo con las siguientes normas</string>
+    <string name="report_violation">Reportar Violación</string>
 </resources>
