@@ -726,7 +726,7 @@
     <string name="user_level_with_class_unabbreviated">Nivel %1$d %2$s</string>
     <string name="thanks_for_subscribing">Gracias por suscribirte</string>
     <string name="subscribe_options_title">Elige el tiempo de suscripción que mejor funcione para tí</string>
-    <string name="cancelled">Cancelar</string>
+    <string name="cancelled">Cancelado</string>
     <string name="send_invites">Enviar invitaciones</string>
     <string name="google">Google</string>
     <string name="apple_sign_in">Ingresar con Apple</string>
@@ -898,4 +898,7 @@
     <string name="setup_task_habit_2_notes">O elimínalo desde la pantalla de edición</string>
     <string name="i_agree_to_follow_the_guidelines">Estoy de acuerdo con las siguientes normas</string>
     <string name="report_violation">Reportar Violación</string>
+    <string name="purchase">Comprar</string>
+    <string name="sent_card">Enviaste un %s</string>
+    <string name="trillion_abbrev">t</string>
 </resources>
