@@ -668,7 +668,7 @@
     <string name="gift_one_get_one_description">有料プランをプレゼントすると、有料プランに無料で加入できるイベントが開催中です！</string>
     <string name="gift_title">誰にプレゼントを贈りたいですか？</string>
     <string name="gift_one_get_one">１つ贈って、１つ無料で手に入れよう！</string>
-    <string name="gift_subscription_subtitle">下の方から贈りたい寄付会員特典を選んでください！ この購入では、自動的に更新はされません。</string>
+    <string name="gift_subscription_subtitle">下の方からプレゼントしたい有料プランを選んでください！ この購入では、自動的に更新はされません。</string>
     <string name="send_gift">プレゼントを贈る</string>
     <string name="server">サーバー</string>
     <string name="gift_confirmation_title">プレゼントを贈りました！</string>
@@ -738,7 +738,7 @@
     <string name="streak">連続実行</string>
     <string name="weekly">毎週</string>
     <string name="monthly">毎月</string>
-    <string name="gift_confirmation_text_sub">%sに%sヶ月分のHabitica寄付会員特典を送りました。</string>
+    <string name="gift_confirmation_text_sub">%sに%sヶ月分のHabitica有料プランを送りました。</string>
     <string name="gift_gems_subtitle">下から贈りたいジェムの量を選びましょう！</string>
     <string name="join_party_description_guild">友達に下のユーザー名を教えるか、%sに行って未来の仲間たちに出会いましょう！</string>
     <string name="sale">セール</string>
@@ -900,7 +900,7 @@
     <string name="joinedGuildDescription">勇気をだしてギルドに入り、Habiticaの人々と交流しました！</string>
     <string name="cancel_subscription_group_plan">あなたはグループプランに加入したパーティーかギルドのメンバーであるため、無料の寄付会員特典が付与されています。これはあなたがグループを離れるか、オーナーによってグループプランがキャンセルされた場合に終了します。グループプランの終了の際には、あなたが持つ寄付会員特典の残りの月が適用されます。</string>
     <string name="gifted">贈りました</string>
-    <string name="resubscribe_description">特典を継続して受けたいですか？ 特典を有効にしたままにするために、あなたに贈られた寄付会員特典の期限が切れる前に次の新しい寄付をはじめることができます。</string>
+    <string name="resubscribe_description">特典を受け続けたいですか？ この有料プランの有効期限が切れる前に新しい有料プランをはじめることで、特典を有効に受け続けられます。</string>
     <string name="resubscribe">有料プランの再開</string>
     <string name="renew_subscription">有料プランを再開する</string>
     <string name="thanks_for_subscribing">有料プランにご加入いただきありがとうございます</string>
@@ -924,8 +924,8 @@
     <string name="g1g1_info_2">機能説明</string>
     <string name="gift_a_subscription">有料プランをプレゼントする</string>
     <string name="g1g1_info_1">贈り物の季節を祝して、特別なプロモーションが戻ってきます。いま寄付会員特典を贈ると、無料であなた自身も同じ寄付会員特典を受けることができます！</string>
-    <string name="promo_g1g1_prompt">誰かに寄付会員特典を贈ると、自分も無料で同じ寄付会員特典を受けられるイベント</string>
-    <string name="promo_g1g1_description">いま寄付会員特典を贈ると、無料であなた自身も同じ寄付会員特典を受けることができます！</string>
+    <string name="promo_g1g1_prompt">誰かに有料プランをプレゼントすると、自分も無料で同じ有料プランを受けられるイベント</string>
+    <string name="promo_g1g1_description">いま有料プランをプレゼントすると、あなた自身も同じ有料プランを無料で受けることができます！</string>
     <string name="event">イベント</string>
     <string name="owner">オーナー</string>
     <string name="member">メンバー</string>
