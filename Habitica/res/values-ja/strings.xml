@@ -872,7 +872,7 @@
     <string name="report_violation">違反を報告する</string>
     <string name="need_help_header_description">%sにメッセージを投稿して、疑問について仲間のプレイヤーに答えてもらいましょう。</string>
     <string name="checklist_text">チェックリストのテキスト</string>
-    <string name="gift_confirmation_text_sub_g1g1">%sに%sヶ月分のHabitica寄付会員特典を送りました。そして、１つ贈って１つ無料で手に入れようキャンペーンによって、あなたのアカウントにも同じ寄付会員特典が適用されました！</string>
+    <string name="gift_confirmation_text_sub_g1g1">%sに%sヶ月分のHabitica有料プランを送りました。そして、誰かにプレゼントすると同じ分だけ無料で受けられるキャンペーンによって、あなたのアカウントにも同じ有料プランが無料で適用されました！</string>
     <string name="number_responded">%1$d/%2$d人参加予定</string>
     <string name="from_balance">残高から</string>
     <string name="preference_push_party_mention">パーティーチャットでのあなたへの返信</string>
@@ -923,7 +923,7 @@
     <string name="gift_gems_balance_subtitle">贈りたいジェムの数を記入するか、タブを切り替えて贈るためのジェムを購入してください</string>
     <string name="g1g1_info_2">機能説明</string>
     <string name="gift_a_subscription">有料プランをプレゼントする</string>
-    <string name="g1g1_info_1">贈り物の季節を祝して、特別なプロモーションが戻ってきます。いま寄付会員特典を贈ると、無料であなた自身も同じ寄付会員特典を受けることができます！</string>
+    <string name="g1g1_info_1">贈り物の季節を祝して、特別なプロモーションを再び開催しています。いま誰かに有料プランをプレゼントすると、あなた自身も同じ有料プランを無料で受けることができます！</string>
     <string name="promo_g1g1_prompt">誰かに有料プランをプレゼントすると、自分も無料で同じ有料プランを受けられるイベント</string>
     <string name="promo_g1g1_description">いま有料プランをプレゼントすると、あなた自身も同じ有料プランを無料で受けることができます！</string>
     <string name="event">イベント</string>
@@ -1011,7 +1011,7 @@
 \n 
 \nジェムは、他のプレイヤーからの贈り物・チャレンジの賞品・Habiticaへの貢献・有料プランの特典などでも受け取ることができます。</string>
     <string name="suggestions_feedback_description">Habiticaがもっと上手く機能しそうな仕組みや新しいアイデアをお持ちですか？是非教えてください！</string>
-    <string name="g1g1_info_3_text">このプロモーションはあなたが他のHabiticaユーザーにギフトを贈ると適用されます。あなたがすでに寄付会員だったり、送られた寄付会員特典を受け取っている場合、今の寄付会員期間が終わるかキャンセルされるまでキャンペーンで適用された特典は使用されません。</string>
+    <string name="g1g1_info_3_text">このプロモーションはあなたが他のHabiticaユーザーにプレゼントを贈ると適用されます。あなた自身やプレゼントを贈った相手がすでに有料会員だった場合、プレゼンントされた有料プランの期間は、今の有料プランが解約されるか期限が切れた後に使用されます。</string>
     <string name="g1g1_info_3">制限事項</string>
     <string name="hourglasses_description">神秘の砂時計は極めてレアなゲーム内通貨で、Habiticaの有料会員を3ヶ月以上継続することで受け取れます。タイムトラベラーの店で神秘の砂時計を使って、過去の装備セット・ペット・乗騎・動く背景・特別なクエストなどを購入できます。 
 \n 
