@@ -52,7 +52,7 @@
     <string name="about_bugreport">Notificar un error</string>
     <string name="about_source_code">Código fuente</string>
     <!--Network Errors-->
-    <string name="internal_error_api">Parece que hay un problema con el servidor. Vuelve a intentarlo más tarde.</string>
+    <string name="internal_error_api">Parece que hay un problema con el servidor. Vuelve a intentarlo más tarde</string>
     <string name="authentication_error_title">Error de autenticación</string>
     <string name="login_validation_error_title">Error de validación</string>
     <string name="login_validation_error_fieldsmissing">Tienes que rellenar todos los campos.</string>
@@ -106,7 +106,7 @@
     <string name="members">Miembros</string>
     <string name="habits">Hábitos</string>
     <string name="dailies">Tareas diarias</string>
-    <string name="todos">Tareas</string>
+    <string name="todos">Tareas Pendientes</string>
     <string name="rewards">Recompensas</string>
     <string name="yes">Sí</string>
     <string name="no">No</string>
@@ -309,7 +309,7 @@
     <string name="all_dailies_completed">Ha completado todas tus tareas diarias. ¡Buen trabajo!</string>
     <string name="widget_habit_button">Hábitos Habitica</string>
     <string name="widget_dailies">Tareas diarias Habitica</string>
-    <string name="widget_todo_list">Tareas pendientes</string>
+    <string name="widget_todo_list">Lista de Tareas pendientes Habitica</string>
     <string name="google_services_missing">No pudieron encontrarse los servidores de Google Play.</string>
     <string name="gem_purchase_toolbartitle">Comprar</string>
     <string name="gem_purchase_title">Comprar gemas apoya a los desarrolladores y ayuda a mantener Habitica en funcionamiento</string>
