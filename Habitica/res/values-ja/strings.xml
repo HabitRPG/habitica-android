@@ -354,7 +354,7 @@
     <string name="subscription">有料プラン</string>
     <string name="active">有効</string>
     <string name="cancel_subscription">有料プランの解約</string>
-    <string name="cancel_subscription_google_description">寄付をやめたいですか？ Google Play ストアのマイアプリの項目で寄付をやめる選択肢を見つけられます。寄付を終了した後は、すでに寄付した分の残りの月が適用されます。</string>
+    <string name="cancel_subscription_google_description">もう有料プランを続けたくないですか？ Google Play ストアのマイアプリの項目で有料プランを解約できます。有料プランの有効期間のストックは、有料プランが終了した後に使用されます。</string>
     <string name="cancel_subscription_notgoogle_description">寄付をやめたいですか？ モバイル決済の制約により、キャンセルするにはウェブサイトへ行く必要があります。このため、下のボタンをタップして、あなたのアカウントにログインして、右上にあるユーザーアイコンをタップして、寄付の項目に行ってください。寄付を終了した後は、すでに寄付した分の残りの月が適用されます。私たちは寂しくなります！</string>
     <string name="visit_habitica_website">Habiticaのウェブサイトを訪れる</string>
     <string name="current_bonuses">現在のボーナス</string>
