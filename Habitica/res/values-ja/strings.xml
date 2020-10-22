@@ -355,7 +355,7 @@
     <string name="active">有効</string>
     <string name="cancel_subscription">有料プランの解約</string>
     <string name="cancel_subscription_google_description">もう有料プランを続けたくないですか？ Google Play ストアのマイアプリの項目で有料プランを解約できます。有料プランの有効期間のストックは、有料プランが終了した後に使用されます。</string>
-    <string name="cancel_subscription_notgoogle_description">寄付をやめたいですか？ モバイル決済の制約により、キャンセルするにはウェブサイトへ行く必要があります。このため、下のボタンをタップして、あなたのアカウントにログインして、右上にあるユーザーアイコンをタップして、寄付の項目に行ってください。寄付を終了した後は、すでに寄付した分の残りの月が適用されます。私たちは寂しくなります！</string>
+    <string name="cancel_subscription_notgoogle_description">もう有料プランを続けたくないですか？ モバイル決済の制約により、解約するにはウェブサイトへ行く必要があります。解約するには、下のボタンをタップして、アカウントにログインして、右上のユーザーアイコンをタップして、有料プランの項目に行ってください。有料プランの有効期間のストックは、有料プランが終了した後に使用されます。私たちは寂しくなります！</string>
     <string name="visit_habitica_website">Habiticaのウェブサイトを訪れる</string>
     <string name="current_bonuses">現在のボーナス</string>
     <string name="months_subscribed">購読した月数</string>
@@ -898,7 +898,7 @@
     <string name="joinedChallengeDescription">チャレンジに参加することで自らに試練を課しました！</string>
     <string name="joinedChallengeTitle">チャレンジに参加しました</string>
     <string name="joinedGuildDescription">勇気をだしてギルドに入り、Habiticaの人々と交流しました！</string>
-    <string name="cancel_subscription_group_plan">あなたはグループプランに加入したパーティーかギルドのメンバーであるため、無料の寄付会員特典が付与されています。これはあなたがグループを離れるか、オーナーによってグループプランがキャンセルされた場合に終了します。グループプランの終了の際には、あなたが持つ寄付会員特典の残りの月が適用されます。</string>
+    <string name="cancel_subscription_group_plan">あなたはグループプランに加入したパーティーかギルドのメンバーであるため、有料プランが無料で付与されています。これはあなたがグループを離れるか、オーナーによってグループプランが解約された場合に終了します。有料プランの有効期間のストックがある場合は、グループプランの終了時に使用されます。</string>
     <string name="gifted">贈りました</string>
     <string name="resubscribe_description">特典を受け続けたいですか？ この有料プランの有効期限が切れる前に新しい有料プランをはじめることで、特典を有効に受け続けられます。</string>
     <string name="resubscribe">有料プランの再開</string>
@@ -1004,7 +1004,7 @@
 \n**知覚(PER)**のステータスは獲得できるゴールドと、ドロップアイテムを見つける確率を増やします。盗賊と魔道士はクラス専用装備に知覚のステータスポイントの上昇効果があります。
 \n
 \nレベル10以降、レベルアップごとにステータスポイントを1獲得でき、好きなステータスに割り振ることができます。ステータスを増加させる様々な組み合わせのアイテムを装備することができます。</string>
-    <string name="cancel_subscription_group_plan_owner">あなたはグループプランのギルドかパーティーのオーナーのため、無料の寄付会員特典を持っています。これはプランをキャンセルしない限り続きます。グループプランの終了時に全ての月の追加の寄付会員特典が適用されます。これはHabiticaのウェブサイトでキャンセルできます。</string>
+    <string name="cancel_subscription_group_plan_owner">あなたはグループプランに加入したギルドかパーティーのオーナーのため、有料プランを無料で受けています。これはグループプランを解約しない限り続きます。有料プランの有効期間のストックは、グループプランの終了時に使用されます。Habiticaのウェブサイトから解約できます。</string>
     <string name="gems_description">ジェムは現実のお金で購入するゲーム内通貨です。ジェムで追加コンテンツを購入できます。ジェムの購入金は有料プランとともにHabiticaチームの主要な資金源になっています。 
 \n 
 \nジェムで購入できる全てのコンテンツは、単なる装飾品か、あるいは時間をかければ無料でも入手できるものです。 
