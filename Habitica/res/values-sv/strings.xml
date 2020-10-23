@@ -784,7 +784,18 @@
     <string name="report">Rapportera</string>
     <string name="no_party_title">Spel Habitica i en Sällskap</string>
     <string name="questShop">Uppdragen</string>
-    <string name="triadBingoTitle"></string>
+    <string name="triadBingoTitle"/>
     <string name="mountMasterTitle">Riddjur Bemästra</string>
     <string name="partyUpTitle">Sällskap Upp</string>
+    <string name="hatch_your_pet">Kläck dina Husdjur</string>
+    <string name="feedPet_title">Mata en Husdjur</string>
+    <string name="fedPetTitle">Mat en Husdjur</string>
+    <string name="hatchedPetTitle">Kläckte en Husdjur</string>
+    <string name="hatch">Kläck</string>
+    <string name="create_task">Skapa %s</string>
+    <string name="habitica_questions">Habitica Frågor</string>
+    <string name="equipment_str">STY:</string>
+    <string name="equipment_con">TÅL:</string>
+    <string name="equipment_per">UPP:</string>
+    <string name="equipment_int">VIS:</string>
 </resources>
