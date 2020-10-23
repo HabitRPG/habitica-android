@@ -798,4 +798,6 @@
     <string name="equipment_con">TÅL:</string>
     <string name="equipment_per">UPP:</string>
     <string name="equipment_int">VIS:</string>
+    <string name="hatch_pet">Kläck Husdjur</string>
+    <string name="hatch_pet_again">Kläck Husdjur igen</string>
 </resources>
