@@ -1009,4 +1009,8 @@
     <string name="how_best_habitica">¿No estás seguro de cómo usar mejor Habitica\?</string>
     <string name="send_bug_prompt">¡Envíanos un reporte de errores y nosotros nos comunicaremos contigo!</string>
     <string name="common_fixes">Arreglos Comunes</string>
+    <string name="mana_description">"Los puntos de Maná son desbloqueados con el sistema de clases en el nivel 10 y te permite **usar habilidades** una vez que empiezas a aprenderlas en el nivel 11
+\n
+\nAlgunos **puntos de Maná restaurados** se restablecen  todos los días, pero puedes recuperar más completando tareas o usando una habilidad de la clase de Mago."</string>
+    <string name="mana_points">Puntos de Maná</string>
 </resources>
