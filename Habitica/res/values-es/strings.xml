@@ -942,4 +942,8 @@
     <string name="delete_x_tasks">Eliminar %s Tareas</string>
     <string name="keep_x_tasks">Mantener %s Tareas</string>
     <string name="broken_challenge">Desafío Terminado</string>
+    <string name="pms_disabled_description">Tu puedes enviar mensajes todavía, pero nadie puede enviartelas a ti. Puedes habilitarlo de nuevo desde Configuraciones</string>
+    <string name="pms_disabled">Los Mensajes Privados están desactivados</string>
+    <string name="disablePrivateMessages">Desactivar Mensajes Privados</string>
+    <string name="block">Bloquear</string>
 </resources>
