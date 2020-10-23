@@ -988,4 +988,6 @@
     <string name="promo_g1g1_description">¡Regala una suscripción ahora y recibirás la misma suscripción para ti gratis!</string>
     <string name="scheduling">Planificación</string>
     <string name="using_habitica_description">Explicaremos lo básico y responderemos las preguntas comunes para ponerte al día</string>
+    <string name="suggestions_feedback_description">Tienes alguna aportación en como las mecánicas podrían trabajar mejor o una idea para algo nuevo\? Cuéntanos!</string>
+    <string name="using_habitica">Usando Habitica</string>
 </resources>
