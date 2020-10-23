@@ -967,7 +967,7 @@
     <string name="ending_on">Finaliza en %s</string>
     <string name="from_balance">Desde el balance</string>
     <string name="preference_push_party_mention">\@Menciones en el equipo</string>
-    <string name="quest_completed">Misión completada!</string>
+    <string name="quest_completed">¡Misión completada!</string>
     <string name="not_participating">No estás participando</string>
     <string name="g1g1_duration">Diciembre 17 a Enero 6</string>
     <string name="limited_event">Evento limitado</string>
@@ -987,4 +987,5 @@
     <string name="g1g1_info_1">En honor de la temporada de dar estamos trayendo de vuelta una promoción muy especial. Ahora cuando regales a alguien una suscripción ¡recibirás la misma suscripción para ti gratis!</string>
     <string name="promo_g1g1_description">¡Regala una suscripción ahora y recibirás la misma suscripción para ti gratis!</string>
     <string name="scheduling">Planificación</string>
+    <string name="using_habitica_description">Explicaremos lo básico y responderemos las preguntas comunes para ponerte al día</string>
 </resources>
