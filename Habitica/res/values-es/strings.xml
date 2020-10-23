@@ -571,7 +571,7 @@
     <string name="report_bug">Notificar un error</string>
     <string name="player_tiers">Rangos de Jugador</string>
     <string name="staff_moderators">Miembros del personal y Moderadores</string>
-    <string name="tiers_descriptions">Los nombres de usuario coloreados que ves en el chat representan el escalafón de colaborador de una persona. ¡Cuanto más alto sea el escalafón, más ha contribuido la persona a habitica a través de arte, codificación, la comunidad o incluso más!</string>
+    <string name="tiers_descriptions">Los nombres de usuario coloreados que ves en el chat representan el rango de colaborador de una persona. ¡Cuanto más alto sea el rango, más ha contribuido la persona a habitica a través de arte, codificación, la comunidad o incluso más!</string>
     <string name="navigation_drawer_open">Abrir panel de navegación</string>
     <string name="navigation_drawer_close">Cerrar panel de navegación</string>
     <string name="world_boss">Jefe Mundial</string>
@@ -807,7 +807,7 @@
     <string name="guild_bank">Banco del gremio</string>
     <string name="guild_members">Miembros del gremio</string>
     <string name="guild_summary">Resumen del gremio</string>
-    <string name="setup_task_habit_2">Presiona aquí para cambiar esto por un mal hábito que quieres remover</string>
+    <string name="setup_task_habit_2">Presiona aquí para editar esto como un mal hábito que quieres dejar</string>
     <string name="joined_guild">Te uniste al gremio</string>
     <string name="left_guild">Has abandonado el gremio</string>
     <string name="leave_guild_confirmation">¿Quieres abandonar el gremio conservando sus desafíos o prefieres abandonarlos\?</string>
@@ -842,7 +842,7 @@
     <string name="create_task">Crear %s</string>
     <string name="take_me_back">Quiero regresar</string>
     <string name="not_now">Ahora no</string>
-    <string name="setup_task_habit_1">Añade un pendiente a Habitica</string>
+    <string name="setup_task_habit_1">Añade una tarea a Habitica</string>
     <string name="cost">Costo</string>
     <string name="x_class">Clase de %s</string>
     <string name="become_x">Conviértete en un %s</string>
@@ -858,7 +858,7 @@
     <string name="adjust_streak">Ajustar racha</string>
     <string name="gift_confirmation_text_sub">Regalaste una suscripción de Habitica de %s-meses a %s.</string>
     <string name="gift_confirmation_text_sub_g1g1">Regalaste una suscripción de %s-meses a %s y se aplicó la misma suscripción a tu cuenta por nuestra promoción de Regala Una Llévate Una Gratis!</string>
-    <string name="join_party_description_guild">Da el usuario a continuación a un amigo o ve al %s para conocer a posibles compañeros</string>
+    <string name="join_party_description_guild">¡Da el nombre de usuario de abajo a un amigo o ve al %s para conocer a camaradas potenciales!</string>
     <string name="number_responded">%1$d/%2$d respondió</string>
     <string name="spooky_promo_info_limitations">Esta promoción solo se aplica durante el evento de tiempo limitado. Este evento comienza el 29 de Octubre a las 8:00 am (12:00 UTC) y terminará el 2 de Noviembre a las 8:00 pm (00:00 UTC). La oferta de la promoción solo está disponible cuando compres Gemas para ti.</string>
     <string name="fall_promo_info_limitations">Esta promoción solo se aplica durante el evento de tiempo limitado. Este evento empieza el 22 de Septiembre a las 8:00 am (12:00 UTC) y terminará el 30 de Septiembre a las 8:00 pm (00:00 UTC). La oferta de la promoción solo está disponible cuando compras Gemas para ti.</string>
@@ -948,4 +948,13 @@
     <string name="disablePrivateMessages">Desactivar Mensajes Privados</string>
     <string name="block">Bloquear</string>
     <string name="setup_task_habit_1_notes">Ya sea un Hábito, una Tarea Diaria, o una Tarea Pendiente</string>
+    <string name="cancel_subscription_group_plan">Tienes una suscripción gratuita por que eres miembro de un Equipo o Gremio que tiene un Plan de Grupo. Este terminará si te vas o si el Plan de Grupo es cancelado por el líder. Cualquier mes de crédito de suscripción extra que tengas se aplicará al final del Plan de Grupo.</string>
+    <string name="owner">Líder</string>
+    <string name="cancel_subscription_group_plan_owner">Tienes una suscripción gratuita por quer eres el líder de un Equipo o de un Gremio que tiene un Plan de Grupo. Este terminará si cancelas el plan. Cualquier mes de crédito de suscripción extra que tengas se aplicará al final del Plan de Grupo. Puedes cancelarlo desde el sitio web de Habitica.</string>
+    <string name="subscription_credit">Crédito de Suscripción</string>
+    <string name="resubscribe_description">¿Quieres continuar con tus beneficios\? Puedes empezar una nueva suscripción antes de que ésta termine para mantener tus beneficios activos.</string>
+    <string name="renew_subscription">Renovar Suscripción</string>
+    <string name="not_recurring">No Recurrente</string>
+    <string name="password_too_short">Tu contraseña tiene que tener por lo menos %d caracteres de largo</string>
+    <string name="gift_gems_disclaimer">Habitica nunca requerirá que regales gemas a otros jugadores. Pedir gemas a otras personas es una violación a las Normas de la Comunidad y debe ser reportado a admin@habitica.com.</string>
 </resources>
