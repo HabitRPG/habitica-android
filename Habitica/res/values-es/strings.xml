@@ -221,7 +221,7 @@
     <string name="quests">Misiones</string>
     <string name="pets">Mascotas</string>
     <string name="mounts">Monturas</string>
-    <string name="armoireEquipment">¡Genial! Has encontrado una prenda insólita en el Armario: %s.</string>
+    <string name="armoireEquipment">¡Genial! Has encontrado una prenda insólita en el Armario: %s</string>
     <string name="armoireFood">Rebuscando en el Armario, encuentras esto: %1$s %2$s. ¿Qué hace aquí?</string>
     <string name="armoireExp">Te peleas con el Armario y ganas experiencia. ¡Ahí lo llevas!</string>
     <string name="sell">Vender (%d de oro)</string>
@@ -239,11 +239,12 @@
     <string name="notification_pet_fed">¡Tu %s ha comido!</string>
     <string name="notification_purchase_reward">Has comprado una recompensa</string>
     <string name="world_quest">Misión mundial</string>
-    <string name="inn_description">¿Necesitar un descanso? Visita la Posada de Daniel para pausar algunos de los mecánicos de juego más difíciles de Habitica:\n\n
-• Las Tareas Diarias perdidas no te harán daño\n
-• Las Tareas Pendientes no reiniciarán las rachas ni se degradarán en color\n
-• Los jefes no harán daño por tus Tareas Diarias perdidas\n
-• El daño que inflija el jefe o los objetos de una misión de recolección permanecerán pendientes hasta que salgas.</string>
+    <string name="inn_description">¿Necesitar un descanso\? Visita la Posada de Daniel para pausar algunas de los mecánicas de juego más difíciles de Habitica:
+\n
+\n • Las Tareas Diarias perdidas no te harán daño
+\n • Las Tareas Pendientes no reiniciarán las rachas ni se degradarán en color
+\n • Los jefes no harán daño por tus Tareas Diarias perdidas
+\n • El daño que inflija el jefe o los objetos de una misión de recolección permanecerán pendientes hasta que salgas</string>
     <string name="empty_items">No tienes %s</string>
     <string name="user_level">Nivel %d</string>
     <string name="user_level_with_class">Nivel %1$d %2$s</string>
@@ -272,7 +273,7 @@
     <string name="send">Enviar</string>
     <string name="invite">Invitar a amigos</string>
     <string name="invite_username_description">Si tienes amigos que ya usan Habitica, invítalos indicando su nombre de usuario aquí.</string>
-    <string name="invite_email_description">Si un amigo se apunta a Habitica a través del correo electrónico que le has enviado, se le invitará automáticamente a tu equipo.</string>
+    <string name="invite_email_description">Si un amigo se apunta a Habitica a través del correo electrónico que le has enviado, ¡será automáticamente invitado a tu equipo!</string>
     <string name="add_invites">Añadir invitaciones</string>
     <string name="email">Correo electrónico</string>
     <string name="share_using">Compartir con</string>
@@ -281,7 +282,7 @@
     <string name="share_raised">¡He conseguido una montura de %1$s en #Habitica realizando mis tareas diarias!</string>
     <string name="open_in_store">Abrir en Play Store</string>
     <string name="change_class_confirmation">¿Seguro que quieres cambiar de clase? Te costará 3 gemas.</string>
-    <string name="change_class_equipment_warning">Aviso: Ya no podrás comprar equipamiento para la clase %s</string>
+    <string name="change_class_equipment_warning">Aviso: Ya no podrás comprar equipamiento para la clase %s.</string>
     <string name="confirm">Confirmar</string>
     <string name="market">Mercado</string>
     <string name="timeTravelers">Viajeros del tiempo</string>
@@ -369,7 +370,7 @@
     <string name="three_months">3 meses</string>
     <string name="six_months">6 meses</string>
     <string name="twelve_months">12 meses</string>
-    <string name="subscribe_prompt_thanks">Siendo suscriptor, obtienes estos beneficios.</string>
+    <string name="subscribe_prompt_thanks">Siendo suscriptor, obtienes estos beneficios</string>
     <string name="subscription_status">Estado de Suscripción</string>
     <string name="challenge_leave_title">Abandonar Desafío</string>
     <string name="challenge_leave_text">¿Seguro que quieres abandonar el Desafio \"%s\"?</string>
@@ -431,7 +432,7 @@
     <string name="empty_description_todos">Tareas son cometidos que sólo se deben completar una vez. Añade listas a tus Tareas para aumentar su valor.</string>
     <string name="empty_title_rewards">No tienes Premios</string>
     <string name="reset_walkthrough">Restablecer el tutorial de Justin</string>
-    <string name="read_community_guidelines">Por favor, lea nuestras directrices de la Comunidad antes de publicar</string>
+    <string name="read_community_guidelines">Por favor, revisa nuestras <u>Normas de la Comunidad</u> antes de publicar</string>
     <string name="maintenance">Mantenimiento</string>
     <string name="reload_content">Recargar Contenido</string>
     <string name="dailyDueDefaultView">Establecer Tareas Diarias por defecto en la pestaña \'debido\'</string>
@@ -632,7 +633,7 @@
     <string name="collapse_notes">Mostrar menos</string>
     <string name="reset_streak">Reiniciar Racha</string>
     <string name="week_reminder_title">¿Cómo te va con tus tareas?</string>
-    <string name="week_reminder_text">Hacer pausas es bueno, pero aun así puedes ganar puntos por actividades sencillas para subir de nivel y para conseguir equipo guay.</string>
+    <string name="week_reminder_text">Hacer pausas es bueno, ¡pero aun así puedes ganar puntos por actividades sencillas para subir de nivel y conseguir equipo guay!</string>
     <string name="last_login">Última Entrada</string>
     <string name="total_checkins">Total de Entradas</string>
     <string name="two_handed">A dos manos</string>
@@ -857,7 +858,7 @@
     <string name="adjust_streak">Ajustar racha</string>
     <string name="gift_confirmation_text_sub">Regalaste una suscripción de Habitica de %s-meses a %s.</string>
     <string name="gift_confirmation_text_sub_g1g1">Regalaste una suscripción de %s-meses a %s y se aplicó la misma suscripción a tu cuenta por nuestra promoción de Regala Una Llévate Una Gratis!</string>
-    <string name="join_party_description_guild">Da el usuario a continuación a un amigo o ve al %s para conocer a posibles compañeros.</string>
+    <string name="join_party_description_guild">Da el usuario a continuación a un amigo o ve al %s para conocer a posibles compañeros</string>
     <string name="number_responded">%1$d/%2$d respondió</string>
     <string name="spooky_promo_info_limitations">Esta promoción solo se aplica durante el evento de tiempo limitado. Este evento comienza el 29 de Octubre a las 8:00 am (12:00 UTC) y terminará el 2 de Noviembre a las 8:00 pm (00:00 UTC). La oferta de la promoción solo está disponible cuando compres Gemas para ti.</string>
     <string name="fall_promo_info_limitations">Esta promoción solo se aplica durante el evento de tiempo limitado. Este evento empieza el 22 de Septiembre a las 8:00 am (12:00 UTC) y terminará el 30 de Septiembre a las 8:00 pm (00:00 UTC). La oferta de la promoción solo está disponible cuando compras Gemas para ti.</string>
@@ -942,7 +943,7 @@
     <string name="delete_x_tasks">Eliminar %s Tareas</string>
     <string name="keep_x_tasks">Mantener %s Tareas</string>
     <string name="broken_challenge">Desafío Terminado</string>
-    <string name="pms_disabled_description">Tu puedes enviar mensajes todavía, pero nadie puede enviartelas a ti. Puedes habilitarlo de nuevo desde Configuraciones</string>
+    <string name="pms_disabled_description">Tu puedes enviar mensajes todavía, pero nadie puede enviartelas a ti. Puedes habilitarlo de nuevo desde Configuraciones.</string>
     <string name="pms_disabled">Los Mensajes Privados están desactivados</string>
     <string name="disablePrivateMessages">Desactivar Mensajes Privados</string>
     <string name="block">Bloquear</string>
