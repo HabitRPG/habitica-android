@@ -975,4 +975,15 @@
     <string name="g1g1_info_2">Como trabaja</string>
     <string name="gift_a_subscription">Regala una Suscripción</string>
     <string name="gems_gift_description">¿Quieres otorgar un reluciente cargamento de gemas a otra persona\?</string>
+    <string name="level_unabbreviated">Nivel %d</string>
+    <string name="unlock_previous_short">Terminar la Misión %d</string>
+    <string name="unlock_level">Desbloqueado al llegar al nivel %d</string>
+    <string name="unlock_previous">Desbloqueado al completar la Misión %d</string>
+    <string name="locked">Bloqueado</string>
+    <string name="skill_unlocks_at">La habilidad se desbloquea en el nivel %d</string>
+    <string name="preference_email_kicked_group">Expulsado del Equipo</string>
+    <string name="g1g1_info_3_text">Esta promoción solo se aplica cuando tú regalas a otro Habiticano. Si tú o tu destinario del regalo ya tiene una suscripción, la suscripción de regalo añadirá meses de crédito que sólo serán usados después de que la suscripción actual se cancele o expire.</string>
+    <string name="g1g1_info_2_text">Presiona ‘Regalar una Suscripción’ y escribe el nombre del usuario de la cuenta a la que quieres regalar. A partir de ahí, escoge el tamaño de la suscripción que te gustaría regalar y comprúebalo. Tu cuenta será recompensada automáticamente con el mismo nivel de suscripción que acabas de regalar.</string>
+    <string name="g1g1_info_1">En honor de la temporada de dar estamos trayendo de vuelta una promoción muy especial. Ahora cuando regales a alguien una suscripción ¡recibirás la misma suscripción para ti gratis!</string>
+    <string name="promo_g1g1_description">¡Regala una suscripción ahora y recibirás la misma suscripción para ti gratis!</string>
 </resources>
