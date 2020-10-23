@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="tutorial_overview">Oto jesteśmy! Wykonałem dla ciebie kilka zadań w oparciu o twoje zainteresowania. Spróbuj dodać kilka własnych. Możesz edytować dowolne zadanie, dotykając tytułu.</string>
-    <string name="tutorial_habits_1">Po pierwsze, Nawyki. Możesz dodać pozytywne Nawyki, które chcesz wzmocnić lub negatywne Nawyki, które chcesz rzucić.</string>
-    <string name="tutorial_habits_2">Za każdym razem, kiedy zrobisz pozytywny nawyk, naciśnij +, aby otrzymać doświadczenie i złoto!</string>
-    <string name="tutorial_habits_3">Jeśli zdarzy Ci się potknięcie i wykonasz negatywny nawyk, naciśnięcie - zredukuje zdrowie twojego awatara, aby pomóc Ci w byciu odpowiedzialnym.</string>
+    <string name="tutorial_habits_1">Najpierw nawyki. Mogą to być pozytywne nawyki, które chcesz poprawić, lub negatywne, które chcesz rzucić.</string>
+    <string name="tutorial_habits_2">Za każdym razem, gdy osiągniesz pozytywny nawyk, dotknij +, aby uzyskać doświadczenie i złoto!</string>
+    <string name="tutorial_habits_3">Jeśli wpadniesz w poślizg i wykonasz negatywny nawyk, stuknięcie przycisku - zmniejszy zdrowie awatara, aby pomóc Ci zachować odpowiedzialność.</string>
     <string name="tutorial_habits_4">Spróbuj! Możesz przeglądać inne rodzaje zadań poprzez dolną nawigację.</string>
     <string name="tutorial_dailies_1">Twórz Codzienne dla zadań, które wymagają regularnego działania.</string>
     <string name="tutorial_dailies_2">Bądź ostrożny - jeśli pominiesz jedno z nich, twój awatar następnego dnia otrzyma obrażenia. Systematyczne odznaczanie ich przynosi wspaniałe nagrody!</string>
