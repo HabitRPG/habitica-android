@@ -901,4 +901,25 @@
     <string name="purchase">Comprar</string>
     <string name="sent_card">Enviaste un %s</string>
     <string name="trillion_abbrev">t</string>
+    <string name="can_hatch_pet">¡Combina tu Huevo %s y la poción %s para eclosionar esta mascota!</string>
+    <string name="suggest_pet_hatch_again_missing_both">Necesitas un huevo %s y una poción %s para eclosionar esta mascota de nuevo</string>
+    <string name="suggest_pet_hatch_again_missing_potion">Aún necesitas una poción %s para eclosionar esta mascota de nuevo</string>
+    <string name="suggest_pet_hatch_again_missing_egg">Aún necesitas un huevo %s para eclosionar esta mascota de nuevo</string>
+    <string name="suggest_pet_hatch_missing_both">Necesitas un huevo %s y una poción %s para eclosionar esta mascota</string>
+    <string name="suggest_pet_hatch_missing_potion">Aún necesitas una poción %s para eclosionar esta mascota</string>
+    <string name="suggest_pet_hatch_missing_egg">Aún necesitas un huevo %s para eclosionar esta mascota</string>
+    <string name="equip">Equipar</string>
+    <string name="excessItemsNoneLeft">Ya tienes todo lo que necesitas para todas las mascotas %s. ¿Estás seguro de que quieres comprar %d %ss\?</string>
+    <string name="excess_items">Exceso de objetos</string>
+    <string name="first_drop_title">¡Has encontrado nuevos objetos!</string>
+    <string name="go_to_items">Ir a objetos</string>
+    <string name="first_drop_explanation2">¡Ve a tus objetos y trata de combinar tu nuevo huevo y una poción de eclosión!</string>
+    <string name="first_drop_explanation1">Completar tareas te da una oportunidad de encontrar huevos, pociones de eclosión y comida de mascotas.</string>
+    <string name="completedTaskDescription">Una tarea puede ser un Hábito, una Tarea Diaria, o una Tarea Pendiente. ¡Continua completándolas para recibir todo tipo de recompensas!</string>
+    <string name="createdTaskDescription">¡Sigue así! Si necesitas ayuda para planificar las tareas, intenta pensar en lo que te gustaría hacer durante una hora específica del día</string>
+    <string name="purchasedEquipmentTitle">Compraste equipamiento</string>
+    <string name="fedPetTitle">Alimentaste una mascota</string>
+    <string name="hatchedPetTitle">Eclosionaste una mascota</string>
+    <string name="completedTaskTitle">Completaste una tarea</string>
+    <string name="createdTaskTitle">Creaste tu primera tarea</string>
 </resources>
