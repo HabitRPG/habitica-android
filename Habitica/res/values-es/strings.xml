@@ -990,4 +990,9 @@
     <string name="using_habitica_description">Explicaremos lo básico y responderemos las preguntas comunes para ponerte al día</string>
     <string name="suggestions_feedback_description">¿Tienes alguna aportación en como las mecánicas podrían trabajar mejor o una idea para algo nuevo\? ¡Cuéntanos!</string>
     <string name="using_habitica">Usando Habitica</string>
+    <string name="bugs_fixes_description">Algo va mal\? Revisa las respuestas aquí o contáctanos por ayuda</string>
+    <string name="bugs_fixes">Errores y Arreglos</string>
+    <string name="suggestions_feedback">Sugerencias y Retroalimentación</string>
+    <string name="get_help">Obtener ayuda</string>
+    <string name="contact_us">Contáctanos</string>
 </resources>
