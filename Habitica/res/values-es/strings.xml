@@ -932,7 +932,7 @@
     <string name="leave_delete_x_tasks">Salir y eliminar %d Tareas</string>
     <string name="leave_delete_task">Salir y eliminar Tarea</string>
     <string name="broken_challenge_description">Esta es una de las %d tareas que son parte del Desafío que ya no existe. ¿Qué te gustaría hacer con estas tareas sobrantes\?</string>
-    <string name="block_user_description">Un usuario bloqueado no puede enviarte Mensajes Privados pero aún puedes ver sus publicaciones en la Taberna o en los gremios. No tendrá efecto si la persona es un Moderador ahora o en el futuro</string>
+    <string name="block_user_description">Un usuario bloqueado no puede enviarte Mensajes Privados pero aún puedes ver sus publicaciones en la Taberna o en los gremios. No tendrá efecto si la persona es un Moderador ahora o en el futuro.</string>
     <string name="block_user_title">Bloquear %s\?</string>
     <string name="unblock_user">Desbloquear Usuario</string>
     <string name="block_user">Bloquear Usuario</string>
