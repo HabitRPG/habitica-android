@@ -930,5 +930,6 @@
     <string name="unhatched_pet">Mascota no eclosionada</string>
     <string name="hatch_pet">Mascota eclosionada</string>
     <string name="leave_delete_x_tasks">Salir y eliminar %d Tareas</string>
-    <string name="leave_delete_task">Salir y eliminar Tareas</string>
+    <string name="leave_delete_task">Salir y eliminar Tarea</string>
+    <string name="broken_challenge_description">Esta es una de las %d tareas que son parte del Desafío que ya no existe. ¿Qué te gustaría hacer con estas tareas sobrantes\?</string>
 </resources>
