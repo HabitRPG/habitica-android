@@ -929,4 +929,6 @@
     <string name="hatch_pet_again">Eclosionar mascota de nuevo</string>
     <string name="unhatched_pet">Mascota no eclosionada</string>
     <string name="hatch_pet">Mascota eclosionada</string>
+    <string name="leave_delete_x_tasks">Salir y eliminar %d Tareas</string>
+    <string name="leave_delete_task">Salir y eliminar Tareas</string>
 </resources>
