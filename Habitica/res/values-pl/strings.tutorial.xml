@@ -3,13 +3,13 @@
     <string name="tutorial_overview">Oto jesteśmy! Wykonałem dla ciebie kilka zadań w oparciu o twoje zainteresowania. Spróbuj dodać kilka własnych. Możesz edytować dowolne zadanie, dotykając tytułu.</string>
     <string name="tutorial_habits_1">Najpierw nawyki. Mogą to być pozytywne nawyki, które chcesz poprawić, lub negatywne, które chcesz rzucić.</string>
     <string name="tutorial_habits_2">Za każdym razem, gdy osiągniesz pozytywny nawyk, dotknij +, aby uzyskać doświadczenie i złoto!</string>
-    <string name="tutorial_habits_3">Jeśli wpadniesz w poślizg i wykonasz negatywny nawyk, stuknięcie przycisku - zmniejszy zdrowie awatara, aby pomóc Ci zachować odpowiedzialność.</string>
+    <string name="tutorial_habits_3">Jeśli zdarzy Ci się potknięcie i wykonasz negatywny nawyk, stuknięcie przycisku - zmniejszy zdrowie awatara, aby pomóc Ci zachować odpowiedzialność.</string>
     <string name="tutorial_habits_4">Spróbuj! Możesz przeglądać inne rodzaje zadań poprzez dolną nawigację.</string>
     <string name="tutorial_dailies_1">Twórz Codzienne dla zadań, które wymagają regularnego działania.</string>
-    <string name="tutorial_dailies_2">Bądź ostrożny - jeśli pominiesz jedno z nich, twój awatar następnego dnia otrzyma obrażenia. Systematyczne odznaczanie ich przynosi wspaniałe nagrody!</string>
+    <string name="tutorial_dailies_2">Bądź ostrożny — jeśli pominiesz jedno z nich, twój awatar następnego dnia otrzyma obrażenia. Systematyczne wykonywanie Codziennych przynosi wspaniałe nagrody!</string>
     <string name="tutorial_todos_1">Użyj zadań Do Zrobienia, aby śledzić tylko te, które chcesz wykonać tylko raz.</string>
     <string name="tutorial_todos_2">Jeśli twoje Do Zrobienia ma być wykonane w określonym czasie, ustal termin. Wygląda na to, że jedno z nich możesz odhaczyć — śmiało!</string>
-    <string name="tutorial_rewards_1">Kup wyposażenie dla swojego awatara za złoto, które zarobiłeś!</string>
+    <string name="tutorial_rewards_1">Kup wyposażenie dla swojego awatara za złoto, które zdobyłeś!</string>
     <string name="tutorial_rewards_2">Możesz również robić realne nagrody, na podstawie tego, co Cię motywuje.</string>
     <string name="tutorial_tasks_complete">To wszystko na razie. Jeżeli potrzebujesz przypomnienia, sprawdź sekcję FAQ.</string>
     <string name="tutorial_skills">Umiejętności to specjalne zdolności, które mają potężne efekty! Stuknij umiejętność, aby jej użyć. To kosztuje Mana (niebieski pasek), którą zyskujesz zaglądając tu codziennie i kończąc zadania w prawdziwym świecie. Aby dowiedzieć się więcej, zaglądnij do FAQ w menu!</string>
