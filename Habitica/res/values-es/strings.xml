@@ -901,7 +901,7 @@
     <string name="purchase">Comprar</string>
     <string name="sent_card">Enviaste un %s</string>
     <string name="trillion_abbrev">t</string>
-    <string name="can_hatch_pet">¡Combina tu Huevo %s y la poción %s para eclosionar esta mascota!</string>
+    <string name="can_hatch_pet">¡Combina tu huevo %s y la poción %s para eclosionar esta mascota!</string>
     <string name="suggest_pet_hatch_again_missing_both">Necesitas un huevo %s y una poción %s para eclosionar esta mascota de nuevo</string>
     <string name="suggest_pet_hatch_again_missing_potion">Aún necesitas una poción %s para eclosionar esta mascota de nuevo</string>
     <string name="suggest_pet_hatch_again_missing_egg">Aún necesitas un huevo %s para eclosionar esta mascota de nuevo</string>
