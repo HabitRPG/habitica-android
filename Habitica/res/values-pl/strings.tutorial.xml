@@ -12,8 +12,8 @@
     <string name="tutorial_rewards_1">Kup wyposażenie dla swojego awatara za złoto, które zdobyłeś!</string>
     <string name="tutorial_rewards_2">Możesz także tworzyć niestandardowe nagrody w realnym świecie na podstawie tego, co Cię motywuje.</string>
     <string name="tutorial_tasks_complete">To wszystko na teraz. Jeśli potrzebujesz przypomnienia, sprawdź sekcję FAQ.</string>
-    <string name="tutorial_skills">Umiejętności to zdolności specjalne, które mają potężne efekty! Wybierz umiejętność, aby z niej skorzystać. Będzie kosztować manę (niebieski pasek), którą zarabiasz, meldując się każdego dnia i wykonując swoje prawdziwe zadania. Sprawdź FAQ w menu, aby uzyskać więcej informacji!</string>
-    <string name="tutorial_party">Tutaj Ty i Twoi przyjaciele pilnujecie wzajemnie swoich celów i walczycie z potworami poprzez swoje zadania!</string>
+    <string name="tutorial_skills">Umiejętności to zdolności specjalne, które mają potężne efekty! Wybierz umiejętność, aby z niej skorzystać. Będzie kosztować manę (niebieski pasek), którą uzyskujesz meldując się każdego dnia i wykonując swoje prawdziwe zadania. Sprawdź FAQ w menu, aby uzyskać więcej informacji!</string>
+    <string name="tutorial_party">To tutaj Ty i Twoi przyjaciele pilnujecie wzajemnie swoich celów i walczycie z potworami swoimi zadaniami!</string>
     <string name="tutorial_tavern">Witaj w Karczmie - publicznym czacie dla wszystkich grup wiekowych! Możecie tu rozmawiać o produktywności i zadawać pytania. Miłej zabawy!</string>
     <string name="tutorial_stats">Naciśnij szary przycisk by przydzielić dużo punktów statystyk na raz albo naciskaj strzałki by przydzielać je pojedynczo. </string>
 </resources>
