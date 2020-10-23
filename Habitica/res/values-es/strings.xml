@@ -356,7 +356,7 @@
     <string name="active">Activa</string>
     <string name="due">Vence</string>
     <string name="cancel_subscription">Cancelar suscripción</string>
-    <string name="cancel_subscription_google_description">¿Ya no quieres suscribirte\? Puedes encontrar la opción de cancelar la suscripción en la sección \"Mis aplicaciones\" de la Google Play Store. Cualquier mes de crédito de suscripción se aplicará después de que su suscripción haya finalizado.</string>
+    <string name="cancel_subscription_google_description">¿Ya no quieres suscribirte\? Puedes encontrar la opción de cancelar la suscripción en la sección \"Mis aplicaciones\" de Google Play Store. Cualquier mes de crédito de suscripción se aplicará después de que su suscripción haya finalizado.</string>
     <string name="cancel_subscription_notgoogle_description">¿Ya no quieres suscribirte\? Debido a tu método de pago, sólo puedes cancelar tu suscripción a través del sitio de web. Para hacer esto, presione el botón a continuación, inicie sesión en su cuenta, presione el icono de Usuario en la esquina superior derecha, y luego vaya a Suscripción. Cualquier mes de crédito de suscripción se aplicará después de que su suscripción haya finalizado. ¡Te echaremos de menos!</string>
     <string name="visit_habitica_website">Visitar la página de Habitica</string>
     <string name="current_bonuses">Bonificaciones Actuales</string>
@@ -882,8 +882,8 @@
     <string name="defeat">Derrotar</string>
     <string name="gift_confirmation_text_gems">Has enviado algunas gemas a %s.</string>
     <string name="special_items">Artículos especiales</string>
-    <string name="leave_delte_tasks">Abandonar y eliminar las tareas</string>
-    <string name="leave_keep_tasks">Abandonar manteniendo las tareas</string>
+    <string name="leave_delte_tasks">Abandonar y eliminar Tareas</string>
+    <string name="leave_keep_tasks">Abandonar y mantener Tareas</string>
     <string name="challenge_leave_description">Puedes elegir mantener las tareas de este desafío en tu tablero personal o eliminarlas cuando lo abandones</string>
     <string name="report_message_title">Reportar a %s por violación:</string>
     <string name="need_help_header_description">Publica un mensaje en el %s para que tus preguntas sean respondidas por otros jugadores.</string>
@@ -947,5 +947,5 @@
     <string name="pms_disabled">Los Mensajes Privados están desactivados</string>
     <string name="disablePrivateMessages">Desactivar Mensajes Privados</string>
     <string name="block">Bloquear</string>
-    <string name="setup_task_habit_1_notes">Ya sea un Hábito, una Actividad Diaria, o un Pendiente</string>
+    <string name="setup_task_habit_1_notes">Ya sea un Hábito, una Tarea Diaria, o una Tarea Pendiente</string>
 </resources>
