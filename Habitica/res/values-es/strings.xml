@@ -997,4 +997,16 @@
     <string name="contact_us">Contáctanos</string>
     <string name="support_bug_title">Constantemente estamos tratando de mejorar nuestras apps basándonos en la retroalimentación de los jugadores pero a veces algunos errores aparecen…</string>
     <string name="lets_go">Vamos</string>
+    <string name="experience_description">Los Puntos de Experiencia representan tu progreso y te permiten subir de nivel. Principalmente **ganas EXP** por completar tareas y misiones, pero además hay algunas habilidades de clase que dan EXP.
+\n
+\nLas tareas de alta dificultad, o las tareas de color rojo te darán **más EXP**. El **atributo de Inteligencia** también incrementa tu tasa de ganar EXP.</string>
+    <string name="health_description">Esto representa la vida de tu avatar. Perder una tarea diaria o hacer un hábito negativo **reduce tu HP**.
+\n
+\n**Recupera HP** subiendo un nivel, usando una poción de salud, o utilizando una habiidad de clase con capacidad de curación.
+\n
+\nSi tu **HP llega a 0** perderás un nivel, todo el oro y una pieza de equipamiento. El equipamiento perdido puede ser recomprado.</string>
+    <string name="health_points">Puntos de Salud</string>
+    <string name="how_best_habitica">¿No estás seguro de cómo usar mejor Habitica\?</string>
+    <string name="send_bug_prompt">¡Envíanos un reporte de errores y nosotros nos comunicaremos contigo!</string>
+    <string name="common_fixes">Arreglos Comunes</string>
 </resources>
