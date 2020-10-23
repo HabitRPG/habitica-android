@@ -997,7 +997,7 @@
     <string name="contact_us">Contáctanos</string>
     <string name="support_bug_title">Constantemente estamos tratando de mejorar nuestras apps basándonos en la retroalimentación de los jugadores pero a veces algunos errores aparecen…</string>
     <string name="lets_go">Vamos</string>
-    <string name="experience_description">Los Puntos de Experiencia representan tu progreso y te permiten subir de nivel. Principalmente **ganas EXP** por completar tareas y misiones, pero además hay algunas habilidades de clase que dan EXP.
+    <string name="experience_description">Los Puntos de Experiencia representan tu progreso y te permiten subir de nivel. Principalmente **ganarás EXP** por completar tareas y misiones, pero además hay algunas habilidades de clase que dan EXP.
 \n
 \nLas tareas de alta dificultad, o las tareas de color rojo te darán **más EXP**. El **atributo de Inteligencia** también incrementa tu tasa de ganar EXP.</string>
     <string name="health_description">Esto representa la vida de tu avatar. Perder una tarea diaria o hacer un hábito negativo **reduce tu HP**.
