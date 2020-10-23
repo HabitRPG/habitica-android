@@ -947,4 +947,5 @@
     <string name="pms_disabled">Los Mensajes Privados están desactivados</string>
     <string name="disablePrivateMessages">Desactivar Mensajes Privados</string>
     <string name="block">Bloquear</string>
+    <string name="setup_task_habit_1_notes">Ya sea un Hábito, una Actividad Diaria, o un Pendiente</string>
 </resources>
