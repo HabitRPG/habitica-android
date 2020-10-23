@@ -957,4 +957,14 @@
     <string name="not_recurring">No Recurrente</string>
     <string name="password_too_short">Tu contraseña tiene que tener por lo menos %d caracteres de largo</string>
     <string name="gift_gems_disclaimer">Habitica nunca requerirá que regales gemas a otros jugadores. Pedir gemas a otras personas es una violación a las Normas de la Comunidad y debe ser reportado a admin@habitica.com.</string>
+    <string name="sale">Venta</string>
+    <string name="event">Evento</string>
+    <string name="member_group_plan">Miembro de un Plan de Grupo</string>
+    <string name="member">Miembro</string>
+    <string name="group_plan">Plan de Grupo</string>
+    <string name="save_20">Guardado 20%</string>
+    <string name="gifted">Regalado</string>
+    <string name="ending_on">Finaliza en %s</string>
+    <string name="from_balance">Desde el balance</string>
+    <string name="preference_push_party_mention">\@Menciones en el equipo</string>
 </resources>
