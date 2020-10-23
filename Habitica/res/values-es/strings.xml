@@ -922,4 +922,11 @@
     <string name="hatchedPetTitle">Eclosionaste una mascota</string>
     <string name="completedTaskTitle">Completaste una tarea</string>
     <string name="createdTaskTitle">Creaste tu primera tarea</string>
+    <string name="delete_challenge_task_description">Esta es una de las Tareas %d que forman parte del Desafío“%s”. Tienes que salir del Desafío para eliminar esta Tarea.</string>
+    <string name="use_saddle">Usar Silla de Montar</string>
+    <string name="magic_potion">Poción mágica</string>
+    <string name="magic_potions">Pociones mágicas</string>
+    <string name="hatch_pet_again">Eclosionar mascota de nuevo</string>
+    <string name="unhatched_pet">Mascota no eclosionada</string>
+    <string name="hatch_pet">Mascota eclosionada</string>
 </resources>
