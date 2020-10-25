@@ -1023,4 +1023,5 @@
     <string name="leave_delte_tasks">辞める、タスクも削除する</string>
     <string name="leave_keep_tasks">辞める、タスクはこのまま</string>
     <string name="challenge_leave_description">このチャレンジのタスクをあなたのタスクボードに残すか、削除するかこのチャレンジを辞めるときに選べます</string>
+    <string name="purchase_equipment_title">装備品の購入</string>
 </resources>
