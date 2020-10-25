@@ -431,7 +431,7 @@
     <string name="empty_description_todos">Afazeres são tarefas que só precisam ser completadas uma única vez. Adicione Listas aos seus Afazeres para aumentar o valor deles.</string>
     <string name="empty_title_rewards">Você não tem nenhuma Recompensa</string>
     <string name="reset_walkthrough">Refazer o Tutorial do Justin</string>
-    <string name="read_community_guidelines">Prefs</string>
+    <string name="read_community_guidelines">Reveja nossas <u>Diretrizes de Comunidade</u> antes de postar</string>
     <string name="maintenance">Manutenção</string>
     <string name="reload_content">Recarregar Conteúdo</string>
     <string name="dailyDueDefaultView">Diárias por padrão na aba \"Ativas\"</string>
