@@ -167,10 +167,10 @@ class TaskSchedulingControls @JvmOverloads constructor(
     }
 
     private fun configureViewsForType() {
-        binding.startDateTextview.text = context.getString(if (taskType == Task.TYPE_DAILY) R.string.start_date else R.string.due_date)
-        binding.repeatsEveryWrapper.visibility = if (taskType == Task.TYPE_DAILY) View.VISIBLE else View.GONE
-        binding.summaryTextview.visibility =  if (taskType == Task.TYPE_DAILY) View.VISIBLE else View.GONE
-        binding.weeklyRepeatWrapper.visibility = if (taskType == Task.TYPE_DAILY) View.VISIBLE else View.GONE
+        binding.startDateTextview.text = context.getString(if (taskType == TaskType.TYPE_DAILY) R.string.start_date else R.string.due_date)
+        binding.repeatsEveryWrapper.visibility = if (taskType == TaskType.TYPE_DAILY) View.VISIBLE else View.GONE
+        binding.summaryTextview.visibility =  if (taskType == TaskType.TYPE_DAILY) View.VISIBLE else View.GONE
+        binding.weeklyRepeatWrapper.visibility = if (taskType == TaskType.TYPE_DAILY) View.VISIBLE else View.GONE
     }
 
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
@@ -189,8 +189,8 @@ class TaskSchedulingControls @JvmOverloads constructor(
             Task.FREQUENCY_YEARLY -> R.string.years
             else -> R.string.days
         })
-        binding.weeklyRepeatWrapper.visibility = if (frequency == Task.FREQUENCY_WEEKLY && taskType == Task.TYPE_DAILY) View.VISIBLE else View.GONE
-        binding.monthlyRepeatWrapper.visibility = if (frequency == Task.FREQUENCY_MONTHLY && taskType == Task.TYPE_DAILY) View.VISIBLE else View.GONE
+        binding.weeklyRepeatWrapper.visibility = if (frequency == Task.FREQUENCY_WEEKLY && taskType == TaskType.TYPE_DAILY) View.VISIBLE else View.GONE
+        binding.monthlyRepeatWrapper.visibility = if (frequency == Task.FREQUENCY_MONTHLY && taskType == TaskType.TYPE_DAILY) View.VISIBLE else View.GONE
         if (frequency == Task.FREQUENCY_WEEKLY) {
             createWeeklyRepeatViews()
         } else if (frequency == TaskFrequency.FREQUENCY_MONTHLY) {

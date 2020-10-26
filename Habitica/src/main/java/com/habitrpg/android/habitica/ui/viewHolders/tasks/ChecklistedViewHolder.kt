@@ -58,8 +58,8 @@ abstract class ChecklistedViewHolder(itemView: View, scoreTaskFunc: ((Task, Task
 
         this.checklistIndicatorWrapper.visibility = if (data.checklist?.size == 0) View.GONE else View.VISIBLE
         super.bind(data, position, displayMode)
-        val regularBoxBackground = if (task?.type == Task.TYPE_DAILY) R.drawable.daily_unchecked else R.drawable.todo_unchecked
-        val completedBoxBackground = if (task?.type == Task.TYPE_DAILY) R.drawable.daily_checked else R.drawable.todo_checked
+        val regularBoxBackground = if (task?.type == TaskType.TYPE_DAILY) R.drawable.daily_unchecked else R.drawable.todo_unchecked
+        val completedBoxBackground = if (task?.type == TaskType.TYPE_DAILY) R.drawable.daily_checked else R.drawable.todo_checked
         val inactiveBoxBackground = R.drawable.daily_inactive
         if (this.shouldDisplayAsActive(data) && !data.isPendingApproval) {
             this.checkboxHolder.setBackgroundResource(data.lightTaskColor)
@@ -90,7 +90,7 @@ abstract class ChecklistedViewHolder(itemView: View, scoreTaskFunc: ((Task, Task
                 for (item in this.task?.checklist ?: emptyList<ChecklistItem>()) {
                     val itemView = layoutInflater?.inflate(R.layout.checklist_item_row, this.checklistView, false)
                     val checkboxBackground = itemView?.findViewById<View>(R.id.checkBoxBackground)
-                    if (task?.type == Task.TYPE_TODO) {
+                    if (task?.type == TaskType.TYPE_TODO) {
                         checkboxBackground?.setBackgroundResource(R.drawable.round_checklist_unchecked)
                     }
                     val textView = itemView?.findViewById<HabiticaEmojiTextView>(R.id.checkedTextView)
@@ -110,7 +110,7 @@ abstract class ChecklistedViewHolder(itemView: View, scoreTaskFunc: ((Task, Task
                     checkboxHolder?.setOnClickListener { _ ->
                         task?.let { scoreChecklistItemFunc(it, item) }
                     }
-                    val color = ContextCompat.getColor(context, if (task?.completed == true || (task?.type == Task.TYPE_DAILY && task?.isDue == false)) {
+                    val color = ContextCompat.getColor(context, if (task?.completed == true || (task?.type == TaskType.TYPE_DAILY && task?.isDue == false)) {
                         checkmark?.drawable?.setTint(ContextCompat.getColor(context, R.color.text_dimmed))
                         R.color.offset_background
                     } else {

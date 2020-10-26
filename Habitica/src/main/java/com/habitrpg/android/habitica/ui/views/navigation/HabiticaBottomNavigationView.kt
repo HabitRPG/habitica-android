@@ -60,9 +60,9 @@ class HabiticaBottomNavigationView @JvmOverloads constructor(
         get() = binding.itemWrapper.measuredHeight
 
     init {
-        binding.habitsTab.setOnClickListener { activeTaskType = Task.TYPE_HABIT }
-        binding.dailiesTab.setOnClickListener { activeTaskType = Task.TYPE_DAILY }
-        binding.todosTab.setOnClickListener { activeTaskType = Task.TYPE_TODO }
+        binding.habitsTab.setOnClickListener { activeTaskType = TaskType.TYPE_HABIT }
+        binding.dailiesTab.setOnClickListener { activeTaskType = TaskType.TYPE_DAILY }
+        binding.todosTab.setOnClickListener { activeTaskType = TaskType.TYPE_TODO }
         binding.rewardsTab.setOnClickListener { activeTaskType = Task.TYPE_REWARD }
         binding.addButton.setOnClickListener {
             if (flipAddBehaviour) {
@@ -148,18 +148,18 @@ class HabiticaBottomNavigationView @JvmOverloads constructor(
 
         var pos = 4
         binding.submenuWrapper.removeAllViews()
-        for (taskType in listOf(Task.TYPE_HABIT, Task.TYPE_DAILY, Task.TYPE_TODO, Task.TYPE_REWARD)) {
+        for (taskType in listOf(TaskType.TYPE_HABIT, TaskType.TYPE_DAILY, TaskType.TYPE_TODO, Task.TYPE_REWARD)) {
             val view = BottomNavigationSubmenuItem(context)
             when (taskType) {
-                Task.TYPE_HABIT -> {
+                TaskType.TYPE_HABIT -> {
                     view.icon = ContextCompat.getDrawable(context, R.drawable.add_habit)
                     view.title = context.getString(R.string.habit)
                 }
-                Task.TYPE_DAILY -> {
+                TaskType.TYPE_DAILY -> {
                     view.icon = ContextCompat.getDrawable(context, R.drawable.add_daily)
                     view.title = context.getString(R.string.daily)
                 }
-                Task.TYPE_TODO -> {
+                TaskType.TYPE_TODO -> {
                     view.icon = ContextCompat.getDrawable(context, R.drawable.add_todo)
                     view.title = context.getString(R.string.todo)
                 }
@@ -225,9 +225,9 @@ class HabiticaBottomNavigationView @JvmOverloads constructor(
     }
 
     private fun updateItemSelection() {
-        binding.habitsTab.isActive = activeTaskType == Task.TYPE_HABIT
-        binding.dailiesTab.isActive = activeTaskType == Task.TYPE_DAILY
-        binding.todosTab.isActive = activeTaskType == Task.TYPE_TODO
+        binding.habitsTab.isActive = activeTaskType == TaskType.TYPE_HABIT
+        binding.dailiesTab.isActive = activeTaskType == TaskType.TYPE_DAILY
+        binding.todosTab.isActive = activeTaskType == TaskType.TYPE_TODO
         binding.rewardsTab.isActive = activeTaskType == Task.TYPE_REWARD
     }
 }

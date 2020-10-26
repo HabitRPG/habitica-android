@@ -166,7 +166,7 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         context?.let { binding?.recyclerView?.setBackgroundColor(ContextCompat.getColor(it, R.color.content_background)) }
-        if (Task.TYPE_DAILY == classType) {
+        if (TaskType.TYPE_DAILY == classType) {
             if (user?.isValid == true && user?.preferences?.dailyDueDefaultView == true) {
                 taskFilterHelper.setActiveFilter(TaskType.TYPE_DAILY, TaskFilter.FILTER_ACTIVE)
             }
@@ -318,17 +318,17 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
             context?.let { binding?.emptyIconView?.setColorFilter(ContextCompat.getColor(it, R.color.text_dimmed), android.graphics.PorterDuff.Mode.MULTIPLY) }
             if (taskFilterHelper.howMany(classType) > 0) {
                 when (this.classType) {
-                    Task.TYPE_HABIT -> {
+                    TaskType.TYPE_HABIT -> {
                         binding?.emptyIconView?.setImageResource(R.drawable.icon_habits)
                         binding?.emptyViewTitle?.setText(R.string.empty_title_habits_filtered)
                         binding?.emptyViewDescription?.setText(R.string.empty_description_habits_filtered)
                     }
-                    Task.TYPE_DAILY -> {
+                    TaskType.TYPE_DAILY -> {
                         binding?.emptyIconView?.setImageResource(R.drawable.icon_dailies)
                         binding?.emptyViewTitle?.setText(R.string.empty_title_dailies_filtered)
                         binding?.emptyViewDescription?.setText(R.string.empty_description_dailies_filtered)
                     }
-                    Task.TYPE_TODO -> {
+                    TaskType.TYPE_TODO -> {
                         binding?.emptyIconView?.setImageResource(R.drawable.icon_todos)
                         binding?.emptyViewTitle?.setText(R.string.empty_title_todos_filtered)
                         binding?.emptyViewDescription?.setText(R.string.empty_description_todos_filtered)
@@ -340,17 +340,17 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
                 }
             } else {
                 when (this.classType) {
-                    Task.TYPE_HABIT -> {
+                    TaskType.TYPE_HABIT -> {
                         binding?.emptyIconView?.setImageResource(R.drawable.icon_habits)
                         binding?.emptyViewTitle?.setText(R.string.empty_title_habits)
                         binding?.emptyViewDescription?.setText(R.string.empty_description_habits)
                     }
-                    Task.TYPE_DAILY -> {
+                    TaskType.TYPE_DAILY -> {
                         binding?.emptyIconView?.setImageResource(R.drawable.icon_dailies)
                         binding?.emptyViewTitle?.setText(R.string.empty_title_dailies)
                         binding?.emptyViewDescription?.setText(R.string.empty_description_dailies)
                     }
-                    Task.TYPE_TODO -> {
+                    TaskType.TYPE_TODO -> {
                         binding?.emptyIconView?.setImageResource(R.drawable.icon_todos)
                         binding?.emptyViewTitle?.setText(R.string.empty_title_todos)
                         binding?.emptyViewDescription?.setText(R.string.empty_description_todos)

@@ -283,15 +283,15 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
                 val taskType = when (step.identifier) {
                     "habits" -> {
                         id = R.id.habits_tab
-                        Task.TYPE_HABIT
+                        TaskType.TYPE_HABIT
                     }
                     "dailies" -> {
                         id = R.id.dailies_tab
-                        Task.TYPE_DAILY
+                        TaskType.TYPE_DAILY
                     }
                     "todos" -> {
                         id = R.id.todos_tab
-                        Task.TYPE_TODO
+                        TaskType.TYPE_TODO
                     }
                     "rewards" -> {
                         id = R.id.rewards_tab
@@ -328,9 +328,9 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
         val additionalData = HashMap<String, Any>()
         additionalData["created task type"] = type
         additionalData["viewed task type"] = when (binding?.viewPager?.currentItem) {
-            0 -> Task.TYPE_HABIT
-            1 -> Task.TYPE_DAILY
-            2 -> Task.TYPE_TODO
+            0 -> TaskType.TYPE_HABIT
+            1 -> TaskType.TYPE_DAILY
+            2 -> TaskType.TYPE_TODO
             3 -> Task.TYPE_REWARD
             else -> ""
         }
