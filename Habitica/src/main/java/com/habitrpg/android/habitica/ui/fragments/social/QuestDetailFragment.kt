@@ -15,7 +15,7 @@ import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.FragmentQuestDetailBinding
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.shared.habitica.models.inventory.Quest
-import com.habitrpg.android.habitica.models.inventory.QuestContent
+import com.habitrpg.shared.habitica.models.inventory.QuestContent
 import com.habitrpg.shared.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.modules.AppModule

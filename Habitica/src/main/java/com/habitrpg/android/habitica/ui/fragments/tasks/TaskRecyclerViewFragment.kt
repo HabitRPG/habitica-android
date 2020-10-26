@@ -95,7 +95,7 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
             TaskType.TYPE_TODO -> {
                 TodosRecyclerViewAdapter(null, true, R.layout.todo_item_card, taskFilterHelper)
             }
-            Task.TYPE_REWARD -> {
+            TaskType.TYPE_REWARD -> {
                 RewardsRecyclerViewAdapter(null, R.layout.reward_item_card, user)
             }
             else -> null
@@ -333,7 +333,7 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
                         binding?.emptyViewTitle?.setText(R.string.empty_title_todos_filtered)
                         binding?.emptyViewDescription?.setText(R.string.empty_description_todos_filtered)
                     }
-                    Task.TYPE_REWARD -> {
+                    TaskType.TYPE_REWARD -> {
                         binding?.emptyIconView?.setImageResource(R.drawable.icon_rewards)
                         binding?.emptyViewTitle?.setText(R.string.empty_title_rewards)
                     }
@@ -355,7 +355,7 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
                         binding?.emptyViewTitle?.setText(R.string.empty_title_todos)
                         binding?.emptyViewDescription?.setText(R.string.empty_description_todos)
                     }
-                    Task.TYPE_REWARD -> {
+                    TaskType.TYPE_REWARD -> {
                         binding?.emptyIconView?.setImageResource(R.drawable.icon_rewards)
                         binding?.emptyViewTitle?.setText(R.string.empty_title_rewards)
                     }

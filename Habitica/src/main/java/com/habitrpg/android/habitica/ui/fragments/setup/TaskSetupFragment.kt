@@ -10,8 +10,8 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.databinding.FragmentSetupTasksBinding
 import com.habitrpg.android.habitica.models.tasks.Days
-import com.habitrpg.android.habitica.models.tasks.Task
-import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.shared.habitica.models.tasks.Task
+import com.habitrpg.shared.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.SetupActivity
 import com.habitrpg.android.habitica.ui.adapter.setup.TaskSetupAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
@@ -127,7 +127,7 @@ class TaskSetupFragment : BaseFragment<FragmentSetupTasksBinding>() {
         }
 
         if (type == TaskType.TYPE_DAILY) {
-            task.frequency = "weekly"
+            TaskFrequency.FREQUENCY = "weekly"
             task.startDate = Date()
             task.everyX = 1
             val days = Days()

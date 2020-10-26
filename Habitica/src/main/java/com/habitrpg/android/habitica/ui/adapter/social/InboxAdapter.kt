@@ -13,7 +13,7 @@ import com.habitrpg.android.habitica.ui.viewHolders.ChatRecyclerMessageViewHolde
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import io.reactivex.subjects.PublishSubject
-import com.habitrpg.android.habitica.models.members.Member
+import com.habitrpg.shared.habitica.models.members.Member
 
 class InboxAdapter(private var user: User?, private var replyToUser : Member) : PagedListAdapter<ChatMessage, ChatRecyclerViewHolder>(DIFF_CALLBACK) {
     private val FIRST_MESSAGE = 0

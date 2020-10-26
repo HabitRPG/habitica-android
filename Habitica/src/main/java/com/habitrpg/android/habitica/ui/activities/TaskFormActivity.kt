@@ -32,10 +32,12 @@ import com.habitrpg.android.habitica.helpers.TaskAlarmManager
 import com.habitrpg.shared.habitica.models.Tag
 import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.tasks.HabitResetOption
-import com.habitrpg.android.habitica.models.tasks.Task
-import com.habitrpg.android.habitica.models.user.Stats
+import com.habitrpg.shared.habitica.models.tasks.Task
+import com.habitrpg.shared.habitica.models.user.Stats
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
+import com.habitrpg.shared.habitica.models.tasks.TaskFrequency
+import com.habitrpg.shared.habitica.models.tasks.TaskType
 import io.realm.RealmList
 import java.util.*
 import javax.inject.Inject
@@ -284,11 +286,11 @@ class TaskFormActivity : BaseActivity() {
         binding.taskSchedulingControls.visibility = todoDailyViewsVisibility
         binding.taskSchedulingControls.taskType = taskType
 
-        val rewardHideViews = if (taskType == Task.TYPE_REWARD) View.GONE else View.VISIBLE
+        val rewardHideViews = if (taskType == TaskType.TYPE_REWARD) View.GONE else View.VISIBLE
         binding.taskDifficultyTitleView.visibility = rewardHideViews
         binding.taskDifficultyButtons.visibility = rewardHideViews
 
-        val rewardViewsVisibility = if (taskType == Task.TYPE_REWARD) View.VISIBLE else View.GONE
+        val rewardViewsVisibility = if (taskType == TaskType.TYPE_REWARD) View.VISIBLE else View.GONE
         binding.rewardValueTitleView.visibility = rewardViewsVisibility
         binding.rewardValue.visibility = rewardViewsVisibility
 
@@ -341,7 +343,7 @@ class TaskFormActivity : BaseActivity() {
             TaskType.TYPE_HABIT -> {
                 binding.habitScoringButtons.isPositive = task.up ?: false
                 binding.habitScoringButtons.isNegative = task.down ?: false
-                task.frequency?.let {
+                task.frequency ?.let {
                     if (it.isNotBlank()) {
                         binding.habitResetStreakButtons.selectedResetOption = HabitResetOption.valueOf(it.toUpperCase(Locale.US))
                     }
@@ -359,13 +361,13 @@ class TaskFormActivity : BaseActivity() {
                 binding.taskSchedulingControls.startDate = task.startDate ?: Date()
                 binding.taskSchedulingControls.everyX = task.everyX ?: 1
                 task.repeat?.let { binding.taskSchedulingControls.weeklyRepeat = it }
-                binding.taskSchedulingControls.daysOfMonth = task.getDaysOfMonth()
-                binding.taskSchedulingControls.weeksOfMonth = task.getWeeksOfMonth()
+                binding.taskSchedulingControls.daysOfMonth = task.daysOfMonth
+                binding.taskSchedulingControls.weeksOfMonth = task.weeksOfMonth
                 binding.habitAdjustPositiveStreakView.setText((task.streak ?: 0).toString())
-                binding.taskSchedulingControls.frequency = task.frequency ?: Task.FREQUENCY_DAILY
+                binding.taskSchedulingControls.frequency = task.frequency ?: TaskFrequency.FREQUENCY_DAILY
             }
             TaskType.TYPE_TODO -> binding.taskSchedulingControls.dueDate = task.dueDate
-            Task.TYPE_REWARD -> binding.rewardValue.value = task.value
+            TaskType.TYPE_REWARD -> binding.rewardValue.value = task.value
         }
         if (taskType == TaskType.TYPE_DAILY || taskType == TaskType.TYPE_TODO) {
             task.checklist?.let { binding.checklistContainer.checklistItems = it }
@@ -438,12 +440,12 @@ class TaskFormActivity : BaseActivity() {
             thisTask.everyX = binding.taskSchedulingControls.everyX
             thisTask.frequency = binding.taskSchedulingControls.frequency
             thisTask.repeat = binding.taskSchedulingControls.weeklyRepeat
-            thisTask.setDaysOfMonth(binding.taskSchedulingControls.daysOfMonth)
-            thisTask.setWeeksOfMonth(binding.taskSchedulingControls.weeksOfMonth)
+            thisTask.daysOfMonth = binding.taskSchedulingControls.daysOfMonth
+            thisTask.weeksOfMonth = binding.taskSchedulingControls.weeksOfMonth
             if (binding.habitAdjustPositiveStreakView.text?.isNotEmpty() == true) thisTask.streak = binding.habitAdjustPositiveStreakView.text.toString().toIntCatchOverflow()
         } else if (taskType == TaskType.TYPE_TODO) {
             thisTask.dueDate = binding.taskSchedulingControls.dueDate
-        } else if (taskType == Task.TYPE_REWARD) {
+        } else if (taskType == TaskType.TYPE_REWARD) {
             thisTask.value = binding.rewardValue.value
         }
 

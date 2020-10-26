@@ -15,9 +15,10 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.TaskFormTaskSchedulingBinding
 import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.extensions.layoutInflater
-import com.habitrpg.android.habitica.models.tasks.Days
-import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.adapter.SimpleSpinnerAdapter
+import com.habitrpg.shared.habitica.models.tasks.Days
+import com.habitrpg.shared.habitica.models.tasks.TaskFrequency
+import com.habitrpg.shared.habitica.models.tasks.TaskType
 import java.text.DateFormat
 import java.text.DateFormatSymbols
 import java.util.*
@@ -60,9 +61,9 @@ class TaskSchedulingControls @JvmOverloads constructor(
     set(value) {
         field = value
         binding.repeatsEverySpinner.setSelection(when (value) {
-            Task.FREQUENCY_WEEKLY -> 1
-            Task.FREQUENCY_MONTHLY -> 2
-            Task.FREQUENCY_YEARLY -> 3
+            TaskFrequency.FREQUENCY_WEEKLY -> 1
+            TaskFrequency.FREQUENCY_MONTHLY -> 2
+            TaskFrequency.FREQUENCY_YEARLY -> 3
             else -> 0
         })
         configureViewsForFrequency()
@@ -184,14 +185,14 @@ class TaskSchedulingControls @JvmOverloads constructor(
 
     private fun configureViewsForFrequency() {
         binding.repeatsEveryTitle.text = context.getText(when (frequency) {
-            Task.FREQUENCY_WEEKLY -> R.string.weeks
-            Task.FREQUENCY_MONTHLY -> R.string.months
-            Task.FREQUENCY_YEARLY -> R.string.years
+            TaskFrequency.FREQUENCY_WEEKLY -> R.string.weeks
+            TaskFrequency.FREQUENCY_MONTHLY -> R.string.months
+            TaskFrequency.FREQUENCY_YEARLY -> R.string.years
             else -> R.string.days
         })
-        binding.weeklyRepeatWrapper.visibility = if (frequency == Task.FREQUENCY_WEEKLY && taskType == TaskType.TYPE_DAILY) View.VISIBLE else View.GONE
-        binding.monthlyRepeatWrapper.visibility = if (frequency == Task.FREQUENCY_MONTHLY && taskType == TaskType.TYPE_DAILY) View.VISIBLE else View.GONE
-        if (frequency == Task.FREQUENCY_WEEKLY) {
+        binding.weeklyRepeatWrapper.visibility = if (frequency == TaskFrequency.FREQUENCY_WEEKLY && taskType == TaskType.TYPE_DAILY) View.VISIBLE else View.GONE
+        binding.monthlyRepeatWrapper.visibility = if (frequency == TaskFrequency.FREQUENCY_MONTHLY && taskType == TaskType.TYPE_DAILY) View.VISIBLE else View.GONE
+        if (frequency == TaskFrequency.FREQUENCY_WEEKLY) {
             createWeeklyRepeatViews()
         } else if (frequency == TaskFrequency.FREQUENCY_MONTHLY) {
             if (weeksOfMonth?.isNotEmpty() != true && daysOfMonth?.isNotEmpty() != true) {

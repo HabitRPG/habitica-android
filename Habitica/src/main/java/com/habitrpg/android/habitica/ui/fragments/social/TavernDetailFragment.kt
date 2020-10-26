@@ -21,7 +21,7 @@ import com.habitrpg.android.habitica.extensions.setTintWith
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.android.habitica.models.inventory.QuestContent
+import com.habitrpg.shared.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.members.PlayerTier
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.shared.habitica.models.user.User

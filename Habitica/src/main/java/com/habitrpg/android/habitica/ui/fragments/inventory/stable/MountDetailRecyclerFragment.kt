@@ -12,7 +12,7 @@ import com.habitrpg.android.habitica.extensions.getTranslatedType
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.Mount
 import com.habitrpg.android.habitica.models.inventory.StableSection
-import com.habitrpg.android.habitica.models.user.OwnedMount
+import com.habitrpg.shared.habitica.models.user.OwnedMount
 import com.habitrpg.android.habitica.ui.adapter.inventory.MountDetailRecyclerAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.helpers.MarginDecoration

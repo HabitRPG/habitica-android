@@ -6,8 +6,8 @@ import android.view.View
 import androidx.appcompat.widget.PopupMenu
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.PartyMemberBinding
-import com.habitrpg.android.habitica.models.members.Member
-import com.habitrpg.android.habitica.models.user.Stats
+import com.habitrpg.shared.habitica.models.members.Member
+import com.habitrpg.shared.habitica.models.user.Stats
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 
 

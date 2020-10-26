@@ -58,7 +58,6 @@ interface TaskRepository : BaseRepository {
 
     fun retrieveDailiesFromDate(date: Date): Flowable<TaskList>
     fun retrieveCompletedTodos(userId: String): Flowable<TaskList>
-    fun syncErroredTasks(): Single<List<Task>>
     fun unlinkAllTasks(challengeID: String?, keepOption: String): Flowable<Void>
     fun getTasksForChallenge(challengeID: String?): Flowable<RealmResults<Task>>
 }

@@ -5,7 +5,7 @@ import android.util.AttributeSet
 import android.widget.LinearLayout
 import com.habitrpg.android.habitica.databinding.ViewInvitationBinding
 import com.habitrpg.android.habitica.extensions.layoutInflater
-import com.habitrpg.android.habitica.models.invitations.GenericInvitation
+import com.habitrpg.shared.habitica.models.invitations.GenericInvitation
 
 class InvitationsView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0

@@ -8,6 +8,7 @@ import com.habitrpg.shared.habitica.nativePackages.annotations.PrimaryKeyAnnotat
 import com.habitrpg.shared.habitica.nativePackages.annotations.SerializedNameAnnotation
 
 open class Member : NativeRealmObject(), Avatar {
+
     @PrimaryKeyAnnotation
     @SerializedNameAnnotation("_id")
     var id: String? = null
@@ -43,10 +44,10 @@ open class Member : NativeRealmObject(), Avatar {
             }
         }
     override var stats: Stats? = null
-        set(stats) {
-            field = stats
-            if (stats != null && this.id != null && !stats.isManaged()) {
-                stats.userId = this.id
+        set(value) {
+            field = value
+            if (value != null && this.id != null && !value.isManaged()) {
+                field?.userId = this.id
             }
         }
     var inbox: Inbox? = null
@@ -57,13 +58,16 @@ open class Member : NativeRealmObject(), Avatar {
             }
         }
     override var preferences: MemberPreferences? = null
-        set(preferences) {
-            field = preferences
-            if (preferences != null && this.id != null && !preferences.isManaged()) {
-                preferences.userId = this.id ?: ""
+        set(value) {
+            field = value
+            if (value != null && this.id != null && !value.isManaged()) {
+                field?.userId = this.id
             }
         }
-
+    override val gemCount: Int
+        get() = 0
+    override val hourglassCount: Int
+        get() = 0
     var profile: Profile? = null
         set(profile) {
             field = profile
@@ -107,18 +111,17 @@ open class Member : NativeRealmObject(), Avatar {
             }
         }
     override var costume: Outfit? = null
-        set(costume) {
-            field = costume
-            if (costume != null && this.id != null) {
-                costume.userId = this.id + "costume"
+        set(value) {
+            field = value
+            if (value != null && this.id != null) {
+                field?.userId = this.id + "costume"
             }
         }
-
     override var equipped: Outfit? = null
-        set(equipped) {
-            field = equipped
-            if (equipped != null && this.id != null) {
-                equipped.userId = this.id + "equipped"
+        set(value) {
+            field = value
+            if (value != null && this.id != null) {
+                field?.userId = this.id + "equipped"
             }
         }
 
@@ -143,16 +146,10 @@ open class Member : NativeRealmObject(), Avatar {
     val formattedUsername: String?
         get() = if (username != null) "@$username" else null
 
-
-    override var gemCount: Int = 0
-    override var hourglassCount: Int = 0
-
     override fun hasClass(): Boolean {
         return preferences?.disableClasses == false && stats?.habitClass?.isNotEmpty() == true
     }
 
     override val sleep: Boolean
-        get() {
-            return preferences?.sleep ?: false
-        }
+        get() = preferences?.sleep ?: false
 }

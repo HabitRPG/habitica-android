@@ -7,7 +7,7 @@ import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.DialogPurchaseContentGearBinding
 import com.habitrpg.android.habitica.extensions.layoutInflater
-import com.habitrpg.android.habitica.models.inventory.Equipment
+import com.habitrpg.shared.habitica.models.inventory.Equipment
 import com.habitrpg.android.habitica.models.shops.ShopItem
 
 internal class PurchaseDialogGearContent(context: Context) : PurchaseDialogContent(context) {

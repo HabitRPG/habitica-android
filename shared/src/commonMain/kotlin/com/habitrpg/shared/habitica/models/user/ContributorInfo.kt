@@ -6,45 +6,10 @@ import com.habitrpg.shared.habitica.nativePackages.NativeSparseIntArray
 import com.habitrpg.shared.habitica.nativePackages.annotations.PrimaryKeyAnnotation
 
 open class ContributorInfo : NativeRealmObject() {
-
-    @PrimaryKeyAnnotation
-    var userId: String? = null
-
-    var user: User? = null
-    var admin: Boolean = false
-    var contributions: String? = null
-    var level: Int = 0
-    var text: String? = null
-
-    val contributorColor: Int
-        get() {
-            var rColor = NativeColor.black
-
-
-            if (CONTRIBUTOR_COLOR_DICT.get(this.level, -1) > 0) {
-                rColor = CONTRIBUTOR_COLOR_DICT.get(this.level, -1)
-            }
-
-            return rColor
-        }
-
-    val contributorForegroundColor: Int
-        get() = NativeColor.white
-
-    fun getAdmin(): Boolean? {
-        return this.admin
-    }
-
-    fun setAdmin(admin: Boolean?) {
-        this.admin = admin!!
-    }
-
     companion object {
-
-        val CONTRIBUTOR_COLOR_DICT: NativeSparseIntArray
+        val CONTRIBUTOR_COLOR_DICT: NativeSparseIntArray = NativeSparseIntArray()
 
         init {
-            CONTRIBUTOR_COLOR_DICT = NativeSparseIntArray()
             CONTRIBUTOR_COLOR_DICT.put(0, NativeColor.contributor_0)
             CONTRIBUTOR_COLOR_DICT.put(1, NativeColor.contributor_1)
             CONTRIBUTOR_COLOR_DICT.put(2, NativeColor.contributor_2)
@@ -57,4 +22,21 @@ open class ContributorInfo : NativeRealmObject() {
             CONTRIBUTOR_COLOR_DICT.put(9, NativeColor.contributor_staff)
         }
     }
+
+    @PrimaryKeyAnnotation
+    var userId: String? = null
+    var user: User? = null
+    var admin: Boolean = false
+    var contributions: String? = null
+    var level: Int = 0
+    var text: String? = null
+
+    val contributorColor: Int
+        get() {
+            var rColor = NativeColor.text_primary
+            if (CONTRIBUTOR_COLOR_DICT.get(level, -1) > 0) {
+                rColor = CONTRIBUTOR_COLOR_DICT.get(level, -1)
+            }
+            return rColor
+        }
 }

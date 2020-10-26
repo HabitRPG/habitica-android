@@ -19,9 +19,12 @@ import com.habitrpg.android.habitica.data.TagRepository
 import com.habitrpg.android.habitica.extensions.OnChangeTextWatcher
 import com.habitrpg.android.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.android.habitica.models.Tag
-import com.habitrpg.android.habitica.models.tasks.Task
+import com.habitrpg.shared.habitica.models.Tag
+import com.habitrpg.shared.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
+import com.habitrpg.shared.habitica.models.tasks.TaskFilter
+import com.habitrpg.shared.habitica.models.tasks.TaskFrequency
+import com.habitrpg.shared.habitica.models.tasks.TaskType
 import io.reactivex.Observable
 import java.util.*
 import javax.inject.Inject

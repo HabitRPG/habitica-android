@@ -1,5 +1,7 @@
 package com.habitrpg.android.habitica.models.inventory
 
+import com.habitrpg.shared.habitica.models.inventory.Customization
+
 class CustomizationSet {
     var text: String? = null
     var identifier: String? = null

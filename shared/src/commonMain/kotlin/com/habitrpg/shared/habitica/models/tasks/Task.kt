@@ -1,12 +1,14 @@
 package com.habitrpg.shared.habitica.models.tasks
 
 import com.habitrpg.shared.habitica.models.Tag
-import com.habitrpg.shared.habitica.nativePackages.NativeDate
-import com.habitrpg.shared.habitica.nativePackages.NativeList
-import com.habitrpg.shared.habitica.nativePackages.NativeParcel
-import com.habitrpg.shared.habitica.nativePackages.NativeSpanned
+import com.habitrpg.shared.habitica.nativePackages.*
+import com.habitrpg.shared.habitica.nativePackages.annotations.IgnoreAnnotation
+import com.habitrpg.shared.habitica.nativePackages.annotations.PrimaryKeyAnnotation
+import com.habitrpg.shared.habitica.nativePackages.annotations.SerializedNameAnnotation
 
-expect open class Task {
+expect open class Task : NativeRealmObject, NativeParcelable {
+    @PrimaryKeyAnnotation
+    @SerializedNameAnnotation("_id")
     var id: String?
     var userId: String
     var priority: Float
@@ -30,32 +32,39 @@ expect open class Task {
     var completed: Boolean
     var checklist: NativeList<ChecklistItem>?
     var reminders: NativeList<RemindersItem>?
-
     //dailies
     var frequency: String?
     var everyX: Int?
     var streak: Int?
     var startDate: NativeDate?
     var repeat: Days?
+    //todos
+    @SerializedNameAnnotation("date")
     var dueDate: NativeDate?
+    // used for buyable items
     var specialTag: String?
+    @IgnoreAnnotation
     var parsedText: NativeSpanned?
+    @IgnoreAnnotation
     var parsedNotes: NativeSpanned?
+
     var isDue: Boolean?
+
     var nextDue: NativeList<NativeDate>?
 
+    //Needed for offline creating/updating
     var isSaving: Boolean
     var hasErrored: Boolean
     var isCreating: Boolean
-
-    //Needed for offline creating/updating
     var yesterDaily: Boolean
 
     var daysOfMonthString: String?
     var weeksOfMonthString: String?
 
+    @IgnoreAnnotation
     var daysOfMonth: List<Int>?
 
+    @IgnoreAnnotation
     var weeksOfMonth: List<Int>?
 
     val completedChecklistCount: Int
@@ -89,14 +98,7 @@ expect open class Task {
 
     override fun hashCode(): Int
 
-    fun describeContents(): Int
+    constructor()
 
-    fun writeToParcel(dest: NativeParcel, flags: Int)
-
-    companion object CREATOR {
-        fun createFromParcel(source: NativeParcel): Task
-
-        fun newArray(size: Int): Array<Task?>
-    }
+    protected constructor(`in`: NativeParcel)
 }
-

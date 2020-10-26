@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import com.habitrpg.android.habitica.databinding.OverlayTutorialBinding
 import com.habitrpg.android.habitica.extensions.layoutInflater
-import com.habitrpg.android.habitica.models.TutorialStep
+import com.habitrpg.shared.habitica.models.TutorialStep
 
 class TutorialView(context: Context, var step: TutorialStep, var onReaction: OnTutorialReaction?) : FrameLayout(context) {
     private val binding = OverlayTutorialBinding.inflate(context.layoutInflater, this, true)

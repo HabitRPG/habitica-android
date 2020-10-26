@@ -26,12 +26,12 @@ class TaskSerializer : JsonSerializer<Task> {
             "habit" -> {
                 obj.addProperty("up", task.up)
                 obj.addProperty("down", task.down)
-                obj.addProperty("frequency", task.frequency)
+                obj.addProperty("frequency", TaskFrequency.FREQUENCY)
                 obj.addProperty("counterUp", task.counterUp)
                 obj.addProperty("counterDown", task.counterDown)
             }
             "daily" -> {
-                obj.addProperty("frequency", task.frequency)
+                obj.addProperty("frequency", TaskFrequency.FREQUENCY)
                 obj.addProperty("everyX", task.everyX)
                 obj.add("repeat", context.serialize(task.repeat))
                 obj.add("startDate", context.serialize(task.startDate))

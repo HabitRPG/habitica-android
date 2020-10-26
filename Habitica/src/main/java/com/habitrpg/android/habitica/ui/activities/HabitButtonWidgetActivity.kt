@@ -17,6 +17,7 @@ import com.habitrpg.shared.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.adapter.SkillTasksRecyclerViewAdapter
 import com.habitrpg.android.habitica.widget.HabitButtonWidgetProvider
+import com.habitrpg.shared.habitica.models.tasks.TaskType
 import javax.inject.Inject
 import javax.inject.Named
 

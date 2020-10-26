@@ -16,7 +16,7 @@ import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentSetupAvatarBinding
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.models.SetupCustomization
-import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.shared.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.SetupActivity
 import com.habitrpg.android.habitica.ui.adapter.setup.CustomizationSetupAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
@@ -219,6 +219,4 @@ class AvatarSetupFragment : BaseFragment<FragmentSetupAvatarBinding>() {
         params?.marginStart = location[0] + px
         binding?.customizationDrawer?.binding?.caretView?.layoutParams = params
     }
-
-
 }

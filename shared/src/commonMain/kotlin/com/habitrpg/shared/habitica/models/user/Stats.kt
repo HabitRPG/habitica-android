@@ -1,13 +1,11 @@
 package com.habitrpg.shared.habitica.models.user
 
-import com.habitrpg.shared.habitica.models.HabitRpgClass
+import com.habitrpg.shared.habitica.nativePackages.NativeColor
 import com.habitrpg.shared.habitica.nativePackages.NativeContext
 import com.habitrpg.shared.habitica.nativePackages.NativeRealmObject
+import com.habitrpg.shared.habitica.nativePackages.NativeString
 import com.habitrpg.shared.habitica.nativePackages.annotations.PrimaryKeyAnnotation
 import com.habitrpg.shared.habitica.nativePackages.annotations.SerializedNameAnnotation
-
-
-expect fun nativeGetTranslatedClassName(context: NativeContext, habitClass: String?): String
 
 open class Stats : NativeRealmObject() {
 
@@ -71,7 +69,15 @@ open class Stats : NativeRealmObject() {
                     buffs?.per ?: 0f > 0
         }
 
-    fun getTranslatedClassName(context: NativeContext): String = nativeGetTranslatedClassName(context, habitClass)
+    fun getTranslatedClassName(context: NativeContext): String {
+        return when (habitClass) {
+            HEALER -> context.getString(NativeString.healer)
+            ROGUE -> context.getString(NativeString.rogue)
+            WARRIOR -> context.getString(NativeString.warrior)
+            MAGE -> context.getString(NativeString.mage)
+            else -> context.getString(NativeString.warrior)
+        }
+    }
 
     fun merge(stats: Stats?) {
         if (stats == null) {
@@ -93,10 +99,6 @@ open class Stats : NativeRealmObject() {
         this.toNextLevel = if (stats.toNextLevel != null) stats.toNextLevel else this.toNextLevel
         this.maxHealth = if (stats.maxHealth != null) stats.maxHealth else this.maxHealth
         this.maxMP = if (stats.maxMP != null) stats.maxMP else this.maxMP
-    }
-
-    fun setHabitClass(habitRpgClass: HabitRpgClass) {
-        habitClass = habitRpgClass.toString()
     }
 
     companion object {

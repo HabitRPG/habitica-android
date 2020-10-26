@@ -295,7 +295,7 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
                     }
                     "rewards" -> {
                         id = R.id.rewards_tab
-                        Task.TYPE_REWARD
+                        TaskType.TYPE_REWARD
                     }
                     else -> ""
                 }
@@ -331,7 +331,7 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
             0 -> TaskType.TYPE_HABIT
             1 -> TaskType.TYPE_DAILY
             2 -> TaskType.TYPE_TODO
-            3 -> Task.TYPE_REWARD
+            3 -> TaskType.TYPE_REWARD
             else -> ""
         }
         AmplitudeManager.sendEvent("open create task form", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT, additionalData)

@@ -2,7 +2,7 @@ package com.habitrpg.android.habitica.ui.views.dialogs
 
 import android.content.Context
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.models.inventory.QuestContent
+import com.habitrpg.shared.habitica.models.inventory.QuestContent
 
 class QuestCompletedDialog(context: Context) : HabiticaAlertDialog(context) {
 

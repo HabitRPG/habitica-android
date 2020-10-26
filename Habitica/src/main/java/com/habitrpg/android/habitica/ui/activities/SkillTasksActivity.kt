@@ -16,6 +16,8 @@ import com.habitrpg.android.habitica.databinding.ActivitySkillTasksBinding
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.fragments.skills.SkillTasksRecyclerViewFragment
+import com.habitrpg.shared.habitica.models.tasks.Task
+import com.habitrpg.shared.habitica.models.tasks.TaskType
 import javax.inject.Inject
 import javax.inject.Named
 
