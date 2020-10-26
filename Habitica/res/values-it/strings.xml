@@ -373,9 +373,6 @@
     <string name="subscribe_prompt_thanks">Otterrai questi vantaggi abbonandoti</string>
     <string name="subscription_status">Stato abbonamento</string>
     <string name="challenge_leave_title">Abbandona sfida</string>
-    <string name="challenge_leave_text">Vuoi davvero abbandonare la sfida \"%s\"?</string>
-    <string name="challenge_remove_tasks_title">Rimuovi attività</string>
-    <string name="challenge_remove_tasks_text">Vuoi rimuovere le attività?</string>
     <string name="remove_tasks">Rimuovi</string>
     <string name="keep_tasks">Tieni</string>
     <string name="my_challenges">Le mie sfide</string>
@@ -670,8 +667,6 @@
     <string name="send_gift">Invia un Regalo</string>
     <string name="server">Server</string>
     <string name="gift_confirmation_title">Il tuo regalo è stato inviato!</string>
-    <string name="gift_confirmation_text_g1g1">L\'abbonamento regalato è stato ricevuto e l\'abbonamento corrispondente applicato al tuo profilo.</string>
-    <string name="gift_confirmation_text">L\'abbonamento regalato è stato ricevuto e l\'abbonamento corrispondente applicato al tuo profilo.</string>
     <string name="discover">Scopri</string>
     <string name="damage_paused">Danni sospesi</string>
     <string name="notifications">Notifiche</string>
@@ -772,7 +767,7 @@
     <string name="login_incentive_short">Accedi ad Habitica regolarmente</string>
     <string name="party_invite_short">Invita degli Amici</string>
     <string name="login_incentive_count">Sbloccalo accedendo ad Habitica %d volte.</string>
-    <string name="user_level_with_class_unabbreviated">Livello %1$d &amp;2$s</string>
+    <string name="user_level_with_class_unabbreviated">Livello %1$d &amp;%2$s</string>
     <string name="remaining_1hour">1 ora rimanente</string>
     <string name="remaining_hours">%d ore rimanenti</string>
     <string name="remaining_days">%d giorni rimanenti</string>

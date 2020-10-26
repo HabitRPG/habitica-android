@@ -52,5 +52,20 @@ actual class NativeColor {
         actual val blue_100: Int = R.color.blue_100
         actual val blue_50: Int = R.color.blue_50
         actual val blue_10: Int = R.color.blue_10
+
+        actual val text_primary: Int = R.color.text_primary
+        actual val text_secondarycolor: Int = R.color.text_secondary
+        actual val text_ternary: Int = R.color.text_ternary
+        actual val text_quad: Int = R.color.text_quad
+        actual val text_dimmed: Int = R.color.text_dimmed
+        actual val text_inverted: Int = R.color.text_inverted
+        actual val text_brand: Int = R.color.text_brand
+        actual val text_brand_neon: Int = R.color.text_brand_neon
+        actual val text_red: Int = R.color.text_red
+        actual val text_orange: Int = R.color.text_orange
+        actual val text_yellow: Int = R.color.text_yellow
+        actual val text_green: Int = R.color.text_green
+        actual val text_blue: Int = R.color.text_blue
+        actual val text_teal: Int = R.color.text_teal
     }
 }

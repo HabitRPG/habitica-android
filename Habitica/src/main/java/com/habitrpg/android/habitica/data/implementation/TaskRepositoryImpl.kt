@@ -13,13 +13,11 @@ import com.habitrpg.shared.habitica.models.user.OwnedItem
 import com.habitrpg.shared.habitica.models.user.User
 import io.reactivex.Flowable
 import io.reactivex.Maybe
-import io.reactivex.Single
 import io.reactivex.functions.Consumer
 import io.realm.Realm
 import io.realm.RealmResults
 import java.text.SimpleDateFormat
 import java.util.*
-
 
 class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiClient, userID: String, val appConfigManager: AppConfigManager) : BaseRepositoryImpl<TaskLocalRepository>(localRepository, apiClient, userID), TaskRepository {
     override fun getTasksOfType(taskType: String): Flowable<RealmResults<Task>> = getTasks(taskType, userID)
@@ -254,19 +252,6 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
     override fun retrieveDailiesFromDate(date: Date): Flowable<TaskList> {
         val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZZZZZ", Locale.US)
         return apiClient.getTasks(TaskType.TYPE_DAILY, formatter.format(date))
-    }
-
-    override fun syncErroredTasks(): Single<List<Task>> {
-        return localRepository.getErroredTasks(userID).firstElement()
-                .flatMapPublisher { Flowable.fromIterable(it) }
-                .map { localRepository.getUnmanagedCopy(it) }
-                .flatMap {
-                    return@flatMap if (it.isCreating) {
-                        createTask(it, true)
-                    } else {
-                        updateTask(it, true).toFlowable()
-                    }
-                }.toList()
     }
 
     override fun unlinkAllTasks(challengeID: String?, keepOption: String): Flowable<Void> {

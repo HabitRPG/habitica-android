@@ -8,23 +8,31 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.core.os.bundleOf
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.databinding.FragmentSupportBugFixBinding
+import com.habitrpg.android.habitica.databinding.KnownIssueBinding
+import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.AppTestingLevel
 import com.habitrpg.android.habitica.helpers.DeviceName
+import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import io.reactivex.Completable
 import javax.inject.Inject
 import javax.inject.Named
 
-class BugFixFragment: BaseMainFragment() {
+class BugFixFragment: BaseMainFragment<FragmentSupportBugFixBinding>() {
     private var deviceInfo: DeviceName.DeviceInfo? = null
 
-    private lateinit var binding: FragmentSupportBugFixBinding
+    override var binding: FragmentSupportBugFixBinding? = null
 
+    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentSupportBugFixBinding {
+        return FragmentSupportBugFixBinding.inflate(inflater, container, false)
+    }
     @field:[Inject Named(AppModule.NAMED_USER_ID)]
     lateinit var userId: String
     @Inject
@@ -37,20 +45,27 @@ class BugFixFragment: BaseMainFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         hidesToolbar = true
-        super.onCreateView(inflater, container, savedInstanceState)
-        binding = FragmentSupportBugFixBinding.inflate(inflater, container, false)
-        return binding.root
+        return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         compositeSubscription.add(Completable.fromAction {
-            deviceInfo = DeviceName.getDeviceInfo(context)
+            deviceInfo = context?.let { DeviceName.getDeviceInfo(it) }
         }.subscribe())
 
-        binding.reportBugButton.setOnClickListener {
+        binding?.reportBugButton?.setOnClickListener {
             sendEmail("[Android] Bugreport")
+        }
+
+        appConfigManager.knownIssues().forEach { issue ->
+            val issueBinding = KnownIssueBinding.inflate(view.context.layoutInflater)
+            issueBinding.root.text = issue["title"]
+            issueBinding.root.setOnClickListener {
+                MainNavigationController.navigate(R.id.FAQDetailFragment, bundleOf(Pair("question", issue["title"]), Pair("answer", issue["text"])))
+            }
+            binding?.knownIssuesLayout?.addView(issueBinding.root)
         }
     }
 
@@ -74,14 +89,14 @@ class BugFixFragment: BaseMainFragment() {
 
     private fun sendEmail(subject: String) {
         val version = Build.VERSION.SDK_INT
-        val deviceName = deviceInfo?.name ?: DeviceName.getDeviceName()
+        val deviceName = deviceInfo?.name ?: DeviceName.deviceName
         val manufacturer = deviceInfo?.manufacturer ?: Build.MANUFACTURER
         var bodyOfEmail = Uri.encode("Device: $manufacturer $deviceName") +
                 "%0D%0A" + Uri.encode("Android Version: $version") +
                 "%0D%0A" + Uri.encode("AppVersion: " + getString(R.string.version_info, versionName, versionCode))
 
         if (appConfigManager.testingLevel().name != AppTestingLevel.PRODUCTION.name) {
-            bodyOfEmail += "%0D%0A" + Uri.encode("${appConfigManager.testingLevel().name}")
+            bodyOfEmail += "%0D%0A" + Uri.encode(appConfigManager.testingLevel().name)
         }
         bodyOfEmail += "%0D%0A" + Uri.encode("User ID: $userId")
 

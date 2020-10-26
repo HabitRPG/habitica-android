@@ -28,27 +28,27 @@ class HabiticaClassArrayAdapter(context: Context, resource: Int, objects: List<C
         when (getItem(position)) {
             Stats.WARRIOR -> {
                 textView?.text = context.getString(R.string.warrior)
-                textView?.setTextColor(ContextCompat.getColor(context, R.color.red_10))
+                textView?.setTextColor(ContextCompat.getColor(context, R.color.text_red))
                 imageView?.setImageBitmap(HabiticaIconsHelper.imageOfWarriorLightBg())
             }
             Stats.MAGE -> {
                 textView?.text = context.getString(R.string.mage)
-                textView?.setTextColor(ContextCompat.getColor(context, R.color.blue_10))
+                textView?.setTextColor(ContextCompat.getColor(context, R.color.text_blue))
                 imageView?.setImageBitmap(HabiticaIconsHelper.imageOfMageLightBg())
             }
             Stats.HEALER -> {
                 textView?.text = context.getString(R.string.healer)
-                textView?.setTextColor(ContextCompat.getColor(context, R.color.yellow_10))
+                textView?.setTextColor(ContextCompat.getColor(context, R.color.text_yellow))
                 imageView?.setImageBitmap(HabiticaIconsHelper.imageOfHealerLightBg())
             }
             Stats.ROGUE -> {
                 textView?.text = context.getString(R.string.rogue)
-                textView?.setTextColor(ContextCompat.getColor(context, R.color.brand_300))
+                textView?.setTextColor(ContextCompat.getColor(context, R.color.text_brand))
                 imageView?.setImageBitmap(HabiticaIconsHelper.imageOfRogueLightBg())
             }
             else -> {
                 textView?.text = context.getString(R.string.classless)
-                textView?.setTextColor(ContextCompat.getColor(context, R.color.textColorLight))
+                textView?.setTextColor(ContextCompat.getColor(context, R.color.text_primary))
                 imageView?.setImageBitmap(null)
             }
         }

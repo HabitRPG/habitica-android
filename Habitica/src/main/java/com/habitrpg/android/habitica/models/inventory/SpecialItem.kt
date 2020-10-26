@@ -7,29 +7,15 @@ import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
 open class SpecialItem : RealmObject(), Item {
+    override val type: String
+        get() = "special"
 
     @PrimaryKey
-    internal var key: String = ""
-    internal var text: String = ""
+    override var key: String = ""
+    override var text: String = ""
     internal var notes: String = ""
-    internal var value: Int? = null
+    override var value: Int = 0
     var isMysteryItem: Boolean = false
-
-    override fun getType(): String {
-        return "special"
-    }
-
-    override fun getKey(): String {
-        return key
-    }
-
-    override fun getText(): String {
-        return text
-    }
-
-    override fun getValue(): Int? {
-        return value
-    }
 
     companion object {
 

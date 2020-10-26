@@ -1,36 +1,29 @@
 package com.habitrpg.shared.habitica.models.tasks
 
-
 import com.habitrpg.shared.habitica.models.Tag
 import com.habitrpg.shared.habitica.nativePackages.NativeRealmObject
 import com.habitrpg.shared.habitica.nativePackages.annotations.PrimaryKeyAnnotation
 
-/**
- * Created by viirus on 08/08/15.
- */
-
 open class TaskTag : NativeRealmObject() {
-
     var tag: Tag? = null
-        set(tag) {
-            field = tag
-            tagId = field?.id
+        set(value) {
+            field = value
+            tagId = tag?.id ?: ""
             updatePrimaryKey()
         }
     var task: Task? = null
-        set(task) {
-            field = task
-
-            taskId = field?.id
+        set(value) {
+            field = value
+            taskId = task?.id ?: ""
             updatePrimaryKey()
         }
 
     @PrimaryKeyAnnotation
     var id: String? = null
-    private var tagId: String? = ""
+    private var tagId = ""
     private var taskId: String? = ""
 
     private fun updatePrimaryKey() {
-        this.id = taskId + "_" + tagId
+        id = taskId + "_" + tagId
     }
 }

@@ -60,11 +60,9 @@ dependencies {
     compileOnly 'com.github.pengrad:jdk9-deps:1.0'
     //App Compatibility and Material Design
     implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'com.google.android.material:material:1.2.1'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'androidx.legacy:legacy-preference-v14:1.0.0'
-    // Emojis
-    implementation 'com.github.viirus:emoji-lib:0.0.5'
     // Markdown
     implementation "io.noties.markwon:core:4.2.0"
     implementation "io.noties.markwon:ext-strikethrough:4.2.0"
@@ -132,7 +130,7 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.0'
     implementation "androidx.paging:paging-runtime-ktx:2.1.2"
     implementation 'com.plattysoft.leonids:LeonidsLib:1.3.2'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.3'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.7'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.3'
 
     implementation 'com.willowtreeapps:signinwithapplebutton:0.2'
@@ -158,8 +156,8 @@ android {
         multiDexEnabled true
         resConfigs "en", "bg", "de", "en-rGB", "es", "fr", "hr-rHR", "in", "it", "iw", "ja", "ko", "lt", "nl", "pl", "pt-rBR", "pt-rPT", "ru", "tr", "zh", "zh-rTW"
 
-        versionCode 2519
-        versionName "2.8"
+        versionCode 2561
+        versionName "3.0"
     }
 
     viewBinding {
@@ -168,10 +166,6 @@ android {
 
     lintOptions {
         abortOnError false
-    }
-
-    viewBinding {
-        enabled true
     }
 
     signingConfigs {
@@ -269,6 +263,11 @@ android {
         disable 'MissingTranslation','InvalidPackage'
         enable 'LogConditional','IconExpectedSize','MissingRegistered','TypographyQuotes'
     }
+}
+
+androidExtensions {
+    features = ['parcelize']
+    experimental = true
 }
 
 Properties props = new Properties()

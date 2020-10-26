@@ -372,9 +372,6 @@
     <string name="subscribe_prompt_thanks">Je krijgt deze voordelen door Abonnee te zijn</string>
     <string name="subscription_status">Abonnementstatus</string>
     <string name="challenge_leave_title">Verlaat uitdaging</string>
-    <string name="challenge_leave_text">Weet je zeker dat je de uitdaging \"%s\" wilt verlaten?</string>
-    <string name="challenge_remove_tasks_title">Verwijder taken</string>
-    <string name="challenge_remove_tasks_text">Wil je de taken verwijderen?</string>
     <string name="remove_tasks">Verwijderen</string>
     <string name="keep_tasks">Houden</string>
     <string name="my_challenges">Mijn uitdagingen</string>
@@ -787,7 +784,6 @@
     <string name="g1g1_duration">17 december tot 6 januari</string>
     <string name="limited_event">Beperkte gebeurtenis</string>
     <string name="not_participating">Je doet niet mee</string>
-    <string name="unlock_level_short">Niveau %d</string>
     <string name="unlock_previous_short">Voltooi Quest %d</string>
     <string name="unlock_level">Vrijspelen door level %d te behalen</string>
     <string name="unlock_previous">Vrijspelen door de Quest %d te voltooien</string>

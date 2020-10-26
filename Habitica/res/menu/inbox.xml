@@ -4,7 +4,6 @@
     tools:context="com.habitrpg.android.habitica.TaskActivity">
 
     <item android:id="@+id/send_message"
-        android:icon="@drawable/menu_messages"
         android:title="@string/send_message"
         app:showAsAction="ifRoom" />
 </menu>

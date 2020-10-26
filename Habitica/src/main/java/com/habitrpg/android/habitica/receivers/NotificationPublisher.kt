@@ -23,7 +23,6 @@ import com.habitrpg.shared.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.shared.habitica.models.tasks.TaskType
 import io.reactivex.functions.BiFunction
-import io.reactivex.functions.Consumer
 import io.realm.RealmResults
 import java.util.*
 import javax.inject.Inject
@@ -66,7 +65,7 @@ class NotificationPublisher : BroadcastReceiver() {
         if (checkDailies) {
             taskRepository.getTasks(TaskType.TYPE_DAILY).firstElement().zipWith(userRepository.getUser().firstElement(), BiFunction<RealmResults<Task>, User, Pair<RealmResults<Task>, User>> { tasks, user ->
                 return@BiFunction Pair(tasks, user)
-            }).subscribe(Consumer { pair ->
+            }).subscribe({ pair ->
                 var showNotifications = false
                 for (task in pair.first) {
                     if (task?.checkIfDue() == true) {

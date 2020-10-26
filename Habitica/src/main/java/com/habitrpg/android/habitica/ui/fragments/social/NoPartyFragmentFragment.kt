@@ -12,16 +12,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.core.os.bundleOf
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
+import com.habitrpg.android.habitica.databinding.FragmentNoPartyBinding
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.shared.habitica.models.members.Member
 import com.habitrpg.shared.habitica.models.user.User
+import com.habitrpg.android.habitica.ui.AvatarView
 import com.habitrpg.android.habitica.ui.activities.GroupFormActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
@@ -29,56 +31,54 @@ import com.habitrpg.android.habitica.ui.helpers.setMarkdown
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.functions.Consumer
-import kotlinx.android.synthetic.main.fragment_no_party.*
 import javax.inject.Inject
 import kotlin.math.roundToInt
 
 
-class NoPartyFragmentFragment : BaseMainFragment() {
+class NoPartyFragmentFragment : BaseMainFragment<FragmentNoPartyBinding>() {
 
     @Inject
     lateinit var socialRepository: SocialRepository
     @Inject
     lateinit var configManager: AppConfigManager
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        hidesToolbar = true
-        super.onCreateView(inflater, container, savedInstanceState)
-        return inflater.inflate(R.layout.fragment_no_party, container, false)
+    override var binding: FragmentNoPartyBinding? = null
+
+    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentNoPartyBinding {
+        return FragmentNoPartyBinding.inflate(inflater, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        refreshLayout?.setOnRefreshListener { this.refresh() }
+        binding?.refreshLayout?.setOnRefreshListener { this.refresh() }
 
-        invitations_view.acceptCall = {
+        binding?.invitationsView?.acceptCall = {
             socialRepository.joinGroup(it)
                     .flatMap { userRepository.retrieveUser(false) }
-                    .subscribe(Consumer {
-                        fragmentManager?.popBackStack()
+                    .subscribe({
+                        parentFragmentManager.popBackStack()
                         MainNavigationController.navigate(R.id.partyFragment,
                                 bundleOf(Pair("partyID", user?.party?.id)))
                     }, RxErrorHandler.handleEmptyError())
         }
 
-        invitations_view.rejectCall = {
-            socialRepository.rejectGroupInvite(it).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
-            invitationWrapper.visibility = View.GONE
+        binding?.invitationsView?.rejectCall = {
+            socialRepository.rejectGroupInvite(it).subscribe({ }, RxErrorHandler.handleEmptyError())
+            binding?.invitationWrapper?.visibility = View.GONE
         }
 
-        invitations_view.setLeader = { leader ->
+        binding?.invitationsView?.setLeader = { leader ->
             compositeSubscription.add(
                     socialRepository.getMember(leader)
-                            .subscribe(Consumer {
-                                invitations_view.avatarView.setAvatar(it)
-                                invitations_view.textView.text = getString(R.string.invitation_title,it.displayName,invitations_view.groupName)
+                            .subscribe({
+                                binding?.root?.findViewById<AvatarView>(R.id.groupleader_avatar_view)?.setAvatar(it)
+                                binding?.root?.findViewById<TextView>(R.id.groupleader_avatar_view)?.text = getString(R.string.invitation_title,it.displayName, binding?.invitationsView?.groupName)
                             }, RxErrorHandler.handleEmptyError())
             )
         }
 
-        username_textview.setOnClickListener {
+        binding?.usernameTextview?.setOnClickListener {
             val clipboard = context?.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
             val clip = ClipData.newPlainText(context?.getString(R.string.username), user?.username)
             clipboard?.setPrimaryClip(clip)
@@ -88,7 +88,7 @@ class NoPartyFragmentFragment : BaseMainFragment() {
             }
         }
 
-        createPartyButton.setOnClickListener {
+        binding?.createPartyButton?.setOnClickListener {
             val bundle = Bundle()
             bundle.putString("groupType", "party")
             bundle.putString("leader", user?.id)
@@ -107,30 +107,30 @@ class NoPartyFragmentFragment : BaseMainFragment() {
                 drawable.tileModeX = Shader.TileMode.REPEAT
                 Observable.just(drawable)
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(Consumer {
-                            if (no_party_background != null) {
-                                no_party_background.background = it
+                        .subscribe({
+                            if (binding?.noPartyBackground != null) {
+                                binding?.noPartyBackground?.background = it
                             }
                         }, RxErrorHandler.handleEmptyError())
             }
         }
 
         if (configManager.noPartyLinkPartyGuild()) {
-            join_party_description_textview.setMarkdown(getString(R.string.join_party_description_guild, "[Party Wanted Guild](https://habitica.com/groups/guild/f2db2a7f-13c5-454d-b3ee-ea1f5089e601)"))
-            join_party_description_textview.setOnClickListener {
+            binding?.joinPartyDescriptionTextview?.setMarkdown(getString(R.string.join_party_description_guild, "[Party Wanted Guild](https://habitica.com/groups/guild/f2db2a7f-13c5-454d-b3ee-ea1f5089e601)"))
+            binding?.joinPartyDescriptionTextview?.setOnClickListener {
                 context?.let { FirebaseAnalytics.getInstance(it).logEvent("clicked_party_wanted", null) }
                 MainNavigationController.navigate(R.id.guildFragment, bundleOf("groupID" to "f2db2a7f-13c5-454d-b3ee-ea1f5089e601"))
             }
         }
 
         if ((user?.invitations?.parties?.count() ?: 0) > 0) {
-            invitationWrapper.visibility = View.VISIBLE
-            user?.invitations?.parties?.let { invitations_view.setInvitations(it) }
+            binding?.invitationWrapper?.visibility = View.VISIBLE
+            user?.invitations?.parties?.let { binding?.invitationsView?.setInvitations(it) }
         } else {
-            invitationWrapper.visibility = View.GONE
+            binding?.invitationWrapper?.visibility = View.GONE
         }
 
-        username_textview.text = user?.formattedUsername
+        binding?.usernameTextview?.text = user?.formattedUsername
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -149,7 +149,7 @@ class NoPartyFragmentFragment : BaseMainFragment() {
                                 .flatMap {
                                     userRepository.retrieveUser(false)
                                 }
-                                .subscribe(Consumer {
+                                .subscribe({
                                     fragmentManager?.popBackStack()
                                     MainNavigationController.navigate(R.id.partyFragment,
                                             bundleOf(Pair("partyID", user?.party?.id)))
@@ -164,9 +164,9 @@ class NoPartyFragmentFragment : BaseMainFragment() {
         compositeSubscription.add(userRepository.retrieveUser(false, forced = true)
                 .filter { it.hasParty() }
                 .flatMap { socialRepository.retrieveGroup("party") }
-                .flatMap<List<Member>> { group1 -> socialRepository.retrieveGroupMembers(group1.id, true) }
-                .doOnComplete { refreshLayout.isRefreshing = false }
-                .subscribe(Consumer {  }, RxErrorHandler.handleEmptyError()))
+                .flatMap { group1 -> socialRepository.retrieveGroupMembers(group1.id, true) }
+                .doOnComplete { binding?.refreshLayout?.isRefreshing = false }
+                .subscribe({  }, RxErrorHandler.handleEmptyError()))
     }
 
     override fun onDestroy() {

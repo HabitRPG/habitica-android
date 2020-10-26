@@ -2,40 +2,45 @@ package com.habitrpg.android.habitica.ui.views.navigation
 
 import android.content.Context
 import android.graphics.PorterDuff
+import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.view.View
-import android.widget.ImageView
 import android.widget.RelativeLayout
-import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.databinding.BottomNavigationItemBinding
 import com.habitrpg.android.habitica.extensions.getThemeColor
-import com.habitrpg.android.habitica.extensions.inflate
-import com.habitrpg.android.habitica.ui.helpers.bindView
+import com.habitrpg.android.habitica.extensions.isUsingNightModeResources
+import com.habitrpg.android.habitica.extensions.layoutInflater
+import com.habitrpg.android.habitica.extensions.setTintWith
 
 class BottomNavigationItem @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : RelativeLayout(context, attrs, defStyleAttr) {
+    private var selectedIcon: Drawable? = null
+    private var icon: Drawable? = null
+    private val binding = BottomNavigationItemBinding.inflate(context.layoutInflater, this)
 
-    private val iconView: ImageView by bindView(R.id.icon_view)
-    private val selectedTitleView: TextView by bindView(R.id.selected_title_view)
-    private val titleView: TextView by bindView(R.id.title_view)
-    private val badge: TextView by bindView(R.id.badge)
-
-    var selectedVisibility = View.VISIBLE
-    var deselectedVisibility = View.VISIBLE
+    private var selectedVisibility = View.VISIBLE
+    private var deselectedVisibility = View.VISIBLE
 
     var isActive = false
     set(value) {
         field = value
         if (isActive) {
-            selectedTitleView.visibility = selectedVisibility
-            titleView.visibility = View.GONE
-            iconView.drawable.setColorFilter(ContextCompat.getColor(context, R.color.white), PorterDuff.Mode.MULTIPLY )
+            binding.selectedTitleView.visibility = selectedVisibility
+            binding.titleView.visibility = View.GONE
+            binding.iconView.setImageDrawable(selectedIcon)
+            if (context.isUsingNightModeResources()) {
+                binding.iconView.drawable.setTintWith(context.getThemeColor(R.attr.colorPrimaryDistinct), PorterDuff.Mode.SRC_ATOP )
+            } else {
+                binding.iconView.drawable.setTintWith(ContextCompat.getColor(context, R.color.white), PorterDuff.Mode.SRC_ATOP )
+            }
         } else {
-            selectedTitleView.visibility = View.GONE
-            titleView.visibility = deselectedVisibility
-            iconView.drawable.setColorFilter(context.getThemeColor(R.attr.textColorPrimaryDark), PorterDuff.Mode.MULTIPLY )
+            binding.selectedTitleView.visibility = View.GONE
+            binding.iconView.setImageDrawable(icon)
+            binding.titleView.visibility = deselectedVisibility
+            binding.iconView.drawable.setTintWith(context.getThemeColor(R.attr.textColorPrimaryDark), PorterDuff.Mode.SRC_ATOP )
         }
     }
 
@@ -43,24 +48,24 @@ class BottomNavigationItem @JvmOverloads constructor(
     set(value) {
         field = value
         if (value == 0) {
-            badge.visibility = View.INVISIBLE
+            binding.badge.visibility = View.INVISIBLE
         } else {
-            badge.visibility = View.VISIBLE
-            badge.text = value.toString()
+            binding.badge.visibility = View.VISIBLE
+            binding.badge.text = value.toString()
         }
     }
 
     init {
-        inflate(R.layout.bottom_navigation_item, true)
-
         val attributes = context.theme?.obtainStyledAttributes(
                 attrs,
                 R.styleable.BottomNavigationItem,
                 0, 0)
         if (attributes != null) {
-            iconView.setImageDrawable(attributes.getDrawable(R.styleable.BottomNavigationItem_iconDrawable))
-            titleView.text = attributes.getString(R.styleable.BottomNavigationItem_title)
-            selectedTitleView.text = attributes.getString(R.styleable.BottomNavigationItem_title)
+            icon = attributes.getDrawable(R.styleable.BottomNavigationItem_iconDrawable)
+            selectedIcon = attributes.getDrawable(R.styleable.BottomNavigationItem_selectedIconDrawable)
+            binding.iconView.setImageDrawable(icon)
+            binding.titleView.text = attributes.getString(R.styleable.BottomNavigationItem_title)
+            binding.selectedTitleView.text = attributes.getString(R.styleable.BottomNavigationItem_title)
         }
     }
 

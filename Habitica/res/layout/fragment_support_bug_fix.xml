@@ -1,12 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 <LinearLayout
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/content_background"
     android:layout_marginBottom="@dimen/spacing_large">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/common_fixes"
+        android:layout_marginStart="@dimen/spacing_large"
+        android:layout_marginTop="@dimen/spacing_large"
+        android:layout_marginBottom="12dp"
+        style="@style/SectionHeaderCaps"
+        />
+
+    <LinearLayout
+        android:id="@+id/known_issues_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/layout_rounded_bg_window"
+        android:layout_marginStart="@dimen/spacing_medium"
+        android:layout_marginEnd="@dimen/spacing_medium"
+        android:divider="?android:listDivider"
+        android:orientation="vertical"
+        android:showDividers="middle" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -22,15 +44,15 @@
         android:layout_height="wrap_content"
         android:padding="19dp"
         android:orientation="vertical"
-        android:background="@drawable/layout_rounded_bg_gray_700"
-        android:layout_marginLeft="@dimen/spacing_medium"
-        android:layout_marginRight="@dimen/spacing_medium"
+        android:background="@drawable/layout_rounded_bg_window"
+        android:layout_marginStart="@dimen/spacing_medium"
+        android:layout_marginEnd="@dimen/spacing_medium"
         android:layout_marginBottom="@dimen/spacing_medium">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/clear_cache"
-            android:textColor="@color/black"
+            android:textColor="@color/text_primary"
             style="@style/Body1"
             android:layout_marginBottom="4dp"/>
         <TextView
@@ -44,15 +66,15 @@
         android:layout_height="wrap_content"
         android:padding="19dp"
         android:orientation="vertical"
-        android:background="@drawable/layout_rounded_bg_gray_700"
-        android:layout_marginLeft="@dimen/spacing_medium"
-        android:layout_marginRight="@dimen/spacing_medium"
+        android:background="@drawable/layout_rounded_bg_window"
+        android:layout_marginStart="@dimen/spacing_medium"
+        android:layout_marginEnd="@dimen/spacing_medium"
         android:layout_marginBottom="@dimen/spacing_medium">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/manual_sync_restart"
-            android:textColor="@color/black"
+            android:textColor="@color/text_primary"
             style="@style/Body1"
             android:layout_marginBottom="4dp"/>
         <TextView
@@ -66,15 +88,15 @@
         android:layout_height="wrap_content"
         android:padding="19dp"
         android:orientation="vertical"
-        android:background="@drawable/layout_rounded_bg_gray_700"
-        android:layout_marginLeft="@dimen/spacing_medium"
-        android:layout_marginRight="@dimen/spacing_medium"
+        android:background="@drawable/layout_rounded_bg_window"
+        android:layout_marginStart="@dimen/spacing_medium"
+        android:layout_marginEnd="@dimen/spacing_medium"
         android:layout_marginBottom="@dimen/spacing_medium">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/update_app"
-            android:textColor="@color/black"
+            android:textColor="@color/text_primary"
             style="@style/Body1"
             android:layout_marginBottom="4dp"/>
         <TextView
@@ -83,13 +105,14 @@
             android:text="@string/update_app_description"
             style="@style/Body2"/>
     </LinearLayout>
-    <TextView
+    <com.habitrpg.android.habitica.ui.views.DayNightTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/need_more_help"
         android:gravity="center"
         android:textStyle="bold"
-        android:textColor="@color/brand_300"
+        app:dayTextColor="@color/text_brand"
+        app:nightTextColor="@color/gray_400"
         android:textSize="16sp"
         android:layout_marginTop="@dimen/spacing_large"
         />
@@ -97,7 +120,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/send_bug_prompt"
-        android:textColor="@color/gray_300"
+        android:textColor="@color/text_quad"
         android:gravity="center"
         android:textSize="14sp"
         android:layout_marginTop="@dimen/spacing_small"
@@ -105,7 +128,7 @@
     <Button
         android:id="@+id/report_bug_button"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         style="@style/HabiticaButton.Purple"
         android:text="@string/report_bug"
         android:elevation="0dp"

@@ -8,8 +8,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.shared.habitica.models.user.User
-import com.habitrpg.android.habitica.ui.helpers.bindView
-import com.habitrpg.android.habitica.ui.viewHolders.ChatRecyclerViewHolder
+import com.habitrpg.android.habitica.ui.viewHolders.ChatRecyclerMessageViewHolder
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import io.reactivex.subjects.PublishSubject
@@ -40,7 +39,7 @@ class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUp
         return if (viewType == 0) {
             SystemChatMessageViewHolder(parent.inflate(R.layout.system_chat_message))
         } else {
-            ChatRecyclerViewHolder(parent.inflate(R.layout.tavern_chat_item), uuid, isTavern)
+            ChatRecyclerMessageViewHolder(parent.inflate(R.layout.chat_item), uuid, isTavern)
         }
     }
 
@@ -49,7 +48,7 @@ class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUp
             if (data[position].isSystemMessage) {
                 (holder as? SystemChatMessageViewHolder)?.bind(data[position])
             } else {
-                val chatHolder = holder as? ChatRecyclerViewHolder ?: return
+                val chatHolder = holder as? ChatRecyclerMessageViewHolder ?: return
                 val message = data[position]
                 chatHolder.bind(message,
                         uuid,
@@ -105,7 +104,7 @@ class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUp
 }
 
 class SystemChatMessageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    private val textView: TextView by bindView(R.id.text_view)
+    private val textView: TextView = itemView.findViewById(R.id.text_view)
 
     fun bind(chatMessage: ChatMessage?) {
         textView.text = chatMessage?.text?.removePrefix("`")?.removeSuffix("`")

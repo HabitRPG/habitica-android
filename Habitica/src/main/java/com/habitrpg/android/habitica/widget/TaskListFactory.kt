@@ -18,8 +18,6 @@ import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
 import com.habitrpg.shared.habitica.models.tasks.TaskType
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.functions.Consumer
-import net.pherth.android.emoji_library.EmojiHandler
 import java.util.*
 import javax.inject.Inject
 
@@ -51,7 +49,7 @@ abstract class TaskListFactory internal constructor(val context: Context, intent
                     .flatMapMaybe { tasks -> taskRepository.getTaskCopies(tasks).firstElement() }
                     .subscribeOn(AndroidSchedulers.mainThread())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(Consumer { tasks ->
+                    .subscribe({ tasks ->
                         reloadData = false
                         taskList = tasks
                         AppWidgetManager.getInstance(context).notifyAppWidgetViewDataChanged(widgetId, R.id.list_view)
@@ -85,7 +83,6 @@ abstract class TaskListFactory internal constructor(val context: Context, intent
             val parsedText = MarkdownParser.parseMarkdown(task.text)
 
             val builder = SpannableStringBuilder(parsedText)
-            EmojiHandler.addEmojis(this.context, builder, 16, DynamicDrawableSpan.ALIGN_BASELINE, 16, 0, -1, false)
 
             remoteView.setTextViewText(listItemTextResId, builder)
             remoteView.setInt(R.id.checkbox_background, "setBackgroundResource", task.lightTaskColor)

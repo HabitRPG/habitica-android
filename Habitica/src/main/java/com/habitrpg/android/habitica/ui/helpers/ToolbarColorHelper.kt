@@ -20,8 +20,6 @@ import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.os.Build
 import android.view.View
-import android.view.ViewGroup
-import android.view.ViewTreeObserver
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.widget.ImageButton
 import androidx.appcompat.view.menu.ActionMenuItemView
@@ -40,8 +38,7 @@ import java.util.*
 object ToolbarColorHelper {
     /**
      * Use this method to colorize toolbar icons to the desired target color
-     * @param toolbarView toolbar view being colored
-     * @param toolbarIconsColor the target color of toolbar icons
+     * @param toolbar toolbar view being colored
      * @param activity reference to activity needed to register observers
      */
     fun colorizeToolbar(toolbar: Toolbar, activity: Activity?, overrideModernHeader: Boolean? = null) {
@@ -72,11 +69,10 @@ object ToolbarColorHelper {
                     if (innerView is ActionMenuItemView) {
                         innerView.setTextColor(toolbarIconsColor)
                         for (k in innerView.compoundDrawables.indices) {
-                            if (innerView.compoundDrawables[k] != null) {
-
-                                //Important to set the color filter in seperate thread, by adding it to the message queue
-                                //Won't work otherwise.
-                                innerView.post { innerView.compoundDrawables[k].colorFilter = colorFilter }
+                            innerView.post {
+                                if (innerView.compoundDrawables[k] != null) {
+                                    innerView.compoundDrawables[k].colorFilter = colorFilter
+                                }
                             }
                         }
                     }

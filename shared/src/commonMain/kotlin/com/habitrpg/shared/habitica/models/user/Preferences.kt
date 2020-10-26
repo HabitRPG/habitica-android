@@ -1,6 +1,5 @@
 package com.habitrpg.shared.habitica.models.user
 
-
 import com.habitrpg.shared.habitica.models.AvatarPreferences
 import com.habitrpg.shared.habitica.nativePackages.NativeRealmObject
 import com.habitrpg.shared.habitica.nativePackages.annotations.PrimaryKeyAnnotation
@@ -10,13 +9,13 @@ open class Preferences : NativeRealmObject(), AvatarPreferences {
 
     @PrimaryKeyAnnotation
     override var userId: String? = null
-        set(userId: String?) {
-            field = userId
+        set(value) {
+            field = value
             if (hair?.isManaged() == false) {
-                hair?.userId = userId
+                hair?.userId = value
             }
             if (suppressModals?.isManaged() == false) {
-                suppressModals?.userId = userId
+                suppressModals?.userId = value
             }
         }
 
@@ -35,15 +34,15 @@ open class Preferences : NativeRealmObject(), AvatarPreferences {
     override var size: String? = null
     override var background: String? = null
     override var chair: String? = null
-    get() {
-        return if (field != null && field != "none") {
-            if (field?.contains("chair_") == true) {
-                field
-            } else {
-                "chair_" + field!!
-            }
-        } else null
-    }
+        get() {
+            return if (field != null && field != "none") {
+                if (field?.contains("chair_") == true) {
+                    field
+                } else {
+                    "chair_" + field!!
+                }
+            } else null
+        }
     var language: String? = null
     var sound: String? = null
     var dayStart: Int = 0
@@ -52,7 +51,6 @@ open class Preferences : NativeRealmObject(), AvatarPreferences {
     var pushNotifications: PushNotificationsPreference? = null
     var emailNotifications: EmailNotificationsPreference? = null
     var autoEquip: Boolean = true
-
 
     fun hasTaskBasedAllocation(): Boolean = nativeHasTaskBasedAllocation(allocationMode, automaticAllocation)
 }

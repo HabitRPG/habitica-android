@@ -36,10 +36,10 @@ abstract class HabiticaPromotion {
     abstract fun configureInfoFragment(fragment: PromoInfoFragment)
 }
 
-fun getHabiticaPromotionFromKey(key: String): HabiticaPromotion? {
+fun getHabiticaPromotionFromKey(key: String, startDate: Date?, endDate: Date?): HabiticaPromotion? {
     return when (key) {
-        "fall_extra_gems" -> FallExtraGemsHabiticaPromotion()
-        "spooky_extra_gems" -> SpookyExtraGemsHabiticaPromotion()
+        "fall_extra_gems", "fall2020", "testFall2020" -> FallExtraGemsHabiticaPromotion(startDate, endDate)
+        "spooky_extra_gems", "fall2020SecondPromo", "spooky2020" -> SpookyExtraGemsHabiticaPromotion(startDate, endDate)
         else -> null
     }
 }

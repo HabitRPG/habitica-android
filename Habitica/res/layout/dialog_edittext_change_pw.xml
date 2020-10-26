@@ -12,11 +12,7 @@
             android:id="@+id/editText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:paddingBottom="16dp"
-            android:paddingTop="16dp"
-            android:paddingStart="@dimen/spacing_large"
-            android:paddingEnd="@dimen/spacing_large" />
+            android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
@@ -29,11 +25,7 @@
             android:id="@+id/passwordEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:paddingBottom="16dp"
-            android:paddingTop="16dp"
-            android:paddingStart="@dimen/spacing_large"
-            android:paddingEnd="@dimen/spacing_large" />
+            android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
@@ -46,10 +38,6 @@
             android:id="@+id/passwordRepeatEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:paddingBottom="16dp"
-            android:paddingTop="16dp"
-            android:paddingStart="@dimen/spacing_large"
-            android:paddingEnd="@dimen/spacing_large" />
+            android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 </LinearLayout>

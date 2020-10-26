@@ -4,12 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.GridLayoutManager
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SocialRepository
-import com.habitrpg.android.habitica.data.UserRepository
+import com.habitrpg.android.habitica.databinding.FragmentRecyclerviewBinding
 import com.habitrpg.android.habitica.events.GearPurchasedEvent
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
@@ -19,26 +21,28 @@ import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.shared.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.adapter.inventory.ShopRecyclerAdapter
-import com.habitrpg.android.habitica.ui.fragments.BaseFragment
+import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
-import io.reactivex.functions.BiFunction
-import io.reactivex.functions.Consumer
-import kotlinx.android.synthetic.main.fragment_recyclerview.*
+import com.habitrpg.android.habitica.ui.views.CurrencyViews
 import org.greenrobot.eventbus.Subscribe
 import javax.inject.Inject
 
-class ShopFragment : BaseFragment() {
+open class ShopFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
+
+
+
+    internal val currencyView: CurrencyViews by lazy {
+        val view = CurrencyViews(context)
+        view
+    }
 
     var adapter: ShopRecyclerAdapter? = null
     var shopIdentifier: String? = null
-    var user: User? = null
     var shop: Shop? = null
     @Inject
     lateinit var inventoryRepository: InventoryRepository
     @Inject
     lateinit var socialRepository: SocialRepository
-    @Inject
-    lateinit var userRepository: UserRepository
     @Inject
     lateinit var configManager: AppConfigManager
 
@@ -46,30 +50,38 @@ class ShopFragment : BaseFragment() {
 
     private var gearCategories: MutableList<ShopCategory>? = null
 
+    override var binding: FragmentRecyclerviewBinding? = null
+
+    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentRecyclerviewBinding {
+        return FragmentRecyclerviewBinding.inflate(inflater, container, false)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        super.onCreateView(inflater, container, savedInstanceState)
-        return inflater.inflate(R.layout.fragment_recyclerview, container, false)
+        this.hidesToolbar = true
+        return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     override fun onDestroyView() {
-        userRepository.close()
         inventoryRepository.close()
+        socialRepository.close()
+        toolbarAccessoryContainer?.removeView(currencyView)
         super.onDestroyView()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        recyclerView.setBackgroundResource(R.color.white)
+        toolbarAccessoryContainer?.addView(currencyView)
+        binding?.recyclerView?.setBackgroundResource(R.color.content_background)
 
-        adapter = recyclerView.adapter as? ShopRecyclerAdapter
+        adapter = binding?.recyclerView?.adapter as? ShopRecyclerAdapter
         if (adapter == null) {
-            adapter = ShopRecyclerAdapter(configManager)
+            adapter = ShopRecyclerAdapter()
             adapter?.context = context
-            recyclerView.adapter = adapter
-            recyclerView.itemAnimator = SafeDefaultItemAnimator()
+            binding?.recyclerView?.adapter = adapter
+            binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
         }
 
-        if (recyclerView.layoutManager == null) {
+        if (binding?.recyclerView?.layoutManager == null) {
             layoutManager = GridLayoutManager(context, 2)
             layoutManager?.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
                 override fun getSpanSize(position: Int): Int {
@@ -80,7 +92,7 @@ class ShopFragment : BaseFragment() {
                     }
                 }
             }
-            recyclerView.layoutManager = layoutManager
+            binding?.recyclerView?.layoutManager = layoutManager
         }
 
         if (savedInstanceState != null) {
@@ -103,17 +115,24 @@ class ShopFragment : BaseFragment() {
             }
         }
 
-        adapter?.user = user
+        compositeSubscription.add(userRepository.getUser().subscribe({
+            adapter?.user = user
+            updateCurrencyView(it)
+        }, RxErrorHandler.handleEmptyError()))
 
         compositeSubscription.add(socialRepository.getGroup(Group.TAVERN_ID)
                 .filter { it.hasActiveQuest }
                 .filter { group -> group.quest?.rageStrikes?.any { it.key == shopIdentifier } ?: false }
                 .filter { group -> group.quest?.rageStrikes?.filter { it.key == shopIdentifier }?.get(0)?.wasHit == true }
-                .subscribe(Consumer {
+                .subscribe({
                     adapter?.shopSpriteSuffix = "_"+it.quest?.key
                 }, RxErrorHandler.handleEmptyError()))
 
         view.post { setGridSpanCount(view.width) }
+
+        currencyView.hourglassVisibility = View.GONE
+
+        context?.let { FirebaseAnalytics.getInstance(it).logEvent("open_shop", bundleOf(Pair("shopIdentifier", shopIdentifier))) }
     }
 
     override fun onResume() {
@@ -148,18 +167,16 @@ class ShopFragment : BaseFragment() {
                         shop1
                     }
                 }
-                .subscribe(Consumer {
+                .subscribe({
                     this.shop = it
                     this.adapter?.setShop(it)
                 }, RxErrorHandler.handleEmptyError()))
 
-
-
         compositeSubscription.add(this.inventoryRepository.getOwnedItems()
-                .subscribe(Consumer { adapter?.setOwnedItems(it) }, RxErrorHandler.handleEmptyError()))
+                .subscribe({ adapter?.setOwnedItems(it) }, RxErrorHandler.handleEmptyError()))
         compositeSubscription.add(this.inventoryRepository.getInAppRewards()
                 .map { rewards -> rewards.map { it.key } }
-                .subscribe(Consumer { adapter?.setPinnedItemKeys(it) }, RxErrorHandler.handleEmptyError()))
+                .subscribe({ adapter?.setPinnedItemKeys(it) }, RxErrorHandler.handleEmptyError()))
     }
 
     private fun formatTimeTravelersShop(shop: Shop): Shop {
@@ -187,7 +204,7 @@ class ShopFragment : BaseFragment() {
 
     private fun loadMarketGear() {
         compositeSubscription.add(inventoryRepository.retrieveMarketGear()
-                .zipWith(inventoryRepository.getOwnedEquipment().map { equipment -> equipment.map { it.key } }, BiFunction<Shop, List<String?>, Shop> { shop, equipment ->
+                .zipWith(inventoryRepository.getOwnedEquipment().map { equipment -> equipment.map { it.key } }, { shop, equipment ->
                     for (category in shop.categories) {
                         val items = category.items.asSequence().filter {
                             !equipment.contains(it.key)
@@ -197,7 +214,7 @@ class ShopFragment : BaseFragment() {
                     }
                     shop
                 })
-                .subscribe(Consumer<Shop> {
+                .subscribe({
                     this.gearCategories = it.categories
                     adapter?.gearCategories = it.categories
                 }, RxErrorHandler.handleEmptyError()))
@@ -239,4 +256,10 @@ class ShopFragment : BaseFragment() {
         }
     }
 
+
+    private fun updateCurrencyView(user: User) {
+        currencyView.gold = user.stats?.gp ?: 0.0
+        currencyView.gems = user.gemCount.toDouble()
+        currencyView.hourglasses = user.hourglassCount.toDouble()
+    }
 }

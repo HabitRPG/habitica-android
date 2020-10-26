@@ -19,7 +19,6 @@ import com.habitrpg.shared.habitica.models.members.Member
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.functions.Consumer
 import io.reactivex.subjects.BehaviorSubject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -37,7 +36,7 @@ class InboxViewModel(recipientID: String?, recipientUsername: String?) : BaseVie
             .setEnablePlaceholders(false)
             .build()
 
-    private val dataSourceFactory = MessagesDataSourceFactory(socialRepository, recipientID)
+    private val dataSourceFactory = MessagesDataSourceFactory(socialRepository, recipientID, ChatMessage())
     val messages: LiveData<PagedList<ChatMessage>> = dataSourceFactory.toLiveData(config)
     private val member: MutableLiveData<Member?> by lazy {
         MutableLiveData<Member?>()
@@ -50,11 +49,11 @@ class InboxViewModel(recipientID: String?, recipientUsername: String?) : BaseVie
                 .filterOptionalDoOnEmpty { member.value = null }
                 .flatMap { socialRepository.getMember(it) }
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(Consumer { member.value = it }, RxErrorHandler.handleEmptyError()))
+                .subscribe({ member.value = it }, RxErrorHandler.handleEmptyError()))
     }
 
     protected var memberIDSubject = BehaviorSubject.create<Optional<String>>()
-    val memberIDFlowable = memberIDSubject.toFlowable(BackpressureStrategy.BUFFER)
+    val memberIDFlowable: Flowable<Optional<String>> = memberIDSubject.toFlowable(BackpressureStrategy.BUFFER)
 
     fun setMemberID(groupID: String) {
         if (groupID == memberIDSubject.value?.value) return
@@ -77,7 +76,7 @@ class InboxViewModel(recipientID: String?, recipientUsername: String?) : BaseVie
             setMemberID(recipientID)
             loadMemberFromLocal()
         } else if (recipientUsername?.isNotBlank() == true) {
-            socialRepository.getMemberWithUsername(recipientUsername).subscribe(Consumer {
+            socialRepository.getMemberWithUsername(recipientUsername).subscribe({
                 setMemberID(it.id ?: "")
                 member.value = it
                 dataSourceFactory.updateRecipientID(memberIDSubject.value?.value)
@@ -87,7 +86,7 @@ class InboxViewModel(recipientID: String?, recipientUsername: String?) : BaseVie
     }
 }
 
-private class MessagesDataSource(val socialRepository: SocialRepository, var recipientID: String?) :
+private class MessagesDataSource(val socialRepository: SocialRepository, var recipientID: String?, var footer : ChatMessage?):
         PositionalDataSource<ChatMessage>() {
     private var lastFetchWasEnd = false
     override fun loadRange(params: LoadRangeParams, callback: LoadRangeCallback<ChatMessage>) {
@@ -101,9 +100,13 @@ private class MessagesDataSource(val socialRepository: SocialRepository, var rec
             }
             val page = ceil(params.startPosition.toFloat() / params.loadSize.toFloat()).toInt()
             socialRepository.retrieveInboxMessages(recipientID ?: "", page)
-                    .subscribe(Consumer {
-                        if (it.size != 10) lastFetchWasEnd = true
-                        callback.onResult(it)
+                    .subscribe( {
+                        if (it.size < 10) {
+                            lastFetchWasEnd = true
+                            callback.onResult(it)
+                        }
+                        else
+                            callback.onResult(it)
                     }, RxErrorHandler.handleEmptyError())
         }
     }
@@ -120,24 +123,29 @@ private class MessagesDataSource(val socialRepository: SocialRepository, var rec
                                 return@flatMapPublisher Flowable.just(it)
                             }
                             socialRepository.retrieveInboxMessages(recipientID ?: "", 0)
-                                    .doOnNext { messages ->
-                                        if (messages.size != 10) lastFetchWasEnd = true
+                                    .doOnNext {
+                                        messages -> if (messages.size < 10) {
+                                        lastFetchWasEnd = true
+                                    }
                                     }
                         } else {
                             Flowable.just(it)
                         }
                     }
-                    .subscribe(Consumer {
-                        callback.onResult(it, 0)
+                    .subscribe( {
+                        if (it.size < 10 && footer != null)
+                            callback.onResult(it.plusElement(footer!!), 0)
+                        else
+                            callback.onResult(it, 0)
                     }, RxErrorHandler.handleEmptyError())
         }
     }
 }
 
-private class MessagesDataSourceFactory(val socialRepository: SocialRepository, var recipientID: String?) :
+private class MessagesDataSourceFactory(val socialRepository: SocialRepository, var recipientID: String?, val footer : ChatMessage?) :
         DataSource.Factory<Int, ChatMessage>() {
     val sourceLiveData = MutableLiveData<MessagesDataSource>()
-    var latestSource: MessagesDataSource = MessagesDataSource(socialRepository, recipientID)
+    var latestSource: MessagesDataSource = MessagesDataSource(socialRepository, recipientID, footer)
 
     fun updateRecipientID(newID: String?) {
         recipientID = newID
@@ -145,7 +153,7 @@ private class MessagesDataSourceFactory(val socialRepository: SocialRepository, 
     }
 
     override fun create(): DataSource<Int, ChatMessage> {
-        latestSource = MessagesDataSource(socialRepository, recipientID)
+        latestSource = MessagesDataSource(socialRepository, recipientID, footer)
         sourceLiveData.postValue(latestSource)
         return latestSource
     }

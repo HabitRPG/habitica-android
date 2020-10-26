@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.data
 
+import com.habitrpg.android.habitica.data.local.UserQuestStatus
 import com.habitrpg.android.habitica.models.Achievement
 import com.habitrpg.shared.habitica.models.QuestAchievement
 import com.habitrpg.android.habitica.models.Skill
@@ -76,5 +77,5 @@ interface UserRepository : BaseRepository {
     fun getAchievements(): Flowable<RealmResults<Achievement>>
     fun getQuestAchievements(): Flowable<RealmResults<QuestAchievement>>
 
-    fun getIsUserOnQuest(): Flowable<Boolean>
+    fun getUserQuestStatus(): Flowable<UserQuestStatus>
 }

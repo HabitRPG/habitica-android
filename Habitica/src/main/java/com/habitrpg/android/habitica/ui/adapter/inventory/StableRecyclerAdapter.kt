@@ -14,7 +14,6 @@ import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.inventory.*
 import com.habitrpg.shared.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.ui.fragments.inventory.stable.StableFragmentDirections
-import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.helpers.loadImage
 import com.habitrpg.android.habitica.ui.viewHolders.MountViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.PetViewHolder
@@ -22,7 +21,6 @@ import com.habitrpg.android.habitica.ui.viewHolders.SectionViewHolder
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import io.reactivex.subjects.PublishSubject
-import io.realm.RealmResults
 
 
 class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -136,9 +134,9 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     internal inner class StableViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
         private var animal: Animal? = null
 
-        private val imageView: SimpleDraweeView by bindView(itemView, R.id.imageView)
-        private val titleView: TextView by bindView(itemView, R.id.titleTextView)
-        private val ownedTextView: TextView by bindView(itemView, R.id.ownedTextView)
+        private val imageView: SimpleDraweeView = itemView.findViewById(R.id.imageView)
+        private val titleView: TextView = itemView.findViewById(R.id.titleTextView)
+        private val ownedTextView: TextView = itemView.findViewById(R.id.ownedTextView)
 
         init {
             itemView.setOnClickListener(this)
@@ -160,20 +158,20 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             }
 
             this.ownedTextView.text = context.getString(R.string.pet_ownership_fraction, item.numberOwned, item.totalNumber)
-            this.ownedTextView.background = context.getDrawable(R.drawable.layout_rounded_bg_shopitem_price)
+            this.ownedTextView.background = ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_shopitem_price)
 
-            this.ownedTextView.setTextColor(ContextCompat.getColor(context, R.color.gray_200))
+            this.ownedTextView.setTextColor(ContextCompat.getColor(context, R.color.text_ternary))
 
             ownedTextView.visibility = View.VISIBLE
             imageView.loadImage(imageName)
 
-            val alpha = if (item.numberOwned <= 0 && ownedEggs?.containsKey(item.animal ?: "") != true) 0.2f else 1.0f
+            val alpha = if (item.numberOwned <= 0 && ownedEggs?.containsKey(item.animal) != true) 0.2f else 1.0f
             this.imageView.alpha = alpha
             this.titleView.alpha = alpha
             this.ownedTextView.alpha = alpha
 
             if (item.numberOwned == item.totalNumber) {
-                this.ownedTextView.background = context.getDrawable(R.drawable.layout_rounded_bg_animalitem_complete)
+                this.ownedTextView.background = ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_animalitem_complete)
                 this.ownedTextView.setTextColor(ContextCompat.getColor(context, R.color.white))
             }
         }
@@ -182,11 +180,11 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             val animal = this.animal
             if (animal != null) {
                 val color = if (animal.type == "special") animal.color else null
-                if (animal.numberOwned > 0 || ownedEggs?.containsKey(animal.animal ?: "") == true) {
+                if (animal.numberOwned > 0 || ownedEggs?.containsKey(animal.animal) == true) {
                     if (itemType == "pets") {
-                        MainNavigationController.navigate(StableFragmentDirections.openPetDetail(animal.animal, animal.type, color))
+                        MainNavigationController.navigate(StableFragmentDirections.openPetDetail(animal.animal, animal.type ?: "", color))
                     } else {
-                        MainNavigationController.navigate(StableFragmentDirections.openMountDetail(animal.animal, animal.type, color))
+                        MainNavigationController.navigate(StableFragmentDirections.openMountDetail(animal.animal, animal.type ?: "", color))
                     }
                 }
             }

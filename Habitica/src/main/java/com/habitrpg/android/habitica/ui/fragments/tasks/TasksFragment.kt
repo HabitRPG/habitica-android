@@ -12,7 +12,9 @@ import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.TagRepository
+import com.habitrpg.android.habitica.databinding.FragmentViewpagerBinding
 import com.habitrpg.android.habitica.extensions.getThemeColor
+import com.habitrpg.android.habitica.extensions.setTintWith
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
@@ -23,15 +25,19 @@ import com.habitrpg.android.habitica.ui.views.tasks.TaskFilterDialog
 import com.habitrpg.shared.habitica.models.tasks.TaskType
 import com.habitrpg.shared.habitica.models.user.User
 import io.reactivex.disposables.Disposable
-import io.reactivex.functions.Consumer
 import java.util.*
 import javax.inject.Inject
 import kotlin.collections.ArrayList
 
 
-class TasksFragment : BaseMainFragment(), SearchView.OnQueryTextListener {
+class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.OnQueryTextListener {
 
-    var viewPager: androidx.viewpager.widget.ViewPager? = null
+    override var binding: FragmentViewpagerBinding? = null
+
+    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentViewpagerBinding {
+        return FragmentViewpagerBinding.inflate(inflater, container, false)
+    }
+
     @Inject
     lateinit var taskFilterHelper: TaskFilterHelper
     @Inject
@@ -53,10 +59,10 @@ class TasksFragment : BaseMainFragment(), SearchView.OnQueryTextListener {
 
     private val activeFragment: TaskRecyclerViewFragment?
         get() {
-            var fragment = viewFragmentsDictionary?.get(viewPager?.currentItem)
+            var fragment = viewFragmentsDictionary?.get(binding?.viewPager?.currentItem)
             if (fragment == null) {
                 if (isAdded) {
-                    fragment = (childFragmentManager.findFragmentByTag("android:switcher:" + R.id.viewPager + ":" + viewPager?.currentItem) as? TaskRecyclerViewFragment)
+                    fragment = (childFragmentManager.findFragmentByTag("android:switcher:" + R.id.viewPager + ":" + binding?.viewPager?.currentItem) as? TaskRecyclerViewFragment)
                 }
             }
             return fragment
@@ -66,13 +72,12 @@ class TasksFragment : BaseMainFragment(), SearchView.OnQueryTextListener {
                               savedInstanceState: Bundle?): View? {
         this.usesTabLayout = false
         this.usesBottomNavigation = true
-        super.onCreateView(inflater, container, savedInstanceState)
-        val v = inflater.inflate(R.layout.fragment_viewpager, container, false)
+        return super.onCreateView(inflater, container, savedInstanceState)
+    }
 
-        viewPager = v.findViewById(R.id.viewPager)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         loadTaskLists()
-
-        return v
     }
 
     override fun onResume() {
@@ -86,11 +91,7 @@ class TasksFragment : BaseMainFragment(), SearchView.OnQueryTextListener {
                 TaskType.TYPE_REWARD -> 3
                 else -> 0
             }
-            if (newItem == viewPager?.currentItem) {
-                refresh()
-            } else {
-                viewPager?.currentItem = newItem
-            }
+            binding?.viewPager?.currentItem = newItem
             updateBottomBarBadges()
         }
         bottomNavigation?.onAddListener = { type ->
@@ -171,7 +172,7 @@ class TasksFragment : BaseMainFragment(), SearchView.OnQueryTextListener {
             val dialog = TaskFilterDialog(it, HabiticaBaseApplication.userComponent)
             if (user != null) {
                 dialog.setTags(user?.tags?.createSnapshot() ?: emptyList())
-                disposable = tagRepository.getTags(user?.id ?: "").subscribe(Consumer {tagsList -> dialog.setTags(tagsList)}, RxErrorHandler.handleEmptyError())
+                disposable = tagRepository.getTags(user?.id ?: "").subscribe({ tagsList -> dialog.setTags(tagsList)}, RxErrorHandler.handleEmptyError())
             }
             dialog.setActiveTags(taskFilterHelper.tags)
             if (activeFragment != null) {
@@ -209,7 +210,7 @@ class TasksFragment : BaseMainFragment(), SearchView.OnQueryTextListener {
     private fun loadTaskLists() {
         val fragmentManager = childFragmentManager
 
-        viewPager?.adapter = object : FragmentPagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+        binding?.viewPager?.adapter = object : FragmentPagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
             override fun getItem(position: Int): androidx.fragment.app.Fragment {
                 val fragment: TaskRecyclerViewFragment = when (position) {
@@ -235,7 +236,7 @@ class TasksFragment : BaseMainFragment(), SearchView.OnQueryTextListener {
             }
         }
 
-        viewPager?.addOnPageChangeListener(object : androidx.viewpager.widget.ViewPager.OnPageChangeListener {
+        binding?.viewPager?.addOnPageChangeListener(object : androidx.viewpager.widget.ViewPager.OnPageChangeListener {
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) { /* no-op */ }
 
             override fun onPageSelected(position: Int) {
@@ -258,14 +259,14 @@ class TasksFragment : BaseMainFragment(), SearchView.OnQueryTextListener {
         if (filterCount == 0) {
             filterMenuItem?.setIcon(R.drawable.ic_action_filter_list)
             context?.let {
-                val filterIcon = it.getDrawable(R.drawable.ic_action_filter_list)
-                filterIcon?.setColorFilter(it.getThemeColor(R.attr.headerTextColor), PorterDuff.Mode.MULTIPLY)
+                val filterIcon = ContextCompat.getDrawable(it, R.drawable.ic_action_filter_list)
+                filterIcon?.setTintWith(it.getThemeColor(R.attr.headerTextColor), PorterDuff.Mode.MULTIPLY)
                 filterMenuItem?.setIcon(filterIcon)
             }
         } else {
             context?.let {
-                val filterIcon = it.getDrawable(R.drawable.ic_filters_active)
-                filterIcon?.setColorFilter(it.getThemeColor(R.attr.textColorPrimaryDark), PorterDuff.Mode.MULTIPLY)
+                val filterIcon = ContextCompat.getDrawable(it, R.drawable.ic_filters_active)
+                filterIcon?.setTintWith(it.getThemeColor(R.attr.textColorPrimaryDark), PorterDuff.Mode.MULTIPLY)
                 filterMenuItem?.setIcon(filterIcon)
             }
         }
@@ -275,25 +276,25 @@ class TasksFragment : BaseMainFragment(), SearchView.OnQueryTextListener {
         if (bottomNavigation == null) {
             return
         }
-        compositeSubscription.add(tutorialRepository.getTutorialSteps(listOf("habits", "dailies", "todos", "rewards")).subscribe(Consumer { tutorialSteps ->
+        compositeSubscription.add(tutorialRepository.getTutorialSteps(listOf("habits", "dailies", "todos", "rewards")).subscribe({ tutorialSteps ->
             val activeTutorialFragments = ArrayList<String>()
             for (step in tutorialSteps) {
                 var id = -1
                 val taskType = when (step.identifier) {
                     "habits" -> {
-                        id = R.id.tab_habits
+                        id = R.id.habits_tab
                         TaskType.TYPE_HABIT
                     }
                     "dailies" -> {
-                        id = R.id.tab_dailies
+                        id = R.id.dailies_tab
                         TaskType.TYPE_DAILY
                     }
                     "todos" -> {
-                        id = R.id.tab_todos
+                        id = R.id.todos_tab
                         TaskType.TYPE_TODO
                     }
                     "rewards" -> {
-                        id = R.id.tab_rewards
+                        id = R.id.rewards_tab
                         TaskType.TYPE_REWARD
                     }
                     else -> ""
@@ -326,7 +327,7 @@ class TasksFragment : BaseMainFragment(), SearchView.OnQueryTextListener {
 
         val additionalData = HashMap<String, Any>()
         additionalData["created task type"] = type
-        additionalData["viewed task type"] = when (viewPager?.currentItem) {
+        additionalData["viewed task type"] = when (binding?.viewPager?.currentItem) {
             0 -> TaskType.TYPE_HABIT
             1 -> TaskType.TYPE_DAILY
             2 -> TaskType.TYPE_TODO
@@ -365,14 +366,20 @@ class TasksFragment : BaseMainFragment(), SearchView.OnQueryTextListener {
             val taskType = data?.getStringExtra(TaskFormActivity.TASK_TYPE_KEY)
             if (taskType != null) {
                 switchToTaskTab(taskType)
+
+                val index = indexForTaskType(taskType)
+                if (index != -1) {
+                    val fragment = viewFragmentsDictionary?.get(index)
+                    fragment?.binding?.recyclerView?.scrollToPosition(0)
+                }
             }
         }
     }
 
     private fun switchToTaskTab(taskType: String) {
         val index = indexForTaskType(taskType)
-        if (viewPager != null && index != -1) {
-            viewPager?.currentItem = index
+        if (binding?.viewPager != null && index != -1) {
+            binding?.viewPager?.currentItem = index
             updateBottomBarBadges()
         }
     }

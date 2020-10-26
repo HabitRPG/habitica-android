@@ -9,7 +9,7 @@
         android:id="@+id/classIconView"
         android:layout_width="32dp"
         android:layout_height="32dp"
-        android:layout_marginRight="8dp"/>
+        android:layout_marginEnd="8dp"/>
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"

@@ -15,15 +15,18 @@ import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
-import com.habitrpg.android.habitica.ui.helpers.resetViews
-import io.reactivex.functions.Consumer
 import io.realm.RealmResults
 import java.util.*
 import javax.inject.Inject
 
-class GuildsOverviewFragment : BaseMainFragment(), androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener {
+class GuildsOverviewFragment : BaseMainFragment<FragmentGuildsOverviewBinding>(), androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener {
 
-    private var binding: FragmentGuildsOverviewBinding? = null
+    override var binding: FragmentGuildsOverviewBinding? = null
+
+    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentGuildsOverviewBinding {
+        return FragmentGuildsOverviewBinding.inflate(inflater, container, false)
+    }
+
     @Inject
     lateinit var socialRepository: SocialRepository
     @Inject
@@ -40,21 +43,17 @@ class GuildsOverviewFragment : BaseMainFragment(), androidx.swiperefreshlayout.w
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         this.hidesToolbar = true
-        super.onCreateView(inflater, container, savedInstanceState)
-        binding = FragmentGuildsOverviewBinding.inflate(inflater, container, false)
-        return binding?.root
+        return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        resetViews()
-
         binding?.refreshLayout?.setOnRefreshListener(this)
         binding?.publicGuildsButton?.setOnClickListener {
             MainNavigationController.navigate(GuildsOverviewFragmentDirections.openPublicGuilds())
         }
-        compositeSubscription.add(socialRepository.getUserGroups("guild").subscribe(Consumer { this.setGuilds(it) }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(socialRepository.getUserGroups("guild").subscribe({ this.setGuilds(it) }, RxErrorHandler.handleEmptyError()))
     }
     override fun onDestroy() {
         socialRepository.close()
@@ -73,7 +72,7 @@ class GuildsOverviewFragment : BaseMainFragment(), androidx.swiperefreshlayout.w
 
     private fun fetchGuilds() {
         compositeSubscription.add(this.socialRepository.retrieveGroups("guilds")
-                .subscribe(Consumer {
+                .subscribe({
                     binding?.refreshLayout?.isRefreshing = false
                 }, RxErrorHandler.handleEmptyError()))
     }

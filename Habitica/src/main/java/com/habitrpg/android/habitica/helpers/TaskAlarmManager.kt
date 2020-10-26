@@ -16,7 +16,6 @@ import com.habitrpg.shared.habitica.models.tasks.RemindersItem
 import com.habitrpg.shared.habitica.models.tasks.Task
 import com.habitrpg.shared.habitica.models.tasks.TaskType
 import io.reactivex.Flowable
-import io.reactivex.functions.Consumer
 import java.util.*
 
 class TaskAlarmManager(private var context: Context, private var taskRepository: TaskRepository, private var userId: String) {
@@ -50,15 +49,15 @@ class TaskAlarmManager(private var context: Context, private var taskRepository:
         taskRepository.getTaskCopy(taskId)
                 .filter { task -> task.isValid && task.isManaged && TaskType.TYPE_DAILY == task.type }
                 .firstElement()
-                .subscribe(Consumer { this.setAlarmsForTask(it) }, RxErrorHandler.handleEmptyError())
+                .subscribe({ this.setAlarmsForTask(it) }, RxErrorHandler.handleEmptyError())
     }
 
     fun scheduleAllSavedAlarms(preventDailyReminder: Boolean) {
         taskRepository.getTaskCopies(userId)
                 .firstElement()
                 .toFlowable()
-                .flatMap<Task> { Flowable.fromIterable(it) }
-                .subscribe(Consumer { this.setAlarmsForTask(it) }, RxErrorHandler.handleEmptyError())
+                .flatMap { Flowable.fromIterable(it) }
+                .subscribe({ this.setAlarmsForTask(it) }, RxErrorHandler.handleEmptyError())
 
         if (!preventDailyReminder) {
             scheduleDailyReminder(context)

@@ -4,16 +4,13 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
-import android.view.ViewGroup
-import android.widget.Button
-import android.widget.TextView
-import androidx.appcompat.widget.Toolbar
 import androidx.core.view.isVisible
 import androidx.navigation.navArgs
 import com.habitrpg.android.habitica.HabiticaPurchaseVerifier
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
+import com.habitrpg.android.habitica.databinding.ActivityGiftSubscriptionBinding
 import com.habitrpg.android.habitica.events.ConsumablePurchasedEvent
 import com.habitrpg.android.habitica.extensions.addOkButton
 import com.habitrpg.android.habitica.helpers.AppConfigManager
@@ -21,13 +18,8 @@ import com.habitrpg.android.habitica.helpers.PurchaseHandler
 import com.habitrpg.android.habitica.helpers.PurchaseTypes
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
-import com.habitrpg.android.habitica.ui.AvatarView
-import com.habitrpg.android.habitica.ui.helpers.bindOptionalView
-import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
-import com.habitrpg.android.habitica.ui.views.social.UsernameLabel
 import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView
-import io.reactivex.functions.Consumer
 import org.greenrobot.eventbus.Subscribe
 import org.solovyev.android.checkout.Inventory
 import org.solovyev.android.checkout.Sku
@@ -35,6 +27,8 @@ import javax.inject.Inject
 
 
 class GiftSubscriptionActivity : BaseActivity() {
+
+    private lateinit var binding: ActivityGiftSubscriptionBinding
 
     @Inject
     lateinit var crashlyticsProxy: CrashlyticsProxy
@@ -44,21 +38,6 @@ class GiftSubscriptionActivity : BaseActivity() {
     lateinit var appConfigManager: AppConfigManager
 
     private var purchaseHandler: PurchaseHandler? = null
-
-    private val toolbar: Toolbar by bindView(R.id.toolbar)
-
-    private val giftOneGetOneContainer: ViewGroup? by bindView(R.id.gift_subscription_container)
-
-    private val avatarView: AvatarView by bindView(R.id.avatar_view)
-    private val displayNameTextView: UsernameLabel by bindView(R.id.display_name_textview)
-    private val usernameTextView: TextView by bindView(R.id.username_textview)
-
-    private val subscription1MonthView: SubscriptionOptionView? by bindView(R.id.subscription1month)
-    private val subscription3MonthView: SubscriptionOptionView? by bindView(R.id.subscription3month)
-    private val subscription6MonthView: SubscriptionOptionView? by bindView(R.id.subscription6month)
-    private val subscription12MonthView: SubscriptionOptionView? by bindView(R.id.subscription12month)
-
-    private val subscriptionButton: Button? by bindOptionalView(R.id.subscribeButton)
 
     private var giftedUsername: String? = null
     private var giftedUserID: String? = null
@@ -74,11 +53,16 @@ class GiftSubscriptionActivity : BaseActivity() {
         component?.inject(this)
     }
 
+    override fun getContentView(): View {
+        binding = ActivityGiftSubscriptionBinding.inflate(layoutInflater)
+        return binding.root
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setTitle(R.string.gift_subscription)
-        setSupportActionBar(toolbar)
+        setSupportActionBar(binding.toolbar)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
@@ -90,17 +74,17 @@ class GiftSubscriptionActivity : BaseActivity() {
             giftedUsername = navArgs<GiftSubscriptionActivityArgs>().value.username
         }
 
-        subscriptionButton?.setOnClickListener {
+        binding.subscriptionButton.setOnClickListener {
             selectedSubscriptionSku?.let { sku -> purchaseSubscription(sku) }
         }
 
-        giftOneGetOneContainer?.isVisible = appConfigManager.enableGiftOneGetOne()
+        binding.giftSubscriptionContainer.isVisible = appConfigManager.enableGiftOneGetOne()
 
-        compositeSubscription.add(socialRepository.getMember(giftedUsername ?: giftedUserID).subscribe(Consumer {
-            avatarView.setAvatar(it)
-            displayNameTextView.username = it.profile?.name
-            displayNameTextView.tier = it.contributor?.level ?: 0
-            usernameTextView.text = "@${it.username}"
+        compositeSubscription.add(socialRepository.getMember(giftedUsername ?: giftedUserID).subscribe({
+            binding.avatarView.setAvatar(it)
+            binding.displayNameTextView.username = it.profile?.name
+            binding.displayNameTextView.tier = it.contributor?.level ?: 0
+            binding.usernameTextView.text = "@${it.username}"
             giftedUserID = it.id
             giftedUsername = it.username
         }, RxErrorHandler.handleEmptyError()))
@@ -122,10 +106,10 @@ class GiftSubscriptionActivity : BaseActivity() {
     override fun onResume() {
         super.onResume()
 
-        this.subscription1MonthView?.setOnPurchaseClickListener(View.OnClickListener { selectSubscription(PurchaseTypes.Subscription1MonthNoRenew) })
-        this.subscription3MonthView?.setOnPurchaseClickListener(View.OnClickListener { selectSubscription(PurchaseTypes.Subscription3MonthNoRenew) })
-        this.subscription6MonthView?.setOnPurchaseClickListener(View.OnClickListener { selectSubscription(PurchaseTypes.Subscription6MonthNoRenew) })
-        this.subscription12MonthView?.setOnPurchaseClickListener(View.OnClickListener { selectSubscription(PurchaseTypes.Subscription12MonthNoRenew) })
+        binding.subscription1MonthView.setOnPurchaseClickListener { selectSubscription(PurchaseTypes.Subscription1MonthNoRenew) }
+        binding.subscription3MonthView.setOnPurchaseClickListener { selectSubscription(PurchaseTypes.Subscription3MonthNoRenew) }
+        binding.subscription6MonthView.setOnPurchaseClickListener { selectSubscription(PurchaseTypes.Subscription6MonthNoRenew) }
+        binding.subscription12MonthView.setOnPurchaseClickListener { selectSubscription(PurchaseTypes.Subscription12MonthNoRenew) }
     }
 
     override fun onStop() {
@@ -171,9 +155,7 @@ class GiftSubscriptionActivity : BaseActivity() {
         this.selectedSubscriptionSku = sku
         val subscriptionOptionButton = buttonForSku(this.selectedSubscriptionSku)
         subscriptionOptionButton?.setIsPurchased(true)
-        if (this.subscriptionButton != null) {
-            this.subscriptionButton?.isEnabled = true
-        }
+        binding.subscriptionButton.isEnabled = true
     }
 
     private fun buttonForSku(sku: Sku?): SubscriptionOptionView? {
@@ -182,10 +164,10 @@ class GiftSubscriptionActivity : BaseActivity() {
 
     private fun buttonForSku(sku: String?): SubscriptionOptionView? {
         return when (sku) {
-            PurchaseTypes.Subscription1MonthNoRenew -> subscription1MonthView
-            PurchaseTypes.Subscription3MonthNoRenew -> subscription3MonthView
-            PurchaseTypes.Subscription6MonthNoRenew -> subscription6MonthView
-            PurchaseTypes.Subscription12MonthNoRenew -> subscription12MonthView
+            PurchaseTypes.Subscription1MonthNoRenew -> binding.subscription1MonthView
+            PurchaseTypes.Subscription3MonthNoRenew -> binding.subscription3MonthView
+            PurchaseTypes.Subscription6MonthNoRenew -> binding.subscription6MonthView
+            PurchaseTypes.Subscription12MonthNoRenew -> binding.subscription12MonthView
             else -> null
         }
     }

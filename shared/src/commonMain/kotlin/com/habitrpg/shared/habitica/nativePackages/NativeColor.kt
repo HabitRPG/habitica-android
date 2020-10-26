@@ -50,5 +50,20 @@ expect class NativeColor {
         val blue_100: Int
         val blue_50: Int
         val blue_10: Int
+
+        val text_primary: Int
+        val text_secondarycolor: Int
+        val text_ternary: Int
+        val text_quad: Int
+        val text_dimmed: Int
+        val text_inverted: Int
+        val text_brand: Int
+        val text_brand_neon: Int
+        val text_red: Int
+        val text_orange: Int
+        val text_yellow: Int
+        val text_green: Int
+        val text_blue: Int
+        val text_teal: Int
     }
 }

@@ -35,10 +35,6 @@ class TaskFilterHelper {
         }
     }
 
-    fun isTagChecked(tagID: String): Boolean {
-        return this.tagsId.contains(tagID)
-    }
-
     fun filter(tasks: List<Task>): List<Task> {
         if (tasks.isEmpty()) {
             return tasks

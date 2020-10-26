@@ -4,9 +4,9 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:paddingLeft="24dip"
+    android:paddingStart="24dip"
     android:paddingTop="24dip"
-    android:paddingRight="24dip">
+    android:paddingEnd="24dip">
 
     <LinearLayout
         android:layout_width="match_parent"

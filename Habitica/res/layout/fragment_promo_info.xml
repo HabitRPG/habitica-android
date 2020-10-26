@@ -11,7 +11,7 @@
         <RelativeLayout
             android:id="@+id/promo_banner"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="103dp"
             android:layout_marginStart="4dp"
             android:layout_marginEnd="4dp"
             android:layout_marginBottom="16dp"
@@ -42,25 +42,27 @@
                     android:id="@+id/promo_banner_title_image"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="2dp"/>
+                    android:layout_marginBottom="6dp"/>
                 <TextView
                     android:id="@+id/promo_banner_subtitle_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/Caption2"
+                    style="@style/Overline"
+                    android:textColor="@color/white"
                     android:textAllCaps="true"
+                    android:layout_marginBottom="4dp"
                     />
                 <TextView
                     android:id="@+id/promo_banner_duration_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/Subheader2"/>
+                    style="@style/Subheader1"/>
             </LinearLayout>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="60dp"
-                android:layout_marginRight="60dp"
+                android:layout_marginStart="60dp"
+                android:layout_marginEnd="60dp"
                 android:gravity="center_horizontal"
                 android:textColor="@color/white"
                 android:textSize="16sp"
@@ -76,10 +78,12 @@
             android:textSize="15sp"
             android:fontFamily="@string/font_family_medium"
             android:layout_marginBottom="@dimen/spacing_large"/>
-        <Button
+        <TextView
             android:id="@+id/prompt_button"
             android:layout_width="match_parent"
-            android:layout_height="38dp" />
+            android:layout_height="38dp"
+            android:textSize="16sp"
+            android:gravity="center" />
 
         <TextView
             android:id="@+id/instructions_title_view"
@@ -88,7 +92,7 @@
             android:gravity="center"
             android:fontFamily="@string/font_family_medium"
             android:textSize="15sp"
-            android:textColor="@color/gray_100"
+            android:textColor="@color/text_secondary"
             android:text="@string/how_it_works"
             android:layout_marginTop="22dp"
             android:layout_marginBottom="7dp"/>
@@ -98,7 +102,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textSize="15sp"
-            android:textColor="@color/gray_300"
+            android:textColor="@color/text_quad"
             android:lineSpacingExtra="2dp"/>
 
         <TextView
@@ -108,7 +112,7 @@
             android:gravity="center"
             android:fontFamily="@string/font_family_medium"
             android:textSize="15sp"
-            android:textColor="@color/gray_100"
+            android:textColor="@color/text_secondary"
             android:text="@string/limitations"
             android:layout_marginTop="22dp"
             android:layout_marginBottom="7dp"/>
@@ -118,7 +122,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textSize="15sp"
-            android:textColor="@color/gray_300"
+            android:textColor="@color/text_quad"
             tools:text="This is some text"
             android:lineSpacingExtra="2dp"/>
     </LinearLayout>

@@ -5,16 +5,16 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/refreshLayout"
-    android:background="@color/gray_700">
+    android:background="@color/window_background">
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/gray_700">
+        android:background="@color/content_background">
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/gray_700">
+            android:background="@color/content_background">
             <TextView
                 android:id="@+id/title_view"
                 android:layout_width="match_parent"
@@ -34,12 +34,12 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="60dp"
-                    android:background="@drawable/layout_rounded_bg_white"
-                    android:layout_marginRight="@dimen/spacing_large"
+                    android:background="@drawable/layout_rounded_bg_window"
+                    android:layout_marginEnd="@dimen/spacing_large"
                     android:paddingTop="@dimen/spacing_small"
                     android:paddingBottom="@dimen/spacing_small"
-                    android:paddingLeft="@dimen/spacing_medium"
-                    android:paddingRight="@dimen/spacing_medium"
+                    android:paddingStart="@dimen/spacing_medium"
+                    android:paddingEnd="@dimen/spacing_medium"
                     android:orientation="vertical"
                     android:gravity="center">
                     <LinearLayout
@@ -50,7 +50,7 @@
                             android:id="@+id/guild_members_icon"
                             android:layout_width="23dp"
                             android:layout_height="23dp"
-                            android:layout_marginRight="@dimen/spacing_medium"/>
+                            android:layout_marginEnd="@dimen/spacing_medium"/>
                         <TextView
                             android:id="@+id/guild_members_text"
                             android:layout_width="wrap_content"
@@ -68,11 +68,11 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="60dp"
-                    android:background="@drawable/layout_rounded_bg_white"
+                    android:background="@drawable/layout_rounded_bg_window"
                     android:paddingTop="@dimen/spacing_small"
                     android:paddingBottom="@dimen/spacing_small"
-                    android:paddingLeft="@dimen/spacing_medium"
-                    android:paddingRight="@dimen/spacing_medium"
+                    android:paddingStart="@dimen/spacing_medium"
+                    android:paddingEnd="@dimen/spacing_medium"
                     android:orientation="vertical"
                     android:gravity="center">
                     <LinearLayout
@@ -83,7 +83,7 @@
                             android:id="@+id/guild_bank_icon"
                             android:layout_width="23dp"
                             android:layout_height="23dp"
-                            android:layout_marginRight="@dimen/spacing_medium"/>
+                            android:layout_marginEnd="@dimen/spacing_medium"/>
                         <TextView
                             android:id="@+id/guild_bank_text"
                             android:layout_width="wrap_content"
@@ -102,11 +102,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:background="@color/white">
+                android:background="?attr/colorContentBackground">
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/gray_500" />
+                    android:background="@color/content_background_offset" />
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -135,7 +135,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/gray_500" />
+                    android:background="@color/content_background_offset" />
                 <LinearLayout
                     android:id="@+id/leader_wrapper"
                     android:layout_width="match_parent"
@@ -148,7 +148,7 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:clipChildren="true"
-                        android:layout_marginRight="@dimen/spacing_large"
+                        android:layout_marginEnd="@dimen/spacing_large"
                         android:background="@drawable/rounded_avatar_bg">
                         <com.habitrpg.android.habitica.ui.AvatarView
                             android:id="@+id/leader_avatar_view"
@@ -202,7 +202,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/gray_500"
+                    android:background="@color/content_background_offset"
                     android:layout_marginTop="@dimen/spacing_medium"/>
             </LinearLayout>
             <Button

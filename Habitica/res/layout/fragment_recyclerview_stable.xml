@@ -12,7 +12,7 @@
         android:scrollbarThumbVertical="@color/scrollbarThumb"
         android:scrollbars="vertical"
         android:clipToPadding="false"
-        android:background="@color/white"/>
+        android:background="@color/content_background"/>
 
     <TextView
         android:layout_width="match_parent"

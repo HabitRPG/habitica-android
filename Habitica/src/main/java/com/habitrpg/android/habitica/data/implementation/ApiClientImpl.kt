@@ -26,7 +26,7 @@ import com.habitrpg.android.habitica.models.social.*
 import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
 import com.habitrpg.shared.habitica.data.ApiRequest
 import com.habitrpg.shared.habitica.data.OfflineClient
-import com.habitrpg.shared.habitica.interactors.TaskLocalInteractor
+import com.habitrpg.shared.habitica.interactors.ScoreTaskLocallyInteractor
 import com.habitrpg.shared.habitica.interactors.UserLocalInteractor
 import com.habitrpg.shared.habitica.models.Tag
 import com.habitrpg.shared.habitica.models.inventory.Equipment
@@ -42,7 +42,6 @@ import com.habitrpg.shared.habitica.models.user.User
 import io.reactivex.Flowable
 import io.reactivex.FlowableTransformer
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.functions.BiFunction
 import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
 import okhttp3.Cache
@@ -264,7 +263,7 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
             val tasksObservable = this.tasks
 
             userObservable = Flowable.zip(userObservable, tasksObservable,
-                    BiFunction { habitRPGUser, tasks ->
+                    { habitRPGUser, tasks ->
                         habitRPGUser.tasks = tasks
                         habitRPGUser
                     })
@@ -459,7 +458,7 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
                     .compose(configureApiCallObserver())
                     .compose(configureApiOfflineErrorHandler(
                             { apiService.postTaskDirection(taskId, direction.text) },
-                            { TaskLocalInteractor.score(user, task, direction) }
+                            { ScoreTaskLocallyInteractor.score(user, task, direction) }
                     ))
         }
     }
@@ -469,7 +468,7 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
                 .compose(configureApiCallObserver())
                 .compose(configureApiOfflineErrorHandler(
                         { apiService.postTaskNewPosition(id, position)},
-                        { TaskLocalInteractor.newPosition(id, position, tasks) }
+                        { ScoreTaskLocallyInteractor.newPosition(id, position, tasks) }
                 ))
     }
 

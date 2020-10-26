@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.ui.views.equipment
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.LinearLayout
+import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.EquipmentOverviewViewBinding
 import com.habitrpg.android.habitica.extensions.layoutInflater
@@ -17,7 +18,7 @@ class EquipmentOverviewView @JvmOverloads constructor(
     private var binding: EquipmentOverviewViewBinding = EquipmentOverviewViewBinding.inflate(context.layoutInflater, this)
 
     init {
-        background = context.getDrawable(R.drawable.layout_rounded_bg_gray_50)
+        background = ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_gray_50)
         setScaledPadding(context, 12, 12, 12 ,12)
         orientation = VERTICAL
 

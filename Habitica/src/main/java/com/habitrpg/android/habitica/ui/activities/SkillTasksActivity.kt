@@ -5,33 +5,30 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.SparseArray
 import android.view.MenuItem
+import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
-import androidx.viewpager.widget.ViewPager
-import com.google.android.material.tabs.TabLayout
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.TaskRepository
+import com.habitrpg.android.habitica.databinding.ActivitySkillTasksBinding
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.fragments.skills.SkillTasksRecyclerViewFragment
-import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.shared.habitica.models.tasks.Task
 import com.habitrpg.shared.habitica.models.tasks.TaskType
-import io.reactivex.functions.Consumer
 import javax.inject.Inject
 import javax.inject.Named
 
 class SkillTasksActivity : BaseActivity() {
 
+    private lateinit var binding: ActivitySkillTasksBinding
+
     @Inject
     lateinit var taskRepository: TaskRepository
     @field:[Inject Named(AppModule.NAMED_USER_ID)]
     lateinit var userId: String
-
-    private val viewPager: ViewPager by bindView(R.id.viewPager)
-    private val tabLayout: TabLayout by bindView(R.id.tab_layout)
 
     internal var viewFragmentsDictionary = SparseArray<SkillTasksRecyclerViewFragment>()
 
@@ -45,6 +42,11 @@ class SkillTasksActivity : BaseActivity() {
         loadTaskLists()
     }
 
+    override fun getContentView(): View {
+        binding = ActivitySkillTasksBinding.inflate(layoutInflater)
+        return binding.root
+    }
+
     override fun injectActivity(component: UserComponent?) {
         component?.inject(this)
     }
@@ -52,7 +54,7 @@ class SkillTasksActivity : BaseActivity() {
     private fun loadTaskLists() {
         val fragmentManager = supportFragmentManager
 
-        viewPager.adapter = object : FragmentPagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+        binding.viewPager.adapter = object : FragmentPagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
             override fun getItem(position: Int): Fragment {
                 val fragment = SkillTasksRecyclerViewFragment()
@@ -62,7 +64,7 @@ class SkillTasksActivity : BaseActivity() {
                     else -> TaskType.TYPE_TODO
                 }
 
-                compositeSubscription.add(fragment.getTaskSelectionEvents().subscribe(Consumer { task -> taskSelected(task) }, RxErrorHandler.handleEmptyError()))
+                compositeSubscription.add(fragment.getTaskSelectionEvents().subscribe({ task -> taskSelected(task) }, RxErrorHandler.handleEmptyError()))
 
                 viewFragmentsDictionary.put(position, fragment)
 
@@ -78,7 +80,7 @@ class SkillTasksActivity : BaseActivity() {
                         else -> TaskType.TYPE_TODO
                     }
 
-                    compositeSubscription.add(item.getTaskSelectionEvents().subscribe(Consumer { task -> taskSelected(task) }, RxErrorHandler.handleEmptyError()))
+                    compositeSubscription.add(item.getTaskSelectionEvents().subscribe({ task -> taskSelected(task) }, RxErrorHandler.handleEmptyError()))
                     viewFragmentsDictionary.put(position, item)
                 }
                 return item
@@ -99,7 +101,7 @@ class SkillTasksActivity : BaseActivity() {
         }
 
 
-        tabLayout.setupWithViewPager(viewPager)
+        binding.tabLayout.setupWithViewPager(binding.viewPager)
     }
 
     fun taskSelected(task: Task) {

@@ -64,13 +64,12 @@ open class User : NativeRealmObject(), Avatar, VersionedObject {
 
     var balance: Double = 0.toDouble()
     override var stats: Stats? = null
-        set(stats) {
-            field = stats
-            if (stats != null && this.id != null && !stats.isManaged()) {
-                stats.userId = this.id
+        set(value) {
+            field = value
+            if (value != null && this.id != null && !value.isManaged()) {
+                field?.userId = this.id
             }
         }
-
     var inbox: Inbox? = null
         set(inbox) {
             field = inbox
@@ -79,13 +78,12 @@ open class User : NativeRealmObject(), Avatar, VersionedObject {
             }
         }
     override var preferences: Preferences? = null
-        set(preferences) {
-            field = preferences
-            if (preferences != null && this.id != null && !preferences.isManaged()) {
-                preferences.userId = this.id
+        set(value) {
+            field = value
+            if (value != null && this.id != null && !value.isManaged()) {
+                field?.userId = this.id
             }
         }
-
     var profile: Profile? = null
         set(profile) {
             field = profile
@@ -107,6 +105,7 @@ open class User : NativeRealmObject(), Avatar, VersionedObject {
                 items.userId = this.id
             }
         }
+
     @SerializedNameAnnotation("auth")
     var authentication: Authentication? = null
         set(authentication) {
@@ -188,10 +187,10 @@ open class User : NativeRealmObject(), Avatar, VersionedObject {
     val formattedUsername: String?
         get() = if (username != null) "@$username" else null
 
-    override val gemCount: Int?
+    override val gemCount: Int
         get() = (this.balance * 4).toInt()
 
-    override val hourglassCount: Int?
+    override val hourglassCount: Int
         get() = purchased?.plan?.consecutive?.trinkets ?: 0
 
     override val costume: Outfit?
@@ -206,7 +205,6 @@ open class User : NativeRealmObject(), Avatar, VersionedObject {
 
     override val currentMount: String?
         get() = items?.currentMount ?: ""
-
     override val currentPet: String?
         get() = items?.currentPet ?: ""
 

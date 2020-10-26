@@ -12,7 +12,6 @@ import com.habitrpg.android.habitica.receivers.LocalNotificationActionReceiver;
 import com.habitrpg.android.habitica.receivers.NotificationPublisher;
 import com.habitrpg.android.habitica.receivers.TaskAlarmBootReceiver;
 import com.habitrpg.android.habitica.receivers.TaskReceiver;
-import com.habitrpg.android.habitica.ui.activities.AboutActivity;
 import com.habitrpg.android.habitica.ui.activities.AdventureGuideActivity;
 import com.habitrpg.android.habitica.ui.activities.ChallengeFormActivity;
 import com.habitrpg.android.habitica.ui.activities.ClassSelectionActivity;
@@ -55,7 +54,6 @@ import com.habitrpg.android.habitica.ui.fragments.inventory.equipment.EquipmentO
 import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemRecyclerFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemsFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.shops.ShopFragment;
-import com.habitrpg.android.habitica.ui.fragments.inventory.shops.ShopsFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.stable.MountDetailRecyclerFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.stable.PetDetailRecyclerFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.stable.StableFragment;
@@ -77,7 +75,6 @@ import com.habitrpg.android.habitica.ui.fragments.setup.WelcomeFragment;
 import com.habitrpg.android.habitica.ui.fragments.skills.SkillTasksRecyclerViewFragment;
 import com.habitrpg.android.habitica.ui.fragments.skills.SkillsFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.ChatFragment;
-import com.habitrpg.android.habitica.ui.fragments.social.ChatListFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.GuildDetailFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.GuildFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.GuildsOverviewFragment;
@@ -124,8 +121,6 @@ import dagger.Subcomponent;
 @Subcomponent(modules = {UserModule.class, UserRepositoryModule.class})
 public interface UserComponent {
     void inject(ClassSelectionActivity classSelectionActivity);
-
-    void inject(AboutActivity aboutActivity);
 
     void inject(GroupFormActivity groupFormActivity);
 
@@ -187,8 +182,6 @@ public interface UserComponent {
 
     void inject(PartyInviteFragment partyInviteFragment);
 
-    void inject(ChatListFragment chatListFragment);
-
     void inject(NoPartyFragmentFragment noPartyFragmentFragment);
 
     void inject(GuildFragment guildFragment);
@@ -212,8 +205,6 @@ public interface UserComponent {
     void inject(InboxOverviewFragment inboxFragment);
 
     void inject(InboxMessageListFragment inboxMessageListFragment);
-
-    void inject(ShopsFragment shopsFragment);
 
     void inject(ShopFragment shopFragment);
 
@@ -281,69 +272,69 @@ public interface UserComponent {
 
     void inject(PurchaseDialog purchaseDialog);
 
-    void inject(@NotNull FixCharacterValuesActivity fixCharacterValuesActivity);
+    void inject(FixCharacterValuesActivity fixCharacterValuesActivity);
 
-    void inject(@NotNull AuthenticationPreferenceFragment authenticationPreferenceFragment);
+    void inject(AuthenticationPreferenceFragment authenticationPreferenceFragment);
 
-    void inject(@NotNull ProfilePreferencesFragment profilePreferencesFragment);
+    void inject(ProfilePreferencesFragment profilePreferencesFragment);
 
-    void inject(@NotNull APIPreferenceFragment apiPreferenceFragment);
+    void inject(APIPreferenceFragment apiPreferenceFragment);
 
-    void inject(@NotNull StatsFragment statsFragment);
+    void inject(StatsFragment statsFragment);
 
-    void inject(@NotNull BulkAllocateStatsDialog bulkAllocateStatsDialog);
+    void inject(BulkAllocateStatsDialog bulkAllocateStatsDialog);
 
-    void inject(@NotNull PushNotificationsPreferencesFragment pushNotificationsPreferencesFragment);
+    void inject(PushNotificationsPreferencesFragment pushNotificationsPreferencesFragment);
 
     void inject(WelcomeFragment welcomeFragment);
 
-    void inject(@NotNull NavigationDrawerFragment navigationDrawerFragment);
+    void inject(NavigationDrawerFragment navigationDrawerFragment);
 
-    void inject(@NotNull ChallengeDetailFragment challengeDetailFragment);
+    void inject(ChallengeDetailFragment challengeDetailFragment);
 
-    void inject(@NotNull VerifyUsernameActivity verifyUsernameActivity);
+    void inject(VerifyUsernameActivity verifyUsernameActivity);
 
-    void inject(@NotNull GroupViewModel viewModel);
+    void inject(GroupViewModel viewModel);
 
-    void inject(@NotNull NotificationsViewModel viewModel);
+    void inject(NotificationsViewModel viewModel);
 
-    void inject(@NotNull ChatFragment chatFragment);
+    void inject(ChatFragment chatFragment);
 
-    void inject(@NotNull GiftSubscriptionActivity giftSubscriptionActivity);
+    void inject(GiftSubscriptionActivity giftSubscriptionActivity);
 
-    void inject(@NotNull AboutFragment aboutFragment);
+    void inject(AboutFragment aboutFragment);
 
-    void inject(@NotNull ChatBarView chatBarView);
+    void inject(ChatBarView chatBarView);
 
-    void inject(@NotNull TaskFormActivity taskFormActivity);
+    void inject(TaskFormActivity taskFormActivity);
 
-    void inject(@NotNull ReportMessageActivity reportMessageActivity);
+    void inject(ReportMessageActivity reportMessageActivity);
 
-    void inject(@NotNull GuildDetailFragment guildDetailFragment);
+    void inject(GuildDetailFragment guildDetailFragment);
 
-    void inject(@NotNull AchievementsFragment achievementsFragment);
+    void inject(AchievementsFragment achievementsFragment);
 
-    void inject(@NotNull InboxViewModel inboxViewModel);
+    void inject(InboxViewModel inboxViewModel);
 
-    void inject(@NotNull InsufficientGemsDialog insufficientGemsDialog);
+    void inject(InsufficientGemsDialog insufficientGemsDialog);
 
-    void inject(@NotNull GiftGemsActivity giftGemsActivity);
+    void inject(GiftGemsActivity giftGemsActivity);
 
-    void inject(@NotNull GiftPurchaseGemsFragment giftPurchaseGemsFragment);
+    void inject(GiftPurchaseGemsFragment giftPurchaseGemsFragment);
 
-    void inject(@NotNull GiftBalanceGemsFragment giftBalanceGemsFragment);
+    void inject(GiftBalanceGemsFragment giftBalanceGemsFragment);
 
-    void inject(@NotNull EmailNotificationsPreferencesFragment emailNotificationsPreferencesFragment);
+    void inject(EmailNotificationsPreferencesFragment emailNotificationsPreferencesFragment);
 
-    void inject(@NotNull SupportMainFragment supportMainFragment);
+    void inject(SupportMainFragment supportMainFragment);
 
-    void inject(@NotNull BugFixFragment bugFixFragment);
+    void inject(BugFixFragment bugFixFragment);
 
-    void inject(@NotNull AvatarEquipmentFragment avatarEquipmentFragment);
+    void inject(AvatarEquipmentFragment avatarEquipmentFragment);
 
-    void inject(@NotNull FAQDetailFragment faqDetailFragment);
+    void inject(FAQDetailFragment faqDetailFragment);
 
-    void inject(@NotNull AdventureGuideActivity adventureGuideFragment);
+    void inject(AdventureGuideActivity adventureGuideFragment);
 
-    void inject(@NotNull PromoInfoFragment promoInfoFragment);
+    void inject(PromoInfoFragment promoInfoFragment);
 }

@@ -40,7 +40,7 @@ class DayStartPreferenceDialogFragment : PreferenceDialogFragmentCompat() {
         picker = TimePicker(context)
         descriptionTextView = TextView(context)
         @Suppress("DEPRECATION")
-        descriptionTextView?.setTextColor(resources.getColor(R.color.textColorLight))
+        descriptionTextView?.setTextColor(resources.getColor(R.color.text_primary))
         val padding = resources.getDimension(R.dimen.card_padding).toInt()
         descriptionTextView?.setPadding(padding, padding, padding, padding)
         val lp = LinearLayout.LayoutParams(

@@ -9,7 +9,7 @@
         android:id="@+id/separator"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/gray_500"/>
+        android:background="@color/content_background_offset"/>
     <LinearLayout
         android:id="@+id/title_view"
         android:layout_width="match_parent"
@@ -23,14 +23,14 @@
             android:layout_marginTop="@dimen/spacing_large"
             android:layout_marginBottom="@dimen/spacing_large"
             android:textSize="16sp"
-            android:textColor="@color/gray_50"
+            android:textColor="@color/text_primary"
             tools:text="Example"/>
         <FrameLayout
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="18dp"
-            android:layout_marginLeft="@dimen/spacing_medium"
-            android:layout_marginRight="@dimen/spacing_medium">
+            android:layout_marginStart="@dimen/spacing_medium"
+            android:layout_marginEnd="@dimen/spacing_medium">
             <ImageView
                 android:id="@+id/infoIconView"
                 android:layout_width="18dp"

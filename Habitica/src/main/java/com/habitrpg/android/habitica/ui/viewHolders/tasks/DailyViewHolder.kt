@@ -1,9 +1,6 @@
 package com.habitrpg.android.habitica.ui.viewHolders.tasks
 
 import android.view.View
-import android.widget.TextView
-import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.shared.habitica.models.responses.TaskDirection
 import com.habitrpg.shared.habitica.models.tasks.ChecklistItem
 import com.habitrpg.shared.habitica.models.tasks.Task
@@ -11,8 +8,6 @@ import java.text.DateFormat
 import java.util.*
 
 class DailyViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> Unit), scoreChecklistItemFunc: ((Task, ChecklistItem) -> Unit), openTaskFunc: ((Task) -> Unit), brokenTaskFunc: ((Task) -> Unit)) : ChecklistedViewHolder(itemView, scoreTaskFunc, scoreChecklistItemFunc, openTaskFunc, brokenTaskFunc) {
-
-
 
     override val taskIconWrapperIsVisible: Boolean
         get() {
@@ -62,8 +57,10 @@ class DailyViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> U
         if (task.streak ?: 0 > 0) {
             this.streakTextView.text = task.streak.toString()
             this.streakTextView.visibility = View.VISIBLE
+            this.streakIconView.visibility = View.VISIBLE
         } else {
             this.streakTextView.visibility = View.GONE
+            this.streakIconView.visibility = View.GONE
         }
     }
 

@@ -19,7 +19,7 @@ class PromoMenuView @JvmOverloads constructor(
     var binding: PromoMenuBinding = PromoMenuBinding.inflate(context.layoutInflater, this)
 
     init {
-        setBackgroundColor(ContextCompat.getColor(context, R.color.gray_700))
+        setBackgroundColor(ContextCompat.getColor(context, R.color.window_background))
         clipToPadding = false
         clipChildren = false
         clipToOutline = false
