@@ -18,7 +18,6 @@ import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.helpers.MarginDecoration
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.shared.habitica.models.inventory.Customization
-import com.habitrpg.shared.habitica.models.user.User
 import io.reactivex.Flowable
 import javax.inject.Inject
 

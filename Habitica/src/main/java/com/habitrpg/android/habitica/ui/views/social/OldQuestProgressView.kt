@@ -14,7 +14,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.QuestProgressOldBinding
 import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.extensions.setScaledPadding
-import com.habitrpg.shared.habitica.models.inventory.QuestContent
+import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.shared.habitica.models.inventory.QuestProgress
 import com.habitrpg.shared.habitica.models.inventory.QuestProgressCollect
 import com.habitrpg.shared.habitica.models.user.User

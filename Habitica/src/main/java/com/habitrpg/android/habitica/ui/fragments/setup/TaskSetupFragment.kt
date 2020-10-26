@@ -9,13 +9,14 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.databinding.FragmentSetupTasksBinding
-import com.habitrpg.android.habitica.models.tasks.Days
+import com.habitrpg.shared.habitica.models.tasks.Days
 import com.habitrpg.shared.habitica.models.tasks.Task
 import com.habitrpg.shared.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.SetupActivity
 import com.habitrpg.android.habitica.ui.adapter.setup.TaskSetupAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
+import com.habitrpg.shared.habitica.models.tasks.TaskFrequency
 import com.habitrpg.shared.habitica.models.tasks.TaskType
 import java.util.*
 
@@ -127,7 +128,7 @@ class TaskSetupFragment : BaseFragment<FragmentSetupTasksBinding>() {
         }
 
         if (type == TaskType.TYPE_DAILY) {
-            TaskFrequency.FREQUENCY = "weekly"
+            task.frequency = "weekly"
             task.startDate = Date()
             task.everyX = 1
             val days = Days()

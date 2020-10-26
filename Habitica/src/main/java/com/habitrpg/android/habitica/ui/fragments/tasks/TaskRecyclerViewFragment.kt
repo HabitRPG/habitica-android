@@ -262,7 +262,7 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
                     ?.doOnNext { playSound(it.second) }
                     ?.subscribeWithErrorHandler { scoreTask(it.first, it.second) }?.let { compositeSubscription.add(it) }
             recyclerAdapter?.checklistItemScoreEvents
-                    ?.flatMap { taskRepository.scoreChecklistItem(it.first.id ?: "", it.second.id ?: "")
+                    ?.flatMap { taskRepository.scoreChecklistItem(it.first, it.second.id ?: "")
                     }?.subscribeWithErrorHandler {}?.let { compositeSubscription.add(it) }
             recyclerAdapter?.brokenTaskEvents?.subscribeWithErrorHandler { showBrokenChallengeDialog(it) }?.let { compositeSubscription.add(it) }
         }
@@ -397,7 +397,7 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
 
         setEmptyLabels()
 
-        if (activeFilter == Task.FILTER_COMPLETED) {
+        if (activeFilter == TaskFilter.FILTER_COMPLETED) {
             compositeSubscription.add(taskRepository.retrieveCompletedTodos(userID).subscribe({}, RxErrorHandler.handleEmptyError()))
         }
     }

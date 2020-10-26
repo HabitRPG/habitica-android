@@ -16,7 +16,7 @@ import com.habitrpg.android.habitica.models.inventory.HatchingPotion
 import com.habitrpg.android.habitica.models.inventory.Pet
 import com.habitrpg.android.habitica.models.inventory.StableSection
 import com.habitrpg.shared.habitica.models.user.OwnedMount
-import com.habitrpg.android.habitica.models.user.OwnedPet
+import com.habitrpg.shared.habitica.models.user.OwnedPet
 import com.habitrpg.android.habitica.ui.adapter.inventory.PetDetailRecyclerAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemRecyclerFragment
