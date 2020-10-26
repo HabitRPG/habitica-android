@@ -63,7 +63,7 @@ class TaskListDeserializer : JsonDeserializer<TaskList> {
                     task.userId = obj.getAsString("userId")
                     task.value = obj.get("value")?.asDouble ?: 0.0
                     task.type = obj.getAsString("type")
-                    TaskFrequency.FREQUENCY = obj.getAsString("frequency")
+                    task.frequency = obj.getAsString("frequency")
                     task.attribute = obj.getAsString("attribute")
                     task.everyX = obj.get("everyX")?.asInt
                     task.priority = obj.get("priority")?.asFloat ?: 1.0f

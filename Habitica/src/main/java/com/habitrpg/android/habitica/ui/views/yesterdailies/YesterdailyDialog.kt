@@ -15,8 +15,8 @@ import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.android.habitica.models.tasks.ChecklistItem
-import com.habitrpg.shared.habitica.models.tasks.Task
+import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
+import com.habitrpg.android.habitica.ui.helpers.TaskTextParser
 import com.habitrpg.android.habitica.ui.views.HabiticaEmojiTextView
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.shared.habitica.models.tasks.ChecklistItem
@@ -104,12 +104,12 @@ class YesterdailyDialog private constructor(context: Context, private val userRe
         val checkboxHolder = checklistView.findViewById<View>(R.id.checkBoxHolder) as? ViewGroup
         checkboxHolder?.setOnClickListener { _ ->
             item.completed = !item.completed
-            taskRepository.scoreChecklistItem(task.id ?: "", item.id ?: "").subscribe({ }, RxErrorHandler.handleEmptyError())
+            taskRepository.scoreChecklistItem(task, item.id ?: "").subscribe({ }, RxErrorHandler.handleEmptyError())
             configureChecklistView(checklistView, task, item)
         }
         checklistView.setOnClickListener {
             item.completed = !item.completed
-            taskRepository.scoreChecklistItem(task.id ?: "", item.id ?: "").subscribe({ }, RxErrorHandler.handleEmptyError())
+            taskRepository.scoreChecklistItem(task, item.id ?: "").subscribe({ }, RxErrorHandler.handleEmptyError())
             configureChecklistView(checklistView, task, item)
         }
         checkboxHolder?.setBackgroundResource(task.extraLightTaskColor)
@@ -132,7 +132,7 @@ class YesterdailyDialog private constructor(context: Context, private val userRe
         }
 
         val emojiView = taskView.findViewById<View>(R.id.text_view) as? HabiticaEmojiTextView
-        emojiView?.text = task.markdownText { emojiView?.text = it }
+        emojiView?.text = TaskTextParser.markdownText(task) { emojiView?.text = it }
     }
 
 

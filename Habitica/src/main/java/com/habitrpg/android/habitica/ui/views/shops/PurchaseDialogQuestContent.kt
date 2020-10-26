@@ -11,8 +11,8 @@ import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.DialogPurchaseContentQuestBinding
 import com.habitrpg.android.habitica.extensions.layoutInflater
-import com.habitrpg.shared.habitica.models.inventory.QuestContent
-import com.habitrpg.shared.habitica.models.inventory.QuestDropItem
+import com.habitrpg.android.habitica.models.inventory.QuestContent
+import com.habitrpg.android.habitica.models.inventory.QuestDropItem
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 

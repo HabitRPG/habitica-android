@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.SkillTaskItemCardBinding
+import com.habitrpg.android.habitica.ui.helpers.TaskTextParser
 import com.habitrpg.shared.habitica.models.tasks.Task
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
@@ -56,12 +57,12 @@ class SkillTasksRecyclerViewAdapter(data: OrderedRealmCollection<Task>?, autoUpd
 
         internal fun bindHolder(task: Task) {
             this.task = task
-            binding.titleTextView.text = task.markdownText { binding.titleTextView.text = it }
+            binding.titleTextView.text = TaskTextParser.markdownText(task) { binding.titleTextView.text = it }
             if (task.notes?.isEmpty() == true) {
                 binding.notesTextView.visibility = View.GONE
             } else {
                 binding.notesTextView.visibility = View.VISIBLE
-                binding.notesTextView.text = task.markdownNotes { binding.notesTextView.text = it }
+                binding.notesTextView.text = TaskTextParser.markdownNotes(task) { binding.notesTextView.text = it }
             }
             binding.rightBorderView.setBackgroundResource(task.lightTaskColor)
         }

@@ -75,20 +75,20 @@ class EquipmentOverviewFragment : BaseMainFragment<FragmentEquipmentOverviewBind
         if (gearEquipped != null && gearEquipped.weapon.isNotEmpty()) {
             compositeSubscription.add(inventoryRepository.getEquipment(gear.equipped?.weapon ?: "").firstElement()
                     .subscribe({
-                        binding?.battlegearView?.updateData(gear.equipped, it.twoHanded)
+                        binding?.battlegearView?.updateData(gearEquipped, it.twoHanded)
                     }, RxErrorHandler.handleEmptyError()))
-        } else {
-            binding?.battlegearView?.updateData(gear.equipped)
+        } else if (gearEquipped != null) {
+            binding?.battlegearView?.updateData(gearEquipped)
         }
 
         val gearCostume = gear.costume
         if (gearCostume != null && gearCostume.weapon.isNotEmpty()) {
             compositeSubscription.add(inventoryRepository.getEquipment(gear.costume?.weapon ?: "").firstElement()
                     .subscribe({
-                        binding?.costumeView?.updateData(gear.costume, it.twoHanded)
+                        binding?.costumeView?.updateData(gearCostume, it.twoHanded)
                     }, RxErrorHandler.handleEmptyError()))
-        } else {
-            binding?.costumeView?.updateData(gear.costume)
+        } else if (gearCostume != null) {
+            binding?.costumeView?.updateData(gearCostume)
         }
     }
 }

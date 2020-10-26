@@ -8,7 +8,7 @@ import android.widget.TextView
 import com.facebook.drawee.backends.pipeline.Fresco
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.extensions.dpToPx
-import com.habitrpg.shared.habitica.models.inventory.QuestContent
+import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 
