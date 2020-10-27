@@ -220,4 +220,8 @@
     <string name="onwards">Вперед!</string>
     <string name="levelup_detail">Завдяки досягненню цілей у реальному житті ваш рівень підвищився та персонаж був зцілений!</string>
     <string name="levelup_header">Ви отримали %1$d рівень!</string>
+    <string name="not_selected">Не обране</string>
+    <string name="selected">Вибране</string>
+    <string name="off">Викл.</string>
+    <string name="on">Вкл.</string>
 </resources>
