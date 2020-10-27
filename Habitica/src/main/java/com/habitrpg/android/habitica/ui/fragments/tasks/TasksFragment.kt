@@ -82,7 +82,13 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
 
     override fun onResume() {
         super.onResume()
-
+        bottomNavigation?.activeTaskType = when (binding?.viewPager?.currentItem) {
+            0 -> Task.TYPE_HABIT
+            1 -> Task.TYPE_DAILY
+            2 -> Task.TYPE_TODO
+            3 -> Task.TYPE_REWARD
+            else -> Task.TYPE_HABIT
+        }
         bottomNavigation?.onTabSelectedListener = {
             val newItem = when (it) {
                 Task.TYPE_HABIT -> 0
