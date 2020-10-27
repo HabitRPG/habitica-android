@@ -199,4 +199,11 @@
     <string name="register_btn_fb">Зареєструватись з Facebook</string>
     <string name="login_btn_google">Увійти з Google</string>
     <string name="login_btn_apple">Увійти з Apple</string>
+    <string name="about_source_code">Відкритий код</string>
+    <string name="about_bugreport">Повідомити про проблему</string>
+    <string name="about_give_us_feedback">Надішліть нам відгук!</string>
+    <string name="about_rate_our_app">Оцініть наш додаток</string>
+    <string name="empty_title_habits">Ви не маєте жодної звички</string>
+    <string name="clear">Очистити</string>
+    <string name="setuP_group_other">Інше</string>
 </resources>
