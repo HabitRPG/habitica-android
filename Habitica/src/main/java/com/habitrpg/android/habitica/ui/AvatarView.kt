@@ -368,7 +368,9 @@ class AvatarView : View {
         if (offset != null) {
             when (layerName) {
                 "head_special_0" -> offset = PointF(offset.x-3, offset.y-18)
-                "weapon_special_0" -> offset = PointF(offset.x-3, offset.y-18)
+                "weapon_special_0" -> offset = PointF(offset.x-12, offset.y+4)
+                "weapon_special_1" -> offset = PointF(offset.x-12, offset.y+4)
+                "weapon_special_critical" -> offset = PointF(offset.x-12, offset.y+4)
                 "head_special_1" -> offset = PointF(offset.x, offset.y+3)
             }
 
