@@ -140,7 +140,7 @@
     <string name="members">Учасники</string>
     <string name="habits">Звички</string>
     <string name="dailies">Щоденні</string>
-    <string name="todos">Задачі</string>
+    <string name="todos">Завдання</string>
     <string name="rewards">Нагороди</string>
     <string name="taskform.delete.title">Ви впевнені?</string>
     <string name="taskform.delete.message">Ви дійсно хочете видалити?</string>
@@ -199,11 +199,25 @@
     <string name="register_btn_fb">Зареєструватись з Facebook</string>
     <string name="login_btn_google">Увійти з Google</string>
     <string name="login_btn_apple">Увійти з Apple</string>
-    <string name="about_source_code">Відкритий код</string>
+    <string name="about_source_code">Вихідний код</string>
     <string name="about_bugreport">Повідомити про проблему</string>
     <string name="about_give_us_feedback">Надішліть нам відгук!</string>
     <string name="about_rate_our_app">Оцініть наш додаток</string>
     <string name="empty_title_habits">Ви не маєте жодної звички</string>
     <string name="clear">Очистити</string>
     <string name="setuP_group_other">Інше</string>
+    <string name="quest_abort">Перервати квест</string>
+    <string name="quest_cancel">Скасувати запрошення</string>
+    <string name="quest_begin">Почати квест</string>
+    <string name="quest_reject">Відхилити</string>
+    <string name="quest_accept">Прийняти</string>
+    <string name="reward_dialog_dismiss">Відхилити</string>
+    <string name="reward_dialog_buy">Купити</string>
+    <string name="tavern_inn_rest">Призупинити щоденні завдання</string>
+    <string name="tavern_inn_checkOut">Знову активувати щоденні завдання</string>
+    <string name="reminder_title">Не забудьте відмічати свої завдання</string>
+    <string name="faint_penalty_body">Ви втратили рівень, своє золото і предмет екіпіровки, але ви можете все повернути, якщо будете працювати! Щасти! У вас все вийде!</string>
+    <string name="onwards">Вперед!</string>
+    <string name="levelup_detail">Завдяки досягненню цілей у реальному житті ваш рівень підвищився та персонаж був зцілений!</string>
+    <string name="levelup_header">Ви отримали %1$d рівень!</string>
 </resources>
