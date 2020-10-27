@@ -163,12 +163,15 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         context?.let { binding?.recyclerView?.setBackgroundColor(ContextCompat.getColor(it, R.color.content_background)) }
-        if (Task.TYPE_DAILY == classType) {
-            if (user?.isValid == true && user?.preferences?.dailyDueDefaultView == true) {
-                taskFilterHelper.setActiveFilter(Task.TYPE_DAILY, Task.FILTER_ACTIVE)
+        savedInstanceState?.let { this.classType = savedInstanceState.getString(CLASS_TYPE_KEY, "") }
+
+        when (classType) {
+            Task.TYPE_TODO -> taskFilterHelper.setActiveFilter(Task.TYPE_TODO, Task.FILTER_ACTIVE)
+            Task.TYPE_DAILY -> {
+                if (user?.isValid == true && user?.preferences?.dailyDueDefaultView == true) {
+                    taskFilterHelper.setActiveFilter(Task.TYPE_DAILY, Task.FILTER_ACTIVE)
+                }
             }
-        } else if (Task.TYPE_TODO == classType) {
-            taskFilterHelper.setActiveFilter(Task.TYPE_TODO, Task.FILTER_ACTIVE)
         }
 
         itemTouchCallback = object : ItemTouchHelper.Callback() {
@@ -229,9 +232,6 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
                             }, RxErrorHandler.handleEmptyError()))
                 }
             }
-        }
-        if (savedInstanceState != null) {
-            this.classType = savedInstanceState.getString(CLASS_TYPE_KEY, "")
         }
 
         binding?.recyclerView?.setScaledPadding(context, 0, 0, 0, 48)
