@@ -271,4 +271,14 @@
     <string name="setup_group_exercise">Вправи</string>
     <string name="task_setup_description">Чудово! А зараз, що вам цікаво робити на протязі цієї подорожі\?</string>
     <string name="avatar_setup_description">Отже, як ви хотіли б виглядати\? Не хвилюйтесь, ви можете змінити це пізніше.</string>
+    <string name="outfit_body">Тіло</string>
+    <string name="outfit_back">Спина</string>
+    <string name="outfit_armor">Броня</string>
+    <string name="outfit_eyewear">Окуляри</string>
+    <string name="outfit_headAccessory">Головний убір</string>
+    <string name="outfit_head">Голова</string>
+    <string name="costume">Наряд</string>
+    <string name="guild_search_hint">Пошук гільдій</string>
+    <string name="write_message">Написати повідомлення</string>
+    <string name="privacy">Конфіденційність</string>
 </resources>
