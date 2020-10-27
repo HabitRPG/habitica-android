@@ -56,6 +56,8 @@ class TaskFormActivity : BaseActivity() {
     lateinit var taskAlarmManager: TaskAlarmManager
     @Inject
     lateinit var challengeRepository: ChallengeRepository
+    @Inject
+    lateinit var sharedPreferences: SharedPreferences
 
     private var challenge: Challenge? = null
 
@@ -253,6 +255,7 @@ class TaskFormActivity : BaseActivity() {
     }
 
     private fun configureForm() {
+        val firstDayOfWeek = sharedPreferences.getInt("FirstDayOfTheWeek", -1)
         val habitViewsVisibility = if (taskType == Task.TYPE_HABIT) View.VISIBLE else View.GONE
         binding.habitScoringButtons.visibility = habitViewsVisibility
         binding.habitResetStreakTitleView.visibility = habitViewsVisibility
@@ -280,10 +283,12 @@ class TaskFormActivity : BaseActivity() {
         binding.remindersTitleView.visibility = if (isChallengeTask) View.GONE else todoDailyViewsVisibility
         binding.remindersContainer.visibility = if (isChallengeTask) View.GONE else todoDailyViewsVisibility
         binding.remindersContainer.taskType = taskType
+        binding.remindersContainer.firstDayOfWeek = firstDayOfWeek
 
         binding.schedulingTitleView.visibility = todoDailyViewsVisibility
         binding.taskSchedulingControls.visibility = todoDailyViewsVisibility
         binding.taskSchedulingControls.taskType = taskType
+        binding.taskSchedulingControls.firstDayOfWeek = firstDayOfWeek
 
         val rewardHideViews = if (taskType == Task.TYPE_REWARD) View.GONE else View.VISIBLE
         binding.taskDifficultyTitleView.visibility = rewardHideViews

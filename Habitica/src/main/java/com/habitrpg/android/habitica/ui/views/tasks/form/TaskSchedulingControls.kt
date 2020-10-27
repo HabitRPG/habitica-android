@@ -98,6 +98,8 @@ class TaskSchedulingControls @JvmOverloads constructor(
         generateSummary()
     }
 
+    var firstDayOfWeek: Int? = null
+
     private val weekdays: Array<String> by lazy {
         DateFormatSymbols().weekdays
     }
@@ -141,6 +143,10 @@ class TaskSchedulingControls @JvmOverloads constructor(
                 } else {
                     startDate = Date()
                 }
+            }
+
+            if ((firstDayOfWeek ?: -1) >= 0) {
+                datePickerDialog.datePicker.firstDayOfWeek = firstDayOfWeek ?: 0
             }
             if (taskType == Task.TYPE_TODO) {
                 datePickerDialog.setButton(DialogInterface.BUTTON_NEUTRAL, resources.getString(R.string.clear)) { _, _ ->

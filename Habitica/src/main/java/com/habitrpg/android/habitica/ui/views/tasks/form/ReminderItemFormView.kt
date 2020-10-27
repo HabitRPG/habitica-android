@@ -55,6 +55,8 @@ class ReminderItemFormView @JvmOverloads constructor(
             binding.textView.text = formattedTime
         }
 
+    var firstDayOfWeek: Int? = null
+
     var tintColor: Int = context.getThemeColor(R.attr.taskFormTint)
     var valueChangedListener: ((Date) -> Unit)? = null
     var animDuration = 0L
@@ -111,6 +113,9 @@ class ReminderItemFormView @JvmOverloads constructor(
                         calendar.get(Calendar.YEAR),
                         calendar.get(Calendar.MONTH),
                         calendar.get(Calendar.DAY_OF_MONTH))
+                if ((firstDayOfWeek ?: -1) >= 0) {
+                    timePickerDialog.datePicker.firstDayOfWeek = firstDayOfWeek ?: 0
+                }
                 timePickerDialog.show()
             }
         }
