@@ -208,7 +208,7 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : HabiticaAl
                 }
                 tags[index] = changedTag
         })
-        val deleteButton = wrapper?.findViewById<View>(R.id.delete_button) as? Button
+        val deleteButton = wrapper?.findViewById<View>(R.id.delete_button) as? ImageButton
         deleteButton?.setOnClickListener {
             deletedTags.add(tag.id)
             if (createdTags.containsKey(tag.id)) {
