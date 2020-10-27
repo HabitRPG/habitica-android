@@ -281,4 +281,10 @@
     <string name="guild_search_hint">Пошук гільдій</string>
     <string name="write_message">Написати повідомлення</string>
     <string name="privacy">Конфіденційність</string>
+    <string name="ago_1week">1 тиждень тому</string>
+    <string name="ago_months">%d міс. тому</string>
+    <string name="ago_1month">1 місяць тому</string>
+    <string name="quest_begin_message">Ви впевнений\? Лише %1$d з %2$d членів вашого гурту приєдналися до цього квесту! Квести починаються автоматично, коли всі гравці приєдналися або відхилили запрошення.</string>
+    <string name="quest_cancel_message">Ви впевнені, що хочете скасувати цей квест\? Усі прийняті запрошення будуть втрачені. Власник квесту збереже у своєму розпорядженні сувій квесту.</string>
+    <string name="equipped">Одягнуто</string>
 </resources>
