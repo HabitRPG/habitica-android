@@ -50,8 +50,8 @@
     <string name="username">Логін</string>
     <string name="email_username">Ел. пошта або логін</string>
     <string name="password">Пароль</string>
-    <string name="emailAddress">Адреса електронної пошти</string>
-    <string name="confirmpassword">Підтвердити пароль</string>
+    <string name="emailAddress">Електронна пошта</string>
+    <string name="confirmpassword">Підтвердіть пароль</string>
     <string name="logout">Вийти</string>
     <string name="logout_description">Вийти з вашого акаунта</string>
     <string name="account_details">Відомості про акаунт</string>
