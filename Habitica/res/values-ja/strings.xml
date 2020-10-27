@@ -71,7 +71,7 @@
     <string name="checklist">チェックリスト</string>
     <string name="reminders">通知</string>
     <string name="attributes">属性</string>
-    <string name="repeatables_frequency_daily">日ごと</string>
+    <string name="repeatables_frequency_daily">毎日</string>
     <string name="repeatables_frequency_weekly">毎週</string>
     <string name="repeatables_frequency_monthly">毎月</string>
     <string name="repeatables_frequency_yearly">毎年</string>
