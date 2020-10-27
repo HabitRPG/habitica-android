@@ -63,7 +63,7 @@ class EquipmentRecyclerViewAdapter : BaseRecyclerViewAdapter<Equipment, Equipmen
 
             if (gear.key == equippedGear) {
                 binding.equippedIndicator.visibility = View.VISIBLE
-                binding.gearContainer.setBackgroundColor(ContextCompat.getColor(context, R.color.brand_700))
+                binding.gearContainer.setBackgroundColor(ContextCompat.getColor(context, R.color.lightly_tinted_background))
                 binding.gearIconBackgroundView .background = ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_content)
             } else {
                 binding.equippedIndicator.visibility = View.GONE
