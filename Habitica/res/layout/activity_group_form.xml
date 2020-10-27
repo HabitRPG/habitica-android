@@ -4,14 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/window_background">
+    android:background="?attr/colorContentBackground">
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="30dp"
-        android:background="?attr/colorContentBackground">
+        android:paddingTop="30dp">
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -138,10 +137,5 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/privacySpinner" />
         </LinearLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#1e000000"
-            android:layout_marginTop="@dimen/spacing_medium" />
     </LinearLayout>
 </ScrollView>

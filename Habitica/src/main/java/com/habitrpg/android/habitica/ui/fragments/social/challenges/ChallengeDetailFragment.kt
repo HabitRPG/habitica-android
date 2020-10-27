@@ -11,11 +11,13 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ChallengeRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.FragmentChallengeDetailBinding
+import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.members.Member
@@ -140,27 +142,48 @@ class ChallengeDetailFragment: BaseMainFragment<FragmentChallengeDetailBinding>(
         inflater.inflate(R.menu.menu_challenge_details, menu)
         val editMenuItem = menu.findItem(R.id.action_edit)
         editMenuItem?.isVisible = isCreator
+        val endChallengeMenuItem = menu.findItem(R.id.action_end_challenge)
+        endChallengeMenuItem?.isVisible = isCreator
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.action_edit) {
-            val intent = Intent(getActivity(), ChallengeFormActivity::class.java)
-            val bundle = Bundle()
-            bundle.putString(ChallengeFormActivity.CHALLENGE_ID_KEY, challengeID)
-            intent.putExtras(bundle)
-            startActivity(intent)
-            return true
-        }
-        else if (item.itemId == R.id.action_share) {
-            val shareGuildIntent = Intent().apply {
-                action = Intent.ACTION_SEND
-                putExtra(Intent.EXTRA_TEXT, "${context?.getString(R.string.base_url)}/challenges/$challengeID")
-                type = "text/plain"
+        when (item.itemId) {
+            R.id.action_edit -> {
+                val intent = Intent(getActivity(), ChallengeFormActivity::class.java)
+                val bundle = Bundle()
+                bundle.putString(ChallengeFormActivity.CHALLENGE_ID_KEY, challengeID)
+                intent.putExtras(bundle)
+                startActivity(intent)
+                return true
             }
-            startActivity(Intent.createChooser(shareGuildIntent, context?.getString(R.string.share_challenge_with)))
+            R.id.action_share -> {
+                val shareGuildIntent = Intent().apply {
+                    action = Intent.ACTION_SEND
+                    putExtra(Intent.EXTRA_TEXT, "${context?.getString(R.string.base_url)}/challenges/$challengeID")
+                    type = "text/plain"
+                }
+                startActivity(Intent.createChooser(shareGuildIntent, context?.getString(R.string.share_challenge_with)))
+            }
+            R.id.action_end_challenge -> {
+                showEndChallengeDialog()
+            }
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun showEndChallengeDialog() {
+        val context = context ?: return
+        val dialog = HabiticaAlertDialog(context)
+        dialog.setTitle(R.string.action_end_challenge)
+        dialog.setMessage(R.string.end_challenge_description)
+        dialog.addButton(R.string.open_website, true, false) { _, _ ->
+            val uriUrl = "https://habitica.com/challenges/${challengeID}".toUri()
+            val launchBrowser = Intent(Intent.ACTION_VIEW, uriUrl)
+            startActivity(launchBrowser)
+        }
+        dialog.addCloseButton()
+        dialog.show()
     }
 
     private fun refresh() {

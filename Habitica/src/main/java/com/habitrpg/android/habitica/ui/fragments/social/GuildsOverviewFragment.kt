@@ -1,20 +1,22 @@
 package com.habitrpg.android.habitica.ui.fragments.social
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.TextView
+import androidx.core.net.toUri
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ChallengeRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.FragmentGuildsOverviewBinding
+import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
+import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import io.realm.RealmResults
 import java.util.*
 import javax.inject.Inject
@@ -59,6 +61,39 @@ class GuildsOverviewFragment : BaseMainFragment<FragmentGuildsOverviewBinding>()
         socialRepository.close()
         challengeRepository.close()
         super.onDestroy()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_create_refresh, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.menu_refresh -> {
+                onRefresh()
+                return true
+            }
+            R.id.menu_create_item -> {
+                showCreationDialog()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun showCreationDialog() {
+        val context = context ?: return
+        val dialog = HabiticaAlertDialog(context)
+        dialog.setTitle(R.string.create_guild)
+        dialog.setMessage(R.string.create_guild_description)
+        dialog.addButton(R.string.open_website, true, false) { _, _ ->
+            val uriUrl = "https://habitica.com/groups/myGuilds".toUri()
+            val launchBrowser = Intent(Intent.ACTION_VIEW, uriUrl)
+            startActivity(launchBrowser)
+        }
+        dialog.addCloseButton()
+        dialog.show()
     }
 
     override fun injectFragment(component: UserComponent) {
