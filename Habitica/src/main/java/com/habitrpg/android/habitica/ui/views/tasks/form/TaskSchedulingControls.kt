@@ -167,7 +167,7 @@ class TaskSchedulingControls @JvmOverloads constructor(
     }
 
     private fun configureViewsForType() {
-        binding.startDateTextview.text = context.getString(if (taskType == Task.TYPE_DAILY) R.string.start_date else R.string.due_date)
+        binding.startDateTitle.text = context.getString(if (taskType == Task.TYPE_DAILY) R.string.start_date else R.string.due_date)
         binding.repeatsEveryWrapper.visibility = if (taskType == Task.TYPE_DAILY) View.VISIBLE else View.GONE
         binding.summaryTextview.visibility =  if (taskType == Task.TYPE_DAILY) View.VISIBLE else View.GONE
         binding.weeklyRepeatWrapper.visibility = if (taskType == Task.TYPE_DAILY) View.VISIBLE else View.GONE
