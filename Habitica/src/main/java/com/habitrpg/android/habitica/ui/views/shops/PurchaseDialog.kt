@@ -125,6 +125,15 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
                 }
             }
 
+            val purchaseImmediatelyView = contentView.findViewById<View>(R.id.purchase_immediately_view)
+            if (purchaseImmediatelyView != null) {
+                if (item.key == "fortify" || item.key == "potion") {
+                    purchaseImmediatelyView.visibility = View.VISIBLE
+                } else {
+                    purchaseImmediatelyView.visibility = View.GONE
+                }
+            }
+
             amountErrorLabel = contentView.findViewById(R.id.amount_error_label)
 
             contentView.setItem(shopItem)
@@ -296,6 +305,8 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
             } else {
                 inventoryRepository.purchaseHourglassItem(shopItem.purchaseType, shopItem.key).cast(Any::class.java)
             }
+        } else if (shopItem.purchaseType == "fortify") {
+            observable = userRepository.reroll().cast(Any::class.java)
         } else if (shopItem.purchaseType == "quests" && shopItem.currency == "gold") {
             observable = inventoryRepository.purchaseQuest(shopItem.key).cast(Any::class.java)
         } else if (shopItem.purchaseType == "debuffPotion") {

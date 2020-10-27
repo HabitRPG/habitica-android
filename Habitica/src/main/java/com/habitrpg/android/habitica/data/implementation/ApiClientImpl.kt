@@ -713,6 +713,11 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
         return apiService.runCron().compose(configureApiCallObserver())
     }
 
+
+    override fun reroll(): Flowable<User> {
+        return apiService.reroll().compose(configureApiCallObserver())
+    }
+
     override fun resetAccount(): Flowable<Void> {
         return apiService.resetAccount().compose(configureApiCallObserver())
     }

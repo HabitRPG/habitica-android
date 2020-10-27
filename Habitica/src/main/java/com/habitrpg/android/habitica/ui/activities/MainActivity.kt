@@ -536,8 +536,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     internal fun displayTaskScoringResponse(data: TaskScoringResult?) {
         if (user != null && data != null) {
             val damageValue = when (userQuestStatus) {
-                UserQuestStatus.QUEST_BOSS,
-                UserQuestStatus.QUEST_UNKNOWN -> data.questDamage
+                UserQuestStatus.QUEST_BOSS -> data.questDamage
                 else -> 0.0
             }
             compositeSubscription.add(notifyUserUseCase.observable(NotifyUserUseCase.RequestValues(this, snackbarContainer,
@@ -546,8 +545,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         }
 
         val showItemsFound = when (userQuestStatus) {
-            UserQuestStatus.QUEST_COLLECT,
-            UserQuestStatus.QUEST_UNKNOWN -> true
+            UserQuestStatus.QUEST_COLLECT -> true
             else -> false
         }
         compositeSubscription.add(displayItemDropUseCase.observable(DisplayItemDropUseCase.RequestValues(data, this, snackbarContainer, showItemsFound))

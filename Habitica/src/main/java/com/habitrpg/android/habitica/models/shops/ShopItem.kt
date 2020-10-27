@@ -143,5 +143,17 @@ open class ShopItem : RealmObject() {
             item.purchaseType = "gems"
             return item
         }
+
+        fun makeFortifyItem(res: Resources?): ShopItem {
+            val item = ShopItem()
+            item.key = "fortify"
+            item.text = res?.getString(R.string.fortify_shop) ?: ""
+            item.notes = res?.getString(R.string.fortify_shop_description) ?: ""
+            item.imageName = "inventory_special_fortify"
+            item.value = 4
+            item.currency = "gems"
+            item.purchaseType = "fortify"
+            return item
+        }
     }
 }

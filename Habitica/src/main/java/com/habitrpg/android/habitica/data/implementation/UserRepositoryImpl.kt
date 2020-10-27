@@ -176,6 +176,12 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
         return localRepository.getUserQuestStatus(userID)
     }
 
+    override fun reroll(): Flowable<User> {
+        return apiClient.reroll().doOnNext {
+            localRepository.saveUser(it)
+        }
+    }
+
     override fun readNotifications(notificationIds: Map<String, List<String>>): Flowable<List<Any>> =
             apiClient.readNotifications(notificationIds)
 

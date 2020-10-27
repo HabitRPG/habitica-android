@@ -234,6 +234,8 @@ interface ApiClient {
 
     fun runCron(): Flowable<Void>
 
+    fun reroll(): Flowable<User>
+
     fun resetAccount(): Flowable<Void>
     fun deleteAccount(password: String): Flowable<Void>
 

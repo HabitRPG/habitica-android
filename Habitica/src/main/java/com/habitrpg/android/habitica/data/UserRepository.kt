@@ -79,4 +79,6 @@ interface UserRepository : BaseRepository {
     fun getQuestAchievements(): Flowable<RealmResults<QuestAchievement>>
 
     fun getUserQuestStatus(): Flowable<UserQuestStatus>
+
+    fun reroll(): Flowable<User>
 }

@@ -1113,4 +1113,7 @@
     <string name="login_disclaimer">By signing up, you are indicating that you have read and agree to the <a href="https://habitica.com/static/terms">Terms of Service</a> and <a href="https://habitica.com/static/privacy">Privacy Policy.</a></string>
     <string name="you">You</string>
     <string name="invitation_title_no_leader">You were invited to join a party</string>
+    <string name="fortify_shop">Fortify Potion</string>
+    <string name="fortify_shop_description">Return all tasks to neutral value (yellow color), and restore all lost Health</string>
+    <string name="purchase_immediately_description">This will take effect immediately after buying!</string>
 </resources>

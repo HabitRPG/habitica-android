@@ -389,4 +389,7 @@ interface ApiService {
 
     @POST("user/block/{userID}")
     fun blockMember(@Path("userID") userID: String): Flowable<HabitResponse<List<String>>>
+
+    @POST("user/reroll")
+    fun reroll(): Flowable<HabitResponse<User>>
 }
