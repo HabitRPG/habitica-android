@@ -20,7 +20,12 @@ import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.subjects.PublishSubject
 import io.realm.OrderedRealmCollection
 
-class RewardsRecyclerViewAdapter(private var customRewards: OrderedRealmCollection<Task>?, private val layoutResource: Int, private val user: User?) : BaseRecyclerViewAdapter<Task, RecyclerView.ViewHolder>(), TaskRecyclerViewAdapter {
+class RewardsRecyclerViewAdapter(private var customRewards: OrderedRealmCollection<Task>?, private val layoutResource: Int, user: User?) : BaseRecyclerViewAdapter<Task, RecyclerView.ViewHolder>(), TaskRecyclerViewAdapter {
+    var user = user
+    set(value) {
+        field = value
+        notifyDataSetChanged()
+    }
     private var inAppRewards: OrderedRealmCollection<ShopItem>? = null
 
     private val errorButtonEventsSubject = PublishSubject.create<String>()

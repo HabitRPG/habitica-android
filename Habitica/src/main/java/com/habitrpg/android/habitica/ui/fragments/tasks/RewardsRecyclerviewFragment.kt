@@ -61,6 +61,10 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
             startActivityForResult(intent, 11)
         }, RxErrorHandler.handleEmptyError())?.let { compositeSubscription.add(it) }
         recyclerAdapter?.brokenTaskEvents?.subscribeWithErrorHandler { showBrokenChallengeDialog(it) }?.let { compositeSubscription.add(it) }
+
+        compositeSubscription.add(userRepository.getUser().subscribe({
+            (recyclerAdapter as? RewardsRecyclerViewAdapter)?.user = it
+        }, RxErrorHandler.handleEmptyError()))
     }
 
     override fun getLayoutManager(context: Context?): LinearLayoutManager {
