@@ -92,7 +92,7 @@ class AvatarOverviewFragment : BaseMainFragment<FragmentAvatarOverviewBinding>()
         }
     }
 
-    override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+    override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
         val newSize: String = if (position == 0) "slim" else "broad"
 
         if (this.user?.isValid == true && this.user?.preferences?.size != newSize) {

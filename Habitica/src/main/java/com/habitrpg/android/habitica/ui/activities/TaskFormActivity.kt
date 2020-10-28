@@ -255,7 +255,7 @@ class TaskFormActivity : BaseActivity() {
     }
 
     private fun configureForm() {
-        val firstDayOfWeek = sharedPreferences.getInt("FirstDayOfTheWeek", -1)
+        val firstDayOfWeek = sharedPreferences.getString("FirstDayOfTheWeek", "-1")?.toInt() ?: -1
         val habitViewsVisibility = if (taskType == Task.TYPE_HABIT) View.VISIBLE else View.GONE
         binding.habitScoringButtons.visibility = habitViewsVisibility
         binding.habitResetStreakTitleView.visibility = habitViewsVisibility
