@@ -1,1 +1,1 @@
-We’re back with a big update that brings a feature many have been waiting for: Dark Mode! Along with that comes a pretty big design refresh that helped us make Dark Mode a reality. We’ve also introduced a few privacy related updates including the ability to disable private messages and block from a player’s profile. There was lots of code cleanup and bug fixing behind the scenes that should help the app run more efficiently and make it easier for us to continue making Habitica the best it can be
+Thanks for helping us testing!

@@ -152,6 +152,8 @@ open class ShopItem : RealmObject() {
             item.imageName = "inventory_special_fortify"
             item.value = 4
             item.currency = "gems"
+            item.pinType = "fortify"
+            item.path = "special.fortify"
             item.purchaseType = "fortify"
             return item
         }
