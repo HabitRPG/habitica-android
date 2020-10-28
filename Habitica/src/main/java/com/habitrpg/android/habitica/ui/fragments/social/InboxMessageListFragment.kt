@@ -30,13 +30,15 @@ import com.habitrpg.android.habitica.ui.viewmodels.InboxViewModelFactory
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.Companion.showSnackbar
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.functions.Action
 import io.reactivex.rxjava3.functions.Consumer
 import java.lang.Exception
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBinding>(), androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener {
+class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBinding>() {
 
     override var binding: FragmentInboxMessageListBinding? = null
 
@@ -54,6 +56,7 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
     private var replyToUserUUID: String? = null
 
     private var viewModel: InboxViewModel? = null
+    private var refreshDisposable: Disposable? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -63,7 +66,6 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding?.swipeRefreshLayout?.setOnRefreshListener(this)
 
         arguments?.let {
             val args = InboxMessageListFragmentArgs.fromBundle(it)
@@ -72,6 +74,8 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
         viewModel = ViewModelProvider(this, InboxViewModelFactory(replyToUserUUID, chatRoomUser)).get(InboxViewModel::class.java)
 
         val layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this.getActivity())
+        layoutManager.reverseLayout = true
+        layoutManager.stackFromEnd = false
         binding?.recyclerView?.layoutManager = layoutManager
         compositeSubscription.add(apiClient.getMember(replyToUserUUID!!).subscribe( { member ->
             chatAdapter = InboxAdapter(user, member)
@@ -99,6 +103,7 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
         if (replyToUserUUID?.isNotBlank() != true && chatRoomUser?.isNotBlank() != true) {
             parentFragmentManager.popBackStack()
         }
+        startAutoRefreshing()
         super.onResume()
     }
 
@@ -108,6 +113,18 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
 
         super.onAttach(context)
     }
+
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        stopAutoRefreshing()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        stopAutoRefreshing()
+    }
+
 
     override fun onDestroy() {
         socialRepository.close()
@@ -133,18 +150,31 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
         component.inject(this)
     }
 
+    private fun startAutoRefreshing() {
+        if (refreshDisposable != null && refreshDisposable?.isDisposed != true) {
+            refreshDisposable?.dispose()
+        }
+        refreshDisposable = Observable.interval(30, TimeUnit.SECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    refreshConversation()
+                }, RxErrorHandler.handleEmptyError())
+        refreshConversation()
+    }
+
+    private fun stopAutoRefreshing() {
+        if (refreshDisposable?.isDisposed != true) {
+            refreshDisposable?.dispose()
+            refreshDisposable = null
+        }
+    }
+
     private fun refreshConversation() {
         if (viewModel?.memberID?.isNotBlank() != true) { return }
         compositeSubscription.add(this.socialRepository.retrieveInboxMessages(replyToUserUUID ?: "", 0)
                 .subscribe({}, RxErrorHandler.handleEmptyError(), {
-                    binding?.swipeRefreshLayout?.isRefreshing = false
                     viewModel?.invalidateDataSource()
                 }))
-    }
-
-    override fun onRefresh() {
-        binding?.swipeRefreshLayout?.isRefreshing = true
-        this.refreshConversation()
     }
 
     private fun sendMessage(chatText: String) {
