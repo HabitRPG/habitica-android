@@ -800,4 +800,5 @@
     <string name="equipment_int">VIS:</string>
     <string name="hatch_pet">Kläck Husdjur</string>
     <string name="hatch_pet_again">Kläck Husdjur igen</string>
+    <string name="purchase_equipment_title">Köp Utrustning</string>
 </resources>
