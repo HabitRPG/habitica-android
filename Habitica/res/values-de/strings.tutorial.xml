@@ -10,10 +10,10 @@
     <string name="tutorial_todos_1">Nutze die To Do\'s, um Aufgaben zu organisieren, die du nur einmalig erledigen musst.</string>
     <string name="tutorial_todos_2">Falls Dein To Do an einem bestimmten Tag erledigt sein muss, kannst du dafür ein Fälligkeitsdatum erstellen. Es sieht so aus, als ob du jetzt auch eine Aufgabe abhaken kannst - probier es aus!</string>
     <string name="tutorial_rewards_1">Kaufe dir mit dem verdienten Gold Ausrüstung für deinen Avatar!</string>
-    <string name="tutorial_rewards_2">Du kannst auch benutzerdefinierte Belohnungen erstellen, die sich auf etwas in deinem wirklichen Leben beziehen, je nachdem was dich motiviert.</string>
+    <string name="tutorial_rewards_2">Du kannst auch benutzerdefinierte Belohnungen erstellen, die sich auf etwas in Deinem wirklichen Leben beziehen, je nachdem was Dich motiviert.</string>
     <string name="tutorial_tasks_complete">Das war\'s für das Erste. Falls du eine Erinnerungshilfe brauchst, dann schau in die FAQs.</string>
-    <string name="tutorial_skills">Fähigkeiten erlauben es dir, mächtige Effekte auszulösen! Tippe auf eine Fähigkeit, um sie zu benutzen. Dies wird dich Mana (der blaue Balken) kosten, das du verdienst, indem du dich jeden Tag einloggst und reale Aufgaben abschließt. Für mehr Infos schaue im Menü in die FAQ!</string>
+    <string name="tutorial_skills">Fähigkeiten erlauben es Dir, mächtige Effekte auszulösen! Tippe auf eine Fähigkeit, um sie zu benutzen. Dies wird Dich Mana (der blaue Balken) kosten, das Du verdienst, indem Du Dich jeden Tag einloggst und reale Aufgaben abschließt. Für mehr Infos schaue im Menü in die FAQ!</string>
     <string name="tutorial_party">Hier können du und deine Freunde einander motivieren und mit euren Aufgaben Monster bekämpfen!</string>
-    <string name="tutorial_tavern">Willkommen in der Taverne, einem öffentlichen Chat für alle Altersklassen! Hier kannst du dich über Produktivität unterhalten und Fragen stellen. Viel Spaß!</string>
+    <string name="tutorial_tavern">Willkommen in der Taverne, einem öffentlichen Chat für alle Altersklassen! Hier kannst Du Dich über Produktivität unterhalten und Fragen stellen. Viel Spaß!</string>
     <string name="tutorial_stats">Tippe auf den grauen Button, um mehrere Punkte auf einmal zuzuweisen, oder tippe auf die Pfeile, um die Punkte einzeln zu verteilen.</string>
 </resources>
