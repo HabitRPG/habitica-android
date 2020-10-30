@@ -100,7 +100,7 @@
     <string name="tavern_inn_checkOut">日課を再開する</string>
     <string name="tavern_inn_rest">日課を中断する</string>
     <string name="reward_dialog_buy">買う</string>
-    <string name="reward_dialog_dismiss">中止</string>
+    <string name="reward_dialog_dismiss">キャンセル</string>
     <string name="party">パーティー</string>
     <string name="chat">チャット</string>
     <string name="members">メンバー</string>
@@ -467,7 +467,7 @@
     <string name="declined">辞退済</string>
     <string name="participants">参加者</string>
     <string name="invitations">招待</string>
-    <string name="quest_leader_header">%sが始めたタスク</string>
+    <string name="quest_leader_header">%sが開始したクエスト</string>
     <string name="quest_abort_message">このミッションを中断します。よろしいですか?　パーティの全員が中断になり、すべての進行状況は失われます。クエストの巻物はクエスト所有者の手に戻ります。</string>
     <string name="reloading_content">再度読み込みます</string>
     <string name="thousand_abbrev">k</string>
