@@ -834,4 +834,16 @@
     <string name="leave_keep_tasks">나가기 &amp; 과제 킵하기</string>
     <string name="challenge_leave_description">이 도전의 과제들을 본인의 목록에 그대로 남기셔도 되고 나가면서 지우셔도 됩니다.</string>
     <string name="subscribe_listitem5_description">매일 두 배의 아이템 획득 제한으로 해비티카에서 더 많은 아이템을 발견하세요.</string>
+    <string name="transfer_ownership">파티장 권한 이양</string>
+    <string name="transfer_ownership_confirm">파티장 권한을 이양하시겠습니까\?</string>
+    <string name="transferred_ownership">%s 에게 파티장 권한이 이양되었습니다</string>
+    <string name="transfer_ownership_confirm_message">%s가 새로운 파티장이 됩니다</string>
+    <string name="send_message">메시지 보내기</string>
+    <string name="remove_member">회원 퇴출</string>
+    <string name="remove">삭제</string>
+    <string name="inbox_messages_title_nosender">%d 메시지를 받았습니다</string>
+    <string name="inbox_messages_title">%s 에게서 %d 메시지를 받았습니다</string>
+    <string name="sent_card">%s 을(를) 보냈습니다</string>
+    <string name="app_theme">어플 테마</string>
+    <string name="delete_reminder">알림 삭제하기</string>
 </resources>
