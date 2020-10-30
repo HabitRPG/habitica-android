@@ -15,5 +15,5 @@
     <string name="tutorial_skills">Fähigkeiten erlauben es Dir, mächtige Effekte auszulösen! Tippe auf eine Fähigkeit, um sie zu benutzen. Dies wird Dich Mana (der blaue Balken) kosten, das Du verdienst, indem Du Dich jeden Tag einloggst und reale Aufgaben abschließt. Für mehr Infos schaue im Menü in die FAQ!</string>
     <string name="tutorial_party">Hier können du und deine Freunde einander motivieren und mit euren Aufgaben Monster bekämpfen!</string>
     <string name="tutorial_tavern">Willkommen in der Taverne, einem öffentlichen Chat für alle Altersklassen! Hier kannst Du Dich über Produktivität unterhalten und Fragen stellen. Viel Spaß!</string>
-    <string name="tutorial_stats">Tippe auf den grauen Button, um mehrere Punkte auf einmal zuzuweisen, oder tippe auf die Pfeile, um die Punkte einzeln zu verteilen.</string>
+    <string name="tutorial_stats">Tippe auf den grauen Button, um mehrere Punkte auf einmal zuzuweisen, oder tippe auf die Pfeile, um die Punkte einzeln zuzuweisen.</string>
 </resources>
