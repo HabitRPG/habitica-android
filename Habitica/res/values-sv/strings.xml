@@ -536,9 +536,9 @@
     <string name="description_optional">Beskrivning (valfri)</string>
     <string name="new_challenge_title">Ny titel för utmaning</string>
     <string name="ownership">Ägarskap</string>
-    <string name="inn">Stuga</string>
+    <string name="inn">Värdshus</string>
     <string name="system">System</string>
-    <string name="start_quest">Starta ett nytt quest</string>
+    <string name="start_quest">Starta ett nytt Uppdrag</string>
     <string name="leave_party">Lämna Sällskap</string>
     <string name="party_description">Sällskap-beskrivning</string>
     <string name="abort_confirmation">Är du säker på att du vill avbryta detta uppdrag? Det kommer avbrytas för alla i ditt sällskap och alla framsteg kommer att gå förlorade. Uppdragsskriftrullen kommer att bli returneras till ägaren.</string>
@@ -580,8 +580,8 @@
     <string name="reset_account">Återställ Konto</string>
     <string name="delete_account">Radera Konto</string>
     <string name="delete_account_description">Är du säker? Detta kommer radera ditt konto för alltid och det kan aldrig bli återställt! Du kommer  at behöva registrera ett nytt konto för att använda Habitica igen. Diamanter du har kvar eller spenderat kommer inte att återbetalas. Om du verkligen är säker, skriv in ditt lösenord i textrutan nedan.</string>
-    <string name="reset_account_confirmation">återställ mitt konto</string>
-    <string name="delete_account_confirmation">radera mitt konto</string>
+    <string name="reset_account_confirmation">Återställ mitt Konto</string>
+    <string name="delete_account_confirmation">Radera mitt Konto</string>
     <string name="danger_zone">Farozon</string>
     <string name="nevermind">Glöm det</string>
     <string name="resetting_account">Återställer Konto</string>
@@ -801,4 +801,7 @@
     <string name="hatch_pet">Kläck Husdjur</string>
     <string name="hatch_pet_again">Kläck Husdjur igen</string>
     <string name="purchase_equipment_title">Köp Utrustning</string>
+    <string name="gift_gems">Ge Juveler</string>
+    <string name="weekly">Veckolig</string>
+    <string name="two_handed">Två-Handar</string>
 </resources>
