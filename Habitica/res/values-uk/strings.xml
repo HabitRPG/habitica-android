@@ -571,4 +571,59 @@
     <string name="leave_guild">Покинути гільдію</string>
     <string name="trillion_abbrev">трлн</string>
     <string name="report_violation">Повідомити про порушення</string>
+    <string name="habitica_questions">Запитання про Habitica</string>
+    <string name="support">Підтримка</string>
+    <string name="update_app">Обновіть додаток</string>
+    <string name="manual_sync_restart">Ручна синхронізація і перевентаження</string>
+    <string name="clear_cache_description">Щоб очистити кеш, відкрийте налаштування свого телефону. Зайдіть в Сховище &gt; Додатки &gt; Habitica, потім клікніть Очистити кеш.</string>
+    <string name="clear_cache">Очистити свій кеш</string>
+    <string name="mystic_hourglasses">Містичний пісочний годинник</string>
+    <string name="subscriber_currency">Валюта підписників</string>
+    <string name="game_mechanics">Механіки гри</string>
+    <string name="common_questions">Поширені запитання</string>
+    <string name="currency">Валюта</string>
+    <string name="premium_currency">Преміальна валюта</string>
+    <string name="standard">Стандарт</string>
+    <string name="stat_allocation">Розподіл характеристик</string>
+    <string name="mana_points">Очки мани</string>
+    <string name="experience_points">Очки досвіду</string>
+    <string name="health_description">Це відображає життя вашого персонажа. Пропущена Щоденка або негативна звичка **зменшує ваш HP**.
+\n
+\n**Відновлюйте HP **, піднімаючи рівень, використовуючи Зілля для здоров’я або класову навичку з цілющою здатністю.
+\n
+\nЯкщо ваш **HP досягне 0**, ви втратите рівень, все золото та один елемент спорядження. Втрачене спорядження можна придбати повторно.</string>
+    <string name="health_points">Очки здоров\'я</string>
+    <string name="stats_currency">Статистика та валюта</string>
+    <string name="how_best_habitica">Не впевнені як найкраще застосовувати Habitica\?</string>
+    <string name="overview">Огляд</string>
+    <string name="send_bug_prompt">Надішліть нам опис баги і ми зв\'яжемось з вами найближчим часом!</string>
+    <string name="support_bug_title">Ми постійно намагаємось зробити наші додатки кращими після відгуків гравців, однак часом з\'являются декілька багів…</string>
+    <string name="lets_go">Почнімо</string>
+    <string name="bugs_fixes_description">Щось пішло не так\? Перевірте відповіді тут або зв\'яжіться з нами, щоб ми змогли допомогти.</string>
+    <string name="bugs_fixes">Баги та фікси</string>
+    <string name="suggestions_feedback">Пропозиції та відгуки</string>
+    <string name="get_help">Отримати допомогу</string>
+    <string name="contact_us">Зв\'язатися з нами</string>
+    <string name="suggestions_feedback_description">Маєте думки як покращити деякі функції або що нового можна додати\? Розкажіть нам!</string>
+    <string name="using_habitica_description">Ми пояснимо основи і відповімо на поширені запитання, щоб пришвидшити тебе</string>
+    <string name="using_habitica">Використання Habitica</string>
+    <string name="quest_completed">Квест завершено!</string>
+    <string name="not_participating">Ви не приймаєте участь</string>
+    <string name="level_unabbreviated">Рівень %d</string>
+    <string name="unlock_previous_short">Завершити Квест %d</string>
+    <string name="unlock_level">Розблокуйте досягнувши %d рівня</string>
+    <string name="unlock_previous">Розблокуйте завершивши Квест %d</string>
+    <string name="locked">Заблоковано</string>
+    <string name="skill_unlocks_at">Навик розблоковується на %d рівні</string>
+    <string name="preference_email_onboarding">Настанова щодо налаштування акаунту Habitica</string>
+    <string name="preference_email_kicked_group">Виключено з групи</string>
+    <string name="preference_email_subscription_reminder">Нагадування про підписку</string>
+    <string name="pref_emails_checkbox">Отримувати cповіщення через E-mail</string>
+    <string name="emails">E-mail cповіщення</string>
+    <string name="go_shopping">Сходити за покупками</string>
+    <string name="purchase_from_timetravel_shop">Ви можете придбати це налаштування в магазині Мандрівників у часі</string>
+    <string name="learn_more">Дізнатись більше</string>
+    <string name="g1g1_duration">З 17 грудня по 6 січня</string>
+    <string name="limited_event">Обмежений захід</string>
+    <string name="g1g1_info_3">Обмеження</string>
 </resources>
