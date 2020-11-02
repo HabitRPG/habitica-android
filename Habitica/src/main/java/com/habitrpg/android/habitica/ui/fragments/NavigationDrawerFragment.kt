@@ -474,11 +474,7 @@ class NavigationDrawerFragment : DialogFragment() {
 
             val bg = binding?.notificationsBadge?.background as? GradientDrawable
             bg?.color = ColorStateList.valueOf(color)
-            binding?.notificationsBadge?.setTextColor(if (allSeen) {
-                ContextCompat.getColor(it, R.color.gray_10)
-            } else {
-                ContextCompat.getColor(it, R.color.white)
-            })
+            binding?.notificationsBadge?.setTextColor(ContextCompat.getColor(it, R.color.white))
         }
     }
 

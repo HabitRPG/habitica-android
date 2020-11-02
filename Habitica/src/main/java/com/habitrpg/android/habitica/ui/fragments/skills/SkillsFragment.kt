@@ -78,9 +78,17 @@ class SkillsFragment : BaseMainFragment<FragmentSkillsBinding>() {
         adapter?.level = this.user?.stats?.lvl ?: 0
         adapter?.specialItems = this.user?.items?.special
         user?.let { user ->
-            Observable.concat(userRepository.getSkills(user).toObservable().flatMap { Observable.fromIterable(it) },
-                    userRepository.getSpecialItems(user).toObservable().flatMap { Observable.fromIterable(it) })
-                    .toList()
+            Flowable.combineLatest(userRepository.getSkills(user),
+                    userRepository.getSpecialItems(user), { skills, items ->
+                val allEntries = mutableListOf<Skill>()
+                for (skill in skills) {
+                    allEntries.add(skill)
+                }
+                for (item in items) {
+                    allEntries.add(item)
+                }
+                return@combineLatest allEntries
+            })
                     .subscribe({ skills -> adapter?.setSkillList(skills) }, RxErrorHandler.handleEmptyError())
         }
     }

@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.models.social
 
 import com.google.gson.annotations.SerializedName
+import com.habitrpg.android.habitica.models.BaseObject
 import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.user.User
 
@@ -8,7 +9,14 @@ import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
-open class Group : RealmObject() {
+open class Group : RealmObject(), BaseObject {
+
+    override val realmClass: Class<Group>
+        get() = Group::class.java
+    override val primaryIdentifier: String?
+        get() = id
+    override val primaryIdentifierName: String
+        get() = "id"
 
     @SerializedName("_id")
     @PrimaryKey

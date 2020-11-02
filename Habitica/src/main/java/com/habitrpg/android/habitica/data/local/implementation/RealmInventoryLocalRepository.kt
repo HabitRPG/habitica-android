@@ -205,8 +205,9 @@ class RealmInventoryLocalRepository(realm: Realm) : RealmContentLocalRepository(
     }
 
     override fun changeOwnedCount(item: OwnedItem, amountToAdd: Int?) {
+        val liveItem = getLiveObject(item) ?: return
         amountToAdd?.let { amount ->
-            executeTransaction { item.numberOwned = item.numberOwned + amount }
+            executeTransaction { liveItem.numberOwned = liveItem.numberOwned + amount }
         }
     }
 

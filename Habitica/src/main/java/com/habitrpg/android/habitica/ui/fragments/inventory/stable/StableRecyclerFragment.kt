@@ -86,10 +86,15 @@ class StableRecyclerFragment : BaseFragment<FragmentRecyclerviewBinding>() {
         adapter = binding?.recyclerView?.adapter as? StableRecyclerAdapter
         if (adapter == null) {
             adapter = StableRecyclerAdapter()
-            adapter?.animalIngredientsRetriever = {
-                val egg = inventoryRepository.getItems(Egg::class.java, arrayOf(it.animal)).firstElement().blockingGet().firstOrNull()
-                val potion = inventoryRepository.getItems(HatchingPotion::class.java, arrayOf(it.color)).firstElement().blockingGet().firstOrNull()
-                Pair(egg as? Egg, potion as? HatchingPotion)
+            adapter?.animalIngredientsRetriever = { animal, callback ->
+                Maybe.zip(
+                        inventoryRepository.getItems(Egg::class.java, arrayOf(animal.animal)).firstElement(),
+                        inventoryRepository.getItems(HatchingPotion::class.java, arrayOf(animal.color)).firstElement(), { eggs, potions ->
+                    Pair(eggs.first() as? Egg, potions.first() as? HatchingPotion)
+                }
+                ).subscribe({
+                    callback(it)
+                }, RxErrorHandler.handleEmptyError())
             }
             adapter?.itemType = this.itemType
             adapter?.shopSpriteSuffix = configManager.shopSpriteSuffix()

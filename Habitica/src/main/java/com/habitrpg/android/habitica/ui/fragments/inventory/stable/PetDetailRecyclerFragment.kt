@@ -22,6 +22,8 @@ import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemRecyclerFragment
 import com.habitrpg.android.habitica.ui.helpers.MarginDecoration
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
+import io.reactivex.rxjava3.core.Flowable
+import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.kotlin.Flowables
 import org.greenrobot.eventbus.Subscribe
 import javax.inject.Inject
@@ -86,10 +88,15 @@ class PetDetailRecyclerFragment : BaseMainFragment<FragmentRecyclerviewBinding>(
         }
         binding?.recyclerView?.layoutManager = layoutManager
         binding?.recyclerView?.addItemDecoration(MarginDecoration(getActivity()))
-        adapter.animalIngredientsRetriever = {
-            val egg = inventoryRepository.getItems(Egg::class.java, arrayOf(it.animal)).firstElement().blockingGet().firstOrNull()
-            val potion = inventoryRepository.getItems(HatchingPotion::class.java, arrayOf(it.color)).firstElement().blockingGet().firstOrNull()
-            Pair(egg as? Egg, potion as? HatchingPotion)
+        adapter.animalIngredientsRetriever = { animal, callback ->
+            Maybe.zip(
+                    inventoryRepository.getItems(Egg::class.java, arrayOf(animal.animal)).firstElement(),
+                    inventoryRepository.getItems(HatchingPotion::class.java, arrayOf(animal.color)).firstElement(), { eggs, potions ->
+                Pair(eggs.first() as? Egg, potions.first() as? HatchingPotion)
+            }
+            ).subscribe({
+                callback(it)
+            }, RxErrorHandler.handleEmptyError())
         }
         binding?.recyclerView?.adapter = adapter
         binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()

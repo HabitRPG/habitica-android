@@ -158,7 +158,7 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int): Recycle
             titleTextView?.text = drawerItem.text
 
             if (isSelected) {
-                itemView.setBackgroundColor(ContextCompat.getColor(itemView.context, R.color.offset_background))
+                itemView.setBackgroundColor(ContextCompat.getColor(itemView.context, R.color.content_background_offset))
                 itemView.background.alpha = 69
                 titleTextView?.setTextColor(tintColor)
             } else {

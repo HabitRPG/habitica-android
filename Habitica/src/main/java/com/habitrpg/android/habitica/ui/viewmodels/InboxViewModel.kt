@@ -118,10 +118,10 @@ private class MessagesDataSource(val socialRepository: SocialRepository, var rec
                         if (it.isEmpty()) {
                             if (recipientID?.isNotBlank() != true) { return@flatMapPublisher Flowable.just(it) }
                             socialRepository.retrieveInboxMessages(recipientID ?: "", 0)
-                                    .doOnNext {
-                                        messages -> if (messages.size < 10) {
-                                        lastFetchWasEnd = true
-                                    }
+                                    .doOnNext { messages ->
+                                        if (messages.size < 10) {
+                                            lastFetchWasEnd = true
+                                        }
                                     }
                         } else {
                             Flowable.just(it)

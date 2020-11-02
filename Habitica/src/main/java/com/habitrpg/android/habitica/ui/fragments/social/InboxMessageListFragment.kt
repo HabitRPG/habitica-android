@@ -77,7 +77,13 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
         layoutManager.reverseLayout = true
         layoutManager.stackFromEnd = false
         binding?.recyclerView?.layoutManager = layoutManager
-        compositeSubscription.add(apiClient.getMember(replyToUserUUID!!).subscribe( { member ->
+        val observable = if (replyToUserUUID?.isNotBlank() == true) {
+            apiClient.getMember(replyToUserUUID!!)
+        } else {
+            apiClient.getMemberWithUsername(chatRoomUser ?: "")
+        }
+        compositeSubscription.add(observable.subscribe( { member ->
+            setReceivingUser(member.username, member.id)
             chatAdapter = InboxAdapter(user, member)
             viewModel?.messages?.observe(this.viewLifecycleOwner, { chatAdapter?.submitList(it) })
 
@@ -193,7 +199,7 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
         }
     }
 
-    private fun setReceivingUser(chatRoomUser: String?, replyToUserUUID: String) {
+    private fun setReceivingUser(chatRoomUser: String?, replyToUserUUID: String?) {
         this.chatRoomUser = chatRoomUser
         this.replyToUserUUID = replyToUserUUID
         activity?.title = chatRoomUser

@@ -173,10 +173,17 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
         if (chatMessage.userLikesMessage(userId) == liked) {
             return
         }
+        val liveMessage = getLiveObject(chatMessage)
         if (liked) {
-            executeTransaction { chatMessage.likes?.add(ChatMessageLike(userId, chatMessage.id)) }
+            executeTransaction {
+                liveMessage?.likes?.add(ChatMessageLike(userId, chatMessage.id))
+            }
         } else {
-            chatMessage.likes?.filter { userId == it.id }?.forEach { like -> executeTransaction { like.deleteFromRealm() } }
+            liveMessage?.likes?.filter { userId == it.id }?.forEach { like ->
+                executeTransaction(Realm.Transaction {
+                    like.deleteFromRealm()
+                })
+            }
         }
     }
 
@@ -212,8 +219,10 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
     }
 
     override fun setQuestActivity(party: Group?, active: Boolean) {
+        if (party == null) return
+        val liveParty = getLiveObject(party)
         executeTransaction {
-            party?.quest?.active = active
+            liveParty?.quest?.active = active
         }
     }
 

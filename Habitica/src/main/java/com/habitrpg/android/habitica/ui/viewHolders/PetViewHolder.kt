@@ -19,7 +19,7 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.subjects.PublishSubject
 import org.greenrobot.eventbus.EventBus
 
-class PetViewHolder(parent: ViewGroup, private val equipEvents: PublishSubject<String>, private val animalIngredientsRetriever: ((Animal) -> Pair<Egg?, HatchingPotion?>)?) : androidx.recyclerview.widget.RecyclerView.ViewHolder(parent.inflate(R.layout.pet_detail_item)), View.OnClickListener {
+class PetViewHolder(parent: ViewGroup, private val equipEvents: PublishSubject<String>, private val animalIngredientsRetriever: ((Animal, ((Pair<Egg?, HatchingPotion?>) -> Unit)) -> Unit)?) : androidx.recyclerview.widget.RecyclerView.ViewHolder(parent.inflate(R.layout.pet_detail_item)), View.OnClickListener {
     private var hasMount: Boolean = false
     private var hasUnlockedPotion: Boolean = false
     private var hasUnlockedEgg: Boolean = false
@@ -147,16 +147,17 @@ class PetViewHolder(parent: ViewGroup, private val equipEvents: PublishSubject<S
         val context = itemView.context
         val dialog = PetSuggestHatchDialog(context)
         animal?.let {
-            val ingredients = animalIngredientsRetriever?.invoke(it)
-            dialog.configure(it,
-                    ingredients?.first,
-                    ingredients?.second,
-                    eggCount,
-                    potionCount,
-                    hasUnlockedEgg,
-                    hasUnlockedPotion,
-                    hasMount)
+            animalIngredientsRetriever?.invoke(it) { ingredients ->
+                dialog.configure(it,
+                        ingredients.first,
+                        ingredients.second,
+                        eggCount,
+                        potionCount,
+                        hasUnlockedEgg,
+                        hasUnlockedPotion,
+                        hasMount)
+                dialog.show()
+            }
         }
-        dialog.show()
     }
 }

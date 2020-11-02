@@ -31,7 +31,7 @@ class PetDetailRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapt
         return equipEvents.toFlowable(BackpressureStrategy.DROP)
     }
 
-    var animalIngredientsRetriever: ((Animal) -> Pair<Egg?, HatchingPotion?>)? = null
+    var animalIngredientsRetriever: ((Animal, ((Pair<Egg?, HatchingPotion?>) -> Unit)) -> Unit)? = null
 
     private fun canRaiseToMount(pet: Pet): Boolean {
         for (mount in existingMounts ?: emptyList<Mount>()) {

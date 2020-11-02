@@ -27,7 +27,7 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var shopSpriteSuffix: String? = null
     private var eggs: Map<String, Egg> = mapOf()
-    var animalIngredientsRetriever: ((Animal) -> Pair<Egg?, HatchingPotion?>)? = null
+    var animalIngredientsRetriever: ((Animal, ((Pair<Egg?, HatchingPotion?>) -> Unit)) -> Unit)? = null
     var itemType: String? = null
     private val equipEvents = PublishSubject.create<String>()
     var ownedEggs: Map<String, OwnedItem>? = null

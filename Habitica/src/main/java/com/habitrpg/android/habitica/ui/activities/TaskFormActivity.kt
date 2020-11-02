@@ -238,10 +238,6 @@ class TaskFormActivity : BaseActivity() {
         when (item.itemId) {
             R.id.action_save -> saveTask()
             R.id.action_delete -> deleteTask()
-            android.R.id.home -> {
-                onBackPressed()
-                return true
-            }
         }
         return super.onOptionsItemSelected(item)
     }
