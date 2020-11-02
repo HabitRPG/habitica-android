@@ -250,8 +250,6 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         navigationController.addOnDestinationChangedListener { _, destination, arguments ->
             updateToolbarTitle(destination, arguments)
         }
-        MainNavigationController.setup(navigationController)
-
         setupNotifications()
         setupBottomnavigationLayoutListener()
 
@@ -368,6 +366,8 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
         val navigationController = findNavController(R.id.nav_host_fragment)
         navigationController.currentDestination?.let { updateToolbarTitle(it, null) }
+
+        MainNavigationController.setup(navigationController)
     }
 
     override fun onPause() {
