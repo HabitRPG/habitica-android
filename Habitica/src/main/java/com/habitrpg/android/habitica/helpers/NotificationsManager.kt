@@ -4,10 +4,7 @@ import android.content.Context
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.ApiClient
-import com.habitrpg.android.habitica.events.ShowAchievementDialog
-import com.habitrpg.android.habitica.events.ShowCheckinDialog
-import com.habitrpg.android.habitica.events.ShowFirstDropDialog
-import com.habitrpg.android.habitica.events.ShowSnackbarEvent
+import com.habitrpg.android.habitica.events.*
 import com.habitrpg.android.habitica.models.Notification
 import com.habitrpg.android.habitica.models.notifications.AchievementData
 import com.habitrpg.android.habitica.models.notifications.FirstDropData
@@ -73,6 +70,7 @@ class NotificationsManager (private val context: Context) {
                         Notification.Type.ACHIEVEMENT_GUILD_JOINED.type -> displayAchievementNotification(it)
                         Notification.Type.ACHIEVEMENT_CHALLENGE_JOINED.type -> displayAchievementNotification(it)
                         Notification.Type.ACHIEVEMENT_INVITED_FRIEND.type -> displayAchievementNotification(it)
+                        Notification.Type.WON_CHALLENGE.type -> displayWonChallengeNotificaiton(it)
                         Notification.Type.ACHIEVEMENT_GENERIC.type -> displayAchievementNotification(it, notifications.find { notif ->
                             notif.type == Notification.Type.ACHIEVEMENT_ONBOARDING_COMPLETE.type
                         } != null)
@@ -87,6 +85,11 @@ class NotificationsManager (private val context: Context) {
 
                 }
 
+        return true
+    }
+
+    private fun displayWonChallengeNotificaiton(notification: Notification): Any {
+        EventBus.getDefault().post(ShowWonChallengeDialog(notification.id))
         return true
     }
 

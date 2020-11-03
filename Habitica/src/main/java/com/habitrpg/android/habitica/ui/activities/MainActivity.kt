@@ -63,10 +63,7 @@ import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.SnackbarDisplayType
 import com.habitrpg.android.habitica.ui.views.ValueBar
-import com.habitrpg.android.habitica.ui.views.dialogs.AchievementDialog
-import com.habitrpg.android.habitica.ui.views.dialogs.FirstDropDialog
-import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
-import com.habitrpg.android.habitica.ui.views.dialogs.QuestCompletedDialog
+import com.habitrpg.android.habitica.ui.views.dialogs.*
 import com.habitrpg.android.habitica.ui.views.yesterdailies.YesterdailyDialog
 import com.habitrpg.android.habitica.userpicture.BitmapUtils
 import com.habitrpg.android.habitica.widget.AvatarStatsWidgetProvider
@@ -808,6 +805,19 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                     retrieveUser(true)
                     val dialog = FirstDropDialog(this)
                     dialog.configure(event.egg, event.hatchingPotion)
+                    dialog.enqueue()
+                    apiClient.readNotification(event.id)
+                            .subscribe({ }, RxErrorHandler.handleEmptyError())
+                }, RxErrorHandler.handleEmptyError()))
+    }
+
+    @Subscribe
+    fun showWonAchievementDialog(event: ShowWonChallengeDialog) {
+        compositeSubscription.add(Completable.complete()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    retrieveUser(true)
+                    val dialog = WonChallengeDialog(this)
                     dialog.enqueue()
                     apiClient.readNotification(event.id)
                             .subscribe({ }, RxErrorHandler.handleEmptyError())

@@ -1121,4 +1121,9 @@
     <string name="open_website">Open Website</string>
     <string name="action_end_challenge">End Challenge</string>
     <string name="end_challenge_description">To end a Challenge, log in to the Habitica website then tap the “End Challenge” button on the right of the Challenge screen.</string>
+    <string name="hurray">Hurray!</string>
+    <string name="you_won_challenge">You won a Challenge</string>
+    <string name="congratulations">Congratulations!</string>
+    <string name="won_achievement_description">%s selected you as the winner! Your win has been recorded in your Achievements.</string>
+    <string name="won_achievement_description_noname">You were selected as the winner! Your win has been recorded in your Achievements.</string>
 </resources>
