@@ -156,7 +156,6 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
     private var launchTrace: com.google.firebase.perf.metrics.Trace? = null
 
-    @SuppressLint("ObsoleteSdkInt")
     public override fun onCreate(savedInstanceState: Bundle?) {
         try {
             launchTrace = FirebasePerformance.getInstance().newTrace("MainActivityLaunch")
@@ -182,9 +181,9 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                     this@MainActivity.user = newUser
                     this@MainActivity.setUserData()
                 }, RxErrorHandler.handleEmptyError()))
-        compositeSubscription.add(userRepository.getUserQuestStatus().subscribeWithErrorHandler(Consumer {
+        compositeSubscription.add(userRepository.getUserQuestStatus().subscribeWithErrorHandler {
             userQuestStatus = it
-        }))
+        })
 
         val viewModel = ViewModelProvider(this).get(NotificationsViewModel::class.java)
         notificationsViewModel = viewModel
@@ -540,8 +539,8 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                 else -> 0.0
             }
             compositeSubscription.add(notifyUserUseCase.observable(NotifyUserUseCase.RequestValues(this, snackbarContainer,
-                    user, data.experienceDelta, data.healthDelta, data.goldDelta, data.manaDelta, damageValue, data.hasLeveledUp))
-                    .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+                    user, data.experienceDelta, data.healthDelta, data.goldDelta, data.manaDelta, damageValue, data.hasLeveledUp, data.level))
+                    .subscribe({ }, RxErrorHandler.handleEmptyError()))
         }
 
         val showItemsFound = when (userQuestStatus) {
@@ -549,7 +548,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
             else -> false
         }
         compositeSubscription.add(displayItemDropUseCase.observable(DisplayItemDropUseCase.RequestValues(data, this, snackbarContainer, showItemsFound))
-                .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+                .subscribe({ }, RxErrorHandler.handleEmptyError()))
     }
 
 

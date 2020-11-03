@@ -46,7 +46,7 @@ class WorldStateSerialization: JsonDeserializer<WorldState> {
             }
         }
 
-        if (json?.asJsonObject?.has("currentEvent") == true) {
+        if (json?.asJsonObject?.has("currentEvent") == true && json.asJsonObject?.get("currentEvent")?.isJsonObject == true) {
             val event = json.asJsonObject?.getAsJsonObject("currentEvent")
             if (event != null) {
                 state.currentEventKey = event.getAsString("event")

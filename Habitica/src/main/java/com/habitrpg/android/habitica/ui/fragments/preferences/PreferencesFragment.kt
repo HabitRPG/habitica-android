@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments.preferences
 
 import android.annotation.SuppressLint
-import android.app.ProgressDialog
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Configuration
@@ -17,6 +16,7 @@ import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.ContentRepository
+import com.habitrpg.android.habitica.events.ShowSnackbarEvent
 import com.habitrpg.android.habitica.helpers.*
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
 import com.habitrpg.android.habitica.models.user.User
@@ -25,6 +25,8 @@ import com.habitrpg.android.habitica.ui.activities.ClassSelectionActivity
 import com.habitrpg.android.habitica.ui.activities.FixCharacterValuesActivity
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.activities.PrefsActivity
+import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
+import org.greenrobot.eventbus.EventBus
 import java.util.*
 import javax.inject.Inject
 
@@ -126,18 +128,12 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                 return true
             }
             "reload_content" -> {
-                @Suppress("DEPRECATION")
-                val dialog = ProgressDialog.show(context, context?.getString(R.string.reloading_content), null, true)
+                val event = ShowSnackbarEvent()
+                event.text = context?.getString(R.string.reloading_content)
+                event.type = HabiticaSnackbar.SnackbarDisplayType.NORMAL
+                EventBus.getDefault().post(event)
                 contentRepository.retrieveContent(context,true).subscribe({
-                    if (dialog.isShowing) {
-                        dialog.dismiss()
-                    }
-                }) { throwable ->
-                    if (dialog.isShowing) {
-                        dialog.dismiss()
-                    }
-                    RxErrorHandler.reportError(throwable)
-                }
+                }, RxErrorHandler.handleEmptyError())
             }
             "fixCharacterValues" -> {
                 val intent = Intent(activity, FixCharacterValuesActivity::class.java)
@@ -148,7 +144,6 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
     }
 
 
-    @SuppressLint("ObsoleteSdkInt")
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
         when (key) {
             "use_reminder" -> {
@@ -190,27 +185,21 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
 
                 Locale.setDefault(languageHelper.locale)
                 val configuration = Configuration()
-                if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.JELLY_BEAN) {
-                    @Suppress("Deprecation")
-                    configuration.locale = languageHelper.locale
-                } else {
-                    configuration.setLocale(languageHelper.locale)
-                }
+                configuration.setLocale(languageHelper.locale)
                 @Suppress("DEPRECATION")
                 activity?.resources?.updateConfiguration(configuration, activity?.resources?.displayMetrics)
+
+                if (user?.preferences?.language == languageHelper.languageCode) {
+                    return
+                }
+
                 userRepository.updateLanguage(user, languageHelper.languageCode ?: "en")
                         .flatMap { contentRepository.retrieveContent(context,true) }
                         .subscribe({ }, RxErrorHandler.handleEmptyError())
 
-                if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) {
-                    val intent = Intent(activity, MainActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                    startActivity(intent)
-                } else {
-                    val intent = Intent(activity, MainActivity::class.java)
-                    this.startActivity(intent)
-                    activity?.finishAffinity()
-                }
+                val intent = Intent(activity, MainActivity::class.java)
+                this.startActivity(intent)
+                activity?.finishAffinity()
             }
             "audioTheme" -> {
                 val newAudioTheme = sharedPreferences.getString(key, "off")

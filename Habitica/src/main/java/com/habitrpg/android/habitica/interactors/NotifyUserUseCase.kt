@@ -38,7 +38,7 @@ constructor(threadExecutor: ThreadExecutor, postExecutionThread: PostExecutionTh
             val stats = requestValues.user.stats
 
             if (requestValues.hasLeveledUp == true) {
-                return@defer levelUpUseCase.observable(LevelUpUseCase.RequestValues(requestValues.user, requestValues.context))
+                return@defer levelUpUseCase.observable(LevelUpUseCase.RequestValues(requestValues.user, requestValues.level, requestValues.context))
                         .flatMap { userRepository.retrieveUser(true) }
                         .map { it.stats }
             } else {
@@ -53,7 +53,7 @@ constructor(threadExecutor: ThreadExecutor, postExecutionThread: PostExecutionTh
         }
     }
 
-    class RequestValues( val context: AppCompatActivity, val snackbarTargetView: ViewGroup, val user: User?, val xp: Double?, val hp: Double?, val gold: Double?, val mp: Double?, val questDamage: Double?, val hasLeveledUp: Boolean?) : UseCase.RequestValues
+    class RequestValues( val context: AppCompatActivity, val snackbarTargetView: ViewGroup, val user: User?, val xp: Double?, val hp: Double?, val gold: Double?, val mp: Double?, val questDamage: Double?, val hasLeveledUp: Boolean?, val level: Long?) : UseCase.RequestValues
 
     companion object {
 

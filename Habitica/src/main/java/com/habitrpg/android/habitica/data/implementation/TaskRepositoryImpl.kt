@@ -16,7 +16,6 @@ import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Single
-import io.realm.Realm
 import io.realm.RealmResults
 import java.text.SimpleDateFormat
 import java.util.*
@@ -73,6 +72,7 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
             result.manaDelta = localData.mp - (stats?.mp ?: 0.0)
             result.goldDelta = localData.gp - (stats?.gp ?: 0.0)
             result.hasLeveledUp = localData.lvl > stats?.lvl ?: 0
+            result.level = localData.lvl
             result.questDamage = localData._tmp?.quest?.progressDelta
             result.questItemsFound = localData._tmp?.quest?.collection
             result.drop = localData._tmp?.drop
@@ -106,6 +106,7 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
                     result.manaDelta = res.mp - (stats?.mp ?: 0.0)
                     result.goldDelta = res.gp - (stats?.gp ?: 0.0)
                     result.hasLeveledUp = res.lvl > stats?.lvl ?: 0
+                    result.level = res.lvl
                     result.questDamage = res._tmp?.quest?.progressDelta
                     result.questItemsFound = res._tmp?.quest?.collection
                     result.drop = res._tmp?.drop

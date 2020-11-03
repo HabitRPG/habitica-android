@@ -25,7 +25,7 @@ class SoundFileLoader(private val context: Context) {
             return cacheDir?.path
         }
 
-    @SuppressLint("SetWorldReadable", "ObsoleteSdkInt", "ReturnCount")
+    @SuppressLint("SetWorldReadable", "ReturnCount")
     fun download(files: List<SoundFile>): Single<List<SoundFile>> {
         return Observable.fromIterable(files)
                 .flatMap({ audioFile ->
@@ -51,22 +51,20 @@ class SoundFileLoader(private val context: Context) {
                             return@create
                         }
 
-                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
-                            try {
-                                val sink = file.sink().buffer()
-                                sink.writeAll(response.body!!.source())
-                                sink.flush()
-                                sink.close()
-                            } catch (io: IOException) {
-                                sub.onComplete()
-                                return@create
-                            }
-
-                            file.setReadable(true, false)
-                            audioFile.file = file
-                            sub.onNext(audioFile)
+                        try {
+                            val sink = file.sink().buffer()
+                            sink.writeAll(response.body!!.source())
+                            sink.flush()
+                            sink.close()
+                        } catch (io: IOException) {
                             sub.onComplete()
+                            return@create
                         }
+
+                        file.setReadable(true, false)
+                        audioFile.file = file
+                        sub.onNext(audioFile)
+                        sub.onComplete()
                     }
                     fileObservable.subscribeOn(Schedulers.io())
                 }, 5)
