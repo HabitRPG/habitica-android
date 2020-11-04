@@ -727,4 +727,23 @@
     <string name="current_hourclasses">Поточне число Містичних пісочних годинників</string>
     <string name="months_subscribed">Місяців підписки</string>
     <string name="current_bonuses">Поточні бонуси</string>
+    <string name="character_build_description">Кожен рівень приносить вам одне очко, яке ви присвоюєте атрибуту на ваш вибір. Ви можете зробити це вручну або дозволити грі вирішити за вас, використовуючи один із варіантів автоматичного розподілу.</string>
+    <string name="forgot_password_confirmation">Якщо у вашому профілі вказана вірна електронна пошта, то на неї було надіслано вказівки щодо встановлення нового пароля.</string>
+    <string name="fix_character_description">Якщо ви зіткнулися з багою або зробили помилку, яка несправедливо змінила вашого персонажа, ви можете вручну виправити ці значення тут.</string>
+    <string name="seasonal_closed_description">Великі Свята трапляються ближче до сонцестояння та рівнодення, тож навідуйтесь тоді, щоб знайти цікавий асортимент особливих сезонних предметів!</string>
+    <string name="timetravelers_closed_description">Заробляйте по одному Містичному Пісочному годиннику за кожні три місяці підписки поспіль, а потім використовуйте їх, щоб розблокувати обмежені предмети, домашніх улюбленців та скакунів з минулого… та майбутнього!</string>
+    <string name="pending">На розгляді</string>
+    <string name="leave_party_confirmation">Хочете ви зберегти чи видалити випробовування після виходу з гурту\?</string>
+    <string name="start_day">Розпочати мій день</string>
+    <string name="yesterdaililes_prompt">Відмітьте щоденки, які ви виконали вчора:</string>
+    <string name="welcome_back">З поверненням</string>
+    <string name="number_responded">%1$d/%2$d відповіли</string>
+    <string name="number_participants">%1$d учасників</string>
+    <string name="party_description">Опис гурту</string>
+    <string name="leave_party">Залишити Гурт</string>
+    <string name="start_quest">Почати новий квест</string>
+    <string name="inn">Готель</string>
+    <string name="ownership">Володіння</string>
+    <string name="new_challenge_title">Заголовок для нового випробування</string>
+    <string name="description_optional">Опис (опціонально)</string>
 </resources>
