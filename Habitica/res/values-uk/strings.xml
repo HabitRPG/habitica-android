@@ -746,4 +746,34 @@
     <string name="ownership">Володіння</string>
     <string name="new_challenge_title">Заголовок для нового випробування</string>
     <string name="description_optional">Опис (опціонально)</string>
+    <string name="confirm_delete_tag_title">Ви впевнені\?</string>
+    <string name="edit_tag_btn_edit">Редагувати</string>
+    <string name="chat_message_copied">Повідомлення скопійовано до буфера обміну</string>
+    <string name="gold_capitalilzed">Золото</string>
+    <string name="gold_plural">золото</string>
+    <string name="successful_purchase">Придбано %1$s</string>
+    <string name="create_account_short">створити акаунт</string>
+    <string name="login_incentive_short_count">%d входів в гру</string>
+    <string name="login_incentive_short">регулярне відвідування Habitica</string>
+    <string name="party_invite_short">Запросити друзів</string>
+    <string name="create_account">Розблокуйте, створивши акаунт</string>
+    <string name="login_incentive_count">Розблокуйте, навідавшись в Habitica %d разів.</string>
+    <string name="login_incentive">Розблокуйте, регулярно навідуючись в Habitica</string>
+    <string name="party_invite">Розблокуйте, запросивши друзів</string>
+    <string name="empty_inbox">У вас немає ніяких повідомлень. Ви можете надіслати користувачу нове повідомлення через публічний чат!</string>
+    <string name="seasonalShop">Сезонна крамниця</string>
+    <string name="timeTravelers">Мандрівники у часі</string>
+    <string name="market">Ринок</string>
+    <string name="confirm">Підтвердити</string>
+    <string name="change_class_equipment_warning">Увага: У вас більше не буде можливості купити спорядження для класу %s.</string>
+    <string name="change_class_confirmation">Ви точно хочете змінити свій клас\? Це буде коштувати 3 самоцвіти.</string>
+    <string name="open_in_store">Відкрити в Play Store</string>
+    <string name="share_raised">Я тільки-но отримав %1$s скакуна в #Habitica, виконуючи завдання з реального життя!</string>
+    <string name="share_hatched">Я тільки-но вивів улюбленця - %1$s %2$s в #Habitica, виконуючи завдання з реального життя!</string>
+    <string name="inn_description">"Потрібна перерва\? Завітайте до готелю Данила, щоб призупинити ігрові механіки в Habitica:
+\n
+\n • Пропущені щоденки не завдадуть вам шкоди
+\n  • Завдання не втратять серій і не змінять кольору
+\n  • Боси не завдадуть шкоди вашим пропущеним щоденкам
+\n  • Пошкодження від боса і предмети з квесту очікуватимуть на вас після виселення"</string>
 </resources>
