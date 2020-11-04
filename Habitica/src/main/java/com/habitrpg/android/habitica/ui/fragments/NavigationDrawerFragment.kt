@@ -467,7 +467,7 @@ class NavigationDrawerFragment : DialogFragment() {
     private fun setNotificationsSeen(allSeen: Boolean) {
         context?.let {
             val color = if (allSeen) {
-                ContextCompat.getColor(it, R.color.text_ternary)
+                ContextCompat.getColor(it, R.color.gray_200)
             } else {
                 it.getThemeColor(R.attr.colorAccent)
             }

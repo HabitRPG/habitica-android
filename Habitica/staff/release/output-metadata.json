@@ -1,19 +1,17 @@
 {
-  "version": 1,
+  "version": 2,
   "artifactType": {
     "type": "APK",
     "kind": "Directory"
   },
   "applicationId": "com.habitrpg.android.habitica",
-  "variantName": "staffRelease",
+  "variantName": "processStaffReleaseResources",
   "elements": [
     {
       "type": "SINGLE",
       "filters": [],
-      "properties": [],
-      "versionCode": 2581,
-      "versionName": "3.0.1",
-      "enabled": true,
+      "versionCode": 2626,
+      "versionName": "3.1",
       "outputFile": "Habitica-staff-release.apk"
     }
   ]

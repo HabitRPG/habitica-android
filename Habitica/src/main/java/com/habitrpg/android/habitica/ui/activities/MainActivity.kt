@@ -361,9 +361,11 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         launchTrace = null
 
         val navigationController = findNavController(R.id.nav_host_fragment)
-        navigationController.currentDestination?.let { updateToolbarTitle(it, null) }
-
         MainNavigationController.setup(navigationController)
+
+        if (binding.toolbarTitle.text?.isNotBlank() != true) {
+            navigationController.currentDestination?.let { updateToolbarTitle(it, null) }
+        }
     }
 
     override fun onPause() {
@@ -437,6 +439,11 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                 drawerIcon.setEnabled(user?.hasCompletedOnboarding == false)
             } else {
                 drawerIcon.setEnabled(false)
+            }
+
+            val navigationController = findNavController(R.id.nav_host_fragment)
+            if (binding.toolbarTitle.text?.isNotBlank() != true) {
+                navigationController.currentDestination?.let { updateToolbarTitle(it, null) }
             }
         }
     }

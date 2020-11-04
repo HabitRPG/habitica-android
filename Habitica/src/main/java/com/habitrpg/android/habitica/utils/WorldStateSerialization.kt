@@ -46,13 +46,17 @@ class WorldStateSerialization: JsonDeserializer<WorldState> {
             }
         }
 
-        if (json?.asJsonObject?.has("currentEvent") == true && json.asJsonObject?.get("currentEvent")?.isJsonObject == true) {
-            val event = json.asJsonObject?.getAsJsonObject("currentEvent")
-            if (event != null) {
-                state.currentEventKey = event.getAsString("event")
-                state.currentEventStartDate = context?.deserialize(event.get("start"), Date::class.java)
-                state.currentEventEndDate = context?.deserialize(event.get("end"), Date::class.java)
+        try {
+            if (json?.asJsonObject?.has("currentEvent") == true && json.asJsonObject?.get("currentEvent")?.isJsonObject == true) {
+                val event = json.asJsonObject?.getAsJsonObject("currentEvent")
+                if (event != null) {
+                    state.currentEventKey = event.getAsString("event")
+                    state.currentEventStartDate = context?.deserialize(event.get("start"), Date::class.java)
+                    state.currentEventEndDate = context?.deserialize(event.get("end"), Date::class.java)
+                }
             }
+        } catch (e: Exception) {
+
         }
 
         return state
