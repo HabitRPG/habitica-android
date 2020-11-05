@@ -22,7 +22,7 @@ interface UserLocalRepository : BaseLocalRepository {
 
     fun getUser(userID: String): Flowable<User>
 
-    fun saveUser(user: User)
+    fun saveUser(user: User, overrideExisting: Boolean = true)
 
     fun saveMessages(messages: List<ChatMessage>)
 

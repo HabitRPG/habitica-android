@@ -83,7 +83,7 @@ class FixCharacterValuesActivity: BaseActivity() {
             userInfo["stats.lvl"] = binding.levelEditText.getDoubleValue().toInt()
             userInfo["achievements.streak"] = binding.streakEditText.getDoubleValue().toInt()
             compositeSubscription.add(repository.updateUser(user, userInfo)
-                    .flatMap { repository.retrieveUser(false) }
+                    .flatMap { repository.retrieveUser(false, true, true) }
                     .subscribe({}, RxErrorHandler.handleEmptyError(), {
                 progressDialog.dismiss()
                 finish()

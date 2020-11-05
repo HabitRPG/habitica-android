@@ -189,8 +189,8 @@ class NavigationDrawerFragment : DialogFragment() {
             updateUser(it)
         }, RxErrorHandler.handleEmptyError()))
 
-        binding?.messagesButtonWrapper?.setOnClickListener { setSelection(R.id.inboxFragment) }
-        binding?.settingsButtonWrapper?.setOnClickListener { setSelection(R.id.prefsActivity) }
+        binding?.messagesButtonWrapper?.setOnClickListener { setSelection(R.id.inboxFragment, null, true, preventReselection = false) }
+        binding?.settingsButtonWrapper?.setOnClickListener { setSelection(R.id.prefsActivity, null, true, preventReselection = false) }
         binding?.notificationsButtonWrapper?.setOnClickListener { startNotificationsActivity() }
     }
 
@@ -361,9 +361,9 @@ class NavigationDrawerFragment : DialogFragment() {
         adapter.updateItems(items)
     }
 
-    fun setSelection(transitionId: Int?, bundle: Bundle? = null, openSelection: Boolean = true) {
+    fun setSelection(transitionId: Int?, bundle: Bundle? = null, openSelection: Boolean = true, preventReselection: Boolean = true) {
         closeDrawer()
-        if (adapter.selectedItem != null && adapter.selectedItem == transitionId) return
+        if (adapter.selectedItem != null && adapter.selectedItem == transitionId && preventReselection) return
         adapter.selectedItem = transitionId
 
         if (!openSelection) {

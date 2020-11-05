@@ -47,12 +47,12 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
             retrieveUser(withTasks, false)
 
     @Suppress("ReturnCount")
-    override fun retrieveUser(withTasks: Boolean, forced: Boolean): Flowable<User> {
+    override fun retrieveUser(withTasks: Boolean, forced: Boolean, overrideExisting: Boolean): Flowable<User> {
         // Only retrieve again after 3 minutes or it's forced.
         if (forced || this.lastSync == null || Date().time - (this.lastSync?.time ?: 0) > 180000) {
             lastSync = Date()
             return apiClient.retrieveUser(withTasks)
-                    .doOnNext { localRepository.saveUser(it) }
+                    .doOnNext { localRepository.saveUser(it, overrideExisting) }
                     .doOnNext { user ->
                         if (withTasks) {
                             val id = user.id
@@ -143,7 +143,7 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
                     copiedUser.purchased = unlockResponse.purchased
                     copiedUser.items = unlockResponse.items
                     copiedUser.balance = copiedUser.balance - (customization.price ?: 0) / 4.0
-                    localRepository.saveUser(copiedUser)
+                    localRepository.saveUser(copiedUser, false)
                 }
     }
 
@@ -163,7 +163,7 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
                     copiedUser.purchased = unlockResponse.purchased
                     copiedUser.items = unlockResponse.items
                     copiedUser.balance = copiedUser.balance - set.price / 4.0
-                    localRepository.saveUser(copiedUser)
+                    localRepository.saveUser(copiedUser, false)
                 }
     }
 
@@ -178,7 +178,7 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
 
     override fun reroll(): Flowable<User> {
         return apiClient.reroll().doOnNext {
-            localRepository.saveUser(it)
+            localRepository.saveUser(it, false)
         }
     }
 
@@ -369,7 +369,7 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
         copiedUser.needsCron = newUser.needsCron
         copiedUser.versionNumber = newUser.versionNumber
 
-        localRepository.saveUser(copiedUser)
+        localRepository.saveUser(copiedUser, false)
         return copiedUser
     }
 }

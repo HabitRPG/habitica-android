@@ -63,7 +63,7 @@ override fun getUser(userID: String): Flowable<User> {
                 .map { users -> users.first() })
     }
 
-    override fun saveUser(user: User) {
+    override fun saveUser(user: User, overrideExisting: Boolean) {
         if (realm.isClosed) return
         val oldUser = realm.where(User::class.java)
                 .equalTo("id", user.id)
@@ -74,7 +74,7 @@ override fun getUser(userID: String): Flowable<User> {
                     user.needsCron = false
                 }
             } else {
-                if (oldUser.versionNumber >= user.versionNumber) {
+                if (oldUser.versionNumber >= user.versionNumber && !overrideExisting) {
                     return
                 }
             }
