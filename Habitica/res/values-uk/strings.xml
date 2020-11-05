@@ -776,4 +776,18 @@
 \n  • Завдання не втратять серій і не змінять кольору
 \n  • Боси не завдадуть шкоди вашим пропущеним щоденкам
 \n  • Пошкодження від боса і предмети з квесту очікуватимуть на вас після виселення"</string>
+    <string name="avatar_hair_bangs"></string>
+    <string name="visit_habitica_website">Відвідайте сайт Habitica</string>
+    <string name="cancel_subscription_notgoogle_description">Більше не хочете бути підпсником\? Через обмеження мобільних платежів вам доведеться скасувати підписку через наш веб-сайт. Для цього натисніть кнопку нижче, увійдіть до свого облікового запису, натисність піктограми Користувач у верхньому правому куті, а потім перейдіть до Підписка. Куплені місяці підписки застосовуватимуться навіть після скасування підписки. Будемо сумувати за тобою!</string>
+    <string name="cancel_subscription_google_description">Більше не хочете бути підписником\? Ви можете скасувати підписку в розділі \"Мої програми\" магазину Google Play. Придбані місяці підписки застосовуватимуться навіть після закінчення підписки.</string>
+    <string name="cancel_subscription">Скасувати підписку</string>
+    <string name="due">З терміном</string>
+    <string name="active">Активний</string>
+    <string name="subscription">Підписка</string>
+    <string name="payment_method">Спосіб платежу</string>
+    <string name="subscription_hourglasses">+%d Містичних пісочних годинників</string>
+    <string name="subscribe12month_gemcap">Максимум 45 самоцвітів</string>
+    <string name="subscribe6month_gemcap">Максимум 35 самоцвітів</string>
+    <string name="subscribe3month_gemcap">Максимум 30 самоцвітів</string>
+    <string name="subscribe1month_gemcap">Максимум 25 самоцвітів</string>
 </resources>
