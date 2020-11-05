@@ -154,7 +154,8 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
 }
 
     override fun deleteMessage(id: String) {
-        getMessage(id).firstElement().subscribe { chatMessage -> executeTransaction { chatMessage.deleteFromRealm() } }
+        val chatMessage = realm.where(ChatMessage::class.java).equalTo("id", id).findFirst()
+        executeTransaction { chatMessage?.deleteFromRealm() }
     }
 
     override fun getGroupMembers(partyId: String): Flowable<RealmResults<Member>> {
