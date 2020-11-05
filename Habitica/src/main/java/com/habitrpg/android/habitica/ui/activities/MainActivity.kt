@@ -256,8 +256,16 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         }
     }
 
+    override fun setTitle(title: CharSequence?) {
+        binding.toolbarTitle.text = title
+    }
+
+    override fun setTitle(titleId: Int) {
+        binding.toolbarTitle.text = getString(titleId)
+    }
+
     private fun updateToolbarTitle(destination: NavDestination, arguments: Bundle?) {
-        binding.toolbarTitle.text = if (destination.id == R.id.promoInfoFragment) {
+        title = if (destination.id == R.id.promoInfoFragment) {
             ""
         } else if (destination.id == R.id.petDetailRecyclerFragment || destination.id == R.id.mountDetailRecyclerFragment) {
             arguments?.getString("type")

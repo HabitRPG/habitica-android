@@ -68,9 +68,7 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
         val useEmailNotifications = preferenceManager.sharedPreferences.getBoolean("useEmailNotifications", true)
         emailNotificationsPreference?.isEnabled = useEmailNotifications
 
-
         classSelectionPreference = findPreference("choose_class")
-        classSelectionPreference?.isVisible = false
 
         serverUrlPreference = findPreference("server_url") as? ListPreference
         serverUrlPreference?.isVisible = false
@@ -265,11 +263,12 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                     classSelectionPreference?.title = getString(R.string.change_class)
                     classSelectionPreference?.summary = getString(R.string.change_class_description)
                 }
-                classSelectionPreference?.isVisible = true
             } else {
                 classSelectionPreference?.title = getString(R.string.enable_class)
-                classSelectionPreference?.isVisible = true
             }
+            classSelectionPreference?.isVisible = true
+        } else {
+            classSelectionPreference?.isVisible = false
         }
         val cdsTimePreference = findPreference("cds_time") as? TimePreference
         cdsTimePreference?.text = user?.preferences?.dayStart.toString() + ":00"

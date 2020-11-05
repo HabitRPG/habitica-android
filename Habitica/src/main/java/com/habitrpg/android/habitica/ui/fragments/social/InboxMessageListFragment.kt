@@ -85,6 +85,7 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
         }
         compositeSubscription.add(observable.subscribe( { member ->
             setReceivingUser(member.username, member.id)
+            activity?.title = member.displayName
             chatAdapter = InboxAdapter(user, member)
             viewModel?.messages?.observe(this.viewLifecycleOwner, { chatAdapter?.submitList(it) })
 
