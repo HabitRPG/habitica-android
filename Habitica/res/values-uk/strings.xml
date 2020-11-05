@@ -813,4 +813,17 @@
     <string name="action_continue">Продовжити</string>
     <string name="choose_recipient_title">Оберіть отримувача</string>
     <string name="confirm_delete_tag_message">Ви дійсно хочете видалити\?</string>
+    <string name="challenge_create_error_title">Вам потрібен загловок, щоб створити Випробування.</string>
+    <string name="challenge_create_error_no_tasks">Вам потрібно додати хоча б одне завдання, щоб створити Випробування.</string>
+    <string name="challenge_create_error_tag">Вам потрібно придумати ім\'я, щоб створити Випробування.</string>
+    <string name="identify_your_challenge_with_a_tag">Ознаменуйте своє випробування коротким іменем</string>
+    <string name="challenge_create_error_enough_gems">У вас немає достатньо самоцвітів, щоб створити випробування.</string>
+    <string name="challenge_create_error_tavern_one_gem">Ви повинні мати хоча б один самоцвіт, щоб створити публічне випробовування.</string>
+    <string name="create_challenge">Створити випробування</string>
+    <string name="tasks">Завдання</string>
+    <string name="gem_reward">Нагорода у самоцвітах</string>
+    <string name="location">Локація</string>
+    <string name="save">Зберегти</string>
+    <string name="no_billing_subscriptions">Ваш пристрій не підтримує жодного із можливих способів оплати. Будь ласка, використайте веб-сайт Habitica, якщо хочете придбати підписку.</string>
+    <string name="no_billing_gems">Ваш пристрій не підтримує жодного із можливих способів оплати. Будь ласка, використайте веб-сайт Habitica, якщо хочете придбати самоцвіти.</string>
 </resources>
