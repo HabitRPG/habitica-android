@@ -776,7 +776,7 @@
 \n  • Завдання не втратять серій і не змінять кольору
 \n  • Боси не завдадуть шкоди вашим пропущеним щоденкам
 \n  • Пошкодження від боса і предмети з квесту очікуватимуть на вас після виселення"</string>
-    <string name="avatar_hair_bangs"></string>
+    <string name="avatar_hair_bangs"/>
     <string name="visit_habitica_website">Відвідайте сайт Habitica</string>
     <string name="cancel_subscription_notgoogle_description">Більше не хочете бути підпсником\? Через обмеження мобільних платежів вам доведеться скасувати підписку через наш веб-сайт. Для цього натисніть кнопку нижче, увійдіть до свого облікового запису, натисність піктограми Користувач у верхньому правому куті, а потім перейдіть до Підписка. Куплені місяці підписки застосовуватимуться навіть після скасування підписки. Будемо сумувати за тобою!</string>
     <string name="cancel_subscription_google_description">Більше не хочете бути підписником\? Ви можете скасувати підписку в розділі \"Мої програми\" магазину Google Play. Придбані місяці підписки застосовуватимуться навіть після закінчення підписки.</string>
@@ -790,4 +790,27 @@
     <string name="subscribe6month_gemcap">Максимум 35 самоцвітів</string>
     <string name="subscribe3month_gemcap">Максимум 30 самоцвітів</string>
     <string name="subscribe1month_gemcap">Максимум 25 самоцвітів</string>
+    <string name="dailyDueDefaultViewDescription">З відзначеним параметром, за замовчуванням будуть відображатися тільки \"Активні\" щоденні завдання замість \"Всіх\"</string>
+    <string name="dailyDueDefaultView">Встановити щоденки по замовчуванню на вкладку \"Активні\"</string>
+    <string name="subscribe_listitem4_description">Отримайте Королівського пурпурного Кроленя при оформленні підписки.</string>
+    <string name="subscribe_listitem3_description_new">Підпишись зараз, щоб отримати %s і отримувати нові предмети кожного місяця!</string>
+    <string name="subscribe_listitem3_description">Підпишись прямо зараз, щоб отримати ексклюзивний набір зараз і нові предмети кожного місяця!</string>
+    <string name="subscribe_listitem2_description">Заробляйте Містичні Пісочні годинники для купівлі предметів з Магазину мандрівників у часі!</string>
+    <string name="subscribe_listitem1_description">У вас буде можливість купувати самоцвіти на ринку за 20 монет золота кожен!</string>
+    <string name="gem_purchase_subtitle">Самоцвіти дозволяють тобі купувати цікаві додаткові речі для свого акаунту, зокрема:</string>
+    <string name="gem_purchase_title">Підписка підтримує розробників та допомагає забезпечувати роботу Habitica</string>
+    <string name="gem_purchase_toolbartitle">Придбати</string>
+    <string name="google_services_missing">Сервіс Google Play не знайдено.</string>
+    <string name="widget_todo_list">Список завдань Habitica</string>
+    <string name="all_dailies_completed">Ви завершили всі свої щоденки. Так тримати!</string>
+    <string name="add_reward">Додати нагороду</string>
+    <string name="add_todo">Додати завдання</string>
+    <string name="add_daily">Додати щоденку</string>
+    <string name="add_habit">Додати звичку</string>
+    <string name="add_task">Додати завдання</string>
+    <string name="stats_widget_label">Характеристики Habitica</string>
+    <string name="invited_to_party">Вас запросили до гурту!</string>
+    <string name="action_continue">Продовжити</string>
+    <string name="choose_recipient_title">Оберіть отримувача</string>
+    <string name="confirm_delete_tag_message">Ви дійсно хочете видалити\?</string>
 </resources>
