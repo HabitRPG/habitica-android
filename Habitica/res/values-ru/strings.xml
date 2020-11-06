@@ -854,7 +854,7 @@
     <string name="beastMasterTitle">Повелитель зверей</string>
     <string name="partyOnDescription">Ваша команда увеличилась до 4 участников!</string>
     <string name="partyUpDescription">Вы объединились с членом команды!</string>
-    <string name="invitation_title">%s пригласил(а) вас в %s</string>
+    <string name="invitation_title">%s пригласил(-а) вас в группу %s</string>
     <string name="id_copied">ID пользователя cкопирован в буфер обмена</string>
     <string name="preference_push_unjoined_guild_mention">\@Упоминания в остальных Гильдиях</string>
     <string name="preference_push_joined_guild_mention">\@Упоминания в моих Гильдиях</string>
