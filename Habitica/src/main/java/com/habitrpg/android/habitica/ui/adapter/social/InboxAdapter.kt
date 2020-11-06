@@ -108,7 +108,7 @@ class InboxAdapter(private var user: User?, private var replyToUser : Member) : 
                                          newConcert: ChatMessage) = oldConcert.id == newConcert.id
 
             override fun areContentsTheSame(oldConcert: ChatMessage,
-                                            newConcert: ChatMessage) = oldConcert == newConcert
+                                            newConcert: ChatMessage) = oldConcert.text == newConcert.text
         }
     }
 }

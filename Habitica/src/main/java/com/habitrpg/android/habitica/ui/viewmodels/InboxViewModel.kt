@@ -36,7 +36,7 @@ class InboxViewModel(recipientID: String?, recipientUsername: String?) : BaseVie
             .setEnablePlaceholders(false)
             .build()
 
-    private val dataSourceFactory = MessagesDataSourceFactory(socialRepository, recipientID, ChatMessage())
+    val dataSourceFactory = MessagesDataSourceFactory(socialRepository, recipientID, ChatMessage())
     val messages: LiveData<PagedList<ChatMessage>> = dataSourceFactory.toLiveData(config)
     private val member: MutableLiveData<Member?> by lazy {
         MutableLiveData<Member?>()
@@ -85,7 +85,7 @@ class InboxViewModel(recipientID: String?, recipientUsername: String?) : BaseVie
     }
 }
 
-private class MessagesDataSource(val socialRepository: SocialRepository, var recipientID: String?, var footer : ChatMessage?):
+class MessagesDataSource(val socialRepository: SocialRepository, var recipientID: String?, var footer : ChatMessage?):
         PositionalDataSource<ChatMessage>() {
     private var lastFetchWasEnd = false
     override fun loadRange(params: LoadRangeParams, callback: LoadRangeCallback<ChatMessage>) {
@@ -137,7 +137,7 @@ private class MessagesDataSource(val socialRepository: SocialRepository, var rec
     }
 }
 
-private class MessagesDataSourceFactory(val socialRepository: SocialRepository, var recipientID: String?, val footer : ChatMessage?) :
+class MessagesDataSourceFactory(val socialRepository: SocialRepository, var recipientID: String?, val footer : ChatMessage?) :
         DataSource.Factory<Int, ChatMessage>() {
     val sourceLiveData = MutableLiveData<MessagesDataSource>()
     var latestSource: MessagesDataSource = MessagesDataSource(socialRepository, recipientID, footer)

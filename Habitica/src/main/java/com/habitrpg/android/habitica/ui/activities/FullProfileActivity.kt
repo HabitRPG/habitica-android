@@ -35,6 +35,7 @@ import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.ui.AvatarView
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel
 import com.habitrpg.android.habitica.ui.adapter.social.AchievementProfileAdapter
+import com.habitrpg.android.habitica.ui.fragments.social.InboxOverviewFragmentDirections
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
 import com.habitrpg.android.habitica.ui.helpers.loadImage
 import com.habitrpg.android.habitica.ui.helpers.setMarkdown
@@ -181,27 +182,7 @@ class FullProfileActivity : BaseActivity() {
     }
 
     private fun showSendMessageToUserDialog() {
-        val factory = LayoutInflater.from(this)
-        val newMessageView = factory.inflate(R.layout.profile_new_message_dialog, null)
-
-        val emojiEditText = newMessageView.findViewById<AppCompatEditText>(R.id.edit_new_message_text)
-
-        val newMessageTitle = newMessageView.findViewById<TextView>(R.id.new_message_title)
-        newMessageTitle.text = String.format(getString(R.string.profile_send_message_to), userDisplayName)
-
-        val addMessageDialog = HabiticaAlertDialog(this)
-        addMessageDialog.addButton(android.R.string.ok, true) { _, _ ->
-                    socialRepository.postPrivateMessage(userID, emojiEditText.text.toString())
-                            .subscribe({
-                                HabiticaSnackbar.showSnackbar(this@FullProfileActivity.binding.scrollView.getChildAt(0) as ViewGroup,
-                                        String.format(getString(R.string.profile_message_sent_to), userDisplayName), SnackbarDisplayType.NORMAL)
-                            }, RxErrorHandler.handleEmptyError())
-
-                    dismissKeyboard()
-                }
-        addMessageDialog.addButton(android.R.string.cancel, false) { _, _ -> dismissKeyboard() }
-        addMessageDialog.setAdditionalContentView(newMessageView)
-        addMessageDialog.show()
+        MainNavigationController.navigate(R.id.inboxFragment, bundleOf(Pair("username", username), Pair("userID", userID)))
     }
 
     private fun updateView(user: Member) {
