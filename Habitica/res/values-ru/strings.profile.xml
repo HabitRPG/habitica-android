@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="profile_pets_and_mounts">Питомцы &amp; Скакуны</string>
+    <string name="profile_pets_and_mounts">Питомцы и Скакуны</string>
     <string name="profile_pets_found">Питомцев найдено</string>
     <string name="profile_mounts_tamed">Пойманных скакунов</string>
     <string name="profile_loading_data">Загрузка данных участника...</string>
