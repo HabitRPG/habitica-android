@@ -653,10 +653,10 @@
     <string name="ago_minutes">%d мин. назад</string>
     <string name="opting_out_progress">Не принимать участие</string>
     <string name="subscription_duration_norenew">Для %s</string>
-    <string name="subscribe1month_gemcap">Максимум 25 драгоценные камни</string>
-    <string name="subscribe3month_gemcap">Максимум 30 драгоценные камни</string>
-    <string name="subscribe6month_gemcap">Максимум 35 драгоценные камни</string>
-    <string name="subscribe12month_gemcap">Максимум 45 драгоценные камни</string>
+    <string name="subscribe1month_gemcap">Максимум 25 самоцветов</string>
+    <string name="subscribe3month_gemcap">Максимум 30 самоцветов</string>
+    <string name="subscribe6month_gemcap">Максимум 35 самоцветов</string>
+    <string name="subscribe12month_gemcap">Максимум 45 самоцветов</string>
     <string name="delete_oauth_account_description">Ваш аккаунт будет удален навсегда без возможности восстановления! Стоимость потраченных и находящихся в банке самоцветов не будет компенсирована. Если вы абсолютно уверены, напишите DELETE в текстовое поле.</string>
     <string name="enter_recipient_username">Введите @ имя получателя</string>
     <string name="visit_website">посетите сайт</string>
