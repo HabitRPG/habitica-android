@@ -1019,4 +1019,5 @@
     <string name="preference_push_unjoined_guild_mention">\@Menciones en Gremios a los que no te has unido</string>
     <string name="preference_push_joined_guild_mention">\@Menciones en Gremios a los que te has unido</string>
     <string name="partyOnTitle">Toma equipo</string>
+    <string name="overview">Visión general</string>
 </resources>
