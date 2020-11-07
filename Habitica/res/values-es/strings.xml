@@ -749,7 +749,7 @@
 \nmensaje</string>
     <string name="gift_gems">Regalar gemas</string>
     <string name="see_other_options">Ver otras opciones</string>
-    <string name="promo_subscription_buy_gems_description">¡Conviértete en suscriptor para comprar gemas con oro, recibir ítems misteriosos cada mes y más!</string>
+    <string name="promo_subscription_buy_gems_description">¡Conviértete en suscriptor para comprar gemas con oro, recibir artículos misteriosos cada mes y más!</string>
     <string name="promo_subscription_buy_gems_prompt">¿Necesitas gemas\?</string>
     <string name="search_hint">Buscar tareas</string>
     <string name="search">Buscar</string>
@@ -1013,4 +1013,10 @@
 \n
 \nAlgunos **puntos de Maná restaurados** se restablecen todos los días, pero puedes recuperar más completando tareas o usando una habilidad de la clase de Mago.</string>
     <string name="mana_points">Puntos de Maná</string>
+    <string name="promo_g1g1_prompt">Evento Regala uno, recibe uno</string>
+    <string name="resubscribe">Volver a suscribirte</string>
+    <string name="local">local</string>
+    <string name="preference_push_unjoined_guild_mention">\@Menciones en Gremios a los que no te has unido</string>
+    <string name="preference_push_joined_guild_mention">\@Menciones en Gremios a los que te has unido</string>
+    <string name="partyOnTitle">Toma equipo</string>
 </resources>
