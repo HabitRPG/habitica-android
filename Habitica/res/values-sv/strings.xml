@@ -829,4 +829,6 @@
     <string name="block_user_title">Blockera %s\?</string>
     <string name="block">Blockera</string>
     <string name="gem_reward">Juvelpris</string>
+    <string name="get_help">Skaffa Hjälp</string>
+    <string name="delete_checklist_entry">Radera…</string>
 </resources>
