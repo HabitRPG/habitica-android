@@ -831,4 +831,5 @@
     <string name="gem_reward">Juvelpris</string>
     <string name="get_help">Skaffa Hjälp</string>
     <string name="delete_checklist_entry">Radera…</string>
+    <string name="owner">Ägar</string>
 </resources>
