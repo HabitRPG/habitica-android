@@ -135,9 +135,10 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
 
     override fun changeClass(selectedClass: String): Flowable<User> = apiClient.changeClass(selectedClass).flatMap { retrieveUser(false) }
 
-    override fun unlockPath(user: User, customization: Customization): Flowable<UnlockResponse> {
+    override fun unlockPath(user: User?, customization: Customization): Flowable<UnlockResponse> {
         return apiClient.unlockPath(customization.path)
                 .doOnNext { unlockResponse ->
+                    if (user == null) return@doOnNext
                     val copiedUser = localRepository.getUnmanagedCopy(user)
                     copiedUser.preferences = unlockResponse.preferences
                     copiedUser.purchased = unlockResponse.purchased

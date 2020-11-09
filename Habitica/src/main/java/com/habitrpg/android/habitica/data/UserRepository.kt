@@ -46,7 +46,7 @@ interface UserRepository : BaseRepository {
 
     fun changeClass(selectedClass: String): Flowable<User>
 
-    fun unlockPath(user: User, customization: Customization): Flowable<UnlockResponse>
+    fun unlockPath(user: User?, customization: Customization): Flowable<UnlockResponse>
     fun unlockPath(user: User, set: CustomizationSet): Flowable<UnlockResponse>
 
     fun runCron(tasks: MutableList<Task>)

@@ -45,7 +45,12 @@ class AvatarCustomizationFragment : BaseMainFragment<FragmentRecyclerviewBinding
 
         compositeSubscription.add(adapter.getSelectCustomizationEvents()
                 .flatMap { customization ->
-                    userRepository.useCustomization(user, customization.type ?: "", customization.category, customization.identifier ?: "")
+                    if (customization.type == "background") {
+                        userRepository.unlockPath(user, customization)
+                                .flatMap { userRepository.retrieveUser(false) }
+                    } else {
+                        userRepository.useCustomization(user, customization.type ?: "", customization.category, customization.identifier ?: "")
+                    }
                 }
                 .subscribe({ }, RxErrorHandler.handleEmptyError()))
         compositeSubscription.add(adapter.getUnlockCustomizationEvents()

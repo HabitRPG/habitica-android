@@ -211,7 +211,7 @@ class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerVi
                 return
             }
 
-            if (customization?.identifier == activeCustomization) {
+            if (customization?.type != "background" && customization?.identifier == activeCustomization) {
                 return
             }
 
