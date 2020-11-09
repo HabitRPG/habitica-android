@@ -832,4 +832,6 @@
     <string name="get_help">Skaffa Hjälp</string>
     <string name="delete_checklist_entry">Radera…</string>
     <string name="owner">Ägar</string>
+    <string name="stat_allocation">Egenskapsfördelning</string>
+    <string name="experience_points">Erfarenhetspoäng</string>
 </resources>
