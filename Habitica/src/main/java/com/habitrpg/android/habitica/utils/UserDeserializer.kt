@@ -179,6 +179,13 @@ class UserDeserializer : JsonDeserializer<User> {
                 }
                 user.questAchievements = questAchievements
             }
+            if (achievements.has("challenges")) {
+                val challengeAchievements = RealmList<String>()
+                for (entry in achievements.getAsJsonArray("challenges")) {
+                    challengeAchievements.add(entry.asString)
+                }
+                user.challengeAchievements = challengeAchievements
+            }
         }
 
         if (obj.has("_ABTests")) {

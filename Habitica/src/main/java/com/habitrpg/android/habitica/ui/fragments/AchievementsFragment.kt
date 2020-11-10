@@ -89,13 +89,18 @@ class AchievementsFragment: BaseMainFragment<FragmentRefreshRecyclerviewBinding>
                     (it.category?.first()?.toInt() ?: 2) * it.index
                 }
             }
-        }.subscribe({
+        }.zipWith(Flowables.combineLatest(userRepository.getQuestAchievements(), userRepository.getQuestAchievements()
+                .map { it.mapNotNull { achievement -> achievement.questKey } }
+                .flatMap { inventoryRepository.getQuestContent(it) }), { achievements, questAchievements ->
+            Pair(achievements, questAchievements)
+        }).subscribe({
+            val achievements = it.first
             val entries = mutableListOf<Any>()
             var lastCategory = ""
-            it.forEach { achievement ->
+            achievements.forEach { achievement ->
                 val categoryIdentifier = achievement.category ?: ""
                 if (categoryIdentifier != lastCategory) {
-                    val category = Pair(categoryIdentifier, it.count { check ->
+                    val category = Pair(categoryIdentifier, achievements.count { check ->
                         check.category == categoryIdentifier && check.earned
                     })
                     entries.add(category)
@@ -103,21 +108,23 @@ class AchievementsFragment: BaseMainFragment<FragmentRefreshRecyclerviewBinding>
                 }
                 entries.add(achievement)
             }
+            val questAchievements = it.second
+            entries.add(Pair("Quests completed", questAchievements.first.size))
+            entries.addAll(questAchievements.first.map { achievement ->
+                val questContent = questAchievements.second.firstOrNull { achievement.questKey == it.key }
+                achievement.title = questContent?.text
+                achievement
+            })
+
+            val challengeAchievementCount = user?.challengeAchievements?.size ?: 0
+            if (challengeAchievementCount > 0) {
+                entries.add(Pair("Challenges won", challengeAchievementCount))
+                user?.challengeAchievements?.let { it1 -> entries.addAll(it1) }
+            }
+
             adapter.entries = entries
             adapter.notifyDataSetChanged()
         }, RxErrorHandler.handleEmptyError()))
-        compositeSubscription.add(Flowables.combineLatest(userRepository.getQuestAchievements(), userRepository.getQuestAchievements()
-                        .map { it.mapNotNull { achievement -> achievement.questKey } }
-                        .flatMap { inventoryRepository.getQuestContent(it) })
-                .subscribeWithErrorHandler { result ->
-                    val achievements = result.first.map { achievement ->
-                        val questContent = result.second.firstOrNull { achievement.questKey == it.key }
-                        achievement.title = questContent?.text
-                        achievement
-                    }
-                    adapter.questAchievements = achievements
-                    adapter.notifyDataSetChanged()
-                })
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

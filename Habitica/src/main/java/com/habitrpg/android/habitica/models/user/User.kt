@@ -156,6 +156,7 @@ open class User : RealmObject(), BaseObject, Avatar, VersionedObject {
             field = value
             field.forEach { it.userID = id }
         }
+    var challengeAchievements = RealmList<String>()
 
     @Ignore
     var pushDevices: List<PushDevice>? = null

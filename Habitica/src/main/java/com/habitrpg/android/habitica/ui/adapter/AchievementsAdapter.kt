@@ -18,12 +18,12 @@ class AchievementsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var useGridLayout: Boolean = false
     var entries = listOf<Any>()
-    var questAchievements = listOf<QuestAchievement>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             0 -> SectionViewHolder(parent.inflate(R.layout.achievement_section_header))
             3 -> QuestAchievementViewHolder(parent.inflate(R.layout.achievement_quest_item))
+            4 -> ChallengeAchievementViewHolder(parent.inflate(R.layout.achievement_challenge_item))
             else -> AchievementViewHolder(if (useGridLayout) {
                 parent.inflate(R.layout.achievement_grid_item)
             } else {
@@ -33,32 +33,28 @@ class AchievementsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        when {
-            entries.size > position -> when (val entry = entries[position]) {
-                is Achievement -> (holder as? AchievementViewHolder)?.bind(entry)
-                is Pair<*, *> -> (holder as? SectionViewHolder)?.bind(entry)
-            }
-            entries.size == position -> (holder as? SectionViewHolder)?.bind(Pair("Quests completed", questAchievements.size))
-            else -> (holder as? QuestAchievementViewHolder)?.bind(questAchievements[position - 1 - entries.size])
+        when (val entry = entries[position]) {
+            is Achievement -> (holder as? AchievementViewHolder)?.bind(entry)
+            is QuestAchievement -> (holder as? QuestAchievementViewHolder)?.bind(entry)
+            is String -> (holder as? ChallengeAchievementViewHolder)?.bind(entry)
+            is Pair<*, *> -> (holder as? SectionViewHolder)?.bind(entry)
         }
     }
 
     override fun getItemCount(): Int {
-        return entries.size + questAchievements.size + 1
+        return entries.size
     }
 
     override fun getItemViewType(position: Int): Int {
-        return when {
-            entries.size > position -> {
-                val entry = entries[position]
-                if (entry is Pair<*, *>) {
-                    0
-                } else {
-                    if (useGridLayout) 1 else 2
-                }
-            }
-            entries.size == position -> 0
-            else -> 3
+        val entry = entries[position]
+        return if (entry is Pair<*, *>) {
+            0
+        } else if (entry is QuestAchievement) {
+            3
+        } else if (entry is String) {
+            4
+        } else {
+            if (useGridLayout) 1 else 2
         }
     }
 
@@ -123,6 +119,14 @@ class AchievementsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             this.achievement = achievement
             binding.achievementTitle.text = achievement.title
             binding.achievementCountLabel.text = achievement.count.toString()
+        }
+    }
+
+    class ChallengeAchievementViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+        private var binding = AchievementQuestItemBinding.bind(itemView)
+
+        fun bind(challengeName: String) {
+            binding.achievementTitle.text = challengeName
         }
     }
 }
