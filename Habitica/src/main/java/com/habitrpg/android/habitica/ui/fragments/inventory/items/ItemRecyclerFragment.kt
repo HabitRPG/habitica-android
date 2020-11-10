@@ -73,7 +73,7 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
         adapter = binding?.recyclerView?.adapter as? ItemRecyclerAdapter
         if (adapter == null) {
             context?.let {
-                adapter = ItemRecyclerAdapter(null, true, context)
+                adapter = ItemRecyclerAdapter(context)
                 adapter?.isHatching = this.isHatching
                 adapter?.isFeeding = this.isFeeding
                 adapter?.fragment = this

@@ -27,7 +27,7 @@ import org.greenrobot.eventbus.EventBus
 import java.text.SimpleDateFormat
 import java.util.*
 
-class ItemRecyclerAdapter(data: OrderedRealmCollection<OwnedItem>?, autoUpdate: Boolean, val context: Context) : BaseRecyclerViewAdapter<OwnedItem, ItemRecyclerAdapter.ItemViewHolder>() {
+class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<OwnedItem, ItemRecyclerAdapter.ItemViewHolder>() {
 
     var isHatching: Boolean = false
     var isFeeding: Boolean = false
@@ -67,10 +67,8 @@ class ItemRecyclerAdapter(data: OrderedRealmCollection<OwnedItem>?, autoUpdate: 
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        data?.let {
-            val ownedItem = it[position]
-            holder.bind(ownedItem, items?.get(ownedItem.key))
-        }
+        val ownedItem = data[position]
+        holder.bind(ownedItem, items?.get(ownedItem.key))
     }
 
     fun setExistingPets(pets: RealmResults<Pet>) {
