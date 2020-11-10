@@ -835,6 +835,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                 .subscribe({
                     retrieveUser(true)
                     val dialog = WonChallengeDialog(this)
+                    dialog.configure(event.data)
                     dialog.enqueue()
                     apiClient.readNotification(event.id)
                             .subscribe({ }, RxErrorHandler.handleEmptyError())

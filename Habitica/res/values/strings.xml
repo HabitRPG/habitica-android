@@ -1126,4 +1126,5 @@
     <string name="congratulations">Congratulations!</string>
     <string name="won_achievement_description">%s selected you as the winner! Your win has been recorded in your Achievements.</string>
     <string name="won_achievement_description_noname">You were selected as the winner! Your win has been recorded in your Achievements.</string>
+    <string name="claim_x_gems">Claim %d Gems</string>
 </resources>

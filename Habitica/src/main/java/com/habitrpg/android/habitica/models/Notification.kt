@@ -56,6 +56,7 @@ class Notification {
             Type.QUEST_INVITATION.type -> QuestInvitationData::class.java
             Type.FIRST_DROP.type -> FirstDropData::class.java
             Type.ACHIEVEMENT_GENERIC.type -> AchievementData::class.java
+            Type.WON_CHALLENGE.type -> ChallengeWonData::class.java
             else -> null
         }
     }

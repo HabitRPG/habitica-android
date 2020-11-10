@@ -7,6 +7,7 @@ import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.events.*
 import com.habitrpg.android.habitica.models.Notification
 import com.habitrpg.android.habitica.models.notifications.AchievementData
+import com.habitrpg.android.habitica.models.notifications.ChallengeWonData
 import com.habitrpg.android.habitica.models.notifications.FirstDropData
 import com.habitrpg.android.habitica.models.notifications.LoginIncentiveData
 import com.habitrpg.android.habitica.models.user.User
@@ -89,7 +90,7 @@ class NotificationsManager (private val context: Context) {
     }
 
     private fun displayWonChallengeNotificaiton(notification: Notification): Any {
-        EventBus.getDefault().post(ShowWonChallengeDialog(notification.id))
+        EventBus.getDefault().post(ShowWonChallengeDialog(notification.id, notification.data as? ChallengeWonData))
         return true
     }
 
