@@ -259,7 +259,7 @@ class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerVi
                         customizationList
                                 .filter { Customization::class.java.isAssignableFrom(it.javaClass) }
                                 .map { it as Customization }
-                                .filter { !it.isUsable(ownedCustomiztations.contains(it.identifier)) && it.customizationSet != null && it.customizationSet == set?.identifier }
+                                .filter { it.customizationSet != null && it.customizationSet == set?.identifier }
                                 .forEach { set?.customizations?.add(it) }
                         if (additionalSetItems.isNotEmpty()) {
                             additionalSetItems
