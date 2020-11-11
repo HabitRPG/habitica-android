@@ -744,5 +744,5 @@
     <string name="short_name">Nazwa skrócona</string>
     <string name="next_day_reminder_text">Sporo jeszcze do odblokowania i odkrycia w miarę jak zdobywasz poziomy, więc trzymaj się swoich zadań i baw się dobrze!</string>
     <string name="unlock_attribute_points">Przypisywanie punktów atrybutów będzie odblokowane od poziomu 10</string>
-    <string name="daily_tip_2">Możesz zmienić to jak często powtarza się dane zadanie codzienne. Nawet rzadziej wykonywane zadania mogą być zaplanowane.</string>
+    <string name="daily_tip_2">Możesz zmienić to jak często powtarza się każde zadanie codzienne. Nawet rzadko wykonywane zadania mogą być zaplanowane.</string>
 </resources>
