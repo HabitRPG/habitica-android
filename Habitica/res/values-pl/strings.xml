@@ -742,4 +742,6 @@
     <string name="same_day_reminder_text">Im więcej dodasz, tym bardziej będziesz nagradzany. Nawet małe nawyki sumują się do wielkiej zmiany.</string>
     <string name="same_day_reminder_title">Czy dodałeś już swoje zadania\?</string>
     <string name="short_name">Nazwa skrócona</string>
+    <string name="next_day_reminder_text">Sporo jeszcze do odblokowania i odkrycia w miarę jak zdobywasz poziomy, więc trzymaj się swoich zadań i baw się dobrze!</string>
+    <string name="unlock_attribute_points">Przypisywanie punktów atrybutów będzie odblokowane od poziomu 10</string>
 </resources>
