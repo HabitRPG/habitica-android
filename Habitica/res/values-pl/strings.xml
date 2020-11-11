@@ -747,9 +747,14 @@
     <string name="daily_tip_2">Możesz zmienić to jak często powtarza się każde zadanie codzienne. Nawet rzadko wykonywane zadania mogą być zaplanowane.</string>
     <string name="daily_tip_4">Okresowa re-ewaluacja Twoich zadań może Ci pomóc trzymać się obranej ścieżki.</string>
     <string name="daily_tip_3">Możesz również planować przypomnienia dla zadań codziennych.</string>
-    <string name="week_reminder_text">Przerwy są zdrowie, ale nadal możesz zyskać punkty za proste czynności, aby podnieść swój poziom i zdobyć fajny sprzęt!</string>
+    <string name="week_reminder_text">Przerwy są zdrowe, ale nadal możesz zyskać punkty za proste czynności, aby podnieść swój poziom i zdobyć fajny sprzęt!</string>
     <string name="reset_streak">Zresetuj serię</string>
     <string name="daily_tip_9">Jeśli jest Ci trudno, spróbuj podzielić swoje zadania na mniejsze części.</string>
     <string name="daily_tip_6">Spróbuj ustawić minutnik na 10 minut i zobaczyć jak dużo dasz radę w tym czasie zrobić!</string>
     <string name="daily_tip_7">Spróbuj przypiąć rzeczy ze sklepu do swoich nagród, aby się zmotywować by je zdobyć.</string>
+    <string name="setup_task_reward_notes">Pooglądaj TV, zagraj w grę, zjedz przekąskę, Ty decydujesz!</string>
+    <string name="setup_task_join_habitica_notes">Możesz ukończyć to zadanie ToDo, edytować je lub usunąć.</string>
+    <string name="display_name_length_error">Nazwa gracza musi mieć od 1 do 30 znaków</string>
+    <string name="welcomeNameTitle">Jak mamy Cię nazywać\?</string>
+    <string name="verification_pet">Jedna z tych maskotek-weteranów będzie na Ciebie czekać po tym jak skończysz potwierdzanie.</string>
 </resources>
