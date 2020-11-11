@@ -798,6 +798,6 @@
     <string name="leave_guild">Opuść gildię</string>
     <string name="report_violation">Zgłoś naruszenie</string>
     <string name="i_agree_to_follow_the_guidelines">Zgadzam się stosować się do regulaminu</string>
-    <string name="guild_summary">Charakterystyka gildii</string>
+    <string name="guild_summary">Opis gildii</string>
     <string name="setup_task_habit_2_notes">Lub usuń go z ekranu edycji</string>
 </resources>
