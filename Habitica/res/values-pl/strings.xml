@@ -771,7 +771,7 @@
     <string name="damage_paused">Uszkodzenia wstrzymane</string>
     <string name="gift_one_get_one_detailed_description">Gdy ta promocja jest aktywna, otrzymasz pasującą subskrypcję automatycznie po wysłaniu podarunku.</string>
     <string name="gift_one_get_one_description">Teraz akcja \"podaruj subskrypcję, otrzymaj jedną gratis\"!</string>
-    <string name="garden">Ogórd</string>
+    <string name="garden">Ogród</string>
     <string name="join_guild">Dołącz do gildii</string>
     <string name="invite_to_guild">Zaproś do gildii</string>
     <string name="guild_description">Opis gildii</string>
@@ -787,4 +787,5 @@
     <string name="gift_subscription_subtitle">Wybierz poniżej subskrypcję, którą chcesz podarować! Ten zakup nie będzie odnawiał się automatycznie.</string>
     <string name="gift_title">Komu chcesz sprawić podarunek\?</string>
     <string name="gift_subscription">Podaruj subskrypcję</string>
+    <string name="trillion_abbrev">bln</string>
 </resources>
