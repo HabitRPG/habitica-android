@@ -771,4 +771,20 @@
     <string name="damage_paused">Uszkodzenia wstrzymane</string>
     <string name="gift_one_get_one_detailed_description">Gdy ta promocja jest aktywna, otrzymasz pasującą subskrypcję automatycznie po wysłaniu podarunku.</string>
     <string name="gift_one_get_one_description">Teraz akcja \"podaruj subskrypcję, otrzymaj jedną gratis\"!</string>
+    <string name="garden">Ogórd</string>
+    <string name="join_guild">Dołącz do gildii</string>
+    <string name="invite_to_guild">Zaproś do gildii</string>
+    <string name="guild_description">Opis gildii</string>
+    <string name="x_class">Klasa %s</string>
+    <string name="become_x">Zostań %s</string>
+    <string name="need_more_help">Potrzebujesz więcej wsparcia\?</string>
+    <string name="create_party">Stwórz drużynę</string>
+    <string name="create">Stwórz</string>
+    <string name="gift_confirmation_text_gems">Wysłałeś %s trochę klejnotów.</string>
+    <string name="gift_confirmation_text_sub">Wysłałeś %s %s-miesięczną subskrypcję Habitica.</string>
+    <string name="gift_confirmation_text_sub_g1g1">Wysłałeś %s %s-miesięczną subskrypcję Habitica i taka sama subskrypcja zasiliła Twoje konto w ramach promocji Dajesz - Dostajesz!</string>
+    <string name="gift_gems_subtitle">Wybierz pakiet klejnotów do podarowania poniżej!</string>
+    <string name="gift_subscription_subtitle">Wybierz poniżej subskrypcję, którą chcesz podarować! Ten zakup nie będzie odnawiał się automatycznie.</string>
+    <string name="gift_title">Komu chcesz sprawić podarunek\?</string>
+    <string name="gift_subscription">Podaruj subskrypcję</string>
 </resources>
