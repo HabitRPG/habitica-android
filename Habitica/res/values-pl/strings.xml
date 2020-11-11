@@ -788,7 +788,7 @@
     <string name="gift_title">Komu chcesz sprawić podarunek\?</string>
     <string name="gift_subscription">Podaruj subskrypcję</string>
     <string name="trillion_abbrev">bln</string>
-    <string name="setup_task_habit_2">Tapnij tutaj, aby oznaczyć to jako niewłaściwy nawyk, którego chciałbyś się pozbyć</string>
+    <string name="setup_task_habit_2">Dotknij tutaj, aby oznaczyć to jako niewłaściwy nawyk, którego chciałbyś się pozbyć</string>
     <string name="setup_task_habit_1_notes">Nawyk, zadanie codzienne albo ToDo\'s</string>
     <string name="setup_task_habit_1">Dodaj zadanie do Habitica</string>
     <string name="cost">Koszt</string>
