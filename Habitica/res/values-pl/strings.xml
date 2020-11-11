@@ -800,4 +800,8 @@
     <string name="i_agree_to_follow_the_guidelines">Zgadzam się stosować się do regulaminu</string>
     <string name="guild_summary">Opis gildii</string>
     <string name="setup_task_habit_2_notes">Lub usuń go z ekranu edycji</string>
+    <string name="are_you_sure">Jesteś pewien\?</string>
+    <string name="invite_to_party">Zaproś do drużyny</string>
+    <string name="guild_bank">Bank gildii</string>
+    <string name="guild_members">Członkowie gildii</string>
 </resources>
