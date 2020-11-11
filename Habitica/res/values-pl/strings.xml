@@ -467,7 +467,7 @@
     <string name="resetting_account">Resetowanie konta</string>
     <string name="deleting_account">Usuwanie konta</string>
     <string name="insufficientGoldTitle">Za mało złota</string>
-    <string name="insufficientGems">Potrzebujesz więcej klejnotów by kupić ten przedmiot!</string>
+    <string name="insufficientGems">Potrzebujesz więcej klejnotów, by kupić ten przedmiot!</string>
     <string name="purchase_gems">Kup klejnoty</string>
     <string name="insufficientHourglasses">Potrzebujesz więcej Mistycznych Klepsydr, żeby kupić ten przedmiot!</string>
     <string name="get_hourglasses">Zdobądź klepsydry</string>
@@ -696,14 +696,14 @@
     <string name="empty_title_dailies_filtered">Brak Codziennych</string>
     <string name="empty_description_habits_filtered">Brak Nawyków spełniających kryteria filtrowania.</string>
     <string name="empty_title_habits_filtered">Brak Nawyków</string>
-    <string name="register_btn_google">Zapisz się poprzez Google</string>
+    <string name="register_btn_google">Zaloguj się przez konto Google</string>
     <string name="register_btn_fb">Zapisz się poprzez Facebook</string>
     <string name="login_btn_apple">Zapisz się poprzez Apple</string>
     <string name="special_items">Przedmioty specjalne</string>
     <string name="leave_delte_tasks">Zrezygnuj i Usuń Zadania</string>
     <string name="leave_keep_tasks">Zrezygnuj i Pozostaw Zadania</string>
     <string name="challenge_leave_description">Możesz wybrać, czy chcesz zostawić zadania z Wyzwania na swojej tablicy, czy też usunąć je, gdy opuścisz Wyzwanie</string>
-    <string name="created_challenge">Stwórz wyzwanie</string>
+    <string name="created_challenge">Utworzone wyzwanie</string>
     <string name="challenge_prize">Nagroda za Wyzwanie</string>
     <string name="tavern_description_world_boss">Och, skarbie, nie zwracaj uwagi na poniższego potwora - to wciąż jest bezpieczna kryjówka na prowadzenia rozmów podczas przerw.</string>
     <string name="world_boss_description_4">Zajrzyj do Tawerny aby zobaczyć postępy Bossa i jego wskaźnik Wściekłości</string>
