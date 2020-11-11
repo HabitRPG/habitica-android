@@ -25,7 +25,7 @@
     <string name="push_notifications_sum">Ustaw swoje ustawienia powiadomień push</string>
     <string name="preference_push_you_won_challenge">Ukończono wyzwanie!</string>
     <string name="preference_push_received_a_private_message">Otrzymano prywatną wiadomość</string>
-    <string name="preference_push_gifted_gems">Otrzymałeś diamenty</string>
+    <string name="preference_push_gifted_gems">Otrzymane diamenty</string>
     <string name="preference_push_gifted_subscription">Otrzymałeś subskrypcję</string>
     <string name="preference_push_invited_to_party">Otrzymano zaproszenie do drużyny</string>
     <string name="preference_push_invited_to_guild">Otrzymano zaproszenie do gildii</string>
@@ -53,7 +53,7 @@
     <string name="about_source_code">Kod źródłowy</string>
     <!--Network Errors-->
     <string name="internal_error_api">Utracono połączenie z serwerem</string>
-    <string name="authentication_error_title">Błąd autentykacji</string>
+    <string name="authentication_error_title">Błąd uwierzytelnienia</string>
     <string name="login_validation_error_title">Błąd walidacji</string>
     <string name="login_validation_error_fieldsmissing">Musisz wypełnić wszystkie pola.</string>
     <string name="save_changes">Zapisz</string>
@@ -124,7 +124,7 @@
     <string name="avatar_size_broad">Krzepka</string>
     <string name="avatar_background">Obrazek</string>
     <string name="purchase_customization">Ustawienia zakupów</string>
-    <string name="purchase_set_button">Odblokuj zestaw za %d gemów</string>
+    <string name="purchase_set_button">Odblokuj zestaw za %d klejnotów</string>
     <string name="purchase_button">Kup</string>
     <string name="purchase_set_title">Kup zestaw %s</string>
     <string name="due_date">Termin</string>
@@ -269,7 +269,7 @@
     <string name="share_hatched">Właśnie wyklułem chowańca %1$s %2$s w #Habitica dzięki wypełnianiu życiowych zadań!</string>
     <string name="share_raised">Właśnie zyskałem wierzchowca %1$s w #Habitica dzięki wypełnianiu życiowych zadań!</string>
     <string name="open_in_store">Otwórz w sklepie Google Play</string>
-    <string name="change_class_confirmation">Jesteś pewien, że chcesz zmienić klasę? Będzie to kosztować 3 kryształy.</string>
+    <string name="change_class_confirmation">Jesteś pewien, że chcesz zmienić klasę\? Będzie to kosztować 3 klejnoty.</string>
     <string name="change_class_equipment_warning">Ostrzeżenie: Nie będziesz nie będziesz mógł kupić wyposażenia dla klasy: %s.</string>
     <string name="confirm">Potwierdź</string>
     <string name="market">Sklep</string>
@@ -321,7 +321,7 @@
     <string name="has_reminder">Ma powiadomienie</string>
     <string name="has_tag">Ma tag</string>
     <string name="subscribe_title">Subskrypcja wspiera deweloperów i pozwala utrzymać Habitikę</string>
-    <string name="subscribe_prompt">Zostań subskrybentem aby otrzymać te elitarne korzyści!</string>
+    <string name="subscribe_prompt">Subskrybuj aby uzyskać te użyteczne korzyści:</string>
     <string name="subscribe_listitem1">Złoto na Klejnoty</string>
     <string name="subscribe_listitem2">Mistyczne Klepsydry</string>
     <string name="subscribe_listitem3">Comiesięczne Przedmioty Mistyczne</string>
@@ -672,7 +672,7 @@
     <string name="party_invite_short">Zaproś Znajomych</string>
     <string name="login_incentive_short">Odwiedzaj Habitica regularnie</string>
     <string name="gold_capitalilzed">Złoto</string>
-    <string name="create_account_short">utwórz konto</string>
+    <string name="create_account_short">stwórz konto</string>
     <string name="login_incentive_short_count">%d Wizyt</string>
     <string name="subscribe_listitem5">Podwój Łup</string>
     <string name="subscribe_listitem3_description_new">Subskrybuj teraz, aby zdobyć %s i otrzymywać nowe przedmioty każdego miesiąca!</string>
