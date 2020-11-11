@@ -747,4 +747,8 @@
     <string name="daily_tip_2">Możesz zmienić to jak często powtarza się każde zadanie codzienne. Nawet rzadko wykonywane zadania mogą być zaplanowane.</string>
     <string name="daily_tip_4">Okresowa re-ewaluacja Twoich zadań może Ci pomóc trzymać się obranej ścieżki.</string>
     <string name="daily_tip_3">Możesz również planować przypomnienia dla zadań codziennych.</string>
+    <string name="week_reminder_text">Przerwy są zdrowie, ale nadal możesz zyskać punkty za proste czynności, aby podnieść swój poziom i zdobyć fajny sprzęt!</string>
+    <string name="reset_streak">Zresetuj serię</string>
+    <string name="daily_tip_9">Jeśli jest Ci trudno, spróbuj podzielić swoje zadania na mniejsze części.</string>
+    <string name="daily_tip_6">Spróbuj ustawić minutnik na 10 minut i zobaczyć jak dużo dasz radę w tym czasie zrobić!</string>
 </resources>
