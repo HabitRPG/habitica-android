@@ -737,7 +737,7 @@
     <string name="old_password">Stare hasło</string>
     <string name="task_title">Nazwa zadania</string>
     <string name="add_local_authentication">Dodaj lokalne uwierzytelnianie</string>
-    <string name="daily_tip_1">Dodawaj listy kontrolne do swoich ToDo\'sów, aby zwielokrotniać swoje nagrody!</string>
+    <string name="daily_tip_1">Dodawaj checklisty do swoich ToDo\'sów, aby pomnożyć swoje nagrody!</string>
     <string name="daily_tip_0">Chcesz spróbować czegoś nowego\? Dołącz do wyzwania, żeby powiększyć swoją listę zadań i wygrać trochę klejnotów!</string>
     <string name="same_day_reminder_text">Im więcej dodasz, tym bardziej będziesz nagradzany. Nawet małe nawyki sumują się do wielkiej zmiany.</string>
     <string name="same_day_reminder_title">Czy dodałeś już swoje zadania\?</string>
