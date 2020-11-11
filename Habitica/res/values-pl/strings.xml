@@ -567,7 +567,7 @@
     <string name="username_not_confirmed">Nazwa użytkownika nie została potwierdzona</string>
     <string name="username_confirmed">Nazwa użytkownika została potwierdzona</string>
     <string name="username_copied">Nazwa użytkownika została skopiowana do schowka</string>
-    <string name="setup_task_join_habitica">Dołączyć do Habitiki (Odznacz mnie!)</string>
+    <string name="setup_task_join_habitica">Dołącz do Habitiki (Odznacz mnie!)</string>
     <string name="visit_website">odwiedź stronę</string>
     <string name="send_gift">Wyślij prezent</string>
     <string name="server">Serwer</string>
@@ -742,7 +742,7 @@
     <string name="same_day_reminder_text">Im więcej dodasz, tym bardziej będziesz nagradzany. Nawet małe nawyki sumują się do wielkiej zmiany.</string>
     <string name="same_day_reminder_title">Czy dodałeś już swoje zadania\?</string>
     <string name="short_name">Nazwa skrócona</string>
-    <string name="next_day_reminder_text">Sporo jeszcze do odblokowania i odkrycia w miarę jak zdobywasz poziomy, więc trzymaj się swoich zadań i baw się dobrze!</string>
+    <string name="next_day_reminder_text">Jest sporo do odblokowania i odkrycia w miarę zdobywania nowych poziomów, więc nadążaj ze swoimi zadaniami i baw się dobrze!</string>
     <string name="unlock_attribute_points">Przypisywanie punktów atrybutów będzie odblokowane od poziomu 10</string>
     <string name="daily_tip_2">Możesz zmienić to jak często powtarza się każde zadanie codzienne. Nawet rzadko wykonywane zadania mogą być zaplanowane.</string>
     <string name="daily_tip_4">Okresowa re-ewaluacja Twoich zadań może Ci pomóc trzymać się obranej ścieżki.</string>
@@ -754,8 +754,8 @@
     <string name="daily_tip_7">Spróbuj przypiąć rzeczy ze sklepu do swoich nagród, aby się zmotywować by je zdobyć!</string>
     <string name="setup_task_reward_notes">Pooglądaj TV, zagraj w grę, zjedz przekąskę, Ty decydujesz!</string>
     <string name="setup_task_join_habitica_notes">Możesz ukończyć to zadanie ToDo, edytować je lub usunąć.</string>
-    <string name="display_name_length_error">Nazwa gracza musi mieć od 1 do 30 znaków</string>
-    <string name="welcomeNameTitle">Jak mamy Cię nazywać\?</string>
+    <string name="display_name_length_error">Nazwy gracza powinny mieć długość od 1 do 30 znaków</string>
+    <string name="welcomeNameTitle">Jak powinniśmy się do Ciebie zwracać\?</string>
     <string name="verification_pet">Jedna z tych maskotek-weteranów będzie na Ciebie czekać po tym jak skończysz potwierdzanie!</string>
     <string name="subscribe_gift_description">Czy chcesz podarować komuś korzyści subskrypcji\?</string>
     <string name="enter_recipient_username">Wprowadź @ nazwę użytkownika odbiorcy</string>
