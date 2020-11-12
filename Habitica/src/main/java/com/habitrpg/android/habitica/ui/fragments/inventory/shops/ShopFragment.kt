@@ -152,14 +152,15 @@ open class ShopFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
                 .map { shop1 ->
                     if (shop1.identifier == Shop.MARKET) {
                         val user = user
+                        val specialCategory = ShopCategory()
+                        specialCategory.text = getString(R.string.special)
                         if (user?.isValid == true && user.purchased?.plan?.isActive == true) {
-                            val specialCategory = ShopCategory()
-                            specialCategory.text = getString(R.string.special)
                             val item = ShopItem.makeGemItem(context?.resources)
                             item.limitedNumberLeft = user.purchased?.plan?.numberOfGemsLeft()
                             specialCategory.items.add(item)
-                            shop1.categories.add(specialCategory)
                         }
+                        specialCategory.items.add(ShopItem.makeFortifyItem(context?.resources))
+                        shop1.categories.add(specialCategory)
                     }
                     if (shop1.identifier == Shop.TIME_TRAVELERS_SHOP) {
                         formatTimeTravelersShop(shop1)

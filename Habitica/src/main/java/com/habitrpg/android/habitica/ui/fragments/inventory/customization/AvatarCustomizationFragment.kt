@@ -47,7 +47,7 @@ class AvatarCustomizationFragment : BaseMainFragment<FragmentRecyclerviewBinding
                 .flatMap { customization ->
                     if (customization.type == "background") {
                         userRepository.unlockPath(user, customization)
-                                .flatMap { userRepository.retrieveUser(false) }
+                                .flatMap { userRepository.retrieveUser(false, true, true) }
                     } else {
                         userRepository.useCustomization(user, customization.type ?: "", customization.category, customization.identifier ?: "")
                     }

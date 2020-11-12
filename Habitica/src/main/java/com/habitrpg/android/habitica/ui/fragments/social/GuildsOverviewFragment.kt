@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.ui.fragments.social
 
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.*
 import android.widget.TextView
@@ -90,6 +91,8 @@ class GuildsOverviewFragment : BaseMainFragment<FragmentGuildsOverviewBinding>()
         dialog.addButton(R.string.open_website, true, false) { _, _ ->
             val uriUrl = "https://habitica.com/groups/myGuilds".toUri()
             val launchBrowser = Intent(Intent.ACTION_VIEW, uriUrl)
+            val l = context.packageManager.queryIntentActivities(launchBrowser, PackageManager.MATCH_DEFAULT_ONLY)
+            launchBrowser.setPackage(l[0].activityInfo.processName)
             startActivity(launchBrowser)
         }
         dialog.addCloseButton()

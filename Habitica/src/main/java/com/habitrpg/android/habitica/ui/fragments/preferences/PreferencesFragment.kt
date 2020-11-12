@@ -70,6 +70,9 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
 
         classSelectionPreference = findPreference("choose_class")
 
+        val weekdayPreference = findPreference("FirstDayOfTheWeek") as? ListPreference
+        weekdayPreference?.summary = weekdayPreference?.entry
+
         serverUrlPreference = findPreference("server_url") as? ListPreference
         serverUrlPreference?.isVisible = false
         serverUrlPreference?.summary = preferenceManager.sharedPreferences.getString("server_url", "")

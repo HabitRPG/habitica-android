@@ -137,7 +137,7 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
             localRepository.executeTransaction {
                 val liveItem = localRepository.getLiveObject(ownedItem)
                 val liveUser = localRepository.getLiveObject(user)
-                liveItem?.numberOwned = 1 - (liveItem?.numberOwned ?: 0)
+                liveItem?.numberOwned = (liveItem?.numberOwned ?: 0) - 1
                 liveUser?.stats?.gp = (user.stats?.gp ?: 0.0) + item.value
             }
         }

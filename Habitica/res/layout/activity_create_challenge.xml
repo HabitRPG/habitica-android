@@ -107,7 +107,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="23dp"
                 android:text="@string/gem_reward"
-                android:textColor="#cc000000" />
+                android:textColor="@color/text_primary" />
 
             <TextView
                 style="@style/Caption3"
@@ -116,7 +116,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="23dp"
                 android:text="@string/gem_reward"
-                android:textColor="#f74e52"
+                android:textColor="@color/text_red"
                 android:visibility="gone"
                 tools:visibility="visible"/>
 
@@ -146,7 +146,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:inputType="number"
-                    android:textColor="#8a000000"
+                    android:textColor="@color/text_secondary"
                     android:text="0"
                     android:id="@+id/create_challenge_prize"
                     android:textAlignment="center" />
@@ -167,14 +167,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="26dp"
                 android:text="@string/location"
-                android:textColor="#cc000000" />
+                android:textColor="@color/text_primary" />
 
             <Spinner
                 android:id="@+id/challenge_location_spinner"
                 style="@android:style/Widget.Material.Spinner.Underlined"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#8a000000"
+                android:textColor="@color/text_secondary"
                 android:layout_marginTop="17dp" />
 
             <TextView
@@ -186,7 +186,7 @@
                 android:drawableEnd="@drawable/ic_info_outline_black_24dp"
                 android:gravity="center"
                 android:text="@string/short_name"
-                android:textColor="#cc000000" />
+                android:textColor="@color/text_primary" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
@@ -203,7 +203,7 @@
                     android:hint="@string/identify_your_challenge_with_a_tag"
                     android:maxLines="1"
                     android:textColor="@color/text_secondary"
-                    android:textColorHint="#61000000" />
+                    android:textColorHint="@color/text_ternary" />
             </com.google.android.material.textfield.TextInputLayout>
 
             </LinearLayout>
@@ -219,7 +219,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="23dp"
-                android:textColor="#f74e52"
+                android:textColor="@color/text_red"
                 android:text="@string/challenge_create_error_no_tasks"
                 android:visibility="gone"
                 tools:visibility="visible"/>

@@ -57,8 +57,6 @@
                 android:background="@color/transparent"
                 android:paddingStart="@dimen/spacing_large"
                 android:paddingEnd="@dimen/spacing_large"
-                android:paddingBottom="@dimen/spacing_large"
-                android:paddingTop="20dp"
                 android:textColorHint="@color/text_secondary"
                 />
         </com.google.android.material.textfield.TextInputLayout>
@@ -84,8 +82,6 @@
                     android:background="@color/transparent"
                     android:paddingStart="@dimen/spacing_large"
                     android:paddingEnd="@dimen/spacing_large"
-                    android:paddingBottom="@dimen/spacing_large"
-                    android:paddingTop="20dp"
                     android:textColorHint="@color/text_primary"
                     android:minLines="3"
                     android:gravity="top" />

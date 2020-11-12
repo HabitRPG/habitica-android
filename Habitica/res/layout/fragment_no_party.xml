@@ -81,8 +81,7 @@
                         android:id="@+id/createPartyButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        style="@style/HabiticaButton.Offset"
-                        android:background="@drawable/layout_rounded_bg_window"
+                        style="@style/HabiticaButton.Gray"
                         android:text="@string/create_party"
                         android:layout_marginTop="@dimen/spacing_large"/>
                 </LinearLayout>
@@ -115,8 +114,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="?colorAccent"
-                        style="@style/HabiticaButton.Offset"
-                        android:background="@drawable/layout_rounded_bg_window"
+                        style="@style/HabiticaButton.Gray"
                         android:layout_marginTop="@dimen/spacing_large"
                         android:layout_marginBottom="@dimen/spacing_large"/>
 

@@ -237,6 +237,7 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
                 partyId?.let { partyID ->
                     @Suppress("DEPRECATION")
                     socialRepository.cancelQuest(partyID)
+                            .flatMap { userRepository.retrieveUser() }
                             .subscribe({ getActivity()?.fragmentManager?.popBackStack() }, RxErrorHandler.handleEmptyError())
                 }
             }
@@ -252,6 +253,7 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
                     partyId?.let { partyID ->
                         @Suppress("DEPRECATION")
                         socialRepository.abortQuest(partyID)
+                                .flatMap { userRepository.retrieveUser() }
                                 .subscribe({ getActivity()?.fragmentManager?.popBackStack() }, RxErrorHandler.handleEmptyError())
                     }
                 }.setNegativeButton(R.string.no) { _, _ -> }

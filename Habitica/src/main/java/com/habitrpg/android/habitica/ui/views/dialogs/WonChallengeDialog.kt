@@ -10,10 +10,11 @@ import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 
 class WonChallengeDialog(context: Context) : HabiticaAlertDialog(context) {
     fun configure(data: ChallengeWonData?) {
-        if (data != null) {
+        if (data?.name != null) {
             additionalContentView?.findViewById<TextView>(R.id.description_view)?.text = context.getString(R.string.won_achievement_description, data.name)
-
-            addButton(context.getString(R.string.claim_x_gems, data.prize), true)
+        }
+        if ((data?.prize ?: 0) > 0) {
+            addButton(context.getString(R.string.claim_x_gems, data?.prize), true)
         } else {
             addButton(R.string.hurray, true)
         }

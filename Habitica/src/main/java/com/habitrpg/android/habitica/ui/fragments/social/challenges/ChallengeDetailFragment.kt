@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.fragments.social.challenges
 
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
@@ -26,10 +27,10 @@ import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.activities.ChallengeFormActivity
 import com.habitrpg.android.habitica.ui.activities.FullProfileActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
+import com.habitrpg.android.habitica.ui.helpers.EmojiParser
 import com.habitrpg.android.habitica.ui.helpers.setMarkdown
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
-import com.habitrpg.android.habitica.ui.helpers.EmojiParser
 import java.util.*
 import javax.inject.Inject
 
@@ -78,7 +79,7 @@ class ChallengeDetailFragment: BaseMainFragment<FragmentChallengeDetailBinding>(
             FullProfileActivity.open(leaderID)
         }
 
-        challengeID?.let {id ->
+        challengeID?.let { id ->
             compositeSubscription.add(challengeRepository.getChallenge(id)
                     .doOnNext {
                         set(it)
@@ -90,7 +91,7 @@ class ChallengeDetailFragment: BaseMainFragment<FragmentChallengeDetailBinding>(
                     .flatMap { creatorID ->
                         return@flatMap socialRepository.getMember(creatorID)
                     }
-                    .subscribe({ set(it)}, RxErrorHandler.handleEmptyError()))
+                    .subscribe({ set(it) }, RxErrorHandler.handleEmptyError()))
             compositeSubscription.add(challengeRepository.getChallengeTasks(id).subscribe({ taskList ->
                 binding?.taskGroupLayout?.removeAllViewsInLayout()
 
@@ -180,6 +181,8 @@ class ChallengeDetailFragment: BaseMainFragment<FragmentChallengeDetailBinding>(
         dialog.addButton(R.string.open_website, true, false) { _, _ ->
             val uriUrl = "https://habitica.com/challenges/${challengeID}".toUri()
             val launchBrowser = Intent(Intent.ACTION_VIEW, uriUrl)
+            val l = context.packageManager.queryIntentActivities(launchBrowser, PackageManager.MATCH_DEFAULT_ONLY)
+            launchBrowser.setPackage(l[0].activityInfo.processName)
             startActivity(launchBrowser)
         }
         dialog.addCloseButton()
@@ -187,7 +190,7 @@ class ChallengeDetailFragment: BaseMainFragment<FragmentChallengeDetailBinding>(
     }
 
     private fun refresh() {
-        challengeID?.let {id ->
+        challengeID?.let { id ->
             challengeRepository.retrieveChallenge(id)
                     .flatMap { challengeRepository.retrieveChallengeTasks(id) }
                     .subscribe({ }, RxErrorHandler.handleEmptyError(), { })
