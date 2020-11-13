@@ -238,7 +238,7 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
                     @Suppress("DEPRECATION")
                     socialRepository.cancelQuest(partyID)
                             .flatMap { userRepository.retrieveUser() }
-                            .subscribe({ getActivity()?.fragmentManager?.popBackStack() }, RxErrorHandler.handleEmptyError())
+                            .subscribe({ getActivity()?.supportFragmentManager?.popBackStack() }, RxErrorHandler.handleEmptyError())
                 }
             }
             alert.addButton(R.string.no, false)
@@ -254,7 +254,7 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
                         @Suppress("DEPRECATION")
                         socialRepository.abortQuest(partyID)
                                 .flatMap { userRepository.retrieveUser() }
-                                .subscribe({ getActivity()?.fragmentManager?.popBackStack() }, RxErrorHandler.handleEmptyError())
+                                .subscribe({ getActivity()?.supportFragmentManager?.popBackStack() }, RxErrorHandler.handleEmptyError())
                     }
                 }.setNegativeButton(R.string.no) { _, _ -> }
         builder.show()

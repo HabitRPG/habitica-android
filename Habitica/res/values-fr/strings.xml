@@ -733,7 +733,7 @@
     <string name="achievement_title">Vous avez obtenu un succès !</string>
     <string name="view_achievements">Voir les succès</string>
     <string name="see_what_s_new">Voir les nouveautés</string>
-    <string name="mystery_item_received">Vous ouvrez la boite et trouvez %@</string>
+    <string name="mystery_item_received">Vous ouvrez la boite et trouvez %s</string>
     <string name="removed_member">%s ne fait plus partie du groupe</string>
     <string name="transfer">Transférer</string>
     <string name="remove_member_confirm">Confirmez-vous vouloir retirer %s du groupe \?</string>

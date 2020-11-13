@@ -326,6 +326,7 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
         val fragment = ItemRecyclerFragment()
         fragment.itemType = "quests"
         fragment.itemTypeText = getString(R.string.quest)
+        fragment.isModal = true
         fragment.show(parentFragmentManager, "questDialog")
     }
 

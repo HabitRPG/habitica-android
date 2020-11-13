@@ -6,6 +6,7 @@ import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.preference.CheckBoxPreference
 import androidx.preference.ListPreference
@@ -54,11 +55,15 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
         super.onCreate(savedInstanceState)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        listView.itemAnimator = null
+    }
+
     override fun setupPreferences() {
         timePreference = findPreference("reminder_time") as? TimePreference
         val useReminder = preferenceManager.sharedPreferences.getBoolean("use_reminder", false)
         timePreference?.isEnabled = useReminder
-
 
         pushNotificationsPreference = findPreference("pushNotifications") as? PreferenceScreen
         val usePushNotifications = preferenceManager.sharedPreferences.getBoolean("usePushNotifications", true)
