@@ -27,7 +27,7 @@
     <string name="preference_push_received_a_private_message">Message privé reçu</string>
     <string name="preference_push_gifted_gems">Gemmes offertes</string>
     <string name="preference_push_gifted_subscription">Abonnement offert</string>
-    <string name="preference_push_invited_to_party">Invitation d\'une équipe</string>
+    <string name="preference_push_invited_to_party">Invitation dans une équipe</string>
     <string name="preference_push_invited_to_guild">Invitation dans une guilde</string>
     <string name="preference_push_your_quest_has_begun">Votre quête a commencé</string>
     <string name="preference_push_invited_to_quest">Invitation à une quête</string>
