@@ -162,7 +162,7 @@ class AvatarCustomizationFragment : BaseMainFragment<FragmentRecyclerviewBinding
         if (this.type == null || user.preferences == null) {
             return
         }
-        val prefs = this.user?.preferences
+        val prefs = user.preferences
         val activeCustomization = when (this.type) {
             "skin" -> prefs?.skin
             "shirt" -> prefs?.shirt
