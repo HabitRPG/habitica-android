@@ -324,7 +324,7 @@ class ChallengeFormActivity : BaseActivity() {
 
         locationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         compositeSubscription.add(socialRepository.getUserGroups("guild").zipWith(userRepository.getUser()
-                .map { "" }
+                .map { it.party?.id ?: "" }
                 .distinctUntilChanged()
                 .flatMap {
                     if (it.isBlank()) {

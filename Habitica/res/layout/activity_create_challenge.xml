@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="?attr/actionBarSize"
-            android:theme="@style/Toolbar"
+            android:theme="@style/Toolbar.Modern"
             app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"/>
 
@@ -49,6 +49,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColorHint="?textColorPrimaryDark"
+                app:boxBackgroundColor="@color/brand_background"
                 app:hintTextAppearance="@style/TextAppearance.AppCompat"
                 android:id="@+id/create_challenge_title_input_layout">
 
@@ -70,8 +71,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColorHint="?textColorPrimaryDark"
-
-                app:hintTextAppearance="@style/TextAppearance.AppCompat">
+                app:boxBackgroundColor="@color/brand_background"
+                app:hintTextAppearance="@style/TextAppearance.AppCompat"
+                android:layout_marginBottom="12dp"
+                android:layout_marginTop="12dp">
 
                 <EditText
                     android:layout_width="match_parent"
@@ -125,13 +128,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="28dp">
 
-                <Button
+                <ImageButton
                     android:id="@+id/challenge_add_gem_btn"
                     style="@style/Body1_Button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:drawableStart="@drawable/challenge_gem_add_button"/>
+                    android:tint="@color/brand_background"
+                    android:src="@drawable/challenge_gem_add_button"/>
 
                 <ImageView
                     android:id="@+id/gem_icon_view"
@@ -151,13 +155,14 @@
                     android:id="@+id/create_challenge_prize"
                     android:textAlignment="center" />
 
-                <Button
+                <ImageButton
                     android:id="@+id/challenge_remove_gem_btn"
                     style="@style/Body1_Button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:drawableEnd="@drawable/challenge_gem_remove_button"/>
+                    android:tint="@color/brand_background"
+                    android:src="@drawable/challenge_gem_remove_button"/>
 
             </LinearLayout>
 
@@ -191,7 +196,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
+                android:layout_marginTop="10dp"
                 android:id="@+id/create_challenge_tag_input_layout"
                 app:hintTextAppearance="@style/TextAppearance.AppCompat">
 
@@ -211,6 +216,7 @@
                 style="@style/Subheader2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:text="@string/tasks" />
 
             <TextView

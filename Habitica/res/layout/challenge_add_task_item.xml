@@ -4,12 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#FFF"
     android:orientation="vertical"
     android:gravity="center">
-
-
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="22dp"
@@ -17,12 +16,9 @@
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
         android:textAllCaps="false"
-        style="@style/Subheader2"
-        android:textColor="?colorAccent"
-        android:background="#f9f9f9"
+        style="@style/HabiticaButton.Gray"
         android:id="@+id/btn_add_task"
         tools:text="Add habit">
 
-    </Button>
-
+    </com.google.android.material.button.MaterialButton>
 </LinearLayout>
