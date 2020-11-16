@@ -119,6 +119,7 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : HabiticaAl
             val tagCheckbox = AppCompatCheckBox(context)
             tagCheckbox.text = tag.name
             tagCheckbox.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
+            tagCheckbox.isChecked = activeTags.contains(tag.id)
             tagCheckbox.setPadding(tagCheckbox.paddingLeft + leftPadding,
                     verticalPadding,
                     tagCheckbox.paddingRight,
@@ -235,7 +236,7 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : HabiticaAl
         for (tagId in this.activeTags) {
             val index = indexForId(tagId)
             if (index >= 0) {
-                (tagsList.getChildAt(index) as? CheckBox)?.isChecked = true
+                (tagsList.getChildAt(index) as? AppCompatCheckBox)?.isChecked = true
             }
         }
         filtersChanged()
