@@ -96,6 +96,14 @@ class ContentDeserializer : JsonDeserializer<ContentResult> {
         }
         result.appearances = context.deserialize(obj.get("appearances"), object : TypeToken<RealmList<Customization>>() {}.type)
         result.backgrounds = context.deserialize(obj.get("backgrounds"), object : TypeToken<RealmList<Customization>>() {}.type)
+        val noBackground = Customization()
+        noBackground.customizationSet = "incentiveBackgrounds"
+        noBackground.customizationSetName = "Login Incentive"
+        noBackground.identifier = ""
+        noBackground.price = 0
+        noBackground.type = "background"
+        noBackground.category = ""
+        result.backgrounds.add(noBackground)
 
         result.faq = context.deserialize(obj.get("faq"), object : TypeToken<RealmList<FAQArticle>>() {}.type)
         deserializeTrace.stop()
