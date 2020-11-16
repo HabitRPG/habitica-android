@@ -19,6 +19,7 @@ import com.habitrpg.android.habitica.models.responses.TaskDirection
 import com.habitrpg.android.habitica.models.tasks.ChecklistItem
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
+import com.habitrpg.android.habitica.ui.helpers.setParsedMarkdown
 import com.habitrpg.android.habitica.ui.views.HabiticaEmojiTextView
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -108,7 +109,9 @@ abstract class ChecklistedViewHolder(itemView: View, scoreTaskFunc: ((Task, Task
                                 .map { MarkdownParser.parseMarkdown(it) }
                                 .subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe({ textView?.text = it }, RxErrorHandler.handleEmptyError())
+                                .subscribe({
+                                    textView?.setParsedMarkdown(it)
+                                }, RxErrorHandler.handleEmptyError())
                     }
                     val checkmark = itemView?.findViewById<ImageView>(R.id.checkmark)
                     checkmark?.drawable?.setTintMode(PorterDuff.Mode.SRC_ATOP)
