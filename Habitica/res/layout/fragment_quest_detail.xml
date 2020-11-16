@@ -106,6 +106,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:visibility="gone"
+            android:gravity="center_vertical"
             android:padding="@dimen/content_border">
 
             <Button
@@ -131,6 +132,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:visibility="gone"
+            android:gravity="center_vertical"
             android:padding="@dimen/content_border">
             <Button
                 android:id="@+id/quest_begin_button"
