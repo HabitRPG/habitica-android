@@ -134,7 +134,7 @@ class YesterdailyDialog private constructor(context: Context, private val userRe
         val completed = !task.isDisplayedActive
         val checkmark = taskView.findViewById<View>(R.id.checkmark)
         val checkboxHolder = taskView.findViewById<View>(R.id.checkBoxHolder)
-        var checkboxBackground = taskView.findViewById<View>(R.id.checkbox_background)
+        val checkboxBackground = taskView.findViewById<View>(R.id.checkbox_background)
         checkmark?.visibility = if (completed) View.VISIBLE else View.GONE
         if (completed) {
             checkboxHolder.setBackgroundResource(R.color.window_background)
