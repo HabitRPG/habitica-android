@@ -846,4 +846,24 @@
     <string name="sent_card">%s 을(를) 보냈습니다</string>
     <string name="app_theme">어플 테마</string>
     <string name="delete_reminder">알림 삭제하기</string>
+    <string name="joinedChallengeTitle">도전에 참여했어요</string>
+    <string name="joinedGuildDescription">길드에 가입함으로써 해비티카의 사회생활에 뛰어들었어요!</string>
+    <string name="joinedGuildTitle">길드에 가입했어요</string>
+    <string name="triadBingoDescription">모든 펫을 찾고, 탑승펫으로 길들인 다음, 또다시 모든 펫을 찾으셔서 \"삼합 빙고\" 업적을 달성했습니다!</string>
+    <string name="triadBingoTitle">삼합 빙고</string>
+    <string name="mountMasterDescription">모든 탑승펫을 길들여서 \"탑승펫 마스터\" 업적을 달성했습니다!</string>
+    <string name="mountMasterTitle">탑승펫 마스터</string>
+    <string name="beastMasterDescription">모든 펫들을 모아서 “비스트 마스터” 업적을 달성했습니다!</string>
+    <string name="beastMasterTitle">비스트 마스터</string>
+    <string name="partyOnDescription">당신의 파티가 멤버 4명으로 자랐습니다!</string>
+    <string name="partyOnTitle">파티 즐기기</string>
+    <string name="partyUpDescription">파티멤버와 팀을 맺으셨습니다!</string>
+    <string name="partyUpTitle">파티 맺기</string>
+    <string name="achievement_title">업적을 달성했습니다!</string>
+    <string name="view_achievements">업적 보기</string>
+    <string name="see_what_s_new">새로운 내용 확인</string>
+    <string name="mystery_item_received">박스를 열어서 %s 을(를) 받았습니다</string>
+    <string name="removed_member">%s 이/가 그룹에서 퇴출되었습니다</string>
+    <string name="transfer">권한 이양</string>
+    <string name="remove_member_confirm">정말로 %s 를 그룹에서 퇴출시키겠습니까\?</string>
 </resources>
