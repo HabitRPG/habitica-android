@@ -866,4 +866,5 @@
     <string name="removed_member">%s 이/가 그룹에서 퇴출되었습니다</string>
     <string name="transfer">권한 이양</string>
     <string name="remove_member_confirm">정말로 %s 를 그룹에서 퇴출시키겠습니까\?</string>
+    <string name="inviteFriendTitle">친구를 초대했어요</string>
 </resources>
