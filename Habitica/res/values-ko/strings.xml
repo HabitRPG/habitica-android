@@ -520,7 +520,7 @@
     <string name="come_back_soon">어서 다시 만나요!</string>
     <string name="level">레벨</string>
     <string name="streak_label">21일 연속 콤보</string>
-    <string name="stats">스탯</string>
+    <string name="stats">능력치</string>
     <string name="fix_character_description">버그나 실수로 인해 캐릭터 수치가 잘못되었다면 여기에서 직접 재조정 하실 수 있습니다.</string>
     <string name="fix_character_values">캐릭터 수치 조정하기</string>
     <string name="saving">저장중</string>
@@ -790,7 +790,7 @@
     <string name="ago_1week">1주 전</string>
     <string name="ago_1month">1달 전</string>
     <string name="not_selected">선택되지 않음</string>
-    <string name="selected">정해짐</string>
+    <string name="selected">선택됨</string>
     <string name="off">끄기</string>
     <string name="on">켜기</string>
     <string name="remaining_hours">%d시간 남음</string>
@@ -899,4 +899,7 @@
     <string name="preference_push_party_activity">파티 활동</string>
     <string name="search">검색</string>
     <string name="complete">완료</string>
+    <string name="overview">개요</string>
+    <string name="health_points">체력</string>
+    <string name="stats_currency">능력치 &amp; 재산</string>
 </resources>
