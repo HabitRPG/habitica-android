@@ -288,7 +288,7 @@
     <string name="choose_recipient_title">메시지 받는 사람 선택</string>
     <string name="action_continue">계속</string>
     <string name="invited_to_party">파티에 참가 초대를 받았습니다!</string>
-    <string name="stats_widget_label">해비티카 통계</string>
+    <string name="stats_widget_label">해비티카 능력치</string>
     <string name="add_task">과제 추가</string>
     <string name="add_habit">습관 추가</string>
     <string name="add_daily">일일과제 추가</string>
@@ -867,4 +867,33 @@
     <string name="transfer">권한 이양</string>
     <string name="remove_member_confirm">정말로 %s 를 그룹에서 퇴출시키겠습니까\?</string>
     <string name="inviteFriendTitle">친구를 초대했어요</string>
+    <string name="reject">거부</string>
+    <string name="preference_push_unjoined_guild_mention">가입하지 않은 길드에서의 @멘션</string>
+    <string name="preference_push_joined_guild_mention">가입한 길드에서의 @멘션</string>
+    <string name="preference_push_party_mention">파티에서의 @멘션</string>
+    <string name="gems_to_gift">선물할 보석</string>
+    <string name="gift_gems_balance_subtitle">선물하기 원하는 보석의 갯수를 아래에 기입하거나 탭을 전환해서 구매하세요</string>
+    <string name="from_balance">잔고에서</string>
+    <string name="purchase">구매하기</string>
+    <string name="more_out_of_habitica">해비티카에서 더 많은 것을 얻으세요</string>
+    <string name="gift_gems_disclaimer">해비티카는 다른 사람에게 보석 선물하는 것을 절대 강제적으로 권유하지 않습니다. 보석을 구걸하는 행위는 커뮤니티 가이드라인에 위배되는 행위로 admin@habitica.com에 신고해주세요.</string>
+    <string name="gems_gift_description">반짝이는 보석 한아름을 다른 사람에게 선물하고 싶으신가요\?</string>
+    <string name="profile_gift_subscription">구독
+\n선물하기</string>
+    <string name="profile_gift_gems">보석
+\n선물하기</string>
+    <string name="profile_send_message">메시지
+\n보내기</string>
+    <string name="gift_gems">보석 선물하기</string>
+    <string name="see_other_options">다른 옵션 보기</string>
+    <string name="promo_subscription_buy_gems_description">골드로 보석을 구입하고, 매달 미스터리 아이템을 받고, 아이템 획득수를 늘리고 싶으시면 구독하세요!</string>
+    <string name="promo_subscription_buy_gems_prompt">보석이 필요하신가요\?</string>
+    <string name="search_hint">과제 검색하기</string>
+    <string name="repeat_daily">매일</string>
+    <string name="accept">수락</string>
+    <string name="equip_automatically">새 장비 자동 장착</string>
+    <string name="leave_challenges">도전 그만두기</string>
+    <string name="keep_challenges">도전과제 유지하기</string>
+    <string name="inviteFriendDescription">친구(들)을 초대해서 함께 모험에 뛰어들었어요!</string>
+    <string name="joinedChallengeDescription">도전에 뛰어들어 스스로를 시험했어요!</string>
 </resources>
