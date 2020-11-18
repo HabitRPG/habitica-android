@@ -790,7 +790,7 @@
     <string name="ago_1week">1주 전</string>
     <string name="ago_1month">1달 전</string>
     <string name="not_selected">선택되지 않음</string>
-    <string name="selected">선택됨</string>
+    <string name="selected">정해짐</string>
     <string name="off">끄기</string>
     <string name="on">켜기</string>
     <string name="remaining_hours">%d시간 남음</string>
@@ -896,4 +896,7 @@
     <string name="keep_challenges">도전과제 유지하기</string>
     <string name="inviteFriendDescription">친구(들)을 초대해서 함께 모험에 뛰어들었어요!</string>
     <string name="joinedChallengeDescription">도전에 뛰어들어 스스로를 시험했어요!</string>
+    <string name="preference_push_party_activity">파티 활동</string>
+    <string name="search">검색</string>
+    <string name="complete">완료</string>
 </resources>
