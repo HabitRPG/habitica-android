@@ -680,8 +680,8 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="daily_tip_7">Versuche Gegenstände aus dem Marktplatz an Deine Belohnungen anzuheften, um Dich zu motivieren sie Dir zu verdienen!</string>
     <string name="week_reminder_text">Pausen sind gesund, dennoch kannst Du mit einfachen Aufgaben Punkte verdienen um Level aufzusteigen und coole Ausrüstung zu bekommen!</string>
     <string name="usernamePromptBody">Loginnamen sind jetzt einzigartige Benutzernamen, welche neben Deinem Anzeigenamen sichtbar sind und für Einladungen, Chat @Erwähnungen und Nachrichten benutzt werden.</string>
-    <string name="usernamePromptWiki">Wenn Du mehr über diese Änderung erfahren möchtest, <a href="https://habitica.fandom.com/wiki/Player_Names">geh auf unsere Wiki.</a></string>
-    <string name="usernamePromptDisclaimer">Benutzernamen sollten mit unseren <a href="https://habitica.com/static/terms">Servicebedingungen</a> und <a href="https://habitica.com/static/community-guidelines">Community-Richtlinien</a> übereinstimmen. Falls Du vorher keinen Loginnamen festgelegt hast, wurde Dein Benutzername auto-generiert.</string>
+    <string name="usernamePromptWiki">Wenn Du mehr über diese Änderung erfahren möchtest, <a href="https://habitica.fandom.com/wiki/Player_Names">geh auf unser Wiki.</a></string>
+    <string name="usernamePromptDisclaimer">Benutzernamen sollten mit unseren <a href="https://habitica.com/static/terms">Servicebedingungen</a> und <a href="https://habitica.com/static/community-guidelines">Community-Richtlinien</a> übereinstimmen. Falls Du vorher keinen Login-Namen festgelegt hast, wurde Dein Benutzername automatisch generiert.</string>
     <string name="confirm_username_description">Das Bestätigen Deines Nutzernamens wird diesen für Einladungen, @Erwähnungen und Nachrichten öffentlich machen. Du kannst Deinen Benutzernamen jederzeit in den Einstellungen ändern.</string>
     <string name="equipment_str">STR:</string>
     <string name="equipment_con">CON:</string>
@@ -827,9 +827,9 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="confirm_deletion">Löschen bestätigen</string>
     <string name="switch_to_grid_view">Zur Kachelansicht wechseln</string>
     <string name="switch_to_list_view">Zur Listenansicht wechseln</string>
-    <string name="special_achievements">Spezielle Erfolge</string>
+    <string name="special_achievements">Besondere Erfolge</string>
     <string name="seasonal_achievements">Saisonale Erfolge</string>
-    <string name="basic_achievements">Einfache Erfolge</string>
+    <string name="basic_achievements">Elementare Erfolge</string>
     <string name="sidebar_achievements">Erfolge</string>
     <string name="take_me_back">Ich will zurück</string>
     <string name="unpin">Entfernen</string>
