@@ -983,8 +983,8 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="habitica_questions">Habitica Fragen</string>
     <string name="support">Support</string>
     <string name="manual_sync_restart_description">Manchmal aktualisiert die App Inhalte nicht automatisch. Versuche sie durch Ziehen zu aktualisieren oder schließe die App und öffne sie erneut.</string>
-    <string name="experience_description">Erfahrungspunkte zeigen Deinen Fortschritt und ermöglichen Dir, ein Level aufzusteigen. Du kannst hauptsächlich **EXP gewinnen**, indem Du Aufgaben erledigst oder Quests abschließt, aber es gibt auch einige Klassenfähigkeiten, die EXP geben. 
-\n 
+    <string name="experience_description">Erfahrungspunkte zeigen Deinen Fortschritt und ermöglichen Dir, ein Level aufzusteigen. Du kannst hauptsächlich **EXP gewinnen**, indem Du Aufgaben erledigst oder Quests abschließt, aber es gibt auch einige Klassenfähigkeiten, die EXP geben.
+\n
 \nSchwierigere Aufgaben und auch rot gefärbte Aufgaben geben Dir **mehr EXP**. Der **Intelligenz-Wert** erhöht Deinen EXP-Gewinn ebenfalls.</string>
     <string name="health_description">Dies stellt das Leben Deines Avatars dar. Eine Tagesaufgabe zu verpassen oder einer schlechten Gewohnheit nachzugehen **senkt Deine HP**.
 \n
@@ -995,10 +995,10 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="mana_description">Mana-Punkte werden mit dem Klassensystem ab Level 10 freigeschaltet und ermöglichen Dir **Fähigkeiten zu verwenden**, sobald Du ab Level 11 welche erlernt hast.
 \n
 \nBeim Tageswechsel wird täglich etwas **Mana aufgefüllt**, aber Du kannst mehr Mana dazugewinnen, indem Du Aufgaben erledigst oder Fähigkeiten eines Magiers anwendest.</string>
-    <string name="gold_description">Gold ist die **Hauptwährung** in Habitica und ermöglicht Dir, Ausrüstung, Quests, Gegenstände oder sogar maßgeschneiderte Belohnungen zu kaufen. 
-\n 
-\n**Verdiene Gold** durch das Abschließen von Quests oder mittels Klassenfähigkeiten. Höhere **Wahrnehmungswerte** erhöhen die Menge an Gold, die Du verdienst. 
-\n 
+    <string name="gold_description">Gold ist die **Hauptwährung** in Habitica und ermöglicht Dir, Ausrüstung, Quests, Gegenstände oder sogar maßgeschneiderte Belohnungen zu kaufen.
+\n
+\n**Verdiene Gold** durch das Abschließen von Quests oder mittels Klassenfähigkeiten. Höhere **Wahrnehmungswerte** erhöhen die Menge an Gold, die Du verdienst.
+\n
 \nWenn Du Habitica abonnierst, kannst Du mit Gold sogar eine gewisse, von der Dauer Deines Abonnements abhängige, Anzahl an Edelsteinen kaufen.</string>
     <string name="update_app_description">Wir lassen immer wieder neue Bugfixes raus. Deshalb solltest Du regelmäßig im Play-Store nach Aktualisierungen ausschau halten.</string>
     <string name="hourglasses_description">Mystische Sanduhren sind eine extrem seltene Währung, die Du nur durch ein Habitica-Abonnement von mindestens drei aufeinanderfolgenden Monaten erhalten kannst. Du brauchst die Sanduhren im Shop der Mystischen Zeitreisenden, um Ausrüstungssets aus vergangenen Zeiten zu kaufen, oder auch Haustiere, Reittiere, animierte Hintergründe oder spezielle Quests.
