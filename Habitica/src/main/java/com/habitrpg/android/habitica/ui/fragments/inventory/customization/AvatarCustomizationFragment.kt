@@ -42,7 +42,7 @@ class AvatarCustomizationFragment : BaseMainFragment<FragmentRecyclerviewBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-
+        showsBackButton = true
         compositeSubscription.add(adapter.getSelectCustomizationEvents()
                 .flatMap { customization ->
                     if (customization.type == "background") {
@@ -91,6 +91,7 @@ class AvatarCustomizationFragment : BaseMainFragment<FragmentRecyclerviewBinding
                 category = args.category
             }
         }
+        adapter.customizationType = type
 
         val layoutManager = GridLayoutManager(activity, 4)
         layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {

@@ -3,8 +3,12 @@ package com.habitrpg.android.habitica.helpers
 import android.content.Intent
 import androidx.core.os.bundleOf
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.events.ShowWonChallengeDialog
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
+import com.habitrpg.android.habitica.models.Notification
+import com.habitrpg.android.habitica.models.notifications.ChallengeWonData
 import com.habitrpg.android.habitica.models.user.User
+import org.greenrobot.eventbus.EventBus
 
 class NotificationOpenHandler {
 
@@ -64,6 +68,10 @@ class NotificationOpenHandler {
 
         private fun openSettingsScreen() {
             MainNavigationController.navigate(R.id.prefsActivity)
+        }
+
+        private fun displayWonChallengeNotificaiton(notification: Notification) {
+            EventBus.getDefault().post(ShowWonChallengeDialog(notification.id, notification.data as? ChallengeWonData))
         }
 
         private fun handleChatMessage(type: String?, groupID: String?) {

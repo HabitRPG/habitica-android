@@ -19,7 +19,8 @@
                 android:id="@+id/cancel_button"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_close_purple_300_24dp"
+                android:src="@drawable/ic_close_white_24dp"
+                android:tint="?colorPrimary"
                 style="@style/Base.Widget.AppCompat.Button.Borderless"
                 android:contentDescription="@string/cancel" />
             <Space
@@ -32,29 +33,26 @@
                 android:layout_height="wrap_content"
                 android:text="@string/create"
                 style="@style/HabiticaButton.Borderless"
-                android:textColor="?colorAccent"
+                android:textColor="?colorPrimary"
                 android:paddingEnd="@dimen/spacing_large"
                 android:paddingStart="@dimen/spacing_large"
                 android:minWidth="20dp"/>
         </LinearLayout>
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             app:hintTextAppearance="@style/TextAppearance.AppCompat"
             android:layout_marginTop="@dimen/spacing_small"
             android:layout_marginStart="@dimen/spacing_large"
             android:layout_marginEnd="@dimen/spacing_large"
-            android:background="@drawable/edittext"
             android:textColorHint="@color/text_primary">
-            <com.habitrpg.android.habitica.ui.views.HabiticaAutocompleteTextView
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/group_name_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:hint="@string/name"
-                android:textColor="@color/text_primary"
                 android:inputType="textCapSentences"
-                android:background="@color/transparent"
                 android:paddingStart="@dimen/spacing_large"
                 android:paddingEnd="@dimen/spacing_large"
                 android:textColorHint="@color/text_secondary"
@@ -63,28 +61,23 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 app:hintTextAppearance="@style/TextAppearance.AppCompat"
                 android:layout_marginTop="@dimen/spacing_large"
                 android:layout_marginStart="@dimen/spacing_large"
                 android:layout_marginEnd="@dimen/spacing_large"
-                android:background="@drawable/edittext"
                 android:textColorHint="@color/text_primary">
 
-                <com.habitrpg.android.habitica.ui.views.HabiticaAutocompleteTextView
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/group_description_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:hint="@string/description"
-                    android:textColor="@color/text_primary"
                     android:inputType="textCapSentences|textMultiLine"
-                    android:background="@color/transparent"
-                    android:paddingStart="@dimen/spacing_large"
-                    android:paddingEnd="@dimen/spacing_large"
                     android:textColorHint="@color/text_primary"
-                    android:minLines="3"
-                    android:gravity="top" />
+                    android:gravity="top"
+                    android:minLines="3" />
             </com.google.android.material.textfield.TextInputLayout>
 
 

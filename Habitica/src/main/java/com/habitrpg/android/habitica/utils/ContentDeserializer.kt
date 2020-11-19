@@ -102,7 +102,6 @@ class ContentDeserializer : JsonDeserializer<ContentResult> {
         noBackground.identifier = ""
         noBackground.price = 0
         noBackground.type = "background"
-        noBackground.category = ""
         result.backgrounds.add(noBackground)
 
         result.faq = context.deserialize(obj.get("faq"), object : TypeToken<RealmList<FAQArticle>>() {}.type)

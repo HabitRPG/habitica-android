@@ -19,7 +19,9 @@ import com.habitrpg.android.habitica.data.ChallengeRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.ActivityCreateChallengeBinding
+import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.extensions.getThemeColor
+import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.social.Group
@@ -27,10 +29,15 @@ import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.adapter.social.challenges.ChallengeTasksRecyclerViewAdapter
+import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengesOverviewFragmentDirections
 import com.habitrpg.android.habitica.ui.helpers.ToolbarColorHelper
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import io.reactivex.rxjava3.core.Flowable
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.lang.NumberFormatException
 import java.util.*
 import javax.inject.Inject
@@ -132,11 +139,22 @@ class ChallengeFormActivity : BaseActivity() {
                 createChallenge()
             }
 
-            compositeSubscription.add(observable.subscribe({
-                dialog.dismiss()
-                savingInProgress = false
-                finish()
-            }, { throwable ->
+            compositeSubscription.add(observable
+                    .flatMap {
+                        challengeId = it.id
+                        challengeRepository.retrieveChallenges(0, true)
+                    }
+                    .subscribe({
+                        dialog.dismiss()
+                        savingInProgress = false
+                        finish()
+                        if (!editMode) {
+                            GlobalScope.launch(context = Dispatchers.Main) {
+                                delay(500L)
+                                MainNavigationController.navigate(ChallengesOverviewFragmentDirections.openChallengeDetail(challengeId ?: ""))
+                            }
+                        }
+                    }, { throwable ->
                 dialog.dismiss()
                 savingInProgress = false
                 RxErrorHandler.reportError(throwable)
@@ -198,6 +216,7 @@ class ChallengeFormActivity : BaseActivity() {
         if (errorMessages.count() > 0) {
             val alert = HabiticaAlertDialog(this)
             alert.setMessage(errorMessages.joinToString("\n"))
+            alert.addCloseButton(true)
             alert.enqueue()
         }
         return errorMessages.size == 0

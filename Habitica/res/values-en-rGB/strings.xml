@@ -758,7 +758,7 @@
     <string name="keep_challenges">Keep Challenges</string>
     <string name="inviteFriendDescription">You invited a friend (or friends) who joined you on your adventure!</string>
     <string name="inviteFriendTitle">Invited a Friend</string>
-    <string name="joinedChallengeDescription">You put themselves to the test by joining a Challenge!</string>
+    <string name="joinedChallengeDescription">You put yourself to the test by joining a Challenge!</string>
     <string name="joinedChallengeTitle">Joined a Challenge</string>
     <string name="joinedGuildDescription">Ventured into the social side of Habitica by joining a Guild!</string>
     <string name="joinedGuildTitle">Joined a Guild</string>

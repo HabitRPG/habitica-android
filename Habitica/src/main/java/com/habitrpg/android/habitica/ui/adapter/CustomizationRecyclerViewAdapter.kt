@@ -25,10 +25,11 @@ import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.subjects.PublishSubject
 import java.util.*
 
-class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
+class CustomizationRecyclerViewAdapter() : androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
 
     var userSize: String? = null
     var hairColor: String? = null
+    var customizationType: String? = null
     var gemBalance: Int = 0
     var unsortedCustomizations: List<Customization> = ArrayList()
     var customizationList: MutableList<Any> = ArrayList()
@@ -61,7 +62,11 @@ class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerVi
                     .inflate(R.layout.customization_section_header, parent, false)
             SectionViewHolder(view)
         } else {
-            val viewID: Int = R.layout.customization_grid_item
+            val viewID: Int = if (customizationType == "background") {
+                R.layout.customization_grid_background_item
+            } else {
+                R.layout.customization_grid_item
+            }
 
             val view = LayoutInflater.from(parent.context).inflate(viewID, parent, false)
             CustomizationViewHolder(view)

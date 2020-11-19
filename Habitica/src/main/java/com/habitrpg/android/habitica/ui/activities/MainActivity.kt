@@ -364,6 +364,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
             val additionalData = HashMap<String, Any>()
             additionalData["identifier"] = identifier
             AmplitudeManager.sendEvent("open notification", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT, additionalData)
+            retrieveUser(true)
             NotificationOpenHandler.handleOpenedByNotification(identifier, intent, user)
         }
 

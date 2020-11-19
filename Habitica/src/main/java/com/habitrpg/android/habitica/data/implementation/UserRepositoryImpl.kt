@@ -136,7 +136,11 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
     override fun changeClass(selectedClass: String): Flowable<User> = apiClient.changeClass(selectedClass).flatMap { retrieveUser(false) }
 
     override fun unlockPath(user: User?, customization: Customization): Flowable<UnlockResponse> {
-        return apiClient.unlockPath(customization.path)
+        var path = customization.path
+        if (path.last() == '.' && customization.type == "background") {
+            path += user?.preferences?.background
+        }
+        return apiClient.unlockPath(path)
                 .doOnNext { unlockResponse ->
                     if (user == null) return@doOnNext
                     val copiedUser = localRepository.getUnmanagedCopy(user)
@@ -178,9 +182,8 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
     }
 
     override fun reroll(): Flowable<User> {
-        return apiClient.reroll().doOnNext {
-            localRepository.saveUser(it, false)
-        }
+        return apiClient.reroll()
+                .flatMap { retrieveUser(true, true, true) }
     }
 
     override fun readNotifications(notificationIds: Map<String, List<String>>): Flowable<List<Any>> =

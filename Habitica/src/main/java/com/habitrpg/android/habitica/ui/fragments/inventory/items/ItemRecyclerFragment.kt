@@ -99,7 +99,7 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
                         .flatMap { socialRepository.retrieveGroup("party") }
                         .subscribe({
                             if (isModal) {
-                                activity?.supportFragmentManager?.popBackStack()
+                                dismiss()
                             } else {
                                 MainNavigationController.navigate(R.id.partyFragment)
                             }

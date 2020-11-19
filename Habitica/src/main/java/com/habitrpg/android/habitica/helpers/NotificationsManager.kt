@@ -72,6 +72,29 @@ class NotificationsManager (private val context: Context) {
                         Notification.Type.ACHIEVEMENT_CHALLENGE_JOINED.type -> displayAchievementNotification(it)
                         Notification.Type.ACHIEVEMENT_INVITED_FRIEND.type -> displayAchievementNotification(it)
                         Notification.Type.WON_CHALLENGE.type -> displayWonChallengeNotificaiton(it)
+
+                        Notification.Type.ACHIEVEMENT_ALL_YOUR_BASE.type -> displayWonChallengeNotificaiton(it)
+                        Notification.Type.ACHIEVEMENT_BACK_TO_BASICS.type -> displayWonChallengeNotificaiton(it)
+                        Notification.Type.ACHIEVEMENT_JUST_ADD_WATER.type -> displayWonChallengeNotificaiton(it)
+                        Notification.Type.ACHIEVEMENT_LOST_MASTERCLASSER.type -> displayWonChallengeNotificaiton(it)
+                        Notification.Type.ACHIEVEMENT_MIND_OVER_MATTER.type -> displayWonChallengeNotificaiton(it)
+                        Notification.Type.ACHIEVEMENT_DUST_DEVIL.type -> displayWonChallengeNotificaiton(it)
+                        Notification.Type.ACHIEVEMENT_ARID_AUTHORITY.type -> displayWonChallengeNotificaiton(it)
+                        Notification.Type.ACHIEVEMENT_MONSTER_MAGUS.type -> displayWonChallengeNotificaiton(it)
+                        Notification.Type.ACHIEVEMENT_UNDEAD_UNDERTAKER.type -> displayWonChallengeNotificaiton(it)
+                        Notification.Type.ACHIEVEMENT_PRIMED_FOR_PAINTING.type -> displayWonChallengeNotificaiton(it)
+                        Notification.Type.ACHIEVEMENT_PEARLY_PRO.type -> displayWonChallengeNotificaiton(it)
+                        Notification.Type.ACHIEVEMENT_TICKLED_PINK.type -> displayWonChallengeNotificaiton(it)
+                        Notification.Type.ACHIEVEMENT_ROSY_OUTLOOK.type -> displayWonChallengeNotificaiton(it)
+                        Notification.Type.ACHIEVEMENT_BUG_BONANZA.type -> displayWonChallengeNotificaiton(it)
+                        Notification.Type.ACHIEVEMENT_BARE_NECESSITIES.type -> displayWonChallengeNotificaiton(it)
+                        Notification.Type.ACHIEVEMENT_FRESHWATER_FRIENDS.type -> displayWonChallengeNotificaiton(it)
+                        Notification.Type.ACHIEVEMENT_GOOD_AS_GOLD.type -> displayWonChallengeNotificaiton(it)
+                        Notification.Type.ACHIEVEMENT_ALL_THAT_GLITTERS.type -> displayWonChallengeNotificaiton(it)
+                        Notification.Type.ACHIEVEMENT_GOOD_AS_GOLD.type -> displayWonChallengeNotificaiton(it)
+                        Notification.Type.ACHIEVEMENT_BONE_COLLECTOR.type -> displayWonChallengeNotificaiton(it)
+                        Notification.Type.ACHIEVEMENT_SKELETON_CREW.type -> displayWonChallengeNotificaiton(it)
+
                         Notification.Type.ACHIEVEMENT_GENERIC.type -> displayAchievementNotification(it, notifications.find { notif ->
                             notif.type == Notification.Type.ACHIEVEMENT_ONBOARDING_COMPLETE.type
                         } != null)
@@ -89,7 +112,7 @@ class NotificationsManager (private val context: Context) {
         return true
     }
 
-    private fun displayWonChallengeNotificaiton(notification: Notification): Any {
+    private fun displayWonChallengeNotificaiton(notification: Notification): Boolean {
         EventBus.getDefault().post(ShowWonChallengeDialog(notification.id, notification.data as? ChallengeWonData))
         return true
     }

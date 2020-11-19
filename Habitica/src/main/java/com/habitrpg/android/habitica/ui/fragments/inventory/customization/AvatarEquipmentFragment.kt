@@ -40,6 +40,7 @@ class AvatarEquipmentFragment : BaseMainFragment<FragmentRecyclerviewBinding>() 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
+        showsBackButton = true
         compositeSubscription.add(adapter.getSelectCustomizationEvents()
                 .flatMap { equipment ->
                     val key = (if (equipment.key?.isNotBlank() != true) activeEquipment else equipment.key) ?: ""

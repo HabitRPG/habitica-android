@@ -550,6 +550,7 @@
     <string name="quest_leader_header">Started by %s</string>
     <string name="quest_abort_message">Are you sure you want to abort this mission? It will abort it for everyone in your party and all progress will be lost. The quest scroll will be returned to the quest owner.</string>
     <string name="reloading_content">Reloading Content</string>
+    <string name="reloaded_content">Reloaded Content</string>
     <string name="thousand_abbrev">k</string>
     <string name="million_abbrev">m</string>
     <string name="billion_abbrev">b</string>
@@ -876,7 +877,7 @@
     <string name="joinedGuildTitle">Joined a Guild</string>
     <string name="joinedGuildDescription">Ventured into the social side of Habitica by joining a Guild!</string>
     <string name="joinedChallengeTitle">Joined a Challenge</string>
-    <string name="joinedChallengeDescription">You put themselves to the test by joining a Challenge!</string>
+    <string name="joinedChallengeDescription">You put yourself to the test by joining a Challenge!</string>
     <string name="inviteFriendTitle">Invited a Friend</string>
     <string name="inviteFriendDescription">You invited a friend (or friends) who joined you on your adventure!</string>
     <string name="keep_challenges">Keep Challenges</string>
@@ -1124,7 +1125,7 @@
     <string name="hurray">Hurray!</string>
     <string name="you_won_challenge">You won a Challenge</string>
     <string name="congratulations">Congratulations!</string>
-    <string name="won_achievement_description">%s selected you as the winner! Your win has been recorded in your Achievements.</string>
+    <string name="won_achievement_description"><b>%s</b> selected you as the winner! Your win has been recorded in your Achievements.</string>
     <string name="won_achievement_description_noname">You were selected as the winner! Your win has been recorded in your Achievements.</string>
     <string name="claim_x_gems">Claim %d Gems</string>
 </resources>

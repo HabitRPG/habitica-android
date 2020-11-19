@@ -101,13 +101,6 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
         recyclerAdapter = adapter as? TaskRecyclerViewAdapter
         binding?.recyclerView?.adapter = adapter
 
-        if (this.classType != null) {
-            compositeSubscription.add(taskRepository.getTasks(this.classType ?: "", userID).subscribe({
-                this.recyclerAdapter?.updateUnfilteredData(it)
-                this.recyclerAdapter?.filter()
-            }, RxErrorHandler.handleEmptyError()))
-        }
-
         context?.let { recyclerAdapter?.taskDisplayMode = configManager.taskDisplayMode(it) }
     }
 
@@ -262,6 +255,11 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
                     ?.flatMap { taskRepository.scoreChecklistItem(it.first.id ?: "", it.second.id ?: "")
                     }?.subscribeWithErrorHandler {}?.let { compositeSubscription.add(it) }
             recyclerAdapter?.brokenTaskEvents?.subscribeWithErrorHandler { showBrokenChallengeDialog(it) }?.let { compositeSubscription.add(it) }
+
+            compositeSubscription.add(taskRepository.getTasks(this.classType ?: "", userID).subscribe({
+                this.recyclerAdapter?.updateUnfilteredData(it)
+                this.recyclerAdapter?.filter()
+            }, RxErrorHandler.handleEmptyError()))
         }
 
         val bottomPadding = ((binding?.recyclerView?.paddingBottom ?: 0) + TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 60f, resources.displayMetrics)).toInt()
@@ -299,11 +297,15 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
                 dialog.setMessage(it.getString(R.string.broken_challenge_description, taskCount))
                 dialog.addButton(it.getString(R.string.keep_x_tasks, taskCount), true) { _, _ ->
                     if (!task.isValid) return@addButton
-                    taskRepository.unlinkAllTasks(task.challengeID, "keep-all").subscribe({}, RxErrorHandler.handleEmptyError())
+                    taskRepository.unlinkAllTasks(task.challengeID, "keep-all")
+                            .flatMap { userRepository.retrieveUser(true) }
+                            .subscribe({}, RxErrorHandler.handleEmptyError())
                 }
                 dialog.addButton(it.getString(R.string.delete_x_tasks, taskCount), false, true) { _, _ ->
                     if (!task.isValid) return@addButton
-                    taskRepository.unlinkAllTasks(task.challengeID, "remove-all").subscribe({}, RxErrorHandler.handleEmptyError())
+                    taskRepository.unlinkAllTasks(task.challengeID, "remove-all")
+                            .flatMap { userRepository.retrieveUser(true) }
+                            .subscribe({}, RxErrorHandler.handleEmptyError())
                 }
                 dialog.setExtraCloseButtonVisibility(View.VISIBLE)
                 dialog.show()

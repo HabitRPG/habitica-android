@@ -138,6 +138,10 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                 event.type = HabiticaSnackbar.SnackbarDisplayType.NORMAL
                 EventBus.getDefault().post(event)
                 contentRepository.retrieveContent(context,true).subscribe({
+                    val completedEvent = ShowSnackbarEvent()
+                    completedEvent.text = context?.getString(R.string.reloaded_content)
+                    completedEvent.type = HabiticaSnackbar.SnackbarDisplayType.SUCCESS
+                    EventBus.getDefault().post(completedEvent)
                 }, RxErrorHandler.handleEmptyError())
             }
             "fixCharacterValues" -> {
@@ -230,6 +234,10 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                 findPreference(key).summary = sharedPreferences.getString(key, "")
             }
             "task_display" -> {
+                val preference = findPreference(key) as ListPreference
+                preference.summary = preference.entry
+            }
+            "FirstDayOfTheWeek" -> {
                 val preference = findPreference(key) as ListPreference
                 preference.summary = preference.entry
             }
