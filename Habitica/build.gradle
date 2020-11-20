@@ -16,7 +16,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.1.0'
+        classpath 'com.android.tools.build:gradle:4.1.1'
         classpath('com.noveogroup.android:check:1.2.5') {
             exclude module: 'checkstyle'
             exclude module: 'pmd-java'
@@ -150,7 +150,7 @@ android {
         buildConfigField "String", "TESTING_LEVEL", "\"production\""
         resConfigs "en", "bg", "de", "en-rGB", "es", "fr", "hr-rHR", "in", "it", "iw", "ja", "ko", "lt", "nl", "pl", "pt-rBR", "pt-rPT", "ru", "tr", "zh", "zh-rTW"
 
-        versionCode 2644
+        versionCode 2647
         versionName "3.1"
     }
 

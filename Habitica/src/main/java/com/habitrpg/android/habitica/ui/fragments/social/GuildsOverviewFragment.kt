@@ -92,7 +92,8 @@ class GuildsOverviewFragment : BaseMainFragment<FragmentGuildsOverviewBinding>()
             val uriUrl = "https://habitica.com/groups/myGuilds".toUri()
             val launchBrowser = Intent(Intent.ACTION_VIEW, uriUrl)
             val l = context.packageManager.queryIntentActivities(launchBrowser, PackageManager.MATCH_DEFAULT_ONLY)
-            launchBrowser.setPackage(l[0].activityInfo.processName)
+            val notHabitica = l.first { !it.activityInfo.processName.contains("habitica") }
+            launchBrowser.setPackage(notHabitica.activityInfo.processName)
             startActivity(launchBrowser)
         }
         dialog.addCloseButton()

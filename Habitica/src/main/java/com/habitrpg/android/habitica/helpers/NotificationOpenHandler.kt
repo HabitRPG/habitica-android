@@ -70,10 +70,6 @@ class NotificationOpenHandler {
             MainNavigationController.navigate(R.id.prefsActivity)
         }
 
-        private fun displayWonChallengeNotificaiton(notification: Notification) {
-            EventBus.getDefault().post(ShowWonChallengeDialog(notification.id, notification.data as? ChallengeWonData))
-        }
-
         private fun handleChatMessage(type: String?, groupID: String?) {
             when (type) {
                 "party" -> MainNavigationController.navigate(R.id.partyFragment)

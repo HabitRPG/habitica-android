@@ -134,7 +134,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     var drawerToggle: ActionBarDrawerToggle? = null
     private var resumeFromActivity = false
     private var userQuestStatus = UserQuestStatus.NO_QUEST
-    private var hasHandledNotificationOpen = false
+    private var lastNotificationOpen: Int? = null
 
     val userID: String
         get() = user?.id ?: ""
@@ -358,8 +358,8 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
             putBoolean("preventDailyReminder", false)
         }
 
-        if (intent.hasExtra("notificationIdentifier") && !hasHandledNotificationOpen) {
-            hasHandledNotificationOpen = true
+        if (intent.hasExtra("notificationIdentifier") && lastNotificationOpen != intent.getIntExtra("notificationTimeStamp", 0)) {
+            lastNotificationOpen = intent.getIntExtra("notificationTimeStamp", 0)
             val identifier = intent.getStringExtra("notificationIdentifier") ?: ""
             val additionalData = HashMap<String, Any>()
             additionalData["identifier"] = identifier
