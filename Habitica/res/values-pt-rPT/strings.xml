@@ -704,4 +704,13 @@
     <string name="profile">Perfil</string>
     <string name="ok">Ok</string>
     <string name="forgot_password_confirmation">Se tivermos o teu e-mail no banco de dados, foram enviadas para o teu e-mail instruções para escolher uma nova senha.</string>
+    <string name="event">Evento</string>
+    <string name="member_group_plan">Membro de um Plano de Grupo</string>
+    <string name="member">Membro</string>
+    <string name="owner">Dono</string>
+    <string name="group_plan">Plano de Grupo</string>
+    <string name="subscription_credit">Crédito de Subscrição</string>
+    <string name="save_20">Economize 20%</string>
+    <string name="renew_subscription">Renovar Subscrição</string>
+    <string name="thanks_for_subscribing">Obrigado por subscrever-se</string>
 </resources>
