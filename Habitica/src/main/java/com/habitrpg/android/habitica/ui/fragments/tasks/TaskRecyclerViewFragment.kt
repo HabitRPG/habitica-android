@@ -290,7 +290,7 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
             if (!task.isValid) {
                 return
             }
-            taskRepository.getTasksForChallenge(task.challengeID).subscribe({ tasks ->
+            taskRepository.getTasksForChallenge(task.challengeID).firstElement().subscribe({ tasks ->
                 val taskCount = tasks.size
                 val dialog = HabiticaAlertDialog(it)
                 dialog.setTitle(R.string.broken_challenge)

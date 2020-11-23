@@ -138,6 +138,7 @@ override fun getUser(userID: String): Flowable<User> {
         val habitClass = if (user.preferences?.disableClasses == true) "none" else user.stats?.habitClass
         return RxJavaBridge.toV3Flowable(realm.where(Skill::class.java)
                 .equalTo("habitClass", habitClass)
+                .sort("lvl")
                 .findAll()
                 .asFlowable()
                 .filter { it.isLoaded })

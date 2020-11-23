@@ -1125,7 +1125,7 @@
     <string name="hurray">Hurray!</string>
     <string name="you_won_challenge">You won a Challenge</string>
     <string name="congratulations">Congratulations!</string>
-    <string name="won_achievement_description"><b>%s</b> selected you as the winner! Your win has been recorded in your Achievements.</string>
+    <string name="won_achievement_description"><![CDATA[<b>%s</b> selected you as the winner! Your win has been recorded in your Achievements.]]></string>
     <string name="won_achievement_description_noname">You were selected as the winner! Your win has been recorded in your Achievements.</string>
     <string name="claim_x_gems">Claim %d Gems</string>
 </resources>

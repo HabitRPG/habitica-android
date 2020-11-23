@@ -47,6 +47,7 @@ import com.habitrpg.android.habitica.models.Notification
 import com.habitrpg.android.habitica.models.TutorialStep
 import com.habitrpg.android.habitica.models.inventory.Egg
 import com.habitrpg.android.habitica.models.inventory.HatchingPotion
+import com.habitrpg.android.habitica.models.notifications.ChallengeWonData
 import com.habitrpg.android.habitica.models.notifications.LoginIncentiveData
 import com.habitrpg.android.habitica.models.responses.MaintenanceResponse
 import com.habitrpg.android.habitica.models.responses.TaskScoringResult
@@ -76,6 +77,10 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.functions.Consumer
 import io.reactivex.rxjava3.schedulers.Schedulers
 import io.realm.kotlin.isValid
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import java.util.*
@@ -377,6 +382,23 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         if (binding.toolbarTitle.text?.isNotBlank() != true) {
             navigationController.currentDestination?.let { updateToolbarTitle(it, null) }
         }
+
+        val alert1 = HabiticaAlertDialog(this)
+        alert1.setTitle("1")
+        alert1.addCloseButton()
+        alert1.enqueue()
+        val alert2 = HabiticaAlertDialog(this)
+        alert2.setTitle("2")
+        alert2.addCloseButton()
+        alert2.enqueue()
+        GlobalScope.launch(context = Dispatchers.Main) {
+            delay(500L)
+            val alert3 = HabiticaAlertDialog(this@MainActivity)
+            alert3.setTitle("3")
+            alert3.addCloseButton()
+            alert3.enqueue()
+        }
+
     }
 
     override fun onPause() {

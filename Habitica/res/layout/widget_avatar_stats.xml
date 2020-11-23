@@ -193,7 +193,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textSize="14sp"
-            android:textColor="@color/textColorSecondaryDark" />
+            android:textColor="?textColorSecondaryDark" />
         <TextView
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -212,7 +212,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
-                android:textColor="@color/textColorSecondaryDark"
+                android:textColor="?textColorSecondaryDark"
                 style="@style/CurrencyTextView"
                 />
 
@@ -226,7 +226,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
-                android:textColor="@color/textColorSecondaryDark"
+                android:textColor="?textColorSecondaryDark"
                 style="@style/CurrencyTextView"
                 />
 
@@ -239,7 +239,7 @@
                 android:id="@+id/gold_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/textColorSecondaryDark"
+                android:textColor="?textColorSecondaryDark"
                 style="@style/CurrencyTextView"
                 />
         </LinearLayout>

@@ -13,6 +13,9 @@ import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 
 class WonChallengeDialog(context: Context) : HabiticaAlertDialog(context) {
     fun configure(data: ChallengeWonData?) {
+        val imageView = additionalContentView?.findViewById<SimpleDraweeView>(R.id.achievement_view);
+        DataBindingUtils.loadImage(imageView, "achievement-karaoke-2x")
+
         if (data?.name != null) {
             additionalContentView?.findViewById<TextView>(R.id.description_view)?.text = context.getString(R.string.won_achievement_description, data.name).fromHtml()
         }
@@ -30,9 +33,6 @@ class WonChallengeDialog(context: Context) : HabiticaAlertDialog(context) {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as? LayoutInflater
         val view = inflater?.inflate(R.layout.dialog_won_challenge, null)
         setTitle(R.string.you_won_challenge)
-
-        DataBindingUtils.loadImage(view?.findViewById(R.id.achievement_view), "achievement-karaoke2x")
-
         setAdditionalContentView(view)
     }
 }
