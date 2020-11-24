@@ -54,6 +54,8 @@ class YesterdailyDialog private constructor(context: Context, private val userRe
         if (inflater != null) {
             createTaskViews(inflater)
         }
+
+        dialogWidth = 360.dpToPx(context)
     }
 
     override fun onAttachedToWindow() {

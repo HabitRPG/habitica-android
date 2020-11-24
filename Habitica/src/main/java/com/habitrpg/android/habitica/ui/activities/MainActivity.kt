@@ -382,23 +382,6 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         if (binding.toolbarTitle.text?.isNotBlank() != true) {
             navigationController.currentDestination?.let { updateToolbarTitle(it, null) }
         }
-
-        val alert1 = HabiticaAlertDialog(this)
-        alert1.setTitle("1")
-        alert1.addCloseButton()
-        alert1.enqueue()
-        val alert2 = HabiticaAlertDialog(this)
-        alert2.setTitle("2")
-        alert2.addCloseButton()
-        alert2.enqueue()
-        GlobalScope.launch(context = Dispatchers.Main) {
-            delay(500L)
-            val alert3 = HabiticaAlertDialog(this@MainActivity)
-            alert3.setTitle("3")
-            alert3.addCloseButton()
-            alert3.enqueue()
-        }
-
     }
 
     override fun onPause() {

@@ -33,6 +33,7 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
     }
     var isCelebratory: Boolean = false
     private val view: RelativeLayout = LayoutInflater.from(context).inflate(R.layout.dialog_habitica_base, null) as RelativeLayout
+    private val dialogWrapper: LinearLayout
     private val dialogContainer: LinearLayout
     private var titleTextView: TextView
     private var messageTextView: TextView
@@ -60,8 +61,17 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
         updateButtonLayout()
     }
 
+    var dialogWidth = 320
+    set(value) {
+        field = value
+        val layoutParams = dialogWrapper.layoutParams
+        layoutParams.width = value
+        dialogWrapper.layoutParams = layoutParams
+    }
+
     init {
         setView(view)
+        dialogWrapper = view.findViewById(R.id.dialog_wrapper)
         dialogContainer = view.findViewById(R.id.dialog_container)
         titleTextView = view.findViewById(R.id.titleTextView)
         messageTextView = view.findViewById(R.id.messageTextView)
