@@ -521,7 +521,7 @@
     <string name="empty_description_todos">To-Do\'s är uppgifter som bara behöver göras en gång. Lägg till checklistor i dina To-Do\'s för att öka på värdet.</string>
     <string name="empty_title_rewards">Du har inga Belöningar</string>
     <string name="reset_walkthrough">Återställ Justins genomgång</string>
-    <string name="read_community_guidelines">Snälla läs Gemenskapens Riktlinjer innan du du gör ett inlägg</string>
+    <string name="read_community_guidelines">Snälla läs <u>Gemenskapens Riktlinjer</u> innan du du gör ett inlägg</string>
     <string name="maintenance">Underhåll</string>
     <string name="reload_content">Ladda om innehåll</string>
     <string name="repeat_summary">Repeterar %1$s varje %2$s %3$s %4$s</string>
