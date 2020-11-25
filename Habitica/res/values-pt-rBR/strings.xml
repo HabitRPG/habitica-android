@@ -239,11 +239,12 @@
     <string name="notification_pet_fed">Você alimentou seu %s!</string>
     <string name="notification_purchase_reward">Você comprou uma recompensa</string>
     <string name="world_quest">Missão Global</string>
-    <string name="inn_description">Precisa de um descanso? Faça uma visita à Pousada do Daniel e pare algumas das mecânicas de jogo mais difíceis do Habitica.
-• Diárias não feitas não lhe causarão dano
-• As tarefas não vão perder seus combos ou decair de cor
-• Os Chefões não causarão dano pelas Diárias não feitas.
-• Seu dano no chefão ou items de Missão de coleta ficarão acumulados até o fim do dia</string>
+    <string name="inn_description">Precisa de um descanso\? Faça uma visita à Pousada do Daniel e pare algumas das mecânicas de jogo mais difíceis do Habitica.
+\n
+\n • Diárias não feitas não lhe causarão dano
+\n • As tarefas não vão perder seus combos ou decair de cor
+\n • Os Chefões não causarão dano pelas Diárias não feitas.
+\n • Seu dano no chefão ou items de Missão de coleta ficarão acumulados até o fim do dia</string>
     <string name="empty_items">Você não tem nenhum %s</string>
     <string name="user_level">Nível %d</string>
     <string name="user_level_with_class">Nível %1$d %2$s</string>
