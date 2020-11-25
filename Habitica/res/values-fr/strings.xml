@@ -941,16 +941,16 @@
     <string name="currency">Monnaie</string>
     <string name="premium_currency">Monnaie premium</string>
     <string name="standard">Standard</string>
-    <string name="stat_description">Tout le monde à Habitica dispose de quatre attributs qui affectent différents aspects du jeu. 
-\n 
-\nLa **force (FOR)** affecte les coups critiques et augmente les dégâts infligés aux boss de quêtes. les guerriers et les voleurs gagnent de la force grâce à leur équipement. 
-\n 
-\nLa **constitution (CON)** augmente vos points de vie et vous permet de résister aux dégâts. Les guérisseurs et les guerriers gagnent de la constitution grâce à leur équipement. 
-\n 
-\nL\'**intelligence (INT)** augmente la quantité d\'expérience et de mana que vous gagnez. Les mages et les guérisseurs gagent de l\'intelligence grâce à leur équipement. 
-\n 
-\nLa **perception (PER)** augmente la quantité d\'or et le taux de butin reçus. Les voleurs et les mages gagnent de la perception grâce à leur équipement. 
-\n 
+    <string name="stat_description">Tout le monde à Habitica dispose de quatre attributs qui affectent différents aspects du jeu.
+\n
+\nLa **force (FOR)** affecte les coups critiques et augmente les dégâts infligés aux boss de quêtes. les guerriers et les voleurs gagnent de la force grâce à leur équipement.
+\n
+\nLa **constitution (CON)** augmente vos points de vie et vous permet de résister aux dégâts. Les guérisseurs et les guerriers gagnent de la constitution grâce à leur équipement.
+\n
+\nL\'**intelligence (INT)** augmente la quantité d\'expérience et de mana que vous gagnez. Les mages et les guérisseurs gagent de l\'intelligence grâce à leur équipement.
+\n
+\nLa **perception (PER)** augmente la quantité d\'or et le taux de butin reçus. Les voleurs et les mages gagnent de la perception grâce à leur équipement.
+\n
 \nAprès le niveau 10, à chaque montée de niveau, vous gagnez 1 point d\'attribut que vous pouvez allouer à l\'attribut que vous souhaitez. Vous pouvez également porter de l\'équipement qui a différentes combinaisons d\'améliorations d\'attributs.</string>
     <string name="stat_allocation">Allocation des attributs</string>
     <string name="mana_description">Les points de mana sont débloqués avec le système de classe au niveau 10, et vous permettent d\'**utiliser des compétences** au fur et à mesure que vous les apprenez dès le niveau 11.
