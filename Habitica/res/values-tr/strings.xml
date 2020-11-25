@@ -890,12 +890,12 @@
     <string name="first_drop_explanation1">Görevleri tamamlamak sana yumurta, kuluçka iksirleri ve evcil hayvan yemi bulma şansı verir.</string>
     <string name="could_not_find_user">Kullanıcı bulunamadı</string>
     <string name="update_app_description">Habitica uygulamasında sürekli yeni düzeltmeler yapıyoruz, bu nedenle herhangi bir güncelleme olup olmadığını görmek için Play Store\'u kontrol ettiğinizden emin olun.</string>
-    <string name="gold_description"></string>
-    <string name="purchasedEquipmentTitle"></string>
+    <string name="gold_description"/>
+    <string name="purchasedEquipmentTitle"/>
     <string name="completedTaskTitle">Bir yapılacak iş tamamlandı</string>
     <string name="createdTaskTitle">İlk yapılacak işini oluşturdun</string>
     <string name="complete_task_title">Bir Görevi Tamamla</string>
-    <string name="stat_description"></string>
+    <string name="stat_description"/>
     <string name="common_fixes">Yaygın Düzeltmeler</string>
     <string name="bugs_fixes_description">Bir şeyler ters mi gitti\? Cevapları buradan kontrol edin veya yardım için bize ulaşın.</string>
     <string name="bugs_fixes">Hatalar ve Düzeltmeler</string>
@@ -959,7 +959,7 @@
     <string name="copy_username">Kullanıcı adını kopyala</string>
     <string name="id_copied">Kullanıcı Kimliği panoya kopyalandı</string>
     <string name="copy_userid">Kullanıcı Kimliğini Kopyala</string>
-    <string name="gift_gems_disclaimer">"Habitica asla diğer oyunculara elmas hediye etmenizi istemez.  İnsanlardan değerli taşlar için yalvarmak Topluluk Kurallarını ihlal eder ve admin@habitica.com adresine bildirilmelidir."</string>
+    <string name="gift_gems_disclaimer">Habitica asla diğer oyunculara elmas hediye etmenizi istemez. İnsanlardan değerli taşlar için yalvarmak Topluluk Kurallarını ihlal eder ve admin@habitica.com adresine bildirilmelidir.</string>
     <string name="gems_gift_description">Başkasına parlak bir elmas paketi vermek mi istiyorsun\?</string>
     <string name="profile_gift_subscription">Abonelik
 \nHediye Et</string>
@@ -973,5 +973,5 @@
     <string name="search">Ara</string>
     <string name="reject">Reddet</string>
     <string name="accept">Kabul Et</string>
-    <string name="setup_task_habit_2"></string>
+    <string name="setup_task_habit_2"/>
 </resources>
