@@ -411,7 +411,7 @@
     <string name="empty_description_todos">To Do adalah tugas yang hanya perlu diselesaikan sekali. Tambahkan ceklis kepada To Do-mu untuk meningkatkan harganya.</string>
     <string name="empty_title_rewards">Kamu tidak punya Hadiah apapun</string>
     <string name="reset_walkthrough">Ulang Panduan Justin</string>
-    <string name="read_community_guidelines">Tolong baca Pedoman Komunitas kami sebelum posting</string>
+    <string name="read_community_guidelines">Tolong baca <u>Pedoman Komunitas</u> kami sebelum posting</string>
     <string name="maintenance">Perbaikan</string>
     <string name="reload_content">Muat Ulang Isi</string>
     <string name="dailyDueDefaultView">Atur Keseharian secara otomatis di tab \'harus dikerjakan\'</string>
