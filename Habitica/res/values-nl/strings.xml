@@ -239,11 +239,12 @@
     <string name="notification_pet_fed">Je hebt je %s gevoederd!</string>
     <string name="notification_purchase_reward">Je hebt een beloning gekocht</string>
     <string name="world_quest">Wereldqueeste</string>
-    <string name="inn_description">Een pauze nodig? Check in bij Daniels Herberg om een paar van Habitica\'s moeilijkere spelmechanismen te pauzeren:\n\n
-• Gemiste dagelijkse taken zullen je niet beschadigen
-• Taken zullen geen streaks verliezen of vervallen in kleur
-• Bazen zullen je geen schade doen voor je gemiste dagelijkse taken
-• Je schade aan de baas of verzamelvoorwerpen van queesten zullen in afwachting blijven tot je uitcheckt</string>
+    <string name="inn_description">Een pauze nodig\? Check in bij Daniels Herberg om een paar van Habitica\'s moeilijkere spelmechanismen te pauzeren:
+\n
+\n • Gemiste dagelijkse taken zullen je niet beschadigen
+\n • Taken zullen geen streaks verliezen of vervallen in kleur
+\n • Bazen zullen je geen schade doen voor je gemiste dagelijkse taken
+\n • Je schade aan de baas of verzamelvoorwerpen van queesten zullen in afwachting blijven tot je uitcheckt</string>
     <string name="empty_items">Je hebt geen %s</string>
     <string name="user_level">NIV %d</string>
     <string name="user_level_with_class">NIV %1$d %2$s</string>
