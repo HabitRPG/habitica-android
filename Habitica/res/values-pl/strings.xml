@@ -230,11 +230,12 @@
     <string name="notification_pet_fed">Nakarmiłeś/aś %s!</string>
     <string name="notification_purchase_reward">Kupiłeś nagrodę</string>
     <string name="world_quest">Zadanie ogólnoświatowe</string>
-    <string name="inn_description">Potrzebujesz przerwy? Zamelduj się w Karczmie Daniela, aby wstrzymać niektóre z cięższych elementów Habitiki.
-• Pominięte Codzienne nie zadadzą Ci obrażeń.
-• Zadania nie stracą serii ani nie osłabią się w kolorze
-• Bossowie nie zadadzą Ci  obrażeń za pominięte Codzienne
-• Twoje obrażenia dla bossa albo misje zbierackie zostaną jako oczekujące do końca dnia</string>
+    <string name="inn_description">Potrzebujesz przerwy\? Zamelduj się w Karczmie Daniela, aby wstrzymać niektóre z cięższych elementów Habitiki.
+\n
+\n • Pominięte Codzienne nie zadadzą Ci obrażeń.
+\n • Zadania nie stracą serii ani nie osłabią się w kolorze
+\n • Bossowie nie zadadzą Ci obrażeń za pominięte Codzienne
+\n • Twoje obrażenia dla bossa albo misje zbierackie zostaną jako oczekujące do końca dnia</string>
     <string name="empty_items">Nie posiadasz %s</string>
     <string name="user_level">poz %d</string>
     <string name="user_level_with_class">poz %1$d %2$s</string>
