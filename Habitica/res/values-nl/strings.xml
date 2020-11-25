@@ -599,7 +599,7 @@
     <string name="world_boss_action_prompt">Versla de Baas om speciale beloningen te ontvangen en red Habitica van %s\'s terreur!</string>
     <string name="questShop_owner_long">Ian de queeste-gids</string>
     <string name="seasonalShop_owner_long">Seizoenstovenares</string>
-    <string name="rage_attack">Woedeaanval</string>
+    <string name="rage_attack">Woedeaanval:</string>
     <string name="tavern_description_world_boss">Oh jee, schenk geen aandacht aan het monster hier beneden — dit blijft een veilige plaats om te chatten tijdens je pauzes.</string>
     <string name="report">rapporteer</string>
     <string name="reply">Reageer</string>
@@ -633,8 +633,7 @@
     <string name="total_checkins">Totaal aantal Check-ins</string>
     <string name="two_handed">Tweehandig</string>
     <string name="usernamePromptTitle">Het is tijd om een gebruikersnaam te kiezen</string>
-    <string name="usernamePromptWiki">Als je meer te weten wil komen over deze verandering, <a href="https://habitica.wikia_com/wiki/Player_Names">bezoek onze wiki.</a>
-    </string>
+    <string name="usernamePromptWiki">Als je meer te weten wil komen over deze verandering, <a href="https://habitica.wikia.com/wiki/Player_Names">bezoek onze wiki.</a></string>
     <string name="confirm_username_title">Weet je zeker dat je jou huidige gebruikersnaam wilt bevestigen?</string>
     <string name="cancel">Annuleren</string>
     <string name="confirm_username">Bevestig gebruikersnaam</string>
@@ -917,7 +916,7 @@
     <string name="welcomeNameTitle">Hoe moeten we je noemen\?</string>
     <string name="verification_pet">Een van deze Veteraan Huisdieren wacht op je nadat je klaar bent met bevestigen!</string>
     <string name="confirm_username_description">Als u uw gebruikersnaam bevestigt, wordt deze openbaar voor uitnodigingen, @vermeldingen en berichten. U kunt uw gebruikersnaam op elk moment wijzigen vanuit de instellingen.</string>
-    <string name="usernamePromptDisclaimer">Prefs</string>
+    <string name="usernamePromptDisclaimer">Gebruikersnamen moeten voldoen aan onze <a href="https://habitica.com/static/terms">Servicevoorwaarden</a> en <a href="https://habitica.com/static/community-guidelines">Community Richtlijnen</a>. Als u niet eerder een inlognaam heeft ingesteld, is uw gebruikersnaam automatisch gegenereerd.</string>
     <string name="usernamePromptBody">Inlognamen zijn nu unieke gebruikersnamen die zichtbaar zijn naast uw weergavenaam en worden gebruikt voor uitnodigingen, chatvermeldingen en berichten.</string>
     <string name="daily_tip_9">Als je het moeilijk hebt, probeer dan je taken in kleinere delen op te splitsen.</string>
     <string name="daily_tip_8">Je kunt de moeilijkheidsgraad van je taak veranderen om jezelf meer te belonen voor zware taken!</string>
