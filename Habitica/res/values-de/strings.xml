@@ -1009,16 +1009,16 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
 \nAlle Inhalte, die mit Edelsteinen gekauft werden, sind rein kosmetischer Natur oder können mit der Zeit auch kostenlos erhalten werden.
 \n
 \nDu kannst Edelsteine auch als Geschenk von anderen Spielern erhalten, als Preis einer Herausforderung, durch Mitarbeit an Habitica oder durch ein Abonnement.</string>
-    <string name="stat_description">Alle Habitica-Charaktere haben vier Attribute, die Habiticas Spielablauf beeinflussen. 
-\n 
-\n**Stärke (STR)** beeinflusst kritische Treffer und erhöht den Schaden, den Du einem Quest Boss zufügst. Krieger und Schurken erhalten STR von Ihrer Klassenausrüstung. 
-\n 
-\n**Ausdauer (CON)** erhöht Deine HP und sorgt dafür, dass Du weniger Schaden nimmst. Heiler und Krieger erhalten CON von Ihrer Klassenausrüstung. 
-\n 
-\n**Intelligenz (INT)** steigert die Menge an EXP, die Du verdienst und gibt Dir mehr Mana. Magier und Heiler erhalten INT von Ihrer Klassenausrüstung. 
-\n 
-\n**Wahrnehmung (PER)** erhöht die Goldmenge, die Du erhältst, und die Fundrate von Gegenständen. Schurken und Magier erhalten PER von Ihrer Klassenausrüstung. 
-\n 
+    <string name="stat_description">Alle Habitica-Charaktere haben vier Attribute, die Habiticas Spielablauf beeinflussen.
+\n
+\n**Stärke (STR)** beeinflusst kritische Treffer und erhöht den Schaden, den Du einem Quest Boss zufügst. Krieger und Schurken erhalten STR von Ihrer Klassenausrüstung.
+\n
+\n**Ausdauer (CON)** erhöht Deine HP und sorgt dafür, dass Du weniger Schaden nimmst. Heiler und Krieger erhalten CON von Ihrer Klassenausrüstung.
+\n
+\n**Intelligenz (INT)** steigert die Menge an EXP, die Du verdienst und gibt Dir mehr Mana. Magier und Heiler erhalten INT von Ihrer Klassenausrüstung.
+\n
+\n**Wahrnehmung (PER)** erhöht die Goldmenge, die Du erhältst, und die Fundrate von Gegenständen. Schurken und Magier erhalten PER von Ihrer Klassenausrüstung.
+\n
 \nAb Level 10 verdienst Du einen Attributspunkt für jedes Level, das Du aufsteigst. Diesen Punkt kannst Du in ein beliebiges Attribut stecken. Außerdem kannst Du Ausrüstung anziehen, die unterschiedliche Attributsboni gewährt.</string>
     <string name="mount_category">%s Reittiere</string>
     <string name="pet_category">%s Haustiere</string>
