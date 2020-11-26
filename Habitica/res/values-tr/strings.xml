@@ -239,7 +239,12 @@
     <string name="notification_pet_fed">%s besledin!</string>
     <string name="notification_purchase_reward">Bir ödül satın aldın</string>
     <string name="world_quest">Dünya Görevi</string>
-    <string name="inn_description">Bir molaya mı ihtiyacın var\? Daniel\'in hanında dinlenerek Habitica\'nın bazı oyun mekaniklerini durdur:/n/n • Tamamlanmamış günlük işler sana zarar vermez/n • Görevlerin kesintisiz tamamlanma serilerini yitirmez ve renklerinde sönme olmaz/n • Canavarlar tamamlanmamış günlük işler için saldırmaz/n • Canavarlara vereceğin zarar ya da topladığın görev eşyaları Handan ayrılana kadar beklemede kalır</string>
+    <string name="inn_description">Bir molaya mı ihtiyacın var\? Daniel\'in hanında dinlenerek Habitica\'nın bazı oyun mekaniklerini durdur:
+\n
+\n • Tamamlanmamış günlük işler sana zarar vermez
+\n • Görevlerin kesintisiz tamamlanma serilerini yitirmez ve renklerinde sönme olmaz
+\n • Canavarlar tamamlanmamış günlük işler için saldırmaz
+\n • Canavarlara vereceğin zarar ya da topladığın görev eşyaları Handan ayrılana kadar beklemede kalır</string>
     <string name="empty_items">Hiç %s\'e sahip değilsin</string>
     <string name="user_level">Svy %d</string>
     <string name="user_level_with_class">Svy %1$d - %2$s</string>
