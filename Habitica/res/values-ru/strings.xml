@@ -399,7 +399,9 @@
     <string name="login_btn_fb">Зарегистрироваться с Facebook</string>
     <string name="login_btn_google">Зарегистрироваться с Google</string>
     <string name="action_back">Назад</string>
-    <string name="welcome_text">О,  должно быть, вы тут впервые. Я Джастин, и буду твоим наставником в Habitica. \n\nДля начала, как тебя зовут, герой? Не беспокойся, имя, которое я выбрал, потом можно будет изменить. Ну что, а теперь давай создадим твой аватар!</string>
+    <string name="welcome_text">О, должно быть, вы тут впервые. Я Джастин, и буду твоим наставником в Habitica.
+\n
+\nДля начала, как тебя зовут, герой\? Не беспокойся, имя, которое я выбрал, потом можно будет изменить. Ну что, а теперь давай создадим твой аватар!</string>
     <string name="randomize">Случайным образом</string>
     <string name="avatar_extras">Дополнительно</string>
     <string name="avatar_skin_color">Цвет кожи</string>
