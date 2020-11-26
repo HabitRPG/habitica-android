@@ -243,45 +243,45 @@
 \n
 \n • Diárias não feitas não lhe causarão dano
 \n • As tarefas não vão perder seus combos ou decair de cor
-\n • Os Chefões não causarão dano pelas Diárias não feitas.
-\n • Seu dano no chefão ou items de Missão de coleta ficarão acumulados até o fim do dia</string>
+\n • Os Chefões não causarão dano pelas Diárias não feitas
+\n • Seu dano no chefão ou items de Missão de coleta ficarão acumulados até você voltar</string>
     <string name="empty_items">Você não tem nenhum %s</string>
     <string name="user_level">Nível %d</string>
     <string name="user_level_with_class">Nível %1$d %2$s</string>
-    <string name="warrior">Guerreiro</string>
-    <string name="rogue">Gatuno</string>
-    <string name="mage">Mago</string>
-    <string name="healer">Curandeiro</string>
+    <string name="warrior">Guerreiro(a)</string>
+    <string name="rogue">Gatuno(a)</string>
+    <string name="mage">Mago(a)</string>
+    <string name="healer">Curandeiro(a)</string>
     <string name="warrior_description">Guerreiros(as) dão mais e melhores danos críticos aos Chefões. Jogue como Guerreiro(a) se você quer derrotar monstros com facilidades. Guerreiro(a) se beneficia de um alto status de Força.</string>
     <string name="mage_description">Magos(as) aprendem Habilidades que causam danos aos Chefões e aumentam EXP e Mana. Jogue como Mago(a) se você for motivado a passar de nível rapidamente! Magos(as) se beneficiam de um alto status de Inteligência.</string>
     <string name="rogue_description">Gatunos(as) aprendem Habilidades que permitem que eles(as) e seu Grupo encontrem mais Ouro e tenham mais chances de encontrar peças aleatórias. Jogue como Gatuno(a) se você quer encontrar muitos itens e grandes quantidades de Ouro! Gatunos(as) se beneficiam de um alto status de Percepção.</string>
     <string name="healer_description">Curandeiros(as) aprendem Habilidades que podem curar e proteger a si e a seu Grupo. Jogue como Curandeiro(a) se você gosta de ajudar os outros ou evitar danos! Curandeiros(as) se beneficiam de um alto status de Constituição.</string>
     <string name="select_class">Escolha sua Classe</string>
-    <string name="opt_out_class">Cancelar</string>
-    <string name="class_confirmation">Você tem certeza que quer ser um %s?</string>
-    <string name="class_changed">Você é um %s agora!</string>
-    <string name="class_changed_description">Você tem o novo Equipamento de Batalha padrão, que você pode alterar em Equipamentos!</string>
-    <string name="choose_class">Escolha sua Classe</string>
+    <string name="opt_out_class">Decidir mais tarde</string>
+    <string name="class_confirmation">Você tem certeza que quer ser um(a) %s\?</string>
+    <string name="class_changed">Você é um(a) %s agora!</string>
+    <string name="class_changed_description">Você tem um novo Equipamento de Batalha padrão, que pode ser trocado em Equipamentos!</string>
+    <string name="choose_class">Escolha a sua Classe</string>
     <string name="dialog_go_back">Voltar</string>
-    <string name="opt_out_confirmation">Você tem certeza que quer cancelar?</string>
-    <string name="change_class">Mudar sua classe</string>
+    <string name="opt_out_confirmation">Você tem certeza de que ainda não quer escolher\?</string>
+    <string name="change_class">Mudar a sua classe</string>
     <string name="change_class_description">Mude a sua classe e reembolse seus Pontos de Atributo por 3 gemas.</string>
     <string name="enable_class">Habilitar Sistema de Classes</string>
     <string name="changing_class_progress">Mudando de Classe</string>
-    <string name="by_email">Por E-mail</string>
+    <string name="by_email">Por e-mail</string>
     <string name="invite_existing_users">Convide usuários existentes</string>
     <string name="send">Enviar</string>
     <string name="invite">Convidar amigos</string>
     <string name="invite_username_description">Se você já tem amigos usando o Habitica, convide-os pelo nome de usuário aqui.</string>
-    <string name="invite_email_description">Se um amigo entra no Habitica pelo seu e-mail, ele automaticamente é convidado ao seu grupo!</string>
+    <string name="invite_email_description">Se um amigo(a) entrar no Habitica pelo seu e-mail, ele(a) será automaticamente convidado(a) para o seu grupo!</string>
     <string name="add_invites">Adicionar convites</string>
     <string name="email">E-mail</string>
     <string name="share_using">Compartilhar via</string>
     <string name="share_levelup">Eu cheguei ao nível %d no #Habitica, melhorando meus hábitos da vida real!</string>
-    <string name="share_hatched">Eu acabei de ganhar um filhote de %1$s %2$s no #Habitica por completar minhas tarefas da vida real!</string>
-    <string name="share_raised">Eu acabei de ganhar um %1$s de montaria no #Habitica por completar minhas tarefas da vida real!</string>
-    <string name="open_in_store">Abra na Play Store</string>
-    <string name="change_class_confirmation">Você tem certeza que quer mudar sua classe? Isso irá custar 3 gemas.</string>
+    <string name="share_hatched">Eu acabei de chocar um mascote de %1$s %2$s no #Habitica completando minhas tarefas da vida real!</string>
+    <string name="share_raised">Eu acabei de ganhar um %1$s de montaria no #Habitica completando minhas tarefas da vida real!</string>
+    <string name="open_in_store">Abrir na Play Store</string>
+    <string name="change_class_confirmation">Você tem certeza que quer mudar a sua classe\? Isso irá custar 3 gemas.</string>
     <string name="change_class_equipment_warning">Aviso: Você não poderá mais comprar equipamentos da classe %s.</string>
     <string name="confirm">Confirmar</string>
     <string name="market">Mercado</string>
@@ -670,7 +670,7 @@
     <string name="send_gift">Enviar presente</string>
     <string name="server">Servidor</string>
     <string name="gift_confirmation_title">Seu presente foi enviado!</string>
-    <string name="opting_out_progress">Cancelando</string>
+    <string name="opting_out_progress">Optando por decidir depois</string>
     <string name="delete_oauth_account_description">Isso vai apagar sua conta para sempre e você não poderá restaurá-la! Gemas guardadas ou gastas não serão reembolsadas. Se você tiver total certeza, digite DELETE na caixa de texto abaixo.</string>
     <string name="discover">Explorar</string>
     <string name="damage_paused">Dano pausado</string>
