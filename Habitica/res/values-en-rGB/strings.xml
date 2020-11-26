@@ -90,7 +90,7 @@
     <string name="faint_button">Refill Health &amp; Try Again</string>
     <string name="filter">Filter</string>
     <string name="used_skill_without_mana">You used %1$s.</string>
-    <string name="new_checklist_item">new checklist item</string>
+    <string name="new_checklist_item">New checklist entry</string>
     <string name="unlock_lvl_11">Unlock at lvl 11</string>
     <string name="forgot_pw_btn">Forgot Password</string>
     <string name="tavern_inn_checkOut">Re-activate your Dailies</string>
