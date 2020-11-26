@@ -314,7 +314,7 @@
     <string name="google_services_missing">Google Play Dienste konnten nicht gefunden werden.</string>
     <string name="gem_purchase_toolbartitle">Kaufen</string>
     <string name="gem_purchase_title">Das Erwerben von Edelsteinen unterstützt die Entwickler und hilft Habitica am Laufen zu halten</string>
-    <string name="gem_purchase_subtitle">Edelsteine erlauben es Dir, spaßige Extras für Dein Konto zu erwerben, inklusive:</string>
+    <string name="gem_purchase_subtitle">Edelsteine erlauben es Dir, tolle Extras für Dein Konto zu erwerben, inklusive:</string>
     <string name="gem_purchase_listitem1">Coole Kostüme für Deinen Avatar</string>
     <string name="gem_purchase_listitem2">Fantastische Hintergründe</string>
     <string name="gem_purchase_listitem3">Quest, welche Dich mit Haustiereiern belohnt</string>
@@ -919,7 +919,7 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="remaining_1month">1 Monat verbleibend</string>
     <string name="ago_weeks">vor %d Wochen</string>
     <string name="ago_1week">vor einer Woche</string>
-    <string name="ago_months">vor %d Monat(en)</string>
+    <string name="ago_months">vor %d Monaten</string>
     <string name="ago_1month">vor einem Monat</string>
     <string name="gems_gift_description">Möchtest Du jemandem eine glänzende Edelsteinbeute zuteil werden lassen\?</string>
     <string name="empty_description_todos_filtered">Mit Deinen aktuellen Filtern sind keine To-Dos sichtbar.</string>
