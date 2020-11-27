@@ -658,7 +658,7 @@
     <string name="danger_zone">Zona de Perigo</string>
     <string name="delete_account_confirmation">Eliminar a minha conta</string>
     <string name="reset_account_confirmation">Reiniciar a minha conta</string>
-    <string name="delete_account_description">Isto irá eliminar a tua conta para sempre e ela não poderá ser restaurada! Gemas guardadas ou gastas não serão devolvidas. Se tiveres a certeza absoluta, digita a tua senha na caixa de texto abaixo:</string>
+    <string name="delete_account_description">Isto irá eliminar a tua conta para sempre e ela não poderá ser restaurada! Gemas guardadas ou gastas não serão devolvidas. Se tiveres a certeza absoluta, digita a tua senha na caixa de texto abaixo.</string>
     <string name="delete_account">Eliminar Conta</string>
     <string name="reset_account_description">CUIDADO!! Isto reinicia muitas partes da tua conta. Isto é fortemente desencorajado, mas algumas pessoas acham-no útil no início depois de brincar com o site por último curto período de tempo.
 \n
