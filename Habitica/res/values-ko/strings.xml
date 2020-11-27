@@ -901,4 +901,8 @@
     <string name="overview">개요</string>
     <string name="health_points">체력</string>
     <string name="stats_currency">능력치 &amp; 재산</string>
+    <string name="password_too_short">패스워드가 적어도 %d 글자 이상이어야 합니다</string>
+    <string name="copy_username">닉네임 복사하기</string>
+    <string name="id_copied">유저 ID를 복사하였습니다</string>
+    <string name="copy_userid">유저 ID 복사하기</string>
 </resources>
