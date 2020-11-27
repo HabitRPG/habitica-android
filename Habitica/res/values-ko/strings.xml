@@ -355,7 +355,7 @@
     <string name="three_months">3개월</string>
     <string name="six_months">6개월</string>
     <string name="twelve_months">12개월</string>
-    <string name="subscribe_prompt_thanks">구독자가 되시면 다음과 같은 혜택을 받을 수 있습니다:</string>
+    <string name="subscribe_prompt_thanks">구독자가 되시면 다음과 같은 혜택을 받을 수 있습니다</string>
     <string name="subscription_status">구독상황</string>
     <string name="challenge_leave_title">도전 그만두기</string>
     <string name="challenge_leave_text">정말로 “%s” 도전을 그만 두시겠습니까?</string>
@@ -492,10 +492,10 @@
     <string name="experience_reward">%d 경험치</string>
     <string name="gold_reward">%d 골드</string>
     <string name="quest_owner_rewards">퀘스트 주인 보상</string>
-    <string name="str_abbrv">Str</string>
-    <string name="per_abbrv">Per</string>
-    <string name="int_abbrv">Int</string>
-    <string name="con_abbrv">Con</string>
+    <string name="str_abbrv">근력</string>
+    <string name="per_abbrv">통찰력</string>
+    <string name="int_abbrv">지력</string>
+    <string name="con_abbrv">생명력</string>
     <string name="reset_account">계정 리셋</string>
     <string name="reset_account_description">경고! 본 계정의 많은 부분이 리셋됩니다. 하지 않는 것을 권장하지만, 일부 유저들은 짧은 시간 앱을 사용해본 후 처음부터 다시 시작하는 것을 유용하게 생각합니다. 
 \n 
@@ -771,13 +771,12 @@
     <string name="unallocated_stats_points"><b>%1$s 개의 배분되지 않은 능력치 포인트</b>가 있습니다</string>
     <string name="new_msg_party">
         <b>%1$s</b> 파티창에 새로운 글이 올라왔습니다</string>
-    <string name="new_msg_guild">
-        <b>%1$s</b> 에 새로운 글이 올라왔습니다</string>
+    <string name="new_msg_guild"><b>%1$s</b> 에 새로운 글이 올라왔습니다</string>
     <string name="new_bailey_update">새로운 베일리의 업데이트가 올라왔어요!</string>
     <string name="dismiss_all">모두 지우기</string>
     <string name="no_notifications_text">알람 요정들이 박수와 환호를 보냅니다! 수고했어요!</string>
     <string name="no_notifications_title">다 읽었어요!</string>
-    <string name="join_party_description_guild">아래의 유저 아이디를 친구에게 알려주거나 %s에 가서 미래의 동료들을 만나세요</string>
+    <string name="join_party_description_guild">아래의 유저 아이디를 친구에게 알려주거나 %s에 가서 미래의 동료들을 만나세요!</string>
     <string name="insufficientGoldTitle">골드가 부족합니다</string>
     <string name="notifications">알림</string>
     <string name="x_months">%d 개월</string>
@@ -831,7 +830,7 @@
     <string name="special_items">스페셜 아이템</string>
     <string name="leave_delte_tasks">나가기 &amp; 과제 지우기</string>
     <string name="leave_keep_tasks">나가기 &amp; 과제 킵하기</string>
-    <string name="challenge_leave_description">이 도전의 과제들을 본인의 목록에 그대로 남기셔도 되고 나가면서 지우셔도 됩니다.</string>
+    <string name="challenge_leave_description">이 도전의 과제들을 본인의 목록에 그대로 남기셔도 되고 나가면서 지우셔도 됩니다</string>
     <string name="subscribe_listitem5_description">매일 두 배의 아이템 획득 제한으로 해비티카에서 더 많은 아이템을 발견하세요.</string>
     <string name="transfer_ownership">파티장 권한 이양</string>
     <string name="transfer_ownership_confirm">파티장 권한을 이양하시겠습니까\?</string>
@@ -905,4 +904,7 @@
     <string name="copy_username">닉네임 복사하기</string>
     <string name="id_copied">유저 ID를 복사하였습니다</string>
     <string name="copy_userid">유저 ID 복사하기</string>
+    <string name="authentication_methods">인증 방식</string>
+    <string name="someone">누군가</string>
+    <string name="invitation_title">%s 님이 %s 그룹에 초대하셨습니다</string>
 </resources>
