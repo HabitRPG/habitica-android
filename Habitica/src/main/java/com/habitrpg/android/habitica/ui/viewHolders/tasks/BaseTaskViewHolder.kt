@@ -227,11 +227,11 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
     override fun onTouch(view: View?, motionEvent: MotionEvent?): Boolean {
         if (motionEvent != null) {
             if (motionEvent.action != MotionEvent.ACTION_UP) return true
-            if (motionEvent.y <= mainTaskWrapper.height + 24.dpToPx(context)) {
-                if (motionEvent.x <= 72.dpToPx(context)) {
+            if (motionEvent.y <= mainTaskWrapper.height + 5.dpToPx(context)) {
+                if (motionEvent.x <= 60.dpToPx(context)) {
                     onLeftActionTouched()
                     return true
-                } else if ((itemView.width - motionEvent.x <= 72.dpToPx(context))) {
+                } else if ((itemView.width - motionEvent.x <= 60.dpToPx(context))) {
                     onRightActionTouched()
                     return true
                 }
