@@ -807,7 +807,7 @@
     <string name="inbox_messages_title">%s üyesinden %d mesajın var</string>
     <string name="inbox_messages_title_nosender">%d mesajın var</string>
     <string name="app_theme">Uygulama Teması</string>
-    <string name="share_challenge_with">Mücadeleyi şunun ile paylaş:</string>
+    <string name="share_challenge_with">Mücadeleyi şunun ile paylaş</string>
     <string name="details">Detaylar</string>
     <string name="create_task">%s oluştur</string>
     <string name="new_task">Yeni Görev</string>
