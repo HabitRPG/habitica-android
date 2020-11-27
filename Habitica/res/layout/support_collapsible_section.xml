@@ -40,12 +40,13 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content" />
+
         <ImageView
             android:id="@+id/caret_view"
-            android:layout_width="wrap_content"
+            android:layout_width="14dp"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_keyboard_arrow_down_black_24dp"
-            android:layout_marginEnd="@dimen/spacing_large"/>
+            android:layout_marginEnd="@dimen/spacing_large"
+            android:src="@drawable/ic_keyboard_arrow_down_black_24dp" />
     </LinearLayout>
     <TextView android:id="@+id/description_view"
         android:layout_width="match_parent"
