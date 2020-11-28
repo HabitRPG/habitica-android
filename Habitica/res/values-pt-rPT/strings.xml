@@ -714,4 +714,13 @@
     <string name="save_20">Economize 20%</string>
     <string name="renew_subscription">Renovar Subscrição</string>
     <string name="thanks_for_subscribing">Obrigado por subscrever-se</string>
+    <string name="class_equipment">Equipamento</string>
+    <string name="allocating_points">Distribuindo Pontos</string>
+    <string name="distribute_task_help">Distribui pontos baseado nas categorias Força, Inteligência, Constituição e Percepção associadas com as tarefas que completastes.</string>
+    <string name="distribute_class_help">Distribui mais pontos para os atributos importantes para sua Classe.</string>
+    <string name="distribute_evenly_help">Distribui o mesmo número de pontos para cada atributo.</string>
+    <string name="no_points_to_allocate">Sem Pontos para Distribuir</string>
+    <string name="points_to_allocate">%d Pontos para Distribuir</string>
+    <string name="distribute_class">Distribuir baseado na classe</string>
+    <string name="distribute_evenly">Distribuir igualmente</string>
 </resources>
