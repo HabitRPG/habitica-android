@@ -287,10 +287,10 @@
     <string name="market">Mercado</string>
     <string name="timeTravelers">Viajantes do Tempo</string>
     <string name="seasonalShop">Loja Sazonal</string>
-    <string name="empty_inbox">Você não tem nenhuma mensagem na caixa de entrada. Você pode enviar novas mensagens a outros usuários a partir das mensagens deles em chats públicos!</string>
-    <string name="party_invite">Desbloqueie ao convidar amigos</string>
+    <string name="empty_inbox">Você não tem nenhuma mensagem na caixa de entrada. Você pode enviar novas mensagens a outros usuários a partir de suas mensagens em chats públicos!</string>
+    <string name="party_invite">Desbloqueie convidando amigos (as)</string>
     <string name="login_incentive">Desbloqueia ao logar regularmente no Habitica</string>
-    <string name="create_account">Desbloqueia ao criar sua conta</string>
+    <string name="create_account">Desbloquear criando uma conta</string>
     <string name="successful_purchase">Comprado %1$s</string>
     <string name="gold_plural">Ouro</string>
     <string name="chat_message_copied">Mensagem copiada para Área de Transferência</string>
@@ -881,8 +881,8 @@
     <string name="subscribe_listitem5">Drops em dobro</string>
     <string name="create_account_short">criar uma conta</string>
     <string name="login_incentive_short_count">%d check-ins</string>
-    <string name="login_incentive_short">Efetue login regularmente no Habitica</string>
-    <string name="party_invite_short">Convidar amigos</string>
+    <string name="login_incentive_short">efetue login regularmente no Habitica</string>
+    <string name="party_invite_short">Convidar amigos(as)</string>
     <string name="login_incentive_count">Desbloqueie logando no Habitica %d vezes.</string>
     <string name="remaining_1hour">1 hora restante</string>
     <string name="remaining_hours">%d horas restantes</string>
