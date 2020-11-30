@@ -84,6 +84,16 @@ class YesterdailyDialog private constructor(context: Context, private val userRe
             taskContainer.setOnClickListener {
                 task.completed = !task.completed
                 configureTaskView(taskView, task)
+
+                if (task.checklist?.size ?: 0 > 0) {
+                    val checklistContainer = taskView.findViewById<ViewGroup>(R.id.checklistView)
+                    checklistContainer.removeAllViews()
+                    for (item in task.checklist ?: emptyList<ChecklistItem>()) {
+                        val checklistView = inflater.inflate(R.layout.checklist_item_row, checklistContainer, false) as ViewGroup
+                        configureChecklistView(checklistView, task, item)
+                        checklistContainer.addView(checklistView)
+                    }
+                }
             }
 
             if (task.checklist?.size ?: 0 > 0) {

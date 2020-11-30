@@ -72,6 +72,8 @@
     <color name="xpColor">@color/yellow_100</color>
     <color name="mpColor">@color/blue_100</color>
 
+    <color name="textColorSecondaryDark">@color/brand_500</color>
+
     <!-- Cards -->
     <color name="text_light">#66000000</color>
     <color name="card_text">@color/text_ternary</color>

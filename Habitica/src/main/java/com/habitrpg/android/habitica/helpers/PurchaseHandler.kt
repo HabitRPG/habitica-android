@@ -149,7 +149,6 @@ class PurchaseHandler(activity: Activity, val crashlyticsProxy: CrashlyticsProxy
     private fun checkIfPendingPurchases() {
         billingRequests?.getAllPurchases(ProductTypes.IN_APP, object : RequestListener<Purchases> {
             override fun onSuccess(purchases: Purchases) {
-                crashlyticsProxy.logException(Exception(purchases.toJson()))
                 for (purchase in purchases.list) {
                     if (PurchaseTypes.allGemTypes.contains(purchase.sku)) {
                         billingRequests?.consume(purchase.token, object : RequestListener<Any> {
