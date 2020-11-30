@@ -292,15 +292,15 @@
     <string name="login_incentive">Desbloqueia ao logar regularmente no Habitica</string>
     <string name="create_account">Desbloquear criando uma conta</string>
     <string name="successful_purchase">Comprado %1$s</string>
-    <string name="gold_plural">Ouro</string>
-    <string name="chat_message_copied">Mensagem copiada para Área de Transferência</string>
+    <string name="gold_plural">ouro</string>
+    <string name="chat_message_copied">Mensagem copiada para a área de transferência</string>
     <string name="edit_tag_btn_edit">Editar</string>
     <string name="confirm_delete_tag_title">Você tem certeza?</string>
-    <string name="confirm_delete_tag_message">Você realmente quer deletar?</string>
+    <string name="confirm_delete_tag_message">Você realmente quer excluir\?</string>
     <!--QR Strings-->
     <string name="choose_recipient_title">Escolha o destinatário da mensagem</string>
     <string name="action_continue">Continuar</string>
-    <string name="invited_to_party">Você foi convidado para um grupo!</string>
+    <string name="invited_to_party">Você foi convidado(a) para um grupo!</string>
     <string name="stats_widget_label">Estatísticas Habitica</string>
     <string name="add_task">Adicionar Tarefa</string>
     <string name="add_habit">Adicionar Hábito</string>
