@@ -477,7 +477,7 @@
     <string name="gems_left_max">今月のジェム： 残り%1$d/%2$d</string>
     <string name="gems_left_nomax">今月のジェム： 残り%d</string>
     <string name="health">体力</string>
-    <string name="collect">集める</string>
+    <string name="collect">収集</string>
     <string name="rage_meter">怒りメーター</string>
     <string name="boss_quest">ボスクエスト</string>
     <string name="collection_quest">収集クエスト</string>
