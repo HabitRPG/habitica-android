@@ -311,7 +311,7 @@
     <string name="hatching_market_info">필요한 아이템이 드롭되지 않나요? 시장으로 가보세요!</string>
     <string name="feeding_market_info">다른 종류의 음식이 필요한가요? 시장에서 음식을 구매해보세요!</string>
     <string name="open_market">시장으로</string>
-    <string name="cds_description">일일과제는 %1$s 후에 처음 해비티카를 사용할 때 리셋됩니다. 꼭 이 시간 전에 일일과제들을 완료하세요!</string>
+    <string name="cds_description">일일과제는 %1$s 후에 처음 Habitica를 사용할 때 리셋됩니다. 꼭 이 시간 전에 모든 일일과제를 완료하세요!</string>
     <string name="AudioTheme_title">오디오 테마</string>
     <string name="AudioTheme_summary">Habitica 오디오 바꾸기</string>
     <!--Login Incentives-->
