@@ -311,7 +311,7 @@
     <string name="hatching_market_info">필요한 아이템이 드롭되지 않나요? 시장으로 가보세요!</string>
     <string name="feeding_market_info">다른 종류의 음식이 필요한가요? 시장에서 음식을 구매해보세요!</string>
     <string name="open_market">시장으로</string>
-    <string name="cds_description">일일과제는 %1$s 후에 처음 Habitica를 사용할 때 리셋됩니다. 꼭 이 시간 전에 모든 일일과제를 완료하세요!</string>
+    <string name="cds_description">일일과제는 %1$s 후에 처음 해비티카를 사용할 때 리셋됩니다. 꼭 이 시간 전에 모든 일일과제를 완료하세요!</string>
     <string name="AudioTheme_title">오디오 테마</string>
     <string name="AudioTheme_summary">Habitica 오디오 바꾸기</string>
     <!--Login Incentives-->
@@ -894,7 +894,7 @@
     <string name="complete">완료</string>
     <string name="overview">개요</string>
     <string name="health_points">체력</string>
-    <string name="stats_currency">능력치 &amp; 재산</string>
+    <string name="stats_currency">능력치 &amp; 화폐</string>
     <string name="password_too_short">패스워드가 적어도 %d 글자 이상이어야 합니다</string>
     <string name="copy_username">유저 아이디 복사하기</string>
     <string name="id_copied">API 아이디를 복사하였습니다</string>
@@ -930,7 +930,7 @@
     <string name="local">로컬</string>
     <string name="lets_go">시작하죠</string>
     <string name="bugs_fixes_description">무언가가 잘못되었나요\? 여기에서 답을 확인해 보시거나 저희에게 문의해 주세요.</string>
-    <string name="bugs_fixes">버그 &amp; 수정</string>
+    <string name="bugs_fixes">버그 &amp; 해결책</string>
     <string name="suggestions_feedback">건의사항 &amp; 의견</string>
     <string name="get_help">문의하기</string>
     <string name="contact_us">연락처</string>
@@ -961,4 +961,8 @@
     <string name="g1g1_info_2_text">\'구독 선물하기\'를 탭하시고 받는 사람 계정의 아이디를 입력하세요. 그리고, 구독 기간을 선택하신 후 계산하시면 됩니다. 여러분의 계정에도 선물하신 것과 같은 레벨의 구독이 보상으로 주어집니다.</string>
     <string name="gift_a_subscription">구독 선물하기</string>
     <string name="g1g1_info_1">나눔의 계절을 맞이하여 아주 특별한 행사를 다시 하려고 합니다. 이제 누군가에게 구독을 선물하면, 여러분도 함께 같은 기간의 구독을 무료로 받습니다!</string>
+    <string name="how_best_habitica">해비티카를 어떤 식으로 사용해야 할지 잘 모르시겠나요\?</string>
+    <string name="send_bug_prompt">버그 신고를 하시면 답을 드리겠습니다!</string>
+    <string name="support_bug_title">저희는 유저 피드백을 통해 앱을 더 좋게 만들기 위해 지속적으로 노력하고 있지만 가끔씩 버그들이 생깁니다…</string>
+    <string name="common_fixes">일반적인 해결책</string>
 </resources>
