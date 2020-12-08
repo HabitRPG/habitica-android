@@ -301,7 +301,7 @@
     <string name="choose_recipient_title">Escolha o destinatário da mensagem</string>
     <string name="action_continue">Continuar</string>
     <string name="invited_to_party">Você foi convidado(a) para um grupo!</string>
-    <string name="stats_widget_label">Estatísticas Habitica</string>
+    <string name="stats_widget_label">Estatísticas do Habitica</string>
     <string name="add_task">Adicionar Tarefa</string>
     <string name="add_habit">Adicionar Hábito</string>
     <string name="add_daily">Adicionar Diária</string>
