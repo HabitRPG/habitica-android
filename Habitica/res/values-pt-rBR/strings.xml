@@ -6,31 +6,31 @@
     <string name="MP_default">Mana</string>
     <!--Prefs-->
     <string name="PS_settings_title">Configurações</string>
-    <string name="SP_userID_title">ID de usuário</string>
-    <string name="SP_userID_summary">Seu ID de usuário</string>
+    <string name="SP_userID_title">ID de Usuário</string>
+    <string name="SP_userID_summary">Seu ID de Usuário</string>
     <string name="SP_APIToken_title">API Token</string>
     <string name="SP_APIToken_summary">Seu API Token</string>
     <string name="Language_title">Idioma</string>
-    <string name="Language_summary">Mudar idioma do Habitica</string>
+    <string name="Language_summary">Mudar Idioma do Habitica</string>
     <string name="PS_contact_title">Contate-me</string>
     <string name="pref_account_header">Conta</string>
-    <string name="pref_first_day_of_the_week_title">Primeiro dia da semana</string>
+    <string name="pref_first_day_of_the_week_title">Primeiro Dia da Semana</string>
     <string name="pref_first_day_of_the_week_summary">Primeiro dia da semana em todos os calendários</string>
     <string name="pref_reminder_header">Lembrete Diário</string>
     <string name="pref_reminder_checkbox">Ativar Lembrete</string>
     <string name="pref_reminder_picker">Definir Hora do Lembrete</string>
     <string name="pref_cds_header">Início do dia personalizado</string>
-    <string name="pref_push_notifications_checkbox">Usar notificações push</string>
+    <string name="pref_push_notifications_checkbox">Usar Notificações Push</string>
     <string name="push_notifications">Notificações Push</string>
     <string name="push_notifications_sum">Configurar suas notificações push</string>
     <string name="preference_push_you_won_challenge">Você venceu um Desafio!</string>
-    <string name="preference_push_received_a_private_message">Recebeu uma mensagem privada</string>
+    <string name="preference_push_received_a_private_message">Recebeu uma Mensagem Privada</string>
     <string name="preference_push_gifted_gems">Gemas presenteadas</string>
     <string name="preference_push_gifted_subscription">Assinatura presenteada</string>
     <string name="preference_push_invited_to_party">Convidado(a) para um Grupo</string>
     <string name="preference_push_invited_to_guild">Convidado(a) para uma Guilda</string>
-    <string name="preference_push_your_quest_has_begun">Sua missão começou</string>
-    <string name="preference_push_invited_to_quest">Convidado para uma missão</string>
+    <string name="preference_push_your_quest_has_begun">Sua Missão Começou</string>
+    <string name="preference_push_invited_to_quest">Convidado para Missão</string>
     <!--Adding tasks-->
     <string name="action_edit">Editar</string>
     <string name="action_cancel">Cancelar</string>
@@ -49,7 +49,7 @@
     <string name="about_habitica_open_source">Habitica está disponível como software de código aberto no Github</string>
     <string name="about_rate_our_app">Avalie nosso Aplicativo</string>
     <string name="about_give_us_feedback">Nos dê sua opinião!</string>
-    <string name="about_bugreport">Reportar um Erro</string>
+    <string name="about_bugreport">Reportar um Bug</string>
     <string name="about_source_code">Código Fonte</string>
     <!--Network Errors-->
     <string name="internal_error_api">Conexão com o servidor perdida</string>
@@ -75,8 +75,8 @@
     <string name="repeatables_frequency_weekly">Semanal</string>
     <string name="repeatables_frequency_monthly">Mensal</string>
     <string name="repeatables_frequency_yearly">Anual</string>
-    <string name="repeatables_frequency_day_of_month">Dia do mês</string>
-    <string name="repeatables_frequency_day_of_week">Dia da semana</string>
+    <string name="repeatables_frequency_day_of_month">Dia do Mês</string>
+    <string name="repeatables_frequency_day_of_week">Dia da Semana</string>
     <string name="monday">Segunda</string>
     <string name="tuesday">Terça</string>
     <string name="wednesday">Quarta</string>
@@ -84,7 +84,7 @@
     <string name="friday">Sexta</string>
     <string name="saturday">Sábado</string>
     <string name="sunday">Domingo</string>
-    <string name="levelup_header">Você alcançou o Nível %1$d!</string>
+    <string name="levelup_header">Você Alcançou o Nível %1$d!</string>
     <string name="levelup_detail">Por completar seus objetivos da vida real, você subiu de nível e agora está totalmente curado!</string>
     <string name="onwards">Hurra!</string>
     <string name="faint_subtitle">Não se desespere!</string>
@@ -96,9 +96,9 @@
     <string name="new_checklist_item">Novo item de Lista</string>
     <string name="reminder_title">Lembre-se de marcar suas tarefas</string>
     <string name="unlock_lvl_11">Desbloqueie no nível 11</string>
-    <string name="forgot_pw_btn">Esqueci a senha</string>
-    <string name="tavern_inn_checkOut">Reativar Diárias</string>
-    <string name="tavern_inn_rest">Pausar Diárias</string>
+    <string name="forgot_pw_btn">Esqueci a Senha</string>
+    <string name="tavern_inn_checkOut">Reativar suas Diárias</string>
+    <string name="tavern_inn_rest">Pausar suas Diárias</string>
     <string name="reward_dialog_buy">Comprar</string>
     <string name="reward_dialog_dismiss">Desfazer</string>
     <string name="party">Grupo</string>
@@ -161,7 +161,7 @@
     <string name="setup_group_creativity">Criatividade</string>
     <string name="setup_task_work_1">Resolver e-mails</string>
     <string name="setup_task_work_2">Tarefa mais importante</string>
-    <string name="setup_task_work_3">Projeto profissional</string>
+    <string name="setup_task_work_3">Projeto Profissional</string>
     <string name="setup_task_exercise_1">10 min aeróbica</string>
     <string name="setup_task_exercise_2">Alongamento</string>
     <string name="setup_task_exercise_3">Criar agenda de atividades físicas</string>
@@ -175,7 +175,7 @@
     <string name="setup_task_teams_2">Atualizar a equipe sobre o progresso</string>
     <string name="setup_task_teams_3">Completar projeto da equipe</string>
     <string name="setup_task_chores_1">Limpeza de 10 minutos</string>
-    <string name="setup_task_chores_2">Lavar a louça</string>
+    <string name="setup_task_chores_2">Lavar a Louça</string>
     <string name="setup_task_chores_3">Organizar armário</string>
     <string name="setup_task_creativity_1">Estudar um guru</string>
     <string name="setup_task_creativity_2">Trabalhar em um projeto criativo</string>
@@ -899,7 +899,7 @@
     <string name="ago_1week">há 1 semana</string>
     <string name="ago_1month">há 1 mês</string>
     <string name="skill_progress_title">Usando Habilidade</string>
-    <string name="authentication_error_body">Seu nome de usuário e/ou senha estão incorretos.</string>
+    <string name="authentication_error_body">Seu Nome de Usuário e/ou Senha estão incorretos.</string>
     <string name="network_error_no_network_body">Você não está conectado(a) à internet.</string>
     <string name="quest_completed">Missão concluída!</string>
     <string name="not_participating">Você não está participando</string>
