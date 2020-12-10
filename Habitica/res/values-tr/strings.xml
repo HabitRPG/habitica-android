@@ -333,7 +333,7 @@
     <string name="has_reminder">Hatırlatıcı Mevcut</string>
     <string name="has_tag">Etiket Mevcut</string>
     <string name="subscribe_title">Abone olmak geliştiricilere destek verir ve Habitica\'nın çalışmaya devam etmesine yardım eder</string>
-    <string name="subscribe_prompt">Abone olarak şu özelliklerden yararlanabilirsin:</string>
+    <string name="subscribe_prompt">Bu özel avantajlardan yararlanmak için abone olun!</string>
     <string name="subscribe_listitem1">Altınla elmas satın al</string>
     <string name="subscribe_listitem2">Mistik Kum Saati</string>
     <string name="subscribe_listitem3">Geçmiş kaydınızı daha uzun süre saklama</string>
@@ -459,7 +459,7 @@
     <string name="party_description">Takım Tanımı</string>
     <string name="number_participants">%1$d Katılımcı</string>
     <string name="welcome_back">Tekrar Hoş Geldin</string>
-    <string name="yesterdaililes_prompt">Dün hiç bu Günlük İşlerden yaptın mı\?</string>
+    <string name="yesterdaililes_prompt">Dün yaptığınız günlük işlere bir göz atın:</string>
     <string name="start_day">Günüme Başla</string>
     <string name="leave_party_confirmation">Takımdan ayrılmak ve görevlere devam edip etmeyeceğini seçmek istediğinden emin misin\?</string>
     <string name="pending">Beklemede</string>
