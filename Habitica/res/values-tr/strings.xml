@@ -727,7 +727,7 @@
     <string name="remaining_1month">1 ay kaldı</string>
     <string name="need_more_help">Daha fazla yardıma mı ihtiyacın var\?</string>
     <string name="new_reminder">Yeni anımsatıcı</string>
-    <string name="checklist_text">Adım Metni</string>
+    <string name="checklist_text">Kontrol Listesi Metni</string>
     <string name="years">yılda bir</string>
     <string name="days">günde bir</string>
     <string name="weeks">haftada bir</string>
@@ -949,7 +949,7 @@
     <string name="leave_challenges">Mücadelelerden Ayrıl</string>
     <string name="keep_challenges">Mücadelelere Devam Et</string>
     <string name="transfer_ownership_confirm">Liderliği devretmek istiyor musun\?</string>
-    <string name="adjust_streak">Alışkanlık Sayılarını Ayarla</string>
+    <string name="adjust_streak">Alışkanlık Serini Ayarla</string>
     <string name="resubscribe_description">Faydalardan yararlanmaya devam etmek ister misin\? Faydalarını etkin tutmak için bu abonelik bitmeden yeni bir abonelik başlatabilirsin.</string>
     <string name="renew_subscription">Aboneliği Yenile</string>
     <string name="resubscribe">Yeniden abone ol</string>
@@ -979,4 +979,8 @@
     <string name="reject">Reddet</string>
     <string name="accept">Kabul Et</string>
     <string name="setup_task_habit_2"/>
+    <string name="update_available">Güncelleme uygun: %1$s (%2$d)</string>
+    <string name="streak">Seri</string>
+    <string name="assigned_stat">Atanan İstatistik</string>
+    <string name="join_party_description_guild">Aşağıdaki kullanıcı adını bir arkadaşınıza verin veya potansiyel yoldaşlarla tanışmak için % s gidin!</string>
 </resources>
