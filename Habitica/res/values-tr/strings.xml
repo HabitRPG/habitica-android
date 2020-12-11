@@ -744,7 +744,7 @@
     <string name="add_local_authentication">Yerel Kimlik Doğrulama Ekle</string>
     <string name="defeat">Yenilgi</string>
     <string name="gift_confirmation_text_gems">%s elmas gönderdin.</string>
-    <string name="gift_confirmation_text_sub_g1g1">%s kullanıcısına %s aylık Habitica üyeliği hediye ettin ve aynı üyeliği sen de kazandın!</string>
+    <string name="gift_confirmation_text_sub_g1g1">%s kullanıcısına %s aylık Habitica üyeliği hediye ettin ve 1 alana 1 bedava kampanyamızla aynı üyeliği sen de kazandın!</string>
     <string name="gift_confirmation_text_sub">%s kullanıcısına %s aylık Habitica üyeliği hediye ettin.</string>
     <string name="gift_gems_subtitle">Hediye etmek istediğin elmas paketini seç!</string>
     <string name="insufficientGoldTitle">Yetersiz Altın</string>
