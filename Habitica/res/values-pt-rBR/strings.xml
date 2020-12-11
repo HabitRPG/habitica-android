@@ -360,7 +360,7 @@
     <string name="cancel_subscription_notgoogle_description">Não quer mais ser Assinante\? Devido às restrições nos métodos de pagamentos móveis, você precisará cancelar através do nosso site. Para fazer isso, toque no botão abaixo, faça login na sua conta, toque no ícone Usuário no canto superior direito e vá para Assinatura. Quaisquer meses de crédito de assinatura serão aplicados após o término da sua assinatura atual. Nós sentiremos sua falta!</string>
     <string name="visit_habitica_website">Visite o site do Habitica</string>
     <string name="current_bonuses">Bônus Atuais</string>
-    <string name="months_subscribed">Meses Assinando</string>
+    <string name="months_subscribed">Meses assinados</string>
     <string name="current_hourclasses">Ampolas Místicas Atuais</string>
     <string name="monthly_gem_cap">Capacidade mensal de Gemas</string>
     <string name="inactive">Inativo</string>
