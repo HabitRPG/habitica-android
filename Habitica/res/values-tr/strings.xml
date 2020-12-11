@@ -748,7 +748,7 @@
     <string name="gift_confirmation_text_sub">%s kullanıcısına %s aylık Habitica üyeliği hediye ettin.</string>
     <string name="gift_gems_subtitle">Hediye etmek istediğin elmas paketini seç!</string>
     <string name="insufficientGoldTitle">Yetersiz Altın</string>
-    <string name="challenge_leave_description">Ayrılırken bu mücadelenin görevlerini kişisel görev tablonda tutabilirsin veya silebilirsin</string>
+    <string name="challenge_leave_description">Bu Meydan Okumanın görevlerini kişisel görev panonuzda tutmayı veya ayrıldığınızda silmeyi seçebilirsiniz.</string>
     <string name="login_incentive_count">Habitica\'ya %d kez giriş yaparak kilidi aç.</string>
     <string name="login_incentive_short_count">%d Giriş</string>
     <string name="number_responded">%1$d/%2$d Yanıtlandı</string>
