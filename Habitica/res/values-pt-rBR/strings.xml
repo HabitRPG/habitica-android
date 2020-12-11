@@ -354,7 +354,7 @@
     <string name="payment_method">Método de pagamento</string>
     <string name="subscription">Assinatura</string>
     <string name="active">Ativo</string>
-    <string name="due">Data de vencimento</string>
+    <string name="due">Vencimento</string>
     <string name="cancel_subscription">Cancelar Assinatura</string>
     <string name="cancel_subscription_google_description">Não quer mais ser Assinante\? Você pode achar a opção de Cancelar a Assinatura na seção \"Meus aplicativos\" no menu do Google Play Store. Quaisquer meses de crédito de assinatura serão aplicados após o término da sua assinatura atual.</string>
     <string name="cancel_subscription_notgoogle_description">Não quer mais ser Assinante\? Devido às restrições nos métodos de pagamentos móveis, você precisará cancelar através do nosso site. Para fazer isso, toque no botão abaixo, faça login na sua conta, toque no ícone Usuário no canto superior direito e vá para Assinatura. Quaisquer meses de crédito de assinatura serão aplicados após o término da sua assinatura atual. Nós sentiremos sua falta!</string>
