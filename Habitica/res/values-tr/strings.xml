@@ -3,7 +3,7 @@
     <string name="action_refresh">Yenile</string>
     <string name="XP_default">Tecrübe</string>
     <string name="HP_default">Sağlık</string>
-    <string name="MP_default">Mana</string>
+    <string name="MP_default">Enerji</string>
     <!--Prefs-->
     <string name="PS_settings_title">Ayarlar</string>
     <string name="SP_userID_title">Kullanıcı ID\'si</string>
@@ -52,7 +52,7 @@
     <string name="about_bugreport">Hata Bildir</string>
     <string name="about_source_code">Kaynak Kodu</string>
     <!--Network Errors-->
-    <string name="internal_error_api">Sunucu ile ilgili bir hata var gibi görünüyor. Daha sonra tekrar dene.</string>
+    <string name="internal_error_api">Sunucu ile ilgili bir hata var gibi görünüyor. Daha sonra tekrar dene</string>
     <string name="authentication_error_title">Kimlik doğrulama hatası</string>
     <string name="login_validation_error_title">Doğrulama Hatası</string>
     <string name="login_validation_error_fieldsmissing">Tüm alanları doldurmanız gerekiyor.</string>
@@ -744,7 +744,7 @@
     <string name="add_local_authentication">Yerel Kimlik Doğrulama Ekle</string>
     <string name="defeat">Yenilgi</string>
     <string name="gift_confirmation_text_gems">%s elmas gönderdin.</string>
-    <string name="gift_confirmation_text_sub_g1g1">%s kullanıcısına %s aylık Habitica üyeliği hediye ettin ve 1 alana 1 bedava kampanyamızla aynı üyeliği sen de kazandın!</string>
+    <string name="gift_confirmation_text_sub_g1g1">%s kullanıcısına %s-month aylık Habitica üyeliği hediye ettin ve 1 alana 1 bedava kampanyamızla aynı üyeliği sen de kazandın!</string>
     <string name="gift_confirmation_text_sub">%s kullanıcısına %s aylık Habitica üyeliği hediye ettin.</string>
     <string name="gift_gems_subtitle">Hediye etmek istediğin elmas paketini seç!</string>
     <string name="insufficientGoldTitle">Yetersiz Altın</string>
@@ -768,27 +768,27 @@
     <string name="create_task_title">Bir Görev Oluştur</string>
     <string name="percent_completed">%%d% Tamamlandı</string>
     <string name="lets_get_started">Haydi başlayalım</string>
-    <string name="your_progress">İlerlemen</string>
+    <string name="your_progress">Senin İlerlemen</string>
     <string name="delete_checklist_entry">Sil…</string>
     <string name="complete_for_gold">&lt;font color=#EE9109&gt;&lt;b&gt;100 Altın&lt;/b&gt;&lt;/font&gt; kazanmak için tamamlayın!</string>
     <string name="pet_ownership_fraction">%1$d / %2$d</string>
     <string name="buy_all">Hepsini Al</string>
-    <string name="animal_ears"/>
+    <string name="animal_ears">Hayvan Kulakları</string>
     <string name="avatar_headband">Kafa bandı</string>
     <string name="support">Destek</string>
     <string name="wacky">Tuhaf</string>
     <string name="habitica_questions">Habitica Soruları</string>
     <string name="clear_cache">Önbelleği Temizleme</string>
     <string name="mystic_hourglasses">Gizemli Kum Saatleri</string>
-    <string name="premium_currency"/>
-    <string name="currency"/>
+    <string name="premium_currency">Premium Para Birimi</string>
+    <string name="currency">Para birimi</string>
     <string name="game_mechanics">Oyun Mekanikleri</string>
     <string name="common_questions">Sık Sorulan Sorular</string>
     <string name="experience_points">Deneyim Puanları</string>
     <string name="view_gem_bundles">Elmas Paketlerini Görüntüle</string>
     <string name="joinedChallengeDescription">Bir mücadeleye katılarak kendini sına!</string>
     <string name="joinedChallengeTitle">Bir Mücadeleye Katıldı</string>
-    <string name="joinedGuildDescription">Bir Loncaya katılarak Habitica\'nın sosyal yönüne yelken aç!</string>
+    <string name="joinedGuildDescription">Bir Loncaya katılarak Habitica\'nın sosyal tarafına adım atın!</string>
     <string name="joinedGuildTitle">Bir Loncaya Katıldı</string>
     <string name="beastMasterTitle">Canavar Ustası</string>
     <string name="beastMasterDescription">Tüm evcil hayvanları toplayarak \"Canavar Ustası\" Başarısını kazandın!</string>
@@ -815,7 +815,7 @@
     <string name="switch_to_grid_view">Izgara görünümüne geç</string>
     <string name="switch_to_list_view">Liste görünümüne geç</string>
     <string name="special_achievements">Özel Başarılar</string>
-    <string name="seasonal_achievements">Dönemsel Başarılar</string>
+    <string name="seasonal_achievements">Sezon Başarıları</string>
     <string name="basic_achievements">Temel Başarılar</string>
     <string name="sidebar_achievements">Başarılar</string>
     <string name="unpin">Sabitleme</string>
@@ -843,12 +843,12 @@
     <string name="mystery_sets">Gizem Setleri</string>
     <string name="reason_for_report">Bildirme nedeni (tercihen)</string>
     <string name="report_message_title">%s kullanıcısını ihlal nedeniyle bildir:</string>
-    <string name="report_explanation">**Sadece** [Topluluk Kuralları](https://habitica.com/static/community-guidelines)\'nı ve/veya and/or [Kullanım Koşulları](https://habitica.com/static/terms)\' nı ihlal eden gönderileri bildirin. Aksi takdirde ceza alabilirsiniz.</string>
+    <string name="report_explanation">**Sadece** [Topluluk Kuralları](https://habitica.com/static/community-guidelines)\'nı ve/veya [Kullanım Koşulları](https://habitica.com/static/terms)\' nı ihlal eden gönderileri bildirin. Aksi takdirde ceza alabilirsiniz.</string>
     <string name="x_class">%s Sınıfı</string>
     <string name="become_x">%s ol</string>
     <string name="purchase_equipment_description">Ekipman kuşanmak, avatarını özelleştirmenin ve istatistiklerini iyileştirmenin bir yoludur</string>
     <string name="hatch_pet_description">Bir Kuluçka İksiri ve Yumurta almak için görevleri tamamla ve ardından Evcil Hayvanını yumurtadan çıkar!</string>
-    <string name="complete_task_description">Ödül kazanmak için görevlerinden herhangi birini tamamla</string>
+    <string name="complete_task_description">Ödül kazanmak için görevlerinizden herhangi birini tamamlayın</string>
     <string name="create_task_description">Bu hafta başarmak istediğin bir şey için bir görev ekle</string>
     <string name="purchase_equipment_title">Ekipman Satın Al</string>
     <string name="feedPet_title">Bir evcil hayvan besle</string>
@@ -862,16 +862,16 @@
     <string name="levelup_detail_10">Oyun tarzına uygun bir sınıf seç ve yolculuğunda sana yardımcı olacak özel becerilerin ve zırhların kilidini aç</string>
     <string name="levelup_title_10">Sınıf Sisteminin kilidi açıldı!</string>
     <string name="suggest_pet_hatch_missing_egg">Bu evcil hayvanı yumurtadan çıkarmak için %s Yumurtasına ihtiyacın var</string>
-    <string name="suggest_pet_hatch_missing_potion">Bu evcil hayvanı yumurtadan çıkarmak için %s İksirine ihtiyacın var</string>
+    <string name="suggest_pet_hatch_missing_potion">Bu evcil hayvanı yumurtadan çıkarmak için hala %s İksirine ihtiyacınız var</string>
     <string name="suggest_pet_hatch_missing_both">Bu evcil hayvanı yumurtadan çıkarmak için %s ve %s İksirine ihtiyacın var</string>
-    <string name="suggest_pet_hatch_again_missing_egg">Bu hayvanı tekrar yumurtadan çıkarmak için bir %s Yumurtasına ihtiyacın var</string>
+    <string name="suggest_pet_hatch_again_missing_egg">Bu hayvanı tekrar yumurtadan çıkarmak için hala bir %s Yumurtasına ihtiyacınız var</string>
     <string name="suggest_pet_hatch_again_missing_potion">Bu hayvanı tekrar yumurtadan çıkarmak için bir %s İksirine ihtiyacın var</string>
-    <string name="can_hatch_pet">Bu evcil hayvanı yumurtadan çıkarmak için %s Yumurtasını ve %s İksirini birleştir!</string>
+    <string name="can_hatch_pet">Bu evcil hayvanı yumurtadan çıkarmak için %s Yumurtanı ve %s İksirini birleştir!</string>
     <string name="magic_potion">Büyülü İksir</string>
     <string name="use_saddle">Eyer Kullan</string>
     <string name="pet_category">%s Evcil Hayvan</string>
     <string name="block">Engelle</string>
-    <string name="pms_disabled_description">Mesaj göndermeye devam edebilirsin ancak sana kimse mesaj gönderemez. Bunu Ayarlar\'a giderek tekrar etkinleştirebilirsin.</string>
+    <string name="pms_disabled_description">Yine de mesaj gönderebilirsiniz, ancak kimse bunları size gönderemez. Ayarlar\'dan tekrar etkinleştirebilirsiniz.</string>
     <string name="pms_disabled">Özel Mesajlar devre dışı bırakıldı</string>
     <string name="disablePrivateMessages">Özel Mesajları Devre Dışı Bırak</string>
     <string name="block_user_description">Engellenen bir kullanıcı sana Özel Mesaj gönderemez, ancak yine de onların yayınlarını Taverna veya Loncalarda görürsün. Kişi moderatörken bunun hiçbir etkisi olmayacaktır.</string>
@@ -888,19 +888,35 @@
     <string name="leave_delete_task">Ayrıl ve Görevi Sil</string>
     <string name="delete_challenge_task_title">Mücadele Görevi Silinsin mi\?</string>
     <string name="equip">Yanına Al</string>
-    <string name="onboardingCompleteDescription">Eğer daha fazlasını istiyorsan Başarılar\'a göz at ve toplamaya başla!</string>
+    <string name="onboardingCompleteDescription">Daha fazlasını istiyorsanız Başarılar\'a göz atın ve toplamaya başlayın!</string>
     <string name="first_drop_title">Yeni eşyalar buldun!</string>
     <string name="go_to_items">Eşyalara Git</string>
     <string name="first_drop_explanation2">Eşyalarına git ve yeni Yumurtanı ve Kuluçka İksirini birleştirmeyi dene!</string>
     <string name="first_drop_explanation1">Görevleri tamamlamak sana yumurta, kuluçka iksirleri ve evcil hayvan yemi bulma şansı verir.</string>
     <string name="could_not_find_user">Kullanıcı bulunamadı</string>
-    <string name="update_app_description">Habitica uygulamasında sürekli yeni düzeltmeler yapıyoruz, bu nedenle herhangi bir güncelleme olup olmadığını görmek için Play Store\'u kontrol ettiğinizden emin olun.</string>
-    <string name="gold_description"/>
-    <string name="purchasedEquipmentTitle"/>
+    <string name="update_app_description">Sürekli olarak yeni düzeltmeler yapıyoruz, bu nedenle herhangi bir güncelleme olup olmadığını görmek için Play Store\'u kontrol ettiğinizden emin olun.</string>
+    <string name="gold_description">Altın, Habitica\'daki **ana para birimi biçimidir** ve belirli donanımları, görevleri, eşyaları ve hatta kendiniz için yaptığınız özel ödülleri satın almanıza izin verir.
+\n
+\nGörevleri veya görevleri tamamlayarak veya bazı Sınıf becerileriyle **Altın kazanın**. Daha yüksek **Algı istatistikleri** kazandığınız Altın miktarını artırır.
+\n
+\nHabitica\'ya abone olursanız, abone olduğunuz sürenin uzunluğuna göre belirlenen bir dizi Mücevher satın almak için Altını bile kullanabilirsiniz.</string>
+    <string name="purchasedEquipmentTitle">Satın Alınan Ekipman</string>
     <string name="completedTaskTitle">Bir yapılacak iş tamamlandı</string>
     <string name="createdTaskTitle">İlk yapılacak işini oluşturdun</string>
     <string name="complete_task_title">Bir Görevi Tamamla</string>
-    <string name="stat_description"/>
+    <string name="stat_description">Tüm Habitica karakterleri, Habitica\'nın oynanış özelliklerini etkileyen dört istatistiğe sahiptir.
+\n
+\n** Kuvvet (STR) ** kritik vuruşları etkiler ve bir Görev Patronuna verilen hasarı artırır. Savaşçılar ve Haydutlar, sınıf ekipmanlarından STR kazanır.
+\n
+\n
+\n**Bünye (CON)** Sağlığınızı yükseltir ve daha az hasar almanızı sağlar. Şifacılar ve Savaşçılar, sınıf ekipmanlarından CON kazanır.
+\n
+\n**Zeka (INT)** kazandığınız Tecrübe Puanı miktarını artırır ve size daha fazla Enerji verir. Büyücüler ve Şifacılar, sınıf ekipmanlarından INT kazanır.
+\n
+\n
+\n**Algı (PER)** kazandığınız altını ve düşen eşyaları bulma oranınızı artırır. Haydutlar ve Büyücüler, sınıf ekipmanlarından PER kazanır.
+\n
+\n10. seviyeden sonra, kazandığınız her seviyede, istediğiniz istatistiğe koyabileceğiniz 1 Stat Puanı kazanırsınız. Ayrıca, farklı istatistik artırma kombinasyonlarına sahip teçhizatı da donatabilirsiniz.</string>
     <string name="common_fixes">Yaygın Düzeltmeler</string>
     <string name="bugs_fixes_description">Bir şeyler ters mi gitti\? Cevapları buradan kontrol edin veya yardım için bize ulaşın.</string>
     <string name="bugs_fixes">Hatalar ve Düzeltmeler</string>
@@ -909,7 +925,7 @@
     <string name="contact_us">Bize Ulaş</string>
     <string name="transfer_ownership_confirm_message">Bu, %s adlı üyeyi yeni Takım lideri yapacak</string>
     <string name="invite_to_party">Takıma Davet Et</string>
-    <string name="sale">Satışı</string>
+    <string name="sale">Satış</string>
     <string name="update_app">Uygulamayı Güncelle</string>
     <string name="overview">Genel Bakış</string>
     <string name="how_best_habitica">Habitica\'yı en iyi şekilde nasıl kullanacağından emin değil misin\?</string>
@@ -929,13 +945,13 @@
     <string name="g1g1_duration">17 Aralık - 6 Ocak</string>
     <string name="limited_event">Sınırlı etkinlik</string>
     <string name="g1g1_info_3">Sınırlamalar</string>
-    <string name="g1g1_info_2_text">\"Abonelik Hediye Et\" e dokun ve hediye etmek istediğin hesabın kullanıcı adını yaz. Daha sonra ne kadar abonelik hediye etmek istediğini seç. Hesabın, az önce hediye ettiğin kadar abonelikle otomatik olarak ödüllendirilecektir.</string>
+    <string name="g1g1_info_2_text">\"Abonelik Hediye Et\" e dokunun ve hediye etmek istediğiniz hesabın kullanıcı adını yazın. Oradan, hediye etmek istediğiniz alt uzunluğu seçin ve kontrol edin. Hesabınız, hediye ettiğiniz aynı düzeydeki abonelikle otomatik olarak ödüllendirilecektir.</string>
     <string name="g1g1_info_2">Nasıl çalışır</string>
     <string name="gift_a_subscription">Abonelik Hediye Et</string>
-    <string name="promo_g1g1_prompt">Hediye Ettiğin Kadar Hediye Etkinliği</string>
+    <string name="promo_g1g1_prompt">Hediye Ettiğin Kadar Hediye Al Etkinliği</string>
     <string name="promo_g1g1_description">Hemen bir abonelik hediye et ve aynı aboneliği kendin de kazan!</string>
     <string name="event">Etkinlik</string>
-    <string name="member_group_plan">Grup Planı Üyesi</string>
+    <string name="member_group_plan">Grup Planının Üyesi</string>
     <string name="owner">Sahip</string>
     <string name="member">Üye</string>
     <string name="save_20">%20 tasarruf et</string>
@@ -983,4 +999,111 @@
     <string name="streak">Seri</string>
     <string name="assigned_stat">Atanan İstatistik</string>
     <string name="join_party_description_guild">Aşağıdaki kullanıcı adını bir arkadaşınıza verin veya potansiyel yoldaşlarla tanışmak için % s gidin!</string>
+    <string name="spooky_promo_info_prompt">Değerli Taş Satışı, bu yılki Sonbahar Galasının en sonunda tekrar gündeme geldi! Bu, her zamankinden daha fazla Mücevher almak için son bir şans, bu yüzden bu süre boyunca stok yapın!</string>
+    <string name="spooky_promo_info_limitations">Bu promosyon yalnızca sınırlı süreli etkinlik sırasında geçerlidir. Bu etkinlik 29 Ekim\'de 08:00 EDT\'de (12:00 UTC) başlayacak ve 2 Kasım 20:00 EDT\'de (00:00 UTC) sona erecek. Promosyon teklifi yalnızca kendiniz için Mücevher satın alırken geçerlidir.</string>
+    <string name="spooky_promo_info_instructions">29 Ekim ile 2 Kasım arasında, her zamanki gibi herhangi bir Mücevher paketi satın alın ve hesabınıza promosyon miktarda Mücevher yatırılacaktır. Gelecek sürümler için harcayabileceğiniz, paylaşabileceğiniz veya saklayabileceğiniz daha fazla Mücevher!</string>
+    <string name="fall_promo_info_prompt">Sonbahar Galası tüm hızıyla devam ediyor, bu yüzden ilk Mücevher Satışımızı sunmak için mükemmel bir zaman olduğunu düşündük! Artık her satın alma işleminde her zamankinden daha fazla Mücevher kazanacaksınız.</string>
+    <string name="fall_promo_info_limitations">Bu promosyon yalnızca sınırlı süreli etkinlik sırasında geçerlidir. Bu etkinlik 22 Eylül 08:00 EDT\'de (12:00 UTC) başlayacak ve 30 Eylül 20:00 EDT (00:00 UTC) itibarıyla sona erecektir. Promosyon teklifi yalnızca kendiniz için Mücevher satın alırken geçerlidir.</string>
+    <string name="fall_promo_info_instructions">22 ve 30 Eylül arasında, her zamanki gibi herhangi bir Gem paketi satın alın ve hesabınıza promosyon miktarda Mücevher kredisi aktarılacaktır. Gelecek sürümler için harcayabileceğiniz, paylaşabileceğiniz veya saklayabileceğiniz daha fazla Mücevher!</string>
+    <string name="how_it_works">Nasıl çalışır</string>
+    <string name="x_to_y">%s - %s</string>
+    <string name="usually_x_gems">Genellikle %d Mücevher</string>
+    <string name="mount_category">%s Binekler</string>
+    <string name="challenge_task_name">%s Zorluk Görevi</string>
+    <string name="delete_x_tasks">%d Görevi Sil</string>
+    <string name="keep_x_tasks">%d Görevi Koru</string>
+    <string name="broken_challenge_description">Bu, artık var olmayan bir Meydan Okumanın parçası olan %d görevden biridir. Bu kalan görevlerle ne yapmak istersiniz\?</string>
+    <string name="broken_challenge">Bozulmuş Mücadele</string>
+    <string name="delete_challenge_task_description">Bu, \"%s\" Meydan Okumasının parçası olan %d görevden biridir. Bu görevi silmek için Meydan Okumadan ayrılmalısınız.</string>
+    <string name="hatch">Yumurtadan Çıkar</string>
+    <string name="hatch_your_pet">Evcil Hayvanınızı Yumurtadan Çıkarın</string>
+    <string name="magic_potions">Sihirli İksirler</string>
+    <string name="hatch_pet_again">Tekrar Evcil Hayvan yumurtadan çıkartıldı</string>
+    <string name="unhatched_pet">Kuluçkalanmamış Evcil Hayvan</string>
+    <string name="hatch_pet">Yumurtadan Evcil Hayvan Çıkarıldı</string>
+    <string name="suggest_pet_hatch_again_missing_both">Bu evcil hayvanı tekrar yumurtadan çıkarmak için %s ve %s İksirine ihtiyacınız var</string>
+    <string name="view_onboarding_tasks">İlk Katılım Görevlerini Görüntüleyin</string>
+    <string name="excessItemsNoneLeft">Tüm %s evcil hayvanları için ihtiyacınız olan her şeye zaten sahipsiniz. %d %ss satın almak istediğinizden emin misiniz\?</string>
+    <string name="purchaseX">%d satın al</string>
+    <string name="excessItemsXLeft">Tüm olası evcil hayvanları yumurtadan çıkarmak için yalnızca %d %s gerekir. %d satın almak istediğinizden emin misiniz\?</string>
+    <string name="excess_items">Fazla Öğeler</string>
+    <string name="onboardingComplete_achievement_title">İlk Katılım Görevlerinizi tamamladınız!</string>
+    <string name="onboardingCompleteTitle">Çabalarınız karşılığında &lt;b&gt;5 Başarı&lt;/b&gt; ve &lt;font color = # EE9109&gt;&lt;b&gt;100 Altın&lt;/b&gt;&lt;/font&gt; kazandınız.</string>
+    <string name="purchasedEquipmentDescription">Ekipman pratik veya modaya uygun olabilir. Avatarınıza her türlü avantajı sağlamak için niteliklerinizi yükseltin</string>
+    <string name="fedPetDescription">Her evcil hayvanın zevk aldığı belirli bir yemeği vardır! Hangisinin en hızlı şekilde evcil hayvanınızı büyüteceğini bulmak için deneme yapın</string>
+    <string name="hatchedPetDescription">Toplanacak o kadar çok Evcil Hayvan var ki, mutlaka bir favoriniz olacak. Onları beslerseniz, büyüyebilirler…</string>
+    <string name="completedTaskDescription">Bir görev, Alışkanlık, Günlük İşler veya Yapılacaklar olabilir. Her türlü ödülü almak için onları tamamlamaya devam edin!</string>
+    <string name="createdTaskDescription">Aynen böyle devam! Görev planlama konusunda yardıma ihtiyacınız varsa günün belirli bir saatinde ne yapmak istediğinizi düşünmeyi deneyin</string>
+    <string name="fedPetTitle">Bir Evcil Hayvan beslenildi</string>
+    <string name="hatchedPetTitle">Bir evcil hayvan yumurtadan çıktı</string>
+    <string name="feedPet_description">Yiyecek almak için görevleri tamamlayın! Evcil hayvanınızı Evcil Hayvanlar ve Binekler bölümünden besleyebilirsiniz</string>
+    <string name="hatch_pet_title">Yeni bir evcil hayvan yumurtadan çıkarttı</string>
+    <string name="adventure_guide_description">Bu işe alım görevlerini tamamladığınızda, işiniz bittiğinde &lt;b&gt;5 Başarı&lt;/b&gt; ve &lt;font color = # EE9109&gt; &lt;b&gt;100 Altın&lt;/b&gt;&lt;/font&gt; kazanacaksınız!</string>
+    <string name="getting_started">Başlangıç</string>
+    <string name="onboarding_tasks">İlk Katılım Görevleri</string>
+    <string name="task_display">Görev listesi ekranı</string>
+    <string name="still_questions">Hala bir sorunuz mu var\?</string>
+    <string name="purchase_amount_error">Bu miktarı satın alamazsınız.</string>
+    <string name="read_more">Daha fazla oku</string>
+    <string name="avatar_accent">Ayırıcı Özellik</string>
+    <string name="animal_tail">Hayvan Kuyruğu</string>
+    <string name="manual_sync_restart_description">Bazen uygulama içeriği otomatik olarak güncellemeyebilir. Uygulamayı yenilemek veya kapatıp yeniden açmayı deneyin.</string>
+    <string name="manual_sync_restart">Manuel Senkronizasyon veya Yeniden Başlatma</string>
+    <string name="clear_cache_description">Önbelleğinizi temizlemek için telefonunuzun Ayarlar uygulamasını açın. Depolama&gt; Uygulamalar&gt; Habitica\'ya gidin ve Önbelleği Temizle\'ye dokunun.</string>
+    <string name="hourglasses_description">Mistik Kum Saati, yalnızca Habitica\'ya arka arkaya üç ay veya daha fazla abone olmak için alabileceğiniz son derece nadir bir para birimidir. Zaman Yolcusu\'nun mağazasında geçmiş teçhizat setleri, evcil hayvanlar, binekler, hareketli arka planlar ve hatta özel görevler satın almak için kullanılırlar.
+\n
+\nYılda dört adede kadar Mistik Kum Saati alabilirsiniz. Ödüllendirildikleri zaman, abonelik yenileme programınıza bağlıdır. Sizi bir kum saati için uygun hale getiren son abonelik ödemenizden sonraki yeni ayın ilk gününde gönderilirler. Daha fazla ayrıntı için [Abonelik] sayfasına bakın.</string>
+    <string name="subscriber_currency">Abone Para Birimi</string>
+    <string name="standard">Standart</string>
+    <string name="stat_allocation">İstatistik Tahsisi</string>
+    <string name="mana_description">Mana puanları 10. seviyede sınıf sistemi ile açılır ve 11. seviyede öğrenmeye başladığınızda **Becerileri kullanmanıza** izin verir.
+\n
+\nHer gün sıfırlandığında bir miktar **MP geri yüklenir**, ancak görevleri tamamlayarak veya bir Mage sınıfı becerisini kullanarak daha fazlasını yeniden kazanabilirsiniz.</string>
+    <string name="mana_points">Enerji Puanları</string>
+    <string name="experience_description">Deneyim puanları ilerlemenizi temsil eder ve seviye atlamanıza izin verir. Görevleri veya görevleri tamamlayarak esas olarak **Tecrübe Puanı kazanacaksınız**, ancak Tecrübe Puanı veren bazı sınıf becerileri de vardır.
+\n
+\nDaha yüksek zorluktaki görevler veya kırmızı renkli görevler size **daha fazla Tecrübe Puanı** verecektir. **Akıl istatistiği** ayrıca Tecrübe Puanı kazanma oranınızı da yükseltir.</string>
+    <string name="health_description">Bu, avatarınızın hayatını temsil eder. Bir Günlük Kaçırmak veya olumsuz bir Alışkanlık yapmak **Sağlığınızı azaltır**.
+\n
+\nSeviye atlayarak, bir Sağlık İksiri kullanarak veya iyileştirme yeteneği olan bir sınıf becerisi kullanarak **Sağlınızı Geri Kazanın**.
+\n
+\n**Sağlığınz 0** \'a ulaşırsa, bir seviye, tamamen Altın ve bir ekipman parçası kaybedersiniz. Kayıp ekipman yeniden satın alınabilir.</string>
+    <string name="health_points">Sağlık Puanın</string>
+    <string name="stats_currency">İstatistikler ve Para Birimi</string>
+    <string name="send_bug_prompt">Bize bir hata raporu gönderin, size geri dönelim!</string>
+    <string name="support_bug_title">Oyuncu geri bildirimlerine göre sürekli olarak uygulamalarımızı daha iyi hale getirmeye çalışıyoruz, ancak bazen birkaç hata ortaya çıkıyor…</string>
+    <string name="lets_go">Hadi Gidelim</string>
+    <string name="suggestions_feedback_description">Özelliklerin nasıl daha iyi çalışabileceği veya yeni bir şey için bir fikriniz var mı\? Bize söyle!</string>
+    <string name="using_habitica_description">Size hız kazandırmak için temel bilgileri açıklayacak ve sık sorulan soruları yanıtlayacağız</string>
+    <string name="using_habitica">Habitica kullanarak</string>
+    <string name="not_participating">Sen katılmıyorsun</string>
+    <string name="unlock_previous_short">Görevi Bitir %d</string>
+    <string name="preference_email_onboarding">Habitica Hesabınızı oluştururken rehberlik</string>
+    <string name="g1g1_info_3_text">Bu promosyon yalnızca başka bir Habiticiye hediye ettiğinizde geçerlidir. Siz veya hediye alıcınızın halihazırda bir aboneliği varsa, hediye edilen abonelik, yalnızca mevcut abonelik iptal edildikten veya sona erdikten sonra kullanılacak aylar boyunca kredi ekleyecektir.</string>
+    <string name="g1g1_info_1">Sezonun şerefine çok özel bir promosyonu geri getiriyoruz. Artık birine abonelik hediye ettiğinizde, aynı aboneliği kendiniz için ücretsiz olarak alırsınız!</string>
+    <string name="cancel_subscription_group_plan_owner">Grup Planı olan bir Partinin veya Loncanın sahibi olduğunuz için ücretsiz aboneliğiniz var. Planı iptal ederseniz bu sona erecektir. Sahip olduğunuz herhangi bir aylık ekstra abonelik kredisi Grup Planının sonunda uygulanacaktır. Habitica web sitesinden iptal edebilirsiniz.</string>
+    <string name="cancel_subscription_group_plan">Grup Planı olan bir Partiye veya Loncaya üye olduğunuz için ücretsiz bir aboneliğiniz var. Ayrılırsanız veya Grup Planı sahibi tarafından iptal edilirse bu sona erecektir. Sahip olduğunuz herhangi bir aylık ekstra abonelik kredisi Grup Planının sonunda uygulanacaktır.</string>
+    <string name="subscription_credit">Abonelik Kredisi</string>
+    <string name="gifted">Hediye edilmiş</string>
+    <string name="preference_push_unjoined_guild_mention">\@Mentions Loncalara katılmamış</string>
+    <string name="preference_push_joined_guild_mention">\@Mentions katıldığı Loncalarda</string>
+    <string name="preference_push_party_mention">Partide @Mentions</string>
+    <string name="more_out_of_habitica">Habitica\'dan daha fazla yararlanın</string>
+    <string name="promo_subscription_buy_gems_description">Altınla Mücevher satın almak, aylık gizemli öğeler almak, düşük limitleri artırmak ve daha fazlasını yapmak için Abone olun!</string>
+    <string name="preference_push_party_activity">Parti Etkinliği</string>
+    <string name="search_hint">Görevleri ara</string>
+    <string name="complete">Tamamlayınız</string>
+    <string name="inviteFriendDescription">Maceranıza size katılan bir arkadaşınızı (veya arkadaşlarınızı) davet ettiniz!</string>
+    <string name="inviteFriendTitle">Bir Arkadaş Davet Etti</string>
+    <string name="triadBingoDescription">Tüm evcil hayvanları bulmak, tüm binekleri evcilleştirmek ve tüm evcil hayvanları yeniden bulmak için \"Üçlü Tam İsabet\" başarımını kazandınız!</string>
+    <string name="triadBingoTitle">Üçlü Tam İsabet</string>
+    <string name="mountMasterDescription">Tüm binekleri evcilleştirerek \"Binek Ustası\" başarımını kazandınız!</string>
+    <string name="mountMasterTitle">Binek Ustası</string>
+    <string name="partyOnTitle">Parti düzenlemek</string>
+    <string name="partyUpDescription">Bir parti üyesiyle takım kurdunuz!</string>
+    <string name="partyUpTitle">Parti verelim</string>
+    <string name="sent_card">%s gönderdin</string>
+    <string name="take_me_back">Beni geri al</string>
+    <string name="not_now">Şimdi olmaz</string>
+    <string name="need_help_header_description">Sorularınızın bir başka oyuncu tarafından cevaplanması için% s içinde bir mesaj gönderin.</string>
 </resources>
