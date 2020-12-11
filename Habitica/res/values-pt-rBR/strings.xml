@@ -1075,7 +1075,7 @@
     <string name="your_progress">Seu Progresso</string>
     <string name="adventure_guide_description">Complete essas tarefas iniciais e você vai ganhar &lt;b&gt;5 Conquistas&lt;/b&gt; e &lt;font color=#EE9109&gt;&lt;b&gt;100 Ouro&lt;/b&gt;&lt;/font&gt; quando terminar!</string>
     <string name="onboarding_tasks">Tarefas Iniciais</string>
-    <string name="getting_started">Iniciando</string>
+    <string name="getting_started">Começando</string>
     <string name="complete_for_gold">Complete para ganhar &lt;font color=#EE9109&gt;&lt;b&gt;100 Ouro&lt;/b&gt;&lt;/font&gt;!</string>
     <string name="task_display">Exibição da lista de tarefas</string>
     <string name="pet_ownership_fraction">%1$d / %2$d</string>
