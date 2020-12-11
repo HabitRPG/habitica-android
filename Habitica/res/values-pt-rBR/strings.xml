@@ -566,7 +566,7 @@
     <string name="view_community_guidelines">Veja as Diretrizes da Comunidade</string>
     <string name="guidelines_description">Habitica procura criar um ambiente acolhedor a todos os seus usuários, independente da idade ou backgrounds técnico, de modo especial nos espaços públicos tais como a Taverna. Se você tiver alguma questão, por favor consulte nossas diretrizes.</string>
     <string name="helpful_links">Links úteis</string>
-    <string name="view_faq">Veja o FAQ</string>
+    <string name="view_faq">Veja as Perguntas Frequentes</string>
     <string name="report_bug">Reporte um Bug</string>
     <string name="player_tiers">Níveis de jogadores</string>
     <string name="staff_moderators">Staff e Moderadores</string>
@@ -1071,7 +1071,7 @@
     <string name="complete_task_title">Completar uma Tarefa</string>
     <string name="create_task_title">Criar uma Tarefa</string>
     <string name="percent_completed">%d%% Completo</string>
-    <string name="lets_get_started">Vamos iniciar</string>
+    <string name="lets_get_started">Vamos começar</string>
     <string name="your_progress">Seu Progresso</string>
     <string name="adventure_guide_description">Complete essas tarefas iniciais e você vai ganhar &lt;b&gt;5 Conquistas&lt;/b&gt; e &lt;font color=#EE9109&gt;&lt;b&gt;100 Ouro&lt;/b&gt;&lt;/font&gt; quando terminar!</string>
     <string name="onboarding_tasks">Tarefas Iniciais</string>
