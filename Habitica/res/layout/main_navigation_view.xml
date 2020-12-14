@@ -13,7 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignTop="@id/item_wrapper">
+        android:layout_alignTop="@id/item_wrapper"
+        android:layoutDirection="ltr">
         <View
             android:layout_width="0dp"
             android:layout_weight="1"
