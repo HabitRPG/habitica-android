@@ -70,7 +70,7 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
         binding?.questRejectButton?.setOnClickListener { onQuestReject() }
         binding?.questBeginButton?.setOnClickListener { onQuestBegin() }
         binding?.questCancelButton?.setOnClickListener { onQuestCancel() }
-        binding?.questAbortButton?.setOnClickListener { onQuestAbort() }
+        binding?.questLeaveButton?.setOnClickListener { onQuestLeave() }
     }
 
     override fun onResume() {
@@ -103,14 +103,11 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
             } else if (showLeaderButtons()) {
                 binding?.questParticipantResponseWrapper?.visibility = View.GONE
                 binding?.questLeaderResponseWrapper?.visibility = View.VISIBLE
+                binding?.questCancelButton?.visibility = View.VISIBLE
                 if (isQuestActive) {
                     binding?.questBeginButton?.visibility = View.GONE
-                    binding?.questCancelButton?.visibility = View.GONE
-                    binding?.questAbortButton?.visibility = View.VISIBLE
                 } else {
                     binding?.questBeginButton?.visibility = View.VISIBLE
-                    binding?.questCancelButton?.visibility = View.VISIBLE
-                    binding?.questAbortButton?.visibility = View.GONE
                 }
             } else {
                 binding?.questLeaderResponseWrapper?.visibility = View.GONE
@@ -231,28 +228,43 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
 
     private fun onQuestCancel() {
         context?.let {
-            val alert = HabiticaAlertDialog(it)
-            alert.setMessage(R.string.quest_cancel_message)
-            alert.addButton(R.string.yes, true) { _, _ ->
-                partyId?.let { partyID ->
-                    @Suppress("DEPRECATION")
-                    socialRepository.cancelQuest(partyID)
-                            .flatMap { userRepository.retrieveUser() }
-                            .subscribe({ getActivity()?.supportFragmentManager?.popBackStack() }, RxErrorHandler.handleEmptyError())
+            if (isQuestActive) {
+
+                val builder = AlertDialog.Builder(getActivity())
+                        .setMessage(R.string.quest_abort_message)
+                        .setPositiveButton(R.string.yes) { _, _ ->
+                            partyId?.let { partyID ->
+                                @Suppress("DEPRECATION")
+                                socialRepository.abortQuest(partyID)
+                                        .flatMap { userRepository.retrieveUser() }
+                                        .subscribe({ getActivity()?.supportFragmentManager?.popBackStack() }, RxErrorHandler.handleEmptyError())
+                            }
+                        }.setNegativeButton(R.string.no) { _, _ -> }
+                builder.show()
+            } else {
+                val alert = HabiticaAlertDialog(it)
+                alert.setMessage(R.string.quest_cancel_message)
+                alert.addButton(R.string.yes, true) { _, _ ->
+                    partyId?.let { partyID ->
+                        @Suppress("DEPRECATION")
+                        socialRepository.cancelQuest(partyID)
+                                .flatMap { userRepository.retrieveUser() }
+                                .subscribe({ getActivity()?.supportFragmentManager?.popBackStack() }, RxErrorHandler.handleEmptyError())
+                    }
                 }
+                alert.addButton(R.string.no, false)
+                alert.show()
             }
-            alert.addButton(R.string.no, false)
-            alert.show()
         }
     }
 
-    private fun onQuestAbort() {
+    private fun onQuestLeave() {
         val builder = AlertDialog.Builder(getActivity())
                 .setMessage(R.string.quest_abort_message)
                 .setPositiveButton(R.string.yes) { _, _ ->
                     partyId?.let { partyID ->
                         @Suppress("DEPRECATION")
-                        socialRepository.abortQuest(partyID)
+                        socialRepository.leaveQuest(partyID)
                                 .flatMap { userRepository.retrieveUser() }
                                 .subscribe({ getActivity()?.supportFragmentManager?.popBackStack() }, RxErrorHandler.handleEmptyError())
                     }

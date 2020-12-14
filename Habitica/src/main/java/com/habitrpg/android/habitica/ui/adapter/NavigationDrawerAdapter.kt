@@ -10,7 +10,6 @@ import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.models.promotions.HabiticaPromotion
 import com.habitrpg.android.habitica.ui.menu.HabiticaDrawerItem
-import com.habitrpg.android.habitica.ui.viewHolders.GiftOneGetOnePromoMenuView
 import com.habitrpg.android.habitica.ui.views.adventureGuide.AdventureGuideMenuBanner
 import com.habitrpg.android.habitica.ui.views.promo.PromoMenuView
 import com.habitrpg.android.habitica.ui.views.promo.PromoMenuViewHolder
@@ -109,14 +108,6 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int): Recycle
         return when (viewType) {
             2 -> {
                 val itemView = SubscriptionBuyGemsPromoView(parent.context)
-                itemView.layoutParams = ViewGroup.LayoutParams(
-                        ViewGroup.LayoutParams.MATCH_PARENT,
-                        148.dpToPx(parent.context)
-                )
-                SubscriptionBuyGemsPromoViewHolder(itemView)
-            }
-            3 -> {
-                val itemView = GiftOneGetOnePromoMenuView(parent.context)
                 itemView.layoutParams = ViewGroup.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         148.dpToPx(parent.context)

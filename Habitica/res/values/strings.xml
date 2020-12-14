@@ -1128,4 +1128,8 @@
     <string name="won_achievement_description"><![CDATA[<b>%s</b> selected you as the winner! Your win has been recorded in your Achievements.]]></string>
     <string name="won_achievement_description_noname">You were selected as the winner! Your win has been recorded in your Achievements.</string>
     <string name="claim_x_gems">Claim %d Gems</string>
+    <string name="g1g1_promo_info_prompt">In honor of the season of giving we\'re bringing back a very special promotion. Now when you gift somebody a subscription, you get the same sub for yourself for free!</string>
+    <string name="g1g1_promo_info_instructions">Tap ‘Gift a Subscription’ and type in the username of the account you’d like to gift to. From there, pick the sub length you’d like to gift and check out. Your account will automatically be rewarded with the same level of subscription you just gifted.</string>
+    <string name="g1g1_promo_info_limitations">This is a limited time event that starts on %s (12:00 UTC) and will end %s (00:00 UTC). This promotion only applies when you gift to another Habitican. If you or your gift recipient already have a subscription, the gifted subscription will add months of credit that will only be used after the current subscription is cancelled or expires.</string>
+    <string name="gift_one_get_one_purchase_banner">Gift a sub and get a sub for free until %s</string>
 </resources>

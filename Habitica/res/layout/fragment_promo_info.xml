@@ -44,6 +44,14 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="6dp"/>
                 <TextView
+                    android:id="@+id/promo_banner_title_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    style="@style/Headline6"
+                    android:textColor="@color/white"
+                    android:layout_marginBottom="6dp"/>
+                <TextView
                     android:id="@+id/promo_banner_subtitle_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

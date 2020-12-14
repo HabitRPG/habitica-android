@@ -120,20 +120,34 @@
                 android:id="@+id/gift_subscription_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/teal_50"
-                android:padding="@dimen/spacing_large"
+                android:background="@drawable/g1g1_menu_background"
+                android:padding="32dp"
                 android:gravity="center_horizontal"
                 android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/g1g1_sparkle_left" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/gift_one_get_one"
                     android:gravity="center_horizontal"
                     android:textColor="@color/white"
-                    android:textSize="16sp"
+                    android:textSize="17sp"
+                    android:layout_marginHorizontal="12dp"
                     android:fontFamily="@string/font_family_medium"/>
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/g1g1_sparkle_right" />
+                </LinearLayout>
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="300dp"
                     android:layout_height="wrap_content"
                     android:text="@string/gift_one_get_one_detailed_description"
                     android:gravity="center_horizontal"

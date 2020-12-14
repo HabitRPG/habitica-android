@@ -148,7 +148,11 @@ class CustomizationRecyclerViewAdapter() : androidx.recyclerview.widget.Recycler
         fun bind(customization: Customization) {
             this.customization = customization
 
-            DataBindingUtils.loadImage(binding.imageView, customization.getIconName(userSize, hairColor))
+            if (customization.type == "background" && customization.identifier == "") {
+                binding.imageView.setActualImageResource(R.drawable.no_background)
+            } else {
+                DataBindingUtils.loadImage(binding.imageView, customization.getIconName(userSize, hairColor))
+            }
 
             if (customization.type == "background") {
                 val params = (binding.imageView.layoutParams as? LinearLayout.LayoutParams)?.apply {

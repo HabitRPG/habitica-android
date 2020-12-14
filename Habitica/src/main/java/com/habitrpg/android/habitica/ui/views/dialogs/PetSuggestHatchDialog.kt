@@ -101,11 +101,11 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
 
             var hatchPrice = 0
             if (!hasEgg) {
-                hatchPrice = getItemPrice(pet, egg, hasUnlockedEgg)
+                hatchPrice += getItemPrice(pet, egg, hasUnlockedEgg)
             }
 
             if (!hasPotion) {
-                hatchPrice = getItemPrice(pet, potion, hasUnlockedPotion)
+                hatchPrice += getItemPrice(pet, potion, hasUnlockedPotion)
 
             }
 
@@ -128,7 +128,9 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
                     if (!hasPotion) {
                         observable = observable.flatMap { activity.inventoryRepository.purchaseItem("hatchingPotions", thisPotion.key, 1) }
                     }
-                    observable.subscribe({
+                    observable
+                            .flatMap { activity.userRepository.retrieveUser(true, forced = true) }
+                            .subscribe({
                         (getActivity() as? MainActivity)?.hatchPet(thisPotion, thisEgg)
                     }, RxErrorHandler.handleEmptyError())
                 }

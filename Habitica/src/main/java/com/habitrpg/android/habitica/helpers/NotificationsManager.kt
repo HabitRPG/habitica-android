@@ -94,6 +94,8 @@ class NotificationsManager (private val context: Context) {
                         Notification.Type.ACHIEVEMENT_GOOD_AS_GOLD.type -> displayAchievementNotification(it)
                         Notification.Type.ACHIEVEMENT_BONE_COLLECTOR.type -> displayAchievementNotification(it)
                         Notification.Type.ACHIEVEMENT_SKELETON_CREW.type -> displayAchievementNotification(it)
+                        Notification.Type.ACHIEVEMENT_SEEING_RED.type -> displayAchievementNotification(it)
+                        Notification.Type.ACHIEVEMENT_RED_LETTER_DAY.type -> displayAchievementNotification(it)
 
                         Notification.Type.ACHIEVEMENT_GENERIC.type -> displayAchievementNotification(it, notifications.find { notif ->
                             notif.type == Notification.Type.ACHIEVEMENT_ONBOARDING_COMPLETE.type
@@ -144,7 +146,8 @@ class NotificationsManager (private val context: Context) {
     }
 
     private fun displayAchievementNotification(notification: Notification, isLastOnboardingAchievement: Boolean = false): Boolean {
-        val achievement = (notification.data as? AchievementData)?.achievement ?: notification.type ?: ""
+        val data = (notification.data as? AchievementData)
+        val achievement = data?.achievement ?: notification.type ?: ""
         val delay: Long = if (achievement == "createdTask" || achievement == Notification.Type.ACHIEVEMENT_ONBOARDING_COMPLETE.type) {
             1000
         } else {
@@ -153,7 +156,7 @@ class NotificationsManager (private val context: Context) {
         val sub = Completable.complete()
                 .delay(delay, TimeUnit.MILLISECONDS)
                 .subscribe({
-                    EventBus.getDefault().post(ShowAchievementDialog(achievement, notification.id, isLastOnboardingAchievement))
+                    EventBus.getDefault().post(ShowAchievementDialog(achievement, notification.id, data?.message, data?.modalText, isLastOnboardingAchievement))
                 }, RxErrorHandler.handleEmptyError())
         logOnboardingEvents(achievement)
         return true

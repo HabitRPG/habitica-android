@@ -15,6 +15,7 @@ import com.habitrpg.android.habitica.databinding.FragmentGemPurchaseBinding
 import com.habitrpg.android.habitica.extensions.addCancelButton
 import com.habitrpg.android.habitica.extensions.isUsingNightModeResources
 import com.habitrpg.android.habitica.helpers.*
+import com.habitrpg.android.habitica.models.promotions.PromoType
 import com.habitrpg.android.habitica.ui.GemPurchaseOptionsView
 import com.habitrpg.android.habitica.ui.activities.GemPurchaseActivity
 import com.habitrpg.android.habitica.ui.activities.GiftGemsActivity
@@ -58,9 +59,6 @@ class GemsPurchaseFragment : BaseFragment<FragmentGemPurchaseBinding>(), GemPurc
 
         binding?.giftGemsButton?.setOnClickListener { showGiftGemsDialog() }
 
-        binding?.giftSubscriptionContainer?.isVisible = appConfigManager.enableGiftOneGetOne()
-        binding?.giftSubscriptionContainer?.setOnClickListener { showGiftSubscriptionDialog() }
-
         if (context?.isUsingNightModeResources() == true) {
             binding?.headerImageView?.setImageResource(R.drawable.gem_purchase_header_dark)
         }
@@ -69,10 +67,12 @@ class GemsPurchaseFragment : BaseFragment<FragmentGemPurchaseBinding>(), GemPurc
         if (promo != null) {
             binding?.let {
                 promo.configurePurchaseBanner(it)
-                promo.configureGemView(it.gems4View.binding, 4)
-                promo.configureGemView(it.gems21View.binding, 21)
-                promo.configureGemView(it.gems42View.binding, 42)
-                promo.configureGemView(it.gems84View.binding, 84)
+                if (promo.promoType != PromoType.SUBSCRIPTION) {
+                    promo.configureGemView(it.gems4View.binding, 4)
+                    promo.configureGemView(it.gems21View.binding, 21)
+                    promo.configureGemView(it.gems42View.binding, 42)
+                    promo.configureGemView(it.gems84View.binding, 84)
+                }
             }
             binding?.promoBanner?.setOnClickListener {
                 val fragment = PromoInfoFragment()

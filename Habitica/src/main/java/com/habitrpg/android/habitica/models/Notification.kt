@@ -47,6 +47,8 @@ class Notification {
         ACHIEVEMENT_ALL_THAT_GLITTERS("ACHIEVEMENT_ALL_THAT_GLITTERS"),
         ACHIEVEMENT_BONE_COLLECTOR("ACHIEVEMENT_BONE_COLLECTOR"),
         ACHIEVEMENT_SKELETON_CREW("ACHIEVEMENT_SKELETON_CREW"),
+        ACHIEVEMENT_SEEING_RED("ACHIEVEMENT_SEEING_RED"),
+        ACHIEVEMENT_RED_LETTER_DAY("ACHIEVEMENT_RED_LETTER_DAY"),
 
         FIRST_DROP("FIRST_DROPS"),
 
@@ -78,6 +80,31 @@ class Notification {
             Type.FIRST_DROP.type -> FirstDropData::class.java
             Type.ACHIEVEMENT_GENERIC.type -> AchievementData::class.java
             Type.WON_CHALLENGE.type -> ChallengeWonData::class.java
+
+            Type.ACHIEVEMENT_ALL_YOUR_BASE.type -> AchievementData::class.java
+            Type.ACHIEVEMENT_BACK_TO_BASICS.type -> AchievementData::class.java
+            Type.ACHIEVEMENT_JUST_ADD_WATER.type -> AchievementData::class.java
+            Type.ACHIEVEMENT_LOST_MASTERCLASSER.type -> AchievementData::class.java
+            Type.ACHIEVEMENT_MIND_OVER_MATTER.type -> AchievementData::class.java
+            Type.ACHIEVEMENT_DUST_DEVIL.type -> AchievementData::class.java
+            Type.ACHIEVEMENT_ARID_AUTHORITY.type -> AchievementData::class.java
+            Type.ACHIEVEMENT_MONSTER_MAGUS.type -> AchievementData::class.java
+            Type.ACHIEVEMENT_UNDEAD_UNDERTAKER.type -> AchievementData::class.java
+            Type.ACHIEVEMENT_PRIMED_FOR_PAINTING.type -> AchievementData::class.java
+            Type.ACHIEVEMENT_PEARLY_PRO.type -> AchievementData::class.java
+            Type.ACHIEVEMENT_TICKLED_PINK.type -> AchievementData::class.java
+            Type.ACHIEVEMENT_ROSY_OUTLOOK.type -> AchievementData::class.java
+            Type.ACHIEVEMENT_BUG_BONANZA.type -> AchievementData::class.java
+            Type.ACHIEVEMENT_BARE_NECESSITIES.type -> AchievementData::class.java
+            Type.ACHIEVEMENT_FRESHWATER_FRIENDS.type -> AchievementData::class.java
+            Type.ACHIEVEMENT_GOOD_AS_GOLD.type -> AchievementData::class.java
+            Type.ACHIEVEMENT_ALL_THAT_GLITTERS.type -> AchievementData::class.java
+            Type.ACHIEVEMENT_GOOD_AS_GOLD.type -> AchievementData::class.java
+            Type.ACHIEVEMENT_BONE_COLLECTOR.type -> AchievementData::class.java
+            Type.ACHIEVEMENT_SKELETON_CREW.type -> AchievementData::class.java
+            Type.ACHIEVEMENT_SEEING_RED.type -> AchievementData::class.java
+            Type.ACHIEVEMENT_RED_LETTER_DAY.type -> AchievementData::class.java
+            
             else -> null
         }
     }

@@ -48,7 +48,7 @@ class NotificationOpenHandler {
         }
 
         private fun openGiftOneGetOneInfoScreen() {
-            MainNavigationController.navigate(R.id.giftOneGetOneInfoActivity)
+            MainNavigationController.navigate(R.id.subscriptionPurchaseActivity)
         }
 
         private fun openQuestDetailSCreen(partyId: String?, questKey: String?) {

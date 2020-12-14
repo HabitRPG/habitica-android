@@ -117,10 +117,6 @@
             android:label="@string/gift_gems">
         </activity>
         <activity
-            android:name=".ui.activities.GiftOneGetOneInfoActivity"
-            android:label="@string/gift_one_get_one">
-        </activity>
-        <activity
             android:name=".ui.activities.GuidelinesActivity"
             android:label="@string/community_guidelines">
         </activity>

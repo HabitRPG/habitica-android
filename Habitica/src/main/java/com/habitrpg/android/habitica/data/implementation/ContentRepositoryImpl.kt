@@ -46,6 +46,7 @@ abstract class ContentRepositoryImpl<T : ContentLocalRepository>(localRepository
 
                 val editor = PreferenceManager.getDefaultSharedPreferences(context).edit()
                 editor.putString("currentEvent", it.currentEventKey)
+                editor.putString("currentEventPromo", it.currentEventPromo)
                 editor.putLong("currentEventStartDate", it.currentEventStartDate?.time ?: 0)
                 editor.putLong("currentEventEndDate", it.currentEventEndDate?.time ?: 0)
                 editor.apply()

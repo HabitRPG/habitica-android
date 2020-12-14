@@ -808,7 +808,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                     retrieveUser(true)
                     val dialog = AchievementDialog(this)
                     dialog.isLastOnboardingAchievement = event.isLastOnboardingAchievement
-                    dialog.setType(event.type)
+                    dialog.setType(event.type, event.message, event.text)
                     dialog.enqueue()
                     apiClient.readNotification(event.id)
                             .subscribe({ }, RxErrorHandler.handleEmptyError())

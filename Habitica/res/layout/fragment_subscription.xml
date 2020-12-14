@@ -19,42 +19,71 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <RelativeLayout
-            android:id="@+id/gift_subscription_container"
+            android:id="@+id/promo_banner"
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:background="@drawable/g1g1_box"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
-            android:layout_marginTop="10dp"
             android:clipChildren="true"
-            android:clipToPadding="true">
+            android:clipToPadding="true"
+            android:clickable="true"
+            android:visibility="gone"
+            tools:visibility="visible">
             <ImageView
+                android:id="@+id/promo_banner_left_image"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/presents1"
+                android:layout_height="match_parent"
                 android:scaleType="center"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentBottom="false"/>
             <ImageView
+                android:id="@+id/promo_banner_right_image"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/presents2"
+                android:layout_height="match_parent"
                 android:scaleType="center"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"/>
-                <TextView
+            <LinearLayout
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
+                <ImageView
+                    android:id="@+id/promo_banner_title_image"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/gift_one_get_one_description"
-                    android:layout_marginStart="60dp"
-                    android:layout_marginEnd="60dp"
-                    android:gravity="center_horizontal"
+                    android:layout_marginBottom="6dp"/>
+                <TextView
+                    android:id="@+id/promo_banner_title_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    style="@style/Headline6"
                     android:textColor="@color/white"
-                    android:textSize="16sp"
-                    android:fontFamily="@string/font_family_medium"
-                    android:layout_marginBottom="12dp"
-                    android:layout_centerInParent="true"/>
+                    android:layout_marginStart="84dp"
+                    android:layout_marginEnd="84dp"
+                    android:gravity="center"
+                    android:layout_marginBottom="6dp"/>
+                <TextView
+                    android:id="@+id/promo_banner_duration_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/Overline"/>
+            </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="60dp"
+                android:layout_marginEnd="60dp"
+                android:gravity="center_horizontal"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:fontFamily="@string/font_family_medium"
+                android:layout_marginBottom="12dp"
+                android:layout_centerInParent="true"/>
         </RelativeLayout>
 
         <LinearLayout

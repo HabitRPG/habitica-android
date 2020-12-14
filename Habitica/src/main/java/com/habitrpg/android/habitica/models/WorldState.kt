@@ -12,6 +12,7 @@ class WorldState {
     var rageStrikes: MutableList<QuestRageStrike>? = null
 
     var currentEventKey: String? = null
+    var currentEventPromo: String? = null
     var currentEventStartDate: Date? = null
     var currentEventEndDate: Date? = null
 }

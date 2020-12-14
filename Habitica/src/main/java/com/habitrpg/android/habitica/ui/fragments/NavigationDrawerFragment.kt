@@ -265,10 +265,6 @@ class NavigationDrawerFragment : DialogFragment() {
             subscriptionItem?.subtitle = context?.getString(R.string.more_out_of_habitica)
         }
 
-        if (configManager.enableGiftOneGetOne()) {
-            subscriptionItem?.pillText = context?.getString(R.string.sale)
-            context?.let { subscriptionItem?.pillBackground = ContextCompat.getDrawable(it, R.drawable.pill_bg_teal) }
-        }
         subscriptionItem?.let { updateItem(it) }
 
         val promoItem = getItemWithIdentifier(SIDEBAR_SUBSCRIPTION_PROMO)
@@ -349,11 +345,7 @@ class NavigationDrawerFragment : DialogFragment() {
         promoItem.isVisible = false
         items.add(promoItem)
 
-        if (configManager.enableGiftOneGetOne()) {
-            val item = HabiticaDrawerItem(R.id.subscriptionPurchaseActivity, SIDEBAR_G1G1_PROMO)
-            item.itemViewType = 3
-            items.add(item)
-        } else if (configManager.showSubscriptionBanner()) {
+        if (configManager.showSubscriptionBanner()) {
             val item = HabiticaDrawerItem(R.id.subscriptionPurchaseActivity, SIDEBAR_SUBSCRIPTION_PROMO)
             item.itemViewType = 2
             items.add(item)

@@ -30,7 +30,7 @@
             </FrameLayout>
             <TextView
                 android:id="@+id/egg_count_view"
-                android:layout_width="24dp"
+                android:layout_width="wrap_content"
                 android:layout_height="24dp"
                 style="@style/Pill"
                 android:padding="0dp"
@@ -72,7 +72,7 @@
             </FrameLayout>
             <TextView
                 android:id="@+id/potion_count_view"
-                android:layout_width="24dp"
+                android:layout_width="wrap_content"
                 android:layout_height="24dp"
                 android:padding="0dp"
                 android:gravity="center"

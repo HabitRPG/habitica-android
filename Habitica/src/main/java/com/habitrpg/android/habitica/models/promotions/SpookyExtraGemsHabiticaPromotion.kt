@@ -9,6 +9,7 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.FragmentGemPurchaseBinding
+import com.habitrpg.android.habitica.databinding.FragmentSubscriptionBinding
 import com.habitrpg.android.habitica.databinding.PurchaseGemViewBinding
 import com.habitrpg.android.habitica.extensions.DateUtils
 import com.habitrpg.android.habitica.helpers.MainNavigationController
@@ -81,6 +82,9 @@ class SpookyExtraGemsHabiticaPromotion(startDate: Date?, endDate: Date?) : Habit
                 formatter.format(startDate),
                 formatter.format(endDate))
         binding.promoBannerDurationView.setTextColor(ContextCompat.getColor(context, R.color.white))
+    }
+
+    override fun configurePurchaseBanner(binding: FragmentSubscriptionBinding) {
     }
 
     override fun configureGemView(binding: PurchaseGemViewBinding, regularAmount: Int) {

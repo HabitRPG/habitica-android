@@ -1,1 +1,1 @@
-Thanks for helping us testing!
+This update is full of bug fixes and quality of life upgrades. You can now use the Fortify Potion! If your tasks are getting out of hand and you’re overwhelmed with red, just get a Fortify Potion from the Market and it will reset all tasks to a neutral value. You’ll now receive an in-app message when you’ve won a Challenge and won Challenges will be listed in your Achievements. We’ve also improved the flow for hatching Pets, receiving Pet Achievements, starting Quests, and creating Challenges.
