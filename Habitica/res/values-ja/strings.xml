@@ -665,7 +665,7 @@
     <string name="visit_website">ウェブサイトを訪れる</string>
     <string name="subscribe_gift_description">有料プランの特典を誰かに贈りたいですか？</string>
     <string name="gift_subscription">有料プランをプレゼントする</string>
-    <string name="gift_one_get_one_description">有料プランをプレゼントすると、有料プランに無料で加入できるイベントが開催中です！</string>
+    <string name="gift_one_get_one_description">有料プランをプレゼントすると、同じ有料プランが無料で利用できるキャンペーンが開催中です！</string>
     <string name="gift_title">誰にプレゼントを贈りたいですか？</string>
     <string name="gift_one_get_one">１つ贈って、１つ無料で手に入れよう！</string>
     <string name="gift_subscription_subtitle">下の方からプレゼントしたい有料プランを選んでください！ この購入では、自動的に更新はされません。</string>
@@ -677,7 +677,7 @@
     <string name="opting_out_progress">選ばない</string>
     <string name="subscription_duration_norenew">%sの間</string>
     <string name="delete_oauth_account_description">この操作であなたのアカウントは完全に削除され、決して復元はできません！ 貯めているジェム、使ったジェムは、返金できません。本当にアカウントを削除するなら、下のテキストボックスに DELETE と入力してください。</string>
-    <string name="gift_one_get_one_detailed_description">このプロモーションが開催されている間は、プレゼントを送った後に自動的に同じ期間の有料プランを無料で受けることができます。</string>
+    <string name="gift_one_get_one_detailed_description">このプロモーションが開催されている間は、プレゼントを送った後に自動的に同じ期間のプランが無料で適用されます。</string>
     <string name="gift_confirmation_text_g1g1">%s に %sヶ月分のHabitica寄付会員特典を送りました。そして、１つ贈って１つ無料で手に入れようキャンペーンによって、あなたのアカウントにも同じ寄付会員特典が適用されました！</string>
     <string name="gift_confirmation_text">%s に %sヶ月分のHabitica寄付会員特典を送りました。</string>
     <string name="damage_paused">ダメージを一時停止する</string>
@@ -872,7 +872,7 @@
     <string name="report_violation">違反を報告する</string>
     <string name="need_help_header_description">%sにメッセージを投稿して、疑問について仲間のプレイヤーに答えてもらいましょう。</string>
     <string name="checklist_text">チェックリストのテキスト</string>
-    <string name="gift_confirmation_text_sub_g1g1">%sに%sヶ月分のHabitica有料プランを送りました。そして、誰かにプレゼントすると同じ分だけ無料で受けられるキャンペーンによって、あなたのアカウントにも同じ有料プランが無料で適用されました！</string>
+    <string name="gift_confirmation_text_sub_g1g1">%sに%sヶ月分のHabitica有料プランを送りました。そして、誰かにプレゼントすると同じ分だけ無料で受けられるキャンペーンによって、あなたのアカウントにも同じプランが無料で適用されました！</string>
     <string name="number_responded">%1$d/%2$d人参加予定</string>
     <string name="from_balance">残高から</string>
     <string name="preference_push_party_mention">パーティーチャットでのあなたへの返信</string>
@@ -925,7 +925,7 @@
     <string name="gift_a_subscription">有料プランをプレゼントする</string>
     <string name="g1g1_info_1">贈り物の季節を祝して、特別なプロモーションを再び開催しています。いま誰かに有料プランをプレゼントすると、あなた自身も同じ有料プランを無料で受けることができます！</string>
     <string name="promo_g1g1_prompt">誰かに有料プランをプレゼントすると、自分も無料で同じ有料プランを受けられるイベント</string>
-    <string name="promo_g1g1_description">いま有料プランをプレゼントすると、あなた自身も同じ有料プランを無料で受けることができます！</string>
+    <string name="promo_g1g1_description">いま有料プランをプレゼントすると、あなた自身も同じ有料プランが無料で適用されます！</string>
     <string name="event">イベント</string>
     <string name="owner">オーナー</string>
     <string name="member">メンバー</string>
