@@ -971,4 +971,5 @@
     <string name="empty_description_todos_filtered">Нет Задач для отображения по текущим фильтрам.</string>
     <string name="empty_description_dailies_filtered">Нет Ежедневных дел для отображения по текущим фильтрам.</string>
     <string name="empty_description_habits_filtered">Нет Привычек для отображения по текущим фильтрам.</string>
+    <string name="gift_confirmation_text_gems">Вы отправили %s несколько самоцветов.</string>
 </resources>
