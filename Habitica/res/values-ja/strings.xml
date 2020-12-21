@@ -139,7 +139,7 @@
     <string name="sidebar_help">ヘルプ・よくある質問</string>
     <string name="complete_tutorial">わかった!</string>
     <string name="dismiss_tutorial">もう一度通知</string>
-    <string name="intro_1_subtitle">へよこそう</string>
+    <string name="intro_1_subtitle">ようこそ</string>
     <string name="intro_1_description">やるべきことを片付けながら楽しむ時が来ました。 現在%s人以上の方々がタスクをこなしながら人生を楽しんでいます。</string>
     <string name="intro_2_subtitle">ゲームの進行</string>
     <string name="intro_2_title">人生の進行</string>
