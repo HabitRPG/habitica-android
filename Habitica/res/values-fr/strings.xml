@@ -542,7 +542,7 @@
     <string name="strength">Force</string>
     <string name="strength_description">Augmente le bonus des coups critiques et les rend plus probable lorsqu\'une tâche est validée. Augmente aussi les dégâts infligés aux boss.</string>
     <string name="intelligence">Intelligence</string>
-    <string name="intelligence_description">Augmente l\'expérience reçue des tâches validées. Augmente également votre limite de mana et sa vitesse de régénération dans le temps.</string>
+    <string name="intelligence_description">Augmente l\'expérience reçue des tâches accompli. Augmente également votre limite de mana et sa vitesse de régénération au fil du temps.</string>
     <string name="constitution">Constitution</string>
     <string name="constitution_description">Diminue la quantité de dégâts reçue de vos tâches. Ne diminue pas les dégâts reçus des boss.</string>
     <string name="perception">Perception</string>
