@@ -23,7 +23,7 @@
     <string name="pref_push_notifications_checkbox">Использовать Push-уведомления</string>
     <string name="push_notifications">Push-уведомления</string>
     <string name="push_notifications_sum">Настройте push-уведомления</string>
-    <string name="preference_push_you_won_challenge">Вы прошли испытание!</string>
+    <string name="preference_push_you_won_challenge">Вы выиграли испытание!</string>
     <string name="preference_push_received_a_private_message">Получено личное сообщение</string>
     <string name="preference_push_gifted_gems">Подаренные самоцветы</string>
     <string name="preference_push_gifted_subscription">Подаренная подписка</string>
@@ -390,10 +390,10 @@
     <string name="nextPrizeUnlocks" tools:ignore="PluralsCandidate">Следующий приз будет доступен после %1$d входа в игру</string>
     <string name="pending_approval">ожидает утверждения</string>
     <string name="filters">Фильтры</string>
-    <string name="done">Выполнено</string>
+    <string name="done">Готово</string>
     <string name="groups">Группы</string>
     <string name="all">Все</string>
-    <string name="none">Никто</string>
+    <string name="none">Ни одна</string>
     <string name="owned">Принадлежит</string>
     <string name="not_owned">Не принадлежит</string>
     <string name="login_btn_fb">Зарегистрироваться с Facebook</string>
