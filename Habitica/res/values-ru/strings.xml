@@ -974,4 +974,6 @@
     <string name="gift_confirmation_text_gems">Вы отправили %s несколько самоцветов.</string>
     <string name="remove_member">удалить участника</string>
     <string name="inbox_messages_title">Вы получили %d сообщений от %s</string>
+    <string name="delete_reminder">Удалить напоминание</string>
+    <string name="remove">Удалить</string>
 </resources>
