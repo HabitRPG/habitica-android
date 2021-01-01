@@ -1021,4 +1021,18 @@
     <string name="partyOnTitle">Toma equipo</string>
     <string name="overview">Visión general</string>
     <string name="stats_currency">Atributos y Monedas</string>
+    <string name="standard">Estándar</string>
+    <string name="currency">Moneda</string>
+    <string name="how_it_works">Cómo funciona</string>
+    <string name="purchase_equipment_description">El equipamiento es una forma de personalizar tu avatar y mejorar tus estadísticas.</string>
+    <string name="percent_completed">%d%% Completado</string>
+    <string name="support">Soporte</string>
+    <string name="update_app_description">Estamos constantemente lanzando nuevas correcciones, así que asegúrese de consultar la Play Store para ver si hay actualizaciones disponibles.</string>
+    <string name="clear_cache_description">Para borrar el caché, abra la aplicación Configuración de su teléfono. Ve a Almacenamiento&gt; Aplicaciones&gt; Habitica, luego toca Borrar caché.</string>
+    <string name="clear_cache">Limpia tu caché</string>
+    <string name="gems_description">Las gemas son una moneda comprada con dinero real que te permite comprar contenido adicional dentro de Habitica y son una de las principales fuentes de apoyo financiero para el equipo de Habitica junto con las suscripciones.
+\n
+\nTodo el contenido comprado a través de Gemas es puramente cosmético o se puede obtener gratis con el tiempo.
+\n
+\nTambién puedes recibir gemas a través de obsequios de otros jugadores, premios de desafíos, contribuyendo a Habitica o suscribiéndote.</string>
 </resources>
