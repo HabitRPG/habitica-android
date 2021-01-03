@@ -1169,4 +1169,6 @@
     <string name="x_to_y">%s tới %s</string>
     <string name="usually_x_gems">Thường là %d Gem</string>
     <string name="fall_promo_info_limitations">Khuyến mãi này chỉ áp dụng trong thời gian giới hạn của sự kiện. Sự kiện này bắt đầu vào ngày 22 Tháng Chín lúc 8:00 AM EDT (12:00 UTC) và sẽ kết thúc vào ngày 30 Tháng Chín vào lúc 8:00 PM EDT (00:00 UTC). Khuyến mãi chỉ áp dụng khi mua Gem cho bản thân bạn.</string>
+    <string name="view_gem_bundles">Xem các gói Gem</string>
+    <string name="fall_promo_info_prompt">Dạ Tiệc Mùa Thu đang diễn ra sôi nổi nên chúng tôi nghĩ đây là thời điểm hoàn hảo để giới thiệu chương trình Giảm Giá Gem đầu tiên của chúng tôi! Giờ đây, bạn sẽ nhận được nhiều Gem hơn khi mua Gem hơn bao giờ hết.</string>
 </resources>
