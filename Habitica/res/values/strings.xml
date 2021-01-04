@@ -243,7 +243,7 @@
     <string name="quest_cancel_message">Are you sure you want to cancel this quest? All invitation acceptances will be lost. The quest owner will retain possession of the quest scroll.</string>
     <string name="quest_begin_message">Are you sure? Only %1$d of your %2$d party members have joined this quest! Quests start automatically when all players have joined or rejected the invitation.</string>
     <string name="ago_1month">1 month ago</string>
-    <string name="ago_months">%d month ago</string>
+    <string name="ago_months">%d months ago</string>
     <string name="ago_1week">1w ago</string>
     <string name="ago_weeks">%dw ago</string>
     <string name="ago_1day">1d ago</string>
@@ -1130,6 +1130,10 @@
     <string name="claim_x_gems">Claim %d Gems</string>
     <string name="g1g1_promo_info_prompt">In honor of the season of giving we\'re bringing back a very special promotion. Now when you gift somebody a subscription, you get the same sub for yourself for free!</string>
     <string name="g1g1_promo_info_instructions">Tap ‘Gift a Subscription’ and type in the username of the account you’d like to gift to. From there, pick the sub length you’d like to gift and check out. Your account will automatically be rewarded with the same level of subscription you just gifted.</string>
-    <string name="g1g1_promo_info_limitations">This is a limited time event that starts on %s (12:00 UTC) and will end %s (00:00 UTC). This promotion only applies when you gift to another Habitican. If you or your gift recipient already have a subscription, the gifted subscription will add months of credit that will only be used after the current subscription is cancelled or expires.</string>
+    <string name="g1g1_promo_info_limitations">This is a limited time event that starts on %s (13:00 UTC) and will end %s (01:00 UTC). This promotion only applies when you gift to another Habitican. If you or your gift recipient already have a subscription, the gifted subscription will add months of credit that will only be used after the current subscription is cancelled or expires.</string>
     <string name="gift_one_get_one_purchase_banner">Gift a sub and get a sub for free until %s</string>
+    <string name="one_month_one_time">1 month one-time subscription</string>
+    <string name="three_months_one_time">3 month one-time subscription</string>
+    <string name="six_months_one_time">6 month one-time subscription</string>
+    <string name="twelve_months_one_time">12 month one-time subscription</string>
 </resources>
