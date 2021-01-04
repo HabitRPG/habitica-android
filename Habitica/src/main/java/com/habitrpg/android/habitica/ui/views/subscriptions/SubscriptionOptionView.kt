@@ -72,12 +72,12 @@ class SubscriptionOptionView(context: Context, attrs: AttributeSet) : FrameLayou
         } else {
             binding.wrapper.setBackgroundResource(R.drawable.subscription_box_bg)
             binding.subscriptionSelectedView.setBackgroundResource(R.drawable.subscription_unselected)
-            binding.gemCapTextView.setBackgroundResource(R.drawable.pill_bg)
-            binding.gemCapTextView.setTextColor(ContextCompat.getColor(context, R.color.text_primary))
-            binding.hourglassTextView.setBackgroundResource(R.drawable.pill_bg)
-            binding.hourglassTextView.setTextColor(ContextCompat.getColor(context, R.color.text_primary))
-            binding.priceLabel.setTextColor(ContextCompat.getColor(context, R.color.text_primary))
-            binding.descriptionTextView.setTextColor(ContextCompat.getColor(context, R.color.text_primary))
+            binding.gemCapTextView.setBackgroundResource(R.drawable.pill_bg_gray)
+            binding.gemCapTextView.setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
+            binding.hourglassTextView.setBackgroundResource(R.drawable.pill_bg_gray)
+            binding.hourglassTextView.setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
+            binding.priceLabel.setTextColor(ContextCompat.getColor(context, R.color.text_ternary))
+            binding.descriptionTextView.setTextColor(ContextCompat.getColor(context, R.color.text_ternary))
         }
         val horizontalPadding = resources.getDimension(R.dimen.pill_horizontal_padding).toInt()
         val verticalPadding = resources.getDimension(R.dimen.pill_vertical_padding).toInt()

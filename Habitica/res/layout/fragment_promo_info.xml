@@ -90,7 +90,7 @@
             android:id="@+id/prompt_button"
             android:layout_width="match_parent"
             android:layout_height="38dp"
-            android:textSize="16sp"
+            style="@style/Subheader1"
             android:gravity="center" />
 
         <TextView
@@ -111,7 +111,7 @@
             android:gravity="center"
             android:textSize="15sp"
             android:textColor="@color/text_quad"
-            android:lineSpacingExtra="2dp"/>
+            android:lineSpacingExtra="3dp"/>
 
         <TextView
             android:id="@+id/limitations_title_view"
@@ -132,6 +132,6 @@
             android:textSize="15sp"
             android:textColor="@color/text_quad"
             tools:text="This is some text"
-            android:lineSpacingExtra="2dp"/>
+            android:lineSpacingExtra="3dp"/>
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

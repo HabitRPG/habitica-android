@@ -25,8 +25,8 @@
             android:id="@+id/title_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/text_secondary"
-            android:textSize="14sp"
+            android:textColor="@color/white"
+            android:textSize="16sp"
             android:textStyle="bold"/>
         <ImageView
             android:id="@+id/description_image_view"
@@ -36,16 +36,20 @@
             android:id="@+id/description_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/text_secondary"
+            android:textColor="@color/white"
+            style="@style/Body1"
             android:textSize="12sp"
+            android:lineSpacingExtra="4dp"
+            android:letterSpacing="0.015"
             android:textAlignment="center"
             android:maxWidth="240dp"/>
         <Button
             android:id="@+id/button"
             android:layout_width="wrap_content"
-            android:layout_height="48dp"
+            android:layout_height="42dp"
             android:minWidth="110dp"
             style="@style/HabiticaButton.Purple"
+            android:textSize="14sp"
             android:layout_marginTop="4dp"/>
     </LinearLayout>
     <ImageView

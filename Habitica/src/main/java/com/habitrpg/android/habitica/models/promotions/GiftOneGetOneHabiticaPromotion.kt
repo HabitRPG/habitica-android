@@ -12,6 +12,7 @@ import com.habitrpg.android.habitica.databinding.FragmentGemPurchaseBinding
 import com.habitrpg.android.habitica.databinding.FragmentSubscriptionBinding
 import com.habitrpg.android.habitica.databinding.PurchaseGemViewBinding
 import com.habitrpg.android.habitica.extensions.DateUtils
+import com.habitrpg.android.habitica.extensions.isUsingNightModeResources
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.ui.fragments.PromoInfoFragment
 import com.habitrpg.android.habitica.ui.fragments.purchases.SubscriptionFragment
@@ -59,7 +60,11 @@ class GiftOneGetOneHabiticaPromotion(startDate: Date?, endDate: Date?) : Habitic
 
         view.binding.button.backgroundTintList = ContextCompat.getColorStateList(context, R.color.content_background)
         view.binding.button.setText(R.string.learn_more)
-        view.binding.button.setTextColor(ContextCompat.getColor(context, R.color.teal_100))
+        if (context.isUsingNightModeResources()) {
+            view.binding.button.setTextColor(ContextCompat.getColor(context, R.color.teal_100))
+        } else {
+            view.binding.button.setTextColor(ContextCompat.getColor(context, R.color.teal_10))
+        }
         view.binding.button.setOnClickListener {
             menuOnNavigation(context)
         }

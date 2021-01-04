@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.utils
 
+import android.os.Build
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
@@ -24,6 +25,11 @@ class DateDeserializer : JsonDeserializer<Date>, JsonSerializer<Date> {
         addFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
         addFormat("E MMM dd yyyy HH:mm:ss zzzz")
         addFormat("yyyy-MM-dd'T'HH:mm:sszzz")
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            addFormat("yyyy-MM-dd'T'HH:mmX")
+        } else {
+            addFormat("yyyy-MM-dd'T'HH:mm")
+        }
         addFormat("yyyy-MM-dd")
     }
 
