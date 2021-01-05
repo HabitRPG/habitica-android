@@ -1088,4 +1088,7 @@
     <string name="task_display">Task list display</string>
     <string name="onboarding_tasks">Onboarding Tasks</string>
     <string name="pet_ownership_fraction">%1$d / %2$d</string>
+    <string name="block_user_title">Block %s\?</string>
+    <string name="unblock_user">Unblock User</string>
+    <string name="block_user">Block User</string>
 </resources>
