@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.viewHolders.tasks
 
 import android.graphics.PorterDuff
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.FrameLayout
