@@ -906,13 +906,11 @@
     <string name="complete_task_title">Bir Görevi Tamamla</string>
     <string name="stat_description">Tüm Habitica karakterleri, Habitica\'nın oynanış özelliklerini etkileyen dört istatistiğe sahiptir.
 \n
-\n** Kuvvet (STR) ** kritik vuruşları etkiler ve bir Görev Patronuna verilen hasarı artırır. Savaşçılar ve Haydutlar, sınıf ekipmanlarından STR kazanır.
-\n
+\n**Kuvvet (STR)** kritik vuruşları etkiler ve bir Görev Patronuna verilen hasarı artırır. Savaşçılar ve Haydutlar, sınıf ekipmanlarından STR kazanır.
 \n
 \n**Bünye (CON)** Sağlığınızı yükseltir ve daha az hasar almanızı sağlar. Şifacılar ve Savaşçılar, sınıf ekipmanlarından CON kazanır.
 \n
 \n**Zeka (INT)** kazandığınız Tecrübe Puanı miktarını artırır ve size daha fazla Enerji verir. Büyücüler ve Şifacılar, sınıf ekipmanlarından INT kazanır.
-\n
 \n
 \n**Algı (PER)** kazandığınız altını ve düşen eşyaları bulma oranınızı artırır. Haydutlar ve Büyücüler, sınıf ekipmanlarından PER kazanır.
 \n
