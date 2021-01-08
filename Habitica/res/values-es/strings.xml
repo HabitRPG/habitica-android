@@ -1042,20 +1042,20 @@
 \nSi te suscribes a Habitica, incluso puedes usar oro para comprar una cantidad de gemas determinada por el tiempo que lleva suscrito.</string>
     <string name="limitations">Limitaciones</string>
     <string name="delete_challenge_task_title">¿Eliminar Tarea del Desafío\?</string>
-    <string name="stat_description">"Todos los personajes de Habitica tienen cuatro atributos que afectan los aspectos del gameplay de Habitica.
+    <string name="stat_description">Todos los personajes de Habitica tienen cuatro atributos que afectan los aspectos del gameplay de Habitica.
 \n
 \nLa **Fuerza (STR)** Afecta los golpes críticos hechos a los Jefes de las Misiones. Guerreros y Rogues ganan STR con su equipamiento de clase.
 \n
 \nLa **Constitución (CON)** eleva tus HP y hace que recibas menos daño. Curanderos y Guerreros ganan CON con su equipamiento de clase.
 \n
-\nLa **Inteligencia (INT)** aumenta la cantidad de  EXP que ganas y te da más Maná. Magos y curanderos ganan INT con su equipamiento de clase.
+\nLa **Inteligencia (INT)** aumenta la cantidad de EXP que ganas y te da más Maná. Magos y curanderos ganan INT con su equipamiento de clase.
 \n
 \nLa **Percepción (PER)** incrementa el Oro que ganas y la frecuencia con la que encuentras artículos caídos. Rogues y Magos consiguen PER con el equipamiento de su clase.
 \n
-\nDespués del nivel 10, obtienes 1 Punto de Atributo por cada nivel que subas para que lo uses en cualquier atributo que quieras. También puedes utilizar equipamiento para aumentar diferentes atributos."</string>
+\nDespués del nivel 10, obtienes 1 Punto de Atributo por cada nivel que subas para que lo uses en cualquier atributo que quieras. También puedes utilizar equipamiento para aumentar diferentes atributos.</string>
     <string name="stat_allocation">Asignación de Estadísticas</string>
     <string name="getting_started">Empezando</string>
-    <string name="delete_checklist_entry">Eliminar. . .</string>
+    <string name="delete_checklist_entry">Eliminar…</string>
     <string name="complete_for_gold">Completa para ganar &lt;font color=#EE9109&gt;&lt;b&gt;100 de oro &lt;/b&gt;&lt;/font&gt;!</string>
     <string name="task_display">Visualización de la lista de tareas</string>
     <string name="still_questions">¿Aún tienes una pregunta\?</string>
