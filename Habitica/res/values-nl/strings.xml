@@ -428,7 +428,7 @@
     <string name="empty_title_dailies">Je hebt geen dagelijkse taken</string>
     <string name="empty_description_dailies">Dagelijkse taken zijn taken die op een vast schema herhalen. Kies de routine die voor jou werkt!</string>
     <string name="empty_title_todos">Je hebt geen to-do\'s</string>
-    <string name="empty_description_todos">To-do\'s zijn taken die slechts een keer voltooid moeten worden. Voeg checklijsten aan je to-do\'s toe om hun waarde te verhogen.</string>
+    <string name="empty_description_todos">To-do\'s zijn taken die slechts één keer voltooid moeten worden. Voeg checklijsten aan je to-do\'s toe om hun waarde te verhogen.</string>
     <string name="empty_title_rewards">Je hebt geen beloningen</string>
     <string name="reset_walkthrough">Herstart Handleiding</string>
     <string name="read_community_guidelines">Bekijk onze <u>Community Guidelines</u> voordat je berichten plaatst</string>
@@ -616,7 +616,7 @@
     <string name="next_day_reminder_title">Heb je jou taken afgevinkt vandaag?</string>
     <string name="next_day_reminder_text">Er is veel om te ontgrendelen en te ontdekken als je niveau omhoog gaat, dus houd je taken bij en veel plezier!</string>
     <string name="daily_tip_0">Wil je iets nieuws proberen? Sluit je aan bij een uitdaging om je takenlijst te vergroten en win wat Edelstenen!</string>
-    <string name="daily_tip_1">Voeg checklijsten toe aan jou To-Dos om de beloningen te vermenigvuldigen!</string>
+    <string name="daily_tip_1">Voeg checklijsten toe aan jouw To-Dos om de beloningen te vermenigvuldigen!</string>
     <string name="daily_tip_2">Je kunt veranderen hoe vaak een Dagelijkse taak zich herhaalt. Zelfs onregelmatige taken kunnen ingepland worden.</string>
     <string name="daily_tip_3">Je kunt ook specifieke herinneringen voor Dagelijkse taken inplannen. </string>
     <string name="daily_tip_4">Het van tijd tot tijd herevalueren van je taken kan je helpen om op het rechte pad te blijven. </string>
@@ -747,7 +747,7 @@
     <string name="local">Lokaal</string>
     <string name="authentication_methods">Verificatiemethoden</string>
     <string name="someone">Iemand</string>
-    <string name="invitation_title">%s heeft je uitgenodigd voor %s</string>
+    <string name="invitation_title">%s heeft je uitgenodigd voor diens groep %s</string>
     <string name="password_too_short">Je wachtwoord moet minimaal %d karakters lang zijn</string>
     <string name="copy_username">Kopieer Gebruikersnaam</string>
     <string name="id_copied">Gebruikers ID naar het klembord gekopieerd</string>
@@ -937,7 +937,26 @@
     <string name="user_level_with_class_unabbreviated">Niveau %1$d %2$s</string>
     <string name="not_selected">Niet geselecteerd</string>
     <string name="selected">Geselecteerd</string>
-    <string name="challenge_leave_description">"Je kunt ervoor kiezen om de taken van de challenge op je persoonlijke pagina te bewaren of om ze te verwijderen als je de challenge verlaat.  "</string>
+    <string name="challenge_leave_description">Je kunt ervoor kiezen om de taken van de challenge op je persoonlijke pagina te bewaren of om ze te verwijderen als je de challenge verlaat.</string>
     <string name="off">Uit</string>
     <string name="on">Aan</string>
+    <string name="mana_points">Manapunten</string>
+    <string name="experience_description">Ervaringspunten geven je voortgang weer, en zorgen ervoor dat je level up gaat. Je zult hoofdzakelijk **EXP krijgen** door het voltooien van taken of queestes, maar er zijn ook klasse-vaardigheden die EXP geven.
+\n
+\nMoeilijkere taken, of roodgekleurde taken geven je **meer EXP**. De **Intelligentie stat** zorgt ook voor snellere EXP stijging.</string>
+    <string name="experience_points">Ervaringspunten</string>
+    <string name="health_description">Dit stelt je avatar\'s leven voor. Een dagelijkse taak missen, of een negatieve gewoonte naleven **reduceert je HP**.
+\n
+\n**Herstel HP** door level up te gaan, een Genezingsdrank te gebruiken, of een vaardigheid die geneest in te zetten.
+\n
+\nAls je **HP 0 bereikt** verlies je een level, al je Goud, en één voorwerp. Verloren voorwerpen kunnen teruggekocht worden.</string>
+    <string name="stats_currency">Attributen en betalingsmiddelen</string>
+    <string name="send_bug_prompt">Stuur ons een foutmelding, en we komen bij je terug!</string>
+    <string name="common_fixes">Vaak werkende oplossingen</string>
+    <string name="support_bug_title">We proberen continue onze apps te verbeteren gebaseerd op feedback van spelers, maar soms schiet er een foutje tussen…</string>
+    <string name="lets_go">Ga van start</string>
+    <string name="bugs_fixes">Bugs &amp; Fixes</string>
+    <string name="get_help">Hulp</string>
+    <string name="suggestions_feedback_description">Heb je voorstellen over hoe de functies beter kunnen, of een idee voor iets nieuws\? Vertel het ons!</string>
+    <string name="using_habitica">Habitica gebruiken</string>
 </resources>
