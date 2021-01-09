@@ -937,4 +937,7 @@
     <string name="user_level_with_class_unabbreviated">Niveau %1$d %2$s</string>
     <string name="not_selected">Niet geselecteerd</string>
     <string name="selected">Geselecteerd</string>
+    <string name="challenge_leave_description">"Je kunt ervoor kiezen om de taken van de challenge op je persoonlijke pagina te bewaren of om ze te verwijderen als je de challenge verlaat.  "</string>
+    <string name="off">Uit</string>
+    <string name="on">Aan</string>
 </resources>
