@@ -959,4 +959,9 @@
     <string name="get_help">Hulp</string>
     <string name="suggestions_feedback_description">Heb je voorstellen over hoe de functies beter kunnen, of een idee voor iets nieuws\? Vertel het ons!</string>
     <string name="using_habitica">Habitica gebruiken</string>
+    <string name="health_points">Levenspunten</string>
+    <string name="using_habitica_description">We leggen de basis uit en beantwoorden veelgestelde vragen om je op weg te helpen</string>
+    <string name="special_items">Speciale voorwerpen</string>
+    <string name="leave_delte_tasks">Verlaat &amp; verwijder taken</string>
+    <string name="leave_keep_tasks">Verlaat &amp; bewaar taken</string>
 </resources>
