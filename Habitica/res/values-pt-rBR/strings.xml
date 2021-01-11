@@ -403,23 +403,25 @@
     <string name="groups">Grupos</string>
     <string name="all">Tudo</string>
     <string name="none">Nenhum</string>
-    <string name="owned">Possuído</string>
-    <string name="not_owned">Não possuído</string>
+    <string name="owned">Em sua propriedade</string>
+    <string name="not_owned">Não adquiridos</string>
     <string name="login_btn_fb">Logar com Facebook</string>
     <string name="login_btn_google">Logar com Google</string>
     <string name="action_back">Voltar</string>
-    <string name="welcome_text">Oh, você deve ser novo aqui. Eu sou o Justin e serei seu guia no Habitica.\n\nPrimeiro, como devemos chamá-lo? Sinta-se livre para mudar o nome que eu havia escolhido. Quando você estiver com tudo definido, vamos criar seu avatar!</string>
+    <string name="welcome_text">Oh, você deve ser novo(a) por aqui. Eu sou o Justin e serei seu guia no Habitica.
+\n
+\nPrimeiro, como devemos chamar você\? Sinta-se livre para mudar o nome que eu havia escolhido. Quando você estiver com tudo definido, vamos criar seu avatar!</string>
     <string name="randomize">Aleatório</string>
     <string name="avatar_extras">Extras</string>
-    <string name="avatar_skin_color">Cor da Pele</string>
-    <string name="avatar_hair_color">Cor do Cabelo</string>
+    <string name="avatar_skin_color">Cor da pele</string>
+    <string name="avatar_hair_color">Cor do cabelo</string>
     <string name="avatar_hair_bangs">Franja</string>
-    <string name="avatar_hair_ponytail">Rabo de Cavalo</string>
+    <string name="avatar_hair_ponytail">Rabo de cavalo</string>
     <string name="avatar_glasses">Óculos</string>
-    <string name="avatar_wheelchair">Cadeira de Rodas</string>
+    <string name="avatar_wheelchair">Cadeira de rodas</string>
     <string name="weak">Fraco</string>
     <string name="strong">Forte</string>
-    <string name="gray">Cinza</string>
+    <string name="gray">Inativo</string>
     <string name="dated">Agendado</string>
     <string name="completed">Concluído</string>
     <string name="setuP_group_other">Outro</string>
