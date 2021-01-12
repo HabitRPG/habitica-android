@@ -345,7 +345,7 @@
     <string name="subscribe_listitem1_description">Je kunt edelstenen van de markt kopen voor elk 20 goud!</string>
     <string name="subscribe_listitem2_description">Verdien Mystieke Zandlopers om voorwerpen in de Tijdreizigerswinkel te kopen!</string>
     <string name="subscribe_listitem3_description">Abonneer nu in om nu een exclusieve set te krijgen en ontvang elke maand nieuwe voorwerpen!</string>
-    <string name="subscribe_listitem4_description">Ontvang het Royale Paarse Jackalope-huisdier wanneer u een nieuwe abonnee wordt.</string>
+    <string name="subscribe_listitem4_description">Ontvang het Koninklijk Paarse Jackalope-huisdier wanneer u een nieuwe abonnee wordt.</string>
     <string name="subscribe1month_gemcap">25 Edelsteen drempel</string>
     <string name="subscribe3month_gemcap">30 Edelsteen drempel</string>
     <string name="subscribe6month_gemcap">35 Edelsteen drempel</string>
@@ -642,9 +642,9 @@
     <string name="username_confirmed">gebruikersnaam bevestigt</string>
     <string name="enter_recipient_username">Voer een ontvanger in @gebruikersnaam</string>
     <string name="username_copied">Gebruikersnaam gekopieerd naar het prikbord</string>
-    <string name="display_name_length_error">Gebruikersnamen moeten tussen 1 en 30 karakters lang zijn</string>
+    <string name="display_name_length_error">Weergavenamen moeten tussen 1 en 30 karakters lang zijn</string>
     <string name="setup_task_join_habitica">Sluit je aan bij Habitica (Aanvinken)</string>
-    <string name="setup_task_join_habitica_notes">Je kan deze To-do voltooien, bewerken of verwijderen</string>
+    <string name="setup_task_join_habitica_notes">Je kan deze To Do voltooien, bewerken of verwijderen</string>
     <string name="setup_task_reward">Beloon jezelf</string>
     <string name="setup_task_reward_notes">Kijk TV, speel een spel, eet een belonging, aan jou de keuze!</string>
     <string name="equipment_str">KRA:</string>
@@ -922,7 +922,7 @@
     <string name="daily_tip_9">Als je het moeilijk hebt, probeer dan je taken in kleinere delen op te splitsen.</string>
     <string name="daily_tip_8">Je kunt de moeilijkheidsgraad van je taak veranderen om jezelf meer te belonen voor zware taken!</string>
     <string name="join_party_description_guild">Geef de onderstaande gebruikersnaam aan een vriend of ga naar de %s om potentiële kameraden te ontmoeten!</string>
-    <string name="insufficientGoldTitle">Niet genoeg goudstukken</string>
+    <string name="insufficientGoldTitle">Niet genoeg Goud</string>
     <string name="clear_cache">Cache legen</string>
     <string name="standard">Standaard</string>
     <string name="how_best_habitica">Niet zeker hoe je Habitica het best kunt gebruiken\?</string>
@@ -965,4 +965,53 @@
     <string name="leave_delte_tasks">Verlaat &amp; verwijder taken</string>
     <string name="leave_keep_tasks">Verlaat &amp; bewaar taken</string>
     <string name="support">Ondersteuning</string>
+    <string name="first_drop_title">Je hebt nieuwe voorwerpen gevonden!</string>
+    <string name="go_to_items">Ga naar Voowerpen</string>
+    <string name="first_drop_explanation2">Ga naar je Voorwerpen en probeer om je nieuwe Ei en Uitbroeddrank te combineren!</string>
+    <string name="first_drop_explanation1">Taken afvinken geeft je een kans om eieren, uitbroeddranken, en voer voor je huisdieren te vinden.</string>
+    <string name="suggest_pet_hatch_missing_potion">Je hebt nog een %s Uitbroeddrank nodig om dit huisdier uit te broeden</string>
+    <string name="suggest_pet_hatch_missing_egg">Je hebt nog een %s Ei nodig om dit Huisdier uit te broeden</string>
+    <string name="hatchedPetDescription">Er zijn zo enorm veel Huisdieren om te verzamelen, dat je zeker een favoriet zult vinden. En als je ze voert, zouden ze wel eens kunnen groeien…</string>
+    <string name="completedTaskDescription">Een taak kan een Gewoonte, Dagelijkse Taak, of To Do zijn. Ga door met deze afvinken om allerlei beloningen te ontvangen!</string>
+    <string name="createdTaskDescription">Ga zo door! Als je hulp nodig hebt bij het inplannen van taken, probeer dan te bedenken wat je zou willen doen op een specifiek tijdstip van de dag</string>
+    <string name="purchasedEquipmentTitle">Je hebt een stuk Uitrusting gekocht</string>
+    <string name="fedPetTitle">Je hebt een Huisdier gevoerd</string>
+    <string name="hatchedPetTitle">Je hebt een Huisdier uitgebroed</string>
+    <string name="completedTaskTitle">Je hebt een taak afgevinkt</string>
+    <string name="createdTaskTitle">Je hebt je eerste taak toegevoegd</string>
+    <string name="purchase_equipment_description">Uitrusting is een manier om je avatar er anders uit te laten zien, en om je stats te verbeteren</string>
+    <string name="feedPet_description">Vink taken af om eten voor je huisdieren te verdienen! Je kunt dit eten aan je huisdieren voeren onder Huisdieren en Rijdieren</string>
+    <string name="hatch_pet_description">Vink taken af om een Uitbroeddrank en een Ei te krijgen en broed dan je Huisdier uit!</string>
+    <string name="complete_task_description">Vink een taak af om beloningen te ontvangen</string>
+    <string name="create_task_description">Voeg een taak toe voor iets dat je deze week wilt bereiken</string>
+    <string name="purchase_equipment_title">Koop een stuk Uitrusting</string>
+    <string name="feedPet_title">Voer een huisdier</string>
+    <string name="hatch_pet_title">Broed een nieuw huisdier uit</string>
+    <string name="complete_task_title">Vink een Taak af</string>
+    <string name="create_task_title">Creëer een Taak</string>
+    <string name="percent_completed">%d%% Compleet</string>
+    <string name="getting_started">Hoe Begin Ik\?</string>
+    <string name="task_display">Takenlijst weergave</string>
+    <string name="still_questions">Heb je verder nog vragen\?</string>
+    <string name="pet_ownership_fraction">%1$d / %2$d</string>
+    <string name="delete_checklist_entry">Verwijder…</string>
+    <string name="lets_get_started">Laten we beginnen</string>
+    <string name="complete_for_gold">Rond deze af om &lt;font color=#EE9109&gt;&lt;b&gt;100 Goud&lt;/b&gt;&lt;/font&gt; te verdienen!</string>
+    <string name="onboarding_tasks">Onboarding Taken</string>
+    <string name="your_progress">Jouw Vooruitgang</string>
+    <string name="adventure_guide_description">Rond deze Onboarding Taken af en je verdient &lt;b&gt;5 Prestaties&lt;/b&gt; en &lt;font color=#EE9109&gt;&lt;b&gt;100 Goud&lt;/b&gt;&lt;/font&gt; wanneer je klaar bent!</string>
+    <string name="onboardingComplete_achievement_title">Je hebt je Onboarding Taken afgerond!</string>
+    <string name="view_onboarding_tasks">Bekijk Onboarding Taken</string>
+    <string name="equip">Aantrekken</string>
+    <string name="stat_description">Alle Habitica karakters hebben vier statistieken die ieder invloed hebben op aspecten van de gameplay van Habitica.
+\n
+\n**Kracht (KRA)** beïnvloedt voltreffers en verhoogt de schade toegebracht aan Quest Eindbazen. Krijgers en Dieven krijgen extra KRA van hun klasse-specifieke uitrusting.
+\n
+\n**Weerbaarheid (WEE)** verlaagt de hoeveelheid gezondheid die je verliest wanneer je een Dagtaak mist, Negatieve Gewoonte afvinkt, of wanneer een Eindbaas je raakt. Genezers en Krijgers krijgen extra WEE van hun klasse-specifieke uitrusting.
+\n
+\n**Intelligentie (INT)** verhoogt de Ervaring (ERV) die je verdient en verhoogt je Mana. Magiërs en Genezers krijgen extra INT van hun klasse-specifieke uitrusting.
+\n
+\n**Perceptie (PER)** verhoogt de hoeveelheid goud die je verdient en de kans om voorwerpen te vinden. Dieven en Magiërs krijgen extra PER van hun klasse-specifieke uitrusting.
+\n
+\nVanaf level 10 ontvang je 1 Stat punt voor ieder level dat je bereikt, deze kun je in iedere Stat naar keuze steken. Je kunt ook uitrusting gebruiken die verschillende combinaties van stat verhogingen geeft.</string>
 </resources>
