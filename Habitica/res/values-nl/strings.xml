@@ -252,7 +252,7 @@
     <string name="rogue">Dief</string>
     <string name="mage">Magiër</string>
     <string name="healer">Genezer</string>
-    <string name="warrior_description">Krijgers scoren meer kritische hits en brengen zware schade toe aan Bazen. Speel een krijger als je gemakkelijk monsters wilt verslaan! Krijgers profiteren van een hoge sterkte stat.</string>
+    <string name="warrior_description">Krijgers scoren meer voltreffers en brengen zware schade toe aan Eindbazen. Speel een krijger als je gemakkelijk monsters wilt verslaan! Krijgers profiteren van een hoge Kracht.</string>
     <string name="mage_description">Magiërs leren vaardigheden die bazen beschadigen en ervaringspunten en mana verhogen. Speel een Magiër als je gemotiveerd bent door snel een level omhoog te gaan! Magiër profiteren van een hoge Intelligentie.</string>
     <string name="rogue_description">Dieven leren vaardigheden waarmee zij en hun partij meer goud en willekeurige voorwerpen kunnen vinden. Speel een Dief als je veel voorwerpen en goud wilt! Dieven profiteren van een hoge Perceptie.</string>
     <string name="healer_description">Genezers leren vaardigheden die zichzelf en hun gezelschap kunnen genezen en beschermen. Speel een Genezer als je het leuk vindt anderen te helpen of schade te vermijden! Genezers profiteren van een hoge constitutie.</string>
@@ -487,7 +487,7 @@
     <string name="str_abbrv">KRA</string>
     <string name="per_abbrv">PER</string>
     <string name="int_abbrv">INT</string>
-    <string name="con_abbrv">LIC</string>
+    <string name="con_abbrv">WEE</string>
     <string name="reset_account">Account Resetten</string>
     <string name="reset_account_description">WAARSCHUWING! Dit stelt grote delen van je account opnieuw in. Het wordt ten zeerste afgeraden, maar sommige mensen vinden het handig in het begin, na kort met de site te hebben gespeeld. \n\nAl je taken (behalve die van uitdagingen) zullen permanent verwijderd worden, en je zult al hun historische data verliezen. Je zult al je uitrusting verliezen, maar je kunt ze allemaal terugkopen, inclusief alle uitrusting met beperkte oplage of Mysterievoorwerpen voor abonnees die je al bezit (je zul wel in de juiste klasse moeten zijn om klassegebonden uitrusting terug te kopen). Je zult je huidige klasse en je huisdieren en rijdieren behouden. Wellicht gebruik je liever een Bol der Hergeboorte in de plaats, aangzien het een veel veiligere optie is waarbij je alle taken en uitrusting behoudt. </string>
     <string name="delete_account">Verwijder Account</string>
@@ -648,7 +648,7 @@
     <string name="setup_task_reward">Beloon jezelf</string>
     <string name="setup_task_reward_notes">Kijk TV, speel een spel, eet een belonging, aan jou de keuze!</string>
     <string name="equipment_str">KRA:</string>
-    <string name="equipment_con">LIC:</string>
+    <string name="equipment_con">WEE:</string>
     <string name="equipment_int">INT:</string>
     <string name="equipment_per">PER:</string>
     <string name="visit_website">bezoek website</string>
@@ -956,7 +956,7 @@
     <string name="support_bug_title">We proberen continue onze apps te verbeteren gebaseerd op feedback van spelers, maar soms schiet er een foutje tussen…</string>
     <string name="lets_go">Ga van start</string>
     <string name="bugs_fixes">Bugs &amp; Fixes</string>
-    <string name="get_help">Hulp</string>
+    <string name="get_help">Krijg Hulp</string>
     <string name="suggestions_feedback_description">Heb je voorstellen over hoe de functies beter kunnen, of een idee voor iets nieuws\? Vertel het ons!</string>
     <string name="using_habitica">Habitica gebruiken</string>
     <string name="health_points">Levenspunten</string>
@@ -964,4 +964,5 @@
     <string name="special_items">Speciale voorwerpen</string>
     <string name="leave_delte_tasks">Verlaat &amp; verwijder taken</string>
     <string name="leave_keep_tasks">Verlaat &amp; bewaar taken</string>
+    <string name="support">Ondersteuning</string>
 </resources>
