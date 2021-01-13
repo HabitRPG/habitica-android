@@ -30,7 +30,7 @@ For an introduction to the technologies used and how the software is organized, 
 
 Thank you very much [to all contributors](https://github.com/HabitRPG/habitrpg-android/graphs/contributors).
 
-#### How mobile release work
+#### How mobile releases work
 
 All major mobile releases are organized by Milestones labeled with the release number. The 'Help Wanted' is added to any issue we feel would be okay for a contributor to work on, so look for that tag first! We do our best to answer any questions contributors may have regarding issues marked with that tag. If an issue does not have the 'Help Wanted' tag, that means staff will handle it when we have the availability. 
 
