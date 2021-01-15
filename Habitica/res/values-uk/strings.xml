@@ -916,4 +916,5 @@
     <string name="insufficientSubscriberGems">Цього місяця ви купили всі самоцвіти. Більше стане доступно протягом перших трьох днів наступного місяця. Дякуємо за підписку!</string>
     <string name="join_party_title">Хочете приєднатись до гурту\?</string>
     <string name="join_party_description_guild">Повідомте нік другові або направляйтесь в %s, щоб зустіртись з потенційними товаришами!</string>
+    <string name="add_tag">Додай новий теґ</string>
 </resources>
