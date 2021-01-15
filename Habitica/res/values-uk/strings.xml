@@ -916,7 +916,7 @@
     <string name="insufficientSubscriberGems">Цього місяця ви купили всі самоцвіти. Більше стане доступно протягом перших трьох днів наступного місяця. Дякуємо за підписку!</string>
     <string name="join_party_title">Хочете приєднатись до гурту\?</string>
     <string name="join_party_description_guild">Повідомте нік другові або направляйтесь в %s, щоб зустіртись з потенційними товаришами!</string>
-    <string name="add_tag">Додай новий теґ</string>
+    <string name="add_tag">Додати новий тег</string>
     <string name="battle_gear">Бойове спорядження</string>
     <string name="group_plan">Груповий план</string>
     <string name="resubscribe_description">Хочеш надалі використовувати свої переваги\? Ти можеш розпочати нову підписку до закінчення актуальної підтиски, щоб зберегти свої переваги.</string>
@@ -961,7 +961,7 @@
     <string name="animal_tail">Звірячі хвости</string>
     <string name="animal_ears">Звірячі вуха</string>
     <string name="could_not_find_user">Не можу знайти користувача</string>
-    <string name="wacky">Чокнуті</string>
+    <string name="wacky">Дивні</string>
     <string name="equip">Одягнути</string>
     <string name="username_confirmed">Ім\'я користувача підтверджено</string>
     <string name="username_not_confirmed">Ім\'я користувача не підтверджено</string>
@@ -986,4 +986,8 @@
     <string name="hourglasses_description">Містичні пісочні годинники - це надзвичайно рідкісна форма валюти, яку ви можете отримати лише підписавшись на Habitica протягом трьох місяців поспіль або більше. Їх використовують у магазині «Мандрівника у часі», щоб купувати існуючі в минулому набори спорядження, домашніх тварин, кріплення, анімовані фони або навіть спеціальні квести.
 \n
 \nВи можете отримати до чотирьох містичних пісочних годинників на рік. Час їх отримання залежить від вашого графіка поновлення підписки. Вони надсилаються в перший день нового місяця після останньої оплати передплати, яка дозволила вам придбати пісочний годинник. Докладніше див. на сторінці Підписка.</string>
+    <string name="navigation_drawer_close">Закрити навігаційне меню</string>
+    <string name="navigation_drawer_open">Відкрити навігаційне меню</string>
+    <string name="equipment_empty">Ви вже маєте все обладнання! Більше буде випущено під час Великого Свята, яке відбувається в дні ближче до сонцестояння та рівнодення.</string>
+    <string name="stat_guide">Статистика</string>
 </resources>
