@@ -953,4 +953,9 @@
     <string name="member_group_plan">Учасник групового плану</string>
     <string name="member">Учасник</string>
     <string name="owner">Власник</string>
+    <string name="tavern_owner_long">Данило-корчмар</string>
+    <string name="market_owner_long">Сашко-продавець</string>
+    <string name="completed">Завершені</string>
+    <string name="gray">Відзначені</string>
+    <string name="avatar_hair_ponytail">Хвостик</string>
 </resources>
