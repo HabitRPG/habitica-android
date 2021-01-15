@@ -965,4 +965,14 @@
     <string name="send_bug_prompt">버그 신고를 하시면 답을 드리겠습니다!</string>
     <string name="support_bug_title">저희는 유저 피드백을 통해 앱을 더 좋게 만들기 위해 지속적으로 노력하고 있지만 가끔씩 버그들이 생깁니다…</string>
     <string name="common_fixes">일반적인 해결책</string>
+    <string name="experience_description">경험치란 진행도를 나타내며 레벨업을 할 수 있도록 합니다. 과제나 퀘스트를 완료하여 **EXP를 얻을** 수 있지만, EXP를 주는 직업 스킬도 있습니다. 
+\n 
+\n보다 어려운 과제나 빨간색 과제는 **EXP를 더 많이** 줍니다. **지력 능력치**도 EXP획득량을 높입니다.</string>
+    <string name="health_description">아바타의 생명력을 나타냅니다. 일일과제를 빠뜨리거나 부정적인 습관을 할 경우 **HP가 감소합니다**. 
+\n 
+\n레벨업 및 체력 물약을 사용하거나 치유 능력이 있는 직업 스킬을 통해 **HP를 다시 획득할 수 있습니다**. 
+\n 
+\n**HP가 0에 도달하는 경우** 레벨이 하락하고, 모든 골드와 장비 하나를 잃습니다. 잃은 장비는 다시 구입할 수 있습니다.</string>
+    <string name="mana_points">마나</string>
+    <string name="experience_points">경험치</string>
 </resources>
