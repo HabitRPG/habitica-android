@@ -958,4 +958,32 @@
     <string name="completed">Завершені</string>
     <string name="gray">Відзначені</string>
     <string name="avatar_hair_ponytail">Хвостик</string>
+    <string name="animal_tail">Звірячі хвости</string>
+    <string name="animal_ears">Звірячі вуха</string>
+    <string name="could_not_find_user">Не можу знайти користувача</string>
+    <string name="wacky">Чокнуті</string>
+    <string name="equip">Одягнути</string>
+    <string name="username_confirmed">Ім\'я користувача підтверджено</string>
+    <string name="username_not_confirmed">Ім\'я користувача не підтверджено</string>
+    <string name="two_handed">Двуручний</string>
+    <string name="hatch_pet">Виростити улюбленця</string>
+    <string name="complete_task_description">Відміть котресь зі своїх завдань, як виконане, щоб заробити нагороду</string>
+    <string name="create_task_description">Додай завдання, котре ти хочеш виконати цього тижня</string>
+    <string name="purchasedEquipmentTitle">Снарядження надбано</string>
+    <string name="fedPetTitle">Улюбленця нагодовано</string>
+    <string name="hatch_pet_title">Висидіти нового улюбленця</string>
+    <string name="complete_task_title">Завершити завдання</string>
+    <string name="createdTaskTitle">Створи своє перше завдання</string>
+    <string name="only_leader_create_challenge">Тільки лідер може створювати випробування</string>
+    <string name="create">Створити</string>
+    <string name="defeat">Поразка</string>
+    <string name="scheduling">Планування</string>
+    <string name="every">кожного/кожної</string>
+    <string name="repeats">Повтори</string>
+    <string name="weekly">Щотижня</string>
+    <string name="reset_streak">Почати спочатку</string>
+    <string name="collapse_notes">Згорнути</string>
+    <string name="hourglasses_description">Містичні пісочні годинники - це надзвичайно рідкісна форма валюти, яку ви можете отримати лише підписавшись на Habitica протягом трьох місяців поспіль або більше. Їх використовують у магазині «Мандрівника у часі», щоб купувати існуючі в минулому набори спорядження, домашніх тварин, кріплення, анімовані фони або навіть спеціальні квести.
+\n
+\nВи можете отримати до чотирьох містичних пісочних годинників на рік. Час їх отримання залежить від вашого графіка поновлення підписки. Вони надсилаються в перший день нового місяця після останньої оплати передплати, яка дозволила вам придбати пісочний годинник. Докладніше див. на сторінці Підписка.</string>
 </resources>
