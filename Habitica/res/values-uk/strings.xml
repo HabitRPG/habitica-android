@@ -87,7 +87,7 @@
     <string name="start_date">Дата початку</string>
     <string name="positive_habit_form">Позитивна ( + )</string>
     <string name="negative_habit_form">Негативна ( - )</string>
-    <string name="checklist">Підзавдання</string>
+    <string name="checklist">Список завдань</string>
     <string name="reminders">Нагадування</string>
     <string name="attributes">Характеристики</string>
     <string name="physical">Сила</string>
@@ -199,10 +199,10 @@
     <string name="register_btn_fb">Зареєструватись з Facebook</string>
     <string name="login_btn_google">Увійти з Google</string>
     <string name="login_btn_apple">Увійти з Apple</string>
-    <string name="about_source_code">Вихідний код</string>
-    <string name="about_bugreport">Повідомити про проблему</string>
+    <string name="about_source_code">Джерело коду</string>
+    <string name="about_bugreport">Сповістіть про помилку</string>
     <string name="about_give_us_feedback">Надішліть нам відгук</string>
-    <string name="about_rate_our_app">Оцініть наш додаток</string>
+    <string name="about_rate_our_app">Оцініть наш застосунок</string>
     <string name="empty_title_habits">Ви не маєте жодної звички</string>
     <string name="clear">Очистити</string>
     <string name="setuP_group_other">Інше</string>
@@ -221,7 +221,7 @@
     <string name="levelup_detail">Завдяки досягненню цілей у реальному житті ваш рівень підвищився та персонаж був зцілений!</string>
     <string name="levelup_header">Ви отримали %1$d рівень!</string>
     <string name="not_selected">Не обране</string>
-    <string name="selected">Вибране</string>
+    <string name="selected">Обране</string>
     <string name="off">Викл.</string>
     <string name="on">Вкл.</string>
     <string name="description">Опис</string>
