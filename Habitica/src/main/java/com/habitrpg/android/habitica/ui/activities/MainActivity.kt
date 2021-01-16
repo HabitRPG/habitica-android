@@ -223,6 +223,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
             }
 
             override fun onDrawerOpened(drawerView: View) {
+                hideKeyboard()
                 val modernHeaderStyle = sharedPreferences.getBoolean("modern_header_style", true)
                 if (!isUsingNightModeResources() && modernHeaderStyle) {
                     window.updateStatusBarColor(getThemeColor(R.attr.colorPrimaryDark), false)
@@ -250,6 +251,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
         val navigationController = findNavController(R.id.nav_host_fragment)
         navigationController.addOnDestinationChangedListener { _, destination, arguments ->
+            hideKeyboard()
             updateToolbarTitle(destination, arguments)
         }
         setupNotifications()
@@ -296,6 +298,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     }
 
     override fun onSupportNavigateUp(): Boolean {
+        hideKeyboard()
         onBackPressed()
         return true
     }
