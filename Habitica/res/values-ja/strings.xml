@@ -820,7 +820,7 @@
     <string name="beastMasterTitle">獣使い</string>
     <string name="partyOnDescription">4人以上のパーティーに参加しました！</string>
     <string name="partyOnTitle">パーティーは続く</string>
-    <string name="partyUpDescription">パーティーに参加しました！</string>
+    <string name="partyUpDescription">仲間たちとパーティーを組みました！</string>
     <string name="partyUpTitle">パーティーに参加</string>
     <string name="achievement_title">実績を獲得しました！</string>
     <string name="view_achievements">実績を確認する</string>
@@ -924,7 +924,7 @@
     <string name="g1g1_info_2">機能説明</string>
     <string name="gift_a_subscription">有料プランをプレゼントする</string>
     <string name="g1g1_info_1">贈り物の季節を祝して、特別なプロモーションを再び開催しています。いま誰かに有料プランをプレゼントすると、あなた自身も同じ有料プランを無料で受けることができます！</string>
-    <string name="promo_g1g1_prompt">誰かに有料プランをプレゼントすると、自分も無料で同じ有料プランを受けられるイベント</string>
+    <string name="promo_g1g1_prompt">ギフトワン、ゲットワンキャンペーン</string>
     <string name="promo_g1g1_description">いま有料プランをプレゼントすると、あなた自身も同じ有料プランが無料で適用されます！</string>
     <string name="event">イベント</string>
     <string name="owner">オーナー</string>
