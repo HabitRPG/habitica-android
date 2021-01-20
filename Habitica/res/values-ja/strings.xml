@@ -822,8 +822,8 @@
     <string name="partyOnTitle">パーティーは続く</string>
     <string name="partyUpDescription">仲間たちとパーティーを組みました！</string>
     <string name="partyUpTitle">パーティーに参加</string>
-    <string name="achievement_title">実績を獲得しました！</string>
-    <string name="view_achievements">実績を確認する</string>
+    <string name="achievement_title">実績を解除しました！</string>
+    <string name="view_achievements">実績を見る</string>
     <string name="see_what_s_new">新着情報を見る</string>
     <string name="send_message">メッセージを送る</string>
     <string name="remove">取り消す</string>
@@ -1023,7 +1023,7 @@
     <string name="leave_delte_tasks">辞める、タスクも削除する</string>
     <string name="leave_keep_tasks">辞める、タスクはこのまま</string>
     <string name="challenge_leave_description">このチャレンジのタスクをあなたのタスクボードに残すか、削除するかこのチャレンジを辞めるときに選べます</string>
-    <string name="purchase_equipment_title">装備品の購入</string>
+    <string name="purchase_equipment_title">装備を買う</string>
     <string name="lets_get_started">はじめましょう</string>
     <string name="your_progress">進捗</string>
     <string name="adventure_guide_description">これらの初心者入門のタスクを完了して、&lt;b&gt;5つの実績バッジ&lt;/b&gt;と&lt;font color=#EE9109&gt;&lt;b&gt;100ゴールド&lt;/b&gt;&lt;/font&gt; をゲットしましょう！</string>
