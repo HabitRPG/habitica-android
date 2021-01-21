@@ -438,7 +438,7 @@
     <string name="subscription_status">Subscription Status</string>
 
     <string name="challenge_leave_title">Leave Challenge</string>
-    <string name="challenge_leave_description">You can choose to keep this Challenge\'s tasks on your personal task board  or delete them when you leave</string>
+    <string name="challenge_leave_description">You can choose to keep this Challenge\'s tasks on your personal task board or delete them when you leave</string>
     <string name="leave_keep_tasks">Leave &amp; Keep Tasks</string>
     <string name="leave_delte_tasks">Leave &amp; Delete Tasks</string>
     <string name="remove_tasks">Remove</string>
@@ -656,7 +656,7 @@
     <string name="tiers_descriptions">The colored usernames you see in chat represent a person’s contributor tier. The higher the tier, the more the person has contributed to habitica through art, code, the community, or more!</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="world_boss">World  Boss</string>
+    <string name="world_boss">World Boss</string>
     <string name="boss_art">Boss Art</string>
     <string name="world_boss_description">World Boss Description</string>
     <string name="rage_strike_count">Rage Strikes: %d/%d</string>
@@ -1047,7 +1047,7 @@
     <string name="hatchedPetDescription">There are so many Pets to collect, you’re bound to have a favorite. If you feed them, they may just grow…</string>
     <string name="fedPetDescription">Every Pet has a specific food they enjoy! Experiment to find out which will grow your Pet the fastest</string>
     <string name="purchasedEquipmentDescription">Equipment can be practical or just fashionable. Raise your stats to get all sorts of benefits to your avatar</string>
-    <string name="first_drop_explanation1">Completing tasks gives you a chance to find eggs, hatching potions,  and pet food.</string>
+    <string name="first_drop_explanation1">Completing tasks gives you a chance to find eggs, hatching potions, and pet food.</string>
     <string name="first_drop_explanation2">Head to your Items and try combining your new Egg and Hatching Potion!</string>
     <string name="go_to_items">Go to Items</string>
     <string name="first_drop_title">You found new items!</string>
