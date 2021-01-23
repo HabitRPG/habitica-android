@@ -1102,4 +1102,9 @@
     <string name="disablePrivateMessages">Disable Private Messages</string>
     <string name="block">Block</string>
     <string name="block_user_description">A blocked user cannot send you Private Messages but you will still see their posts in Tavern or Guilds. This will have no effect if the person is a moderator now or in the future.</string>
+    <string name="spooky_promo_info_prompt">The Gem Sale is back to haunt the very end of this year’s Fall Gala! This is one last chance to get more Gems than ever, so stock up while it lasts!</string>
+    <string name="spooky_promo_info_limitations">This promotion only applies during the limited time event. This event starts on October 29th at 8:00 AM EDT (12:00 UTC) and will end November 2nd at 8:00 PM EDT (00:00 UTC). The promo offer is only available when buying Gems for yourself.</string>
+    <string name="spooky_promo_info_instructions">Between October 29th and November 2nd, simply purchase any Gem bundle like usual and your account will be credited with the promotional amount of Gems. More Gems to spend, share, or save for any future releases!</string>
+    <string name="view_gem_bundles">View Gem Bundles</string>
+    <string name="fall_promo_info_prompt">The Fall Gala is in full swing so we thought it was the perfect time to introduce our first ever Gem Sale! Now you will get more Gems with each purchase than ever before.</string>
 </resources>
