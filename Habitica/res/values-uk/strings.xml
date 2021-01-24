@@ -1041,4 +1041,5 @@
     <string name="total_checkins">Усього відвідувань</string>
     <string name="last_login">Останнє відвідування</string>
     <string name="week_reminder_text">Відпочинок корисний, але ви все ще можете заробити очки досвіду за виконання завдань, щоб підняти рівень і отримати крутий комплект броні!</string>
+    <string name="no_notifications_title">Ви все завершили!</string>
 </resources>
