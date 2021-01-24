@@ -1035,4 +1035,7 @@
     <string name="completedTaskDescription">タスクには習慣・日課・To Doがあります。すべての種類のごほうびを受け取るためにタスクをこなし続けましょう！</string>
     <string name="createdTaskDescription">続けましょう！タスクを計画するのに助けがいるなら、特定の時間帯になにをしたいか考えてみましょう</string>
     <string name="onboardingCompleteTitle">がんばったので&lt;b&gt;5つの実績&lt;/b&gt;と&lt;font color=#EE9109&gt;&lt;b&gt;100ゴールド&lt;/b&gt;&lt;/font&gt;を入手しました。</string>
+    <string name="purchasedEquipmentDescription">装備には実用的なものと、おしゃれのためのものがあります。ステータスをあげてアバターにあらゆる種類のメリットをもたらしましょう</string>
+    <string name="fedPetDescription">それぞれのペットには好きなえさがあります！どのえさで早く育つのか、試してみましょう</string>
+    <string name="hatchedPetDescription">集めるペットはたくさんいるので、お気に入りが見つかるでしょう。あなたがえさをあげれば成長するかも……</string>
 </resources>
