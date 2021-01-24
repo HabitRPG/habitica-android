@@ -1031,4 +1031,14 @@
     <string name="next_day_reminder_title">Ви перевіряли свої завдання на сьогодні\?</string>
     <string name="same_day_reminder_text">Чим більше ви додаєте, тим більше буде нагорода. Навіть малі звички ведуть до великого виграшу.</string>
     <string name="avatar_headband">Пов\'язка на голову</string>
+    <string name="new_subscriber_item">У вас новий <b>Таємничий артефакт</b></string>
+    <string name="no_notifications_text">Феї повідомлень вам тихо аплодують! Відмінно!</string>
+    <string name="gift_confirmation_text_sub">Ви вислали %s %s-мвсячну підписку на Habitica.</string>
+    <string name="gift_gems_subtitle">Виберіть пакет самоцвітів, який ви хочете подарувати!</string>
+    <string name="usernamePromptDisclaimer">Імена користувачів повинні відповідати нашим &lt;a href=\"https://habitica.com/static/terms\"&gt; Умовам обслуговування &gt; і &lt;a href=\"https://habitica.com/static/community-guidelines\"&gt; Правилам спільноти &lt;/a&gt;. Якщо ви раніше не вибирали ім\'я користувача, це значит, що воно було згенеровано автоматично.<a href="https://habitica.com/static/terms">Terms of Service</a> and <a href="https://habitica.com/static/community-guidelines">Community Guidelines</a>. If you didn’t previously set a login name, your username was auto-generated.</string>
+    <string name="usernamePromptWiki">Якщо ви хочете дізнатися більше про цю зміну, <a href="https://habitica.wikia.com/wiki/Player_Names">visit our wiki.</a></string>
+    <string name="usernamePromptBody">Імена для входу тепер є унікальними іменами користувачів, які відображатимуться поруч із вашим ніком і будуть використовуватися для запрошень, чату @ згадок та обміну повідомленнями.</string>
+    <string name="total_checkins">Усього відвідувань</string>
+    <string name="last_login">Останнє відвідування</string>
+    <string name="week_reminder_text">Відпочинок корисний, але ви все ще можете заробити очки досвіду за виконання завдань, щоб підняти рівень і отримати крутий комплект броні!</string>
 </resources>
