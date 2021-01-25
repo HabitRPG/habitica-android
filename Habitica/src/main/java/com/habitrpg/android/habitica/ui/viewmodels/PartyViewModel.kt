@@ -45,9 +45,10 @@ class PartyViewModel: GroupViewModel() {
     }
 
     fun acceptQuest() {
-        groupIDSubject.value?.value?.let {
-            disposable.add(socialRepository.acceptQuest(null, it)
+        groupIDSubject.value?.value?.let { groupID ->
+            disposable.add(socialRepository.acceptQuest(null, groupID)
                     .flatMap { userRepository.retrieveUser() }
+                    .flatMap { socialRepository.retrieveGroup(groupID) }
                     .subscribe({
                         val event = ShowSnackbarEvent()
                         event.type = HabiticaSnackbar.SnackbarDisplayType.SUCCESS
@@ -58,9 +59,10 @@ class PartyViewModel: GroupViewModel() {
     }
 
     fun rejectQuest() {
-        groupIDSubject.value?.value?.let {
-            disposable.add(socialRepository.rejectQuest(null, it)
+        groupIDSubject.value?.value?.let { groupID ->
+            disposable.add(socialRepository.rejectQuest(null, groupID)
                     .flatMap { userRepository.retrieveUser() }
+                    .flatMap { socialRepository.retrieveGroup(groupID) }
                     .subscribe({
                         val event = ShowSnackbarEvent()
                         event.type = HabiticaSnackbar.SnackbarDisplayType.FAILURE
