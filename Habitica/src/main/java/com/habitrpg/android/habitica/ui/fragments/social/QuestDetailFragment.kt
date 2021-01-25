@@ -8,11 +8,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.text.parseAsHtml
+import androidx.core.text.toHtml
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.FragmentQuestDetailBinding
+import com.habitrpg.android.habitica.extensions.fromHtml
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.inventory.QuestContent
@@ -21,6 +24,7 @@ import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
+import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
 import com.habitrpg.android.habitica.ui.helpers.setMarkdown
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import javax.inject.Inject
@@ -132,7 +136,9 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
             return
         }
         binding?.titleView?.text = questContent.text
-        binding?.descriptionView?.setMarkdown(questContent.notes)
+        // We need to do this, because the quest description can contain markdown AND HTML.
+        binding?.descriptionView?.setText(MarkdownParser.parseMarkdown(questContent.notes).toHtml().fromHtml(), TextView.BufferType.SPANNABLE)
+
         DataBindingUtils.loadImage(binding?.questScrollImageView, "inventory_quest_scroll_" + questContent.key)
     }
 

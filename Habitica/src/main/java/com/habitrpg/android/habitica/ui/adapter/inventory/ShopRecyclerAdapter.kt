@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.ui.adapter.inventory
 
 import android.content.Context
-import android.text.Html
 import android.text.method.LinkMovementMethod
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +8,7 @@ import android.widget.Button
 import android.widget.TextView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ShopHeaderBinding
+import com.habitrpg.android.habitica.extensions.fromHtml
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.shops.Shop
@@ -221,8 +221,7 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<an
             binding.npcBannerView.shopSpriteSuffix = shopSpriteSuffix
             binding.npcBannerView.identifier = shop.identifier
 
-            @Suppress("DEPRECATION")
-            binding.descriptionView.text = Html.fromHtml(shop.notes)
+            binding.descriptionView.text = shop.notes.fromHtml()
             binding.namePlate.setText(shop.npcNameResource)
         }
 
