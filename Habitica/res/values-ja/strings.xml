@@ -245,7 +245,7 @@
 \n ・タスクの連続実行は変更されなくなり、色も変わらなくなります
 \n ・日課をこなさなくてもボスからのダメージを受けなくなります
 \n ・チェックアウトするまで、ボスダメージや収集クエストアイテムは保留されたままになります</string>
-    <string name="empty_items">%s を持っていません</string>
+    <string name="empty_items">%sはありません</string>
     <string name="user_level">レベル %d</string>
     <string name="user_level_with_class">レベル %1$d %2$s</string>
     <string name="warrior">戦士</string>
@@ -424,9 +424,9 @@
     <string name="completed">完了</string>
     <string name="setuP_group_other">ほか</string>
     <string name="clear">クリア</string>
-    <string name="empty_title_habits">習慣を持っていません</string>
+    <string name="empty_title_habits">習慣がありません</string>
     <string name="empty_description_habits">習慣は、タスクの中でもこなすスケジュールがきっちりと決まっていないものです。１日に何回チェックしてもいいし、チェックしない日があっても大丈夫です。</string>
-    <string name="empty_title_dailies">日課を持っていません</string>
+    <string name="empty_title_dailies">日課がありません</string>
     <string name="empty_description_dailies">日課は一定のペースでこなすタスクです。自分に合ったスケジュールを組みましょう！</string>
     <string name="empty_title_todos">To Doがありません</string>
     <string name="empty_description_todos">To Doは1度きりで完了するタスクです。To Doの報酬を増やすために、チェックリストを追加しましょう。</string>
@@ -976,10 +976,10 @@
     <string name="experience_description">経験値(XP)はプレイヤーの進捗状況を表し、経験値が貯まるとレベルアップできます。**経験値を得るには**おもにタスクやクエストを完了させる他、いくつかのクラスのスキルを使用することでも得ることができます。
 \n
 \nより難しいタスクや、赤い色のタスクを完了すると**より多い経験値**を得ることができます。**知能のステータス**が得られる経験値に影響します。</string>
-    <string name="health_description">これはあなたのアバターの体力(Health Point=HP)を表します。日課をこなさなかったか、悪い習慣を行うと**HPは減少します**。
-\n
-\n**HPの回復**にはレベルアップするか、体力回復の薬を使うか、治療士のスキルを使います。
-\n
+    <string name="health_description">これはあなたのアバターの体力(Health Point=HP)を表します。日課をこなさなかったか、悪い習慣を行うと**HPは減少します**。 
+\n 
+\n**HPの回復**にはレベルアップするか、体力回復の薬を使うか、治療師のスキルを使います。 
+\n 
 \nもしあなたの**HPが0になると**レベルが1下がり、ゴールドを全て失い、装備を一つ失います。無くなった装備はもう一度購入することで取り戻せます。</string>
     <string name="mana_description">マナポイント(Mana points=MP)はレベル10になってクラスシステムが解放されると表示されるようになり、レベル11から一つずつ覚える**スキルを使う**ことができるようになります。
 \n
@@ -997,9 +997,9 @@
 \n
 \n**力(STR)**のステータスはクリティカルヒットに影響し、クエストボスのダメージを増加させます。戦士と盗賊はクラス専用装備に力のステータスポイントの上昇効果があります。
 \n
-\n**体質(CON)**のステータスはHPを増やし、受けるダメージを少なくします。治療士と戦士はクラス専用装備に体質のステータスポイントの上昇効果があります。
+\n**体質(CON)**のステータスはHPを増やし、受けるダメージを少なくします。治療師と戦士はクラス専用装備に体質のステータスポイントの上昇効果があります。
 \n
-\n**知能 (INT)**のステータスは獲得できる経験値を増やしより多くのマナをより多く得られるようになりま。魔道士と治療士はクラス専用装備に知能のステータスポイントの上昇効果があります。
+\n**知能 (INT)**のステータスは獲得できる経験値を増やしより多くのマナをより多く得られるようになりま。魔道士と治療師はクラス専用装備に知能のステータスポイントの上昇効果があります。
 \n
 \n**知覚(PER)**のステータスは獲得できるゴールドと、ドロップアイテムを見つける確率を増やします。盗賊と魔道士はクラス専用装備に知覚のステータスポイントの上昇効果があります。
 \n
@@ -1038,4 +1038,14 @@
     <string name="purchasedEquipmentDescription">装備には実用的なものと、おしゃれのためのものがあります。ステータスをあげてアバターにあらゆる種類のメリットをもたらしましょう</string>
     <string name="fedPetDescription">それぞれのペットには好きなえさがあります！どのえさで早く育つのか、試してみましょう</string>
     <string name="hatchedPetDescription">集めるペットはたくさんいるので、お気に入りが見つかるでしょう。あなたがえさをあげれば成長するかも……</string>
+    <string name="feedPet_title">ペットにえさをやる</string>
+    <string name="hatch_pet_title">ペットをかえす</string>
+    <string name="complete_task_title">タスクを完了する</string>
+    <string name="delete_x_tasks">%dのタスクを削除する</string>
+    <string name="keep_x_tasks">%dのタスクを残す</string>
+    <string name="broken_challenge_description">このタスクは%dチャレンジの一部です。このチャレンジは終了しました。残ったタスクをどうしますか？</string>
+    <string name="pms_disabled">プライベートメッセージが無効になりました</string>
+    <string name="disablePrivateMessages">プライベートメッセージを無効にする</string>
+    <string name="block">ブロックする</string>
+    <string name="block_user_description">ブロックしたユーザーからはプライベートメッセージを受けとれません。ですが、ブロックしたユーザーがキャンプ場やギルドに書き込んだ書き込みはいままでどおり見ることができます。ブロックはモデレーターや将来モデレーターになるユーザーに対しては使えません。</string>
 </resources>
