@@ -106,7 +106,7 @@
     <string name="members">Miembros</string>
     <string name="habits">Hábitos</string>
     <string name="dailies">Tareas diarias</string>
-    <string name="todos">Tareas Pendientes</string>
+    <string name="todos">Para Hacer</string>
     <string name="rewards">Recompensas</string>
     <string name="yes">Sí</string>
     <string name="no">No</string>
@@ -700,7 +700,7 @@
     <string name="selected">Seleccionado</string>
     <string name="off">Apagado</string>
     <string name="authentication_error_body">Tu nombre de usuario y/o contraseña son incorrectos.</string>
-    <string name="network_error_no_network_body">No tienes conexión a Internet.</string>
+    <string name="network_error_no_network_body">No tienes conexión a internet.</string>
     <string name="ago_weeks">Hace %d semana</string>
     <string name="ago_1week">Hace 1 semana</string>
     <string name="ago_months">Hace %d mes</string>
