@@ -12,7 +12,7 @@
     <string name="SP_APIToken_summary">Tu token de API</string>
     <string name="Language_title">Idioma</string>
     <string name="Language_summary">Cambiar el idioma de Habitica</string>
-    <string name="PS_contact_title">Contactar</string>
+    <string name="PS_contact_title">Contáctame</string>
     <string name="pref_account_header">Cuenta</string>
     <string name="pref_first_day_of_the_week_title">Primer día de la semana</string>
     <string name="pref_first_day_of_the_week_summary">Primer día de la semana en todos los calendarios</string>
