@@ -357,7 +357,7 @@
     <string name="due">Vence</string>
     <string name="cancel_subscription">Cancelar suscripción</string>
     <string name="cancel_subscription_google_description">¿Ya no quieres suscribirte\? Puedes encontrar la opción de cancelar la suscripción en la sección \"Mis aplicaciones\" de Google Play Store. Cualquier mes de crédito de suscripción se aplicará después de que su suscripción haya finalizado.</string>
-    <string name="cancel_subscription_notgoogle_description">¿Ya no quieres suscribirte\? Debido a las restricciones por el método de pago virtual, será neceario cancelar tu suscripción a través de nuestro sitio web. Para esto, haz click en el botón de abajo, Ingresa en tu cuenta, selecciona el ícono de Usuario ubicado arriba a la derecha, y luego en Suscripción. No se aplicarán recargos luego de que tu suscripción haya finalizado. ¡Te extrañaremos!</string>
+    <string name="cancel_subscription_notgoogle_description">¿Ya no quieres suscribirte\? Debido a las restricciones por el método de pago móvil, tendrás que cancelar tu suscripción a través de nuestro sitio web. Para esto, haz click en el botón de abajo, Ingresa en tu cuenta, selecciona el icono de Usuario ubicado arriba a la derecha, y luego en Suscripción. Los meses de crédito de suscripción que tengas se harán efectivos después de que se acabe tu suscripción. ¡Te echaremos de menos!</string>
     <string name="visit_habitica_website">Visitar la página de Habitica</string>
     <string name="current_bonuses">Bonificaciones Actuales</string>
     <string name="months_subscribed">Meses suscrito</string>
