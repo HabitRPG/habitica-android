@@ -183,7 +183,7 @@
     <string name="my_guilds">所属ギルド</string>
     <string name="public_guilds">公共ギルド</string>
     <string name="guild">ギルド</string>
-    <string name="leave">辞める</string>
+    <string name="leave">やめる</string>
     <string name="join">参加する</string>
     <string name="gems">ジェム</string>
     <string name="delete">削除</string>
@@ -794,7 +794,7 @@
     <string name="wacky">へんてこ</string>
     <string name="could_not_find_user">ユーザーが見つかりません</string>
     <string name="habitica_questions">よくある質問</string>
-    <string name="read_more">続きを読む</string>
+    <string name="read_more">つづきを読む</string>
     <string name="still_questions">まだ疑問が解決しませんか？</string>
     <string name="clear_cache">キャッシュをクリアしてください</string>
     <string name="mystic_hourglasses">神秘の砂時計</string>
@@ -964,7 +964,7 @@
     <string name="suggestions_feedback">提案とフィードバック</string>
     <string name="get_help">サポートを受ける</string>
     <string name="contact_us">お問い合わせ</string>
-    <string name="using_habitica_description">基本的な機能の説明とよくある質問にお答えします</string>
+    <string name="using_habitica_description">より理解を深めるために、基本的な機能の説明しよくある質問にお答えします</string>
     <string name="purchase_amount_error">この金額を買うことはできません。</string>
     <string name="stat_allocation">ステータスポイントの割り当て</string>
     <string name="premium_currency">特別なゲーム内通貨</string>
@@ -1020,9 +1020,9 @@
     <string name="create_task_title">タスクの作成</string>
     <string name="percent_completed">%d%%完了</string>
     <string name="pet_ownership_fraction">%1$d / %2$d</string>
-    <string name="leave_delte_tasks">辞める、タスクも削除する</string>
-    <string name="leave_keep_tasks">辞める、タスクはこのまま</string>
-    <string name="challenge_leave_description">このチャレンジのタスクをあなたのタスクボードに残すか、削除するかこのチャレンジを辞めるときに選べます</string>
+    <string name="leave_delte_tasks">やめる、タスクも削除する</string>
+    <string name="leave_keep_tasks">やめる、タスクはこのまま</string>
+    <string name="challenge_leave_description">このチャレンジのタスクをあなたのタスクボードに残すか、削除するかこのチャレンジをやめるときに選べます</string>
     <string name="purchase_equipment_title">装備を買う</string>
     <string name="lets_get_started">はじめましょう</string>
     <string name="your_progress">進捗</string>
@@ -1048,4 +1048,8 @@
     <string name="disablePrivateMessages">プライベートメッセージを無効にする</string>
     <string name="block">ブロックする</string>
     <string name="block_user_description">ブロックしたユーザーからはプライベートメッセージを受けとれません。ですが、ブロックしたユーザーがキャンプ場やギルドに書き込んだ書き込みはいままでどおり見ることができます。ブロックはモデレーターや将来モデレーターになるユーザーに対しては使えません。</string>
+    <string name="broken_challenge">チャレンジのリンク切れ</string>
+    <string name="leave_delete_x_tasks">やめる、%dタスクを削除する</string>
+    <string name="leave_delete_task">やめる、タスクも削除する</string>
+    <string name="delete_challenge_task_description">このタスクは「%s」チャレンジの%dタスクの一部です。このタスクを削除するにはチャレンジを止めてください。</string>
 </resources>
