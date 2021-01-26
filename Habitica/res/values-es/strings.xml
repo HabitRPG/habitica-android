@@ -310,7 +310,7 @@
     <string name="all_dailies_completed">Ha completado todas tus tareas diarias. ¡Buen trabajo!</string>
     <string name="widget_habit_button">Hábitos Habitica</string>
     <string name="widget_dailies">Tareas diarias Habitica</string>
-    <string name="widget_todo_list">Lista de Tareas pendientes Habitica</string>
+    <string name="widget_todo_list">Lista de Tareas Pendientes Habitica</string>
     <string name="google_services_missing">No pudieron encontrarse los servidores de Google Play.</string>
     <string name="gem_purchase_toolbartitle">Comprar</string>
     <string name="gem_purchase_title">Comprar gemas apoya a los desarrolladores y ayuda a mantener Habitica en funcionamiento</string>
