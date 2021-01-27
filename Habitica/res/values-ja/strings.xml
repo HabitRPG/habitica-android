@@ -931,9 +931,9 @@
     <string name="member">メンバー</string>
     <string name="member_group_plan">グループプランのメンバー</string>
     <string name="update_app_description">常時バグの修正が行われた新しいバージョンがリリースされています。Playストアをチェックして新しいアップデートがないか確認してください。</string>
-    <string name="manual_sync_restart_description">アプリは自動で内容が更新されないことがあります。右上の「︙」ボタンから「更新」を選んで同期するか、アプリを終了させて再起動してください。</string>
+    <string name="manual_sync_restart_description">アプリは自動で内容が更新されないことがあります。画面を下に引っ張るか、右上の「︙」ボタンから「更新」を選んで同期するか、アプリを終了させて再起動してください。</string>
     <string name="update_app">アプリをアップデートしてください</string>
-    <string name="manual_sync_restart">手動で同期と再起動を行ってください</string>
+    <string name="manual_sync_restart">手動で同期するか再起動してください</string>
     <string name="clear_cache_description">キャッシュをクリアするには、端末の設定画面を開き、ストレージ＞アプリ＞Habiticaに移動し、「キャッシュをクリアする」をタップしてください。</string>
     <string name="support">サポート</string>
     <string name="animal_ears">獣耳</string>
@@ -965,7 +965,7 @@
     <string name="get_help">サポートを受ける</string>
     <string name="contact_us">お問い合わせ</string>
     <string name="using_habitica_description">より理解を深めるために、基本的な機能の説明しよくある質問にお答えします</string>
-    <string name="purchase_amount_error">この金額を買うことはできません。</string>
+    <string name="purchase_amount_error">買える量を超えています。</string>
     <string name="stat_allocation">ステータスポイントの割り当て</string>
     <string name="premium_currency">特別なゲーム内通貨</string>
     <string name="currency">ゲーム内通貨</string>
@@ -986,7 +986,7 @@
 \n日をまたぐことでいくらかの**MPは回復します**が、タスクを完了したり、魔道士のスキルを使用することでさらにMPを獲得できます。</string>
     <string name="stats_currency">ステータスとゲーム内通貨</string>
     <string name="overview">概要</string>
-    <string name="send_bug_prompt">バグの報告をしてください。対応します！</string>
+    <string name="send_bug_prompt">バグの報告をしてください。折り返し連絡します！</string>
     <string name="common_fixes">一般的な対処法</string>
     <string name="gold_description">ゴールドは**メインのゲーム内通貨**で、装備・クエスト・アイテム・自分自身で設定できるカスタムごほうびなどを購入することができます。 
 \n 
