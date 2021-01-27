@@ -1,10 +1,8 @@
 package com.habitrpg.android.habitica.data.local
 
-import com.habitrpg.android.habitica.models.Achievement
-import com.habitrpg.android.habitica.models.QuestAchievement
-import com.habitrpg.android.habitica.models.Skill
-import com.habitrpg.android.habitica.models.TutorialStep
+import com.habitrpg.android.habitica.models.*
 import com.habitrpg.android.habitica.models.social.ChatMessage
+import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.rxjava3.core.Flowable
 import io.realm.RealmResults
@@ -32,4 +30,6 @@ interface UserLocalRepository : BaseLocalRepository {
     fun getAchievements(): Flowable<RealmResults<Achievement>>
     fun getQuestAchievements(userID: String): Flowable<RealmResults<QuestAchievement>>
     fun getUserQuestStatus(userID: String): Flowable<UserQuestStatus>
+    fun getTeamPlans(userID: String): Flowable<RealmResults<TeamPlan>>
+    fun getTeamPlan(teamID: String): Flowable<Group>
 }

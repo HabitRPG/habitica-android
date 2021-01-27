@@ -20,7 +20,6 @@ import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.TaskFilterHelper
 import com.habitrpg.android.habitica.models.tasks.Task
-import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.TaskFormActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.views.navigation.HabiticaBottomNavigationViewListener
@@ -31,13 +30,15 @@ import javax.inject.Inject
 import kotlin.collections.ArrayList
 
 
-class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.OnQueryTextListener, HabiticaBottomNavigationViewListener {
+class TeamBoardFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.OnQueryTextListener, HabiticaBottomNavigationViewListener {
 
     override var binding: FragmentViewpagerBinding? = null
 
     override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentViewpagerBinding {
         return FragmentViewpagerBinding.inflate(inflater, container, false)
     }
+
+    var teamID: String = ""
 
     @Inject
     lateinit var taskFilterHelper: TaskFilterHelper
@@ -65,12 +66,26 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         this.usesTabLayout = false
+        this.hidesToolbar = true
         this.usesBottomNavigation = true
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        arguments?.let {
+            val args = TeamBoardFragmentArgs.fromBundle(it)
+            teamID = args.teamID
+        }
+
+        compositeSubscription.add(userRepository.getTeamPlan(teamID)
+                .subscribe( {
+                    activity?.title = it.name
+                }, RxErrorHandler.handleEmptyError()))
+
+        compositeSubscription.add(userRepository.retrieveTeamPlan(teamID).subscribe({ }, RxErrorHandler.handleEmptyError()))
+
         loadTaskLists()
     }
 
@@ -84,7 +99,7 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
             else -> Task.TYPE_HABIT
         }
         bottomNavigation?.listener = this
-        bottomNavigation?.canAddTasks = true
+        bottomNavigation?.canAddTasks = false
     }
 
     override fun onPause() {
@@ -207,13 +222,14 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
                     3 -> RewardsRecyclerviewFragment.newInstance(context, Task.TYPE_REWARD)
                     else -> TaskRecyclerViewFragment.newInstance(context, Task.TYPE_TODO)
                 }
-                fragment.ownerID = user?.id ?: ""
+                fragment.ownerID = teamID
                 fragment.refreshAction = {
-                    compositeSubscription.add(userRepository.retrieveUser(true, true)
+                    compositeSubscription.add(userRepository.retrieveTeamPlan(teamID)
                             .doOnTerminate {
                                 it()
                             }.subscribe({ }, RxErrorHandler.handleEmptyError()))
                 }
+
                 viewFragmentsDictionary?.put(position, fragment)
 
                 return fragment
@@ -400,7 +416,6 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
         internal const val TASK_CREATED_RESULT = 1
         const val TASK_UPDATED_RESULT = 2
     }
-
 
     override fun onTabSelected(taskType: String) {
         val newItem = when (taskType) {

@@ -25,6 +25,7 @@ import java.util.*
 
 class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
 
+    private var showCustomRewards: Boolean = true
     private var selectedCard: ShopItem? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -51,9 +52,11 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
         }
         binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
 
-        compositeSubscription.add(inventoryRepository.getInAppRewards().subscribe({
-            (recyclerAdapter as? RewardsRecyclerViewAdapter)?.updateItemRewards(it)
-        }, RxErrorHandler.handleEmptyError()))
+        if (showCustomRewards) {
+            compositeSubscription.add(inventoryRepository.getInAppRewards().subscribe({
+                (recyclerAdapter as? RewardsRecyclerViewAdapter)?.updateItemRewards(it)
+            }, RxErrorHandler.handleEmptyError()))
+        }
 
         (recyclerAdapter as? RewardsRecyclerViewAdapter)?.purchaseCardEvents?.subscribe({
             selectedCard = it
@@ -100,7 +103,7 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
             when (requestCode) {
                 11 -> {
                     if (resultCode == Activity.RESULT_OK) {
-                        userRepository.useSkill(user,
+                        userRepository.useSkill(null,
                                 selectedCard?.key ?: "",
                                 "member",
                                 data.getStringExtra("member_id") ?: "")
@@ -118,11 +121,11 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
 
     companion object {
 
-        fun newInstance(context: Context?, user: User?, classType: String): RewardsRecyclerviewFragment {
+        fun newInstance(context: Context?, classType: String, showCustomRewards: Boolean): RewardsRecyclerviewFragment {
             val fragment = RewardsRecyclerviewFragment()
             fragment.retainInstance = true
-            fragment.user = user
             fragment.classType = classType
+            fragment.showCustomRewards = showCustomRewards
 
             if (context != null) {
                 fragment.tutorialStepIdentifier = "rewards"

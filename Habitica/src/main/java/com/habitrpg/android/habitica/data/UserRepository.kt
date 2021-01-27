@@ -4,11 +4,13 @@ import com.habitrpg.android.habitica.data.local.UserQuestStatus
 import com.habitrpg.android.habitica.models.Achievement
 import com.habitrpg.android.habitica.models.QuestAchievement
 import com.habitrpg.android.habitica.models.Skill
+import com.habitrpg.android.habitica.models.TeamPlan
 import com.habitrpg.android.habitica.models.inventory.Customization
 import com.habitrpg.android.habitica.models.inventory.CustomizationSet
 import com.habitrpg.android.habitica.models.responses.SkillResponse
 import com.habitrpg.android.habitica.models.responses.UnlockResponse
 import com.habitrpg.android.habitica.models.responses.VerifyUsernameResponse
+import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
@@ -81,4 +83,8 @@ interface UserRepository : BaseRepository {
     fun getUserQuestStatus(): Flowable<UserQuestStatus>
 
     fun reroll(): Flowable<User>
+    fun retrieveTeamPlans(): Flowable<List<TeamPlan>>
+    fun getTeamPlans(): Flowable<RealmResults<TeamPlan>>
+    fun retrieveTeamPlan(teamID: String): Flowable<Group>
+    fun getTeamPlan(teamID: String): Flowable<Group>
 }

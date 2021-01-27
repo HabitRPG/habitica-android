@@ -626,6 +626,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                         pushNotificationManager.setUser(user1)
                         pushNotificationManager.addPushDeviceUsingStoredToken()
                     }
+                    .flatMap { userRepository.retrieveTeamPlans() }
                     .flatMap { contentRepository.retrieveContent(this,false) }
                     .flatMap { contentRepository.retrieveWorldState(this) }
                     .subscribe({ }, RxErrorHandler.handleEmptyError()))

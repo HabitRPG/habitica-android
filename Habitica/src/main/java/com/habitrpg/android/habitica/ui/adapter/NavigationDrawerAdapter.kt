@@ -4,11 +4,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.extensions.inflate
+import com.habitrpg.android.habitica.models.TeamPlan
 import com.habitrpg.android.habitica.models.promotions.HabiticaPromotion
+import com.habitrpg.android.habitica.ui.fragments.NavigationDrawerFragment
 import com.habitrpg.android.habitica.ui.menu.HabiticaDrawerItem
 import com.habitrpg.android.habitica.ui.views.adventureGuide.AdventureGuideMenuBanner
 import com.habitrpg.android.habitica.ui.views.promo.PromoMenuView
@@ -63,6 +66,30 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int): Recycle
     fun updateItems(newItems: List<HabiticaDrawerItem>) {
         items.clear()
         items.addAll(newItems)
+        notifyDataSetChanged()
+    }
+
+    fun setTeams(teams: List<TeamPlan>) {
+        var teamHeaderIndex = -1
+        var nextHeaderIndex = -1
+        for ((index, item) in items.withIndex()) {
+            if (teamHeaderIndex != -1 && item.isHeader) {
+                nextHeaderIndex = index
+                break
+            } else if (item.identifier == NavigationDrawerFragment.SIDEBAR_TEAMS) {
+                teamHeaderIndex = index
+            }
+        }
+        if (teamHeaderIndex != -1 && nextHeaderIndex != -1) {
+            for (x in nextHeaderIndex-1 downTo teamHeaderIndex+1) {
+                items.removeAt(x)
+            }
+            for ((index, team) in teams.withIndex()) {
+                val item = HabiticaDrawerItem(R.id.teamBoardFragment, team.id, team.summary)
+                item.bundle = bundleOf(Pair("teamID", team.id))
+                items.add(teamHeaderIndex + index + 1, item)
+            }
+        }
         notifyDataSetChanged()
     }
 

@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments.tasks
 
 import android.content.Context
-import android.content.Intent
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.util.TypedValue
@@ -31,7 +30,6 @@ import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.activities.MainActivity
-import com.habitrpg.android.habitica.ui.activities.TaskFormActivity
 import com.habitrpg.android.habitica.ui.adapter.tasks.*
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
@@ -54,8 +52,7 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
 
     var recyclerAdapter: TaskRecyclerViewAdapter? = null
     var itemAnimator = SafeDefaultItemAnimator()
-    @field:[Inject Named(AppModule.NAMED_USER_ID)]
-    lateinit var userID: String
+    var ownerID: String = ""
     @Inject
     lateinit var apiClient: ApiClient
     @Inject
@@ -74,8 +71,9 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
     internal var layoutManager: RecyclerView.LayoutManager? = null
 
     internal var classType: String? = null
-    internal var user: User? = null
     private var itemTouchCallback: ItemTouchHelper.Callback? = null
+
+    var refreshAction: ((() -> Unit) -> Unit)? = null
 
     internal val className: String
         get() = this.classType ?: ""
@@ -93,7 +91,7 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
                 TodosRecyclerViewAdapter(null, true, R.layout.todo_item_card, taskFilterHelper)
             }
             Task.TYPE_REWARD -> {
-                RewardsRecyclerViewAdapter(null, R.layout.reward_item_card, user)
+                RewardsRecyclerViewAdapter(null, R.layout.reward_item_card)
             }
             else -> null
         }
@@ -161,9 +159,9 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
         when (classType) {
             Task.TYPE_TODO -> taskFilterHelper.setActiveFilter(Task.TYPE_TODO, Task.FILTER_ACTIVE)
             Task.TYPE_DAILY -> {
-                if (user?.isValid == true && user?.preferences?.dailyDueDefaultView == true) {
+                /*if (user?.isValid == true && user?.preferences?.dailyDueDefaultView == true) {
                     taskFilterHelper.setActiveFilter(Task.TYPE_DAILY, Task.FILTER_ACTIVE)
-                }
+                }*/
             }
         }
 
@@ -256,7 +254,7 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
                     }?.subscribeWithErrorHandler {}?.let { compositeSubscription.add(it) }
             recyclerAdapter?.brokenTaskEvents?.subscribeWithErrorHandler { showBrokenChallengeDialog(it) }?.let { compositeSubscription.add(it) }
 
-            compositeSubscription.add(taskRepository.getTasks(this.classType ?: "", userID).subscribe({
+            compositeSubscription.add(taskRepository.getTasks(this.classType ?: "", ownerID).subscribe({
                 this.recyclerAdapter?.updateUnfilteredData(it)
                 this.recyclerAdapter?.filter()
             }, RxErrorHandler.handleEmptyError()))
@@ -280,7 +278,7 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
         setEmptyLabels()
 
         if (Task.TYPE_REWARD == className) {
-            compositeSubscription.add(taskRepository.getTasks(this.className, userID)
+            compositeSubscription.add(taskRepository.getTasks(this.className, ownerID)
                     .subscribe({ recyclerAdapter?.data = it }, RxErrorHandler.handleEmptyError()))
         }
     }
@@ -366,7 +364,7 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
     }
 
     private fun scoreTask(task: Task, direction: TaskDirection) {
-        compositeSubscription.add(taskRepository.taskChecked(user, task, direction == TaskDirection.UP, false) { result ->
+        compositeSubscription.add(taskRepository.taskChecked(null, task, direction == TaskDirection.UP, false) { result ->
             handleTaskResult(result, task.value.toInt())
         }.subscribeWithErrorHandler {})
     }
@@ -381,10 +379,9 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
 
     override fun onRefresh() {
         binding?.refreshLayout?.isRefreshing = true
-        compositeSubscription.add(userRepository.retrieveUser(true, true)
-                .doOnTerminate {
-                    binding?.refreshLayout?.isRefreshing = false
-                }.subscribe({ }, RxErrorHandler.handleEmptyError()))
+        refreshAction?.invoke {
+            binding?.refreshLayout?.isRefreshing = false
+        }
     }
 
     override fun onResume() {
@@ -399,35 +396,19 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
         setEmptyLabels()
 
         if (activeFilter == Task.FILTER_COMPLETED) {
-            compositeSubscription.add(taskRepository.retrieveCompletedTodos(userID).subscribe({}, RxErrorHandler.handleEmptyError()))
+            compositeSubscription.add(taskRepository.retrieveCompletedTodos(ownerID).subscribe({}, RxErrorHandler.handleEmptyError()))
         }
     }
 
     private fun openTaskForm(task: Task) {
-        if (Date().time - (TasksFragment.lastTaskFormOpen?.time ?: 0) < 2000 || !task.isValid) {
-            return
-        }
-
-        val bundle = Bundle()
-        bundle.putString(TaskFormActivity.TASK_TYPE_KEY, task.type)
-        bundle.putString(TaskFormActivity.TASK_ID_KEY, task.id)
-        bundle.putDouble(TaskFormActivity.TASK_VALUE_KEY, task.value)
-
-        val intent = Intent(activity, TaskFormActivity::class.java)
-        intent.putExtras(bundle)
-        TasksFragment.lastTaskFormOpen = Date()
-        if (isAdded) {
-            startActivityForResult(intent, TasksFragment.TASK_UPDATED_RESULT)
-        }
     }
 
     companion object {
         private const val CLASS_TYPE_KEY = "CLASS_TYPE_KEY"
 
-        fun newInstance(context: Context?, user: User?, classType: String): TaskRecyclerViewFragment {
+        fun newInstance(context: Context?, classType: String): TaskRecyclerViewFragment {
             val fragment = TaskRecyclerViewFragment()
             fragment.retainInstance = true
-            fragment.user = user
             fragment.classType = classType
             var tutorialTexts: List<String>? = null
             if (context != null) {

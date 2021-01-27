@@ -6,6 +6,7 @@ import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.inventory.QuestRageStrike
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.Group
+import com.habitrpg.android.habitica.models.tasks.TasksOrder
 import io.realm.Realm
 import io.realm.RealmList
 import java.lang.reflect.Type
@@ -107,6 +108,11 @@ class GroupSerialization : JsonDeserializer<Group>, JsonSerializer<Group> {
                 group.leaderOnlyGetGems = leaderOnly.get("getGems").asBoolean
             }
         }
+
+        if (obj.has("tasksOrder")) {
+            group.tasksOrder = context.deserialize(obj.get("tasksOrder"), TasksOrder::class.java)
+        }
+
         return group
     }
 

@@ -1136,4 +1136,5 @@
     <string name="three_months_one_time">3 month one-time subscription</string>
     <string name="six_months_one_time">6 month one-time subscription</string>
     <string name="twelve_months_one_time">12 month one-time subscription</string>
+    <string name="sidebar_teams">Teams</string>
 </resources>

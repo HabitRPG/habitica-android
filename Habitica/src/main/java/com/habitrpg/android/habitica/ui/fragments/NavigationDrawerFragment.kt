@@ -185,6 +185,13 @@ class NavigationDrawerFragment : DialogFragment() {
                    questContent = it
                 }, RxErrorHandler.handleEmptyError()))
 
+        subscriptions?.add(userRepository.getTeamPlans()
+                .distinctUntilChanged { firstTeams, secondTeams -> firstTeams == secondTeams }
+                .subscribe( {
+                    getItemWithIdentifier(SIDEBAR_TEAMS)?.isVisible = it.size != 0
+                    adapter.setTeams(it)
+                }, RxErrorHandler.handleEmptyError()))
+
         subscriptions?.add(userRepository.getUser().subscribe({
             updateUser(it)
         }, RxErrorHandler.handleEmptyError()))
@@ -313,6 +320,8 @@ class NavigationDrawerFragment : DialogFragment() {
             items.add(HabiticaDrawerItem(R.id.statsFragment, SIDEBAR_STATS, context.getString(R.string.sidebar_stats)))
             items.add(HabiticaDrawerItem(R.id.achievementsFragment, SIDEBAR_ACHIEVEMENTS, context.getString(R.string.sidebar_achievements)))
 
+            items.add(HabiticaDrawerItem(0, SIDEBAR_TEAMS, context.getString(R.string.sidebar_teams), true))
+
             items.add(HabiticaDrawerItem(0, SIDEBAR_INVENTORY, context.getString(R.string.sidebar_shops), true))
             items.add(HabiticaDrawerItem(R.id.marketFragment, SIDEBAR_SHOPS_MARKET, context.getString(R.string.market)))
             items.add(HabiticaDrawerItem(R.id.questShopFragment, SIDEBAR_SHOPS_QUEST, context.getString(R.string.questShop)))
@@ -325,11 +334,11 @@ class NavigationDrawerFragment : DialogFragment() {
             items.add(HabiticaDrawerItem(R.id.stableFragment, SIDEBAR_STABLE, context.getString(R.string.sidebar_stable)))
             items.add(HabiticaDrawerItem(R.id.avatarOverviewFragment, SIDEBAR_AVATAR, context.getString(R.string.sidebar_avatar)))
             items.add(HabiticaDrawerItem(R.id.gemPurchaseActivity, SIDEBAR_GEMS, context.getString(R.string.sidebar_gems)))
-            items.add(HabiticaDrawerItem(R.id.subscriptionPurchaseActivity, SIDEBAR_SUBSCRIPTION, context.getString(R.string.sidebar_subscription), isHeader = false))
+            items.add(HabiticaDrawerItem(R.id.subscriptionPurchaseActivity, SIDEBAR_SUBSCRIPTION, context.getString(R.string.sidebar_subscription)))
 
             items.add(HabiticaDrawerItem(0, SIDEBAR_SOCIAL, context.getString(R.string.sidebar_section_social), true))
             items.add(HabiticaDrawerItem(R.id.partyFragment, SIDEBAR_PARTY, context.getString(R.string.sidebar_party)))
-            items.add(HabiticaDrawerItem(R.id.tavernFragment, SIDEBAR_TAVERN, context.getString(R.string.sidebar_tavern), isHeader = false))
+            items.add(HabiticaDrawerItem(R.id.tavernFragment, SIDEBAR_TAVERN, context.getString(R.string.sidebar_tavern)))
             items.add(HabiticaDrawerItem(R.id.guildsOverviewFragment, SIDEBAR_GUILDS, context.getString(R.string.sidebar_guilds)))
             items.add(HabiticaDrawerItem(R.id.challengesOverviewFragment, SIDEBAR_CHALLENGES, context.getString(R.string.sidebar_challenges)))
 
@@ -355,7 +364,7 @@ class NavigationDrawerFragment : DialogFragment() {
 
     fun setSelection(transitionId: Int?, bundle: Bundle? = null, openSelection: Boolean = true, preventReselection: Boolean = true) {
         closeDrawer()
-        if (adapter.selectedItem != null && adapter.selectedItem == transitionId && preventReselection) return
+        if (adapter.selectedItem != null && adapter.selectedItem == transitionId && bundle == null && preventReselection) return
         adapter.selectedItem = transitionId
 
         if (!openSelection) {
@@ -517,6 +526,7 @@ class NavigationDrawerFragment : DialogFragment() {
         const val SIDEBAR_SKILLS = "skills"
         const val SIDEBAR_STATS = "stats"
         const val SIDEBAR_ACHIEVEMENTS = "achievements"
+        const val SIDEBAR_TEAMS = "teams"
         const val SIDEBAR_SOCIAL = "social"
         const val SIDEBAR_TAVERN = "tavern"
         const val SIDEBAR_PARTY = "party"

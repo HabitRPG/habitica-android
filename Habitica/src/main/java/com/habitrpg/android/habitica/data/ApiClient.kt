@@ -262,4 +262,6 @@ interface ApiClient {
     fun transferGems(giftedID: String, amount: Int): Flowable<Void>
     fun unlinkAllTasks(challengeID: String?, keepOption: String): Flowable<Void>
     fun blockMember(userID: String): Flowable<List<String>>
+    fun getTeamPlans(): Flowable<List<TeamPlan>>
+    fun getTeamPlanTasks(teamID: String): Flowable<TaskList>
 }

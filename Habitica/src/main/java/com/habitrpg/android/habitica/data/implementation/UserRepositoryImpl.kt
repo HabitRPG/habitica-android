@@ -10,11 +10,13 @@ import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.Achievement
 import com.habitrpg.android.habitica.models.QuestAchievement
 import com.habitrpg.android.habitica.models.Skill
+import com.habitrpg.android.habitica.models.TeamPlan
 import com.habitrpg.android.habitica.models.inventory.Customization
 import com.habitrpg.android.habitica.models.inventory.CustomizationSet
 import com.habitrpg.android.habitica.models.responses.SkillResponse
 import com.habitrpg.android.habitica.models.responses.UnlockResponse
 import com.habitrpg.android.habitica.models.responses.VerifyUsernameResponse
+import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
@@ -338,6 +340,38 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
 
     override fun getQuestAchievements(): Flowable<RealmResults<QuestAchievement>> {
         return localRepository.getQuestAchievements(userID)
+    }
+
+    override fun retrieveTeamPlans(): Flowable<List<TeamPlan>> {
+        return apiClient.getTeamPlans().doOnNext { teams ->
+            teams.forEach { it.userID = userID }
+            localRepository.save(teams)
+        }
+    }
+
+    override fun getTeamPlans(): Flowable<RealmResults<TeamPlan>> {
+        return localRepository.getTeamPlans(userID)
+    }
+
+    override fun retrieveTeamPlan(teamID: String): Flowable<Group> {
+        return Flowable.zip(apiClient.getGroup(teamID), apiClient.getTeamPlanTasks(teamID),
+                { team, tasks ->
+                    team.tasks = tasks
+                    team
+                })
+                .doOnNext { localRepository.save(it) }
+                .doOnNext { team ->
+                    val id = team.id
+                    val tasksOrder = team.tasksOrder
+                    val tasks = team.tasks
+                    if (id.isNotBlank() && tasksOrder != null && tasks != null) {
+                        taskRepository.saveTasks(id, tasksOrder, tasks)
+                    }
+                }
+    }
+
+    override fun getTeamPlan(teamID: String): Flowable<Group> {
+        return localRepository.getTeamPlan(teamID)
     }
 
     private fun mergeUser(oldUser: User?, newUser: User): User {
