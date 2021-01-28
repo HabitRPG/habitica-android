@@ -238,12 +238,40 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
         if (motionEvent != null) {
             if (motionEvent.action != MotionEvent.ACTION_UP) return true
             if (motionEvent.y <= mainTaskWrapper.height + 5.dpToPx(context)) {
-                if (motionEvent.x <= 60.dpToPx(context)) {
-                    onLeftActionTouched()
-                    return true
-                } else if ((itemView.width - motionEvent.x <= 60.dpToPx(context))) {
-                    onRightActionTouched()
-                    return true
+                if ((this.task?.checklist?.isNotEmpty() != true)) {
+                    if (motionEvent.x <= 72.dpToPx(context)) {
+                        onLeftActionTouched()
+                        return true
+                    } else if ((itemView.width - motionEvent.x <= 72.dpToPx(context))) {
+                        onRightActionTouched()
+                        return true
+                    }
+                } else {
+                    val checkboxHolder: ViewGroup = itemView.findViewById(R.id.checkBoxHolder)
+                    if (mainTaskWrapper.height == checkboxHolder.height) {
+                        if (motionEvent.x <= 72.dpToPx(context)) {
+                            onLeftActionTouched()
+                            return true
+                        } else if ((itemView.width - motionEvent.x <= 72.dpToPx(context))) {
+                            onRightActionTouched()
+                            return true
+                        }
+                    }  else {
+                        if (motionEvent.y <= (checkboxHolder.height + 5.dpToPx(context))) {
+                            if (motionEvent.x <= 72.dpToPx(context)) {
+                                onLeftActionTouched()
+                                return true
+                            } else if ((itemView.width - motionEvent.x <= 72.dpToPx(context))) {
+                                onRightActionTouched()
+                                return true
+                            }
+                        } else if ((motionEvent.y > (checkboxHolder.height + 5.dpToPx(context)))) {
+                            if (motionEvent.x <= 72.dpToPx(context)) {
+                                onLeftActionTouched()
+                                return true
+                            }
+                        }
+                    }
                 }
             }
         }
