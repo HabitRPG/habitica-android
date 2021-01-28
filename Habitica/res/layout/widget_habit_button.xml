@@ -27,6 +27,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/selection_highlight_brand"
+                android:textSize="24sp"
                 />
         </FrameLayout>
         <FrameLayout
@@ -45,6 +46,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/selection_highlight_brand"
+                android:textSize="24sp"
                 />
         </FrameLayout>
     </LinearLayout>

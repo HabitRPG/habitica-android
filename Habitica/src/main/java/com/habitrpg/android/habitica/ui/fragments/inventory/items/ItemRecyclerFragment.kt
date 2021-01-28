@@ -10,6 +10,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
+import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentItemsBinding
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
@@ -31,6 +32,8 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
 
     @Inject
     lateinit var inventoryRepository: InventoryRepository
+    @Inject
+    lateinit var socialRepository: SocialRepository
     @Inject
     lateinit var userRepository: UserRepository
     var adapter: ItemRecyclerAdapter? = null
@@ -93,7 +96,14 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
 
                 compositeSubscription.add(adapter.getQuestInvitationFlowable()
                         .flatMap { quest -> inventoryRepository.inviteToQuest(quest) }
-                        .subscribe({ MainNavigationController.navigate(R.id.partyFragment) }, RxErrorHandler.handleEmptyError()))
+                        .flatMap { socialRepository.retrieveGroup("party") }
+                        .subscribe({
+                            if (isModal) {
+                                dismiss()
+                            } else {
+                                MainNavigationController.navigate(R.id.partyFragment)
+                            }
+                        }, RxErrorHandler.handleEmptyError()))
                 compositeSubscription.add(adapter.getOpenMysteryItemFlowable()
                         .flatMap { inventoryRepository.openMysteryItem(user) }
                         .doOnNext {

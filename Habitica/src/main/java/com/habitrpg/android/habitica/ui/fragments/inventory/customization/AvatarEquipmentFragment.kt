@@ -40,6 +40,7 @@ class AvatarEquipmentFragment : BaseMainFragment<FragmentRecyclerviewBinding>() 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
+        showsBackButton = true
         compositeSubscription.add(adapter.getSelectCustomizationEvents()
                 .flatMap { equipment ->
                     val key = (if (equipment.key?.isNotBlank() != true) activeEquipment else equipment.key) ?: ""
@@ -53,12 +54,7 @@ class AvatarEquipmentFragment : BaseMainFragment<FragmentRecyclerviewBinding>() 
                 .subscribe({ }, RxErrorHandler.handleEmptyError()))
         compositeSubscription.add(adapter.getUnlockSetEvents()
                 .flatMap { set ->
-                    val user = this.user
-                    if (user != null) {
-                        userRepository.unlockPath(user, set)
-                    } else {
-                        Flowable.empty()
-                    }
+                    userRepository.unlockPath(set)
                 }
                 .subscribe({ }, RxErrorHandler.handleEmptyError()))
         return super.onCreateView(inflater, container, savedInstanceState)

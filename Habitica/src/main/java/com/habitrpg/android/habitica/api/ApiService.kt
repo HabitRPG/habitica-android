@@ -392,4 +392,12 @@ interface ApiService {
 
     @POST("user/reroll")
     fun reroll(): Flowable<HabitResponse<User>>
+
+    // Team Plans
+
+    @GET("group-plans")
+    fun getTeamPlans(): Flowable<HabitResponse<List<TeamPlan>>>
+
+    @GET("tasks/group/{groupID}")
+    fun getTeamPlanTasks(@Path("groupID") groupId: String): Flowable<HabitResponse<TaskList>>
 }

@@ -913,7 +913,7 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="remaining_1month">1 Monat verbleibend</string>
     <string name="ago_weeks">vor %d Wochen</string>
     <string name="ago_1week">vor einer Woche</string>
-    <string name="ago_months">vor %d Monat(en)</string>
+    <string name="ago_months">vor %d Monaten</string>
     <string name="ago_1month">vor einem Monat</string>
     <string name="gems_gift_description">Möchtest Du jemandem eine glänzende Edelsteinbeute zuteil werden lassen\?</string>
     <string name="empty_description_todos_filtered">Mit Deinen aktuellen Filtern sind keine To-Dos sichtbar.</string>

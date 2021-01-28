@@ -36,7 +36,7 @@
         android:id="@android:id/summary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@android:id/title"
+        android:layout_alignStart="@android:id/title"
         android:layout_below="@android:id/title"
         android:maxLines="4"
         android:textAppearance="?android:attr/textAppearanceSmall"

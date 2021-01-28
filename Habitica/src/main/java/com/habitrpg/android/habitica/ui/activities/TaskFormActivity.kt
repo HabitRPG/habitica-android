@@ -221,7 +221,9 @@ class TaskFormActivity : BaseActivity() {
 
     override fun onStart() {
         super.onStart()
-        binding.textEditText.requestFocus()
+        if (isCreating) {
+            binding.textEditText.requestFocus()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

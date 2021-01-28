@@ -114,19 +114,20 @@
                     android:paddingEnd="@dimen/spacing_large"
                     android:paddingTop="12dp"
                     android:paddingBottom="12dp"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
                     <Button
                         android:id="@+id/invite_button"
                         android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:layout_height="@dimen/button_height"
+                        android:layout_height="wrap_content"
                         android:text="@string/invite_to_guild"
                         style="@style/HabiticaButton.Purple" />
                     <Button
                         android:id="@+id/join_button"
                         android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:layout_height="@dimen/button_height"
+                        android:layout_height="wrap_content"
                         android:text="@string/join_guild"
                         style="@style/HabiticaButton.Green"
                         android:layout_marginStart="@dimen/spacing_large"/>

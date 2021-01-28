@@ -113,10 +113,10 @@ class AvatarStatsWidgetProvider : BaseWidgetProvider() {
 
             avatarView.setAvatar(user)
             val finalRemoteViews = remoteViews
-            avatarView.onAvatarImageReady({ bitmap ->
+            avatarView.onAvatarImageReady { bitmap ->
                 finalRemoteViews.setImageViewBitmap(R.id.avatar_view, bitmap)
                 appWidgetManager.partiallyUpdateAppWidget(allWidgetIds, finalRemoteViews)
-            })
+            }
 
             //If user click on life and xp: open the app
             val openAppIntent = Intent(context.applicationContext, MainActivity::class.java)

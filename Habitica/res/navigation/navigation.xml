@@ -151,11 +151,6 @@
             android:defaultValue="true" />
     </activity>
     <activity
-        android:id="@+id/giftOneGetOneInfoActivity"
-        android:name="com.habitrpg.android.habitica.ui.activities.GiftOneGetOneInfoActivity"
-        android:label="@string/gift_one_get_one" >
-    </activity>
-    <activity
         android:id="@+id/gemPurchaseActivity"
         android:name="com.habitrpg.android.habitica.ui.activities.GemPurchaseActivity"
         android:label="@string/gem_purchase_toolbartitle">
@@ -435,4 +430,12 @@
         android:id="@+id/promoInfoFragment"
         android:name="com.habitrpg.android.habitica.ui.fragments.PromoInfoFragment"
         android:label="" />
+    <fragment
+        android:id="@+id/teamBoardFragment"
+        android:name="com.habitrpg.android.habitica.ui.fragments.tasks.TeamBoardFragment"
+        android:label="TeamBoardFragment" >
+        <argument
+            android:name="teamID"
+            app:argType="string" />
+    </fragment>
 </navigation>

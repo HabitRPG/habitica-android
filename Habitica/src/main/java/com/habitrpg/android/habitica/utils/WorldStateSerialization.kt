@@ -51,6 +51,7 @@ class WorldStateSerialization: JsonDeserializer<WorldState> {
                 val event = json.asJsonObject?.getAsJsonObject("currentEvent")
                 if (event != null) {
                     state.currentEventKey = event.getAsString("event")
+                    state.currentEventPromo = if (event.has("promo")) event.getAsString("promo") else null
                     state.currentEventStartDate = context?.deserialize(event.get("start"), Date::class.java)
                     state.currentEventEndDate = context?.deserialize(event.get("end"), Date::class.java)
                 }

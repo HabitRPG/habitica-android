@@ -42,12 +42,12 @@ class AvatarCustomizationFragment : BaseMainFragment<FragmentRecyclerviewBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-
+        showsBackButton = true
         compositeSubscription.add(adapter.getSelectCustomizationEvents()
                 .flatMap { customization ->
                     if (customization.type == "background") {
                         userRepository.unlockPath(user, customization)
-                                .flatMap { userRepository.retrieveUser(false) }
+                                .flatMap { userRepository.retrieveUser(false, true, true) }
                     } else {
                         userRepository.useCustomization(user, customization.type ?: "", customization.category, customization.identifier ?: "")
                     }
@@ -55,24 +55,14 @@ class AvatarCustomizationFragment : BaseMainFragment<FragmentRecyclerviewBinding
                 .subscribe({ }, RxErrorHandler.handleEmptyError()))
         compositeSubscription.add(adapter.getUnlockCustomizationEvents()
                 .flatMap { customization ->
-                    val user = this.user
-                    if (user != null) {
                     userRepository.unlockPath(user, customization)
-                    } else {
-                        Flowable.empty()
-                    }
                 }
                 .flatMap { userRepository.retrieveUser(withTasks = false, forced = true) }
                 .flatMap { inventoryRepository.retrieveInAppRewards() }
                 .subscribe({ }, RxErrorHandler.handleEmptyError()))
         compositeSubscription.add(adapter.getUnlockSetEvents()
                 .flatMap { set ->
-                    val user = this.user
-                    if (user != null) {
-                        userRepository.unlockPath(user, set)
-                    } else {
-                        Flowable.empty()
-                    }
+                    userRepository.unlockPath(set)
                  }
                 .flatMap { userRepository.retrieveUser(withTasks = false, forced = true) }
                 .flatMap { inventoryRepository.retrieveInAppRewards() }
@@ -91,6 +81,7 @@ class AvatarCustomizationFragment : BaseMainFragment<FragmentRecyclerviewBinding
                 category = args.category
             }
         }
+        adapter.customizationType = type
 
         val layoutManager = GridLayoutManager(activity, 4)
         layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
@@ -162,7 +153,7 @@ class AvatarCustomizationFragment : BaseMainFragment<FragmentRecyclerviewBinding
         if (this.type == null || user.preferences == null) {
             return
         }
-        val prefs = this.user?.preferences
+        val prefs = user.preferences
         val activeCustomization = when (this.type) {
             "skin" -> prefs?.skin
             "shirt" -> prefs?.shirt

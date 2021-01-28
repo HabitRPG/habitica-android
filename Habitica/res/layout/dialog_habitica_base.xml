@@ -12,7 +12,7 @@
 <LinearLayout
     android:id="@+id/dialog_wrapper"
     android:orientation="vertical"
-    android:layout_width="320dp"
+    android:layout_width="360dp"
     android:layout_height="wrap_content"
     tools:background="@android:color/black"
     android:minWidth="300dp"
@@ -24,7 +24,7 @@
     <LinearLayout
         android:id="@+id/dialog_container"
         android:minWidth="300dp"
-        android:layout_width="320dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:background="@drawable/alert_dialog_background"

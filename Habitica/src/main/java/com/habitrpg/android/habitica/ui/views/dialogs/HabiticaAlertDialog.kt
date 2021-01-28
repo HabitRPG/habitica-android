@@ -13,8 +13,14 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.extensions.layoutInflater
+import com.habitrpg.android.habitica.helpers.MainNavigationController
+import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengesOverviewFragmentDirections
 import com.habitrpg.android.habitica.ui.views.login.LockableScrollView
 import com.plattysoft.leonids.ParticleSystem
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.lang.ref.WeakReference
 
 
@@ -27,6 +33,7 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
     }
     var isCelebratory: Boolean = false
     private val view: RelativeLayout = LayoutInflater.from(context).inflate(R.layout.dialog_habitica_base, null) as RelativeLayout
+    private val dialogWrapper: LinearLayout
     private val dialogContainer: LinearLayout
     private var titleTextView: TextView
     private var messageTextView: TextView
@@ -54,8 +61,17 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
         updateButtonLayout()
     }
 
+    var dialogWidth = 320
+    set(value) {
+        field = value
+        val layoutParams = dialogWrapper.layoutParams
+        layoutParams.width = value
+        dialogWrapper.layoutParams = layoutParams
+    }
+
     init {
         setView(view)
+        dialogWrapper = view.findViewById(R.id.dialog_wrapper)
         dialogContainer = view.findViewById(R.id.dialog_container)
         titleTextView = view.findViewById(R.id.titleTextView)
         messageTextView = view.findViewById(R.id.messageTextView)
@@ -269,8 +285,11 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
                 dialogQueue.removeAt(0)
             }
             if (dialogQueue.size > 0) {
-                if ((dialogQueue[0].context as? Activity)?.isFinishing == false) {
-                    dialogQueue[0].show()
+                if ((dialogQueue[0].context as? Activity)?.isFinishing != true) {
+                    GlobalScope.launch(context = Dispatchers.Main) {
+                        delay(500L)
+                        dialogQueue[0].show()
+                    }
                 }
             }
         }

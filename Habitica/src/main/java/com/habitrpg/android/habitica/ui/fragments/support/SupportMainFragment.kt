@@ -63,7 +63,7 @@ class SupportMainFragment : BaseMainFragment<FragmentSupportMainBinding>() {
         }.subscribe())
 
         binding?.resetTutorialButton?.setOnClickListener {
-            userRepository.resetTutorial(user)
+            userRepository.resetTutorial()
         }
     }
 

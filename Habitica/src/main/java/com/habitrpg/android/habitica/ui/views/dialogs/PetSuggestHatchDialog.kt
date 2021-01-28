@@ -4,12 +4,15 @@ import android.content.Context
 import android.graphics.drawable.BitmapDrawable
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.DialogPetSuggestHatchBinding
 import com.habitrpg.android.habitica.extensions.dpToPx
+import com.habitrpg.android.habitica.extensions.getThemeColor
+import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.Animal
 import com.habitrpg.android.habitica.models.inventory.Egg
@@ -98,29 +101,22 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
 
             var hatchPrice = 0
             if (!hasEgg) {
-                hatchPrice = getItemPrice(pet, egg, hasUnlockedEgg)
+                hatchPrice += getItemPrice(pet, egg, hasUnlockedEgg)
             }
 
             if (!hasPotion) {
-                hatchPrice = getItemPrice(pet, potion, hasUnlockedPotion)
+                hatchPrice += getItemPrice(pet, potion, hasUnlockedPotion)
 
             }
 
             addButton(R.string.close, true)
 
             if (hatchPrice > 0) {
-                val linearLayout = LinearLayout(context)
-                val label = TextView(context)
-                label.setText(R.string.hatch)
-                label.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary))
-                linearLayout.addView(label)
-                val layoutParams: LinearLayout.LayoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT)
-                layoutParams.setMargins(0, 0, 4.dpToPx(context), 0)
-                label.layoutParams = layoutParams
-                val priceView = CurrencyView(context, "gems", true)
-                priceView.value = hatchPrice.toDouble()
-                linearLayout.addView(priceView)
+                val linearLayout = layoutInflater.inflate(R.layout.dialog_hatch_pet_button, null) as? LinearLayout ?: return
+
+                val priceView = linearLayout.findViewById<CurrencyView>(R.id.currencyView)
+                priceView?.value = hatchPrice.toDouble()
+                priceView?.currency = "gems"
                 addButton(linearLayout, true) { _, _ ->
                     val activity = (getActivity() as? MainActivity) ?: return@addButton
                     val thisPotion = potion ?: return@addButton
@@ -132,7 +128,9 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
                     if (!hasPotion) {
                         observable = observable.flatMap { activity.inventoryRepository.purchaseItem("hatchingPotions", thisPotion.key, 1) }
                     }
-                    observable.subscribe({
+                    observable
+                            .flatMap { activity.userRepository.retrieveUser(true, forced = true) }
+                            .subscribe({
                         (getActivity() as? MainActivity)?.hatchPet(thisPotion, thisEgg)
                     }, RxErrorHandler.handleEmptyError())
                 }

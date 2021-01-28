@@ -102,6 +102,7 @@ abstract class HabiticaBaseApplication : Application() {
         val builder = RealmConfiguration.Builder()
                 .schemaVersion(1)
                 .deleteRealmIfMigrationNeeded()
+                .allowWritesOnUiThread(true)
         try {
             Realm.setDefaultConfiguration(builder.build())
         } catch (ignored: UnsatisfiedLinkError) {

@@ -37,21 +37,23 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
                 .filter { it.isLoaded })
 }
 
-    override fun saveTasks(userId: String, tasksOrder: TasksOrder, tasks: TaskList) {
+    override fun saveTasks(ownerID: String, tasksOrder: TasksOrder, tasks: TaskList) {
         val sortedTasks = ArrayList<Task>()
         sortedTasks.addAll(sortTasks(tasks.tasks, tasksOrder.habits))
         sortedTasks.addAll(sortTasks(tasks.tasks, tasksOrder.dailys))
         sortedTasks.addAll(sortTasks(tasks.tasks, tasksOrder.todos))
         sortedTasks.addAll(sortTasks(tasks.tasks, tasksOrder.rewards))
-        removeOldTasks(userId, sortedTasks)
+        removeOldTasks(ownerID, sortedTasks)
 
         val allChecklistItems = ArrayList<ChecklistItem>()
-        sortedTasks.forEach { it.checklist?.let { it1 -> allChecklistItems.addAll(it1) } }
-        removeOldChecklists(allChecklistItems)
-
         val allReminders = ArrayList<RemindersItem>()
-        sortedTasks.forEach { it.reminders?.let { it1 -> allReminders.addAll(it1) } }
+        sortedTasks.forEach {
+            if (it.userId.isBlank()) it.userId = ownerID
+            it.checklist?.let { it1 -> allChecklistItems.addAll(it1) }
+            it.reminders?.let { it1 -> allReminders.addAll(it1) }
+        }
         removeOldReminders(allReminders)
+        removeOldChecklists(allChecklistItems)
 
         executeTransaction { realm1 -> realm1.insertOrUpdate(sortedTasks) }
     }

@@ -4,7 +4,6 @@ import android.graphics.Paint
 import android.graphics.PorterDuff
 import android.os.Build
 import android.os.Bundle
-import android.text.Html
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
@@ -15,6 +14,7 @@ import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.ActivityAdventureGuideBinding
 import com.habitrpg.android.habitica.databinding.AdventureGuideItemBinding
+import com.habitrpg.android.habitica.extensions.fromHtml
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
@@ -65,11 +65,7 @@ class AdventureGuideActivity : BaseActivity() {
         )
 
         val descriptionText = getString(R.string.adventure_guide_description)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            binding.descriptionView.setText(Html.fromHtml(descriptionText,  Html.FROM_HTML_MODE_LEGACY), TextView.BufferType.SPANNABLE)
-        } else {
-            binding.descriptionView.setText(Html.fromHtml(descriptionText), TextView.BufferType.SPANNABLE)
-        }
+        binding.descriptionView.setText(descriptionText.fromHtml(), TextView.BufferType.SPANNABLE)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

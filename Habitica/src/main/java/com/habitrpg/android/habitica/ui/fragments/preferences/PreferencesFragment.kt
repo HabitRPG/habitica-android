@@ -6,6 +6,7 @@ import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.preference.CheckBoxPreference
 import androidx.preference.ListPreference
@@ -54,11 +55,15 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
         super.onCreate(savedInstanceState)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        listView.itemAnimator = null
+    }
+
     override fun setupPreferences() {
         timePreference = findPreference("reminder_time") as? TimePreference
         val useReminder = preferenceManager.sharedPreferences.getBoolean("use_reminder", false)
         timePreference?.isEnabled = useReminder
-
 
         pushNotificationsPreference = findPreference("pushNotifications") as? PreferenceScreen
         val usePushNotifications = preferenceManager.sharedPreferences.getBoolean("usePushNotifications", true)
@@ -69,6 +74,9 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
         emailNotificationsPreference?.isEnabled = useEmailNotifications
 
         classSelectionPreference = findPreference("choose_class")
+
+        val weekdayPreference = findPreference("FirstDayOfTheWeek") as? ListPreference
+        weekdayPreference?.summary = weekdayPreference?.entry
 
         serverUrlPreference = findPreference("server_url") as? ListPreference
         serverUrlPreference?.isVisible = false
@@ -130,6 +138,10 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                 event.type = HabiticaSnackbar.SnackbarDisplayType.NORMAL
                 EventBus.getDefault().post(event)
                 contentRepository.retrieveContent(context,true).subscribe({
+                    val completedEvent = ShowSnackbarEvent()
+                    completedEvent.text = context?.getString(R.string.reloaded_content)
+                    completedEvent.type = HabiticaSnackbar.SnackbarDisplayType.SUCCESS
+                    EventBus.getDefault().post(completedEvent)
                 }, RxErrorHandler.handleEmptyError())
             }
             "fixCharacterValues" -> {
@@ -190,7 +202,7 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                     return
                 }
 
-                userRepository.updateLanguage(user, languageHelper.languageCode ?: "en")
+                userRepository.updateLanguage(languageHelper.languageCode ?: "en")
                         .flatMap { contentRepository.retrieveContent(context,true) }
                         .subscribe({ }, RxErrorHandler.handleEmptyError())
 
@@ -201,7 +213,7 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
             "audioTheme" -> {
                 val newAudioTheme = sharedPreferences.getString(key, "off")
                 if (newAudioTheme != null) {
-                    compositeSubscription.add(userRepository.updateUser(user, "preferences.sound", newAudioTheme)
+                    compositeSubscription.add(userRepository.updateUser("preferences.sound", newAudioTheme)
                             .subscribe({ }, RxErrorHandler.handleEmptyError()))
                     soundManager.soundTheme = newAudioTheme
                     soundManager.preloadAllFiles()
@@ -215,7 +227,7 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                 val activity = activity as? PrefsActivity ?: return
                 activity.reload()
             }
-            "dailyDueDefaultView" -> userRepository.updateUser(user, "preferences.dailyDueDefaultView", sharedPreferences.getBoolean(key, false))
+            "dailyDueDefaultView" -> userRepository.updateUser("preferences.dailyDueDefaultView", sharedPreferences.getBoolean(key, false))
                     .subscribe({ }, RxErrorHandler.handleEmptyError())
             "server_url" -> {
                 apiClient.updateServerUrl(sharedPreferences.getString(key, ""))
@@ -225,10 +237,14 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                 val preference = findPreference(key) as ListPreference
                 preference.summary = preference.entry
             }
+            "FirstDayOfTheWeek" -> {
+                val preference = findPreference(key) as ListPreference
+                preference.summary = preference.entry
+            }
             "disablePMs" -> {
                 val isDisabled = sharedPreferences.getBoolean("disablePMs", false)
                 if (user?.inbox?.optOut != isDisabled) {
-                    compositeSubscription.add(userRepository.updateUser(user, "inbox.optOut", isDisabled)
+                    compositeSubscription.add(userRepository.updateUser("inbox.optOut", isDisabled)
                             .subscribe({ }, RxErrorHandler.handleEmptyError()))
                 }
             }

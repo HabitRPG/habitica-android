@@ -71,6 +71,8 @@ class ClassSelectionActivity : BaseActivity(), Consumer<User> {
         isInitialSelection = args.isInitialSelection
         currentClass = args.className
 
+        newClass = currentClass ?: "healer"
+
         compositeSubscription.add(userRepository.getUser().firstElement().subscribe({
             it.preferences?.let {preferences ->
                 val unmanagedPrefs = userRepository.getUnmanagedCopy(preferences)
@@ -89,11 +91,6 @@ class ClassSelectionActivity : BaseActivity(), Consumer<User> {
         binding.rogueWrapper.setOnClickListener { newClass = "rogue" }
         binding.warriorWrapper.setOnClickListener { newClass = "warrior" }
         binding.selectedButton.setOnClickListener { displayConfirmationDialogForClass() }
-    }
-
-    override fun onStart() {
-        super.onStart()
-        newClass = currentClass ?: "healer"
     }
 
 

@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="?attr/actionBarSize"
-            android:theme="@style/Toolbar"
+            android:theme="@style/Toolbar.Modern"
             app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"/>
 
@@ -38,7 +38,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?colorPrimaryOffset"
             android:orientation="vertical"
             android:paddingStart="@dimen/activity_horizontal_margin"
             android:paddingEnd="@dimen/activity_horizontal_margin"
@@ -48,7 +47,6 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColorHint="?textColorPrimaryDark"
                 app:hintTextAppearance="@style/TextAppearance.AppCompat"
                 android:id="@+id/create_challenge_title_input_layout">
 
@@ -58,9 +56,6 @@
                     android:layout_gravity="fill_horizontal"
                     android:hint="@string/new_challenge_title"
                     android:id="@+id/create_challenge_title"
-                    android:textColor="@color/white"
-                    android:textColorHighlight="?textColorPrimaryDark"
-                    android:textColorHint="?textColorPrimaryDark"
 
                     tools:text="Get in shape"
                     android:inputType="text" />
@@ -69,22 +64,18 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColorHint="?textColorPrimaryDark"
-
-                app:hintTextAppearance="@style/TextAppearance.AppCompat">
+                app:hintTextAppearance="@style/TextAppearance.AppCompat"
+                android:layout_marginBottom="12dp"
+                android:layout_marginTop="12dp">
 
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/description_optional"
                     android:inputType="textMultiLine"
-
                     android:id="@+id/create_challenge_description"
                     android:maxLines="5"
-                    android:minLines="3"
-                    android:textColor="@color/white"
-                    android:textColorHighlight="?textColorPrimaryDark"
-                    android:textColorHint="?textColorPrimaryDark" />
+                    android:minLines="3" />
             </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
@@ -107,7 +98,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="23dp"
                 android:text="@string/gem_reward"
-                android:textColor="#cc000000" />
+                android:textColor="@color/text_primary" />
 
             <TextView
                 style="@style/Caption3"
@@ -116,7 +107,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="23dp"
                 android:text="@string/gem_reward"
-                android:textColor="#f74e52"
+                android:textColor="@color/text_red"
                 android:visibility="gone"
                 tools:visibility="visible"/>
 
@@ -125,13 +116,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="28dp">
 
-                <Button
+                <ImageButton
                     android:id="@+id/challenge_add_gem_btn"
                     style="@style/Body1_Button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:drawableStart="@drawable/challenge_gem_add_button"/>
+                    android:tint="@color/text_brand_neon"
+                    android:src="@drawable/challenge_gem_add_button"/>
 
                 <ImageView
                     android:id="@+id/gem_icon_view"
@@ -146,18 +138,19 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:inputType="number"
-                    android:textColor="#8a000000"
+                    android:textColor="@color/text_secondary"
                     android:text="0"
                     android:id="@+id/create_challenge_prize"
                     android:textAlignment="center" />
 
-                <Button
+                <ImageButton
                     android:id="@+id/challenge_remove_gem_btn"
                     style="@style/Body1_Button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:drawableEnd="@drawable/challenge_gem_remove_button"/>
+                    android:tint="@color/text_brand_neon"
+                    android:src="@drawable/challenge_gem_remove_button"/>
 
             </LinearLayout>
 
@@ -167,14 +160,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="26dp"
                 android:text="@string/location"
-                android:textColor="#cc000000" />
+                android:textColor="@color/text_primary" />
 
             <Spinner
                 android:id="@+id/challenge_location_spinner"
                 style="@android:style/Widget.Material.Spinner.Underlined"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#8a000000"
+                android:textColor="@color/text_secondary"
                 android:layout_marginTop="17dp" />
 
             <TextView
@@ -183,15 +176,14 @@
                 android:layout_height="20dp"
                 android:layout_marginTop="39dp"
                 android:drawablePadding="12dp"
-                android:drawableEnd="@drawable/ic_info_outline_black_24dp"
                 android:gravity="center"
                 android:text="@string/short_name"
-                android:textColor="#cc000000" />
+                android:textColor="@color/text_primary" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
+                android:layout_marginTop="10dp"
                 android:id="@+id/create_challenge_tag_input_layout"
                 app:hintTextAppearance="@style/TextAppearance.AppCompat">
 
@@ -203,7 +195,7 @@
                     android:hint="@string/identify_your_challenge_with_a_tag"
                     android:maxLines="1"
                     android:textColor="@color/text_secondary"
-                    android:textColorHint="#61000000" />
+                    android:textColorHint="@color/text_ternary" />
             </com.google.android.material.textfield.TextInputLayout>
 
             </LinearLayout>
@@ -211,6 +203,7 @@
                 style="@style/Subheader2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:text="@string/tasks" />
 
             <TextView
@@ -219,20 +212,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="23dp"
-                android:textColor="#f74e52"
+                android:textColor="@color/text_red"
                 android:text="@string/challenge_create_error_no_tasks"
                 android:visibility="gone"
                 tools:visibility="visible"/>
-
-
-
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:nestedScrollingEnabled="false"
+            android:background="@color/content_background"
             android:id="@+id/create_challenge_task_list">
 
         </androidx.recyclerview.widget.RecyclerView>

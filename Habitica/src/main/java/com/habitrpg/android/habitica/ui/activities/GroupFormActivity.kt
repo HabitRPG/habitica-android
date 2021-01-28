@@ -64,15 +64,6 @@ class GroupFormActivity : BaseActivity() {
         binding.saveButton.setOnClickListener {
             finishActivitySuccessfuly()
         }
-
-        autocompleteAdapter = AutocompleteAdapter(this)
-        val tokenizer = AutocompleteTokenizer(listOf(':'))
-        binding.groupNameEditText.setAdapter(autocompleteAdapter)
-        binding.groupNameEditText.threshold = 2
-        binding.groupNameEditText.setTokenizer(tokenizer)
-        binding.groupDescriptionEditText.setAdapter(autocompleteAdapter)
-        binding.groupDescriptionEditText.setTokenizer(tokenizer)
-        binding.groupDescriptionEditText.threshold = 2
     }
 
 
@@ -108,7 +99,7 @@ class GroupFormActivity : BaseActivity() {
         val bundle = Bundle()
         bundle.putString("name", name)
         bundle.putString("groupType", groupType)
-        bundle.putString("description", MarkdownParser.parseCompiled(binding.groupDescriptionEditText.text))
+        bundle.putString("description", MarkdownParser.parseCompiled(binding.groupDescriptionEditText.text.toString()))
         bundle.putBoolean("leaderOnlyChallenges", binding.leaderCreateChallengeSwitch.isChecked)
         bundle.putString("leader", this.groupLeader)
         resultIntent.putExtras(bundle)

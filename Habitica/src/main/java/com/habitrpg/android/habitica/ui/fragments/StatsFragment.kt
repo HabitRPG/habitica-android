@@ -89,11 +89,11 @@ class StatsFragment: BaseMainFragment<FragmentStatsBinding>() {
             binding?.distributeTaskHelpButton?.setImageBitmap(HabiticaIconsHelper.imageOfInfoIcon(color))
         }
 
-        compositeSubscription.add(userRepository.getUser(userId).subscribe({
+        compositeSubscription.add(userRepository.getUser().subscribe({ user ->
             canAllocatePoints = user?.stats?.lvl ?: 0 >= 10 && user?.stats?.points ?: 0 > 0
-            binding?.unlockAtLevel?.visibility = if (it?.stats?.lvl ?: 0 < 10) View.VISIBLE else View.GONE
-            updateStats(it)
-            updateAttributePoints(it)
+            binding?.unlockAtLevel?.visibility = if (user.stats?.lvl ?: 0 < 10) View.VISIBLE else View.GONE
+            updateStats(user)
+            updateAttributePoints(user)
         }, RxErrorHandler.handleEmptyError()))
 
         binding?.distributeEvenlyButton?.setOnCheckedChangeListener { _, isChecked ->
@@ -113,7 +113,7 @@ class StatsFragment: BaseMainFragment<FragmentStatsBinding>() {
         }
 
         binding?.automaticAllocationSwitch?.setOnCheckedChangeListener{ _, isChecked ->
-            userRepository.updateUser(user, "preferences.automaticAllocation", isChecked).subscribe({}, RxErrorHandler.handleEmptyError())
+            userRepository.updateUser("preferences.automaticAllocation", isChecked).subscribe({}, RxErrorHandler.handleEmptyError())
         }
 
         binding?.strengthStatsView?.allocateAction = { allocatePoint(Stats.STRENGTH) }
@@ -140,7 +140,7 @@ class StatsFragment: BaseMainFragment<FragmentStatsBinding>() {
     }
 
     private fun changeAutoAllocationMode(allocationMode: String) {
-        compositeSubscription.add(userRepository.updateUser(user, "preferences.allocationMode", allocationMode).subscribe({}, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(userRepository.updateUser("preferences.allocationMode", allocationMode).subscribe({}, RxErrorHandler.handleEmptyError()))
         binding?.distributeEvenlyButton?.isChecked = allocationMode == Stats.AUTO_ALLOCATE_FLAT
         binding?.distributeClassButton?.isChecked = allocationMode == Stats.AUTO_ALLOCATE_CLASSBASED
         binding?.distributeTaskButton?.isChecked = allocationMode == Stats.AUTO_ALLOCATE_TASKBASED
@@ -155,7 +155,7 @@ class StatsFragment: BaseMainFragment<FragmentStatsBinding>() {
     }
 
     private fun allocatePoint(stat: String) {
-        compositeSubscription.add(userRepository.allocatePoint(user, stat).subscribe({ }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(userRepository.allocatePoint(stat).subscribe({ }, RxErrorHandler.handleEmptyError()))
     }
 
     private fun updateAttributePoints(user: User) {
@@ -203,8 +203,8 @@ class StatsFragment: BaseMainFragment<FragmentStatsBinding>() {
         component.inject(this)
     }
 
-    private fun updateStats(currentUser: User) {
-        val levelStat = min((currentUser.stats?.lvl ?: 0) / 2.0f, 50f).toInt()
+    private fun updateStats(user: User) {
+        val levelStat = min((user.stats?.lvl ?: 0) / 2.0f, 50f).toInt()
 
         totalStrength = levelStat
         totalIntelligence = levelStat
@@ -216,25 +216,25 @@ class StatsFragment: BaseMainFragment<FragmentStatsBinding>() {
         binding?.constitutionStatsView?.levelValue = levelStat
         binding?.perceptionStatsView?.levelValue = levelStat
 
-        totalStrength += currentUser.stats?.buffs?.str?.toInt() ?: 0
-        totalIntelligence += currentUser.stats?.buffs?._int?.toInt() ?: 0
-        totalConstitution += currentUser.stats?.buffs?.con?.toInt() ?: 0
-        totalPerception += currentUser.stats?.buffs?.per?.toInt() ?: 0
-        binding?.strengthStatsView?.buffValue = currentUser.stats?.buffs?.str?.toInt() ?: 0
-        binding?.intelligenceStatsView?.buffValue = currentUser.stats?.buffs?._int?.toInt() ?: 0
-        binding?.constitutionStatsView?.buffValue = currentUser.stats?.buffs?.con?.toInt() ?: 0
-        binding?.perceptionStatsView?.buffValue = currentUser.stats?.buffs?.per?.toInt() ?: 0
+        totalStrength += user.stats?.buffs?.str?.toInt() ?: 0
+        totalIntelligence += user.stats?.buffs?._int?.toInt() ?: 0
+        totalConstitution += user.stats?.buffs?.con?.toInt() ?: 0
+        totalPerception += user.stats?.buffs?.per?.toInt() ?: 0
+        binding?.strengthStatsView?.buffValue = user.stats?.buffs?.str?.toInt() ?: 0
+        binding?.intelligenceStatsView?.buffValue = user.stats?.buffs?._int?.toInt() ?: 0
+        binding?.constitutionStatsView?.buffValue = user.stats?.buffs?.con?.toInt() ?: 0
+        binding?.perceptionStatsView?.buffValue = user.stats?.buffs?.per?.toInt() ?: 0
 
-        totalStrength += currentUser.stats?.strength ?: 0
-        totalIntelligence += currentUser.stats?.intelligence ?: 0
-        totalConstitution += currentUser.stats?.constitution ?: 0
-        totalPerception += currentUser.stats?.per ?: 0
-        binding?.strengthStatsView?.allocatedValue = currentUser.stats?.strength ?: 0
-        binding?.intelligenceStatsView?.allocatedValue = currentUser.stats?.intelligence ?: 0
-        binding?.constitutionStatsView?.allocatedValue = currentUser.stats?.constitution ?: 0
-        binding?.perceptionStatsView?.allocatedValue = currentUser.stats?.per ?: 0
+        totalStrength += user.stats?.strength ?: 0
+        totalIntelligence += user.stats?.intelligence ?: 0
+        totalConstitution += user.stats?.constitution ?: 0
+        totalPerception += user.stats?.per ?: 0
+        binding?.strengthStatsView?.allocatedValue = user.stats?.strength ?: 0
+        binding?.intelligenceStatsView?.allocatedValue = user.stats?.intelligence ?: 0
+        binding?.constitutionStatsView?.allocatedValue = user.stats?.constitution ?: 0
+        binding?.perceptionStatsView?.allocatedValue = user.stats?.per ?: 0
 
-        val outfit = currentUser.items?.gear?.equipped
+        val outfit = user.items?.gear?.equipped
         val outfitList = ArrayList<String>()
         outfit?.let { thisOutfit ->
             outfitList.add(thisOutfit.armor)

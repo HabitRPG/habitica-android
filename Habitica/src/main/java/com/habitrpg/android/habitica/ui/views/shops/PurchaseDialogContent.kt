@@ -8,6 +8,7 @@ import android.widget.TextView
 import com.facebook.drawee.backends.pipeline.Fresco
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.extensions.dpToPx
+import com.habitrpg.android.habitica.extensions.fromHtml
 import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
@@ -43,6 +44,6 @@ abstract class PurchaseDialogContent @JvmOverloads constructor(
 
     open fun setQuestContentItem(questContent: QuestContent) {
         DataBindingUtils.loadImage(imageView, "inventory_quest_scroll_" + questContent.key)
-        titleTextView.text = questContent.text
+        titleTextView.setText(questContent.text.fromHtml(), TextView.BufferType.SPANNABLE)
     }
 }

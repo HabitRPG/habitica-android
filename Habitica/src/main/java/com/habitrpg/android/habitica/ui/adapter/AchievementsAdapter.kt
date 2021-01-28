@@ -6,6 +6,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.databinding.AchievementChallengeItemBinding
 import com.habitrpg.android.habitica.databinding.AchievementQuestItemBinding
 import com.habitrpg.android.habitica.databinding.AchievementSectionHeaderBinding
 import com.habitrpg.android.habitica.extensions.inflate
@@ -123,7 +124,7 @@ class AchievementsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     class ChallengeAchievementViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        private var binding = AchievementQuestItemBinding.bind(itemView)
+        private var binding = AchievementChallengeItemBinding.bind(itemView)
 
         fun bind(challengeName: String) {
             binding.achievementTitle.text = challengeName

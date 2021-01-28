@@ -22,7 +22,6 @@ class AvatarOverviewFragment : BaseMainFragment<FragmentAvatarOverviewBinding>()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        showsBackButton = true
         super.onViewCreated(view, savedInstanceState)
         binding?.avatarSizeSpinner?.onItemSelectedListener = this
 
@@ -95,10 +94,8 @@ class AvatarOverviewFragment : BaseMainFragment<FragmentAvatarOverviewBinding>()
     override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
         val newSize: String = if (position == 0) "slim" else "broad"
 
-        if (this.user?.isValid == true && this.user?.preferences?.size != newSize) {
-            compositeSubscription.add(userRepository.updateUser(user, "preferences.size", newSize)
+        compositeSubscription.add(userRepository.updateUser("preferences.size", newSize)
                     .subscribe({ }, RxErrorHandler.handleEmptyError()))
-        }
     }
 
     override fun onNothingSelected(parent: AdapterView<*>) { /* no-on */ }

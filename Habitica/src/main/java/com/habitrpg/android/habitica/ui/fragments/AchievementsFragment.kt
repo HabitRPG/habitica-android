@@ -11,11 +11,11 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBinding
-import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.ui.adapter.AchievementsAdapter
 import com.habitrpg.android.habitica.ui.helpers.ToolbarColorHelper
 import io.reactivex.rxjava3.kotlin.Flowables
+import io.reactivex.rxjava3.kotlin.combineLatest
 import javax.inject.Inject
 
 class AchievementsFragment: BaseMainFragment<FragmentRefreshRecyclerviewBinding>(), SwipeRefreshLayout.OnRefreshListener {
@@ -89,11 +89,9 @@ class AchievementsFragment: BaseMainFragment<FragmentRefreshRecyclerviewBinding>
                     (it.category?.first()?.toInt() ?: 2) * it.index
                 }
             }
-        }.zipWith(Flowables.combineLatest(userRepository.getQuestAchievements(), userRepository.getQuestAchievements()
+        }.combineLatest(Flowables.combineLatest(userRepository.getQuestAchievements(), userRepository.getQuestAchievements()
                 .map { it.mapNotNull { achievement -> achievement.questKey } }
-                .flatMap { inventoryRepository.getQuestContent(it) }), { achievements, questAchievements ->
-            Pair(achievements, questAchievements)
-        }).subscribe({
+                .flatMap { inventoryRepository.getQuestContent(it) })).subscribe({
             val achievements = it.first
             val entries = mutableListOf<Any>()
             var lastCategory = ""

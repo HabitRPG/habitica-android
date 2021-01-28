@@ -58,21 +58,21 @@ class ProfilePreferencesFragment: BasePreferencesFragment(), SharedPreferences.O
             val observable: Flowable<User>? = when (key) {
                 "display_name" -> {
                     if (newValue != user?.profile?.name) {
-                        userRepository.updateUser(user, "profile.name", newValue)
+                        userRepository.updateUser("profile.name", newValue)
                     } else {
                         null
                     }
                 }
                 "photo_url" -> {
                     if (newValue != user?.profile?.imageUrl) {
-                        userRepository.updateUser(user, "profile.imageUrl", newValue)
+                        userRepository.updateUser("profile.imageUrl", newValue)
                     } else {
                         null
                     }
                 }
                 "about" -> {
                     if (newValue != user?.profile?.blurb) {
-                        userRepository.updateUser(user, "profile.blurb", newValue)
+                        userRepository.updateUser("profile.blurb", newValue)
                     } else {
                         null
                     }

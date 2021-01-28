@@ -1,12 +1,14 @@
 package com.habitrpg.android.habitica.ui.viewHolders.tasks
 
 import android.content.Context
+import android.text.TextUtils
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.content.ContextCompat
+import androidx.core.text.TextUtilsCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.extensions.getThemeColor
@@ -34,6 +36,7 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
     protected val titleTextView: EllipsisTextView = itemView.findViewById(R.id.checkedTextView)
     protected val notesTextView: EllipsisTextView? = itemView.findViewById(R.id.notesTextView)
     protected val calendarIconView: ImageView? = itemView.findViewById(R.id.iconViewCalendar)
+    protected val iconViewTeam: ImageView? = itemView.findViewById(R.id.iconViewTeamTask)
     protected val specialTaskTextView: TextView? = itemView.findViewById(R.id.specialTaskText)
     private val iconViewChallenge: AppCompatImageView? = itemView.findViewById(R.id.iconviewChallenge)
     private val iconViewReminder: ImageView? = itemView.findViewById(R.id.iconviewReminder)
@@ -55,6 +58,9 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
         get() {
             var isVisible = false
 
+            if (iconViewTeam?.visibility == View.VISIBLE) {
+                isVisible = true
+            }
             if (iconViewReminder?.visibility == View.VISIBLE) {
                 isVisible = true
             }
@@ -140,6 +146,7 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
                 titleTextView.setSpannableFactory(NoCopySpannableFactory.getInstance())
                 if (data.text.isNotEmpty()) {
                     Single.just(data.text)
+                            .map { TextUtils.concat(it, "\u200B").toString() }
                             .map { MarkdownParser.parseMarkdown(it) }
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
@@ -159,6 +166,7 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
                                 return@let
                             }
                             Single.just(notes)
+                                    .map { TextUtils.concat(it, "\u200B").toString() }
                                     .map { MarkdownParser.parseMarkdown(it) }
                                     .subscribeOn(Schedulers.io())
                                     .observeOn(AndroidSchedulers.mainThread())
@@ -198,6 +206,8 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
                 }
             }
             configureSpecialTaskTextView(data)
+
+            iconViewTeam?.visibility = if (data.isGroupTask) View.VISIBLE else View.GONE
 
             taskIconWrapper?.visibility = if (taskIconWrapperIsVisible) View.VISIBLE else View.GONE
         } else {

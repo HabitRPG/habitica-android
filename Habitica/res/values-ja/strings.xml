@@ -846,7 +846,7 @@
     <string name="mountMasterDescription">すべての乗騎を集めた実績、「乗騎使い」を手に入れました！</string>
     <string name="mountMasterTitle">乗騎使い</string>
     <string name="beastMasterDescription">全てのペットを集めたため、「獣使い」の実績を獲得しました！</string>
-    <string name="mystery_item_received">宝箱を開け、%@を見つけました</string>
+    <string name="mystery_item_received">宝箱を開け、%sを見つけました</string>
     <string name="removed_member">%sはグループから解除されました</string>
     <string name="transfer">移譲する</string>
     <string name="remove_member_confirm">本当に%sをグループから解除しますか？</string>

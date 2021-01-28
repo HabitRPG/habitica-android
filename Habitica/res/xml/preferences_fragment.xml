@@ -118,7 +118,8 @@
         <Preference
             android:key="choose_class"
             tools:title="Change Class"
-            android:layout="@layout/preference_child_summary"/>
+            android:layout="@layout/preference_child_summary"
+            app:isPreferenceVisible="false"/>
         <Preference android:title="@string/fix_character_values"
             app:key="fixCharacterValues"
             android:layout="@layout/preference_child_summary"/>

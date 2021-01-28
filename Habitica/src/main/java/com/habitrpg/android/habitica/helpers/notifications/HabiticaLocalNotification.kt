@@ -57,6 +57,7 @@ abstract class HabiticaLocalNotification(protected var context: Context, protect
     protected open fun setNotificationActions(data: Map<String, String>)  {
         val intent = Intent(context, MainActivity::class.java)
         intent.putExtra("notificationIdentifier", identifier)
+        intent.putExtra("notificationTimeStamp", Date().time)
         configureMainIntent(intent)
         val pendingIntent = PendingIntent.getActivity(
                 context,

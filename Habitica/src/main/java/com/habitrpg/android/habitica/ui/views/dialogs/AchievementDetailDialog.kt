@@ -6,6 +6,7 @@ import android.widget.TextView
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.addCloseButton
+import com.habitrpg.android.habitica.extensions.fromHtml
 import com.habitrpg.android.habitica.models.Achievement
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 
@@ -21,7 +22,7 @@ class AchievementDetailDialog(val achievement: Achievement, context: Context): H
         descriptionView = view?.findViewById(R.id.description_view)
         setAdditionalContentView(view)
         setTitle(achievement.title)
-        descriptionView?.text = achievement.text
+        descriptionView?.setText(achievement.text?.fromHtml(), TextView.BufferType.SPANNABLE)
         val iconName = if (achievement.earned) {
             achievement.icon + "2x"
         } else {

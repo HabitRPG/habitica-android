@@ -22,10 +22,6 @@ class AppConfigManager {
         return remoteConfig.getLong("maxChatLength")
     }
 
-    fun enableGiftOneGetOne(): Boolean {
-        return remoteConfig.getBoolean("enableGiftOneGetOne")
-    }
-
     fun spriteSubstitutions(): Map<String, Map<String, String>> {
         val type = object : TypeToken<Map<String, Map<String, String>>>() {}.type
         return Gson().fromJson(remoteConfig.getString("spriteSubstitutions"), type)
@@ -112,7 +108,7 @@ class AppConfigManager {
             val startDate = if (startDateLong > 0) Date(startDateLong) else null
             val endDateLong = preferences.getLong("currentEventEndDate", 0)
             val endDate = if (endDateLong > 0) Date(endDateLong) else null
-            return getHabiticaPromotionFromKey(key, startDate, endDate)
+            return getHabiticaPromotionFromKey(preferences.getString("currentEventPromo", null) ?: key, startDate, endDate)
         }
         return null
     }

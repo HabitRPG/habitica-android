@@ -25,6 +25,7 @@ class FAQDetailFragment : BaseMainFragment<FragmentFaqDetailBinding>() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         hidesToolbar = true
+        showsBackButton = true
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 

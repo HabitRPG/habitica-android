@@ -4,11 +4,13 @@ import com.habitrpg.android.habitica.data.local.UserQuestStatus
 import com.habitrpg.android.habitica.models.Achievement
 import com.habitrpg.android.habitica.models.QuestAchievement
 import com.habitrpg.android.habitica.models.Skill
+import com.habitrpg.android.habitica.models.TeamPlan
 import com.habitrpg.android.habitica.models.inventory.Customization
 import com.habitrpg.android.habitica.models.inventory.CustomizationSet
 import com.habitrpg.android.habitica.models.responses.SkillResponse
 import com.habitrpg.android.habitica.models.responses.UnlockResponse
 import com.habitrpg.android.habitica.models.responses.VerifyUsernameResponse
+import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
@@ -20,15 +22,15 @@ interface UserRepository : BaseRepository {
     fun getUser(): Flowable<User>
 
     fun getUser(userID: String): Flowable<User>
-    fun updateUser(user: User?, updateData: Map<String, Any>): Flowable<User>
-    fun updateUser(user: User?, key: String, value: Any): Flowable<User>
+    fun updateUser(updateData: Map<String, Any>): Flowable<User>
+    fun updateUser(key: String, value: Any): Flowable<User>
 
     fun retrieveUser(withTasks: Boolean): Flowable<User>
     fun retrieveUser(withTasks: Boolean = false, forced: Boolean = false, overrideExisting: Boolean = false): Flowable<User>
 
     fun revive(user: User): Flowable<User>
 
-    fun resetTutorial(user: User?)
+    fun resetTutorial()
 
     fun sleep(user: User): Flowable<User>
 
@@ -47,7 +49,7 @@ interface UserRepository : BaseRepository {
     fun changeClass(selectedClass: String): Flowable<User>
 
     fun unlockPath(user: User?, customization: Customization): Flowable<UnlockResponse>
-    fun unlockPath(user: User, set: CustomizationSet): Flowable<UnlockResponse>
+    fun unlockPath(set: CustomizationSet): Flowable<UnlockResponse>
 
     fun runCron(tasks: MutableList<Task>)
     fun runCron()
@@ -58,7 +60,7 @@ interface UserRepository : BaseRepository {
 
     fun changeCustomDayStart(dayStartTime: Int): Flowable<User>
 
-    fun updateLanguage(user: User?, languageCode: String): Flowable<User>
+    fun updateLanguage(languageCode: String): Flowable<User>
 
     fun resetAccount(): Flowable<User>
     fun deleteAccount(password: String): Flowable<Void>
@@ -70,7 +72,7 @@ interface UserRepository : BaseRepository {
     fun updatePassword(oldPassword: String, newPassword: String, newPasswordConfirmation: String): Flowable<Void>
     fun verifyUsername(username: String): Flowable<VerifyUsernameResponse>
 
-    fun allocatePoint(user: User?, stat: String): Flowable<Stats>
+    fun allocatePoint(stat: String): Flowable<Stats>
 
     fun bulkAllocatePoints(user: User?, strength: Int, intelligence: Int, constitution: Int, perception: Int): Flowable<Stats>
     fun useCustomization(user: User?, type: String, category: String?, identifier: String): Flowable<User>
@@ -81,4 +83,8 @@ interface UserRepository : BaseRepository {
     fun getUserQuestStatus(): Flowable<UserQuestStatus>
 
     fun reroll(): Flowable<User>
+    fun retrieveTeamPlans(): Flowable<List<TeamPlan>>
+    fun getTeamPlans(): Flowable<RealmResults<TeamPlan>>
+    fun retrieveTeamPlan(teamID: String): Flowable<Group>
+    fun getTeamPlan(teamID: String): Flowable<Group>
 }

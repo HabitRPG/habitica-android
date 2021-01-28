@@ -5,6 +5,8 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.components.UserComponent
+import com.habitrpg.android.habitica.data.UserRepository
+import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import javax.inject.Inject
 
 class HabiticaFirebaseMessagingService : FirebaseMessagingService() {
@@ -15,10 +17,17 @@ class HabiticaFirebaseMessagingService : FirebaseMessagingService() {
     @Inject
     internal lateinit var pushNotificationManager: PushNotificationManager
 
+    @Inject
+    internal lateinit var userRepository: UserRepository
+
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         userComponent?.inject(this)
         if (this::pushNotificationManager.isInitialized) {
             pushNotificationManager.displayNotification(remoteMessage)
+
+            if (remoteMessage.data["identifier"]?.contains(PushNotificationManager.WON_CHALLENGE_PUSH_NOTIFICATION_KEY) == true) {
+                userRepository.retrieveUser(true).subscribe({}, RxErrorHandler.handleEmptyError())
+            }
         }
     }
 

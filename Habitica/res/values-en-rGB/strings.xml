@@ -758,7 +758,7 @@
     <string name="keep_challenges">Keep Challenges</string>
     <string name="inviteFriendDescription">You invited a friend (or friends) who joined you on your adventure!</string>
     <string name="inviteFriendTitle">Invited a Friend</string>
-    <string name="joinedChallengeDescription">You put themselves to the test by joining a Challenge!</string>
+    <string name="joinedChallengeDescription">You put yourself to the test by joining a Challenge!</string>
     <string name="joinedChallengeTitle">Joined a Challenge</string>
     <string name="joinedGuildDescription">Ventured into the social side of Habitica by joining a Guild!</string>
     <string name="joinedGuildTitle">Joined a Guild</string>
@@ -916,7 +916,7 @@
     <string name="remaining_1month">1 month remaining</string>
     <string name="ago_weeks">%dw ago</string>
     <string name="ago_1week">1w ago</string>
-    <string name="ago_months">%d month ago</string>
+    <string name="ago_months">%d months ago</string>
     <string name="ago_1month">1 month ago</string>
     <string name="skill_progress_title">Using Skill</string>
     <string name="authentication_error_body">Your Username and/or Password was incorrect.</string>

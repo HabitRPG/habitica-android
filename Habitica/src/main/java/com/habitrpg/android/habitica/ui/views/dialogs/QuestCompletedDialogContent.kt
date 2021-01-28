@@ -12,6 +12,7 @@ import android.widget.TextView
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.DialogCompletedQuestContentBinding
+import com.habitrpg.android.habitica.extensions.fromHtml
 import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.inventory.QuestDropItem
@@ -39,8 +40,8 @@ class QuestCompletedDialogContent : LinearLayout {
     }
 
     fun setQuestContent(questContent: QuestContent) {
-        binding.titleTextView.text = questContent.text
-        binding.notesTextView.text = questContent.completion
+        binding.titleTextView.setText(questContent.text.fromHtml(), TextView.BufferType.SPANNABLE)
+        binding.notesTextView.setText(questContent.completion.fromHtml(), TextView.BufferType.SPANNABLE)
         DataBindingUtils.loadImage(binding.imageView, "quest_" + questContent.key)
 
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as? LayoutInflater

@@ -106,6 +106,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:visibility="gone"
+            android:gravity="center_vertical"
             android:padding="@dimen/content_border">
 
             <Button
@@ -131,6 +132,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:visibility="gone"
+            android:gravity="center_vertical"
             android:padding="@dimen/content_border">
             <Button
                 android:id="@+id/quest_begin_button"
@@ -140,6 +142,14 @@
                 android:text="@string/quest_begin"
                 style="@style/HabiticaButton.Yellow"
                 android:layout_marginEnd="16dp" />
+            <Button
+                android:id="@+id/quest_leave_button"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                android:layout_height="wrap_content"
+                android:text="@string/leave"
+                style="@style/HabiticaButton.Red" />
 
             <Button
                 android:id="@+id/quest_cancel_button"
@@ -147,13 +157,6 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="@string/quest_cancel"
-                style="@style/HabiticaButton.Red" />
-            <Button
-                android:id="@+id/quest_abort_button"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="@string/quest_abort"
                 style="@style/HabiticaButton.Red" />
         </LinearLayout>
     </LinearLayout>

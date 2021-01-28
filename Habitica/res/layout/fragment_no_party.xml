@@ -81,8 +81,7 @@
                         android:id="@+id/createPartyButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        style="@style/HabiticaButton.Offset"
-                        android:background="@drawable/layout_rounded_bg_window"
+                        style="@style/HabiticaButton.Gray"
                         android:text="@string/create_party"
                         android:layout_marginTop="@dimen/spacing_large"/>
                 </LinearLayout>
@@ -106,6 +105,7 @@
                         style="@style/Body2"
                         android:text="@string/join_party_description"
                         android:textColor="@color/text_quad"
+                        android:textColorLink="@color/text_brand_neon"
                         android:gravity="center"
                         android:layout_marginStart="@dimen/spacing_large"
                         android:layout_marginEnd="@dimen/spacing_large"/>
@@ -114,9 +114,7 @@
                         android:id="@+id/username_textview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="?colorAccent"
-                        style="@style/HabiticaButton.Offset"
-                        android:background="@drawable/layout_rounded_bg_window"
+                        style="@style/HabiticaButton.Gray"
                         android:layout_marginTop="@dimen/spacing_large"
                         android:layout_marginBottom="@dimen/spacing_large"/>
 

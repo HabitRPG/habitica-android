@@ -23,6 +23,7 @@ import javax.inject.Inject
 
 abstract class BaseFragment<VB: ViewBinding> : DialogFragment() {
 
+    var isModal: Boolean = false
     abstract var binding: VB?
 
     @Inject

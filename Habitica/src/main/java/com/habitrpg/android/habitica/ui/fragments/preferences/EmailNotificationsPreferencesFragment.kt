@@ -73,7 +73,7 @@ class EmailNotificationsPreferencesFragment : BasePreferencesFragment(), SharedP
             else -> null
         }
         if (pathKey != null) {
-            compositeSubscription.add(userRepository.updateUser(user, "preferences.emailNotifications.$pathKey", sharedPreferences.getBoolean(key, false)).subscribe({  }, RxErrorHandler.handleEmptyError()))
+            compositeSubscription.add(userRepository.updateUser("preferences.emailNotifications.$pathKey", sharedPreferences.getBoolean(key, false)).subscribe({  }, RxErrorHandler.handleEmptyError()))
         }
     }
 }

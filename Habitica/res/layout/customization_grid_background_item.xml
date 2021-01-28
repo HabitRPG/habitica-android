@@ -1,36 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card_view"
-    style="@style/FlatCardView"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_width="match_parent">
-    <RelativeLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
+    android:minHeight="60dp">
+
+    <LinearLayout
+        android:id="@+id/wrapper"
+        android:layout_width="76dp"
         android:layout_height="wrap_content"
-        android:minHeight="60dp"
+        android:background="@drawable/layout_rounded_bg_window"
         android:orientation="vertical"
-        android:clickable="true"
-        android:background="@drawable/selection_highlight">
-        <View
-            android:id="@+id/purchaseOverlay"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true"
-            android:background="@android:color/black" />
+        android:layout_gravity="center">
+
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/imageView"
-            android:layout_width="@dimen/avatar_width"
-            android:layout_height="@dimen/avatar_height"
-            android:layout_gravity="center_horizontal"
-            android:scaleType="fitCenter"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true" />
-
-    </RelativeLayout>
+            android:layout_width="76dp"
+            android:layout_height="76dp"
+            android:layout_gravity="start"
+            app:roundedCornerRadius="6dp"
+            app:roundingBorderWidth="6dp"
+            android:scaleType="fitEnd" />
+        <FrameLayout
+            android:id="@+id/buy_button"
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:background="@drawable/layout_rounded_bg_shopitem_price">
+            <com.habitrpg.android.habitica.ui.views.CurrencyView
+                android:id="@+id/price_label"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:textColor="@color/text_quad"
+                tools:text="150"
+                style="@style/Body1"
+                android:textSize="15sp"
+                android:layout_gravity="center" />
+        </FrameLayout>
+    </LinearLayout>
 </FrameLayout>

@@ -4,18 +4,40 @@
     android:layout_height="match_parent"
     android:gravity="center_horizontal">
 <FrameLayout
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content">
     <ImageView
+        android:id="@+id/achievement_confetti_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/challenge_won_gem_confetti"
-        android:layout_gravity="center"/>
-    <com.facebook.drawee.view.SimpleDraweeView
-        android:id="@+id/achievement_view"
-        android:layout_width="48dp"
-        android:layout_height="52dp"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        android:src="@drawable/challenge_won_gem_confetti" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/achievement_confetti_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/sparkles_left" />
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/achievement_view"
+            android:layout_width="48dp"
+            android:layout_height="52dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"/>
+        <ImageView
+            android:id="@+id/achievement_confetti_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/sparkles_right" />
+    </LinearLayout>
 </FrameLayout>
     <TextView
         android:layout_width="wrap_content"

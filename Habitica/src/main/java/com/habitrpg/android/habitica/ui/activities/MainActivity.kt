@@ -47,6 +47,7 @@ import com.habitrpg.android.habitica.models.Notification
 import com.habitrpg.android.habitica.models.TutorialStep
 import com.habitrpg.android.habitica.models.inventory.Egg
 import com.habitrpg.android.habitica.models.inventory.HatchingPotion
+import com.habitrpg.android.habitica.models.notifications.ChallengeWonData
 import com.habitrpg.android.habitica.models.notifications.LoginIncentiveData
 import com.habitrpg.android.habitica.models.responses.MaintenanceResponse
 import com.habitrpg.android.habitica.models.responses.TaskScoringResult
@@ -76,6 +77,10 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.functions.Consumer
 import io.reactivex.rxjava3.schedulers.Schedulers
 import io.realm.kotlin.isValid
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import java.util.*
@@ -134,7 +139,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     var drawerToggle: ActionBarDrawerToggle? = null
     private var resumeFromActivity = false
     private var userQuestStatus = UserQuestStatus.NO_QUEST
-    private var hasHandledNotificationOpen = false
+    private var lastNotificationOpen: Int? = null
 
     val userID: String
         get() = user?.id ?: ""
@@ -218,6 +223,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
             }
 
             override fun onDrawerOpened(drawerView: View) {
+                hideKeyboard()
                 val modernHeaderStyle = sharedPreferences.getBoolean("modern_header_style", true)
                 if (!isUsingNightModeResources() && modernHeaderStyle) {
                     window.updateStatusBarColor(getThemeColor(R.attr.colorPrimaryDark), false)
@@ -245,6 +251,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
         val navigationController = findNavController(R.id.nav_host_fragment)
         navigationController.addOnDestinationChangedListener { _, destination, arguments ->
+            hideKeyboard()
             updateToolbarTitle(destination, arguments)
         }
         setupNotifications()
@@ -291,6 +298,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     }
 
     override fun onSupportNavigateUp(): Boolean {
+        hideKeyboard()
         onBackPressed()
         return true
     }
@@ -358,12 +366,13 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
             putBoolean("preventDailyReminder", false)
         }
 
-        if (intent.hasExtra("notificationIdentifier") && !hasHandledNotificationOpen) {
-            hasHandledNotificationOpen = true
+        if (intent.hasExtra("notificationIdentifier") && lastNotificationOpen != intent.getIntExtra("notificationTimeStamp", 0)) {
+            lastNotificationOpen = intent.getIntExtra("notificationTimeStamp", 0)
             val identifier = intent.getStringExtra("notificationIdentifier") ?: ""
             val additionalData = HashMap<String, Any>()
             additionalData["identifier"] = identifier
             AmplitudeManager.sendEvent("open notification", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT, additionalData)
+            retrieveUser(true)
             NotificationOpenHandler.handleOpenedByNotification(identifier, intent, user)
         }
 
@@ -437,12 +446,12 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                 compositeSubscription.add(inventoryRepository.getQuestContent(user?.party?.quest?.completed ?: "").firstElement().subscribe({
                     QuestCompletedDialog.showWithQuest(this, it)
 
-                    userRepository.updateUser(user, "party.quest.completed", "").subscribe({}, RxErrorHandler.handleEmptyError())
+                    userRepository.updateUser("party.quest.completed", "").subscribe({}, RxErrorHandler.handleEmptyError())
                 }, RxErrorHandler.handleEmptyError()))
             }
 
             if (user?.flags?.welcomed == false) {
-                compositeSubscription.add(userRepository.updateUser(user, "flags.welcomed", true).subscribe({}, RxErrorHandler.handleEmptyError()))
+                compositeSubscription.add(userRepository.updateUser("flags.welcomed", true).subscribe({}, RxErrorHandler.handleEmptyError()))
             }
 
             if (appConfigManager.enableAdventureGuide()) {
@@ -617,6 +626,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                         pushNotificationManager.setUser(user1)
                         pushNotificationManager.addPushDeviceUsingStoredToken()
                     }
+                    .flatMap { userRepository.retrieveTeamPlans() }
                     .flatMap { contentRepository.retrieveContent(this,false) }
                     .flatMap { contentRepository.retrieveWorldState(this) }
                     .subscribe({ }, RxErrorHandler.handleEmptyError()))
@@ -656,10 +666,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     }
 
     override fun onTutorialCompleted(step: TutorialStep) {
-        val path = "flags.tutorial." + step.tutorialGroup + "." + step.identifier
-        val updateData = HashMap<String, Any>()
-        updateData[path] = true
-        compositeSubscription.add(userRepository.updateUser(user, updateData)
+        compositeSubscription.add(userRepository.updateUser("flags.tutorial." + step.tutorialGroup + "." + step.identifier, true)
                 .subscribe({ }, RxErrorHandler.handleEmptyError()))
         binding.overlayFrameLayout.removeView(this.activeTutorialView)
         this.removeActiveTutorialView()
@@ -802,7 +809,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                     retrieveUser(true)
                     val dialog = AchievementDialog(this)
                     dialog.isLastOnboardingAchievement = event.isLastOnboardingAchievement
-                    dialog.setType(event.type)
+                    dialog.setType(event.type, event.message, event.text)
                     dialog.enqueue()
                     apiClient.readNotification(event.id)
                             .subscribe({ }, RxErrorHandler.handleEmptyError())
