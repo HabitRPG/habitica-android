@@ -1,0 +1,19 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.habitrpg.android.habitica.TaskActivity">
+    <item android:id="@+id/action_team_info"
+        android:title="@string/team_information"
+        android:icon="@drawable/team_info_icon"
+        app:showAsAction="collapseActionView|always" />
+    <item android:id="@+id/action_search"
+        android:title="@string/search"
+        android:icon="@drawable/ic_search"
+        app:showAsAction="collapseActionView|always"
+        app:actionLayout="@layout/toolbar_search" />
+
+    <item android:id="@+id/action_filter"
+        android:icon="@drawable/ic_action_filter_list"
+        android:title="@string/filter"
+        app:showAsAction="ifRoom" />
+</menu>

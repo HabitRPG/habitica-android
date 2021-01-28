@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.*
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.fragment.app.FragmentPagerAdapter
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
@@ -15,10 +16,7 @@ import com.habitrpg.android.habitica.data.TagRepository
 import com.habitrpg.android.habitica.databinding.FragmentViewpagerBinding
 import com.habitrpg.android.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.extensions.setTintWith
-import com.habitrpg.android.habitica.helpers.AmplitudeManager
-import com.habitrpg.android.habitica.helpers.AppConfigManager
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.android.habitica.helpers.TaskFilterHelper
+import com.habitrpg.android.habitica.helpers.*
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.activities.TaskFormActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
@@ -120,7 +118,7 @@ class TeamBoardFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchVi
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_main_activity, menu)
+        inflater.inflate(R.menu.menu_team_board, menu)
 
         filterMenuItem = menu.findItem(R.id.action_filter)
         updateFilterIcon()
@@ -165,6 +163,10 @@ class TeamBoardFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchVi
                 refresh()
                 true
             }
+            R.id.action_team_info -> {
+                MainNavigationController.navigate(R.id.guildFragment, bundleOf(Pair("groupID", teamID)))
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -173,10 +175,7 @@ class TeamBoardFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchVi
         context?.let {
             var disposable: Disposable? = null
             val dialog = TaskFilterDialog(it, HabiticaBaseApplication.userComponent)
-            if (user != null) {
-                dialog.setTags(user?.tags?.createSnapshot() ?: emptyList())
-                disposable = tagRepository.getTags(user?.id ?: "").subscribe({ tagsList -> dialog.setTags(tagsList)}, RxErrorHandler.handleEmptyError())
-            }
+            disposable = tagRepository.getTags().subscribe({ tagsList -> dialog.setTags(tagsList)}, RxErrorHandler.handleEmptyError())
             dialog.setActiveTags(taskFilterHelper.tags)
             if (activeFragment != null) {
                 val taskType = activeFragment?.classType
@@ -219,10 +218,11 @@ class TeamBoardFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchVi
                 val fragment: TaskRecyclerViewFragment = when (position) {
                     0 -> TaskRecyclerViewFragment.newInstance(context, Task.TYPE_HABIT)
                     1 -> TaskRecyclerViewFragment.newInstance(context, Task.TYPE_DAILY)
-                    3 -> RewardsRecyclerviewFragment.newInstance(context, Task.TYPE_REWARD)
+                    3 -> RewardsRecyclerviewFragment.newInstance(context, Task.TYPE_REWARD, false)
                     else -> TaskRecyclerViewFragment.newInstance(context, Task.TYPE_TODO)
                 }
                 fragment.ownerID = teamID
+                fragment.canEditTasks = false
                 fragment.refreshAction = {
                     compositeSubscription.add(userRepository.retrieveTeamPlan(teamID)
                             .doOnTerminate {

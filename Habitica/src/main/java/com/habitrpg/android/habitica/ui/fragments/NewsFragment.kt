@@ -44,6 +44,6 @@ class NewsFragment : BaseMainFragment<FragmentNewsBinding>() {
 
     override fun onResume() {
         super.onResume()
-        compositeSubscription.add(userRepository.updateUser(user, "flags.newStuff", false).subscribeWithErrorHandler({}))
+        compositeSubscription.add(userRepository.updateUser("flags.newStuff", false).subscribeWithErrorHandler({}))
     }
 }

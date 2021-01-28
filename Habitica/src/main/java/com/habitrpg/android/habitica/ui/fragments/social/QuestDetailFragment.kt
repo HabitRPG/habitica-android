@@ -125,7 +125,7 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
     }
 
     private fun showParticipatantButtons(): Boolean {
-        return if (user == null || user?.party == null || user?.party?.quest == null) {
+        return if (user?.party?.quest == null) {
             false
         } else !isQuestActive && user?.party?.quest?.RSVPNeeded == true
     }

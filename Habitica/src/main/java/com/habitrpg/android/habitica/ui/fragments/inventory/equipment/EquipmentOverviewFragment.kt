@@ -49,8 +49,8 @@ class EquipmentOverviewFragment : BaseMainFragment<FragmentEquipmentOverviewBind
         binding?.autoEquipSwitch?.isChecked = user?.preferences?.autoEquip ?: false
         binding?.costumeSwitch?.isChecked = user?.preferences?.costume ?: false
 
-        binding?.autoEquipSwitch?.setOnCheckedChangeListener { _, isChecked -> userRepository.updateUser(user, "preferences.autoEquip", isChecked).subscribe({ }, RxErrorHandler.handleEmptyError()) }
-        binding?.costumeSwitch?.setOnCheckedChangeListener { _, isChecked -> userRepository.updateUser(user, "preferences.costume", isChecked).subscribe({ }, RxErrorHandler.handleEmptyError()) }
+        binding?.autoEquipSwitch?.setOnCheckedChangeListener { _, isChecked -> userRepository.updateUser("preferences.autoEquip", isChecked).subscribe({ }, RxErrorHandler.handleEmptyError()) }
+        binding?.costumeSwitch?.setOnCheckedChangeListener { _, isChecked -> userRepository.updateUser("preferences.costume", isChecked).subscribe({ }, RxErrorHandler.handleEmptyError()) }
 
         user?.items?.gear?.let {
             updateGearData(it)

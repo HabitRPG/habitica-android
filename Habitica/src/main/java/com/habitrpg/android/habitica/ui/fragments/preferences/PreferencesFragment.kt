@@ -202,7 +202,7 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                     return
                 }
 
-                userRepository.updateLanguage(user, languageHelper.languageCode ?: "en")
+                userRepository.updateLanguage(languageHelper.languageCode ?: "en")
                         .flatMap { contentRepository.retrieveContent(context,true) }
                         .subscribe({ }, RxErrorHandler.handleEmptyError())
 
@@ -213,7 +213,7 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
             "audioTheme" -> {
                 val newAudioTheme = sharedPreferences.getString(key, "off")
                 if (newAudioTheme != null) {
-                    compositeSubscription.add(userRepository.updateUser(user, "preferences.sound", newAudioTheme)
+                    compositeSubscription.add(userRepository.updateUser("preferences.sound", newAudioTheme)
                             .subscribe({ }, RxErrorHandler.handleEmptyError()))
                     soundManager.soundTheme = newAudioTheme
                     soundManager.preloadAllFiles()
@@ -227,7 +227,7 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                 val activity = activity as? PrefsActivity ?: return
                 activity.reload()
             }
-            "dailyDueDefaultView" -> userRepository.updateUser(user, "preferences.dailyDueDefaultView", sharedPreferences.getBoolean(key, false))
+            "dailyDueDefaultView" -> userRepository.updateUser("preferences.dailyDueDefaultView", sharedPreferences.getBoolean(key, false))
                     .subscribe({ }, RxErrorHandler.handleEmptyError())
             "server_url" -> {
                 apiClient.updateServerUrl(sharedPreferences.getString(key, ""))
@@ -244,7 +244,7 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
             "disablePMs" -> {
                 val isDisabled = sharedPreferences.getBoolean("disablePMs", false)
                 if (user?.inbox?.optOut != isDisabled) {
-                    compositeSubscription.add(userRepository.updateUser(user, "inbox.optOut", isDisabled)
+                    compositeSubscription.add(userRepository.updateUser("inbox.optOut", isDisabled)
                             .subscribe({ }, RxErrorHandler.handleEmptyError()))
                 }
             }

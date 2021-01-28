@@ -43,6 +43,6 @@ abstract class BaseViewModel: ViewModel() {
     }
 
     fun updateUser(path: String, value: Any) {
-        disposable.add(userRepository.updateUser(getUserData().value, path, value).subscribe({ }, RxErrorHandler.handleEmptyError()))
+        disposable.add(userRepository.updateUser(path, value).subscribe({ }, RxErrorHandler.handleEmptyError()))
     }
 }

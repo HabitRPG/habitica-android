@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.fragments.tasks
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.util.TypedValue
@@ -30,6 +31,7 @@ import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.activities.MainActivity
+import com.habitrpg.android.habitica.ui.activities.TaskFormActivity
 import com.habitrpg.android.habitica.ui.adapter.tasks.*
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
@@ -44,6 +46,7 @@ import javax.inject.Inject
 import javax.inject.Named
 
 open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBinding>(), androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener {
+    internal var canEditTasks: Boolean = true
     override var binding: FragmentRefreshRecyclerviewBinding? = null
 
     override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentRefreshRecyclerviewBinding {
@@ -401,6 +404,21 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
     }
 
     private fun openTaskForm(task: Task) {
+        if (Date().time - (TasksFragment.lastTaskFormOpen?.time ?: 0) < 2000 || !task.isValid || !canEditTasks) {
+            return
+        }
+
+        val bundle = Bundle()
+        bundle.putString(TaskFormActivity.TASK_TYPE_KEY, task.type)
+        bundle.putString(TaskFormActivity.TASK_ID_KEY, task.id)
+        bundle.putDouble(TaskFormActivity.TASK_VALUE_KEY, task.value)
+
+        val intent = Intent(activity, TaskFormActivity::class.java)
+        intent.putExtras(bundle)
+        TasksFragment.lastTaskFormOpen = Date()
+        if (isAdded) {
+            startActivityForResult(intent, TasksFragment.TASK_UPDATED_RESULT)
+        }
     }
 
     companion object {

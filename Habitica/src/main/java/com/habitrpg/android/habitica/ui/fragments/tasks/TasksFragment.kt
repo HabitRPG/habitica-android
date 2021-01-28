@@ -21,6 +21,7 @@ import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.TaskFilterHelper
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.activities.TaskFormActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.views.navigation.HabiticaBottomNavigationViewListener
@@ -28,6 +29,7 @@ import com.habitrpg.android.habitica.ui.views.tasks.TaskFilterDialog
 import io.reactivex.rxjava3.disposables.Disposable
 import java.util.*
 import javax.inject.Inject
+import javax.inject.Named
 import kotlin.collections.ArrayList
 
 
@@ -39,6 +41,8 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
         return FragmentViewpagerBinding.inflate(inflater, container, false)
     }
 
+    @field:[Inject Named(AppModule.NAMED_USER_ID)]
+    lateinit var userID: String
     @Inject
     lateinit var taskFilterHelper: TaskFilterHelper
     @Inject
@@ -158,10 +162,7 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
         context?.let {
             var disposable: Disposable? = null
             val dialog = TaskFilterDialog(it, HabiticaBaseApplication.userComponent)
-            if (user != null) {
-                dialog.setTags(user?.tags?.createSnapshot() ?: emptyList())
-                disposable = tagRepository.getTags(user?.id ?: "").subscribe({ tagsList -> dialog.setTags(tagsList)}, RxErrorHandler.handleEmptyError())
-            }
+            disposable = tagRepository.getTags().subscribe({ tagsList -> dialog.setTags(tagsList)}, RxErrorHandler.handleEmptyError())
             dialog.setActiveTags(taskFilterHelper.tags)
             if (activeFragment != null) {
                 val taskType = activeFragment?.classType
@@ -204,10 +205,10 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
                 val fragment: TaskRecyclerViewFragment = when (position) {
                     0 -> TaskRecyclerViewFragment.newInstance(context, Task.TYPE_HABIT)
                     1 -> TaskRecyclerViewFragment.newInstance(context, Task.TYPE_DAILY)
-                    3 -> RewardsRecyclerviewFragment.newInstance(context, Task.TYPE_REWARD)
+                    3 -> RewardsRecyclerviewFragment.newInstance(context, Task.TYPE_REWARD, true)
                     else -> TaskRecyclerViewFragment.newInstance(context, Task.TYPE_TODO)
                 }
-                fragment.ownerID = user?.id ?: ""
+                fragment.ownerID = userID
                 fragment.refreshAction = {
                     compositeSubscription.add(userRepository.retrieveUser(true, true)
                             .doOnTerminate {
