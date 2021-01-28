@@ -217,11 +217,7 @@ class AvatarView : View {
 
         avatar.stats?.buffs?.let { buffs ->
             if (buffs.snowball == true) {
-                if (Calendar.getInstance().get(Calendar.YEAR) > 2019) {
-                    layerMap[LayerType.VISUAL_BUFF] = "avatar_snowball_" + avatar.stats?.habitClass
-                } else {
-                    layerMap[LayerType.VISUAL_BUFF] = "snowman"
-                }
+                layerMap[LayerType.VISUAL_BUFF] = "avatar_snowball_" + avatar.stats?.habitClass
                 hasVisualBuffs = true
             }
 
