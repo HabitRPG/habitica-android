@@ -31,7 +31,6 @@ class MaxHeightLinearLayout : LinearLayout {
         }
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes) {
         if (!isInEditMode) {
             init(context, attrs)

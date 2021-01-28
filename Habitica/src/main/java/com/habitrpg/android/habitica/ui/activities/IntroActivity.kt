@@ -49,11 +49,8 @@ class IntroActivity : BaseActivity(), View.OnClickListener, ViewPager.OnPageChan
         compositeSubscription.add(contentRepository.retrieveContent(this).subscribe({ }, RxErrorHandler.handleEmptyError()))
 
 
-        val window = window
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window.statusBarColor = ContextCompat.getColor(this, R.color.black_20_alpha)
-        }
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.black_20_alpha)
+        window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
     }
 
     override fun injectActivity(component: UserComponent?) {

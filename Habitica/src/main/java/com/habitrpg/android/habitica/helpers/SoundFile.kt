@@ -32,16 +32,11 @@ class SoundFile(val theme: String, private val fileName: String) : MediaPlayer.O
 
         try {
             m.setDataSource(file?.path)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                val attributes = AudioAttributes.Builder()
-                        .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                        .setLegacyStreamType(AudioManager.STREAM_NOTIFICATION)
-                        .build()
-                m.setAudioAttributes(attributes)
-            } else {
-                @Suppress("Deprecation")
-                m.setAudioStreamType(AudioManager.STREAM_NOTIFICATION)
-            }
+            val attributes = AudioAttributes.Builder()
+                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                    .setLegacyStreamType(AudioManager.STREAM_NOTIFICATION)
+                    .build()
+            m.setAudioAttributes(attributes)
             m.prepare()
 
             playerPrepared = true
