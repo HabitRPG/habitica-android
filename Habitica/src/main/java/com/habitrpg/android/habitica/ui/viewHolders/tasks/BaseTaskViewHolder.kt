@@ -140,6 +140,7 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
                 titleTextView.setSpannableFactory(NoCopySpannableFactory.getInstance())
                 if (data.text.isNotEmpty()) {
                     Single.just(data.text)
+                            .map { TextUtils.concat(it, "\u200B").toString() }
                             .map { MarkdownParser.parseMarkdown(it) }
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
@@ -159,6 +160,7 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
                                 return@let
                             }
                             Single.just(notes)
+                                    .map { TextUtils.concat(it, "\u200B").toString() }
                                     .map { MarkdownParser.parseMarkdown(it) }
                                     .subscribeOn(Schedulers.io())
                                     .observeOn(AndroidSchedulers.mainThread())
