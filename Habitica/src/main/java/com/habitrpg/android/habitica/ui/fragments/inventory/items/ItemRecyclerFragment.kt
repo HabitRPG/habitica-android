@@ -13,6 +13,7 @@ import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentItemsBinding
+import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
@@ -24,8 +25,9 @@ import com.habitrpg.android.habitica.ui.adapter.inventory.ItemRecyclerAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
-import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
-import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.Companion.showSnackbar
+import com.habitrpg.android.habitica.ui.helpers.loadImage
+import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
+import com.habitrpg.android.habitica.ui.views.dialogs.OpenedMysteryitemDialog
 import javax.inject.Inject
 
 class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshLayout.OnRefreshListener {
@@ -109,9 +111,17 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
                         .doOnNext {
                             val activity = activity as? MainActivity
                             if (activity != null) {
-                                DataBindingUtils.loadImage("shop_${it.key}") {image ->
-                                    showSnackbar(activity.snackbarContainer, BitmapDrawable(context?.resources, image), null, getString(R.string.mystery_item_received, it.text), HabiticaSnackbar.SnackbarDisplayType.NORMAL)
+                                val dialog = OpenedMysteryitemDialog(activity)
+                                dialog.isCelebratory = true
+                                dialog.setTitle(R.string.mystery_item_title)
+                                dialog.binding.iconView.loadImage("shop_${it.key}")
+                                dialog.binding.titleView.text = it.text
+                                dialog.binding.descriptionView.text = it.notes
+                                dialog.addButton(R.string.equip, true) { _, _ ->
+                                    inventoryRepository.equip(user, "equipped", it.key ?: "").subscribe( {}, RxErrorHandler.handleEmptyError())
                                 }
+                                dialog.addCloseButton()
+                                dialog.enqueue()
                             }
                         }
                         .flatMap { userRepository.retrieveUser(false) }
