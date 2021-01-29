@@ -12,11 +12,13 @@ import com.facebook.imagepipeline.image.ImageInfo
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ProfileAchievementItemBinding
 import com.habitrpg.android.habitica.extensions.addOkButton
+import com.habitrpg.android.habitica.extensions.fromHtml
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.models.Achievement
 import com.habitrpg.android.habitica.ui.AvatarView
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.viewHolders.SectionViewHolder
+import com.habitrpg.android.habitica.ui.views.dialogs.AchievementDetailDialog
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 
 class AchievementProfileAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -90,23 +92,9 @@ class AchievementProfileAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
         }
 
         override fun onClick(view: View) {
-            val context = itemView.context
-            val alert = HabiticaAlertDialog(context)
-
-            val customView = LayoutInflater.from(context).inflate(R.layout.dialog_achievement_details, null)
-            val achievementImage = customView.findViewById<View>(R.id.achievement_image) as? ImageView
-            achievementImage?.setImageDrawable(binding.achievementDrawee.drawable)
-
-            val titleView = customView.findViewById<View>(R.id.achievement_title) as? TextView
-            titleView?.text = achievement?.title
-
-            val textView = customView.findViewById<View>(R.id.achievement_text) as? TextView
-            textView?.text = achievement?.text
-
-            alert.setAdditionalContentView(customView)
-            alert.addOkButton()
-
-            alert.show()
+            achievement?.let {
+                AchievementDetailDialog(it, itemView.context).show()
+            }
         }
     }
 }

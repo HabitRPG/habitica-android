@@ -430,4 +430,12 @@
         android:id="@+id/promoInfoFragment"
         android:name="com.habitrpg.android.habitica.ui.fragments.PromoInfoFragment"
         android:label="" />
+    <fragment
+        android:id="@+id/teamBoardFragment"
+        android:name="com.habitrpg.android.habitica.ui.fragments.tasks.TeamBoardFragment"
+        android:label="TeamBoardFragment" >
+        <argument
+            android:name="teamID"
+            app:argType="string" />
+    </fragment>
 </navigation>

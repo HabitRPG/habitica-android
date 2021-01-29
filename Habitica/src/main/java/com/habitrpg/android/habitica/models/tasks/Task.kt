@@ -171,7 +171,7 @@ open class Task : RealmObject, BaseObject, Parcelable {
         get() = this.checklist?.size != this.completedChecklistCount
 
     val isGroupTask: Boolean
-        get() = group?.approvalApproved == true
+        get() = group?.groupID?.isNotBlank() == true
 
     val isPendingApproval: Boolean
         get() = (group?.approvalRequired == true && group?.approvalRequested == true && group?.approvalApproved == false)

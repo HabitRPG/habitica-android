@@ -51,7 +51,7 @@ class InboxOverviewFragment : BaseMainFragment<FragmentInboxBinding>(), androidx
 
         binding?.inboxRefreshLayout?.setOnRefreshListener(this)
 
-        compositeSubscription.add(userRepository.getUser().map { user?.inbox?.optOut ?: false }.distinctUntilChanged().subscribe {
+        compositeSubscription.add(userRepository.getUser().map { it.inbox?.optOut ?: false }.distinctUntilChanged().subscribe {
             binding?.optOutView?.visibility = if (it) View.VISIBLE else View.GONE
         })
 

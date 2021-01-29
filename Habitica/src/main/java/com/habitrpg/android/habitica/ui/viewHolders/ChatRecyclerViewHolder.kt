@@ -5,7 +5,9 @@ import android.content.Context
 import android.content.res.Resources
 import android.graphics.drawable.BitmapDrawable
 import android.text.method.LinkMovementMethod
+import android.util.Log
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
@@ -23,6 +25,7 @@ import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
 import com.habitrpg.android.habitica.models.members.Member
+import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 
 open class ChatRecyclerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
@@ -66,7 +69,21 @@ class ChatRecyclerMessageViewHolder(itemView: View, private var userId: String, 
         itemView.setOnClickListener {
             onShouldExpand?.invoke()
         }
-        binding.tvLikes.setOnClickListener { chatMessage?.let { onLikeMessage?.invoke(it) } }
+        binding.tvLikes.setOnClickListener { chatMessage?.let {
+            if(it.uuid != userId) {
+                onLikeMessage?.invoke(it)
+            }
+            else {
+                val context = context
+                if (context != null) {
+                    val alert = HabiticaAlertDialog(context)
+                    alert.setMessage("Can't like your own message. Don't be that person.")
+                    alert.addButton(R.string.ok, true)
+                    alert.show()
+                }
+            }
+            }
+        }
         binding.messageText.setOnClickListener { onShouldExpand?.invoke() }
         binding.messageText.movementMethod = LinkMovementMethod.getInstance()
         binding.userLabel.setOnClickListener { chatMessage?.uuid?.let { onOpenProfile?.invoke(it) } }

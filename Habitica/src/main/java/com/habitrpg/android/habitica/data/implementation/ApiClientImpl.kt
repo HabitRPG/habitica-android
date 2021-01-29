@@ -780,6 +780,14 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
         return apiService.transferGems(mapOf(Pair("toUserId", giftedID), Pair("gemAmount", amount))).compose(configureApiCallObserver())
     }
 
+    override fun getTeamPlans(): Flowable<List<TeamPlan>> {
+        return apiService.getTeamPlans().compose(configureApiCallObserver())
+    }
+
+    override fun getTeamPlanTasks(teamID: String): Flowable<TaskList> {
+        return apiService.getTeamPlanTasks(teamID).compose(configureApiCallObserver())
+    }
+
     override fun bulkAllocatePoints(strength: Int, intelligence: Int, constitution: Int, perception: Int): Flowable<Stats> {
         val body = HashMap<String, Map<String, Int>>()
         val stats = HashMap<String, Int>()

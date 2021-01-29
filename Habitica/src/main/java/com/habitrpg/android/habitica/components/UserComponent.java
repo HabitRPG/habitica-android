@@ -97,6 +97,7 @@ import com.habitrpg.android.habitica.ui.fragments.support.FAQOverviewFragment;
 import com.habitrpg.android.habitica.ui.fragments.support.SupportMainFragment;
 import com.habitrpg.android.habitica.ui.fragments.tasks.TaskRecyclerViewFragment;
 import com.habitrpg.android.habitica.ui.fragments.tasks.TasksFragment;
+import com.habitrpg.android.habitica.ui.fragments.tasks.TeamBoardFragment;
 import com.habitrpg.android.habitica.ui.viewmodels.GroupViewModel;
 import com.habitrpg.android.habitica.ui.viewmodels.InboxViewModel;
 import com.habitrpg.android.habitica.ui.viewmodels.NotificationsViewModel;
@@ -337,4 +338,6 @@ public interface UserComponent {
     void inject(AdventureGuideActivity adventureGuideFragment);
 
     void inject(PromoInfoFragment promoInfoFragment);
+
+    void inject(@NotNull TeamBoardFragment teamBoardFragment);
 }

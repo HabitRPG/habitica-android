@@ -79,10 +79,6 @@ class TavernFragment : BaseMainFragment<FragmentViewpagerBinding>() {
 
     private fun setViewPagerAdapter() {
         val fragmentManager = childFragmentManager
-        if (this.user == null) {
-            return
-        }
-
         binding?.viewPager?.adapter = object : FragmentPagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
             override fun getItem(position: Int): Fragment {
                 return when (position) {

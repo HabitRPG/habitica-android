@@ -53,7 +53,8 @@ class RealmUserLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
 
     override fun getTutorialSteps(): Flowable<RealmResults<TutorialStep>> = RxJavaBridge.toV3Flowable(realm.where(TutorialStep::class.java).findAll().asFlowable()
                 .filter { it.isLoaded })
-override fun getUser(userID: String): Flowable<User> {
+
+    override fun getUser(userID: String): Flowable<User> {
         if (realm.isClosed) return Flowable.empty()
         return RxJavaBridge.toV3Flowable(realm.where(User::class.java)
                 .equalTo("id", userID)
@@ -132,6 +133,24 @@ override fun getUser(userID: String): Flowable<User> {
                 it.deleteFromRealm()
             }
         }
+    }
+
+    override fun getTeamPlans(userID: String): Flowable<RealmResults<TeamPlan>> {
+        return RxJavaBridge.toV3Flowable(realm.where(TeamPlan::class.java)
+                .equalTo("userID", userID)
+                .findAll()
+                .asFlowable()
+                .filter { it.isLoaded })
+    }
+
+    override fun getTeamPlan(teamID: String): Flowable<Group> {
+        if (realm.isClosed) return Flowable.empty()
+        return RxJavaBridge.toV3Flowable(realm.where(Group::class.java)
+                .equalTo("id", teamID)
+                .findAll()
+                .asFlowable()
+                .filter { realmObject -> realmObject.isLoaded && realmObject.isValid && !realmObject.isEmpty() }
+                .map { teams -> teams.first() })
     }
 
     override fun getSkills(user: User): Flowable<RealmResults<Skill>> {

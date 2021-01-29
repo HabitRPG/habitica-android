@@ -546,7 +546,7 @@
             @string/font_family_condensed
         </item>
         <item name="android:textSize">14sp</item>
-        <item name="android:letterSpacing" tools:targetApi="lollipop">0.035</item>
+        <item name="android:letterSpacing">0.035</item>
         <item name="android:lineSpacingExtra">2.0dp</item>
         <item name="android:layout_marginLeft">16dp</item>
         <item name="android:layout_marginEnd">16dp</item>

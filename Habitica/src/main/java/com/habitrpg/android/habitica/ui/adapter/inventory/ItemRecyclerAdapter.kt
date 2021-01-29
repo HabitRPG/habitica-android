@@ -105,25 +105,25 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<OwnedI
         fun bind(ownedItem: OwnedItem, item: Item?) {
             this.ownedItem = ownedItem
             this.item = item
-            binding.titleTextView.text = item?.text
+            binding.titleTextView.text = item?.text ?: ownedItem.key
             binding.ownedTextView.text = ownedItem.numberOwned.toString()
 
             var disabled = false
             val imageName: String?
             if (item is QuestContent) {
-                imageName = "inventory_quest_scroll_" + item.key
+                imageName = "inventory_quest_scroll_" + ownedItem.key
             } else if (item is SpecialItem) {
                 val sdf = SimpleDateFormat("MM", Locale.getDefault())
                 val month = sdf.format(Date())
                 imageName = "inventory_present_$month"
             } else {
-                val type = when (item) {
-                    is Egg -> "Egg"
-                    is Food -> "Food"
-                    is HatchingPotion -> "HatchingPotion"
+                val type = when (ownedItem.itemType) {
+                    "eggs" -> "Egg"
+                    "food" -> "Food"
+                    "hatchingPotions" -> "HatchingPotion"
                     else -> ""
                 }
-                imageName = "Pet_" + type + "_" + item?.key
+                imageName = "Pet_" + type + "_" + ownedItem.key
 
                 if (isHatching) {
                     disabled = !this.canHatch

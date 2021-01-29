@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:weightSum="1">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="1">
+        <View
+            android:id="@+id/pendingBar"
+            android:layout_width="0dip"
+            android:layout_height="match_parent" />
+
+        <View
+            android:id="@+id/pendingEmptyBarSpace"
+            android:layout_width="0dip"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="1">
+        <View
+            android:id="@+id/bar"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"/>
+        <View
+            android:id="@+id/emptyBarSpace"
+            android:layout_width="0dip"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+</merge>

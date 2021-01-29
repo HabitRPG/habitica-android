@@ -21,12 +21,11 @@ open class Tag : RealmObject() {
     }
 
 
-    override fun equals(o: Any?): Boolean {
-        if (Tag::class.java.isAssignableFrom(o!!.javaClass)) {
-            val otherTag = o as Tag?
-            return this.id == otherTag!!.id
+    override fun equals(other: Any?): Boolean {
+        if (other is Tag) {
+            return this.id == other.id
         }
-        return super.equals(o)
+        return super.equals(other)
     }
 
     override fun hashCode(): Int {

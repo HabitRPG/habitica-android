@@ -21,16 +21,19 @@ import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.TaskFilterHelper
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.activities.TaskFormActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
+import com.habitrpg.android.habitica.ui.views.navigation.HabiticaBottomNavigationViewListener
 import com.habitrpg.android.habitica.ui.views.tasks.TaskFilterDialog
 import io.reactivex.rxjava3.disposables.Disposable
 import java.util.*
 import javax.inject.Inject
+import javax.inject.Named
 import kotlin.collections.ArrayList
 
 
-class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.OnQueryTextListener {
+class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.OnQueryTextListener, HabiticaBottomNavigationViewListener {
 
     override var binding: FragmentViewpagerBinding? = null
 
@@ -38,6 +41,8 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
         return FragmentViewpagerBinding.inflate(inflater, container, false)
     }
 
+    @field:[Inject Named(AppModule.NAMED_USER_ID)]
+    lateinit var userID: String
     @Inject
     lateinit var taskFilterHelper: TaskFilterHelper
     @Inject
@@ -49,13 +54,6 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
     internal var viewFragmentsDictionary: MutableMap<Int, TaskRecyclerViewFragment>? = WeakHashMap()
 
     private var filterMenuItem: MenuItem? = null
-
-    override var user: User?
-        get() = super.user
-        set(value) {
-            super.user = value
-            viewFragmentsDictionary?.values?.forEach { it.user = value }
-        }
 
     private val activeFragment: TaskRecyclerViewFragment?
         get() {
@@ -89,26 +87,14 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
             3 -> Task.TYPE_REWARD
             else -> Task.TYPE_HABIT
         }
-        bottomNavigation?.onTabSelectedListener = {
-            val newItem = when (it) {
-                Task.TYPE_HABIT -> 0
-                Task.TYPE_DAILY -> 1
-                Task.TYPE_TODO -> 2
-                Task.TYPE_REWARD -> 3
-                else -> 0
-            }
-            binding?.viewPager?.currentItem = newItem
-            updateBottomBarBadges()
-        }
-        bottomNavigation?.onAddListener = { type ->
-            openNewTaskActivity(type)
-        }
-        bottomNavigation?.flipAddBehaviour = appConfigManager.flipAddTaskBehaviour()
+        bottomNavigation?.listener = this
+        bottomNavigation?.canAddTasks = true
     }
 
     override fun onPause() {
-        bottomNavigation?.onTabSelectedListener = null
-        bottomNavigation?.onAddListener = null
+        if (bottomNavigation?.listener == this) {
+            bottomNavigation?.listener = null
+        }
 
         super.onPause()
     }
@@ -176,10 +162,7 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
         context?.let {
             var disposable: Disposable? = null
             val dialog = TaskFilterDialog(it, HabiticaBaseApplication.userComponent)
-            if (user != null) {
-                dialog.setTags(user?.tags?.createSnapshot() ?: emptyList())
-                disposable = tagRepository.getTags(user?.id ?: "").subscribe({ tagsList -> dialog.setTags(tagsList)}, RxErrorHandler.handleEmptyError())
-            }
+            disposable = tagRepository.getTags().subscribe({ tagsList -> dialog.setTags(tagsList)}, RxErrorHandler.handleEmptyError())
             dialog.setActiveTags(taskFilterHelper.tags)
             if (activeFragment != null) {
                 val taskType = activeFragment?.classType
@@ -220,12 +203,18 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
 
             override fun getItem(position: Int): androidx.fragment.app.Fragment {
                 val fragment: TaskRecyclerViewFragment = when (position) {
-                    0 -> TaskRecyclerViewFragment.newInstance(context, user, Task.TYPE_HABIT)
-                    1 -> TaskRecyclerViewFragment.newInstance(context, user, Task.TYPE_DAILY)
-                    3 -> RewardsRecyclerviewFragment.newInstance(context, user, Task.TYPE_REWARD)
-                    else -> TaskRecyclerViewFragment.newInstance(context, user, Task.TYPE_TODO)
+                    0 -> TaskRecyclerViewFragment.newInstance(context, Task.TYPE_HABIT)
+                    1 -> TaskRecyclerViewFragment.newInstance(context, Task.TYPE_DAILY)
+                    3 -> RewardsRecyclerviewFragment.newInstance(context, Task.TYPE_REWARD, true)
+                    else -> TaskRecyclerViewFragment.newInstance(context, Task.TYPE_TODO)
                 }
-
+                fragment.ownerID = userID
+                fragment.refreshAction = {
+                    compositeSubscription.add(userRepository.retrieveUser(true, true)
+                            .doOnTerminate {
+                                it()
+                            }.subscribe({ }, RxErrorHandler.handleEmptyError()))
+                }
                 viewFragmentsDictionary?.put(position, fragment)
 
                 return fragment
@@ -411,5 +400,22 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
         var lastTaskFormOpen: Date? = null
         internal const val TASK_CREATED_RESULT = 1
         const val TASK_UPDATED_RESULT = 2
+    }
+
+
+    override fun onTabSelected(taskType: String) {
+        val newItem = when (taskType) {
+            Task.TYPE_HABIT -> 0
+            Task.TYPE_DAILY -> 1
+            Task.TYPE_TODO -> 2
+            Task.TYPE_REWARD -> 3
+            else -> 0
+        }
+        binding?.viewPager?.currentItem = newItem
+        updateBottomBarBadges()
+    }
+
+    override fun onAdd(taskType: String) {
+        openNewTaskActivity(taskType)
     }
 }

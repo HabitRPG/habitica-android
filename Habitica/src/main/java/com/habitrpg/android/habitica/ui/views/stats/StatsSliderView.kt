@@ -52,11 +52,7 @@ class StatsSliderView(context: Context, attrs: AttributeSet?) : LinearLayout(con
             binding.statTypeTitle.text = attributes.getString(R.styleable.StatsSliderView_statsTitle)
             val statColor = attributes.getColor(R.styleable.StatsSliderView_statsColor, 0)
             binding.statTypeTitle.setTextColor(attributes.getColor(R.styleable.StatsSliderView_statsTextColor, 0))
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                binding.statsSeekBar.progressTintList = ColorStateList.valueOf(statColor)
-            } else {
-                binding.statsSeekBar.progressDrawable.setTintWith(statColor, PorterDuff.Mode.SRC_IN)
-            }
+            binding.statsSeekBar.progressTintList = ColorStateList.valueOf(statColor)
             val thumbDrawable = ContextCompat.getDrawable(context, R.drawable.seekbar_thumb)
             thumbDrawable?.setTintWith(statColor, PorterDuff.Mode.MULTIPLY)
             binding.statsSeekBar.thumb = thumbDrawable

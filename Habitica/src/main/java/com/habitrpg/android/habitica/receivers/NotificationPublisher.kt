@@ -129,9 +129,7 @@ class NotificationPublisher : BroadcastReceiver() {
                 notificationIntent, 0)
         builder.setContentIntent(intent)
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            builder.color = ContextCompat.getColor(thisContext, R.color.brand_300)
-        }
+        builder.color = ContextCompat.getColor(thisContext, R.color.brand_300)
 
         notification = builder.build()
         notification.defaults = notification.defaults or Notification.DEFAULT_LIGHTS

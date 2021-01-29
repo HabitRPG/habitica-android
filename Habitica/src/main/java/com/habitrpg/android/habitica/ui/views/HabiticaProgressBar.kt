@@ -1,10 +1,16 @@
 package com.habitrpg.android.habitica.ui.views
 
 import android.content.Context
+import android.content.res.ColorStateList
+import android.graphics.PorterDuff
+import android.os.Build
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
+import android.widget.ImageView
 import android.widget.LinearLayout
+import androidx.core.content.ContextCompat
+import androidx.core.widget.ImageViewCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ProgressBarBinding
 import com.habitrpg.android.habitica.extensions.layoutInflater
@@ -18,7 +24,13 @@ class HabiticaProgressBar(context: Context, attrs: AttributeSet?) : FrameLayout(
     var barForegroundColor: Int = 0
     set(value) {
         field = value
-        DataBindingUtils.setRoundedBackground(binding.bar, value)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+            DataBindingUtils.setRoundedBackground(binding.bar, value)
+        } else {
+            val bar: ImageView = findViewById(R.id.bar)
+            ImageViewCompat.setImageTintList(bar, ColorStateList.valueOf(field))
+            ImageViewCompat.setImageTintMode(bar, PorterDuff.Mode.SRC_IN)
+        }
     }
 
     var barPendingColor: Int = 0
@@ -105,9 +117,8 @@ class HabiticaProgressBar(context: Context, attrs: AttributeSet?) : FrameLayout(
             layout?.weight = weight.toFloat()
             view.layoutParams = layout
         } else if (layout?.weight?.toDouble() != weight) {
-            val anim = DataBindingUtils.LayoutWeightAnimation(view, weight.toFloat())
-            anim.duration = 300
-            view.startAnimation(anim)
+            layout?.weight = weight.toFloat()
+            view.layoutParams = layout
         }
     }
 }

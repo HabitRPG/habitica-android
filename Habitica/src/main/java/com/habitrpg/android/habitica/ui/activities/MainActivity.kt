@@ -223,6 +223,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
             }
 
             override fun onDrawerOpened(drawerView: View) {
+                hideKeyboard()
                 val modernHeaderStyle = sharedPreferences.getBoolean("modern_header_style", true)
                 if (!isUsingNightModeResources() && modernHeaderStyle) {
                     window.updateStatusBarColor(getThemeColor(R.attr.colorPrimaryDark), false)
@@ -250,6 +251,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
         val navigationController = findNavController(R.id.nav_host_fragment)
         navigationController.addOnDestinationChangedListener { _, destination, arguments ->
+            hideKeyboard()
             updateToolbarTitle(destination, arguments)
         }
         setupNotifications()
@@ -296,6 +298,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     }
 
     override fun onSupportNavigateUp(): Boolean {
+        hideKeyboard()
         onBackPressed()
         return true
     }
@@ -443,12 +446,12 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                 compositeSubscription.add(inventoryRepository.getQuestContent(user?.party?.quest?.completed ?: "").firstElement().subscribe({
                     QuestCompletedDialog.showWithQuest(this, it)
 
-                    userRepository.updateUser(user, "party.quest.completed", "").subscribe({}, RxErrorHandler.handleEmptyError())
+                    userRepository.updateUser("party.quest.completed", "").subscribe({}, RxErrorHandler.handleEmptyError())
                 }, RxErrorHandler.handleEmptyError()))
             }
 
             if (user?.flags?.welcomed == false) {
-                compositeSubscription.add(userRepository.updateUser(user, "flags.welcomed", true).subscribe({}, RxErrorHandler.handleEmptyError()))
+                compositeSubscription.add(userRepository.updateUser("flags.welcomed", true).subscribe({}, RxErrorHandler.handleEmptyError()))
             }
 
             if (appConfigManager.enableAdventureGuide()) {
@@ -623,6 +626,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                         pushNotificationManager.setUser(user1)
                         pushNotificationManager.addPushDeviceUsingStoredToken()
                     }
+                    .flatMap { userRepository.retrieveTeamPlans() }
                     .flatMap { contentRepository.retrieveContent(this,false) }
                     .flatMap { contentRepository.retrieveWorldState(this) }
                     .subscribe({ }, RxErrorHandler.handleEmptyError()))
@@ -662,10 +666,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     }
 
     override fun onTutorialCompleted(step: TutorialStep) {
-        val path = "flags.tutorial." + step.tutorialGroup + "." + step.identifier
-        val updateData = HashMap<String, Any>()
-        updateData[path] = true
-        compositeSubscription.add(userRepository.updateUser(user, updateData)
+        compositeSubscription.add(userRepository.updateUser("flags.tutorial." + step.tutorialGroup + "." + step.identifier, true)
                 .subscribe({ }, RxErrorHandler.handleEmptyError()))
         binding.overlayFrameLayout.removeView(this.activeTutorialView)
         this.removeActiveTutorialView()

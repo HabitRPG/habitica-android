@@ -54,8 +54,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-crashlytics:17.3.0'
 
     //Dependency Injection
-    implementation 'com.google.dagger:dagger:2.29.1'
-    kapt 'com.google.dagger:dagger-compiler:2.29.1'
+    implementation 'com.google.dagger:dagger:2.31.2'
+    kapt 'com.google.dagger:dagger-compiler:2.31.2'
     compileOnly 'javax.annotation:javax.annotation-api:1.3.2'
     compileOnly 'com.github.pengrad:jdk9-deps:1.0'
     //App Compatibility and Material Design
@@ -64,34 +64,34 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'androidx.legacy:legacy-preference-v14:1.0.0'
     // Markdown
-    implementation "io.noties.markwon:core:4.6.0"
-    implementation "io.noties.markwon:ext-strikethrough:4.6.0"
-    implementation "io.noties.markwon:image:4.6.0"
-    implementation "io.noties.markwon:recycler:4.6.0"
-    implementation "io.noties.markwon:html:4.6.0"
+    implementation "io.noties.markwon:core:4.6.1"
+    implementation "io.noties.markwon:ext-strikethrough:4.6.1"
+    implementation "io.noties.markwon:image:4.6.1"
+    implementation "io.noties.markwon:recycler:4.6.1"
+    implementation "io.noties.markwon:html:4.6.1"
     //Eventbus
     implementation 'org.greenrobot:eventbus:3.2.0'
     // IAP Handling / Verification
     implementation 'org.solovyev.android:checkout:1.2.2'
     //Facebook
-    implementation('com.facebook.android:facebook-android-sdk:7.1.0') {
+    implementation('com.facebook.android:facebook-android-sdk:8.1.0') {
         transitive = true
     }
     implementation 'fr.avianey.com.viewpagerindicator:library:2.4.1@aar'
     //RxJava
     implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
-    implementation 'io.reactivex.rxjava3:rxjava:3.0.6'
+    implementation 'io.reactivex.rxjava3:rxjava:3.0.9'
     implementation 'io.reactivex.rxjava3:rxkotlin:3.0.1'
     implementation 'io.reactivex.rxjava2:rxjava:2.2.19'
     implementation "com.github.akarnokd:rxjava3-bridge:3.0.0"
 
     //Analytics
-    implementation 'com.amplitude:android-sdk:2.25.2'
+    implementation 'com.amplitude:android-sdk:2.30.0'
     // Fresco Image Management Library
-    implementation('com.facebook.fresco:fresco:2.3.0') {
+    implementation('com.facebook.fresco:fresco:2.4.0') {
         exclude module: 'bolts-android'
     }
-    implementation('com.facebook.fresco:animated-gif:2.3.0') {
+    implementation('com.facebook.fresco:animated-gif:2.4.0') {
         exclude module: 'bolts-android'
     }
     //Tests
@@ -110,10 +110,10 @@ dependencies {
     //Leak Detection
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.5'
     //Push Notifications
-    implementation 'com.google.firebase:firebase-core:18.0.0'
-    implementation 'com.google.firebase:firebase-messaging:21.0.0'
-    implementation 'com.google.firebase:firebase-config:20.0.1'
-    implementation 'com.google.firebase:firebase-perf:19.0.10'
+    implementation 'com.google.firebase:firebase-core:18.0.1'
+    implementation 'com.google.firebase:firebase-messaging:21.0.1'
+    implementation 'com.google.firebase:firebase-config:20.0.2'
+    implementation 'com.google.firebase:firebase-perf:19.1.0'
     implementation 'com.google.android.gms:play-services-auth:19.0.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.nex3z:flow-layout:1.2.2'
@@ -125,10 +125,10 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.2'
     implementation "androidx.paging:paging-runtime-ktx:2.1.2"
     implementation 'com.plattysoft.leonids:LeonidsLib:1.3.2'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.7'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.3'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.2'
 
-    implementation 'com.willowtreeapps:signinwithapplebutton:0.2'
+    implementation 'com.willowtreeapps:signinwithapplebutton:0.3'
 
     implementation project(':shared')
 }
@@ -150,8 +150,8 @@ android {
         buildConfigField "String", "TESTING_LEVEL", "\"production\""
         resConfigs "en", "bg", "de", "en-rGB", "es", "fr", "hr-rHR", "in", "it", "iw", "ja", "ko", "lt", "nl", "pl", "pt-rBR", "pt-rPT", "ru", "tr", "zh", "zh-rTW"
 
-        versionCode 2693
-        versionName "3.1.1"
+        versionCode 2694
+        versionName "3.2"
     }
 
     buildFeatures {

@@ -156,11 +156,8 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
         binding.backgroundContainer.post { binding.backgroundContainer.scrollTo(0, binding.backgroundContainer.bottom) }
         binding.backgroundContainer.isScrollable = false
 
-        val window = window
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window.statusBarColor = ContextCompat.getColor(this, R.color.black_20_alpha)
-        }
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.black_20_alpha)
+        window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
 
         binding.newGameButton.setOnClickListener { newGameButtonClicked() }
         binding.showLoginButton.setOnClickListener { showLoginButtonClicked() }

@@ -7,6 +7,7 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.extensions.setTintWith
 import com.habitrpg.android.habitica.models.responses.TaskDirection
 import com.habitrpg.android.habitica.models.tasks.Task
 
@@ -30,8 +31,7 @@ class HabitViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> U
         this.task = data
         if (data.up == true) {
             val plusIcon = ContextCompat.getDrawable(context, R.drawable.habit_plus)
-            plusIcon?.setTint(ContextCompat.getColor(context, R.color.white))
-            plusIcon?.setTintMode(PorterDuff.Mode.MULTIPLY)
+            plusIcon?.setTintWith(context, R.color.white)
             this.btnPlusIconView.setImageDrawable(plusIcon)
             val drawable = ContextCompat.getDrawable(context, R.drawable.habit_circle)
             this.btnPlusWrapper.setBackgroundResource(data.lightTaskColor)

@@ -5,6 +5,7 @@ import android.content.Context
 import android.graphics.PorterDuff
 import android.util.AttributeSet
 import android.view.MotionEvent
+import android.view.View
 import android.view.animation.Animation
 import android.view.animation.BounceInterpolator
 import android.view.animation.LinearInterpolator
@@ -20,12 +21,16 @@ import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.extensions.setTintWith
 import com.habitrpg.android.habitica.models.tasks.Task
 
+interface HabiticaBottomNavigationViewListener {
+    fun onTabSelected(taskType: String)
+    fun onAdd(taskType: String)
+}
+
 class HabiticaBottomNavigationView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : RelativeLayout(context, attrs, defStyleAttr) {
     private val binding = MainNavigationViewBinding.inflate(context.layoutInflater, this)
 
-    var flipAddBehaviour = true
     private var isShowingSubmenu: Boolean = false
     var selectedPosition: Int
     get() {
@@ -44,15 +49,28 @@ class HabiticaBottomNavigationView @JvmOverloads constructor(
             else -> Task.TYPE_HABIT
         }
     }
-    var onTabSelectedListener: ((String) -> Unit)? = null
-    var onAddListener:  ((String) -> Unit)? = null
+    var listener: HabiticaBottomNavigationViewListener? = null
     var activeTaskType: String = Task.TYPE_HABIT
     set(value) {
         val wasChanged = field != value
         field = value
         if (wasChanged) {
             updateItemSelection()
-            onTabSelectedListener?.invoke(value)
+            listener?.onTabSelected(value)
+        }
+    }
+
+    var canAddTasks = true
+    set(value) {
+        field = value
+        if (field) {
+            binding.cutoutWrapper.visibility = View.VISIBLE
+            binding.cutoutSpace.visibility = View.VISIBLE
+            binding.addButtonBackground.visibility = View.VISIBLE
+        } else {
+            binding.cutoutWrapper.visibility = View.GONE
+            binding.cutoutSpace.visibility = View.GONE
+            binding.addButtonBackground.visibility = View.GONE
         }
     }
 
@@ -65,23 +83,15 @@ class HabiticaBottomNavigationView @JvmOverloads constructor(
         binding.todosTab.setOnClickListener { activeTaskType = Task.TYPE_TODO }
         binding.rewardsTab.setOnClickListener { activeTaskType = Task.TYPE_REWARD }
         binding.addButton.setOnClickListener {
-            if (flipAddBehaviour) {
-                if (isShowingSubmenu) {
-                    hideSubmenu()
-                } else {
-                    onAddListener?.invoke(activeTaskType)
-                }
+            if (isShowingSubmenu) {
+                hideSubmenu()
             } else {
-                showSubmenu()
+                listener?.onAdd(activeTaskType)
             }
             animateButtonTap()
         }
         binding.addButton.setOnLongClickListener {
-            if (flipAddBehaviour) {
-                showSubmenu()
-            } else {
-                onAddListener?.invoke(activeTaskType)
-            }
+            showSubmenu()
             animateButtonTap()
             true
         }
@@ -169,7 +179,7 @@ class HabiticaBottomNavigationView @JvmOverloads constructor(
                 }
             }
             view.onAddListener = {
-                onAddListener?.invoke(taskType)
+                listener?.onAdd(taskType)
                 hideSubmenu()
             }
             binding.submenuWrapper.addView(view)

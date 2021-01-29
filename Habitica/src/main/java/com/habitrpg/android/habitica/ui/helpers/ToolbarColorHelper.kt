@@ -46,12 +46,15 @@ object ToolbarColorHelper {
     fun colorizeToolbar(toolbar: Toolbar, activity: Activity?, overrideModernHeader: Boolean? = null) {
         if (activity == null) return
         val modernHeaderStyle = overrideModernHeader ?: PreferenceManager.getDefaultSharedPreferences(activity).getBoolean("modern_header_style", true)
-        val toolbarIconsColor = if (modernHeaderStyle && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        val toolbarIconsColor = if (modernHeaderStyle) {
             toolbar.setBackgroundColor(activity.getThemeColor(R.attr.headerBackgroundColor))
             activity.getThemeColor(R.attr.headerTextColor)
         } else {
             toolbar.setBackgroundColor(activity.getThemeColor(R.attr.colorPrimary))
             activity.getThemeColor(R.attr.toolbarContentColor)
+        }
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            activity.window.statusBarColor = activity.getThemeColor(R.attr.colorPrimaryDark)
         }
         val colorFilter = PorterDuffColorFilter(toolbarIconsColor, PorterDuff.Mode.MULTIPLY)
         for (i in 0 until toolbar.childCount) {
