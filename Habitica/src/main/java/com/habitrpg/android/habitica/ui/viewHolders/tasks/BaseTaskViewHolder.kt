@@ -265,11 +265,6 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
                                 onRightActionTouched()
                                 return true
                             }
-                        } else if ((motionEvent.y > (checkboxHolder.height + 5.dpToPx(context)))) {
-                            if (motionEvent.x <= 72.dpToPx(context)) {
-                                onLeftActionTouched()
-                                return true
-                            }
                         }
                     }
                 }

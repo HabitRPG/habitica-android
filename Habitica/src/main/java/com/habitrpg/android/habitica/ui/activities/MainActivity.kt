@@ -139,7 +139,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     var drawerToggle: ActionBarDrawerToggle? = null
     private var resumeFromActivity = false
     private var userQuestStatus = UserQuestStatus.NO_QUEST
-    private var lastNotificationOpen: Int? = null
+    private var lastNotificationOpen: Long? = null
 
     val userID: String
         get() = user?.id ?: ""
@@ -354,6 +354,9 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     override fun onResume() {
         super.onResume()
 
+        val navigationController = findNavController(R.id.nav_host_fragment)
+        MainNavigationController.setup(navigationController)
+
         if(!resumeFromActivity){
             retrieveUser()
             this.checkMaintenance()
@@ -366,8 +369,8 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
             putBoolean("preventDailyReminder", false)
         }
 
-        if (intent.hasExtra("notificationIdentifier") && lastNotificationOpen != intent.getIntExtra("notificationTimeStamp", 0)) {
-            lastNotificationOpen = intent.getIntExtra("notificationTimeStamp", 0)
+        if (intent.hasExtra("notificationIdentifier") && lastNotificationOpen != intent.getLongExtra("notificationTimeStamp", 0)) {
+            lastNotificationOpen = intent.getLongExtra("notificationTimeStamp", 0)
             val identifier = intent.getStringExtra("notificationIdentifier") ?: ""
             val additionalData = HashMap<String, Any>()
             additionalData["identifier"] = identifier
@@ -379,8 +382,6 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         launchTrace?.stop()
         launchTrace = null
 
-        val navigationController = findNavController(R.id.nav_host_fragment)
-        MainNavigationController.setup(navigationController)
 
         if (binding.toolbarTitle.text?.isNotBlank() != true) {
             navigationController.currentDestination?.let { updateToolbarTitle(it, null) }
