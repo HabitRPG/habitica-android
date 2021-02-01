@@ -201,7 +201,7 @@
     <string name="login_btn_apple">Увійти з Apple</string>
     <string name="about_source_code">Джерело коду</string>
     <string name="about_bugreport">Сповістіть про помилку</string>
-    <string name="about_give_us_feedback">Надішліть нам відгук</string>
+    <string name="about_give_us_feedback">Надішліть нам відгук!</string>
     <string name="about_rate_our_app">Оцініть наш застосунок</string>
     <string name="empty_title_habits">Ви не маєте жодної звички</string>
     <string name="clear">Очистити</string>
@@ -1035,7 +1035,7 @@
     <string name="no_notifications_text">Феї повідомлень вам тихо аплодують! Відмінно!</string>
     <string name="gift_confirmation_text_sub">Ви вислали %s %s-мвсячну підписку на Habitica.</string>
     <string name="gift_gems_subtitle">Виберіть пакет самоцвітів, який ви хочете подарувати!</string>
-    <string name="usernamePromptDisclaimer">Імена користувачів повинні відповідати нашим &lt;a href=\"https://habitica.com/static/terms\"&gt; Умовам обслуговування &gt; і &lt;a href=\"https://habitica.com/static/community-guidelines\"&gt; Правилам спільноти &lt;/a&gt;. Якщо ви раніше не вибирали ім\'я користувача, це значит, що воно було згенеровано автоматично.<a href="https://habitica.com/static/terms">Terms of Service</a> and <a href="https://habitica.com/static/community-guidelines">Community Guidelines</a>. If you didn’t previously set a login name, your username was auto-generated.</string>
+    <string name="usernamePromptDisclaimer">Імена користувачів повинні відповідати нашим <a href="https://habitica.com/static/terms"> Умовам обслуговування </a> і <a href="https://habitica.com/static/community-guidelines"> Правилам спільноти </a>. Якщо ви раніше не вибирали ім\'я користувача, це значит, що воно було згенеровано автоматично.</string>
     <string name="usernamePromptWiki">Якщо ви хочете дізнатися більше про цю зміну, <a href="https://habitica.wikia.com/wiki/Player_Names">visit our wiki.</a></string>
     <string name="usernamePromptBody">Імена для входу тепер є унікальними іменами користувачів, які відображатимуться поруч із вашим ніком і будуть використовуватися для запрошень, чату @ згадок та обміну повідомленнями.</string>
     <string name="total_checkins">Усього відвідувань</string>
@@ -1083,11 +1083,11 @@
     <string name="mana_description">Очки мани розблоковуються системою класів на рівні 10 і дозволяють **використовувати навички**, коли ви починаєте вивчати їх на рівні 11.
 \n
 \nДеякі **ОМ відновлюються** при денному скиданні щодня, але ви можете повернути більше, виконуючи завдання або використовуючи вміння класу мага.</string>
-    <string name="gold_description">"Золото це **головна валюта** у Хабітиці, яка дозволяє купувати певні: спорядження, квести, предмети, або навіть особливі нагороди, що ви додаєте самостійно.
+    <string name="gold_description">Золото це **головна валюта** у Хабітиці, яка дозволяє купувати певні: спорядження, квести, предмети, або навіть особливі нагороди, що ви додаєте самостійно.
 \n
 \n**Отримуйте Золото** шляхом завершення задач та квестів, або шляхом класових навичок. **Очки сприйняття** збільшують кількість отримуваного золота.
 \n
-\nЯкщо ви підпишетесь на  Хабітику, Ви навіть можете використовувати Золото для придбання ряду дорогоцінних каменів, що визначається тривалістю підписки."</string>
+\nЯкщо ви підпишетесь на Хабітику, Ви навіть можете використовувати Золото для придбання ряду дорогоцінних каменів, що визначається тривалістю підписки.</string>
     <string name="experience_description">Очки досвіду представляють ваш прогрес і дозволяють вам підвищити рівень. В основному, ви будете **отримувати** досвід за закінчення задач або квестів, а крім цього, деякі класові навички дають досвід.
 \n
 \nЗавдання більшої складності, або червоні завдання будуть давати **більше досвіду**. **Рівень інтелекту** також підвищує ваш коефіцієнт посилення досвіду.</string>
@@ -1120,7 +1120,7 @@
     <string name="invited_to_quest">Вас запросили на квест <b>%1$s</b></string>
     <string name="invited_to_private_guild">Вас запросили приєднатися до приватної гільдії <b>%1$s</b></string>
     <string name="invited_to_party_notification">Вас запросили до команди <b>%1$s</b></string>
-    <string name="gift_confirmation_text_sub_g1g1">"Ви відправили  %s %s-місячну підписку Habitica. Ця ж підписка була застосована до вашого облікового запису, завдяки участі в акції «Подаруйте підписку, отримайте підписку»!"</string>
+    <string name="gift_confirmation_text_sub_g1g1">Ви відправили %s %s-місячну підписку Habitica. Ця ж підписка була застосована до вашого облікового запису, завдяки участі в акції «Подаруйте підписку, отримайте підписку»!</string>
     <string name="gift_subscription_subtitle">Виберіть підписку, яку хочете подарувати внизу! Ця покупка не буде продовжена автоматично.</string>
     <string name="gift_one_get_one_detailed_description">Допоки ця акція активна, ви отримуєте відповідну підписку автоматично після відправки подарунка.</string>
     <string name="confirm_username_description">Підтвердження свого Ім\'я користувача дає змогу приймати запрошення, @згадки і повідомлення. Ви можете змінити своє Ім\'я користувача в будь-який час в налаштуваннях.</string>
