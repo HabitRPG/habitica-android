@@ -421,6 +421,10 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
         return apiService.postTaskDirection(id, direction).compose(configureApiCallObserver())
     }
 
+    override fun bulkScoreTasks(data: List<Map<String, String>>): Flowable<BulkTaskScoringData> {
+        return apiService.bulkScoreTasks(data).compose(configureApiCallObserver())
+    }
+
     override fun postTaskNewPosition(id: String, position: Int): Flowable<List<String>> {
         return apiService.postTaskNewPosition(id, position).compose(configureApiCallObserver())
     }
