@@ -189,14 +189,27 @@ class YesterdailyDialog private constructor(context: Context, private val userRe
                         }
                         .retry(1)
                         .throttleFirst(2, TimeUnit.SECONDS)
-                        .subscribe(Consumer { tasks ->
+                        .filter {
                             if (isDisplaying) {
-                                return@Consumer
+                                return@filter false
                             }
 
                             if (abs((lastCronRun?.time ?: 0) - Date().time) < 60 * 60 * 1000L) {
-                                return@Consumer
+                                return@filter false
                             }
+                            return@filter true
+                        }
+                        .firstElement()
+                        .zipWith(taskRepository.getTasks(Task.TYPE_DAILY).firstElement()
+                                .map {
+                                    val taskMap = mutableMapOf<String, Int>()
+                                    it.forEachIndexed { index, task -> taskMap[task.id ?: ""] = index }
+                                    taskMap
+                                }
+                        ) { yesterdayTasks, dailies ->
+                            yesterdayTasks.sortedBy { dailies[it.id ?: ""] }
+                        }
+                        .subscribe({ tasks ->
                             val additionalData = HashMap<String, Any>()
                             additionalData["task count"] = tasks.size
                             AmplitudeManager.sendEvent("show cron", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT, additionalData)
