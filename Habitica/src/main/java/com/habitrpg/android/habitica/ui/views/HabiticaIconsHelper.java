@@ -630,11 +630,14 @@ public class HabiticaIconsHelper {
     }
 
     public static Bitmap imageOfLocked(@ColorInt int lockColor) {
-        Bitmap imageOfLocked = Bitmap.createBitmap(scaleSize(15), scaleSize(17), Bitmap.Config.ARGB_8888);
+        return imageOfLocked(lockColor, 15, 17);
+    }
+
+        public static Bitmap imageOfLocked(@ColorInt int lockColor, int width, int height) {
+        Bitmap imageOfLocked = Bitmap.createBitmap(scaleSize(width), scaleSize(height), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(imageOfLocked);
         canvas.scale(displayDensity, displayDensity);
-        HabiticaIcons.drawLocked(canvas, lockColor);
-
+        HabiticaIcons.drawLocked(canvas, new RectF(0f, 0f, width, height), HabiticaIcons.ResizingBehavior.AspectFit, lockColor);
         return imageOfLocked;
     }
 

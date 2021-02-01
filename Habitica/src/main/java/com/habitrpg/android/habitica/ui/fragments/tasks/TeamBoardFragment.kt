@@ -223,6 +223,7 @@ class TeamBoardFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchVi
                 }
                 fragment.ownerID = teamID
                 fragment.canEditTasks = false
+                fragment.canScoreTaks = false
                 fragment.refreshAction = {
                     compositeSubscription.add(userRepository.retrieveTeamPlan(teamID)
                             .doOnTerminate {

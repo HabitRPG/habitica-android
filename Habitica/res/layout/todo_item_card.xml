@@ -46,6 +46,13 @@
                         android:layout_gravity="center"
                         android:scaleType="center"
                         android:src="@drawable/checkmark" />
+                    <ImageView
+                        android:id="@+id/lock_view"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_gravity="center"
+                        android:scaleType="center"
+                        android:src="@drawable/checkmark" />
                 </FrameLayout>
                 <include layout="@layout/task_main_content" />
                 <ProgressBar

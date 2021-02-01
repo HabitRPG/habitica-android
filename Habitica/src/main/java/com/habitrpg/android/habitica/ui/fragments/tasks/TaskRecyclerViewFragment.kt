@@ -32,6 +32,7 @@ import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.activities.TaskFormActivity
+import com.habitrpg.android.habitica.ui.adapter.BaseRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.adapter.tasks.*
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
@@ -47,6 +48,7 @@ import javax.inject.Named
 
 open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBinding>(), androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener {
     internal var canEditTasks: Boolean = true
+    internal var canScoreTaks: Boolean = true
     override var binding: FragmentRefreshRecyclerviewBinding? = null
 
     override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentRefreshRecyclerviewBinding {
@@ -83,7 +85,7 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
 
     // TODO needs a bit of cleanup
     private fun setInnerAdapter() {
-        val adapter: RecyclerView.Adapter<*>? = when (this.classType) {
+        val adapter: BaseRecyclerViewAdapter<*, *>? = when (this.classType) {
             Task.TYPE_HABIT -> {
                 HabitsRecyclerViewAdapter(null, true, R.layout.habit_item_card, taskFilterHelper)
             }
@@ -100,6 +102,7 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
         }
 
         recyclerAdapter = adapter as? TaskRecyclerViewAdapter
+        recyclerAdapter?.canScoreTasks = canScoreTaks
         binding?.recyclerView?.adapter = adapter
 
         context?.let { recyclerAdapter?.taskDisplayMode = configManager.taskDisplayMode(it) }

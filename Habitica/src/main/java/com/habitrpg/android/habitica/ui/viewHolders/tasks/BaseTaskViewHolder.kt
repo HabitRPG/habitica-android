@@ -31,6 +31,7 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
     var task: Task? = null
     var movingFromPosition: Int? = null
     var errorButtonClicked: Action? = null
+    var isLocked = false
     protected var context: Context
     private val mainTaskWrapper: ViewGroup = itemView.findViewById(R.id.main_task_wrapper)
     protected val titleTextView: EllipsisTextView = itemView.findViewById(R.id.checkedTextView)

@@ -8,6 +8,7 @@ import io.realm.OrderedRealmCollection
 import io.realm.RealmResults
 
 interface TaskRecyclerViewAdapter {
+    var canScoreTasks: Boolean
     var data: List<Task>
     var ignoreUpdates: Boolean
 

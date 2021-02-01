@@ -1,6 +1,8 @@
 package com.habitrpg.android.habitica.ui.viewHolders.tasks
 
+import android.graphics.Color
 import android.graphics.PorterDuff
+import android.graphics.drawable.BitmapDrawable
 import android.view.View
 import android.widget.Button
 import android.widget.FrameLayout
@@ -10,6 +12,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.setTintWith
 import com.habitrpg.android.habitica.models.responses.TaskDirection
 import com.habitrpg.android.habitica.models.tasks.Task
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 
 class HabitViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> Unit), openTaskFunc: ((Task) -> Unit), brokenTaskFunc: ((Task) -> Unit)) : BaseTaskViewHolder(itemView, scoreTaskFunc, openTaskFunc, brokenTaskFunc) {
 
@@ -30,7 +33,11 @@ class HabitViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> U
     override fun bind(data: Task, position: Int, displayMode: String) {
         this.task = data
         if (data.up == true) {
-            val plusIcon = ContextCompat.getDrawable(context, R.drawable.habit_plus)
+            val plusIcon = if (isLocked) {
+                BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfLocked(ContextCompat.getColor(context, R.color.white), 10, 12))
+            } else {
+                ContextCompat.getDrawable(context, R.drawable.habit_plus)
+            }
             plusIcon?.setTintWith(context, R.color.white)
             this.btnPlusIconView.setImageDrawable(plusIcon)
             val drawable = ContextCompat.getDrawable(context, R.drawable.habit_circle)
@@ -42,7 +49,11 @@ class HabitViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> U
             this.btnPlus.isClickable = true
         } else {
             this.btnPlusWrapper.setBackgroundResource(R.color.habit_inactive_gray)
-            val plusIcon = ContextCompat.getDrawable(context, R.drawable.habit_plus)
+            val plusIcon = if (isLocked) {
+                BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfLocked(ContextCompat.getColor(context, R.color.content_background_offset), 10, 12))
+            } else {
+                ContextCompat.getDrawable(context, R.drawable.habit_plus)
+            }
             plusIcon?.setTint(ContextCompat.getColor(context, R.color.content_background_offset))
             plusIcon?.setTintMode(PorterDuff.Mode.MULTIPLY)
             this.btnPlusIconView.setImageDrawable(plusIcon)
@@ -53,7 +64,11 @@ class HabitViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> U
 
         if (data.down == true) {
             this.btnMinusWrapper.setBackgroundResource(data.lightTaskColor)
-            val minusIcon = ContextCompat.getDrawable(context, R.drawable.habit_minus)
+            val minusIcon = if (isLocked) {
+                BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfLocked(ContextCompat.getColor(context, R.color.white), 10, 12))
+            } else {
+                ContextCompat.getDrawable(context, R.drawable.habit_minus)
+            }
             minusIcon?.setTint(ContextCompat.getColor(context, R.color.white))
             minusIcon?.setTintMode(PorterDuff.Mode.MULTIPLY)
             this.btnMinusIconView.setImageDrawable(minusIcon)
@@ -66,7 +81,11 @@ class HabitViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> U
             this.btnMinus.isClickable = true
         } else {
             this.btnMinusWrapper.setBackgroundResource(R.color.habit_inactive_gray)
-            val minusIcon = ContextCompat.getDrawable(context, R.drawable.habit_minus)
+            val minusIcon = if (isLocked) {
+                BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfLocked(ContextCompat.getColor(context, R.color.content_background_offset), 10, 12))
+            } else {
+                ContextCompat.getDrawable(context, R.drawable.habit_minus)
+            }
             minusIcon?.setTint(ContextCompat.getColor(context, R.color.content_background_offset))
             minusIcon?.setTintMode(PorterDuff.Mode.MULTIPLY)
             this.btnMinusIconView.setImageDrawable(minusIcon)
