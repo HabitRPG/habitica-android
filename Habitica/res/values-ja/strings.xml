@@ -1059,4 +1059,16 @@
     <string name="suggest_pet_hatch_again_missing_both">このペットをもう一度孵化するには%sのたまごと%sたまごがえしの薬が必要です</string>
     <string name="suggest_pet_hatch_again_missing_egg">このペットをもう一度孵化するには%sのたまごが必要です</string>
     <string name="suggest_pet_hatch_missing_egg">このペットの孵化には%sのたまごが必要です</string>
+    <string name="first_drop_explanation2">「アイテム」メニューから新しいたまごにたまごがえしの薬を使ってみましょう！</string>
+    <string name="first_drop_explanation1">タスクを完了することで、たまご・たまごがえしの薬・ペットのえさなどのアイテムを見つけるチャンスが与えられます。</string>
+    <string name="purchasedEquipmentTitle">装備を買う</string>
+    <string name="fedPetTitle">ペットにえさをやる</string>
+    <string name="hatchedPetTitle">ペットをかえす</string>
+    <string name="completedTaskTitle">タスクを完了する</string>
+    <string name="createdTaskTitle">最初のタスクを作成する</string>
+    <string name="purchase_equipment_description">「装備」はアバターをカスタマイズしたりステータスを強化したりできる要素です</string>
+    <string name="feedPet_description">えさを手に入れるためにタスクを完了させましょう！「ペットと乗騎」から、ペットにえさをやることができます</string>
+    <string name="hatch_pet_description">タスクを完了させて魔法のたまごがえしの薬を手に入れ、ペットを孵化させましょう！</string>
+    <string name="complete_task_description">ごほうびをもらうためにいずれかのタスクをチェックしましょう</string>
+    <string name="create_task_description">今週中に達成したいことをタスクとして追加しましょう</string>
 </resources>
