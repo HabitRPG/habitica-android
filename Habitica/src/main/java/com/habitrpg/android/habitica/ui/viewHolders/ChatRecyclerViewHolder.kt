@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ChatItemBinding
 import com.habitrpg.android.habitica.databinding.TavernChatIntroItemBinding
+import com.habitrpg.android.habitica.events.ShowSnackbarEvent
 import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.extensions.getAgoString
 import com.habitrpg.android.habitica.extensions.setScaledPadding
@@ -25,7 +26,9 @@ import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
 import com.habitrpg.android.habitica.models.members.Member
+import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
+import org.greenrobot.eventbus.EventBus
 
 open class ChatRecyclerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
@@ -69,19 +72,14 @@ class ChatRecyclerMessageViewHolder(itemView: View, private var userId: String, 
         itemView.setOnClickListener {
             onShouldExpand?.invoke()
         }
-        binding.tvLikes.setOnClickListener { chatMessage?.let {
-            if(it.uuid != userId) {
-                onLikeMessage?.invoke(it)
-            }
-            else {
-                val context = context
-                if (context != null) {
-                    val alert = HabiticaAlertDialog(context)
-                    alert.setMessage("Can't like your own message. Don't be that person.")
-                    alert.addButton(R.string.ok, true)
-                    alert.show()
+        binding.tvLikes.setOnClickListener {
+            chatMessage?.let {
+                if(it.uuid != userId) {
+                    onLikeMessage?.invoke(it)
+                } else {
+                    val event = ShowSnackbarEvent(context.getString(R.string.cant_like_own_message), HabiticaSnackbar.SnackbarDisplayType.FAILURE)
+                    EventBus.getDefault().post(event)
                 }
-            }
             }
         }
         binding.messageText.setOnClickListener { onShouldExpand?.invoke() }
