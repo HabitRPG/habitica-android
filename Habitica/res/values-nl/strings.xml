@@ -106,7 +106,7 @@
     <string name="members">Leden</string>
     <string name="habits">Gewoontes</string>
     <string name="dailies">Dagelijkse taken</string>
-    <string name="todos">To-do\'s</string>
+    <string name="todos">To-Do\'s</string>
     <string name="rewards">Beloningen</string>
     <string name="yes">Ja</string>
     <string name="no">Nee</string>
@@ -305,7 +305,7 @@
     <string name="add_task">Voeg taak toe</string>
     <string name="add_habit">Voeg Gewoonte toe</string>
     <string name="add_daily">Voeg Dagelijkse taak toe</string>
-    <string name="add_todo">Voeg To-do toe</string>
+    <string name="add_todo">Voeg To-Do toe</string>
     <string name="add_reward">Voeg Beloning toe</string>
     <string name="all_dailies_completed">Je hebt al je Dagelijkse taken voltooid. Goed gedaan!</string>
     <string name="widget_habit_button">Habitica Doe Gewoonte</string>
@@ -382,7 +382,7 @@
     <string name="daily">Dagelijkse taak</string>
     <string name="habit">Gewoonte</string>
     <string name="reward">Beloning</string>
-    <string name="todo">To-do</string>
+    <string name="todo">To-Do</string>
     <string name="official">Officieel</string>
     <string name="challenge">Uitdaging</string>
     <string name="not_part_of_a_challenge">Je maakt geen deel uit van uitdagingen op dit moment!</string>
@@ -427,7 +427,7 @@
     <string name="empty_description_habits">Gewoontes zijn taken die geen vast schema hebben. Je kan ze meerdere keren per dag afvinken of helemaal niet.</string>
     <string name="empty_title_dailies">Je hebt geen dagelijkse taken</string>
     <string name="empty_description_dailies">Dagelijkse taken zijn taken die op een vast schema herhalen. Kies de routine die voor jou werkt!</string>
-    <string name="empty_title_todos">Je hebt geen to-do\'s</string>
+    <string name="empty_title_todos">Je hebt geen To-Do\'s</string>
     <string name="empty_description_todos">To-do\'s zijn taken die slechts één keer voltooid moeten worden. Voeg checklijsten aan je to-do\'s toe om hun waarde te verhogen.</string>
     <string name="empty_title_rewards">Je hebt geen beloningen</string>
     <string name="reset_walkthrough">Herstart Handleiding</string>
@@ -634,7 +634,7 @@
     <string name="total_checkins">Totaal aantal Check-ins</string>
     <string name="two_handed">Tweehandig</string>
     <string name="usernamePromptTitle">Het is tijd om een gebruikersnaam te kiezen</string>
-    <string name="usernamePromptWiki">Als je meer te weten wil komen over deze verandering, <a href="https://habitica.wikia.com/wiki/Player_Names">bezoek onze wiki.</a></string>
+    <string name="usernamePromptWiki">Als je meer te weten wil komen over deze verandering, <a href="https://habitica.fandom.com/wiki/Player_Names">bezoek onze wiki.</a></string>
     <string name="confirm_username_title">Weet je zeker dat je jou huidige gebruikersnaam wilt bevestigen?</string>
     <string name="cancel">Annuleren</string>
     <string name="confirm_username">Bevestig gebruikersnaam</string>
@@ -857,7 +857,7 @@
     <string name="guild_summary">Gilde samenvatting</string>
     <string name="setup_task_habit_2_notes">Of verwijder het uit het bewerkingsscherm</string>
     <string name="setup_task_habit_2">Tik hier om dit wijzigen in een slechte gewoonte waarmee je wilt stoppen</string>
-    <string name="setup_task_habit_1_notes">Ofwel een gewoonte, een dagelijkse taak of een to-do</string>
+    <string name="setup_task_habit_1_notes">Ofwel een gewoonte, een dagelijkse taak of een To-Do</string>
     <string name="setup_task_habit_1">Voeg een taak toe aan Habitica</string>
     <string name="cost">Kosten</string>
     <string name="joined_guild">Je bent lid geworden van de gilde</string>
@@ -1014,4 +1014,17 @@
 \n**Perceptie (PER)** verhoogt de hoeveelheid goud die je verdient en de kans om voorwerpen te vinden. Dieven en Magiërs krijgen extra PER van hun klasse-specifieke uitrusting.
 \n
 \nVanaf level 10 ontvang je 1 Stat punt voor ieder level dat je bereikt, deze kun je in iedere Stat naar keuze steken. Je kunt ook uitrusting gebruiken die verschillende combinaties van stat verhogingen geeft.</string>
+    <string name="premium_currency">Premium Betaalmiddel</string>
+    <string name="currency">Betaalmiddel</string>
+    <string name="game_mechanics">Spelmechanisme</string>
+    <string name="common_questions">Veelvoorkomende Vragen</string>
+    <string name="stat_allocation">Toewijzing Eigenschapspunten</string>
+    <string name="mana_description">Mana punten worden vrijgespeeld in het klasse systeem op level 10, en stellen je in staat om **Vaardigheden te gebruiken** zodra je ze begint te leren op level 11.
+\n
+\nEen gedeelte van je **MP worden aangevuld** bij de dagelijkse reset, maar je krijgt er meer terug door taken af te ronden of de Magiër klassevaardigheid te gebruiken.</string>
+    <string name="gold_description">Goud is de **voornaamste valuta** in Habitica en stelt je in staat om bepaalde uitrustingen, kweestes, voorwerpen of zelfs op maat ingestelde beloningen voor jezelf te kopen.
+\n
+\n**Verdien Goud** door taken en kweestes af te ronden, en met sommige klassevaardigheden. Een hogere **Perceptie stat** zorgt voor een hogere goudopbrengst.
+\n
+\nAls je een abonnement neemt op Habitica, kun je Goud zelfs gebruiken om een aantal Edelstenen te kopen, gebaseerd op de tijdsduur van je abonnement.</string>
 </resources>
