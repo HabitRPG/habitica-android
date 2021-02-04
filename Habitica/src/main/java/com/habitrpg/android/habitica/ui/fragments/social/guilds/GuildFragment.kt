@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica.ui.fragments.social
+package com.habitrpg.android.habitica.ui.fragments.social.guilds
 
 import android.app.Activity
 import android.content.Intent
@@ -14,6 +14,8 @@ import com.habitrpg.android.habitica.databinding.FragmentViewpagerBinding
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.ui.activities.GroupFormActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
+import com.habitrpg.android.habitica.ui.fragments.social.ChatFragment
+import com.habitrpg.android.habitica.ui.fragments.social.guilds.GuildFragmentArgs
 import com.habitrpg.android.habitica.ui.viewmodels.GroupViewModel
 import com.habitrpg.android.habitica.ui.viewmodels.GroupViewType
 

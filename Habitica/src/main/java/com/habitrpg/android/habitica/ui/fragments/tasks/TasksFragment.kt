@@ -244,13 +244,9 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
     }
 
     private fun updateFilterIcon() {
-        if (filterMenuItem == null) {
-            return
-        }
-        var filterCount = 0
-        if (activeFragment != null) {
-            filterCount = taskFilterHelper.howMany(activeFragment?.classType)
-        }
+        val filterCount = taskFilterHelper.howMany(activeFragment?.classType)
+
+        filterMenuItem?.isVisible = activeFragment?.classType != Task.TYPE_REWARD
         if (filterCount == 0) {
             filterMenuItem?.setIcon(R.drawable.ic_action_filter_list)
             context?.let {

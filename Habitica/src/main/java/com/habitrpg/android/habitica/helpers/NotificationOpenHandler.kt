@@ -61,7 +61,7 @@ class NotificationOpenHandler {
 
         private fun openGuildDetailScreen(groupID: String?) {
             if (groupID?.isNotEmpty() != true) {
-                MainNavigationController.navigate(R.id.guildsOverviewFragment)
+                MainNavigationController.navigate(R.id.guildOverviewFragment)
             } else {
                 MainNavigationController.navigate(R.id.guildFragment, bundleOf("groupID" to groupID))
             }

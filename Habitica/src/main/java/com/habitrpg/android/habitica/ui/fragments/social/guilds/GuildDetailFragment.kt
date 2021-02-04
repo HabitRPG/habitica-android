@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica.ui.fragments.social
+package com.habitrpg.android.habitica.ui.fragments.social.guilds
 
 import android.app.Activity
 import android.content.Intent

@@ -1138,5 +1138,6 @@
     <string name="twelve_months_one_time">12 month one-time subscription</string>
     <string name="sidebar_teams">Teams</string>
     <string name="team_information">Team Information</string>
-    <string name="mystery_item_title">You open the box and find...</string>
+    <string name="mystery_item_title">You open the box and find…</string>
+    <string name="cant_like_own_message">Can\'t like your own messages.</string>
 </resources>

@@ -77,7 +77,9 @@ class ChatRecyclerMessageViewHolder(itemView: View, private var userId: String, 
                 if(it.uuid != userId) {
                     onLikeMessage?.invoke(it)
                 } else {
-                    val event = ShowSnackbarEvent(context.getString(R.string.cant_like_own_message), HabiticaSnackbar.SnackbarDisplayType.FAILURE)
+                    val event = ShowSnackbarEvent()
+                    event.text = context.getString(R.string.cant_like_own_message)
+                    event.type = HabiticaSnackbar.SnackbarDisplayType.FAILURE
                     EventBus.getDefault().post(event)
                 }
             }

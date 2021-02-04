@@ -834,4 +834,31 @@ public class HabiticaIconsHelper {
 
         return imageOfSpookyGemPromoBG;
     }
+
+    public static Bitmap imageOfGuildCrest(Context context, boolean isOwner, boolean isPublic, float memberCount, String memberCountLabel) {
+        Bitmap imageOfGuildCrest = Bitmap.createBitmap(scaleSize(40), scaleSize(38), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(imageOfGuildCrest);
+        canvas.scale(displayDensity, displayDensity);
+        HabiticaIcons.drawGuildCrest(canvas, context, isOwner, isPublic, memberCount, memberCountLabel);
+
+        return imageOfGuildCrest;
+    }
+
+    public static Bitmap imageOfGuildCrestMedium(float memberCount) {
+        Bitmap imageOfGuildCrestMedium = Bitmap.createBitmap(scaleSize(30), scaleSize(34), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(imageOfGuildCrestMedium);
+        canvas.scale(displayDensity, displayDensity);
+        HabiticaIcons.drawGuildCrestMedium(canvas, memberCount);
+
+        return imageOfGuildCrestMedium;
+    }
+
+    public static Bitmap imageOfGuildCrestSmall(float memberCount) {
+        Bitmap imageOfGuildCrestSmall = Bitmap.createBitmap(scaleSize(16), scaleSize(16), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(imageOfGuildCrestSmall);
+        canvas.scale(displayDensity, displayDensity);
+        HabiticaIcons.drawGuildCrestSmall(canvas, memberCount);
+
+        return imageOfGuildCrestSmall;
+    }
 }

@@ -73,13 +73,15 @@
             <ImageView
                 android:layout_width="18dp"
                 android:layout_height="20dp"
-                android:src="@drawable/dialogue_participants" />
+                android:src="@drawable/dialogue_participants"
+                app:tint="@color/text_ternary"/>
 
             <TextView
                 android:id="@+id/participantCount"
                 style="@style/ChallengeTaskDetails"
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"
+                android:textColor="@color/text_ternary"
                 android:layout_marginStart="@dimen/spacing_small"
                 android:gravity="center_vertical"
                 tools:text="12334" />

@@ -10336,7 +10336,7 @@ public class HabiticaIcons {
         labelTextPaint.setColor(crestColor5);
         GlobalCache.helveticaNeue.setTtcIndex(0);
         labelTextPaint.setTypeface(GlobalCache.helveticaNeue.build());
-        labelTextPaint.setTextSize(12f);
+        labelTextPaint.setTextSize(10f);
         StaticLayout labelStaticLayout = CacheForGuildCrest.labelStaticLayout.get((int) labelRect.width(), Layout.Alignment.ALIGN_CENTER, memberCountLabel, labelTextPaint);
         canvas.save();
         canvas.clipRect(labelRect);
