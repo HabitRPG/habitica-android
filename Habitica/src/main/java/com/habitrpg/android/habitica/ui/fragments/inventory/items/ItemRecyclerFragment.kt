@@ -108,6 +108,7 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
                         }, RxErrorHandler.handleEmptyError()))
                 compositeSubscription.add(adapter.getOpenMysteryItemFlowable()
                         .flatMap { inventoryRepository.openMysteryItem(user) }
+                        .flatMap { inventoryRepository.getEquipment(it.key ?: "") }
                         .doOnNext {
                             val activity = activity as? MainActivity
                             if (activity != null) {
