@@ -108,7 +108,6 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
                         }, RxErrorHandler.handleEmptyError()))
                 compositeSubscription.add(adapter.getOpenMysteryItemFlowable()
                         .flatMap { inventoryRepository.openMysteryItem(user) }
-                        .flatMap { inventoryRepository.getEquipment(it.key ?: "") }
                         .doOnNext {
                             val activity = activity as? MainActivity
                             if (activity != null) {
@@ -125,7 +124,6 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
                                 dialog.enqueue()
                             }
                         }
-                        .flatMap { userRepository.retrieveUser(false) }
                         .subscribe({ }, RxErrorHandler.handleEmptyError()))
                 compositeSubscription.add(adapter.startHatchingEvents.subscribeWithErrorHandler { showHatchingDialog(it) })
                 compositeSubscription.add(adapter.hatchPetEvents.subscribeWithErrorHandler { hatchPet(it.first, it.second) })
