@@ -13,8 +13,6 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.extensions.layoutInflater
-import com.habitrpg.android.habitica.helpers.MainNavigationController
-import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengesOverviewFragmentDirections
 import com.habitrpg.android.habitica.ui.views.login.LockableScrollView
 import com.plattysoft.leonids.ParticleSystem
 import kotlinx.coroutines.Dispatchers
@@ -265,7 +263,13 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
                         .setSpeedByComponentsRange(-0.15f, 0.15f, -0.1f, -0.5f)
                         .setFadeOut(200, AccelerateInterpolator())
                         .emitWithGravity(titleTextView, Gravity.BOTTOM, 10, 2000)
-                ParticleSystem(confettiContainer, 40, ContextCompat.getDrawable(context, R.drawable.confetti_green), 3000)
+                ParticleSystem(confettiContainer, 40, ContextCompat.getDrawable(context, R.drawable.confetti_yellow), 3000)
+                        .setAcceleration(0.00013f, 90)
+                        .setRotationSpeed(144f)
+                        .setSpeedByComponentsRange(-0.15f, 0.15f, -0.1f, -0.5f)
+                        .setFadeOut(200, AccelerateInterpolator())
+                        .emitWithGravity(titleTextView, Gravity.BOTTOM, 10, 2000)
+                ParticleSystem(confettiContainer, 40, ContextCompat.getDrawable(context, R.drawable.confetti_purple), 3000)
                         .setAcceleration(0.00013f, 90)
                         .setRotationSpeed(144f)
                         .setSpeedByComponentsRange(-0.15f, 0.15f, -0.1f, -0.5f)
