@@ -1071,4 +1071,18 @@
     <string name="hatch_pet_description">タスクを完了させて魔法のたまごがえしの薬を手に入れ、ペットを孵化させましょう！</string>
     <string name="complete_task_description">ごほうびをもらうためにいずれかのタスクをチェックしましょう</string>
     <string name="create_task_description">今週中に達成したいことをタスクとして追加しましょう</string>
+    <string name="magic_potions">魔法の薬</string>
+    <string name="hatch_pet_again">もう一度ペットをかえす</string>
+    <string name="unhatched_pet">たまごからかえっていないペット</string>
+    <string name="hatch_pet">ペットをかえす</string>
+    <string name="view_onboarding_tasks">「初心者入門のタスク」を見る</string>
+    <string name="equip">装備</string>
+    <string name="excessItemsNoneLeft">すでに%sペットは全て所有しています。本当に%d%ssを購入しますか？</string>
+    <string name="purchaseX">%dを買う</string>
+    <string name="excessItemsXLeft">今孵せるペットに必要なのは%d%sだけです。本当に%dを購入しますか？</string>
+    <string name="excess_items">あまったアイテム</string>
+    <string name="onboardingComplete_achievement_title">初心者入門のタスクを完了しました！</string>
+    <string name="onboardingCompleteDescription">もっとほしいなら、実績を確認してコレクションをはじめましょう！</string>
+    <string name="first_drop_title">新しいアイテムを見つけました！</string>
+    <string name="go_to_items">「アイテム」へ</string>
 </resources>
