@@ -1085,4 +1085,27 @@
     <string name="onboardingCompleteDescription">もっとほしいなら、実績を確認してコレクションをはじめましょう！</string>
     <string name="first_drop_title">新しいアイテムを見つけました！</string>
     <string name="go_to_items">「アイテム」へ</string>
+    <string name="spooky_promo_info_prompt">ジェムのセールが今年の秋の大祭に出没するために戻ってきました！いつもよりもジェムを多く手に入れるラストチャンスです。キャンペーンの間にジェムをストックしておきましょう！</string>
+    <string name="spooky_promo_info_limitations">このキャンペーンは季節限定イベントの間のみの実施です。このイベントはの10月29日の21:00時 (12:00 UTC)に始まり、11月2日の09:00時(00:00 UTC)に終了します。キャンペーンの対象は自分へのジェムを購入したときにのみ適用されます。</string>
+    <string name="spooky_promo_info_instructions">9月22日から30日の間、いつものようにジェムセットを買うだけであなたのアカウントにキャンペーンのジェムが贈られます。もっとジェムを使ったりシェアしたり新しい機能のリリースに備えてたくわえておいたりしましょう！</string>
+    <string name="view_gem_bundles">ジェムセットを見る</string>
+    <string name="fall_promo_info_prompt">秋の大祭も最高潮で、はじめてのジェムのセールを皆さんにお知らせするのに最高のタイミングだと我々は考えました！このセールでは、いつもと同じ値段で、いつもよりも多くのジェムが購入できます。</string>
+    <string name="fall_promo_info_limitations">このキャンペーンは季節限定イベントの間のみの実施です。このイベントはの9月の22日21:00時 (12:00 UTC)に始まり、9月30日の09:00時(00:00 UTC)に終了します。キャンペーンの対象は自分へのジェムを購入したときにのみ適用されます。</string>
+    <string name="fall_promo_info_instructions">9月22日から30日の間、いつものようにジェムセットを買うだけであなたのアカウントにキャンペーンのジェムが贈られます。もっとジェムを使ったりシェアしたり新しい機能のリリースに備えてたくわえておいたりしましょう！</string>
+    <string name="limitations">制限事項</string>
+    <string name="how_it_works">機能説明</string>
+    <string name="x_to_y">%sから%sへ</string>
+    <string name="usually_x_gems">通常は%dジェム</string>
+    <string name="pms_disabled_description">あなたはまだメッセージを送ることができますが、誰もあなたにメッセージを送ることはできません。設定からメッセージ機能を再びオンに出来ます。</string>
+    <string name="block_user_title">%sをブロックしますか？</string>
+    <string name="unblock_user">ユーザーのブロックを解除する</string>
+    <string name="block_user">ユーザーをブロックする</string>
+    <string name="mount_category">%s乗騎</string>
+    <string name="pet_category">%sペット</string>
+    <string name="challenge_task_name">「%s 」チャレンジのタスク</string>
+    <string name="delete_challenge_task_title">チャレンジのタスクを削除しますか？</string>
+    <string name="hatch">たまごをかえす</string>
+    <string name="hatch_your_pet">ペットを孵化しましょう</string>
+    <string name="use_saddle">くらを使う</string>
+    <string name="magic_potion">魔法の薬</string>
 </resources>
