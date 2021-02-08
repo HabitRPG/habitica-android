@@ -1139,5 +1139,5 @@
     <string name="sidebar_teams">Teams</string>
     <string name="team_information">Team Information</string>
     <string name="mystery_item_title">You open the Mystery Box and find…</string>
-    <string name="cant_like_own_message">Can\'t like your own messages.</string>
+    <string name="cant_like_own_message">Can\'t like your own messages</string>
 </resources>
