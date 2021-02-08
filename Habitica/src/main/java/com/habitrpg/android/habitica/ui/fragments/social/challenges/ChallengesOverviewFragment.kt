@@ -47,6 +47,11 @@ class ChallengesOverviewFragment : BaseMainFragment<FragmentViewpagerBinding>() 
         setViewPagerAdapter()
     }
 
+    override fun onResume() {
+        super.onResume()
+        getActiveFragment()?.retrieveChallengesPage()
+    }
+
     override fun onDestroy() {
         challengeRepository.close()
         super.onDestroy()
