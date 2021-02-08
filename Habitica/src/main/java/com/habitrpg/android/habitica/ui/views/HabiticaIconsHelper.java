@@ -256,7 +256,7 @@ public class HabiticaIconsHelper {
         if (imageOfPinItem != null)
             return imageOfPinItem;
 
-        int size = scaleSize(40);
+        int size = scaleSize(24);
         imageOfPinItem = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(imageOfPinItem);
         canvas.scale(displayDensity, displayDensity);
@@ -270,7 +270,7 @@ public class HabiticaIconsHelper {
         if (imageOfUnpinItem != null)
             return imageOfUnpinItem;
 
-        int size = scaleSize(40);
+        int size = scaleSize(24);
         imageOfUnpinItem = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(imageOfUnpinItem);
         canvas.scale(displayDensity, displayDensity);
@@ -293,6 +293,20 @@ public class HabiticaIconsHelper {
         return imageOfItemIndicatorNumber;
     }
 
+    private static Bitmap imageOfItemIndicatorNumberDark = null;
+    public static Bitmap imageOfItemIndicatorNumberDark() {
+        if (imageOfItemIndicatorNumberDark != null)
+            return imageOfItemIndicatorNumberDark;
+
+        int size = scaleSize(28);
+        imageOfItemIndicatorNumberDark = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(imageOfItemIndicatorNumberDark);
+        canvas.scale(displayDensity, displayDensity);
+        HabiticaIcons.drawItemIndicator(canvas, Color.parseColor("#C3C0C7"), false, false, true);
+
+        return imageOfItemIndicatorNumberDark;
+    }
+
     private static Bitmap imageOfItemIndicatorLocked = null;
     public static Bitmap imageOfItemIndicatorLocked() {
         if (imageOfItemIndicatorLocked != null)
@@ -304,6 +318,19 @@ public class HabiticaIconsHelper {
         canvas.scale(displayDensity, displayDensity);
         HabiticaIcons.drawItemIndicator(canvas, Color.parseColor("#C3C0C7"), true, false, false);
         return imageOfItemIndicatorLocked;
+    }
+
+    private static Bitmap imageOfItemIndicatorLockedDark = null;
+    public static Bitmap imageOfItemIndicatorLockedDark() {
+        if (imageOfItemIndicatorLockedDark != null)
+            return imageOfItemIndicatorLockedDark;
+
+        int size = scaleSize(28);
+        imageOfItemIndicatorLockedDark = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(imageOfItemIndicatorLockedDark);
+        canvas.scale(displayDensity, displayDensity);
+        HabiticaIcons.drawItemIndicator(canvas, Color.parseColor("#C3C0C7"), true, false, true);
+        return imageOfItemIndicatorLockedDark;
     }
 
     private static Bitmap imageOfItemIndicatorLimited = null;
@@ -603,11 +630,14 @@ public class HabiticaIconsHelper {
     }
 
     public static Bitmap imageOfLocked(@ColorInt int lockColor) {
-        Bitmap imageOfLocked = Bitmap.createBitmap(scaleSize(15), scaleSize(17), Bitmap.Config.ARGB_8888);
+        return imageOfLocked(lockColor, 15, 17);
+    }
+
+        public static Bitmap imageOfLocked(@ColorInt int lockColor, int width, int height) {
+        Bitmap imageOfLocked = Bitmap.createBitmap(scaleSize(width), scaleSize(height), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(imageOfLocked);
         canvas.scale(displayDensity, displayDensity);
-        HabiticaIcons.drawLocked(canvas, lockColor);
-
+        HabiticaIcons.drawLocked(canvas, new RectF(0f, 0f, width, height), HabiticaIcons.ResizingBehavior.AspectFit, lockColor);
         return imageOfLocked;
     }
 

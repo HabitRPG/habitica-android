@@ -1,9 +1,11 @@
 package com.habitrpg.android.habitica.ui.activities
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
@@ -17,7 +19,6 @@ import com.habitrpg.android.habitica.databinding.ActivityIntroBinding
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.ui.fragments.setup.IntroFragment
 import com.viewpagerindicator.IconPagerAdapter
-import io.reactivex.functions.Consumer
 import javax.inject.Inject
 
 
@@ -40,12 +41,16 @@ class IntroActivity : BaseActivity(), View.OnClickListener, ViewPager.OnPageChan
         super.onCreate(savedInstanceState)
 
         setupIntro()
-        //binding.viewPagerIndicator.setViewPager(binding.viewPager)
+        binding.viewPagerIndicator.setViewPager(binding.viewPager)
 
         binding.skipButton.setOnClickListener(this)
         binding.finishButton.setOnClickListener(this)
 
-        compositeSubscription.add(contentRepository.retrieveContent(this).subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(contentRepository.retrieveContent(this).subscribe({ }, RxErrorHandler.handleEmptyError()))
+
+
+        window.statusBarColor = ContextCompat.getColor(this, R.color.black_20_alpha)
+        window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
     }
 
     override fun injectActivity(component: UserComponent?) {

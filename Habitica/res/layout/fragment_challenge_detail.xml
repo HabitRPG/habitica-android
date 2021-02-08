@@ -18,8 +18,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp">
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp">
             <com.habitrpg.android.habitica.ui.views.HabiticaEmojiTextView
                 android:id="@+id/challenge_name"
                 android:layout_width="match_parent"
@@ -38,10 +38,10 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
-                    android:background="@drawable/layout_rounded_bg"
+                    android:background="@drawable/layout_rounded_bg_window"
                     android:padding="@dimen/spacing_medium"
                     android:orientation="vertical"
-                    android:layout_marginRight="@dimen/spacing_medium">
+                    android:layout_marginEnd="@dimen/spacing_medium">
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -56,9 +56,9 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:textSize="17sp"
-                            android:textColor="@color/gray_100"
+                            android:textColor="@color/text_secondary"
                             tools:text="5"
-                            android:layout_marginLeft="@dimen/spacing_small"
+                            android:layout_marginStart="@dimen/spacing_small"
                             />
                     </LinearLayout>
                     <TextView
@@ -67,16 +67,16 @@
                         android:text="@string/participants"
                         android:gravity="center"
                         android:textSize="12sp"
-                        android:textColor="@color/gray_200"/>
+                        android:textColor="@color/text_ternary"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
-                    android:background="@drawable/layout_rounded_bg"
+                    android:background="@drawable/layout_rounded_bg_window"
                     android:padding="@dimen/spacing_medium"
                     android:orientation="vertical"
-                    android:layout_marginLeft="@dimen/spacing_medium">
+                    android:layout_marginStart="@dimen/spacing_medium">
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -91,9 +91,9 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:textSize="17sp"
-                            android:textColor="@color/gray_100"
+                            android:textColor="@color/text_secondary"
                             tools:text="5"
-                            android:layout_marginLeft="@dimen/spacing_small"
+                            android:layout_marginStart="@dimen/spacing_small"
                             />
                     </LinearLayout>
                     <TextView
@@ -102,7 +102,7 @@
                         android:text="@string/challenge_prize"
                         android:gravity="center"
                         android:textSize="12sp"
-                        android:textColor="@color/gray_200"/>
+                        android:textColor="@color/text_ternary"/>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
@@ -110,11 +110,11 @@
             android:id="@+id/join_button_wrapper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/spacing_large"
-            android:paddingRight="@dimen/spacing_large"
+            android:paddingStart="@dimen/spacing_large"
+            android:paddingEnd="@dimen/spacing_large"
             android:paddingTop="@dimen/spacing_medium"
             android:paddingBottom="@dimen/spacing_medium"
-            android:background="@color/white">
+            android:background="?attr/colorContentBackground">
             <Button
                 android:id="@+id/join_button"
                 android:layout_width="match_parent"
@@ -126,17 +126,16 @@
             android:id="@+id/challenge_creator_wrapper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/spacing_large"
-            android:paddingRight="@dimen/spacing_large"
+            android:paddingStart="@dimen/spacing_large"
+            android:paddingEnd="@dimen/spacing_large"
             android:paddingTop="@dimen/spacing_medium"
             android:paddingBottom="@dimen/spacing_medium"
-            android:background="@color/white"
+            android:background="?attr/colorContentBackground"
             android:orientation="horizontal">
             <com.habitrpg.android.habitica.ui.RoundedFrameLayout
                 android:layout_width="@dimen/avatar_chat_size"
                 android:layout_height="@dimen/avatar_chat_size"
                 android:clipChildren="true"
-                android:layout_marginRight="@dimen/spacing_medium"
                 android:layout_marginEnd="@dimen/spacing_medium"
                 android:background="@drawable/rounded_avatar_bg">
                 <com.habitrpg.android.habitica.ui.AvatarView
@@ -160,7 +159,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/created_challenge"
-                    android:textColor="@color/gray_200"
+                    android:textColor="@color/text_ternary"
                     android:textSize="12sp"/>
             </LinearLayout>
             <ImageButton
@@ -172,7 +171,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:title="@string/challenge_categories"
-            android:background="@color/white">
+            android:background="?attr/colorContentBackground">
             <com.habitrpg.android.habitica.ui.views.HabiticaEmojiTextView
                 android:id="@+id/challenge_description"
                 style="@style/Body2"
@@ -195,8 +194,8 @@
             android:id="@+id/leave_button_wrapper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/spacing_large"
-            android:paddingRight="@dimen/spacing_large"
+            android:paddingStart="@dimen/spacing_large"
+            android:paddingEnd="@dimen/spacing_large"
             android:paddingTop="@dimen/spacing_medium"
             android:paddingBottom="@dimen/spacing_large">
             <Button

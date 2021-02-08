@@ -108,15 +108,6 @@
             app:destination="@id/challengeDetailFragment" />
     </fragment>
     <fragment
-        android:id="@+id/shopsFragment"
-        android:name="com.habitrpg.android.habitica.ui.fragments.inventory.shops.ShopsFragment"
-        android:label="@string/sidebar_shops" >
-        <argument
-            android:name="selectedTab"
-            app:argType="integer"
-            android:defaultValue="0" />
-    </fragment>
-    <fragment
         android:id="@+id/avatarOverviewFragment"
         android:name="com.habitrpg.android.habitica.ui.fragments.inventory.customization.AvatarOverviewFragment"
         android:label="@string/sidebar_avatar" >
@@ -158,11 +149,6 @@
             android:name="openSubscription"
             app:argType="boolean"
             android:defaultValue="true" />
-    </activity>
-    <activity
-        android:id="@+id/giftOneGetOneInfoActivity"
-        android:name="com.habitrpg.android.habitica.ui.activities.GiftOneGetOneInfoActivity"
-        android:label="@string/gift_one_get_one" >
     </activity>
     <activity
         android:id="@+id/gemPurchaseActivity"
@@ -218,7 +204,16 @@
         android:label="@string/sidebar_help" >
         <argument
             android:name="position"
-            app:argType="integer" />
+            app:argType="integer"
+            android:defaultValue="0"/>
+        <argument
+            android:name="question"
+            app:argType="string"
+            app:nullable="true"/>
+        <argument
+            android:name="answer"
+            app:argType="string"
+            app:nullable="true"/>
     </fragment>
     <fragment
         android:id="@+id/aboutFragment"
@@ -434,5 +429,13 @@
     <fragment
         android:id="@+id/promoInfoFragment"
         android:name="com.habitrpg.android.habitica.ui.fragments.PromoInfoFragment"
-        android:label="PromoInfoFragment" />
+        android:label="" />
+    <fragment
+        android:id="@+id/teamBoardFragment"
+        android:name="com.habitrpg.android.habitica.ui.fragments.tasks.TeamBoardFragment"
+        android:label="TeamBoardFragment" >
+        <argument
+            android:name="teamID"
+            app:argType="string" />
+    </fragment>
 </navigation>

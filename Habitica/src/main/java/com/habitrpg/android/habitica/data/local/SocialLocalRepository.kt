@@ -6,7 +6,7 @@ import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.models.social.GroupMembership
 import com.habitrpg.android.habitica.models.social.InboxConversation
 import com.habitrpg.android.habitica.models.user.User
-import io.reactivex.Flowable
+import io.reactivex.rxjava3.core.Flowable
 import io.realm.RealmResults
 
 interface SocialLocalRepository : BaseLocalRepository {

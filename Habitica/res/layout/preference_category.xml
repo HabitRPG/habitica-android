@@ -21,8 +21,8 @@
     android:textAllCaps="true"
     android:textSize="12sp"
     android:background="@color/transparent"
-    android:textColor="@color/gray_300"
-    android:paddingLeft="32dip"
-    android:paddingRight="32dip"
+    android:textColor="@color/text_quad"
+    android:paddingStart="32dip"
+    android:paddingEnd="32dip"
     android:paddingTop="16dip"
     tools:text="Title" />

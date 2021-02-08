@@ -6,7 +6,7 @@ import com.habitrpg.android.habitica.models.responses.FeedResponse
 import com.habitrpg.android.habitica.models.shops.Shop
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.models.user.*
-import io.reactivex.Flowable
+import io.reactivex.rxjava3.core.Flowable
 import io.realm.RealmResults
 
 
@@ -65,14 +65,14 @@ interface InventoryRepository : BaseRepository {
     fun retrieveShopInventory(identifier: String): Flowable<Shop>
     fun retrieveMarketGear(): Flowable<Shop>
 
-    fun purchaseMysterySet(categoryIdentifier: String): Flowable<Any>
+    fun purchaseMysterySet(categoryIdentifier: String): Flowable<Void>
 
-    fun purchaseHourglassItem(purchaseType: String, key: String): Flowable<Any>
+    fun purchaseHourglassItem(purchaseType: String, key: String): Flowable<Void>
 
-    fun purchaseQuest(key: String): Flowable<Any>
-    fun purchaseSpecialSpell(key: String): Flowable<Any>
+    fun purchaseQuest(key: String): Flowable<Void>
+    fun purchaseSpecialSpell(key: String): Flowable<Void>
 
-    fun purchaseItem(purchaseType: String, key: String, purchaseQuantity: Int): Flowable<Any>
+    fun purchaseItem(purchaseType: String, key: String, purchaseQuantity: Int): Flowable<Void>
 
     fun togglePinnedItem(item: ShopItem): Flowable<List<ShopItem>>
     fun getItems(itemClass: Class<out Item>, keys: Array<String>): Flowable<out RealmResults<out Item>>

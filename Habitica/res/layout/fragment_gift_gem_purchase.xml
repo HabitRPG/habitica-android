@@ -28,7 +28,7 @@
             android:id="@+id/username_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/gray_300"
+            android:textColor="@color/text_quad"
             android:textSize="12sp"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="@dimen/spacing_large"/>
@@ -38,14 +38,15 @@
             android:layout_gravity="center_horizontal"
             android:gravity="center_horizontal"
             android:text="@string/gift_gems_subtitle"
-            android:textColor="@color/gray_300"
-            android:layout_marginLeft="@dimen/spacing_large"
-            android:layout_marginRight="@dimen/spacing_large"
+            android:textColor="@color/text_quad"
+            android:layout_marginStart="@dimen/spacing_large"
+            android:layout_marginEnd="@dimen/spacing_large"
             android:layout_marginBottom="@dimen/spacing_large"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginHorizontal="@dimen/spacing_large">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -99,7 +100,8 @@
             android:gravity="center"
             android:layout_marginStart="@dimen/spacing_large"
             android:layout_marginEnd="@dimen/spacing_large"
-            android:layout_marginBottom="@dimen/spacing_large"
+            android:layout_marginTop="@dimen/spacing_large"
+            android:layout_marginBottom="@dimen/spacing_xlarge"
             style="@style/Caption2"/>
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

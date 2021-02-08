@@ -6,10 +6,6 @@
         <value>3000</value>
     </entry>
     <entry>
-        <key>enableGiftOneGetOne</key>
-        <value>false</value>
-    </entry>
-    <entry>
         <key>shopSpriteSuffix</key>
     </entry>
     <entry>
@@ -86,7 +82,7 @@
     </entry>
     <entry>
         <key>feedbackURL</key>
-        <value></value>
+        <value />
     </entry>
     <entry>
         <key>enableAdventureGuide</key>
@@ -95,6 +91,10 @@
     <entry>
         <key>activePromo</key>
         <value> </value>
+    </entry>
+    <entry>
+        <key>knownIssues</key>
+        <value>[]</value>
     </entry>
 </defaultsMap>
     <!-- END xml_defaults -->

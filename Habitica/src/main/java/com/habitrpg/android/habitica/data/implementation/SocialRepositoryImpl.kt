@@ -11,10 +11,8 @@ import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.responses.PostChatMessageResult
 import com.habitrpg.android.habitica.models.social.*
 import com.habitrpg.android.habitica.models.user.User
-import io.reactivex.Flowable
-import io.reactivex.Single
-import io.reactivex.functions.BiFunction
-import io.reactivex.functions.Consumer
+import io.reactivex.rxjava3.core.Flowable
+import io.reactivex.rxjava3.core.Single
 import io.realm.RealmResults
 import java.util.*
 import kotlin.collections.HashMap
@@ -71,7 +69,7 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
     }
 
     override fun markMessagesSeen(seenGroupId: String) {
-        apiClient.seenMessages(seenGroupId).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+        apiClient.seenMessages(seenGroupId).subscribe({ }, RxErrorHandler.handleEmptyError())
     }
 
     override fun flagMessage(chatMessage: ChatMessage, additionalInfo: String): Flowable<Void> {
@@ -130,7 +128,7 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
     override fun retrieveGroup(id: String): Flowable<Group> {
         return Flowable.zip(apiClient.getGroup(id).doOnNext { localRepository.saveSyncronous(it) }, retrieveGroupChat(id)
                 .toFlowable(),
-                BiFunction<Group, List<ChatMessage>, Group> { group, _ ->
+                { group, _ ->
                     group
                 }
         )
@@ -268,7 +266,7 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
         return apiClient.markPrivateMessagesRead()
                 .doOnNext {
                     if (user?.isManaged == true) {
-                        localRepository.executeTransaction { user.inbox?.newMessages = 0 }
+                        localRepository.modify(user) { it.inbox?.newMessages = 0 }
                     }
                 }
     }

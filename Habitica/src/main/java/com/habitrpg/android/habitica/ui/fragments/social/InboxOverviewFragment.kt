@@ -4,10 +4,12 @@ import android.content.Context
 import android.os.Bundle
 import android.view.*
 import android.widget.TextView
+import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.DialogChooseMessageRecipientBinding
+import com.habitrpg.android.habitica.databinding.FragmentInboxBinding
 import com.habitrpg.android.habitica.extensions.getAgoString
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
@@ -19,13 +21,11 @@ import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.social.UsernameLabel
-import io.reactivex.functions.Consumer
 import io.realm.RealmResults
-import kotlinx.android.synthetic.main.fragment_inbox.*
 import javax.inject.Inject
 import javax.inject.Named
 
-class InboxOverviewFragment : BaseMainFragment(), androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
+class InboxOverviewFragment : BaseMainFragment<FragmentInboxBinding>(), androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
 
     @Inject
     lateinit var socialRepository: SocialRepository
@@ -34,24 +34,25 @@ class InboxOverviewFragment : BaseMainFragment(), androidx.swiperefreshlayout.wi
     @Inject
     lateinit var configManager: AppConfigManager
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override var binding: FragmentInboxBinding? = null
+
+    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentInboxBinding {
+        return FragmentInboxBinding.inflate(inflater, container, false)
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         this.hidesToolbar = true
-        super.onCreateView(inflater, container, savedInstanceState)
-
-        compositeSubscription.add(this.socialRepository.markPrivateMessagesRead(user).subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
-
-
-        return inflater.inflate(R.layout.fragment_inbox, container, false)
+        compositeSubscription.add(this.socialRepository.markPrivateMessagesRead(user).subscribe({ }, RxErrorHandler.handleEmptyError()))
+        return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        inbox_refresh_layout?.setOnRefreshListener(this)
+        binding?.inboxRefreshLayout?.setOnRefreshListener(this)
 
-        compositeSubscription.add(userRepository.getUser().map { user?.inbox?.optOut ?: false }.distinctUntilChanged().subscribe {
-            opt_out_view.visibility = if (it) View.VISIBLE else View.GONE
+        compositeSubscription.add(userRepository.getUser().map { it.inbox?.optOut ?: false }.distinctUntilChanged().subscribe {
+            binding?.optOutView?.visibility = if (it) View.VISIBLE else View.GONE
         })
 
         loadMessages()
@@ -59,7 +60,7 @@ class InboxOverviewFragment : BaseMainFragment(), androidx.swiperefreshlayout.wi
     }
 
     private fun loadMessages() {
-        compositeSubscription.add(socialRepository.getInboxConversations().subscribe(Consumer<RealmResults<InboxConversation>> {
+        compositeSubscription.add(socialRepository.getInboxConversations().subscribe({
             setInboxMessages(it)
         }, RxErrorHandler.handleEmptyError()))
     }
@@ -87,7 +88,9 @@ class InboxOverviewFragment : BaseMainFragment(), androidx.swiperefreshlayout.wi
     }
 
     private fun openNewMessageDialog() {
-        assert(this.activity != null)
+        if (BuildConfig.DEBUG && this.activity == null) {
+            error("Assertion failed")
+        }
         val binding = DialogChooseMessageRecipientBinding.inflate(layoutInflater)
         this.activity?.let { thisActivity ->
             val alert = HabiticaAlertDialog(thisActivity)
@@ -95,8 +98,8 @@ class InboxOverviewFragment : BaseMainFragment(), androidx.swiperefreshlayout.wi
             alert.addButton(
                     getString(R.string.action_continue),
                     true,
-                    false,
-                    false
+                    isDestructive = false,
+                    autoDismiss = false
             ) { _, _ ->
                 binding.errorTextView.visibility = View.GONE
                 binding.progressCircular.visibility = View.VISIBLE
@@ -128,27 +131,27 @@ class InboxOverviewFragment : BaseMainFragment(), androidx.swiperefreshlayout.wi
 
     private fun retrieveMessages() {
         compositeSubscription.add(this.socialRepository.retrieveInboxConversations()
-                .subscribe(Consumer<List<InboxConversation>> {
-                    inbox_refresh_layout.isRefreshing = false
+                .subscribe({
+                    binding?.inboxRefreshLayout?.isRefreshing = false
                 }, RxErrorHandler.handleEmptyError()))
     }
 
     override fun onRefresh() {
-        inbox_refresh_layout.isRefreshing = true
+        binding?.inboxRefreshLayout?.isRefreshing = true
         retrieveMessages()
     }
 
     private fun setInboxMessages(messages: RealmResults<InboxConversation>) {
-        if (inbox_messages == null) {
+        if (binding?.inboxMessages == null) {
             return
         }
 
-        inbox_messages.removeAllViewsInLayout()
+        binding?.inboxMessages?.removeAllViewsInLayout()
 
         val inflater = context?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as? LayoutInflater
         if (messages.isNotEmpty()) {
             for (message in messages) {
-                val entry = inflater?.inflate(R.layout.item_inbox_overview, inbox_messages, false)
+                val entry = inflater?.inflate(R.layout.item_inbox_overview, binding?.inboxMessages, false)
                 val avatarView = entry?.findViewById(R.id.avatar_view) as? AvatarView
                 message.userStyles?.let { avatarView?.setAvatar(it) }
                 val displayNameTextView = entry?.findViewById(R.id.display_name_textview) as? UsernameLabel
@@ -167,7 +170,7 @@ class InboxOverviewFragment : BaseMainFragment(), androidx.swiperefreshlayout.wi
                 messageTextView?.text = message.text
                 entry?.tag = message.uuid
                 entry?.setOnClickListener(this)
-                inbox_messages.addView(entry)
+                binding?.inboxMessages?.addView(entry)
             }
         } else {
             val tv = TextView(context)

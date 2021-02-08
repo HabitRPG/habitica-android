@@ -7,52 +7,55 @@ import android.view.View
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.databinding.StatsViewBinding
+import com.habitrpg.android.habitica.extensions.layoutInflater
+import com.habitrpg.android.habitica.extensions.setTintWith
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
-import kotlinx.android.synthetic.main.stats_view.view.*
 
-class StatsView(context: Context?, attrs: AttributeSet?) : LinearLayout(context, attrs) {
+class StatsView(context: Context, attrs: AttributeSet?) : LinearLayout(context, attrs) {
+    private val binding = StatsViewBinding.inflate(context.layoutInflater, this, true)
 
     var levelValue: Int = 0
         set(value) {
             field = value
-            levelValueTextView.text = value.toString()
+            binding.levelValueTextView.text = value.toString()
         }
     var equipmentValue: Int = 0
         set(value) {
             field = value
-            equipmentValueTextView.text = value.toString()
+            binding.equipmentValueTextView.text = value.toString()
         }
     var buffValue: Int = 0
         set(value) {
             field = value
-            buffValueTextView.text = value.toString()
+            binding.buffValueTextView.text = value.toString()
         }
     var allocatedValue: Int = 0
         set(value) {
             field = value
-            allocatedValueTextView.text = value.toString()
+            binding.allocatedValueTextView.text = value.toString()
         }
 
     var totalValue: Int = 0
         set(value) {
             field = value
-            totalValueTextView.text = value.toString()
+            binding.totalValueTextView.text = value.toString()
         }
 
     var canDistributePoints: Boolean = false
         set(value) {
             field = value
-            allocateButton.visibility = if (value) View.VISIBLE else View.GONE
+            binding.allocateButton.visibility = if (value) View.VISIBLE else View.GONE
             if (value) {
-                allocatedWrapper.setBackgroundColor(ContextCompat.getColor(context, R.color.gray_600_30))
-                allocateButton.setBackgroundColor(ContextCompat.getColor(context, R.color.gray_600_30))
-                allocatedValueTextView.setTextColor(statColor)
-                allocatedLabelView.setTextColor(statColor)
+                binding.allocatedWrapper.setBackgroundColor(ContextCompat.getColor(context, R.color.offset_background_30))
+                binding.allocateButton.setBackgroundColor(ContextCompat.getColor(context, R.color.offset_background_30))
+                binding.allocatedValueTextView.setTextColor(statColor)
+                binding.allocatedLabelView.setTextColor(statColor)
             } else {
-                allocatedWrapper.setBackgroundColor(ContextCompat.getColor(context, R.color.gray_700))
-                allocateButton.setBackgroundColor(ContextCompat.getColor(context, R.color.gray_700))
-                allocatedValueTextView.setTextColor(ContextCompat.getColor(context, R.color.gray_50))
-                allocatedLabelView.setTextColor(ContextCompat.getColor(context, R.color.gray_300))
+                binding.allocatedWrapper.setBackgroundColor(ContextCompat.getColor(context, R.color.window_background))
+                binding.allocateButton.setBackgroundColor(ContextCompat.getColor(context, R.color.window_background))
+                binding.allocatedValueTextView.setTextColor(ContextCompat.getColor(context, R.color.text_primary))
+                binding.allocatedLabelView.setTextColor(ContextCompat.getColor(context, R.color.text_quad))
             }
         }
 
@@ -61,27 +64,24 @@ class StatsView(context: Context?, attrs: AttributeSet?) : LinearLayout(context,
     private var statColor: Int = 0
 
     init {
-        View.inflate(context, R.layout.stats_view, this)
 
-        val attributes = context?.theme?.obtainStyledAttributes(
+        val attributes = context.theme?.obtainStyledAttributes(
                 attrs,
                 R.styleable.StatsView,
                 0, 0)
 
-        if (context != null) {
-            val backgroundDrawable = ContextCompat.getDrawable(context, R.drawable.layout_top_rounded_bg)
-            if (attributes != null) {
-                statColor = attributes.getColor(R.styleable.StatsView_statsColor, 0)
-                backgroundDrawable?.setColorFilter(attributes.getColor(R.styleable.StatsView_titleBackgroundColor, 0), PorterDuff.Mode.MULTIPLY)
-                titleTextView.text = attributes.getString(R.styleable.StatsView_statsTitle)
-            }
-            titleWrapper.background = backgroundDrawable
+        val backgroundDrawable = ContextCompat.getDrawable(context, R.drawable.layout_top_rounded_bg_white)
+        if (attributes != null) {
+            statColor = attributes.getColor(R.styleable.StatsView_statsColor, 0)
+            backgroundDrawable?.setTintWith(attributes.getColor(R.styleable.StatsView_titleBackgroundColor, 0), PorterDuff.Mode.MULTIPLY)
+            binding.titleTextView.text = attributes.getString(R.styleable.StatsView_statsTitle)
         }
+        binding.titleWrapper.background = backgroundDrawable
 
-        allocateButton.setOnClickListener {
+        binding.allocateButton.setOnClickListener {
             allocateAction?.invoke()
         }
 
-        allocateButton.setImageBitmap(HabiticaIconsHelper.imageOfAttributeAllocateButton())
+        binding.allocateButton.setImageBitmap(HabiticaIconsHelper.imageOfAttributeAllocateButton())
     }
 }

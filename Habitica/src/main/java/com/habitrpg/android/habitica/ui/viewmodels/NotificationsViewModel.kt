@@ -12,12 +12,11 @@ import com.habitrpg.android.habitica.models.Notification
 import com.habitrpg.android.habitica.models.notifications.*
 import com.habitrpg.android.habitica.models.social.UserParty
 import com.habitrpg.android.habitica.models.user.User
-import io.reactivex.BackpressureStrategy
-import io.reactivex.Flowable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.functions.BiFunction
-import io.reactivex.functions.Consumer
-import io.reactivex.subjects.BehaviorSubject
+import io.reactivex.rxjava3.core.BackpressureStrategy
+import io.reactivex.rxjava3.core.Flowable
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.functions.BiFunction
+import io.reactivex.rxjava3.subjects.BehaviorSubject
 import java.util.*
 import javax.inject.Inject
 
@@ -55,7 +54,7 @@ open class NotificationsViewModel : BaseViewModel() {
         customNotifications.onNext(emptyList())
 
         disposable.add(userRepository.getUser()
-                .subscribe(Consumer {
+                .subscribe({
                     party = it.party
                     var notifications = convertInvitationsToNotifications(it)
                     if (it.flags?.newStuff == true) {
@@ -181,7 +180,7 @@ open class NotificationsViewModel : BaseViewModel() {
         }
 
         disposable.add(userRepository.readNotification(notification.id)
-                .subscribe(Consumer {}, RxErrorHandler.handleEmptyError()))
+                .subscribe({}, RxErrorHandler.handleEmptyError()))
     }
 
     fun dismissAllNotifications(notifications: List<Notification>) {
@@ -198,7 +197,7 @@ open class NotificationsViewModel : BaseViewModel() {
         notificationIds["notificationIds"] = dismissableIds
 
         disposable.add(userRepository.readNotifications(notificationIds)
-                .subscribe(Consumer {}, RxErrorHandler.handleEmptyError()))
+                .subscribe({}, RxErrorHandler.handleEmptyError()))
     }
 
     fun markNotificationsAsSeen(notifications: List<Notification>) {
@@ -215,7 +214,7 @@ open class NotificationsViewModel : BaseViewModel() {
         notificationIds["notificationIds"] = unseenIds
 
         disposable.add(userRepository.seeNotifications(notificationIds)
-                .subscribe(Consumer {}, RxErrorHandler.handleEmptyError()))
+                .subscribe({}, RxErrorHandler.handleEmptyError()))
     }
 
     private fun findNotification(id: String): Notification? {
@@ -315,7 +314,7 @@ open class NotificationsViewModel : BaseViewModel() {
         groupId?.let {
             disposable.add(socialRepository.joinGroup(it)
                     .flatMap { userRepository.retrieveUser(false, forced = true) }
-                    .subscribe(Consumer {
+                    .subscribe({
                         refreshNotifications()
                     }, RxErrorHandler.handleEmptyError()))
         }
@@ -325,7 +324,7 @@ open class NotificationsViewModel : BaseViewModel() {
         groupId?.let {
             disposable.add(socialRepository.rejectGroupInvite(it)
                     .flatMap { userRepository.retrieveUser(false, forced = true) }
-                    .subscribe(Consumer {
+                    .subscribe({
                         refreshNotifications()
                     }, RxErrorHandler.handleEmptyError()))
         }
@@ -335,7 +334,7 @@ open class NotificationsViewModel : BaseViewModel() {
         party?.id?.let {
             disposable.add(socialRepository.acceptQuest(null, it)
                     .flatMap { userRepository.retrieveUser(false, forced = true) }
-                    .subscribe(Consumer {
+                    .subscribe({
                         refreshNotifications()
                     }, RxErrorHandler.handleEmptyError()))
         }
@@ -345,7 +344,7 @@ open class NotificationsViewModel : BaseViewModel() {
         party?.id?.let {
             disposable.add(socialRepository.rejectQuest(null, it)
                     .flatMap { userRepository.retrieveUser(false, forced = true) }
-                    .subscribe(Consumer {
+                    .subscribe({
                         refreshNotifications()
                     }, RxErrorHandler.handleEmptyError()))
         }

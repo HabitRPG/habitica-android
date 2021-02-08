@@ -30,10 +30,10 @@ class GuidelinesActivity: BaseActivity() {
 
             @Throws(IOException::class)
             override fun onResponse(call: Call, response: Response) {
-                val `in` = response.body()?.byteStream()
+                val `in` = response.body?.byteStream()
                 val reader = BufferedReader(InputStreamReader(`in`))
                 val text = reader.readText()
-                response.body()?.close()
+                response.body?.close()
 
                 findViewById<TextView>(R.id.text_view).post {
                     findViewById<TextView>(R.id.text_view).setMarkdown(text)

@@ -22,10 +22,6 @@ class AppConfigManager {
         return remoteConfig.getLong("maxChatLength")
     }
 
-    fun enableGiftOneGetOne(): Boolean {
-        return remoteConfig.getBoolean("enableGiftOneGetOne")
-    }
-
     fun spriteSubstitutions(): Map<String, Map<String, String>> {
         val type = object : TypeToken<Map<String, Map<String, String>>>() {}.type
         return Gson().fromJson(remoteConfig.getString("spriteSubstitutions"), type)
@@ -100,19 +96,25 @@ class AppConfigManager {
         }
     }
 
-    fun reorderMenu(): Boolean {
-        return remoteConfig.getBoolean("reorderMenu")
-    }
-
     fun enableAdventureGuide(): Boolean {
         return remoteConfig.getBoolean("enableAdventureGuide")
     }
 
-    fun activePromo(): HabiticaPromotion? {
-        val key = remoteConfig.getString("activePromo")
-        if (key.isNotBlank()) {
-            return getHabiticaPromotionFromKey(key)
+    fun activePromo(context: Context): HabiticaPromotion? {
+        val preferences = PreferenceManager.getDefaultSharedPreferences(context)
+        val key = preferences.getString("currentEvent", null)
+        if (key?.isNotBlank() == true) {
+            val startDateLong = preferences.getLong("currentEventStartDate", 0)
+            val startDate = if (startDateLong > 0) Date(startDateLong) else null
+            val endDateLong = preferences.getLong("currentEventEndDate", 0)
+            val endDate = if (endDateLong > 0) Date(endDateLong) else null
+            return getHabiticaPromotionFromKey(preferences.getString("currentEventPromo", null) ?: key, startDate, endDate)
         }
         return null
+    }
+
+    fun knownIssues(): List<Map<String, String>> {
+        val type = object : TypeToken<List<Map<String, String>>>() {}.type
+        return Gson().fromJson(remoteConfig.getString("knownIssues"), type)
     }
 }

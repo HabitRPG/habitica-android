@@ -322,8 +322,6 @@
     <string name="twelve_months">12 meses</string>
     <string name="subscription_status">Estado da Subscrição</string>
     <string name="challenge_leave_title">Sair do Desafio</string>
-    <string name="challenge_remove_tasks_title">Remover tarefas</string>
-    <string name="challenge_remove_tasks_text">Deseja remover as tarefas?</string>
     <string name="remove_tasks">Remover</string>
     <string name="keep_tasks">Manter</string>
     <string name="my_challenges">Os Meus Desafios</string>

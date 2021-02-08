@@ -1,33 +1,42 @@
 package com.habitrpg.android.habitica.ui.views
 
 import android.content.Context
+import android.content.res.ColorStateList
+import android.graphics.PorterDuff
+import android.os.Build
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
+import android.widget.ImageView
 import android.widget.LinearLayout
+import androidx.core.content.ContextCompat
+import androidx.core.widget.ImageViewCompat
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.databinding.ProgressBarBinding
+import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
-import com.habitrpg.android.habitica.ui.helpers.bindView
 import kotlin.math.min
 
 
 class HabiticaProgressBar(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs) {
-
-    private val barView: View by bindView(R.id.bar)
-    private val pendingBarView: View by bindView(R.id.pendingBar)
-    private val barEmptySpace: View by bindView(R.id.emptyBarSpace)
-    private val pendingEmptyBarSpace: View by bindView(R.id.pendingEmptyBarSpace)
+    val binding = ProgressBarBinding.inflate(context.layoutInflater, this)
 
     var barForegroundColor: Int = 0
     set(value) {
         field = value
-        DataBindingUtils.setRoundedBackground(barView, value)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+            DataBindingUtils.setRoundedBackground(binding.bar, value)
+        } else {
+            val bar: ImageView = findViewById(R.id.bar)
+            ImageViewCompat.setImageTintList(bar, ColorStateList.valueOf(field))
+            ImageViewCompat.setImageTintMode(bar, PorterDuff.Mode.SRC_IN)
+        }
     }
 
     var barPendingColor: Int = 0
         set(value) {
             field = value
-            DataBindingUtils.setRoundedBackground(pendingBarView, value)
+            DataBindingUtils.setRoundedBackground(binding.pendingBar, value)
         }
 
     var barBackgroundColor: Int = 0
@@ -48,7 +57,6 @@ class HabiticaProgressBar(context: Context, attrs: AttributeSet?) : FrameLayout(
                 updateBar()
             }
         }
-
 
     private fun updateBar() {
         val remainingValue = currentValue - pendingValue
@@ -77,12 +85,12 @@ class HabiticaProgressBar(context: Context, attrs: AttributeSet?) : FrameLayout(
 
 
     private fun setBarWeight(percent: Double) {
-        setLayoutWeight(barView, percent)
-        setLayoutWeight(barEmptySpace, 1.0f - percent)
+        setLayoutWeight(binding.bar, percent)
+        setLayoutWeight(binding.emptyBarSpace, 1.0f - percent)
     }
     private fun setPendingBarWeight(percent: Double) {
-        setLayoutWeight(pendingBarView, percent)
-        setLayoutWeight(pendingEmptyBarSpace, 1.0f - percent)
+        setLayoutWeight(binding.pendingBar, percent)
+        setLayoutWeight(binding.pendingEmptyBarSpace, 1.0f - percent)
     }
 
 
@@ -109,9 +117,8 @@ class HabiticaProgressBar(context: Context, attrs: AttributeSet?) : FrameLayout(
             layout?.weight = weight.toFloat()
             view.layoutParams = layout
         } else if (layout?.weight?.toDouble() != weight) {
-            val anim = DataBindingUtils.LayoutWeightAnimation(view, weight.toFloat())
-            anim.duration = 300
-            view.startAnimation(anim)
+            layout?.weight = weight.toFloat()
+            view.layoutParams = layout
         }
     }
 }

@@ -2,28 +2,24 @@ package com.habitrpg.android.habitica.ui.adapter.social
 
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.databinding.ChallengeItemBinding
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.social.ChallengeMembership
+import com.habitrpg.android.habitica.ui.adapter.BaseRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengeFilterOptions
-import com.habitrpg.android.habitica.ui.helpers.bindView
-import com.habitrpg.android.habitica.ui.views.HabiticaEmojiTextView
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
-import io.reactivex.BackpressureStrategy
-import io.reactivex.Flowable
-import io.reactivex.subjects.PublishSubject
+import io.reactivex.rxjava3.core.BackpressureStrategy
+import io.reactivex.rxjava3.core.Flowable
+import io.reactivex.rxjava3.subjects.PublishSubject
+import com.habitrpg.android.habitica.ui.helpers.EmojiParser
 import io.realm.OrderedRealmCollection
-import io.realm.RealmRecyclerViewAdapter
-import net.pherth.android.emoji_library.EmojiParser
 
-class ChallengesListViewAdapter(data: OrderedRealmCollection<Challenge>?, autoUpdate: Boolean, private val viewUserChallengesOnly: Boolean, private val userId: String) : RealmRecyclerViewAdapter<Challenge, ChallengesListViewAdapter.ChallengeViewHolder>(data, autoUpdate) {
+class ChallengesListViewAdapter(private val viewUserChallengesOnly: Boolean, private val userId: String) : BaseRecyclerViewAdapter<Challenge, ChallengesListViewAdapter.ChallengeViewHolder>() {
     private var unfilteredData: OrderedRealmCollection<Challenge>? = null
-    var challengeMemberships: OrderedRealmCollection<ChallengeMembership>? = null
+    private var challengeMemberships: OrderedRealmCollection<ChallengeMembership>? = null
 
     private val openChallengeFragmentEvents = PublishSubject.create<String>()
 
@@ -45,7 +41,7 @@ class ChallengesListViewAdapter(data: OrderedRealmCollection<Challenge>?, autoUp
     }
 
     fun updateUnfilteredData(data: OrderedRealmCollection<Challenge>?) {
-        super.updateData(data)
+        this.data = data ?: emptyList()
         unfilteredData = data
     }
 
@@ -75,7 +71,7 @@ class ChallengesListViewAdapter(data: OrderedRealmCollection<Challenge>?, autoUp
         }
 
         query?.let {
-            this.updateData(it.findAll())
+            data = it.findAll()
         }
     }
 
@@ -84,41 +80,30 @@ class ChallengesListViewAdapter(data: OrderedRealmCollection<Challenge>?, autoUp
     }
 
     class ChallengeViewHolder internal constructor(itemView: View, private val viewUserChallengesOnly: Boolean) : RecyclerView.ViewHolder(itemView) {
-
-        private val challengeName: HabiticaEmojiTextView by bindView(R.id.challenge_name)
-        private val challengeDescription: TextView by bindView(R.id.challenge_shorttext)
-        private val participantCount: TextView by bindView(R.id.participantCount)
-        private val officialChallengeLayout: TextView by bindView(R.id.official_challenge_view)
-        private val challengeParticipatingTextView: View by bindView(R.id.is_joined_label)
-        private val gemPrizeTextView: TextView by bindView(R.id.gemPrizeTextView)
-        private val gemIconView: ImageView by bindView(R.id.gem_icon)
+        private val binding = ChallengeItemBinding.bind(itemView)
 
         private var challenge: Challenge? = null
 
         init {
-            gemIconView.setImageBitmap(HabiticaIconsHelper.imageOfGem())
-
-            if (!viewUserChallengesOnly) {
-                challengeName.setTextColor(ContextCompat.getColor(itemView.context, R.color.brand_200))
-            }
+            binding.gemIcon.setImageBitmap(HabiticaIconsHelper.imageOfGem())
         }
 
         fun bind(challenge: Challenge, isParticipating: Boolean) {
             this.challenge = challenge
 
-            challengeName.text = EmojiParser.parseEmojis(challenge.name?.trim { it <= ' ' })
-            challengeDescription.text = challenge.summary
+            binding.challengeName.text = EmojiParser.parseEmojis(challenge.name?.trim { it <= ' ' })
+            binding.challengeShorttext.text = challenge.summary
 
-            officialChallengeLayout.visibility = if (challenge.official) View.VISIBLE else View.GONE
+            binding.officialChallengeView.visibility = if (challenge.official) View.VISIBLE else View.GONE
 
             if (viewUserChallengesOnly) {
-                challengeParticipatingTextView.visibility = View.GONE
+                binding.isJoinedLabel.visibility = View.GONE
             } else {
-                challengeParticipatingTextView.visibility = if (isParticipating) View.VISIBLE else View.GONE
+                binding.isJoinedLabel.visibility = if (isParticipating) View.VISIBLE else View.GONE
             }
-            participantCount.text = challenge.memberCount.toString()
+            binding.participantCount.text = challenge.memberCount.toString()
 
-            gemPrizeTextView.text = challenge.prize.toString()
+            binding.gemPrizeTextView.text = challenge.prize.toString()
         }
     }
 }

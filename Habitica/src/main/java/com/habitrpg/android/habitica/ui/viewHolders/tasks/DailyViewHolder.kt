@@ -1,18 +1,13 @@
 package com.habitrpg.android.habitica.ui.viewHolders.tasks
 
 import android.view.View
-import android.widget.TextView
-import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.models.responses.TaskDirection
 import com.habitrpg.android.habitica.models.tasks.ChecklistItem
 import com.habitrpg.android.habitica.models.tasks.Task
-import com.habitrpg.android.habitica.ui.helpers.bindView
 import java.text.DateFormat
 import java.util.*
 
 class DailyViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> Unit), scoreChecklistItemFunc: ((Task, ChecklistItem) -> Unit), openTaskFunc: ((Task) -> Unit), brokenTaskFunc: ((Task) -> Unit)) : ChecklistedViewHolder(itemView, scoreTaskFunc, scoreChecklistItemFunc, openTaskFunc, brokenTaskFunc) {
-
-
 
     override val taskIconWrapperIsVisible: Boolean
         get() {
@@ -52,8 +47,8 @@ class DailyViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> U
         super.bind(newTask, position, displayMode)
     }
 
-    override fun shouldDisplayAsActive(newTask: Task): Boolean {
-        return newTask.isDisplayedActive
+    override fun shouldDisplayAsActive(newTask: Task?): Boolean {
+        return newTask?.isDisplayedActive ?: false
     }
 
     override fun configureSpecialTaskTextView(task: Task) {
@@ -61,8 +56,10 @@ class DailyViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> U
         if (task.streak ?: 0 > 0) {
             this.streakTextView.text = task.streak.toString()
             this.streakTextView.visibility = View.VISIBLE
+            this.streakIconView.visibility = View.VISIBLE
         } else {
             this.streakTextView.visibility = View.GONE
+            this.streakIconView.visibility = View.GONE
         }
     }
 

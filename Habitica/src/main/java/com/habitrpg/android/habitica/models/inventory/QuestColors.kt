@@ -17,19 +17,19 @@ open class QuestColors : RealmObject() {
     var light: String? = null
     var extralight: String? = null
 
-    var darkColor: Int = 0
+    val darkColor: Int
         get() {
             return Color.parseColor(dark)
         }
-    var mediumColor: Int = 0
+    val mediumColor: Int
         get() {
             return Color.parseColor(medium)
         }
-    var lightColor: Int = 0
+    val lightColor: Int
         get() {
             return Color.parseColor(light)
         }
-    var extraLightColor: Int = 0
+    val extraLightColor: Int
         get() {
             return Color.parseColor(extralight)
         }

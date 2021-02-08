@@ -373,9 +373,6 @@
     <string name="subscribe_prompt_thanks">Você desfruta desses benefícios por ser um(a) assinante</string>
     <string name="subscription_status">Status da assinatura</string>
     <string name="challenge_leave_title">Sair do Desafio</string>
-    <string name="challenge_leave_text">Tem certeza que deseja sair do Desafio “%s”?</string>
-    <string name="challenge_remove_tasks_title">Remover tarefas</string>
-    <string name="challenge_remove_tasks_text">Você quer remover as tarefas?</string>
     <string name="remove_tasks">Remover</string>
     <string name="keep_tasks">Manter</string>
     <string name="my_challenges">Meus Desafios</string>
@@ -905,7 +902,6 @@
     <string name="network_error_no_network_body">Você não está conectado(a) à internet.</string>
     <string name="quest_completed">Missão concluída!</string>
     <string name="not_participating">Você não está participando</string>
-    <string name="unlock_level_short">Nível %d</string>
     <string name="unlock_previous_short">Terminar Missão %d</string>
     <string name="unlock_level">Desbloqueie ao atingir o nível %d</string>
     <string name="unlock_previous">Desbloqueie ao terminar a Missão %d</string>

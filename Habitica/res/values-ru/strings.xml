@@ -364,9 +364,6 @@
     <string name="subscribe_prompt_thanks">Вы получаете эти преимущества за подписку</string>
     <string name="subscription_status">Статус подписки</string>
     <string name="challenge_leave_title">Покинуть испытание</string>
-    <string name="challenge_leave_text">Вы уверены, что хотите покинуть испытание “%s”?</string>
-    <string name="challenge_remove_tasks_title">Удалить задачи</string>
-    <string name="challenge_remove_tasks_text">Вы уверены, что хотите удалить задачи?</string>
     <string name="remove_tasks">Удалить</string>
     <string name="keep_tasks">Оставить</string>
     <string name="my_challenges">Мои испытания</string>
@@ -671,8 +668,6 @@
     <string name="send_gift">Отправить подарок</string>
     <string name="server">Сервер</string>
     <string name="gift_confirmation_title">Ваш подарок отправлен!</string>
-    <string name="gift_confirmation_text_g1g1">Вы отправили %s месячную подписку Habitica %s, и эта же подписка была применена к вашей учетной записи для нашей акции «Подарок один, получите один»!</string>
-    <string name="gift_confirmation_text">Вы отправили %s один %s-месячную подписку Habitica.</string>
     <string name="discover">Обнаруживать</string>
     <string name="due">Сегодня</string>
     <string name="gift_one_get_one_description">Подарите подписку и получите такую же бесплатно прямо сейчас!</string>
@@ -702,7 +697,6 @@
     <string name="switch_to_list_view">Переключиться на вид списка</string>
     <string name="quest_completed">Квест завершён!</string>
     <string name="not_participating">Вы не принимаете участие</string>
-    <string name="unlock_level_short">Уровень %d</string>
     <string name="gift_a_subscription">Подарить подписку</string>
     <string name="sale">Акция</string>
     <string name="member_group_plan">Участник группового тарифа</string>

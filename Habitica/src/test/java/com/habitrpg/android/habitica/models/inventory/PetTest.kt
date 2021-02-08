@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica.models.inventory;
+package com.habitrpg.android.habitica.models.inventory
 
 import android.content.Context
 import com.google.common.truth.Truth.assertThat
@@ -22,7 +22,7 @@ class PetTest {
         pet.type = "drop"
         `when`(mockContext.getString(R.string.standard)).thenReturn(FAKE_STANDARD)
 
-        val result: String = pet.getTranslatedType(mockContext)
+        val result = pet.getTranslatedType(mockContext)
 
         assertThat(result).isEqualTo(FAKE_STANDARD)
     }
@@ -31,7 +31,7 @@ class PetTest {
     fun testGetTranslatedStringReturnsPremiumWhenContextIsNull() {
         pet.type = "premium"
 
-        val result: String = pet.getTranslatedType(null)
+        val result = pet.getTranslatedType(null)
 
         assertThat(result).isEqualTo(FAKE_PREMIUM)
     }

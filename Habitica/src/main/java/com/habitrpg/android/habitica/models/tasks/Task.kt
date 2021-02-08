@@ -6,10 +6,10 @@ import android.text.Spanned
 import androidx.annotation.StringDef
 import com.google.gson.annotations.SerializedName
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.models.BaseObject
 import com.habitrpg.android.habitica.models.Tag
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
-import io.reactivex.functions.Consumer
 import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.Ignore
@@ -18,7 +18,15 @@ import org.json.JSONArray
 import org.json.JSONException
 import java.util.*
 
-open class Task : RealmObject, Parcelable {
+open class Task : RealmObject, BaseObject, Parcelable {
+
+    override val realmClass: Class<Task>
+        get() = Task::class.java
+    override val primaryIdentifier: String?
+        get() = id
+    override val primaryIdentifierName: String
+        get() = "id"
+
     @PrimaryKey
     @SerializedName("_id")
     var id: String? = null
@@ -143,14 +151,27 @@ open class Task : RealmObject, Parcelable {
             }
         }
 
+    val darkestTaskColor: Int
+        get() {
+            return when {
+                this.value < -20 -> return R.color.maroon_5
+                this.value < -10 -> return R.color.red_5
+                this.value < -1 -> return R.color.orange_5
+                this.value < 1 -> return R.color.yellow_5
+                this.value < 5 -> return R.color.green_5
+                this.value < 10 -> return R.color.teal_5
+                else -> R.color.blue_5
+            }
+        }
+
     val isDisplayedActive: Boolean
-        get() = isDue == true && !completed
+        get() = ((isDue == true && type == Task.TYPE_DAILY) || type == TYPE_TODO) && !completed
 
     val isChecklistDisplayActive: Boolean
-        get() = this.isDisplayedActive && this.checklist?.size != this.completedChecklistCount
+        get() = this.checklist?.size != this.completedChecklistCount
 
     val isGroupTask: Boolean
-        get() = group?.approvalApproved == true
+        get() = group?.groupID?.isNotBlank() == true
 
     val isPendingApproval: Boolean
         get() = (group?.approvalRequired == true && group?.approvalRequested == true && group?.approvalApproved == false)
@@ -199,10 +220,10 @@ open class Task : RealmObject, Parcelable {
             return this.parsedText ?: ""
         }
 
-        MarkdownParser.parseMarkdownAsync(this.text, Consumer { parsedText ->
+        MarkdownParser.parseMarkdownAsync(this.text) { parsedText ->
             this.parsedText = parsedText
             callback(parsedText)
-        })
+        }
 
         return this.text
     }
@@ -213,10 +234,10 @@ open class Task : RealmObject, Parcelable {
         }
 
         if (notes?.isNotEmpty() == true) {
-            MarkdownParser.parseMarkdownAsync(notes, Consumer { parsedText ->
+            MarkdownParser.parseMarkdownAsync(notes) { parsedText ->
                 parsedNotes = parsedText
                 callback(parsedText)
-            })
+            }
         }
         return notes
     }

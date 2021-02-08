@@ -1,9 +1,9 @@
 package com.habitrpg.android.habitica.extensions
 
-import io.reactivex.Flowable
-import io.reactivex.Maybe
-import io.reactivex.Observable
-import io.reactivex.Single
+import io.reactivex.rxjava3.core.Flowable
+import io.reactivex.rxjava3.core.Maybe
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
 
 
 fun <S, T : Optional<S>> Flowable<T>.filterOptionalDoOnEmpty(function: () -> Unit): Flowable<S> {
@@ -29,7 +29,7 @@ fun <S, T : Optional<S>> Observable<T>.filterMapEmpty(): Observable<S> {
 }
 
 fun <S, T : Optional<S>> Single<T>.filterOptionalDoOnEmpty(function: () -> Unit): Maybe<S> {
-    return this.doAfterSuccess { if (it.isEmpty) function() }
+    return this.doOnSuccess { if (it.isEmpty) function() }
             .filter { !it.isEmpty }
             .map { it.value }
 }
@@ -40,7 +40,7 @@ fun <S, T : Optional<S>> Single<T>.filterMapEmpty(): Maybe<S> {
 }
 
 fun <S, T : Optional<S>> Maybe<T>.filterOptionalDoOnEmpty(function: () -> Unit): Maybe<S> {
-    return this.doAfterSuccess { if (it.isEmpty) function() }
+    return this.doOnSuccess { if (it.isEmpty) function() }
             .filter { !it.isEmpty }
             .map { it.value }
 }

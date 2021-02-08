@@ -8,16 +8,16 @@
     android:baselineAligned="false"
     android:gravity="center_vertical"
     android:minHeight="?android:attr/listPreferredItemHeight"
-    android:paddingRight="16dip"
-    android:paddingLeft="16dip"
+    android:paddingEnd="16dip"
+    android:paddingStart="16dip"
     android:orientation="horizontal">
 
 <RelativeLayout
     android:layout_width="0dip"
     android:layout_height="wrap_content"
     android:layout_marginBottom="6dip"
-    android:layout_marginLeft="16dip"
-    android:layout_marginRight="6dip"
+    android:layout_marginStart="16dip"
+    android:layout_marginEnd="6dip"
     android:layout_marginTop="6dip"
     android:layout_weight="1" >
 
@@ -29,14 +29,14 @@
         android:fadingEdge="horizontal"
         android:singleLine="true"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@color/black"
+        android:textColor="@color/text_primary"
         tools:text="Title"/>
 
     <TextView
         android:id="@android:id/summary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@android:id/title"
+        android:layout_alignStart="@android:id/title"
         android:layout_below="@android:id/title"
         android:maxLines="4"
         android:textAppearance="?android:attr/textAppearanceSmall"
@@ -47,5 +47,5 @@
         android:layout_height="match_parent"
         android:gravity="center_vertical"
         android:orientation="vertical"
-        android:paddingLeft="16dp" />
+        android:paddingStart="16dp" />
 </LinearLayout>

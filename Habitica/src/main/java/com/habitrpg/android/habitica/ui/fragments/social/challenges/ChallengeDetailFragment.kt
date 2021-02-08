@@ -1,69 +1,62 @@
 package com.habitrpg.android.habitica.ui.fragments.social.challenges
 
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
 import android.view.*
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ChallengeRepository
 import com.habitrpg.android.habitica.data.SocialRepository
+import com.habitrpg.android.habitica.databinding.DialogChallengeDetailTaskGroupBinding
+import com.habitrpg.android.habitica.databinding.FragmentChallengeDetailBinding
+import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.members.Member
+import com.habitrpg.android.habitica.models.responses.TaskDirection
 import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.tasks.Task
-import com.habitrpg.android.habitica.ui.AvatarView
 import com.habitrpg.android.habitica.ui.activities.ChallengeFormActivity
 import com.habitrpg.android.habitica.ui.activities.FullProfileActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
-import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
-import com.habitrpg.android.habitica.ui.helpers.bindView
+import com.habitrpg.android.habitica.ui.helpers.EmojiParser
 import com.habitrpg.android.habitica.ui.helpers.setMarkdown
-import com.habitrpg.android.habitica.ui.views.HabiticaEmojiTextView
+import com.habitrpg.android.habitica.ui.viewHolders.tasks.DailyViewHolder
+import com.habitrpg.android.habitica.ui.viewHolders.tasks.HabitViewHolder
+import com.habitrpg.android.habitica.ui.viewHolders.tasks.RewardViewHolder
+import com.habitrpg.android.habitica.ui.viewHolders.tasks.TodoViewHolder
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
-import com.habitrpg.android.habitica.ui.views.social.UsernameLabel
-import io.reactivex.functions.Action
-import io.reactivex.functions.Consumer
-import net.pherth.android.emoji_library.EmojiParser
 import java.util.*
 import javax.inject.Inject
 
 
-class ChallengeDetailFragment: BaseMainFragment() {
+class ChallengeDetailFragment: BaseMainFragment<FragmentChallengeDetailBinding>() {
 
     @Inject
     lateinit var challengeRepository: ChallengeRepository
     @Inject
     lateinit var socialRepository: SocialRepository
 
-    private val joinButtonWrapper: ViewGroup? by bindView(R.id.join_button_wrapper)
-    private val joinButton: Button? by bindView(R.id.join_button)
-    private val leaveButonWrapper: ViewGroup? by bindView(R.id.leave_button_wrapper)
-    private val leaveButton: Button? by bindView(R.id.leave_button)
-    private val challengeName: HabiticaEmojiTextView? by bindView(R.id.challenge_name)
-    private val challengeDescription: HabiticaEmojiTextView? by bindView(R.id.challenge_description)
-    private val challengeLeaderWrapper: ViewGroup? by bindView(R.id.challenge_creator_wrapper)
-    private val challengeLeaderAvatarView: AvatarView? by bindView(R.id.creator_avatarview)
-    private val challengeLeaderLabel: UsernameLabel? by bindView(R.id.creator_label)
-    private val gemAmountView: TextView? by bindView(R.id.gem_amount)
-    private val gemAmountIconView: ImageView? by bindView(R.id.gem_amount_icon)
-    private val memberCountView: TextView? by bindView(R.id.participant_count)
-    private val memberCountIconView: ImageView? by bindView(R.id.participant_count_icon)
-    private val taskGrouplayout: LinearLayout? by bindView(R.id.task_group_layout)
+    override var binding: FragmentChallengeDetailBinding? = null
+
+    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentChallengeDetailBinding {
+        return FragmentChallengeDetailBinding.inflate(inflater, container, false)
+    }
 
     var challengeID: String? = null
     var challenge: Challenge? = null
-    var isCreator = false
+    private var isCreator = false
 
     override fun injectFragment(component: UserComponent) {
         component.inject(this)
@@ -71,8 +64,7 @@ class ChallengeDetailFragment: BaseMainFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         this.hidesToolbar = true
-        super.onCreateView(inflater, container, savedInstanceState)
-        return container?.inflate(R.layout.fragment_challenge_detail)
+        return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     @Suppress("ReturnCount")
@@ -84,16 +76,16 @@ class ChallengeDetailFragment: BaseMainFragment() {
             challengeID = args.challengeID
         }
 
-        gemAmountIconView?.setImageBitmap(HabiticaIconsHelper.imageOfGem_36())
-        memberCountIconView?.setImageBitmap(HabiticaIconsHelper.imageOfParticipantsIcon())
-        challengeDescription?.movementMethod = LinkMovementMethod.getInstance()
+        binding?.gemAmountIcon?.setImageBitmap(HabiticaIconsHelper.imageOfGem_36())
+        binding?.participantCountIcon?.setImageBitmap(HabiticaIconsHelper.imageOfParticipantsIcon())
+        binding?.challengeDescription?.movementMethod = LinkMovementMethod.getInstance()
 
-        challengeLeaderWrapper?.setOnClickListener {
+        binding?.challengeCreatorWrapper?.setOnClickListener {
             val leaderID = challenge?.leaderId ?: return@setOnClickListener
             FullProfileActivity.open(leaderID)
         }
 
-        challengeID?.let {id ->
+        challengeID?.let { id ->
             compositeSubscription.add(challengeRepository.getChallenge(id)
                     .doOnNext {
                         set(it)
@@ -105,9 +97,9 @@ class ChallengeDetailFragment: BaseMainFragment() {
                     .flatMap { creatorID ->
                         return@flatMap socialRepository.getMember(creatorID)
                     }
-                    .subscribe(Consumer { set(it)}, RxErrorHandler.handleEmptyError()))
-            compositeSubscription.add(challengeRepository.getChallengeTasks(id).subscribe(Consumer { taskList ->
-                taskGrouplayout?.removeAllViewsInLayout()
+                    .subscribe({ set(it) }, RxErrorHandler.handleEmptyError()))
+            compositeSubscription.add(challengeRepository.getChallengeTasks(id).subscribe({ taskList ->
+                binding?.taskGroupLayout?.removeAllViewsInLayout()
 
                 val todos = ArrayList<Task>()
                 val habits = ArrayList<Task>()
@@ -140,15 +132,15 @@ class ChallengeDetailFragment: BaseMainFragment() {
                 }
             }, RxErrorHandler.handleEmptyError()))
 
-            compositeSubscription.add(challengeRepository.isChallengeMember(id).subscribe(Consumer { isMember ->
+            compositeSubscription.add(challengeRepository.isChallengeMember(id).subscribe({ isMember ->
                 setJoined(isMember)
             }, RxErrorHandler.handleEmptyError()))
         }
 
-        joinButton?.setOnClickListener { challenge?.let { challenge -> challengeRepository.joinChallenge(challenge)
+        binding?.joinButton?.setOnClickListener { challenge?.let { challenge -> challengeRepository.joinChallenge(challenge)
                 .flatMap { userRepository.retrieveUser(true) }
-                .subscribe(Consumer {}, RxErrorHandler.handleEmptyError()) } }
-        leaveButton?.setOnClickListener { showChallengeLeaveDialog() }
+                .subscribe({}, RxErrorHandler.handleEmptyError()) } }
+        binding?.leaveButton?.setOnClickListener { showChallengeLeaveDialog() }
 
         refresh()
     }
@@ -157,190 +149,143 @@ class ChallengeDetailFragment: BaseMainFragment() {
         inflater.inflate(R.menu.menu_challenge_details, menu)
         val editMenuItem = menu.findItem(R.id.action_edit)
         editMenuItem?.isVisible = isCreator
+        val endChallengeMenuItem = menu.findItem(R.id.action_end_challenge)
+        endChallengeMenuItem?.isVisible = isCreator
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.action_edit) {
-            val intent = Intent(getActivity(), ChallengeFormActivity::class.java)
-            val bundle = Bundle()
-            bundle.putString(ChallengeFormActivity.CHALLENGE_ID_KEY, challengeID)
-            intent.putExtras(bundle)
-            startActivity(intent)
-            return true
-        }
-        else if (item.itemId == R.id.action_share) {
-            val shareGuildIntent = Intent().apply {
-                action = Intent.ACTION_SEND
-                putExtra(Intent.EXTRA_TEXT, "${context?.getString(R.string.base_url)}/challenges/$challengeID")
-                type = "text/plain"
+        when (item.itemId) {
+            R.id.action_edit -> {
+                val intent = Intent(getActivity(), ChallengeFormActivity::class.java)
+                val bundle = Bundle()
+                bundle.putString(ChallengeFormActivity.CHALLENGE_ID_KEY, challengeID)
+                intent.putExtras(bundle)
+                startActivity(intent)
+                return true
             }
-            startActivity(Intent.createChooser(shareGuildIntent, context?.getString(R.string.share_challenge_with)))
+            R.id.action_share -> {
+                val shareGuildIntent = Intent().apply {
+                    action = Intent.ACTION_SEND
+                    putExtra(Intent.EXTRA_TEXT, "${context?.getString(R.string.base_url)}/challenges/$challengeID")
+                    type = "text/plain"
+                }
+                startActivity(Intent.createChooser(shareGuildIntent, context?.getString(R.string.share_challenge_with)))
+            }
+            R.id.action_end_challenge -> {
+                showEndChallengeDialog()
+            }
         }
 
         return super.onOptionsItemSelected(item)
     }
 
+    private fun showEndChallengeDialog() {
+        val context = context ?: return
+        val dialog = HabiticaAlertDialog(context)
+        dialog.setTitle(R.string.action_end_challenge)
+        dialog.setMessage(R.string.end_challenge_description)
+        dialog.addButton(R.string.open_website, true, false) { _, _ ->
+            val uriUrl = "https://habitica.com/challenges/${challengeID}".toUri()
+            val launchBrowser = Intent(Intent.ACTION_VIEW, uriUrl)
+            val l = context.packageManager.queryIntentActivities(launchBrowser, PackageManager.MATCH_DEFAULT_ONLY)
+            val notHabitica = l.first { !it.activityInfo.processName.contains("habitica") }
+            launchBrowser.setPackage(notHabitica.activityInfo.processName)
+            startActivity(launchBrowser)
+        }
+        dialog.addCloseButton()
+        dialog.show()
+    }
+
     private fun refresh() {
-        challengeID?.let {id ->
+        challengeID?.let { id ->
             challengeRepository.retrieveChallenge(id)
                     .flatMap { challengeRepository.retrieveChallengeTasks(id) }
-                    .subscribe(Consumer {  }, RxErrorHandler.handleEmptyError(), Action {  })
+                    .subscribe({ }, RxErrorHandler.handleEmptyError(), { })
         }
     }
 
     private fun set(challenge: Challenge) {
         this.challenge = challenge
-        challengeName?.text = EmojiParser.parseEmojis(challenge.name)
-        challengeDescription?.setMarkdown(challenge.description)
-        challengeLeaderLabel?.username = challenge.leaderName
+        binding?.challengeName?.text = EmojiParser.parseEmojis(challenge.name)
+        binding?.challengeDescription?.setMarkdown(challenge.description)
+        binding?.creatorLabel?.username = challenge.leaderName
 
-        gemAmountView?.text = challenge.prize.toString()
-        memberCountView?.text = challenge.memberCount.toString()
+        binding?.gemAmount?.text = challenge.prize.toString()
+        binding?.participantCount?.text = challenge.memberCount.toString()
     }
 
     private fun set(creator: Member) {
-        challengeLeaderAvatarView?.setAvatar(creator)
-        challengeLeaderLabel?.tier = creator.contributor?.level ?: 0
-        challengeLeaderLabel?.username = creator.displayName
+        binding?.creatorAvatarview?.setAvatar(creator)
+        binding?.creatorLabel?.tier = creator.contributor?.level ?: 0
+        binding?.creatorLabel?.username = creator.displayName
         isCreator = creator.id == user?.id
         this.activity?.invalidateOptionsMenu()
     }
 
     private fun setJoined(joined: Boolean) {
-        joinButton?.visibility = if (!joined) View.VISIBLE else View.GONE
-        joinButtonWrapper?.visibility = if (!joined) View.VISIBLE else View.GONE
-        leaveButton?.visibility = if (joined) View.VISIBLE else View.GONE
-        leaveButonWrapper?.visibility = if (joined) View.VISIBLE else View.GONE
+        binding?.joinButton?.visibility = if (!joined) View.VISIBLE else View.GONE
+        binding?.joinButtonWrapper?.visibility = if (!joined) View.VISIBLE else View.GONE
+        binding?.leaveButton?.visibility = if (joined) View.VISIBLE else View.GONE
+        binding?.leaveButtonWrapper?.visibility = if (joined) View.VISIBLE else View.GONE
     }
 
     private fun addHabits(habits: ArrayList<Task>) {
-        val taskGroup = taskGrouplayout?.inflate(R.layout.dialog_challenge_detail_task_group)
-        val groupName = taskGroup?.findViewById(R.id.task_group_name) as? TextView
-        val tasksLayout = taskGroup?.findViewById(R.id.tasks_layout) as? LinearLayout
-
-        groupName?.text = getLabelByTypeAndCount(Challenge.TASK_ORDER_HABITS, habits.size)
-        taskGroup?.findViewById<TextView>(R.id.task_count_view)?.text = habits.size.toString()
-
-        val size = habits.size
-        for (i in 0 until size) {
+        val groupBinding = DialogChallengeDetailTaskGroupBinding.inflate(layoutInflater, binding?.taskGroupLayout, true)
+        groupBinding.taskGroupName.text = getLabelByTypeAndCount(Challenge.TASK_ORDER_HABITS, habits.size)
+        groupBinding.taskCountView.text = habits.size.toString()
+        for (i in 0 until habits.size) {
             val task = habits[i]
-            val entry = tasksLayout?.inflate(R.layout.dialog_challenge_detail_habit)
-            val habitTitle = entry?.findViewById(R.id.habit_title) as? TextView
-
-            entry?.findViewById<ImageView>(R.id.lock_icon_plus)?.setImageBitmap(HabiticaIconsHelper.imageOfLocked(Color.parseColor("#DFDEDF")))
-            entry?.findViewById<ImageView>(R.id.lock_icon_minus)?.setImageBitmap(HabiticaIconsHelper.imageOfLocked(Color.parseColor("#DFDEDF")))
-            context?.let {
-                if (task.up == true) {
-                    entry?.findViewById<ImageView>(R.id.lock_icon_plus)?.setImageBitmap(HabiticaIconsHelper.imageOfLocked(Color.parseColor("#B3FFFFFF")))
-                    entry?.findViewById<View>(R.id.lock_icon_background_plus)?.setBackgroundColor(ContextCompat.getColor(it, task.mediumTaskColor))
-                    val drawable = ContextCompat.getDrawable(it, R.drawable.circle_white)
-                    drawable?.colorFilter = PorterDuffColorFilter(ContextCompat.getColor(it, task.darkTaskColor), PorterDuff.Mode.MULTIPLY)
-                    entry?.findViewById<View>(R.id.lock_icon_plus)?.background = drawable
-                }
-                if (task.down == true) {
-                    entry?.findViewById<ImageView>(R.id.lock_icon_minus)?.setImageBitmap(HabiticaIconsHelper.imageOfLocked(Color.parseColor("#B3FFFFFF")))
-                    entry?.findViewById<View>(R.id.lock_icon_background_minus)?.setBackgroundColor(ContextCompat.getColor(it, task.mediumTaskColor))
-                    val drawable = ContextCompat.getDrawable(it, R.drawable.circle_white)
-                    drawable?.colorFilter = PorterDuffColorFilter(ContextCompat.getColor(it, task.darkTaskColor), PorterDuff.Mode.MULTIPLY)
-                    entry?.findViewById<View>(R.id.lock_icon_plus)?.background = drawable
-                }
-            }
-
-            habitTitle?.text = EmojiParser.parseEmojis(task.text)
-            tasksLayout?.addView(entry)
+            val entry = groupBinding.tasksLayout.inflate(R.layout.habit_item_card)
+            val viewHolder = HabitViewHolder(entry, { _, _ -> }, {}, {})
+            viewHolder.isLocked = true
+            viewHolder.bind(task, i, "normal")
+            groupBinding.tasksLayout.addView(entry)
         }
-        taskGrouplayout?.addView(taskGroup)
     }
 
     private fun addDailys(dailies: ArrayList<Task>) {
-        val taskGroup = taskGrouplayout?.inflate(R.layout.dialog_challenge_detail_task_group)
-        val groupName = taskGroup?.findViewById(R.id.task_group_name) as? TextView
-        val tasksLayout = taskGroup?.findViewById(R.id.tasks_layout) as? LinearLayout
+        val groupBinding = DialogChallengeDetailTaskGroupBinding.inflate(layoutInflater, binding?.taskGroupLayout, true)
+        groupBinding.taskGroupName.text = getLabelByTypeAndCount(Challenge.TASK_ORDER_DAILYS, dailies.size)
+        groupBinding.taskCountView.text = dailies.size.toString()
 
-        val size = dailies.size
-        groupName?.text = getLabelByTypeAndCount(Challenge.TASK_ORDER_DAILYS, size)
-        taskGroup?.findViewById<TextView>(R.id.task_count_view)?.text = dailies.size.toString()
-
-        for (i in 0 until size) {
+        for (i in 0 until dailies.size) {
             val task = dailies[i]
-            val entry = tasksLayout?.inflate(R.layout.dialog_challenge_detail_daily)
-            val title = entry?.findViewById(R.id.daily_title) as? TextView?
-            title?.text = EmojiParser.parseEmojis(task.text)
-            entry?.findViewById<ImageView>(R.id.lock_icon)?.setImageBitmap(HabiticaIconsHelper.imageOfLocked(Color.parseColor("#949494")))
-            context?.let {
-                entry?.findViewById<View>(R.id.lock_icon_background)?.setBackgroundColor(ContextCompat.getColor(it, task.mediumTaskColor))
-                val drawable = ContextCompat.getDrawable(it, R.drawable.circle_white)
-                drawable?.colorFilter = PorterDuffColorFilter(ContextCompat.getColor(it, task.extraLightTaskColor), PorterDuff.Mode.MULTIPLY)
-                entry?.findViewById<View>(R.id.lock_icon)?.background = drawable
-            }
-            if (task.checklist != null && task.checklist?.isEmpty() == false) {
-                val checklistIndicatorWrapper = entry?.findViewById<View>(R.id.checklistIndicatorWrapper)
-
-                checklistIndicatorWrapper?.visibility = View.VISIBLE
-
-                val checkListAllTextView = entry?.findViewById<View>(R.id.checkListAllTextView) as? TextView
-                checkListAllTextView?.text = task.checklist?.size.toString()
-            }
-            tasksLayout?.addView(entry)
+            val entry = groupBinding.tasksLayout.inflate(R.layout.daily_item_card)
+            val viewHolder = DailyViewHolder(entry, { _, _ -> }, { _, _ -> }, {}, {})
+            viewHolder.isLocked = true
+            viewHolder.bind(task, i, "normal")
+            groupBinding.tasksLayout.addView(entry)
         }
-        taskGrouplayout?.addView(taskGroup)
     }
 
     private fun addTodos(todos: ArrayList<Task>) {
-        val taskGroup = taskGrouplayout?.inflate(R.layout.dialog_challenge_detail_task_group)
-        val groupName = taskGroup?.findViewById(R.id.task_group_name) as? TextView
-        val tasksLayout = taskGroup?.findViewById(R.id.tasks_layout) as? LinearLayout
+        val groupBinding = DialogChallengeDetailTaskGroupBinding.inflate(layoutInflater, binding?.taskGroupLayout, true)
+        groupBinding.taskGroupName.text = getLabelByTypeAndCount(Challenge.TASK_ORDER_TODOS, todos.size)
+        groupBinding.taskCountView.text = todos.size.toString()
 
-        val size = todos.size
-        groupName?.text = getLabelByTypeAndCount(Challenge.TASK_ORDER_TODOS, size)
-        taskGroup?.findViewById<TextView>(R.id.task_count_view)?.text = todos.size.toString()
-
-        for (i in 0 until size) {
+        for (i in 0 until todos.size) {
             val task = todos[i]
-            val entry = tasksLayout?.inflate(R.layout.dialog_challenge_detail_todo)
-            val title = entry?.findViewById(R.id.todo_title) as? TextView
-            title?.text = EmojiParser.parseEmojis(task.text)
-            entry?.findViewById<ImageView>(R.id.lock_icon)?.setImageBitmap(HabiticaIconsHelper.imageOfLocked(Color.parseColor("#949494")))
-            context?.let {
-                entry?.findViewById<View>(R.id.lock_icon_background)?.setBackgroundColor(ContextCompat.getColor(it, task.mediumTaskColor))
-                val drawable = ContextCompat.getDrawable(it, R.drawable.circle_white)
-                drawable?.colorFilter = PorterDuffColorFilter(ContextCompat.getColor(it, task.extraLightTaskColor), PorterDuff.Mode.MULTIPLY)
-                entry?.findViewById<View>(R.id.lock_icon)?.background = drawable
-            }
-
-            if (task.checklist != null && task.checklist?.isEmpty() == false) {
-                val checklistIndicatorWrapper = entry?.findViewById<View>(R.id.checklistIndicatorWrapper)
-
-                checklistIndicatorWrapper?.visibility = View.VISIBLE
-
-                val checkListAllTextView = entry?.findViewById<View>(R.id.checkListAllTextView) as? TextView
-                checkListAllTextView?.text = task.checklist?.size.toString()
-            }
-            tasksLayout?.addView(entry)
+            val entry = groupBinding.tasksLayout.inflate(R.layout.todo_item_card)
+            val viewHolder = TodoViewHolder(entry, { _, _ -> }, { _, _ -> }, {}, {})
+            viewHolder.isLocked = true
+            viewHolder.bind(task, i, "normal")
+            groupBinding.tasksLayout.addView(entry)
         }
-        taskGrouplayout?.addView(taskGroup)
     }
 
     private fun addRewards(rewards: ArrayList<Task>) {
-        val taskGroup = taskGrouplayout?.inflate(R.layout.dialog_challenge_detail_task_group)
-        val groupName = taskGroup?.findViewById(R.id.task_group_name) as? TextView
+        val groupBinding = DialogChallengeDetailTaskGroupBinding.inflate(layoutInflater, binding?.taskGroupLayout, true)
+        groupBinding.taskGroupName.text = getLabelByTypeAndCount(Challenge.TASK_ORDER_HABITS, rewards.size)
+        groupBinding.taskCountView.text = rewards.size.toString()
 
-        val tasksLayout = taskGroup?.findViewById(R.id.tasks_layout) as? LinearLayout
-
-        val size = rewards.size
-        groupName?.text =  getLabelByTypeAndCount(Challenge.TASK_ORDER_REWARDS, size)
-        taskGroup?.findViewById<TextView>(R.id.task_count_view)?.text = rewards.size.toString()
-
-        for (i in 0 until size) {
+        for (i in 0 until rewards.size) {
             val task = rewards[i]
-
-            val entry = tasksLayout?.inflate(R.layout.dialog_challenge_detail_reward)
-            (entry?.findViewById<View>(R.id.gold_icon) as? ImageView)?.setImageBitmap(HabiticaIconsHelper.imageOfGold())
-            val title = entry?.findViewById<View>(R.id.reward_title) as? TextView
-            title?.text = EmojiParser.parseEmojis(task.text)
-            tasksLayout?.addView(entry)
+            val entry = groupBinding.tasksLayout.inflate(R.layout.habit_item_card)
+            val viewHolder = RewardViewHolder(entry, { _, _ -> }, {}, {})
+            viewHolder.isLocked = true
+            viewHolder.bind(task, i, "normal")
+            groupBinding.tasksLayout.addView(entry)
         }
-        taskGrouplayout?.addView(taskGroup)
     }
 
     private fun getLabelByTypeAndCount(type: String, count: Int): String {
@@ -357,13 +302,13 @@ class ChallengeDetailFragment: BaseMainFragment() {
         val alert = HabiticaAlertDialog(context)
         alert.setTitle(this.getString(R.string.challenge_leave_title))
         alert.setMessage(this.getString(R.string.challenge_leave_description))
-        alert.addButton(R.string.leave_keep_tasks, true) { dialog, _ ->
+        alert.addButton(R.string.leave_keep_tasks, true) { _, _ ->
             val challenge = challenge ?: return@addButton
-            challengeRepository.leaveChallenge(challenge, "keep-all").subscribe(Consumer {}, RxErrorHandler.handleEmptyError())
+            challengeRepository.leaveChallenge(challenge, "keep-all").subscribe({}, RxErrorHandler.handleEmptyError())
         }
-        alert.addButton(R.string.leave_delte_tasks, false, true) { dialog, _ ->
+        alert.addButton(R.string.leave_delte_tasks, isPrimary = false, isDestructive = true) { _, _ ->
             val challenge = challenge ?: return@addButton
-            challengeRepository.leaveChallenge(challenge, "remove-all").subscribe(Consumer {}, RxErrorHandler.handleEmptyError())
+            challengeRepository.leaveChallenge(challenge, "remove-all").subscribe({}, RxErrorHandler.handleEmptyError())
         }
         alert.setExtraCloseButtonVisibility(View.VISIBLE)
         alert.show()

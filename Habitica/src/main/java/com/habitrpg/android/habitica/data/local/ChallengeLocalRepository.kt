@@ -5,7 +5,7 @@ import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.social.ChallengeMembership
 import com.habitrpg.android.habitica.models.tasks.Task
 
-import io.reactivex.Flowable
+import io.reactivex.rxjava3.core.Flowable
 import io.realm.RealmResults
 
 interface ChallengeLocalRepository : BaseLocalRepository {

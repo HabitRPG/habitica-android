@@ -4,7 +4,13 @@
     tools:context="com.habitrpg.android.habitica.TaskActivity">
     <item
         android:id="@+id/action_edit"
-        android:title="@string/action_edit" />
+        android:title="@string/action_edit"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_end_challenge"
+        android:title="@string/action_end_challenge"
+        app:showAsAction="never"
+        />
     <item
         android:id="@+id/action_share"
         android:title="@string/share"/>

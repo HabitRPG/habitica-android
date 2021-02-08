@@ -17,7 +17,7 @@ import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.shared.habitica.HLogger
 import com.habitrpg.shared.habitica.LogLevel
-import io.reactivex.functions.Consumer
+import io.reactivex.rxjava3.functions.Consumer
 import java.util.*
 import javax.inject.Inject
 

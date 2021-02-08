@@ -4,7 +4,7 @@ import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.TutorialRepository
 import com.habitrpg.android.habitica.data.local.TutorialLocalRepository
 import com.habitrpg.android.habitica.models.TutorialStep
-import io.reactivex.Flowable
+import io.reactivex.rxjava3.core.Flowable
 import io.realm.RealmResults
 
 

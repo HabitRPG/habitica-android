@@ -4,12 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
+import com.habitrpg.android.habitica.databinding.FragmentRecyclerviewBinding
 import com.habitrpg.android.habitica.extensions.getTranslatedType
-import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.Animal
@@ -19,37 +18,38 @@ import com.habitrpg.android.habitica.models.inventory.StableSection
 import com.habitrpg.android.habitica.models.user.*
 import com.habitrpg.android.habitica.ui.adapter.inventory.StableRecyclerAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
-import com.habitrpg.android.habitica.ui.helpers.*
-import io.reactivex.Maybe
-import io.reactivex.functions.BiFunction
-import io.reactivex.functions.Consumer
+import com.habitrpg.android.habitica.ui.helpers.MarginDecoration
+import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
+import io.reactivex.rxjava3.core.Maybe
 import io.realm.RealmResults
 import java.util.*
 import javax.inject.Inject
 
-class StableRecyclerFragment : BaseFragment() {
+class StableRecyclerFragment : BaseFragment<FragmentRecyclerviewBinding>() {
 
     @Inject
     lateinit var inventoryRepository: InventoryRepository
     @Inject
     lateinit var configManager: AppConfigManager
 
-    private val recyclerView: RecyclerViewEmptySupport? by bindView(R.id.recyclerView)
-    private val emptyView: TextView? by bindView(R.id.emptyView)
     var adapter: StableRecyclerAdapter? = null
     var itemType: String? = null
     var itemTypeText: String? = null
     var user: User? = null
     internal var layoutManager: androidx.recyclerview.widget.GridLayoutManager? = null
-    
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        super.onCreateView(inflater, container, savedInstanceState)
 
+    override var binding: FragmentRecyclerviewBinding? = null
+
+    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentRecyclerviewBinding {
+        return FragmentRecyclerviewBinding.inflate(inflater, container, false)
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         if (savedInstanceState != null) {
             this.itemType = savedInstanceState.getString(ITEM_TYPE_KEY, "")
         }
 
-        return container?.inflate(R.layout.fragment_recyclerview_stable)
+        return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     override fun onDestroy() {
@@ -64,10 +64,8 @@ class StableRecyclerFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        resetViews()
-        
-        recyclerView?.setEmptyView(emptyView)
-        emptyView?.text = getString(R.string.empty_items, itemTypeText)
+        binding?.recyclerView?.setEmptyView(binding?.emptyView)
+        binding?.emptyView?.text = getString(R.string.empty_items, itemTypeText)
 
         layoutManager = androidx.recyclerview.widget.GridLayoutManager(activity, 2)
         layoutManager?.spanSizeLookup = object : androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup() {
@@ -80,28 +78,33 @@ class StableRecyclerFragment : BaseFragment() {
             }
         }
 
-        recyclerView?.layoutManager = layoutManager
+        binding?.recyclerView?.layoutManager = layoutManager
         activity?.let {
-            recyclerView?.addItemDecoration(MarginDecoration(it, setOf(HEADER_VIEW_TYPE)))
+            binding?.recyclerView?.addItemDecoration(MarginDecoration(it, setOf(HEADER_VIEW_TYPE)))
         }
 
-        adapter = recyclerView?.adapter as? StableRecyclerAdapter
+        adapter = binding?.recyclerView?.adapter as? StableRecyclerAdapter
         if (adapter == null) {
             adapter = StableRecyclerAdapter()
-            adapter?.animalIngredientsRetriever = {
-                val egg = inventoryRepository.getItems(Egg::class.java, arrayOf(it.animal)).firstElement().blockingGet().firstOrNull()
-                val potion = inventoryRepository.getItems(HatchingPotion::class.java, arrayOf(it.color)).firstElement().blockingGet().firstOrNull()
-                Pair(egg as? Egg, potion as? HatchingPotion)
+            adapter?.animalIngredientsRetriever = { animal, callback ->
+                Maybe.zip(
+                        inventoryRepository.getItems(Egg::class.java, arrayOf(animal.animal)).firstElement(),
+                        inventoryRepository.getItems(HatchingPotion::class.java, arrayOf(animal.color)).firstElement(), { eggs, potions ->
+                    Pair(eggs.first() as? Egg, potions.first() as? HatchingPotion)
+                }
+                ).subscribe({
+                    callback(it)
+                }, RxErrorHandler.handleEmptyError())
             }
             adapter?.itemType = this.itemType
             adapter?.shopSpriteSuffix = configManager.shopSpriteSuffix()
-            recyclerView?.adapter = adapter
-            recyclerView?.itemAnimator = SafeDefaultItemAnimator()
+            binding?.recyclerView?.adapter = adapter
+            binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
 
             adapter?.let {
                 compositeSubscription.add(it.getEquipFlowable()
-                        .flatMap<Items> { key -> inventoryRepository.equip(user, if (itemType == "pets") "pet" else "mount", key) }
-                        .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+                        .flatMap { key -> inventoryRepository.equip(user, if (itemType == "pets") "pet" else "mount", key) }
+                        .subscribe({ }, RxErrorHandler.handleEmptyError()))
             }
         }
         
@@ -156,12 +159,12 @@ class StableRecyclerFragment : BaseFragment() {
                     }
                     eggMap
                 }
-                .subscribe(Consumer {
+                .subscribe({
             adapter?.setEggs(it)
         }, RxErrorHandler.handleEmptyError()))
-        compositeSubscription.add(observable.zipWith(ownedObservable, BiFunction<RealmResults<out Animal>, Map<String, OwnedObject>, ArrayList<Any>> { unsortedAnimals, ownedAnimals ->
+        compositeSubscription.add(observable.zipWith(ownedObservable, { unsortedAnimals, ownedAnimals ->
             mapAnimals(unsortedAnimals, ownedAnimals)
-        }).subscribe(Consumer { items -> adapter?.setItemList(items) }, RxErrorHandler.handleEmptyError()))
+        }).subscribe({ items -> adapter?.setItemList(items) }, RxErrorHandler.handleEmptyError()))
 
         compositeSubscription.add(inventoryRepository.getOwnedItems("eggs")
                 .map {
@@ -171,7 +174,7 @@ class StableRecyclerFragment : BaseFragment() {
                     }
                     map
                 }
-                .subscribe(Consumer {
+                .subscribe({
             adapter?.ownedEggs = it
         }, RxErrorHandler.handleEmptyError()))
     }

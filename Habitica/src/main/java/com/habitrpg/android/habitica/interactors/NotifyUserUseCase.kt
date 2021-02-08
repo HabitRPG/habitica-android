@@ -22,7 +22,7 @@ import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.SnackbarDisplayType
-import io.reactivex.Flowable
+import io.reactivex.rxjava3.core.Flowable
 import javax.inject.Inject
 import kotlin.math.abs
 
@@ -38,8 +38,8 @@ constructor(threadExecutor: ThreadExecutor, postExecutionThread: PostExecutionTh
             val stats = requestValues.user.stats
 
             if (requestValues.hasLeveledUp == true) {
-                return@defer levelUpUseCase.observable(LevelUpUseCase.RequestValues(requestValues.user, requestValues.context))
-                        .flatMap<User> { userRepository.retrieveUser(true) }
+                return@defer levelUpUseCase.observable(LevelUpUseCase.RequestValues(requestValues.user, requestValues.level, requestValues.context))
+                        .flatMap { userRepository.retrieveUser(true) }
                         .map { it.stats }
             } else {
                 val pair = getNotificationAndAddStatsToUser(requestValues.context, requestValues.xp, requestValues.hp, requestValues.gold, requestValues.mp, requestValues.questDamage, requestValues.user)
@@ -53,7 +53,7 @@ constructor(threadExecutor: ThreadExecutor, postExecutionThread: PostExecutionTh
         }
     }
 
-    class RequestValues( val context: AppCompatActivity, val snackbarTargetView: ViewGroup, val user: User?, val xp: Double?, val hp: Double?, val gold: Double?, val mp: Double?, val questDamage: Double?, val hasLeveledUp: Boolean?) : UseCase.RequestValues
+    class RequestValues( val context: AppCompatActivity, val snackbarTargetView: ViewGroup, val user: User?, val xp: Double?, val hp: Double?, val gold: Double?, val mp: Double?, val questDamage: Double?, val hasLeveledUp: Boolean?, val level: Long?) : UseCase.RequestValues
 
     companion object {
 

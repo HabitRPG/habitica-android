@@ -7,11 +7,14 @@ import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
+import androidx.paging.DataSource
+import androidx.paging.PagedList
 import com.habitrpg.android.habitica.MainNavDirections
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
+import com.habitrpg.android.habitica.databinding.FragmentInboxMessageListBinding
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
@@ -26,15 +29,22 @@ import com.habitrpg.android.habitica.ui.viewmodels.InboxViewModel
 import com.habitrpg.android.habitica.ui.viewmodels.InboxViewModelFactory
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.Companion.showSnackbar
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.functions.Action
-import io.reactivex.functions.Consumer
-import kotlinx.android.synthetic.main.fragment_inbox_message_list.*
-import kotlinx.android.synthetic.main.tavern_chat_new_entry_item.*
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.disposables.Disposable
+import io.reactivex.rxjava3.functions.Action
+import io.reactivex.rxjava3.functions.Consumer
+import java.lang.Exception
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class InboxMessageListFragment : BaseMainFragment(), androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener {
+class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBinding>() {
+
+    override var binding: FragmentInboxMessageListBinding? = null
+
+    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentInboxMessageListBinding {
+        return FragmentInboxMessageListBinding.inflate(inflater, container, false)
+    }
 
     @Inject
     lateinit var socialRepository: SocialRepository
@@ -46,54 +56,62 @@ class InboxMessageListFragment : BaseMainFragment(), androidx.swiperefreshlayout
     private var replyToUserUUID: String? = null
 
     private var viewModel: InboxViewModel? = null
+    private var refreshDisposable: Disposable? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         this.hidesToolbar = true
-        super.onCreateView(inflater, container, savedInstanceState)
-
-        return inflater.inflate(R.layout.fragment_inbox_message_list, container, false)
+        return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        showsBackButton = true
         super.onViewCreated(view, savedInstanceState)
-        swipeRefreshLayout?.setOnRefreshListener(this)
 
         arguments?.let {
             val args = InboxMessageListFragmentArgs.fromBundle(it)
             setReceivingUser(args.username, args.userID)
         }
-        viewModel = ViewModelProviders.of(this, InboxViewModelFactory(replyToUserUUID, chatRoomUser)).get(InboxViewModel::class.java)
+        viewModel = ViewModelProvider(this, InboxViewModelFactory(replyToUserUUID, chatRoomUser)).get(InboxViewModel::class.java)
 
         val layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this.getActivity())
-        recyclerView.layoutManager = layoutManager
-
-        chatAdapter = InboxAdapter(user)
-        viewModel?.messages?.observe(this.viewLifecycleOwner, Observer { chatAdapter?.submitList(it) })
-        viewModel?.getMemberData()?.observe(this.viewLifecycleOwner, Observer {
-            activity?.binding?.toolbarTitle?.text = it?.profile?.name
-        })
-        recyclerView.adapter = chatAdapter
-        recyclerView.itemAnimator = SafeDefaultItemAnimator()
-        chatAdapter?.let { adapter ->
-            compositeSubscription.add(adapter.getUserLabelClickFlowable().subscribe(Consumer<String> {
-                FullProfileActivity.open(it)
-            }, RxErrorHandler.handleEmptyError()))
-            compositeSubscription.add(adapter.getDeleteMessageFlowable().subscribe(Consumer { this.showDeleteConfirmationDialog(it) }, RxErrorHandler.handleEmptyError()))
-            compositeSubscription.add(adapter.getFlagMessageClickFlowable().subscribe(Consumer { this.showFlagConfirmationDialog(it) }, RxErrorHandler.handleEmptyError()))
-            compositeSubscription.add(adapter.getCopyMessageFlowable().subscribe(Consumer { this.copyMessageToClipboard(it) }, RxErrorHandler.handleEmptyError()))
+        layoutManager.reverseLayout = true
+        layoutManager.stackFromEnd = false
+        binding?.recyclerView?.layoutManager = layoutManager
+        val observable = if (replyToUserUUID?.isNotBlank() == true) {
+            apiClient.getMember(replyToUserUUID!!)
+        } else {
+            apiClient.getMemberWithUsername(chatRoomUser ?: "")
         }
+        compositeSubscription.add(observable.subscribe( { member ->
+            setReceivingUser(member.username, member.id)
+            activity?.title = member.displayName
+            chatAdapter = InboxAdapter(user, member)
+            viewModel?.messages?.observe(this.viewLifecycleOwner, { chatAdapter?.submitList(it) })
 
-        chatBarView.sendAction = { sendMessage(it) }
-        chatBarView.maxChatLength = configManager.maxChatLength()
+            binding?.recyclerView?.adapter = chatAdapter
+            binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
+            chatAdapter?.let { adapter ->
+                compositeSubscription.add(adapter.getUserLabelClickFlowable().subscribe({
+                    FullProfileActivity.open(it)
+                }, RxErrorHandler.handleEmptyError()))
+                compositeSubscription.add(adapter.getDeleteMessageFlowable().subscribe({ this.showDeleteConfirmationDialog(it) }, RxErrorHandler.handleEmptyError()))
+                compositeSubscription.add(adapter.getFlagMessageClickFlowable().subscribe({ this.showFlagConfirmationDialog(it) }, RxErrorHandler.handleEmptyError()))
+                compositeSubscription.add(adapter.getCopyMessageFlowable().subscribe({ this.copyMessageToClipboard(it) }, RxErrorHandler.handleEmptyError()))
+            }
+        }, RxErrorHandler.handleEmptyError()))
 
-        communityGuidelinesView.visibility = View.GONE
+        binding?.chatBarView?.sendAction = { sendMessage(it) }
+        binding?.chatBarView?.maxChatLength = configManager.maxChatLength()
+
+        binding?.chatBarView?.hasAcceptedGuidelines = true
     }
 
     override fun onResume() {
         if (replyToUserUUID?.isNotBlank() != true && chatRoomUser?.isNotBlank() != true) {
-            fragmentManager?.popBackStack()
+            parentFragmentManager.popBackStack()
         }
+        startAutoRefreshing()
         super.onResume()
     }
 
@@ -104,6 +122,18 @@ class InboxMessageListFragment : BaseMainFragment(), androidx.swiperefreshlayout
         super.onAttach(context)
     }
 
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        stopAutoRefreshing()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        stopAutoRefreshing()
+    }
+
+
     override fun onDestroy() {
         socialRepository.close()
         super.onDestroy()
@@ -111,7 +141,6 @@ class InboxMessageListFragment : BaseMainFragment(), androidx.swiperefreshlayout
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         this.activity?.menuInflater?.inflate(R.menu.inbox_chat, menu)
-        val item = menu.findItem(R.id.open_profile)
         super.onCreateOptionsMenu(menu, inflater)
     }
 
@@ -129,18 +158,31 @@ class InboxMessageListFragment : BaseMainFragment(), androidx.swiperefreshlayout
         component.inject(this)
     }
 
+    private fun startAutoRefreshing() {
+        if (refreshDisposable != null && refreshDisposable?.isDisposed != true) {
+            refreshDisposable?.dispose()
+        }
+        refreshDisposable = Observable.interval(30, TimeUnit.SECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    refreshConversation()
+                }, RxErrorHandler.handleEmptyError())
+        refreshConversation()
+    }
+
+    private fun stopAutoRefreshing() {
+        if (refreshDisposable?.isDisposed != true) {
+            refreshDisposable?.dispose()
+            refreshDisposable = null
+        }
+    }
+
     private fun refreshConversation() {
         if (viewModel?.memberID?.isNotBlank() != true) { return }
         compositeSubscription.add(this.socialRepository.retrieveInboxMessages(replyToUserUUID ?: "", 0)
-                .subscribe(Consumer {}, RxErrorHandler.handleEmptyError(), Action {
-                    swipeRefreshLayout?.isRefreshing = false
+                .subscribe({}, RxErrorHandler.handleEmptyError(), {
                     viewModel?.invalidateDataSource()
                 }))
-    }
-
-    override fun onRefresh() {
-        this.swipeRefreshLayout?.isRefreshing = true
-        this.refreshConversation()
     }
 
     private fun sendMessage(chatText: String) {
@@ -149,17 +191,17 @@ class InboxMessageListFragment : BaseMainFragment(), androidx.swiperefreshlayout
                     .delay(200, TimeUnit.MILLISECONDS)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
-                recyclerView?.scrollToPosition(0)
+                        binding?.recyclerView?.scrollToPosition(0)
                         viewModel?.invalidateDataSource()
             }, { error ->
                         RxErrorHandler.reportError(error)
-                        chatBarView.message = chatText
+                        binding?.chatBarView?.message = chatText
                     })
             KeyboardUtil.dismissKeyboard(getActivity())
         }
     }
 
-    private fun setReceivingUser(chatRoomUser: String?, replyToUserUUID: String) {
+    private fun setReceivingUser(chatRoomUser: String?, replyToUserUUID: String?) {
         this.chatRoomUser = chatRoomUser
         this.replyToUserUUID = replyToUserUUID
         activity?.title = chatRoomUser
@@ -187,8 +229,8 @@ class InboxMessageListFragment : BaseMainFragment(), androidx.swiperefreshlayout
                     .setTitle(R.string.confirm_delete_tag_title)
                     .setMessage(R.string.confirm_delete_tag_message)
                     .setIcon(android.R.drawable.ic_dialog_alert)
-                    .setPositiveButton(android.R.string.yes) { _, _ -> socialRepository.deleteMessage(chatMessage).subscribe(Consumer { }, RxErrorHandler.handleEmptyError()) }
-                    .setNegativeButton(android.R.string.no, null).show()
+                    .setPositiveButton(R.string.yes) { _, _ -> socialRepository.deleteMessage(chatMessage).subscribe({ }, RxErrorHandler.handleEmptyError()) }
+                    .setNegativeButton(R.string.no, null).show()
         }
     }
 

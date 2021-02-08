@@ -4,8 +4,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="@dimen/shopitem_dialog_content_inset"
-    android:paddingRight="@dimen/shopitem_dialog_content_inset"
+    android:paddingStart="@dimen/shopitem_dialog_content_inset"
+    android:paddingEnd="@dimen/shopitem_dialog_content_inset"
     android:gravity="center_horizontal"
     tools:parentTag="LinearLayout"
     tools:orientation="vertical">
@@ -59,7 +59,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/Body2"
-        android:textColor="@color/black_50_alpha"
+        android:textColor="@color/text_secondary"
         tools:text="These are the notes"
         android:gravity="center"/>
 </merge>

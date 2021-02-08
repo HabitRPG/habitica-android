@@ -11,7 +11,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.inflate
-import com.habitrpg.android.habitica.ui.helpers.bindView
+import com.habitrpg.android.habitica.extensions.setTintWith
 import java.util.*
 
 class TaskSetupAdapter : RecyclerView.Adapter<TaskSetupAdapter.TaskViewHolder>() {
@@ -42,7 +42,7 @@ class TaskSetupAdapter : RecyclerView.Adapter<TaskSetupAdapter.TaskViewHolder>()
     inner class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
         private val icon: Drawable?
-        private val textView: TextView by bindView(R.id.textView)
+        private val textView: TextView = itemView.findViewById(R.id.textView)
 
         private var taskGroup: List<String>? = null
         private var isChecked: Boolean? = null
@@ -53,7 +53,7 @@ class TaskSetupAdapter : RecyclerView.Adapter<TaskSetupAdapter.TaskViewHolder>()
             itemView.setOnClickListener(this)
 
             icon = VectorDrawableCompat.create(context.resources, R.drawable.ic_check_white_18dp, null)
-            icon?.setColorFilter(ContextCompat.getColor(context, R.color.brand_100), PorterDuff.Mode.MULTIPLY)
+            icon?.setTintWith(ContextCompat.getColor(context, R.color.brand_100), PorterDuff.Mode.MULTIPLY)
         }
 
         fun bind(taskGroup: List<String>, isChecked: Boolean?) {
@@ -65,11 +65,11 @@ class TaskSetupAdapter : RecyclerView.Adapter<TaskSetupAdapter.TaskViewHolder>()
             }
             if (this.isChecked == true) {
                 this.textView.setCompoundDrawablesWithIntrinsicBounds(icon, null, null, null)
-                textView.background.setColorFilter(ContextCompat.getColor(context, R.color.white), PorterDuff.Mode.MULTIPLY)
+                textView.background.setTintWith(ContextCompat.getColor(context, R.color.white), PorterDuff.Mode.MULTIPLY)
                 textView.setTextColor(ContextCompat.getColor(context, R.color.brand_100))
             } else {
                 this.textView.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null)
-                textView.background.setColorFilter(ContextCompat.getColor(context, R.color.brand_100), PorterDuff.Mode.MULTIPLY)
+                textView.background.setTintWith(ContextCompat.getColor(context, R.color.brand_100), PorterDuff.Mode.MULTIPLY)
                 textView.setTextColor(ContextCompat.getColor(context, R.color.white))
             }
         }

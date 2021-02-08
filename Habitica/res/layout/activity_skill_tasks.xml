@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.activities.PrefsActivity"
     android:orientation="vertical"
-    android:background="@color/white">
+    android:background="?attr/colorContentBackground">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -19,7 +19,7 @@
             android:minHeight="?attr/actionBarSize"
             android:theme="@style/Toolbar.Modern"
             app:layout_scrollFlags="scroll|enterAlways"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+            app:popupTheme="@style/PopupTheme"/>
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -28,17 +28,15 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:layout_gravity="bottom"
-        android:background="?attr/colorPrimary"
+        android:background="?headerOffsetColor"
         android:elevation="0dp"
         android:fillViewport="false"
-
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:layout_anchor="@+id/collapsing_toolbar"
         app:layout_anchorGravity="bottom"
-
         app:layout_collapseMode="pin"
         app:tabGravity="fill"
-        app:tabIndicatorColor="@android:color/white"
+        app:tabIndicatorColor="?colorPrimary"
         app:tabMode="fixed" />
 
     <androidx.viewpager.widget.ViewPager
@@ -46,6 +44,6 @@
         android:layout_width="match_parent"
         android:layout_height="0px"
         android:layout_weight="1"
-        android:background="@android:color/white" />
+        android:background="@color/content_background" />
 
 </LinearLayout>

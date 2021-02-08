@@ -5,22 +5,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
+import androidx.viewbinding.ViewBinding
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.TutorialRepository
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.ui.activities.MainActivity
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.functions.Consumer
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.functions.Consumer
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.EventBusException
 import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-abstract class BaseFragment : DialogFragment() {
+abstract class BaseFragment<VB: ViewBinding> : DialogFragment() {
+
+    var isModal: Boolean = false
+    abstract var binding: VB?
 
     @Inject
     lateinit var tutorialRepository: TutorialRepository
@@ -35,11 +39,6 @@ abstract class BaseFragment : DialogFragment() {
     open val displayedClassName: String?
         get() = this.javaClass.simpleName
 
-    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
-        super.setUserVisibleHint(isVisibleToUser)
-        showTutorialIfNeeded()
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         HabiticaBaseApplication.userComponent?.let {
             injectFragment(it)
@@ -47,6 +46,8 @@ abstract class BaseFragment : DialogFragment() {
         this.showsDialog = false
         super.onCreate(savedInstanceState)
     }
+
+    abstract fun createBinding(inflater: LayoutInflater, container: ViewGroup?): VB
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         compositeSubscription = CompositeDisposable()
@@ -62,7 +63,8 @@ abstract class BaseFragment : DialogFragment() {
         additionalData["page"] = this.javaClass.simpleName
         AmplitudeManager.sendEvent("navigate", AmplitudeManager.EVENT_CATEGORY_NAVIGATION, AmplitudeManager.EVENT_HITTYPE_PAGEVIEW, additionalData)
 
-        return null
+        binding = createBinding(inflater, container)
+        return binding?.root
     }
 
     abstract fun injectFragment(component: UserComponent)
@@ -101,10 +103,6 @@ abstract class BaseFragment : DialogFragment() {
         }
 
         super.onDestroyView()
-        context?.let {
-            val refWatcher = HabiticaBaseApplication.getInstance(it)?.refWatcher
-            refWatcher?.watch(this)
-        }
     }
 
     override fun onDestroy() {

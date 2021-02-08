@@ -3,15 +3,14 @@ package com.habitrpg.android.habitica.ui.activities
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import androidx.appcompat.widget.Toolbar
+import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.navigation.navArgs
-import androidx.viewpager.widget.ViewPager
-import com.google.android.material.tabs.TabLayout
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
+import com.habitrpg.android.habitica.databinding.ActivityGiftGemsBinding
 import com.habitrpg.android.habitica.events.ConsumablePurchasedEvent
 import com.habitrpg.android.habitica.extensions.addOkButton
 import com.habitrpg.android.habitica.helpers.AppConfigManager
@@ -20,13 +19,13 @@ import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
 import com.habitrpg.android.habitica.ui.fragments.purchases.GiftBalanceGemsFragment
 import com.habitrpg.android.habitica.ui.fragments.purchases.GiftPurchaseGemsFragment
-import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
-import io.reactivex.functions.Consumer
 import org.greenrobot.eventbus.Subscribe
 import javax.inject.Inject
 
 class GiftGemsActivity : BaseActivity() {
+
+    private lateinit var binding: ActivityGiftGemsBinding
 
     @Inject
     lateinit var crashlyticsProxy: CrashlyticsProxy
@@ -37,9 +36,6 @@ class GiftGemsActivity : BaseActivity() {
 
     private var purchaseHandler: PurchaseHandler? = null
 
-    private val toolbar: Toolbar by bindView(R.id.toolbar)
-    internal val tabLayout: TabLayout by bindView(R.id.tab_layout)
-    internal val viewPager: ViewPager by bindView(R.id.viewPager)
 
     private var giftedUsername: String? = null
     private var giftedUserID: String? = null
@@ -51,6 +47,11 @@ class GiftGemsActivity : BaseActivity() {
         return R.layout.activity_gift_gems
     }
 
+    override fun getContentView(): View {
+        binding = ActivityGiftGemsBinding.inflate(layoutInflater)
+        return binding.root
+    }
+
     override fun injectActivity(component: UserComponent?) {
         component?.inject(this)
     }
@@ -59,7 +60,7 @@ class GiftGemsActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
 
         setTitle(R.string.gift_gems)
-        setSupportActionBar(toolbar)
+        setSupportActionBar(binding.toolbar)
 
         purchaseHandler = PurchaseHandler(this, crashlyticsProxy)
 
@@ -75,7 +76,7 @@ class GiftGemsActivity : BaseActivity() {
 
         setViewPagerAdapter()
 
-        compositeSubscription.add(socialRepository.getMember(giftedUsername ?: giftedUserID).firstElement().subscribe(Consumer {
+        compositeSubscription.add(socialRepository.getMember(giftedUsername ?: giftedUserID).firstElement().subscribe({
             giftedUserID = it.id
             giftedUsername = it.username
             purchaseFragment?.giftedMember = it
@@ -109,7 +110,7 @@ class GiftGemsActivity : BaseActivity() {
     private fun setViewPagerAdapter() {
         val fragmentManager = supportFragmentManager
 
-        viewPager.adapter = object : FragmentPagerAdapter(fragmentManager) {
+        binding.viewPager.adapter = object : FragmentPagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
             override fun getItem(position: Int): Fragment {
                 return if (position == 0) {
@@ -141,7 +142,7 @@ class GiftGemsActivity : BaseActivity() {
             }
         }
 
-        tabLayout.setupWithViewPager(viewPager)
+        binding.tabLayout.setupWithViewPager(binding.viewPager)
     }
 
     @Subscribe

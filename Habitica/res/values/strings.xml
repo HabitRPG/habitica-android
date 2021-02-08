@@ -169,7 +169,7 @@
     <string name="quest_abort">Abort Quest</string>
     <string name="version_info">Version %1$s (%2$d)</string>
 
-    <string name="sidebar_help">Help &amp; FAQ</string>
+    <string name="sidebar_help">Support</string>
     <string name="complete_tutorial">Got it!</string>
     <string name="dismiss_tutorial">Remind me again</string>
     <string name="intro_1_subtitle">Welcome to</string>
@@ -243,7 +243,7 @@
     <string name="quest_cancel_message">Are you sure you want to cancel this quest? All invitation acceptances will be lost. The quest owner will retain possession of the quest scroll.</string>
     <string name="quest_begin_message">Are you sure? Only %1$d of your %2$d party members have joined this quest! Quests start automatically when all players have joined or rejected the invitation.</string>
     <string name="ago_1month">1 month ago</string>
-    <string name="ago_months">%d month ago</string>
+    <string name="ago_months">%d months ago</string>
     <string name="ago_1week">1w ago</string>
     <string name="ago_weeks">%dw ago</string>
     <string name="ago_1day">1d ago</string>
@@ -271,8 +271,9 @@
     <string name="pets">Pets</string>
     <string name="mounts">Mounts</string>
 
+    <string name="quest_items_found">You\'ve found %d quest items</string>
     <string name="armoireEquipment">You found %s in the Armoire</string>
-    <string name="armoireFood">You rummage in the Armoire and find %1$s %2$s. What\'s that doing in here?</string>
+    <string name="armoireFood">You rummage in the Armoire and find%1$s %2$s. What\'s that doing in here?</string>
     <string name="armoireExp">You wrestle with the Armoire and gain Experience. Take that!</string>
     <string name="sell">Sell (%d Gold)</string>
     <string name="hatch_with_potion">Hatch with potion</string>
@@ -437,7 +438,7 @@
     <string name="subscription_status">Subscription Status</string>
 
     <string name="challenge_leave_title">Leave Challenge</string>
-    <string name="challenge_leave_description">You can choose to keep this Challenge\'s tasks on your personal task board  or delete them when you leave</string>
+    <string name="challenge_leave_description">You can choose to keep this Challenge\'s tasks on your personal task board or delete them when you leave</string>
     <string name="leave_keep_tasks">Leave &amp; Keep Tasks</string>
     <string name="leave_delte_tasks">Leave &amp; Delete Tasks</string>
     <string name="remove_tasks">Remove</string>
@@ -549,6 +550,7 @@
     <string name="quest_leader_header">Started by %s</string>
     <string name="quest_abort_message">Are you sure you want to abort this mission? It will abort it for everyone in your party and all progress will be lost. The quest scroll will be returned to the quest owner.</string>
     <string name="reloading_content">Reloading Content</string>
+    <string name="reloaded_content">Reloaded Content</string>
     <string name="thousand_abbrev">k</string>
     <string name="million_abbrev">m</string>
     <string name="billion_abbrev">b</string>
@@ -571,8 +573,8 @@
     <string name="reset_account">Reset Account</string>
     <string name="reset_account_description">WARNING! This resets many parts of your account. This is highly discouraged, but some people find it useful in the beginning after playing with the site for a short time.\n\nYou will lose all your levels, gold, and experience points. All your tasks (except those from challenges) will be deleted permanently and you will lose all of their historical data. You will lose all your equipment but you will be able to buy it all back, including all limited edition equipment or subscriber Mystery items that you already own (you will need to be in the correct class to re-buy class-specific gear). You will keep your current class and your pets and mounts. You might prefer to use an Orb of Rebirth instead, which is a much safer option and which will preserve your tasks and equipment.</string>
     <string name="delete_account">Delete Account</string>
-    <string name="delete_account_description">This will delete your account forever, and it can never be restored! Banked or spent Gems will not be refunded. If you’re absolutely certain, type your password into the text box below.</string>
-    <string name="delete_oauth_account_description">This will delete your account forever, and it can never be restored! Banked or spent Gems will not be refunded. If you’re absolutely certain, type DELETE into the text box below.</string>
+    <string name="delete_account_description">Deleted accounts are permanent and cannot be restored. Gems cannot be refunded. If you still want to delete, type your password below.</string>
+    <string name="delete_oauth_account_description">Deleted accounts are permanent and cannot be restored. Gems cannot be refunded. If you still want to delete, type DELETE below.</string>
     <string name="reset_account_confirmation">Reset my Account</string>
     <string name="delete_account_confirmation">Delete my Account</string>
     <string name="danger_zone">Danger Zone</string>
@@ -654,7 +656,7 @@
     <string name="tiers_descriptions">The colored usernames you see in chat represent a person’s contributor tier. The higher the tier, the more the person has contributed to habitica through art, code, the community, or more!</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="world_boss">World  Boss</string>
+    <string name="world_boss">World Boss</string>
     <string name="boss_art">Boss Art</string>
     <string name="world_boss_description">World Boss Description</string>
     <string name="rage_strike_count">Rage Strikes: %d/%d</string>
@@ -875,7 +877,7 @@
     <string name="joinedGuildTitle">Joined a Guild</string>
     <string name="joinedGuildDescription">Ventured into the social side of Habitica by joining a Guild!</string>
     <string name="joinedChallengeTitle">Joined a Challenge</string>
-    <string name="joinedChallengeDescription">You put themselves to the test by joining a Challenge!</string>
+    <string name="joinedChallengeDescription">You put yourself to the test by joining a Challenge!</string>
     <string name="inviteFriendTitle">Invited a Friend</string>
     <string name="inviteFriendDescription">You invited a friend (or friends) who joined you on your adventure!</string>
     <string name="keep_challenges">Keep Challenges</string>
@@ -1045,7 +1047,7 @@
     <string name="hatchedPetDescription">There are so many Pets to collect, you’re bound to have a favorite. If you feed them, they may just grow…</string>
     <string name="fedPetDescription">Every Pet has a specific food they enjoy! Experiment to find out which will grow your Pet the fastest</string>
     <string name="purchasedEquipmentDescription">Equipment can be practical or just fashionable. Raise your stats to get all sorts of benefits to your avatar</string>
-    <string name="first_drop_explanation1">Completing tasks gives you a chance to find eggs, hatching potions,  and pet food.</string>
+    <string name="first_drop_explanation1">Completing tasks gives you a chance to find eggs, hatching potions, and pet food.</string>
     <string name="first_drop_explanation2">Head to your Items and try combining your new Egg and Hatching Potion!</string>
     <string name="go_to_items">Go to Items</string>
     <string name="first_drop_title">You found new items!</string>
@@ -1096,11 +1098,45 @@
     <string name="x_to_y">%s to %s</string>
     <string name="how_it_works">How it works</string>
     <string name="limitations">Limitations</string>
-    <string name="fall_promo_info_instructions">Between September 22nd and 30th, simply purchase any Gem bundle like usual and your account will be credited with the promotional amount of Gems. More Gems to spend, share, or save for any future releases!</string>
-    <string name="fall_promo_info_limitations">This promotion only applies during the limited time event. This event starts on September 22nd at 8:00 AM EDT (12:00 UTC) and will end September 30th at 8:00 PM EDT (00:00 UTC). The promo offer is only available when buying Gems for yourself.</string>
+    <string name="fall_promo_info_instructions">Between %s and %s, simply purchase any Gem bundle like usual and your account will be credited with the promotional amount of Gems. More Gems to spend, share, or save for any future releases!</string>
     <string name="fall_promo_info_prompt">The Fall Gala is in full swing so we thought it was the perfect time to introduce our first ever Gem Sale! Now you will get more Gems with each purchase than ever before.</string>
     <string name="view_gem_bundles">View Gem Bundles</string>
-    <string name="spooky_promo_info_instructions">Between October 29th and November 2nd, simply purchase any Gem bundle like usual and your account will be credited with the promotional amount of Gems. More Gems to spend, share, or save for any future releases!</string>
-    <string name="spooky_promo_info_limitations">This promotion only applies during the limited time event. This event starts on October 29th at 8:00 AM EDT (12:00 UTC) and will end November 2nd at 8:00 PM EDT (00:00 UTC). The promo offer is only available when buying Gems for yourself.</string>
+    <string name="spooky_promo_info_instructions">Between %s and %s, simply purchase any Gem bundle like usual and your account will be credited with the promotional amount of Gems. More Gems to spend, share, or save for any future releases!</string>
+    <string name="gems_promo_info_limitations">This promotion only applies during the limited time event. This event starts on %s (12:00 UTC) and will end %s (00:00 UTC). The promo offer is only available when buying Gems for yourself.</string>
     <string name="spooky_promo_info_prompt">The Gem Sale is back to haunt the very end of this year’s Fall Gala! This is one last chance to get more Gems than ever, so stock up while it lasts!</string>
+    <string name="dark_mode">Dark Mode</string>
+    <string name="theme_mode">Theme Mode</string>
+    <string name="theme_color">Theme Color</string>
+    <string name="submit_feedback">Submit Feedback</string>
+    <string name="user_is_blocked">You blocked this user</string>
+    <string name="user_is_blocked_explanation">A blocked user cannot send you Private Messages but you will still see their posts in Tavern or Guilds.</string>
+    <string name="finish">Finish</string>
+    <string name="login_disclaimer">By signing up, you are indicating that you have read and agree to the <a href="https://habitica.com/static/terms">Terms of Service</a> and <a href="https://habitica.com/static/privacy">Privacy Policy.</a></string>
+    <string name="you">You</string>
+    <string name="invitation_title_no_leader">You were invited to join a party</string>
+    <string name="fortify_shop">Fortify Potion</string>
+    <string name="fortify_shop_description">Return all tasks to neutral value (yellow color), and restore all lost Health</string>
+    <string name="purchase_immediately_description">This will take effect immediately after buying!</string>
+    <string name="create_guild">Create Guild</string>
+    <string name="create_guild_description">To create a Guild, log in to the Habitica website then tap the “Create” button on the “My Guilds” screen.</string>
+    <string name="open_website">Open Website</string>
+    <string name="action_end_challenge">End Challenge</string>
+    <string name="end_challenge_description">To end a Challenge, log in to the Habitica website then tap the “End Challenge” button on the right of the Challenge screen.</string>
+    <string name="hurray">Hurray!</string>
+    <string name="you_won_challenge">You won a Challenge</string>
+    <string name="congratulations">Congratulations!</string>
+    <string name="won_achievement_description"><![CDATA[<b>%s</b> selected you as the winner! Your win has been recorded in your Achievements.]]></string>
+    <string name="won_achievement_description_noname">You were selected as the winner! Your win has been recorded in your Achievements.</string>
+    <string name="claim_x_gems">Claim %d Gems</string>
+    <string name="g1g1_promo_info_prompt">In honor of the season of giving we\'re bringing back a very special promotion. Now when you gift somebody a subscription, you get the same sub for yourself for free!</string>
+    <string name="g1g1_promo_info_instructions">Tap ‘Gift a Subscription’ and type in the username of the account you’d like to gift to. From there, pick the sub length you’d like to gift and check out. Your account will automatically be rewarded with the same level of subscription you just gifted.</string>
+    <string name="g1g1_promo_info_limitations">This is a limited time event that starts on %s (13:00 UTC) and will end %s (01:00 UTC). This promotion only applies when you gift to another Habitican. If you or your gift recipient already have a subscription, the gifted subscription will add months of credit that will only be used after the current subscription is cancelled or expires.</string>
+    <string name="gift_one_get_one_purchase_banner">Gift a sub and get a sub for free until %s</string>
+    <string name="one_month_one_time">1 month one-time subscription</string>
+    <string name="three_months_one_time">3 month one-time subscription</string>
+    <string name="six_months_one_time">6 month one-time subscription</string>
+    <string name="twelve_months_one_time">12 month one-time subscription</string>
+    <string name="sidebar_teams">Teams</string>
+    <string name="team_information">Team Information</string>
+    <string name="mystery_item_title">You open the box and find...</string>
 </resources>

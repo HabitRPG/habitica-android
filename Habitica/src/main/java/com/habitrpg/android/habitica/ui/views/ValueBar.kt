@@ -5,33 +5,50 @@ import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.view.View
-import android.view.ViewGroup
 import android.widget.FrameLayout
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.databinding.ValueBarBinding
 import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.extensions.getThemeColor
-import com.habitrpg.android.habitica.ui.helpers.bindView
+import com.habitrpg.android.habitica.extensions.isUsingNightModeResources
+import com.habitrpg.android.habitica.extensions.layoutInflater
+import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import java.math.RoundingMode
 import java.text.NumberFormat
 
 
 class ValueBar(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs) {
 
-    private val iconView: ImageView by bindView(R.id.ic_header)
-    private val secondaryIconView: ImageView by bindView(R.id.secondaryIconView)
-    private val descriptionIconView: ImageView by bindView(R.id.descriptionIconView)
-    private val valueTextView: TextView by bindView(R.id.valueLabel)
-    private val descriptionTextView: TextView by bindView(R.id.descriptionLabel)
-    private val progressBar: HabiticaProgressBar by bindView(R.id.progressBar)
-    private val labelWrapper: ViewGroup by bindView(R.id.labelWrapper)
+    var descriptionIconVisibility: Int
+        get() = binding.descriptionIconView.visibility
+        set(value) {
+            binding.descriptionIconView.visibility = value
+        }
 
+    private var binding: ValueBarBinding = ValueBarBinding.inflate(context.layoutInflater, this, true)
     private val formatter = NumberFormat.getInstance()
 
     private var currentValue: Double = 0.0
     private var maxValue: Double = 0.0
+
+    var barForegroundColor: Int
+        get() = binding.progressBar.barForegroundColor
+        set(value) {
+            binding.progressBar.barForegroundColor = value
+        }
+
+    var barPendingColor: Int
+        get() = binding.progressBar.barPendingColor
+        set(value) {
+            binding.progressBar.barPendingColor = value
+        }
+
+    var barBackgroundColor: Int
+        get() = binding.progressBar.barBackgroundColor
+        set(value) {
+            binding.progressBar.barBackgroundColor = value
+        }
 
     var pendingValue: Double = 0.0
         set(value) {
@@ -45,49 +62,48 @@ class ValueBar(context: Context, attrs: AttributeSet?) : FrameLayout(context, at
     set(value) {
         field = value
         if (value != null) {
-            progressBar.layoutParams.height = value
+            binding.progressBar.layoutParams.height = value
         }
     }
 
     var description: String = ""
     set(value) {
         field = value
-        descriptionTextView.text = description
+        binding.descriptionTextView.text = description
     }
 
     private fun updateBar() {
-        progressBar.set(currentValue, maxValue)
-        this.progressBar.pendingValue = pendingValue
-        this.setValueText(formatter.format(currentValue) + " / " + formatter.format(maxValue.toInt()))
+        binding.progressBar.set(currentValue, maxValue)
+        binding.progressBar.pendingValue = pendingValue
+        setValueText(formatter.format(currentValue) + " / " + formatter.format(maxValue.toInt()))
     }
 
     init {
-        View.inflate(context, R.layout.value_bar, this)
 
         val attributes = context.theme?.obtainStyledAttributes(
                 attrs,
                 R.styleable.ValueBar,
                 0, 0)
-        setLightBackground(attributes?.getBoolean(R.styleable.ValueBar_lightBackground, false) == true)
+        setLightBackground(attributes?.getBoolean(R.styleable.ValueBar_lightBackground, !context.isUsingNightModeResources()) == true)
 
-        progressBar.barForegroundColor = attributes?.getColor(R.styleable.ValueBar_barForegroundColor, 0) ?: 0
-        progressBar.barPendingColor = attributes?.getColor(R.styleable.ValueBar_barPendingColor, 0) ?: 0
-        progressBar.barBackgroundColor = attributes?.getColor(R.styleable.ValueBar_barBackgroundColor, 0) ?: 0
+        binding.progressBar.barForegroundColor = attributes?.getColor(R.styleable.ValueBar_barForegroundColor, 0) ?: 0
+        binding.progressBar.barPendingColor = attributes?.getColor(R.styleable.ValueBar_barPendingColor, 0) ?: 0
+        binding.progressBar.barBackgroundColor = attributes?.getColor(R.styleable.ValueBar_barBackgroundColor, 0) ?: 0
 
         val labelSpacing = attributes?.getDimension(R.styleable.ValueBar_labelSpacing, 2.dpToPx(context).toFloat())
         if (labelSpacing != null) {
-            labelWrapper.setPadding(0, labelSpacing.toInt(), 0, 0)
+            binding.labelWrapper.setPadding(0, labelSpacing.toInt(), 0, 0)
         }
 
         barHeight = attributes?.getDimension(R.styleable.ValueBar_barHeight, context.resources.getDimension(R.dimen.bar_size))?.toInt()
 
         val valueTextColor = attributes?.getColor(R.styleable.ValueBar_valueTextColor, 0) ?: 0
         if (valueTextColor != 0) {
-            valueTextView.setTextColor(valueTextColor)
+            binding.valueTextView.setTextColor(valueTextColor)
         }
         val descriptionTextColor = attributes?.getColor(R.styleable.ValueBar_descriptionTextColor, 0) ?: 0
         if (descriptionTextColor != 0) {
-            descriptionTextView.setTextColor(descriptionTextColor)
+            binding.descriptionTextView.setTextColor(descriptionTextColor)
         }
 
         val iconRes = attributes?.getDrawable(R.styleable.ValueBar_barIconDrawable)
@@ -95,7 +111,7 @@ class ValueBar(context: Context, attrs: AttributeSet?) : FrameLayout(context, at
             setIcon(iconRes)
         }
 
-        descriptionTextView.text = attributes?.getString(R.styleable.ValueBar_description)
+        binding.descriptionTextView.text = attributes?.getString(R.styleable.ValueBar_description)
 
         formatter.maximumFractionDigits = 1
         formatter.roundingMode = RoundingMode.UP
@@ -103,50 +119,50 @@ class ValueBar(context: Context, attrs: AttributeSet?) : FrameLayout(context, at
     }
 
     fun setIcon(iconRes: Drawable) {
-        iconView.setImageDrawable(iconRes)
-        iconView.visibility = View.VISIBLE
+        binding.iconView.setImageDrawable(iconRes)
+        binding.iconView.visibility = View.VISIBLE
     }
 
     fun setIcon(bitmap: Bitmap) {
-        iconView.setImageBitmap(bitmap)
-        iconView.visibility = View.VISIBLE
+        binding.iconView.setImageBitmap(bitmap)
+        binding.iconView.visibility = View.VISIBLE
     }
 
     fun setSecondaryIcon(iconRes: Drawable) {
-        secondaryIconView.setImageDrawable(iconRes)
-        secondaryIconView.visibility = View.VISIBLE
+        binding.secondaryIconView.setImageDrawable(iconRes)
+        binding.secondaryIconView.visibility = View.VISIBLE
     }
 
     fun setSecondaryIcon(bitmap: Bitmap) {
-        secondaryIconView.setImageBitmap(bitmap)
-        secondaryIconView.visibility = View.VISIBLE
+        binding.secondaryIconView.setImageBitmap(bitmap)
+        binding.secondaryIconView.visibility = View.VISIBLE
     }
 
     fun setDescriptionIcon(iconRes: Drawable) {
-        descriptionIconView.setImageDrawable(iconRes)
-        descriptionIconView.visibility = View.VISIBLE
+        binding.descriptionIconView.setImageDrawable(iconRes)
+        binding.descriptionIconView.visibility = View.VISIBLE
     }
 
     fun setDescriptionIcon(bitmap: Bitmap) {
-        descriptionIconView.setImageBitmap(bitmap)
-        descriptionIconView.visibility = View.VISIBLE
+        binding.descriptionIconView.setImageBitmap(bitmap)
+        binding.descriptionIconView.visibility = View.VISIBLE
     }
 
     fun setValueText(valueText: String) {
-        valueTextView.text = valueText
+        binding.valueTextView.text = valueText
     }
 
     fun setLightBackground(lightBackground: Boolean) {
         val textColor: Int
         if (lightBackground) {
-            textColor = ContextCompat.getColor(context, R.color.gray_10)
-            progressBar.setBackgroundResource(R.drawable.layout_rounded_bg_light_gray)
+            textColor = ContextCompat.getColor(context, R.color.text_ternary)
+            binding.progressBar.setBackgroundResource(R.drawable.layout_rounded_bg_light_gray)
         } else {
             textColor = context.getThemeColor(R.attr.textColorPrimaryDark)
-            progressBar.setBackgroundResource(R.drawable.layout_rounded_bg_header_bar)
+            binding.progressBar.setBackgroundResource(R.drawable.layout_rounded_bg_header_bar)
         }
-        valueTextView.setTextColor(textColor)
-        descriptionTextView.setTextColor(textColor)
+        binding.valueTextView.setTextColor(textColor)
+        binding.descriptionTextView.setTextColor(textColor)
     }
 
     fun set(value: Double, valueMax: Double) {
@@ -158,7 +174,7 @@ class ValueBar(context: Context, attrs: AttributeSet?) : FrameLayout(context, at
     }
 
     fun setLabelVisibility(visibility: Int) {
-        valueTextView.visibility = visibility
-        descriptionTextView.visibility = visibility
+        binding.valueTextView.visibility = visibility
+        binding.descriptionTextView.visibility = visibility
     }
 }

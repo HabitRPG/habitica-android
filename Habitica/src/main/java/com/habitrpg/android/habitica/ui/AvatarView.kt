@@ -15,11 +15,12 @@ import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder
 import com.facebook.drawee.view.DraweeHolder
 import com.facebook.drawee.view.MultiDraweeHolder
 import com.facebook.imagepipeline.image.ImageInfo
+import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.models.Avatar
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
-import io.reactivex.functions.Consumer
+import io.reactivex.rxjava3.functions.Consumer
 import java.util.*
 import java.util.concurrent.atomic.AtomicInteger
 
@@ -42,7 +43,6 @@ class AvatarView : View {
     private var avatarBitmap: Bitmap? = null
     private var avatarCanvas: Canvas? = null
     private var currentLayers: Map<LayerType, String>? = null
-    var enableNewSnowman = false
 
     private val layerMap: Map<LayerType, String>
         get() {
@@ -56,8 +56,9 @@ class AvatarView : View {
 
     private val avatarImage: Bitmap?
         get() {
-            assert(avatar != null)
-            assert(avatarRectF != null)
+            if (BuildConfig.DEBUG && (avatar == null || avatarRectF == null)) {
+                error("Assertion failed")
+            }
             val canvasRect = Rect()
             avatarRectF?.round(canvasRect)
             avatarBitmap = Bitmap.createBitmap(canvasRect.width(), canvasRect.height(), Bitmap.Config.ARGB_8888)
@@ -189,7 +190,7 @@ class AvatarView : View {
     }
 
     private fun substituteOrReturn(substitutions: Map<String, String>?, name: String): String {
-        for (key in substitutions?.keys ?: arrayListOf<String>()) {
+        for (key in substitutions?.keys ?: arrayListOf()) {
             if (name.contains(key)) {
                 return substitutions?.get(key) ?: name
             }
@@ -201,7 +202,7 @@ class AvatarView : View {
     private fun getAvatarLayerMap(avatar: Avatar, substitutions: Map<String, Map<String, String>>): EnumMap<LayerType, String> {
         val layerMap = EnumMap<LayerType, String>(LayerType::class.java)
 
-        if (!avatar.isValid) {
+        if (!avatar.isValid()) {
             return layerMap
         }
 
@@ -216,11 +217,7 @@ class AvatarView : View {
 
         avatar.stats?.buffs?.let { buffs ->
             if (buffs.snowball == true) {
-                if (Calendar.getInstance().get(Calendar.YEAR) > 2019) {
-                    layerMap[LayerType.VISUAL_BUFF] = "avatar_snowball_" + avatar.stats?.habitClass
-                } else {
-                    layerMap[LayerType.VISUAL_BUFF] = "snowman"
-                }
+                layerMap[LayerType.VISUAL_BUFF] = "avatar_snowball_" + avatar.stats?.habitClass
                 hasVisualBuffs = true
             }
 
@@ -367,7 +364,9 @@ class AvatarView : View {
         if (offset != null) {
             when (layerName) {
                 "head_special_0" -> offset = PointF(offset.x-3, offset.y-18)
-                "weapon_special_0" -> offset = PointF(offset.x-3, offset.y-18)
+                "weapon_special_0" -> offset = PointF(offset.x-12, offset.y+4)
+                "weapon_special_1" -> offset = PointF(offset.x-12, offset.y+4)
+                "weapon_special_critical" -> offset = PointF(offset.x-12, offset.y+4)
                 "head_special_1" -> offset = PointF(offset.x, offset.y+3)
             }
 
@@ -448,7 +447,7 @@ class AvatarView : View {
         initAvatarRectMatrix()
 
         // draw only when user is set
-        if (avatar?.isValid != true) return
+        if (avatar?.isValid() != true) return
 
         // request image layers if not yet processed
         if (multiDraweeHolder.size() == 0) {

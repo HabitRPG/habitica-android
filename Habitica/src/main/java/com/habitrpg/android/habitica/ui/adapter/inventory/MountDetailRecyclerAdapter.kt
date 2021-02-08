@@ -1,16 +1,14 @@
 package com.habitrpg.android.habitica.ui.adapter.inventory
 
 import android.view.ViewGroup
-import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.models.inventory.Mount
 import com.habitrpg.android.habitica.models.inventory.StableSection
 import com.habitrpg.android.habitica.models.user.OwnedMount
 import com.habitrpg.android.habitica.ui.viewHolders.MountViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.SectionViewHolder
-import io.reactivex.BackpressureStrategy
-import io.reactivex.Flowable
-import io.reactivex.subjects.PublishSubject
+import io.reactivex.rxjava3.core.BackpressureStrategy
+import io.reactivex.rxjava3.core.Flowable
+import io.reactivex.rxjava3.subjects.PublishSubject
 
 class MountDetailRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
     private var ownedMounts: Map<String, OwnedMount>? = null

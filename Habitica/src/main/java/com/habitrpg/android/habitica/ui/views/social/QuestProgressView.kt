@@ -10,7 +10,6 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -19,42 +18,27 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.edit
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.databinding.QuestProgressBinding
+import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.inventory.QuestProgressCollect
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
-import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.helpers.setMarkdown
-import com.habitrpg.android.habitica.ui.views.*
+import com.habitrpg.android.habitica.ui.views.HabiticaIcons
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
+import com.habitrpg.android.habitica.ui.views.NPCBannerView
+import com.habitrpg.android.habitica.ui.views.ValueBar
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.functions.Consumer
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.realm.RealmList
 
 
 class QuestProgressView : LinearLayout {
-
-    private val questImageWrapper: FrameLayout by bindView(R.id.questImageWrapper)
-    private val questImageView: SimpleDraweeView by bindView(R.id.questImageView)
-    private val questFlourishesImageView: SimpleDraweeView by bindView(R.id.questFlourishesImageView)
-    private val questImageTitle: View by bindView(R.id.questImageTitle)
-    private val artCreditTextView: TextView by bindView(R.id.artCreditTextView)
-    private val questImageSeparator: View by bindView(R.id.questImageSeparator)
-    private val questImageCaretView: ImageView by bindView(R.id.caretView)
-    private val bossNameView: TextView by bindView(R.id.bossNameView)
-    private val pendingDamageIconView: ImageView by bindView(R.id.pendingDamageIconView)
-    private val pendingDamageTextView: TextView by bindView(R.id.pendingDamageTextView)
-    private val bossHealthView: ValueBar by bindView(R.id.bossHealthView)
-    private val rageMeterView: TextView by bindView(R.id.rageMeterView)
-    private val bossRageView: ValueBar by bindView(R.id.bossRageView)
-    private val rageStrikeDescriptionView: TextView by bindView(R.id.rageStrikeDescriptionView)
-    private val rageStrikeContainer: LinearLayout by bindView(R.id.rageStrikeContainer)
-    private val collectionContainer: ViewGroup by bindView(R.id.collectionContainer)
-    private val questDescriptionSection: CollapsibleSectionView by bindView(R.id.questDescriptionSection)
-    private val questDescriptionView: TextView by bindView(R.id.questDescription)
+    private val binding = QuestProgressBinding.inflate(context.layoutInflater, this, true)
 
     private val rect = RectF()
     private val displayDensity = context.resources.displayMetrics.density
@@ -82,27 +66,25 @@ class QuestProgressView : LinearLayout {
 
     private fun setupView(context: Context) {
         setWillNotDraw(false)
-        val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as? LayoutInflater
-        inflater?.inflate(R.layout.quest_progress, this)
 
-        questImageCaretView.setImageBitmap(HabiticaIconsHelper.imageOfCaret(ContextCompat.getColor(context, R.color.white), true))
-        questImageTitle.setOnClickListener {
-            if (questImageWrapper.visibility == View.VISIBLE) {
+        binding.caretView.setImageBitmap(HabiticaIconsHelper.imageOfCaret(ContextCompat.getColor(context, R.color.white), true))
+        binding.questImageTitle.setOnClickListener {
+            if (binding.questImageWrapper.visibility == View.VISIBLE) {
                 hideQuestImage()
             } else {
                 showQuestImage()
             }
         }
 
-        pendingDamageIconView.setImageBitmap(HabiticaIconsHelper.imageOfDamage())
-        bossHealthView.setSecondaryIcon(HabiticaIconsHelper.imageOfHeartDarkBg())
-        bossRageView.setSecondaryIcon(HabiticaIconsHelper.imageOfRage())
+        binding.pendingDamageIconView.setImageBitmap(HabiticaIconsHelper.imageOfDamage())
+        binding.bossHealthView.setSecondaryIcon(HabiticaIconsHelper.imageOfHeartDarkBg())
+        binding.bossRageView.setSecondaryIcon(HabiticaIconsHelper.imageOfRage())
 
-        rageStrikeDescriptionView.setOnClickListener { showStrikeDescriptionAlert() }
+        binding.rageStrikeDescriptionView.setOnClickListener { showStrikeDescriptionAlert() }
 
         val density = resources.displayMetrics.density
 
-        questDescriptionSection.setCaretOffset((12 * density).toInt())
+        binding.questDescriptionSection.setCaretOffset((12 * density).toInt())
 
         preferences = context.getSharedPreferences("collapsible_sections", 0)
         if (preferences?.getBoolean("boss_art_collapsed", false) == true) {
@@ -131,75 +113,79 @@ class QuestProgressView : LinearLayout {
         if (quest == null || progress == null || !quest.isValid || !progress.isValid) {
             return
         }
-        collectionContainer.removeAllViews()
+        binding.collectionContainer.removeAllViews()
         if (quest.isBossQuest) {
-            bossNameView.text = quest.boss?.name
-            bossNameView.visibility = View.VISIBLE
-            bossHealthView.visibility = View.VISIBLE
-            bossHealthView.set(progress.progress?.hp ?: 0.0, quest.boss?.hp?.toDouble() ?: 0.0)
+            binding.bossNameView.text = quest.boss?.name
+            binding.bossNameView.visibility = View.VISIBLE
+            binding.bossHealthView.visibility = View.VISIBLE
+            binding.bossHealthView.set(progress.progress?.hp ?: 0.0, quest.boss?.hp?.toDouble() ?: 0.0)
+            binding.collectedItemsNumberView.visibility = View.GONE
 
             if (quest.boss?.hasRage() == true) {
-                rageMeterView.visibility = View.VISIBLE
-                bossRageView.visibility = View.VISIBLE
-                rageMeterView.text = quest.boss?.rage?.title
-                bossRageView.set(progress.progress?.rage ?: 0.0, quest.boss?.rage?.value ?: 0.0)
+                binding.rageMeterView.visibility = View.VISIBLE
+                binding.bossRageView.visibility = View.VISIBLE
+                binding.rageMeterView.text = quest.boss?.rage?.title
+                binding.bossRageView.set(progress.progress?.rage ?: 0.0, quest.boss?.rage?.value ?: 0.0)
                 if (progress.hasRageStrikes()) {
                     setupRageStrikeViews()
                 } else {
-                    rageStrikeDescriptionView.visibility = View.GONE
+                    binding.rageStrikeDescriptionView.visibility = View.GONE
                 }
             } else {
-                rageMeterView.visibility = View.GONE
-                bossRageView.visibility = View.GONE
-                rageStrikeDescriptionView.visibility = View.GONE
+                binding.rageMeterView.visibility = View.GONE
+                binding.bossRageView.visibility = View.GONE
+                binding.rageStrikeDescriptionView.visibility = View.GONE
             }
         } else {
-            bossNameView.visibility = View.GONE
-            bossHealthView.visibility = View.GONE
-            rageMeterView.visibility = View.GONE
-            bossRageView.visibility = View.GONE
-            rageStrikeDescriptionView.visibility = View.GONE
+            binding.bossNameView.visibility = View.GONE
+            binding.bossHealthView.visibility = View.GONE
+            binding.rageMeterView.visibility = View.GONE
+            binding.bossRageView.visibility = View.GONE
+            binding.rageStrikeDescriptionView.visibility = View.GONE
+            binding.collectedItemsNumberView.visibility = View.VISIBLE
 
             val collection = progress.progress?.collect
             if (collection != null) {
                 setCollectionViews(collection, quest)
             }
         }
-        questDescriptionView.setMarkdown(quest.notes)
-        DataBindingUtils.loadImage(questImageView, "quest_"+quest.key, "gif")
-        DataBindingUtils.loadImage(questFlourishesImageView, "quest_"+quest.key+"_flourishes")
+        binding.questDescription.setMarkdown(quest.notes)
+        DataBindingUtils.loadImage(binding.questImageView, "quest_"+quest.key, "gif")
+        DataBindingUtils.loadImage(binding.questFlourishesImageView, "quest_"+quest.key+"_flourishes")
         val lightColor =  quest.colors?.lightColor
         if (lightColor != null) {
-            questDescriptionSection.separatorColor = lightColor
-            questImageSeparator.setBackgroundColor(lightColor)
+            binding.questDescriptionSection.separatorColor = lightColor
+            binding.questImageSeparator.setBackgroundColor(lightColor)
 
             val gradientDrawable = GradientDrawable(
                     GradientDrawable.Orientation.TOP_BOTTOM,
                     intArrayOf(ContextCompat.getColor(context, R.color.transparent), lightColor))
             gradientDrawable.cornerRadius = 0f
-            questImageWrapper.background = gradientDrawable
+            binding.questImageWrapper.background = gradientDrawable
         }
         updateCaretImage()
-        questDescriptionSection.caretColor = quest.colors?.extraLightColor ?: 0
-        artCreditTextView.setTextColor(quest.colors?.extraLightColor ?: 0)
+        binding.questDescriptionSection.caretColor = quest.colors?.extraLightColor ?: 0
+        binding.artCreditTextView.setTextColor(quest.colors?.extraLightColor ?: 0)
     }
 
     fun configure(user: User) {
-        pendingDamageTextView.text = String.format("%.01f dmg pending", (user.party?.quest?.progress?.up ?: 0F) )
+        binding.pendingDamageTextView.text = String.format("%.01f dmg pending", (user.party?.quest?.progress?.up ?: 0F) )
+        val collectedItems = user.party?.quest?.progress?.collectedItems ?: 0
+        binding.collectedItemsNumberView.text = context.getString(R.string.quest_items_found, collectedItems)
     }
 
     private fun setupRageStrikeViews() {
-        rageStrikeDescriptionView.visibility = View.VISIBLE
-        rageStrikeDescriptionView.text = context.getString(R.string.rage_strike_count, progress?.activeRageStrikeNumber, progress?.rageStrikes?.size ?: 0)
+        binding.rageStrikeDescriptionView.visibility = View.VISIBLE
+        binding.rageStrikeDescriptionView.text = context.getString(R.string.rage_strike_count, progress?.activeRageStrikeNumber, progress?.rageStrikes?.size ?: 0)
 
-        rageStrikeContainer.removeAllViews()
+        binding.rageStrikeContainer.removeAllViews()
         progress?.rageStrikes?.sortedByDescending { it.wasHit }?.forEach { strike ->
             val iconView = ImageView(context)
             if (strike.wasHit) {
                 DataBindingUtils.loadImage("rage_strike_${strike.key}") {
                     Observable.just(it)
                             .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(Consumer { bitmap ->
+                            .subscribe({ bitmap ->
                                 val displayDensity = resources.displayMetrics.density
                                 val width = bitmap.width * displayDensity
                                 val height = bitmap.height * displayDensity
@@ -217,7 +203,7 @@ class QuestProgressView : LinearLayout {
             val params = LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
             val spacing = context.resources.getDimension(R.dimen.spacing_medium).toInt()
             params.setMargins(spacing, 0, spacing, 0)
-            rageStrikeContainer.addView(iconView, params)
+            binding.rageStrikeContainer.addView(iconView, params)
         }
     }
 
@@ -264,7 +250,7 @@ class QuestProgressView : LinearLayout {
         val inflater = LayoutInflater.from(context)
         for (collect in collection) {
             val contentCollect = quest.getCollectWithKey(collect.key) ?: continue
-            val view = inflater.inflate(R.layout.quest_collect, collectionContainer, false)
+            val view = inflater.inflate(R.layout.quest_collect, binding.collectionContainer, false)
             val iconView: SimpleDraweeView = view.findViewById(R.id.icon_view)
             val nameView: TextView = view.findViewById(R.id.name_view)
             val valueView: ValueBar = view.findViewById(R.id.value_view)
@@ -272,18 +258,7 @@ class QuestProgressView : LinearLayout {
             nameView.text = contentCollect.text
             valueView.set(collect.count.toDouble(), contentCollect.count.toDouble())
 
-            collectionContainer.addView(view)
-        }
-    }
-
-    private fun getNpcName(key: String): String {
-        return when (key) {
-            "market" -> context.getString(R.string.market_owner)
-            "tavern" -> context.getString(R.string.tavern_owner)
-            "questShop" -> context.getString(R.string.questShop_owner)
-            "seasonalShop" -> context.getString(R.string.seasonalShop_owner)
-            "stable" -> context.getString(R.string.stable_owner)
-            else -> ""
+            binding.collectionContainer.addView(view)
         }
     }
 
@@ -311,24 +286,24 @@ class QuestProgressView : LinearLayout {
 
 
     private fun showQuestImage() {
-        questImageWrapper.visibility = View.VISIBLE
-        DataBindingUtils.loadImage(questImageView, "quest_"+quest?.key)
+        binding.questImageWrapper.visibility = View.VISIBLE
+        DataBindingUtils.loadImage(binding.questImageView, "quest_"+quest?.key)
         preferences?.edit { putBoolean("boss_art_collapsed", false) }
         updateCaretImage()
     }
 
     private fun hideQuestImage() {
-        questImageWrapper.visibility = View.GONE
+        binding.questImageWrapper.visibility = View.GONE
         preferences?.edit { putBoolean("boss_art_collapsed", true) }
 
         updateCaretImage()
     }
 
     private fun updateCaretImage() {
-        if (questImageWrapper.visibility == View.VISIBLE) {
-            questImageCaretView.setImageBitmap(HabiticaIconsHelper.imageOfCaret(quest?.colors?.extraLightColor ?: 0, true))
+        if (binding.questImageWrapper.visibility == View.VISIBLE) {
+            binding.caretView.setImageBitmap(HabiticaIconsHelper.imageOfCaret(quest?.colors?.extraLightColor ?: 0, true))
         } else {
-            questImageCaretView.setImageBitmap(HabiticaIconsHelper.imageOfCaret(quest?.colors?.extraLightColor ?: 0, false))
+            binding.caretView.setImageBitmap(HabiticaIconsHelper.imageOfCaret(quest?.colors?.extraLightColor ?: 0, false))
         }
     }
 }

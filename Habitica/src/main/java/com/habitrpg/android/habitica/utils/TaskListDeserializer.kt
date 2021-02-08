@@ -120,13 +120,15 @@ class TaskListDeserializer : JsonDeserializer<TaskList> {
                     }
 
                     if (obj.has("group")) {
-                        val group = TaskGroupPlan()
                         val groupObject = obj.getAsJsonObject("group")
-                        val approvalObject = groupObject.getAsJsonObject("approval")
-                        group.approvalRequested = approvalObject.getAsJsonPrimitive("requested").asBoolean
-                        group.approvalApproved = approvalObject.getAsJsonPrimitive("approved").asBoolean
-                        group.approvalRequired = approvalObject.getAsJsonPrimitive("required").asBoolean
-                        task.group = group
+                        val group: TaskGroupPlan = ctx.deserialize(groupObject, TaskGroupPlan::class.java)
+                        if (group.groupID?.isNotBlank() == true) {
+                            val approvalObject = groupObject.getAsJsonObject("approval")
+                            if (approvalObject.has("requested")) group.approvalRequested = approvalObject.getAsJsonPrimitive("requested").asBoolean
+                            if (approvalObject.has("approved")) group.approvalApproved = approvalObject.getAsJsonPrimitive("approved").asBoolean
+                            if (approvalObject.has("required")) group.approvalRequired = approvalObject.getAsJsonPrimitive("required").asBoolean
+                            task.group = group
+                        }
                     }
                     // Work around since Realm does not support Arrays of ints
                     getMonthlyDays(e, task)

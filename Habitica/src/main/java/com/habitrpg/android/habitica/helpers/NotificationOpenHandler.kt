@@ -5,25 +5,30 @@ import androidx.core.os.bundleOf
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
 import com.habitrpg.android.habitica.models.user.User
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class NotificationOpenHandler {
 
     companion object {
 
         fun handleOpenedByNotification(identifier: String, intent: Intent, user: User?) {
-            when (identifier) {
-                PushNotificationManager.PARTY_INVITE_PUSH_NOTIFICATION_KEY -> openPartyScreen()
-                PushNotificationManager.QUEST_BEGUN_PUSH_NOTIFICATION_KEY -> openQuestDetailSCreen(user?.party?.id,
-                        user?.party?.quest?.key)
-                PushNotificationManager.QUEST_INVITE_PUSH_NOTIFICATION_KEY -> openQuestDetailSCreen(user?.party?.id,
-                        user?.party?.quest?.key)
-                PushNotificationManager.GUILD_INVITE_PUSH_NOTIFICATION_KEY -> openGuildDetailScreen(intent.getStringExtra("groupID"))
-                PushNotificationManager.RECEIVED_PRIVATE_MESSAGE_PUSH_NOTIFICATION_KEY -> openPrivateMessageScreen(intent.getStringExtra("replyTo"))
-                PushNotificationManager.CHANGE_USERNAME_PUSH_NOTIFICATION_KEY -> openSettingsScreen()
-                PushNotificationManager.GIFT_ONE_GET_ONE_PUSH_NOTIFICATION_KEY -> openSubscriptionScreen()
-                PushNotificationManager.CHAT_MENTION_NOTIFICATION_KEY -> handleChatMessage(intent.getStringExtra("type"), intent.getStringExtra("groupID"))
-                PushNotificationManager.GROUP_ACTIVITY_NOTIFICATION_KEY -> handleChatMessage(intent.getStringExtra("type"), intent.getStringExtra("groupID"))
-                PushNotificationManager.G1G1_PROMO_KEY -> openGiftOneGetOneInfoScreen()
+            GlobalScope.launch(context = Dispatchers.Main) {
+                when (identifier) {
+                    PushNotificationManager.PARTY_INVITE_PUSH_NOTIFICATION_KEY -> openPartyScreen()
+                    PushNotificationManager.QUEST_BEGUN_PUSH_NOTIFICATION_KEY -> openQuestDetailSCreen(user?.party?.id,
+                            user?.party?.quest?.key)
+                    PushNotificationManager.QUEST_INVITE_PUSH_NOTIFICATION_KEY -> openQuestDetailSCreen(user?.party?.id,
+                            user?.party?.quest?.key)
+                    PushNotificationManager.GUILD_INVITE_PUSH_NOTIFICATION_KEY -> openGuildDetailScreen(intent.getStringExtra("groupID"))
+                    PushNotificationManager.RECEIVED_PRIVATE_MESSAGE_PUSH_NOTIFICATION_KEY -> openPrivateMessageScreen(intent.getStringExtra("replyTo"))
+                    PushNotificationManager.CHANGE_USERNAME_PUSH_NOTIFICATION_KEY -> openSettingsScreen()
+                    PushNotificationManager.GIFT_ONE_GET_ONE_PUSH_NOTIFICATION_KEY -> openSubscriptionScreen()
+                    PushNotificationManager.CHAT_MENTION_NOTIFICATION_KEY -> handleChatMessage(intent.getStringExtra("type"), intent.getStringExtra("groupID"))
+                    PushNotificationManager.GROUP_ACTIVITY_NOTIFICATION_KEY -> handleChatMessage(intent.getStringExtra("type"), intent.getStringExtra("groupID"))
+                    PushNotificationManager.G1G1_PROMO_KEY -> openGiftOneGetOneInfoScreen()
+                }
             }
         }
 
@@ -44,7 +49,7 @@ class NotificationOpenHandler {
         }
 
         private fun openGiftOneGetOneInfoScreen() {
-            MainNavigationController.navigate(R.id.giftOneGetOneInfoActivity)
+            MainNavigationController.navigate(R.id.subscriptionPurchaseActivity)
         }
 
         private fun openQuestDetailSCreen(partyId: String?, questKey: String?) {
@@ -56,10 +61,10 @@ class NotificationOpenHandler {
 
         private fun openGuildDetailScreen(groupID: String?) {
             if (groupID?.isNotEmpty() != true) {
-                return
+                MainNavigationController.navigate(R.id.guildsOverviewFragment)
+            } else {
+                MainNavigationController.navigate(R.id.guildFragment, bundleOf("groupID" to groupID))
             }
-            MainNavigationController.navigate(R.id.guildFragment, bundleOf("groupID" to groupID))
-
         }
 
         private fun openSettingsScreen() {
@@ -68,9 +73,9 @@ class NotificationOpenHandler {
 
         private fun handleChatMessage(type: String?, groupID: String?) {
             when (type) {
-                "party" -> MainNavigationController.navigate(R.id.partyFragment)
+                "party" -> openPartyScreen()
                 "tavern" -> MainNavigationController.navigate(R.id.tavernFragment)
-                "guild" -> MainNavigationController.navigate(R.id.guildFragment, bundleOf("groupID" to groupID))
+                "guild" -> openGuildDetailScreen(groupID)
             }
         }
     }

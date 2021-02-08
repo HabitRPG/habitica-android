@@ -37,7 +37,7 @@
         android:text="@string/levelup_title_10"
         style="@style/Subheader1"
         android:gravity="center_horizontal"
-        android:textColor="@color/gray_50"
+        android:textColor="@color/text_primary"
         android:layout_marginBottom="@dimen/spacing_medium"/>
     <TextView
         android:layout_width="wrap_content"
@@ -45,5 +45,5 @@
         android:text="@string/levelup_detail_10"
         style="@style/Body2"
         android:gravity="center_horizontal"
-        android:textColor="@color/gray_200"/>
+        android:textColor="@color/text_ternary"/>
 </LinearLayout>

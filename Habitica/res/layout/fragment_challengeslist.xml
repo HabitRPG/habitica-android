@@ -1,10 +1,8 @@
 <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-
     android:id="@+id/refreshLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
         <com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport
             android:id="@+id/recyclerView"
@@ -18,8 +16,8 @@
             android:id="@+id/emptyView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="48dp"
-            android:layout_marginRight="48dp"
+            android:layout_marginStart="48dp"
+            android:layout_marginEnd="48dp"
             android:layout_marginTop="32dp"
             android:orientation="vertical">
 

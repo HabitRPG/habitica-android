@@ -2,7 +2,7 @@ package com.habitrpg.android.habitica.data.local
 
 import com.habitrpg.android.habitica.models.Tag
 
-import io.reactivex.Flowable
+import io.reactivex.rxjava3.core.Flowable
 import io.realm.RealmResults
 
 interface TagLocalRepository : BaseLocalRepository {

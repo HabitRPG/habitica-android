@@ -11,7 +11,7 @@ import com.habitrpg.android.habitica.ui.activities.ClassSelectionActivity
 
 import javax.inject.Inject
 
-import io.reactivex.Flowable
+import io.reactivex.rxjava3.core.Flowable
 
 import com.habitrpg.android.habitica.ui.activities.MainActivity.Companion.SELECT_CLASS_RESULT
 
@@ -32,7 +32,7 @@ constructor(threadExecutor: ThreadExecutor, postExecutionThread: PostExecutionTh
                 displayClassSelectionActivity(requestValues.isInitialSelection, requestValues.currentClass, requestValues.activity)
             }
 
-            Flowable.empty<Void>()
+            Flowable.empty()
         }
     }
 

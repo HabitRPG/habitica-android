@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/gray_700">
+    android:background="?attr/colorContentBackground">
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="30dp"
-        android:background="@color/white">
+        android:paddingBottom="20dp">
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -20,7 +19,8 @@
                 android:id="@+id/cancel_button"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_close_purple_300_24dp"
+                android:src="@drawable/ic_close_white_24dp"
+                android:tint="?colorPrimary"
                 style="@style/Base.Widget.AppCompat.Button.Borderless"
                 android:contentDescription="@string/cancel" />
             <Space
@@ -33,63 +33,52 @@
                 android:layout_height="wrap_content"
                 android:text="@string/create"
                 style="@style/HabiticaButton.Borderless"
-                android:textColor="?colorAccent"
+                android:textColor="?colorPrimary"
                 android:paddingEnd="@dimen/spacing_large"
                 android:paddingStart="@dimen/spacing_large"
                 android:minWidth="20dp"/>
         </LinearLayout>
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             app:hintTextAppearance="@style/TextAppearance.AppCompat"
             android:layout_marginTop="@dimen/spacing_small"
-            android:layout_marginLeft="@dimen/spacing_large"
-            android:layout_marginRight="@dimen/spacing_large"
-            android:background="@drawable/edittext"
-            android:textColorHint="@color/gray_50">
-            <com.habitrpg.android.habitica.ui.views.HabiticaAutocompleteTextView
-                android:id="@+id/group_name_edittext"
+            android:layout_marginStart="@dimen/spacing_large"
+            android:layout_marginEnd="@dimen/spacing_large"
+            android:textColorHint="@color/text_primary">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/group_name_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:hint="@string/name"
-                android:textColor="@android:color/black"
                 android:inputType="textCapSentences"
-                android:background="@color/transparent"
                 android:paddingStart="@dimen/spacing_large"
                 android:paddingEnd="@dimen/spacing_large"
-                android:paddingBottom="@dimen/spacing_large"
-                android:paddingTop="20dp"
-                android:textColorHint="@color/gray_50"
+                android:textColorHint="@color/text_secondary"
                 />
         </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 app:hintTextAppearance="@style/TextAppearance.AppCompat"
                 android:layout_marginTop="@dimen/spacing_large"
-                android:layout_marginLeft="@dimen/spacing_large"
-                android:layout_marginRight="@dimen/spacing_large"
-                android:background="@drawable/edittext"
-                android:textColorHint="@color/gray_50">
+                android:layout_marginStart="@dimen/spacing_large"
+                android:layout_marginEnd="@dimen/spacing_large"
+                android:textColorHint="@color/text_primary">
 
-                <com.habitrpg.android.habitica.ui.views.HabiticaAutocompleteTextView
-                    android:id="@+id/group_description_edittext"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/group_description_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:hint="@string/description"
-                    android:textColor="@android:color/black"
                     android:inputType="textCapSentences|textMultiLine"
-                    android:background="@color/transparent"
-                    android:paddingStart="@dimen/spacing_large"
-                    android:paddingEnd="@dimen/spacing_large"
-                    android:paddingBottom="@dimen/spacing_large"
-                    android:paddingTop="20dp"
-                    android:textColorHint="@color/gray_50"
+                    android:textColorHint="@color/text_primary"
+                    android:gravity="top"
                     android:minLines="3"
-                    android:gravity="top" />
+                    android:scrollbars="vertical"/>
             </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -97,14 +86,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_large"
-            android:layout_marginLeft="@dimen/spacing_large"
-            android:layout_marginRight="@dimen/spacing_large">
+            android:layout_marginStart="@dimen/spacing_large"
+            android:layout_marginEnd="@dimen/spacing_large">
             <TextView
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="@string/only_leader_create_challenge"/>
-            <Switch
+            <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/leader_create_challenge_switch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -123,8 +112,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/privacyWrapper"
-            android:layout_marginLeft="@dimen/spacing_large"
-            android:layout_marginRight="@dimen/spacing_large"
+            android:layout_marginStart="@dimen/spacing_large"
+            android:layout_marginEnd="@dimen/spacing_large"
             tools:visibility="gone">
 
             <TextView
@@ -138,10 +127,5 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/privacySpinner" />
         </LinearLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#1e000000"
-            android:layout_marginTop="@dimen/spacing_medium" />
     </LinearLayout>
-</ScrollView>
+</FrameLayout>

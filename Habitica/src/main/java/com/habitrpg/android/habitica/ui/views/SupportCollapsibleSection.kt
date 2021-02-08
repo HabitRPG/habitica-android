@@ -33,9 +33,9 @@ class SupportCollapsibleSection : LinearLayout {
         binding.titleView.text = a.getString(R.styleable.SupportCollapsibleSection_title)
         binding.subtitleView.text = a.getString(R.styleable.SupportCollapsibleSection_subtitle)
         binding.descriptionView.text = MarkdownParser.parseMarkdown(a.getString(R.styleable.SupportCollapsibleSection_description))
-        binding.titleView.setTextColor(a.getColor(R.styleable.SupportCollapsibleSection_titleColor, ContextCompat.getColor(context, R.color.gray_50)))
+        binding.titleView.setTextColor(a.getColor(R.styleable.SupportCollapsibleSection_titleColor, ContextCompat.getColor(context, R.color.text_primary)))
 
-        background = context.getDrawable(R.drawable.layout_rounded_bg_gray_700)
+        background = ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_window)
 
         a.recycle()
 

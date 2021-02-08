@@ -3,24 +3,27 @@ package com.habitrpg.android.habitica.ui.adapter.tasks
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.helpers.TaskFilterHelper
 import com.habitrpg.android.habitica.models.responses.TaskDirection
 import com.habitrpg.android.habitica.models.tasks.ChecklistItem
 import com.habitrpg.android.habitica.models.tasks.Task
+import com.habitrpg.android.habitica.ui.adapter.BaseRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.BaseTaskViewHolder
-import io.reactivex.BackpressureStrategy
-import io.reactivex.Flowable
-import io.reactivex.functions.Action
-import io.reactivex.subjects.PublishSubject
-import io.realm.*
+import com.habitrpg.android.habitica.ui.viewHolders.tasks.RewardViewHolder
+import io.reactivex.rxjava3.core.BackpressureStrategy
+import io.reactivex.rxjava3.core.Flowable
+import io.reactivex.rxjava3.functions.Action
+import io.reactivex.rxjava3.subjects.PublishSubject
+import io.realm.OrderedRealmCollection
 
 abstract class RealmBaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(
         private var unfilteredData: OrderedRealmCollection<Task>?,
         private val hasAutoUpdates: Boolean,
         private val layoutResource: Int,
         private val taskFilterHelper: TaskFilterHelper?
-) : RealmRecyclerViewAdapter<Task, VH>(null, false), TaskRecyclerViewAdapter {
+) : BaseRecyclerViewAdapter<Task, VH>(), TaskRecyclerViewAdapter {
+    override var canScoreTasks = true
+
     private var updateOnModification: Boolean = false
     override var ignoreUpdates: Boolean = false
 
@@ -29,78 +32,6 @@ abstract class RealmBaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(
         if (field != value) {
             field = value
             notifyDataSetChanged()
-        }
-    }
-
-    private val resultsListener: OrderedRealmCollectionChangeListener<RealmResults<Task>> by lazy {
-        OrderedRealmCollectionChangeListener<RealmResults<Task>> { _, changeSet ->
-            buildChangeSet(changeSet)
-        }
-    }
-
-    private val listListener: OrderedRealmCollectionChangeListener<RealmList<Task>> by lazy {
-        OrderedRealmCollectionChangeListener<RealmList<Task>> { _, changeSet ->
-            buildChangeSet(changeSet)
-        }
-    }
-
-    private fun buildChangeSet(changeSet: OrderedCollectionChangeSet) {
-        if (ignoreUpdates) return
-        if (changeSet.state == OrderedCollectionChangeSet.State.INITIAL) {
-            notifyDataSetChanged()
-            return
-        }
-        // For deletions, the adapter has to be notified in reverse order.
-        val deletions = changeSet.deletionRanges
-        for (i in deletions.indices.reversed()) {
-            val range = deletions[i]
-            notifyItemRangeRemoved(range.startIndex + dataOffset(), range.length)
-        }
-
-        val insertions = changeSet.insertionRanges
-        for (range in insertions) {
-            notifyItemRangeInserted(range.startIndex + dataOffset(), range.length)
-        }
-
-        if (!updateOnModification) {
-            return
-        }
-
-        val modifications = changeSet.changeRanges
-        for (range in modifications) {
-            notifyItemRangeChanged(range.startIndex + dataOffset(), range.length)
-        }
-    }
-
-    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
-        super.onAttachedToRecyclerView(recyclerView)
-        data?.takeIf { it.isValid }?.addListener()
-    }
-
-    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
-        super.onDetachedFromRecyclerView(recyclerView)
-        data?.takeIf { it.isValid }?.removeListener()
-    }
-
-    override fun updateData(tasks: OrderedRealmCollection<Task>?) {
-        data?.takeIf { it.isValid }?.removeListener()
-        tasks?.takeIf { it.isValid }?.addListener()
-        super.updateData(tasks)
-    }
-
-    private fun OrderedRealmCollection<Task>.addListener() {
-        when (this) {
-            is RealmResults<Task> -> addChangeListener(resultsListener)
-            is RealmList<Task> -> addChangeListener(listListener)
-            else -> throw IllegalArgumentException("RealmCollection not supported: $javaClass")
-        }
-    }
-
-    private fun OrderedRealmCollection<Task>.removeListener() {
-        when (this) {
-            is RealmResults<Task> -> removeChangeListener(resultsListener)
-            is RealmList<Task> -> removeChangeListener(listListener)
-            else -> throw IllegalArgumentException("RealmCollection not supported: $javaClass")
         }
     }
 
@@ -115,9 +46,6 @@ abstract class RealmBaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(
     protected var brokenTaskEventsSubject = PublishSubject.create<Task>()
     override val brokenTaskEvents: Flowable<Task> = brokenTaskEventsSubject.toFlowable(BackpressureStrategy.DROP)
 
-    private val isDataValid: Boolean
-        get() = data?.isValid ?: false
-
     init {
         check(!(unfilteredData != null && unfilteredData?.isManaged == false)) { "Only use this adapter with managed RealmCollection, " + "for un-managed lists you can just use the BaseRecyclerViewAdapter" }
         this.updateOnModification = true
@@ -126,18 +54,15 @@ abstract class RealmBaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(
 
     override fun getItemId(index: Int): Long = index.toLong()
 
-    override fun getItemCount(): Int = if (isDataValid) data?.size ?: 0 else 0
-
-    override fun getItem(index: Int): Task? = if (isDataValid) data?.get(index) else null
-
     override fun updateUnfilteredData(data: OrderedRealmCollection<Task>?) {
         unfilteredData = data
-        updateData(data)
+        this.data = data ?: emptyList()
     }
 
     override fun onBindViewHolder(holder: VH, position: Int) {
         val item = getItem(position)
         if (item != null) {
+            holder.isLocked = !canScoreTasks
             holder.bind(item, position, taskDisplayMode)
             holder.errorButtonClicked = Action {
                 errorButtonEventsSubject.onNext("")
@@ -156,12 +81,12 @@ abstract class RealmBaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(
         if (taskFilterHelper != null) {
             val query = taskFilterHelper.createQuery(unfilteredData)
             if (query != null) {
-                updateData(query.findAll())
+                data = query.findAll()
             }
         }
     }
 
     override fun getTaskIDAt(position: Int): String {
-        return data?.get(position)?.id ?: ""
+        return data[position].id ?: ""
     }
 }

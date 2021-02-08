@@ -1,12 +1,12 @@
 package com.habitrpg.android.habitica.ui.fragments.preferences
 
 import android.annotation.SuppressLint
-import android.app.ProgressDialog
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.preference.CheckBoxPreference
 import androidx.preference.ListPreference
@@ -17,16 +17,17 @@ import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.ContentRepository
+import com.habitrpg.android.habitica.events.ShowSnackbarEvent
 import com.habitrpg.android.habitica.helpers.*
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
-import com.habitrpg.android.habitica.models.ContentResult
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.prefs.TimePreference
 import com.habitrpg.android.habitica.ui.activities.ClassSelectionActivity
 import com.habitrpg.android.habitica.ui.activities.FixCharacterValuesActivity
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.activities.PrefsActivity
-import io.reactivex.functions.Consumer
+import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
+import org.greenrobot.eventbus.EventBus
 import java.util.*
 import javax.inject.Inject
 
@@ -52,14 +53,17 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
     override fun onCreate(savedInstanceState: Bundle?) {
         HabiticaBaseApplication.userComponent?.inject(this)
         super.onCreate(savedInstanceState)
+    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        listView.itemAnimator = null
     }
 
     override fun setupPreferences() {
         timePreference = findPreference("reminder_time") as? TimePreference
         val useReminder = preferenceManager.sharedPreferences.getBoolean("use_reminder", false)
         timePreference?.isEnabled = useReminder
-
 
         pushNotificationsPreference = findPreference("pushNotifications") as? PreferenceScreen
         val usePushNotifications = preferenceManager.sharedPreferences.getBoolean("usePushNotifications", true)
@@ -69,16 +73,18 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
         val useEmailNotifications = preferenceManager.sharedPreferences.getBoolean("useEmailNotifications", true)
         emailNotificationsPreference?.isEnabled = useEmailNotifications
 
-
         classSelectionPreference = findPreference("choose_class")
-        classSelectionPreference?.isVisible = false
+
+        val weekdayPreference = findPreference("FirstDayOfTheWeek") as? ListPreference
+        weekdayPreference?.summary = weekdayPreference?.entry
 
         serverUrlPreference = findPreference("server_url") as? ListPreference
         serverUrlPreference?.isVisible = false
         serverUrlPreference?.summary = preferenceManager.sharedPreferences.getString("server_url", "")
         val themePreference = findPreference("theme_name") as? ListPreference
-        themePreference?.isVisible = configManager.testingLevel() == AppTestingLevel.ALPHA || BuildConfig.DEBUG
-        themePreference?.summary = themePreference?.entry
+        themePreference?.summary = themePreference?.entry ?: "Default"
+        val themeModePreference = findPreference("theme_mode") as? ListPreference
+        themeModePreference?.summary = themeModePreference?.entry ?: "Follow System"
 
 
         val taskDisplayPreference = findPreference("task_display") as? ListPreference
@@ -92,7 +98,6 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
     override fun onResume() {
         super.onResume()
         preferenceManager.sharedPreferences.registerOnSharedPreferenceChangeListener(this)
-
     }
 
     override fun onPause() {
@@ -128,18 +133,16 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                 return true
             }
             "reload_content" -> {
-                @Suppress("DEPRECATION")
-                val dialog = ProgressDialog.show(context, context?.getString(R.string.reloading_content), null, true)
+                val event = ShowSnackbarEvent()
+                event.text = context?.getString(R.string.reloading_content)
+                event.type = HabiticaSnackbar.SnackbarDisplayType.NORMAL
+                EventBus.getDefault().post(event)
                 contentRepository.retrieveContent(context,true).subscribe({
-                    if (dialog.isShowing) {
-                        dialog.dismiss()
-                    }
-                }) { throwable ->
-                    if (dialog.isShowing) {
-                        dialog.dismiss()
-                    }
-                    RxErrorHandler.reportError(throwable)
-                }
+                    val completedEvent = ShowSnackbarEvent()
+                    completedEvent.text = context?.getString(R.string.reloaded_content)
+                    completedEvent.type = HabiticaSnackbar.SnackbarDisplayType.SUCCESS
+                    EventBus.getDefault().post(completedEvent)
+                }, RxErrorHandler.handleEmptyError())
             }
             "fixCharacterValues" -> {
                 val intent = Intent(activity, FixCharacterValuesActivity::class.java)
@@ -150,7 +153,6 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
     }
 
 
-    @SuppressLint("ObsoleteSdkInt")
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
         when (key) {
             "use_reminder" -> {
@@ -184,7 +186,7 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                 val pieces = timeval?.split(":".toRegex())?.dropLastWhile { it.isEmpty() }?.toTypedArray()
                 if (pieces != null) {
                     val hour = Integer.parseInt(pieces[0])
-                    userRepository.changeCustomDayStart(hour).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+                    userRepository.changeCustomDayStart(hour).subscribe({ }, RxErrorHandler.handleEmptyError())
                 }
             }
             "language" -> {
@@ -192,33 +194,27 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
 
                 Locale.setDefault(languageHelper.locale)
                 val configuration = Configuration()
-                if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.JELLY_BEAN) {
-                    @Suppress("Deprecation")
-                    configuration.locale = languageHelper.locale
-                } else {
-                    configuration.setLocale(languageHelper.locale)
-                }
+                configuration.setLocale(languageHelper.locale)
                 @Suppress("DEPRECATION")
                 activity?.resources?.updateConfiguration(configuration, activity?.resources?.displayMetrics)
-                userRepository.updateLanguage(user, languageHelper.languageCode ?: "en")
-                        .flatMap<ContentResult> { contentRepository.retrieveContent(context,true) }
-                        .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
 
-                if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) {
-                    val intent = Intent(activity, MainActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                    startActivity(intent)
-                } else {
-                    val intent = Intent(activity, MainActivity::class.java)
-                    this.startActivity(intent)
-                    activity?.finishAffinity()
+                if (user?.preferences?.language == languageHelper.languageCode) {
+                    return
                 }
+
+                userRepository.updateLanguage(languageHelper.languageCode ?: "en")
+                        .flatMap { contentRepository.retrieveContent(context,true) }
+                        .subscribe({ }, RxErrorHandler.handleEmptyError())
+
+                val intent = Intent(activity, MainActivity::class.java)
+                this.startActivity(intent)
+                activity?.finishAffinity()
             }
             "audioTheme" -> {
                 val newAudioTheme = sharedPreferences.getString(key, "off")
                 if (newAudioTheme != null) {
-                    compositeSubscription.add(userRepository.updateUser(user, "preferences.sound", newAudioTheme)
-                            .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+                    compositeSubscription.add(userRepository.updateUser("preferences.sound", newAudioTheme)
+                            .subscribe({ }, RxErrorHandler.handleEmptyError()))
                     soundManager.soundTheme = newAudioTheme
                     soundManager.preloadAllFiles()
                 }
@@ -227,8 +223,12 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                 val activity = activity as? PrefsActivity ?: return
                 activity.reload()
             }
-            "dailyDueDefaultView" -> userRepository.updateUser(user, "preferences.dailyDueDefaultView", sharedPreferences.getBoolean(key, false))
-                    .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+            "theme_mode" -> {
+                val activity = activity as? PrefsActivity ?: return
+                activity.reload()
+            }
+            "dailyDueDefaultView" -> userRepository.updateUser("preferences.dailyDueDefaultView", sharedPreferences.getBoolean(key, false))
+                    .subscribe({ }, RxErrorHandler.handleEmptyError())
             "server_url" -> {
                 apiClient.updateServerUrl(sharedPreferences.getString(key, ""))
                 findPreference(key).summary = sharedPreferences.getString(key, "")
@@ -237,11 +237,15 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                 val preference = findPreference(key) as ListPreference
                 preference.summary = preference.entry
             }
+            "FirstDayOfTheWeek" -> {
+                val preference = findPreference(key) as ListPreference
+                preference.summary = preference.entry
+            }
             "disablePMs" -> {
                 val isDisabled = sharedPreferences.getBoolean("disablePMs", false)
                 if (user?.inbox?.optOut != isDisabled) {
-                    compositeSubscription.add(userRepository.updateUser(user, "inbox.optOut", isDisabled)
-                            .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+                    compositeSubscription.add(userRepository.updateUser("inbox.optOut", isDisabled)
+                            .subscribe({ }, RxErrorHandler.handleEmptyError()))
                 }
             }
         }
@@ -250,18 +254,14 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
     override fun onDisplayPreferenceDialog(preference: Preference) {
         if (preference is TimePreference) {
             if (preference.getKey() == "cds_time") {
-                if (fragmentManager?.findFragmentByTag(DayStartPreferenceDialogFragment.TAG) == null) {
-                    fragmentManager?.let {
-                        DayStartPreferenceDialogFragment.newInstance(this, preference.getKey())
-                                .show(it, DayStartPreferenceDialogFragment.TAG)
-                    }
+                if (parentFragmentManager.findFragmentByTag(DayStartPreferenceDialogFragment.TAG) == null) {
+                    DayStartPreferenceDialogFragment.newInstance(this, preference.getKey())
+                                .show(parentFragmentManager, DayStartPreferenceDialogFragment.TAG)
                 }
             } else {
-                if (fragmentManager?.findFragmentByTag(TimePreferenceDialogFragment.TAG) == null) {
-                    fragmentManager?.let {
+                if (parentFragmentManager.findFragmentByTag(TimePreferenceDialogFragment.TAG) == null) {
                         TimePreferenceDialogFragment.newInstance(this, preference.getKey())
-                                .show(it, TimePreferenceDialogFragment.TAG)
-                    }
+                                .show(parentFragmentManager, TimePreferenceDialogFragment.TAG)
                 }
             }
         } else {
@@ -279,11 +279,12 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                     classSelectionPreference?.title = getString(R.string.change_class)
                     classSelectionPreference?.summary = getString(R.string.change_class_description)
                 }
-                classSelectionPreference?.isVisible = true
             } else {
                 classSelectionPreference?.title = getString(R.string.enable_class)
-                classSelectionPreference?.isVisible = true
             }
+            classSelectionPreference?.isVisible = true
+        } else {
+            classSelectionPreference?.isVisible = false
         }
         val cdsTimePreference = findPreference("cds_time") as? TimePreference
         cdsTimePreference?.text = user?.preferences?.dayStart.toString() + ":00"
@@ -296,7 +297,7 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
         audioThemePreference?.summary = audioThemePreference?.entry
 
         val preference = findPreference("authentication")
-        if (user?.flags?.isVerifiedUsername == true) {
+        if (user?.flags?.verifiedUsername == true) {
             preference.layoutResource = R.layout.preference_child_summary
             preference.summary = context?.getString(R.string.authentication_summary)
         } else {
@@ -308,7 +309,7 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
         val inbox = user?.inbox
         disablePMsPreference?.isChecked = inbox?.optOut ?: true
 
-        if (user?.contributor?.admin == true) {
+        if (configManager.testingLevel() == AppTestingLevel.STAFF || BuildConfig.DEBUG) {
             serverUrlPreference?.isVisible = true
         }
     }

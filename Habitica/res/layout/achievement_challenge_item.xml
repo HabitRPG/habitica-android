@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:paddingTop="13dp"
+    android:paddingBottom="13dp">
+    <ImageView
+        android:id="@+id/achievement_count_label"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:textColor="@color/text_ternary"
+        style="@style/Body1"
+        android:src="@drawable/won_challenge_icon"
+        android:layout_marginStart="35dp"
+        android:layout_marginEnd="25dp"/>
+    <TextView
+        android:id="@+id/achievement_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Body1"
+        android:textColor="@color/text_secondary"
+        tools:text="This is the quest title"/>
+</LinearLayout>

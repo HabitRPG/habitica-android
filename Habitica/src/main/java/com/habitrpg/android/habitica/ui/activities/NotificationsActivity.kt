@@ -8,20 +8,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SocialRepository
-import com.habitrpg.android.habitica.databinding.ActivityIntroBinding
 import com.habitrpg.android.habitica.databinding.ActivityNotificationsBinding
+import com.habitrpg.android.habitica.extensions.fromHtml
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.Notification
 import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.notifications.*
 import com.habitrpg.android.habitica.ui.activities.MainActivity.Companion.NOTIFICATION_CLICK
 import com.habitrpg.android.habitica.ui.viewmodels.NotificationsViewModel
-import io.reactivex.functions.Consumer
 import javax.inject.Inject
 
 class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener {
@@ -52,10 +51,9 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
 
         inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as? LayoutInflater
 
-        viewModel = ViewModelProviders.of(this)
-                .get(NotificationsViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(NotificationsViewModel::class.java)
 
-        compositeSubscription.add(viewModel.getNotifications().subscribe(Consumer {
+        compositeSubscription.add(viewModel.getNotifications().subscribe({
             this.setNotifications(it)
             viewModel.markNotificationsAsSeen(it)
         }, RxErrorHandler.handleEmptyError()))
@@ -78,17 +76,13 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
     override fun onRefresh() {
         binding.notificationsRefreshLayout.isRefreshing = true
 
-        compositeSubscription.add(viewModel.refreshNotifications().subscribe(Consumer {
+        compositeSubscription.add(viewModel.refreshNotifications().subscribe({
             binding.notificationsRefreshLayout.isRefreshing = false
         }, RxErrorHandler.handleEmptyError()))
     }
 
     private fun setNotifications(notifications: List<Notification>) {
         this.notifications = notifications
-
-        if (binding.notificationItems == null) {
-            return
-        }
 
         binding.notificationItems.removeAllViewsInLayout()
 
@@ -303,7 +297,7 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
 
         compositeSubscription.add(inventoryRepository.getQuestContent(data?.questKey ?: "")
                 .firstElement()
-                .subscribe(Consumer {
+                .subscribe({
                     updateQuestInvitationView(view, it)
                 }, RxErrorHandler.handleEmptyError()))
 
@@ -373,11 +367,6 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
     }
 
     private fun fromHtml(text: String): CharSequence {
-        return if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-            Html.fromHtml(text, Html.FROM_HTML_MODE_LEGACY)
-        } else {
-            @Suppress("DEPRECATION")
-            Html.fromHtml(text)
-        }
+        return text.fromHtml()
     }
 }

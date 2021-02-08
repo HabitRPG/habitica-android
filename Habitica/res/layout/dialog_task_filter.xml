@@ -4,18 +4,9 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-<View
-    android:layout_width="match_parent"
-    android:layout_height="2dp"
-    android:background="@color/pill_gray"
-        android:layout_marginTop="16dp"/>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
         android:layout_marginBottom="16dp"
         android:orientation="vertical">
         <TextView
@@ -28,7 +19,7 @@
         <RadioGroup
             android:id="@+id/task_filter_wrapper"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:orientation="horizontal"
             android:layout_marginTop="12dp"
             android:layout_marginBottom="24dp">
@@ -46,8 +37,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/weak"
                 style="@style/TaskFilterRadioButton"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp" />
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp" />
             <RadioButton
                 android:id="@+id/third_task_filter"
                 android:layout_width="wrap_content"
@@ -57,8 +48,8 @@
         </RadioGroup>
         <View
             android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="@color/pill_gray" />
+            android:layout_height="1dp"
+            android:background="@color/separator" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -83,7 +74,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
                     android:text="@string/edit_tag_btn_edit"
-                    android:textColor="#6133b4"
+                    android:textColor="?colorPrimary"
                     android:textSize="16sp"
                     android:gravity="end|center_vertical"
                     android:paddingEnd="0dp"/>
@@ -103,9 +94,4 @@
         </ScrollView>
 
     </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@color/pill_gray" />
 </LinearLayout>

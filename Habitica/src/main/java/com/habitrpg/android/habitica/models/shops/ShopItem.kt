@@ -57,7 +57,7 @@ open class ShopItem : RealmObject() {
     var level: Int? = null
 
     val isTypeItem: Boolean
-        get() = "eggs" == purchaseType || "hatchingPotions" == purchaseType || "food" == purchaseType || "armoire" == purchaseType || "potion" == purchaseType || "debuffPotion" == purchaseType
+        get() = "eggs" == purchaseType || "hatchingPotions" == purchaseType || "food" == purchaseType || "armoire" == purchaseType || "potion" == purchaseType || "debuffPotion" == purchaseType || "fortify" == purchaseType
 
     val isTypeQuest: Boolean
         get() = "quests" == purchaseType
@@ -69,13 +69,11 @@ open class ShopItem : RealmObject() {
         get() = "pets" == purchaseType || "mounts" == purchaseType
 
     val canPurchaseBulk: Boolean
-        get() = "eggs" == purchaseType || "hatchingPotions" == purchaseType || "food" == purchaseType
+        get() = "eggs" == purchaseType || "hatchingPotions" == purchaseType || "food" == purchaseType || "gems" == purchaseType
 
     fun canAfford(user: User?, quantity: Int): Boolean = when(currency) {
-        "gold" -> (value * quantity) <= user?.stats?.gp ?: 0.0
-        "gems" -> (value * quantity) <= user?.gemCount?.toDouble() ?: 0.0
-        "hourglasses" -> (value * quantity) <= user?.hourglassCount?.toDouble() ?: 0.0
-        else -> false
+        "gold" -> (value * quantity) <= (user?.stats?.gp ?: 0.0)
+        else -> true
     }
 
     override fun equals(other: Any?): Boolean {
@@ -143,6 +141,20 @@ open class ShopItem : RealmObject() {
             item.value = 20
             item.currency = "gold"
             item.purchaseType = "gems"
+            return item
+        }
+
+        fun makeFortifyItem(res: Resources?): ShopItem {
+            val item = ShopItem()
+            item.key = "fortify"
+            item.text = res?.getString(R.string.fortify_shop) ?: ""
+            item.notes = res?.getString(R.string.fortify_shop_description) ?: ""
+            item.imageName = "inventory_special_fortify"
+            item.value = 4
+            item.currency = "gems"
+            item.pinType = "fortify"
+            item.path = "special.fortify"
+            item.purchaseType = "fortify"
             return item
         }
     }

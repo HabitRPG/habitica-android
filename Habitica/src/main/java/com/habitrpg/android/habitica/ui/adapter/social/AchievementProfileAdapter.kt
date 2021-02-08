@@ -8,16 +8,17 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.drawee.backends.pipeline.Fresco
 import com.facebook.drawee.controller.BaseControllerListener
-import com.facebook.drawee.view.SimpleDraweeView
 import com.facebook.imagepipeline.image.ImageInfo
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.databinding.ProfileAchievementItemBinding
 import com.habitrpg.android.habitica.extensions.addOkButton
+import com.habitrpg.android.habitica.extensions.fromHtml
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.models.Achievement
 import com.habitrpg.android.habitica.ui.AvatarView
 import com.habitrpg.android.habitica.ui.activities.MainActivity
-import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.viewHolders.SectionViewHolder
+import com.habitrpg.android.habitica.ui.views.dialogs.AchievementDetailDialog
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 
 class AchievementProfileAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -61,11 +62,8 @@ class AchievementProfileAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
     }
 
     internal class AchievementViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+        private val binding = ProfileAchievementItemBinding.bind(itemView)
         private var achievement: Achievement? = null
-
-        private val draweeView: SimpleDraweeView by bindView(R.id.achievement_drawee)
-        private val titleView: TextView by bindView(R.id.achievement_text)
-        private val countText: TextView by bindView(R.id.achievement_count_label)
 
         init {
             itemView.isClickable = true
@@ -75,7 +73,7 @@ class AchievementProfileAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
         fun bind(item: Achievement) {
             val iconUrl = AvatarView.IMAGE_URI_ROOT + (if (!item.earned) "achievement-unearned" else item.icon) + "2x.png"
 
-            draweeView.controller = Fresco.newDraweeControllerBuilder()
+            binding.achievementDrawee.controller = Fresco.newDraweeControllerBuilder()
                     .setUri(iconUrl)
                     .setControllerListener(object : BaseControllerListener<ImageInfo>() {
                         override fun onFailure(id: String?, throwable: Throwable?) { /* no-on */ }
@@ -83,34 +81,20 @@ class AchievementProfileAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
                     .build()
 
             this.achievement = item
-            titleView.text = item.title
+            binding.achievementText.text = item.title
 
             if (item.optionalCount == null || item.optionalCount == 0) {
-                countText.visibility = View.GONE
+                binding.achievementCountLabel.visibility = View.GONE
             } else {
-                countText.visibility = View.VISIBLE
-                countText.text = item.optionalCount.toString()
+                binding.achievementCountLabel.visibility = View.VISIBLE
+                binding.achievementCountLabel.text = item.optionalCount.toString()
             }
         }
 
         override fun onClick(view: View) {
-            val context = itemView.context
-            val alert = HabiticaAlertDialog(context)
-
-            val customView = LayoutInflater.from(context).inflate(R.layout.dialog_achievement_details, null)
-            val achievementImage = customView.findViewById<View>(R.id.achievement_image) as? ImageView
-            achievementImage?.setImageDrawable(draweeView.drawable)
-
-            val titleView = customView.findViewById<View>(R.id.achievement_title) as? TextView
-            titleView?.text = achievement?.title
-
-            val textView = customView.findViewById<View>(R.id.achievement_text) as? TextView
-            textView?.text = achievement?.text
-
-            alert.setAdditionalContentView(customView)
-            alert.addOkButton()
-
-            alert.show()
+            achievement?.let {
+                AchievementDetailDialog(it, itemView.context).show()
+            }
         }
     }
 }

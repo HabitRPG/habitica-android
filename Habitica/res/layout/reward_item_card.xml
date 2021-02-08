@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white">
+    android:background="@color/content_background">
 
     <LinearLayout
         android:id="@+id/main_task_wrapper"
@@ -24,8 +24,8 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="@dimen/spacing_small"
-            android:layout_marginRight="@dimen/spacing_small"
+            android:layout_marginStart="@dimen/spacing_small"
+            android:layout_marginEnd="@dimen/spacing_small"
             style="@style/Widget.AppCompat.ProgressBar"/>
         <ImageButton
             android:id="@+id/error_icon"
@@ -34,8 +34,8 @@
             android:layout_gravity="center_vertical"
             android:background="@color/transparent"
             android:src="@drawable/ic_warning_black"
-            android:layout_marginLeft="@dimen/spacing_small"
-            android:layout_marginRight="@dimen/spacing_small"/>
+            android:layout_marginStart="@dimen/spacing_small"
+            android:layout_marginEnd="@dimen/spacing_small"/>
         <LinearLayout
             android:id="@+id/buyButton"
             android:layout_width="56dp"

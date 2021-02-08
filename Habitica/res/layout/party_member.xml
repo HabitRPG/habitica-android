@@ -37,9 +37,16 @@
                 android:id="@+id/more_button"
                 android:src="@drawable/ic_more_horiz_black_18dp"
                 android:background="@color/transparent"
+                android:tint="?textColorPrimary"
                 android:layout_width="30dp"
                 android:layout_height="20dp"
-                android:layout_gravity="right"/>
+                android:layout_gravity="end"/>
+            <TextView
+                android:id="@+id/you_pill"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Pill"
+                android:text="@string/you"/>
         </LinearLayout>
         <TableLayout
             android:layout_width="match_parent"
@@ -77,16 +84,16 @@
                 <com.habitrpg.android.habitica.ui.views.HabiticaProgressBar
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:layout_height="13dp"
+                    android:layout_height="@dimen/bar_size"
                     android:id="@+id/health_bar"
                     app:barForegroundColor="@color/hpColor"
-                    app:barBackgroundColor="@color/gray_700"/>
+                    app:barBackgroundColor="@color/window_background"/>
                 <TextView
                     android:id="@+id/health_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="19dp"
                     android:textSize="12sp"
-                    android:textColor="@color/gray_200"
+                    android:textColor="@color/text_ternary"
                     tools:text="50 / 50"
                     android:layout_marginStart="13dp"/>
             </TableRow>
@@ -95,16 +102,16 @@
                 <com.habitrpg.android.habitica.ui.views.HabiticaProgressBar
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:layout_height="13dp"
+                    android:layout_height="@dimen/bar_size"
                     android:id="@+id/experience_bar"
                     app:barForegroundColor="@color/xpColor"
-                    app:barBackgroundColor="@color/gray_700"/>
+                    app:barBackgroundColor="@color/window_background"/>
                 <TextView
                     android:id="@+id/experience_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="19dp"
                     android:textSize="12sp"
-                    android:textColor="@color/gray_200"
+                    android:textColor="@color/text_ternary"
                     tools:text="50 / 50"
                     android:layout_marginStart="13dp"/>
             </TableRow>
@@ -113,16 +120,16 @@
                 <com.habitrpg.android.habitica.ui.views.HabiticaProgressBar
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:layout_height="13dp"
+                    android:layout_height="@dimen/bar_size"
                     android:id="@+id/mana_bar"
                     app:barForegroundColor="@color/mpColor"
-                    app:barBackgroundColor="@color/gray_700"/>
+                    app:barBackgroundColor="@color/window_background"/>
                 <TextView
                     android:id="@+id/mana_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="19dp"
                     android:textSize="12sp"
-                    android:textColor="@color/gray_200"
+                    android:textColor="@color/text_ternary"
                     tools:text="50 / 5000"
                     android:layout_marginStart="13dp"/>
             </TableRow>

@@ -6,24 +6,25 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.databinding.AchievementChallengeItemBinding
+import com.habitrpg.android.habitica.databinding.AchievementQuestItemBinding
+import com.habitrpg.android.habitica.databinding.AchievementSectionHeaderBinding
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.models.Achievement
 import com.habitrpg.android.habitica.models.QuestAchievement
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
-import com.habitrpg.android.habitica.ui.helpers.bindOptionalView
-import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.views.dialogs.AchievementDetailDialog
 
 class AchievementsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var useGridLayout: Boolean = false
     var entries = listOf<Any>()
-    var questAchievements = listOf<QuestAchievement>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             0 -> SectionViewHolder(parent.inflate(R.layout.achievement_section_header))
             3 -> QuestAchievementViewHolder(parent.inflate(R.layout.achievement_quest_item))
+            4 -> ChallengeAchievementViewHolder(parent.inflate(R.layout.achievement_challenge_item))
             else -> AchievementViewHolder(if (useGridLayout) {
                 parent.inflate(R.layout.achievement_grid_item)
             } else {
@@ -33,56 +34,56 @@ class AchievementsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        when {
-            entries.size > position -> when (val entry = entries[position]) {
-                is Achievement -> (holder as? AchievementViewHolder)?.bind(entry)
-                is Pair<*, *> -> (holder as? SectionViewHolder)?.bind(entry)
-            }
-            entries.size == position -> (holder as? SectionViewHolder)?.bind(Pair("Quests completed", questAchievements.size))
-            else -> (holder as? QuestAchievementViewHolder)?.bind(questAchievements[position - 1 - entries.size])
+        when (val entry = entries[position]) {
+            is Achievement -> (holder as? AchievementViewHolder)?.bind(entry)
+            is QuestAchievement -> (holder as? QuestAchievementViewHolder)?.bind(entry)
+            is String -> (holder as? ChallengeAchievementViewHolder)?.bind(entry)
+            is Pair<*, *> -> (holder as? SectionViewHolder)?.bind(entry)
         }
     }
 
     override fun getItemCount(): Int {
-        return entries.size + questAchievements.size + 1
+        return entries.size
     }
 
     override fun getItemViewType(position: Int): Int {
-        return when {
-            entries.size > position -> {
-                val entry = entries[position]
-                if (entry is Pair<*, *>) {
-                    0
-                } else {
-                    if (useGridLayout) 1 else 2
-                }
-            }
-            entries.size == position -> 0
-            else -> 3
+        val entry = entries[position]
+        return if (entry is Pair<*, *>) {
+            0
+        } else if (entry is QuestAchievement) {
+            3
+        } else if (entry is String) {
+            4
+        } else {
+            if (useGridLayout) 1 else 2
         }
     }
 
     class SectionViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        private val titleView: TextView by bindView(R.id.title)
-        private val countView: TextView by bindView(R.id.count_label)
+        private var binding = AchievementSectionHeaderBinding.bind(itemView)
 
         fun bind(category: Pair<*, *>) {
-            titleView.text = category.first as? String
-            countView.text = category.second.toString()
+            binding.title.text = category.first as? String
+            binding.countLabel.text = category.second.toString()
         }
     }
 
     class AchievementViewHolder(itemView: View): RecyclerView.ViewHolder(itemView), View.OnClickListener {
         private var achievement: Achievement? = null
 
-        private val achievementContainer: ViewGroup? by bindOptionalView(R.id.achievement_container)
-        private val achievementIconView: SimpleDraweeView by bindView(R.id.achievement_icon)
-        private val achievementCountView: TextView by bindView(R.id.achievement_count_label)
-        private val achievementTitleView: TextView by bindView(R.id.achievement_title)
-        private val achievementDescriptionView: TextView? by bindOptionalView(R.id.achievement_description)
+        private val achievementContainer: ViewGroup?
+        private val achievementIconView: SimpleDraweeView
+        private val achievementCountView: TextView
+        private val achievementTitleView: TextView
+        private val achievementDescriptionView: TextView?
 
         init {
             itemView.setOnClickListener(this)
+            achievementContainer = itemView.findViewById(R.id.achievement_container)
+            achievementIconView = itemView.findViewById(R.id.achievement_icon)
+            achievementCountView = itemView.findViewById(R.id.achievement_count_label)
+            achievementTitleView = itemView.findViewById(R.id.achievement_title)
+            achievementDescriptionView = itemView.findViewById(R.id.achievement_description)
         }
 
         fun bind(achievement: Achievement) {
@@ -112,15 +113,21 @@ class AchievementsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     class QuestAchievementViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+        private var binding = AchievementQuestItemBinding.bind(itemView)
         private var achievement: QuestAchievement? = null
-
-        private val achievementCountView: TextView by bindView(R.id.achievement_count_label)
-        private val achievementTitleView: TextView by bindView(R.id.achievement_title)
 
         fun bind(achievement: QuestAchievement) {
             this.achievement = achievement
-            achievementTitleView.text = achievement.title
-            achievementCountView.text = achievement.count.toString()
+            binding.achievementTitle.text = achievement.title
+            binding.achievementCountLabel.text = achievement.count.toString()
+        }
+    }
+
+    class ChallengeAchievementViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+        private var binding = AchievementChallengeItemBinding.bind(itemView)
+
+        fun bind(challengeName: String) {
+            binding.achievementTitle.text = challengeName
         }
     }
 }

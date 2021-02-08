@@ -16,7 +16,6 @@ import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.AvatarView
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
-import io.reactivex.functions.Consumer
 
 class AvatarStatsWidgetProvider : BaseWidgetProvider() {
 
@@ -41,7 +40,7 @@ class AvatarStatsWidgetProvider : BaseWidgetProvider() {
         this.appWidgetManager = appWidgetManager
         this.context = context
 
-        userRepository?.getUser()?.firstElement()?.subscribe(Consumer<User> { this.updateData(it) }, RxErrorHandler.handleEmptyError())
+        userRepository.getUser().firstElement()?.subscribe({ this.updateData(it) }, RxErrorHandler.handleEmptyError())
     }
 
     override fun configureRemoteViews(remoteViews: RemoteViews, widgetId: Int, columns: Int, rows: Int): RemoteViews {
@@ -114,10 +113,10 @@ class AvatarStatsWidgetProvider : BaseWidgetProvider() {
 
             avatarView.setAvatar(user)
             val finalRemoteViews = remoteViews
-            avatarView.onAvatarImageReady(Consumer { bitmap ->
+            avatarView.onAvatarImageReady { bitmap ->
                 finalRemoteViews.setImageViewBitmap(R.id.avatar_view, bitmap)
                 appWidgetManager.partiallyUpdateAppWidget(allWidgetIds, finalRemoteViews)
-            })
+            }
 
             //If user click on life and xp: open the app
             val openAppIntent = Intent(context.applicationContext, MainActivity::class.java)

@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
-    android:foreground="?selectableItemBackground"
-    android:orientation="vertical">
+    android:background="?attr/colorContentBackground"
+    android:foreground="?selectableItemBackground">
 
-    <FrameLayout
+    <LinearLayout
         android:id="@+id/main_task_wrapper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,11 +14,8 @@
         android:layout_marginVertical="@dimen/task_spacing_vertical"
         android:background="@drawable/task_background"
         android:clipChildren="true"
-        android:minHeight="@dimen/task_min_height">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+        android:minHeight="@dimen/task_min_height"
+        android:orientation="vertical">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -31,15 +26,29 @@
                 <FrameLayout
                     android:id="@+id/checkBoxHolder"
                     android:layout_width="@dimen/button_width"
-                    android:layout_height="match_parent">
-
-                    <CheckBox
-                        android:id="@+id/checkBox"
-                        android:layout_width="@dimen/checkbox_size"
-                        android:layout_height="@dimen/checkbox_size"
+                    android:layout_height="match_parent"
+                    tools:background="@color/red_10">
+                    <View
+                        android:id="@+id/checkBoxBackground"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:gravity="center"
+                        android:background="@drawable/daily_checked"
+                        android:layout_gravity="center" />
+                    <ImageView
+                        android:id="@+id/checkmark"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
                         android:layout_gravity="center"
-                        android:button="@drawable/daily_checkbox"
-                        android:gravity="center" />
+                        android:scaleType="center"
+                        android:src="@drawable/checkmark" />
+                    <ImageView
+                        android:id="@+id/lock_view"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_gravity="center"
+                        android:scaleType="center"
+                        android:src="@drawable/checkmark" />
                 </FrameLayout>
                 <include layout="@layout/task_main_content" />
                 <ProgressBar
@@ -47,8 +56,8 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="@dimen/spacing_small"
-                    android:layout_marginRight="@dimen/spacing_small"
+                    android:layout_marginStart="@dimen/spacing_small"
+                    android:layout_marginEnd="@dimen/spacing_small"
                     style="@style/Widget.AppCompat.ProgressBar"/>
                 <ImageButton
                     android:id="@+id/error_icon"
@@ -57,8 +66,8 @@
                     android:layout_gravity="center_vertical"
                     android:background="@color/transparent"
                     android:src="@drawable/ic_warning_black"
-                    android:layout_marginLeft="@dimen/spacing_small"
-                    android:layout_marginRight="@dimen/spacing_small"/>
+                    android:layout_marginStart="@dimen/spacing_small"
+                    android:layout_marginEnd="@dimen/spacing_small"/>
                 <include layout="@layout/checklist_indicator" />
             </LinearLayout>
             <LinearLayout
@@ -66,6 +75,5 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical" />
-        </LinearLayout>
-    </FrameLayout>
-</LinearLayout>
+    </LinearLayout>
+</FrameLayout>

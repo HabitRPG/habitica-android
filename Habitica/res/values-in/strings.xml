@@ -353,9 +353,6 @@
     <string name="subscribe_prompt_thanks">Dengan Berlangganan kamu menerima keuntungan bermanfaat berikut:</string>
     <string name="subscription_status">Status Langganan</string>
     <string name="challenge_leave_title">Tinggalkan Tantangan</string>
-    <string name="challenge_leave_text">Apakah kamu yakin ingin meninggalkan Tantangan \"%s\"?</string>
-    <string name="challenge_remove_tasks_title">Hapus tugas</string>
-    <string name="challenge_remove_tasks_text">Apakah kamu mau menghapus tugas ini?</string>
     <string name="remove_tasks">Hapus</string>
     <string name="keep_tasks">Simpan</string>
     <string name="my_challenges">Tantangan Saya</string>

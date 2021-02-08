@@ -379,6 +379,9 @@
     <string name="remove_tasks">Премахване</string>
     <string name="keep_tasks">Задържане</string>
     <string name="my_challenges">Моите предизвикателства</string>
+  <string name="remove_tasks">Премахване</string>
+  <string name="keep_tasks">Задържане</string>
+  <string name="my_challenges">Моите предизвикателства</string>
     <string name="daily">Ежедневно</string>
     <string name="habit">Навик</string>
     <string name="reward">Награда</string>
@@ -687,4 +690,3 @@
     <string name="invited_to_private_guild"><![CDATA[Получихте покана за присъединяване към частната гилдия <b>%1$s</b>]]></string>
     <string name="invited_to_public_guild"><![CDATA[Получихте покана за присъединяване към гилдията <b>%1$s</b>]]></string>
     <string name="invited_to_quest"><![CDATA[Получихте покана за присъединяване в мисията <b>%1$s</b>]]></string>
-</resources>

@@ -5,20 +5,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_vertical">
-    <Button
+    <ImageButton
         android:id="@+id/delete_button"
         android:layout_width="45dp"
         android:layout_height="wrap_content"
         android:padding="0dp"
-        android:drawableLeft="@drawable/ic_close_purple_300_36dp"
-        style="@style/Base.Widget.AppCompat.Button.Borderless"/>
+        android:src="@drawable/ic_close_purple_300_36dp"
+        android:tint="@color/color_accent"
+        android:background="@color/transparent"/>
     <EditText
         android:id="@+id/edit_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:layout_marginLeft="8dp"
-        android:drawableRight="@drawable/ic_create_grey_400_18dp"
+        android:layout_marginStart="8dp"
+        android:drawableEnd="@drawable/ic_create_grey_400_18dp"
         tools:text="hello"
         style="@style/TagEditTextTheme"
         android:paddingBottom="14dp"

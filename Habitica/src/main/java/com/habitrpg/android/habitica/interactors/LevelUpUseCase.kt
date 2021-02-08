@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.interactors
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.databinding.DialogLevelup10Binding
 import com.habitrpg.android.habitica.events.ShareEvent
 import com.habitrpg.android.habitica.executors.PostExecutionThread
 import com.habitrpg.android.habitica.executors.ThreadExecutor
@@ -13,8 +14,7 @@ import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.AvatarView
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
-import io.reactivex.Flowable
-import io.reactivex.functions.Consumer
+import io.reactivex.rxjava3.core.Flowable
 import org.greenrobot.eventbus.EventBus
 import javax.inject.Inject
 
@@ -32,18 +32,16 @@ constructor(private val soundManager: SoundManager, threadExecutor: ThreadExecut
                 return@defer Flowable.just<Stats>(requestValues.user.stats)
             }
 
-            if (requestValues.newLevel == 10) {
-                val customView = requestValues.activity.layoutInflater.inflate(R.layout.dialog_levelup_10, null)
-                if (customView != null) {
-                    customView.findViewById<ImageView>(R.id.healer_icon_view).setImageBitmap(HabiticaIconsHelper.imageOfHealerLightBg())
-                    customView.findViewById<ImageView>(R.id.mage_icon_view).setImageBitmap(HabiticaIconsHelper.imageOfMageLightBg())
-                    customView.findViewById<ImageView>(R.id.rogue_icon_view).setImageBitmap(HabiticaIconsHelper.imageOfRogueLightBg())
-                    customView.findViewById<ImageView>(R.id.warrior_icon_view).setImageBitmap(HabiticaIconsHelper.imageOfWarriorLightBg())
-                }
+            if (requestValues.newLevel == 10L) {
+                val binding = DialogLevelup10Binding.inflate(requestValues.activity.layoutInflater)
+                binding.healerIconView.setImageBitmap(HabiticaIconsHelper.imageOfHealerLightBg())
+                binding.mageIconView.setImageBitmap(HabiticaIconsHelper.imageOfMageLightBg())
+                binding.rogueIconView.setImageBitmap(HabiticaIconsHelper.imageOfRogueLightBg())
+                binding.warriorIconView.setImageBitmap(HabiticaIconsHelper.imageOfWarriorLightBg())
 
                 val alert = HabiticaAlertDialog(requestValues.activity)
                 alert.setTitle(requestValues.activity.getString(R.string.levelup_header, requestValues.newLevel))
-                alert.setAdditionalContentView(customView)
+                alert.setAdditionalContentView(binding.root)
                 alert.addButton(R.string.select_class, true) { _, _ ->
                     showClassSelection(requestValues)
                 }
@@ -64,7 +62,7 @@ constructor(private val soundManager: SoundManager, threadExecutor: ThreadExecut
                 event.sharedMessage = requestValues.activity.getString(R.string.share_levelup, requestValues.newLevel)
                 val avatarView = AvatarView(requestValues.activity, showBackground = true, showMount = true, showPet = true)
                 avatarView.setAvatar(requestValues.user)
-                avatarView.onAvatarImageReady(Consumer { t -> event.shareImage = t })
+                avatarView.onAvatarImageReady { t -> event.shareImage = t }
 
                 val alert = HabiticaAlertDialog(requestValues.activity)
                 alert.setTitle(requestValues.activity.getString(R.string.levelup_header, requestValues.newLevel))
@@ -75,6 +73,7 @@ constructor(private val soundManager: SoundManager, threadExecutor: ThreadExecut
                 alert.addButton(R.string.share, false) { _, _ ->
                     EventBus.getDefault().post(event)
                 }
+                alert.isCelebratory = true
 
                 if (!requestValues.activity.isFinishing) {
                     alert.enqueue()
@@ -87,10 +86,10 @@ constructor(private val soundManager: SoundManager, threadExecutor: ThreadExecut
 
     private fun showClassSelection(requestValues: RequestValues) {
         checkClassSelectionUseCase.observable(CheckClassSelectionUseCase.RequestValues(requestValues.user, true, null, requestValues.activity))
-                .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+                .subscribe({ }, RxErrorHandler.handleEmptyError())
     }
 
-    class RequestValues(val user: User, val activity: AppCompatActivity) : UseCase.RequestValues {
-        val newLevel: Int = (user.stats?.lvl ?: 0 )
+    class RequestValues(val user: User, val level: Long?, val activity: AppCompatActivity) : UseCase.RequestValues {
+        val newLevel: Long = level ?: 0
     }
 }

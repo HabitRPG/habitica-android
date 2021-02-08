@@ -17,7 +17,7 @@ import com.habitrpg.android.habitica.models.tasks.TaskList
 import com.habitrpg.android.habitica.models.user.Items
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
-import io.reactivex.Flowable
+import io.reactivex.rxjava3.core.Flowable
 import retrofit2.http.*
 
 @JvmSuppressWildcards
@@ -103,6 +103,8 @@ interface ApiService {
 
     @POST("tasks/{id}/score/{direction}")
     fun postTaskDirection(@Path("id") id: String, @Path("direction") direction: String): Flowable<HabitResponse<TaskDirectionData>>
+    @POST("tasks/bulk-score")
+    fun bulkScoreTasks(@Body data: List<Map<String, String>>): Flowable<HabitResponse<BulkTaskScoringData>>
 
     @POST("tasks/{id}/move/to/{position}")
     fun postTaskNewPosition(@Path("id") id: String, @Path("position") position: Int): Flowable<HabitResponse<List<String>>>
@@ -389,4 +391,15 @@ interface ApiService {
 
     @POST("user/block/{userID}")
     fun blockMember(@Path("userID") userID: String): Flowable<HabitResponse<List<String>>>
+
+    @POST("user/reroll")
+    fun reroll(): Flowable<HabitResponse<User>>
+
+    // Team Plans
+
+    @GET("group-plans")
+    fun getTeamPlans(): Flowable<HabitResponse<List<TeamPlan>>>
+
+    @GET("tasks/group/{groupID}")
+    fun getTeamPlanTasks(@Path("groupID") groupId: String): Flowable<HabitResponse<TaskList>>
 }

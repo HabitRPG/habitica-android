@@ -6,7 +6,7 @@
              android:layout_height="match_parent"
              tools:context=".ui.activities.PrefsActivity"
     android:orientation="vertical"
-    android:background="@color/white">
+    android:background="?attr/colorContentBackground">
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
@@ -23,12 +23,22 @@
 
         </com.google.android.material.appbar.AppBarLayout>
     <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <FrameLayout
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_gravity="top|center" >
-
+    </FrameLayout>
+        <FrameLayout
+            android:id="@+id/snackbar_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="158dp"
+            android:layout_gravity="bottom"
+            android:paddingBottom="68dp"/>
     </FrameLayout>
 
 </LinearLayout>

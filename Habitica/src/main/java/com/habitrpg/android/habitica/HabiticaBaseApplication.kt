@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica
 
+import android.app.Application
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -11,7 +12,6 @@ import android.database.sqlite.SQLiteDatabase
 import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.edit
-import androidx.multidex.MultiDexApplication
 import androidx.preference.PreferenceManager
 import com.amplitude.api.Amplitude
 import com.amplitude.api.Identify
@@ -33,8 +33,6 @@ import com.habitrpg.android.habitica.ui.activities.IntroActivity
 import com.habitrpg.android.habitica.ui.activities.LoginActivity
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
-import com.squareup.leakcanary.LeakCanary
-import com.squareup.leakcanary.RefWatcher
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import org.solovyev.android.checkout.Billing
@@ -44,8 +42,7 @@ import org.solovyev.android.checkout.PurchaseVerifier
 import javax.inject.Inject
 
 //contains all HabiticaApplicationLogic except dagger componentInitialisation
-abstract class HabiticaBaseApplication : MultiDexApplication() {
-    var refWatcher: RefWatcher? = null
+abstract class HabiticaBaseApplication : Application() {
     @Inject
     internal lateinit var lazyApiHelper: ApiClient
     @Inject
@@ -69,16 +66,10 @@ abstract class HabiticaBaseApplication : MultiDexApplication() {
 
     override fun onCreate() {
         super.onCreate()
-        if (LeakCanary.isInAnalyzerProcess(this)) {
-            // This process is dedicated to LeakCanary for heap analysis.
-            // You should not init your app in this process.
-            return
-        }
         setupRealm()
         setupDagger()
         setupRemoteConfig()
         setupNotifications()
-        refWatcher = LeakCanary.install(this)
         createBillingAndCheckout()
         HabiticaIconsHelper.init(this)
         MarkdownParser.setup(this)
@@ -111,6 +102,7 @@ abstract class HabiticaBaseApplication : MultiDexApplication() {
         val builder = RealmConfiguration.Builder()
                 .schemaVersion(1)
                 .deleteRealmIfMigrationNeeded()
+                .allowWritesOnUiThread(true)
         try {
             Realm.setDefaultConfiguration(builder.build())
         } catch (ignored: UnsatisfiedLinkError) {
@@ -196,7 +188,7 @@ abstract class HabiticaBaseApplication : MultiDexApplication() {
                 .setMinimumFetchIntervalInSeconds(if (BuildConfig.DEBUG) 0 else 3600)
                 .build()
         remoteConfig.setConfigSettingsAsync(configSettings)
-        remoteConfig.setDefaults(R.xml.remote_config_defaults)
+        remoteConfig.setDefaultsAsync(R.xml.remote_config_defaults)
         remoteConfig.fetchAndActivate()
     }
 
@@ -235,10 +227,12 @@ abstract class HabiticaBaseApplication : MultiDexApplication() {
             val preferences = PreferenceManager.getDefaultSharedPreferences(context)
             val useReminder = preferences.getBoolean("use_reminder", false)
             val reminderTime = preferences.getString("reminder_time", "19:00")
+            val lightMode = preferences.getString("theme_mode", "system")
             preferences.edit {
                 clear()
                 putBoolean("use_reminder", useReminder)
                 putString("reminder_time", reminderTime)
+                putString("theme_mode", lightMode)
             }
             reloadUserComponent()
             getInstance(context)?.lazyApiHelper?.updateAuthenticationCredentials(null, null)

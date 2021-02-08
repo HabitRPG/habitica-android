@@ -4,13 +4,14 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Environment
 import com.habitrpg.android.habitica.HabiticaBaseApplication
-import io.reactivex.Observable
-import io.reactivex.Single
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.schedulers.Schedulers
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
-import okio.Okio
+import okio.buffer
+import okio.sink
 import java.io.File
 import java.io.IOException
 
@@ -24,7 +25,7 @@ class SoundFileLoader(private val context: Context) {
             return cacheDir?.path
         }
 
-    @SuppressLint("SetWorldReadable", "ObsoleteSdkInt", "ReturnCount")
+    @SuppressLint("SetWorldReadable", "ReturnCount")
     fun download(files: List<SoundFile>): Single<List<SoundFile>> {
         return Observable.fromIterable(files)
                 .flatMap({ audioFile ->
@@ -50,22 +51,20 @@ class SoundFileLoader(private val context: Context) {
                             return@create
                         }
 
-                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
-                            try {
-                                val sink = Okio.buffer(Okio.sink(file))
-                                sink.writeAll(response.body()!!.source())
-                                sink.flush()
-                                sink.close()
-                            } catch (io: IOException) {
-                                sub.onComplete()
-                                return@create
-                            }
-
-                            file.setReadable(true, false)
-                            audioFile.file = file
-                            sub.onNext(audioFile)
+                        try {
+                            val sink = file.sink().buffer()
+                            sink.writeAll(response.body!!.source())
+                            sink.flush()
+                            sink.close()
+                        } catch (io: IOException) {
                             sub.onComplete()
+                            return@create
                         }
+
+                        file.setReadable(true, false)
+                        audioFile.file = file
+                        sub.onNext(audioFile)
+                        sub.onComplete()
                     }
                     fileObservable.subscribeOn(Schedulers.io())
                 }, 5)

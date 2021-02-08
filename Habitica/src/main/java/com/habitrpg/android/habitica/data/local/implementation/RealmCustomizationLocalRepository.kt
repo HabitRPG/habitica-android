@@ -2,7 +2,8 @@ package com.habitrpg.android.habitica.data.local.implementation
 
 import com.habitrpg.android.habitica.data.local.CustomizationLocalRepository
 import com.habitrpg.android.habitica.models.inventory.Customization
-import io.reactivex.Flowable
+import hu.akarnokd.rxjava3.bridge.RxJavaBridge
+import io.reactivex.rxjava3.core.Flowable
 import io.realm.Realm
 import io.realm.RealmResults
 import java.util.*
@@ -29,10 +30,10 @@ class RealmCustomizationLocalRepository(realm: Realm) : RealmContentLocalReposit
                     .endGroup()
                     .endGroup()
         }
-        return query
+        return RxJavaBridge.toV3Flowable(query
                 .sort("customizationSetName")
                 .findAll()
                 .asFlowable()
-                .filter { it.isLoaded }
+                .filter { it.isLoaded })
     }
 }

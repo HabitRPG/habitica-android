@@ -5,9 +5,8 @@ import android.content.Intent
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
 import org.solovyev.android.checkout.*
-import java.lang.NullPointerException
+import retrofit2.Response
 import java.util.*
-import javax.annotation.Nonnull
 
 class PurchaseHandler(activity: Activity, val crashlyticsProxy: CrashlyticsProxy) {
     private val billing = HabiticaBaseApplication.getInstance(activity.applicationContext)?.billing
@@ -186,7 +185,10 @@ class PurchaseHandler(activity: Activity, val crashlyticsProxy: CrashlyticsProxy
                 }
 
                 override fun onError(response: Int, e: java.lang.Exception) {
-                    e.printStackTrace()
+                    crashlyticsProxy.logException(e)
+                    if (response == ResponseCodes.ITEM_ALREADY_OWNED) {
+                        checkIfPendingPurchases()
+                    }
                 }
             }))
         }
@@ -205,7 +207,9 @@ class PurchaseHandler(activity: Activity, val crashlyticsProxy: CrashlyticsProxy
                     })
                 }
 
-                override fun onError(response: Int, e: java.lang.Exception) { /* no-op */ }
+                override fun onError(response: Int, e: java.lang.Exception) {
+                    crashlyticsProxy.logException(e)
+                }
             }))
         }
     }

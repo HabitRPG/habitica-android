@@ -2,13 +2,12 @@ package com.habitrpg.android.habitica.ui.views.dialogs
 
 import android.content.Context
 import android.graphics.Typeface
-import android.os.Build
-import android.text.Html
 import android.util.TypedValue
 import android.view.View
 import android.widget.TextView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.DialogAchievementDetailBinding
+import com.habitrpg.android.habitica.extensions.fromHtml
 import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.Notification
@@ -25,7 +24,7 @@ class AchievementDialog(context: Context) : HabiticaAlertDialog(context) {
         setAdditionalContentView(binding.root)
     }
 
-    fun setType(type: String) {
+    fun setType(type: String, message: String?, text: String?) {
         when (type) {
             Notification.Type.ACHIEVEMENT_PARTY_UP.type -> configure(R.string.partyUpTitle, R.string.partyUpDescription, "partyUp")
             Notification.Type.ACHIEVEMENT_PARTY_ON.type -> configure(R.string.partyOnTitle, R.string.partyOnDescription, "partyOn")
@@ -41,12 +40,17 @@ class AchievementDialog(context: Context) : HabiticaAlertDialog(context) {
             "fedPet" -> configure(R.string.fedPetTitle, R.string.fedPetDescription, type)
             "purchasedEquipment" -> configure(R.string.purchasedEquipmentTitle, R.string.purchasedEquipmentDescription, type)
             Notification.Type.ACHIEVEMENT_ONBOARDING_COMPLETE.type -> configure(R.string.onboardingCompleteTitle, R.string.onboardingCompleteDescription, "onboardingComplete")
+            else -> configure(message ?: "", text ?: "", type)
         }
     }
 
     private fun configure(titleID: Int, descriptionID: Int, iconName: String) {
-        binding.titleView.text = context.getString(titleID)
-        binding.descriptionView.text = context.getString(descriptionID)
+        configure(context.getString(titleID), context.getString(descriptionID), iconName)
+    }
+
+    private fun configure(title: String, description: String, iconName: String) {
+        binding.titleView.text = title
+        binding.descriptionView.setText(description.fromHtml(), TextView.BufferType.SPANNABLE)
         DataBindingUtils.loadImage(binding.iconView, "achievement-${iconName}2x")
         if (iconName == "onboardingComplete") {
             setTitle(R.string.onboardingComplete_achievement_title)
@@ -54,12 +58,7 @@ class AchievementDialog(context: Context) : HabiticaAlertDialog(context) {
             binding.achievementWrapper.visibility = View.GONE
             binding.onboardingDoneIcon.visibility = View.VISIBLE
             binding.titleView.typeface = Typeface.DEFAULT
-            val titleText = context.getString(titleID)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                binding.titleView.setText(Html.fromHtml(titleText,  Html.FROM_HTML_MODE_LEGACY), TextView.BufferType.SPANNABLE)
-            } else {
-                binding.titleView.setText(Html.fromHtml(titleText), TextView.BufferType.SPANNABLE)
-            }
+            binding.titleView.setText(title.fromHtml(), TextView.BufferType.SPANNABLE)
         } else {
             setTitle(R.string.achievement_title)
             binding.achievementWrapper.visibility = View.VISIBLE

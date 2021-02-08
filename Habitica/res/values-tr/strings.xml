@@ -674,8 +674,6 @@
     <string name="gift_subscription_subtitle">Aşağıdan hediye etmek istediğin aboneliği seç! Bu satın alım otomatik olarak yenilenmeyecek.</string>
     <string name="server">Sunucu</string>
     <string name="gift_confirmation_title">Hediyen gönderildi!</string>
-    <string name="gift_confirmation_text_g1g1">Bir Hediye Et Bir Kazan promosyonuyla %s \'e/a %s-month Habitica aboneliği yolladın ve aynı abonelik sizin hesabınıza da uygulandı!</string>
-    <string name="gift_confirmation_text">%s \'e/a %s-month Habitica üyeliği gönderdin.</string>
     <string name="discover">Keşfet</string>
     <string name="damage_paused">Hasar Durduruldu</string>
     <string name="preference_push_important_announcements">Önemli Duyurular</string>

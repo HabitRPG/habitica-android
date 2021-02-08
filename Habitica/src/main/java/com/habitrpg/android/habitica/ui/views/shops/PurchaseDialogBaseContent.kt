@@ -1,14 +1,15 @@
 package com.habitrpg.android.habitica.ui.views.shops
 
 import android.content.Context
-import android.util.AttributeSet
+import android.widget.TextView
+import com.facebook.drawee.view.SimpleDraweeView
+import com.habitrpg.android.habitica.databinding.DialogPurchaseContentItemBinding
+import com.habitrpg.android.habitica.extensions.layoutInflater
 
-import com.habitrpg.android.habitica.R
-
-class PurchaseDialogBaseContent : PurchaseDialogContent {
-    override val viewId: Int
-        get() =  R.layout.dialog_purchase_content_item
-
-    constructor(context: Context) : super(context)
-    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
+class PurchaseDialogBaseContent(context: Context) : PurchaseDialogContent(context) {
+    val binding = DialogPurchaseContentItemBinding.inflate(context.layoutInflater, this)
+    override val imageView: SimpleDraweeView
+        get() = binding.imageView
+    override val titleTextView: TextView
+        get() = binding.titleTextView
 }

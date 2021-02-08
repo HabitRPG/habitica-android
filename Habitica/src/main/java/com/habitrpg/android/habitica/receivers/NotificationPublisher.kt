@@ -21,8 +21,7 @@ import com.habitrpg.android.habitica.helpers.TaskAlarmManager
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.MainActivity
-import io.reactivex.functions.BiFunction
-import io.reactivex.functions.Consumer
+import io.reactivex.rxjava3.functions.BiFunction
 import io.realm.RealmResults
 import java.util.*
 import javax.inject.Inject
@@ -65,7 +64,7 @@ class NotificationPublisher : BroadcastReceiver() {
         if (checkDailies) {
             taskRepository.getTasks(Task.TYPE_DAILY).firstElement().zipWith(userRepository.getUser().firstElement(), BiFunction<RealmResults<Task>, User, Pair<RealmResults<Task>, User>> { tasks, user ->
                 return@BiFunction Pair(tasks, user)
-            }).subscribe(Consumer { pair ->
+            }).subscribe({ pair ->
                 var showNotifications = false
                 for (task in pair.first) {
                     if (task?.checkIfDue() == true) {
@@ -130,9 +129,7 @@ class NotificationPublisher : BroadcastReceiver() {
                 notificationIntent, 0)
         builder.setContentIntent(intent)
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            builder.color = ContextCompat.getColor(thisContext, R.color.brand_300)
-        }
+        builder.color = ContextCompat.getColor(thisContext, R.color.brand_300)
 
         notification = builder.build()
         notification.defaults = notification.defaults or Notification.DEFAULT_LIGHTS

@@ -6,7 +6,6 @@ import androidx.preference.CheckBoxPreference
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.User
-import io.reactivex.functions.Consumer
 
 class EmailNotificationsPreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -74,7 +73,7 @@ class EmailNotificationsPreferencesFragment : BasePreferencesFragment(), SharedP
             else -> null
         }
         if (pathKey != null) {
-            compositeSubscription.add(userRepository.updateUser(user, "preferences.emailNotifications.$pathKey", sharedPreferences.getBoolean(key, false)).subscribe(Consumer {  }, RxErrorHandler.handleEmptyError()))
+            compositeSubscription.add(userRepository.updateUser("preferences.emailNotifications.$pathKey", sharedPreferences.getBoolean(key, false)).subscribe({  }, RxErrorHandler.handleEmptyError()))
         }
     }
 }

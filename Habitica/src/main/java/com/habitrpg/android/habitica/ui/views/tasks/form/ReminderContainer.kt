@@ -53,6 +53,8 @@ class ReminderContainer @JvmOverloads constructor(
             layoutTransition = animatedTransitions
         }
 
+    var firstDayOfWeek: Int? = null
+
     init {
         orientation = VERTICAL
 
@@ -61,6 +63,7 @@ class ReminderContainer @JvmOverloads constructor(
 
     private fun addReminderViewAt(index: Int, item: RemindersItem? = null) {
         val view = ReminderItemFormView(context)
+        view.firstDayOfWeek = firstDayOfWeek
         view.taskType = taskType
         item?.let {
             view.item = it

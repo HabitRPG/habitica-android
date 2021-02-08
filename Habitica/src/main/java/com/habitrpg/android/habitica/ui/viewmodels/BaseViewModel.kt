@@ -8,9 +8,8 @@ import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.User
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.functions.Consumer
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 import javax.inject.Inject
 
 abstract class BaseViewModel: ViewModel() {
@@ -40,10 +39,10 @@ abstract class BaseViewModel: ViewModel() {
     fun getUserData(): LiveData<User?> = user
 
     private fun loadUserFromLocal() {
-        disposable.add(userRepository.getUser().observeOn(AndroidSchedulers.mainThread()).subscribe(Consumer { user.value = it }, RxErrorHandler.handleEmptyError()))
+        disposable.add(userRepository.getUser().observeOn(AndroidSchedulers.mainThread()).subscribe({ user.value = it }, RxErrorHandler.handleEmptyError()))
     }
 
     fun updateUser(path: String, value: Any) {
-        disposable.add(userRepository.updateUser(getUserData().value, path, value).subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+        disposable.add(userRepository.updateUser(path, value).subscribe({ }, RxErrorHandler.handleEmptyError()))
     }
 }

@@ -1,7 +1,7 @@
 package com.habitrpg.android.habitica.executors;
 
 
-import io.reactivex.Scheduler;
+import io.reactivex.rxjava3.core.Scheduler;
 
 public interface PostExecutionThread {
     Scheduler getScheduler();

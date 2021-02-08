@@ -51,10 +51,6 @@ class ContentDeserializer : JsonDeserializer<ContentResult> {
             pet.key = petObj.getAsString("key")
             pet.text = petObj.getAsString("text")
             pet.type = petObj.getAsString("type")
-            if (pet.type == "special") {
-                pet.animal = pet.key.split("-")[0]
-                pet.color = pet.key.split("-")[1]
-            }
             if (pet.type == "premium") {
                 pet.premium = true
             }
@@ -70,10 +66,6 @@ class ContentDeserializer : JsonDeserializer<ContentResult> {
             mount.key = mountObj.getAsString("key")
             mount.text = mountObj.getAsString("text")
             mount.type = mountObj.getAsString("type")
-            if (mount.type == "special") {
-                mount.animal = mount.key.split("-")[0]
-                mount.color = mount.key.split("-")[1]
-            }
             if (mount.type == "premium") {
                 mount.premium = true
             }
@@ -104,6 +96,13 @@ class ContentDeserializer : JsonDeserializer<ContentResult> {
         }
         result.appearances = context.deserialize(obj.get("appearances"), object : TypeToken<RealmList<Customization>>() {}.type)
         result.backgrounds = context.deserialize(obj.get("backgrounds"), object : TypeToken<RealmList<Customization>>() {}.type)
+        val noBackground = Customization()
+        noBackground.customizationSet = "incentiveBackgrounds"
+        noBackground.customizationSetName = "Login Incentive"
+        noBackground.identifier = ""
+        noBackground.price = 0
+        noBackground.type = "background"
+        result.backgrounds.add(noBackground)
 
         result.faq = context.deserialize(obj.get("faq"), object : TypeToken<RealmList<FAQArticle>>() {}.type)
         deserializeTrace.stop()

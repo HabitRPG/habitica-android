@@ -9,7 +9,6 @@
   <string name="pref_reminder_picker">ตั้งเวลาแจ้งเตือน</string>
   <!--Adding tasks-->
   <string name="action_edit">แก้ไข</string>
-  <string name="action_delete">ลบ</string>
   <string name="action_cancel">ยกเลิก</string>
   <string name="login_btn">ลงชื่อเข้าใช้งาน</string>
   <string name="register_btn">สมัครสมาชิก</string>
@@ -27,7 +26,6 @@
   <string name="easy">ง่าย</string>
   <string name="medium">ปานกลาง</string>
   <string name="hard">ยาก</string>
-  <string name="frequency_daily">ทุก X วัน</string>
   <string name="monday">จันทร์</string>
   <string name="tuesday">อังคาร</string>
   <string name="wednesday">พุธ</string>
@@ -35,11 +33,8 @@
   <string name="friday">ศุกร์</string>
   <string name="saturday">เสาร์</string>
   <string name="sunday">อาทิตย์</string>
-  <string name="coming_soon">เร็วๆนี้</string>
   <string name="forgot_pw_btn">ลืมรหัสผ่าน</string>
   <string name="rewards">รางวัล</string>
-  <string name="taskform.delete.title">คุณแน่ใจแล้วใช่ไหม?</string>
-  <string name="taskform.delete.message">คุณแน่ใจที่จะลบใช่ไหม?</string>
   <string name="yes">ใช่</string>
   <string name="no">ไม่</string>
   <string name="quest">ภารกิจ</string>

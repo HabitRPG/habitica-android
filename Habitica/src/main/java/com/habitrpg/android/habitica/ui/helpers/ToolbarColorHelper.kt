@@ -16,14 +16,14 @@ limitations under the License.
 package com.habitrpg.android.habitica.ui.helpers
 
 import android.app.Activity
+import android.graphics.Color
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.os.Build
 import android.view.View
-import android.view.ViewGroup
-import android.view.ViewTreeObserver
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.widget.ImageButton
+import android.widget.TextView
 import androidx.appcompat.view.menu.ActionMenuItemView
 import androidx.appcompat.widget.ActionMenuView
 import androidx.appcompat.widget.Toolbar
@@ -40,19 +40,21 @@ import java.util.*
 object ToolbarColorHelper {
     /**
      * Use this method to colorize toolbar icons to the desired target color
-     * @param toolbarView toolbar view being colored
-     * @param toolbarIconsColor the target color of toolbar icons
+     * @param toolbar toolbar view being colored
      * @param activity reference to activity needed to register observers
      */
     fun colorizeToolbar(toolbar: Toolbar, activity: Activity?, overrideModernHeader: Boolean? = null) {
         if (activity == null) return
         val modernHeaderStyle = overrideModernHeader ?: PreferenceManager.getDefaultSharedPreferences(activity).getBoolean("modern_header_style", true)
-        val toolbarIconsColor = if (modernHeaderStyle && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        val toolbarIconsColor = if (modernHeaderStyle) {
             toolbar.setBackgroundColor(activity.getThemeColor(R.attr.headerBackgroundColor))
             activity.getThemeColor(R.attr.headerTextColor)
         } else {
             toolbar.setBackgroundColor(activity.getThemeColor(R.attr.colorPrimary))
             activity.getThemeColor(R.attr.toolbarContentColor)
+        }
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            activity.window.statusBarColor = activity.getThemeColor(R.attr.colorPrimaryDark)
         }
         val colorFilter = PorterDuffColorFilter(toolbarIconsColor, PorterDuff.Mode.MULTIPLY)
         for (i in 0 until toolbar.childCount) {
@@ -62,8 +64,7 @@ object ToolbarColorHelper {
             if (v is ImageButton) {
                 //Action Bar back button
                 v.drawable.colorFilter = colorFilter
-            }
-            if (v is ActionMenuView) {
+            } else if (v is ActionMenuView) {
                 for (j in 0 until v.childCount) {
 
                     //Step 2: Changing the color of any ActionMenuViews - icons that are not back button, nor text, nor overflow menu icon.
@@ -72,15 +73,16 @@ object ToolbarColorHelper {
                     if (innerView is ActionMenuItemView) {
                         innerView.setTextColor(toolbarIconsColor)
                         for (k in innerView.compoundDrawables.indices) {
-                            if (innerView.compoundDrawables[k] != null) {
-
-                                //Important to set the color filter in seperate thread, by adding it to the message queue
-                                //Won't work otherwise.
-                                innerView.post { innerView.compoundDrawables[k].colorFilter = colorFilter }
+                            innerView.post {
+                                if (innerView.compoundDrawables[k] != null) {
+                                    innerView.compoundDrawables[k].colorFilter = colorFilter
+                                }
                             }
                         }
                     }
                 }
+            } else if (v is TextView) {
+                v.setTextColor(toolbarIconsColor)
             }
         }
 

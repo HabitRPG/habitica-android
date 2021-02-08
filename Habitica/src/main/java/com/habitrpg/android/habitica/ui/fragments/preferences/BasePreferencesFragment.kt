@@ -7,8 +7,7 @@ import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.modules.AppModule
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.functions.Consumer
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -28,7 +27,7 @@ abstract class BasePreferencesFragment : PreferenceFragmentCompat() {
 
         val userID = preferenceManager.sharedPreferences.getString(context?.getString(R.string.SP_userID), null)
         if (userID != null) {
-            compositeSubscription.add(userRepository.getUser(userID).subscribe(Consumer { this.setUser(it) }, RxErrorHandler.handleEmptyError()))
+            compositeSubscription.add(userRepository.getUser(userID).subscribe({ this.setUser(it) }, RxErrorHandler.handleEmptyError()))
         }
     }
 

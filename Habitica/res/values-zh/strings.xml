@@ -372,9 +372,6 @@
     <string name="subscribe_prompt_thanks">成为订阅者你会得到这些好处</string>
     <string name="subscription_status">订阅状态</string>
     <string name="challenge_leave_title">放弃挑战</string>
-    <string name="challenge_leave_text">你是否确定想放弃这个挑战“%s”？</string>
-    <string name="challenge_remove_tasks_title">删除任务</string>
-    <string name="challenge_remove_tasks_text">你确定要删除这个任务吗？</string>
     <string name="remove_tasks">删除</string>
     <string name="keep_tasks">保留</string>
     <string name="my_challenges">我的挑战</string>
@@ -674,8 +671,6 @@
     <string name="send_gift">赠送礼物</string>
     <string name="server">服务器</string>
     <string name="gift_confirmation_title">你的礼物已送出！</string>
-    <string name="gift_confirmation_text_g1g1">你赠送了 %s 长达 %s-月的Habitica会员，同样时长的会员已经发放到你的账户，这是我们的买一送一促销活动！</string>
-    <string name="gift_confirmation_text">你赠送了 %s 长达 %s-月的Habitica 会员。</string>
     <string name="discover">探索</string>
     <string name="damage_paused">暂停伤害</string>
     <string name="preference_push_important_announcements">重要通知</string>
@@ -893,7 +888,6 @@
     <string name="unlock_previous">完成副本“%d”来解锁</string>
     <string name="unlock_level">升到%d级来解锁</string>
     <string name="unlock_previous_short">完成副本“%d”</string>
-    <string name="unlock_level_short">%d级</string>
     <string name="not_participating">你没有参加这个副本</string>
     <string name="quest_completed">副本已完成！</string>
     <string name="empty_title_rewards_filtered">没有奖励</string>

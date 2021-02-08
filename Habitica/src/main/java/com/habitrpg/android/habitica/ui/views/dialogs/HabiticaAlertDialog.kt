@@ -3,7 +3,6 @@ package com.habitrpg.android.habitica.ui.views.dialogs
 import android.app.Activity
 import android.content.Context
 import android.text.method.ScrollingMovementMethod
-import android.util.Log
 import android.view.*
 import android.view.animation.AccelerateInterpolator
 import android.widget.*
@@ -14,21 +13,33 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.extensions.layoutInflater
-import com.habitrpg.android.habitica.extensions.setScaledPadding
+import com.habitrpg.android.habitica.helpers.MainNavigationController
+import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengesOverviewFragmentDirections
+import com.habitrpg.android.habitica.ui.views.login.LockableScrollView
 import com.plattysoft.leonids.ParticleSystem
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.lang.ref.WeakReference
-
 
 
 open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.HabiticaAlertDialogTheme) {
 
+    var buttonAxis: Int = LinearLayout.VERTICAL
+    set(value) {
+        field = value
+        updateButtonLayout()
+    }
     var isCelebratory: Boolean = false
     private val view: RelativeLayout = LayoutInflater.from(context).inflate(R.layout.dialog_habitica_base, null) as RelativeLayout
+    private val dialogWrapper: LinearLayout
     private val dialogContainer: LinearLayout
     private var titleTextView: TextView
     private var messageTextView: TextView
     internal var contentView: FrameLayout
     private var scrollingSeparator: View
+    internal var scrollView: LockableScrollView
     private var buttonsWrapper: LinearLayout
     private var noticeTextView: TextView
     private var closeButton: Button
@@ -50,13 +61,23 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
         updateButtonLayout()
     }
 
+    var dialogWidth = 320
+    set(value) {
+        field = value
+        val layoutParams = dialogWrapper.layoutParams
+        layoutParams.width = value
+        dialogWrapper.layoutParams = layoutParams
+    }
+
     init {
         setView(view)
+        dialogWrapper = view.findViewById(R.id.dialog_wrapper)
         dialogContainer = view.findViewById(R.id.dialog_container)
         titleTextView = view.findViewById(R.id.titleTextView)
         messageTextView = view.findViewById(R.id.messageTextView)
         contentView = view.findViewById(R.id.content_view)
         scrollingSeparator = view.findViewById(R.id.scrolling_separator)
+        scrollView = view.findViewById(R.id.main_scroll_view)
         buttonsWrapper = view.findViewById(R.id.buttons_wrapper)
         noticeTextView = view.findViewById(R.id.notice_text_view)
         closeButton = view.findViewById(R.id.close_button)
@@ -136,7 +157,7 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
     }
 
     private fun updateButtonLayout() {
-        if (isScrollingLayout) {
+        if (isScrollingLayout || buttonAxis == LinearLayout.HORIZONTAL) {
             scrollingSeparator.visibility = View.VISIBLE
             buttonsWrapper.orientation = LinearLayout.HORIZONTAL
             val padding = 16.dpToPx(context)
@@ -156,8 +177,8 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
 
     fun getContentView(): View? = additionalContentView
 
-    fun addButton(stringRes: Int, isPrimary: Boolean, isDestructive: Boolean = false, function: ((HabiticaAlertDialog, Int) -> Unit)? = null): Button {
-        return addButton(context.getString(stringRes), isPrimary, isDestructive, true, function)
+    fun addButton(stringRes: Int, isPrimary: Boolean, isDestructive: Boolean = false, autoDismiss: Boolean = true, function: ((HabiticaAlertDialog, Int) -> Unit)? = null): Button {
+        return addButton(context.getString(stringRes), isPrimary, isDestructive, autoDismiss, function)
     }
 
     fun addButton(string: String, isPrimary: Boolean, isDestructive: Boolean = false, autoDismiss: Boolean = true, function: ((HabiticaAlertDialog, Int) -> Unit)? = null): Button {
@@ -170,19 +191,17 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
         } else {
             val button = buttonsWrapper.inflate(R.layout.dialog_habitica_secondary_button) as? Button
             if (isDestructive) {
-                button?.setTextColor(ContextCompat.getColor(context, R.color.red_100))
+                button?.setTextColor(ContextCompat.getColor(context, R.color.text_red))
             }
             button
         } ?: Button(context)
         button.text = string
-        button.minWidth = 147.dpToPx(context)
-        button.setScaledPadding(context, 20, 0, 20, 0)
         return addButton(button, autoDismiss, function) as Button
     }
 
 
     fun addButton(buttonView: View, autoDismiss: Boolean = true, function: ((HabiticaAlertDialog, Int) -> Unit)? = null): View {
-        val weakThis = WeakReference<HabiticaAlertDialog>(this)
+        val weakThis = WeakReference(this)
         val buttonIndex = buttonsWrapper.childCount
         buttonView.setOnClickListener {
             weakThis.get()?.let { it1 ->
@@ -201,11 +220,11 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
 
     private fun configureButtonLayoutParams(buttonView: View) {
         val layoutParams = if (isScrollingLayout) {
-            val params = LinearLayout.LayoutParams(0, 38.dpToPx(context))
+            val params = LinearLayout.LayoutParams(0, 48.dpToPx(context))
             params.weight = 1f
             params
         } else {
-            LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, 38.dpToPx(context))
+            LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, 48.dpToPx(context))
         }
         buttonView.layoutParams = layoutParams
         buttonView.elevation = 10f
@@ -234,19 +253,19 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
         if (isCelebratory) {
             titleTextView.post {
                 val confettiContainer = view.findViewById<RelativeLayout>(R.id.confetti_container)
-                ParticleSystem(confettiContainer, 40, context.getDrawable(R.drawable.confetti_blue), 3000)
+                ParticleSystem(confettiContainer, 40, ContextCompat.getDrawable(context, R.drawable.confetti_blue), 3000)
                         .setAcceleration(0.00013f, 90)
                         .setRotationSpeed(144f)
                         .setSpeedByComponentsRange(-0.15f, 0.15f, -0.1f, -0.5f)
                         .setFadeOut(200, AccelerateInterpolator())
                         .emitWithGravity(titleTextView, Gravity.BOTTOM, 10, 2000)
-                ParticleSystem(confettiContainer, 40, context.getDrawable(R.drawable.confetti_red), 3000)
+                ParticleSystem(confettiContainer, 40, ContextCompat.getDrawable(context, R.drawable.confetti_red), 3000)
                         .setAcceleration(0.00013f, 90)
                         .setRotationSpeed(144f)
                         .setSpeedByComponentsRange(-0.15f, 0.15f, -0.1f, -0.5f)
                         .setFadeOut(200, AccelerateInterpolator())
                         .emitWithGravity(titleTextView, Gravity.BOTTOM, 10, 2000)
-                ParticleSystem(confettiContainer, 40, context.getDrawable(R.drawable.confetti_green), 3000)
+                ParticleSystem(confettiContainer, 40, ContextCompat.getDrawable(context, R.drawable.confetti_green), 3000)
                         .setAcceleration(0.00013f, 90)
                         .setRotationSpeed(144f)
                         .setSpeedByComponentsRange(-0.15f, 0.15f, -0.1f, -0.5f)
@@ -266,8 +285,11 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
                 dialogQueue.removeAt(0)
             }
             if (dialogQueue.size > 0) {
-                if ((dialogQueue[0].context as? Activity) == null || (dialogQueue[0].context as? Activity)?.isFinishing == false) {
-                    dialogQueue[0].show()
+                if ((dialogQueue[0].context as? Activity)?.isFinishing != true) {
+                    GlobalScope.launch(context = Dispatchers.Main) {
+                        delay(500L)
+                        dialogQueue[0].show()
+                    }
                 }
             }
         }

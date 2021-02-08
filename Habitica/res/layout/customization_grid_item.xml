@@ -11,7 +11,7 @@
         android:id="@+id/wrapper"
         android:layout_width="76dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/layout_rounded_bg_gray_700"
+        android:background="@drawable/layout_rounded_bg_window"
         android:orientation="vertical"
         android:layout_gravity="center">
 
@@ -20,6 +20,7 @@
             android:layout_width="60dp"
             android:layout_height="76dp"
             android:layout_gravity="start"
+            app:roundedCornerRadius="6dp"
             android:scaleType="fitEnd" />
         <FrameLayout
             android:id="@+id/buy_button"
@@ -30,10 +31,9 @@
                         android:id="@+id/price_label"
                         android:layout_width="wrap_content"
                         android:layout_height="32dp"
-                        android:textColor="@color/gray_300"
+                        android:textColor="@color/text_quad"
                         tools:text="150"
                         style="@style/Body1"
-                        app:hasLightBackground="true"
                         android:textSize="15sp"
                         android:layout_gravity="center" />
         </FrameLayout>

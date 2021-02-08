@@ -4,36 +4,41 @@ import android.app.Activity
 import android.appwidget.AppWidgetManager
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.TaskRepository
+import com.habitrpg.android.habitica.databinding.WidgetConfigureHabitButtonBinding
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.adapter.SkillTasksRecyclerViewAdapter
-import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.widget.HabitButtonWidgetProvider
-import io.reactivex.functions.Consumer
 import javax.inject.Inject
 import javax.inject.Named
 
 class HabitButtonWidgetActivity : BaseActivity() {
+
+    private lateinit var binding: WidgetConfigureHabitButtonBinding
 
     @Inject
     lateinit var taskRepository: TaskRepository
     @field:[Inject Named(AppModule.NAMED_USER_ID)]
     lateinit var userId: String
 
-    internal val recyclerView: RecyclerView by bindView(R.id.recyclerView)
     private var widgetId: Int = 0
     private var adapter: SkillTasksRecyclerViewAdapter? = null
 
     override fun getLayoutResId(): Int {
         return R.layout.widget_configure_habit_button
+    }
+
+    override fun getContentView(): View {
+        binding = WidgetConfigureHabitButtonBinding.inflate(layoutInflater)
+        return binding.root
     }
 
     override fun injectActivity(component: UserComponent?) {
@@ -55,21 +60,21 @@ class HabitButtonWidgetActivity : BaseActivity() {
             finish()
         }
 
-        var layoutManager: LinearLayoutManager? = recyclerView.layoutManager as? LinearLayoutManager
+        var layoutManager: LinearLayoutManager? = binding.recyclerView.layoutManager as? LinearLayoutManager
 
         if (layoutManager == null) {
             layoutManager = LinearLayoutManager(this)
 
-            recyclerView.layoutManager = layoutManager
+            binding.recyclerView.layoutManager = layoutManager
         }
 
-        adapter = SkillTasksRecyclerViewAdapter(null, true)
-        adapter?.getTaskSelectionEvents()?.subscribe(Consumer { task -> taskSelected(task.id) },
+        adapter = SkillTasksRecyclerViewAdapter()
+        adapter?.getTaskSelectionEvents()?.subscribe({ task -> taskSelected(task.id) },
                 RxErrorHandler.handleEmptyError())
                 ?.let { compositeSubscription.add(it) }
-        recyclerView.adapter = adapter
+        binding.recyclerView.adapter = adapter
 
-        compositeSubscription.add(taskRepository.getTasks(Task.TYPE_HABIT, userId).firstElement().subscribe(Consumer { adapter?.updateData(it) }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(taskRepository.getTasks(Task.TYPE_HABIT, userId).subscribe({ adapter?.data = it }, RxErrorHandler.handleEmptyError()))
     }
 
     private fun taskSelected(taskId: String?) {

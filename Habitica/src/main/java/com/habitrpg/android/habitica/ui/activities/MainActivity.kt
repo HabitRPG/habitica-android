@@ -13,7 +13,6 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.os.Build
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import android.view.*
 import android.widget.FrameLayout
@@ -22,11 +21,9 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.content.FileProvider
 import androidx.core.content.edit
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.NavController
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
 import com.facebook.drawee.view.SimpleDraweeView
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.perf.FirebasePerformance
@@ -36,12 +33,11 @@ import com.habitrpg.android.habitica.api.HostConfig
 import com.habitrpg.android.habitica.api.MaintenanceApiService
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.*
+import com.habitrpg.android.habitica.data.local.UserQuestStatus
 import com.habitrpg.android.habitica.databinding.ActivityMainBinding
 import com.habitrpg.android.habitica.events.*
 import com.habitrpg.android.habitica.events.commands.FeedCommand
-import com.habitrpg.android.habitica.extensions.dpToPx
-import com.habitrpg.android.habitica.extensions.getThemeColor
-import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
+import com.habitrpg.android.habitica.extensions.*
 import com.habitrpg.android.habitica.helpers.*
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
 import com.habitrpg.android.habitica.interactors.CheckClassSelectionUseCase
@@ -51,6 +47,7 @@ import com.habitrpg.android.habitica.models.Notification
 import com.habitrpg.android.habitica.models.TutorialStep
 import com.habitrpg.android.habitica.models.inventory.Egg
 import com.habitrpg.android.habitica.models.inventory.HatchingPotion
+import com.habitrpg.android.habitica.models.notifications.ChallengeWonData
 import com.habitrpg.android.habitica.models.notifications.LoginIncentiveData
 import com.habitrpg.android.habitica.models.responses.MaintenanceResponse
 import com.habitrpg.android.habitica.models.responses.TaskScoringResult
@@ -67,22 +64,23 @@ import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.SnackbarDisplayType
 import com.habitrpg.android.habitica.ui.views.ValueBar
-import com.habitrpg.android.habitica.ui.views.dialogs.AchievementDialog
-import com.habitrpg.android.habitica.ui.views.dialogs.FirstDropDialog
-import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
-import com.habitrpg.android.habitica.ui.views.dialogs.QuestCompletedDialog
+import com.habitrpg.android.habitica.ui.views.dialogs.*
 import com.habitrpg.android.habitica.ui.views.yesterdailies.YesterdailyDialog
 import com.habitrpg.android.habitica.userpicture.BitmapUtils
 import com.habitrpg.android.habitica.widget.AvatarStatsWidgetProvider
 import com.habitrpg.android.habitica.widget.DailiesWidgetProvider
 import com.habitrpg.android.habitica.widget.HabitButtonWidgetProvider
 import com.habitrpg.android.habitica.widget.TodoListWidgetProvider
-import io.reactivex.Completable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.functions.Action
-import io.reactivex.functions.Consumer
-import io.reactivex.schedulers.Schedulers
-import io.realm.Realm
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.functions.Consumer
+import io.reactivex.rxjava3.schedulers.Schedulers
+import io.realm.kotlin.isValid
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import java.util.*
@@ -140,9 +138,8 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     private var drawerFragment: NavigationDrawerFragment? = null
     var drawerToggle: ActionBarDrawerToggle? = null
     private var resumeFromActivity = false
-    private var userIsOnQuest = false
-
-    private var connectionIssueHandler: Handler? = null
+    private var userQuestStatus = UserQuestStatus.NO_QUEST
+    private var lastNotificationOpen: Long? = null
 
     val userID: String
         get() = user?.id ?: ""
@@ -162,7 +159,6 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
     private var launchTrace: com.google.firebase.perf.metrics.Trace? = null
 
-    @SuppressLint("ObsoleteSdkInt")
     public override fun onCreate(savedInstanceState: Bundle?) {
         try {
             launchTrace = FirebasePerformance.getInstance().newTrace("MainActivityLaunch")
@@ -184,16 +180,15 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         sideAvatarView = AvatarView(this, showBackground = true, showMount = false, showPet = false)
 
         compositeSubscription.add(userRepository.getUser()
-                .subscribe(Consumer { newUser ->
+                .subscribe({ newUser ->
                     this@MainActivity.user = newUser
                     this@MainActivity.setUserData()
                 }, RxErrorHandler.handleEmptyError()))
-        compositeSubscription.add(userRepository.getIsUserOnQuest().subscribeWithErrorHandler(Consumer {
-            userIsOnQuest = it
-        }))
+        compositeSubscription.add(userRepository.getUserQuestStatus().subscribeWithErrorHandler {
+            userQuestStatus = it
+        })
 
-        val viewModel = ViewModelProviders.of(this)
-                .get(NotificationsViewModel::class.java)
+        val viewModel = ViewModelProvider(this).get(NotificationsViewModel::class.java)
         notificationsViewModel = viewModel
 
         val drawerLayout = findViewById<DrawerLayout>(R.id.drawer_layout)
@@ -204,7 +199,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
         drawerToggle = object : ActionBarDrawerToggle(
                 this, /* host Activity */
-                findViewById(R.id.drawer_layout), /* DrawerLayout object */
+                drawerLayout, /* DrawerLayout object */
                 R.string.navigation_drawer_open, /* "open drawer" description */
                 R.string.navigation_drawer_close  /* "close drawer" description */
         ) {}
@@ -216,33 +211,32 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
             override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
                 val modernHeaderStyle = sharedPreferences.getBoolean("modern_header_style", true)
-                if (modernHeaderStyle && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (!isUsingNightModeResources() && modernHeaderStyle) {
                     if (slideOffset < 0.5f && isOpeningDrawer == null) {
-                        window.statusBarColor = getThemeColor(R.attr.colorPrimaryDark)
-                        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE
+                        window.updateStatusBarColor(getThemeColor(R.attr.colorPrimaryDark), false)
                         isOpeningDrawer = true
                     } else if (slideOffset > 0.5f && isOpeningDrawer == null) {
-                        window.statusBarColor = getThemeColor(R.attr.headerBackgroundColor)
-                        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+                        window.updateStatusBarColor(getThemeColor(R.attr.headerBackgroundColor), true)
                         isOpeningDrawer = false
                     }
                 }
             }
 
             override fun onDrawerOpened(drawerView: View) {
+                hideKeyboard()
                 val modernHeaderStyle = sharedPreferences.getBoolean("modern_header_style", true)
-                if (modernHeaderStyle && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    window.statusBarColor = getThemeColor(R.attr.colorPrimaryDark)
-                    window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE
+                if (!isUsingNightModeResources() && modernHeaderStyle) {
+                    window.updateStatusBarColor(getThemeColor(R.attr.colorPrimaryDark), false)
                 }
                 isOpeningDrawer = null
+
+                drawerFragment?.updatePromo()
             }
 
             override fun onDrawerClosed(drawerView: View) {
                 val modernHeaderStyle = sharedPreferences.getBoolean("modern_header_style", true)
-                if (modernHeaderStyle && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    window.statusBarColor = getThemeColor(R.attr.headerBackgroundColor)
-                    window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+                if (!isUsingNightModeResources() && modernHeaderStyle) {
+                    window.updateStatusBarColor(getThemeColor(R.attr.headerBackgroundColor), true)
                 }
                 isOpeningDrawer = null
             }
@@ -257,10 +251,9 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
         val navigationController = findNavController(R.id.nav_host_fragment)
         navigationController.addOnDestinationChangedListener { _, destination, arguments ->
+            hideKeyboard()
             updateToolbarTitle(destination, arguments)
         }
-        MainNavigationController.setup(navigationController)
-
         setupNotifications()
         setupBottomnavigationLayoutListener()
 
@@ -271,18 +264,29 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         }
     }
 
+    override fun setTitle(title: CharSequence?) {
+        binding.toolbarTitle.text = title
+    }
+
+    override fun setTitle(titleId: Int) {
+        binding.toolbarTitle.text = getString(titleId)
+    }
+
     private fun updateToolbarTitle(destination: NavDestination, arguments: Bundle?) {
-        binding.toolbarTitle.text = if (destination.id == R.id.petDetailRecyclerFragment || destination.id == R.id.mountDetailRecyclerFragment) {
+        title = if (destination.id == R.id.promoInfoFragment) {
+            ""
+        } else if (destination.id == R.id.petDetailRecyclerFragment || destination.id == R.id.mountDetailRecyclerFragment) {
             arguments?.getString("type")
         } else if (destination.label.isNullOrEmpty() && user?.isValid == true) {
             user?.profile?.name
-        } else if (user?.isValid == true && user?.profile != null) {
+        } else if (destination.label != null) {
             destination.label
         } else {
             ""
         }
         if (destination.id == R.id.petDetailRecyclerFragment || destination.id == R.id.mountDetailRecyclerFragment) {
-            compositeSubscription.add(inventoryRepository.getItem("egg", arguments?.getString("type") ?: "").firstElement().subscribe(Consumer {
+            compositeSubscription.add(inventoryRepository.getItem("egg", arguments?.getString("type") ?: "").firstElement().subscribe({
+                if (!it.isValid()) return@subscribe
                 binding.toolbarTitle.text = if (destination.id == R.id.petDetailRecyclerFragment) {
                     (it as? Egg)?.text
                 } else {
@@ -294,6 +298,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     }
 
     override fun onSupportNavigateUp(): Boolean {
+        hideKeyboard()
         onBackPressed()
         return true
     }
@@ -349,6 +354,9 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     override fun onResume() {
         super.onResume()
 
+        val navigationController = findNavController(R.id.nav_host_fragment)
+        MainNavigationController.setup(navigationController)
+
         if(!resumeFromActivity){
             retrieveUser()
             this.checkMaintenance()
@@ -361,16 +369,23 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
             putBoolean("preventDailyReminder", false)
         }
 
-        if (intent.hasExtra("notificationIdentifier")) {
+        if (intent.hasExtra("notificationIdentifier") && lastNotificationOpen != intent.getLongExtra("notificationTimeStamp", 0)) {
+            lastNotificationOpen = intent.getLongExtra("notificationTimeStamp", 0)
             val identifier = intent.getStringExtra("notificationIdentifier") ?: ""
             val additionalData = HashMap<String, Any>()
             additionalData["identifier"] = identifier
             AmplitudeManager.sendEvent("open notification", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT, additionalData)
+            retrieveUser(true)
             NotificationOpenHandler.handleOpenedByNotification(identifier, intent, user)
         }
 
         launchTrace?.stop()
         launchTrace = null
+
+
+        if (binding.toolbarTitle.text?.isNotBlank() != true) {
+            navigationController.currentDestination?.let { updateToolbarTitle(it, null) }
+        }
     }
 
     override fun onPause() {
@@ -422,28 +437,33 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
             displayDeathDialogIfNeeded()
             YesterdailyDialog.showDialogIfNeeded(this, user?.id, userRepository, taskRepository)
 
-            if (user?.flags?.isVerifiedUsername == false && isActivityVisible) {
+            if (user?.flags?.verifiedUsername == false && isActivityVisible) {
                 val intent = Intent(this, VerifyUsernameActivity::class.java)
                 startActivity(intent)
             }
 
             val quest = user?.party?.quest
             if (quest?.completed?.isNotBlank() == true) {
-                compositeSubscription.add(inventoryRepository.getQuestContent(user?.party?.quest?.completed ?: "").firstElement().subscribe(Consumer {
+                compositeSubscription.add(inventoryRepository.getQuestContent(user?.party?.quest?.completed ?: "").firstElement().subscribe({
                     QuestCompletedDialog.showWithQuest(this, it)
 
-                    userRepository.updateUser(user, "party.quest.completed", "").subscribe(Consumer {}, RxErrorHandler.handleEmptyError())
+                    userRepository.updateUser("party.quest.completed", "").subscribe({}, RxErrorHandler.handleEmptyError())
                 }, RxErrorHandler.handleEmptyError()))
             }
 
             if (user?.flags?.welcomed == false) {
-                compositeSubscription.add(userRepository.updateUser(user, "flags.welcomed", true).subscribe(Consumer {}, RxErrorHandler.handleEmptyError()))
+                compositeSubscription.add(userRepository.updateUser("flags.welcomed", true).subscribe({}, RxErrorHandler.handleEmptyError()))
             }
 
             if (appConfigManager.enableAdventureGuide()) {
                 drawerIcon.setEnabled(user?.hasCompletedOnboarding == false)
             } else {
                 drawerIcon.setEnabled(false)
+            }
+
+            val navigationController = findNavController(R.id.nav_host_fragment)
+            if (binding.toolbarTitle.text?.isNotBlank() != true) {
+                navigationController.currentDestination?.let { updateToolbarTitle(it, null) }
             }
         }
     }
@@ -506,7 +526,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         }
         val pet = event.usingPet
         compositeSubscription.add(this.inventoryRepository.feedPet(event.usingPet, event.usingFood)
-                .subscribe(Consumer { feedResponse ->
+                .subscribe({ feedResponse ->
                     HabiticaSnackbar.showSnackbar(snackbarContainer, feedResponse.message, SnackbarDisplayType.NORMAL)
                     if (feedResponse.value == -1) {
                         val mountWrapper = View.inflate(this, R.layout.pet_imageview, null) as? FrameLayout
@@ -538,13 +558,21 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
     internal fun displayTaskScoringResponse(data: TaskScoringResult?) {
         if (user != null && data != null) {
+            val damageValue = when (userQuestStatus) {
+                UserQuestStatus.QUEST_BOSS -> data.questDamage
+                else -> 0.0
+            }
             compositeSubscription.add(notifyUserUseCase.observable(NotifyUserUseCase.RequestValues(this, snackbarContainer,
-                    user, data.experienceDelta, data.healthDelta, data.goldDelta, data.manaDelta, if (userIsOnQuest) data.questDamage else 0.0, data.hasLeveledUp))
-                    .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+                    user, data.experienceDelta, data.healthDelta, data.goldDelta, data.manaDelta, damageValue, data.hasLeveledUp, data.level))
+                    .subscribe({ }, RxErrorHandler.handleEmptyError()))
         }
 
-        compositeSubscription.add(displayItemDropUseCase.observable(DisplayItemDropUseCase.RequestValues(data, this, snackbarContainer))
-                .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+        val showItemsFound = when (userQuestStatus) {
+            UserQuestStatus.QUEST_COLLECT -> true
+            else -> false
+        }
+        compositeSubscription.add(displayItemDropUseCase.observable(DisplayItemDropUseCase.RequestValues(data, this, snackbarContainer, showItemsFound))
+                .subscribe({ }, RxErrorHandler.handleEmptyError()))
     }
 
 
@@ -572,7 +600,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
             faintDialog?.addButton(R.string.faint_button, true) { _, _ ->
                         faintDialog = null
                         user?.let {
-                            userRepository.revive(it).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+                            userRepository.revive(it).subscribe({ }, RxErrorHandler.handleEmptyError())
                         }
                     }
             soundManager.loadAndPlayAudio(SoundManager.SoundDeath)
@@ -599,9 +627,10 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                         pushNotificationManager.setUser(user1)
                         pushNotificationManager.addPushDeviceUsingStoredToken()
                     }
+                    .flatMap { userRepository.retrieveTeamPlans() }
                     .flatMap { contentRepository.retrieveContent(this,false) }
-                    .flatMap { contentRepository.retrieveWorldState() }
-                    .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+                    .flatMap { contentRepository.retrieveWorldState(this) }
+                    .subscribe({ }, RxErrorHandler.handleEmptyError()))
         }
     }
 
@@ -638,11 +667,8 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     }
 
     override fun onTutorialCompleted(step: TutorialStep) {
-        val path = "flags.tutorial." + step.tutorialGroup + "." + step.identifier
-        val updateData = HashMap<String, Any>()
-        updateData[path] = true
-        compositeSubscription.add(userRepository.updateUser(user, updateData)
-                .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(userRepository.updateUser("flags.tutorial." + step.tutorialGroup + "." + step.identifier, true)
+                .subscribe({ }, RxErrorHandler.handleEmptyError()))
         binding.overlayFrameLayout.removeView(this.activeTutorialView)
         this.removeActiveTutorialView()
 
@@ -654,7 +680,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     }
 
     override fun onTutorialDeferred(step: TutorialStep) {
-        taskRepository.executeTransaction(Realm.Transaction { step.displayedOn = Date() })
+        taskRepository.modify(step) { it.displayedOn = Date() }
         this.removeActiveTutorialView()
     }
 
@@ -671,7 +697,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         sharingIntent.type = "*/*"
         sharingIntent.putExtra(Intent.EXTRA_TEXT, event.sharedMessage)
         BitmapUtils.clearDirectoryContent("$filesDir/shared_images")
-        val f = BitmapUtils.saveToShareableFile("$filesDir/shared_images", "${Date().toString()}.png", event.shareImage)
+        val f = BitmapUtils.saveToShareableFile("$filesDir/shared_images", "${Date()}.png", event.shareImage)
         val fileUri = f?.let { FileProvider.getUriForFile(this, getString(R.string.content_provider), it) }
         if (fileUri != null) {
             sharingIntent.putExtra(Intent.EXTRA_STREAM, fileUri)
@@ -757,13 +783,13 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
         compositeSubscription.add(Completable.complete()
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(Action {
+                .subscribe({
                     val alert = HabiticaAlertDialog(this)
                     alert.setAdditionalContentView(view)
                     alert.setTitle(title)
                     alert.addButton(R.string.see_you_tomorrow, true) { _, _ ->
                         apiClient.readNotification(event.notification.id)
-                                .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+                                .subscribe({ }, RxErrorHandler.handleEmptyError())
                     }
                     alert.show()
                 }, RxErrorHandler.handleEmptyError()))
@@ -773,40 +799,54 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     fun showAchievementDialog(event: ShowAchievementDialog) {
         if (User.ONBOARDING_ACHIEVEMENT_KEYS.contains(event.type) || event.type == Notification.Type.ACHIEVEMENT_ONBOARDING_COMPLETE.type) {
             if (!appConfigManager.enableAdventureGuide()) {
-                apiClient.readNotification(event.id)
-                        .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+                compositeSubscription.add(apiClient.readNotification(event.id)
+                        .subscribe({ }, RxErrorHandler.handleEmptyError()))
                 return
             }
         }
         compositeSubscription.add(Completable.complete()
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(Action {
+                .subscribe({
                     retrieveUser(true)
                     val dialog = AchievementDialog(this)
                     dialog.isLastOnboardingAchievement = event.isLastOnboardingAchievement
-                    dialog.setType(event.type)
+                    dialog.setType(event.type, event.message, event.text)
                     dialog.enqueue()
                     apiClient.readNotification(event.id)
-                            .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+                            .subscribe({ }, RxErrorHandler.handleEmptyError())
                 }, RxErrorHandler.handleEmptyError()))
     }
 
     @Subscribe
     fun showFirstDropDialog(event: ShowFirstDropDialog) {
         if (!appConfigManager.enableAdventureGuide()) {
-            apiClient.readNotification(event.id)
-                    .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+            compositeSubscription.add(apiClient.readNotification(event.id)
+                    .subscribe({ }, RxErrorHandler.handleEmptyError()))
             return
         }
         compositeSubscription.add(Completable.complete()
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(Action {
+                .subscribe({
                     retrieveUser(true)
                     val dialog = FirstDropDialog(this)
                     dialog.configure(event.egg, event.hatchingPotion)
                     dialog.enqueue()
                     apiClient.readNotification(event.id)
-                            .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+                            .subscribe({ }, RxErrorHandler.handleEmptyError())
+                }, RxErrorHandler.handleEmptyError()))
+    }
+
+    @Subscribe
+    fun showWonAchievementDialog(event: ShowWonChallengeDialog) {
+        compositeSubscription.add(Completable.complete()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    retrieveUser(true)
+                    val dialog = WonChallengeDialog(this)
+                    dialog.configure(event.data)
+                    dialog.enqueue()
+                    apiClient.readNotification(event.id)
+                            .subscribe({ }, RxErrorHandler.handleEmptyError())
                 }, RxErrorHandler.handleEmptyError()))
     }
 
@@ -814,13 +854,13 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         if (event.title != null) {
             super.onEvent(event)
         } else {
-            connectionIssueHandler?.removeCallbacksAndMessages(null)
             binding.connectionIssueTextview.visibility = View.VISIBLE
             binding.connectionIssueTextview.text = event.message
-            connectionIssueHandler = Handler()
-            connectionIssueHandler?.postDelayed({
-                binding.connectionIssueTextview.visibility = View.GONE
-            }, 5000)
+            compositeSubscription.add(Observable.just("")
+                    .delay(500, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
+                    .subscribe( {
+                        binding.connectionIssueTextview.visibility = View.GONE
+                    }, {}))
         }
     }
 
@@ -829,7 +869,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
             val petWrapper = View.inflate(this, R.layout.pet_imageview, null) as? FrameLayout
             val petImageView = petWrapper?.findViewById(R.id.pet_imageview) as? SimpleDraweeView
 
-            DataBindingUtils.loadImage(petImageView, "social_Pet-" + egg.key + "-" + potion.key)
+            DataBindingUtils.loadImage(petImageView, "stable_Pet-" + egg.key + "-" + potion.key)
             val potionName = potion.text
             val eggName = egg.text
             val dialog = HabiticaAlertDialog(this)
@@ -837,7 +877,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
             dialog.setAdditionalContentView(petWrapper)
             dialog.addButton(R.string.equip, true) { _, _ ->
                 inventoryRepository.equip(user, "pet", egg.key + "-" + potion.key)
-                        .subscribe(Consumer {}, RxErrorHandler.handleEmptyError())
+                        .subscribe({}, RxErrorHandler.handleEmptyError())
             }
             dialog.addButton(R.string.share, false) { hatchingDialog, _ ->
                 val event1 = ShareEvent()
@@ -853,12 +893,12 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
             }
             dialog.setExtraCloseButtonVisibility(View.VISIBLE)
             dialog.enqueue()
-        }.subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+        }.subscribe({ }, RxErrorHandler.handleEmptyError()))
     }
 
     @Subscribe
     fun onConsumablePurchased(event: ConsumablePurchasedEvent) {
-        userRepository.retrieveUser(false, true).subscribe(Consumer {}, RxErrorHandler.handleEmptyError())
+        compositeSubscription.add(userRepository.retrieveUser(withTasks = false, forced = true).subscribe({}, RxErrorHandler.handleEmptyError()))
     }
 
     companion object {

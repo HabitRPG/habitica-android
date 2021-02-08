@@ -342,9 +342,6 @@
     <string name="subscribe_prompt_thanks">You get these benefits for being a Subscriber</string>
     <string name="subscription_status">Subscription Status</string>
     <string name="challenge_leave_title">Leave Challenge</string>
-    <string name="challenge_leave_text">Are you sure you want to leave the Challenge “%s”?</string>
-    <string name="challenge_remove_tasks_title">Remove tasks</string>
-    <string name="challenge_remove_tasks_text">Do you want to remove the tasks?</string>
     <string name="remove_tasks">Remove</string>
     <string name="keep_tasks">Keep</string>
     <string name="my_challenges">My Challenges</string>
@@ -390,9 +387,9 @@
     <string name="completed">Completed</string>
     <string name="setuP_group_other">Other</string>
     <string name="clear">Clear</string>
-    <string name="empty_title_habits">You don&amp;rsquo;t have any Habits</string>
-    <string name="empty_description_habits">Habits are tasks that don&amp;rsquo;t have a rigid schedule. You can check them off many times a day, or not at all.</string>
-    <string name="empty_title_dailies">You don&amp;rsquo;t have any Dailies</string>
+    <string name="empty_title_habits">You don\'t have any Habits</string>
+    <string name="empty_description_habits">Habits are tasks that don\'t have a rigid schedule. You can check them off many times a day, or not at all.</string>
+    <string name="empty_title_dailies">You don\'t have any Dailies</string>
     <string name="empty_description_dailies">Dailies are tasks that repeat on a regular basis. Choose the schedule that works for you!</string>
     <string name="empty_title_todos">You don\'t have any To Do\'s</string>
     <string name="empty_description_todos">To Do\'s are tasks that only need to be completed once. Add checklists to your To Do\'s to increase their value.</string>
@@ -675,8 +672,6 @@
     <string name="send_gift">Send Gift</string>
     <string name="server">Server</string>
     <string name="gift_confirmation_title">Your gift was sent!</string>
-    <string name="gift_confirmation_text_g1g1">You sent %s a %s-month Habitica subscription and the same subscription was applied to your account for our Gift One Get One promotion!</string>
-    <string name="gift_confirmation_text">You sent %s a %s-month Habitica subscription.</string>
     <string name="discover">Discover</string>
     <string name="damage_paused">Damage paused</string>
     <string name="preference_push_important_announcements">Important Announcements</string>
@@ -763,7 +758,7 @@
     <string name="keep_challenges">Keep Challenges</string>
     <string name="inviteFriendDescription">You invited a friend (or friends) who joined you on your adventure!</string>
     <string name="inviteFriendTitle">Invited a Friend</string>
-    <string name="joinedChallengeDescription">You put themselves to the test by joining a Challenge!</string>
+    <string name="joinedChallengeDescription">You put yourself to the test by joining a Challenge!</string>
     <string name="joinedChallengeTitle">Joined a Challenge</string>
     <string name="joinedGuildDescription">Ventured into the social side of Habitica by joining a Guild!</string>
     <string name="joinedGuildTitle">Joined a Guild</string>
@@ -882,7 +877,6 @@
     <string name="unlock_previous">Unlock by finishing Quest %d</string>
     <string name="unlock_level">Unlock by reaching level %d</string>
     <string name="unlock_previous_short">Finish Quest %d</string>
-    <string name="unlock_level_short">Level %d</string>
     <string name="not_participating">You are not participating</string>
     <string name="quest_completed">Quest completed!</string>
     <string name="gift_confirmation_text_gems">You sent %s some gems.</string>
@@ -922,7 +916,7 @@
     <string name="remaining_1month">1 month remaining</string>
     <string name="ago_weeks">%dw ago</string>
     <string name="ago_1week">1w ago</string>
-    <string name="ago_months">%d month ago</string>
+    <string name="ago_months">%d months ago</string>
     <string name="ago_1month">1 month ago</string>
     <string name="skill_progress_title">Using Skill</string>
     <string name="authentication_error_body">Your Username and/or Password was incorrect.</string>

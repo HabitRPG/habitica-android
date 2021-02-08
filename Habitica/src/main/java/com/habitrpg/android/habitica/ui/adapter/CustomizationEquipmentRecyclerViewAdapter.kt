@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
@@ -16,9 +17,9 @@ import com.habitrpg.android.habitica.models.inventory.Equipment
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
-import io.reactivex.BackpressureStrategy
-import io.reactivex.Flowable
-import io.reactivex.subjects.PublishSubject
+import io.reactivex.rxjava3.core.BackpressureStrategy
+import io.reactivex.rxjava3.core.Flowable
+import io.reactivex.rxjava3.subjects.PublishSubject
 import java.util.*
 
 class CustomizationEquipmentRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
@@ -107,9 +108,9 @@ class CustomizationEquipmentRecyclerViewAdapter : androidx.recyclerview.widget.R
             }
 
             if (activeEquipment == equipment.key || (activeEquipment?.contains("base_0") == true && equipment.key?.isNotBlank() != true)) {
-                binding.wrapper.background = itemView.context.getDrawable(R.drawable.layout_rounded_bg_gray_700_brand_border)
+                binding.wrapper.background = ContextCompat.getDrawable(itemView.context, R.drawable.layout_rounded_bg_window_tint_border)
             } else {
-                binding.wrapper.background = itemView.context.getDrawable(R.drawable.layout_rounded_bg_gray_700)
+                binding.wrapper.background = ContextCompat.getDrawable(itemView.context, R.drawable.layout_rounded_bg_window)
             }
         }
 

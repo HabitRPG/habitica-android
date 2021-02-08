@@ -1,17 +1,15 @@
 package com.habitrpg.android.habitica.ui.adapter.inventory
 
 import android.view.ViewGroup
-import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.models.inventory.*
 import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.OwnedMount
 import com.habitrpg.android.habitica.models.user.OwnedPet
 import com.habitrpg.android.habitica.ui.viewHolders.PetViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.SectionViewHolder
-import io.reactivex.BackpressureStrategy
-import io.reactivex.Flowable
-import io.reactivex.subjects.PublishSubject
+import io.reactivex.rxjava3.core.BackpressureStrategy
+import io.reactivex.rxjava3.core.Flowable
+import io.reactivex.rxjava3.subjects.PublishSubject
 import io.realm.RealmResults
 
 class PetDetailRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
@@ -33,7 +31,7 @@ class PetDetailRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapt
         return equipEvents.toFlowable(BackpressureStrategy.DROP)
     }
 
-    var animalIngredientsRetriever: ((Animal) -> Pair<Egg?, HatchingPotion?>)? = null
+    var animalIngredientsRetriever: ((Animal, ((Pair<Egg?, HatchingPotion?>) -> Unit)) -> Unit)? = null
 
     private fun canRaiseToMount(pet: Pet): Boolean {
         for (mount in existingMounts ?: emptyList<Mount>()) {
@@ -98,12 +96,7 @@ class PetDetailRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapt
 
     fun setOwnedItems(ownedItems: Map<String, OwnedItem>) {
         this.ownedItems = ownedItems
-        ownsSaddles = ownedItems.containsKey("Saddle-food")
-        notifyDataSetChanged()
-    }
-
-    fun setOwnsSaddles(ownsSaddles: Boolean) {
-        this.ownsSaddles = ownsSaddles
+        ownsSaddles = if (ownedItems.containsKey("Saddle-food")) (ownedItems["Saddle-food"]?.numberOwned ?: 0)> 0 else false
         notifyDataSetChanged()
     }
 }

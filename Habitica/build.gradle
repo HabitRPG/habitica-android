@@ -16,7 +16,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.0.1'
+        classpath 'com.android.tools.build:gradle:4.1.1'
         classpath('com.noveogroup.android:check:1.2.5') {
             exclude module: 'checkstyle'
             exclude module: 'pmd-java'
@@ -42,60 +42,56 @@ repositories {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     //Networking
-    implementation 'com.squareup.okhttp3:okhttp:3.14.6'
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.14.6'
+    implementation 'com.squareup.okhttp3:okhttp:4.9.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.0'
     //REST API handling
-    implementation('com.squareup.retrofit2:retrofit:2.7.1') {
+    implementation('com.squareup.retrofit2:retrofit:2.9.0') {
         exclude module: 'okhttp'
     }
-    implementation 'com.squareup.retrofit2:converter-gson:2.7.1'
-    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.7.1'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava3:2.9.0'
     //Crash Logging
-    implementation 'com.google.firebase:firebase-crashlytics:17.2.1'
+    implementation 'com.google.firebase:firebase-crashlytics:17.3.0'
 
     //Dependency Injection
-    implementation 'com.google.dagger:dagger:2.27'
-    kapt 'com.google.dagger:dagger-compiler:2.25.4'
+    implementation 'com.google.dagger:dagger:2.31.2'
+    kapt 'com.google.dagger:dagger-compiler:2.31.2'
     compileOnly 'javax.annotation:javax.annotation-api:1.3.2'
     compileOnly 'com.github.pengrad:jdk9-deps:1.0'
     //App Compatibility and Material Design
     implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'com.google.android.material:material:1.2.1'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'androidx.legacy:legacy-preference-v14:1.0.0'
-    // Emojis
-    implementation 'com.github.viirus:emoji-lib:0.0.5'
     // Markdown
-    implementation "io.noties.markwon:core:4.2.0"
-    implementation "io.noties.markwon:ext-strikethrough:4.2.0"
-    implementation "io.noties.markwon:image:4.2.0"
-    implementation "io.noties.markwon:recycler:4.2.0"
-    implementation "io.noties.markwon:html:4.2.0"
-    // About View for all dependent Libraries, we are using
-    implementation('com.mikepenz:aboutlibraries:5.9.4@aar') {
-        transitive = true
-    }
+    implementation "io.noties.markwon:core:4.6.1"
+    implementation "io.noties.markwon:ext-strikethrough:4.6.1"
+    implementation "io.noties.markwon:image:4.6.1"
+    implementation "io.noties.markwon:recycler:4.6.1"
+    implementation "io.noties.markwon:html:4.6.1"
     //Eventbus
-    implementation 'org.greenrobot:eventbus:3.1.1'
+    implementation 'org.greenrobot:eventbus:3.2.0'
     // IAP Handling / Verification
-    implementation 'org.solovyev.android:checkout:1.2.1'
+    implementation 'org.solovyev.android:checkout:1.2.2'
     //Facebook
-    implementation('com.facebook.android:facebook-android-sdk:4.40.0') {
+    implementation('com.facebook.android:facebook-android-sdk:8.1.0') {
         transitive = true
     }
     implementation 'fr.avianey.com.viewpagerindicator:library:2.4.1@aar'
     //RxJava
-    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
-    implementation 'io.reactivex.rxjava2:rxjava:2.2.17'
-    implementation 'io.reactivex.rxjava2:rxkotlin:2.4.0'
+    implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
+    implementation 'io.reactivex.rxjava3:rxjava:3.0.9'
+    implementation 'io.reactivex.rxjava3:rxkotlin:3.0.1'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.19'
+    implementation "com.github.akarnokd:rxjava3-bridge:3.0.0"
 
     //Analytics
-    implementation 'com.amplitude:android-sdk:2.23.2'
+    implementation 'com.amplitude:android-sdk:2.30.0'
     // Fresco Image Management Library
-    implementation('com.facebook.fresco:fresco:2.0.0') {
+    implementation('com.facebook.fresco:fresco:2.4.0') {
         exclude module: 'bolts-android'
     }
-    implementation('com.facebook.fresco:animated-gif:2.0.0') {
+    implementation('com.facebook.fresco:animated-gif:2.4.0') {
         exclude module: 'bolts-android'
     }
     //Tests
@@ -112,30 +108,27 @@ dependencies {
     testImplementation 'org.powermock:powermock-module-junit4-rule:1.7.0'
     testImplementation 'org.powermock:powermock-module-junit4:1.7.0'
     //Leak Detection
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.2'
-    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.2'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.5'
     //Push Notifications
-    implementation 'com.google.firebase:firebase-core:17.5.0'
-    implementation 'com.google.firebase:firebase-messaging:20.2.4'
-    implementation 'com.google.firebase:firebase-config:19.2.0'
-    implementation 'com.google.firebase:firebase-perf:19.0.8'
-    implementation 'com.google.android.gms:play-services-auth:18.1.0'
-    implementation 'io.realm:android-adapters:3.1.0'
+    implementation 'com.google.firebase:firebase-core:18.0.1'
+    implementation 'com.google.firebase:firebase-messaging:21.0.1'
+    implementation 'com.google.firebase:firebase-config:20.0.2'
+    implementation 'com.google.firebase:firebase-perf:19.1.0'
+    implementation 'com.google.android.gms:play-services-auth:19.0.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.multidex:multidex:2.0.1'
     implementation 'com.nex3z:flow-layout:1.2.2'
 
-    implementation 'androidx.core:core-ktx:1.3.1'
+    implementation 'androidx.core:core-ktx:1.3.2'
     implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
     implementation "androidx.lifecycle:lifecycle-common-java8:2.2.0"
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.0'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.3.0'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.2'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.3.2'
     implementation "androidx.paging:paging-runtime-ktx:2.1.2"
     implementation 'com.plattysoft.leonids:LeonidsLib:1.3.2'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.3'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.3'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.2'
 
-    implementation 'com.willowtreeapps:signinwithapplebutton:0.2'
+    implementation 'com.willowtreeapps:signinwithapplebutton:0.3'
 
     implementation project(':shared')
 }
@@ -155,23 +148,18 @@ android {
         vectorDrawables.useSupportLibrary = true
         buildConfigField "String", "STORE", "\"google\""
         buildConfigField "String", "TESTING_LEVEL", "\"production\""
-        multiDexEnabled true
         resConfigs "en", "bg", "de", "en-rGB", "es", "fr", "hr-rHR", "in", "it", "iw", "ja", "ko", "lt", "nl", "pl", "pt-rBR", "pt-rPT", "ru", "tr", "zh", "zh-rTW"
 
-        versionCode 2519
-        versionName "2.8"
+        versionCode 2695
+        versionName "3.2"
     }
 
-    viewBinding {
-        enabled = true
+    buildFeatures {
+        viewBinding true
     }
 
     lintOptions {
         abortOnError false
-    }
-
-    viewBinding {
-        enabled true
     }
 
     signingConfigs {
@@ -183,7 +171,6 @@ android {
         debug {
             applicationIdSuffix ".debug"
             debuggable true
-            multiDexEnabled true
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             // Disable fabric build ID generation for debug builds
@@ -195,7 +182,6 @@ android {
         release {
             signingConfig signingConfigs.release
             debuggable false
-            multiDexEnabled true
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -269,6 +255,11 @@ android {
         disable 'MissingTranslation','InvalidPackage'
         enable 'LogConditional','IconExpectedSize','MissingRegistered','TypographyQuotes'
     }
+}
+
+androidExtensions {
+    features = ['parcelize']
+    experimental = true
 }
 
 Properties props = new Properties()

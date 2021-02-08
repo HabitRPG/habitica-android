@@ -5,81 +5,69 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
-import com.habitrpg.android.habitica.extensions.inflate
+import com.habitrpg.android.habitica.databinding.FragmentSetupTasksBinding
 import com.habitrpg.android.habitica.models.tasks.Days
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.user.User
-import com.habitrpg.android.habitica.ui.AvatarView
-import com.habitrpg.android.habitica.ui.SpeechBubbleView
 import com.habitrpg.android.habitica.ui.activities.SetupActivity
 import com.habitrpg.android.habitica.ui.adapter.setup.TaskSetupAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
-import com.habitrpg.android.habitica.ui.helpers.bindOptionalView
-import com.habitrpg.android.habitica.ui.helpers.resetViews
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import java.util.*
 
-class TaskSetupFragment : BaseFragment() {
-
+class TaskSetupFragment : BaseFragment<FragmentSetupTasksBinding>() {
 
     var activity: SetupActivity? = null
     var width: Int = 0
-    private val recyclerView: RecyclerView? by bindOptionalView(R.id.recyclerView)
-    private val avatarView: AvatarView? by bindOptionalView(R.id.avatarView)
-    private val speechBubbleView: SpeechBubbleView? by bindOptionalView(R.id.speech_bubble)
-    private val heartView: ImageView? by bindOptionalView(R.id.heart_icon)
+
+    override var binding: FragmentSetupTasksBinding? = null
+
+    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentSetupTasksBinding {
+        return FragmentSetupTasksBinding.inflate(inflater, container, false)
+    }
+
     internal var adapter: TaskSetupAdapter = TaskSetupAdapter()
     private var taskGroups: List<List<String>> = listOf()
     private var tasks: List<List<Any>> = listOf()
     private var user: User? = null
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        super.onCreateView(inflater, container, savedInstanceState)
-
-        return container?.inflate(R.layout.fragment_setup_tasks)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        resetViews()
 
         this.setTasks()
 
         this.adapter = TaskSetupAdapter()
         this.adapter.setTaskList(this.taskGroups)
-        this.recyclerView?.layoutManager = GridLayoutManager(activity, 2)
-        this.recyclerView?.adapter = this.adapter
+        binding?.recyclerView?.layoutManager = GridLayoutManager(activity, 2)
+        binding?.recyclerView?.adapter = this.adapter
 
         if (this.user != null) {
             this.updateAvatar()
         }
 
-        heartView?.setImageDrawable(BitmapDrawable(HabiticaIconsHelper.imageOfHeartLightBg()))
+        binding?.heartIcon?.setImageDrawable(BitmapDrawable(HabiticaIconsHelper.imageOfHeartLightBg()))
     }
 
-    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
-        super.setUserVisibleHint(isVisibleToUser)
-        if (isVisibleToUser && context != null) {
-            speechBubbleView?.animateText(context?.getString(R.string.task_setup_description) ?: "")
+    override fun onResume() {
+        super.onResume()
+        if (context != null) {
+            binding?.speechBubble?.animateText(context?.getString(R.string.task_setup_description) ?: "")
         }
     }
 
     fun setUser(user: User?) {
         this.user = user
-        if (avatarView != null) {
+        if (binding?.avatarView != null) {
             updateAvatar()
         }
     }
 
     private fun updateAvatar() {
         user?.let {
-            avatarView?.setAvatar(it)
+            binding?.avatarView?.setAvatar(it)
         }
     }
 

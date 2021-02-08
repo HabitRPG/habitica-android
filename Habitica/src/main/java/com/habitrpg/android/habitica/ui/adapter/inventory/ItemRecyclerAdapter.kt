@@ -12,22 +12,22 @@ import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.models.inventory.*
 import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.OwnedPet
+import com.habitrpg.android.habitica.ui.adapter.BaseRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemRecyclerFragment
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.menu.BottomSheetMenu
 import com.habitrpg.android.habitica.ui.menu.BottomSheetMenuItem
 import com.habitrpg.android.habitica.ui.views.dialogs.DetailDialog
-import io.reactivex.BackpressureStrategy
-import io.reactivex.Flowable
-import io.reactivex.subjects.PublishSubject
+import io.reactivex.rxjava3.core.BackpressureStrategy
+import io.reactivex.rxjava3.core.Flowable
+import io.reactivex.rxjava3.subjects.PublishSubject
 import io.realm.OrderedRealmCollection
-import io.realm.RealmRecyclerViewAdapter
 import io.realm.RealmResults
 import org.greenrobot.eventbus.EventBus
 import java.text.SimpleDateFormat
 import java.util.*
 
-class ItemRecyclerAdapter(data: OrderedRealmCollection<OwnedItem>?, autoUpdate: Boolean, val context: Context) : RealmRecyclerViewAdapter<OwnedItem, ItemRecyclerAdapter.ItemViewHolder>(data, autoUpdate) {
+class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<OwnedItem, ItemRecyclerAdapter.ItemViewHolder>() {
 
     var isHatching: Boolean = false
     var isFeeding: Boolean = false
@@ -59,18 +59,16 @@ class ItemRecyclerAdapter(data: OrderedRealmCollection<OwnedItem>?, autoUpdate: 
         return openMysteryItemEvents.toFlowable(BackpressureStrategy.DROP)
     }
 
-    val startHatchingEvents = startHatchingSubject.toFlowable(BackpressureStrategy.DROP)
-    val hatchPetEvents = hatchPetSubject.toFlowable(BackpressureStrategy.DROP)
+    val startHatchingEvents: Flowable<Item> = startHatchingSubject.toFlowable(BackpressureStrategy.DROP)
+    val hatchPetEvents: Flowable<Pair<HatchingPotion, Egg>> = hatchPetSubject.toFlowable(BackpressureStrategy.DROP)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
-        return ItemViewHolder(ItemItemBinding.inflate(context?.layoutInflater, parent, false))
+        return ItemViewHolder(ItemItemBinding.inflate(context.layoutInflater, parent, false))
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        data?.let {
-            val ownedItem = it[position]
-            holder.bind(ownedItem, items?.get(ownedItem.key))
-        }
+        val ownedItem = data[position]
+        holder.bind(ownedItem, items?.get(ownedItem.key))
     }
 
     fun setExistingPets(pets: RealmResults<Pet>) {
@@ -84,7 +82,7 @@ class ItemRecyclerAdapter(data: OrderedRealmCollection<OwnedItem>?, autoUpdate: 
     }
 
     inner class ItemViewHolder(val binding: ItemItemBinding) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
-        var ownedItem: OwnedItem? = null
+        private var ownedItem: OwnedItem? = null
         var item: Item? = null
 
         var resources: Resources = itemView.resources
@@ -107,25 +105,25 @@ class ItemRecyclerAdapter(data: OrderedRealmCollection<OwnedItem>?, autoUpdate: 
         fun bind(ownedItem: OwnedItem, item: Item?) {
             this.ownedItem = ownedItem
             this.item = item
-            binding.titleTextView.text = item?.text
+            binding.titleTextView.text = item?.text ?: ownedItem.key
             binding.ownedTextView.text = ownedItem.numberOwned.toString()
 
             var disabled = false
             val imageName: String?
             if (item is QuestContent) {
-                imageName = "inventory_quest_scroll_" + item.getKey()
+                imageName = "inventory_quest_scroll_" + ownedItem.key
             } else if (item is SpecialItem) {
                 val sdf = SimpleDateFormat("MM", Locale.getDefault())
                 val month = sdf.format(Date())
                 imageName = "inventory_present_$month"
             } else {
-                val type = when (item) {
-                    is Egg -> "Egg"
-                    is Food -> "Food"
-                    is HatchingPotion -> "HatchingPotion"
+                val type = when (ownedItem.itemType) {
+                    "eggs" -> "Egg"
+                    "food" -> "Food"
+                    "hatchingPotions" -> "HatchingPotion"
                     else -> ""
                 }
-                imageName = "Pet_" + type + "_" + item?.key
+                imageName = "Pet_" + type + "_" + ownedItem.key
 
                 if (isHatching) {
                     disabled = !this.canHatch
@@ -143,7 +141,7 @@ class ItemRecyclerAdapter(data: OrderedRealmCollection<OwnedItem>?, autoUpdate: 
         }
 
         override fun onClick(v: View) {
-            val context = context ?: return
+            val context = context
             if (!isHatching && !isFeeding) {
                 val menu = BottomSheetMenu(context)
                 if (item !is QuestContent && item !is SpecialItem) {

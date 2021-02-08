@@ -4,22 +4,23 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.extensions.inflate
+import com.habitrpg.android.habitica.models.TeamPlan
 import com.habitrpg.android.habitica.models.promotions.HabiticaPromotion
-import com.habitrpg.android.habitica.ui.helpers.bindOptionalView
+import com.habitrpg.android.habitica.ui.fragments.NavigationDrawerFragment
 import com.habitrpg.android.habitica.ui.menu.HabiticaDrawerItem
-import com.habitrpg.android.habitica.ui.viewHolders.GiftOneGetOnePromoMenuView
 import com.habitrpg.android.habitica.ui.views.adventureGuide.AdventureGuideMenuBanner
 import com.habitrpg.android.habitica.ui.views.promo.PromoMenuView
 import com.habitrpg.android.habitica.ui.views.promo.PromoMenuViewHolder
 import com.habitrpg.android.habitica.ui.views.promo.SubscriptionBuyGemsPromoView
 import com.habitrpg.android.habitica.ui.views.promo.SubscriptionBuyGemsPromoViewHolder
-import io.reactivex.BackpressureStrategy
-import io.reactivex.Flowable
-import io.reactivex.subjects.PublishSubject
+import io.reactivex.rxjava3.core.BackpressureStrategy
+import io.reactivex.rxjava3.core.Flowable
+import io.reactivex.rxjava3.subjects.PublishSubject
 
 
 class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -50,13 +51,9 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int): Recycle
 
     fun getItemSelectionEvents(): Flowable<HabiticaDrawerItem> = itemSelectedEvents.toFlowable(BackpressureStrategy.DROP)
 
-    fun getItemWithTransitionId(transitionId: Int): HabiticaDrawerItem? =
-            items.find { it.transitionId == transitionId }
     fun getItemWithIdentifier(identifier: String): HabiticaDrawerItem? =
             items.find { it.identifier == identifier }
 
-    private fun getItemPosition(transitionId: Int): Int =
-            items.indexOfFirst { it.transitionId == transitionId }
     private fun getItemPosition(identifier: String): Int =
             items.indexOfFirst { it.identifier == identifier }
 
@@ -69,6 +66,30 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int): Recycle
     fun updateItems(newItems: List<HabiticaDrawerItem>) {
         items.clear()
         items.addAll(newItems)
+        notifyDataSetChanged()
+    }
+
+    fun setTeams(teams: List<TeamPlan>) {
+        var teamHeaderIndex = -1
+        var nextHeaderIndex = -1
+        for ((index, item) in items.withIndex()) {
+            if (teamHeaderIndex != -1 && item.isHeader) {
+                nextHeaderIndex = index
+                break
+            } else if (item.identifier == NavigationDrawerFragment.SIDEBAR_TEAMS) {
+                teamHeaderIndex = index
+            }
+        }
+        if (teamHeaderIndex != -1 && nextHeaderIndex != -1) {
+            for (x in nextHeaderIndex-1 downTo teamHeaderIndex+1) {
+                items.removeAt(x)
+            }
+            for ((index, team) in teams.withIndex()) {
+                val item = HabiticaDrawerItem(R.id.teamBoardFragment, team.id, team.summary)
+                item.bundle = bundleOf(Pair("teamID", team.id))
+                items.add(teamHeaderIndex + index + 1, item)
+            }
+        }
         notifyDataSetChanged()
     }
 
@@ -120,14 +141,6 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int): Recycle
                 )
                 SubscriptionBuyGemsPromoViewHolder(itemView)
             }
-            3 -> {
-                val itemView = GiftOneGetOnePromoMenuView(parent.context)
-                itemView.layoutParams = ViewGroup.LayoutParams(
-                        ViewGroup.LayoutParams.MATCH_PARENT,
-                        148.dpToPx(parent.context)
-                )
-                SubscriptionBuyGemsPromoViewHolder(itemView)
-            }
             4 -> {
                 val itemView = AdventureGuideMenuBanner(parent.context)
                 itemView.layoutParams = ViewGroup.LayoutParams(
@@ -154,20 +167,21 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int): Recycle
         var tintColor: Int = 0
         var backgroundTintColor: Int = 0
 
-        private val titleTextView: TextView? by bindOptionalView(itemView, R.id.titleTextView)
-        private val pillView: TextView? by bindOptionalView(itemView, R.id.pillView)
-        private val bubbleView: View? by bindOptionalView(itemView, R.id.bubble_view)
-        private val additionalInfoView: TextView? by bindOptionalView(itemView, R.id.additionalInfoView)
+        private val titleTextView: TextView? = itemView.findViewById(R.id.titleTextView)
+        private val pillView: TextView? = itemView.findViewById(R.id.pillView)
+        private val bubbleView: View? = itemView.findViewById(R.id.bubble_view)
+        private val additionalInfoView: TextView? = itemView.findViewById(R.id.additionalInfoView)
 
         fun bind(drawerItem: HabiticaDrawerItem, isSelected: Boolean) {
             titleTextView?.text = drawerItem.text
 
             if (isSelected) {
-                itemView.setBackgroundColor(ContextCompat.getColor(itemView.context, R.color.gray_600))
+                itemView.setBackgroundColor(ContextCompat.getColor(itemView.context, R.color.content_background_offset))
+                itemView.background.alpha = 69
                 titleTextView?.setTextColor(tintColor)
             } else {
-                itemView.setBackgroundColor(ContextCompat.getColor(itemView.context, R.color.white))
-                titleTextView?.setTextColor(ContextCompat.getColor(itemView.context, R.color.gray_10))
+                itemView.setBackgroundColor(ContextCompat.getColor(itemView.context, R.color.content_background))
+                titleTextView?.setTextColor(ContextCompat.getColor(itemView.context, R.color.text_primary))
             }
 
             if (drawerItem.pillText != null) {

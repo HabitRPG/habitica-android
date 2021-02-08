@@ -340,14 +340,11 @@
     <string name="subscribe_listitem1_description">您將可以從市場上以每枚20金幣的價格購買寶石！</string>
     <string name="subscribe_listitem2_description">獲得神秘沙漏在時空穿越者的商店購買物品！</string>
     <string name="subscribe_listitem3_description">現在訂閱，可以得到贈品，和每月得到新的物品！</string>
-    <string name="subscribe_listitem4.description">雙倍掉落讓你每天能夠從完成的任務中得到更多的物品，幫助你更快地馴服坐騎！</string>
     <string name="subscription_hourglasses">%d 個神秘沙漏</string>
     <string name="payment_method">付款方式</string>
     <string name="subscription">訂閱</string>
     <string name="active">活躍的</string>
     <string name="cancel_subscription">取消訂閱</string>
-    <string name="cancel_subscription_google.description">想要取消訂閱嗎？你可以在 Google Play 裡的「我的應用程式」取消訂閱。</string>
-    <string name="cancel_subscription_notgoogle.description">想要取消訂閱嗎？由於你的支付方式，你只能在網站上取消訂閱，點擊下方的按鈕以打開網頁！</string>
     <string name="visit_habitica_website">查訪 Habitica 官方網站</string>
     <string name="current_bonuses">現在的加成獎勵</string>
     <string name="months_subscribed">月訂閱</string>
@@ -363,9 +360,6 @@
     <string name="subscribe_prompt_thanks">成為會員你會得到這些好處</string>
     <string name="subscription_status">訂閱狀態</string>
     <string name="challenge_leave_title">離開挑戰</string>
-    <string name="challenge_leave_text">你確認你要離開\"%s\"挑戰嗎？</string>
-    <string name="challenge_remove_tasks_title">移除任務</string>
-    <string name="challenge_remove_tasks_text">你確定要刪除這個任務嗎？</string>
     <string name="remove_tasks">刪除</string>
     <string name="keep_tasks">保留</string>
     <string name="my_challenges">我的挑戰</string>
@@ -678,8 +672,6 @@
     <string name="send_gift">贈送禮物</string>
     <string name="server">伺服器</string>
     <string name="gift_confirmation_title">你的禮物已送出！</string>
-    <string name="gift_confirmation_text_g1g1">你贈送了 %s 長達 %s 個月的 Habitica 訂閱，同樣時長的訂閱已經發放到你的帳號，這是我們的買一送一促銷活動！</string>
-    <string name="gift_confirmation_text">你贈送了%s長達 %s 個月的 Habitica 訂閱。</string>
     <string name="discover">探索</string>
     <string name="damage_paused">暫停傷害</string>
     <string name="preference_push_important_announcements">重要公告</string>
@@ -739,7 +731,6 @@
     <string name="unlock_previous">完成副本“%d”來解鎖</string>
     <string name="unlock_level">升到%d級來解鎖</string>
     <string name="unlock_previous_short">完成副本“%d”</string>
-    <string name="unlock_level_short">%d級</string>
     <string name="quest_completed">副本已完成！</string>
     <string name="not_participating">你沒有參加這個副本</string>
     <string name="login_incentive_short">定期登錄Habitica</string>

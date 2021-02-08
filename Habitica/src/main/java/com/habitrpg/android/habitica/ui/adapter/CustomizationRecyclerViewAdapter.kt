@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
@@ -17,18 +18,18 @@ import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.inventory.Customization
 import com.habitrpg.android.habitica.models.inventory.CustomizationSet
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
-import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
-import io.reactivex.BackpressureStrategy
-import io.reactivex.Flowable
-import io.reactivex.subjects.PublishSubject
+import io.reactivex.rxjava3.core.BackpressureStrategy
+import io.reactivex.rxjava3.core.Flowable
+import io.reactivex.rxjava3.subjects.PublishSubject
 import java.util.*
 
-class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
+class CustomizationRecyclerViewAdapter() : androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
 
     var userSize: String? = null
     var hairColor: String? = null
+    var customizationType: String? = null
     var gemBalance: Int = 0
     var unsortedCustomizations: List<Customization> = ArrayList()
     var customizationList: MutableList<Any> = ArrayList()
@@ -61,7 +62,11 @@ class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerVi
                     .inflate(R.layout.customization_section_header, parent, false)
             SectionViewHolder(view)
         } else {
-            val viewID: Int = R.layout.customization_grid_item
+            val viewID: Int = if (customizationType == "background") {
+                R.layout.customization_grid_background_item
+            } else {
+                R.layout.customization_grid_item
+            }
 
             val view = LayoutInflater.from(parent.context).inflate(viewID, parent, false)
             CustomizationViewHolder(view)
@@ -106,7 +111,7 @@ class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerVi
                 val set = CustomizationSet()
                 set.identifier = customization.customizationSet
                 set.text = customization.customizationSetName
-                set.price = customization.setPrice
+                set.price = customization.setPrice ?: 0
                 set.hasPurchasable = !customization.isUsable(ownedCustomiztations.contains(customization.identifier))
                 lastSet = set
                 customizationList.add(set)
@@ -143,7 +148,11 @@ class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerVi
         fun bind(customization: Customization) {
             this.customization = customization
 
-            DataBindingUtils.loadImage(binding.imageView, customization.getIconName(userSize, hairColor))
+            if (customization.type == "background" && customization.identifier == "") {
+                binding.imageView.setActualImageResource(R.drawable.no_background)
+            } else {
+                DataBindingUtils.loadImage(binding.imageView, customization.getIconName(userSize, hairColor))
+            }
 
             if (customization.type == "background") {
                 val params = (binding.imageView.layoutParams as? LinearLayout.LayoutParams)?.apply {
@@ -165,9 +174,9 @@ class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerVi
             }
 
             if (activeCustomization == customization.identifier) {
-                binding.wrapper.background = itemView.context.getDrawable(R.drawable.layout_rounded_bg_gray_700_brand_border)
+                binding.wrapper.background = ContextCompat.getDrawable(itemView.context, R.drawable.layout_rounded_bg_window_tint_border)
             } else {
-                binding.wrapper.background = itemView.context.getDrawable(R.drawable.layout_rounded_bg_gray_700)
+                binding.wrapper.background = ContextCompat.getDrawable(itemView.context, R.drawable.layout_rounded_bg_window)
             }
         }
 
@@ -177,7 +186,7 @@ class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerVi
                     val dialog = HabiticaAlertDialog(itemView.context)
                     dialog.setMessage(R.string.purchase_from_timetravel_shop)
                     dialog.addButton(R.string.go_shopping, true) { _, _ ->
-                        MainNavigationController.navigate(R.id.shopsFragment, bundleOf(Pair("selectedTab", 3)))
+                        MainNavigationController.navigate(R.id.timeTravelersShopFragment)
                     }
                     dialog.addButton(R.string.reward_dialog_dismiss, false)
                     dialog.show()
@@ -211,7 +220,7 @@ class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerVi
                 return
             }
 
-            if (customization?.identifier == activeCustomization) {
+            if (customization?.type != "background" && customization?.identifier == activeCustomization) {
                 return
             }
 
@@ -224,7 +233,6 @@ class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerVi
     internal inner class SectionViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
         private val binding = CustomizationSectionHeaderBinding.bind(itemView)
-        private val label: TextView by bindView(itemView, R.id.label)
         var context: Context = itemView.context
         private var set: CustomizationSet? = null
 
@@ -234,8 +242,8 @@ class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerVi
 
         fun bind(set: CustomizationSet) {
             this.set = set
-            this.label.text = set.text
-            if (set.hasPurchasable && !set.identifier.contains("timeTravel")) {
+            binding.label.text = set.text
+            if (set.hasPurchasable && set.identifier?.contains("timeTravel") != true) {
                 binding.purchaseSetButton.visibility = View.VISIBLE
                 binding.setPriceLabel.value = set.price.toDouble()
                 binding.setPriceLabel.currency = "gems"
@@ -260,7 +268,7 @@ class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerVi
                         customizationList
                                 .filter { Customization::class.java.isAssignableFrom(it.javaClass) }
                                 .map { it as Customization }
-                                .filter { !it.isUsable(ownedCustomiztations.contains(it.identifier)) && it.customizationSet != null && it.customizationSet == set?.identifier }
+                                .filter { it.customizationSet != null && it.customizationSet == set?.identifier }
                                 .forEach { set?.customizations?.add(it) }
                         if (additionalSetItems.isNotEmpty()) {
                             additionalSetItems

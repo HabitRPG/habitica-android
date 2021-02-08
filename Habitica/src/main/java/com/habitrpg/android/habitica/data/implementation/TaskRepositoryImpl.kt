@@ -6,17 +6,17 @@ import com.habitrpg.android.habitica.data.local.TaskLocalRepository
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.interactors.ScoreTaskLocallyInteractor
+import com.habitrpg.android.habitica.models.BaseObject
+import com.habitrpg.android.habitica.models.responses.BulkTaskScoringData
 import com.habitrpg.android.habitica.models.responses.TaskDirection
 import com.habitrpg.android.habitica.models.responses.TaskDirectionData
 import com.habitrpg.android.habitica.models.responses.TaskScoringResult
 import com.habitrpg.android.habitica.models.tasks.*
 import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.User
-import io.reactivex.Flowable
-import io.reactivex.Maybe
-import io.reactivex.Single
-import io.reactivex.functions.Consumer
-import io.realm.Realm
+import io.reactivex.rxjava3.core.Flowable
+import io.reactivex.rxjava3.core.Maybe
+import io.reactivex.rxjava3.core.Single
 import io.realm.RealmResults
 import java.text.SimpleDateFormat
 import java.util.*
@@ -36,8 +36,8 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
     override fun getCurrentUserTasks(taskType: String): Flowable<RealmResults<Task>> =
             this.localRepository.getTasks(taskType, userID)
 
-    override fun saveTasks(userId: String, order: TasksOrder, tasks: TaskList) {
-        localRepository.saveTasks(userId, order, tasks)
+    override fun saveTasks(ownerID: String, order: TasksOrder, tasks: TaskList) {
+        localRepository.saveTasks(ownerID, order, tasks)
     }
 
     override fun retrieveTasks(userId: String, tasksOrder: TasksOrder): Flowable<TaskList> {
@@ -49,9 +49,7 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
         return this.apiClient.getTasks("completedTodos")
                 .doOnNext { taskList ->
                     val tasks = taskList.tasks
-                    if (tasks != null) {
-                        this.localRepository.saveCompletedTodos(userId, tasks.values)
-                    }
+                    this.localRepository.saveCompletedTodos(userId, tasks.values)
                 }
     }
 
@@ -75,7 +73,9 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
             result.manaDelta = localData.mp - (stats?.mp ?: 0.0)
             result.goldDelta = localData.gp - (stats?.gp ?: 0.0)
             result.hasLeveledUp = localData.lvl > stats?.lvl ?: 0
+            result.level = localData.lvl
             result.questDamage = localData._tmp?.quest?.progressDelta
+            result.questItemsFound = localData._tmp?.quest?.collection
             result.drop = localData._tmp?.drop
             notifyFunc?.invoke(result)
 
@@ -107,7 +107,9 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
                     result.manaDelta = res.mp - (stats?.mp ?: 0.0)
                     result.goldDelta = res.gp - (stats?.gp ?: 0.0)
                     result.hasLeveledUp = res.lvl > stats?.lvl ?: 0
+                    result.level = res.lvl
                     result.questDamage = res._tmp?.quest?.progressDelta
+                    result.questItemsFound = res._tmp?.quest?.collection
                     result.drop = res._tmp?.drop
                     if (localData == null) {
                         notifyFunc?.invoke(result)
@@ -117,12 +119,14 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
                 }
     }
 
+    override fun bulkScoreTasks(data: List<Map<String, String>>): Flowable<BulkTaskScoringData> {
+        return apiClient.bulkScoreTasks(listOf())
+    }
+
     private fun handleTaskResponse(user: User, res: TaskDirectionData, task: Task, up: Boolean, localDelta: Float) {
-        val userID = user.id
-        val taskID = task.id
         this.localRepository.executeTransaction {
-            val bgTask = it.where(Task::class.java).equalTo("id", taskID).findFirst() ?: return@executeTransaction
-            val bgUser = it.where(User::class.java).equalTo("id", userID).findFirst() ?: return@executeTransaction
+            val bgTask = localRepository.getLiveObject(task) ?: return@executeTransaction
+            val bgUser = localRepository.getLiveObject(user) ?: return@executeTransaction
             if (bgTask.type != "reward" && (bgTask.value - localDelta) + res.delta != bgTask.value) {
                 bgTask.value = (bgTask.value - localDelta) + res.delta
                 if (Task.TYPE_DAILY == bgTask.type || Task.TYPE_TODO == bgTask.type) {
@@ -178,7 +182,7 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
                 .doOnNext { task ->
                     val updatedItem: ChecklistItem? = task.checklist?.lastOrNull { itemId == it.id }
                     if (updatedItem != null) {
-                        localRepository.executeTransaction { updatedItem.completed = !updatedItem.completed }
+                        localRepository.modify(updatedItem) { liveItem -> liveItem.completed = !liveItem.completed }
                     }
                 }
     }
@@ -260,8 +264,8 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
         localRepository.saveReminder(remindersItem)
     }
 
-    override fun executeTransaction(transaction: Realm.Transaction) {
-        localRepository.executeTransaction(transaction)
+    override fun <T: BaseObject> modify(obj: T, transaction: (T) -> Unit) {
+        localRepository.modify(obj, transaction)
     }
 
     override fun swapTaskPosition(firstPosition: Int, secondPosition: Int) {
@@ -277,11 +281,11 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
             getTask(taskid).map { localRepository.getUnmanagedCopy(it) }
 
     override fun updateTaskInBackground(task: Task) {
-        updateTask(task).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+        updateTask(task).subscribe({ }, RxErrorHandler.handleEmptyError())
     }
 
     override fun createTaskInBackground(task: Task) {
-        createTask(task).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+        createTask(task).subscribe({ }, RxErrorHandler.handleEmptyError())
     }
 
     override fun getTaskCopies(userId: String): Flowable<List<Task>> =

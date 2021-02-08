@@ -9,7 +9,6 @@ import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.User
-import io.reactivex.functions.Consumer
 import java.util.*
 
 class PushNotificationManager(var apiClient: ApiClient, private val sharedPreferences: SharedPreferences, private val context: Context) {
@@ -43,14 +42,14 @@ class PushNotificationManager(var apiClient: ApiClient, private val sharedPrefer
         val pushDeviceData = HashMap<String, String>()
         pushDeviceData["regId"] = this.refreshedToken
         pushDeviceData["type"] = "android"
-        apiClient.addPushDevice(pushDeviceData).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+        apiClient.addPushDevice(pushDeviceData).subscribe({ }, RxErrorHandler.handleEmptyError())
     }
 
     fun removePushDeviceUsingStoredToken() {
         if (this.refreshedToken.isEmpty()) {
             return
         }
-        apiClient.deletePushDevice(this.refreshedToken).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+        apiClient.deletePushDevice(this.refreshedToken).subscribe({ }, RxErrorHandler.handleEmptyError())
     }
 
     private fun userHasPushDevice(): Boolean {

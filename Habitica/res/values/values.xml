@@ -151,6 +151,18 @@
         <item>blue</item>
     </string-array>
 
+    <string-array name="AppThemeModes">
+        <item>Follow System</item>
+        <item>Always Light</item>
+        <item>Always Dark</item>
+    </string-array>
+
+    <string-array name="AppThemeModeValues">
+        <item>system</item>
+        <item>light</item>
+        <item>dark</item>
+    </string-array>
+
     <string-array name="server_urls">
         <item>https://habitica.com</item>
         <item>https://habitrpg-staging.herokuapp.com</item>
