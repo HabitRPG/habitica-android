@@ -18,8 +18,6 @@ import com.habitrpg.android.habitica.ui.viewHolders.ChatRecyclerMessageViewHolde
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.subjects.PublishSubject
-import java.time.Instant
-import java.time.ZoneId
 
 class ChatRecyclerViewAdapter(user: User?, private val isTavern: Boolean) : BaseRecyclerViewAdapter<ChatMessage, RecyclerView.ViewHolder>() {
     internal var user = user
