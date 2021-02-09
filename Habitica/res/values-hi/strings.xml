@@ -24,8 +24,4 @@
     <!--Login Incentives-->
     <string name="pref_cds_header">कस्टम दिन की शुरुआत</string>
     <string name="pref_reminder_picker">अनुस्मारक समय सेट करें</string>
-    <string name="preference_push_received_a_private_message">आपको एक निजी संदेश प्राप्त हुआ है</string>
-    <string name="preference_push_you_won_challenge">आपने एक चुनौती जीती है!</string>
-    <string name="push_notifications">सूचनाएं भेजना</string>
-    <string name="pref_push_notifications_checkbox">पुश सूचनाओं का उपयोग करें</string>
 </resources>

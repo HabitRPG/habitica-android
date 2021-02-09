@@ -1,19 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <resources>
     <string name="tutorial_skills">Atributos são habilidades especiais que têm efeitos poderosos! Toque num atributo para o usar. Este irá custar Mana (a barra azul), que ganha ao verificar e completar todos os dias as suas tarefas da vida real. Consulte as FAQs no menu para mais informação!</string>
-    <string name="tutorial_party">Isto é onde você e os seus amigos podem responsabilizar-se mutuamente para os vossos objetivos e lutar contra monstros com as vossas tarefas!</string>
-    <string name="tutorial_tavern">Bem-vindo ao Tabern, uma sala de conversação pública para todas as idades! Aqui pode conversar sobre a produtividade e colocar questões. Divirta-se!</string>
+  <string name="tutorial_party">Isto é onde você e os seus amigos podem responsabilizar-se mutuamente para os vossos objetivos e lutar contra monstros com as vossas tarefas!</string>
+  <string name="tutorial_tavern">Bem-vindo ao Tabern, uma sala de conversação pública para todas as idades! Aqui pode conversar sobre a produtividade e colocar questões. Divirta-se!</string>
     <string name="tutorial_overview">Aqui estamos! Inseri algumas tarefas para ti com base nos teus interesses. Experimenta adicionar algumas por tua conta. Podes editar qualquer tarefa ao tocar o título.</string>
     <string name="tutorial_habits_1">Primeiro os Hábitos. Podem ser Hábitos positivos que queres melhorar ou Hábitos negativos que queres deixar.</string>
     <string name="tutorial_habits_2">Sempre que realizares um hábito positivo, clica no + para receberes experiência e ouro!</string>
-    <string name="tutorial_stats">Toque no botão cinza para alocar vários de seus pontos de habilidade de uma vez ou toque nas setas para adicioná-los um de cada vez.</string>
-    <string name="tutorial_tasks_complete">É isso por agora. Se precisares de um lembrete, verifique a seção de perguntas frequentes.</string>
-    <string name="tutorial_rewards_2">Tu também podes criar recompensas personalizadas do mundo real com base no que te motiva.</string>
-    <string name="tutorial_rewards_1">Compre equipamentos para teu personagem com o ouro que ganhares!</string>
-    <string name="tutorial_todos_2">Se teu Afazer tiver que ser feito até um determinado tempo, defina limite. Parece que tu podes realizar um - vá em frente!</string>
-    <string name="tutorial_todos_1">Use To Do\'s para controlar as tarefas que você precisa fazer apenas uma vez.</string>
-    <string name="tutorial_dailies_2">Tenha cuidado - se perderes um, seu personagem sofrerá danos durante a noite. Checá-los consistentemente traz grandes recompensas!</string>
-    <string name="tutorial_dailies_1">Crie tarefas diárias para atividades urgentes que precisam ser feitas regularmente.</string>
-    <string name="tutorial_habits_4">Dê uma chance! Tu podes explorar outros tipos de tarefas por meio da navegação de baixo.</string>
-    <string name="tutorial_habits_3">Se fizeres um Hábito negativo, tocar no - reduzirá a saúde de teu personagem para ajudá-lo a se manter responsável.</string>
-</resources>
+    </resources>

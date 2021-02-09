@@ -640,8 +640,8 @@
     <string name="two_handed">雙手握持</string>
     <string name="usernamePromptTitle">是時候設置用戶名了！</string>
     <string name="usernamePromptBody">現在用戶名就是登錄名，同時用戶名還用於邀請、聊天版上@你，還有私信。</string>
-    <string name="usernamePromptWiki">如果你想了解更多關於此變動的信息，<a href="https://habitica.fandom.com/zh/wiki/%E7%8E%A9%E5%AE%B6%E5%90%8D">請看habitica中文wiki。 </a></string>
-    <string name="usernamePromptDisclaimer">用戶名應該符合我們的<a href="https://habitica.com/static/terms">使用條款</a>以及<a href="https://habitica.com/static/community-guidelines">社區準則</a>。如果你從前沒有設置登錄名，會自動為你生成一個用戶名。</string>
+    <string name="usernamePromptWiki">如果你想了解更多關於變動的信息， <a href="https://habitica.wikia.com/wiki/Player_Names">訪問我們的百科</a></string>
+    <string name="usernamePromptDisclaimer">使用者名稱必須遵守我們的<a href="https://habitica.com/static/terms">服務條款</a>和<a href="https://habitica.com/static/community-guidelines">社群守則</a>。如果您之前尚未設立登入名稱，您的使用者名稱將會被自動產生。</string>
     <string name="confirm_username_title">你確定要用這個名字嗎？</string>
     <string name="confirm_username_description">用戶名一經確認就會顯示在邀請，@提到你和私信中。你隨時都可以在設定裏修改用戶名。</string>
     <string name="cancel">取消</string>
@@ -654,7 +654,7 @@
     <string name="welcomeNameTitle">我們應該怎麽稱呼你呢？</string>
     <string name="display_name_length_error">暱稱長度必須介於 1 至 30 個字符之間</string>
     <string name="setup_task_join_habitica">加入 Habitica ( 幫我勾選掉！)</string>
-    <string name="setup_task_join_habitica_notes">你可以打勾完成這項待辦，或者編輯掉它，或者刪除它。</string>
+    <string name="setup_task_join_habitica_notes">您可以完成此待辦事項、編輯它、或刪除它。</string>
     <string name="setup_task_reward">獎勵自己</string>
     <string name="setup_task_reward_notes">看電視、玩遊戲、或者吃點東西，都取決於你！</string>
     <string name="equipment_str">力量：</string>
@@ -825,7 +825,7 @@
     <string name="guild_summary">公會概要</string>
     <string name="setup_task_habit_2_notes">或者在編輯界面刪除</string>
     <string name="setup_task_habit_2">點擊這裡來把它編輯成一個你想戒掉的壞習慣吧</string>
-    <string name="setup_task_habit_1_notes">可以是一個習慣、每日任務或待辦事項</string>
+    <string name="setup_task_habit_1_notes">習慣，每日任務或待辦事項</string>
     <string name="setup_task_habit_1">添加一個任務到Habitica裡</string>
     <string name="cost">價格</string>
     <string name="joined_guild">你加入了公會</string>
@@ -850,7 +850,7 @@
     <string name="id_copied">已將用戶ID複製到剪貼板</string>
     <string name="copy_username">複製用戶名</string>
     <string name="password_too_short">您的密碼長度至少為％d個字符</string>
-    <string name="invitation_title">%s邀請你加入他們的小組%s</string>
+    <string name="invitation_title">%s邀請你加入%s</string>
     <string name="someone">有人</string>
     <string name="authentication_methods">認證方式</string>
     <string name="local">本地</string>
@@ -999,7 +999,7 @@
     <string name="read_more">閱讀更多</string>
     <string name="purchase_amount_error">你無法購買該金額。</string>
     <string name="still_questions">還有問題嗎？</string>
-    <string name="delete_checklist_entry">刪除……</string>
+    <string name="delete_checklist_entry">刪除清單的清單條目</string>
     <string name="contact_us">聯繫我們</string>
     <string name="suggestions_feedback_description">如果你願意給我們反饋或想請求新的功能，告訴我們吧！</string>
     <string name="using_habitica_description">我們會解釋基礎知識並回答常見問題，幫助你快速入門</string>
@@ -1013,76 +1013,4 @@
     <string name="selected">已選擇</string>
     <string name="off">關</string>
     <string name="on">開</string>
-    <string name="suggest_pet_hatch_again_missing_potion">你還需要一瓶%s藥水才能再次孵化這個寵物</string>
-    <string name="suggest_pet_hatch_again_missing_both">你需要一個%s和%s藥劑才能再次孵化這個寵物</string>
-    <string name="can_hatch_pet">對你的%s蛋使用%s藥水來孵化這個寵物吧！</string>
-    <string name="hatch_pet">孵化寵物</string>
-    <string name="unhatched_pet">未孵化的寵物</string>
-    <string name="hatch_pet_again">再次孵化寵物</string>
-    <string name="magic_potions">魔法藥水</string>
-    <string name="magic_potion">魔法藥水</string>
-    <string name="use_saddle">使用鞍</string>
-    <string name="hatch_your_pet">孵化寵物</string>
-    <string name="hatch">孵化</string>
-    <string name="delete_challenge_task_title">刪除挑戰任務？</string>
-    <string name="delete_challenge_task_description">這是%d個挑戰任務之一，屬於“%s”挑戰。你必須先退出挑戰才能刪除這個任務。</string>
-    <string name="leave_delete_task">退出挑戰並刪除任務</string>
-    <string name="leave_delete_x_tasks">退出挑戰並刪除%d個任務</string>
-    <string name="broken_challenge">已損壞的挑戰</string>
-    <string name="broken_challenge_description">這是%d個挑戰任務之一，屬於一個已不復存在的挑戰。你想如何處理這些遺留的任務？</string>
-    <string name="keep_x_tasks">保留%d個任務</string>
-    <string name="delete_x_tasks">刪除%d個任務</string>
-    <string name="challenge_task_name">挑战任务 %s</string>
-    <string name="pet_category">%s寵物</string>
-    <string name="mount_category">%s坐騎</string>
-    <string name="suggest_pet_hatch_again_missing_egg">你還需要一個%s蛋才能再次孵化這個寵物</string>
-    <string name="suggest_pet_hatch_missing_both">你需要一個%s和一瓶%s藥水才能孵化這個寵物</string>
-    <string name="suggest_pet_hatch_missing_potion">你還需要一個%s孵化藥水來孵化這個寵物</string>
-    <string name="suggest_pet_hatch_missing_egg">你還需要一個%s寵物蛋來孵化這個寵物任務</string>
-    <string name="view_onboarding_tasks">查看新手任務</string>
-    <string name="equip">裝備</string>
-    <string name="excessItemsNoneLeft">你已經有得到所有%s寵物所需的一切物品。你確定你要買%d個%s？</string>
-    <string name="purchaseX">買%d個</string>
-    <string name="excessItemsXLeft">你只需要%d個%s即可孵化所有可得到的這種寵物。你確定你想要買%d個？</string>
-    <string name="feedPet_description">完成任務有概率掉落寵物食品！這樣你就可以把寵物餵大長成坐騎啦！</string>
-    <string name="excess_items">多餘物品</string>
-    <string name="onboardingComplete_achievement_title">你完成了新手任務！</string>
-    <string name="onboardingCompleteDescription">想要更多？看看成就面板，並且開始收集吧！</string>
-    <string name="onboardingCompleteTitle">因為你的努力，你得到了&lt;b&gt;5項成就&lt;/b&gt;和&lt;font color=#EE9109&gt;&lt;b&gt;100金幣&lt;/b&gt;&lt;/font&gt;。</string>
-    <string name="first_drop_title">你找到了新的物品！</string>
-    <string name="go_to_items">打開物品欄</string>
-    <string name="first_drop_explanation2">打開物品欄，試試對寵物蛋使用孵化藥水！</string>
-    <string name="first_drop_explanation1">完成任務有概率掉落寵物蛋、孵化藥水和寵物食品。</string>
-    <string name="purchasedEquipmentDescription">裝備可能比較強，也可能只是為了帥。提升屬性對你的人物能產生各種各樣的增益</string>
-    <string name="fedPetDescription">每個寵物都有它們喜歡的特定食物！試試找出哪種寵物吃哪種食物長得最快吧（提示：看顏色）</string>
-    <string name="hatchedPetDescription">有這麼多種的寵物可供收集，你肯定有個最喜歡的。如果你餵寵物吃的，它就會長大……</string>
-    <string name="completedTaskDescription">任務可以是“習慣”、“日常任務”或者“待辦事項”。繼續完成任務，收集各種獎勵！</string>
-    <string name="createdTaskDescription">堅持住！如果你需要一些任務規劃上的幫助，試試考慮下一般你每天的特定時候都乾點什麼</string>
-    <string name="purchasedEquipmentTitle">買了一件裝備</string>
-    <string name="fedPetTitle">餵了一隻寵物</string>
-    <string name="hatchedPetTitle">孵化了一隻寵物</string>
-    <string name="completedTaskTitle">完成了一項任務</string>
-    <string name="createdTaskTitle">創建你的第一個任務</string>
-    <string name="purchase_equipment_description">裝備既能打扮你的人物形象，也能增強你的屬性能力數值</string>
-    <string name="hatch_pet_description">完成任務有概率掉落孵化藥水和寵物蛋，這樣就能孵化寵物啦！</string>
-    <string name="complete_task_description">完成一個任務，得到獎勵</string>
-    <string name="create_task_description">填寫你這週打算完成的任務</string>
-    <string name="purchase_equipment_title">買裝備</string>
-    <string name="feedPet_title">餵一隻寵物</string>
-    <string name="hatch_pet_title">孵化一隻新寵物</string>
-    <string name="complete_task_title">完成一個任務</string>
-    <string name="create_task_title">創建一個任務</string>
-    <string name="percent_completed">%d%%已完成</string>
-    <string name="lets_get_started">我們開始吧</string>
-    <string name="your_progress">你的進展</string>
-    <string name="adventure_guide_description">完成這些新手入門任務，立即獲得&lt;b&gt;5項成就&lt;/b&gt;和&lt;font color=#EE9109&gt;&lt;b&gt;100金幣&lt;/b&gt;&lt;/font&gt;！</string>
-    <string name="getting_started">起步</string>
-    <string name="complete_for_gold">完成可掙得&lt;font color=#EE9109&gt;&lt;b&gt;100金幣&lt;/b&gt;&lt;/font&gt;！</string>
-    <string name="onboarding_tasks">新手任務</string>
-    <string name="task_display">展示任務列表</string>
-    <string name="pet_ownership_fraction">%1$d / %2$d</string>
-    <string name="special_items">特殊物品</string>
-    <string name="leave_delte_tasks">退出挑戰，並刪除挑戰任務</string>
-    <string name="leave_keep_tasks">退出挑戰，並保留挑戰任務</string>
-    <string name="challenge_leave_description">在退出挑戰之後，你可以在自己的任務列表裡保留參加挑戰時的任務，也可以刪除它們</string>
 </resources>

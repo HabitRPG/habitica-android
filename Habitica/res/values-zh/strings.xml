@@ -85,7 +85,7 @@
     <string name="saturday">六</string>
     <string name="sunday">日</string>
     <string name="levelup_header">你达到了%1$d级！</string>
-    <string name="levelup_detail">你通过完成现实生活的目标，提升了等级并且恢复了满血状态！</string>
+    <string name="levelup_detail">通过完成您现实生活中的目标，你提升等级并恢复满血状态了！</string>
     <string name="onwards">冲啊！</string>
     <string name="faint_subtitle">别丧气！</string>
     <string name="faint_penalty_body">你降了一级，丢失了所有的金币和一件装备。不过继续努力，你就可以把他们都拿回来！加油，你会更棒的！</string>
@@ -292,7 +292,7 @@
     <string name="party_invite">通过邀请朋友来解锁</string>
     <string name="login_incentive">定期登录Habitica可解锁</string>
     <string name="create_account">创建帐户可以解锁</string>
-    <string name="successful_purchase">已购买%1$s</string>
+    <string name="successful_purchase">购买%1$s</string>
     <string name="gold_plural">金币</string>
     <string name="chat_message_copied">复制到剪帖板的信息</string>
     <string name="edit_tag_btn_edit">编辑</string>
@@ -311,7 +311,7 @@
     <string name="all_dailies_completed">你完成了所有没有任务。干得漂亮！</string>
     <string name="widget_habit_button">Habitica完成习惯</string>
     <string name="widget_dailies">Habitica每日任务</string>
-    <string name="widget_todo_list">Habitica待办事项</string>
+    <string name="widget_todo_list">Habitica 待办事项</string>
     <string name="google_services_missing">没有找到Google play服务。</string>
     <string name="gem_purchase_toolbartitle">购买</string>
     <string name="gem_purchase_title">购买宝石来支持开发者们和帮助保证Habitica的日常运营</string>
@@ -373,7 +373,7 @@
     <string name="subscription_status">订阅状态</string>
     <string name="challenge_leave_title">放弃挑战</string>
     <string name="remove_tasks">删除</string>
-    <string name="keep_tasks">保留</string>
+    <string name="keep_tasks">保持</string>
     <string name="my_challenges">我的挑战</string>
     <string name="daily">每日任务</string>
     <string name="habit">习惯</string>
@@ -408,7 +408,7 @@
 \n
 \n开始之前，我们该怎么称呼您\? 你可随意修改默认值，等你都填好后，我们就可以开始创建你的个人形象！</string>
     <string name="randomize">随机</string>
-    <string name="avatar_extras">其他装扮</string>
+    <string name="avatar_extras">额外收益</string>
     <string name="avatar_skin_color">肤色</string>
     <string name="avatar_hair_color">发色</string>
     <string name="avatar_hair_bangs">刘海</string>
@@ -427,7 +427,7 @@
     <string name="empty_title_dailies">你还没有任何每日任务</string>
     <string name="empty_description_dailies">每日任务是规律性的任务。选择适合你的安排！</string>
     <string name="empty_title_todos">你还没有任何待办事项</string>
-    <string name="empty_description_todos">待办事项是一次性完成后不再重复的任务。为一项待办添加细分清单，可以让待办事项的价值更高。</string>
+    <string name="empty_description_todos">待办事项是只需要完成一次的任务。给待办事项添加清单可以提高它们的价值。</string>
     <string name="empty_title_rewards">你还没有任何奖励项目</string>
     <string name="reset_walkthrough">重置贾斯汀的介绍</string>
     <string name="read_community_guidelines">请在发表之前阅读我们的<u>社区守则</u></string>
@@ -640,8 +640,8 @@
     <string name="total_checkins">总签到数</string>
     <string name="usernamePromptTitle">是时候设置用户名了！</string>
     <string name="usernamePromptBody">现在用户名就是登录名，同时用户名还用于邀请、聊天版上@你，还有私信。</string>
-    <string name="usernamePromptWiki">如果你想了解更多关于此变动的信息，<a href="https://habitica.fandom.com/zh/wiki/%E7%8E%A9%E5%AE%B6%E5%90%8D">请看habitica中文wiki。</a></string>
-    <string name="usernamePromptDisclaimer">用户名应该符合我们的<a href="https://habitica.com/static/terms">使用条款</a>以及<a href="https://habitica.com/static/community-guidelines">社区准则</a>。如果你从前没有设置登录名，会自动为你生成一个用户名。</string>
+    <string name="usernamePromptWiki">如果你想了解更多关于变动的信息， <a href="https://habitica.wikia_com/wiki/Player_Names">访问我们的百科</a></string>
+    <string name="usernamePromptDisclaimer">用户名应该符合我们的<a href="https://habitica.com/static/terms">服务协议</a>以及<a href="https://habitica_com/static/community-guidelines">社区准则</a>。如果你之前没有设置登录名，你的用户名会自动生成。</string>
     <string name="confirm_username_title">你确定要用这个名字吗？</string>
     <string name="confirm_username_description">用户名一经确认就会显示在邀请，@提到你和私信中。你随时都可以在设置里修改用户名。</string>
     <string name="cancel">取消</string>
@@ -652,8 +652,8 @@
     <string name="username_copied">用户名已复制到剪贴板</string>
     <string name="welcomeNameTitle">我们应该怎么称呼你呢？</string>
     <string name="display_name_length_error">昵称长度应当在1到30个字符之间</string>
-    <string name="setup_task_join_habitica">加入Habitica（把我勾掉！）</string>
-    <string name="setup_task_join_habitica_notes">你可以打勾完成这项待办，或者编辑掉它，或者删除它。</string>
+    <string name="setup_task_join_habitica">加入Habitica（完成我！）</string>
+    <string name="setup_task_join_habitica_notes">你可以任意编辑这条待办事项，完成或者删除它。</string>
     <string name="setup_task_reward">奖励自己</string>
     <string name="setup_task_reward_notes">看电视，玩游戏，或者吃点什么，都取决于你！</string>
     <string name="equipment_str">力量：</string>
@@ -806,12 +806,12 @@
     <string name="guild_summary">公会概要</string>
     <string name="setup_task_habit_2_notes">或者在编辑界面删除</string>
     <string name="setup_task_habit_2">点击这里来把它编辑成一个你想戒掉的坏习惯吧</string>
-    <string name="setup_task_habit_1_notes">可以是一个习惯、每日任务或待办事项</string>
+    <string name="setup_task_habit_1_notes">习惯，每日任务或待办事项</string>
     <string name="setup_task_habit_1">添加一个任务到Habitica里</string>
     <string name="cost">价格</string>
     <string name="joined_guild">你加入了公会</string>
     <string name="left_guild">你离开了公会</string>
-    <string name="leave_guild_confirmation">您想退出公会吗？退出后可以留在已加入的挑战中，也可以离开挑战。</string>
+    <string name="leave_guild_confirmation">您想退出公会并保留或删除挑战吗？</string>
     <string name="leave_guild">退出公会</string>
     <string name="report_violation">举报违规</string>
     <string name="trillion_abbrev">兆</string>
@@ -831,7 +831,7 @@
     <string name="id_copied">已将用户ID复制到剪贴板</string>
     <string name="password_too_short">您的密码长度至少为％d个字符</string>
     <string name="copy_username">复制用户名</string>
-    <string name="invitation_title">%s邀请你加入他们的小组%s</string>
+    <string name="invitation_title">%s邀请你加入%s</string>
     <string name="someone">有人</string>
     <string name="authentication_methods">认证方式</string>
     <string name="local">本地</string>
@@ -855,7 +855,7 @@
     <string name="gift_gems_subtitle">在下面选择你要赠送的宝石包！</string>
     <string name="subscription_credit">订阅奖金</string>
     <string name="group_plan">团队计划</string>
-    <string name="empty_description_todos_filtered">无待办事项符合此筛选条件。</string>
+    <string name="empty_description_todos_filtered">你的筛选中没有任何待办事项。</string>
     <string name="empty_description_dailies_filtered">你的筛选中没有任何每日任务。</string>
     <string name="empty_description_habits_filtered">你的筛选中没有任何习惯。</string>
     <string name="cancel_subscription_group_plan">你免费订阅，因为您是拥有团队计划的队伍或公会的成员。如果你离开了小组，或拥有者取消团队计划，订阅便会被取消。你购买的订阅会加在团队计划后。</string>
@@ -875,7 +875,7 @@
     <string name="g1g1_info_3">局限</string>
     <string name="limited_event">限量事件</string>
     <string name="g1g1_duration">12月17日至1月6日</string>
-    <string name="learn_more">了解更多</string>
+    <string name="learn_more">学到更多</string>
     <string name="purchase_from_timetravel_shop">你可以在时空穿越者的商店买这个定制</string>
     <string name="go_shopping">去购买东西</string>
     <string name="emails">电邮通知</string>
@@ -930,7 +930,7 @@
 \n
 \n**智力**能提高你的经验值，解锁职业系统后，决定了你的最大魔法值。法师和医师从他们的职业装备获得智力。
 \n
-\n**感知**值增加你每次获得的金币量。当你解锁市场后，物品掉落的几率也会增加。法师和盗贼从他们的职业装备获得感知。
+\n**感知**值增加你每次获得的金币量。当你解锁市场后，物品掉落的几率也会增加。法师和医师从他们的职业装备获得感知。
 \n
 \n你达到10级后，等级赚取1点属性。你还可以用具有不同属性提升组合的装备。</string>
     <string name="mana_description">魔法值在10级的班级系统中被解锁。一旦你在11级，你开始学习它们，便可以**使用技能**。
@@ -978,8 +978,8 @@
     <string name="avatar_accent">首饰</string>
     <string name="buy_all">购买所有</string>
     <string name="read_more">阅读更多</string>
-    <string name="purchase_amount_error">你买不了那么多。</string>
-    <string name="delete_checklist_entry">删除……</string>
+    <string name="purchase_amount_error">你无法购买该金额。</string>
+    <string name="delete_checklist_entry">删除清单的清单条目</string>
     <string name="still_questions">还有问题吗？</string>
     <string name="health_description">这代表你的形象的生活力。如果每日任务到期前你没能完成它，或你点击（-）习惯，你会**减少你的生命**。
 \n
@@ -1011,95 +1011,4 @@
     <string name="off">关</string>
     <string name="on">开</string>
     <string name="user_level_with_class_unabbreviated">%1$d级%2$s</string>
-    <string name="special_items">特殊物品</string>
-    <string name="leave_delte_tasks">退出挑战，并删除挑战任务</string>
-    <string name="leave_keep_tasks">退出挑战，并保留挑战任务</string>
-    <string name="challenge_leave_description">在退出挑战之后，你可以在自己的任务列表里保留参加挑战时的任务，也可以删除它们</string>
-    <string name="suggest_pet_hatch_missing_potion">你还需要一个%s孵化药水来孵化这个宠物</string>
-    <string name="suggest_pet_hatch_missing_egg">你还需要一个%s宠物蛋来孵化这个宠物</string>
-    <string name="view_onboarding_tasks">查看新手任务</string>
-    <string name="equip">装备</string>
-    <string name="excessItemsNoneLeft">你已经有得到所有%s宠物所需的一切物品。你确定你要买%d个%s？</string>
-    <string name="excessItemsXLeft">你只需要%d个%s即可孵化所有可得到的这种宠物。你确定你想要买%d个？</string>
-    <string name="purchaseX">买%d个</string>
-    <string name="excess_items">多余物品</string>
-    <string name="onboardingComplete_achievement_title">你完成了新手任务！</string>
-    <string name="onboardingCompleteDescription">想要更多？看看成就面板，并且开始收集吧！</string>
-    <string name="onboardingCompleteTitle">因为你的努力，你得到了&lt;b&gt;5项成就&lt;/b&gt;和&lt;font color=#EE9109&gt;&lt;b&gt;100金币&lt;/b&gt;&lt;/font&gt;。</string>
-    <string name="first_drop_title">你找到了新的物品！</string>
-    <string name="go_to_items">打开物品栏</string>
-    <string name="first_drop_explanation2">打开物品栏，试试对宠物蛋使用孵化药水！</string>
-    <string name="first_drop_explanation1">完成任务有概率掉落宠物蛋、孵化药水和宠物食品。</string>
-    <string name="purchasedEquipmentDescription">装备可能比较强，也可能只是为了帅。提升属性对你的人物能产生各种各样的增益</string>
-    <string name="fedPetDescription">每个宠物都有它们喜欢的特定食物！试试找出哪种宠物吃哪种食物长得最快吧（提示：看颜色）</string>
-    <string name="hatchedPetDescription">有这么多种的宠物可供收集，你肯定有个最喜欢的。如果你喂宠物吃的，它就会长大……</string>
-    <string name="completedTaskDescription">任务可以是“习惯”、“日常任务”或者“待办事项”。继续完成任务，收集各种奖励！</string>
-    <string name="createdTaskDescription">坚持住！如果你需要一些任务规划上的帮助，试试考虑下一般你每天的特定时候都干点什么</string>
-    <string name="purchasedEquipmentTitle">买了一件装备</string>
-    <string name="fedPetTitle">喂了一只宠物</string>
-    <string name="hatchedPetTitle">孵化了一只宠物</string>
-    <string name="completedTaskTitle">完成了一项任务</string>
-    <string name="createdTaskTitle">创建你的第一个任务</string>
-    <string name="purchase_equipment_description">装备既能打扮你的人物形象，也能增强你的属性能力数值</string>
-    <string name="feedPet_description">完成任务有概率掉落宠物食品！这样你就可以把宠物喂大长成坐骑啦！</string>
-    <string name="hatch_pet_description">完成任务有概率掉落孵化药水和宠物蛋，这样就能孵化宠物啦！</string>
-    <string name="complete_task_description">完成一个任务，得到奖励</string>
-    <string name="create_task_description">填写你这周打算完成的任务</string>
-    <string name="purchase_equipment_title">买装备</string>
-    <string name="feedPet_title">喂一只宠物</string>
-    <string name="hatch_pet_title">孵化一只新宠物</string>
-    <string name="complete_task_title">完成一个任务</string>
-    <string name="create_task_title">创建一个任务</string>
-    <string name="percent_completed">%d%%已完成</string>
-    <string name="lets_get_started">我们开始吧</string>
-    <string name="your_progress">你的进展</string>
-    <string name="onboarding_tasks">新手任务</string>
-    <string name="adventure_guide_description">完成这些新手入门任务，立即获得&lt;b&gt;5项成就&lt;/b&gt;和&lt;font color=#EE9109&gt;&lt;b&gt;100金币&lt;/b&gt;&lt;/font&gt;！</string>
-    <string name="getting_started">起步</string>
-    <string name="complete_for_gold">完成可挣得&lt;font color=#EE9109&gt;&lt;b&gt;100金币&lt;/b&gt;&lt;/font&gt;！</string>
-    <string name="task_display">展示任务列表</string>
-    <string name="pet_ownership_fraction">%1$d / %2$d</string>
-    <string name="mount_category">%s坐骑</string>
-    <string name="pet_category">%s宠物</string>
-    <string name="challenge_task_name">挑战任务 %s</string>
-    <string name="delete_x_tasks">删除%d个任务</string>
-    <string name="keep_x_tasks">保留%d个任务</string>
-    <string name="broken_challenge_description">这是%d个挑战任务之一，属于一个已不复存在的挑战。你想如何处理这些遗留的任务？</string>
-    <string name="broken_challenge">已损坏的挑战</string>
-    <string name="leave_delete_x_tasks">退出挑战并删除%d个任务</string>
-    <string name="leave_delete_task">退出挑战并删除任务</string>
-    <string name="delete_challenge_task_description">这是%d个挑战任务之一，属于“%s”挑战。你必须先退出挑战才能删除这个任务。</string>
-    <string name="delete_challenge_task_title">删除挑战任务？</string>
-    <string name="hatch">孵化</string>
-    <string name="hatch_your_pet">孵化宠物</string>
-    <string name="use_saddle">使用鞍</string>
-    <string name="magic_potion">魔法药水</string>
-    <string name="magic_potions">魔法药水</string>
-    <string name="hatch_pet_again">再次孵化宠物</string>
-    <string name="unhatched_pet">未孵化的宠物</string>
-    <string name="hatch_pet">孵化宠物</string>
-    <string name="can_hatch_pet">对你的%s蛋使用%s药水来孵化这个宠物吧！</string>
-    <string name="suggest_pet_hatch_again_missing_both">你需要一个%s和%s药剂才能再次孵化这个宠物</string>
-    <string name="suggest_pet_hatch_again_missing_potion">你还需要一瓶%s药水才能再次孵化这个宠物</string>
-    <string name="suggest_pet_hatch_again_missing_egg">你还需要一个%s蛋才能再次孵化这个宠物</string>
-    <string name="suggest_pet_hatch_missing_both">你需要一个%s和一瓶%s药水才能孵化这个宠物</string>
-    <string name="pms_disabled">私信已停用</string>
-    <string name="disablePrivateMessages">禁用私信</string>
-    <string name="block">屏蔽</string>
-    <string name="block_user_description">被屏蔽用户不能发送私信给你, 但你仍然可以在酒馆或公会看到他们发表的内容。但如果此人是现在或未来的管理员，那么屏蔽无法生效。</string>
-    <string name="block_user_title">确定屏蔽%s？</string>
-    <string name="block_user">屏蔽该用户</string>
-    <string name="unblock_user">解除屏蔽该用户</string>
-    <string name="pms_disabled_description">你依旧能正常发送私信给他人，但没人能发送私信给你。在设置中可重启接收私信功能。</string>
-    <string name="spooky_promo_info_prompt">今年在秋季庆典的宝石特卖会步入尾声！这是最后一次获得更多宝石的机会，请趁早囤货！</string>
-    <string name="spooky_promo_info_limitations">本促销活动仅适用于限时活动期间。本次活动从美国东部时间9月22日上午8:00(12:00UTC)开始，将于美国东部时间9月30日晚上8:00(00:00UTC)结束。该优惠活动仅适用于个人购买宝石。</string>
-    <string name="spooky_promo_info_instructions">在9月22日至30日期间，只需像往常一样购买任何宝石捆绑包，你的账户就会记入促销金额赠送的宝石数。获得的更多宝石可以用来消费、赠送或未来使用！</string>
-    <string name="view_gem_bundles">查看宝石捆绑包</string>
-    <string name="fall_promo_info_prompt">秋季盛典正在如火如荼的进行中，所以我们认为这是我们首次推出宝石特卖会的最佳时机！现在你每次购买都会获得比以往更多的宝石。现在你每次购买都将获得比以往更多的宝石。</string>
-    <string name="fall_promo_info_limitations">本促销活动仅适用于限时活动期间。本次活动从美国东部时间9月22日上午8:00(12:00UTC)开始，将于美国东部时间9月30日晚上8:00(00:00UTC)结束。该优惠活动仅适用于个人购买宝石。</string>
-    <string name="fall_promo_info_instructions">在9月22日至30日期间，只需像往常一样购买任何宝石捆绑包，你的账户就会记入促销金额赠送的宝石数。获得的更多宝石可以用来消费、赠送或未来使用！</string>
-    <string name="limitations">限制</string>
-    <string name="how_it_works">如何工作</string>
-    <string name="x_to_y">%s到%s</string>
-    <string name="usually_x_gems">通常%d颗宝石</string>
 </resources>

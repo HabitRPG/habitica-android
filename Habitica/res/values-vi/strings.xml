@@ -105,7 +105,7 @@
     <string name="avatar_color">Màu da</string>
     <string name="avatar_beard">Râu</string>
     <string name="avatar_mustache">Ria</string>
-    <string name="avatar_flower">Hoa kẹp tóc</string>
+    <string name="avatar_flower">Hoa gắn đầu</string>
     <string name="avatar_bangs">Kiểu tóc</string>
     <string name="avatar_size">Kích cỡ</string>
     <string name="avatar_size_slim">Mảnh mai</string>
@@ -671,7 +671,7 @@
     <string name="joined">Đã tham gia</string>
     <string name="created_challenge">Đã tạo Thử thách</string>
     <string name="challenge_categories">Chuyên mục của Thử thách</string>
-    <string name="usernamePromptWiki">Nếu bạn muốn tìm hiểu thêm về sự thay đổi này, <a href="https://habitica.fandom.com/wiki/Player_Names"> ghé thăm trang wiki của chúng tôi.</a></string>
+    <string name="usernamePromptWiki">Nếu bạn muốn tìm hiểu thêm về sự thay đổi này, <a href="https://habitica.wikia_com/wiki/Player_Names">ghé thăm trang wiki của chúng tôi.</a></string>
     <string name="usernamePromptBody">Tên đăng nhập bây giờ là những cái tên độc nhất mà sẽ được nhìn thấy bên cạnh tên hiển thị của bạn và được dùng cho lời mời, @mentions khi nói chuyện, và nhắn tin.</string>
     <string name="usernamePromptTitle">Bây giờ là lúc thiết lập tên đăng nhập của bạn!</string>
     <string name="two_handed">Hai tay</string>
@@ -763,7 +763,7 @@
     <string name="cancel">Hủy</string>
     <string name="confirm_username_description">Xác nhận tên đăng nhập của bạn sẽ khiến nó công khai cho lời mời, @mentions và nhắn tin. Bạn có thể thay đổi tên đăng nhập của mình từ Cài đặt bất cứ lúc nào.</string>
     <string name="confirm_username_title">Bạn có chắc xác nhận tên đăng nhập hiện tại của mình chứ\?</string>
-    <string name="usernamePromptDisclaimer">Tên người dùng nên tuân thủ <a href="https://habitica.com/static/terms">Điều khoản Dịch vụ</a> và <a href="https://habitica.com/static/community-guidelines"> Nội quy Cộng đồng</a> của chúng tôi. Nếu bạn chưa đặt tên đăng nhập, tên người dùng của bạn đã được tự động tạo ra.</string>
+    <string name="usernamePromptDisclaimer">Tên người dùng nên tuân thủ <a href="https://habitica.com/static/terms">Điều khoản Dịch vụ</a> và <a href="https://habitica_com/static/community-guidelines"> Nội quy Cộng đồng</a> của chúng tôi. Nếu bạn chưa đặt tên đăng nhập, tên người dùng của bạn đã được tự động tạo ra.</string>
     <string name="mountMasterDescription">Bạn đã kiếm được Thành tựu \"Bậc thầy Thú cưỡi\" cho việc thuần hóa tất cả thú cưỡi!</string>
     <string name="mountMasterTitle">Bậc thầy Thú cưỡi</string>
     <string name="beastMasterDescription">Bạn đã kiếm được Thành tựu \"Bậc thầy Huấn luyện thú\" cho việc sưu tầm tất cả thú cưng!</string>
@@ -880,7 +880,7 @@
     <string name="local">địa phương</string>
     <string name="authentication_methods">Phương pháp Xác thực</string>
     <string name="someone">Ai đó</string>
-    <string name="invitation_title">%s đã mời bạn tham gia nhóm của họ %s</string>
+    <string name="invitation_title">%s đã mời bạn tới %s</string>
     <string name="password_too_short">Mật khẩu của bạn phải dài ít nhất %d ký tự</string>
     <string name="copy_username">Sao chép Tên đăng nhập</string>
     <string name="id_copied">Đã sao chép ID Người chơi vào Bảng dán</string>
@@ -994,7 +994,7 @@
     <string name="currency">Đơn vị tiền tệ</string>
     <string name="premium_currency">Đơn vị Tiền tệ Cao cấp</string>
     <string name="standard">Tiêu chuẩn</string>
-    <string name="delete_checklist_entry">Xóa…</string>
+    <string name="delete_checklist_entry">Xóa Danh mục</string>
     <string name="still_questions">Vẫn còn thắc mắc\?</string>
     <string name="purchase_amount_error">Bạn không thể mua số lượng đó.</string>
     <string name="read_more">Đọc thêm</string>
@@ -1012,95 +1012,4 @@
     <string name="manual_sync_restart_description">Đôi khi ứng dụng không tự động cập nhập nội dung. Thử kéo xuống để tải lại hoặc buộc đóng ứng dụng và mở lại.</string>
     <string name="manual_sync_restart">Đồng bộ hóa Thủ công hay Khởi động lại</string>
     <string name="clear_cache_description">Để xóa bộ nhớ tạm của bạn, mở ứng dụng Cài đặt trên điện thoại. Tới Lưu trữ &gt; Ứng dụng &gt; Habitica, sau đó chạm Xóa bộ nhớ tạm.</string>
-    <string name="mount_category">%s Thú cưỡi</string>
-    <string name="pet_category">%s Thú cưng</string>
-    <string name="challenge_task_name">%s Công việc Thử thách</string>
-    <string name="delete_x_tasks">Xóa %d Công việc</string>
-    <string name="keep_x_tasks">Giữ %d Công việc</string>
-    <string name="broken_challenge_description">Đây là một trong %d công việc là phần của một Thử thách không còn tồn tại nữa. Bạn muốn làm gì với những công việc còn lại\?</string>
-    <string name="broken_challenge">Thử thách Bị hủy</string>
-    <string name="leave_delete_x_tasks">Rời &amp; Xóa %d Công việc</string>
-    <string name="leave_delete_task">Rời &amp; Xóa Công việc</string>
-    <string name="delete_challenge_task_description">Đây là một trong %d công việc là phần của Thử thách \"%s\". Bạn phải rời Thử thách để xóa công việc này.</string>
-    <string name="delete_challenge_task_title">Xóa Công việc của Thử thách\?</string>
-    <string name="hatch">Ấp</string>
-    <string name="hatch_your_pet">Ấp thú cưng của bạn</string>
-    <string name="use_saddle">Sử dụng Yên thú</string>
-    <string name="magic_potion">Lọ ấp ma thuật</string>
-    <string name="magic_potions">Lọ ấp trứng ma thuật</string>
-    <string name="hatch_pet_again">Ấp trứng lại</string>
-    <string name="unhatched_pet">Thú cưng chưa ấp</string>
-    <string name="hatch_pet">Ấp thú cưng</string>
-    <string name="can_hatch_pet">Kết hợp Trứng %s và Lọ ấp trứng %s để ấp thú cưng này!</string>
-    <string name="suggest_pet_hatch_again_missing_both">Bạn cần một %s và %s Lọ ấp trứng để ấp thú cưng này nữa</string>
-    <string name="suggest_pet_hatch_again_missing_potion">Bạn còn cần một %s Lọ ấp trứng để ấp thú cưng này nữa</string>
-    <string name="suggest_pet_hatch_again_missing_egg">Bạn còn cần một %s Trứng để ấp thú cưng này nữa</string>
-    <string name="suggest_pet_hatch_missing_both">Bạn cần một %s và %s Lọ ấp trứng để ấp thú cưng này</string>
-    <string name="suggest_pet_hatch_missing_potion">Bạn còn cần một %s Lọ ấp trứng để ấp thú cưng này</string>
-    <string name="suggest_pet_hatch_missing_egg">Bạn còn cần một %s Trứng để ấp thú cưng này</string>
-    <string name="view_onboarding_tasks">Xem Công việc Nhập môn</string>
-    <string name="equip">Trang bị</string>
-    <string name="excessItemsNoneLeft">Bạn đã có mọi thứ bạn cần cho tất cả %s thú cưng. Bạn có chắc muốn mua %d %ss\?</string>
-    <string name="purchaseX">Mua %d</string>
-    <string name="excessItemsXLeft">Bạn chỉ cần %d %s để ấp tất cả thú cưng mà bạn có thể. Bạn có chắc muốn mua %d\?</string>
-    <string name="excess_items">Vật phẩm dư thừa</string>
-    <string name="onboardingComplete_achievement_title">Bạn đã hoàn thành những Công việc Nhập môn của bạn!</string>
-    <string name="onboardingCompleteDescription">Nếu bạn muốn nhiều hơn nữa, xem Thành tựu và bắt đầu sưu tập!</string>
-    <string name="onboardingCompleteTitle">Bạn đã kiếm được &lt;b&gt;5 Thành tựu&lt;/b&gt; và &lt;font color=#EE9109&gt;&lt;b&gt;100 Vàng&lt;/b&gt;&lt;/font&gt; cho những nỗ lực của bạn.</string>
-    <string name="first_drop_title">Bạn đã tìm thấy vật phẩm mới!</string>
-    <string name="go_to_items">Đi tới Vật phẩm</string>
-    <string name="first_drop_explanation2">Đi tới Vật phẩm của bạn và thử kết hợp Trứng mới của bạn và Lọ ấp trứng!</string>
-    <string name="first_drop_explanation1">Hoàn thành công việc cho bạn một cơ hội để tìm được trứng, lọ ấp trứng, và thức ăn thú cưng.</string>
-    <string name="purchasedEquipmentDescription">Trang bị có thể hữu dụng hay chỉ là thời gian. Tăng chỉ số của bạn để có tất cả các kiểu lợi ích tới nhân vật đại diện của bạn</string>
-    <string name="fedPetDescription">Mỗi thú cưng có một thức ăn nhất định chúng thích! Trải nghiệm để tìm ra cái nào sẽ nuôi Thú cưng bạn nhanh nhất</string>
-    <string name="hatchedPetDescription">Có rất nhiều Thú cưng để sưu tầm, bạn ràng buộc để có một con yêu thích. Nếu bạn cho chúng ăn, chúng có thể lớn lên…</string>
-    <string name="completedTaskDescription">Một công việc có thể là một Thói quen, Việc hằng ngày, hay Việc cần làm. Tiếp tục hoàn thành chúng để nhận tất cả các loại phần thưởng!</string>
-    <string name="createdTaskDescription">Tiếp tục như thế! Nếu bạn cần giúp lên kế hoạch công việc, thử nghĩ về thứ bạn muốn làm trong một khoảng thời gian nhất định trong ngày</string>
-    <string name="purchasedEquipmentTitle">Đã mua Trang bị</string>
-    <string name="fedPetTitle">Đã cho một Thú cưng ăn</string>
-    <string name="hatchedPetTitle">Đã ấp một Thú cưng</string>
-    <string name="completedTaskTitle">Đã hoàn thành một công việc</string>
-    <string name="createdTaskTitle">Đã tạo công việc đầu tiên của bạn</string>
-    <string name="purchase_equipment_description">Trang bị là một cách để tùy chỉnh nhân vật đại diện của bạn và cải thiện chỉ số của bạn</string>
-    <string name="feedPet_description">Hoàn thành công việc để kiếm thức ăn! Bạn có thể cho thú cưng của bạn ăn từ Thú cưng &amp; Thú cưỡi</string>
-    <string name="hatch_pet_description">Hoàn thành công việc để có một Lọ ấp trứng và Trứng và sau đó ấp Thú cưng của bạn!</string>
-    <string name="complete_task_description">Đánh dấu bất kỳ công việc của bạn để kiếm phần thưởng</string>
-    <string name="create_task_description">Thêm một công việc cho thứ gì đó bạn muốn hoàn thành tuần này</string>
-    <string name="purchase_equipment_title">Mua Trang bị</string>
-    <string name="feedPet_title">Cho ăn một thú cưng</string>
-    <string name="hatch_pet_title">Ấp một thú cưng mới</string>
-    <string name="complete_task_title">Hoàn thành một Công việc</string>
-    <string name="create_task_title">Tạo một Công việc</string>
-    <string name="percent_completed">Hoàn thành %d%%</string>
-    <string name="lets_get_started">Bắt đầu nào</string>
-    <string name="your_progress">Tiến trình của bạn</string>
-    <string name="adventure_guide_description">Hoàn thành những công việc nhập môn và bạn sẽ kiếm &lt;b&gt;5 Thành tựu&lt;/b&gt; và &lt;font color=#EE9109&gt;&lt;b&gt;100 Vàng&lt;/b&gt;&lt;/font&gt; khi bạn hoàn thành!</string>
-    <string name="getting_started">Bắt đầu nào</string>
-    <string name="complete_for_gold">Hoàn thành để kiếm &lt;font color=#EE9109&gt;&lt;b&gt;100 Vàng&lt;/b&gt;&lt;/font&gt;!</string>
-    <string name="onboarding_tasks">Công việc Nhập môn</string>
-    <string name="task_display">Hiển thị danh sách công việc</string>
-    <string name="pet_ownership_fraction">%1$d / %2$d</string>
-    <string name="special_items">Vật phẩm đặc biệt</string>
-    <string name="leave_delte_tasks">Rời &amp; Xóa Công việc</string>
-    <string name="leave_keep_tasks">Rời &amp; Giữ Công việc</string>
-    <string name="challenge_leave_description">Bạn có thể chọn giữ những công việc của Thử thách này trong bảng công việc cá nhân của bạn hoặc xóa chúng khi bạn rời</string>
-    <string name="pms_disabled_description">Bạn vẫn có thể gửi tin nhắn, nhưng không ai có thể gửi lại cho bạn. Bạn có thể kích hoạt lại từ Cài đặt.</string>
-    <string name="pms_disabled">Tin nhắn riêng tư đã được vô hiệu</string>
-    <string name="disablePrivateMessages">Vô hiệu Tin nhắn Riêng tư</string>
-    <string name="block">Chặn</string>
-    <string name="block_user_description">Người dùng bị chặn không thể gửi Tin nhắn Riêng tư cho bạn nhưng bạn vẫn thấy bài đăng của họ trong Quán rượu hay Bang hộ. Điều này sẽ không có ảnh hưởng nếu người đó là quản trị viên bây giờ hay trong tương lai.</string>
-    <string name="block_user_title">Chặn %s\?</string>
-    <string name="unblock_user">Gỡ chặn người dùng</string>
-    <string name="block_user">Chặn người dùng</string>
-    <string name="fall_promo_info_instructions">Ở giữa ngày 22 tới 30 tháng Chín, đơn giản là mua bất kỳ gói Gem nào như thường lệ và tài khoản của bạn sẽ cộng được thêm một khoảng Gem. Thêm nhiều Gem để xài, chia sẻ hay để dành cho những lần ra mắt trong tương lai!</string>
-    <string name="limitations">Những giới hạn</string>
-    <string name="how_it_works">Nó hoạt động như thế nào</string>
-    <string name="x_to_y">%s tới %s</string>
-    <string name="usually_x_gems">Thường là %d Gem</string>
-    <string name="fall_promo_info_limitations">Khuyến mãi này chỉ áp dụng trong thời gian giới hạn của sự kiện. Sự kiện này bắt đầu vào ngày 22 Tháng Chín lúc 8:00 AM EDT (12:00 UTC) và sẽ kết thúc vào ngày 30 Tháng Chín vào lúc 8:00 PM EDT (00:00 UTC). Khuyến mãi chỉ áp dụng khi mua Gem cho bản thân bạn.</string>
-    <string name="view_gem_bundles">Xem các gói Gem</string>
-    <string name="fall_promo_info_prompt">Dạ Tiệc Mùa Thu đang diễn ra rất sôi nổi nên chúng tôi nghĩ đây là thời điểm hoàn hảo để giới thiệu chương trình Giảm Giá Gem đầu tiên của chúng tôi! Giờ đây, bạn sẽ nhận được nhiều Gem hơn khi mua Gem hơn bao giờ hết.</string>
-    <string name="spooky_promo_info_limitations">Khuyến mãi này chỉ áp dụng trong thời gian giới hạn của sự kiện. Sự kiện này bắt đầu vào ngày 29 tháng Mười lúc 8:00 AM EDT (12:00 UTC) và sẽ kết thúc vào ngày 2 tháng Mười Một vào lúc 8:00 PM EDT (00:00 UTC). Khuyến mãi chỉ áp dụng khi mua Gem cho bản thân bạn.</string>
-    <string name="spooky_promo_info_instructions">Từ ngày 29 tháng 10 đến ngày 2 tháng 11, đơn giản là mua bất kỳ gói Gem nào như thường lệ và tài khoản của bạn sẽ cộng được thêm một khoảng Gem. Thêm nhiều Gem để xài, chia sẻ hay để dành cho những lần ra mắt trong tương lai!</string>
-    <string name="spooky_promo_info_prompt">Chương trình giảm giá Gem trở lại và tiếp diễn đến khi kết thúc Dạ tiệc Mùa Thu! Đây là cơ hội cuối cùng để nhận nhiều Gem hơn bao giờ hết, vì thế hãy mua dự trữ khi chương trình đang diễn ra!</string>
 </resources>
