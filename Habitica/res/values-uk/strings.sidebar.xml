@@ -1,21 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="sidebar_stats">Статистика</string>
-    <string name="sidebar_shops">Магазини</string>
-    <string name="sidebar_about">Про програму</string>
-    <string name="sidebar_news">Новини</string>
-    <string name="sidebar_stable">Улюбленці та Скакуни</string>
-    <string name="sidebar_equipment">Спорядження</string>
-    <string name="sidebar_avatar">Налаштування аватара</string>
-    <string name="sidebar_section_inventory">Інвентар</string>
-    <string name="sidebar_challenges">Випробовування</string>
-    <string name="sidebar_guilds">Гільдії</string>
-    <string name="sidebar_subscription">Підписка</string>
-    <string name="sidebar_gems">Купити самоцвіти</string>
-    <string name="sidebar_party">Гурт</string>
-    <string name="sidebar_tavern">Таверна</string>
-    <string name="sidebar_inbox">Повідомлення</string>
-    <string name="sidebar_section_social">Спілкування</string>
-    <string name="sidebar_skills">Вміння</string>
-    <string name="sidebar_tasks">Завдання</string>
-</resources>
+<resources />

@@ -411,7 +411,7 @@
     <string name="empty_description_todos">Lucrurile De-Făcut sunt sarcini care trebuie completate o singură dată. Bifează-ți lucrurile De-Făcut pentru a le crește valoarea. </string>
     <string name="empty_title_rewards">Nu ai nicio Recompensă</string>
     <string name="reset_walkthrough">Resetează Tutorialul lui Justin</string>
-    <string name="read_community_guidelines">Te rugăm să citești <u>Ghidurile Comunității</u> înainte să postezi</string>
+    <string name="read_community_guidelines">Te rugăm să citești Ghidurile Comunității înainte să postezi</string>
     <string name="maintenance">În Lucru</string>
     <string name="reload_content">Reîmprospătează Conținutul</string>
     <string name="dailyDueDefaultView">Setează Cotidienele la tabul cu termen limită</string>

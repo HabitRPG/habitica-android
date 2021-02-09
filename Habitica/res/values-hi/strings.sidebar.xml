@@ -1,19 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="sidebar_stats">आंकड़े</string>
-    <string name="sidebar_shops">दुकानें</string>
-    <string name="sidebar_about">विषय में</string>
-    <string name="sidebar_news">समाचार</string>
-    <string name="sidebar_stable">पालतू जानवर और सवारी</string>
-    <string name="sidebar_equipment">उपकरण</string>
-    <string name="sidebar_section_inventory">सूची</string>
-    <string name="sidebar_challenges">चुनौतियों</string>
-    <string name="sidebar_subscription">अंशदान</string>
-    <string name="sidebar_gems">रत्नों की खरीद</string>
-    <string name="sidebar_party">समूह</string>
-    <string name="sidebar_tavern">मधुशाला</string>
-    <string name="sidebar_inbox">संदेशों</string>
-    <string name="sidebar_section_social">सामाजिक</string>
-    <string name="sidebar_skills">कौशल</string>
-    <string name="sidebar_tasks">काम</string>
-</resources>
+<resources />

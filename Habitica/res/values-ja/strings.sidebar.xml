@@ -16,6 +16,6 @@
     <string name="sidebar_about">Habiticaについて</string>
     <string name="sidebar_shops">ショップ</string>
     <string name="sidebar_stats">ステータス</string>
-    <string name="sidebar_subscription">有料プラン</string>
+    <string name="sidebar_subscription">寄付</string>
     <string name="sidebar_gems">ジェムを買う</string>
 </resources>

@@ -1,5 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="tutorial_habits_2">जब आप एक सकारात्मक आदत डालते हैं, + इसे टैप करें, अनुभव और सोना पाने के लिए!</string>
-    <string name="tutorial_habits_1">पहली आदत है | वे सकारात्मक आदतें हो सकते हैं जिन्हें आप सुधारना चाहते हैं या नकारात्मक आदतें जिन्हें आप छोड़ना चाहते हैं।</string>
-</resources>
+<resources />
