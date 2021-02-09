@@ -6,12 +6,12 @@
     <string name="MP_default">Mana</string>
     <!--Prefs-->
     <string name="PS_settings_title">Paramètres</string>
-    <string name="SP_userID_title">ID d\'utilisateur</string>
+    <string name="SP_userID_title">ID utilisateur</string>
     <string name="SP_userID_summary">Votre identifiant</string>
     <string name="SP_APIToken_title">Jeton d\'API</string>
     <string name="SP_APIToken_summary">Votre jeton d\'API</string>
-    <string name="Language_title">Langage</string>
-    <string name="Language_summary">Changer la langue de Habitica</string>
+    <string name="Language_title">Langue</string>
+    <string name="Language_summary">Changer la langue d\'Habitica</string>
     <string name="PS_contact_title">Contactez-moi</string>
     <string name="pref_account_header">Compte</string>
     <string name="pref_first_day_of_the_week_title">Premier jour de la semaine</string>
@@ -85,10 +85,10 @@
     <string name="saturday">Samedi</string>
     <string name="sunday">Dimanche</string>
     <string name="levelup_header">Vous avez atteint le niveau %1$d !</string>
-    <string name="levelup_detail">En atteignant vos buts dans la vie réelle, vous avez gagné un niveau et êtes maintenant complètement guéri !</string>
+    <string name="levelup_detail">En atteignant vos buts dans la vie réelle, vous avez gagné un niveau et vous êtes maintenant complètement guéri !</string>
     <string name="faint_subtitle">Ne désespérez pas !</string>
-    <string name="faint_penalty_body">Vous avez perdu un niveau, votre or, et une pièce d\'équipement, mais vous pouvez tous les récupérer en travaillant dur ! Bonne chance—vous y arriverez.</string>
-    <string name="faint_header">Vous n\'avez plus de points de vie !</string>
+    <string name="faint_penalty_body">Vous avez perdu un niveau, votre or, et une pièce d\'équipement, mais vous pouvez tous les récupérer en travaillant dur ! Bonne chance — vous y arriverez.</string>
+    <string name="faint_header">Votre santé est à zéro !</string>
     <string name="faint_button">Reprendre des forces &amp; réessayer</string>
     <string name="filter">Filtrer</string>
     <string name="used_skill_without_mana">Vous avez utilisé %1$s.</string>
@@ -114,7 +114,7 @@
     <string name="avatar_hair">Cheveux</string>
     <string name="avatar_shirt">Tunique</string>
     <string name="avatar_skin">Peau</string>
-    <string name="avatar_base">Nuque</string>
+    <string name="avatar_base">Base</string>
     <string name="avatar_color">Couleur</string>
     <string name="avatar_beard">Barbe</string>
     <string name="avatar_mustache">Moustache</string>
@@ -140,9 +140,9 @@
     <string name="dismiss_tutorial">Rappelez-le moi plus tard</string>
     <string name="intro_1_subtitle">Bienvenue sur</string>
     <string name="intro_1_description">Il est temps de s\'amuser en menant vos tâches à bien. Rejoignez plus de %s personnes qui progressent dans la vie tâche par tâche.</string>
-    <string name="intro_2_subtitle">Progrès en jeu</string>
+    <string name="intro_2_subtitle">Progression dans le jeu</string>
     <string name="intro_2_title">Progrès dans la vie</string>
-    <string name="intro_2_description">Débloquez des fonctionnalités en jeu en validant vos tâches dans la vraie vie. Obtenez des équipements, des familiers, et d\'autres récompenses pour l\'accomplissement de vos objectifs.</string>
+    <string name="intro_2_description">Débloquez des fonctionnalités de jeu en validant vos tâches dans la vraie vie. Obtenez des équipements, des familiers, et d\'autres récompenses pour l\'accomplissement de vos objectifs.</string>
     <string name="intro_3_subtitle">Combattez des monstres</string>
     <string name="intro_3_title">Sociabilisez-vous</string>
     <string name="intro_3_description">Restez sur les rails de l\'accomplissement de vos buts avec l\'aide de vos amis. Épaulez-vous dans la vie et dans la bataille en vous améliorant ensemble !</string>
@@ -163,9 +163,9 @@
     <string name="setup_task_work_3">Projet de travail</string>
     <string name="setup_task_exercise_1">10 minutes de cardio</string>
     <string name="setup_task_exercise_2">Étirements</string>
-    <string name="setup_task_exercise_3">Définir des horaires où faire du sport</string>
+    <string name="setup_task_exercise_3">Définir un programme d\'entraînement</string>
     <string name="setup_task_healthWellness_1">Manger sainement / Malbouffe</string>
-    <string name="setup_task_healthWellness_2">Passer du fil dentaire</string>
+    <string name="setup_task_healthWellness_2">Utiliser du fil dentaire</string>
     <string name="setup_task_healthWellness_3">Planifier un bilan</string>
     <string name="setup_task_school_1">Étudier/Procrastiner</string>
     <string name="setup_task_school_2">Faire mes devoirs</string>
@@ -176,7 +176,7 @@
     <string name="setup_task_chores_1">10 minutes de nettoyage</string>
     <string name="setup_task_chores_2">Faire la vaisselle</string>
     <string name="setup_task_chores_3">Organiser mon placard</string>
-    <string name="setup_task_creativity_1">Étudier un maître de l\'art</string>
+    <string name="setup_task_creativity_1">Inspirez-vous du travail d\'un mentor</string>
     <string name="setup_task_creativity_2">Travailler sur un projet créatif</string>
     <string name="setup_task_creativity_3">Finir un projet créatif</string>
     <string name="my_guilds">Mes guildes</string>
@@ -220,10 +220,10 @@
     <string name="quests">Quêtes</string>
     <string name="pets">Familiers</string>
     <string name="mounts">Montures</string>
+    <string name="armoireEquipment">Vous avez trouvé %s dans l\'armoire enchantée</string>
+    <string name="armoireFood">Vous farfouillez dans l\'armoire enchantée et trouvez une %1$s %2$s. Qu\'est-ce que ça fait là \?</string>
+    <string name="armoireExp">Vous luttez contre l\'armoire enchantée et gagnez de l\'expérience. Prends ça !</string>
     <string name="quest_items_found">Vous avez trouvé %d objets pour la quête</string>
-    <string name="armoireEquipment">Vous avez trouvé une pièce d\'équipement rare dans l\'Armoire : %s! Génial !</string>
-    <string name="armoireFood">Vous farfouillez dans l\'Armoire et trouvez une %1$s %2$s. Qu\'est-ce que ça fait là ?</string>
-    <string name="armoireExp">Vous luttez contre l\'Armoire et gagnez de l\'expérience. Prends ça !</string>
     <string name="sell">Vendre (%d pièces d\'or)</string>
     <string name="hatch_with_potion">Faire éclore avec la potion</string>
     <string name="hatch_egg">Faire éclore avec l\'œuf</string>
@@ -239,11 +239,11 @@
     <string name="notification_pet_fed">Vous avez nourri votre %s !</string>
     <string name="notification_purchase_reward">Vous avez acheté une récompense</string>
     <string name="world_quest">Quête mondiale</string>
-    <string name="inn_description">Besoin de repos \? Reposez vous à l\'Auberge de Daniel pour faire une pause des effets de jeu les plus compliqués :
-\n
-\n • Les quotidiennes manquées ne vous infligeront pas de dégâts
-\n • Les tâches ne perdront pas de combo ni ne changeront de couleur
-\n • Les boss ne vous infligeront pas de dégâts pour vos quotidiennes manquées
+    <string name="inn_description">Besoin de repos \? Reposez vous à l\'auberge de Daniel pour faire une pause des effets de jeu les plus compliqués : 
+\n 
+\n • Les quotidiennes manquées ne vous infligeront pas de dégâts 
+\n • Les tâches ne perdront pas de combo ni ne changeront de couleur 
+\n • Les boss ne vous infligeront pas de dégâts pour vos quotidiennes manquées 
 \n • Vos dégâts de boss ou objets de quêtes collectés resteront en cours jusqu\'à ce que vous quittiez l\'auberge</string>
     <string name="empty_items">Vous n\'avez pas de %s</string>
     <string name="user_level">Niv %d</string>
@@ -252,9 +252,9 @@
     <string name="rogue">Voleur</string>
     <string name="mage">Mage</string>
     <string name="healer">Guérisseur</string>
-    <string name="warrior_description">Les guerriers font plus de coups critiques et infligent également de lourds dégâts aux boss. Jouez un guerrier si vous voulez vaincre facilement les monstres ! Les guerrier bénéficient d\'une force élevée.</string>
-    <string name="mage_description">Les Mages apprennent des compétences qui infligent des dégâts aux boss et augmentent l\'expérience et le mana. Jouez un Mage si vous voulez gagner des niveaux rapidement ! Les mages bénéficient d\'une grande intelligence.</string>
-    <string name="rogue_description">Les Voleurs apprennent des compétences qui leur font gagner ainsi qu\'à leur équipe plus d\'or et de butin aléatoire. Jouez un Voleur si vous êtes fortement motivé par les récompenses et les succès, à la recherche de butin et de badges !</string>
+    <string name="warrior_description">Les guerriers assènent plus de coups critiques et infligent de lourds dégâts aux boss. Jouez un guerrier si vous voulez vaincre facilement les monstres ! Les guerriers bénéficient d\'une force élevée.</string>
+    <string name="mage_description">Les Mages usent de sortilèges qui infligent des dégâts aux boss et augmentent leur expérience et leur mana. Jouez un Mage si vous voulez gagner des niveaux rapidement ! Les mages bénéficient d\'une grande intelligence.</string>
+    <string name="rogue_description">Les Voleurs sont dotés d\'une adresse prodigieuse, ce qui leur font gagner ainsi qu\'à leur équipe plus d\'or et de butins aléatoires. Jouez un Voleur si vous êtes fortement motivé par les récompenses et les succès, à la recherche de butins et de badges.</string>
     <string name="healer_description">Les Guérisseurs apprennent des compétences qui permettent de se protéger et se soigner, ainsi que leur équipe. Jouez un Guérisseur si vous aimez assister les membres de votre équipe, ou juste tromper la mort. Les guérisseurs bénéficient d\'une constitution élevée.</string>
     <string name="select_class">Sélectionner une classe</string>
     <string name="opt_out_class">Désactiver</string>
@@ -272,7 +272,7 @@
     <string name="invite_existing_users">Inviter des utilisateurs•trices existant•e•s</string>
     <string name="send">Envoyer</string>
     <string name="invite">Inviter des proches</string>
-    <string name="invite_username_description">Si vous avez des amis qui utilisent déjà Habitica, invitez les ici avec leur nom d\'utilisateur.</string>
+    <string name="invite_username_description">Si vous avez des amis qui utilisent déjà Habitica, invitez les ici avec leur identifiant.</string>
     <string name="invite_email_description">Si un•e ami•e rejoint Habitica via votre email, il ou elle sera automatiquement invité•e à rejoindre votre équipe !</string>
     <string name="add_invites">Ajouter des invitations</string>
     <string name="email">Email</string>
@@ -287,7 +287,7 @@
     <string name="market">Marché</string>
     <string name="timeTravelers">Voyageurs temporels</string>
     <string name="seasonalShop">Boutique saisonnière</string>
-    <string name="empty_inbox">Vous n\'avez pas de message. Vous pouvez envoyer un nouveau message à quelqu\'un à partir de ses message de discussion publics !</string>
+    <string name="empty_inbox">Vous n\'avez pas de message. Vous pouvez envoyer un nouveau message à quelqu\'un à partir de ses messages de discussion publics !</string>
     <string name="party_invite">Débloquer en invitant des ami•e•s</string>
     <string name="login_incentive">Débloquez en vous connectant régulièrement à Habitica</string>
     <string name="create_account">Débloquez en créant un compte</string>
@@ -310,7 +310,7 @@
     <string name="all_dailies_completed">Vous avez accompli toutes vos tâches quotidiennes. Bravo !</string>
     <string name="widget_habit_button">Réaliser une tâche Habitica</string>
     <string name="widget_dailies">Quotidiennes Habitica</string>
-    <string name="widget_todo_list">Liste des tâches Habitica</string>
+    <string name="widget_todo_list">Liste des tâches à faire d\'Habitica</string>
     <string name="google_services_missing">Le service Google Play n\'a pas pu être trouvé.</string>
     <string name="gem_purchase_toolbartitle">Acheter</string>
     <string name="gem_purchase_title">Acheter des gemmes soutient les développeurs et aide Habitica à fonctionner</string>
@@ -324,7 +324,7 @@
     <string name="hatching_market_info">Vous ne recevez pas le bon butin ? Allez voir au marché !</string>
     <string name="feeding_market_info">Besoin de plus de nourriture ? Achetez-en au marché !</string>
     <string name="open_market">Ouvrir le Marché</string>
-    <string name="cds_description">Vos Quotidiennes se réinitialiseront la première fois que vous utiliserez Habitica après %1$s. Faites attention à les accomplir avant cette heure !</string>
+    <string name="cds_description">Vos quotidiennes se réinitialiseront la première fois que vous utiliserez Habitica après %1$s. Faites attention à les accomplir avant cette heure !</string>
     <string name="AudioTheme_title">Thème audio</string>
     <string name="AudioTheme_summary">Changer le thème audio d\'Habitica</string>
     <!--Login Incentives-->
@@ -333,23 +333,23 @@
     <string name="has_reminder">A un rappel</string>
     <string name="has_tag">A une étiquette</string>
     <string name="subscribe_title">L\'abonnement aide l\'équipe de développement et permet à Habitica de fonctionner</string>
-    <string name="subscribe_prompt">Abonnez vous pour obtenir ces bénéfices utiles !</string>
+    <string name="subscribe_prompt">Abonnez vous pour obtenir des avantages exclusifs !</string>
     <string name="subscribe_listitem1">De l\'or pour les gemmes</string>
     <string name="subscribe_listitem2">Sabliers mystiques</string>
     <string name="subscribe_listitem3">Objets mystère mensuels</string>
-    <string name="subscribe_listitem4">Familier d\'abonnement exclusif</string>
+    <string name="subscribe_listitem4">Familier spécial d\'abonnement</string>
     <string name="subscriptions">Abonnements</string>
     <string name="subscription_duration">Périodique tous les %s</string>
     <string name="subscription_duration_norenew">Pour %s</string>
     <string name="subscribe">S\'abonner</string>
     <string name="subscribe_listitem1_description">Vous pourrez acheter des gemmes au marché pour 20 pièces d\'or chacune !</string>
-    <string name="subscribe_listitem2_description">Obtenez des Sabliers mystiques pour acheter des objets dans la boutique des Voyageurs Temporels !</string>
+    <string name="subscribe_listitem2_description">Obtenez des sabliers mystiques pour acheter des objets dans la boutique des voyageurs temporels !</string>
     <string name="subscribe_listitem3_description">Abonnez-vous pour recevoir un ensemble exclusif et de nouveaux objets tous les mois !</string>
     <string name="subscribe_listitem4_description">Obtenez le familier jackalope pourpre royal lorsque vous vous abonnez.</string>
-    <string name="subscribe1month_gemcap">Plafond de 25 gemmes</string>
-    <string name="subscribe3month_gemcap">Plafond de 30 gemmes</string>
-    <string name="subscribe6month_gemcap">Plafond de 35 gemmes</string>
-    <string name="subscribe12month_gemcap">Plafond de 45 gemmes</string>
+    <string name="subscribe1month_gemcap">25 gemmes max</string>
+    <string name="subscribe3month_gemcap">30 gemmes max</string>
+    <string name="subscribe6month_gemcap">35 gemmes max</string>
+    <string name="subscribe12month_gemcap">45 gemmes max</string>
     <string name="subscription_hourglasses">+%d sabliers mystiques</string>
     <string name="payment_method">Méthode de paiement</string>
     <string name="subscription">Abonnement</string>
@@ -357,8 +357,8 @@
     <string name="due">Echéance</string>
     <string name="cancel_subscription">Annuler l\'inscription</string>
     <string name="cancel_subscription_google_description">Vous ne voulez plus vous abonner \? Vous trouverez l\'option pour vous désabonner dans la section \"Mes applications\" de Google Play Store. Le crédit des mois d\'abonnement restant sera appliqué dès que votre abonnement aura pris fin.</string>
-    <string name="cancel_subscription_notgoogle_description">Vous ne voulez plus vous abonner \? A cause de contraintes sur les paiements mobiles, vous ne pouvez vous désinscrire qu\'à travers le site. Pour cela, cliquez sur le bouton ci-dessous, et connectez-vous avec votre compte, cliquez sur l\'icône utilisateur en haut à droite, puis allez dans \"Abonnement). Tous les crédits de mois d\'abonnement restants seront appliqués lorsque l\'abonnement aura pris fin. Vous allez nous manquer !</string>
-    <string name="visit_habitica_website">Rendez vous sur le site Habitica</string>
+    <string name="cancel_subscription_notgoogle_description">Vous ne voulez plus vous abonner \? A cause de contraintes sur les paiements mobiles, vous ne pouvez vous désinscrire qu\'à travers le site. Pour cela, cliquez sur le bouton ci-dessous, et connectez-vous avec votre compte, cliquez sur l\'icône utilisateur en haut à droite, puis allez dans \"Abonnement\". Tous les crédits de mois d\'abonnement restants seront appliqués lorsque l\'abonnement aura pris fin. Vous allez nous manquer !</string>
+    <string name="visit_habitica_website">Rendez-vous sur le site Habitica</string>
     <string name="current_bonuses">Bonus actuels</string>
     <string name="months_subscribed">Mois souscrits</string>
     <string name="current_hourclasses">Sabliers mystiques actuels</string>
@@ -384,7 +384,7 @@
     <string name="challenge">Défi</string>
     <string name="not_part_of_a_challenge">Vous ne faites pas encore partie de ce défi !</string>
     <string name="join_a_challenge">Rejoignez un défi pour ajouter une sélection de tâches à votre liste, puis affrontez les autres participants pour gagner des succès ou même des gemmes !</string>
-    <string name="check_the_public_challenge_tab">Sélectionnez l\'onglet \"Publique\" pour trouver les défi créés par la communauté qui vous sont le plus adaptés !</string>
+    <string name="check_the_public_challenge_tab">Sélectionnez l\'onglet \"Découvrir\" pour trouver les défi créés par la communauté qui vous sont le plus adaptés !</string>
     <string name="inbox">Messages</string>
     <string name="special">Spécial</string>
     <string name="gem_for_gold_description">Grâce à votre abonnement, vous pouvez acheter des gemmes chaque mois en utilisant de l\'or.</string>
@@ -392,7 +392,7 @@
     <string name="mystery_item">Objet mystère</string>
     <string name="myster_item_notes">Chaque mois, votre abonnement vous donnera accès à un objet mystère. Il est généralement disponible une semaine avant la fin du mois.</string>
     <string name="open">Ouvrir</string>
-    <string name="checkInRewardEarned">Vous avez mérité cette récompense : %1$s pour votre dévotion à améliorer votre vie.</string>
+    <string name="checkInRewardEarned">Vous avez mérité cette récompense : %1$s pour votre engagement à améliorer votre vie.</string>
     <string name="nextPrizeUnlocks" tools:ignore="PluralsCandidate">Votre prochain prix sera débloqué à %1$d connexions</string>
     <string name="pending_approval">En attente de validation</string>
     <string name="filters">Filtres</string>
@@ -405,9 +405,9 @@
     <string name="login_btn_fb">Se connecter via Facebook</string>
     <string name="login_btn_google">Se connecter via Google</string>
     <string name="action_back">Retour</string>
-    <string name="welcome_text">Oh, vous devez débuter. Je m\'appelle Justin et je vais vous guider dans Habitica.
-\n
-\nPour commencer, comment devons-nous vous appeler\? Sentez-vous libre de changer ce que j\'ai choisi. Quand vous êtes prêt, créons votre avatar !</string>
+    <string name="welcome_text">Oh, vous venez d\'arriver \? Je m\'appelle Justin et je vais vous guider dans Habitica. 
+\n 
+\nPour commencer, comment devons-nous vous appeler \? Sentez-vous libre de changer ce que j\'ai choisi. Quand vous aurez finis, nous créerons votre avatar !</string>
     <string name="randomize">Aléatoire</string>
     <string name="avatar_extras">Bonus</string>
     <string name="avatar_skin_color">Couleur de peau</string>
@@ -428,16 +428,16 @@
     <string name="empty_title_dailies">Vous n\'avez aucune tâche quotidienne</string>
     <string name="empty_description_dailies">Les quotidiennes sont des tâches qui se répètent de façon régulière. Choisissez la planification qui vous convient !</string>
     <string name="empty_title_todos">Vous n\'avez aucune tâche à faire</string>
-    <string name="empty_description_todos">Les tâches à faire sont des tâches qui ne doivent être validées qu\'une seule fois. Ajoutez des listes de vérifications pour augmenter leur valeur.</string>
+    <string name="empty_description_todos">Les tâches à faire sont des tâches qui ne sont validées qu\'une seule fois. Ajoutez des listes de vérifications pour augmenter leur valeur.</string>
     <string name="empty_title_rewards">Vous n\'avez aucune récompense</string>
     <string name="reset_walkthrough">Recommencer la visite de Justin</string>
     <string name="read_community_guidelines">Veuillez lire nos <u>règles de vie en communauté</u> avant de publier un message</string>
     <string name="maintenance">Maintenance</string>
     <string name="reload_content">Recharger le contenu</string>
-    <string name="dailyDueDefaultView">Passez le quotidiennes sur l\'onglet \'échéance\' par défaut</string>
-    <string name="dailyDueDefaultViewDescription">Une fois cette option définie, les quotidiennes seront par défait sur l\'onglet \'échéance\' à la place de \'toutes\'</string>
-    <string name="no_billing_gems">Votre appareil ne dispose pas de méthode de paiement supportée. Veuillez utiliser le site habitica si vous voulez acheter des gemmes.</string>
-    <string name="no_billing_subscriptions">Votre appareil ne dispose pas de méthode de paiement supportée. Veuillez utiliser le site habitica si vous voulez payer un abonnement.</string>
+    <string name="dailyDueDefaultView">Passez les quotidiennes sur l\'onglet \'échéance\' par défaut</string>
+    <string name="dailyDueDefaultViewDescription">Une fois cette option définie, les quotidiennes seront organisées par défaut sur l\'onglet \'échéance\' à la place de \'toutes\'</string>
+    <string name="no_billing_gems">Votre appareil ne dispose pas de méthode de paiement supportée. Utilisez le site Habitica pour acheter des gemmes.</string>
+    <string name="no_billing_subscriptions">Votre appareil ne dispose pas de méthode de paiement supportée. Utilisez le site d\'Habitica pour souscrire un abonnement.</string>
     <string name="save">Enregistrer</string>
     <string name="location">Localisation</string>
     <string name="gem_reward">Récompense en gemmes</string>
@@ -446,7 +446,7 @@
     <string name="challenge_create_error_tavern_one_gem">Il vous faut au moins 1 gemme pour créer un défi public.</string>
     <string name="challenge_create_error_enough_gems">Vous ne possédez pas assez de gemmes pour créer un défi.</string>
     <string name="identify_your_challenge_with_a_tag">Identifiez votre défi avec une étiquette</string>
-    <string name="challenge_create_error_tag">Il vous faut un nom nom court pour créer ce défi.</string>
+    <string name="challenge_create_error_tag">Il faut ajouter un nom court pour créer ce défi.</string>
     <string name="challenge_create_error_no_tasks">Vous devez ajouter au moins une tâche pour créer ce défi.</string>
     <string name="challenge_create_error_title">Il vous faut un titre pour créer ce défi.</string>
     <string name="description_optional">Description (optionnel)</string>
@@ -459,7 +459,7 @@
     <string name="number_participants">%1$d participants</string>
     <string name="welcome_back">Bienvenue à nouveau</string>
     <string name="yesterdaililes_prompt">Cochez les quotidiennes accomplies hier :</string>
-    <string name="start_day">Démarrer ma journée</string>
+    <string name="start_day">Commencer ma journée</string>
     <string name="leave_party_confirmation">Voulez-vous vraiment quitter l\'équipe ?</string>
     <string name="pending">En cours</string>
     <string name="accepted">Accepté</string>
@@ -489,15 +489,17 @@
     <string name="int_abbrv">Int</string>
     <string name="con_abbrv">Con</string>
     <string name="reset_account">Réinitialiser le compte</string>
-    <string name="reset_account_description">ATTENTION ! Cette action va réinitialiser de nombreux aspects de votre compte. Cela est hautement déconseillé, mais certaines personnes peuvent trouver utile de le faire après avoir joué un peu avec le site.\n\nVous perdrez tous vos niveau, votre or et vos points d\'expérience. Toutes vos tâches (à l\'exception de celles des défis) seront détruites de façon permanente et vous perdrez leur historique. Vous perdrez tout votre équipement, mais vous pourrez le racheter, y compris l\'équipement en édition limité et les objets mystères d\'abonnement que vous possédez déjà (vous aurez besoin d\'être de la classe correspondant à l\'équipement spécifique à une classe). Vous conserverez votre classe actuelle ainsi que vos familiers et montures. Vous voudrez peut-être utiliser l\'orbe de renaissance à la place, qui est une option plus sûre et conservera vos tâches et votre équipement.</string>
+    <string name="reset_account_description">ATTENTION ! Cette action va réinitialiser de nombreux aspects de votre compte. Cela est hautement déconseillé, mais certaines personnes peuvent trouver utile de le faire après avoir joué un peu avec le site.
+\n
+\nVous perdrez tous vos niveaux, votre or et vos points d\'expérience. Toutes vos tâches (à l\'exception de celles des défis) seront détruites de façon permanente et vous perdrez leur historique. Vous perdrez tout votre équipement, mais vous pourrez le racheter, y compris l\'équipement en édition limitée et les objets mystères déjà obtenu lors de votre abonnement (vous aurez besoin d\'être de la classe correspondant à l\'équipement spécifique à une classe). Vous conserverez votre classe actuelle ainsi que vos familiers et montures. Vous voudrez peut-être utiliser l\'orbe de renaissance à la place, qui est une option plus sûre et conservera vos tâches et votre équipement.</string>
     <string name="delete_account">Supprimer le compte</string>
     <string name="delete_account_description">Cela va supprimer votre compte définitivement et il ne pourra pas être restauré ! Les gemmes sur votre compte ou celles dépensées ne seront pas remboursées. Si vous confirmez définitivement, tapez votre mot de passe dans le champ de texte ci-dessous.</string>
-    <string name="reset_account_confirmation">réinitialiser mon compte</string>
-    <string name="delete_account_confirmation">supprimer mon compte</string>
+    <string name="reset_account_confirmation">Réinitialiser mon compte</string>
+    <string name="delete_account_confirmation">Supprimer mon compte</string>
     <string name="danger_zone">Zone de danger</string>
     <string name="resetting_account">Réinitialisation du compte</string>
     <string name="deleting_account">Suppression du compte</string>
-    <string name="insufficientGold">Vous devez compléter plus de taches avant de pouvoir vous offrir cet objet ! </string>
+    <string name="insufficientGold">Vous devez compléter plus de tâches avant de pouvoir vous offrir cet objet !</string>
     <string name="insufficientGems">Vous n\'avez pas assez de gemmes pour acheter cet objet !</string>
     <string name="purchase_gems">Acheter des gemmes</string>
     <string name="insufficientHourglasses">Vous n\'avez pas assez de sabliers mystiques pour acheter cet objet !</string>
@@ -510,25 +512,25 @@
     <string name="level">Niveau</string>
     <string name="streak_label">Combo de 21 jours</string>
     <string name="stats">Stats</string>
-    <string name="fix_character_description">Si vous avez eu affaire à un bug, ou fait une erreur qui a injustement changé votre personnage, vous pouvez corriger manuellement ces chiffres ici.</string>
+    <string name="fix_character_description">Si vous avez subi un bug, ou commis une erreur qui a injustement changé votre personnage, vous pouvez corriger manuellement ses valeurs ici.</string>
     <string name="fix_character_values">Corriger les valeurs du personnage</string>
     <string name="saving">Enregistrement</string>
     <string name="forgot_password_title">Envoyer par email un lien de réinitialisation de mot de passe</string>
-    <string name="forgot_password_description">Indiquez l\'adresse mail que vous avez utilisé pour vous inscrire sur Habitica.</string>
+    <string name="forgot_password_description">Indiquez l\'adresse mail que vous avez utilisée pour vous inscrire sur Habitica.</string>
     <string name="forgot_password_confirmation">Si votre email est dans nos bases, les instructions pour définir un nouveau mot de passe vous ont été envoyées à cette adresse.</string>
     <string name="ok">OK</string>
     <string name="profile">Profil</string>
     <string name="profile_summary">Modifiez votre profil public.</string>
-    <string name="display_name">Nom affiché</string>
+    <string name="display_name">Pseudo</string>
     <string name="photo_url">URL de photo</string>
-    <string name="login_name">Nom de connexion</string>
+    <string name="login_name">Identifiant</string>
     <string name="about">A propos</string>
     <string name="app_settings">Paramètres de l\'application</string>
     <string name="authentication">Authentification</string>
     <string name="authentication_summary">Modifiez vos options d\'authentification.</string>
     <string name="change_password">Changer le mot de passe</string>
     <string name="change_email">Changer votre adresse de courriel</string>
-    <string name="change_username">Changer son Nom d\'Utilisateur</string>
+    <string name="change_username">Changer son identifiant</string>
     <string name="change">Changer</string>
     <string name="character_level">Niveau du personnage</string>
     <string name="auto_allocate_points">Attribuer automatiquement les points</string>
@@ -538,11 +540,11 @@
     <string name="strength">Force</string>
     <string name="strength_description">Augmente le bonus des coups critiques et les rend plus probable lorsqu\'une tâche est validée. Augmente aussi les dégâts infligés aux boss.</string>
     <string name="intelligence">Intelligence</string>
-    <string name="intelligence_description">Augmente l\'expérience reçue des tâches validées. Augmente également votre limite de mana et sa vitesse de régénération dans le temps.</string>
+    <string name="intelligence_description">Augmente l\'expérience reçue des tâches accompli. Augmente également votre limite de mana et sa vitesse de régénération au fil du temps.</string>
     <string name="constitution">Constitution</string>
     <string name="constitution_description">Diminue la quantité de dégâts reçue de vos tâches. Ne diminue pas les dégâts reçus des boss.</string>
     <string name="perception">Perception</string>
-    <string name="perception_description">Augmente la probabilité de trouver du butin lorsqu\'une tâche est validée, la limite de bulletin quotidienne, le bonus des combos, et la quantité d\'or reçue par les tâches.</string>
+    <string name="perception_description">Augmente la probabilité de trouver du butin lorsqu\'une tâche est validée, la quantité de butin quotidien, le bonus des combos, et la quantité d\'or reçue par les tâches.</string>
     <string name="buffs">Bonus</string>
     <string name="allocated">Alloué</string>
     <string name="distribute_evenly">Répartir équitablement</string>
@@ -555,21 +557,22 @@
     <string name="distribute_task_help">Assigner les points en fonction des catégories de force, intelligence, constitution et perception associées aux tâches que vous réalisez.</string>
     <string name="allocating_points">Allocation des points</string>
     <string name="class_equipment">Équipement</string>
-    <string name="equipment_empty">Vous avez déjà tout l\'équipement ! D\'autre objets seront disponibles pendant les Grand Galas, lors des solstices et des équinoxes.</string>
+    <string name="equipment_empty">Vous avez déjà tout l\'équipement ! D\'autres objets seront disponibles pendant les grands galas, lors des solstices et des équinoxes.</string>
     <string name="classless">Sans classe</string>
-    <string name="class_equipment_shop_dialog">Cet objet n\'est disponible que pour une classe spécifique.\nVous pouvez changer de classe depuis les paramètres.</string>
+    <string name="class_equipment_shop_dialog">Cet objet est disponible pour une classe spécifique.
+\nVous pouvez changer de classe depuis les paramètres.</string>
     <string name="class_gear_disclaimer">Vous ne pouvez acheter de l\'équipement que pour votre classe actuelle</string>
-    <string name="tavern_description">Bienvenu à l\'auberge ! Prenez une chaise pour vous joindre à la conversation, ou faite une pause de vos tâches.</string>
+    <string name="tavern_description">Bienvenue à la taverne ! Prenez une chaise pour vous joindre à la conversation, ou faites une pause de vos tâches à l\'auberge.</string>
     <string name="check_into_inn">Se reposer à l\'auberge</string>
     <string name="community_guidelines">Règles de vie en communauté</string>
     <string name="view_community_guidelines">Voir les règles de vie en communauté</string>
-    <string name="guidelines_description">Habitica essaye de créer un environnement bienveillant pour les personnes de tout âge et de toute origine qui y participent, en particulier dans les espaces publics comme la taverne. Si vous avez une question, veuillez consulter nos règles.</string>
+    <string name="guidelines_description">Habitica essaye de créer un environnement bienveillant pour les personnes de tout âge et de toute origine qui y participent, en particulier dans les espaces publics comme la taverne. Si vous avez une question, veuillez consulter nos règles de vie en communauté.</string>
     <string name="helpful_links">Liens utiles</string>
     <string name="view_faq">Voir la FAQ</string>
-    <string name="report_bug">Rapporter un bug</string>
+    <string name="report_bug">Signaler un bug</string>
     <string name="player_tiers">Paliers de contribution</string>
-    <string name="staff_moderators">Équipe d\'administration</string>
-    <string name="tiers_descriptions">Les pseudos de couleur que vous pouvez voir dans les discussion représentent le palier de contribution d\'une personne. Plus le palier est élevé, plus la personne a contribué à Habitica avec de l\'art, du code, du temps ou plus !</string>
+    <string name="staff_moderators">Équipes d\'administration et de modération</string>
+    <string name="tiers_descriptions">Les pseudos de couleur que vous pouvez voir dans les discussions représentent le palier de contribution d\'une personne. Plus le palier est élevé, plus la personne a contribué à Habitica avec de l\'art, du code, du temps ou plus !</string>
     <string name="navigation_drawer_open">Ouvrir le volet de navigation</string>
     <string name="navigation_drawer_close">Fermer le volet de navigation</string>
     <string name="world_boss">Boss mondial</string>
@@ -579,7 +582,7 @@
     <string name="pending_strike_title">Attaque en cours</string>
     <string name="strike_description_title">Qu\'est-ce qu\'une attaque de rage ?</string>
     <string name="strike_active_title">%s a été attaqué !</string>
-    <string name="strike_active_description">Notre %s a eu le cœur brisé lorsque %s a fracassé %s. Vite, réalisez vos quotidiennes pour vaincre le monstre et aider à reconstruire !!</string>
+    <string name="strike_active_description">Notre %s a eu le cœur brisé lorsque %s a fracassé %s. Vite, réalisez vos quotidiennes pour vaincre le monstre et aider à reconstruire Habitica ! !</string>
     <string name="questShop">Magasin de quêtes</string>
     <string name="market_owner_long">Alex le marchand</string>
     <string name="tavern_owner_long">Daniel l\'aubergiste</string>
@@ -592,7 +595,7 @@
     <string name="join_party_title">Vous voulez rejoindre une équipe ?</string>
     <string name="insufficientSubscriberGems">Vous avez acheté toutes les gemmes possibles de ce mois. D\'autres seront disponibles dans les trois premiers jours de chaque mois. Merci pour votre abonnement !</string>
     <string name="world_boss_description_title">Qu\'est-ce qu\'un boss mondial ?</string>
-    <string name="world_boss_description_intro">Un boss mondial est un événement spécial où toute la communauté travaille ensemble pour combattre avec ses tâches un puissant monstre !</string>
+    <string name="world_boss_description_intro">Un boss mondial est un événement spécial où toute la communauté travaille coude à coude pour combattre un puissant monstre grâce à la réalisation des tâches !</string>
     <string name="world_boss_description_1">Réalisez vos tâches pour infliger des dégâts au boss</string>
     <string name="world_boss_description_2">Le boss ne vous infligera pas de dégâts pour les tâches non réalisées, mais sa jauge de rage augmentera. Si la barre se remplit, le boss attaquera l\'un des marchands !</string>
     <string name="world_boss_description_3">Vous pouvez continuer à faire vos quêtes de boss habituelles, vos dégâts s\'appliqueront aux deux</string>
@@ -608,22 +611,22 @@
     <string name="challenge_categories">Catégories du défi</string>
     <string name="created_challenge">Défi créé</string>
     <string name="joined">Rejoint</string>
-    <string name="public_challenge">Défi publique</string>
+    <string name="public_challenge">Défi public</string>
     <string name="short_name">Nom court</string>
     <string name="unlock_attribute_points">L\'allocation de points d\'attributs se déverrouille au niveau 10</string>
     <string name="same_day_reminder_title">Avez-vous déjà ajouté vos tâches ?</string>
-    <string name="same_day_reminder_text">Le plus vous en ajoutez, le plus vous aurez de récompenses. Même les petites habitudes mènent à de grands changements.</string>
+    <string name="same_day_reminder_text">Plus vous en ajoutez, plus vous aurez de récompenses. Même les petites habitudes mènent à de grands changements.</string>
     <string name="next_day_reminder_title">Avez-vous validé vos tâches quotidiennes aujourd\'hui ?</string>
     <string name="next_day_reminder_text">Il y a beaucoup à découvrir en gagnant des niveaux, alors continuez avec vos tâches et amusez-vous !</string>
     <string name="daily_tip_0">Vous voulez essayer quelque chose de nouveau ? Rejoignez un défi pour augmenter votre liste de tâches et gagnez des gemmes !</string>
-    <string name="daily_tip_1">Ajoutez des listes de vérifications à vos taches à faire pour augmenter vos récompenses !</string>
+    <string name="daily_tip_1">Ajoutez des listes de vérifications à vos tâches à faire pour augmenter vos récompenses !</string>
     <string name="daily_tip_2">Vous pouvez modifier la périodicité des tâches quotidiennes. Même les tâches les moins fréquentes peuvent être planifiées.</string>
     <string name="daily_tip_3">Vous pouvez également planifier des rappels pour vos tâches quotidiennes.</string>
     <string name="daily_tip_4">Refaire occasionnellement le point sur vos tâches vous aidera à rester sur le droit chemin.</string>
     <string name="daily_tip_5">Respirez profondément pour vous aider à vous concentrer. Vous pouvez le faire !</string>
     <string name="daily_tip_6">Réglez un chronomètre sur 10 minutes et regardez combien vous pouvez en faire dans ce temps !</string>
     <string name="daily_tip_7">Essayez d\'épingler des objets depuis le marché dans vos récompenses pour vous aider à vous motiver à les obtenir !</string>
-    <string name="daily_tip_8">Vous pouvez changer la difficulté de votre tâche pour vous récompenser un peu plus pour les tâches difficiles !</string>
+    <string name="daily_tip_8">Vous pouvez modifier le niveau de difficulté de votre tâche pour vous récompenser un peu plus pour les tâches difficiles !</string>
     <string name="daily_tip_9">Si vous rencontrez des difficultés, essayez de diviser vos tâches en plus petites tâches.</string>
     <string name="moderator">Modérateur</string>
     <string name="staff">Administrateur</string>
@@ -635,21 +638,21 @@
     <string name="last_login">Dernière connexion</string>
     <string name="total_checkins">Total de connexions</string>
     <string name="two_handed">Deux mains</string>
-    <string name="usernamePromptTitle">Il est temps de choisir votre nom d\'utilisateur !</string>
-    <string name="usernamePromptBody">Les noms de connexion sont maintenant uniques, seront visibles à côté de votre nom affiché, et seront utilisés pour les invitations, les @mentions et les discussions.</string>
-    <string name="usernamePromptWiki">Si vous souhaitez en savoir plus sur ce changement, <a href="https://habitica.wikia_com/wiki/Player_Names">visitez notre wiki.</a></string>
-    <string name="usernamePromptDisclaimer">Les Noms d\'Utilisateurs doivent respecter nos <a href="https://habitica.com/static/terms">Conditions d\'Utilisation</a> et nos <a href="https://habitica_com/static/community-guidelines">règles de vie en communauté</a>. Si vous n\'avez pas choisi un pseudo de connexion précédemment, votre nom d\'utilisateur a été généré automatiquement.</string>
-    <string name="confirm_username_title">Êtes-vous sûr(e) de vouloir confirmer votre nom d\'utilisateur actuel ?</string>
-    <string name="confirm_username_description">Confirmer votre nom d\'utilisateur le rendra public pour les invitations, les @mentions et les messages. Vous pouvez changer votre nom d\'utilisateur depuis les paramètres à n\'importe quel moment.</string>
+    <string name="usernamePromptTitle">Il est temps de choisir votre identifiant !</string>
+    <string name="usernamePromptBody">Les identifiants sont maintenant uniques. Ils seront visibles sous votre pseudo, et seront utilisés pour les invitations, les @mentions et les discussions.</string>
+    <string name="usernamePromptWiki">Si vous souhaitez en savoir plus sur ce changement, <a href="https://habitica.wikia.com/wiki/Player_Names">visitez notre wiki.</a></string>
+    <string name="usernamePromptDisclaimer">Les identifiants doivent respecter nos <a href="https://habitica.com/static/terms">Conditions d\'Utilisation</a> et nos <a href="https://habitica.com/static/community-guidelines">règles de vie en communauté</a>. Si vous n\'avez pas choisi un pseudo précédemment, votre identifiant a été généré automatiquement.</string>
+    <string name="confirm_username_title">Êtes-vous sûr(e) de vouloir confirmer votre identifiant actuel \?</string>
+    <string name="confirm_username_description">Confirmer votre identifiant le rendra public pour les invitations, les @mentions et les messages. Vous pouvez le changer depuis les paramètres à n\'importe quel moment.</string>
     <string name="cancel">Annuler</string>
-    <string name="confirm_username">Confirmer le Nom d\'Utilisateur</string>
-    <string name="username_not_confirmed">Nom d\'Utilisateur non confirmé</string>
-    <string name="username_confirmed">Nom d\'utilisateur confirmé</string>
-    <string name="enter_recipient_username">Entrez le @ nom d\'utilisateur du destinataire</string>
-    <string name="username_copied">Nom d\'utilisateur copié dans le presse papier</string>
-    <string name="verification_pet">Un de ces Familiers Vétérans vous attendra une fois la confirmation effectuée !</string>
+    <string name="confirm_username">Confirmer votre identifiant</string>
+    <string name="username_not_confirmed">Identifiant non confirmé</string>
+    <string name="username_confirmed">Identifiant confirmé</string>
+    <string name="enter_recipient_username">Entrez le @ identifiant du destinataire</string>
+    <string name="username_copied">identifiant copié dans le presse papier</string>
+    <string name="verification_pet">Un de ces familiers vétérans vous attendra une fois la confirmation effectuée !</string>
     <string name="welcomeNameTitle">Comment devrions-nous vous appeler \?</string>
-    <string name="display_name_length_error">Les noms affichés doivent comporter entre 1 et 30 caractères</string>
+    <string name="display_name_length_error">Les pseudos doivent comporter entre 1 et 30 caractères</string>
     <string name="setup_task_join_habitica">Rejoindre Habitica (Cochez-moi!)</string>
     <string name="setup_task_join_habitica_notes">Vous pouvez réaliser cette tâche, l\'éditer ou la supprimer.</string>
     <string name="setup_task_reward">Récompensez-vous</string>
@@ -659,7 +662,7 @@
     <string name="equipment_int">INT :</string>
     <string name="equipment_per">PER :</string>
     <string name="visit_website">Rendez vous sur le site</string>
-    <string name="subscribe_gift_description">Vous souhaitez donner les bénéfices de l\'abonnement à quelqu\'un d\'autre ?</string>
+    <string name="subscribe_gift_description">Vous souhaitez offrir les bénéfices de l\'abonnement à quelqu\'un d\'autre \?</string>
     <string name="gift_subscription">Offrir un Abonnement</string>
     <string name="gift_one_get_one_description">Un événement \"Offrez un abonnement et recevez un abonnement gratuit\" est en cours !</string>
     <string name="gift_title">A qui souhaitez-vous l\'offrir ?</string>
@@ -670,7 +673,7 @@
     <string name="server">Serveur</string>
     <string name="gift_confirmation_title">Votre cadeau a été envoyé !</string>
     <string name="opting_out_progress">Ne pas choisir</string>
-    <string name="delete_oauth_account_description">Cela va définitivement supprimer votre compte, et il ne pourra pas être restauré ! Les gemmes sur votre compte ou celles dépensées ne seront pas remboursées. Si vous confirmez définitivement, tapez DELETE dans le champ ci-dessous.</string>
+    <string name="delete_oauth_account_description">Cela va définitivement supprimer votre compte, et il ne pourra pas être restauré ! Les gemmes sur votre compte ou celles dépensées ne seront pas remboursées. Si vous êtes absolument certain, tapez DELETE dans le champ ci-dessous.</string>
     <string name="discover">Découvrir</string>
     <string name="damage_paused">Dommages en pause</string>
     <string name="preference_push_important_announcements">Annonces importantes</string>
@@ -713,7 +716,7 @@
     <string name="accept">Accepter</string>
     <string name="equip_automatically">Équiper automatiquement les nouveaux équipements</string>
     <string name="leave_challenges">Quitter les défis</string>
-    <string name="keep_challenges">Conserver les Défis</string>
+    <string name="keep_challenges">Conserver les défis</string>
     <string name="inviteFriendDescription">Vous avez invité un ou des amis qui vous ont rejoint dans vos aventures !</string>
     <string name="inviteFriendTitle">A invité un ami</string>
     <string name="joinedChallengeDescription">Vous vous êtes mis à l\'épreuve en rejoignant un défi !</string>
@@ -759,7 +762,7 @@
     <string name="basic_achievements">Succès de base</string>
     <string name="sidebar_achievements">Succès</string>
     <string name="take_me_back">Revenir en arrière</string>
-    <string name="unpin">Des-épingler</string>
+    <string name="unpin">Désépingler</string>
     <string name="pin">Épingler</string>
     <string name="levelup_title_10">Le système de classe est débloqué !</string>
     <string name="levelup_detail_10">Choisissez une classe qui correspond à votre style de jeu, et débloquez des compétences et des armures pour vous aider dans votre aventure</string>
@@ -771,8 +774,8 @@
     <string name="guild_members">Membres de la guilde</string>
     <string name="guild_summary">Description de la guilde</string>
     <string name="setup_task_habit_2_notes">ou supprimez la depuis la fenêtre d\'édition</string>
-    <string name="setup_task_habit_2">Cliquez ici pour éditer ceci en une mauvaise habitude que vous voudriez perdre</string>
-    <string name="setup_task_habit_1_notes">Soit une habitude, soit une Quotidienne ou encore une tâche À faire</string>
+    <string name="setup_task_habit_2">Cliquez ici pour éditer une mauvaise habitude que vous voudriez perdre</string>
+    <string name="setup_task_habit_1_notes">Soit une habitude, soit une quotidienne ou encore une tâche à faire</string>
     <string name="setup_task_habit_1">Ajoutez une tâche à Habitica</string>
     <string name="cost">Prix</string>
     <string name="joined_guild">Vous avez rejoint la guilde</string>
@@ -797,7 +800,7 @@
     <string name="update_available">Mise à jour disponible : %1$s (%2$d)</string>
     <string name="streak">Combo</string>
     <string name="new_reminder">Nouveau rappel</string>
-    <string name="checklist_text">Texte de liste</string>
+    <string name="checklist_text">Liste de vérification</string>
     <string name="years">Années</string>
     <string name="weeks">Semaines</string>
     <string name="days">Jours</string>
@@ -816,7 +819,7 @@
     <string name="add_local_authentication">Ajouter l\'authentification locale</string>
     <string name="defeat">Défaire</string>
     <string name="join_party_description_guild">Donnez l\'identifiant ci-dessous à un ami ou rendez-vous sur %s pour rencontrer des camarades potentiels !</string>
-    <string name="insufficientGoldTitle">Pas assez d\'Or</string>
+    <string name="insufficientGoldTitle">Pas assez d\'or</string>
     <string name="x_months">%d mois</string>
     <string name="skill_progress_title">Utilisation de compétence</string>
     <string name="onwards">En avant !</string>
@@ -826,12 +829,12 @@
     <string name="preference_push_unjoined_guild_mention">\@mentions dans des guildes</string>
     <string name="preference_push_joined_guild_mention">\@mentions dans vos guildes</string>
     <string name="gems_to_gift">Gemmes à offrir</string>
-    <string name="gift_gems_balance_subtitle">Indiquez ci-dessous combien de vos propres gemmes vous voudriez envoyer, ou changez d\'onglet pour acheter des gemmes à offrir</string>
+    <string name="gift_gems_balance_subtitle">Indiquez ci-dessous combien de vos propres gemmes vous voulez envoyer, ou changez d\'onglet pour acheter des gemmes à offrir</string>
     <string name="from_balance">Offrir vos propres gemmes</string>
     <string name="purchase">Acheter</string>
     <string name="preference_push_party_mention">\@mentions dans l\'équipe</string>
     <string name="more_out_of_habitica">Profitez encore plus d\'Habitica</string>
-    <string name="gift_gems_disclaimer">Habitica ne vous demandera jamais d\'offrir des gemmes aux autres joueurs. Supplier qu\'on vous donne des gemmes est une violation de nos règles de vie en communauté, et toute fois où cela se produit doit être signalée à admin@habitica.com.</string>
+    <string name="gift_gems_disclaimer">Habitica ne vous obligera jamais à offrir des gemmes à d\'autres personnes. Réclamer des gemmes est une violation de notre guide de vie en communauté qui doit être reportée à admin@habitica.com.</string>
     <string name="gems_gift_description">Vous voulez octroyer un butin scintillant à quelqu\'un d\'autre \?</string>
     <string name="profile_gift_subscription">Offrir
 \nun abonnement</string>
@@ -841,7 +844,7 @@
 \nun message</string>
     <string name="gift_gems">Offrir des gemmes</string>
     <string name="see_other_options">Voir les autres options</string>
-    <string name="promo_subscription_buy_gems_description">Abonnez-vous pour acheter des gemmes avec de l\'or,obtenir des objets mystères tous les mois, augmenter le taux de butin et plus encore !</string>
+    <string name="promo_subscription_buy_gems_description">Abonnez-vous pour acheter des gemmes avec de l\'or, obtenir des objets mystères tous les mois, augmenter le taux de butin et plus encore !</string>
     <string name="promo_subscription_buy_gems_prompt">Besoin de gemmes \?</string>
     <string name="transfer_ownership_confirm_message">Cela fera de %s le nouveau responsable de l\'équipe</string>
     <string name="gift_confirmation_text_gems">Vous avez envoyé des gemmes à %s.</string>
@@ -853,14 +856,14 @@
     <string name="empty_title_todos_filtered">Pas de tâches</string>
     <string name="empty_description_dailies_filtered">Il n\'y a pas de quotidienne visible avec vos filtres actuels.</string>
     <string name="empty_title_dailies_filtered">Aucune quotidienne</string>
-    <string name="empty_description_habits_filtered">Il n\'y a pas d\'habitudes visibles avec vos filtres actuels.</string>
+    <string name="empty_description_habits_filtered">Il n\'y a pas d\'habitude visible avec vos filtres actuels.</string>
     <string name="empty_title_habits_filtered">Pas d\'habitudes</string>
     <string name="register_btn_google">S\'inscrire avec Google</string>
     <string name="register_btn_fb">S\'inscrire avec Facebook</string>
     <string name="login_btn_apple">Se connecter avec Apple</string>
     <string name="subscribe_listitem5_description">Trouvez encore plus d\'objets dans Habitica avec un bonus de 2x la limite de butin habituelle.</string>
     <string name="subscribe_listitem3_description_new">Abonnez-vous maintenant pour obtenir %s et pour recevoir de nouveaux objets chaque mois !</string>
-    <string name="subscribe_listitem5">Double le butin</string>
+    <string name="subscribe_listitem5">Un butin doublé</string>
     <string name="create_account_short">Créer un compte</string>
     <string name="login_incentive_short_count">%d connexions</string>
     <string name="login_incentive_short">Connectez-vous régulièrement à Habitica</string>
@@ -881,12 +884,12 @@
     <string name="pref_emails_checkbox">Utiliser les notifications par courriel</string>
     <string name="emails">Notifications par courriel</string>
     <string name="go_shopping">Faire des emplettes</string>
-    <string name="purchase_from_timetravel_shop">Vous pouvez achetez cette customisation depuis la boutique des voyageurs temporels</string>
+    <string name="purchase_from_timetravel_shop">Vous pouvez acheter cette personnalisation dans la boutique des voyageurs temporels</string>
     <string name="learn_more">En savoir plus</string>
     <string name="limited_event">Événement limité</string>
-    <string name="g1g1_info_3_text">Cette promotion s\'applique seulement lors vous faites un cadeau à une autre personne. Si vous ou le bénéficiaire du cadeau possédez déjà un abonnement, l\'abonnement cadeau ajoutera des mois de crédit qui ne pourront être utilisés que lorsque l\'abonnement actuel sera annulé ou arrivera à expiration.</string>
+    <string name="g1g1_info_3_text">Cette promotion s\'applique seulement lorsque vous faites un cadeau à une autre personne. Si vous ou le bénéficiaire du cadeau possédez déjà un abonnement, l\'abonnement cadeau ajoutera des mois de crédit qui pourront être utilisés lorsque l\'abonnement actuel sera annulé ou arrivera à expiration.</string>
     <string name="g1g1_info_3">Limitations</string>
-    <string name="g1g1_info_2_text">Choisissez \"Offrir un abonnement\", et entrez l\'identifiant du compte auquel vous voulez faire un cadeau. A partir de là, choisissez la durée d\'abonnement que vous voulez offrir et validez. Votre accès recevra automatiquement la même durée d\'abonnement que vous venez d\'offrir.</string>
+    <string name="g1g1_info_2_text">Choisissez \"Offrir un abonnement\", et entrez l\'identifiant du compte auquel vous voulez faire un cadeau. Puis choisissez la durée d\'abonnement que vous voulez offrir et validez. Vous recevrez automatiquement la même durée d\'abonnement que celle que vous venez d\'offrir.</string>
     <string name="g1g1_info_2">Comment ça marche</string>
     <string name="gift_a_subscription">Offrez un abonnement</string>
     <string name="g1g1_info_1">En l\'honneur de la saison des cadeaux, nous reprenons une promotion très spéciale. Désormais, lorsque vous offrez un abonnement à quelqu\'un, vous recevrez le même abonnement pour vous même !</string>
@@ -897,15 +900,15 @@
     <string name="member_group_plan">Membre d\'une offre de groupe</string>
     <string name="member">Membre</string>
     <string name="owner">Propriétaire</string>
-    <string name="cancel_subscription_group_plan_owner">Vous bénéficiez d\'un abonnement gratuit parce que vous détenez à une équipe ou une guilde qui a une offre de groupe. Cela s\'arrêtera si vous annulez l\'offre de groupe. Chaque mois de crédit d\'abonnement que vous avez sera appliqué à la fin de l\'offre de groupe. Vous pouvez l\'annuler depuis le site Habitica.</string>
+    <string name="cancel_subscription_group_plan_owner">Vous bénéficiez d\'un abonnement gratuit parce que vous appartenez à une équipe ou une guilde qui a une offre de groupe. Cela s\'arrêtera si vous annulez l\'offre de groupe. Chaque mois de crédit d\'abonnement que vous avez sera appliqué à la fin de l\'offre de groupe. Vous pouvez l\'annuler depuis le site Habitica.</string>
     <string name="cancel_subscription_group_plan">Vous bénéficiez d\'un abonnement gratuit parce que vous appartenez à une équipe ou une guilde qui a une offre de groupe. Cet abonnement se terminera si vous quittez l\'équipe ou la guilde, ou si son propriétaire annule l\'offre de groupe. Tous les mois d\'abonnements dont vous disposiez déjà seront appliqués à la fin de l\'offre de groupe.</string>
     <string name="group_plan">Offre de groupe</string>
     <string name="subscription_credit">Crédit d\'abonnement</string>
     <string name="save_20">Économiser 20%</string>
     <string name="gifted">offert</string>
-    <string name="resubscribe_description">Vous voulez encore profiter des bonus \? Vous pouvez commencer un nouvel abonnement avant que celui-ci se termine pour les conserver.</string>
+    <string name="resubscribe_description">Vous voulez encore profiter des bonus \? Vous pouvez commencer un nouvel abonnement avant que celui-ci ne se termine pour les conserver.</string>
     <string name="resubscribe">Se réinscrire</string>
-    <string name="renew_subscription">Renouvellement l\'abonnement</string>
+    <string name="renew_subscription">Renouveler l\'abonnement</string>
     <string name="thanks_for_subscribing">Merci d\'avoir souscrit un abonnement</string>
     <string name="subscribe_options_title">Choisissez la durée d\'abonnement qui marche pour vous</string>
     <string name="ending_on">Termine le %s</string>
@@ -918,17 +921,17 @@
     <string name="local">local</string>
     <string name="authentication_methods">Méthodes d\'authentification</string>
     <string name="someone">Quelqu\'un</string>
-    <string name="invitation_title">%s vous a invité•e à %s</string>
+    <string name="invitation_title">%s vous a invité•e à rejoindre son groupe %s</string>
     <string name="password_too_short">Votre mot de passe doit contenir au moins %d caractères</string>
     <string name="copy_username">Copier l\'identifiant</string>
     <string name="mystic_hourglasses">Sabliers mystiques</string>
     <string name="subscriber_currency">Monnaie d\'abonnement</string>
     <string name="game_mechanics">Mécaniques de jeu</string>
     <string name="common_questions">Questions habituelles</string>
-    <string name="gems_description">Les gemmes sont une monnaie achetée avec de l\'argent, et qui vous permet d\'acheter plus de contenu dans Habitica et est une principale source de soutient financier pour l\'équipe d\'Habitica, avec les abonnements.
-\n
-\nTout le contenu acheté avec des gemmes est purement cosmétique ou peut être obtenu gratuitement avec le temps.
-\n
+    <string name="gems_description">Les gemmes sont une monnaie achetée avec de l\'argent, qui vous permet d\'acheter plus de contenu dans Habitica et est la principale source de soutien financier pour l\'équipe d\'Habitica, avec les abonnements. 
+\n 
+\nTout le contenu acheté avec des gemmes est purement esthétique ou peut être obtenu gratuitement avec le temps. 
+\n 
 \nVous pouvez aussi recevoir des gemmes offertes par d\'autres personnes, par des récompenses de défi, en contribuant à Habitica ou en vous abonnant.</string>
     <string name="currency">Monnaie</string>
     <string name="premium_currency">Monnaie premium</string>
@@ -943,7 +946,7 @@
 \n
 \nLa **perception (PER)** augmente la quantité d\'or et le taux de butin reçus. Les voleurs et les mages gagnent de la perception grâce à leur équipement.
 \n
-\nAprès le niveau 10, vous gagnez 1 point d\'attribut que vous pouvez allouer à l\'attribut que vous souhaitez. Vous pouvez également porter de l\'équipement qui a différentes combinaisons d\'améliorations d\'attributs.</string>
+\nAprès le niveau 10, à chaque montée de niveau, vous gagnez 1 point d\'attribut que vous pouvez allouer à l\'attribut que vous souhaitez. Vous pouvez également porter de l\'équipement qui a différentes combinaisons d\'améliorations d\'attributs.</string>
     <string name="stat_allocation">Allocation des attributs</string>
     <string name="mana_description">Les points de mana sont débloqués avec le système de classe au niveau 10, et vous permettent d\'**utiliser des compétences** au fur et à mesure que vous les apprenez dès le niveau 11.
 \n
@@ -954,9 +957,9 @@
 \n
 \nSi vous vous abonnez à Habitica, vous pourrez même utiliser l\'or pour acheter un nombre de gemmes déterminé par la durée de votre abonnement.</string>
     <string name="mana_points">Points de mana</string>
-    <string name="experience_description">Les points d\'expérience représentes vos progrès et vous permettent de monter en niveau. Vous allez **gagner de l\'expérience** surtout en validant des tâches et en réussissant des quêtes, mais il y a également des compétences de classe qui donnent de l\'expérience.
-\n
-\nLes tâche d\'une difficulté élevée, ou les tâches en rouge vous donneront **plus d\'expérience**. L\'attribut **intelligence** augmente également votre gain d\'expérience.</string>
+    <string name="experience_description">Les points d\'expérience représentent vos progrès et vous permettent de monter de niveau. Vous allez **gagner de l\'expérience** surtout en validant des tâches et en réussissant des quêtes, mais il y a également des compétences de classe qui donnent de l\'expérience. 
+\n 
+\nLes tâches d\'une difficulté élevée, ou les tâches en rouge vous donneront **plus d\'expérience**. L\'attribut **intelligence** augmente également votre gain d\'expérience.</string>
     <string name="experience_points">Points d\'expérience</string>
     <string name="health_description">Ceci représente la santé de votre avatar. Rater une quotidienne ou réaliser une mauvaise habitude **diminue vos points de vie**.
 \n
@@ -967,11 +970,11 @@
     <string name="stats_currency">Stats &amp; monnaie</string>
     <string name="how_best_habitica">Des doutes sur la meilleure façon d\'utiliser Habitica \?</string>
     <string name="overview">Vue d\'ensemble</string>
-    <string name="send_bug_prompt">Envoyez-nous un rapport d\'erreur et nous vous reviendrons !</string>
+    <string name="send_bug_prompt">Envoyez-nous un rapport d\'erreur et nous reviendrons vers vous !</string>
     <string name="common_fixes">Solutions courantes</string>
     <string name="support_bug_title">Nous essayons constamment d\'améliorer notre application en nous basant sur vos commentaires, mais parfois quelques bugs apparaissent…</string>
     <string name="lets_go">Allons-y</string>
-    <string name="bugs_fixes_description">Quelque chose s\'est mal passé \? Trouvez des réponses ici ou contacter nous pour de l\'aide.</string>
+    <string name="bugs_fixes_description">Quelque chose s\'est mal passé \? Trouvez des réponses ici ou contactez-nous pour de l\'aide.</string>
     <string name="bugs_fixes">Anomalies &amp; corrections</string>
     <string name="suggestions_feedback">Suggestions &amp; retours</string>
     <string name="get_help">Obtenir de l\'aide</string>
@@ -988,7 +991,7 @@
     <string name="selected">Sélectionné</string>
     <string name="off">Désactivé</string>
     <string name="on">Activé</string>
-    <string name="delete_checklist_entry">Supprimer l\'élément de liste de vérification</string>
+    <string name="delete_checklist_entry">Supprimer…</string>
     <string name="still_questions">D\'autres questions \?</string>
     <string name="purchase_amount_error">Vous ne pouvez pas acheter autant.</string>
     <string name="read_more">Lire plus</string>
@@ -1010,4 +1013,95 @@
     <string name="hourglasses_description">Les sabliers mystiques sont une forme de monnaie extrêmement rare que vous ne recevrez qu\'en vous abonnant à Habitica pour trois mois consécutifs ou plus. Ils sont utilisables à la boutique des voyageurs temporels pour acheter d\'anciens ensembles, familiers, montures, arrière-plans animés ou même des quêtes spéciales.
 \n
 \nVous pouvez recevoir jusqu\'à quatre sabliers mystiques par an. Vous les recevrez au moment où votre abonnement se renouvelle. Ils vous sont envoyés le premier jour du mois qui suit votre dernier paiement d\'abonnement vous qualifiant pour un sablier. Lisez la page d\'[abonnement] pour plus de détails.</string>
+    <string name="leave_delte_tasks">Quitter et supprimer les tâches</string>
+    <string name="leave_keep_tasks">Quitter et conserver les tâches</string>
+    <string name="leave_delete_task">Quitter et supprimer la tâche</string>
+    <string name="challenge_leave_description">Vous pouvez choisir de conserver les tâches de ce défi sur votre tableau de tâches personnel ou les supprimer lorsque vous le quittez</string>
+    <string name="create_task_description">Ajoutez une tâche pour quelque chose que vous aimeriez accomplir cette semaine</string>
+    <string name="purchase_equipment_title">Acheter un équipement</string>
+    <string name="mount_category">Montures %s</string>
+    <string name="pet_category">Familiers %s</string>
+    <string name="challenge_task_name">Tâche du défi %s</string>
+    <string name="delete_x_tasks">Supprimer %d tâches</string>
+    <string name="keep_x_tasks">Conserver %d tâches</string>
+    <string name="broken_challenge_description">Cette tâche est l\'une des %d tâches qui composent un défi qui n\'existe plus. Que voudriez-vous faire des tâches restantes \?</string>
+    <string name="broken_challenge">Défi cassé</string>
+    <string name="leave_delete_x_tasks">Quitter &amp; supprimer %d tâches</string>
+    <string name="delete_challenge_task_description">Cette tâche appartient aux %d tâches qui composent le défi “%s”. Vous devez quitter ce défi pour supprimer cette tâche.</string>
+    <string name="delete_challenge_task_title">Supprimer la tâche du défi \?</string>
+    <string name="hatch">Faire éclore</string>
+    <string name="hatch_your_pet">Faites éclore votre familier</string>
+    <string name="use_saddle">Utiliser une selle</string>
+    <string name="magic_potion">Potion magique</string>
+    <string name="magic_potions">Potions magiques</string>
+    <string name="hatch_pet_again">Faire éclore le familier à nouveau</string>
+    <string name="unhatched_pet">Familier non éclos</string>
+    <string name="hatch_pet">Faire éclore le familier</string>
+    <string name="can_hatch_pet">Combinez votre œuf de %s et votre potion %s pour faire éclore ce familier !</string>
+    <string name="suggest_pet_hatch_again_missing_both">Vous avez besoin d\'un %s et d\'une potion %s pour faire éclore ce familier à nouveau</string>
+    <string name="suggest_pet_hatch_again_missing_potion">Vous avez besoin d\'une potion %s pour faire éclore ce familier à nouveau</string>
+    <string name="suggest_pet_hatch_again_missing_egg">Vous avez besoin d\'un œuf de %s pour faire éclore ce familier à nouveau</string>
+    <string name="suggest_pet_hatch_missing_both">Vous avez besoin d\'un %s et d\'une potion %s pour faire éclore ce familier</string>
+    <string name="suggest_pet_hatch_missing_potion">Vous avez besoin d\'une potion %s pour faire éclore ce familier</string>
+    <string name="suggest_pet_hatch_missing_egg">Vous avez besoin d\'un œuf de %s pour faire éclore ce familier</string>
+    <string name="view_onboarding_tasks">Voir les tâches d’intégration</string>
+    <string name="equip">Équiper</string>
+    <string name="excessItemsNoneLeft">Vous avez déjà tout le nécessaire pour tous les familiers %s. Voulez vous vraiment acheter %d %ss \?</string>
+    <string name="purchaseX">Acheter %d</string>
+    <string name="excessItemsXLeft">Vous avez seulement besoin de %d %@s pour faire éclore tous les familiers possibles. Voulez-vous vraiment acheter %d \?</string>
+    <string name="excess_items">Objets en surplus</string>
+    <string name="onboardingComplete_achievement_title">Vous avez terminé vos tâches de démarrage !</string>
+    <string name="onboardingCompleteDescription">Si vous en voulez plus, allez regarder vos succès et commencez à les collectionner !</string>
+    <string name="onboardingCompleteTitle">Vous avez reçu <b>5 Accomplissements</b> et <font color="#EE9109"><b>100 pièces d’or</b></font> pour vos efforts.</string>
+    <string name="first_drop_title">Vous avez trouvé de nouveaux objets !</string>
+    <string name="go_to_items">Allez voir vos objets</string>
+    <string name="first_drop_explanation2">Allez voir vos objets et essayez de combiner votre nouvel œuf et potion d’éclosion !</string>
+    <string name="first_drop_explanation1">Accomplir des tâches vous donne la chance d’obtenir des œufs, des potions d’éclosion, et de la nourriture pour familiers.</string>
+    <string name="purchasedEquipmentDescription">L’équipement peut être pratique ou juste élégant. Augmentez vos caractéristiques pour donner toutes sortes d’avantages à votre avatar</string>
+    <string name="fedPetDescription">Chaque familier a une nourriture spécifique qu’il adore ! Expérimentez pour trouver laquelle fera grandir votre familier plus rapidement</string>
+    <string name="hatchedPetDescription">Il y a tellement de familiers à collectionner, vous êtes sûr d’avoir des favoris. Si vous les nourrissez, petit familier pourra peut-être devenir grand…</string>
+    <string name="completedTaskDescription">Une tâche peut être une habitude, une tâche quotidienne, ou un liste à faire. Continuez de les accomplir pour recevoir toutes sortes de récompenses !</string>
+    <string name="createdTaskDescription">C\'est parti ! Si vous avez besoin d’aide pour planifier vos tâches, essayez de réfléchir à ce que vous aimeriez faire à un moment donné de la journée</string>
+    <string name="purchasedEquipmentTitle">Équipement acheté</string>
+    <string name="fedPetTitle">Nourrissez un familier</string>
+    <string name="hatchedPetTitle">Eclosion de familier</string>
+    <string name="completedTaskTitle">Complétez une tâche</string>
+    <string name="createdTaskTitle">Avez créé votre première tâche</string>
+    <string name="purchase_equipment_description">L’équipement est une manière de personnaliser votre avatar et améliorer vos caractéristiques</string>
+    <string name="feedPet_description">Complétez des tâches pour obtenir de la nourriture ! Vous pourrez ainsi nourrir votre familier</string>
+    <string name="hatch_pet_description">Complétez des tâches pour obtenir une potion d\'éclosion et un oeuf, puis faites éclore votre familier !</string>
+    <string name="complete_task_description">Valider n\'importe laquelle de vos tâches pour remporter des récompenses</string>
+    <string name="feedPet_title">Nourrissez un familier</string>
+    <string name="hatch_pet_title">Faire éclore un nouveau familier</string>
+    <string name="complete_task_title">Valider une tâche</string>
+    <string name="create_task_title">Créer une tâche</string>
+    <string name="percent_completed">%d%% Complété</string>
+    <string name="lets_get_started">Commençons</string>
+    <string name="your_progress">Votre progression</string>
+    <string name="adventure_guide_description">Remplissez ces tâches d\'initiation et vous gagnerez &lt;b&gt;5 succès&lt;/b&gt; et &lt;font color=#EE9109&gt;&lt;b&gt;100 pièces d\'or&lt;/b&gt;&lt;/font&gt; une fois terminé !</string>
+    <string name="getting_started">Pour commencer</string>
+    <string name="complete_for_gold">Remplissez cette tâche pour gagner &lt;font color=#EE9109&gt;&lt;b&gt;100 or&lt;/b&gt;&lt;/font&gt; !</string>
+    <string name="onboarding_tasks">Tâches d\'Intégration</string>
+    <string name="task_display">Affichage de liste des tâches</string>
+    <string name="pet_ownership_fraction">%1$d / %2$d</string>
+    <string name="special_items">Objets spéciaux</string>
+    <string name="pms_disabled_description">Vous pouvez toujours envoyer des messages, mais personne ne peut vous en envoyer. Vous pouvez les réactiver dans les paramètres.</string>
+    <string name="pms_disabled">Les messages privés sont désactivés</string>
+    <string name="disablePrivateMessages">Désactiver les messages privés</string>
+    <string name="block">Bloquer</string>
+    <string name="block_user_description">Une personne bloquée ne peut vous envoyer de messages privés mais vous verrez malgré tout leurs messages dans la taverne ou les guildes. Vous ne pouvez pas bloquer l\'équipe de modération.</string>
+    <string name="block_user_title">Bloquer %s \?</string>
+    <string name="unblock_user">Débloquer l\'utilisateur</string>
+    <string name="block_user">Bloquer l\'utilisateur</string>
+    <string name="limitations">Limitations</string>
+    <string name="spooky_promo_info_prompt">La vente de gemmes est de retour pour hanter cette fin de gala d\'automne ! C\'est votre dernière chance d\'obtenir plus de gemmes que jamais, alors faites le plein tant que ça dure !</string>
+    <string name="spooky_promo_info_limitations">Cette promotion est limitée à la durée de l\'événement. Cet événement démarrera le 29 octobre à 8:00 EDT (12:00 UTC) et se terminera le 2 novembre à 20:00 EDT (00:00 UTC). Cette promotion n\'est disponible que si vous achetez des gemmes pour vous-même.</string>
+    <string name="spooky_promo_info_instructions">Entre le 29 Octobre et le 2 Novembre, achetez simplement n\'importe quel paquet de gemmes comme d\'habitude, et votre compte sera crédité du nombre de gemmes promotionnelles. Cela vous fera plus de gemmes à dépenser, partager, ou économiser pour de futurs objets !</string>
+    <string name="view_gem_bundles">Voir les paquets de gemmes</string>
+    <string name="fall_promo_info_prompt">Le gala d\'automne bat son plein, alors nous avons pensé que ce serait le moment idéal pour proposer notre toute première vente de gemmes ! Dès à présent, vous recevrez plus de gemmes qu\'auparavant pour chaque achat.</string>
+    <string name="fall_promo_info_limitations">Cette promotion est limitée à la durée de l\'événement. Cet événement démarrera le 22 septembre à 8:00 EDT (12:00 UTC) et se terminera le 30 septembre à 20:00 EDT (00:00 UTC). Cette promotion n\'est disponible que si vous achetez des gemmes pour vous-même.</string>
+    <string name="fall_promo_info_instructions">Entre le 22 et le 30 septembre, achetez simplement n\'importe quel paquet de gemmes comme d\'habitude, et votre compte sera crédité du nombre de gemmes promotionnelles. Cela vous fera plus de gemmes à dépenser, partager, ou économiser pour de futurs objets !</string>
+    <string name="how_it_works">Comment ça marche</string>
+    <string name="x_to_y">%s à %s</string>
+    <string name="usually_x_gems">Généralement %d gemmes</string>
 </resources>

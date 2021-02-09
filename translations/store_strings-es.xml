@@ -1,9 +1,6 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="store_title">Convierte tus Obligaciones En Un Juego</string>
-  <string name="store_short_description">¡Vive tu vida como si fuese un juego para motivarte y organizarte!</string>
-  <string name="store_description">¡Haz de tu vida un juego para mantenerte motivado y organizado! Habitica hace sencillo divertirte mientras completas tus objetivos.
-Introduce tus Hábitos, tus Tareas Diarias y tu lista de Tareas Pendientes, y luego crea un personaje personalizado. ¡Completa tus tareas para subir de nivel a tu personaje y desbloquear elementos como armaduras, mascotas, habilidades e incluso misiones! Combate monstruos con tus amigos para impulsaros mutuamente a ser más responsables, y usa tu oro en recompensas del juego, como equipamiento, o premios personalizados, como ver un episodio de tu serie favorita. Flexible, social y divertido, Habitica es la mejor forma de motivarte para completar cualquier cosa.
-Si tienes cualquier sugerencia, siéntete libre de enviarla a mobile@habitica.com. Y si te gusta nuestra aplicación, agradeceríamos enormemente que nos dejases tu valoración.
-</string>
+    <string name="store_title">Convierte tus Obligaciones En Un Juego</string>
+    <string name="store_short_description">¡Vive tu vida como si fuese un juego para motivarte y organizarte!</string>
+    <string name="store_description">¡Haz de tu vida un juego para mantenerte motivado y organizado! Habitica hace sencillo divertirte mientras completas tus objetivos. Introduce tus Hábitos, tus Tareas Diarias y tu lista de Tareas Pendientes, y luego crea un personaje personalizado. ¡Completa tus tareas para subir de nivel a tu personaje y desbloquear elementos como armaduras, mascotas, habilidades e incluso misiones! Combate monstruos con tus amigos para impulsaros mutuamente a ser más responsables, y usa tu oro en recompensas del juego como equipamiento o premios personalizados, por ejemplo, ver un episodio de tu serie favorita. Flexible, social y divertido, Habitica es la mejor forma de motivarte para conseguir lo que sea. Si tienes cualquier sugerencia, siéntete libre de enviarla a mobile@habitica.com. Y si te gusta nuestra aplicación, agradeceríamos enormemente que nos dejases tu valoración.</string>
 </resources>

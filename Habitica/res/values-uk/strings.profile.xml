@@ -1,2 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="profile_achievements">Досягнення</string>
+    <string name="profile_private_message">Особисте повідмлення</string>
+    <string name="profile_allocated">Розподілено:</string>
+    <string name="profile_class_bonus">Клас-Бонус:</string>
+    <string name="profile_level">Рівень:</string>
+    <string name="profile_message_sent_to">Повідомлення відправлено %s</string>
+    <string name="profile_send_message_to">Відправити повідомлення %s</string>
+    <string name="profile_loading_data">Завантаження даних учасника...</string>
+    <string name="profile_mounts_tamed">Приручені скакуни</string>
+    <string name="profile_pets_found">Знайдені улюбленці</string>
+    <string name="profile_pets_and_mounts">Улюбленці та Скакуни</string>
+</resources>

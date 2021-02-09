@@ -1,9 +1,6 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="store_title">Faites de vos tâches un jeu</string>
-  <string name="store_short_description">Traitez votre vie comme un jeu afin de gagner en motivation et en organisation !</string>
-  <string name="store_description">Gérez votre vie comme un jeu pour garder la motivation et l\'organisation ! Habitica rend simple le fait de s\'amuser en accomplissant ses tâches.
-Intégrez vos habitudes, vos objectifs quotidiens, et votre liste de tâches, puis créez-vous un avatar personnalisé. Validez vos tâches pour gagner des niveau et débloquer des fonctionnalités comme l\'armure, les familiers, les compétences et même les quêtes ! Combattez les monstres avec vos amis pour vous responsabiliser, et utilisez votre or pour acheter des récompenses du jeu, comme de l\'équipement, ou des récompenses personnalisées comme regarder un épisode de votre série préférée. Flexible, social et amusant,  Habitica est la meilleure manière de vous motiver à accomplir vos objectifs.
-Si vous avez la moindre question, n\'hésitez pas à envoyer un message à mobile@habitica.com ! Et si vous appréciez notre application, nous vous serions reconnaissant de bien vouloir nous laisser un avis.
-</string>
+    <string name="store_title">Faites de vos tâches un jeu</string>
+    <string name="store_short_description">Faites de votre vie un jeu afin de gagner en motivation et en organisation !</string>
+    <string name="store_description">Gérez votre vie comme un jeu pour vous motiver et vous organiser ! Habitica permet de s\'amuser en accomplissant ses corvées. Intégrez vos habitudes, vos objectifs quotidiens, et votre liste de tâches, puis créez-vous un avatar personnalisé. Validez vos tâches pour gagner des niveaux et débloquer des fonctionnalités telles qu\'armure, familiers, compétences ou encore des quêtes ! Combattez des monstres avec vos amis pour vous responsabiliser, et utilisez votre or pour acheter des récompenses du jeu : équipement ou récompenses personnalisées comme regarder un épisode de votre série préférée. Flexible, social et amusant, Habitica est la meilleure manière de vous motiver à accomplir vos objectifs. Si vous avez la moindre question, n\'hésitez pas à envoyer un message à mobile@habitica.com ! Et si vous appréciez notre application, nous vous serions reconnaissant de bien vouloir nous laisser un commentaire.</string>
 </resources>

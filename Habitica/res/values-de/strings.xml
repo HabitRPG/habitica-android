@@ -314,7 +314,7 @@
     <string name="google_services_missing">Google Play Dienste konnten nicht gefunden werden.</string>
     <string name="gem_purchase_toolbartitle">Kaufen</string>
     <string name="gem_purchase_title">Das Erwerben von Edelsteinen unterstützt die Entwickler und hilft Habitica am Laufen zu halten</string>
-    <string name="gem_purchase_subtitle">Edelsteine erlauben es Dir, spaßige Extras für Dein Konto zu erwerben, inklusive:</string>
+    <string name="gem_purchase_subtitle">Edelsteine erlauben es Dir, tolle Extras für Dein Konto zu erwerben, inklusive:</string>
     <string name="gem_purchase_listitem1">Coole Kostüme für Deinen Avatar</string>
     <string name="gem_purchase_listitem2">Fantastische Hintergründe</string>
     <string name="gem_purchase_listitem3">Quest, welche Dich mit Haustiereiern belohnt</string>
@@ -361,7 +361,7 @@
     <string name="monthly_gem_cap">Monatliche Edelsteinobergrenze</string>
     <string name="inactive">Inaktiv</string>
     <string name="one_month">1 Monat</string>
-    <string name="months">%d Monate</string>
+    <string name="months">Monate</string>
     <string name="month">Monat</string>
     <string name="three_months">3 Monate</string>
     <string name="six_months">6 Monate</string>
@@ -675,8 +675,8 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="daily_tip_7">Versuche Gegenstände aus dem Marktplatz an Deine Belohnungen anzuheften, um Dich zu motivieren sie Dir zu verdienen!</string>
     <string name="week_reminder_text">Pausen sind gesund, dennoch kannst Du mit einfachen Aufgaben Punkte verdienen um Level aufzusteigen und coole Ausrüstung zu bekommen!</string>
     <string name="usernamePromptBody">Loginnamen sind jetzt einzigartige Benutzernamen, welche neben Deinem Anzeigenamen sichtbar sind und für Einladungen, Chat @Erwähnungen und Nachrichten benutzt werden.</string>
-    <string name="usernamePromptWiki">Wenn Du mehr über diese Änderung erfahren möchtest, <a href="https://habitica.fandom.com/wiki/Player_Names">geh auf unsere Wiki.</a></string>
-    <string name="usernamePromptDisclaimer">Benutzernamen sollten mit unseren <a href="https://habitica.com/static/terms">Servicebedingungen</a> und <a href="https://habitica.com/static/community-guidelines">Community-Richtlinien</a> übereinstimmen. Falls Du vorher keinen Loginnamen festgelegt hast, wurde Dein Benutzername auto-generiert.</string>
+    <string name="usernamePromptWiki">Wenn Du mehr über diese Änderung erfahren möchtest, <a href="https://habitica.fandom.com/wiki/Player_Names">geh auf unser Wiki.</a></string>
+    <string name="usernamePromptDisclaimer">Benutzernamen sollten mit unseren <a href="https://habitica.com/static/terms">Servicebedingungen</a> und <a href="https://habitica.com/static/community-guidelines">Community-Richtlinien</a> übereinstimmen. Falls Du vorher keinen Login-Namen festgelegt hast, wurde Dein Benutzername automatisch generiert.</string>
     <string name="confirm_username_description">Das Bestätigen Deines Nutzernamens wird diesen für Einladungen, @Erwähnungen und Nachrichten öffentlich machen. Du kannst Deinen Benutzernamen jederzeit in den Einstellungen ändern.</string>
     <string name="equipment_str">STR:</string>
     <string name="equipment_con">CON:</string>
@@ -745,7 +745,7 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="local">lokale</string>
     <string name="authentication_methods">Authentifizierungsmethoden</string>
     <string name="someone">Jemand</string>
-    <string name="invitation_title">%s hat Dich zur %s eingeladen</string>
+    <string name="invitation_title">%s hat Dich eingeladen der Gruppe %s beizutreten</string>
     <string name="password_too_short">Das Passwort muss mindestens %d Zeichen haben</string>
     <string name="copy_username">Benutzernamen kopieren</string>
     <string name="id_copied">Benutzer-ID in die Zwischenablage kopiert</string>
@@ -821,9 +821,9 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="confirm_deletion">Löschen bestätigen</string>
     <string name="switch_to_grid_view">Zur Kachelansicht wechseln</string>
     <string name="switch_to_list_view">Zur Listenansicht wechseln</string>
-    <string name="special_achievements">Spezielle Erfolge</string>
+    <string name="special_achievements">Besondere Erfolge</string>
     <string name="seasonal_achievements">Saisonale Erfolge</string>
-    <string name="basic_achievements">Einfache Erfolge</string>
+    <string name="basic_achievements">Elementare Erfolge</string>
     <string name="sidebar_achievements">Erfolge</string>
     <string name="take_me_back">Ich will zurück</string>
     <string name="unpin">Entfernen</string>
@@ -967,7 +967,7 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="bugs_fixes">Programmfehler &amp; Fehlerbehebung</string>
     <string name="suggestions_feedback_description">Hast Du Vorschläge, wie Funktionen besser gestaltet werden können, oder Ideen für etwas Neues\? Erzähle es uns!</string>
     <string name="not_selected">Nicht ausgewählt</string>
-    <string name="delete_checklist_entry">Checklisteneintrag löschen</string>
+    <string name="delete_checklist_entry">Löschen…</string>
     <string name="still_questions">Hast Du weitere Fragen\?</string>
     <string name="purchase_amount_error">Du bist nicht in der Lage, so viele zu kaufen.</string>
     <string name="read_more">Mehr Erfahren</string>
@@ -977,33 +977,33 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="habitica_questions">Habitica Fragen</string>
     <string name="support">Support</string>
     <string name="manual_sync_restart_description">Manchmal aktualisiert die App Inhalte nicht automatisch. Versuche sie durch Ziehen zu aktualisieren oder schließe die App und öffne sie erneut.</string>
-    <string name="experience_description">Erfahrungspunkte zeigen Deinen Fortschritt und ermöglichen Dir, ein Level aufzusteigen. Du kannst hauptsächlich **EXP gewinnen**, indem Du Aufgaben erledigst oder Quests abschliesst, aber es gibt auch einige Klassenfähigkeiten, die EXP geben.
+    <string name="experience_description">Erfahrungspunkte zeigen Deinen Fortschritt und ermöglichen Dir, ein Level aufzusteigen. Du kannst hauptsächlich **EXP gewinnen**, indem Du Aufgaben erledigst oder Quests abschließt, aber es gibt auch einige Klassenfähigkeiten, die EXP geben.
 \n
-\nSchwierigere Aufgaben und auch rot gefärbte Aufgaben geben Dir ** mehr EXP**. Der **Intelligenz-Wert** erhöht Deinen EXP-Gewinn ebenfalls.</string>
+\nSchwierigere Aufgaben und auch rot gefärbte Aufgaben geben Dir **mehr EXP**. Der **Intelligenz-Wert** erhöht Deinen EXP-Gewinn ebenfalls.</string>
     <string name="health_description">Dies stellt das Leben Deines Avatars dar. Eine Tagesaufgabe zu verpassen oder einer schlechten Gewohnheit nachzugehen **senkt Deine HP**.
 \n
 \n**Erhöhe HP** indem Du ein Level aufsteigst, durch einen Heiltrank, oder mit einer Klassenfähigkeit, die heilt.
 \n
 \nWenn Deine **HP 0 erreichen**, wirst Du ein Level verlieren, sowie alles Gold und ein Stück Deiner Ausrüstung. Verlorene Ausrüstung kann wieder gekauft werden.</string>
     <string name="number_responded">%1$d/%2$d haben geantwortet</string>
-    <string name="mana_description">Mana-Punkte werden mit dem Klassensystem ab Level 10 freigeschaltet und ermöglichen Dir **Fähigkeiten zu verwenden**, sobald Du ab Level 11 welche erlernt hat.
+    <string name="mana_description">Mana-Punkte werden mit dem Klassensystem ab Level 10 freigeschaltet und ermöglichen Dir **Fähigkeiten zu verwenden**, sobald Du ab Level 11 welche erlernt hast.
 \n
-\nEtwas **Mana wird aufgefüllt** bei Deinem Tageswechsel, aber Du kannst mehr Mana dazugewinnen, indem Du Aufgaben erledigst oder Fähigkeiten eines Magiers anwendest.</string>
+\nBeim Tageswechsel wird täglich etwas **Mana aufgefüllt**, aber Du kannst mehr Mana dazugewinnen, indem Du Aufgaben erledigst oder Fähigkeiten eines Magiers anwendest.</string>
     <string name="gold_description">Gold ist die **Hauptwährung** in Habitica und ermöglicht Dir, Ausrüstung, Quests, Gegenstände oder sogar maßgeschneiderte Belohnungen zu kaufen.
 \n
-\n**Verdiene Gold** durch das Abschliessen von Quests oder mittels Klassenfähigkeiten. Höhere **Wahrnehmungswerte** erhöhen die Menge an Gold, die Du verdienst.
+\n**Verdiene Gold** durch das Abschließen von Quests oder mittels Klassenfähigkeiten. Höhere **Wahrnehmungswerte** erhöhen die Menge an Gold, die Du verdienst.
 \n
-\nWen Du Habitica abonnierst, kannst Du mit Gold sogar eine beschränkte Anzahl Edelsteine kaufen, je nachdem, wie lange Du schon Abonnent bist.</string>
+\nWenn Du Habitica abonnierst, kannst Du mit Gold sogar eine gewisse, von der Dauer Deines Abonnements abhängige, Anzahl an Edelsteinen kaufen.</string>
     <string name="update_app_description">Wir lassen immer wieder neue Bugfixes raus. Deshalb solltest Du regelmäßig im Play-Store nach Aktualisierungen ausschau halten.</string>
     <string name="hourglasses_description">Mystische Sanduhren sind eine extrem seltene Währung, die Du nur durch ein Habitica-Abonnement von mindestens drei aufeinanderfolgenden Monaten erhalten kannst. Du brauchst die Sanduhren im Shop der Mystischen Zeitreisenden, um Ausrüstungssets aus vergangenen Zeiten zu kaufen, oder auch Haustiere, Reittiere, animierte Hintergründe oder spezielle Quests.
 \n
 \nDu kannst bis zu vier Mystische Sanduhren pro Jahr erhalten. Der Zeitpunkt, wann das passiert, hängt von Deiner Abonnements-Erneuerung ab. Die Sanduhren trudeln am ersten Tag des neuen Monats nach der Abonnementszahlung ein, für die Dir eine Sanduhr zusteht. Sie auf der [Abonnement]-Seite nach, wenn Du mehr wissen willst.</string>
-    <string name="gems_description">Edelsteine sind eine Währung, die Du mit echtem Geld kaufst. Sie ermöglichen Dir, zusätzliche Inhalte in Habitica zu kaufen und sind neben Abonnementen eine der Haupteinnahmequellen für das Habitica-Team.
+    <string name="gems_description">Edelsteine sind eine Währung, die Du mit echtem Geld kaufst. Sie ermöglichen Dir, zusätzliche Inhalte in Habitica zu kaufen und sind neben Abonnements eine der Haupteinnahmequellen für das Habitica-Team.
 \n
 \nAlle Inhalte, die mit Edelsteinen gekauft werden, sind rein kosmetischer Natur oder können mit der Zeit auch kostenlos erhalten werden.
 \n
 \nDu kannst Edelsteine auch als Geschenk von anderen Spielern erhalten, als Preis einer Herausforderung, durch Mitarbeit an Habitica oder durch ein Abonnement.</string>
-    <string name="stat_description">Alle Habitica-Charaktere haben vier Eigenschaften, die Habiticas Spielablauf beeinflussen.
+    <string name="stat_description">Alle Habitica-Charaktere haben vier Attribute, die Habiticas Spielablauf beeinflussen.
 \n
 \n**Stärke (STR)** beeinflusst kritische Treffer und erhöht den Schaden, den Du einem Quest Boss zufügst. Krieger und Schurken erhalten STR von Ihrer Klassenausrüstung.
 \n
@@ -1011,7 +1011,98 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
 \n
 \n**Intelligenz (INT)** steigert die Menge an EXP, die Du verdienst und gibt Dir mehr Mana. Magier und Heiler erhalten INT von Ihrer Klassenausrüstung.
 \n
-\n**Wahrnehmung (PER)** erhöht die Goldmenge, die Du erhältst und die Rate Deiner Fundgegenstände. Schurken und Magier erhalten PER von Ihrer Klassenausrüstung.
+\n**Wahrnehmung (PER)** erhöht die Goldmenge, die Du erhältst, und die Fundrate von Gegenständen. Schurken und Magier erhalten PER von Ihrer Klassenausrüstung.
 \n
-\nAb Level 10 verdienst Du einen Eigenschaften-Punkt für jedes Level, das Du aufsteigst. Diesen Punkt kannst Du in eine beliebige Eigenschaft stecken. Ausserdem kannst Du Ausrüstung anziehen, die unterschiedliche Eigenschaften-Boni gewährt.</string>
+\nAb Level 10 verdienst Du einen Attributspunkt für jedes Level, das Du aufsteigst. Diesen Punkt kannst Du in ein beliebiges Attribut stecken. Außerdem kannst Du Ausrüstung anziehen, die unterschiedliche Attributsboni gewährt.</string>
+    <string name="mount_category">%s Reittiere</string>
+    <string name="pet_category">%s Haustiere</string>
+    <string name="broken_challenge">Toter Herausforderungs-Link</string>
+    <string name="leave_delete_task">Verlassen &amp; Aufgabe löschen</string>
+    <string name="magic_potion">Magisches Schlüpfelixier</string>
+    <string name="magic_potions">Magische Schlüpfelixiere</string>
+    <string name="hatch_pet_again">Haustier erneut schlüpfen</string>
+    <string name="hatch_pet">Haustier schlüpfen</string>
+    <string name="view_onboarding_tasks">Einstiegsaufgaben ansehen</string>
+    <string name="equip">Ausrüsten</string>
+    <string name="excessItemsNoneLeft">Du hast bereits alles, was Du für alle %s Haustiere benötigst. Bist Du Dir sicher, dass Du %d %ss kaufen willst\?</string>
+    <string name="purchaseX">%d kaufen</string>
+    <string name="excessItemsXLeft">Du brauchst nur %d %s um alle möglichen Haustiere zu schlüpfen. Bist Du Dir sicher, dass Du %d kaufen willst\?</string>
+    <string name="excess_items">Überschüssige Gegenstände</string>
+    <string name="onboardingComplete_achievement_title">Du hast Deine Einstiegsaufgaben erledigt!</string>
+    <string name="onboardingCompleteDescription">Falls Du noch mehr willst, sieh Dir Deine Erfolge an und beginne zu sammeln!</string>
+    <string name="onboardingCompleteTitle">Du hast mit Deiner Leistung &lt;b&gt;5 Erfolge&lt;/b&gt; freigeschaltet und &lt;font color=#EE9109&gt;&lt;b&gt;100 Goldstücke&lt;/b&gt;&lt;/font&gt; verdient.</string>
+    <string name="first_drop_title">Du hast neue Gegenstände gefunden!</string>
+    <string name="go_to_items">Zu Gegenständen gehen</string>
+    <string name="first_drop_explanation2">Schau in Deinen Gegenständen nach und versuche, ein Schlüpfelixier mit einem Ei zu kombinieren!</string>
+    <string name="first_drop_explanation1">Durch das Abschließen von Aufgaben erhältst Du die Chance, Gegenstände wie etwa Eier, Schlüpfelixiere und Futter zu finden.</string>
+    <string name="purchasedEquipmentDescription">Ausrüstung kann zweckmäßig oder einfach nur elegant sein. Erhöhe Deine Werte, um allerlei Vorteile für Deinen Avatar zu erhalten</string>
+    <string name="fedPetDescription">Jedes Haustier mag bestimmtes Futter! Experimentiere, um herauszufinden, welches Futter Dein Haustier am schnellsten wachsen lässt</string>
+    <string name="hatchedPetDescription">Es gibt so viele Haustiere zu sammeln, Du wirst bestimmt einen Liebling haben. Wenn Du sie fütterst, könnten sie allerdings wachsen…</string>
+    <string name="completedTaskDescription">Eine Aufgabe kann eine Gewohnheit, Tagesaufgabe oder ein To-Do sein. Erfülle sie weiterhin, um allerhand Belohnungen zu erhalten!</string>
+    <string name="createdTaskDescription">Weiter so! Falls Du bei der Planung von Aufgaben Hilfe brauchst, versuche Dir zu überlegen, was Du zu einer bestimmten Tageszeit machen möchtest</string>
+    <string name="purchasedEquipmentTitle">Hat Ausrüstung gekauft</string>
+    <string name="fedPetTitle">Hat ein Haustier gefüttert</string>
+    <string name="hatchedPetTitle">Hat ein Haustier geschlüpft</string>
+    <string name="completedTaskTitle">Hat eine Aufgabe erledigt</string>
+    <string name="createdTaskTitle">Du hast Deine erste Aufgabe erstellt</string>
+    <string name="purchase_equipment_description">Durch Ausrüstung kann Dein Avatar personalisiert und die Attributswerte erhöht werden</string>
+    <string name="feedPet_description">Schließe Aufgaben ab, um Futter zu erhalten! Dieses kannst Du unter Haus- &amp; Reittiere an Deine Haustiere verfüttern</string>
+    <string name="hatch_pet_description">Schließe Aufgaben ab, um ein Schlüpfelixier und Ei zu erhalten, und schlüpfe dann Dein Haustier!</string>
+    <string name="complete_task_description">Hake Deine Aufgaben ab, um Belohnungen zu verdienen</string>
+    <string name="create_task_description">Füge eine Aufgabe hinzu, für etwas, das Du diese Woche erreichen willst</string>
+    <string name="purchase_equipment_title">Erwerbe Ausrüstung</string>
+    <string name="feedPet_title">Füttere ein Haustier</string>
+    <string name="complete_task_title">Erledige eine Aufgabe</string>
+    <string name="create_task_title">Erstelle eine Aufgabe</string>
+    <string name="percent_completed">%d%% Abgeschlossen</string>
+    <string name="lets_get_started">Los geht\'s!</string>
+    <string name="your_progress">Dein Fortschritt</string>
+    <string name="adventure_guide_description">Erledige diese Einstiegsaufgaben und Du wirst &lt;b&gt;5 Erfolge&lt;/b&gt; freischalten und &lt;font color=#EE9109&gt;&lt;b&gt;100 Goldstücke&lt;/b&gt;&lt;/font&gt; erhalten, sobald Du fertig bist!</string>
+    <string name="getting_started">Zu Beginn</string>
+    <string name="complete_for_gold">Abschließen, um &lt;font color=#EE9109&gt;&lt;b&gt;100 Gold&lt;/b&gt;&lt;/font&gt; zu erhalten!</string>
+    <string name="onboarding_tasks">Einstiegsaufgaben</string>
+    <string name="special_items">Besondere Gegenstände</string>
+    <string name="leave_delte_tasks">Verlassen &amp; Aufgaben löschen</string>
+    <string name="leave_keep_tasks">Verlassen &amp; Aufgaben behalten</string>
+    <string name="delete_x_tasks">%d Aufgaben löschen</string>
+    <string name="keep_x_tasks">%d Aufgaben behalten</string>
+    <string name="broken_challenge_description">Dies ist eine von %d Aufgaben, die Teil einer Herausforderung sind, die nicht mehr existiert. Wie möchtest Du mit den übrig gebliebenen Aufgaben verfahren\?</string>
+    <string name="leave_delete_x_tasks">Verlassen &amp; %d Aufgaben löschen</string>
+    <string name="delete_challenge_task_description">Dies ist eine von %d Aufgaben, die Teil der “%s” Herausforderung sind. Du musst die Herausforderung verlassen, um diese Aufgabe zu löschen.</string>
+    <string name="delete_challenge_task_title">Herausforderungsaufgabe löschen\?</string>
+    <string name="use_saddle">Magischen Sattel benutzen</string>
+    <string name="unhatched_pet">Nicht ausgebrütetes Haustier</string>
+    <string name="can_hatch_pet">Kombiniere Dein %s Ei und %s Elixier, um dieses Haustier auszubrüten!</string>
+    <string name="suggest_pet_hatch_again_missing_both">Du brauchst noch ein %s und %s Elixier, um dieses Haustier erneut auszubrüten</string>
+    <string name="suggest_pet_hatch_again_missing_potion">Du brauchst noch ein %s Elixier, um dieses Haustier erneut auszubrüten</string>
+    <string name="suggest_pet_hatch_again_missing_egg">Du brauchst noch ein %s Ei, um dieses Haustier erneut auszubrüten</string>
+    <string name="suggest_pet_hatch_missing_both">Du brauchst noch ein %s und %s Elixier, um dieses Haustier auszubrüten</string>
+    <string name="suggest_pet_hatch_missing_potion">Du brauchst noch ein %s Elixier, um dieses Haustier auszubrüten</string>
+    <string name="suggest_pet_hatch_missing_egg">Du brauchst noch ein %s Ei, um dieses Haustier auszubrüten</string>
+    <string name="hatch_pet_title">Ein neues Haustier ausbrüten</string>
+    <string name="pet_ownership_fraction">%1$d / %2$d</string>
+    <string name="challenge_task_name">%s Herausforderungsaufgabe</string>
+    <string name="task_display">Anzeige der Aufgabenliste</string>
+    <string name="challenge_leave_description">Du kannst auswählen, die Aufgaben dieser Herausforderung in Deiner persönlichen Aufgabenliste zu behalten oder sie zu löschen, wenn Du austrittst</string>
+    <string name="hatch">Ausbrüten</string>
+    <string name="hatch_your_pet">Lasse Dein Haustier schlüpfen</string>
+    <string name="pms_disabled_description">Du kannst weiter Nachrichten verschicken, aber niemand kann dir welche schicken. Der Erhalt von Nachrichten kann in den Einstellungen wieder aktiviert werden.</string>
+    <string name="pms_disabled">Private Nachrichten sind deaktiviert</string>
+    <string name="disablePrivateMessages">Private Nachrichten deaktivieren</string>
+    <string name="block">Blockieren</string>
+    <string name="block_user_description">Blockierte User können Dir keine Privaten Nachrichten schicken, aber Du wirst Ihre Posts in der Taverne und in Gilden weiterhin sehen. Blockieren wird nicht funktionieren, wenn die Person zurzeit ein Moderator ist oder in Zukunft wird.</string>
+    <string name="block_user_title">%s blockieren\?</string>
+    <string name="unblock_user">User entblocken</string>
+    <string name="block_user">User blockieren</string>
+    <string name="x_to_y">%s bis %s</string>
+    <string name="usually_x_gems">Üblicherweise %d Edelsteine</string>
+    <string name="limitations">Einschränkungen</string>
+    <string name="how_it_works">So funktioniert es</string>
+    <string name="fall_promo_info_instructions">Zwischen 22. und 30. September kannst Du wie gewohnt ein Edelstein-Paket kaufen, Deinem Konto wird aber der Aktions-Betrag Edelsteine hinzugefügt. Mehr Edelsteine zum ausgeben, teilen oder aufsparen für spätere Neuerungen!</string>
+    <string name="spooky_promo_info_prompt">Der Edelstein-Sonderverkauf ist zurück! Das ist die letzte Chance, mehr Edelsteine als je zuvor zu bekommen, also füll\' Deine Lager solange Du noch kannst!</string>
+    <string name="spooky_promo_info_limitations">Diese Aktion ist nur während dem zeitlich beschränkten Event gültig. Der Event beginnt am 29. Oktober um 8:00 AM EDT ( 12:00 UTC) und endet am 2. November um 8:00 PM EDT (00:00 UTC). Das Aktionsangebot ist nur verfügbar, wenn Du Edelsteine für Dich selbst kaufst.</string>
+    <string name="spooky_promo_info_instructions">Zwischen 29. Oktober und 2. November kannst Du wie gewohnt ein Edelstein-Paket kaufen, Deinem Konto wird aber der Aktions-Betrag Edelsteine hinzugefügt. Mehr Edelsteine zum ausgeben, teilen oder aufsparen für spätere Neuerungen!</string>
+    <string name="view_gem_bundles">Edelstein-Pakete anzeigen</string>
+    <string name="fall_promo_info_prompt">Die Herbstgala ist in vollem Gange. Deshalb haben wir gedacht, dass dies der perfekte Zeitpunkt für den allerersten Edelstein-Sonderverkauf ist! Jetzt bekommst Du mit jedem Einkauf mehr Edelsteine als je zuvor.</string>
+    <string name="fall_promo_info_limitations">Diese Aktion ist nur während dem zeitlich beschränkten Event gültig. Der Event beginnt am 22. September um 8:00 AM EDT ( 12:00 UTC) und endet am 30. September um 8:00 PM EDT (00:00 UTC). Das Aktionsangebot ist nur verfügbar, wenn Du Edelsteine für Dich selbst kaufst.</string>
 </resources>

@@ -106,7 +106,7 @@
     <string name="members">Leden</string>
     <string name="habits">Gewoontes</string>
     <string name="dailies">Dagelijkse taken</string>
-    <string name="todos">To-do\'s</string>
+    <string name="todos">To-Do\'s</string>
     <string name="rewards">Beloningen</string>
     <string name="yes">Ja</string>
     <string name="no">Nee</string>
@@ -239,11 +239,12 @@
     <string name="notification_pet_fed">Je hebt je %s gevoederd!</string>
     <string name="notification_purchase_reward">Je hebt een beloning gekocht</string>
     <string name="world_quest">Wereldqueeste</string>
-    <string name="inn_description">Een pauze nodig? Check in bij Daniels Herberg om een paar van Habitica\'s moeilijkere spelmechanismen te pauzeren:\n\n
-• Gemiste dagelijkse taken zullen je niet beschadigen
-• Taken zullen geen streaks verliezen of vervallen in kleur
-• Bazen zullen je geen schade doen voor je gemiste dagelijkse taken
-• Je schade aan de baas of verzamelvoorwerpen van queesten zullen in afwachting blijven tot je uitcheckt</string>
+    <string name="inn_description">Een pauze nodig\? Check in bij Daniels Herberg om een paar van Habitica\'s moeilijkere spelmechanismen te pauzeren:
+\n
+\n • Gemiste dagelijkse taken zullen je niet beschadigen
+\n • Taken zullen geen streaks verliezen of vervallen in kleur
+\n • Bazen zullen je geen schade doen voor je gemiste dagelijkse taken
+\n • Je schade aan de baas of verzamelvoorwerpen van queesten zullen in afwachting blijven tot je uitcheckt</string>
     <string name="empty_items">Je hebt geen %s</string>
     <string name="user_level">NIV %d</string>
     <string name="user_level_with_class">NIV %1$d %2$s</string>
@@ -251,7 +252,7 @@
     <string name="rogue">Dief</string>
     <string name="mage">Magiër</string>
     <string name="healer">Genezer</string>
-    <string name="warrior_description">Krijgers scoren meer kritische hits en brengen zware schade toe aan Bazen. Speel een krijger als je gemakkelijk monsters wilt verslaan! Krijgers profiteren van een hoge sterkte stat.</string>
+    <string name="warrior_description">Krijgers scoren meer voltreffers en brengen zware schade toe aan Eindbazen. Speel een krijger als je gemakkelijk monsters wilt verslaan! Krijgers profiteren van een hoge Kracht.</string>
     <string name="mage_description">Magiërs leren vaardigheden die bazen beschadigen en ervaringspunten en mana verhogen. Speel een Magiër als je gemotiveerd bent door snel een level omhoog te gaan! Magiër profiteren van een hoge Intelligentie.</string>
     <string name="rogue_description">Dieven leren vaardigheden waarmee zij en hun partij meer goud en willekeurige voorwerpen kunnen vinden. Speel een Dief als je veel voorwerpen en goud wilt! Dieven profiteren van een hoge Perceptie.</string>
     <string name="healer_description">Genezers leren vaardigheden die zichzelf en hun gezelschap kunnen genezen en beschermen. Speel een Genezer als je het leuk vindt anderen te helpen of schade te vermijden! Genezers profiteren van een hoge constitutie.</string>
@@ -304,7 +305,7 @@
     <string name="add_task">Voeg taak toe</string>
     <string name="add_habit">Voeg Gewoonte toe</string>
     <string name="add_daily">Voeg Dagelijkse taak toe</string>
-    <string name="add_todo">Voeg To-do toe</string>
+    <string name="add_todo">Voeg To-Do toe</string>
     <string name="add_reward">Voeg Beloning toe</string>
     <string name="all_dailies_completed">Je hebt al je Dagelijkse taken voltooid. Goed gedaan!</string>
     <string name="widget_habit_button">Habitica Doe Gewoonte</string>
@@ -344,7 +345,7 @@
     <string name="subscribe_listitem1_description">Je kunt edelstenen van de markt kopen voor elk 20 goud!</string>
     <string name="subscribe_listitem2_description">Verdien Mystieke Zandlopers om voorwerpen in de Tijdreizigerswinkel te kopen!</string>
     <string name="subscribe_listitem3_description">Abonneer nu in om nu een exclusieve set te krijgen en ontvang elke maand nieuwe voorwerpen!</string>
-    <string name="subscribe_listitem4_description">Ontvang het Royale Paarse Jackalope-huisdier wanneer u een nieuwe abonnee wordt.</string>
+    <string name="subscribe_listitem4_description">Ontvang het Koninklijk Paarse Jackalope-huisdier wanneer u een nieuwe abonnee wordt.</string>
     <string name="subscribe1month_gemcap">25 Edelsteen drempel</string>
     <string name="subscribe3month_gemcap">30 Edelsteen drempel</string>
     <string name="subscribe6month_gemcap">35 Edelsteen drempel</string>
@@ -378,7 +379,7 @@
     <string name="daily">Dagelijkse taak</string>
     <string name="habit">Gewoonte</string>
     <string name="reward">Beloning</string>
-    <string name="todo">To-do</string>
+    <string name="todo">To-Do</string>
     <string name="official">Officieel</string>
     <string name="challenge">Uitdaging</string>
     <string name="not_part_of_a_challenge">Je maakt geen deel uit van uitdagingen op dit moment!</string>
@@ -423,8 +424,8 @@
     <string name="empty_description_habits">Gewoontes zijn taken die geen vast schema hebben. Je kan ze meerdere keren per dag afvinken of helemaal niet.</string>
     <string name="empty_title_dailies">Je hebt geen dagelijkse taken</string>
     <string name="empty_description_dailies">Dagelijkse taken zijn taken die op een vast schema herhalen. Kies de routine die voor jou werkt!</string>
-    <string name="empty_title_todos">Je hebt geen to-do\'s</string>
-    <string name="empty_description_todos">To-do\'s zijn taken die slechts een keer voltooid moeten worden. Voeg checklijsten aan je to-do\'s toe om hun waarde te verhogen.</string>
+    <string name="empty_title_todos">Je hebt geen To-Do\'s</string>
+    <string name="empty_description_todos">To-do\'s zijn taken die slechts één keer voltooid moeten worden. Voeg checklijsten aan je to-do\'s toe om hun waarde te verhogen.</string>
     <string name="empty_title_rewards">Je hebt geen beloningen</string>
     <string name="reset_walkthrough">Herstart Handleiding</string>
     <string name="read_community_guidelines">Bekijk onze <u>Community Guidelines</u> voordat je berichten plaatst</string>
@@ -483,7 +484,7 @@
     <string name="str_abbrv">KRA</string>
     <string name="per_abbrv">PER</string>
     <string name="int_abbrv">INT</string>
-    <string name="con_abbrv">LIC</string>
+    <string name="con_abbrv">WEE</string>
     <string name="reset_account">Account Resetten</string>
     <string name="reset_account_description">WAARSCHUWING! Dit stelt grote delen van je account opnieuw in. Het wordt ten zeerste afgeraden, maar sommige mensen vinden het handig in het begin, na kort met de site te hebben gespeeld. \n\nAl je taken (behalve die van uitdagingen) zullen permanent verwijderd worden, en je zult al hun historische data verliezen. Je zult al je uitrusting verliezen, maar je kunt ze allemaal terugkopen, inclusief alle uitrusting met beperkte oplage of Mysterievoorwerpen voor abonnees die je al bezit (je zul wel in de juiste klasse moeten zijn om klassegebonden uitrusting terug te kopen). Je zult je huidige klasse en je huisdieren en rijdieren behouden. Wellicht gebruik je liever een Bol der Hergeboorte in de plaats, aangzien het een veel veiligere optie is waarbij je alle taken en uitrusting behoudt. </string>
     <string name="delete_account">Verwijder Account</string>
@@ -596,7 +597,7 @@
     <string name="world_boss_action_prompt">Versla de Baas om speciale beloningen te ontvangen en red Habitica van %s\'s terreur!</string>
     <string name="questShop_owner_long">Ian de queeste-gids</string>
     <string name="seasonalShop_owner_long">Seizoenstovenares</string>
-    <string name="rage_attack">Woedeaanval</string>
+    <string name="rage_attack">Woedeaanval:</string>
     <string name="tavern_description_world_boss">Oh jee, schenk geen aandacht aan het monster hier beneden — dit blijft een veilige plaats om te chatten tijdens je pauzes.</string>
     <string name="report">rapporteer</string>
     <string name="reply">Reageer</string>
@@ -612,7 +613,7 @@
     <string name="next_day_reminder_title">Heb je jou taken afgevinkt vandaag?</string>
     <string name="next_day_reminder_text">Er is veel om te ontgrendelen en te ontdekken als je niveau omhoog gaat, dus houd je taken bij en veel plezier!</string>
     <string name="daily_tip_0">Wil je iets nieuws proberen? Sluit je aan bij een uitdaging om je takenlijst te vergroten en win wat Edelstenen!</string>
-    <string name="daily_tip_1">Voeg checklijsten toe aan jou To-Dos om de beloningen te vermenigvuldigen!</string>
+    <string name="daily_tip_1">Voeg checklijsten toe aan jouw To-Dos om de beloningen te vermenigvuldigen!</string>
     <string name="daily_tip_2">Je kunt veranderen hoe vaak een Dagelijkse taak zich herhaalt. Zelfs onregelmatige taken kunnen ingepland worden.</string>
     <string name="daily_tip_3">Je kunt ook specifieke herinneringen voor Dagelijkse taken inplannen. </string>
     <string name="daily_tip_4">Het van tijd tot tijd herevalueren van je taken kan je helpen om op het rechte pad te blijven. </string>
@@ -630,8 +631,7 @@
     <string name="total_checkins">Totaal aantal Check-ins</string>
     <string name="two_handed">Tweehandig</string>
     <string name="usernamePromptTitle">Het is tijd om een gebruikersnaam te kiezen</string>
-    <string name="usernamePromptWiki">Als je meer te weten wil komen over deze verandering, <a href="https://habitica.wikia_com/wiki/Player_Names">bezoek onze wiki.</a>
-    </string>
+    <string name="usernamePromptWiki">Als je meer te weten wil komen over deze verandering, <a href="https://habitica.fandom.com/wiki/Player_Names">bezoek onze wiki.</a></string>
     <string name="confirm_username_title">Weet je zeker dat je jou huidige gebruikersnaam wilt bevestigen?</string>
     <string name="cancel">Annuleren</string>
     <string name="confirm_username">Bevestig gebruikersnaam</string>
@@ -639,13 +639,13 @@
     <string name="username_confirmed">gebruikersnaam bevestigt</string>
     <string name="enter_recipient_username">Voer een ontvanger in @gebruikersnaam</string>
     <string name="username_copied">Gebruikersnaam gekopieerd naar het prikbord</string>
-    <string name="display_name_length_error">Gebruikersnamen moeten tussen 1 en 30 karakters lang zijn</string>
+    <string name="display_name_length_error">Weergavenamen moeten tussen 1 en 30 karakters lang zijn</string>
     <string name="setup_task_join_habitica">Sluit je aan bij Habitica (Aanvinken)</string>
-    <string name="setup_task_join_habitica_notes">Je kan deze To-do voltooien, bewerken of verwijderen</string>
+    <string name="setup_task_join_habitica_notes">Je kan deze To Do voltooien, bewerken of verwijderen</string>
     <string name="setup_task_reward">Beloon jezelf</string>
     <string name="setup_task_reward_notes">Kijk TV, speel een spel, eet een belonging, aan jou de keuze!</string>
     <string name="equipment_str">KRA:</string>
-    <string name="equipment_con">LIC:</string>
+    <string name="equipment_con">WEE:</string>
     <string name="equipment_int">INT:</string>
     <string name="equipment_per">PER:</string>
     <string name="visit_website">bezoek website</string>
@@ -744,7 +744,7 @@
     <string name="local">Lokaal</string>
     <string name="authentication_methods">Verificatiemethoden</string>
     <string name="someone">Iemand</string>
-    <string name="invitation_title">%s heeft je uitgenodigd voor %s</string>
+    <string name="invitation_title">%s heeft je uitgenodigd voor diens groep %s</string>
     <string name="password_too_short">Je wachtwoord moet minimaal %d karakters lang zijn</string>
     <string name="copy_username">Kopieer Gebruikersnaam</string>
     <string name="id_copied">Gebruikers ID naar het klembord gekopieerd</string>
@@ -853,7 +853,7 @@
     <string name="guild_summary">Gilde samenvatting</string>
     <string name="setup_task_habit_2_notes">Of verwijder het uit het bewerkingsscherm</string>
     <string name="setup_task_habit_2">Tik hier om dit wijzigen in een slechte gewoonte waarmee je wilt stoppen</string>
-    <string name="setup_task_habit_1_notes">Ofwel een gewoonte, een dagelijkse taak of een to-do</string>
+    <string name="setup_task_habit_1_notes">Ofwel een gewoonte, een dagelijkse taak of een To-Do</string>
     <string name="setup_task_habit_1">Voeg een taak toe aan Habitica</string>
     <string name="cost">Kosten</string>
     <string name="joined_guild">Je bent lid geworden van de gilde</string>
@@ -903,7 +903,7 @@
     <string name="mystery_sets">Mysteriesets</string>
     <string name="reason_for_report">Reden voor melding (optioneel)</string>
     <string name="report_message_title">%s melden wegens overtreding:</string>
-    <string name="report_explanation">Meld **alleen** een bericht dat de [Communityrichtlijnen] (https://habitica.com/static/community-guidelines) en/of [Servicevoorwaarden] (https://habitica.com/static/terms) schendt. Het ongepast melden van een bericht kan een overtreding opleveren.</string>
+    <string name="report_explanation">Meld **alleen** een bericht dat de [Communityrichtlijnen](https://habitica.com/static/community-guidelines) en/of [Servicevoorwaarden](https://habitica.com/static/terms) schendt. Het ongepast melden van een bericht kan een overtreding opleveren.</string>
     <string name="gift_confirmation_text_sub_g1g1">Je hebt %s een %s-maand Habitica-abonnement gestuurd en hetzelfde abonnement is toegepast op je account voor onze Gift One Get One-promotie!</string>
     <string name="gift_gems_subtitle">Kies hieronder het edelsteenpakket dat je cadeau wilt doen!</string>
     <string name="gift_subscription_subtitle">Kies hieronder het abonnement dat u wilt schenken! Deze aankoop wordt niet automatisch verlengd.</string>
@@ -913,12 +913,12 @@
     <string name="welcomeNameTitle">Hoe moeten we je noemen\?</string>
     <string name="verification_pet">Een van deze Veteraan Huisdieren wacht op je nadat je klaar bent met bevestigen!</string>
     <string name="confirm_username_description">Als u uw gebruikersnaam bevestigt, wordt deze openbaar voor uitnodigingen, @vermeldingen en berichten. U kunt uw gebruikersnaam op elk moment wijzigen vanuit de instellingen.</string>
-    <string name="usernamePromptDisclaimer">Prefs</string>
+    <string name="usernamePromptDisclaimer">Gebruikersnamen moeten voldoen aan onze <a href="https://habitica.com/static/terms">Servicevoorwaarden</a> en <a href="https://habitica.com/static/community-guidelines">Community Richtlijnen</a>. Als u niet eerder een inlognaam heeft ingesteld, is uw gebruikersnaam automatisch gegenereerd.</string>
     <string name="usernamePromptBody">Inlognamen zijn nu unieke gebruikersnamen die zichtbaar zijn naast uw weergavenaam en worden gebruikt voor uitnodigingen, chatvermeldingen en berichten.</string>
     <string name="daily_tip_9">Als je het moeilijk hebt, probeer dan je taken in kleinere delen op te splitsen.</string>
     <string name="daily_tip_8">Je kunt de moeilijkheidsgraad van je taak veranderen om jezelf meer te belonen voor zware taken!</string>
     <string name="join_party_description_guild">Geef de onderstaande gebruikersnaam aan een vriend of ga naar de %s om potentiële kameraden te ontmoeten!</string>
-    <string name="insufficientGoldTitle">Niet genoeg goudstukken</string>
+    <string name="insufficientGoldTitle">Niet genoeg Goud</string>
     <string name="clear_cache">Cache legen</string>
     <string name="standard">Standaard</string>
     <string name="how_best_habitica">Niet zeker hoe je Habitica het best kunt gebruiken\?</string>
@@ -933,4 +933,94 @@
     <string name="user_level_with_class_unabbreviated">Niveau %1$d %2$s</string>
     <string name="not_selected">Niet geselecteerd</string>
     <string name="selected">Geselecteerd</string>
+    <string name="challenge_leave_description">Je kunt ervoor kiezen om de taken van de challenge op je persoonlijke pagina te bewaren of om ze te verwijderen als je de challenge verlaat.</string>
+    <string name="off">Uit</string>
+    <string name="on">Aan</string>
+    <string name="mana_points">Manapunten</string>
+    <string name="experience_description">Ervaringspunten geven je voortgang weer, en zorgen ervoor dat je level up gaat. Je zult hoofdzakelijk **EXP krijgen** door het voltooien van taken of queestes, maar er zijn ook klasse-vaardigheden die EXP geven.
+\n
+\nMoeilijkere taken, of roodgekleurde taken geven je **meer EXP**. De **Intelligentie stat** zorgt ook voor snellere EXP stijging.</string>
+    <string name="experience_points">Ervaringspunten</string>
+    <string name="health_description">Dit stelt je avatar\'s leven voor. Een dagelijkse taak missen, of een negatieve gewoonte naleven **reduceert je HP**.
+\n
+\n**Herstel HP** door level up te gaan, een Genezingsdrank te gebruiken, of een vaardigheid die geneest in te zetten.
+\n
+\nAls je **HP 0 bereikt** verlies je een level, al je Goud, en één voorwerp. Verloren voorwerpen kunnen teruggekocht worden.</string>
+    <string name="stats_currency">Attributen en betalingsmiddelen</string>
+    <string name="send_bug_prompt">Stuur ons een foutmelding, en we komen bij je terug!</string>
+    <string name="common_fixes">Vaak werkende oplossingen</string>
+    <string name="support_bug_title">We proberen continue onze apps te verbeteren gebaseerd op feedback van spelers, maar soms schiet er een foutje tussen…</string>
+    <string name="lets_go">Ga van start</string>
+    <string name="bugs_fixes">Bugs &amp; Fixes</string>
+    <string name="get_help">Krijg Hulp</string>
+    <string name="suggestions_feedback_description">Heb je voorstellen over hoe de functies beter kunnen, of een idee voor iets nieuws\? Vertel het ons!</string>
+    <string name="using_habitica">Habitica gebruiken</string>
+    <string name="health_points">Levenspunten</string>
+    <string name="using_habitica_description">We leggen de basis uit en beantwoorden veelgestelde vragen om je op weg te helpen</string>
+    <string name="special_items">Speciale voorwerpen</string>
+    <string name="leave_delte_tasks">Verlaat &amp; verwijder taken</string>
+    <string name="leave_keep_tasks">Verlaat &amp; bewaar taken</string>
+    <string name="support">Ondersteuning</string>
+    <string name="first_drop_title">Je hebt nieuwe voorwerpen gevonden!</string>
+    <string name="go_to_items">Ga naar Voowerpen</string>
+    <string name="first_drop_explanation2">Ga naar je Voorwerpen en probeer om je nieuwe Ei en Uitbroeddrank te combineren!</string>
+    <string name="first_drop_explanation1">Taken afvinken geeft je een kans om eieren, uitbroeddranken, en voer voor je huisdieren te vinden.</string>
+    <string name="suggest_pet_hatch_missing_potion">Je hebt nog een %s Uitbroeddrank nodig om dit huisdier uit te broeden</string>
+    <string name="suggest_pet_hatch_missing_egg">Je hebt nog een %s Ei nodig om dit Huisdier uit te broeden</string>
+    <string name="hatchedPetDescription">Er zijn zo enorm veel Huisdieren om te verzamelen, dat je zeker een favoriet zult vinden. En als je ze voert, zouden ze wel eens kunnen groeien…</string>
+    <string name="completedTaskDescription">Een taak kan een Gewoonte, Dagelijkse Taak, of To Do zijn. Ga door met deze afvinken om allerlei beloningen te ontvangen!</string>
+    <string name="createdTaskDescription">Ga zo door! Als je hulp nodig hebt bij het inplannen van taken, probeer dan te bedenken wat je zou willen doen op een specifiek tijdstip van de dag</string>
+    <string name="purchasedEquipmentTitle">Je hebt een stuk Uitrusting gekocht</string>
+    <string name="fedPetTitle">Je hebt een Huisdier gevoerd</string>
+    <string name="hatchedPetTitle">Je hebt een Huisdier uitgebroed</string>
+    <string name="completedTaskTitle">Je hebt een taak afgevinkt</string>
+    <string name="createdTaskTitle">Je hebt je eerste taak toegevoegd</string>
+    <string name="purchase_equipment_description">Uitrusting is een manier om je avatar er anders uit te laten zien, en om je stats te verbeteren</string>
+    <string name="feedPet_description">Vink taken af om eten voor je huisdieren te verdienen! Je kunt dit eten aan je huisdieren voeren onder Huisdieren en Rijdieren</string>
+    <string name="hatch_pet_description">Vink taken af om een Uitbroeddrank en een Ei te krijgen en broed dan je Huisdier uit!</string>
+    <string name="complete_task_description">Vink een taak af om beloningen te ontvangen</string>
+    <string name="create_task_description">Voeg een taak toe voor iets dat je deze week wilt bereiken</string>
+    <string name="purchase_equipment_title">Koop een stuk Uitrusting</string>
+    <string name="feedPet_title">Voer een huisdier</string>
+    <string name="hatch_pet_title">Broed een nieuw huisdier uit</string>
+    <string name="complete_task_title">Vink een Taak af</string>
+    <string name="create_task_title">Creëer een Taak</string>
+    <string name="percent_completed">%d%% Compleet</string>
+    <string name="getting_started">Hoe Begin Ik\?</string>
+    <string name="task_display">Takenlijst weergave</string>
+    <string name="still_questions">Heb je verder nog vragen\?</string>
+    <string name="pet_ownership_fraction">%1$d / %2$d</string>
+    <string name="delete_checklist_entry">Verwijder…</string>
+    <string name="lets_get_started">Laten we beginnen</string>
+    <string name="complete_for_gold">Rond deze af om &lt;font color=#EE9109&gt;&lt;b&gt;100 Goud&lt;/b&gt;&lt;/font&gt; te verdienen!</string>
+    <string name="onboarding_tasks">Onboarding Taken</string>
+    <string name="your_progress">Jouw Vooruitgang</string>
+    <string name="adventure_guide_description">Rond deze Onboarding Taken af en je verdient &lt;b&gt;5 Prestaties&lt;/b&gt; en &lt;font color=#EE9109&gt;&lt;b&gt;100 Goud&lt;/b&gt;&lt;/font&gt; wanneer je klaar bent!</string>
+    <string name="onboardingComplete_achievement_title">Je hebt je Onboarding Taken afgerond!</string>
+    <string name="view_onboarding_tasks">Bekijk Onboarding Taken</string>
+    <string name="equip">Aantrekken</string>
+    <string name="stat_description">Alle Habitica karakters hebben vier statistieken die ieder invloed hebben op aspecten van de gameplay van Habitica.
+\n
+\n**Kracht (KRA)** beïnvloedt voltreffers en verhoogt de schade toegebracht aan Quest Eindbazen. Krijgers en Dieven krijgen extra KRA van hun klasse-specifieke uitrusting.
+\n
+\n**Weerbaarheid (WEE)** verlaagt de hoeveelheid gezondheid die je verliest wanneer je een Dagtaak mist, Negatieve Gewoonte afvinkt, of wanneer een Eindbaas je raakt. Genezers en Krijgers krijgen extra WEE van hun klasse-specifieke uitrusting.
+\n
+\n**Intelligentie (INT)** verhoogt de Ervaring (ERV) die je verdient en verhoogt je Mana. Magiërs en Genezers krijgen extra INT van hun klasse-specifieke uitrusting.
+\n
+\n**Perceptie (PER)** verhoogt de hoeveelheid goud die je verdient en de kans om voorwerpen te vinden. Dieven en Magiërs krijgen extra PER van hun klasse-specifieke uitrusting.
+\n
+\nVanaf level 10 ontvang je 1 Stat punt voor ieder level dat je bereikt, deze kun je in iedere Stat naar keuze steken. Je kunt ook uitrusting gebruiken die verschillende combinaties van stat verhogingen geeft.</string>
+    <string name="premium_currency">Premium Betaalmiddel</string>
+    <string name="currency">Betaalmiddel</string>
+    <string name="game_mechanics">Spelmechanisme</string>
+    <string name="common_questions">Veelvoorkomende Vragen</string>
+    <string name="stat_allocation">Toewijzing Eigenschapspunten</string>
+    <string name="mana_description">Mana punten worden vrijgespeeld in het klasse systeem op level 10, en stellen je in staat om **Vaardigheden te gebruiken** zodra je ze begint te leren op level 11.
+\n
+\nEen gedeelte van je **MP worden aangevuld** bij de dagelijkse reset, maar je krijgt er meer terug door taken af te ronden of de Magiër klassevaardigheid te gebruiken.</string>
+    <string name="gold_description">Goud is de **voornaamste valuta** in Habitica en stelt je in staat om bepaalde uitrustingen, kweestes, voorwerpen of zelfs op maat ingestelde beloningen voor jezelf te kopen.
+\n
+\n**Verdien Goud** door taken en kweestes af te ronden, en met sommige klassevaardigheden. Een hogere **Perceptie stat** zorgt voor een hogere goudopbrengst.
+\n
+\nAls je een abonnement neemt op Habitica, kun je Goud zelfs gebruiken om een aantal Edelstenen te kopen, gebaseerd op de tijdsduur van je abonnement.</string>
 </resources>
