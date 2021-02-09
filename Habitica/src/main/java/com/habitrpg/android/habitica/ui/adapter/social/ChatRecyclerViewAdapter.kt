@@ -7,6 +7,8 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.databinding.ChatItemBinding
+import com.habitrpg.android.habitica.databinding.SystemChatMessageBinding
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.user.User
@@ -112,6 +114,7 @@ class SystemChatMessageViewHolder(itemView: View) : RecyclerView.ViewHolder(item
     private val textView: TextView = itemView.findViewById(R.id.text_view)
     private val timestamp: TextView = itemView.findViewById(R.id.system_message_timestamp)
     private val dateTime = java.text.SimpleDateFormat("MMM dd, hh:mm aaa")
+    val binding = SystemChatMessageBinding.bind(itemView)
 
     var onShouldExpand: (() -> Unit)? = null
 
@@ -123,9 +126,13 @@ class SystemChatMessageViewHolder(itemView: View) : RecyclerView.ViewHolder(item
 
     fun bind(chatMessage: ChatMessage?, isExpanded: Boolean) {
         textView.text = chatMessage?.text?.removePrefix("`")?.removeSuffix("`")
+        timestamp.text = dateTime.format(chatMessage?.timestamp?.let { java.util.Date(it) })
         if(isExpanded) {
-            timestamp.text = dateTime.format(chatMessage?.timestamp?.let { java.util.Date(it) })
+            binding.systemMessageTimestamp.visibility = View.VISIBLE
             }
+        else{
+            binding.systemMessageTimestamp.visibility = View.GONE
+        }
     }
 
 }
