@@ -195,6 +195,7 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
                         viewModel?.invalidateDataSource()
             }, { error ->
                         RxErrorHandler.reportError(error)
+                        //ADD POP UP CALL HERE
                         binding?.chatBarView?.message = chatText
                     })
             KeyboardUtil.dismissKeyboard(getActivity())
