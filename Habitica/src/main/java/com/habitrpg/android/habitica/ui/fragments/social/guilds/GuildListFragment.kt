@@ -6,6 +6,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
+import com.habitrpg.android.habitica.databinding.FragmentGuildListBinding
 import com.habitrpg.android.habitica.databinding.FragmentRecyclerviewBinding
 import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBinding
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
@@ -16,15 +17,15 @@ import com.habitrpg.android.habitica.ui.helpers.KeyboardUtil
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import javax.inject.Inject
 
-class GuildListFragment(val onlyShowUsersGuilds: Boolean) : BaseFragment<FragmentRefreshRecyclerviewBinding>(), SearchView.OnQueryTextListener, SwipeRefreshLayout.OnRefreshListener {
+class GuildListFragment(val onlyShowUsersGuilds: Boolean) : BaseFragment<FragmentGuildListBinding>(), SearchView.OnQueryTextListener, SwipeRefreshLayout.OnRefreshListener {
 
     @Inject
     lateinit var socialRepository: SocialRepository
 
-    override var binding: FragmentRefreshRecyclerviewBinding? = null
+    override var binding: FragmentGuildListBinding? = null
 
-    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentRefreshRecyclerviewBinding {
-        return FragmentRefreshRecyclerviewBinding.inflate(inflater, container, false)
+    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentGuildListBinding {
+        return FragmentGuildListBinding.inflate(inflater, container, false)
     }
 
     private var viewAdapter = GuildListAdapter(onlyShowUsersGuilds)

@@ -43,6 +43,7 @@ class GuildFragment : BaseMainFragment<FragmentViewpagerBinding>() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        showsBackButton = true
         super.onViewCreated(view, savedInstanceState)
 
         viewModel = ViewModelProvider(this).get(GroupViewModel::class.java)

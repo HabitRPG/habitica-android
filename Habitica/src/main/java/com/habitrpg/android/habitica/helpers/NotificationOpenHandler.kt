@@ -17,10 +17,8 @@ class NotificationOpenHandler {
             GlobalScope.launch(context = Dispatchers.Main) {
                 when (identifier) {
                     PushNotificationManager.PARTY_INVITE_PUSH_NOTIFICATION_KEY -> openPartyScreen()
-                    PushNotificationManager.QUEST_BEGUN_PUSH_NOTIFICATION_KEY -> openQuestDetailSCreen(user?.party?.id,
-                            user?.party?.quest?.key)
-                    PushNotificationManager.QUEST_INVITE_PUSH_NOTIFICATION_KEY -> openQuestDetailSCreen(user?.party?.id,
-                            user?.party?.quest?.key)
+                    PushNotificationManager.QUEST_BEGUN_PUSH_NOTIFICATION_KEY -> openQuestDetailSCreen()
+                    PushNotificationManager.QUEST_INVITE_PUSH_NOTIFICATION_KEY -> openQuestDetailSCreen()
                     PushNotificationManager.GUILD_INVITE_PUSH_NOTIFICATION_KEY -> openGuildDetailScreen(intent.getStringExtra("groupID"))
                     PushNotificationManager.RECEIVED_PRIVATE_MESSAGE_PUSH_NOTIFICATION_KEY -> openPrivateMessageScreen(intent.getStringExtra("replyTo"))
                     PushNotificationManager.CHANGE_USERNAME_PUSH_NOTIFICATION_KEY -> openSettingsScreen()
@@ -52,11 +50,8 @@ class NotificationOpenHandler {
             MainNavigationController.navigate(R.id.subscriptionPurchaseActivity)
         }
 
-        private fun openQuestDetailSCreen(partyId: String?, questKey: String?) {
-            if (partyId == null || questKey == null ||partyId.isNotEmpty() || questKey.isNotEmpty()) {
-                return
-            }
-            MainNavigationController.navigate(R.id.questDetailFragment, bundleOf("partyID" to partyId, "questKey" to questKey))
+        private fun openQuestDetailSCreen() {
+            MainNavigationController.navigate(R.id.questDetailFragment)
         }
 
         private fun openGuildDetailScreen(groupID: String?) {

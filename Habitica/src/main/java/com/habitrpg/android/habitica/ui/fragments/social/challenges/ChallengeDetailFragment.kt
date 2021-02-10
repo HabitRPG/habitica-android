@@ -69,6 +69,7 @@ class ChallengeDetailFragment: BaseMainFragment<FragmentChallengeDetailBinding>(
 
     @Suppress("ReturnCount")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        showsBackButton = true
         super.onViewCreated(view, savedInstanceState)
 
         arguments?.let {
@@ -275,12 +276,12 @@ class ChallengeDetailFragment: BaseMainFragment<FragmentChallengeDetailBinding>(
 
     private fun addRewards(rewards: ArrayList<Task>) {
         val groupBinding = DialogChallengeDetailTaskGroupBinding.inflate(layoutInflater, binding?.taskGroupLayout, true)
-        groupBinding.taskGroupName.text = getLabelByTypeAndCount(Challenge.TASK_ORDER_HABITS, rewards.size)
+        groupBinding.taskGroupName.text = getLabelByTypeAndCount(Challenge.TASK_ORDER_REWARDS, rewards.size)
         groupBinding.taskCountView.text = rewards.size.toString()
 
         for (i in 0 until rewards.size) {
             val task = rewards[i]
-            val entry = groupBinding.tasksLayout.inflate(R.layout.habit_item_card)
+            val entry = groupBinding.tasksLayout.inflate(R.layout.reward_item_card)
             val viewHolder = RewardViewHolder(entry, { _, _ -> }, {}, {})
             viewHolder.isLocked = true
             viewHolder.bind(task, i, "normal")
