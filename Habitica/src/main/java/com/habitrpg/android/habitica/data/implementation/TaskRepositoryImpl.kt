@@ -235,6 +235,7 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
         return apiClient.updateTask(id, unmanagedTask).singleElement()
                 .map { task1 ->
                     task1.position = task.position
+                    task1.id = task.id
                     task1
                 }
                 .doOnSuccess { localRepository.save(it) }

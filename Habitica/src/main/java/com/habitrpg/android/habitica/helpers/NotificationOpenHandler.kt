@@ -17,8 +17,8 @@ class NotificationOpenHandler {
             GlobalScope.launch(context = Dispatchers.Main) {
                 when (identifier) {
                     PushNotificationManager.PARTY_INVITE_PUSH_NOTIFICATION_KEY -> openPartyScreen()
-                    PushNotificationManager.QUEST_BEGUN_PUSH_NOTIFICATION_KEY -> openQuestDetailSCreen()
-                    PushNotificationManager.QUEST_INVITE_PUSH_NOTIFICATION_KEY -> openQuestDetailSCreen()
+                    PushNotificationManager.QUEST_BEGUN_PUSH_NOTIFICATION_KEY -> openPartyScreen()
+                    PushNotificationManager.QUEST_INVITE_PUSH_NOTIFICATION_KEY -> openPartyScreen()
                     PushNotificationManager.GUILD_INVITE_PUSH_NOTIFICATION_KEY -> openGuildDetailScreen(intent.getStringExtra("groupID"))
                     PushNotificationManager.RECEIVED_PRIVATE_MESSAGE_PUSH_NOTIFICATION_KEY -> openPrivateMessageScreen(intent.getStringExtra("replyTo"))
                     PushNotificationManager.CHANGE_USERNAME_PUSH_NOTIFICATION_KEY -> openSettingsScreen()
