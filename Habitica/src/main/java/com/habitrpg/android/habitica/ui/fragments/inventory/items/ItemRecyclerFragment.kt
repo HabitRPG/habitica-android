@@ -93,7 +93,7 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
 
             adapter?.let { adapter ->
                 compositeSubscription.add(adapter.getSellItemFlowable()
-                        .flatMap { item -> inventoryRepository.sellItem(user, item) }
+                        .flatMap { item -> inventoryRepository.sellItem(item) }
                         .subscribe({ }, RxErrorHandler.handleEmptyError()))
 
                 compositeSubscription.add(adapter.getQuestInvitationFlowable()
