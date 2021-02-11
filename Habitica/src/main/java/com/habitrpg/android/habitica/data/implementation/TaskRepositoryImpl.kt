@@ -120,7 +120,7 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
     }
 
     override fun bulkScoreTasks(data: List<Map<String, String>>): Flowable<BulkTaskScoringData> {
-        return apiClient.bulkScoreTasks(listOf())
+        return apiClient.bulkScoreTasks(data)
     }
 
     private fun handleTaskResponse(user: User, res: TaskDirectionData, task: Task, up: Boolean, localDelta: Float) {

@@ -60,12 +60,6 @@
         android:id="@+id/questDetailFragment"
         android:name="com.habitrpg.android.habitica.ui.fragments.social.QuestDetailFragment">
         <deepLink app:uri="habitica.com/party/quest" />
-        <argument
-            android:name="partyID"
-            app:argType="string"/>
-        <argument
-            android:name="questKey"
-            app:argType="string"/>
     </fragment>
     <fragment
         android:id="@+id/skillsFragment"
@@ -86,8 +80,8 @@
         <deepLink app:uri="habitica.com/tavern" />
     </fragment>
     <fragment
-        android:id="@+id/guildsOverviewFragment"
-        android:name="com.habitrpg.android.habitica.ui.fragments.social.GuildsOverviewFragment"
+        android:id="@+id/guildOverviewFragment"
+        android:name="com.habitrpg.android.habitica.ui.fragments.social.guilds.GuildOverviewFragment"
         android:label="@string/sidebar_guilds" >
         <deepLink app:uri="habitica.com/groups/myGuilds" />
         <action
@@ -229,7 +223,7 @@
     </fragment>
     <fragment
         android:id="@+id/guildFragment"
-        android:name="com.habitrpg.android.habitica.ui.fragments.social.GuildFragment"
+        android:name="com.habitrpg.android.habitica.ui.fragments.social.guilds.GuildFragment"
         android:label="@string/guild" >
         <deepLink app:uri="habitica.com/groups/guild/{groupID}" />
         <argument
@@ -246,7 +240,7 @@
     </fragment>
     <fragment
         android:id="@+id/publicGuildsFragment"
-        android:name="com.habitrpg.android.habitica.ui.fragments.social.PublicGuildsFragment"
+        android:name="com.habitrpg.android.habitica.ui.fragments.social.guilds.GuildListFragment"
         android:label="@string/public_guilds" >
         <action
             android:id="@+id/openGuildDetail"

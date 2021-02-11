@@ -45,8 +45,6 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
         return FragmentQuestDetailBinding.inflate(inflater, container, false)
     }
 
-    var partyId: String? = null
-    var questKey: String? = null
     private var party: Group? = null
     private var quest: Quest? = null
     private var beginQuestMessage: String? = null
@@ -62,29 +60,36 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        showsBackButton = true
         super.onViewCreated(view, savedInstanceState)
-
-        arguments?.let {
-            val args = QuestDetailFragmentArgs.fromBundle(it)
-            partyId = args.partyID
-            questKey = args.questKey
-        }
 
         binding?.questAcceptButton?.setOnClickListener { onQuestAccept() }
         binding?.questRejectButton?.setOnClickListener { onQuestReject() }
         binding?.questBeginButton?.setOnClickListener { onQuestBegin() }
         binding?.questCancelButton?.setOnClickListener { onQuestCancel() }
         binding?.questLeaveButton?.setOnClickListener { onQuestLeave() }
-    }
 
-    override fun onResume() {
-        super.onResume()
-        compositeSubscription.add(socialRepository.getGroup(partyId)
-                .subscribe({ this.updateParty(it) }, RxErrorHandler.handleEmptyError()))
-        if (questKey != null) {
-            compositeSubscription.add(inventoryRepository.getQuestContent(questKey ?: "")
-                    .subscribe({ this.updateQuestContent(it) }, RxErrorHandler.handleEmptyError()))
-        }
+        compositeSubscription.add(
+                userRepository.getUser()
+                        .map {
+                            it.party?.id ?: ""
+                        }
+                        .skipWhile { it.isBlank() }
+                        .distinctUntilChanged()
+                        .flatMap { socialRepository.getGroup(it) }
+                        .doOnNext { updateParty(it) }
+                        .map {
+                            it.quest?.key ?: ""
+                        }
+                        .skipWhile {
+                            it.isBlank()
+                        }
+                        .distinctUntilChanged()
+                        .flatMap { inventoryRepository.getQuestContent(it) }
+                        .subscribe({
+                            updateQuestContent(it)
+                        }, RxErrorHandler.handleEmptyError())
+        )
     }
 
     private fun updateParty(group: Group?) {
@@ -203,14 +208,14 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
     }
 
     private fun onQuestAccept() {
-        partyId?.let { partyID ->
+        party?.id?.let { partyID ->
         socialRepository.acceptQuest(user, partyID).subscribe({ }, RxErrorHandler.handleEmptyError())
         }
     }
 
 
     private fun onQuestReject() {
-        partyId?.let { partyID ->
+        party?.id?.let { partyID ->
             socialRepository.rejectQuest(user, partyID).subscribe({ }, RxErrorHandler.handleEmptyError())
         }
     }
@@ -239,7 +244,7 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
                 val builder = AlertDialog.Builder(getActivity())
                         .setMessage(R.string.quest_abort_message)
                         .setPositiveButton(R.string.yes) { _, _ ->
-                            partyId?.let { partyID ->
+                            party?.id?.let { partyID ->
                                 @Suppress("DEPRECATION")
                                 socialRepository.abortQuest(partyID)
                                         .flatMap { userRepository.retrieveUser() }
@@ -251,7 +256,7 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
                 val alert = HabiticaAlertDialog(it)
                 alert.setMessage(R.string.quest_cancel_message)
                 alert.addButton(R.string.yes, true) { _, _ ->
-                    partyId?.let { partyID ->
+                    party?.id?.let { partyID ->
                         @Suppress("DEPRECATION")
                         socialRepository.cancelQuest(partyID)
                                 .flatMap { userRepository.retrieveUser() }
@@ -268,7 +273,7 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
         val builder = AlertDialog.Builder(getActivity())
                 .setMessage(R.string.quest_abort_message)
                 .setPositiveButton(R.string.yes) { _, _ ->
-                    partyId?.let { partyID ->
+                    party?.id?.let { partyID ->
                         @Suppress("DEPRECATION")
                         socialRepository.leaveQuest(partyID)
                                 .flatMap { userRepository.retrieveUser() }

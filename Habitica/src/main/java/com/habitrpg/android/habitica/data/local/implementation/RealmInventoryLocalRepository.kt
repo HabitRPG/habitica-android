@@ -120,7 +120,6 @@ class RealmInventoryLocalRepository(realm: Realm) : RealmContentLocalRepository(
 
     override fun getEquipment(key: String): Flowable<Equipment> {
         return RxJavaBridge.toV3Flowable(realm.where(Equipment::class.java)
-                .sort("text")
                 .equalTo("key", key)
                 .findFirstAsync()
                 .asFlowable<RealmObject>()

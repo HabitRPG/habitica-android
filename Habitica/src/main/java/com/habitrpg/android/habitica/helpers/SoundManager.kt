@@ -65,7 +65,7 @@ class SoundManager {
         const val SoundMinusHabit = "Minus_Habit"
         const val SoundPlusHabit = "Plus_Habit"
         const val SoundReward = "Reward"
-        const val SoundTodo = "ToDo"
+        const val SoundTodo = "Todo"
         const val SoundThemeOff = "off"
     }
 

@@ -34,7 +34,7 @@ class HabitViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> U
         this.task = data
         if (data.up == true) {
             val plusIcon = if (isLocked) {
-                BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfLocked(ContextCompat.getColor(context, R.color.white), 10, 12))
+                BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfLocked(ContextCompat.getColor(context, data.darkestTaskColor), 10, 12))
             } else {
                 ContextCompat.getDrawable(context, R.drawable.habit_plus)
             }
@@ -50,7 +50,7 @@ class HabitViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> U
         } else {
             this.btnPlusWrapper.setBackgroundResource(R.color.habit_inactive_gray)
             val plusIcon = if (isLocked) {
-                BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfLocked(ContextCompat.getColor(context, R.color.content_background_offset), 10, 12))
+                BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfLocked(ContextCompat.getColor(context, R.color.text_dimmed), 10, 12))
             } else {
                 ContextCompat.getDrawable(context, R.drawable.habit_plus)
             }
@@ -65,7 +65,7 @@ class HabitViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> U
         if (data.down == true) {
             this.btnMinusWrapper.setBackgroundResource(data.lightTaskColor)
             val minusIcon = if (isLocked) {
-                BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfLocked(ContextCompat.getColor(context, R.color.white), 10, 12))
+                BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfLocked(ContextCompat.getColor(context, data.darkestTaskColor), 10, 12))
             } else {
                 ContextCompat.getDrawable(context, R.drawable.habit_minus)
             }
@@ -82,7 +82,7 @@ class HabitViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> U
         } else {
             this.btnMinusWrapper.setBackgroundResource(R.color.habit_inactive_gray)
             val minusIcon = if (isLocked) {
-                BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfLocked(ContextCompat.getColor(context, R.color.content_background_offset), 10, 12))
+                BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfLocked(ContextCompat.getColor(context, R.color.text_dimmed), 10, 12))
             } else {
                 ContextCompat.getDrawable(context, R.drawable.habit_minus)
             }

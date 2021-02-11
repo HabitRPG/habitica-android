@@ -47,6 +47,11 @@ class ChallengesOverviewFragment : BaseMainFragment<FragmentViewpagerBinding>() 
         setViewPagerAdapter()
     }
 
+    override fun onResume() {
+        super.onResume()
+        getActiveFragment()?.retrieveChallengesPage()
+    }
+
     override fun onDestroy() {
         challengeRepository.close()
         super.onDestroy()
@@ -102,7 +107,7 @@ class ChallengesOverviewFragment : BaseMainFragment<FragmentViewpagerBinding>() 
     private fun setViewPagerAdapter() {
         val fragmentManager = childFragmentManager
 
-        statePagerAdapter = object : FragmentStatePagerAdapter(fragmentManager) {
+        statePagerAdapter = object : FragmentStatePagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
             override fun getItem(position: Int): Fragment {
                 return if (position == 0) {
@@ -128,5 +133,4 @@ class ChallengesOverviewFragment : BaseMainFragment<FragmentViewpagerBinding>() 
         tabLayout?.setupWithViewPager(binding?.viewPager)
         statePagerAdapter?.notifyDataSetChanged()
     }
-
 }

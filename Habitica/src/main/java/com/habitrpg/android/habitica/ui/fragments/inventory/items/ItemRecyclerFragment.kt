@@ -124,7 +124,6 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
                                 dialog.enqueue()
                             }
                         }
-                        .flatMap { userRepository.retrieveUser(false) }
                         .subscribe({ }, RxErrorHandler.handleEmptyError()))
                 compositeSubscription.add(adapter.startHatchingEvents.subscribeWithErrorHandler { showHatchingDialog(it) })
                 compositeSubscription.add(adapter.hatchPetEvents.subscribeWithErrorHandler { hatchPet(it.first, it.second) })
