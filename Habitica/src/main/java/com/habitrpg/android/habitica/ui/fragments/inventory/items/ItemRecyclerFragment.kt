@@ -93,7 +93,7 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
 
             adapter?.let { adapter ->
                 compositeSubscription.add(adapter.getSellItemFlowable()
-                        .flatMap { item -> inventoryRepository.sellItem(user, item) }
+                        .flatMap { item -> inventoryRepository.sellItem(item) }
                         .subscribe({ }, RxErrorHandler.handleEmptyError()))
 
                 compositeSubscription.add(adapter.getQuestInvitationFlowable()
@@ -227,14 +227,12 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
         itemType?.let { type ->
             compositeSubscription.add(inventoryRepository.getOwnedItems(type)
                     .doOnNext { items ->
-                        if (items.size > 0) {
-                            val filteredItems = if (isFeeding) {
-                                items.where().notEqualTo("key", "Saddle").findAll()
-                            } else {
-                                items
-                            }
-                            adapter?.data = filteredItems
+                        val filteredItems = if (isFeeding) {
+                            items.where().notEqualTo("key", "Saddle").findAll()
+                        } else {
+                            items
                         }
+                        adapter?.data = filteredItems
                     }
                     .map { items -> items.mapNotNull { it.key } }
                     .flatMap { inventoryRepository.getItems(itemClass, it.toTypedArray()) }

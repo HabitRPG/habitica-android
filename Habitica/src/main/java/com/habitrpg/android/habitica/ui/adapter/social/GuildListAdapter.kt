@@ -100,7 +100,12 @@ class GuildListAdapter(private val onlyShowUsersGuilds: Boolean) : BaseRecyclerV
         fun bind(guild: Group) {
             binding.titleTextView.text = guild.name
 
-            val formattedNumber = NumberAbbreviator.abbreviate(itemView.context, guild.memberCount.toDouble(), if (guild.memberCount > 10000) 1 else 2)
+            val number = when {
+                guild.memberCount < 1000 -> 2
+                guild.memberCount < 10000 -> 1
+                else -> 0
+            }
+            val formattedNumber = NumberAbbreviator.abbreviate(itemView.context, guild.memberCount.toDouble(), number)
             binding.guildBadgeView.setImageBitmap(
                     HabiticaIconsHelper.imageOfGuildCrest(itemView.context,
                             false,
@@ -116,7 +121,12 @@ class GuildListAdapter(private val onlyShowUsersGuilds: Boolean) : BaseRecyclerV
 
         fun bind(guild: Group, isInGroup: Boolean) {
             binding.nameTextView.text = guild.name
-            binding.memberCountTextView.text = NumberAbbreviator.abbreviate(itemView.context, guild.memberCount.toDouble())
+            val number = when {
+                guild.memberCount < 1000 -> 2
+                guild.memberCount < 10000 -> 1
+                else -> 0
+            }
+            binding.memberCountTextView.text = NumberAbbreviator.abbreviate(itemView.context, guild.memberCount.toDouble(), number)
             binding.descriptionTextView.setMarkdown(guild.summary)
             binding.descriptionTextView.setOnClickListener {
                 itemView.callOnClick()
@@ -131,7 +141,7 @@ class GuildListAdapter(private val onlyShowUsersGuilds: Boolean) : BaseRecyclerV
                     textView.root.setTextColor(ContextCompat.getColor(itemView.context, R.color.white))
                     ContextCompat.getDrawable(itemView.context, R.drawable.pill_bg_purple_400)
                 } else {
-                    textView.root.setTextColor(ContextCompat.getColor(itemView.context, R.color.text_ternary))
+                    textView.root.setTextColor(ContextCompat.getColor(itemView.context, R.color.text_secondary))
                     ContextCompat.getDrawable(itemView.context, R.drawable.pill_bg_gray)
                 }
             }

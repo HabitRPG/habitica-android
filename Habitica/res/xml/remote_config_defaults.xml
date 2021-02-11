@@ -96,5 +96,9 @@
         <key>knownIssues</key>
         <value>[]</value>
     </entry>
+    <entry>
+        <key>enableTeamBoards</key>
+        <value>false</value>
+    </entry>
 </defaultsMap>
     <!-- END xml_defaults -->
