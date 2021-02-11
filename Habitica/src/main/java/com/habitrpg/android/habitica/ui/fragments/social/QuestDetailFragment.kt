@@ -112,10 +112,11 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
             } else if (showLeaderButtons()) {
                 binding?.questParticipantResponseWrapper?.visibility = View.GONE
                 binding?.questLeaderResponseWrapper?.visibility = View.VISIBLE
-                binding?.questCancelButton?.visibility = View.VISIBLE
                 if (isQuestActive) {
+                    binding?.questCancelButton?.visibility = View.GONE
                     binding?.questBeginButton?.visibility = View.GONE
                 } else {
+                    binding?.questCancelButton?.visibility = View.VISIBLE
                     binding?.questBeginButton?.visibility = View.VISIBLE
                 }
             } else {

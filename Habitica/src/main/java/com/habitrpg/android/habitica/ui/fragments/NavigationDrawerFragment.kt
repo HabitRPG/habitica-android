@@ -185,12 +185,14 @@ class NavigationDrawerFragment : DialogFragment() {
                    questContent = it
                 }, RxErrorHandler.handleEmptyError()))
 
-        subscriptions?.add(userRepository.getTeamPlans()
-                .distinctUntilChanged { firstTeams, secondTeams -> firstTeams == secondTeams }
-                .subscribe( {
-                    getItemWithIdentifier(SIDEBAR_TEAMS)?.isVisible = it.size != 0
-                    adapter.setTeams(it)
-                }, RxErrorHandler.handleEmptyError()))
+        if (configManager.enableTeamBoards()) {
+            subscriptions?.add(userRepository.getTeamPlans()
+                    .distinctUntilChanged { firstTeams, secondTeams -> firstTeams == secondTeams }
+                    .subscribe({
+                        getItemWithIdentifier(SIDEBAR_TEAMS)?.isVisible = it.size != 0
+                        adapter.setTeams(it)
+                    }, RxErrorHandler.handleEmptyError()))
+        }
 
         subscriptions?.add(userRepository.getUser().subscribe({
             updateUser(it)

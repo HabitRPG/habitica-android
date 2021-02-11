@@ -284,7 +284,7 @@ class ChallengeDetailFragment: BaseMainFragment<FragmentChallengeDetailBinding>(
             val entry = groupBinding.tasksLayout.inflate(R.layout.reward_item_card)
             val viewHolder = RewardViewHolder(entry, { _, _ -> }, {}, {})
             viewHolder.isLocked = true
-            viewHolder.bind(task, i, "normal")
+            viewHolder.bind(task, i, true, "normal")
             groupBinding.tasksLayout.addView(entry)
         }
     }

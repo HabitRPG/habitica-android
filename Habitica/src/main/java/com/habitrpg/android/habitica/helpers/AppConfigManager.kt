@@ -117,4 +117,8 @@ class AppConfigManager {
         val type = object : TypeToken<List<Map<String, String>>>() {}.type
         return Gson().fromJson(remoteConfig.getString("knownIssues"), type)
     }
+
+    fun enableTeamBoards(): Boolean {
+        return remoteConfig.getBoolean("enableTeamBoards")
+    }
 }

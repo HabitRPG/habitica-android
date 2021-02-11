@@ -52,7 +52,7 @@
                         android:layout_height="24dp"
                         android:layout_gravity="center"
                         android:scaleType="center"
-                        android:src="@drawable/checkmark" />
+                        android:src="@drawable/task_lock" />
                 </FrameLayout>
                 <include layout="@layout/task_main_content" />
                 <ProgressBar

@@ -19,8 +19,6 @@ class RewardViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> 
         get() = this.task?.specialTag == "item"
 
     init {
-        binding.goldIcon.setImageBitmap(HabiticaIconsHelper.imageOfGold())
-
         binding.buyButton.setOnClickListener {
             buyReward()
         }
@@ -63,14 +61,23 @@ class RewardViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> 
         super.bind(reward, position, displayMode)
         binding.priceLabel.text = NumberAbbreviator.abbreviate(itemView.context, this.task?.value ?: 0.0)
 
-        if (canBuy) {
+        if (isLocked) {
+            binding.goldIcon.setImageResource(R.drawable.task_lock)
+            binding.goldIcon.drawable.setTint(ContextCompat.getColor(context, R.color.reward_buy_button_text))
             binding.goldIcon.alpha = 1.0f
             binding.priceLabel.setTextColor(ContextCompat.getColor(context, R.color.reward_buy_button_text))
             binding.buyButton.setBackgroundColor(ContextCompat.getColor(context, R.color.reward_buy_button_bg))
         } else {
-            binding.goldIcon.alpha = 0.6f
-            binding.priceLabel.setTextColor(ContextCompat.getColor(context, R.color.text_quad))
-            binding.buyButton.setBackgroundColor(ColorUtils.setAlphaComponent(ContextCompat.getColor(context, R.color.offset_background), 127))
+            binding.goldIcon.setImageBitmap(HabiticaIconsHelper.imageOfGold())
+            if (canBuy) {
+                binding.goldIcon.alpha = 1.0f
+                binding.priceLabel.setTextColor(ContextCompat.getColor(context, R.color.reward_buy_button_text))
+                binding.buyButton.setBackgroundColor(ContextCompat.getColor(context, R.color.reward_buy_button_bg))
+            } else {
+                binding.goldIcon.alpha = 0.6f
+                binding.priceLabel.setTextColor(ContextCompat.getColor(context, R.color.text_quad))
+                binding.buyButton.setBackgroundColor(ColorUtils.setAlphaComponent(ContextCompat.getColor(context, R.color.offset_background), 127))
+            }
         }
         streakTextView.visibility = View.GONE
     }
