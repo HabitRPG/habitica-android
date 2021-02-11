@@ -373,9 +373,15 @@
   <string name="subscribe_prompt_thanks">За абонирането си получавате следните полезни неща:</string>
   <string name="subscription_status">Състояние на абонамента</string>
     <string name="challenge_leave_title">Напускане на предизвикателството</string>
+<<<<<<< HEAD
   <string name="remove_tasks">Премахване</string>
   <string name="keep_tasks">Задържане</string>
   <string name="my_challenges">Моите предизвикателства</string>
+=======
+    <string name="remove_tasks">Премахване</string>
+    <string name="keep_tasks">Задържане</string>
+    <string name="my_challenges">Моите предизвикателства</string>
+>>>>>>> 17bb0a8809779611ae1479041d09680196e887cf
     <string name="daily">Ежедневно</string>
   <string name="habit">Навик</string>
   <string name="reward">Награда</string>
@@ -644,6 +650,7 @@
   <string name="username_not_confirmed">Потребителското име не е потвърдено</string>
   <string name="username_confirmed">Потребителското име е потвърдено</string>
     <string name="enter_recipient_username">Въведете @ потребителското име на получателя</string>
+<<<<<<< HEAD
   <string name="username_copied">Потребителското име е копирано</string>
   <string name="verification_pet">Един от тези любимци-ветерани ще Ви чака след като завършите потвърждението!</string>
   <string name="welcomeNameTitle">Как да Ви наричаме?</string>
@@ -683,3 +690,44 @@
   <string name="invited_to_public_guild"><![CDATA[Получихте покана за присъединяване към гилдията <b>%1$s</b>]]></string>
   <string name="invited_to_quest"><![CDATA[Получихте покана за присъединяване в мисията <b>%1$s</b>]]></string>
 </resources>
+=======
+    <string name="username_copied">Потребителското име е копирано</string>
+    <string name="verification_pet">Един от тези любимци-ветерани ще Ви чака след като завършите потвърждението!</string>
+    <string name="welcomeNameTitle">Как да Ви наричаме?</string>
+    <string name="display_name_length_error">Екранното име трябва да бъде с дължина между 1 и 30 знака</string>
+    <string name="setup_task_join_habitica">Присъединяване към Хабитика (отметнете ме!)</string>
+    <string name="setup_task_join_habitica_notes">Можете да изпълните тази задача, да я редактирате или да я премахнете.</string>
+    <string name="setup_task_reward">Наградете се</string>
+    <string name="setup_task_reward_notes">Погледайте телевизия, играйте игра, хапнете си нещо сладко. Каквото пожелаете!</string>
+    <string name="equipment_str">СИЛ:</string>
+    <string name="equipment_con">ЯКО:</string>
+    <string name="equipment_int">ИНТ:</string>
+    <string name="equipment_per">УСЕ:</string>
+    <string name="visit_website">посещаване на уеб сайта</string>
+    <string name="subscribe_gift_description">Искате ли да подарите предимствата на абонамента на другиго?</string>
+    <string name="gift_subscription">Подаряване на абонамент</string>
+    <string name="gift_one_get_one_description">Събитието за подаряване на абонамент и получаване на безплатен такъв протича в момента!</string>
+    <string name="gift_title">На кого искате да подарите абонамента?</string>
+    <string name="gift_one_get_one">Подарете един. Получете един!</string>
+    <string name="gift_one_get_one_detailed_description">Докато трае тази промоция ще получавате автоматично същия абонамент, който подарите, на момента.</string>
+    <string name="gift_subscription_subtitle">Изберете абонамента, който искате да подарите, по-долу! Това плащане няма да се подновява автоматично.</string>
+    <string name="send_gift">Изпращане на подаръка</string>
+    <string name="server">Сървър</string>
+    <string name="gift_confirmation_title">Подаръкът Ви беше изпратен!</string>
+    <string name="discover">Откриване</string>
+    <string name="damage_paused">Щетите са спрени</string>
+    <string name="notifications">Известия</string>
+    <string name="no_notifications_title">Няма непрочетени известия!</string>
+    <string name="no_notifications_text">Феите на известията Ви ръкопляскат бурно! Добра работа!</string>
+    <string name="dismiss_all">Премахване на всички</string>
+    <string name="new_bailey_update">Ново обновление от Бейли!</string>
+    <string name="new_msg_guild"><![CDATA[Има нови публикации в <b>%1$s</b>]]></string>
+    <string name="new_msg_party"><![CDATA[Има нови публикации в групата Ви — <b>%1$s</b>]]></string>
+    <string name="unallocated_stats_points"><![CDATA[Имате <b>%1$s неразпределени показателни точки</b>]]></string>
+    <string name="new_subscriber_item"><![CDATA[Имате нов <b>тайнствен предмет</b>]]></string>
+    <string name="invited_to_party_notification"><![CDATA[Получихте покана за присъединяване към групата <b>%1$s</b>]]></string>
+    <string name="invited_to_private_guild"><![CDATA[Получихте покана за присъединяване към частната гилдия <b>%1$s</b>]]></string>
+    <string name="invited_to_public_guild"><![CDATA[Получихте покана за присъединяване към гилдията <b>%1$s</b>]]></string>
+    <string name="invited_to_quest"><![CDATA[Получихте покана за присъединяване в мисията <b>%1$s</b>]]></string>
+</resources>
+>>>>>>> 17bb0a8809779611ae1479041d09680196e887cf

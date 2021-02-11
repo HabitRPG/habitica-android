@@ -71,9 +71,13 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
     }
 
     override fun openMysteryItem(user: User?): Flowable<Equipment> {
-        return apiClient.openMysteryItem().doOnNext { itemData ->
-            itemData.owned = true
-            localRepository.save(itemData)
+        return apiClient.openMysteryItem()
+                .flatMap { localRepository.getEquipment(it.key ?: "").firstElement().toFlowable() }
+                .doOnNext { itemData ->
+                    val liveEquipment = localRepository.getLiveObject(itemData)
+                    localRepository.executeTransaction {
+                        liveEquipment?.owned = true
+                    }
             localRepository.decrementMysteryItemCount(user)
         }
     }

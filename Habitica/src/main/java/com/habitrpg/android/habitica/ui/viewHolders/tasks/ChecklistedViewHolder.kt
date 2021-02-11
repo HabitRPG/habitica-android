@@ -48,7 +48,7 @@ abstract class ChecklistedViewHolder(itemView: View, scoreTaskFunc: ((Task, Task
         if (isLocked) {
             this.checkmarkView.visibility = View.GONE
             this.lockView.visibility = View.VISIBLE
-            lockView.setImageBitmap(HabiticaIconsHelper.imageOfLocked(ContextCompat.getColor(context, R.color.white), 10, 12))
+            lockView.setImageBitmap(HabiticaIconsHelper.imageOfLocked(ContextCompat.getColor(context, if (data.isDue == true || data.type == Task.TYPE_DAILY) data.darkestTaskColor else R.color.text_dimmed), 10, 12))
         } else {
             this.checkmarkView.visibility = if (completed) View.VISIBLE else View.GONE
             checkmarkView.drawable.setTint(ContextCompat.getColor(context, R.color.gray_400))

@@ -6,6 +6,7 @@ import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.inventory.QuestRageStrike
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.Group
+import com.habitrpg.android.habitica.models.social.GroupCategory
 import com.habitrpg.android.habitica.models.tasks.TasksOrder
 import io.realm.Realm
 import io.realm.RealmList
@@ -111,6 +112,13 @@ class GroupSerialization : JsonDeserializer<Group>, JsonSerializer<Group> {
 
         if (obj.has("tasksOrder")) {
             group.tasksOrder = context.deserialize(obj.get("tasksOrder"), TasksOrder::class.java)
+        }
+
+        if (obj.has("categories")) {
+            group.categories = RealmList()
+            obj.getAsJsonArray("categories").forEach {
+                group.categories?.add(context.deserialize(it, GroupCategory::class.java))
+            }
         }
 
         return group

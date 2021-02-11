@@ -9,15 +9,18 @@ import java.text.DecimalFormat
 
 object NumberAbbreviator {
 
-    fun abbreviate(context: Context, number: Double): String {
+    fun abbreviate(context: Context, number: Double, numberOfDecimals: Int = 2): String {
         var usedNumber = number
         var counter = 0
         while (usedNumber >= 1000) {
             counter++
             usedNumber /= 1000
         }
-
-        val formatter = DecimalFormat("###.##" + abbreviationForCounter(context, counter).replace(".", ""))
+        var pattern = "###"
+        if (numberOfDecimals > 0) {
+            pattern = ("$pattern.").padEnd(4 + numberOfDecimals, '#')
+        }
+        val formatter = DecimalFormat(pattern + abbreviationForCounter(context, counter).replace(".", ""))
         formatter.roundingMode = RoundingMode.FLOOR
         return formatter.format(usedNumber)
     }
