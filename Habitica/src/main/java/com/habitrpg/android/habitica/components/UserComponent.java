@@ -79,7 +79,7 @@ import com.habitrpg.android.habitica.ui.fragments.social.guilds.GuildDetailFragm
 import com.habitrpg.android.habitica.ui.fragments.social.guilds.GuildFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.InboxMessageListFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.InboxOverviewFragment;
-import com.habitrpg.android.habitica.ui.fragments.social.NoPartyFragmentFragment;
+import com.habitrpg.android.habitica.ui.fragments.social.party.NoPartyFragmentFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.guilds.GuildListFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.QuestDetailFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.TavernDetailFragment;

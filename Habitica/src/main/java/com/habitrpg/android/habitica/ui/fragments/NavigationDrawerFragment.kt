@@ -192,6 +192,8 @@ class NavigationDrawerFragment : DialogFragment() {
                         getItemWithIdentifier(SIDEBAR_TEAMS)?.isVisible = it.size != 0
                         adapter.setTeams(it)
                     }, RxErrorHandler.handleEmptyError()))
+        } else {
+            getItemWithIdentifier(SIDEBAR_TEAMS)?.isVisible = false
         }
 
         subscriptions?.add(userRepository.getUser().subscribe({

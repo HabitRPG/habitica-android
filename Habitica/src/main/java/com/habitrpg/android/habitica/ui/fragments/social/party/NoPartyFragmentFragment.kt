@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica.ui.fragments.social
+package com.habitrpg.android.habitica.ui.fragments.social.party
 
 import android.app.Activity
 import android.content.ClipData
