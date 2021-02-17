@@ -20,6 +20,7 @@ import com.habitrpg.android.habitica.helpers.NumberAbbreviator
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.ui.adapter.BaseRecyclerViewAdapter
+import com.habitrpg.android.habitica.ui.helpers.EmojiParser
 import com.habitrpg.android.habitica.ui.helpers.setMarkdown
 import com.habitrpg.android.habitica.ui.views.HabiticaIcons
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
@@ -127,7 +128,7 @@ class GuildListAdapter(private val onlyShowUsersGuilds: Boolean) : BaseRecyclerV
                 else -> 0
             }
             binding.memberCountTextView.text = NumberAbbreviator.abbreviate(itemView.context, guild.memberCount.toDouble(), number)
-            binding.descriptionTextView.setMarkdown(guild.summary)
+            binding.descriptionTextView.text = EmojiParser.parseEmojis(guild.summary)
             binding.descriptionTextView.setOnClickListener {
                 itemView.callOnClick()
             }

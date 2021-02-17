@@ -63,8 +63,6 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
         showsBackButton = true
         super.onViewCreated(view, savedInstanceState)
 
-        binding?.questAcceptButton?.setOnClickListener { onQuestAccept() }
-        binding?.questRejectButton?.setOnClickListener { onQuestReject() }
         binding?.questBeginButton?.setOnClickListener { onQuestBegin() }
         binding?.questCancelButton?.setOnClickListener { onQuestCancel() }
         binding?.questLeaveButton?.setOnClickListener { onQuestLeave() }
@@ -105,27 +103,22 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
             }
         }, RxErrorHandler.handleEmptyError()))
 
-        if (binding?.questLeaderResponseWrapper != null) {
-            if (showParticipatantButtons()) {
-                binding?.questLeaderResponseWrapper?.visibility = View.GONE
-                binding?.questParticipantResponseWrapper?.visibility = View.VISIBLE
-            } else if (showLeaderButtons()) {
-                binding?.questParticipantResponseWrapper?.visibility = View.GONE
-                binding?.questLeaderResponseWrapper?.visibility = View.VISIBLE
+        if (binding?.questResponseWrapper != null) {
+            if (userId != party?.quest?.leader && showParticipatantButtons()) {
+                binding?.questLeaveButton?.visibility = View.VISIBLE
+            } else {
+                binding?.questLeaveButton?.visibility = View.GONE
+            }
+            if (showLeaderButtons()) {
                 binding?.questCancelButton?.visibility = View.VISIBLE
                 if (isQuestActive) {
-                    if (userId != party?.quest?.leader) {
-                        binding?.questLeaveButton?.visibility = View.VISIBLE
-                    } else {
-                        binding?.questLeaveButton?.visibility = View.GONE
-                    }
                     binding?.questBeginButton?.visibility = View.GONE
                 } else {
                     binding?.questBeginButton?.visibility = View.VISIBLE
                 }
             } else {
-                binding?.questLeaderResponseWrapper?.visibility = View.GONE
-                binding?.questParticipantResponseWrapper?.visibility = View.GONE
+                binding?.questCancelButton?.visibility = View.GONE
+                binding?.questBeginButton?.visibility = View.GONE
             }
         }
     }
@@ -137,7 +130,7 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
     private fun showParticipatantButtons(): Boolean {
         return if (user?.party?.quest == null) {
             false
-        } else !isQuestActive && user?.party?.quest?.RSVPNeeded == true
+        } else party?.quest?.participants?.find { it.id == user?.id } != null
     }
 
 
@@ -212,19 +205,6 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
         super.onDestroyView()
     }
 
-    private fun onQuestAccept() {
-        party?.id?.let { partyID ->
-        socialRepository.acceptQuest(user, partyID).subscribe({ }, RxErrorHandler.handleEmptyError())
-        }
-    }
-
-
-    private fun onQuestReject() {
-        party?.id?.let { partyID ->
-            socialRepository.rejectQuest(user, partyID).subscribe({ }, RxErrorHandler.handleEmptyError())
-        }
-    }
-
     private fun onQuestBegin() {
         val context = context
         if (context != null) {
@@ -245,7 +225,6 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
     private fun onQuestCancel() {
         context?.let {
             if (isQuestActive) {
-
                 val builder = AlertDialog.Builder(getActivity())
                         .setMessage(R.string.quest_abort_message)
                         .setPositiveButton(R.string.yes) { _, _ ->
@@ -276,12 +255,13 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
 
     private fun onQuestLeave() {
         val builder = AlertDialog.Builder(getActivity())
-                .setMessage(R.string.quest_abort_message)
+                .setMessage(if (quest?.active == true) R.string.quest_leave_message else R.string.quest_leave_message_nostart)
                 .setPositiveButton(R.string.yes) { _, _ ->
                     party?.id?.let { partyID ->
                         @Suppress("DEPRECATION")
                         socialRepository.leaveQuest(partyID)
                                 .flatMap { userRepository.retrieveUser() }
+                                .flatMap { socialRepository.retrieveGroup(partyID) }
                                 .subscribe({ getActivity()?.supportFragmentManager?.popBackStack() }, RxErrorHandler.handleEmptyError())
                     }
                 }.setNegativeButton(R.string.no) { _, _ -> }

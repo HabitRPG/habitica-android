@@ -362,8 +362,6 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
     }
 
     private fun questDetailButtonClicked() {
-        viewModel?.getGroupData()?.value?.let { party ->
-            MainNavigationController.navigate(PartyFragmentDirections.openQuestDetail())
-        }
+        MainNavigationController.navigate(PartyFragmentDirections.openQuestDetail())
     }
 }
