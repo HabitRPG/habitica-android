@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments.purchases
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -30,6 +31,7 @@ class GiftPurchaseGemsFragment : BaseFragment<FragmentGiftGemPurchaseBinding>() 
     }
 
     var giftedMember: Member? = null
+    @SuppressLint("SetTextI18n")
     set(value) {
         field = value
         field?.let {
@@ -52,7 +54,7 @@ class GiftPurchaseGemsFragment : BaseFragment<FragmentGiftGemPurchaseBinding>() 
         binding?.gems4View?.setOnPurchaseClickListener { purchaseGems(PurchaseTypes.Purchase4Gems) }
         binding?.gems21View?.setOnPurchaseClickListener { purchaseGems(PurchaseTypes.Purchase21Gems) }
         binding?.gems42View?.setOnPurchaseClickListener { purchaseGems(PurchaseTypes.Purchase42Gems) }
-        binding?.gems84View?.setOnPurchaseClickListener({ purchaseGems(PurchaseTypes.Purchase84Gems) })
+        binding?.gems84View?.setOnPurchaseClickListener { purchaseGems(PurchaseTypes.Purchase84Gems) }
     }
 
     fun setupCheckout() {
