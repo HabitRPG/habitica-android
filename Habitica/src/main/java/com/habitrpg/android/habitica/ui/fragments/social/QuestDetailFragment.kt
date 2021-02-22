@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments.social
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
@@ -104,7 +105,7 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
         }, RxErrorHandler.handleEmptyError()))
 
         if (binding?.questResponseWrapper != null) {
-            if (userId != party?.quest?.leader && showParticipatantButtons()) {
+            if (userId != party?.quest?.leader && user?.party?.quest?.key == group.quest?.key && user?.party?.quest?.RSVPNeeded == false) {
                 binding?.questLeaveButton?.visibility = View.VISIBLE
             } else {
                 binding?.questLeaveButton?.visibility = View.GONE
@@ -126,13 +127,6 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
     private fun showLeaderButtons(): Boolean {
         return userId == party?.quest?.leader || userId == party?.leaderID
     }
-
-    private fun showParticipatantButtons(): Boolean {
-        return if (user?.party?.quest == null) {
-            false
-        } else party?.quest?.participants?.find { it.id == user?.id } != null
-    }
-
 
     private fun updateQuestContent(questContent: QuestContent) {
         if (binding?.titleView == null || !questContent.isManaged) {
@@ -193,8 +187,9 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
             binding?.participantsHeaderCount?.text = participantCount.toString()
         } else {
             binding?.participantsHeader?.setText(R.string.invitations)
-            binding?.participantsHeaderCount?.text = participantCount.toString() + "/" + quest?.participants?.size
-            beginQuestMessage = getString(R.string.quest_begin_message, participantCount, quest?.participants?.size)
+            @SuppressLint("SetTextI18n")
+            binding?.participantsHeaderCount?.text = participantCount.toString() + "/" + participants?.size
+            beginQuestMessage = getString(R.string.quest_begin_message, participantCount, participants?.size)
         }
     }
 
