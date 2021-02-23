@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.ui.fragments.tasks
 
 import android.app.Activity
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.*
@@ -15,10 +16,7 @@ import com.habitrpg.android.habitica.data.TagRepository
 import com.habitrpg.android.habitica.databinding.FragmentViewpagerBinding
 import com.habitrpg.android.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.extensions.setTintWith
-import com.habitrpg.android.habitica.helpers.AmplitudeManager
-import com.habitrpg.android.habitica.helpers.AppConfigManager
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.android.habitica.helpers.TaskFilterHelper
+import com.habitrpg.android.habitica.helpers.*
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.modules.AppModule
@@ -49,6 +47,8 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
     lateinit var tagRepository: TagRepository
     @Inject
     lateinit var appConfigManager: AppConfigManager
+    @Inject
+    lateinit var sharedPreferences: SharedPreferences
 
     private var refreshItem: MenuItem? = null
     internal var viewFragmentsDictionary: MutableMap<Int, TaskRecyclerViewFragment>? = WeakHashMap()
@@ -76,6 +76,20 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         loadTaskLists()
+        arguments?.let {
+            val args = TasksFragmentArgs.fromBundle(it)
+            val taskType = args.taskType
+            if (taskType?.isNotBlank() == true) {
+                switchToTaskTab(taskType)
+            } else {
+                when (sharedPreferences.getString("launch_screen", "")) {
+                    "/user/tasks/habits" -> binding?.viewPager?.currentItem = 0
+                    "/user/tasks/dailies" -> binding?.viewPager?.currentItem = 1
+                    "/user/tasks/todos" -> binding?.viewPager?.currentItem = 2
+                    "/user/tasks/rewards" -> binding?.viewPager?.currentItem = 3
+                }
+            }
+        }
     }
 
     override fun onResume() {
@@ -95,7 +109,6 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
         if (bottomNavigation?.listener == this) {
             bottomNavigation?.listener = null
         }
-
         super.onPause()
     }
 
@@ -160,7 +173,7 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
 
     private fun showFilterDialog() {
         context?.let {
-            var disposable: Disposable
+            val disposable: Disposable
             val dialog = TaskFilterDialog(it, HabiticaBaseApplication.userComponent)
             disposable = tagRepository.getTags().subscribe({ tagsList -> dialog.setTags(tagsList)}, RxErrorHandler.handleEmptyError())
             dialog.setActiveTags(taskFilterHelper.tags)

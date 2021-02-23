@@ -163,6 +163,23 @@
         <item>dark</item>
     </string-array>
 
+
+    <string-array name="launch_screen_types">
+        <item>@string/habits</item>
+        <item>@string/dailies</item>
+        <item>@string/todos</item>
+        <item>@string/rewards</item>
+        <item>@string/party</item>
+    </string-array>
+
+    <string-array name="launch_screen_values">
+        <item>/user/tasks/habits</item>
+        <item>/user/tasks/dailies</item>
+        <item>/user/tasks/todos</item>
+        <item>/user/tasks/rewards</item>
+        <item>/party</item>
+    </string-array>
+
     <string-array name="server_urls">
         <item>https://habitica.com</item>
         <item>https://habitrpg-staging.herokuapp.com</item>

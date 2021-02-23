@@ -23,9 +23,9 @@ object MainNavigationController {
             try {
                 navController?.get()?.navigate(transactionId, args)
             } catch (e: IllegalArgumentException) {
-                Log.e("Main Navigation", e.localizedMessage)
+                Log.e("Main Navigation", e.localizedMessage ?: "")
             } catch (error: Exception) {
-                Log.e("Main Navigation", error.localizedMessage)
+                Log.e("Main Navigation", error.localizedMessage ?: "")
             }
         }
     }

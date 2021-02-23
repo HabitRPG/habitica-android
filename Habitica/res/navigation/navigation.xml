@@ -30,6 +30,12 @@
     <fragment
         android:id="@+id/tasksFragment"
         android:name="com.habitrpg.android.habitica.ui.fragments.tasks.TasksFragment">
+        <argument
+            android:name="taskType"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue=""/>
+        <deepLink app:uri="habitica.com/user/tasks/{taskType}" />
         <deepLink app:uri="habitica.com/tasks" />
         <deepLink app:uri="habitica.com" />
     </fragment>

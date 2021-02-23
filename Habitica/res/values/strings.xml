@@ -1142,4 +1142,5 @@
     <string name="cant_like_own_message">Can\'t like your own messages</string>
     <string name="quest_leave_message">Are you sure you want to leave the Quest? All your progress will be lost.</string>
     <string name="quest_leave_message_nostart">Are you sure you want to leave the Quest? You won\'t be able to participate.</string>
+    <string name="launch_screen">Launch Screen</string>
 </resources>

@@ -11,6 +11,7 @@ import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -20,10 +21,13 @@ import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.content.FileProvider
 import androidx.core.content.edit
+import androidx.core.os.bundleOf
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavDeepLinkBuilder
 import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import com.facebook.drawee.view.SimpleDraweeView
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.perf.FirebasePerformance
@@ -51,12 +55,14 @@ import com.habitrpg.android.habitica.models.notifications.ChallengeWonData
 import com.habitrpg.android.habitica.models.notifications.LoginIncentiveData
 import com.habitrpg.android.habitica.models.responses.MaintenanceResponse
 import com.habitrpg.android.habitica.models.responses.TaskScoringResult
+import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
 import com.habitrpg.android.habitica.ui.AvatarView
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel
 import com.habitrpg.android.habitica.ui.TutorialView
 import com.habitrpg.android.habitica.ui.fragments.NavigationDrawerFragment
+import com.habitrpg.android.habitica.ui.fragments.tasks.TasksFragment
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.viewmodels.NotificationsViewModel
 import com.habitrpg.android.habitica.ui.views.AdventureGuideDrawerArrowDrawable
@@ -88,6 +94,7 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
+    private var launchScreen: String? = null
     private lateinit var drawerIcon: AdventureGuideDrawerArrowDrawable
 
     @Inject
@@ -248,12 +255,6 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeButtonEnabled(true)
-
-        val navigationController = findNavController(R.id.nav_host_fragment)
-        navigationController.addOnDestinationChangedListener { _, destination, arguments ->
-            hideKeyboard()
-            updateToolbarTitle(destination, arguments)
-        }
         setupNotifications()
         setupBottomnavigationLayoutListener()
 
@@ -329,6 +330,16 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         super.onPostCreate(savedInstanceState)
         // Sync the toggle state after onRestoreInstanceState has occurred.
         drawerToggle?.syncState()
+
+        launchScreen = sharedPreferences.getString("launch_screen", "")
+    }
+
+    private fun openTaskType(taskType: String) {
+        if (supportFragmentManager.findFragmentById(R.id.nav_host_fragment) is TasksFragment) {
+            binding.bottomNavigation.activeTaskType = taskType
+        } else {
+            MainNavigationController.navigate(R.id.tasksFragment, bundleOf(Pair("taskType", taskType)))
+        }
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
@@ -354,8 +365,14 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     override fun onResume() {
         super.onResume()
 
-        val navigationController = findNavController(R.id.nav_host_fragment)
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navigationController = navHostFragment.navController
         MainNavigationController.setup(navigationController)
+
+        when (launchScreen) {
+            "/party" -> MainNavigationController.navigate(R.id.partyFragment)
+        }
+        launchScreen = null
 
         if(!resumeFromActivity){
             retrieveUser()
