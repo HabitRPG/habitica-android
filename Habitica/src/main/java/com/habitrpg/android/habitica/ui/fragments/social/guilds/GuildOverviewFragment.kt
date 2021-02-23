@@ -114,7 +114,7 @@ class GuildOverviewFragment : BaseMainFragment<FragmentViewpagerBinding>(), Sear
                     userGuildsFragment?.onlyShowUsersGuilds = true
                     userGuildsFragment
                 } else {
-                    userGuildsFragment?.onlyShowUsersGuilds = false
+                    publicGuildsFragment?.onlyShowUsersGuilds = false
                     publicGuildsFragment
                 } ?: Fragment()
             }
