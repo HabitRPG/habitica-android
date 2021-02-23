@@ -143,13 +143,12 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
             path += user?.preferences?.background
         }
         return zipWithLiveUser(apiClient.unlockPath(path)) { unlockResponse, copiedUser ->
-            localRepository.modify(copiedUser) { copiedUser ->
-                copiedUser.preferences = unlockResponse.preferences
-                copiedUser.purchased = unlockResponse.purchased
-                copiedUser.items = unlockResponse.items
-                copiedUser.balance = copiedUser.balance - (customization.price ?: 0) / 4.0
-                localRepository.saveUser(copiedUser, false)
-            }
+            val user = localRepository.getUnmanagedCopy(copiedUser)
+            user.preferences = unlockResponse.preferences
+            user.purchased = unlockResponse.purchased
+            user.items = unlockResponse.items
+            user.balance = copiedUser.balance - (customization.price ?: 0) / 4.0
+            localRepository.saveUser(copiedUser, false)
             unlockResponse
         }
     }
@@ -164,7 +163,7 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
         }
         path = path.substring(1)
         return Flowable.zip(apiClient.unlockPath(path), localRepository.getUser(userID).firstElement().toFlowable()
-                .map { localRepository.getLiveObject(it) }
+                .map { localRepository.getUnmanagedCopy(it) }
                 .skipNil(), { unlockResponse, copiedUser ->
                     copiedUser.preferences = unlockResponse.preferences
                     copiedUser.purchased = unlockResponse.purchased

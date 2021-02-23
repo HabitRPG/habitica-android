@@ -31,18 +31,17 @@ class PushNotificationManager(var apiClient: ApiClient, private val sharedPrefer
     }
 
     fun addPushDeviceUsingStoredToken() {
-        if (this.refreshedToken.isEmpty()) {
-            this.refreshedToken = FirebaseMessaging.getInstance().token.result
-        }
+        FirebaseMessaging.getInstance().token.addOnCompleteListener {
+            this.refreshedToken = it.result
+            if (this.refreshedToken.isEmpty() || this.user == null || this.userHasPushDevice() || !this.userIsSubscribedToNotifications()) {
+                return@addOnCompleteListener
+            }
 
-        if (this.refreshedToken.isEmpty() || this.user == null || this.userHasPushDevice() || !this.userIsSubscribedToNotifications()) {
-            return
+            val pushDeviceData = HashMap<String, String>()
+            pushDeviceData["regId"] = this.refreshedToken
+            pushDeviceData["type"] = "android"
+            apiClient.addPushDevice(pushDeviceData).subscribe({ }, RxErrorHandler.handleEmptyError())
         }
-
-        val pushDeviceData = HashMap<String, String>()
-        pushDeviceData["regId"] = this.refreshedToken
-        pushDeviceData["type"] = "android"
-        apiClient.addPushDevice(pushDeviceData).subscribe({ }, RxErrorHandler.handleEmptyError())
     }
 
     fun removePushDeviceUsingStoredToken() {

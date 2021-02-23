@@ -7,6 +7,7 @@ import com.habitrpg.android.habitica.models.BaseObject
 import io.realm.Realm
 import io.realm.RealmModel
 import io.realm.RealmObject
+import io.realm.kotlin.isManaged
 import io.realm.kotlin.where
 
 abstract class RealmBaseLocalRepository internal constructor(override var realm: Realm) : BaseLocalRepository {
@@ -72,7 +73,7 @@ abstract class RealmBaseLocalRepository internal constructor(override var realm:
 
     override fun <T: BaseObject> modify(obj: T, transaction: (T) -> Unit) {
         if (isClosed) { return }
-        val liveObject = getLiveObject(obj) ?: return
+        val liveObject =  getLiveObject(obj) ?: return
         realm.executeTransaction {
             transaction(liveObject)
         }
@@ -88,6 +89,7 @@ abstract class RealmBaseLocalRepository internal constructor(override var realm:
 
     override fun <T: RealmModel> getLiveObject(obj: T): T? {
         if (isClosed) return null
+        if (!obj.isManaged()) return obj
         val baseObject = obj as? BaseObject ?: return null
         return realm.where(baseObject.realmClass).equalTo(baseObject.primaryIdentifierName, baseObject.primaryIdentifier).findFirst() as? T
     }
