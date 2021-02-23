@@ -20,12 +20,8 @@
             style="@style/SectionTitle"
             android:text="@string/avatar_body"
             android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <FrameLayout
-            android:background="@drawable/layout_rounded_bg_window"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
             <LinearLayout
+                android:background="@drawable/layout_rounded_bg_window"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -66,24 +62,19 @@
                     android:id="@+id/avatarSkinView"
                     app:equipmentTitle="@string/avatar_skin"/>
             </LinearLayout>
-        </FrameLayout>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/avatar_extras"
             android:textAppearance="?android:attr/textAppearanceMedium"
             style="@style/SectionTitle"/>
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/layout_rounded_bg_window">
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:divider="?android:listDivider"
-                android:showDividers="middle">
+                android:showDividers="middle"
+                android:background="@drawable/layout_rounded_bg_window">
                 <com.habitrpg.android.habitica.ui.views.EquipmentItemRow
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -117,7 +108,6 @@
                     android:id="@+id/avatar_headband_view"
                     app:equipmentTitle="@string/avatar_headband"/>
             </LinearLayout>
-        </FrameLayout>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -125,16 +115,13 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             style="@style/SectionTitle"/>
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/layout_rounded_bg_window">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:divider="?android:listDivider"
-                android:showDividers="middle">
+                android:showDividers="middle"
+                android:background="@drawable/layout_rounded_bg_window">
                 <com.habitrpg.android.habitica.ui.views.EquipmentItemRow
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -161,29 +148,22 @@
                     android:id="@+id/avatarHairMustacheView"
                     app:equipmentTitle="@string/avatar_mustache" />
             </LinearLayout>
-        </FrameLayout>
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/avatar_background"
             android:textAppearance="?android:attr/textAppearanceMedium"
             style="@style/SectionTitle"/>
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/layout_rounded_bg_window">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:background="@drawable/layout_rounded_bg_window">
                 <com.habitrpg.android.habitica.ui.views.EquipmentItemRow
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/avatarBackgroundView"
                     app:equipmentTitle="@string/avatar_background" />
             </LinearLayout>
-        </FrameLayout>
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

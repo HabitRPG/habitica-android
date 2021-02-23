@@ -19,7 +19,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="180dp"
                 android:scaleType="centerInside"/>
-        <com.habitrpg.android.habitica.ui.views.HabiticaEmojiTextView
+        <TextView
                 android:id="@+id/descriptionTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>

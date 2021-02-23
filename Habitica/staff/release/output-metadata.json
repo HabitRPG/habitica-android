@@ -10,8 +10,8 @@
     {
       "type": "SINGLE",
       "filters": [],
-      "versionCode": 2828,
-      "versionName": "3.2",
+      "versionCode": 2835,
+      "versionName": "3.2.1",
       "outputFile": "Habitica-staff-release.apk"
     }
   ]

@@ -100,6 +100,10 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
                 .map { (res, user): Pair<TaskDirectionData, User> ->
                     // save local task changes
                     val result = TaskScoringResult()
+                    if (res.lvl == 0) {
+                        // Team tasks that require approval have weird data that we should just ignore.
+                        return@map result
+                    }
                     val stats = user.stats
 
                     result.healthDelta = res.hp - (stats?.hp ?: 0.0)

@@ -2,7 +2,6 @@ package com.habitrpg.android.habitica.ui.views.yesterdailies
 
 import android.app.Activity
 import android.content.Context
-import android.graphics.PorterDuff
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,11 +18,9 @@ import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.tasks.ChecklistItem
 import com.habitrpg.android.habitica.models.tasks.Task
-import com.habitrpg.android.habitica.ui.views.HabiticaEmojiTextView
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.functions.Consumer
 import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.math.abs
@@ -156,7 +153,7 @@ class YesterdailyDialog private constructor(context: Context, private val userRe
             checkboxBackground.setBackgroundResource(R.drawable.daily_unchecked)
         }
 
-        val emojiView = taskView.findViewById<View>(R.id.text_view) as? HabiticaEmojiTextView
+        val emojiView = taskView.findViewById<TextView>(R.id.text_view)
         emojiView?.text = task.markdownText { emojiView?.text = it }
     }
 

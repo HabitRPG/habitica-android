@@ -173,7 +173,7 @@ class TeamBoardFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchVi
 
     private fun showFilterDialog() {
         context?.let {
-            var disposable: Disposable? = null
+            val disposable: Disposable
             val dialog = TaskFilterDialog(it, HabiticaBaseApplication.userComponent)
             disposable = tagRepository.getTags().subscribe({ tagsList -> dialog.setTags(tagsList)}, RxErrorHandler.handleEmptyError())
             dialog.setActiveTags(taskFilterHelper.tags)
@@ -197,7 +197,7 @@ class TeamBoardFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchVi
                 }
             })
             dialog.setOnDismissListener {
-                if (disposable?.isDisposed == false) {
+                if (!disposable.isDisposed) {
                     disposable.dispose()
                 }
             }

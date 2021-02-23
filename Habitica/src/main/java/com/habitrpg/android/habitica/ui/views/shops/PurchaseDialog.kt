@@ -310,7 +310,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
         } else if (shopItem.purchaseType == "quests" && shopItem.currency == "gold") {
             observable = inventoryRepository.purchaseQuest(shopItem.key).cast(Any::class.java)
         } else if (shopItem.purchaseType == "debuffPotion") {
-            observable = userRepository.useSkill(user, shopItem.key, null).cast(Any::class.java)
+            observable = userRepository.useSkill(shopItem.key, null).cast(Any::class.java)
         } else if (shopItem.purchaseType == "card") {
             purchaseCardAction?.invoke(shopItem)
             dismiss()

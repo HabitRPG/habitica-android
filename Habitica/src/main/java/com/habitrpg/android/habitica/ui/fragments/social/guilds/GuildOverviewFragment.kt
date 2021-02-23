@@ -32,8 +32,8 @@ class GuildOverviewFragment : BaseMainFragment<FragmentViewpagerBinding>(), Sear
     }
 
     private var statePagerAdapter: FragmentStatePagerAdapter? = null
-    private var userGuildsFragment: GuildListFragment? = GuildListFragment(true)
-    private var publicGuildsFragment: GuildListFragment? = GuildListFragment(false)
+    private var userGuildsFragment: GuildListFragment? = GuildListFragment()
+    private var publicGuildsFragment: GuildListFragment? = GuildListFragment()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -111,8 +111,10 @@ class GuildOverviewFragment : BaseMainFragment<FragmentViewpagerBinding>(), Sear
 
             override fun getItem(position: Int): Fragment {
                 return if (position == 0) {
+                    userGuildsFragment?.onlyShowUsersGuilds = true
                     userGuildsFragment
                 } else {
+                    userGuildsFragment?.onlyShowUsersGuilds = false
                     publicGuildsFragment
                 } ?: Fragment()
             }

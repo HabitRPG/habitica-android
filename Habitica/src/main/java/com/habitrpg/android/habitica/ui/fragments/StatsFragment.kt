@@ -204,36 +204,6 @@ class StatsFragment: BaseMainFragment<FragmentStatsBinding>() {
     }
 
     private fun updateStats(user: User) {
-        val levelStat = min((user.stats?.lvl ?: 0) / 2.0f, 50f).toInt()
-
-        totalStrength = levelStat
-        totalIntelligence = levelStat
-        totalConstitution = levelStat
-        totalPerception = levelStat
-
-        binding?.strengthStatsView?.levelValue = levelStat
-        binding?.intelligenceStatsView?.levelValue = levelStat
-        binding?.constitutionStatsView?.levelValue = levelStat
-        binding?.perceptionStatsView?.levelValue = levelStat
-
-        totalStrength += user.stats?.buffs?.str?.toInt() ?: 0
-        totalIntelligence += user.stats?.buffs?._int?.toInt() ?: 0
-        totalConstitution += user.stats?.buffs?.con?.toInt() ?: 0
-        totalPerception += user.stats?.buffs?.per?.toInt() ?: 0
-        binding?.strengthStatsView?.buffValue = user.stats?.buffs?.str?.toInt() ?: 0
-        binding?.intelligenceStatsView?.buffValue = user.stats?.buffs?._int?.toInt() ?: 0
-        binding?.constitutionStatsView?.buffValue = user.stats?.buffs?.con?.toInt() ?: 0
-        binding?.perceptionStatsView?.buffValue = user.stats?.buffs?.per?.toInt() ?: 0
-
-        totalStrength += user.stats?.strength ?: 0
-        totalIntelligence += user.stats?.intelligence ?: 0
-        totalConstitution += user.stats?.constitution ?: 0
-        totalPerception += user.stats?.per ?: 0
-        binding?.strengthStatsView?.allocatedValue = user.stats?.strength ?: 0
-        binding?.intelligenceStatsView?.allocatedValue = user.stats?.intelligence ?: 0
-        binding?.constitutionStatsView?.allocatedValue = user.stats?.constitution ?: 0
-        binding?.perceptionStatsView?.allocatedValue = user.stats?.per ?: 0
-
         val outfit = user.items?.gear?.equipped
         val outfitList = ArrayList<String>()
         outfit?.let { thisOutfit ->
@@ -249,35 +219,63 @@ class StatsFragment: BaseMainFragment<FragmentStatsBinding>() {
 
         compositeSubscription.add(inventoryRepository.getEquipment(outfitList).firstElement()
                 .retry(1)
-                .subscribe(Consumer {
-            val userStatComputer = UserStatComputer()
-            val statsRows = user?.let { it1 -> userStatComputer.computeClassBonus(it, it1) } ?: return@Consumer
+                .subscribe( {
+                    val levelStat = min((user.stats?.lvl ?: 0) / 2.0f, 50f).toInt()
 
-            var strength = 0
-            var intelligence = 0
-            var constitution = 0
-            var perception = 0
+                    totalStrength = levelStat
+                    totalIntelligence = levelStat
+                    totalConstitution = levelStat
+                    totalPerception = levelStat
 
-            for (row in statsRows) {
-                if (row.javaClass == UserStatComputer.AttributeRow::class.java) {
-                    val attributeRow = row as UserStatComputer.AttributeRow
-                    strength += attributeRow.strVal.toInt()
-                    intelligence += attributeRow.intVal.toInt()
-                    constitution += attributeRow.conVal.toInt()
-                    perception += attributeRow.perVal.toInt()
-                }
-            }
+                    binding?.strengthStatsView?.levelValue = levelStat
+                    binding?.intelligenceStatsView?.levelValue = levelStat
+                    binding?.constitutionStatsView?.levelValue = levelStat
+                    binding?.perceptionStatsView?.levelValue = levelStat
 
-            totalStrength += strength
-            totalIntelligence += intelligence
-            totalConstitution += constitution
-            totalPerception += perception
+                    totalStrength += user.stats?.buffs?.str?.toInt() ?: 0
+                    totalIntelligence += user.stats?.buffs?._int?.toInt() ?: 0
+                    totalConstitution += user.stats?.buffs?.con?.toInt() ?: 0
+                    totalPerception += user.stats?.buffs?.per?.toInt() ?: 0
+                    binding?.strengthStatsView?.buffValue = user.stats?.buffs?.str?.toInt() ?: 0
+                    binding?.intelligenceStatsView?.buffValue = user.stats?.buffs?._int?.toInt() ?: 0
+                    binding?.constitutionStatsView?.buffValue = user.stats?.buffs?.con?.toInt() ?: 0
+                    binding?.perceptionStatsView?.buffValue = user.stats?.buffs?.per?.toInt() ?: 0
+
+                    totalStrength += user.stats?.strength ?: 0
+                    totalIntelligence += user.stats?.intelligence ?: 0
+                    totalConstitution += user.stats?.constitution ?: 0
+                    totalPerception += user.stats?.per ?: 0
+                    binding?.strengthStatsView?.allocatedValue = user.stats?.strength ?: 0
+                    binding?.intelligenceStatsView?.allocatedValue = user.stats?.intelligence ?: 0
+                    binding?.constitutionStatsView?.allocatedValue = user.stats?.constitution ?: 0
+                    binding?.perceptionStatsView?.allocatedValue = user.stats?.per ?: 0
+                    val userStatComputer = UserStatComputer()
+                    val statsRows = userStatComputer.computeClassBonus(it, user)
+
+                    var strength = 0
+                    var intelligence = 0
+                    var constitution = 0
+                    var perception = 0
+
+                    for (row in statsRows) {
+                        if (row.javaClass == UserStatComputer.AttributeRow::class.java) {
+                            val attributeRow = row as UserStatComputer.AttributeRow
+                            strength += attributeRow.strVal.toInt()
+                            intelligence += attributeRow.intVal.toInt()
+                            constitution += attributeRow.conVal.toInt()
+                            perception += attributeRow.perVal.toInt()
+                        }
+                    }
+
+                    totalStrength += strength
+                    totalIntelligence += intelligence
+                    totalConstitution += constitution
+                    totalPerception += perception
                     binding?.strengthStatsView?.equipmentValue = strength
                     binding?.intelligenceStatsView?.equipmentValue = intelligence
                     binding?.constitutionStatsView?.equipmentValue = constitution
                     binding?.perceptionStatsView?.equipmentValue = perception
 
-        }, RxErrorHandler.handleEmptyError()))
+                }, RxErrorHandler.handleEmptyError()))
     }
-
 }

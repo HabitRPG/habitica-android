@@ -3,95 +3,90 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_marginBottom="16dp">
+    <TextView
+        android:id="@+id/task_type_title"
+        style="@style/Caption3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="@string/habits"
+        android:textAllCaps="true"/>
+    <RadioGroup
+        android:id="@+id/task_filter_wrapper"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="24dp">
+        <RadioButton
+            android:id="@+id/all_task_filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/all"
+            style="@style/TaskFilterRadioButton"
+            android:checked="true"
+            />
+        <RadioButton
+            android:id="@+id/second_task_filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/weak"
+            style="@style/TaskFilterRadioButton"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp" />
+        <RadioButton
+            android:id="@+id/third_task_filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/strong"
+            style="@style/TaskFilterRadioButton"/>
+    </RadioGroup>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/separator" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:orientation="vertical">
+        android:orientation="horizontal"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp">
+
         <TextView
-            android:id="@+id/task_type_title"
+            android:id="@+id/tags_title"
             style="@style/Caption3"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            tools:text="@string/habits"
+            android:layout_gravity="center"
+            android:layout_weight="2"
+            android:text="@string/tags"
             android:textAllCaps="true"/>
-        <RadioGroup
-            android:id="@+id/task_filter_wrapper"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:orientation="horizontal"
-            android:layout_marginTop="12dp"
-            android:layout_marginBottom="24dp">
-            <RadioButton
-                android:id="@+id/all_task_filter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/all"
-                style="@style/TaskFilterRadioButton"
-                android:checked="true"
-                />
-            <RadioButton
-                android:id="@+id/second_task_filter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/weak"
-                style="@style/TaskFilterRadioButton"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp" />
-            <RadioButton
-                android:id="@+id/third_task_filter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/strong"
-                style="@style/TaskFilterRadioButton"/>
-        </RadioGroup>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/separator" />
+
+        <Button
+            android:id="@+id/tag_edit_button"
+            style="@style/Body1_Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:text="@string/edit_tag_btn_edit"
+            android:textColor="?colorPrimary"
+            android:textSize="16sp"
+            android:gravity="end|center_vertical"
+            android:paddingEnd="0dp"
+            android:paddingStart="0dp"/>
+    </LinearLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
         <LinearLayout
+            android:id="@+id/tags_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp">
-
-            <TextView
-                android:id="@+id/tags_title"
-                style="@style/Caption3"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="2"
-                android:text="@string/tags"
-                android:textAllCaps="true"/>
-
-                <Button
-                    android:id="@+id/tag_edit_button"
-                    style="@style/Body1_Button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:text="@string/edit_tag_btn_edit"
-                    android:textColor="?colorPrimary"
-                    android:textSize="16sp"
-                    android:gravity="end|center_vertical"
-                    android:paddingEnd="0dp"/>
-        </LinearLayout>
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <LinearLayout
-                android:id="@+id/tags_list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
-                android:orientation="vertical"
-                android:showDividers="middle"
-                android:divider="@color/transparent"
-                android:dividerPadding="8dp"/>
-        </ScrollView>
-
-    </LinearLayout>
+            android:layout_marginBottom="24dp"
+            android:orientation="vertical"
+            android:showDividers="middle"
+            android:divider="@color/transparent"
+            android:dividerPadding="8dp"/>
+    </ScrollView>
 </LinearLayout>

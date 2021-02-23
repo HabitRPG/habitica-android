@@ -155,7 +155,9 @@ class NoPartyFragmentFragment : BaseMainFragment<FragmentNoPartyBinding>() {
                                     userRepository.retrieveUser(false)
                                 }
                                 .subscribe({
-                                    fragmentManager?.popBackStack()
+                                    if (isAdded) {
+                                        parentFragmentManager.popBackStack()
+                                    }
                                     MainNavigationController.navigate(R.id.partyFragment,
                                             bundleOf(Pair("partyID", user?.party?.id)))
                                 }, RxErrorHandler.handleEmptyError())

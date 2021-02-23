@@ -39,7 +39,7 @@ open class Task : RealmObject, BaseObject, Parcelable {
     var text: String = ""
     var notes: String? = null
     @TaskTypes
-    var type: String = ""
+    var type: String = Task.TYPE_HABIT
     var challengeID: String? = null
     var challengeBroken: String? = null
     var attribute: String? = Stats.STRENGTH

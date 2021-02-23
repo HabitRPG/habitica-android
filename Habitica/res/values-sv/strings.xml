@@ -452,7 +452,7 @@
     <string name="insufficientHourglasses">Du behöver mer Mystiska Timglas för att köpa detta objekt!</string>
     <string name="get_hourglasses">Skaffa timglas</string>
     <string name="subscribe_for_hourglasses">Prenumerera för Timglas</string>
-    <string name="timetravelers_closed_description">Tjäna ett Mystiskt timglas för varje tredje månad du prenumererat i följd. Använd dom sen för att låsa upp begränsade utgåvor, husdjur och riddjur från det förflutna... och framtiden!</string>
+    <string name="timetravelers_closed_description"><![CDATA[Tjäna ett Mystiskt timglas för varje tredje månad du prenumererat i följd. Använd dom sen för att låsa upp begränsade utgåvor, husdjur och riddjur från det förflutna… och framtiden!]]></string>
     <string name="want_to_subscribe">Jag vill Prenumerera</string>
     <string name="come_back_soon">Kom tillbaka snart!</string>
     <string name="level">Nivå</string>

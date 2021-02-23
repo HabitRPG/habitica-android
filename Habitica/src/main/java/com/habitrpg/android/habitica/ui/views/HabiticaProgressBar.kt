@@ -9,7 +9,6 @@ import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
-import androidx.core.content.ContextCompat
 import androidx.core.widget.ImageViewCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ProgressBarBinding

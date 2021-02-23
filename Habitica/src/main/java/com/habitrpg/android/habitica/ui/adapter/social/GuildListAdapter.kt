@@ -4,7 +4,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
-import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.RecyclerView
@@ -17,33 +16,26 @@ import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.NumberAbbreviator
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.ui.adapter.BaseRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.helpers.EmojiParser
-import com.habitrpg.android.habitica.ui.helpers.setMarkdown
-import com.habitrpg.android.habitica.ui.views.HabiticaIcons
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import io.realm.Case
 import io.realm.OrderedRealmCollection
 import java.util.*
 
-class GuildListAdapter(private val onlyShowUsersGuilds: Boolean) : BaseRecyclerViewAdapter<Group, RecyclerView.ViewHolder>(), Filterable {
+class GuildListAdapter : BaseRecyclerViewAdapter<Group, RecyclerView.ViewHolder>(), Filterable {
 
     var socialRepository: SocialRepository? = null
-    private var memberGuildIDs: List<String> = listOf()
 
-    fun setMemberGuildIDs(memberGuildIDs: List<String>) {
-        this.memberGuildIDs = memberGuildIDs
-    }
+    var onlyShowUsersGuilds = false
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val guildViewHolder = if (onlyShowUsersGuilds) {
+        return if (onlyShowUsersGuilds) {
             UserGuildViewHolder(parent.inflate(R.layout.item_user_guild))
         } else {
             GuildViewHolder(parent.inflate(R.layout.item_public_guild))
         }
-        return guildViewHolder
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -51,17 +43,12 @@ class GuildListAdapter(private val onlyShowUsersGuilds: Boolean) : BaseRecyclerV
         if (onlyShowUsersGuilds && holder is UserGuildViewHolder) {
             holder.bind(guild)
         } else if (holder is GuildViewHolder) {
-            val isInGroup = isInGroup(guild)
-            holder.bind(guild, isInGroup)
+            holder.bind(guild)
             holder.itemView.tag = guild
         }
-        holder.itemView.setOnClickListener { v ->
+        holder.itemView.setOnClickListener {
             MainNavigationController.navigate(R.id.guildFragment, bundleOf(Pair("groupID", guild.id)))
         }
-    }
-
-    private fun isInGroup(guild: Group): Boolean {
-        return this.memberGuildIDs.contains(guild.id)
     }
 
     private var unfilteredData: OrderedRealmCollection<Group>? = null
@@ -120,7 +107,7 @@ class GuildListAdapter(private val onlyShowUsersGuilds: Boolean) : BaseRecyclerV
     class GuildViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val binding = ItemPublicGuildBinding.bind(itemView)
 
-        fun bind(guild: Group, isInGroup: Boolean) {
+        fun bind(guild: Group) {
             binding.nameTextView.text = guild.name
             val number = when {
                 guild.memberCount < 1000 -> 2
@@ -135,10 +122,10 @@ class GuildListAdapter(private val onlyShowUsersGuilds: Boolean) : BaseRecyclerV
             binding.guildBadgeView.setImageBitmap(HabiticaIconsHelper.imageOfGuildCrestSmall(guild.memberCount.toFloat()))
 
             binding.tagWrapper.removeAllViews()
-            guild.categories?.forEach {
+            guild.categories?.forEach { category ->
                 val textView = PillTextviewBinding.inflate(itemView.context.layoutInflater, binding.tagWrapper, true)
-                textView.root.text = it.name?.split("_")?.map { it.capitalize(Locale.getDefault()) }?.joinToString(" ")
-                textView.root.background = if (it.slug == "habitica_official") {
+                textView.root.text = category.name?.split("_")?.joinToString(" ") { it.capitalize(Locale.getDefault()) }
+                textView.root.background = if (category.slug == "habitica_official") {
                     textView.root.setTextColor(ContextCompat.getColor(itemView.context, R.color.white))
                     ContextCompat.getDrawable(itemView.context, R.drawable.pill_bg_purple_400)
                 } else {

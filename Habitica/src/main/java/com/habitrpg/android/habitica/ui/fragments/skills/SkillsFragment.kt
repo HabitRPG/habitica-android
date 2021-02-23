@@ -150,9 +150,9 @@ class SkillsFragment : BaseMainFragment<FragmentSkillsBinding>() {
             return
         }
         val observable: Flowable<SkillResponse> = if (taskId != null) {
-            userRepository.useSkill(user, skill.key, skill.target, taskId)
+            userRepository.useSkill(skill.key, skill.target, taskId)
         } else {
-            userRepository.useSkill(user, skill.key, skill.target)
+            userRepository.useSkill(skill.key, skill.target)
         }
         compositeSubscription.add(observable.subscribe({ skillResponse -> this.displaySkillResult(skill, skillResponse) },
                 RxErrorHandler.handleEmptyError()))

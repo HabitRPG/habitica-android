@@ -32,9 +32,7 @@ class SkillTasksRecyclerViewAdapter : BaseRecyclerViewAdapter<Task, SkillTasksRe
     }
 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
-        data?.let {
-            holder.bindHolder(it[position])
-        }
+        holder.bindHolder(data[position])
     }
 
     fun getTaskSelectionEvents(): Flowable<Task> {

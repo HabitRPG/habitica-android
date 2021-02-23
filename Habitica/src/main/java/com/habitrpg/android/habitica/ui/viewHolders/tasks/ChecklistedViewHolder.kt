@@ -2,7 +2,6 @@ package com.habitrpg.android.habitica.ui.viewHolders.tasks
 
 import android.content.Context
 import android.graphics.PorterDuff
-import android.graphics.drawable.BitmapDrawable
 import android.view.*
 import android.widget.*
 import androidx.core.content.ContextCompat
@@ -17,8 +16,6 @@ import com.habitrpg.android.habitica.models.tasks.ChecklistItem
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
 import com.habitrpg.android.habitica.ui.helpers.setParsedMarkdown
-import com.habitrpg.android.habitica.ui.views.HabiticaEmojiTextView
-import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -106,7 +103,7 @@ abstract class ChecklistedViewHolder(itemView: View, scoreTaskFunc: ((Task, Task
                     } else {
                         R.color.checkbox_fill
                     }) ?: R.color.checkbox_fill)
-                    val textView = itemView?.findViewById<HabiticaEmojiTextView>(R.id.checkedTextView)
+                    val textView = itemView?.findViewById<TextView>(R.id.checkedTextView)
                     // Populate the data into the template view using the data object
                     textView?.text = item.text
                     textView?.setTextColor(ContextCompat.getColor(context, if (item.completed) R.color.text_dimmed else R.color.text_secondary))

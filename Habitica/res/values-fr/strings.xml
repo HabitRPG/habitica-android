@@ -505,7 +505,7 @@
     <string name="insufficientHourglasses">Vous n\'avez pas assez de sabliers mystiques pour acheter cet objet !</string>
     <string name="get_hourglasses">Obtenir des sabliers mystiques</string>
     <string name="subscribe_for_hourglasses">S\'abonner pour obtenir des sabliers mystiques</string>
-    <string name="timetravelers_closed_description">Obtenez un sablier mystique pour chaque série de trois mois d\'abonnement consécutifs, puis utilisez-les pour débloquer des objets, des familiers et des montures en édition limitée du passé... Ou du futur !</string>
+    <string name="timetravelers_closed_description">Obtenez un sablier mystique pour chaque série de trois mois d\'abonnement consécutifs, puis utilisez-les pour débloquer des objets, des familiers et des montures en édition limitée du passé… Ou du futur !</string>
     <string name="want_to_subscribe">Je veux m\'abonner</string>
     <string name="seasonal_closed_description">Les grand galas ont lieu lors des solstices et des équinoxes, revenez ici à ces périodes pour obtenir des objets saisonniers amusants !</string>
     <string name="come_back_soon">Revenez bientôt !</string>
@@ -604,7 +604,7 @@
     <string name="questShop_owner_long">Ian le guide des quêtes</string>
     <string name="seasonalShop_owner_long">Sorcière saisonnière</string>
     <string name="rage_attack">Attaque de rage :</string>
-    <string name="tavern_description_world_boss">Oh, ne faites pas attention au monstre ci-dessous -- c\'est toujours un endroit sûr pour discuter pendant vos pauses.</string>
+    <string name="tavern_description_world_boss">Oh, ne faites pas attention au monstre ci-dessous — c\'est toujours un endroit sûr pour discuter pendant vos pauses.</string>
     <string name="report">Signaler</string>
     <string name="reply">Répondre</string>
     <string name="challenge_prize">Récompense du défi</string>

@@ -103,8 +103,7 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
             when (requestCode) {
                 11 -> {
                     if (resultCode == Activity.RESULT_OK) {
-                        userRepository.useSkill(null,
-                                selectedCard?.key ?: "",
+                        userRepository.useSkill(selectedCard?.key ?: "",
                                 "member",
                                 data.getStringExtra("member_id") ?: "")
                                 .subscribeWithErrorHandler(Consumer {

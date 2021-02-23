@@ -112,7 +112,7 @@ class HabiticaPurchaseVerifier(context: Context, apiClient: ApiClient) : BasePur
     private fun loadPendingGifts(): MutableMap<String?, String?> {
         val outputMap: MutableMap<String?, String?> = HashMap()
         try {
-            val jsonString = preferences?.getString(PENDING_GIFTS_KEY, JSONObject().toString())
+            val jsonString = preferences?.getString(PENDING_GIFTS_KEY, JSONObject().toString()) ?: ""
             val jsonObject = JSONObject(jsonString)
             val keysItr = jsonObject.keys()
             while (keysItr.hasNext()) {

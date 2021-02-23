@@ -6,7 +6,7 @@
     <string name="profile_level">Level:</string>
     <string name="profile_message_sent_to">Meddelande skickat till %s</string>
     <string name="profile_send_message_to">Skicka meddelande till %s</string>
-    <string name="profile_loading_data">Laddar medlemmens data...</string>
+    <string name="profile_loading_data">Laddar medlemmens data…</string>
     <string name="profile_mounts_tamed">Tama riddjur</string>
     <string name="profile_pets_found">Sällskapsdjur funna</string>
     <string name="profile_pets_and_mounts">Sällskapsdjur &amp; Riddjur</string>

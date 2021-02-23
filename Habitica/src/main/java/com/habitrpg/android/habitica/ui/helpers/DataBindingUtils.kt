@@ -83,7 +83,7 @@ object DataBindingUtils {
             }
 
             override fun onFailureImpl(dataSource: DataSource<CloseableReference<CloseableImage>>) {
-                dataSource?.close()
+                dataSource.close()
             }
         }, CallerThreadExecutor.getInstance())
     }

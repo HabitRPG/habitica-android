@@ -13,7 +13,7 @@ class NotificationOpenHandler {
 
     companion object {
 
-        fun handleOpenedByNotification(identifier: String, intent: Intent, user: User?) {
+        fun handleOpenedByNotification(identifier: String, intent: Intent) {
             GlobalScope.launch(context = Dispatchers.Main) {
                 when (identifier) {
                     PushNotificationManager.PARTY_INVITE_PUSH_NOTIFICATION_KEY -> openPartyScreen()

@@ -73,7 +73,7 @@
                 android:id="@+id/gemCapTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="@string/subscribe1month.gemcap"
+                tools:text="@string/subscribe1month_gemcap"
                 style="@style/Pill"
                 android:textSize="12sp"
                 android:layout_marginTop="4dp"

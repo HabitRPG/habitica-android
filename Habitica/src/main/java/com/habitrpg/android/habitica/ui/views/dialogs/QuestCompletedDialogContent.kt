@@ -48,12 +48,12 @@ class QuestCompletedDialogContent : LinearLayout {
 
         if (questContent.drop != null && questContent.drop?.items != null) {
             questContent.drop?.items
-                    ?.filterNot { it.isOnlyOwner }
+                    ?.filterNot { it.onlyOwner }
                     ?.forEach { addRewardsRow(inflater, it, binding.rewardsList) }
 
             var hasOwnerRewards = false
             for (item in questContent.drop?.items ?: emptyList<QuestDropItem>()) {
-                if (item.isOnlyOwner) {
+                if (item.onlyOwner) {
                     addRewardsRow(inflater, item, binding.ownerRewardsList)
                     hasOwnerRewards = true
                 }

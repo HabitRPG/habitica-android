@@ -16,7 +16,7 @@
     <string name="Language_summary">A Habitica nyelvének megváltoztatása</string>
     <string name="SP_user_qr_code">A QR kódod</string>
     <string name="PS_contact_title">Kapcsolat</string>
-    <string name="unknown_error">Hiba történt...</string>
+    <string name="unknown_error">Hiba történt…</string>
     <string name="pref_account_header">Fiók</string>
     <string name="pref_first_day_of_the_week_title">A hét első napja</string>
     <string name="pref_first_day_of_the_week_summary">A hét első napja minden naptárban</string>

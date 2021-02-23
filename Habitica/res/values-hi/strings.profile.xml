@@ -2,9 +2,8 @@
 <resources>
     <string name="profile_mounts_tamed">सवारी जो नामांकित हैं</string>
     <string name="profile_achievements">उपलब्धियों</string>
-    <string name="profile_private_message">निजी संदेश</string>
     <string name="profile_allocated">आवंटित:</string>
-    <string name="profile_loading_data">सदस्य का डेटा प्राप्त करना...</string>
+    <string name="profile_loading_data">सदस्य का डेटा प्राप्त करना…</string>
     <string name="profile_class_bonus">वर्ग का बोनस:</string>
     <string name="profile_level">स्तर:</string>
     <string name="profile_message_sent_to">%s के लिए संदेश भेजा</string>

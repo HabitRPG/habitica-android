@@ -18,7 +18,7 @@ import com.amplitude.api.Identify
 import com.facebook.drawee.backends.pipeline.Fresco
 import com.facebook.imagepipeline.core.ImagePipelineConfig
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.google.firebase.iid.FirebaseInstanceId
+import com.google.firebase.installations.FirebaseInstallations
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import com.habitrpg.android.habitica.api.HostConfig
@@ -170,7 +170,7 @@ abstract class HabiticaBaseApplication : Application() {
                 return "DONT-NEED-IT"
             }
 
-            override fun getCache(): Cache? {
+            override fun getCache(): Cache {
                 return Billing.newCache()
             }
 
@@ -193,16 +193,12 @@ abstract class HabiticaBaseApplication : Application() {
     }
 
     private fun setupNotifications() {
-        FirebaseInstanceId.getInstance().instanceId.addOnCompleteListener { task ->
+        FirebaseInstallations.getInstance().id.addOnCompleteListener { task ->
             if (!task.isSuccessful) {
                 Log.w("Token", "getInstanceId failed", task.exception)
                 return@addOnCompleteListener
             }
-
-            // Get new Instance ID token
-            val token = task.result?.token
-
-            // Log and toast
+            val token = task.result
             if (BuildConfig.DEBUG) {
                 Log.d("Token", "Firebase Notification Token: $token")
             }

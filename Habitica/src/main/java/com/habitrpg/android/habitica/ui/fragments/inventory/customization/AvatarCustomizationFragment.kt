@@ -49,7 +49,7 @@ class AvatarCustomizationFragment : BaseMainFragment<FragmentRecyclerviewBinding
                         userRepository.unlockPath(user, customization)
                                 .flatMap { userRepository.retrieveUser(false, true, true) }
                     } else {
-                        userRepository.useCustomization(user, customization.type ?: "", customization.category, customization.identifier ?: "")
+                        userRepository.useCustomization(customization.type ?: "", customization.category, customization.identifier ?: "")
                     }
                 }
                 .subscribe({ }, RxErrorHandler.handleEmptyError()))

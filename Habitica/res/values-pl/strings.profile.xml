@@ -3,7 +3,7 @@
     <string name="profile_pets_and_mounts">Chowańce i Wierzchowce</string>
     <string name="profile_pets_found">Znalezione chowańce</string>
     <string name="profile_mounts_tamed">Okiełznane wierzchowce</string>
-    <string name="profile_loading_data">Ładowanie danych użytkownika...</string>
+    <string name="profile_loading_data">Ładowanie danych użytkownika…</string>
     <string name="profile_send_message_to">Wyślij wiadomość do %s</string>
     <string name="profile_message_sent_to">Wiadomość wysłana do %s</string>
     <string name="profile_level">Poziom:</string>

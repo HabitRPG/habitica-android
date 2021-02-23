@@ -35,7 +35,7 @@
                 android:scaleType="center"
                 android:src="@drawable/checkmark" />
         </FrameLayout>
-        <com.habitrpg.android.habitica.ui.views.HabiticaEmojiTextView
+        <TextView
             android:id="@+id/text_view"
             style="@style/Subheader3"
             android:layout_width="match_parent"

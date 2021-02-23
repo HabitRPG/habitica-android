@@ -18,6 +18,7 @@ import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.*
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
+import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaProgressDialog
 import io.reactivex.rxjava3.functions.Consumer
 import javax.inject.Inject
 
@@ -49,8 +50,7 @@ class ClassSelectionActivity : BaseActivity(), Consumer<User> {
     @Inject
     lateinit var userRepository: UserRepository
 
-    @Suppress("DEPRECATION")
-    private var progressDialog: ProgressDialog? = null
+    private var progressDialog: HabiticaProgressDialog? = null
 
     override fun getLayoutResId(): Int {
         return R.layout.activity_class_selection
@@ -260,8 +260,7 @@ class ClassSelectionActivity : BaseActivity(), Consumer<User> {
     }
 
     private fun displayProgressDialog(progressText: String) {
-        @Suppress("DEPRECATION")
-        progressDialog = ProgressDialog.show(this, progressText, null, true)
+        val dialog = HabiticaProgressDialog.show(this, progressText)
     }
 
     override fun accept(user: User) {

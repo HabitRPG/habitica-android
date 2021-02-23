@@ -1,86 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:id="@+id/snackbar_view"
+    android:orientation="horizontal"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingStart="6dp"
+    android:paddingEnd="0dp"
+    android:gravity="center"
+    tools:background="@drawable/snackbar_background_green"
+    android:layout_marginBottom="32dp"
+    android:layout_gravity="center_horizontal"
+    android:elevation="24dp"
     android:clipToPadding="false">
+    <ImageView
+        android:id="@+id/leftImageView"
+        android:layout_height="@dimen/snackbar_image_size"
+        android:layout_width="@dimen/snackbar_image_size"
+        android:background="@drawable/white_circle_background"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="6dp"/>
     <LinearLayout
-        android:id="@+id/snackbar_view"
-        android:orientation="horizontal"
-        android:layout_width="wrap_content"
+        android:id="@+id/content_container"
+        android:layout_width="0dp"
+        android:layout_weight="1"
         android:layout_height="wrap_content"
-        android:paddingStart="6dp"
-        android:gravity="center"
-        tools:background="@drawable/snackbar_background_green"
-        android:layout_marginBottom="32dp"
-        android:layout_gravity="center_horizontal"
-        android:elevation="24dp">
-        <ImageView
-            android:id="@+id/leftImageView"
-            android:layout_height="@dimen/snackbar_image_size"
-            android:layout_width="@dimen/snackbar_image_size"
-            android:background="@drawable/white_circle_background"
+        android:orientation="vertical"
+        android:paddingStart="12dp"
+        android:paddingEnd="18dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp">
+        <TextView
+            android:id="@+id/snackbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="This is the Title"
+            android:gravity="center"
+            style="@style/Title2"
+            android:textSize="18sp"
             android:visibility="gone"
             tools:visibility="visible"
-            android:layout_marginTop="6dp"
-            android:layout_marginBottom="6dp"/>
-        <LinearLayout
-            android:id="@+id/content_container"
-            android:layout_width="0dp"
-            android:layout_weight="1"
+            android:textColor="@color/white"/>
+        <TextView
+            android:id="@+id/snackbar_text"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingStart="12dp"
-            android:paddingEnd="18dp"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp">
-            <TextView
-                android:id="@+id/snackbar_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="This is the Title"
-                android:gravity="center"
-                style="@style/Title2"
-                android:textSize="18sp"
-                android:visibility="gone"
-                tools:visibility="visible"
-                android:textColor="@color/white"/>
-            <TextView
-                android:id="@+id/snackbar_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:text="This is the Content"
-                android:gravity="center"
-                style="@style/Body1"
-                android:textSize="13sp"
-                android:visibility="gone"
-                tools:visibility="visible"
-                android:textColor="@color/white"/>
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/rightView"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:background="@drawable/snackbar_right_bg"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp"
-            android:layout_marginEnd="1dp"
-            android:layout_marginTop="1dp"
-            android:layout_marginBottom="1dp"
+            tools:text="This is the Content"
+            android:gravity="center"
+            style="@style/Body1"
+            android:textSize="13sp"
             android:visibility="gone"
-            tools:visibility="visible">
-            <ImageView
-                android:id="@+id/rightIconView"
-                android:layout_width="@dimen/currency_icon_size"
-                android:layout_height="@dimen/currency_icon_size" />
-            <TextView
-                android:id="@+id/rightTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingStart="4dp"
-                tools:text="12"/>
-            </LinearLayout>
+            tools:visibility="visible"
+            android:textColor="@color/white"/>
     </LinearLayout>
-</FrameLayout>
+    <LinearLayout
+        android:id="@+id/rightView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:background="@drawable/snackbar_right_bg"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginBottom="1dp"
+        android:visibility="gone"
+        tools:visibility="visible">
+        <ImageView
+            android:id="@+id/rightIconView"
+            android:layout_width="@dimen/currency_icon_size"
+            android:layout_height="@dimen/currency_icon_size" />
+        <TextView
+            android:id="@+id/rightTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="4dp"
+            android:paddingEnd="0dp"
+            tools:text="12"/>
+    </LinearLayout>
+</LinearLayout>

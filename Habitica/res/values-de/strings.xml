@@ -504,7 +504,7 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="insufficientHourglasses">Du wirst mehr mystische Sanduhren benötigen um diesen Gegenstand zu kaufen!</string>
     <string name="get_hourglasses">Kaufe Sanduhren</string>
     <string name="subscribe_for_hourglasses">Abonniere für Sanduhren</string>
-    <string name="timetravelers_closed_description">Erhalte eine mystische Sanduhr alle drei Monate für ein aufeinanderfolgendes Abonnement, nutze diese dann, um Limitiertes freizuschalten: Gegenstände, Haustiere oder Reittiere aus der Vergangenheit... und aus der Zukunft!</string>
+    <string name="timetravelers_closed_description">Erhalte eine mystische Sanduhr alle drei Monate für ein aufeinanderfolgendes Abonnement, nutze diese dann, um Limitiertes freizuschalten: Gegenstände, Haustiere oder Reittiere aus der Vergangenheit… und aus der Zukunft!</string>
     <string name="want_to_subscribe">Ich möchte ein Abo abschließen</string>
     <string name="seasonal_closed_description">Die Großen Galas werden an Sonnenwenden und Tag-Nacht-Gleichen veranstaltet, also komme zu dieser Zeit wieder, um eine lustige Auswahl von speziellen saisonalen Gegenständen zu finden!</string>
     <string name="come_back_soon">Komm bald zurück!</string>
@@ -602,7 +602,7 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="questShop_owner_long">Ian der Questmeister</string>
     <string name="seasonalShop_owner_long">Jahreszeitenzauberin</string>
     <string name="rage_attack">Raserei-Angriff:</string>
-    <string name="tavern_description_world_boss">Ihr Lieben, kümmert Euch nicht um das Monster -- dies ist immer noch ein sicherer Platz für eine kleine Pause zum Chatten.</string>
+    <string name="tavern_description_world_boss">Ihr Lieben, kümmert Euch nicht um das Monster — dies ist immer noch ein sicherer Platz für eine kleine Pause zum Chatten.</string>
     <string name="report">Melden</string>
     <string name="reply">Antworten</string>
     <string name="challenge_prize">Herausforderungspreis</string>
@@ -1100,9 +1100,7 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="how_it_works">So funktioniert es</string>
     <string name="fall_promo_info_instructions">Zwischen 22. und 30. September kannst Du wie gewohnt ein Edelstein-Paket kaufen, Deinem Konto wird aber der Aktions-Betrag Edelsteine hinzugefügt. Mehr Edelsteine zum ausgeben, teilen oder aufsparen für spätere Neuerungen!</string>
     <string name="spooky_promo_info_prompt">Der Edelstein-Sonderverkauf ist zurück! Das ist die letzte Chance, mehr Edelsteine als je zuvor zu bekommen, also füll\' Deine Lager solange Du noch kannst!</string>
-    <string name="spooky_promo_info_limitations">Diese Aktion ist nur während dem zeitlich beschränkten Event gültig. Der Event beginnt am 29. Oktober um 8:00 AM EDT ( 12:00 UTC) und endet am 2. November um 8:00 PM EDT (00:00 UTC). Das Aktionsangebot ist nur verfügbar, wenn Du Edelsteine für Dich selbst kaufst.</string>
     <string name="spooky_promo_info_instructions">Zwischen 29. Oktober und 2. November kannst Du wie gewohnt ein Edelstein-Paket kaufen, Deinem Konto wird aber der Aktions-Betrag Edelsteine hinzugefügt. Mehr Edelsteine zum ausgeben, teilen oder aufsparen für spätere Neuerungen!</string>
     <string name="view_gem_bundles">Edelstein-Pakete anzeigen</string>
     <string name="fall_promo_info_prompt">Die Herbstgala ist in vollem Gange. Deshalb haben wir gedacht, dass dies der perfekte Zeitpunkt für den allerersten Edelstein-Sonderverkauf ist! Jetzt bekommst Du mit jedem Einkauf mehr Edelsteine als je zuvor.</string>
-    <string name="fall_promo_info_limitations">Diese Aktion ist nur während dem zeitlich beschränkten Event gültig. Der Event beginnt am 22. September um 8:00 AM EDT ( 12:00 UTC) und endet am 30. September um 8:00 PM EDT (00:00 UTC). Das Aktionsangebot ist nur verfügbar, wenn Du Edelsteine für Dich selbst kaufst.</string>
 </resources>

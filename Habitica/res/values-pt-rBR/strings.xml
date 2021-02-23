@@ -88,7 +88,7 @@
     <string name="levelup_detail">Por completar seus objetivos da vida real, você subiu de nível e agora está totalmente curado!</string>
     <string name="onwards">Hurra!</string>
     <string name="faint_subtitle">Não se desespere!</string>
-    <string name="faint_penalty_body">Você perdeu um Nível, seu Ouro, e uma peça de Equipamento, mas você pode ganhar todos eles de volta com trabalho duro! Boa sorte -- Você se sairá bem.</string>
+    <string name="faint_penalty_body">Você perdeu um Nível, seu Ouro, e uma peça de Equipamento, mas você pode ganhar todos eles de volta com trabalho duro! Boa sorte — Você se sairá bem.</string>
     <string name="faint_header">Você perdeu toda sua Vida!</string>
     <string name="faint_button">Restaurar Vida &amp; Tentar Novamente</string>
     <string name="filter">Filtro</string>
@@ -503,7 +503,7 @@
     <string name="insufficientHourglasses">Você precisará de mais Ampulhetas Místicas para comprar este item!</string>
     <string name="get_hourglasses">Obter ampulhetas</string>
     <string name="subscribe_for_hourglasses">Assinar pelas Ampulhetas</string>
-    <string name="timetravelers_closed_description">Receba uma Ampulheta Mística a cada três meses de assinatura consecutiva então as use para liberar itens, mascotes e montarias de edição limitada do passado... e do futuro!</string>
+    <string name="timetravelers_closed_description">Receba uma Ampulheta Mística a cada três meses de assinatura consecutiva então as use para liberar itens, mascotes e montarias de edição limitada do passado… e do futuro!</string>
     <string name="want_to_subscribe">Eu quero Assinar</string>
     <string name="seasonal_closed_description">As Grande Galas acontecem próximo da virada das quatro estações do ano, então volte aqui nesses períodos para ver os itens sazonais especiais!</string>
     <string name="come_back_soon">Volte logo!</string>
@@ -858,9 +858,9 @@
     <string name="task_title">Título da tarefa</string>
     <string name="add_local_authentication">Adicionar autenticação local</string>
     <string name="defeat">Derrotar</string>
-    <string name="gift_confirmation_text_sub_g1g1">Você enviou para %s uma assinatura por % s mês/meses no Habitica e a mesma assinatura foi aplicada à sua conta para a nossa promoção \"Presenteie com uma e ganhe outra\"!</string>
+    <string name="gift_confirmation_text_sub_g1g1">Você enviou para %s uma assinatura por %s mês/meses no Habitica e a mesma assinatura foi aplicada à sua conta para a nossa promoção \"Presenteie com uma e ganhe outra\"!</string>
     <string name="gift_confirmation_text_gems">Você enviou algumas gemas para %s.</string>
-    <string name="gift_confirmation_text_sub">Você enviou para %s uma assinatura por % s mês/meses no Habitica.</string>
+    <string name="gift_confirmation_text_sub">Você enviou para %s uma assinatura por %s mês/meses no Habitica.</string>
     <string name="gift_gems_subtitle">Selecione abaixo o pacote de gemas que você deseja presentear!</string>
     <string name="join_party_description_guild">Dê o nome de usuário abaixo a um amigo ou vá para %s para conhecer potenciais camaradas!</string>
     <string name="insufficientGoldTitle">Ouro insuficiente</string>

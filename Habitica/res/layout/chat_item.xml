@@ -85,7 +85,7 @@
                 tools:text="2d ago"
                 android:textSize="12sp"
                 android:textColor="@color/text_quad"/>
-            <com.habitrpg.android.habitica.ui.views.HabiticaEmojiTextView
+            <TextView
                 android:id="@+id/message_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
