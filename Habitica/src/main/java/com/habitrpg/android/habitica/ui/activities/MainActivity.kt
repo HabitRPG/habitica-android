@@ -334,14 +334,6 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         launchScreen = sharedPreferences.getString("launch_screen", "")
     }
 
-    private fun openTaskType(taskType: String) {
-        if (supportFragmentManager.findFragmentById(R.id.nav_host_fragment) is TasksFragment) {
-            binding.bottomNavigation.activeTaskType = taskType
-        } else {
-            MainNavigationController.navigate(R.id.tasksFragment, bundleOf(Pair("taskType", taskType)))
-        }
-    }
-
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         Log.e("RESTORED:", savedInstanceState.toString())
@@ -368,9 +360,14 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navigationController = navHostFragment.navController
         MainNavigationController.setup(navigationController)
+        navigationController.addOnDestinationChangedListener { _, destination, arguments -> updateToolbarTitle(destination, arguments) }
 
         when (launchScreen) {
-            "/party" -> MainNavigationController.navigate(R.id.partyFragment)
+            "/party" -> {
+                if (user?.party?.id != null) {
+                    MainNavigationController.navigate(R.id.partyFragment)
+                }
+            }
         }
         launchScreen = null
 

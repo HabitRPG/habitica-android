@@ -79,7 +79,9 @@ abstract class HabiticaBaseApplication : Application() {
         if (!BuildConfig.DEBUG) {
             try {
                 Amplitude.getInstance().initialize(this, getString(R.string.amplitude_app_id)).enableForegroundTracking(this)
-                val identify = Identify().setOnce("androidStore", BuildConfig.STORE)
+                val identify = Identify()
+                        .setOnce("androidStore", BuildConfig.STORE)
+                        .set("launch_screen", sharedPrefs.getString("launch_screen", ""))
                 Amplitude.getInstance().identify(identify)
             } catch (ignored: Resources.NotFoundException) {
             }
@@ -224,11 +226,13 @@ abstract class HabiticaBaseApplication : Application() {
             val useReminder = preferences.getBoolean("use_reminder", false)
             val reminderTime = preferences.getString("reminder_time", "19:00")
             val lightMode = preferences.getString("theme_mode", "system")
+            val launchScreen = preferences.getString("launch_screen", "")
             preferences.edit {
                 clear()
                 putBoolean("use_reminder", useReminder)
                 putString("reminder_time", reminderTime)
                 putString("theme_mode", lightMode)
+                putString("launch_screen", launchScreen)
             }
             reloadUserComponent()
             getInstance(context)?.lazyApiHelper?.updateAuthenticationCredentials(null, null)
