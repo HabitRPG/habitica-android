@@ -35,10 +35,10 @@ android:
     - tools
 
     # The BuildTools version used by your project
-    - build-tools-30.0.3
+    - build-tools-27.0.3
 
     # The SDK version used to compile your project
-    - android-30
+    - android-27
 
     # Additional components
     - extra-google-google_play_services
