@@ -16,7 +16,7 @@ before_install:
   - export JAVA8_HOME=/usr/lib/jvm/java-8-oracle
   - if [ $REQUIRES_SERVER = "true" ]; then nvm install 14.16.0; fi
   - if [ $REQUIRES_SERVER = "true" ]; then nvm use 14.16.0; fi
-  - if [ $REQUIRES_SERVER = "true" ]; then npm i -g npm@14; fi
+  - if [ $REQUIRES_SERVER = "true" ]; then npm i -g npm@6; fi
   - if [ $REQUIRES_SERVER = "true" ]; then sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10; fi
   - if [ $REQUIRES_SERVER = "true" ]; then echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | sudo tee /etc/apt/sources.list.d/mongodb.list; fi
   - if [ $REQUIRES_SERVER = "true" ]; then sudo apt-get update || true; fi
