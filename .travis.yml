@@ -9,7 +9,7 @@ addons:
     sources:
       - ubuntu-toolchain-r-test
     packages:
-      - g++-9.3
+      - g++-10
 before_install:
   - $CXX --version
   - export JAVA7_HOME=/usr/lib/jvm/java-7-oracle
@@ -61,7 +61,7 @@ script:
   - ./gradlew $TEST2
 env:
   global:
-    - CXX=g++-9.3
+    - CXX=g++-10
     - DISABLE_REQUEST_LOGGING=true
   matrix:
     - TEST1="assembleDebug -PdisablePreDex"
