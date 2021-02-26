@@ -91,7 +91,7 @@ class RewardsRecyclerViewAdapter(private var customRewards: OrderedRealmCollecti
         if (customRewards != null && position < customRewardCount) {
             val reward = customRewards?.get(position) ?: return
             val gold = user?.stats?.gp ?: 0.0
-            (holder as? RewardViewHolder)?.isLocked = canScoreTasks
+            (holder as? RewardViewHolder)?.isLocked = !canScoreTasks
             (holder as? RewardViewHolder)?.bind(reward, position, reward.value <= gold, taskDisplayMode)
         } else if (inAppRewards != null) {
             val item = inAppRewards?.get(position - customRewardCount) ?: return
