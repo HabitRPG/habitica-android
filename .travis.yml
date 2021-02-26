@@ -1,5 +1,5 @@
 language: android
-dist: trusty
+dist: focal
 jdk: oraclejdk8
 sudo: required
 services:
@@ -9,14 +9,14 @@ addons:
     sources:
       - ubuntu-toolchain-r-test
     packages:
-      - g++-4.8
+      - g++-9.3
 before_install:
   - $CXX --version
   - export JAVA7_HOME=/usr/lib/jvm/java-7-oracle
   - export JAVA8_HOME=/usr/lib/jvm/java-8-oracle
-  - if [ $REQUIRES_SERVER = "true" ]; then nvm install 6.9.3; fi
-  - if [ $REQUIRES_SERVER = "true" ]; then nvm use 6.9.3; fi
-  - if [ $REQUIRES_SERVER = "true" ]; then npm i -g npm@6; fi
+  - if [ $REQUIRES_SERVER = "true" ]; then nvm install 14.16.0; fi
+  - if [ $REQUIRES_SERVER = "true" ]; then nvm use 14.16.0; fi
+  - if [ $REQUIRES_SERVER = "true" ]; then npm i -g npm@14; fi
   - if [ $REQUIRES_SERVER = "true" ]; then sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10; fi
   - if [ $REQUIRES_SERVER = "true" ]; then echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | sudo tee /etc/apt/sources.list.d/mongodb.list; fi
   - if [ $REQUIRES_SERVER = "true" ]; then sudo apt-get update || true; fi
@@ -35,10 +35,10 @@ android:
     - tools
 
     # The BuildTools version used by your project
-    - build-tools-28.0.3
+    - build-tools-30.0.3
 
     # The SDK version used to compile your project
-    - android-29
+    - android-30
 
     # Additional components
     - extra-google-google_play_services
@@ -61,7 +61,7 @@ script:
   - ./gradlew $TEST2
 env:
   global:
-    - CXX=g++-4.8
+    - CXX=g++-9.3
     - DISABLE_REQUEST_LOGGING=true
   matrix:
     - TEST1="assembleDebug -PdisablePreDex"
