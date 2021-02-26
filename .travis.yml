@@ -1,5 +1,5 @@
 language: android
-dist: focal
+dist: xenial
 jdk: oraclejdk8
 sudo: required
 services:
@@ -9,7 +9,7 @@ addons:
     sources:
       - ubuntu-toolchain-r-test
     packages:
-      - g++-10
+      - g++-4.8
 before_install:
   - $CXX --version
   - export JAVA7_HOME=/usr/lib/jvm/java-7-oracle
@@ -61,7 +61,7 @@ script:
   - ./gradlew $TEST2
 env:
   global:
-    - CXX=g++-10
+    - CXX=g++
     - DISABLE_REQUEST_LOGGING=true
   matrix:
     - TEST1="assembleDebug -PdisablePreDex"
