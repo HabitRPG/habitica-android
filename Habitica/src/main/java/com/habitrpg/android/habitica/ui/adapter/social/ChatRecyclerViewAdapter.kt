@@ -127,8 +127,7 @@ class SystemChatMessageViewHolder(itemView: View) : RecyclerView.ViewHolder(item
         timestamp.text = dateTime.format(chatMessage?.timestamp?.let { java.util.Date(it) })
         if(isExpanded) {
             binding.systemMessageTimestamp.visibility = View.VISIBLE
-            }
-        else{
+        } else {
             binding.systemMessageTimestamp.visibility = View.GONE
         }
     }
