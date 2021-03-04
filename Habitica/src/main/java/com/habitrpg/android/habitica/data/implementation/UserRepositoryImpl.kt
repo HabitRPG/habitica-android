@@ -5,6 +5,7 @@ import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.data.local.UserLocalRepository
 import com.habitrpg.android.habitica.data.local.UserQuestStatus
+import com.habitrpg.android.habitica.extensions.skipNull
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.Achievement
@@ -164,7 +165,7 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
         path = path.substring(1)
         return Flowable.zip(apiClient.unlockPath(path), localRepository.getUser(userID).firstElement().toFlowable()
                 .map { localRepository.getUnmanagedCopy(it) }
-                .skipNil(), { unlockResponse, copiedUser ->
+                .skipNull(), { unlockResponse, copiedUser ->
                     copiedUser.preferences = unlockResponse.preferences
                     copiedUser.purchased = unlockResponse.purchased
                     copiedUser.items = unlockResponse.items
@@ -380,7 +381,7 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
     private fun getLiveUser(): Flowable<User> {
         return localRepository.getUser(userID)
                 .map { localRepository.getLiveObject(it) }
-                .skipNil()
+                .skipNull()
     }
 
     private fun <T> zipWithLiveUser(flowable: Flowable<T>, mergeFunc: BiFunction<T, User, T>): Flowable<T> {
@@ -423,9 +424,4 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
         localRepository.saveUser(copiedUser, false)
         return copiedUser
     }
-}
-
-private fun <T> Flowable<T?>.skipNil(): Flowable<T> {
-    @Suppress("UNCHECKED_CAST")
-    return skipWhile { it == null } as? Flowable<T> ?: Flowable.empty()
 }

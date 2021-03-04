@@ -198,7 +198,7 @@ class GiftSubscriptionActivity : BaseActivity() {
     }
 
     private fun displayConfirmationDialog() {
-        val message = getString(if (appConfigManager.activePromo(this)?.identifier == "g1g1"){
+        val message = getString(if (appConfigManager.activePromo()?.identifier == "g1g1"){
             R.string.gift_confirmation_text_sub_g1g1
         } else {
             R.string.gift_confirmation_text_sub

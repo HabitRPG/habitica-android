@@ -50,6 +50,16 @@ class AvatarView : View {
             return getLayerMap(avatar, true)
         }
 
+    private var spriteSubstitutions: Map<String, Map<String, String>> = HashMap()
+        get() {
+            if (Date().time - (lastSubstitutionCheck?.time ?: 0) > 180000) {
+                field = AppConfigManager(null).spriteSubstitutions()
+                lastSubstitutionCheck = Date()
+            }
+            return field
+        }
+    private var lastSubstitutionCheck: Date? = null
+
 
     private val originalRect: Rect
         get() = if (showMount || showPet) FULL_HERO_RECT else if (showBackground) COMPACT_HERO_RECT else HERO_ONLY_RECT
@@ -151,8 +161,7 @@ class AvatarView : View {
     }
 
     private fun getLayerMap(avatar: Avatar, resetHasAttributes: Boolean): Map<LayerType, String> {
-        val substitutions = AppConfigManager().spriteSubstitutions()
-        val layerMap = getAvatarLayerMap(avatar, substitutions)
+        val layerMap = getAvatarLayerMap(avatar, spriteSubstitutions)
 
         if (resetHasAttributes) {
             hasPet = false
@@ -162,7 +171,7 @@ class AvatarView : View {
 
         var mountName = avatar.currentMount
         if (showMount && mountName?.isNotEmpty() == true) {
-            mountName = substituteOrReturn(substitutions["mounts"], mountName)
+            mountName = substituteOrReturn(spriteSubstitutions["mounts"], mountName)
             layerMap[LayerType.MOUNT_BODY] = "Mount_Body_$mountName"
             layerMap[LayerType.MOUNT_HEAD] = "Mount_Head_$mountName"
             if (resetHasAttributes) hasMount = true
@@ -170,14 +179,14 @@ class AvatarView : View {
 
         var petName = avatar.currentPet
         if (showPet && petName?.isNotEmpty() == true) {
-            petName = substituteOrReturn(substitutions["pets"], petName)
+            petName = substituteOrReturn(spriteSubstitutions["pets"], petName)
             layerMap[LayerType.PET] = "Pet-$petName"
             if (resetHasAttributes) hasPet = true
         }
 
         var backgroundName = avatar.preferences?.background
         if (showBackground && backgroundName?.isNotEmpty() == true) {
-            backgroundName = substituteOrReturn(substitutions["backgrounds"], backgroundName)
+            backgroundName = substituteOrReturn(spriteSubstitutions["backgrounds"], backgroundName)
             layerMap[LayerType.BACKGROUND] = "background_$backgroundName"
             if (resetHasAttributes) hasBackground = true
         }

@@ -63,7 +63,7 @@ class GemsPurchaseFragment : BaseFragment<FragmentGemPurchaseBinding>(), GemPurc
             binding?.headerImageView?.setImageResource(R.drawable.gem_purchase_header_dark)
         }
 
-        val promo = context?.let { appConfigManager.activePromo(it) }
+        val promo = appConfigManager.activePromo()
         if (promo != null) {
             binding?.let {
                 promo.configurePurchaseBanner(it)

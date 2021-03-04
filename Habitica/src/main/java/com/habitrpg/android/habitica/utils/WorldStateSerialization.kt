@@ -5,8 +5,10 @@ import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
 import com.habitrpg.android.habitica.extensions.getAsString
 import com.habitrpg.android.habitica.models.WorldState
+import com.habitrpg.android.habitica.models.WorldStateEvent
 import com.habitrpg.android.habitica.models.inventory.QuestProgress
 import com.habitrpg.android.habitica.models.inventory.QuestRageStrike
+import io.realm.RealmList
 import java.lang.reflect.Type
 import java.util.*
 
@@ -37,7 +39,7 @@ class WorldStateSerialization: JsonDeserializer<WorldState> {
                 val extra = worldBossObject["extra"].asJsonObject
                 if (extra.has("worldDmg")) {
                     val worldDmg = extra["worldDmg"].asJsonObject
-                    state.rageStrikes = mutableListOf()
+                    state.rageStrikes = RealmList()
                     worldDmg.entrySet().forEach { (key, value) ->
                         val strike = QuestRageStrike(key, value.asBoolean)
                         state.rageStrikes?.add(strike)
@@ -46,14 +48,20 @@ class WorldStateSerialization: JsonDeserializer<WorldState> {
             }
         }
 
+        state.npcImageSuffix = json?.asJsonObject.getAsString("npcImageSuffix")
+
         try {
             if (json?.asJsonObject?.has("currentEvent") == true && json.asJsonObject?.get("currentEvent")?.isJsonObject == true) {
                 val event = json.asJsonObject?.getAsJsonObject("currentEvent")
                 if (event != null) {
-                    state.currentEventKey = event.getAsString("event")
-                    state.currentEventPromo = if (event.has("promo")) event.getAsString("promo") else null
-                    state.currentEventStartDate = context?.deserialize(event.get("start"), Date::class.java)
-                    state.currentEventEndDate = context?.deserialize(event.get("end"), Date::class.java)
+                    state.currentEvent = context?.deserialize(event, WorldStateEvent::class.java)
+                }
+                if (json.asJsonObject.has("events")) {
+                    val events = RealmList<WorldStateEvent>()
+                    for (element in json.asJsonObject.getAsJsonArray("events")) {
+                        context?.deserialize<WorldStateEvent>(element, WorldStateEvent::class.java)?.let { events.add(it) }
+                    }
+                    state.events = events
                 }
             }
         } catch (e: Exception) {
