@@ -53,7 +53,7 @@ constructor(threadExecutor: ThreadExecutor, postExecutionThread: PostExecutionTh
         }
     }
 
-    class RequestValues( val context: AppCompatActivity, val snackbarTargetView: ViewGroup, val user: User?, val xp: Double?, val hp: Double?, val gold: Double?, val mp: Double?, val questDamage: Double?, val hasLeveledUp: Boolean?, val level: Long?) : UseCase.RequestValues
+    class RequestValues( val context: AppCompatActivity, val snackbarTargetView: ViewGroup, val user: User?, val xp: Double?, val hp: Double?, val gold: Double?, val mp: Double?, val questDamage: Double?, val hasLeveledUp: Boolean?, val level: Int?) : UseCase.RequestValues
 
     companion object {
 
@@ -107,7 +107,7 @@ constructor(threadExecutor: ThreadExecutor, postExecutionThread: PostExecutionTh
             return textView
         }
 
-        fun getNotificationAndAddStatsToUserAsText(context: Context, xp: Double, hp: Double, gold: Double, mp: Double): Pair<SpannableStringBuilder, SnackbarDisplayType> {
+        fun getNotificationAndAddStatsToUserAsText(xp: Double, hp: Double, gold: Double, mp: Double): Pair<SpannableStringBuilder, SnackbarDisplayType> {
             val builder = SpannableStringBuilder()
             var displayType = SnackbarDisplayType.NORMAL
 

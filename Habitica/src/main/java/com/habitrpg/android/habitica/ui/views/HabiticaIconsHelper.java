@@ -630,11 +630,14 @@ public class HabiticaIconsHelper {
     }
 
     public static Bitmap imageOfLocked(@ColorInt int lockColor) {
-        Bitmap imageOfLocked = Bitmap.createBitmap(scaleSize(15), scaleSize(17), Bitmap.Config.ARGB_8888);
+        return imageOfLocked(lockColor, 15, 17);
+    }
+
+        public static Bitmap imageOfLocked(@ColorInt int lockColor, int width, int height) {
+        Bitmap imageOfLocked = Bitmap.createBitmap(scaleSize(width), scaleSize(height), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(imageOfLocked);
         canvas.scale(displayDensity, displayDensity);
-        HabiticaIcons.drawLocked(canvas, lockColor);
-
+        HabiticaIcons.drawLocked(canvas, new RectF(0f, 0f, width, height), HabiticaIcons.ResizingBehavior.AspectFit, lockColor);
         return imageOfLocked;
     }
 
@@ -830,5 +833,32 @@ public class HabiticaIconsHelper {
         HabiticaIcons.drawSpookyGemPromoBG(canvas);
 
         return imageOfSpookyGemPromoBG;
+    }
+
+    public static Bitmap imageOfGuildCrest(Context context, boolean isOwner, boolean isPublic, float memberCount, String memberCountLabel) {
+        Bitmap imageOfGuildCrest = Bitmap.createBitmap(scaleSize(40), scaleSize(38), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(imageOfGuildCrest);
+        canvas.scale(displayDensity, displayDensity);
+        HabiticaIcons.drawGuildCrest(canvas, context, isOwner, isPublic, memberCount, memberCountLabel);
+
+        return imageOfGuildCrest;
+    }
+
+    public static Bitmap imageOfGuildCrestMedium(float memberCount) {
+        Bitmap imageOfGuildCrestMedium = Bitmap.createBitmap(scaleSize(30), scaleSize(34), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(imageOfGuildCrestMedium);
+        canvas.scale(displayDensity, displayDensity);
+        HabiticaIcons.drawGuildCrestMedium(canvas, memberCount);
+
+        return imageOfGuildCrestMedium;
+    }
+
+    public static Bitmap imageOfGuildCrestSmall(float memberCount) {
+        Bitmap imageOfGuildCrestSmall = Bitmap.createBitmap(scaleSize(16), scaleSize(16), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(imageOfGuildCrestSmall);
+        canvas.scale(displayDensity, displayDensity);
+        HabiticaIcons.drawGuildCrestSmall(canvas, memberCount);
+
+        return imageOfGuildCrestSmall;
     }
 }

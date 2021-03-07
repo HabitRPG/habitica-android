@@ -6,7 +6,7 @@
     android:paddingBottom="@dimen/spacing_medium"
     android:paddingStart="@dimen/spacing_large"
     android:paddingEnd="@dimen/spacing_large">
-    <com.habitrpg.android.habitica.ui.views.HabiticaEmojiTextView
+    <TextView
         android:id="@+id/emoji_textview"
         android:layout_width="wrap_content"
         android:layout_height="30dp"

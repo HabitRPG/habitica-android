@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments.purchases
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -24,6 +25,7 @@ class GiftBalanceGemsFragment : BaseFragment<FragmentGiftGemBalanceBinding>() {
     }
 
     var giftedMember: Member? = null
+        @SuppressLint("SetTextI18n")
         set(value) {
             field = value
             field?.let {

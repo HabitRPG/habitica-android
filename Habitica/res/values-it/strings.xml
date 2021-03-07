@@ -310,7 +310,7 @@
     <string name="all_dailies_completed">Hai completato tutte le tue Attività Giornaliere. Ottimo lavoro!</string>
     <string name="widget_habit_button">Habitica esegui Abitudine</string>
     <string name="widget_dailies">Habitica Attività Giornaliere</string>
-    <string name="widget_todo_list">Habitica lista Cose da Fare</string>
+    <string name="widget_todo_list">Lista di Cose da Fare di Habitica</string>
     <string name="google_services_missing">Impossibile trovare Google Play Services.</string>
     <string name="gem_purchase_toolbartitle">Compra</string>
     <string name="gem_purchase_title">Comprando gemme supporti gli sviluppatori e tieni in vita Habitica</string>
@@ -345,7 +345,7 @@
     <string name="subscribe_listitem1_description">Potrai acquistare gemme al Mercato per 20 Oro ciascuna!</string>
     <string name="subscribe_listitem2_description">Guadagna Clessidre Mistiche per comprare oggetti nel Negozio dei Viaggiatori del Tempo!</string>
     <string name="subscribe_listitem3_description">Abbonati ora per avere un\'esclusivo set e ricevere nuovi oggetti ogni mese!</string>
-    <string name="subscribe_listitem4_description">Riceverai l\'Animale Royal Purple Jackalope quando diventerai un nuovo abbonato.</string>
+    <string name="subscribe_listitem4_description">Riceverai il Lepronte Porpora quando diventerai un nuovo abbonato.</string>
     <string name="subscribe1month_gemcap">Limite di 25 Gemme</string>
     <string name="subscribe3month_gemcap">Limite di 30 Gemme</string>
     <string name="subscribe6month_gemcap">Limite di 35 Gemme</string>
@@ -501,7 +501,7 @@
     <string name="insufficientHourglasses">Ti servono più Clessidre Mistiche per comprare questo oggetto!</string>
     <string name="get_hourglasses">Ottieni clessidre</string>
     <string name="subscribe_for_hourglasses">Abbonati per le Clessidre</string>
-    <string name="timetravelers_closed_description">Ottieni una Clessidra Mistica per ogni tre mesi di abbonamento consecutivi, che puoi usare per sbloccare elementi in edizione limitata come oggetti, animali e cavalcature del passato... o del futuro!</string>
+    <string name="timetravelers_closed_description">Ottieni una Clessidra Mistica per ogni tre mesi di abbonamento consecutivi, che puoi usare per sbloccare elementi in edizione limitata come oggetti, animali e cavalcature del passato… o del futuro!</string>
     <string name="want_to_subscribe">Voglio abbonarmi</string>
     <string name="seasonal_closed_description">I Gran Galà stagionali hanno luogo nei pressi dei solstizi e degli equinozi, quindi torna più avanti per trovare un vivace assortimento di oggetti stagionali!</string>
     <string name="come_back_soon">Torna presto!</string>
@@ -635,8 +635,8 @@
     <string name="two_handed">Due mani</string>
     <string name="usernamePromptTitle">È giunta l\'ora di scegliere il tuo nome utente!</string>
     <string name="usernamePromptBody">I login sono nuovi, unici nomi utente, che appariranno accanto al tuo nome pubblico e che verranno usati per gli inviti, i @richiami nel chat, e i messaggi.</string>
-    <string name="usernamePromptWiki">Per più ampie informazioni su questo cambiamento, <a href="https://habitica.wikia_com/wiki/Player_Names">visita il wiki.</a></string>
-    <string name="usernamePromptDisclaimer">I nomi utente devono rispettare i nostri <a href="https://habitica.com/static/terms">Termini di servizio</a> e le <a href="https://habitica_com/static/community-guidelines">Linee guida Comunitarie</a>. Se non hai ancora fissato il tuo login, il tuo nome utente è stato generato automaticamente.</string>
+    <string name="usernamePromptWiki">Per maggiori informazioni su questo cambiamento, <a href="https://habitica.wikia.com/wiki/Player_Names">visita la wiki.</a></string>
+    <string name="usernamePromptDisclaimer">I nomi utente devono rispettare i nostri <a href="https://habitica.com/static/terms">Termini di servizio</a> e le <a href="https://habitica.com/static/community-guidelines">Linee guida Comunitarie</a>. Se non hai ancora impostato il tuo login, il tuo nome utente è stato generato automaticamente.</string>
     <string name="confirm_username_title">Sei sicuro di voler confermare il tuo nome utente attuale?</string>
     <string name="confirm_username_description">Confermando il tuo nome utente, lo renderai pubblico per gli inviti, le @menzioni e i messaggi. Puoi cambiare il tuo nome utente andando nei parametri quando vuoi.</string>
     <string name="cancel">Annulla</string>
@@ -658,7 +658,7 @@
     <string name="equipment_per">PER:</string>
     <string name="visit_website">Visita il sito web</string>
     <string name="subscribe_gift_description">Vuoi dare i vantaggi di un abbonamento a qualcun altro\?</string>
-    <string name="gift_subscription">Regala Abbonamento</string>
+    <string name="gift_subscription">Regala un Abbonamento</string>
     <string name="gift_one_get_one_description">Evento Regala un Abbonamento e Ricevi un Abbonamento Gratuito in corso ora!</string>
     <string name="gift_title">A chi vorresti regalarlo?</string>
     <string name="gift_one_get_one">Regalane uno, Ottienine uno per te!</string>
@@ -789,7 +789,7 @@
     <string name="authentication_error_body">Il tuo Nome utente e/o la tua Password non sono corretti.</string>
     <string name="network_error_no_network_body">Non sei connesso a Internet.</string>
     <string name="empty_description_dailies_filtered">Non ci sono Attività Giornaliere visibili con i filtri attuali.</string>
-    <string name="delete_checklist_entry">Elimina la checklist</string>
+    <string name="delete_checklist_entry">Elimina…</string>
     <string name="still_questions">Hai altre domande\?</string>
     <string name="purchase_amount_error">Non ne puoi acquistare in questo numero.</string>
     <string name="read_more">Leggi di più</string>
@@ -921,7 +921,7 @@
     <string name="local">locale</string>
     <string name="authentication_methods">Metodi di autenticazione</string>
     <string name="someone">Qualcuno</string>
-    <string name="invitation_title">%s ti ha invitato a %s</string>
+    <string name="invitation_title">%s ti ha invitato ad unirti al suo gruppo %s</string>
     <string name="password_too_short">La tua password deve essere lunga almeno %d caratteri</string>
     <string name="copy_username">Copia Nome Utente</string>
     <string name="id_copied">ID Utente copiato negli appunti</string>
@@ -1007,4 +1007,95 @@
     <string name="empty_title_rewards_filtered">Nessuna Ricompensa</string>
     <string name="empty_description_todos_filtered">Non ci sono Cose da Fare visibili con i filtri specificati.</string>
     <string name="empty_title_todos_filtered">Nessuna Cosa da fare</string>
+    <string name="getting_started">Per Iniziare</string>
+    <string name="complete_for_gold">Completa per guadagnare &lt;font color=#EE9109&gt;&lt;b&gt;100 oro&lt;/b&gt;&lt;/font&gt;!</string>
+    <string name="onboardingCompleteTitle">Hai guadagnato &lt;b&gt;5 Medaglie&lt;/b&gt; e &lt;font color=#EE9109&gt;&lt;b&gt;100 Oro&lt;/b&gt;&lt;/font&gt; per i tuoi sforzi.</string>
+    <string name="first_drop_title">Hai trovato nuovi oggetti!</string>
+    <string name="go_to_items">Vai agli Oggetti</string>
+    <string name="first_drop_explanation2">Vai ai tuoi oggetti e prova a combinare la tua nuova Pozione di Schiusa con un Uovo!</string>
+    <string name="first_drop_explanation1">Il completamento delle attività ti dà la possibilità di trovare uova, pozioni di schiusa e cibo per i tuoi animali.</string>
+    <string name="purchasedEquipmentDescription">L\'equipaggiamento può essere pratico o semplicemente alla moda. Aumenta le tue statistiche per ottenere tutti i tipi di vantaggi per il tuo avatar</string>
+    <string name="fedPetDescription">Ogni animale ha un cibo specifico che gli piace! Sperimenta per scoprire quale lo farà crescere più velocemente</string>
+    <string name="hatchedPetDescription">Ci sono così tanti animali da collezionare, ma ne avrai sicuramente uno preferito. Dagli da mangiare e potrebbe crescere…</string>
+    <string name="completedTaskDescription">Un\'attività può essere una Abitudine, una Attività Giornaliera o una Cosa da Fare. Completale per ricevere una ricompensa sempre diversa!</string>
+    <string name="createdTaskDescription">Continua così! Se hai bisogno di aiuto per pianificare le attività, prova a pensare a cosa ti piacerebbe fare durante una determinata ora del giorno</string>
+    <string name="purchasedEquipmentTitle">Hai comprato dell\'equipaggiamento</string>
+    <string name="fedPetTitle">Hai dato da mangiare ad un Animale</string>
+    <string name="hatchedPetTitle">Hai schiuso un Animale</string>
+    <string name="createdTaskTitle">Crea la tua prima attività</string>
+    <string name="completedTaskTitle">Completa una attività</string>
+    <string name="purchase_equipment_description">L\'equipaggiamento è un modo per personalizzare il tuo avatar e migliorare le tue statistiche</string>
+    <string name="feedPet_description">Completa le attività per ottenere cibo! Puoi dar da mangiare al tuo animale nella sezione Animali e Cavalcature</string>
+    <string name="hatch_pet_description">Completa le attività per ottenere una Pozione di Schiusa ed un Uovo, quindi fai schiudere il tuo animale!</string>
+    <string name="complete_task_description">Spunta le tue attività per guadagnare premi</string>
+    <string name="create_task_description">Aggiungi una attività per qualcosa che vorresti realizzare questa settimana</string>
+    <string name="purchase_equipment_title">Compra dell\'equipaggiamento</string>
+    <string name="feedPet_title">Dai da mangiare ad un animale</string>
+    <string name="hatch_pet_title">Schiudi un nuovo animale</string>
+    <string name="complete_task_title">Completa una Attività</string>
+    <string name="create_task_title">Crea una Attività</string>
+    <string name="percent_completed">%d%% completato</string>
+    <string name="lets_get_started">Iniziamo</string>
+    <string name="your_progress">I tuoi progressi</string>
+    <string name="adventure_guide_description">Completa queste attività introduttive ed otterrai &lt;b&gt;5 Medaglie&lt;/b&gt; e &lt;font color=#EE9109&gt;&lt;b&gt;100 oro&lt;/b&gt;&lt;/font&gt; una volta completate!</string>
+    <string name="onboarding_tasks">Attività introduttive</string>
+    <string name="task_display">Visualizzazione dell\'elenco delle attività</string>
+    <string name="special_items">Oggetti speciali</string>
+    <string name="leave_keep_tasks">Lascia e mantieni le attività</string>
+    <string name="leave_delte_tasks">Lascia e rimuovi le attività</string>
+    <string name="challenge_leave_description">Puoi scegliere di mantenere le attività di questa Sfida sulla tua bacheca personale o di eliminarle quando esci</string>
+    <string name="pet_ownership_fraction">%1$d / %2$d</string>
+    <string name="mount_category">%s Cavalcature</string>
+    <string name="pet_category">%s Animali</string>
+    <string name="challenge_task_name">%s Attività sfida</string>
+    <string name="delete_x_tasks">Elimina %d attività</string>
+    <string name="keep_x_tasks">Tieni %d attività</string>
+    <string name="broken_challenge_description">Questa è una delle %d attività che fanno parte di una Sfida che non esiste più. Cosa vorresti fare con queste attività orfane\?</string>
+    <string name="broken_challenge">Sfida mancante</string>
+    <string name="leave_delete_x_tasks">Lascia e rimuovi le %d attività</string>
+    <string name="leave_delete_task">Lascia e rimuovi le attività</string>
+    <string name="delete_challenge_task_description">Questa è una delle %d attività che fanno parte della sfida \"%s\". Devi abbandonare la sfida per eliminare questa attività.</string>
+    <string name="delete_challenge_task_title">Eliminare le attività della sfida\?</string>
+    <string name="hatch">Schiudi</string>
+    <string name="hatch_your_pet">Schiudi il tuo animale</string>
+    <string name="use_saddle">Usa una Sella</string>
+    <string name="magic_potion">Pozione Magica</string>
+    <string name="magic_potions">Pozioni magiche</string>
+    <string name="hatch_pet_again">Schiudi di nuovo un animale</string>
+    <string name="unhatched_pet">Animali non schiusi</string>
+    <string name="hatch_pet">Schiudi un Animale</string>
+    <string name="can_hatch_pet">Combina il tuo Uovo %s e la tua Pozione %s per schiudere questo animale!</string>
+    <string name="suggest_pet_hatch_again_missing_both">Hai ancora bisogno di %s ed un uovo %s per poter schiudere di nuovo questo animale</string>
+    <string name="suggest_pet_hatch_again_missing_potion">Hai ancora bisogno di una Pozione %s per poter schiudere di nuovo questo animale</string>
+    <string name="suggest_pet_hatch_again_missing_egg">Hai ancora bisogno di un uovo %s per poter schiudere di nuovo questo animale</string>
+    <string name="suggest_pet_hatch_missing_both">Hai bisogno di %s e una Pozione %s per poter schiudere questo animale</string>
+    <string name="suggest_pet_hatch_missing_potion">Hai bisogno di una Pozione %s per poter schiudere questo animale</string>
+    <string name="suggest_pet_hatch_missing_egg">Hai bisogno di un uovo %s per poter schiudere questo animale</string>
+    <string name="view_onboarding_tasks">Visualizza le attività introduttive</string>
+    <string name="equip">Equipaggia</string>
+    <string name="excessItemsNoneLeft">Hai già tutto il necessario per tutti gli animali %@. Sei sicuro di voler acquistare %d %ss\?</string>
+    <string name="purchaseX">Acquista %d</string>
+    <string name="excessItemsXLeft">Hai solo bisogno di %d %s per schiudere tutti i possibili animali. Sei sicuro di voler acquistare %d\?</string>
+    <string name="excess_items">Articoli in eccesso</string>
+    <string name="onboardingComplete_achievement_title">Hai completato le attività introduttive!</string>
+    <string name="onboardingCompleteDescription">Se ne vuoi di più, dai un\'occhiata alle Medaglie ed inizia a collezionarle!</string>
+    <string name="pms_disabled_description">Puoi continuare ad inviare messaggi, ma nessuno potrà inviartene. Puoi abilitarlo nuovamente nelle impostazioni.</string>
+    <string name="pms_disabled">I Messaggi Privati sono disabilitati</string>
+    <string name="disablePrivateMessages">Disabilita i messaggi privati</string>
+    <string name="block">Blocca</string>
+    <string name="block_user_description">Un utente bloccato non può inviarti messaggi privati ma vedrai comunque i suoi post nella Taverna o nelle Gilde. Non avrà alcun effetto se la persona è un moderatore o se lo sarà in futuro.</string>
+    <string name="block_user_title">Bloccare %s\?</string>
+    <string name="unblock_user">Sblocca utente</string>
+    <string name="block_user">Blocca utente</string>
+    <string name="spooky_promo_info_prompt">La vendita di Gemme è tornata per infestare la fine del Gala Autunnale di quest\'anno! Questa è l\'ultima possibilità per ottenere più gemme che mai, quindi fanne scorta finché dura!</string>
+    <string name="spooky_promo_info_limitations">Questa promozione si applica solo durante l\'evento a tempo limitato. Questo evento inizia il 29 ottobre alle 14:00 ora italiana (12:00 UTC) e terminerà il 3 novembre alle 2:00 di mattina ora italiana (00:00 UTC). L\'offerta promozionale è disponibile solo se acquisti Gemme per te stesso.</string>
+    <string name="spooky_promo_info_instructions">Tra il 29 ottobre e il 2 novembre acquista semplicemente un pacchetto di gemme e sul tuo account verrà accreditato l\'importo promozionale di gemme. Più gemme da spendere, condividere o risparmiare per eventuali oggetti futuri!</string>
+    <string name="view_gem_bundles">Visualizza pacchetti di gemme</string>
+    <string name="fall_promo_info_prompt">Il Gala Autunnale è in pieno svolgimento, quindi abbiamo pensato che fosse il momento perfetto per presentare la nostra prima vendita di Gemme in assoluto! Ora otterrai più gemme ogni acquisto più che mai.</string>
+    <string name="fall_promo_info_limitations">Questa promozione si applica solo durante l\'evento a tempo limitato. Questo evento inizia il 22 settembre alle 14:00 ora italiana (12:00 UTC) e terminerà il 1 ottobre alle 2:00 di mattina ora italiana (00:00 UTC). L\'offerta promozionale è disponibile solo se acquisti Gemme per te stesso.</string>
+    <string name="fall_promo_info_instructions">Tra il 22 e il 30 settembre, acquista semplicemente un pacchetto di gemme e sul tuo account verrà accreditato l\'importo promozionale di gemme. Più gemme da spendere, condividere o risparmiare per eventuali oggetti futuri!</string>
+    <string name="limitations">Limitazioni</string>
+    <string name="how_it_works">Come funziona</string>
+    <string name="x_to_y">%s a %s</string>
+    <string name="usually_x_gems">Solitamente %d Gemme</string>
 </resources>

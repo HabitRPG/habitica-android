@@ -185,12 +185,16 @@ class NavigationDrawerFragment : DialogFragment() {
                    questContent = it
                 }, RxErrorHandler.handleEmptyError()))
 
-        subscriptions?.add(userRepository.getTeamPlans()
-                .distinctUntilChanged { firstTeams, secondTeams -> firstTeams == secondTeams }
-                .subscribe( {
-                    getItemWithIdentifier(SIDEBAR_TEAMS)?.isVisible = it.size != 0
-                    adapter.setTeams(it)
-                }, RxErrorHandler.handleEmptyError()))
+        if (configManager.enableTeamBoards()) {
+            subscriptions?.add(userRepository.getTeamPlans()
+                    .distinctUntilChanged { firstTeams, secondTeams -> firstTeams == secondTeams }
+                    .subscribe({
+                        getItemWithIdentifier(SIDEBAR_TEAMS)?.isVisible = it.size != 0
+                        adapter.setTeams(it)
+                    }, RxErrorHandler.handleEmptyError()))
+        } else {
+            getItemWithIdentifier(SIDEBAR_TEAMS)?.isVisible = false
+        }
 
         subscriptions?.add(userRepository.getUser().subscribe({
             updateUser(it)
@@ -339,7 +343,7 @@ class NavigationDrawerFragment : DialogFragment() {
             items.add(HabiticaDrawerItem(0, SIDEBAR_SOCIAL, context.getString(R.string.sidebar_section_social), true))
             items.add(HabiticaDrawerItem(R.id.partyFragment, SIDEBAR_PARTY, context.getString(R.string.sidebar_party)))
             items.add(HabiticaDrawerItem(R.id.tavernFragment, SIDEBAR_TAVERN, context.getString(R.string.sidebar_tavern)))
-            items.add(HabiticaDrawerItem(R.id.guildsOverviewFragment, SIDEBAR_GUILDS, context.getString(R.string.sidebar_guilds)))
+            items.add(HabiticaDrawerItem(R.id.guildOverviewFragment, SIDEBAR_GUILDS, context.getString(R.string.sidebar_guilds)))
             items.add(HabiticaDrawerItem(R.id.challengesOverviewFragment, SIDEBAR_CHALLENGES, context.getString(R.string.sidebar_challenges)))
 
             items.add(HabiticaDrawerItem(0, SIDEBAR_ABOUT_HEADER, context.getString(R.string.sidebar_about), true))

@@ -5,9 +5,6 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:background="?attr/colorContentBackground">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -20,13 +17,13 @@
                 android:paddingEnd="@dimen/spacing_large"
                 android:paddingBottom="20dp"
                 android:paddingTop="20dp">
-                <com.habitrpg.android.habitica.ui.views.HabiticaEmojiTextView
+                <TextView
                     android:id="@+id/titleTextView"
                     style="@style/CardTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
-                <com.habitrpg.android.habitica.ui.views.HabiticaEmojiTextView
+                <TextView
                     android:id="@+id/notesTextView"
                     style="@style/CardText"
                     android:layout_width="match_parent"
@@ -40,7 +37,6 @@
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true" />
         </RelativeLayout>
-    </LinearLayout>
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"

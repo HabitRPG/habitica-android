@@ -95,6 +95,7 @@ abstract class BaseFragment<VB: ViewBinding> : DialogFragment() {
     }
 
     override fun onDestroyView() {
+        binding = null
         if (EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().unregister(this)
         }

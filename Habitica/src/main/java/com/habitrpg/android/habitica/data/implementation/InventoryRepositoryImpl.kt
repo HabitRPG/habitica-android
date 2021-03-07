@@ -71,9 +71,13 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
     }
 
     override fun openMysteryItem(user: User?): Flowable<Equipment> {
-        return apiClient.openMysteryItem().doOnNext { itemData ->
-            itemData.owned = true
-            localRepository.save(itemData)
+        return apiClient.openMysteryItem()
+                .flatMap { localRepository.getEquipment(it.key ?: "").firstElement().toFlowable() }
+                .doOnNext { itemData ->
+                    val liveEquipment = localRepository.getLiveObject(itemData)
+                    localRepository.executeTransaction {
+                        liveEquipment?.owned = true
+                    }
             localRepository.decrementMysteryItemCount(user)
         }
     }
@@ -114,14 +118,14 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
         localRepository.changeOwnedCount(type, key, userID, amountToAdd)
     }
 
-    override fun sellItem(user: User?, type: String, key: String): Flowable<User> {
+    override fun sellItem(type: String, key: String): Flowable<User> {
         return localRepository.getOwnedItem(userID, type, key, true)
-                .flatMap { item -> sellItem(user, item) }
+                .flatMap { item -> sellItem(item) }
     }
 
-    override fun sellItem(user: User?, item: OwnedItem): Flowable<User> {
+    override fun sellItem(item: OwnedItem): Flowable<User> {
         return localRepository.getItem(item.itemType ?: "", item.key ?: "")
-                .flatMap { newItem -> sellItem(user, newItem, item) }
+                .flatMap { newItem -> sellItem(newItem, item) }
     }
 
     override fun getLatestMysteryItem(): Flowable<Equipment> {
@@ -132,34 +136,16 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
         return localRepository.getItem(type, key)
     }
 
-    private fun sellItem(user: User?, item: Item, ownedItem: OwnedItem): Flowable<User> {
-        if (user != null && appConfigManager.enableLocalChanges()) {
+    private fun sellItem(item: Item, ownedItem: OwnedItem): Flowable<User> {
+        if (appConfigManager.enableLocalChanges()) {
             localRepository.executeTransaction {
                 val liveItem = localRepository.getLiveObject(ownedItem)
-                val liveUser = localRepository.getLiveObject(user)
                 liveItem?.numberOwned = (liveItem?.numberOwned ?: 0) - 1
-                liveUser?.stats?.gp = (user.stats?.gp ?: 0.0) + item.value
             }
         }
         return apiClient.sellItem(item.type, item.key)
-                .map { user1 ->
-                    localRepository.modifyWithRealm(user1) { realm, liveUser ->
-                        if (user != null) {
-                            val items = liveUser.items
-                            if (items != null) {
-                                items.userId = user.id
-                                val newItems = realm.copyToRealmOrUpdate(items)
-                                user.items = newItems
-                            }
-                            val stats = liveUser.stats
-                            if (stats != null) {
-                                stats.userId = user.id
-                                val newStats = realm.copyToRealmOrUpdate(stats)
-                                user.stats = newStats
-                            }
-                        }
-                    }
-                    user ?: user1
+                .map { user ->
+                    localRepository.soldItem(userID, user)
                 }
     }
 

@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:context=".ui.activities.MainActivity">
-            <fragment
+            <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/nav_host_fragment"
                 android:name="androidx.navigation.fragment.NavHostFragment"
                 android:layout_width="match_parent"
@@ -92,7 +92,7 @@
                 <com.google.android.material.tabs.TabLayout
                     android:id="@+id/detail_tabs"
                     android:layout_width="match_parent"
-                    android:layout_height="54dp"
+                    android:layout_height="48dp"
                     android:layout_gravity="bottom"
                     android:background="?headerOffsetColor"
                     android:elevation="0dp"
@@ -141,7 +141,7 @@
 
     <!-- The drawer is given a fixed width in dp and extends the full height of
          the container. -->
-    <fragment
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/navigation_drawer"
         class="com.habitrpg.android.habitica.ui.fragments.NavigationDrawerFragment"
         android:layout_width="match_parent"

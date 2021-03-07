@@ -7,6 +7,7 @@ import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.interactors.ScoreTaskLocallyInteractor
 import com.habitrpg.android.habitica.models.BaseObject
+import com.habitrpg.android.habitica.models.responses.BulkTaskScoringData
 import com.habitrpg.android.habitica.models.responses.TaskDirection
 import com.habitrpg.android.habitica.models.responses.TaskDirectionData
 import com.habitrpg.android.habitica.models.responses.TaskScoringResult
@@ -99,6 +100,10 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
                 .map { (res, user): Pair<TaskDirectionData, User> ->
                     // save local task changes
                     val result = TaskScoringResult()
+                    if (res.lvl == 0) {
+                        // Team tasks that require approval have weird data that we should just ignore.
+                        return@map result
+                    }
                     val stats = user.stats
 
                     result.healthDelta = res.hp - (stats?.hp ?: 0.0)
@@ -116,6 +121,10 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
                     handleTaskResponse(user, res, task, up, localData?.delta ?: 0f)
                     result
                 }
+    }
+
+    override fun bulkScoreTasks(data: List<Map<String, String>>): Flowable<BulkTaskScoringData> {
+        return apiClient.bulkScoreTasks(data)
     }
 
     private fun handleTaskResponse(user: User, res: TaskDirectionData, task: Task, up: Boolean, localDelta: Float) {
@@ -230,6 +239,7 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
         return apiClient.updateTask(id, unmanagedTask).singleElement()
                 .map { task1 ->
                     task1.position = task.position
+                    task1.id = task.id
                     task1
                 }
                 .doOnSuccess { localRepository.save(it) }

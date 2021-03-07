@@ -140,6 +140,13 @@
             android:entryValues="@array/TaskDisplayValues"
             android:defaultValue="standard"
             android:layout="@layout/preference_child_summary"/>
+        <ListPreference
+            android:title="@string/launch_screen"
+            android:key="launch_screen"
+            android:entries="@array/launch_screen_types"
+            android:entryValues="@array/launch_screen_values"
+            android:defaultValue="habits"
+            android:layout="@layout/preference_child_summary"/>
         <ListPreference android:title="@string/Language_title"
             android:key="language"
             android:entries="@array/Language"

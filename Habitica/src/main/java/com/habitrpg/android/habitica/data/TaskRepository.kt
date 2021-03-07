@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.data
 
 import com.habitrpg.android.habitica.models.BaseObject
+import com.habitrpg.android.habitica.models.responses.BulkTaskScoringData
 import com.habitrpg.android.habitica.models.responses.TaskScoringResult
 import com.habitrpg.android.habitica.models.tasks.RemindersItem
 import com.habitrpg.android.habitica.models.tasks.Task
@@ -62,4 +63,5 @@ interface TaskRepository : BaseRepository {
     fun syncErroredTasks(): Single<List<Task>>
     fun unlinkAllTasks(challengeID: String?, keepOption: String): Flowable<Void>
     fun getTasksForChallenge(challengeID: String?): Flowable<RealmResults<Task>>
+    fun bulkScoreTasks(data: List<Map<String, String>>): Flowable<BulkTaskScoringData>
 }

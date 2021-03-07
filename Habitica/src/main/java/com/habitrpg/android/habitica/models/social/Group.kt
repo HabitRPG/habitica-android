@@ -40,6 +40,7 @@ open class Group : RealmObject(), BaseObject {
     var leaderMessage: String? = null
     var leaderOnlyChallenges: Boolean = false
     var leaderOnlyGetGems: Boolean = false
+    var categories: RealmList<GroupCategory>? = null
 
 
     @Ignore

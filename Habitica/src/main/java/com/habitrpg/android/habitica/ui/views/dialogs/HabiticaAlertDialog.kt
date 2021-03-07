@@ -13,8 +13,6 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.extensions.layoutInflater
-import com.habitrpg.android.habitica.helpers.MainNavigationController
-import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengesOverviewFragmentDirections
 import com.habitrpg.android.habitica.ui.views.login.LockableScrollView
 import com.plattysoft.leonids.ParticleSystem
 import kotlinx.coroutines.Dispatchers
@@ -253,22 +251,28 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
         if (isCelebratory) {
             titleTextView.post {
                 val confettiContainer = view.findViewById<RelativeLayout>(R.id.confetti_container)
-                ParticleSystem(confettiContainer, 40, ContextCompat.getDrawable(context, R.drawable.confetti_blue), 3000)
-                        .setAcceleration(0.00013f, 90)
+                ParticleSystem(confettiContainer, 40, ContextCompat.getDrawable(context, R.drawable.confetti_blue), 6000)
+                        .setAcceleration(0.00010f, 90)
                         .setRotationSpeed(144f)
-                        .setSpeedByComponentsRange(-0.15f, 0.15f, -0.1f, -0.5f)
+                        .setSpeedByComponentsRange(-0.15f, 0.15f, -0.1f, -0.4f)
                         .setFadeOut(200, AccelerateInterpolator())
                         .emitWithGravity(titleTextView, Gravity.BOTTOM, 10, 2000)
-                ParticleSystem(confettiContainer, 40, ContextCompat.getDrawable(context, R.drawable.confetti_red), 3000)
-                        .setAcceleration(0.00013f, 90)
+                ParticleSystem(confettiContainer, 40, ContextCompat.getDrawable(context, R.drawable.confetti_red), 6000)
+                        .setAcceleration(0.00010f, 90)
                         .setRotationSpeed(144f)
-                        .setSpeedByComponentsRange(-0.15f, 0.15f, -0.1f, -0.5f)
+                        .setSpeedByComponentsRange(-0.15f, 0.15f, -0.1f, -0.4f)
                         .setFadeOut(200, AccelerateInterpolator())
                         .emitWithGravity(titleTextView, Gravity.BOTTOM, 10, 2000)
-                ParticleSystem(confettiContainer, 40, ContextCompat.getDrawable(context, R.drawable.confetti_green), 3000)
-                        .setAcceleration(0.00013f, 90)
+                ParticleSystem(confettiContainer, 40, ContextCompat.getDrawable(context, R.drawable.confetti_yellow), 6000)
+                        .setAcceleration(0.00010f, 90)
                         .setRotationSpeed(144f)
-                        .setSpeedByComponentsRange(-0.15f, 0.15f, -0.1f, -0.5f)
+                        .setSpeedByComponentsRange(-0.15f, 0.15f, -0.1f, -0.4f)
+                        .setFadeOut(200, AccelerateInterpolator())
+                        .emitWithGravity(titleTextView, Gravity.BOTTOM, 10, 2000)
+                ParticleSystem(confettiContainer, 40, ContextCompat.getDrawable(context, R.drawable.confetti_purple), 6000)
+                        .setAcceleration(0.00010f, 90)
+                        .setRotationSpeed(144f)
+                        .setSpeedByComponentsRange(-0.15f, 0.15f, -0.1f, -0.4f)
                         .setFadeOut(200, AccelerateInterpolator())
                         .emitWithGravity(titleTextView, Gravity.BOTTOM, 10, 2000)
             }
@@ -288,7 +292,9 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
                 if ((dialogQueue[0].context as? Activity)?.isFinishing != true) {
                     GlobalScope.launch(context = Dispatchers.Main) {
                         delay(500L)
-                        dialogQueue[0].show()
+                        if (dialogQueue.size > 0) {
+                            dialogQueue[0].show()
+                        }
                     }
                 }
             }

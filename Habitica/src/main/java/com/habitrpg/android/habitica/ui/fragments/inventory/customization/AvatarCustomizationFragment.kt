@@ -49,7 +49,7 @@ class AvatarCustomizationFragment : BaseMainFragment<FragmentRecyclerviewBinding
                         userRepository.unlockPath(user, customization)
                                 .flatMap { userRepository.retrieveUser(false, true, true) }
                     } else {
-                        userRepository.useCustomization(user, customization.type ?: "", customization.category, customization.identifier ?: "")
+                        userRepository.useCustomization(customization.type ?: "", customization.category, customization.identifier ?: "")
                     }
                 }
                 .subscribe({ }, RxErrorHandler.handleEmptyError()))
@@ -138,7 +138,7 @@ class AvatarCustomizationFragment : BaseMainFragment<FragmentRecyclerviewBinding
         this.updateActiveCustomization(user)
         if (adapter.customizationList.size != 0) {
             val ownedCustomizations = ArrayList<String>()
-            user.purchased?.customizations?.filter { it.type == this.type && it.purchased }?.mapTo(ownedCustomizations) { it.key ?: "" }
+            user.purchased?.customizations?.filter { it.type == this.type && it.purchased }?.mapTo(ownedCustomizations) { it.key + "_" + it.type + "_" + it.category }
             adapter.updateOwnership(ownedCustomizations)
         } else {
             this.loadCustomizations()

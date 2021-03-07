@@ -408,7 +408,7 @@
     <string name="empty_description_todos">To Do adalah tugas yang hanya perlu diselesaikan sekali. Tambahkan ceklis kepada To Do-mu untuk meningkatkan harganya.</string>
     <string name="empty_title_rewards">Kamu tidak punya Hadiah apapun</string>
     <string name="reset_walkthrough">Ulang Panduan Justin</string>
-    <string name="read_community_guidelines">Tolong baca Pedoman Komunitas kami sebelum posting</string>
+    <string name="read_community_guidelines">Tolong baca <u>Pedoman Komunitas</u> kami sebelum posting</string>
     <string name="maintenance">Perbaikan</string>
     <string name="reload_content">Muat Ulang Isi</string>
     <string name="dailyDueDefaultView">Atur Keseharian secara otomatis di tab \'harus dikerjakan\'</string>
@@ -474,7 +474,7 @@
     <string name="insufficientHourglasses">Kamu perlu lebih banyak Jam Pasir Mistis untuk membeli item ini!</string>
     <string name="get_hourglasses">Dapatkan jam pasir</string>
     <string name="subscribe_for_hourglasses">Berlangganan untuk Jam Pasir</string>
-    <string name="timetravelers_closed_description">Dapatkan satu Jam Pasir Mistis setiap tiga bulan berturut-turut kamu berlangganan, lalu gunakan untuk membuka item-item edisi terbatas, peliharaan, dan tunggangan dari masa lalu... dan masa depan!</string>
+    <string name="timetravelers_closed_description">Dapatkan satu Jam Pasir Mistis setiap tiga bulan berturut-turut kamu berlangganan, lalu gunakan untuk membuka item-item edisi terbatas, peliharaan, dan tunggangan dari masa lalu… dan masa depan!</string>
     <string name="want_to_subscribe">Aku mau Berlangganan</string>
     <string name="seasonal_closed_description">Grand Gala diadakan dekat dengan titik balik matahari dan ekuinoks, jadi cek kembali nanti untuk menemukan sekumpulan seru item musiman yang spesial!</string>
     <string name="come_back_soon">Datang kembali nanti!</string>

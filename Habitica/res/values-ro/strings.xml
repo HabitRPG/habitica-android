@@ -411,7 +411,7 @@
     <string name="empty_description_todos">Lucrurile De-Făcut sunt sarcini care trebuie completate o singură dată. Bifează-ți lucrurile De-Făcut pentru a le crește valoarea. </string>
     <string name="empty_title_rewards">Nu ai nicio Recompensă</string>
     <string name="reset_walkthrough">Resetează Tutorialul lui Justin</string>
-    <string name="read_community_guidelines">Te rugăm să citești Ghidurile Comunității înainte să postezi</string>
+    <string name="read_community_guidelines">Te rugăm să citești <u>Ghidurile Comunității</u> înainte să postezi</string>
     <string name="maintenance">În Lucru</string>
     <string name="reload_content">Reîmprospătează Conținutul</string>
     <string name="dailyDueDefaultView">Setează Cotidienele la tabul cu termen limită</string>
@@ -479,7 +479,7 @@
     <string name="insufficientHourglasses">Ai nevoie de mai multe Clepsidre Mistice pentru a cumpăra acest obiect!</string>
     <string name="get_hourglasses">Fă rost de clepsidre</string>
     <string name="subscribe_for_hourglasses">Abonează-te pentru Clepsidre</string>
-    <string name="timetravelers_closed_description">Câștigă o Clepsidră Mistică pentru fiecare trei luni consecutive de abonare, apoi utilizează-le pentru a debloca obiecte în ediție limitată, animale de companie sau de călărit din trecut... și viitor!</string>
+    <string name="timetravelers_closed_description">Câștigă o Clepsidră Mistică pentru fiecare trei luni consecutive de abonare, apoi utilizează-le pentru a debloca obiecte în ediție limitată, animale de companie sau de călărit din trecut… și viitor!</string>
     <string name="want_to_subscribe">Vreau să mă abonez</string>
     <string name="seasonal_closed_description">Galele Grand au loc în apropierea solstițiilor și echinocțiilor, așa că întoarce-te atunci pentru a găsi un asortiment de obiecte sezonale speciale!</string>
     <string name="come_back_soon">Revino în curând!</string>

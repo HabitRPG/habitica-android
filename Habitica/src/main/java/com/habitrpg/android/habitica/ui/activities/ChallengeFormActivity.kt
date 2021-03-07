@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.ui.activities
 
 import android.app.Activity
-import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.ColorDrawable
@@ -10,8 +9,8 @@ import android.view.*
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
+import android.widget.TextView
 import androidx.appcompat.widget.AppCompatCheckedTextView
-import androidx.appcompat.widget.AppCompatTextView
 import androidx.appcompat.widget.Toolbar
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
@@ -33,6 +32,7 @@ import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengesOv
 import com.habitrpg.android.habitica.ui.helpers.ToolbarColorHelper
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
+import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaProgressDialog
 import io.reactivex.rxjava3.core.Flowable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -130,8 +130,7 @@ class ChallengeFormActivity : BaseActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.action_save && !savingInProgress && validateAllFields()) {
             savingInProgress = true
-            @Suppress("DEPRECATION")
-            val dialog = ProgressDialog.show(this, "", "Saving challenge data. Please wait...", true, false)
+            val dialog = HabiticaProgressDialog.show(this, R.string.saving)
 
             val observable: Flowable<Challenge> = if (editMode) {
                 updateChallenge()
@@ -145,7 +144,7 @@ class ChallengeFormActivity : BaseActivity() {
                         challengeRepository.retrieveChallenges(0, true)
                     }
                     .subscribe({
-                        dialog.dismiss()
+                        dialog?.dismiss()
                         savingInProgress = false
                         finish()
                         if (!editMode) {
@@ -155,7 +154,7 @@ class ChallengeFormActivity : BaseActivity() {
                             }
                         }
                     }, { throwable ->
-                dialog.dismiss()
+                dialog?.dismiss()
                 savingInProgress = false
                 RxErrorHandler.reportError(throwable)
             }))
@@ -520,7 +519,7 @@ class ChallengeFormActivity : BaseActivity() {
     private class GroupArrayAdapter(context: Context) : ArrayAdapter<Group>(context, android.R.layout.simple_spinner_item) {
 
         override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-            val checkedTextView = super.getView(position, convertView, parent) as? AppCompatTextView
+            val checkedTextView = super.getView(position, convertView, parent) as? TextView
             checkedTextView?.text = getItem(position)?.name
             return checkedTextView ?: View(context)
         }

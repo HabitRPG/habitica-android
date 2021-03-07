@@ -79,8 +79,9 @@ private constructor(parent: ViewGroup, content: View, callback: ContentViewCallb
         return this
     }
 
-    private class ContentViewCallback(private val content: View) : BaseTransientBottomBar.ContentViewCallback {
+    private class ContentViewCallback(private val content: View) : com.google.android.material.snackbar.ContentViewCallback {
 
+        @Suppress("SameParameterValue")
         override fun animateContentIn(delay: Int, duration: Int) {
             content.scaleY = 0f
             content.scaleX = 0f

@@ -401,7 +401,7 @@
     <string name="empty_description_todos">Gjøremål er oppgaver som kun behøver å fullføres én gang. Legg til sjekklister til dine Gjøremål for å øke dets verdi.</string>
     <string name="empty_title_rewards">Du har ingen Belønninger</string>
     <string name="reset_walkthrough">Nullstill Justins Gjennomgang</string>
-    <string name="read_community_guidelines">Vennligst les våre Samfunnsretningslinjer før posting</string>
+    <string name="read_community_guidelines">Vennligst les våre <u>Samfunnsretningslinjer</u> før posting</string>
     <string name="maintenance">Vedlikehold</string>
     <string name="reload_content">Last inn Innhold på nytt</string>
     <string name="dailyDueDefaultView">Sett Daglige Gjøremål i \"Forfall\"-fanen</string>

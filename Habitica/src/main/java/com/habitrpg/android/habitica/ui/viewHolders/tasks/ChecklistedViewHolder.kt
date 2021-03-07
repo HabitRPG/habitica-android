@@ -16,7 +16,6 @@ import com.habitrpg.android.habitica.models.tasks.ChecklistItem
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
 import com.habitrpg.android.habitica.ui.helpers.setParsedMarkdown
-import com.habitrpg.android.habitica.ui.views.HabiticaEmojiTextView
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -25,6 +24,7 @@ abstract class ChecklistedViewHolder(itemView: View, scoreTaskFunc: ((Task, Task
 
     private val checkboxHolder: ViewGroup = itemView.findViewById(R.id.checkBoxHolder)
     internal val checkmarkView: ImageView = itemView.findViewById(R.id.checkmark)
+    internal val lockView: ImageView = itemView.findViewById(R.id.lock_view)
     internal val checkboxBackground: View = itemView.findViewById(R.id.checkBoxBackground)
     internal val checklistView: LinearLayout = itemView.findViewById(R.id.checklistView)
     internal val checklistIndicatorWrapper: ViewGroup = itemView.findViewById(R.id.checklistIndicatorWrapper)
@@ -42,8 +42,15 @@ abstract class ChecklistedViewHolder(itemView: View, scoreTaskFunc: ((Task, Task
         if (data.isPendingApproval) {
             completed = false
         }
-        this.checkmarkView.visibility = if (completed) View.VISIBLE else View.GONE
-        checkmarkView.drawable.setTint(ContextCompat.getColor(context, R.color.gray_400))
+        if (isLocked) {
+            this.checkmarkView.visibility = View.GONE
+            this.lockView.visibility = View.VISIBLE
+            lockView.drawable.setTint(ContextCompat.getColor(context, if (data.isDue == true || data.type == Task.TYPE_TODO) data.darkestTaskColor else R.color.text_dimmed))
+        } else {
+            this.checkmarkView.visibility = if (completed) View.VISIBLE else View.GONE
+            checkmarkView.drawable.setTint(ContextCompat.getColor(context, R.color.gray_400))
+            this.lockView.visibility = View.GONE
+        }
         this.checklistCompletedTextView.text = data.completedChecklistCount.toString()
         this.checklistAllTextView.text = data.checklist?.size.toString()
 
@@ -96,7 +103,7 @@ abstract class ChecklistedViewHolder(itemView: View, scoreTaskFunc: ((Task, Task
                     } else {
                         R.color.checkbox_fill
                     }) ?: R.color.checkbox_fill)
-                    val textView = itemView?.findViewById<HabiticaEmojiTextView>(R.id.checkedTextView)
+                    val textView = itemView?.findViewById<TextView>(R.id.checkedTextView)
                     // Populate the data into the template view using the data object
                     textView?.text = item.text
                     textView?.setTextColor(ContextCompat.getColor(context, if (item.completed) R.color.text_dimmed else R.color.text_secondary))

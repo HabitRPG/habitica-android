@@ -9,6 +9,7 @@ import com.habitrpg.android.habitica.models.tasks.ChecklistItem
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.adapter.BaseRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.BaseTaskViewHolder
+import com.habitrpg.android.habitica.ui.viewHolders.tasks.RewardViewHolder
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.functions.Action
@@ -21,6 +22,8 @@ abstract class RealmBaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(
         private val layoutResource: Int,
         private val taskFilterHelper: TaskFilterHelper?
 ) : BaseRecyclerViewAdapter<Task, VH>(), TaskRecyclerViewAdapter {
+    override var canScoreTasks = true
+
     private var updateOnModification: Boolean = false
     override var ignoreUpdates: Boolean = false
 
@@ -59,6 +62,7 @@ abstract class RealmBaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(
     override fun onBindViewHolder(holder: VH, position: Int) {
         val item = getItem(position)
         if (item != null) {
+            holder.isLocked = !canScoreTasks
             holder.bind(item, position, taskDisplayMode)
             holder.errorButtonClicked = Action {
                 errorButtonEventsSubject.onNext("")

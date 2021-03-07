@@ -16,8 +16,9 @@ package com.habitrpg.android.habitica.ui.views
 
 import android.content.Context
 import android.util.AttributeSet
+import androidx.appcompat.widget.AppCompatTextView
 
-class EllipsisTextView : HabiticaEmojiTextView {
+class EllipsisTextView : AppCompatTextView {
 
     private val ellipsesListeners = ArrayList<EllipsisListener>()
 

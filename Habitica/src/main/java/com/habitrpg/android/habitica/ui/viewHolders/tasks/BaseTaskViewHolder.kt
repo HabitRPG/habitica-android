@@ -31,6 +31,7 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
     var task: Task? = null
     var movingFromPosition: Int? = null
     var errorButtonClicked: Action? = null
+    var isLocked = false
     protected var context: Context
     private val mainTaskWrapper: ViewGroup = itemView.findViewById(R.id.main_task_wrapper)
     protected val titleTextView: EllipsisTextView = itemView.findViewById(R.id.checkedTextView)
@@ -263,11 +264,6 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
                                 return true
                             } else if ((itemView.width - motionEvent.x <= 72.dpToPx(context))) {
                                 onRightActionTouched()
-                                return true
-                            }
-                        } else if ((motionEvent.y > (checkboxHolder.height + 5.dpToPx(context)))) {
-                            if (motionEvent.x <= 72.dpToPx(context)) {
-                                onLeftActionTouched()
                                 return true
                             }
                         }

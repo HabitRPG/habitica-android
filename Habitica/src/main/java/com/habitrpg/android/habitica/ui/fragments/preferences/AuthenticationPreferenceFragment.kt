@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica.ui.fragments.preferences
 
-import android.app.ProgressDialog
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
@@ -24,6 +23,7 @@ import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
+import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaProgressDialog
 import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionDetailsView
 import javax.inject.Inject
 
@@ -225,13 +225,12 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
     }
 
     private fun deleteAccount(password: String) {
-        @Suppress("DEPRECATION")
-        val dialog = ProgressDialog.show(context, context?.getString(R.string.deleting_account), null, true)
+        val dialog = HabiticaProgressDialog.show(context, R.string.deleting_account)
         compositeSubscription.add(userRepository.deleteAccount(password).subscribe({ _ ->
             context?.let { HabiticaBaseApplication.logout(it) }
             activity?.finish()
         }) { throwable ->
-            dialog.dismiss()
+            dialog?.dismiss()
             RxErrorHandler.reportError(throwable)
         })
     }
@@ -264,10 +263,9 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
     }
 
     private fun resetAccount() {
-        @Suppress("DEPRECATION")
-        val dialog = ProgressDialog.show(context, context?.getString(R.string.resetting_account), null, true)
-        compositeSubscription.add(userRepository.resetAccount().subscribe({ dialog.dismiss() }) { throwable ->
-            dialog.dismiss()
+        val dialog = HabiticaProgressDialog.show(context, R.string.resetting_account)
+        compositeSubscription.add(userRepository.resetAccount().subscribe({ dialog?.dismiss() }) { throwable ->
+            dialog?.dismiss()
             RxErrorHandler.reportError(throwable)
         })
     }

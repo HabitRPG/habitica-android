@@ -120,7 +120,6 @@ class RealmInventoryLocalRepository(realm: Realm) : RealmContentLocalRepository(
 
     override fun getEquipment(key: String): Flowable<Equipment> {
         return RxJavaBridge.toV3Flowable(realm.where(Equipment::class.java)
-                .sort("text")
                 .equalTo("key", key)
                 .findFirstAsync()
                 .asFlowable<RealmObject>()
@@ -350,5 +349,26 @@ class RealmInventoryLocalRepository(realm: Realm) : RealmContentLocalRepository(
                 .asFlowable()
                 .filter { it.isLoaded && it.size > 0}
                 .map { it.first() })
+    }
+
+    override fun soldItem(userID: String, updatedUser: User): User {
+        val user = realm.where(User::class.java)
+                .equalTo("id", userID)
+                .findFirst() ?: return updatedUser
+        executeTransaction {
+            val items = updatedUser.items
+            if (items != null) {
+                items.userId = user.id
+                val newItems = realm.copyToRealmOrUpdate(items)
+                user.items = newItems
+            }
+            val stats = updatedUser.stats
+            if (stats != null) {
+                stats.userId = user.id
+                val newStats = realm.copyToRealmOrUpdate(stats)
+                user.stats = newStats
+            }
+        }
+        return user
     }
 }

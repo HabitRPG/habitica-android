@@ -47,7 +47,7 @@
         android:orientation="vertical">
 
 
-        <com.habitrpg.android.habitica.ui.views.HabiticaEmojiTextView
+        <TextView
             android:id="@+id/challenge_name"
             style="@style/ChallengeName"
             android:layout_width="match_parent"
@@ -56,7 +56,7 @@
             android:maxLines="3"
             tools:text="Name" />
 
-        <com.habitrpg.android.habitica.ui.views.HabiticaEmojiTextView
+        <TextView
             android:id="@+id/challenge_shorttext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -73,13 +73,15 @@
             <ImageView
                 android:layout_width="18dp"
                 android:layout_height="20dp"
-                android:src="@drawable/dialogue_participants" />
+                android:src="@drawable/dialogue_participants"
+                app:tint="@color/text_ternary"/>
 
             <TextView
                 android:id="@+id/participantCount"
                 style="@style/ChallengeTaskDetails"
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"
+                android:textColor="@color/text_ternary"
                 android:layout_marginStart="@dimen/spacing_small"
                 android:gravity="center_vertical"
                 tools:text="12334" />

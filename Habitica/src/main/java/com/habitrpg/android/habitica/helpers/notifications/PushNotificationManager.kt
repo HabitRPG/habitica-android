@@ -3,7 +3,7 @@ package com.habitrpg.android.habitica.helpers.notifications
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
-import com.google.firebase.iid.FirebaseInstanceId
+import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.RemoteMessage
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
@@ -31,18 +31,17 @@ class PushNotificationManager(var apiClient: ApiClient, private val sharedPrefer
     }
 
     fun addPushDeviceUsingStoredToken() {
-        if (this.refreshedToken.isEmpty()) {
-            this.refreshedToken = FirebaseInstanceId.getInstance().token ?: ""
-        }
+        FirebaseMessaging.getInstance().token.addOnCompleteListener {
+            this.refreshedToken = it.result
+            if (this.refreshedToken.isEmpty() || this.user == null || this.userHasPushDevice() || !this.userIsSubscribedToNotifications()) {
+                return@addOnCompleteListener
+            }
 
-        if (this.refreshedToken.isEmpty() || this.user == null || this.userHasPushDevice() || !this.userIsSubscribedToNotifications()) {
-            return
+            val pushDeviceData = HashMap<String, String>()
+            pushDeviceData["regId"] = this.refreshedToken
+            pushDeviceData["type"] = "android"
+            apiClient.addPushDevice(pushDeviceData).subscribe({ }, RxErrorHandler.handleEmptyError())
         }
-
-        val pushDeviceData = HashMap<String, String>()
-        pushDeviceData["regId"] = this.refreshedToken
-        pushDeviceData["type"] = "android"
-        apiClient.addPushDevice(pushDeviceData).subscribe({ }, RxErrorHandler.handleEmptyError())
     }
 
     fun removePushDeviceUsingStoredToken() {

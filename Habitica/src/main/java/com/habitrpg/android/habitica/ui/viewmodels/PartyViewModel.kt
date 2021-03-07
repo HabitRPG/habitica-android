@@ -19,7 +19,8 @@ class PartyViewModel: GroupViewModel() {
         get() = getGroupData().value?.quest?.active == true
 
     internal val isUserOnQuest: Boolean
-        get() = !(getGroupData().value?.quest?.members?.filter { it.key == getUserData().value?.id }?.isEmpty()?:true)
+        get() = !(getGroupData().value?.quest?.members?.none { it.key == getUserData().value?.id }
+                ?: true)
 
     private val members: MutableLiveData<RealmResults<Member>?> by lazy {
         MutableLiveData<RealmResults<Member>?>()

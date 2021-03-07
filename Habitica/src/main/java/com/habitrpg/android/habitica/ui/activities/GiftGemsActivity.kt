@@ -149,7 +149,9 @@ class GiftGemsActivity : BaseActivity() {
     fun onConsumablePurchased(event: ConsumablePurchasedEvent) {
         purchaseHandler?.consumePurchase(event.purchase)
         runOnUiThread {
-            displayConfirmationDialog()
+            if (event.recipientID == giftedUserID) {
+                displayConfirmationDialog()
+            }
         }
     }
 

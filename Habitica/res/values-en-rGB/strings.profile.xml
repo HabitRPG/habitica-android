@@ -3,13 +3,11 @@
     <string name="profile_pets_and_mounts">Pets &amp; Mounts</string>
     <string name="profile_pets_found">Pets Found</string>
     <string name="profile_mounts_tamed">Mounts Tamed</string>
-    <string name="profile_loading_data">Loading member data...</string>
+    <string name="profile_loading_data">Loading member data…</string>
     <string name="profile_send_message_to">Send message to %s</string>
     <string name="profile_message_sent_to">Message sent to %s</string>
     <string name="profile_level">Level:</string>
     <string name="profile_class_bonus">Class-Bonus:</string>
     <string name="profile_allocated">Allocated:</string>
-    <string name="profile_private_message">Private Message</string>
     <string name="profile_achievements">Achievements</string>
-
 </resources>

@@ -3,7 +3,6 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">8dp</dimen>
-    <dimen name="card_horizontal_padding">4dip</dimen>
 
     <dimen name="card_medium_text">18.0sp</dimen>
     <dimen name="card_small_text">14.0sp</dimen>
@@ -11,9 +10,7 @@
     <dimen name="card_padding_compact">6dp</dimen>
     <dimen name="section_leftright_padding">6dp</dimen>
     <dimen name="section_top_padding">16dp</dimen>
-    <dimen name="card_margin">6dp</dimen>
 
-    <dimen name="party_invite_button">34dp</dimen>
     <dimen name="party_accept_button_start_margin">5dp</dimen>
     <dimen name="party_invite_avatar">46dp</dimen>  <!--50?-->
     <dimen name="party_invite_separator">4dp</dimen>
@@ -40,7 +37,7 @@
     <dimen name="checklist_wrapper_width">24dp</dimen>
     <dimen name="checklist_item_min_height">50dp</dimen>
 
-    <dimen name="daily_checkbox_corner_radius">2dp</dimen>
+    <dimen name="daily_checkbox_corner_radius">4dp</dimen>
     <dimen name="checkbox_size">24dp</dimen>
     <dimen name="checkbox_compact_size">20dp</dimen>
 
@@ -77,7 +74,7 @@
     <dimen name="task_icon_space">12dp</dimen>
     <dimen name="task_icon_size">18dp</dimen>
     <dimen name="pill_horizontal_padding">10dp</dimen>
-    <dimen name="pill_vertical_padding">2dp</dimen>
+    <dimen name="pill_vertical_padding">3dp</dimen>
     <dimen name="button_padding_small">16dp</dimen>
     <dimen name="button_padding_vertical_small">4dp</dimen>
 

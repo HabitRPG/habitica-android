@@ -39,7 +39,7 @@ open class Task : RealmObject, BaseObject, Parcelable {
     var text: String = ""
     var notes: String? = null
     @TaskTypes
-    var type: String = ""
+    var type: String = Task.TYPE_HABIT
     var challengeID: String? = null
     var challengeBroken: String? = null
     var attribute: String? = Stats.STRENGTH
@@ -154,13 +154,13 @@ open class Task : RealmObject, BaseObject, Parcelable {
     val darkestTaskColor: Int
         get() {
             return when {
-                this.value < -20 -> return R.color.maroon_5
-                this.value < -10 -> return R.color.red_5
-                this.value < -1 -> return R.color.orange_5
-                this.value < 1 -> return R.color.yellow_5
-                this.value < 5 -> return R.color.green_5
-                this.value < 10 -> return R.color.teal_5
-                else -> R.color.blue_5
+                this.value < -20 -> return R.color.maroon_1
+                this.value < -10 -> return R.color.red_1
+                this.value < -1 -> return R.color.orange_1
+                this.value < 1 -> return R.color.yellow_1
+                this.value < 5 -> return R.color.green_1
+                this.value < 10 -> return R.color.teal_1
+                else -> R.color.blue_1
             }
         }
 

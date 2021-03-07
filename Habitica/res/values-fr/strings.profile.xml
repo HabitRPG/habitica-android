@@ -3,13 +3,12 @@
     <string name="profile_pets_and_mounts">Familiers &amp; montures</string>
     <string name="profile_pets_found">Familiers trouvés</string>
     <string name="profile_mounts_tamed">Montures dressées</string>
-    <string name="profile_loading_data">Chargement des données de membre...</string>
+    <string name="profile_loading_data">Chargement des données de membre…</string>
     <string name="profile_send_message_to">Envoyer un message à %s</string>
     <string name="profile_message_sent_to">Message envoyé à %s</string>
     <string name="profile_level">Niveau :</string>
     <string name="profile_class_bonus">Bonus de classe :</string>
     <string name="profile_allocated">Points alloués :</string>
-    <string name="profile_private_message">Message privé</string>
     <string name="profile_achievements">Succès</string>
 
 </resources>

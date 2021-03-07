@@ -165,7 +165,7 @@
     <string name="quest_accept">Accept</string>
     <string name="quest_reject">Reject</string>
     <string name="quest_begin">Begin Quest</string>
-    <string name="quest_cancel">Cancel Invitation</string>
+    <string name="quest_cancel">Cancel</string>
     <string name="quest_abort">Abort Quest</string>
     <string name="version_info">Version %1$s (%2$d)</string>
 
@@ -240,7 +240,7 @@
     <string name="outfit_weapon">Main-Hand</string>
     <string name="wear_costume">Wear Costume</string>
     <string name="equipped">Equipped</string>
-    <string name="quest_cancel_message">Are you sure you want to cancel this quest? All invitation acceptances will be lost. The quest owner will retain possession of the quest scroll.</string>
+    <string name="quest_cancel_message">Are you sure you want to cancel this Quest? Canceling the Quest will cancel all accepted and pending invitations. The Quest will be returned to the owner’s inventory.</string>
     <string name="quest_begin_message">Are you sure? Only %1$d of your %2$d party members have joined this quest! Quests start automatically when all players have joined or rejected the invitation.</string>
     <string name="ago_1month">1 month ago</string>
     <string name="ago_months">%d months ago</string>
@@ -548,7 +548,7 @@
     <string name="participants">Participants</string>
     <string name="invitations">Invitations</string>
     <string name="quest_leader_header">Started by %s</string>
-    <string name="quest_abort_message">Are you sure you want to abort this mission? It will abort it for everyone in your party and all progress will be lost. The quest scroll will be returned to the quest owner.</string>
+    <string name="quest_abort_message">Are you sure you want to cancel this Quest? All progress will be lost. The Quest will be returned to the owner’s inventory.</string>
     <string name="reloading_content">Reloading Content</string>
     <string name="reloaded_content">Reloaded Content</string>
     <string name="thousand_abbrev">k</string>
@@ -1138,4 +1138,9 @@
     <string name="twelve_months_one_time">12 month one-time subscription</string>
     <string name="sidebar_teams">Teams</string>
     <string name="team_information">Team Information</string>
+    <string name="mystery_item_title">You open the Mystery Box and find…</string>
+    <string name="cant_like_own_message">Can\'t like your own messages</string>
+    <string name="quest_leave_message">Are you sure you want to leave the Quest? All your progress will be lost.</string>
+    <string name="quest_leave_message_nostart">Are you sure you want to leave the Quest? You won\'t be able to participate.</string>
+    <string name="launch_screen">Launch Screen</string>
 </resources>

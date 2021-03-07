@@ -32,7 +32,7 @@ constructor(private val soundManager: SoundManager, threadExecutor: ThreadExecut
                 return@defer Flowable.just<Stats>(requestValues.user.stats)
             }
 
-            if (requestValues.newLevel == 10L) {
+            if (requestValues.newLevel == 10) {
                 val binding = DialogLevelup10Binding.inflate(requestValues.activity.layoutInflater)
                 binding.healerIconView.setImageBitmap(HabiticaIconsHelper.imageOfHealerLightBg())
                 binding.mageIconView.setImageBitmap(HabiticaIconsHelper.imageOfMageLightBg())
@@ -89,7 +89,7 @@ constructor(private val soundManager: SoundManager, threadExecutor: ThreadExecut
                 .subscribe({ }, RxErrorHandler.handleEmptyError())
     }
 
-    class RequestValues(val user: User, val level: Long?, val activity: AppCompatActivity) : UseCase.RequestValues {
-        val newLevel: Long = level ?: 0
+    class RequestValues(val user: User, val level: Int?, val activity: AppCompatActivity) : UseCase.RequestValues {
+        val newLevel: Int = level ?: 0
     }
 }

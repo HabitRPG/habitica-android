@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.helpers.notifications
 
-import com.google.firebase.iid.FirebaseInstanceId
+import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.habitrpg.android.habitica.HabiticaBaseApplication
@@ -34,9 +34,12 @@ class HabiticaFirebaseMessagingService : FirebaseMessagingService() {
     override fun onNewToken(s: String) {
         super.onNewToken(s)
         userComponent?.inject(this)
-        val refreshedToken = FirebaseInstanceId.getInstance().token
-        if (refreshedToken != null && this::pushNotificationManager.isInitialized) {
-            pushNotificationManager.refreshedToken = refreshedToken
+        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+            val refreshedToken = task.result
+            if (refreshedToken != null && this::pushNotificationManager.isInitialized) {
+                pushNotificationManager.refreshedToken = refreshedToken
+            }
         }
+
     }
 }

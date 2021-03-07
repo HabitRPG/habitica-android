@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments.social
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
@@ -45,8 +46,6 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
         return FragmentQuestDetailBinding.inflate(inflater, container, false)
     }
 
-    var partyId: String? = null
-    var questKey: String? = null
     private var party: Group? = null
     private var quest: Quest? = null
     private var beginQuestMessage: String? = null
@@ -62,29 +61,34 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        showsBackButton = true
         super.onViewCreated(view, savedInstanceState)
 
-        arguments?.let {
-            val args = QuestDetailFragmentArgs.fromBundle(it)
-            partyId = args.partyID
-            questKey = args.questKey
-        }
-
-        binding?.questAcceptButton?.setOnClickListener { onQuestAccept() }
-        binding?.questRejectButton?.setOnClickListener { onQuestReject() }
         binding?.questBeginButton?.setOnClickListener { onQuestBegin() }
         binding?.questCancelButton?.setOnClickListener { onQuestCancel() }
         binding?.questLeaveButton?.setOnClickListener { onQuestLeave() }
-    }
 
-    override fun onResume() {
-        super.onResume()
-        compositeSubscription.add(socialRepository.getGroup(partyId)
-                .subscribe({ this.updateParty(it) }, RxErrorHandler.handleEmptyError()))
-        if (questKey != null) {
-            compositeSubscription.add(inventoryRepository.getQuestContent(questKey ?: "")
-                    .subscribe({ this.updateQuestContent(it) }, RxErrorHandler.handleEmptyError()))
-        }
+        compositeSubscription.add(
+                userRepository.getUser()
+                        .map {
+                            it.party?.id ?: ""
+                        }
+                        .skipWhile { it.isBlank() }
+                        .distinctUntilChanged()
+                        .flatMap { socialRepository.getGroup(it) }
+                        .doOnNext { updateParty(it) }
+                        .map {
+                            it.quest?.key ?: ""
+                        }
+                        .skipWhile {
+                            it.isBlank()
+                        }
+                        .distinctUntilChanged()
+                        .flatMap { inventoryRepository.getQuestContent(it) }
+                        .subscribe({
+                            updateQuestContent(it)
+                        }, RxErrorHandler.handleEmptyError())
+        )
     }
 
     private fun updateParty(group: Group?) {
@@ -100,13 +104,13 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
             }
         }, RxErrorHandler.handleEmptyError()))
 
-        if (binding?.questLeaderResponseWrapper != null) {
-            if (showParticipatantButtons()) {
-                binding?.questLeaderResponseWrapper?.visibility = View.GONE
-                binding?.questParticipantResponseWrapper?.visibility = View.VISIBLE
-            } else if (showLeaderButtons()) {
-                binding?.questParticipantResponseWrapper?.visibility = View.GONE
-                binding?.questLeaderResponseWrapper?.visibility = View.VISIBLE
+        if (binding?.questResponseWrapper != null) {
+            if (userId != party?.quest?.leader && user?.party?.quest?.key == group.quest?.key && user?.party?.quest?.RSVPNeeded == false) {
+                binding?.questLeaveButton?.visibility = View.VISIBLE
+            } else {
+                binding?.questLeaveButton?.visibility = View.GONE
+            }
+            if (showLeaderButtons()) {
                 binding?.questCancelButton?.visibility = View.VISIBLE
                 if (isQuestActive) {
                     binding?.questBeginButton?.visibility = View.GONE
@@ -114,8 +118,8 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
                     binding?.questBeginButton?.visibility = View.VISIBLE
                 }
             } else {
-                binding?.questLeaderResponseWrapper?.visibility = View.GONE
-                binding?.questParticipantResponseWrapper?.visibility = View.GONE
+                binding?.questCancelButton?.visibility = View.GONE
+                binding?.questBeginButton?.visibility = View.GONE
             }
         }
     }
@@ -123,13 +127,6 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
     private fun showLeaderButtons(): Boolean {
         return userId == party?.quest?.leader || userId == party?.leaderID
     }
-
-    private fun showParticipatantButtons(): Boolean {
-        return if (user?.party?.quest == null) {
-            false
-        } else !isQuestActive && user?.party?.quest?.RSVPNeeded == true
-    }
-
 
     private fun updateQuestContent(questContent: QuestContent) {
         if (binding?.titleView == null || !questContent.isManaged) {
@@ -190,8 +187,9 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
             binding?.participantsHeaderCount?.text = participantCount.toString()
         } else {
             binding?.participantsHeader?.setText(R.string.invitations)
-            binding?.participantsHeaderCount?.text = participantCount.toString() + "/" + quest?.participants?.size
-            beginQuestMessage = getString(R.string.quest_begin_message, participantCount, quest?.participants?.size)
+            @SuppressLint("SetTextI18n")
+            binding?.participantsHeaderCount?.text = participantCount.toString() + "/" + participants?.size
+            beginQuestMessage = getString(R.string.quest_begin_message, participantCount, participants?.size)
         }
     }
 
@@ -200,19 +198,6 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
         userRepository.close()
         inventoryRepository.close()
         super.onDestroyView()
-    }
-
-    private fun onQuestAccept() {
-        partyId?.let { partyID ->
-        socialRepository.acceptQuest(user, partyID).subscribe({ }, RxErrorHandler.handleEmptyError())
-        }
-    }
-
-
-    private fun onQuestReject() {
-        partyId?.let { partyID ->
-            socialRepository.rejectQuest(user, partyID).subscribe({ }, RxErrorHandler.handleEmptyError())
-        }
     }
 
     private fun onQuestBegin() {
@@ -235,11 +220,10 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
     private fun onQuestCancel() {
         context?.let {
             if (isQuestActive) {
-
                 val builder = AlertDialog.Builder(getActivity())
                         .setMessage(R.string.quest_abort_message)
                         .setPositiveButton(R.string.yes) { _, _ ->
-                            partyId?.let { partyID ->
+                            party?.id?.let { partyID ->
                                 @Suppress("DEPRECATION")
                                 socialRepository.abortQuest(partyID)
                                         .flatMap { userRepository.retrieveUser() }
@@ -251,7 +235,7 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
                 val alert = HabiticaAlertDialog(it)
                 alert.setMessage(R.string.quest_cancel_message)
                 alert.addButton(R.string.yes, true) { _, _ ->
-                    partyId?.let { partyID ->
+                    party?.id?.let { partyID ->
                         @Suppress("DEPRECATION")
                         socialRepository.cancelQuest(partyID)
                                 .flatMap { userRepository.retrieveUser() }
@@ -266,12 +250,13 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
 
     private fun onQuestLeave() {
         val builder = AlertDialog.Builder(getActivity())
-                .setMessage(R.string.quest_abort_message)
+                .setMessage(if (quest?.active == true) R.string.quest_leave_message else R.string.quest_leave_message_nostart)
                 .setPositiveButton(R.string.yes) { _, _ ->
-                    partyId?.let { partyID ->
+                    party?.id?.let { partyID ->
                         @Suppress("DEPRECATION")
                         socialRepository.leaveQuest(partyID)
                                 .flatMap { userRepository.retrieveUser() }
+                                .flatMap { socialRepository.retrieveGroup(partyID) }
                                 .subscribe({ getActivity()?.supportFragmentManager?.popBackStack() }, RxErrorHandler.handleEmptyError())
                     }
                 }.setNegativeButton(R.string.no) { _, _ -> }

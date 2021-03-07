@@ -39,13 +39,6 @@ public class HabiticaIcons {
     private static class GlobalCache {
         static PaintCodeBitmap rageStrikeNPC = new PaintCodeBitmap();
         static PorterDuffXfermode blendModeSourceIn = new PorterDuffXfermode(PorterDuff.Mode.SRC_IN);
-        static Typeface.Builder helveticaNeue = null;
-        
-        private static void initializeTypefaceBuilders(AssetManager assetManager) {
-            if (GlobalCache.helveticaNeue == null) {
-                GlobalCache.helveticaNeue = new Typeface.Builder(assetManager, "HelveticaNeue.ttc");
-            }
-        }
     }
     
     // Resizing Behavior
@@ -9846,8 +9839,7 @@ public class HabiticaIcons {
         Stack<Matrix> currentTransformation = new Stack<Matrix>();
         currentTransformation.push(new Matrix());
         Paint paint = CacheForGuildCrest.paint;
-        GlobalCache.initializeTypefaceBuilders(context.getAssets());
-        
+
         // Local Colors
         int crestSilver5 = Color.argb(255, 141, 141, 141);
         int crestBronze3 = Color.argb(255, 179, 98, 19);
@@ -10334,8 +10326,6 @@ public class HabiticaIcons {
         labelTextPaint.reset();
         labelTextPaint.setFlags(Paint.ANTI_ALIAS_FLAG);
         labelTextPaint.setColor(crestColor5);
-        GlobalCache.helveticaNeue.setTtcIndex(0);
-        labelTextPaint.setTypeface(GlobalCache.helveticaNeue.build());
         labelTextPaint.setTextSize(12f);
         StaticLayout labelStaticLayout = CacheForGuildCrest.labelStaticLayout.get((int) labelRect.width(), Layout.Alignment.ALIGN_CENTER, memberCountLabel, labelTextPaint);
         canvas.save();

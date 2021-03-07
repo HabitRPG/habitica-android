@@ -28,7 +28,7 @@ class ChallengesListViewAdapter(private val viewUserChallengesOnly: Boolean, pri
     }
 
     override fun onBindViewHolder(holder: ChallengeViewHolder, position: Int) {
-        data?.get(position)?.let { challenge ->
+        data[position].let { challenge ->
             holder.bind(challenge, challengeMemberships?.first { challenge.id == it.challengeID } != null)
             holder.itemView.setOnClickListener {
                 if (challenge.isManaged && challenge.isValid) {

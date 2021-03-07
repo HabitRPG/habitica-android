@@ -3,7 +3,7 @@
     <string name="profile_pets_and_mounts">Evcil &amp; Binek Hayvanlar</string>
     <string name="profile_pets_found">Bulunan Evcil Hayvanlar</string>
     <string name="profile_mounts_tamed">Evcilleştirilen Binek Hayvanları</string>
-    <string name="profile_loading_data">Üye verileri yükleniyor...</string>
+    <string name="profile_loading_data">Üye verileri yükleniyor…</string>
     <string name="profile_send_message_to">%s kişisine mesaj gönder</string>
     <string name="profile_message_sent_to">%s kişisine mesaj gönderildi</string>
     <string name="profile_level">Seviye:</string>

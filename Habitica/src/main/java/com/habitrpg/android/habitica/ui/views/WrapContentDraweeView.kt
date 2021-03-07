@@ -15,11 +15,9 @@ class WrapContentDraweeView : SimpleDraweeView {
     // we set a listener and update the view's aspect ratio depending on the loaded image
     private val listener = object : BaseControllerListener<ImageInfo>() {
         override fun onIntermediateImageSet(id: String?, imageInfo: ImageInfo?) {
-            updateViewSize(imageInfo)
         }
 
         override fun onFinalImageSet(id: String?, imageInfo: ImageInfo?, animatable: Animatable?) {
-            updateViewSize(imageInfo)
         }
     }
 
@@ -39,9 +37,5 @@ class WrapContentDraweeView : SimpleDraweeView {
                 .setOldController(controller)
                 .build()
         setController(controller)
-    }
-
-    internal fun updateViewSize(imageInfo: ImageInfo?) {
-
     }
 }

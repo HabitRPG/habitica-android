@@ -38,9 +38,8 @@ interface UserRepository : BaseRepository {
 
     fun getSpecialItems(user: User): Flowable<RealmResults<Skill>>
 
-    fun useSkill(user: User?, key: String, target: String?, taskId: String): Flowable<SkillResponse>
-
-    fun useSkill(user: User?, key: String, target: String?): Flowable<SkillResponse>
+    fun useSkill(key: String, target: String?, taskId: String): Flowable<SkillResponse>
+    fun useSkill(key: String, target: String?): Flowable<SkillResponse>
 
     fun changeClass(): Flowable<User>
 
@@ -73,9 +72,9 @@ interface UserRepository : BaseRepository {
     fun verifyUsername(username: String): Flowable<VerifyUsernameResponse>
 
     fun allocatePoint(stat: String): Flowable<Stats>
+    fun bulkAllocatePoints(strength: Int, intelligence: Int, constitution: Int, perception: Int): Flowable<Stats>
 
-    fun bulkAllocatePoints(user: User?, strength: Int, intelligence: Int, constitution: Int, perception: Int): Flowable<Stats>
-    fun useCustomization(user: User?, type: String, category: String?, identifier: String): Flowable<User>
+    fun useCustomization(type: String, category: String?, identifier: String): Flowable<User>
     fun retrieveAchievements(): Flowable<List<Achievement>>
     fun getAchievements(): Flowable<RealmResults<Achievement>>
     fun getQuestAchievements(): Flowable<RealmResults<QuestAchievement>>

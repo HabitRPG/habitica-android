@@ -101,37 +101,10 @@
             android:layout_height="1dp"
             android:background="@color/black_10_alpha"/>
         <LinearLayout
-            android:id="@+id/quest_participant_response_wrapper"
+            android:id="@+id/quest_response_wrapper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:visibility="gone"
-            android:gravity="center_vertical"
-            android:padding="@dimen/content_border">
-
-            <Button
-                android:id="@+id/quest_accept_button"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="@string/quest_accept"
-                style="@style/HabiticaButton.Green"
-                android:layout_marginEnd="16dp" />
-
-            <Button
-                android:id="@+id/quest_reject_button"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="@string/quest_reject"
-                style="@style/HabiticaButton.Red"/>
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/quest_leader_response_wrapper"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:visibility="gone"
             android:gravity="center_vertical"
             android:padding="@dimen/content_border">
             <Button
