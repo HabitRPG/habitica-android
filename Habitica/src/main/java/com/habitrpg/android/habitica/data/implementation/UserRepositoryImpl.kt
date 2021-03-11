@@ -39,16 +39,24 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
 
     override fun getUser(userID: String): Flowable<User> = localRepository.getUser(userID)
 
-    override fun updateUser(updateData: Map<String, Any>): Flowable<User> {
+    private fun updateUser(userID: String, updateData: Map<String, Any>): Flowable<User> {
         return Flowable.zip(apiClient.updateUser(updateData),
                 localRepository.getUser(userID).firstElement().toFlowable(),
                 { newUser, user -> mergeUser(user, newUser) })
     }
 
-    override fun updateUser(key: String, value: Any): Flowable<User> {
+    private fun updateUser(userID: String, key: String, value: Any): Flowable<User> {
         val updateData = HashMap<String, Any>()
         updateData[key] = value
-        return updateUser(updateData)
+        return updateUser(userID, updateData)
+    }
+
+    override fun updateUser(updateData: Map<String, Any>): Flowable<User> {
+        return updateUser(userID, updateData)
+    }
+
+    override fun updateUser(key: String, value: Any): Flowable<User> {
+        return updateUser(userID, key, value)
     }
 
     override fun retrieveUser(withTasks: Boolean): Flowable<User> =
@@ -76,7 +84,7 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
                         val timeZone = calendar.timeZone
                         val offset = -TimeUnit.MINUTES.convert(timeZone.getOffset(calendar.timeInMillis).toLong(), TimeUnit.MILLISECONDS)
                         if (offset.toInt() != user.preferences?.timezoneOffset ?: 0) {
-                            return@flatMap updateUser("preferences.timezoneOffset", offset.toString())
+                            return@flatMap updateUser(user.id ?: "", "preferences.timezoneOffset", offset.toString())
                         } else {
                             return@flatMap Flowable.just(user)
                         }

@@ -178,7 +178,7 @@ class TeamBoardFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchVi
             disposable = tagRepository.getTags().subscribe({ tagsList -> dialog.setTags(tagsList)}, RxErrorHandler.handleEmptyError())
             dialog.setActiveTags(taskFilterHelper.tags)
             if (activeFragment != null) {
-                val taskType = activeFragment?.classType
+                val taskType = activeFragment?.taskType
                 if (taskType != null) {
                     dialog.setTaskType(taskType, taskFilterHelper.getActiveFilter(taskType))
                 }
@@ -265,7 +265,7 @@ class TeamBoardFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchVi
         }
         var filterCount = 0
         if (activeFragment != null) {
-            filterCount = taskFilterHelper.howMany(activeFragment?.classType)
+            filterCount = taskFilterHelper.howMany(activeFragment?.taskType)
         }
         if (filterCount == 0) {
             filterMenuItem?.setIcon(R.drawable.ic_action_filter_list)

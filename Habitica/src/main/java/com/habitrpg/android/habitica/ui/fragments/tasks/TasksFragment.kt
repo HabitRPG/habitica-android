@@ -18,7 +18,6 @@ import com.habitrpg.android.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.extensions.setTintWith
 import com.habitrpg.android.habitica.helpers.*
 import com.habitrpg.android.habitica.models.tasks.Task
-import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.activities.TaskFormActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
@@ -178,7 +177,7 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
             disposable = tagRepository.getTags().subscribe({ tagsList -> dialog.setTags(tagsList)}, RxErrorHandler.handleEmptyError())
             dialog.setActiveTags(taskFilterHelper.tags)
             if (activeFragment != null) {
-                val taskType = activeFragment?.classType
+                val taskType = activeFragment?.taskType
                 if (taskType != null) {
                     dialog.setTaskType(taskType, taskFilterHelper.getActiveFilter(taskType))
                 }
@@ -257,9 +256,9 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
     }
 
     private fun updateFilterIcon() {
-        val filterCount = taskFilterHelper.howMany(activeFragment?.classType)
+        val filterCount = taskFilterHelper.howMany(activeFragment?.taskType)
 
-        filterMenuItem?.isVisible = activeFragment?.classType != Task.TYPE_REWARD
+        filterMenuItem?.isVisible = activeFragment?.taskType != Task.TYPE_REWARD
         if (filterCount == 0) {
             filterMenuItem?.setIcon(R.drawable.ic_action_filter_list)
             context?.let {
