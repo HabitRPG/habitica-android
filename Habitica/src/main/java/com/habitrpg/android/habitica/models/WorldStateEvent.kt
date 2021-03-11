@@ -14,6 +14,7 @@ open class WorldStateEvent: RealmObject(), BaseObject {
     var end: Date? = null
     var promo: String? = null
     var npcImageSuffix: String? = null
+    var aprilFools: String? = null
 
     override val realmClass: Class<out RealmModel>
         get() = WorldStateEvent::class.java
