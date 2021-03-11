@@ -26,6 +26,7 @@ import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
 import com.habitrpg.android.habitica.models.members.Member
+import com.habitrpg.android.habitica.ui.helpers.setParsedMarkdown
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import org.greenrobot.eventbus.EventBus
@@ -172,7 +173,7 @@ class ChatRecyclerMessageViewHolder(itemView: View, private var userId: String, 
             itemView.setPadding(16.dpToPx(context), itemView.paddingTop, itemView.paddingRight, itemView.paddingBottom)
         }
 
-        binding.messageText.text = chatMessage?.parsedText
+        binding.messageText.setParsedMarkdown(chatMessage?.parsedText)
         if (msg.parsedText == null) {
             binding.messageText.text = chatMessage?.text
             Maybe.just(chatMessage?.text ?: "")
@@ -181,7 +182,7 @@ class ChatRecyclerMessageViewHolder(itemView: View, private var userId: String, 
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ parsedText ->
                         chatMessage?.parsedText = parsedText
-                        binding.messageText.text = chatMessage?.parsedText
+                        binding.messageText.setParsedMarkdown(parsedText)
                     }, { it.printStackTrace() })
         }
 
