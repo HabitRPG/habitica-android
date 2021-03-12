@@ -56,9 +56,9 @@ class WorldStateSerialization: JsonDeserializer<WorldState> {
                 if (event != null) {
                     state.currentEvent = context?.deserialize(event, WorldStateEvent::class.java)
                 }
-                if (json.asJsonObject.has("events")) {
+                if (json.asJsonObject.has("currentEventList")) {
                     val events = RealmList<WorldStateEvent>()
-                    for (element in json.asJsonObject.getAsJsonArray("events")) {
+                    for (element in json.asJsonObject.getAsJsonArray("currentEventList")) {
                         context?.deserialize<WorldStateEvent>(element, WorldStateEvent::class.java)?.let { events.add(it) }
                     }
                     state.events = events

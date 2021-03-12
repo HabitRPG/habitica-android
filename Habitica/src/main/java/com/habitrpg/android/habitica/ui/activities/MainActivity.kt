@@ -634,17 +634,18 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
     protected fun retrieveUser(forced: Boolean = false) {
         if (hostConfig.hasAuthentication()) {
-            compositeSubscription.add(this.userRepository.retrieveUser(true, forced)
-                    .doOnNext { user1 ->
-                        FirebaseAnalytics.getInstance(this).setUserProperty("has_party", if (user1.party?.id?.isNotEmpty() == true) "true" else "false")
-                        FirebaseAnalytics.getInstance(this).setUserProperty("is_subscribed", if (user1.isSubscribed) "true" else "false")
-                        pushNotificationManager.setUser(user1)
-                        pushNotificationManager.addPushDeviceUsingStoredToken()
-                    }
-                    .flatMap { userRepository.retrieveTeamPlans() }
-                    .flatMap { contentRepository.retrieveContent(this,false) }
-                    .flatMap { contentRepository.retrieveWorldState(this) }
-                    .subscribe({ }, RxErrorHandler.handleEmptyError()))
+            compositeSubscription.add(
+                    contentRepository.retrieveWorldState(this)
+                            .flatMap { userRepository.retrieveUser(true, forced) }
+                            .doOnNext { user1 ->
+                                FirebaseAnalytics.getInstance(this).setUserProperty("has_party", if (user1.party?.id?.isNotEmpty() == true) "true" else "false")
+                                FirebaseAnalytics.getInstance(this).setUserProperty("is_subscribed", if (user1.isSubscribed) "true" else "false")
+                                pushNotificationManager.setUser(user1)
+                                pushNotificationManager.addPushDeviceUsingStoredToken()
+                            }
+                            .flatMap { userRepository.retrieveTeamPlans() }
+                            .flatMap { contentRepository.retrieveContent(this) }
+                            .subscribe({ }, RxErrorHandler.handleEmptyError()))
         }
     }
 

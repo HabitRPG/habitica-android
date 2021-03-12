@@ -7,6 +7,12 @@ import io.realm.annotations.PrimaryKey
 import java.util.*
 
 open class WorldStateEvent: RealmObject(), BaseObject {
+    val isCurrentlyActive: Boolean
+    get() {
+        val now = Date()
+        return (start?.before(now) == true) && (end?.after(now) == true)
+    }
+
     @PrimaryKey
     @SerializedName("event")
     var eventKey: String? = null
