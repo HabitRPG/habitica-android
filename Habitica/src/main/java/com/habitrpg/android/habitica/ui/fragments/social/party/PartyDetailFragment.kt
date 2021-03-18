@@ -333,22 +333,27 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
     internal fun leaveParty() {
         val context = context
         if (context != null) {
-            val alert = HabiticaAlertDialog(context)
-            alert.setMessage(R.string.leave_party_confirmation)
-            alert.addButton(R.string.keep_challenges, true) { _, _ ->
-                viewModel?.leaveGroup(true) {
-                    parentFragmentManager.popBackStack()
-                    MainNavigationController.navigate(R.id.noPartyFragment)
+            // map over user repository to get the user
+            userRepository.getUser().filter {
+                !it.challenges.isNullOrEmpty()
+            }.forEach {
+                val alert = HabiticaAlertDialog(context)
+                alert.setMessage(R.string.leave_party_confirmation)
+                alert.addButton(R.string.keep_challenges, true) { _, _ ->
+                    viewModel?.leaveGroup(true) {
+                        parentFragmentManager.popBackStack()
+                        MainNavigationController.navigate(R.id.noPartyFragment)
+                    }
                 }
-            }
-            alert.addButton(R.string.leave_challenges, true) { _, _ ->
-                viewModel?.leaveGroup(false) {
-                    parentFragmentManager.popBackStack()
-                    MainNavigationController.navigate(R.id.noPartyFragment)
+                alert.addButton(R.string.leave_challenges, true) { _, _ ->
+                    viewModel?.leaveGroup(false) {
+                        parentFragmentManager.popBackStack()
+                        MainNavigationController.navigate(R.id.noPartyFragment)
+                    }
                 }
+                alert.addButton(R.string.no, false)
+                alert.show()
             }
-            alert.addButton(R.string.no, false)
-            alert.show()
         }
     }
 
