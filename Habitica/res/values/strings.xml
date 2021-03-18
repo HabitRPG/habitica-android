@@ -441,7 +441,9 @@
     <string name="challenge_leave_description">You can choose to keep this Challenge\'s tasks on your personal task board or delete them when you leave</string>
     <string name="leave_keep_tasks">Leave &amp; Keep Tasks</string>
     <string name="leave_delte_tasks">Leave &amp; Delete Tasks</string>
+    <string name="party_challenges">You\'re participating in a Party Challenge</string>
     <string name="remove_tasks">Remove</string>
+    <string name="leave_party_challenges_confirmation">Do you want to keep participating in the Challenge(s) when leaving the Party?</string>
     <string name="keep_tasks">Keep</string>
     <string name="my_challenges">My Challenges</string>
     <string name="daily">Daily</string>
@@ -884,6 +886,7 @@
     <string name="leave_challenges">Leave Challenges</string>
     <string name="equip_automatically">Auto-equip new</string>
     <string name="accept">Accept</string>
+    <string name="leave_group_challenges">Leave Challenge(s) &amp; Delete Tasks</string>
     <string name="reject">Reject</string>
     <string name="complete">Complete</string>
     <string name="repeat_daily">Daily</string>

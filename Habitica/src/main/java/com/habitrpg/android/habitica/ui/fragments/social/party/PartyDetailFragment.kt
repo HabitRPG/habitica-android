@@ -12,6 +12,7 @@ import androidx.core.os.bundleOf
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
+import com.habitrpg.android.habitica.data.ChallengeRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentPartyDetailBinding
@@ -20,6 +21,7 @@ import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.members.Member
+import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.modules.AppModule
@@ -53,6 +55,8 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
         return FragmentPartyDetailBinding.inflate(inflater, container, false)
     }
 
+    @Inject
+    lateinit var challengeRepository: ChallengeRepository
     @Inject
     lateinit var socialRepository: SocialRepository
     @Inject
@@ -332,26 +336,36 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
 
     internal fun leaveParty() {
         val context = context
+        var hasChallenge = false
+        var challenges = mutableListOf<String>()
         if (context != null) {
-            // map over user repository to get the user
-            userRepository.getUser().filter {
+            /*userRepository.getUser().blockingSingle().filter{
                 !it.challenges.isNullOrEmpty()
-            }.forEach {
+            }.forEach */
+            userRepository.getUser().blockingSingle().challenges.forEach{
+                if ( challengeRepository.getChallenge(it.challengeID).blockingSingle().groupId == viewModel?.groupId){
+                    hasChallenge = true
+                    challenges.add(it.challengeID)
+                }
+            }
+            if ( hasChallenge ) {
                 val alert = HabiticaAlertDialog(context)
-                alert.setMessage(R.string.leave_party_confirmation)
+                alert.setTitle(R.string.party_challenges) //party challenges string needed
+                //leave party challenges string needed
+                alert.setMessage(R.string.leave_party_challenges_confirmation)
                 alert.addButton(R.string.keep_challenges, true) { _, _ ->
                     viewModel?.leaveGroup(true) {
                         parentFragmentManager.popBackStack()
                         MainNavigationController.navigate(R.id.noPartyFragment)
                     }
                 }
-                alert.addButton(R.string.leave_challenges, true) { _, _ ->
+                alert.addButton(R.string.leave_group_challenges, false, isDestructive = true) { _, _ ->
                     viewModel?.leaveGroup(false) {
                         parentFragmentManager.popBackStack()
                         MainNavigationController.navigate(R.id.noPartyFragment)
                     }
                 }
-                alert.addButton(R.string.no, false)
+                alert.addButton(R.string.cancel, false)
                 alert.show()
             }
         }
