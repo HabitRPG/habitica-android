@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.fragments.social.party
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -336,22 +337,21 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
 
     internal fun leaveParty() {
         val context = context
+        val TAG = "LeaveParty"
         var hasChallenge = false
         var challenges = mutableListOf<String>()
         if (context != null) {
-            /*userRepository.getUser().blockingSingle().filter{
-                !it.challenges.isNullOrEmpty()
-            }.forEach */
-            userRepository.getUser().blockingSingle().challenges?.forEach{
-                if ( challengeRepository.getChallenge(it.challengeID).blockingSingle().groupId == viewModel?.groupID ?: ""){
+            userRepository.getUser().blockingFirst().challenges?.forEach{
+                Log.i(TAG, "Challenge")
+                if ( challengeRepository.getChallenge(it.challengeID).blockingFirst().groupId.equals(viewModel?.groupID)){
+                    Log.i(TAG, "Group is equal")
                     hasChallenge = true
                     challenges.add(it.challengeID)
                 }
             }
             if ( hasChallenge ) {
                 val alert = HabiticaAlertDialog(context)
-                alert.setTitle(R.string.party_challenges) //party challenges string needed
-                //leave party challenges string needed
+                alert.setTitle(R.string.party_challenges)
                 alert.setMessage(R.string.leave_party_challenges_confirmation)
                 alert.addButton(R.string.keep_challenges, true) { _, _ ->
                     viewModel?.leaveGroup(true) {
