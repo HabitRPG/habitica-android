@@ -342,8 +342,8 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
             /*userRepository.getUser().blockingSingle().filter{
                 !it.challenges.isNullOrEmpty()
             }.forEach */
-            userRepository.getUser().blockingSingle().challenges.forEach{
-                if ( challengeRepository.getChallenge(it.challengeID).blockingSingle().groupId == viewModel?.groupId){
+            userRepository.getUser().blockingSingle().challenges?.forEach{
+                if ( challengeRepository.getChallenge(it.challengeID).blockingSingle().groupId == viewModel?.groupID ?: ""){
                     hasChallenge = true
                     challenges.add(it.challengeID)
                 }
@@ -367,6 +367,12 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
                 }
                 alert.addButton(R.string.cancel, false)
                 alert.show()
+            }
+            else{
+                viewModel?.leaveGroup(false) {
+                    parentFragmentManager.popBackStack()
+                    MainNavigationController.navigate(R.id.noPartyFragment)
+                }
             }
         }
     }
