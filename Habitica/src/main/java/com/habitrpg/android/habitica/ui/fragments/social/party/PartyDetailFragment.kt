@@ -58,12 +58,16 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
 
     @Inject
     lateinit var challengeRepository: ChallengeRepository
+
     @Inject
     lateinit var socialRepository: SocialRepository
+
     @Inject
     lateinit var userRepository: UserRepository
+
     @Inject
     lateinit var inventoryRepository: InventoryRepository
+
     @field:[Inject Named(AppModule.NAMED_USER_ID)]
     lateinit var userId: String
 
@@ -173,18 +177,18 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
         if ((user.invitations?.parties?.count() ?: 0) > 0) {
             binding?.partyInvitationWrapper?.visibility = View.VISIBLE
             user.invitations?.parties?.let {
-                for (invitation in it){
+                for (invitation in it) {
                     val leaderID = invitation.inviter
                     val groupName = invitation.name
 
                     leaderID.let { id ->
                         compositeSubscription.add(
-                            socialRepository.getMember(id)
-                                    .subscribe({ member ->
-                                        binding?.root?.findViewById<AvatarView>(R.id.groupleader_avatar_view)?.setAvatar(member)
-                                        binding?.root?.findViewById<TextView>(R.id.groupleader_text_view)?.text = getString(R.string.invitation_title, member.displayName, groupName)
-                                    }, RxErrorHandler.handleEmptyError())
-                                )
+                                socialRepository.getMember(id)
+                                        .subscribe({ member ->
+                                            binding?.root?.findViewById<AvatarView>(R.id.groupleader_avatar_view)?.setAvatar(member)
+                                            binding?.root?.findViewById<TextView>(R.id.groupleader_text_view)?.text = getString(R.string.invitation_title, member.displayName, groupName)
+                                        }, RxErrorHandler.handleEmptyError())
+                        )
                     }
 
                     view?.findViewById<Button>(R.id.accept_button)?.setOnClickListener {
@@ -338,18 +342,22 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
     internal fun leaveParty() {
         val context = context
         val TAG = "LeaveParty"
-        var hasChallenge = false
-        var challenges = mutableListOf<String>()
+        var groupChallenges = mutableListOf<String>()
         if (context != null) {
-            userRepository.getUser().blockingFirst().challenges?.forEach{
-                Log.i(TAG, "Challenge")
-                if ( challengeRepository.getChallenge(it.challengeID).blockingFirst().groupId.equals(viewModel?.groupID)){
-                    Log.i(TAG, "Group is equal")
-                    hasChallenge = true
-                    challenges.add(it.challengeID)
+            Log.i(TAG, "Has context")
+            userRepository.getUser(userId).forEach {
+                Log.i(TAG, "Has user")
+                it.challenges?.forEach {
+                    Log.i(TAG, "Challenge")
+                    challengeRepository.getChallenge(it.challengeID).forEach{
+                        if(it.groupId.equals(viewModel?.groupID)) {
+                            Log.i(TAG, "Group is equal")
+                            it.id?.let { it1 -> groupChallenges.add(it1) }
+                        }
+                    }
                 }
             }
-            if ( hasChallenge ) {
+            if (!groupChallenges.isNullOrEmpty()) {
                 val alert = HabiticaAlertDialog(context)
                 alert.setTitle(R.string.party_challenges)
                 alert.setMessage(R.string.leave_party_challenges_confirmation)
@@ -367,12 +375,19 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
                 }
                 alert.addButton(R.string.cancel, false)
                 alert.show()
-            }
-            else{
-                viewModel?.leaveGroup(false) {
-                    parentFragmentManager.popBackStack()
-                    MainNavigationController.navigate(R.id.noPartyFragment)
+            } else {
+                Log.i(TAG, "Else happens too soon")
+                val alert = HabiticaAlertDialog(context)
+                alert.setTitle("Are you sure you want to leave the party?")
+                alert.setMessage("You will not be able to rejoin this party unless invited.")
+                alert.addButton("Leave", isPrimary = true, isDestructive = true) { _, _ ->
+                    viewModel?.leaveGroup(false) {
+                        parentFragmentManager.popBackStack()
+                        MainNavigationController.navigate(R.id.noPartyFragment)
+                    }
                 }
+                alert.setExtraCloseButtonVisibility(View.VISIBLE)
+                alert.show()
             }
         }
     }
