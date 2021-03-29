@@ -1,8 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments.social.party
 
 import android.os.Bundle
-import android.util.Log //remove
-import kotlinx.coroutines.* //remove
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -341,44 +339,25 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
     }
 
     private fun getGroupChallenges(): List<String> {
-        val TAG = "LeaveParty"
         var groupChallenges = mutableListOf<String>()
-
-        Log.i(TAG, "3")
         userRepository.getUser(userId).forEach {
-            Log.i(TAG, "Has user")
-            Log.i(TAG, "4")
             it.challenges?.forEach {
-                Log.i(TAG, "Challenge")
                 challengeRepository.getChallenge(it.challengeID).forEach {
                     if (it.groupId.equals(viewModel?.groupID)) {
-                        Log.i(TAG, "Group is equal")
                         it.id?.let { it1 -> groupChallenges.add(it1) }
-                        Log.i(TAG, "5")
                     }
                 }
             }
         }
-
-        val isChallenge = groupChallenges.isEmpty()
-        Log.i(TAG, "$isChallenge")
-        Log.i(TAG, "6")
-
         return groupChallenges
     }
 
     internal fun leaveParty() {
         val context = context
-        val TAG = "LeaveParty"
-        var groupChallenges = mutableListOf<String>()
         if (context != null) {
-            Log.i(TAG, "1")
-            try {
-                Log.i(TAG, "2")
-                groupChallenges = getGroupChallenges() as MutableList<String>
-            } finally {
-                // I need things to chill right here
-                Log.i(TAG, "7")
+            var groupChallenges = getGroupChallenges()
+            GlobalScope.launch(Dispatchers.Main) {
+                delay(500)
                 if (groupChallenges.isNotEmpty()) {
                     val alert = HabiticaAlertDialog(context)
                     alert.setTitle(R.string.party_challenges)
@@ -398,7 +377,6 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
                     alert.addButton(R.string.cancel, false)
                     alert.show()
                 } else {
-                    Log.i(TAG, "Else happens too soon")
                     val alert = HabiticaAlertDialog(context)
                     alert.setTitle("Are you sure you want to leave the party?")
                     alert.setMessage("You will not be able to rejoin this party unless invited.")
