@@ -374,7 +374,7 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
                             MainNavigationController.navigate(R.id.noPartyFragment)
                         }
                     }
-                    alert.addButton(R.string.cancel, false)
+                    alert.setExtraCloseButtonVisibility(View.VISIBLE)
                     alert.show()
                 } else {
                     val alert = HabiticaAlertDialog(context)

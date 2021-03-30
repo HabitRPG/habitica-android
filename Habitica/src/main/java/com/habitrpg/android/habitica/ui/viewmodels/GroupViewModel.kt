@@ -22,6 +22,7 @@ import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.realm.RealmResults
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
+import android.util.Log //remove later
 
 enum class GroupViewType(internal val order: String) {
     PARTY("party"),
@@ -164,11 +165,18 @@ open class GroupViewModel : BaseViewModel() {
     }
 
     fun leaveGroup(keepChallenges: Boolean = true, function: (() -> Unit)? = null) {
+        val TAG = "leaveGroup"
+        Log.i(TAG, "$keepChallenges")
         disposable.add(socialRepository.leaveGroup(this.group.value?.id ?: "", keepChallenges)
                 .flatMap { userRepository.retrieveUser(withTasks = false, forced = true) }
                 .subscribe({
+                    Log.i(TAG, "$keepChallenges")
+                    // remove tasks in here??
+                    //challengeRepository.leaveChallenge(it, "remove-all") // it needs to be challenge
+                    // maybe something to do with this
                     function?.invoke()
                 }, RxErrorHandler.handleEmptyError()))
+        Log.i(TAG, "$keepChallenges")
     }
 
     fun joinGroup(id: String? = null, function: (() -> Unit)? = null) {
