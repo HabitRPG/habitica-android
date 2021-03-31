@@ -5,14 +5,14 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:background="?attr/colorContentBackground">
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_centerVertical="true"
                 android:paddingStart="@dimen/spacing_large"
                 android:paddingEnd="@dimen/spacing_large"
                 android:paddingBottom="20dp"
@@ -31,12 +31,11 @@
             </LinearLayout>
             <View
                 android:id="@+id/rightBorderView"
-                android:layout_width="5dp"
+                android:layout_width="8dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true" />
-        </RelativeLayout>
+                android:background="@color/red_10"/>
+        </LinearLayout>
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"

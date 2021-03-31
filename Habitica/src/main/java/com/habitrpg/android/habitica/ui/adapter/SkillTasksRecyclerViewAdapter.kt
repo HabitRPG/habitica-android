@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.ui.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.SkillTaskItemCardBinding
@@ -57,7 +58,7 @@ class SkillTasksRecyclerViewAdapter : BaseRecyclerViewAdapter<Task, SkillTasksRe
                 binding.notesTextView.visibility = View.VISIBLE
                 binding.notesTextView.text = task.markdownNotes { binding.notesTextView.text = it }
             }
-            binding.rightBorderView.setBackgroundResource(task.lightTaskColor)
+            binding.rightBorderView.setBackgroundColor(ContextCompat.getColor(itemView.context, task.lightTaskColor))
         }
 
         override fun onClick(v: View) {
