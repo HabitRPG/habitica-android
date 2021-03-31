@@ -46,7 +46,7 @@ abstract class ContentRepositoryImpl<T : ContentLocalRepository>(localRepository
                 localRepository.saveWorldState(it)
                 for (event in it.events) {
                     if (event.aprilFools != null && event.isCurrentlyActive) {
-                        AprilFoolsHandler.handle(event.aprilFools)
+                        AprilFoolsHandler.handle(event.aprilFools, event.end)
                     }
                 }
             }

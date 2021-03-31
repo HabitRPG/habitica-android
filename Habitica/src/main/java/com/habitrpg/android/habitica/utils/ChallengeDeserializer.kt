@@ -67,7 +67,9 @@ class ChallengeDeserializer : JsonDeserializer<Challenge>, JsonSerializer<Challe
             challenge.updatedAt = context.deserialize(jsonObject.get("updatedAt"), Date::class.java)
         }
 
-        challenge.summary = jsonObject.get("summary").asString
+        if (jsonObject.has("summary")) {
+            challenge.summary = jsonObject.get("summary").asString
+        }
 
         val groupElement = jsonObject.get("group")
 

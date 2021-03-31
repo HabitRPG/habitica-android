@@ -17,9 +17,6 @@ class InvertPostProcessor: BasePostprocessor() {
         val canvas = Canvas(bitmap)
         val paint = Paint()
 
-        val matrixGrayscale = ColorMatrix()
-        matrixGrayscale.setSaturation(0f)
-
         val matrixInvert = ColorMatrix()
         matrixInvert.set(floatArrayOf(
                 -1.0f, 0.0f, 0.0f, 0.0f, 255.0f,
@@ -27,7 +24,6 @@ class InvertPostProcessor: BasePostprocessor() {
                 0.0f, 0.0f, -1.0f, 0.0f, 255.0f,
                 0.0f, 0.0f, 0.0f, 1.0f, 0.0f
         ))
-        matrixInvert.preConcat(matrixGrayscale)
 
         val filter = ColorMatrixColorFilter(matrixInvert)
         paint.colorFilter = filter

@@ -364,7 +364,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
         when (launchScreen) {
             "/party" -> {
-                if (user?.party?.id != null) {
+                if (user == null || user?.party?.id != null) {
                     MainNavigationController.navigate(R.id.partyFragment)
                 }
             }

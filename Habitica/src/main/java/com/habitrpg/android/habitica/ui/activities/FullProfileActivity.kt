@@ -371,7 +371,9 @@ class FullProfileActivity : BaseActivity() {
 
         binding.equipmentTableLayout.removeAllViews()
         for (index in 1 until binding.attributesTableLayout.childCount) {
-            binding.attributesTableLayout.removeViewAt(index)
+            if (binding.attributesTableLayout != null) {
+                binding.attributesTableLayout.removeViewAt(index)
+            }
         }
 
         addLevelAttributes(user)

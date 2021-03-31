@@ -39,6 +39,7 @@ import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -52,6 +53,7 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
         return FragmentRefreshRecyclerviewBinding.inflate(inflater, container, false)
     }
 
+    protected var recyclerSubscription: CompositeDisposable = CompositeDisposable()
     var recyclerAdapter: TaskRecyclerViewAdapter? = null
     var itemAnimator = SafeDefaultItemAnimator()
     var ownerID: String = ""
@@ -78,23 +80,22 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
     var refreshAction: ((() -> Unit) -> Unit)? = null
 
     internal val className: String
-        get() = this.taskType ?: ""
+        get() = this.taskType
 
     // TODO needs a bit of cleanup
     private fun setInnerAdapter() {
+        if (binding?.recyclerView?.adapter != null && binding?.recyclerView?.adapter == recyclerAdapter && !recyclerSubscription.isDisposed) {
+            return
+        }
+        if (!recyclerSubscription.isDisposed) {
+            recyclerSubscription.dispose()
+        }
+        recyclerSubscription = CompositeDisposable()
         val adapter: BaseRecyclerViewAdapter<*, *>? = when (this.taskType) {
-            Task.TYPE_HABIT -> {
-                HabitsRecyclerViewAdapter(null, true, R.layout.habit_item_card, taskFilterHelper)
-            }
-            Task.TYPE_DAILY -> {
-                DailiesRecyclerViewHolder(null, true, R.layout.daily_item_card, taskFilterHelper)
-            }
-            Task.TYPE_TODO -> {
-                TodosRecyclerViewAdapter(null, true, R.layout.todo_item_card, taskFilterHelper)
-            }
-            Task.TYPE_REWARD -> {
-                RewardsRecyclerViewAdapter(null, R.layout.reward_item_card)
-            }
+            Task.TYPE_HABIT -> HabitsRecyclerViewAdapter(null, true, R.layout.habit_item_card, taskFilterHelper)
+            Task.TYPE_DAILY -> DailiesRecyclerViewHolder(null, true, R.layout.daily_item_card, taskFilterHelper)
+            Task.TYPE_TODO -> TodosRecyclerViewAdapter(null, true, R.layout.todo_item_card, taskFilterHelper)
+            Task.TYPE_REWARD -> RewardsRecyclerViewAdapter(null, R.layout.reward_item_card)
             else -> null
         }
 
@@ -106,19 +107,19 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
 
         recyclerAdapter?.errorButtonEvents?.subscribe({
             taskRepository.syncErroredTasks().subscribe({}, RxErrorHandler.handleEmptyError())
-        }, RxErrorHandler.handleEmptyError())?.let { compositeSubscription.add(it) }
+        }, RxErrorHandler.handleEmptyError())?.let { recyclerSubscription.add(it) }
         recyclerAdapter?.taskOpenEvents?.subscribeWithErrorHandler {
             openTaskForm(it)
-        }?.let { compositeSubscription.add(it) }
+        }?.let { recyclerSubscription.add(it) }
         recyclerAdapter?.taskScoreEvents
                 ?.doOnNext { playSound(it.second) }
-                ?.subscribeWithErrorHandler { scoreTask(it.first, it.second) }?.let { compositeSubscription.add(it) }
+                ?.subscribeWithErrorHandler { scoreTask(it.first, it.second) }?.let { recyclerSubscription.add(it) }
         recyclerAdapter?.checklistItemScoreEvents
                 ?.flatMap { taskRepository.scoreChecklistItem(it.first.id ?: "", it.second.id ?: "")
-                }?.subscribeWithErrorHandler {}?.let { compositeSubscription.add(it) }
-        recyclerAdapter?.brokenTaskEvents?.subscribeWithErrorHandler { showBrokenChallengeDialog(it) }?.let { compositeSubscription.add(it) }
+                }?.subscribeWithErrorHandler {}?.let { recyclerSubscription.add(it) }
+        recyclerAdapter?.brokenTaskEvents?.subscribeWithErrorHandler { showBrokenChallengeDialog(it) }?.let { recyclerSubscription.add(it) }
 
-        compositeSubscription.add(taskRepository.getTasks(this.taskType, ownerID).subscribe({
+        recyclerSubscription.add(taskRepository.getTasks(this.taskType, ownerID).subscribe({
             this.recyclerAdapter?.updateUnfilteredData(it)
             this.recyclerAdapter?.filter()
         }, RxErrorHandler.handleEmptyError()))
@@ -188,6 +189,8 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
             }
         }
 
+        recyclerAdapter?.filter()
+
         itemTouchCallback = object : ItemTouchHelper.Callback() {
             override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
                 super.onSelectedChanged(viewHolder, actionState)
@@ -249,16 +252,12 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
         }
 
         binding?.recyclerView?.setScaledPadding(context, 0, 0, 0, 48)
-        binding?.recyclerView?.adapter = recyclerAdapter as? RecyclerView.Adapter<*>
-        recyclerAdapter?.filter()
 
         layoutManager = getLayoutManager(context)
         layoutManager?.isItemPrefetchEnabled = false
         binding?.recyclerView?.layoutManager = layoutManager
 
-        if (binding?.recyclerView?.adapter == null) {
-            this.setInnerAdapter()
-        }
+        this.setInnerAdapter()
 
         allowReordering()
 
@@ -384,12 +383,18 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        context?.let { recyclerAdapter?.taskDisplayMode = configManager.taskDisplayMode(it) }
+    override fun onStart() {
+        super.onStart()
         if (binding?.recyclerView?.adapter == null || recyclerAdapter == null) {
             setInnerAdapter()
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        context?.let { recyclerAdapter?.taskDisplayMode = configManager.taskDisplayMode(it) }
+        setInnerAdapter()
+        recyclerAdapter?.filter()
     }
 
     fun setActiveFilter(activeFilter: String) {

@@ -532,6 +532,6 @@ class AvatarView : View {
         private val COMPACT_HERO_RECT = Rect(0, 0, 114, 114)
         private val HERO_ONLY_RECT = Rect(0, 0, 90, 90)
 
-        val postProcessors: MutableMap<LayerType, (() -> BasePostprocessor)> = mutableMapOf()
+        val postProcessors: MutableMap<LayerType, (() -> BasePostprocessor?)> = mutableMapOf()
     }
 }
