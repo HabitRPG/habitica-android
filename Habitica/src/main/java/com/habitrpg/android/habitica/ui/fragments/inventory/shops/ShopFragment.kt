@@ -164,6 +164,9 @@ open class ShopFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
                     }
                     if (shop1.identifier == Shop.TIME_TRAVELERS_SHOP) {
                         formatTimeTravelersShop(shop1)
+                    } else if (shop1.identifier == Shop.SEASONAL_SHOP) {
+                        shop1.categories.reverse()
+                        shop1
                     } else {
                         shop1
                     }
