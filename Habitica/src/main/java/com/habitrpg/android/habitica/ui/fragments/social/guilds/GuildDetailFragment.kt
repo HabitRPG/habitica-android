@@ -14,6 +14,7 @@ import com.habitrpg.android.habitica.databinding.FragmentGuildDetailBinding
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.members.Member
+import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.ui.activities.GroupFormActivity
 import com.habitrpg.android.habitica.ui.activities.GroupInviteActivity
@@ -132,14 +133,15 @@ class GuildDetailFragment : BaseFragment<FragmentGuildDetailBinding>() {
 
     internal fun leaveGuild() {
         val context = context
+        var groupChallenges = listOf<Challenge>()
         if (context != null) {
             val alert = HabiticaAlertDialog(context)
             alert.setMessage(R.string.leave_guild_confirmation)
             alert.addButton(R.string.keep_challenges, true) { _, _ ->
-                viewModel?.leaveGroup(true) { showLeaveSnackbar() }
+                viewModel?.leaveGroup(groupChallenges, true) { showLeaveSnackbar() }
             }
             alert.addButton(R.string.leave_challenges, true) { _, _ ->
-                viewModel?.leaveGroup(false) { showLeaveSnackbar() }
+                viewModel?.leaveGroup(groupChallenges,false) { showLeaveSnackbar() }
             }
             alert.addButton(R.string.no, false)
             alert.show()

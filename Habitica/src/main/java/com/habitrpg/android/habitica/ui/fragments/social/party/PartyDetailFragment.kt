@@ -338,13 +338,13 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
         fragment.show(parentFragmentManager, "questDialog")
     }
 
-    private fun getGroupChallenges(): List<String> {
-        var groupChallenges = mutableListOf<String>()
+    private fun getGroupChallenges(): List<Challenge> {
+        var groupChallenges = mutableListOf<Challenge>()
         userRepository.getUser(userId).forEach {
             it.challenges?.forEach {
                 challengeRepository.getChallenge(it.challengeID).forEach {
                     if (it.groupId.equals(viewModel?.groupID)) {
-                        it.id?.let { it1 -> groupChallenges.add(it1) }
+                        groupChallenges.add(it)
                     }
                 }
             }
@@ -363,13 +363,13 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
                     alert.setTitle(R.string.party_challenges)
                     alert.setMessage(R.string.leave_party_challenges_confirmation)
                     alert.addButton(R.string.keep_challenges, true) { _, _ ->
-                        viewModel?.leaveGroup(true) {
+                        viewModel?.leaveGroup(groupChallenges,true) {
                             parentFragmentManager.popBackStack()
                             MainNavigationController.navigate(R.id.noPartyFragment)
                         }
                     }
                     alert.addButton(R.string.leave_group_challenges, false, isDestructive = true) { _, _ ->
-                        viewModel?.leaveGroup(false) {
+                        viewModel?.leaveGroup(groupChallenges,false) {
                             parentFragmentManager.popBackStack()
                             MainNavigationController.navigate(R.id.noPartyFragment)
                         }
@@ -381,7 +381,7 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
                     alert.setTitle("Are you sure you want to leave the party?")
                     alert.setMessage("You will not be able to rejoin this party unless invited.")
                     alert.addButton("Leave", isPrimary = true, isDestructive = true) { _, _ ->
-                        viewModel?.leaveGroup(false) {
+                        viewModel?.leaveGroup(groupChallenges, false) {
                             parentFragmentManager.popBackStack()
                             MainNavigationController.navigate(R.id.noPartyFragment)
                         }
