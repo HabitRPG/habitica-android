@@ -14,6 +14,7 @@ import androidx.core.view.GravityCompat
 import androidx.fragment.app.DialogFragment
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.data.ContentRepository
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
@@ -58,6 +59,8 @@ class NavigationDrawerFragment : DialogFragment() {
     lateinit var userRepository: UserRepository
     @Inject
     lateinit var configManager: AppConfigManager
+    @Inject
+    lateinit var contentRepository: ContentRepository
 
     private var activePromo: HabiticaPromotion? = null
 
@@ -184,6 +187,29 @@ class NavigationDrawerFragment : DialogFragment() {
                 .subscribe({
                    questContent = it
                 }, RxErrorHandler.handleEmptyError()))
+
+        subscriptions?.add(contentRepository.getWorldState().subscribe( { state ->
+            state.events.forEach {
+                if (it.gear) {
+                    val shop = getItemWithIdentifier(SIDEBAR_SHOPS_SEASONAL) ?: return@forEach
+                    shop.isVisible = true
+                    shop.pillText = context?.getString(R.string.open)
+                    return@subscribe
+                }
+            }
+            getItemWithIdentifier(SIDEBAR_SHOPS_SEASONAL)?.isVisible = false
+        }, RxErrorHandler.handleEmptyError()))
+
+        subscriptions?.add(inventoryRepository.getAvailableLimitedItems().subscribe( { items ->
+            val market = getItemWithIdentifier(SIDEBAR_SHOPS_MARKET) ?: return@subscribe
+            if (items.isNotEmpty()) {
+                market.pillText = context?.getString(R.string.something_new)
+                market.subtitle = context?.getString(R.string.limited_potions_available)
+            } else {
+                market.pillText = null
+                market.subtitle = null
+            }
+        }, RxErrorHandler.handleEmptyError()))
 
         if (configManager.enableTeamBoards()) {
             subscriptions?.add(userRepository.getTeamPlans()

@@ -461,7 +461,8 @@
     <string name="gem_shop">Gem</string>
     <string name="mystery_item">Mystery Item</string>
     <string name="myster_item_notes">Each month, subscribers will receive a mystery item. This is usually released about one week before the end of the month.</string>
-    <string name="open">Open</string>
+    <string name="open">Open</string>>
+    <string name="is_open">Open</string>
     <string name="checkInRewardEarned">You earned a %1$s as a reward for your devotion to improving your life.</string>
     <string name="nextPrizeUnlocks" tools:ignore="PluralsCandidate">Next prize in %1$d Check-Ins</string>
     <string name="pending_approval">pending approval</string>
@@ -1144,4 +1145,6 @@
     <string name="quest_leave_message">Are you sure you want to leave the Quest? All your progress will be lost.</string>
     <string name="quest_leave_message_nostart">Are you sure you want to leave the Quest? You won\'t be able to participate.</string>
     <string name="launch_screen">Launch Screen</string>
+    <string name="something_new">New</string>
+    <string name="limited_potions_available">Limited Items Available</string>
 </resources>
