@@ -10,14 +10,17 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toDrawable
 import androidx.core.os.bundleOf
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.events.GearPurchasedEvent
 import com.habitrpg.android.habitica.events.ShowSnackbarEvent
+import com.habitrpg.android.habitica.extensions.DateUtils
 import com.habitrpg.android.habitica.extensions.addCancelButton
 import com.habitrpg.android.habitica.extensions.addCloseButton
+import com.habitrpg.android.habitica.extensions.getShortRemainingString
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
@@ -74,24 +77,11 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
         set(value) {
             field = value
 
-            if (shopItem.isLimited) {
-                //TODO: replace with correct date once API is final
-                limitedTextView.text = context.getString(R.string.available_until, Date().toString())
-            } else {
-                limitedTextView.visibility = View.GONE
-            }
-
             if (shopItem.lockedReason(context) == null) {
                 updatePurchaseTotal()
                 priceLabel.currency = shopItem.currency
             } else {
                 limitedTextView.text = shopItem.lockedReason(context)
-            }
-            if (shopItem.locked) {
-                buyLabel.text = context.getString(R.string.locked)
-                limitedTextView.visibility = View.VISIBLE
-                limitedTextView.background = ContextCompat.getColor(context, R.color.offset_background).toDrawable()
-                limitedTextView.setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
             }
 
             priceLabel.isLocked = shopItem.locked || shopItem.lockedReason(context) != null
@@ -138,6 +128,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
 
             contentView.setItem(shopItem)
             setAdditionalContentView(contentView)
+            setLimitedTextView()
         }
 
     private fun updatePurchaseTotal() {
@@ -161,16 +152,26 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
     }
 
     private fun checkGearClass() {
-        val user = user ?: return
-
         if (shopItem.purchaseType == "gems") {
             return
         }
 
-        if (shopItem.habitClass != null && shopItem.habitClass != "special" && user.stats?.habitClass != shopItem.habitClass) {
+        setLimitedTextView()
+    }
+
+    private fun setLimitedTextView() {
+        if (shopItem.habitClass != null && shopItem.habitClass != "special" && user?.stats?.habitClass != shopItem.habitClass) {
             limitedTextView.text = context.getString(R.string.class_equipment_shop_dialog)
             limitedTextView.visibility = View.VISIBLE
             limitedTextView.setBackgroundColor(ContextCompat.getColor(context, R.color.inverted_background))
+        } else if (shopItem.event?.end?.after(Date()) == true) {
+            limitedTextView.visibility = View.VISIBLE
+            limitedTextView.text = context.getString(R.string.available_for, shopItem.event?.end?.getShortRemainingString())
+        } else if (shopItem.locked) {
+            buyLabel.text = context.getString(R.string.locked)
+            limitedTextView.visibility = View.VISIBLE
+            limitedTextView.background = ContextCompat.getColor(context, R.color.offset_background).toDrawable()
+            limitedTextView.setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
         } else {
             limitedTextView.visibility = View.GONE
         }
@@ -297,6 +298,11 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
     }
 
     private fun buyItem(quantity: Int) {
+        FirebaseAnalytics.getInstance(context).logEvent("item_purchased", bundleOf(
+                Pair("shop", shopIdentifier),
+                Pair("type", shopItem.purchaseType),
+                Pair("key", shopItem.key)
+        ))
         val snackbarText = arrayOf("")
         val observable: Flowable<Any>
         if (shopIdentifier != null && shopIdentifier == Shop.TIME_TRAVELERS_SHOP || "mystery_set" == shopItem.purchaseType || shopItem.currency == "hourglasses") {

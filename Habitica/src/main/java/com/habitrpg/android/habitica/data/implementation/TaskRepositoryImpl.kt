@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.data.implementation
 
+import androidx.core.os.bundleOf
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.local.TaskLocalRepository
@@ -14,6 +15,7 @@ import com.habitrpg.android.habitica.models.responses.TaskScoringResult
 import com.habitrpg.android.habitica.models.tasks.*
 import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Single
@@ -22,7 +24,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiClient, userID: String, val appConfigManager: AppConfigManager) : BaseRepositoryImpl<TaskLocalRepository>(localRepository, apiClient, userID), TaskRepository {
+class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiClient, userID: String, val appConfigManager: AppConfigManager, val analyticsManager: AnalyticsManager) : BaseRepositoryImpl<TaskLocalRepository>(localRepository, apiClient, userID), TaskRepository {
     override fun getTasksOfType(taskType: String): Flowable<RealmResults<Task>> = getTasks(taskType, userID)
 
     private var lastTaskAction: Long = 0
@@ -99,6 +101,11 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
                 }
                 .map { (res, user): Pair<TaskDirectionData, User> ->
                     // save local task changes
+                    analyticsManager.logEvent("task_scored", bundleOf(
+                            Pair("type", task.type),
+                            Pair("scored_up", up),
+                            Pair("value", task.value)
+                    ))
                     val result = TaskScoringResult()
                     if (res.lvl == 0) {
                         // Team tasks that require approval have weird data that we should just ignore.

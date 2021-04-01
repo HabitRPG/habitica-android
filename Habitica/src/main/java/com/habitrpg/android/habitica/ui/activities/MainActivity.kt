@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica.ui.activities
 
-import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.appwidget.AppWidgetManager
@@ -11,7 +10,6 @@ import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.Canvas
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -21,10 +19,8 @@ import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.content.FileProvider
 import androidx.core.content.edit
-import androidx.core.os.bundleOf
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.NavDeepLinkBuilder
 import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -51,18 +47,15 @@ import com.habitrpg.android.habitica.models.Notification
 import com.habitrpg.android.habitica.models.TutorialStep
 import com.habitrpg.android.habitica.models.inventory.Egg
 import com.habitrpg.android.habitica.models.inventory.HatchingPotion
-import com.habitrpg.android.habitica.models.notifications.ChallengeWonData
 import com.habitrpg.android.habitica.models.notifications.LoginIncentiveData
 import com.habitrpg.android.habitica.models.responses.MaintenanceResponse
 import com.habitrpg.android.habitica.models.responses.TaskScoringResult
-import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.user.User
-import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
+import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import com.habitrpg.android.habitica.ui.AvatarView
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel
 import com.habitrpg.android.habitica.ui.TutorialView
 import com.habitrpg.android.habitica.ui.fragments.NavigationDrawerFragment
-import com.habitrpg.android.habitica.ui.fragments.tasks.TasksFragment
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.viewmodels.NotificationsViewModel
 import com.habitrpg.android.habitica.ui.views.AdventureGuideDrawerArrowDrawable
@@ -83,10 +76,6 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.functions.Consumer
 import io.reactivex.rxjava3.schedulers.Schedulers
 import io.realm.kotlin.isValid
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import java.util.*
@@ -108,7 +97,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     @Inject
     internal lateinit var sharedPreferences: SharedPreferences
     @Inject
-    internal lateinit var crashlyticsProxy: CrashlyticsProxy
+    internal lateinit var analyticsManager: AnalyticsManager
     @Inject
     internal lateinit var pushNotificationManager: PushNotificationManager
     @Inject
@@ -261,7 +250,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         try {
             taskAlarmManager.scheduleAllSavedAlarms(sharedPreferences.getBoolean("preventDailyReminder", false))
         } catch (e: Exception) {
-            crashlyticsProxy.logException(e)
+            analyticsManager.logException(e)
         }
     }
 

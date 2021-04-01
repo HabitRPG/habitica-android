@@ -12,7 +12,7 @@ import com.habitrpg.android.habitica.models.promotions.HabiticaPromotion
 import com.habitrpg.android.habitica.models.promotions.getHabiticaPromotionFromKey
 import java.util.*
 
-class AppConfigManager(private val contentRepository: ContentRepository?) {
+class AppConfigManager(contentRepository: ContentRepository?) {
 
     private var worldState: WorldState? = null
 

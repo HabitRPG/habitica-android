@@ -555,6 +555,7 @@
     <string name="million_abbrev">m</string>
     <string name="billion_abbrev">b</string>
     <string name="available_until">Available until %s</string>
+    <string name="available_for">Available for %s</string>
     <string name="gems_left_max">Monthly Gems: %1$d/%2$d Remaining</string>
     <string name="gems_left_nomax">Monthly Gems: %d Remaining</string>
     <string name="health">Health</string>

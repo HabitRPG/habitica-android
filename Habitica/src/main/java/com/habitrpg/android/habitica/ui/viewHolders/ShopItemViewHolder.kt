@@ -77,7 +77,7 @@ class ShopItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), Vi
                 BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfItemIndicatorLocked())
             }
             binding.itemDetailIndicator.visibility = View.VISIBLE
-        } else if (item.isLimited) {
+        } else if (item.isLimited || item.event?.end != null) {
             binding.itemDetailIndicator.background = BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfItemIndicatorLimited())
             binding.itemDetailIndicator.visibility = View.VISIBLE
         }

@@ -1,6 +1,5 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'com.google.firebase.crashlytics'
 apply plugin: 'com.noveogroup.android.check'
@@ -255,11 +254,6 @@ android {
         disable 'MissingTranslation','InvalidPackage'
         enable 'LogConditional','IconExpectedSize','MissingRegistered','TypographyQuotes'
     }
-}
-
-androidExtensions {
-    features = ['parcelize']
-    experimental = true
 }
 
 Properties props = new Properties()

@@ -23,7 +23,7 @@ import com.habitrpg.android.habitica.helpers.PurchaseHandler
 import com.habitrpg.android.habitica.helpers.PurchaseTypes
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.User
-import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
+import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import com.habitrpg.android.habitica.ui.activities.GemPurchaseActivity
 import com.habitrpg.android.habitica.ui.activities.GiftSubscriptionActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
@@ -46,7 +46,7 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>(), GemPur
     }
 
     @Inject
-    lateinit var crashlyticsProxy: CrashlyticsProxy
+    lateinit var analyticsManager: AnalyticsManager
     @Inject
     lateinit var userRepository: UserRepository
     @Inject
