@@ -32,6 +32,9 @@ class PushNotificationManager(var apiClient: ApiClient, private val sharedPrefer
 
     fun addPushDeviceUsingStoredToken() {
         FirebaseMessaging.getInstance().token.addOnCompleteListener {
+            if (!it.isSuccessful) {
+                return@addOnCompleteListener
+            }
             this.refreshedToken = it.result
             if (this.refreshedToken.isEmpty() || this.user == null || this.userHasPushDevice() || !this.userIsSubscribedToNotifications()) {
                 return@addOnCompleteListener

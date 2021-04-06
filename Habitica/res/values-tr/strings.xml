@@ -994,7 +994,7 @@
     <string name="update_available">Güncelleme uygun: %1$s (%2$d)</string>
     <string name="streak">Seri</string>
     <string name="assigned_stat">Atanan İstatistik</string>
-    <string name="join_party_description_guild">Aşağıdaki kullanıcı adını bir arkadaşınıza verin veya potansiyel yoldaşlarla tanışmak için % s gidin!</string>
+    <string name="join_party_description_guild">Aşağıdaki kullanıcı adını bir arkadaşınıza verin veya potansiyel yoldaşlarla tanışmak için %s gidin!</string>
     <string name="spooky_promo_info_prompt">Değerli Taş Satışı, bu yılki Sonbahar Galasının en sonunda tekrar gündeme geldi! Bu, her zamankinden daha fazla Mücevher almak için son bir şans, bu yüzden bu süre boyunca stok yapın!</string>
     <string name="spooky_promo_info_limitations">Bu promosyon yalnızca sınırlı süreli etkinlik sırasında geçerlidir. Bu etkinlik 29 Ekim\'de 08:00 EDT\'de (12:00 UTC) başlayacak ve 2 Kasım 20:00 EDT\'de (00:00 UTC) sona erecek. Promosyon teklifi yalnızca kendiniz için Mücevher satın alırken geçerlidir.</string>
     <string name="spooky_promo_info_instructions">29 Ekim ile 2 Kasım arasında, her zamanki gibi herhangi bir Mücevher paketi satın alın ve hesabınıza promosyon miktarda Mücevher yatırılacaktır. Gelecek sürümler için harcayabileceğiniz, paylaşabileceğiniz veya saklayabileceğiniz daha fazla Mücevher!</string>

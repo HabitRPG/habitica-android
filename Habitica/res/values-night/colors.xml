@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="brand">@color/brand_400</color>
     <color name="color_accent">@color/brand_400</color>
     <color name="text_primary">@color/gray_600</color>
     <color name="text_secondary">@color/gray_500</color>

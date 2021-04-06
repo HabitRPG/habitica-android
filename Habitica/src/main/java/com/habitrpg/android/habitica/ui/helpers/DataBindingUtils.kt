@@ -132,7 +132,7 @@ object DataBindingUtils {
     private var spriteSubstitutions: Map<String, String> = HashMap()
     get() {
         if (Date().time - (lastSubstitutionCheck?.time ?: 0) > 180000) {
-            field = AppConfigManager().spriteSubstitutions().get("generic") ?: HashMap()
+            field = AppConfigManager(null).spriteSubstitutions()["generic"] ?: HashMap()
             lastSubstitutionCheck = Date()
         }
         return field

@@ -502,7 +502,7 @@ class NavigationDrawerFragment : DialogFragment() {
     }
 
     fun updatePromo() {
-        activePromo = context?.let { configManager.activePromo(it) }
+        activePromo = configManager.activePromo()
         val promoItem = getItemWithIdentifier(SIDEBAR_PROMO) ?: return
         if (activePromo != null) {
             promoItem.isVisible = true

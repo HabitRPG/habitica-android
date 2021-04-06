@@ -364,7 +364,7 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
         hideProgress()
         dismissKeyboard()
         try {
-            saveTokens(userAuthResponse.token, userAuthResponse.id)
+            saveTokens(userAuthResponse.apiToken, userAuthResponse.id)
         } catch (e: Exception) {
             crashlyticsProxy.logException(e)
         }
@@ -375,7 +375,7 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
             FirebaseAnalytics.getInstance(this).logEvent("user_registered", null)
         }
 
-        compositeSubscription.add(userRepository.retrieveUser(true)
+        compositeSubscription.add(userRepository.retrieveUser(true, true)
                 .subscribe({
                     if (userAuthResponse.newUser) {
                         this.startSetupActivity()

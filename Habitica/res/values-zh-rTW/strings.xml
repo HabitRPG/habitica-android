@@ -339,7 +339,6 @@
     <string name="subscribe">加入會員</string>
     <string name="subscribe_listitem1_description">您將可以從市場上以每枚20金幣的價格購買寶石！</string>
     <string name="subscribe_listitem2_description">獲得神秘沙漏在時空穿越者的商店購買物品！</string>
-    <string name="subscribe_listitem3_description">現在訂閱，可以得到贈品，和每月得到新的物品！</string>
     <string name="subscription_hourglasses">%d 個神秘沙漏</string>
     <string name="payment_method">付款方式</string>
     <string name="subscription">訂閱</string>
@@ -702,7 +701,7 @@
     <string name="cancel_subscription_google_description">不想再繼續捐助了？你可以在Google應用商店裡的“我的應用程序”部分找到退訂選項。</string>
     <string name="subscribe_listitem5_description">在Habitica發現更多的物品，每天享受雙倍的物品掉落上限。</string>
     <string name="subscribe_listitem4_description">如果您變成訂閱者，您可以獲得紫禦鹿角兔寵物。</string>
-    <string name="subscribe_listitem3_description_new">現在訂閱，可以得到%@和每月得到新的物品！</string>
+    <string name="subscribe_listitem3_description_new">現在訂閱，可以得到%s和每月得到新的物品！</string>
     <string name="subscribe_listitem5">雙倍掉落</string>
     <string name="create_account_short">創建一個帳戶</string>
     <string name="login_incentive_short_count">簽到%d次</string>

@@ -942,7 +942,6 @@
     <string name="hatch_pet">Вырастить питомца</string>
     <string name="adventure_guide_description">Выполните эти задания и в итоге получите &lt;b&gt;5 достижений&lt;/b&gt; и &lt;font color=#EE9109&gt;&lt;b&gt;100 золота&lt;/b&gt;&lt;/font&gt;!</string>
     <string name="pet_ownership_fraction">%1$d / %2$d</string>
-    <string name="subscribe_listitem3_description_new">Подпишитесь сейчас, чтобы сразу же получить , а также получать новые предметы каждый месяц!</string>
     <string name="subscribe_listitem5">Удвойте количество выпадающих предметов</string>
     <string name="pms_disabled">Личные сообщения заблокированы</string>
     <string name="disablePrivateMessages">Заблокировать получение личных сообщений</string>

@@ -344,7 +344,6 @@
     <string name="subscribe">订阅</string>
     <string name="subscribe_listitem1_description">您将可以从市场上以每枚20金币的价格购买宝石！</string>
     <string name="subscribe_listitem2_description">获得神秘沙漏在时空穿越者的商店购买物品！</string>
-    <string name="subscribe_listitem3_description">现在订阅，可以得到赠品，和每月得到新的物品！</string>
     <string name="subscribe_listitem4_description">如果您变成订阅者，您可以获得紫御鹿角兔宠物。</string>
     <string name="subscribe1month_gemcap">25 宝石</string>
     <string name="subscribe3month_gemcap">30 宝石</string>
@@ -898,7 +897,7 @@
     <string name="register_btn_fb">Facebook登录</string>
     <string name="login_btn_apple">Apple登录</string>
     <string name="subscribe_listitem5_description">在Habitica发现更多的物品，每天享受双倍的物品掉落上限。</string>
-    <string name="subscribe_listitem3_description_new">现在订阅，可以得到%@和每月得到新的物品！</string>
+    <string name="subscribe_listitem3_description_new">现在订阅，可以得到%s和每月得到新的物品！</string>
     <string name="subscribe_listitem5">双倍掉落</string>
     <string name="create_account_short">创建一个帐户</string>
     <string name="login_incentive_short_count">签到%d次</string>

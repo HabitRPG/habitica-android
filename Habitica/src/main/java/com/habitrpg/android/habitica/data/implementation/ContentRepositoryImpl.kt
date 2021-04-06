@@ -5,6 +5,7 @@ import androidx.preference.PreferenceManager
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.ContentRepository
 import com.habitrpg.android.habitica.data.local.ContentLocalRepository
+import com.habitrpg.android.habitica.helpers.AprilFoolsHandler
 import com.habitrpg.android.habitica.models.ContentResult
 import com.habitrpg.android.habitica.models.WorldState
 import com.habitrpg.android.habitica.models.inventory.SpecialItem
@@ -43,16 +44,18 @@ abstract class ContentRepositoryImpl<T : ContentLocalRepository>(localRepository
             lastWorldStateSync = now
             apiClient.worldState.doOnNext {
                 localRepository.saveWorldState(it)
-
-                val editor = PreferenceManager.getDefaultSharedPreferences(context).edit()
-                editor.putString("currentEvent", it.currentEventKey)
-                editor.putString("currentEventPromo", it.currentEventPromo)
-                editor.putLong("currentEventStartDate", it.currentEventStartDate?.time ?: 0)
-                editor.putLong("currentEventEndDate", it.currentEventEndDate?.time ?: 0)
-                editor.apply()
+                for (event in it.events) {
+                    if (event.aprilFools != null && event.isCurrentlyActive) {
+                        AprilFoolsHandler.handle(event.aprilFools, event.end)
+                    }
+                }
             }
         } else {
             Flowable.empty()
         }
+    }
+
+    override fun getWorldState(): Flowable<WorldState> {
+        return localRepository.getWorldState()
     }
 }

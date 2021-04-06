@@ -77,7 +77,7 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>(), GemPur
         binding?.subscriptionDetails?.visibility = View.GONE
         binding?.subscriptionDetails?.onShowSubscriptionOptions = { showSubscriptionOptions() }
 
-        binding?.giftSubscriptionButton?.setOnClickListener { context?.let { context -> showGiftSubscriptionDialog(context, appConfigManager.activePromo(context)?.identifier == "g1g1") } }
+        binding?.giftSubscriptionButton?.setOnClickListener { context?.let { context -> showGiftSubscriptionDialog(context, appConfigManager.activePromo()?.identifier == "g1g1") } }
 
         binding?.subscription1month?.setOnPurchaseClickListener { selectSubscription(PurchaseTypes.Subscription1Month) }
         binding?.subscription3month?.setOnPurchaseClickListener { selectSubscription(PurchaseTypes.Subscription3Month) }
@@ -86,7 +86,7 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>(), GemPur
 
         binding?.subscribeButton?.setOnClickListener { subscribeUser() }
 
-        val promo = context?.let { appConfigManager.activePromo(it) }
+        val promo = appConfigManager.activePromo()
         if (promo != null) {
             binding?.let {
                 promo.configurePurchaseBanner(it)

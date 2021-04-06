@@ -935,8 +935,8 @@
     <string name="mount_category">%s Monturas</string>
     <string name="pet_category">%s Mascotas</string>
     <string name="challenge_task_name">%s Tareas del Desafío</string>
-    <string name="delete_x_tasks">Eliminar %s Tareas</string>
-    <string name="keep_x_tasks">Mantener %s Tareas</string>
+    <string name="delete_x_tasks">Eliminar %d Tareas</string>
+    <string name="keep_x_tasks">Mantener %d Tareas</string>
     <string name="broken_challenge">Desafío Terminado</string>
     <string name="pms_disabled_description">Tu puedes enviar mensajes todavía, pero nadie puede enviartelas a ti. Puedes habilitarlo de nuevo desde Configuraciones.</string>
     <string name="pms_disabled">Los Mensajes Privados están desactivados</string>

@@ -8,6 +8,7 @@ import android.content.res.Resources;
 import androidx.preference.PreferenceManager;
 
 import com.habitrpg.android.habitica.data.ApiClient;
+import com.habitrpg.android.habitica.data.ContentRepository;
 import com.habitrpg.android.habitica.executors.JobExecutor;
 import com.habitrpg.android.habitica.executors.PostExecutionThread;
 import com.habitrpg.android.habitica.executors.ThreadExecutor;
@@ -126,7 +127,7 @@ public class AppModule {
 
     @Provides
     @Singleton
-    AppConfigManager providesRemoteConfigManager() {
-        return new AppConfigManager();
+    AppConfigManager providesRemoteConfigManager(ContentRepository contentRepository) {
+        return new AppConfigManager(contentRepository);
     }
 }

@@ -393,8 +393,8 @@
     <string name="empty_description_dailies">Dailies are tasks that repeat on a regular basis. Choose the schedule that works for you!</string>
     <string name="empty_title_todos">You don\'t have any To Do\'s</string>
     <string name="empty_description_todos">To Do\'s are tasks that only need to be completed once. Add checklists to your To Do\'s to increase their value.</string>
-    <string name="empty_title_rewards">You don&amp;rsquo;t have any Rewards</string>
-    <string name="reset_walkthrough">Reset Justin&amp;rsquo;s Walkthrough</string>
+    <string name="empty_title_rewards">You don\'t have any Rewards</string>
+    <string name="reset_walkthrough">Reset Justins Walkthrough</string>
     <string name="read_community_guidelines">Review our <u>Community Guidelines</u> before posting</string>
     <string name="maintenance">Maintenance</string>
     <string name="reload_content">Reload Content</string>

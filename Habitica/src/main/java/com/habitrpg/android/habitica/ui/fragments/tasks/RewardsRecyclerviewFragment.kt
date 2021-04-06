@@ -14,7 +14,6 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.shops.ShopItem
-import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.activities.SkillMemberActivity
 import com.habitrpg.android.habitica.ui.adapter.tasks.RewardsRecyclerViewAdapter
@@ -123,7 +122,7 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
         fun newInstance(context: Context?, classType: String, showCustomRewards: Boolean): RewardsRecyclerviewFragment {
             val fragment = RewardsRecyclerviewFragment()
             fragment.retainInstance = true
-            fragment.classType = classType
+            fragment.taskType = classType
             fragment.showCustomRewards = showCustomRewards
 
             if (context != null) {

@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.*
 import android.graphics.drawable.Animatable
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.text.TextUtils
 import android.util.AttributeSet
 import android.util.Log
@@ -15,6 +16,8 @@ import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder
 import com.facebook.drawee.view.DraweeHolder
 import com.facebook.drawee.view.MultiDraweeHolder
 import com.facebook.imagepipeline.image.ImageInfo
+import com.facebook.imagepipeline.request.BasePostprocessor
+import com.facebook.imagepipeline.request.ImageRequestBuilder
 import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.helpers.AppConfigManager
@@ -50,6 +53,15 @@ class AvatarView : View {
             return getLayerMap(avatar, true)
         }
 
+    private var spriteSubstitutions: Map<String, Map<String, String>> = HashMap()
+        get() {
+            if (Date().time - (lastSubstitutionCheck?.time ?: 0) > 180000) {
+                field = AppConfigManager(null).spriteSubstitutions()
+                lastSubstitutionCheck = Date()
+            }
+            return field
+        }
+    private var lastSubstitutionCheck: Date? = null
 
     private val originalRect: Rect
         get() = if (showMount || showPet) FULL_HERO_RECT else if (showBackground) COMPACT_HERO_RECT else HERO_ONLY_RECT
@@ -122,8 +134,14 @@ class AvatarView : View {
             draweeHolder.topLevelDrawable?.callback = this
             multiDraweeHolder.add(draweeHolder)
 
+            val uri = Uri.parse(IMAGE_URI_ROOT + DataBindingUtils.getFullFilename(layerName, null))
+            var request = ImageRequestBuilder.newBuilderWithSource(uri)
+            postProcessors[layerKey]?.let {
+                request = request.setPostprocessor(it())
+            }
+
             val controller = Fresco.newDraweeControllerBuilder()
-                    .setUri(IMAGE_URI_ROOT + DataBindingUtils.getFullFilename(layerName, null))
+                    .setImageRequest(request.build())
                     .setControllerListener(object : BaseControllerListener<ImageInfo>() {
                         override fun onFinalImageSet(
                                 id: String?,
@@ -151,8 +169,7 @@ class AvatarView : View {
     }
 
     private fun getLayerMap(avatar: Avatar, resetHasAttributes: Boolean): Map<LayerType, String> {
-        val substitutions = AppConfigManager().spriteSubstitutions()
-        val layerMap = getAvatarLayerMap(avatar, substitutions)
+        val layerMap = getAvatarLayerMap(avatar, spriteSubstitutions)
 
         if (resetHasAttributes) {
             hasPet = false
@@ -162,7 +179,7 @@ class AvatarView : View {
 
         var mountName = avatar.currentMount
         if (showMount && mountName?.isNotEmpty() == true) {
-            mountName = substituteOrReturn(substitutions["mounts"], mountName)
+            mountName = substituteOrReturn(spriteSubstitutions["mounts"], mountName)
             layerMap[LayerType.MOUNT_BODY] = "Mount_Body_$mountName"
             layerMap[LayerType.MOUNT_HEAD] = "Mount_Head_$mountName"
             if (resetHasAttributes) hasMount = true
@@ -170,14 +187,14 @@ class AvatarView : View {
 
         var petName = avatar.currentPet
         if (showPet && petName?.isNotEmpty() == true) {
-            petName = substituteOrReturn(substitutions["pets"], petName)
+            petName = substituteOrReturn(spriteSubstitutions["pets"], petName)
             layerMap[LayerType.PET] = "Pet-$petName"
             if (resetHasAttributes) hasPet = true
         }
 
         var backgroundName = avatar.preferences?.background
         if (showBackground && backgroundName?.isNotEmpty() == true) {
-            backgroundName = substituteOrReturn(substitutions["backgrounds"], backgroundName)
+            backgroundName = substituteOrReturn(spriteSubstitutions["backgrounds"], backgroundName)
             layerMap[LayerType.BACKGROUND] = "background_$backgroundName"
             if (resetHasAttributes) hasBackground = true
         }
@@ -243,6 +260,7 @@ class AvatarView : View {
             hasVisualBuffs = true
         }
 
+        val hair = prefs.hair
         if (!hasVisualBuffs) {
             if (!TextUtils.isEmpty(prefs.chair)) {
                 layerMap[LayerType.CHAIR] = prefs.chair
@@ -279,7 +297,6 @@ class AvatarView : View {
             layerMap[LayerType.SHIRT] = prefs.size + "_shirt_" + prefs.shirt
             layerMap[LayerType.HEAD_0] = "head_0"
 
-            val hair = prefs.hair
             if (hair != null) {
                 val hairColor = hair.color
 
@@ -295,17 +312,11 @@ class AvatarView : View {
                 if (hair.isAvailable(hair.beard)) {
                     layerMap[LayerType.HAIR_BEARD] = "hair_beard_" + hair.beard + "_" + hairColor
                 }
-                if (hair.isAvailable(hair.flower)) {
-                    layerMap[LayerType.HAIR_FLOWER] = "hair_flower_" + hair.flower
-                }
             }
-        } else {
-            val hair = prefs.hair
+        }
 
-            // Show flower all the time!
-            if (hair != null && hair.isAvailable(hair.flower)) {
-                layerMap[LayerType.HAIR_FLOWER] = "hair_flower_" + hair.flower
-            }
+        if (hair != null && hair.isAvailable(hair.flower)) {
+            layerMap[LayerType.HAIR_FLOWER] = "hair_flower_" + hair.flower
         }
 
         return layerMap
@@ -409,7 +420,7 @@ class AvatarView : View {
 
             val equals = currentLayers != null && currentLayers == newLayerMap
 
-            if (!equals) {
+            if (!equals || postProcessors.isNotEmpty()) {
                 multiDraweeHolder.clear()
                 numberLayersInProcess.set(0)
             }
@@ -521,5 +532,6 @@ class AvatarView : View {
         private val COMPACT_HERO_RECT = Rect(0, 0, 114, 114)
         private val HERO_ONLY_RECT = Rect(0, 0, 90, 90)
 
+        val postProcessors: MutableMap<LayerType, (() -> BasePostprocessor?)> = mutableMapOf()
     }
 }
