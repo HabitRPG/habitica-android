@@ -6,9 +6,12 @@ import com.habitrpg.android.habitica.models.inventory.QuestRageStrike
 import io.realm.RealmList
 import io.realm.RealmModel
 import io.realm.RealmObject
+import io.realm.annotations.PrimaryKey
 import java.util.*
 
 open class WorldState: RealmObject() {
+    @PrimaryKey
+    var id = "habitica"
     var worldBossKey: String = ""
     var worldBossActive: Boolean = false
     var progress: QuestProgress? = null

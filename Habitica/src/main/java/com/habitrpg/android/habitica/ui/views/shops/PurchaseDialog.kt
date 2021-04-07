@@ -42,10 +42,17 @@ import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.realm.RealmResults
+import kotlinx.coroutines.*
 import org.greenrobot.eventbus.EventBus
+import java.time.Duration
+import java.time.temporal.TemporalUnit
 import java.util.*
 import javax.inject.Inject
 import kotlin.math.max
+import kotlin.time.DurationUnit
+import kotlin.time.ExperimentalTime
+import kotlin.time.minutes
+import kotlin.time.seconds
 
 class PurchaseDialog(context: Context, component: UserComponent?, val item: ShopItem) : HabiticaAlertDialog(context) {
 
@@ -159,14 +166,24 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
         setLimitedTextView()
     }
 
+    private var limitedTextViewJob: Job? = null
+
+    @OptIn(ExperimentalTime::class)
     private fun setLimitedTextView() {
         if (shopItem.habitClass != null && shopItem.habitClass != "special" && user?.stats?.habitClass != shopItem.habitClass) {
             limitedTextView.text = context.getString(R.string.class_equipment_shop_dialog)
             limitedTextView.visibility = View.VISIBLE
             limitedTextView.setBackgroundColor(ContextCompat.getColor(context, R.color.inverted_background))
         } else if (shopItem.event?.end?.after(Date()) == true) {
-            limitedTextView.visibility = View.VISIBLE
-            limitedTextView.text = context.getString(R.string.available_for, shopItem.event?.end?.getShortRemainingString())
+            limitedTextViewJob?.cancel()
+            limitedTextViewJob = GlobalScope.launch(Dispatchers.Main) {
+                limitedTextView.visibility = View.VISIBLE
+                while (shopItem.event?.end?.after(Date()) == true) {
+                    limitedTextView.text = context.getString(R.string.available_for, shopItem.event?.end?.getShortRemainingString())
+                    val diff = (shopItem.event?.end?.time ?: 0) - Date().time
+                    delay(if (diff < (60 * 60 * 1000)) 1.seconds else 1.minutes)
+                }
+            }
         } else if (shopItem.locked) {
             buyLabel.text = context.getString(R.string.locked)
             limitedTextView.visibility = View.VISIBLE
@@ -256,6 +273,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
     override fun dismiss() {
         userRepository.close()
         inventoryRepository.close()
+        limitedTextViewJob?.cancel()
         if (!compositeSubscription.isDisposed) {
             compositeSubscription.dispose()
         }

@@ -14,6 +14,6 @@ class DateExtensionsTest : TestCase() {
     }
 
     fun testGetShortRemainingStringWithMinute() {
-        assertEquals("34m", (Date().time + 2077400L).getShortRemainingString())
+        assertEquals("34m 37s", (Date().time + 2077400L).getShortRemainingString())
     }
 }

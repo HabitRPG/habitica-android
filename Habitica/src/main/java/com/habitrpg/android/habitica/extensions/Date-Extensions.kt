@@ -97,13 +97,18 @@ fun Long.getShortRemainingString(): String {
     val diffHours = diff / (60 * 60 * 1000)
     diff -= (diffHours * (60 * 60 * 1000))
     val diffMinutes = diff / (60 * 1000)
+    diff -= (diffMinutes * (60 * 1000))
+    val diffSeconds = diff / 1000
 
     var str = "${diffMinutes}m"
     if (diffHours > 0) {
-        str = "${diffHours}h ${str}"
+        str = "${diffHours}h $str"
     }
     if (diffDays > 0) {
-        str = "${diffDays}d ${str}"
+        str = "${diffDays}d $str"
+    }
+    if (diffDays == 0L && diffHours == 0L) {
+        str = "$str ${diffSeconds}s"
     }
     return str
 }

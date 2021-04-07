@@ -1146,5 +1146,6 @@
     <string name="quest_leave_message_nostart">Are you sure you want to leave the Quest? You won\'t be able to participate.</string>
     <string name="launch_screen">Launch Screen</string>
     <string name="something_new">New</string>
-    <string name="limited_potions_available">Limited Items Available</string>
+    <string name="limited_potions_available">Seasonal Items Available</string>
+    <string name="open_for">Open for %s</string>
 </resources>

@@ -19,10 +19,7 @@ import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.DrawerMainBinding
-import com.habitrpg.android.habitica.extensions.getRemainingString
-import com.habitrpg.android.habitica.extensions.getThemeColor
-import com.habitrpg.android.habitica.extensions.isUsingNightModeResources
-import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
+import com.habitrpg.android.habitica.extensions.*
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
@@ -41,10 +38,14 @@ import com.habitrpg.android.habitica.ui.menu.HabiticaDrawerItem
 import com.habitrpg.android.habitica.ui.viewmodels.NotificationsViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import kotlinx.coroutines.*
 import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import kotlin.collections.ArrayList
+import kotlin.time.ExperimentalTime
+import kotlin.time.minutes
+import kotlin.time.seconds
 
 
 class NavigationDrawerFragment : DialogFragment() {
@@ -168,6 +169,9 @@ class NavigationDrawerFragment : DialogFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? = inflater.inflate(R.layout.drawer_main, container, false) as? ViewGroup
 
+    private var seasonalShopJob: Job? = null
+
+    @OptIn(ExperimentalTime::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = DrawerMainBinding.bind(view)
@@ -192,8 +196,19 @@ class NavigationDrawerFragment : DialogFragment() {
             state.events.forEach {
                 if (it.gear) {
                     val shop = getItemWithIdentifier(SIDEBAR_SHOPS_SEASONAL) ?: return@forEach
-                    shop.isVisible = true
                     shop.pillText = context?.getString(R.string.open)
+                    seasonalShopJob?.cancel()
+                    seasonalShopJob = GlobalScope.launch(Dispatchers.Main) {
+                        while (it.end?.after(Date()) == true) {
+                            shop.isVisible = true
+                            shop.subtitle = context?.getString(R.string.open_for, it.end?.getShortRemainingString())
+                            val diff = (it.end?.time ?: 0) - Date().time
+                            delay(if (diff < (60 * 60 * 1000)) 1.seconds else 1.minutes)
+                            adapter.notifyDataSetChanged()
+                        }
+                        shop.isVisible = false
+                        adapter.notifyDataSetChanged()
+                    }
                     return@subscribe
                 }
             }
