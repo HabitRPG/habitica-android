@@ -229,6 +229,7 @@ class RealmInventoryLocalRepository(realm: Realm) : RealmContentLocalRepository(
             "hatchingPotions" -> HatchingPotion::class.java
             "food" -> Food::class.java
             "quests" -> QuestContent::class.java
+            "special" -> SpecialItem::class.java
             else -> Egg::class.java
         }
         return RxJavaBridge.toV3Flowable(realm.where(itemClass).equalTo("key", key).findFirstAsync().asFlowable<RealmObject>()

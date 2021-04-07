@@ -14,7 +14,7 @@ open class SpecialItems : RealmObject() {
             ownedItems?.forEach {
                 if (!it.isManaged) {
                     it.userID = userId
-                    it.itemType = "eggs"
+                    it.itemType = "special"
                 }
             }
         }
