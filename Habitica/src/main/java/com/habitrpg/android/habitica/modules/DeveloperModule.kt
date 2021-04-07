@@ -12,7 +12,7 @@ import javax.inject.Singleton
 open class DeveloperModule {
     @Provides
     @Singleton
-    protected fun provideAnalyticsManager(context: Context?): AnalyticsManager {
+    open fun provideAnalyticsManager(context: Context): AnalyticsManager {
         return EmptyAnalyticsManager()
     }
 }

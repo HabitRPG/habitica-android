@@ -5,10 +5,8 @@ import com.habitrpg.android.habitica.proxy.AnalyticsManagerImpl
 import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import android.content.Context
 
-//change debug proxy here by override methods
-class ReleaseDeveloperModule : DeveloperModule() {
-    @Override
-    protected fun provideAnalyticsManager(context: Context?): AnalyticsManager {
-        return AnalyticsManagerImpl()
+class ReleaseDeveloperModule: DeveloperModule() {
+    override fun provideAnalyticsManager(context: Context): AnalyticsManager {
+        return AnalyticsManagerImpl(context)
     }
 }

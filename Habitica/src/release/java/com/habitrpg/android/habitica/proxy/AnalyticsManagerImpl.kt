@@ -5,16 +5,18 @@ import com.google.firebase.crashlytics.internal.common.CrashlyticsCore
 import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import android.content.Context
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.amplitude.api.Amplitude
+import android.os.Bundle
 
-class AnalyticsManagerImpl: AnalyticsManager {
+class AnalyticsManagerImpl(context: Context): AnalyticsManager {
 
     private val firebaseAnalytics: com.google.firebase.analytics.FirebaseAnalytics
 
-    init(context: Context) {
-        firebaseAnalytics = FirebaseAnalytics.getInstance(this)
+    init {
+        firebaseAnalytics = FirebaseAnalytics.getInstance(context)
     }
 
-    override fun logException(t: Throwabl?) {
+    override fun logException(t: Throwable) {
         FirebaseCrashlytics.getInstance().recordException(t)
     }
 
@@ -27,7 +29,7 @@ class AnalyticsManagerImpl: AnalyticsManager {
         FirebaseCrashlytics.getInstance().log(msg)
     }
 
-    fun logEvent(eventName: String, data: Bundle) {
+    override fun logEvent(eventName: String, data: Bundle) {
         firebaseAnalytics.logEvent(eventName, data)
     }
 }
