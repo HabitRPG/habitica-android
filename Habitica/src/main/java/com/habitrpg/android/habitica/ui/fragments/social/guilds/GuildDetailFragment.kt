@@ -10,12 +10,15 @@ import android.view.ViewGroup
 import com.habitrpg.android.habitica.MainNavDirections
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
+import com.habitrpg.android.habitica.data.ChallengeRepository
+import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentGuildDetailBinding
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.social.Group
+import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.activities.GroupFormActivity
 import com.habitrpg.android.habitica.ui.activities.GroupInviteActivity
 import com.habitrpg.android.habitica.ui.activities.MainActivity
@@ -26,8 +29,13 @@ import com.habitrpg.android.habitica.ui.views.HabiticaIcons
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
+import javax.inject.Named
 
 class GuildDetailFragment : BaseFragment<FragmentGuildDetailBinding>() {
 
@@ -35,6 +43,15 @@ class GuildDetailFragment : BaseFragment<FragmentGuildDetailBinding>() {
     lateinit var configManager: AppConfigManager
 
     override var binding: FragmentGuildDetailBinding? = null
+
+    @Inject
+    lateinit var challengeRepository: ChallengeRepository
+
+    @Inject
+    lateinit var userRepository: UserRepository
+
+    @field:[Inject Named(AppModule.NAMED_USER_ID)]
+    lateinit var userId: String
 
     override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentGuildDetailBinding {
         return FragmentGuildDetailBinding.inflate(inflater, container, false)
@@ -131,20 +148,53 @@ class GuildDetailFragment : BaseFragment<FragmentGuildDetailBinding>() {
         }
     }
 
+    private fun getGroupChallenges(): List<Challenge> {
+        var groupChallenges = mutableListOf<Challenge>()
+        userRepository.getUser(userId).forEach {
+            it.challenges?.forEach {
+                challengeRepository.getChallenge(it.challengeID).forEach {
+                    if (it.groupId.equals(viewModel?.groupID)) {
+                        groupChallenges.add(it)
+                    }
+                }
+            }
+        }
+        return groupChallenges
+    }
+
     internal fun leaveGuild() {
         val context = context
-        var groupChallenges = listOf<Challenge>()
         if (context != null) {
-            val alert = HabiticaAlertDialog(context)
-            alert.setMessage(R.string.leave_guild_confirmation)
-            alert.addButton(R.string.keep_challenges, true) { _, _ ->
-                viewModel?.leaveGroup(groupChallenges, true) { showLeaveSnackbar() }
+            var groupChallenges = getGroupChallenges()
+            GlobalScope.launch(Dispatchers.Main) {
+                delay(1000)
+                if (groupChallenges.isNotEmpty()) {
+                    val alert = HabiticaAlertDialog(context)
+                    alert.setTitle(R.string.guild_challenges)
+                    alert.setMessage(R.string.leave_guild_challenges_confirmation)
+                    alert.addButton(R.string.keep_challenges, true) { _, _ ->
+                        viewModel?.leaveGroup(groupChallenges, true) { showLeaveSnackbar() }
+                    }
+                    alert.addButton(R.string.leave_challenges, true) { _, _ ->
+                        viewModel?.leaveGroup(groupChallenges, false) { showLeaveSnackbar() }
+                    }
+                    alert.setExtraCloseButtonVisibility(View.VISIBLE)
+                    alert.show()
+                }
+                else {
+                    val alert = HabiticaAlertDialog(context)
+                    alert.setTitle("Are you sure you want to leave this guild?")
+                    alert.setMessage("You can rejoin this guild from the Guilds: Discover page.")
+                    alert.addButton("Leave", isPrimary = true, isDestructive = true) { _, _ ->
+                        viewModel?.leaveGroup(groupChallenges, false) {
+                            parentFragmentManager.popBackStack()
+                            MainNavigationController.navigate(R.id.noPartyFragment)
+                        }
+                    }
+                    alert.setExtraCloseButtonVisibility(View.VISIBLE)
+                    alert.show()
+                }
             }
-            alert.addButton(R.string.leave_challenges, true) { _, _ ->
-                viewModel?.leaveGroup(groupChallenges,false) { showLeaveSnackbar() }
-            }
-            alert.addButton(R.string.no, false)
-            alert.show()
         }
     }
 
