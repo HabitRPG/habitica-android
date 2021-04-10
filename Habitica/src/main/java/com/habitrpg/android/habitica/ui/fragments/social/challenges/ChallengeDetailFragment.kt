@@ -307,7 +307,7 @@ class ChallengeDetailFragment: BaseMainFragment<FragmentChallengeDetailBinding>(
             val challenge = challenge ?: return@addButton
             challengeRepository.leaveChallenge(challenge, "keep-all").subscribe({}, RxErrorHandler.handleEmptyError())
         }
-        alert.addButton(R.string.leave_delte_tasks, isPrimary = false, isDestructive = true) { _, _ ->
+        alert.addButton(R.string.leave_delete_tasks, isPrimary = false, isDestructive = true) { _, _ ->
             val challenge = challenge ?: return@addButton
             challengeRepository.leaveChallenge(challenge, "remove-all").subscribe({}, RxErrorHandler.handleEmptyError())
         }

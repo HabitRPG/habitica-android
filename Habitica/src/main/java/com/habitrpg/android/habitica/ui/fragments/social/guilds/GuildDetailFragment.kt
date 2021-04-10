@@ -187,8 +187,7 @@ class GuildDetailFragment : BaseFragment<FragmentGuildDetailBinding>() {
                     alert.setMessage("You can rejoin this guild from the Guilds: Discover page.")
                     alert.addButton("Leave", isPrimary = true, isDestructive = true) { _, _ ->
                         viewModel?.leaveGroup(groupChallenges, false) {
-                            parentFragmentManager.popBackStack()
-                            MainNavigationController.navigate(R.id.noPartyFragment)
+                            showLeaveSnackbar()
                         }
                     }
                     alert.setExtraCloseButtonVisibility(View.VISIBLE)
