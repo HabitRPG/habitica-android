@@ -368,7 +368,7 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
                             MainNavigationController.navigate(R.id.noPartyFragment)
                         }
                     }
-                    alert.addButton(R.string.leave_group_challenges, false, isDestructive = true) { _, _ ->
+                    alert.addButton(R.string.leave_challenges_delete_tasks, false, isDestructive = true) { _, _ ->
                         viewModel?.leaveGroup(groupChallenges,false) {
                             parentFragmentManager.popBackStack()
                             MainNavigationController.navigate(R.id.noPartyFragment)
@@ -378,9 +378,9 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
                     alert.show()
                 } else {
                     val alert = HabiticaAlertDialog(context)
-                    alert.setTitle("Are you sure you want to leave the party?")
-                    alert.setMessage("You will not be able to rejoin this party unless invited.")
-                    alert.addButton("Leave", isPrimary = true, isDestructive = true) { _, _ ->
+                    alert.setTitle(R.string.leave_party_confirmation)
+                    alert.setMessage(R.string.rejoin_party)
+                    alert.addButton(R.string.leave, isPrimary = true, isDestructive = true) { _, _ ->
                         viewModel?.leaveGroup(groupChallenges, false) {
                             parentFragmentManager.popBackStack()
                             MainNavigationController.navigate(R.id.noPartyFragment)

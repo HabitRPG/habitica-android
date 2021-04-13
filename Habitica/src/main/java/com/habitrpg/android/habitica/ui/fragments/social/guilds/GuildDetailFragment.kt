@@ -167,7 +167,7 @@ class GuildDetailFragment : BaseFragment<FragmentGuildDetailBinding>() {
         if (context != null) {
             var groupChallenges = getGroupChallenges()
             GlobalScope.launch(Dispatchers.Main) {
-                delay(1000)
+                delay(500)
                 if (groupChallenges.isNotEmpty()) {
                     val alert = HabiticaAlertDialog(context)
                     alert.setTitle(R.string.guild_challenges)
@@ -175,7 +175,7 @@ class GuildDetailFragment : BaseFragment<FragmentGuildDetailBinding>() {
                     alert.addButton(R.string.keep_challenges, true) { _, _ ->
                         viewModel?.leaveGroup(groupChallenges, true) { showLeaveSnackbar() }
                     }
-                    alert.addButton(R.string.leave_challenges, true) { _, _ ->
+                    alert.addButton(R.string.leave_challenges_delete_tasks, isPrimary = false, isDestructive = true) { _, _ ->
                         viewModel?.leaveGroup(groupChallenges, false) { showLeaveSnackbar() }
                     }
                     alert.setExtraCloseButtonVisibility(View.VISIBLE)
@@ -183,9 +183,9 @@ class GuildDetailFragment : BaseFragment<FragmentGuildDetailBinding>() {
                 }
                 else {
                     val alert = HabiticaAlertDialog(context)
-                    alert.setTitle("Are you sure you want to leave this guild?")
-                    alert.setMessage("You can rejoin this guild from the Guilds: Discover page.")
-                    alert.addButton("Leave", isPrimary = true, isDestructive = true) { _, _ ->
+                    alert.setTitle(R.string.leave_guild)
+                    alert.setMessage(R.string.rejoin_guild)
+                    alert.addButton(R.string.leave, isPrimary = true, isDestructive = true) { _, _ ->
                         viewModel?.leaveGroup(groupChallenges, false) {
                             showLeaveSnackbar()
                         }
