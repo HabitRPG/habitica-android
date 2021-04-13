@@ -180,8 +180,7 @@ class GuildDetailFragment : BaseFragment<FragmentGuildDetailBinding>() {
                     }
                     alert.setExtraCloseButtonVisibility(View.VISIBLE)
                     alert.show()
-                }
-                else {
+                } else {
                     val alert = HabiticaAlertDialog(context)
                     alert.setTitle(R.string.leave_guild)
                     alert.setMessage(R.string.rejoin_guild)
