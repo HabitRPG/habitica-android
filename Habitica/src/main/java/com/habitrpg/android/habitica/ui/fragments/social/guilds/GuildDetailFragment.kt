@@ -182,7 +182,7 @@ class GuildDetailFragment : BaseFragment<FragmentGuildDetailBinding>() {
                     alert.show()
                 } else {
                     val alert = HabiticaAlertDialog(context)
-                    alert.setTitle(R.string.leave_guild)
+                    alert.setTitle(R.string.leave_guild_confirmation)
                     alert.setMessage(R.string.rejoin_guild)
                     alert.addButton(R.string.leave, isPrimary = true, isDestructive = true) { _, _ ->
                         viewModel?.leaveGroup(groupChallenges, false) {
