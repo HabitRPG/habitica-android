@@ -1074,6 +1074,7 @@
     <string name="hatch_pet">ペットをかえす</string>
     <string name="view_onboarding_tasks">「初心者入門のタスク」を見る</string>
     <string name="equip">装備</string>
+    <string name="unequip">装備解除 </string>
     <string name="excessItemsNoneLeft">すでに%sペットは全て所有しています。本当に%d%ssを購入しますか？</string>
     <string name="purchaseX">%dを買う</string>
     <string name="excessItemsXLeft">今孵せるペットに必要なのは%d%sだけです。本当に%dを購入しますか？</string>

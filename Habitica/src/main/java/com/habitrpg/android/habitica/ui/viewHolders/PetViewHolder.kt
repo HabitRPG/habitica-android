@@ -10,6 +10,7 @@ import com.habitrpg.android.habitica.events.commands.FeedCommand
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.*
+import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.menu.BottomSheetMenu
 import com.habitrpg.android.habitica.ui.menu.BottomSheetMenuItem
@@ -27,6 +28,7 @@ class PetViewHolder(parent: ViewGroup, private val equipEvents: PublishSubject<S
     private var potionCount: Int = 0
     private var ownsSaddles = false
     private var animal: Pet? = null
+    private var user: User? = null
 
     private var binding: PetDetailItemBinding = PetDetailItemBinding.bind(itemView)
 
@@ -41,15 +43,18 @@ class PetViewHolder(parent: ViewGroup, private val equipEvents: PublishSubject<S
         itemView.setOnClickListener(this)
     }
 
-    fun bind(item: Pet,
-             trained: Int,
-             eggCount: Int,
-             potionCount: Int,
-             canRaiseToMount: Boolean,
-             ownsSaddles: Boolean,
-             hasUnlockedEgg: Boolean,
-             hasUnlockedPotion: Boolean,
-             hasMount: Boolean) {
+    fun bind(
+        item: Pet,
+        trained: Int,
+        eggCount: Int,
+        potionCount: Int,
+        canRaiseToMount: Boolean,
+        ownsSaddles: Boolean,
+        hasUnlockedEgg: Boolean,
+        hasUnlockedPotion: Boolean,
+        hasMount: Boolean,
+        user: User?
+    ) {
         this.animal = item
         isOwned = trained > 0
         binding.imageView.alpha = 1.0f
@@ -60,6 +65,7 @@ class PetViewHolder(parent: ViewGroup, private val equipEvents: PublishSubject<S
         this.hasUnlockedEgg = hasUnlockedEgg
         this.hasUnlockedPotion = hasUnlockedPotion
         this.hasMount = hasMount
+        this.user = user
         binding.imageView.visibility = View.VISIBLE
         binding.itemWrapper.visibility = View.GONE
         binding.checkmarkView.visibility = View.GONE
@@ -111,7 +117,11 @@ class PetViewHolder(parent: ViewGroup, private val equipEvents: PublishSubject<S
         val context = itemView.context
         val menu = BottomSheetMenu(context)
         menu.setTitle(animal?.text)
-        menu.addMenuItem(BottomSheetMenuItem(itemView.resources.getString(R.string.equip)))
+
+        val hasCurrentPet = user?.currentPet.equals(animal?.key)
+        val labelId = if (hasCurrentPet) R.string.unequip else R.string.equip
+        menu.addMenuItem(BottomSheetMenuItem(itemView.resources.getString(labelId)))
+
         if (canRaiseToMount) {
             menu.addMenuItem(BottomSheetMenuItem(itemView.resources.getString(R.string.feed)))
             if (ownsSaddles) {

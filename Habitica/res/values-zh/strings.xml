@@ -1018,6 +1018,7 @@
     <string name="suggest_pet_hatch_missing_egg">你还需要一个%s宠物蛋来孵化这个宠物</string>
     <string name="view_onboarding_tasks">查看新手任务</string>
     <string name="equip">装备</string>
+    <string name="unequip">取消装备</string>
     <string name="excessItemsNoneLeft">你已经有得到所有%s宠物所需的一切物品。你确定你要买%d个%s？</string>
     <string name="excessItemsXLeft">你只需要%d个%s即可孵化所有可得到的这种宠物。你确定你想要买%d个？</string>
     <string name="purchaseX">买%d个</string>

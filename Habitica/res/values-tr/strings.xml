@@ -886,6 +886,7 @@
     <string name="leave_delete_task">Ayrıl ve Görevi Sil</string>
     <string name="delete_challenge_task_title">Mücadele Görevi Silinsin mi\?</string>
     <string name="equip">Yanına Al</string>
+    <string name="unequip">Boşalt</string>
     <string name="onboardingCompleteDescription">Daha fazlasını istiyorsanız Başarılar\'a göz atın ve toplamaya başlayın!</string>
     <string name="first_drop_title">Yeni eşyalar buldun!</string>
     <string name="go_to_items">Eşyalara Git</string>

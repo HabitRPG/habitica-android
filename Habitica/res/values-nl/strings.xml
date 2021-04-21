@@ -999,6 +999,7 @@
     <string name="onboardingComplete_achievement_title">Je hebt je Onboarding Taken afgerond!</string>
     <string name="view_onboarding_tasks">Bekijk Onboarding Taken</string>
     <string name="equip">Aantrekken</string>
+    <string name="unequip">Niet uitrusten</string>
     <string name="stat_description">Alle Habitica karakters hebben vier statistieken die ieder invloed hebben op aspecten van de gameplay van Habitica.
 \n
 \n**Kracht (KRA)** beïnvloedt voltreffers en verhoogt de schade toegebracht aan Quest Eindbazen. Krijgers en Dieven krijgen extra KRA van hun klasse-specifieke uitrusting.

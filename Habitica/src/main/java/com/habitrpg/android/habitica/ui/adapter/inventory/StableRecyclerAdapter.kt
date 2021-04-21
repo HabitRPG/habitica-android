@@ -13,6 +13,7 @@ import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.inventory.*
 import com.habitrpg.android.habitica.models.user.OwnedItem
+import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.fragments.inventory.stable.StableFragmentDirections
 import com.habitrpg.android.habitica.ui.helpers.loadImage
 import com.habitrpg.android.habitica.ui.viewHolders.MountViewHolder
@@ -29,11 +30,17 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var eggs: Map<String, Egg> = mapOf()
     var animalIngredientsRetriever: ((Animal, ((Pair<Egg?, HatchingPotion?>) -> Unit)) -> Unit)? = null
     var itemType: String? = null
+    private var user: User? = null
     private val equipEvents = PublishSubject.create<String>()
     var ownedEggs: Map<String, OwnedItem>? = null
 
     fun getEquipFlowable(): Flowable<String> {
         return equipEvents.toFlowable(BackpressureStrategy.DROP)
+    }
+
+    fun setUser(user: User){
+        this.user = user
+        notifyDataSetChanged()
     }
 
     private var itemList: List<Any> = ArrayList()
@@ -68,17 +75,20 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 val isIndividualAnimal = item.type == "special" || item.type == "wacky"
                 if (isIndividualAnimal) {
                     if (item is Pet) {
-                        (holder as? PetViewHolder)?.bind(item,
-                                item.numberOwned,
-                                canRaiseToMount = false,
-                                eggCount = 0,
-                                potionCount = 0,
-                                ownsSaddles = false,
-                                hasUnlockedEgg = false,
-                                hasUnlockedPotion = false,
-                                hasMount = false)
+                        (holder as? PetViewHolder)?.bind(
+                            item,
+                            item.numberOwned,
+                            eggCount = 0,
+                            potionCount = 0,
+                            canRaiseToMount = false,
+                            ownsSaddles = false,
+                            hasUnlockedEgg = false,
+                            hasUnlockedPotion = false,
+                            hasMount = false,
+                            user = user
+                        )
                     } else if (item is Mount) {
-                        (holder as? MountViewHolder)?.bind(item, item.numberOwned > 0)
+                        (holder as? MountViewHolder)?.bind(item, item.numberOwned > 0, user)
                     }
                     return
                 }

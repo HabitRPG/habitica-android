@@ -963,6 +963,7 @@
     <string name="could_not_find_user">Не можу знайти користувача</string>
     <string name="wacky">Дивні</string>
     <string name="equip">Одягнути</string>
+    <string name="unequip">Неоснащення </string>
     <string name="username_confirmed">Ім\'я користувача підтверджено</string>
     <string name="username_not_confirmed">Ім\'я користувача не підтверджено</string>
     <string name="two_handed">Двуручний</string>

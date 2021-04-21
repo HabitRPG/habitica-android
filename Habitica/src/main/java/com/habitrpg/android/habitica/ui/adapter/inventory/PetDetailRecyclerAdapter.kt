@@ -5,6 +5,7 @@ import com.habitrpg.android.habitica.models.inventory.*
 import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.OwnedMount
 import com.habitrpg.android.habitica.models.user.OwnedPet
+import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.viewHolders.PetViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.SectionViewHolder
 import io.reactivex.rxjava3.core.BackpressureStrategy
@@ -17,6 +18,7 @@ class PetDetailRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapt
     private var ownedPets: Map<String, OwnedPet>? = null
     private var ownedMounts: Map<String, OwnedMount>? = null
     private var ownedItems: Map<String, OwnedItem>? = null
+    private var user: User? = null
     private val equipEvents = PublishSubject.create<String>()
     private var ownsSaddles: Boolean = false
 
@@ -25,6 +27,11 @@ class PetDetailRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapt
     fun setItemList(itemList: List<Any>) {
         this.itemList = itemList
         this.notifyDataSetChanged()
+    }
+
+    fun setUser(user: User) {
+        this.user = user
+        notifyDataSetChanged()
     }
 
     fun getEquipFlowable(): Flowable<String> {
@@ -69,7 +76,8 @@ class PetDetailRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapt
                         ownsSaddles,
                         ownedItems?.get(obj.animal + "-eggs") != null,
                         ownedItems?.get(obj.color + "-hatchingPotions") != null,
-                        ownedMounts?.containsKey(obj.key) == true
+                        ownedMounts?.containsKey(obj.key) == true,
+                        user
                 )
             }
         }

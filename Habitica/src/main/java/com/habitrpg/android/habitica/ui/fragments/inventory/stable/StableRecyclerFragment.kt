@@ -86,6 +86,7 @@ class StableRecyclerFragment : BaseFragment<FragmentRecyclerviewBinding>() {
         adapter = binding?.recyclerView?.adapter as? StableRecyclerAdapter
         if (adapter == null) {
             adapter = StableRecyclerAdapter()
+            user?.let { adapter?.setUser(it) }
             adapter?.animalIngredientsRetriever = { animal, callback ->
                 Maybe.zip(
                         inventoryRepository.getItems(Egg::class.java, arrayOf(animal.animal)).firstElement(),

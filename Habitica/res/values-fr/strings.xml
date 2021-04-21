@@ -1046,6 +1046,7 @@
     <string name="suggest_pet_hatch_missing_egg">Vous avez besoin d\'un œuf de %s pour faire éclore ce familier</string>
     <string name="view_onboarding_tasks">Voir les tâches d’intégration</string>
     <string name="equip">Équiper</string>
+    <string name="unequip">Déséquiper</string>
     <string name="excessItemsNoneLeft">Vous avez déjà tout le nécessaire pour tous les familiers %s. Voulez vous vraiment acheter %d %ss \?</string>
     <string name="purchaseX">Acheter %d</string>
     <string name="excessItemsXLeft">Vous avez seulement besoin de %d %@s pour faire éclore tous les familiers possibles. Voulez-vous vraiment acheter %d \?</string>

@@ -1041,6 +1041,7 @@
     <string name="suggest_pet_hatch_missing_egg">You still need a %s Egg to hatch this pet</string>
     <string name="view_onboarding_tasks">View Onboarding Tasks</string>
     <string name="equip">Equip</string>
+    <string name="unequip">Unequip</string>
     <string name="excessItemsNoneLeft">You already have everything you need for all %s pets. Are you sure you want to purchase %d %ss\?</string>
     <string name="purchaseX">Purchase %d</string>
     <string name="excessItemsXLeft">You only need %d %s to hatch all possible pets. Are you sure you want to purchase %d\?</string>

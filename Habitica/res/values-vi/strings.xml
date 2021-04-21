@@ -1040,6 +1040,7 @@
     <string name="suggest_pet_hatch_missing_egg">Bạn còn cần một %s Trứng để ấp thú cưng này</string>
     <string name="view_onboarding_tasks">Xem Công việc Nhập môn</string>
     <string name="equip">Trang bị</string>
+    <string name="unequip">Giải đáp thắc mắc </string>
     <string name="excessItemsNoneLeft">Bạn đã có mọi thứ bạn cần cho tất cả %s thú cưng. Bạn có chắc muốn mua %d %ss\?</string>
     <string name="purchaseX">Mua %d</string>
     <string name="excessItemsXLeft">Bạn chỉ cần %d %s để ấp tất cả thú cưng mà bạn có thể. Bạn có chắc muốn mua %d\?</string>
