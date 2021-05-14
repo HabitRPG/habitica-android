@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.ui.fragments
 
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.res.ColorStateList
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
@@ -9,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.core.content.edit
 import androidx.core.os.bundleOf
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.DialogFragment
@@ -23,6 +25,8 @@ import com.habitrpg.android.habitica.extensions.*
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.models.WorldState
+import com.habitrpg.android.habitica.models.inventory.Item
 import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.promotions.HabiticaPromotion
@@ -37,6 +41,7 @@ import com.habitrpg.android.habitica.ui.fragments.social.TavernDetailFragment
 import com.habitrpg.android.habitica.ui.menu.HabiticaDrawerItem
 import com.habitrpg.android.habitica.ui.viewmodels.NotificationsViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
+import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import kotlinx.coroutines.*
 import java.util.*
@@ -62,6 +67,8 @@ class NavigationDrawerFragment : DialogFragment() {
     lateinit var configManager: AppConfigManager
     @Inject
     lateinit var contentRepository: ContentRepository
+    @Inject
+    lateinit var sharedPreferences: SharedPreferences
 
     private var activePromo: HabiticaPromotion? = null
 
@@ -183,6 +190,13 @@ class NavigationDrawerFragment : DialogFragment() {
         subscriptions?.add(adapter.getItemSelectionEvents().subscribe({
             setSelection(it.transitionId, it.bundle, true)
         }, RxErrorHandler.handleEmptyError()))
+        subscriptions?.add(adapter.getPromoCloseEvents().subscribe({
+            sharedPreferences.edit {
+                putBoolean("hide${it}", true)
+            }
+            updatePromo()
+            adapter.notifyDataSetChanged()
+        }, RxErrorHandler.handleEmptyError()))
 
         subscriptions?.add(socialRepository.getGroup(Group.TAVERN_ID)
                 .doOnNext {  quest = it.quest }
@@ -192,38 +206,21 @@ class NavigationDrawerFragment : DialogFragment() {
                    questContent = it
                 }, RxErrorHandler.handleEmptyError()))
 
-        subscriptions?.add(contentRepository.getWorldState().subscribe( { state ->
-            state.events.forEach {
-                if (it.gear) {
-                    val shop = getItemWithIdentifier(SIDEBAR_SHOPS_SEASONAL) ?: return@forEach
-                    shop.pillText = context?.getString(R.string.open)
+        subscriptions?.add(
+                Flowable.combineLatest(contentRepository.getWorldState(), inventoryRepository.getAvailableLimitedItems(), { state, items ->
+                    return@combineLatest Pair(state, items)
+                }).subscribe( { pair ->
+                    updateSeasonalMenuEntries(pair.first, pair.second)
                     seasonalShopJob?.cancel()
                     seasonalShopJob = GlobalScope.launch(Dispatchers.Main) {
-                        while (it.end?.after(Date()) == true) {
-                            shop.isVisible = true
-                            shop.subtitle = context?.getString(R.string.open_for, it.end?.getShortRemainingString())
-                            val diff = (it.end?.time ?: 0) - Date().time
+                        val gearEvent = pair.first.events.firstOrNull { it.gear }
+                        while (gearEvent?.end?.after(Date()) == true || pair.second.isNotEmpty()) {
+                            updateSeasonalMenuEntries(pair.first, pair.second)
+                            val diff = (gearEvent?.end?.time ?: 0) - Date().time
                             delay(if (diff < (60 * 60 * 1000)) 1.seconds else 1.minutes)
-                            adapter.notifyDataSetChanged()
                         }
-                        shop.isVisible = false
-                        adapter.notifyDataSetChanged()
                     }
-                    return@subscribe
-                }
-            }
             getItemWithIdentifier(SIDEBAR_SHOPS_SEASONAL)?.isVisible = false
-        }, RxErrorHandler.handleEmptyError()))
-
-        subscriptions?.add(inventoryRepository.getAvailableLimitedItems().subscribe( { items ->
-            val market = getItemWithIdentifier(SIDEBAR_SHOPS_MARKET) ?: return@subscribe
-            if (items.isNotEmpty()) {
-                market.pillText = context?.getString(R.string.something_new)
-                market.subtitle = context?.getString(R.string.limited_potions_available)
-            } else {
-                market.pillText = null
-                market.subtitle = null
-            }
         }, RxErrorHandler.handleEmptyError()))
 
         if (configManager.enableTeamBoards()) {
@@ -244,6 +241,29 @@ class NavigationDrawerFragment : DialogFragment() {
         binding?.messagesButtonWrapper?.setOnClickListener { setSelection(R.id.inboxFragment, null, true, preventReselection = false) }
         binding?.settingsButtonWrapper?.setOnClickListener { setSelection(R.id.prefsActivity, null, true, preventReselection = false) }
         binding?.notificationsButtonWrapper?.setOnClickListener { startNotificationsActivity() }
+    }
+
+    private fun updateSeasonalMenuEntries(worldState: WorldState, items: List<Item>) {
+        val market = getItemWithIdentifier(SIDEBAR_SHOPS_MARKET) ?: return
+        if (items.isNotEmpty() && items.firstOrNull()?.event?.end?.after(Date()) == true) {
+            market.pillText = context?.getString(R.string.something_new)
+            market.subtitle = context?.getString(R.string.limited_potions_available)
+        } else {
+            market.pillText = null
+            market.subtitle = null
+        }
+        adapter.notifyDataSetChanged()
+
+        val shop = getItemWithIdentifier(SIDEBAR_SHOPS_SEASONAL) ?: return
+        shop.pillText = context?.getString(R.string.open)
+        val gearEvent = worldState.events.firstOrNull { it.gear }
+        if (gearEvent?.end?.after(Date()) == true) {
+            shop.isVisible = true
+            shop.subtitle = context?.getString(R.string.open_for, gearEvent.end?.getShortRemainingString())
+        } else {
+            shop.isVisible = false
+        }
+        adapter.notifyDataSetChanged()
     }
 
     private fun updateUser(user: User) {
@@ -370,7 +390,9 @@ class NavigationDrawerFragment : DialogFragment() {
             items.add(HabiticaDrawerItem(0, SIDEBAR_INVENTORY, context.getString(R.string.sidebar_shops), true))
             items.add(HabiticaDrawerItem(R.id.marketFragment, SIDEBAR_SHOPS_MARKET, context.getString(R.string.market)))
             items.add(HabiticaDrawerItem(R.id.questShopFragment, SIDEBAR_SHOPS_QUEST, context.getString(R.string.questShop)))
-            items.add(HabiticaDrawerItem(R.id.seasonalShopFragment, SIDEBAR_SHOPS_SEASONAL, context.getString(R.string.seasonalShop)))
+            val seasonalShopEntry = HabiticaDrawerItem(R.id.seasonalShopFragment, SIDEBAR_SHOPS_SEASONAL, context.getString(R.string.seasonalShop))
+            seasonalShopEntry.isVisible = false
+            items.add(seasonalShopEntry)
             items.add(HabiticaDrawerItem(R.id.timeTravelersShopFragment, SIDEBAR_SHOPS_TIMETRAVEL, context.getString(R.string.timeTravelers)))
 
             items.add(HabiticaDrawerItem(0, SIDEBAR_INVENTORY, context.getString(R.string.sidebar_section_inventory), true))
@@ -545,7 +567,7 @@ class NavigationDrawerFragment : DialogFragment() {
     fun updatePromo() {
         activePromo = configManager.activePromo()
         val promoItem = getItemWithIdentifier(SIDEBAR_PROMO) ?: return
-        if (activePromo != null) {
+        if (activePromo != null && !sharedPreferences.getBoolean("hide${activePromo?.identifier}", false)) {
             promoItem.isVisible = true
             adapter.activePromo = activePromo
 

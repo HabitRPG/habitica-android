@@ -435,6 +435,11 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
             val preferences = user?.preferences
 
             preferences?.language?.let { apiClient.setLanguageCode(it) }
+            if (preferences?.language != sharedPreferences.getString("language", "en")) {
+                sharedPreferences.edit {
+                    putString("language", preferences?.language)
+                }
+            }
             preferences?.sound?.let { soundManager.soundTheme = it }
 
             displayDeathDialogIfNeeded()
@@ -464,9 +469,13 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                 drawerIcon.setEnabled(false)
             }
 
-            val navigationController = findNavController(R.id.nav_host_fragment)
-            if (binding.toolbarTitle.text?.isNotBlank() != true) {
-                navigationController.currentDestination?.let { updateToolbarTitle(it, null) }
+            try {
+                val navigationController = findNavController(R.id.nav_host_fragment)
+                if (binding.toolbarTitle.text?.isNotBlank() != true) {
+                    navigationController.currentDestination?.let { updateToolbarTitle(it, null) }
+                }
+            } catch (e: java.lang.IllegalStateException) {
+                // Has no Navcontroller right now.
             }
         }
     }

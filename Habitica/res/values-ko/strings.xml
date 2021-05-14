@@ -830,7 +830,7 @@
     <string name="remove_member">회원 퇴출</string>
     <string name="remove">삭제</string>
     <string name="inbox_messages_title_nosender">%d 메시지를 받았습니다</string>
-    <string name="inbox_messages_title">%s 에게서 %d 메시지를 받았습니다</string>
+    <string name="inbox_messages_title">%2$s 에게서 %1$d 메시지를 받았습니다</string>
     <string name="sent_card">%s 을(를) 보냈습니다</string>
     <string name="app_theme">어플 테마</string>
     <string name="delete_reminder">알림 삭제하기</string>

@@ -167,7 +167,9 @@ open class ShopFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
                             formatTimeTravelersShop(shop1)
                         }
                         Shop.SEASONAL_SHOP -> {
-                            shop1.categories.sortWith(compareBy<ShopCategory> { it.items.size != 1 }.thenByDescending { it.items.firstOrNull()?.event?.end })
+                            shop1.categories.sortWith(compareBy<ShopCategory> { it.items.size != 1 }
+                                    .thenBy { it.items.firstOrNull()?.currency != "gold" }
+                                    .thenByDescending { it.items.firstOrNull()?.event?.end })
                             shop1
                         }
                         else -> {

@@ -814,7 +814,7 @@
     <string name="transfer_ownership">Leiderschap Overdragen</string>
     <string name="remove">Verwijderen</string>
     <string name="inbox_messages_title_nosender">U heeft %d berichten ontvangen</string>
-    <string name="inbox_messages_title">Je hebt %d berichten ontvangen van %s</string>
+    <string name="inbox_messages_title">Je hebt %1$d berichten ontvangen van %2$s</string>
     <string name="sent_card">U heeft een %s verzonden</string>
     <string name="app_theme">App-thema</string>
     <string name="share_challenge_with">Deel de uitdaging met</string>

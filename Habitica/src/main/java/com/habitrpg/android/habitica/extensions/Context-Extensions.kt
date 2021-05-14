@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.res.Configuration
 import android.util.TypedValue
 import android.view.LayoutInflater
+import java.util.*
 
 val Context.layoutInflater: LayoutInflater
     get() = this.getSystemService(Service.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -24,4 +25,10 @@ fun Context.isUsingNightModeResources(): Boolean {
         Configuration.UI_MODE_NIGHT_UNDEFINED -> false
         else -> false
     }
+}
+fun Context.forceLocale(locale: Locale): Context {
+    Locale.setDefault(locale)
+    val config = Configuration(resources.configuration)
+    config.setLocale(locale)
+    return createConfigurationContext(config)
 }

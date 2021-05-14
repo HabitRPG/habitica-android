@@ -174,7 +174,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
             limitedTextView.text = context.getString(R.string.class_equipment_shop_dialog)
             limitedTextView.visibility = View.VISIBLE
             limitedTextView.setBackgroundColor(ContextCompat.getColor(context, R.color.inverted_background))
-        } else if (shopItem.event?.end?.after(Date()) == true) {
+        } else if (shopItem.event?.end != null) {
             limitedTextViewJob?.cancel()
             limitedTextViewJob = GlobalScope.launch(Dispatchers.Main) {
                 limitedTextView.visibility = View.VISIBLE
@@ -182,6 +182,11 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
                     limitedTextView.text = context.getString(R.string.available_for, shopItem.event?.end?.getShortRemainingString())
                     val diff = (shopItem.event?.end?.time ?: 0) - Date().time
                     delay(if (diff < (60 * 60 * 1000)) 1.seconds else 1.minutes)
+                }
+                if (shopItem.event?.end?.before(Date()) == true) {
+                    limitedTextView.text = context.getString(R.string.no_longer_available)
+                    limitedTextView.background = ContextCompat.getColor(context, R.color.offset_background).toDrawable()
+                    limitedTextView.setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
                 }
             }
         } else if (shopItem.locked) {

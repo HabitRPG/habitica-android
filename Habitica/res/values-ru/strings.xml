@@ -966,7 +966,7 @@
     <string name="empty_description_habits_filtered">Нет Привычек для отображения по текущим фильтрам.</string>
     <string name="gift_confirmation_text_gems">Вы отправили %s несколько самоцветов.</string>
     <string name="remove_member">Удалить участника</string>
-    <string name="inbox_messages_title">Вы получили %d сообщений от %s</string>
+    <string name="inbox_messages_title">Вы получили %1$d сообщений от %2$s</string>
     <string name="delete_reminder">Удалить напоминание</string>
     <string name="remove">Удалить</string>
 </resources>

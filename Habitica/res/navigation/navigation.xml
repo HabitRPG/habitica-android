@@ -431,6 +431,14 @@
         android:name="com.habitrpg.android.habitica.ui.fragments.PromoInfoFragment"
         android:label="" />
     <fragment
+        android:id="@+id/promoWebFragment"
+        android:name="com.habitrpg.android.habitica.ui.fragments.PromoWebFragment"
+        android:label="">
+        <argument
+            android:name="url"
+            app:argType="string" />
+    </fragment>
+    <fragment
         android:id="@+id/teamBoardFragment"
         android:name="com.habitrpg.android.habitica.ui.fragments.tasks.TeamBoardFragment"
         android:label="TeamBoardFragment" >

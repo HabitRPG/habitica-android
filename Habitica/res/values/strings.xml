@@ -850,7 +850,7 @@
     <string name="share_challenge_with">Share Challenge with</string>
     <string name="app_theme">App Theme</string>
     <string name="sent_card">You sent a %s</string>
-    <string name="inbox_messages_title">You received %d messages from %s</string>
+    <string name="inbox_messages_title">You received %1$d messages from %2$s</string>
     <string name="inbox_messages_title_nosender">You received %d messages</string>
     <string name="remove">Remove</string>
     <string name="transfer_ownership">Transfer Leadership</string>
@@ -1146,6 +1146,10 @@
     <string name="quest_leave_message_nostart">Are you sure you want to leave the Quest? You won\'t be able to participate.</string>
     <string name="launch_screen">Launch Screen</string>
     <string name="something_new">New</string>
-    <string name="limited_potions_available">Seasonal Items Available</string>
+    <string name="limited_potions_available">Seasonal items available</string>
     <string name="open_for">Open for %s</string>
+    <string name="no_longer_available">No longer available</string>
+    <string name="go_to_survey">Go to Survey</string>
+    <string name="survey_title">Habitica player survey</string>
+    <string name="survey_menu_description">Fill out this 5 minute survey to help us grow and receive an achievement!</string>
 </resources>

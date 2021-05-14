@@ -64,4 +64,13 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true" />
+    <ImageButton
+        android:id="@+id/close_button"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/ic_close_white_24dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:visibility="gone"
+        style="@style/HabiticaButton.Borderless" />
 </merge>

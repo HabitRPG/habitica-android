@@ -747,7 +747,7 @@
     <string name="transfer_ownership">Transférer la responsabilité</string>
     <string name="remove">Supprimer</string>
     <string name="inbox_messages_title_nosender">Vous avez reçu %d messages</string>
-    <string name="inbox_messages_title">Vous avez reçu %d messages de %s</string>
+    <string name="inbox_messages_title">Vous avez reçu %1$d messages de %2$s</string>
     <string name="sent_card">Vous avez envoyé une %s</string>
     <string name="app_theme">Thème de l\'application</string>
     <string name="share_challenge_with">Partager le défi avec</string>
