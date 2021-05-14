@@ -191,9 +191,15 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
             }
         } else if (shopItem.locked) {
             buyLabel.text = context.getString(R.string.locked)
-            limitedTextView.visibility = View.VISIBLE
-            limitedTextView.background = ContextCompat.getColor(context, R.color.offset_background).toDrawable()
-            limitedTextView.setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
+            limitedTextView.visibility = View.GONE
+            if (shopItem.isTypeGear && shopItem.key.last().toString().toIntOrNull() != null) {
+                val previousKey = "${shopItem.key.dropLast(1)}${shopItem.key.last().toString().toIntOrNull()}"
+                if (user?.items?.gear?.owned?.find { it.key ==  previousKey} == null) {
+                    limitedTextView.visibility = View.VISIBLE
+                    limitedTextView.background = ContextCompat.getColor(context, R.color.offset_background).toDrawable()
+                    limitedTextView.setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
+                }
+            }
         } else {
             limitedTextView.visibility = View.GONE
         }

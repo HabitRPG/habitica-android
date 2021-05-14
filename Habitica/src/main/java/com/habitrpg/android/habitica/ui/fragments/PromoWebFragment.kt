@@ -8,8 +8,13 @@ import android.view.ViewGroup
 import android.webkit.WebChromeClient
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.databinding.FragmentNewsBinding
+import com.habitrpg.android.habitica.modules.AppModule
+import javax.inject.Inject
+import javax.inject.Named
 
 class PromoWebFragment : BaseMainFragment<FragmentNewsBinding>() {
+    @field:[Inject Named(AppModule.NAMED_USER_ID)]
+    lateinit var userID: String
 
     override var binding: FragmentNewsBinding? = null
 
@@ -32,7 +37,9 @@ class PromoWebFragment : BaseMainFragment<FragmentNewsBinding>() {
         }
         arguments?.let {
             val args = PromoWebFragmentArgs.fromBundle(it)
-            binding?.newsWebview?.loadUrl(args.url)
+            var url = args.url
+            url = url.replace("USER_ID", userID)
+            binding?.newsWebview?.loadUrl(url)
 
         }
     }
