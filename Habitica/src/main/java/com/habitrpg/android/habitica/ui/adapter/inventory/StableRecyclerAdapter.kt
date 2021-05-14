@@ -165,7 +165,7 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             ownedTextView.visibility = View.VISIBLE
             imageView.loadImage(imageName)
 
-            val alpha = if (item.numberOwned <= 0 && ownedEggs?.containsKey(item.animal) != true) 0.2f else 1.0f
+            val alpha = if (item.numberOwned <= 0 && (ownedEggs?.containsKey(item.animal) != true || itemType == "mounts")) 0.2f else 1.0f
             this.imageView.alpha = alpha
             this.titleView.alpha = alpha
             this.ownedTextView.alpha = alpha
