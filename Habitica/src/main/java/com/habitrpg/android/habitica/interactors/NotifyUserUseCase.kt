@@ -37,17 +37,17 @@ constructor(threadExecutor: ThreadExecutor, postExecutionThread: PostExecutionTh
             }
             val stats = requestValues.user.stats
 
+            val pair = getNotificationAndAddStatsToUser(requestValues.context, requestValues.xp, requestValues.hp, requestValues.gold, requestValues.mp, requestValues.questDamage, requestValues.user)
+            val view = pair.first
+            val type = pair.second
+            if (view != null && type != null) {
+                HabiticaSnackbar.showSnackbar(requestValues.snackbarTargetView, null, null, view, type)
+            }
             if (requestValues.hasLeveledUp == true) {
                 return@defer levelUpUseCase.observable(LevelUpUseCase.RequestValues(requestValues.user, requestValues.level, requestValues.context))
                         .flatMap { userRepository.retrieveUser(true) }
                         .map { it.stats }
             } else {
-                val pair = getNotificationAndAddStatsToUser(requestValues.context, requestValues.xp, requestValues.hp, requestValues.gold, requestValues.mp, requestValues.questDamage, requestValues.user)
-                val view = pair.first
-                val type = pair.second
-                if (view != null && type != null) {
-                    HabiticaSnackbar.showSnackbar(requestValues.snackbarTargetView, null, null, view, type)
-                }
                 return@defer Flowable.just(stats)
             }
         }
