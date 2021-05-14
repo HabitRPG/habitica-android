@@ -72,7 +72,11 @@ class RewardsRecyclerViewAdapter(private var customRewards: OrderedRealmCollecti
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == VIEWTYPE_CUSTOM_REWARD) {
-            RewardViewHolder(getContentView(parent), { task, direction -> taskScoreEventsSubject.onNext(Pair(task, direction)) }, {
+            RewardViewHolder(getContentView(parent), { task, direction ->
+                if (task.value <= (user?.stats?.gp ?: 0.0)) {
+                    taskScoreEventsSubject.onNext(Pair(task, direction))
+                }
+                                                     }, {
                 task -> taskOpenEventsSubject.onNext(task)
             }) {
                 task -> brokenTaskEventsSubject.onNext(task)
