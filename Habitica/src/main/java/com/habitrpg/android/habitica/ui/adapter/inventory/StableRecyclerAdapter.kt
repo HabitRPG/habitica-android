@@ -154,7 +154,7 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             val imageName = if (itemType == "pets") {
                 "Pet_Egg_" + item.animal
             } else {
-                "Mount_Icon_" + item.key
+                "Mount_Icon_" + item.animal + "-Base"
             }
 
             this.ownedTextView.text = context.getString(R.string.pet_ownership_fraction, item.numberOwned, item.totalNumber)
