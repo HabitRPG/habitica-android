@@ -825,7 +825,7 @@
     <string name="send_message">メッセージを送る</string>
     <string name="remove">取り消す</string>
     <string name="inbox_messages_title_nosender">あなたは %d のメッセージを受け取りました</string>
-    <string name="inbox_messages_title">あなたは %s から %d のメッセージを受け取りました</string>
+    <string name="inbox_messages_title">あなたは %2$s から %1$d のメッセージを受け取りました</string>
     <string name="app_theme">アプリのスキン</string>
     <string name="switch_to_grid_view">グリッド表示に切り替える</string>
     <string name="switch_to_list_view">リスト表示に切り替える</string>

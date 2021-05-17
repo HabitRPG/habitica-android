@@ -79,4 +79,5 @@ interface InventoryRepository : BaseRepository {
     fun getItems(itemClass: Class<out Item>): Flowable<out RealmResults<out Item>>
     fun getLatestMysteryItem(): Flowable<Equipment>
     fun getItem(type: String, key: String): Flowable<Item>
+    fun getAvailableLimitedItems(): Flowable<List<Item>>
 }

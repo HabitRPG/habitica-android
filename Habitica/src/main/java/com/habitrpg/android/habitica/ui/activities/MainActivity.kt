@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica.ui.activities
 
-import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.appwidget.AppWidgetManager
@@ -11,7 +10,6 @@ import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.Canvas
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -24,7 +22,6 @@ import androidx.core.content.edit
 import androidx.core.os.bundleOf
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.NavDeepLinkBuilder
 import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -51,18 +48,15 @@ import com.habitrpg.android.habitica.models.Notification
 import com.habitrpg.android.habitica.models.TutorialStep
 import com.habitrpg.android.habitica.models.inventory.Egg
 import com.habitrpg.android.habitica.models.inventory.HatchingPotion
-import com.habitrpg.android.habitica.models.notifications.ChallengeWonData
 import com.habitrpg.android.habitica.models.notifications.LoginIncentiveData
 import com.habitrpg.android.habitica.models.responses.MaintenanceResponse
 import com.habitrpg.android.habitica.models.responses.TaskScoringResult
-import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.user.User
-import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
+import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import com.habitrpg.android.habitica.ui.AvatarView
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel
 import com.habitrpg.android.habitica.ui.TutorialView
 import com.habitrpg.android.habitica.ui.fragments.NavigationDrawerFragment
-import com.habitrpg.android.habitica.ui.fragments.tasks.TasksFragment
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.viewmodels.NotificationsViewModel
 import com.habitrpg.android.habitica.ui.views.AdventureGuideDrawerArrowDrawable
@@ -83,10 +77,6 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.functions.Consumer
 import io.reactivex.rxjava3.schedulers.Schedulers
 import io.realm.kotlin.isValid
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import java.util.*
@@ -108,7 +98,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     @Inject
     internal lateinit var sharedPreferences: SharedPreferences
     @Inject
-    internal lateinit var crashlyticsProxy: CrashlyticsProxy
+    internal lateinit var analyticsManager: AnalyticsManager
     @Inject
     internal lateinit var pushNotificationManager: PushNotificationManager
     @Inject
@@ -261,7 +251,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         try {
             taskAlarmManager.scheduleAllSavedAlarms(sharedPreferences.getBoolean("preventDailyReminder", false))
         } catch (e: Exception) {
-            crashlyticsProxy.logException(e)
+            analyticsManager.logException(e)
         }
     }
 
@@ -446,6 +436,11 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
             val preferences = user?.preferences
 
             preferences?.language?.let { apiClient.setLanguageCode(it) }
+            if (preferences?.language != sharedPreferences.getString("language", "en")) {
+                sharedPreferences.edit {
+                    putString("language", preferences?.language)
+                }
+            }
             preferences?.sound?.let { soundManager.soundTheme = it }
 
             displayDeathDialogIfNeeded()
@@ -475,9 +470,13 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                 drawerIcon.setEnabled(false)
             }
 
-            val navigationController = findNavController(R.id.nav_host_fragment)
-            if (binding.toolbarTitle.text?.isNotBlank() != true) {
-                navigationController.currentDestination?.let { updateToolbarTitle(it, null) }
+            try {
+                val navigationController = findNavController(R.id.nav_host_fragment)
+                if (binding.toolbarTitle.text?.isNotBlank() != true) {
+                    navigationController.currentDestination?.let { updateToolbarTitle(it, null) }
+                }
+            } catch (e: java.lang.IllegalStateException) {
+                // Has no Navcontroller right now.
             }
         }
     }
@@ -553,6 +552,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                         dialog.addButton(R.string.onwards, true)
                         dialog.addButton(R.string.share, false) { hatchingDialog, _ ->
                                     val event1 = ShareEvent()
+                                    event1.identifier = "raisedPet"
                                     event1.sharedMessage = getString(R.string.share_raised, pet.text)
                                     val mountImageSideLength = 99
                                     val sharedImage = Bitmap.createBitmap(mountImageSideLength, mountImageSideLength, Bitmap.Config.ARGB_8888)
@@ -640,6 +640,8 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                             .doOnNext { user1 ->
                                 FirebaseAnalytics.getInstance(this).setUserProperty("has_party", if (user1.party?.id?.isNotEmpty() == true) "true" else "false")
                                 FirebaseAnalytics.getInstance(this).setUserProperty("is_subscribed", if (user1.isSubscribed) "true" else "false")
+                                FirebaseAnalytics.getInstance(this).setUserProperty("checkin_count", user1.loginIncentives.toString())
+                                FirebaseAnalytics.getInstance(this).setUserProperty("level", user1.stats?.lvl?.toString() ?: "")
                                 pushNotificationManager.setUser(user1)
                                 pushNotificationManager.addPushDeviceUsingStoredToken()
                             }
@@ -708,6 +710,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
     @Subscribe
     fun shareEvent(event: ShareEvent) {
+        analyticsManager.logEvent("shared", bundleOf(Pair("identifier", event.identifier)))
         val sharingIntent = Intent(Intent.ACTION_SEND)
         sharingIntent.type = "*/*"
         sharingIntent.putExtra(Intent.EXTRA_TEXT, event.sharedMessage)
@@ -897,6 +900,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
             dialog.addButton(R.string.share, false) { hatchingDialog, _ ->
                 val event1 = ShareEvent()
                 event1.sharedMessage = getString(R.string.share_hatched, potionName, eggName)
+                event1.identifier = "hatchedPet";
                 val petImageSideLength = 140
                 val sharedImage = Bitmap.createBitmap(petImageSideLength, petImageSideLength, Bitmap.Config.ARGB_8888)
                 val canvas = Canvas(sharedImage)

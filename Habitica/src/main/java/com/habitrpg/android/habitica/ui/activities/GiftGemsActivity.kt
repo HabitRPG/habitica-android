@@ -16,7 +16,7 @@ import com.habitrpg.android.habitica.extensions.addOkButton
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.PurchaseHandler
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
+import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import com.habitrpg.android.habitica.ui.fragments.purchases.GiftBalanceGemsFragment
 import com.habitrpg.android.habitica.ui.fragments.purchases.GiftPurchaseGemsFragment
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
@@ -28,7 +28,7 @@ class GiftGemsActivity : BaseActivity() {
     private lateinit var binding: ActivityGiftGemsBinding
 
     @Inject
-    lateinit var crashlyticsProxy: CrashlyticsProxy
+    lateinit var analyticsManager: AnalyticsManager
     @Inject
     lateinit var socialRepository: SocialRepository
     @Inject
@@ -62,7 +62,7 @@ class GiftGemsActivity : BaseActivity() {
         setTitle(R.string.gift_gems)
         setSupportActionBar(binding.toolbar)
 
-        purchaseHandler = PurchaseHandler(this, crashlyticsProxy)
+        purchaseHandler = PurchaseHandler(this, analyticsManager)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)

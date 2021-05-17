@@ -256,6 +256,10 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
                 }
     }
 
+    override fun getAvailableLimitedItems(): Flowable<List<Item>> {
+        return localRepository.getAvailableLimitedItems()
+    }
+
     override fun retrieveShopInventory(identifier: String): Flowable<Shop> {
         return apiClient.retrieveShopIventory(identifier)
     }

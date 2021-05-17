@@ -12,7 +12,8 @@ import java.util.*
 enum class PromoType {
     GEMS_AMOUNT,
     GEMS_PRICE,
-    SUBSCRIPTION
+    SUBSCRIPTION,
+    SURVEY
 }
 
 abstract class HabiticaPromotion {
@@ -43,7 +44,12 @@ fun getHabiticaPromotionFromKey(key: String, startDate: Date?, endDate: Date?): 
         "fall_extra_gems", "fall2020", "testFall2020" -> FallExtraGemsHabiticaPromotion(startDate, endDate)
         "spooky_extra_gems", "fall2020SecondPromo", "spooky2020" -> SpookyExtraGemsHabiticaPromotion(startDate, endDate)
         "g1g1" -> GiftOneGetOneHabiticaPromotion(startDate, endDate)
+        "survey2021" -> Survey2021Promotion()
         else -> null
     }
 }
 
+
+interface HabiticaWebPromotion {
+    var url: String?
+}

@@ -44,6 +44,7 @@ import com.habitrpg.android.habitica.data.local.implementation.RealmTutorialLoca
 import com.habitrpg.android.habitica.data.local.implementation.RealmUserLocalRepository;
 import com.habitrpg.android.habitica.helpers.AppConfigManager;
 import com.habitrpg.android.habitica.helpers.UserScope;
+import com.habitrpg.android.habitica.proxy.AnalyticsManager;
 
 import javax.inject.Named;
 
@@ -65,8 +66,8 @@ public class UserRepositoryModule {
     }
 
     @Provides
-    TaskRepository providesTaskRepository(TaskLocalRepository localRepository, ApiClient apiClient, @Named(AppModule.NAMED_USER_ID) String userId, AppConfigManager appConfigManager) {
-        return new TaskRepositoryImpl(localRepository, apiClient, userId, appConfigManager);
+    TaskRepository providesTaskRepository(TaskLocalRepository localRepository, ApiClient apiClient, @Named(AppModule.NAMED_USER_ID) String userId, AppConfigManager appConfigManager, AnalyticsManager analyticsManager) {
+        return new TaskRepositoryImpl(localRepository, apiClient, userId, appConfigManager, analyticsManager);
     }
 
     @Provides

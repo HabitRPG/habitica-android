@@ -5,6 +5,7 @@ import android.content.Context
 import com.habitrpg.android.habitica.R
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
+import java.util.*
 
 open class SpecialItem : RealmObject(), Item {
     override val type: String
@@ -15,6 +16,7 @@ open class SpecialItem : RealmObject(), Item {
     override var text: String = ""
     internal var notes: String = ""
     override var value: Int = 0
+    override var event: ItemEvent? = null
     var isMysteryItem: Boolean = false
 
     companion object {

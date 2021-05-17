@@ -57,4 +57,5 @@ interface InventoryLocalRepository : ContentLocalRepository {
     fun feedPet(foodKey: String, petKey: String, feedValue: Int, userID: String)
     fun getLatestMysteryItem(): Flowable<Equipment>
     fun soldItem(userID: String, updatedUser: User): User
+    fun getAvailableLimitedItems(): Flowable<List<Item>>
 }

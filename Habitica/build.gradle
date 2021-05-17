@@ -1,6 +1,5 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'com.google.firebase.crashlytics'
 apply plugin: 'com.noveogroup.android.check'
@@ -51,7 +50,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava3:2.9.0'
     //Crash Logging
-    implementation 'com.google.firebase:firebase-crashlytics:17.3.1'
+    implementation 'com.google.firebase:firebase-crashlytics:17.4.1'
 
     //Dependency Injection
     implementation 'com.google.dagger:dagger:2.31.2'
@@ -61,7 +60,7 @@ dependencies {
     //App Compatibility and Material Design
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.3.0'
-    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'androidx.recyclerview:recyclerview:1.2.0'
     implementation 'androidx.legacy:legacy-preference-v14:1.0.0'
     // Markdown
     implementation "io.noties.markwon:core:4.6.1"
@@ -150,8 +149,8 @@ android {
         buildConfigField "String", "TESTING_LEVEL", "\"production\""
         resConfigs "en", "bg", "de", "en-rGB", "es", "fr", "hr-rHR", "in", "it", "iw", "ja", "ko", "lt", "nl", "pl", "pt-rBR", "pt-rPT", "ru", "tr", "zh", "zh-rTW"
 
-        versionCode 2895
-        versionName "3.2.2"
+        versionCode 2943
+        versionName "3.2.3"
     }
 
     buildFeatures {
@@ -255,11 +254,16 @@ android {
         disable 'MissingTranslation','InvalidPackage'
         enable 'LogConditional','IconExpectedSize','MissingRegistered','TypographyQuotes'
     }
-}
 
-androidExtensions {
-    features = ['parcelize']
-    experimental = true
+    bundle {
+        language {
+            // Specifies that the app bundle should not support
+            // configuration APKs for language resources. These
+            // resources are instead packaged with each base and
+            // dynamic feature APK.
+            enableSplit = false
+        }
+    }
 }
 
 Properties props = new Properties()

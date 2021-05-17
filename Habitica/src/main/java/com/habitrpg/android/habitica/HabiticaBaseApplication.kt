@@ -28,7 +28,7 @@ import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.modules.UserModule
 import com.habitrpg.android.habitica.modules.UserRepositoryModule
-import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
+import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import com.habitrpg.android.habitica.ui.activities.IntroActivity
 import com.habitrpg.android.habitica.ui.activities.LoginActivity
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
@@ -48,7 +48,7 @@ abstract class HabiticaBaseApplication : Application() {
     @Inject
     internal lateinit var sharedPrefs: SharedPreferences
     @Inject
-    internal lateinit var crashlyticsProxy: CrashlyticsProxy
+    internal lateinit var analyticsManager: AnalyticsManager
     /**
      * For better performance billing class should be used as singleton
      */
@@ -92,7 +92,7 @@ abstract class HabiticaBaseApplication : Application() {
                 .build()
         Fresco.initialize(this, config)
 
-        RxErrorHandler.init(crashlyticsProxy)
+        RxErrorHandler.init(analyticsManager)
 
         FirebaseAnalytics.getInstance(this).setUserProperty("app_testing_level", BuildConfig.TESTING_LEVEL)
 

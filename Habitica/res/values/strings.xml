@@ -461,7 +461,8 @@
     <string name="gem_shop">Gem</string>
     <string name="mystery_item">Mystery Item</string>
     <string name="myster_item_notes">Each month, subscribers will receive a mystery item. This is usually released about one week before the end of the month.</string>
-    <string name="open">Open</string>
+    <string name="open">Open</string>>
+    <string name="is_open">Open</string>
     <string name="checkInRewardEarned">You earned a %1$s as a reward for your devotion to improving your life.</string>
     <string name="nextPrizeUnlocks" tools:ignore="PluralsCandidate">Next prize in %1$d Check-Ins</string>
     <string name="pending_approval">pending approval</string>
@@ -555,6 +556,7 @@
     <string name="million_abbrev">m</string>
     <string name="billion_abbrev">b</string>
     <string name="available_until">Available until %s</string>
+    <string name="available_for">Available for %s</string>
     <string name="gems_left_max">Monthly Gems: %1$d/%2$d Remaining</string>
     <string name="gems_left_nomax">Monthly Gems: %d Remaining</string>
     <string name="health">Health</string>
@@ -848,7 +850,7 @@
     <string name="share_challenge_with">Share Challenge with</string>
     <string name="app_theme">App Theme</string>
     <string name="sent_card">You sent a %s</string>
-    <string name="inbox_messages_title">You received %d messages from %s</string>
+    <string name="inbox_messages_title">You received %1$d messages from %2$s</string>
     <string name="inbox_messages_title_nosender">You received %d messages</string>
     <string name="remove">Remove</string>
     <string name="transfer_ownership">Transfer Leadership</string>
@@ -1143,4 +1145,13 @@
     <string name="quest_leave_message">Are you sure you want to leave the Quest? All your progress will be lost.</string>
     <string name="quest_leave_message_nostart">Are you sure you want to leave the Quest? You won\'t be able to participate.</string>
     <string name="launch_screen">Launch Screen</string>
+    <string name="something_new">New</string>
+    <string name="limited_potions_available">Seasonal items available</string>
+    <string name="open_for">Open for %s</string>
+    <string name="no_longer_available">No longer available</string>
+    <string name="go_to_survey">Go to Survey</string>
+    <string name="survey_title">Habitica player survey</string>
+    <string name="survey_menu_description">Fill out this 5 minute survey to help us grow and receive an achievement!</string>
+    <string name="locked_equipment_shop_dialog">You must purchase the previous items in this sequence to unlock</string>
+    <string name="caused_damage">You caused damage to the boss</string>
 </resources>

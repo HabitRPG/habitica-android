@@ -787,7 +787,7 @@
     <string name="transfer_ownership">Chuyển quyền Lãnh đạo</string>
     <string name="remove">Xóa</string>
     <string name="inbox_messages_title_nosender">Bạn đã nhận %d tin nhắn</string>
-    <string name="inbox_messages_title">Bạn đã nhận %d tin nhắn từ %s</string>
+    <string name="inbox_messages_title">Bạn đã nhận %1$d tin nhắn từ %2$s</string>
     <string name="sent_card">Bạn đã gửi một %s</string>
     <string name="app_theme">Chủ đề Ứng dụng</string>
     <string name="share_challenge_with">Chia sẻ Thử thách với</string>

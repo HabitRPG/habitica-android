@@ -279,57 +279,66 @@ public class HabiticaIconsHelper {
         return imageOfUnpinItem;
     }
 
-    private static Bitmap imageOfItemIndicatorNumber = null;
-    public static Bitmap imageOfItemIndicatorNumber() {
-        if (imageOfItemIndicatorNumber != null)
-            return imageOfItemIndicatorNumber;
-
+    public static Bitmap imageOfItemIndicatorNumber(boolean isLimited) {
         int size = scaleSize(28);
-        imageOfItemIndicatorNumber = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
+        Bitmap imageOfItemIndicatorNumber = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(imageOfItemIndicatorNumber);
         canvas.scale(displayDensity, displayDensity);
-        HabiticaIcons.drawItemIndicator(canvas, Color.parseColor("#C3C0C7"), false, false, false);
+        int lightColor = Color.parseColor("#A5A1AD");
+        int darkColor = Color.parseColor("#525252");
+        if (isLimited) {
+            lightColor = Color.parseColor("#6133B4");
+            darkColor = Color.parseColor("#6133B4");
+        }
+        HabiticaIcons.drawItemIndicator(canvas, lightColor, Color.parseColor("#C3C0C7"), darkColor, lightColor, false, false, false);
 
         return imageOfItemIndicatorNumber;
     }
 
-    private static Bitmap imageOfItemIndicatorNumberDark = null;
-    public static Bitmap imageOfItemIndicatorNumberDark() {
-        if (imageOfItemIndicatorNumberDark != null)
-            return imageOfItemIndicatorNumberDark;
-
+    public static Bitmap imageOfItemIndicatorNumberDark(boolean isLimited) {
         int size = scaleSize(28);
-        imageOfItemIndicatorNumberDark = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
+        Bitmap imageOfItemIndicatorNumberDark = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(imageOfItemIndicatorNumberDark);
         canvas.scale(displayDensity, displayDensity);
-        HabiticaIcons.drawItemIndicator(canvas, Color.parseColor("#C3C0C7"), false, false, true);
+        int lightColor = Color.parseColor("#A5A1AD");
+        int darkColor = Color.parseColor("#525252");
+        if (isLimited) {
+            lightColor = Color.parseColor("#6133B4");
+            darkColor = Color.parseColor("#6133B4");
+        }
+        HabiticaIcons.drawItemIndicator(canvas, lightColor, Color.parseColor("#C3C0C7"), lightColor, darkColor, false, false, true);
 
         return imageOfItemIndicatorNumberDark;
     }
 
-    private static Bitmap imageOfItemIndicatorLocked = null;
-    public static Bitmap imageOfItemIndicatorLocked() {
-        if (imageOfItemIndicatorLocked != null)
-            return imageOfItemIndicatorLocked;
-
+    public static Bitmap imageOfItemIndicatorLocked(boolean isLimited) {
         int size = scaleSize(28);
-        imageOfItemIndicatorLocked = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
+        Bitmap imageOfItemIndicatorLocked = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(imageOfItemIndicatorLocked);
         canvas.scale(displayDensity, displayDensity);
-        HabiticaIcons.drawItemIndicator(canvas, Color.parseColor("#C3C0C7"), true, false, false);
+        int lightColor = Color.parseColor("#EDECEE");
+        int darkColor = Color.parseColor("#525252");
+        if (isLimited) {
+            lightColor = Color.parseColor("#6133B4");
+            darkColor = Color.parseColor("#6133B4");
+        }
+        HabiticaIcons.drawItemIndicator(canvas, lightColor, Color.parseColor("#C3C0C7"), lightColor, darkColor, true, false, false);
         return imageOfItemIndicatorLocked;
     }
 
     private static Bitmap imageOfItemIndicatorLockedDark = null;
-    public static Bitmap imageOfItemIndicatorLockedDark() {
-        if (imageOfItemIndicatorLockedDark != null)
-            return imageOfItemIndicatorLockedDark;
-
+    public static Bitmap imageOfItemIndicatorLockedDark(boolean isLimited) {
         int size = scaleSize(28);
-        imageOfItemIndicatorLockedDark = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
+        Bitmap imageOfItemIndicatorLockedDark = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(imageOfItemIndicatorLockedDark);
         canvas.scale(displayDensity, displayDensity);
-        HabiticaIcons.drawItemIndicator(canvas, Color.parseColor("#C3C0C7"), true, false, true);
+        int lightColor = Color.parseColor("#EDECEE");
+        int darkColor = Color.parseColor("#525252");
+        if (isLimited) {
+            lightColor = Color.parseColor("#6133B4");
+            darkColor = Color.parseColor("#6133B4");
+        }
+        HabiticaIcons.drawItemIndicator(canvas, lightColor, Color.parseColor("#C3C0C7"), lightColor, darkColor, true, false, true);
         return imageOfItemIndicatorLockedDark;
     }
 
@@ -342,7 +351,7 @@ public class HabiticaIconsHelper {
         imageOfItemIndicatorLimited = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(imageOfItemIndicatorLimited);
         canvas.scale(displayDensity, displayDensity);
-        HabiticaIcons.drawItemIndicator(canvas, Color.parseColor("#C3C0C7"), false, true, false);
+        HabiticaIcons.drawItemIndicator(canvas, Color.parseColor("#A5A1AD"), Color.parseColor("#C3C0C7"), Color.parseColor("#A5A1AD"), Color.parseColor("#525252"), false, true, false);
 
         return imageOfItemIndicatorLimited;
     }

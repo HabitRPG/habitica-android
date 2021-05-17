@@ -45,6 +45,7 @@ open class QuestContent : RealmObject(), Item {
         }
 
     var collect: RealmList<QuestCollect>? = null
+    override var event: ItemEvent? = null
 
     val isBossQuest: Boolean
         get() = this.boss != null

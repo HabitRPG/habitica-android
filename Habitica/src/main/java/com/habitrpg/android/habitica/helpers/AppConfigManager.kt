@@ -9,10 +9,11 @@ import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.data.ContentRepository
 import com.habitrpg.android.habitica.models.WorldState
 import com.habitrpg.android.habitica.models.promotions.HabiticaPromotion
+import com.habitrpg.android.habitica.models.promotions.HabiticaWebPromotion
 import com.habitrpg.android.habitica.models.promotions.getHabiticaPromotionFromKey
 import java.util.*
 
-class AppConfigManager(private val contentRepository: ContentRepository?) {
+class AppConfigManager(contentRepository: ContentRepository?) {
 
     private var worldState: WorldState? = null
 
@@ -93,6 +94,10 @@ class AppConfigManager(private val contentRepository: ContentRepository?) {
         return remoteConfig.getString("feedbackURL")
     }
 
+    fun surveyURL(): String {
+        return remoteConfig.getString("surveyURL")
+    }
+
     fun taskDisplayMode(context: Context): String {
         return if (remoteConfig.getBoolean("enableTaskDisplayMode")) {
             val preferences = PreferenceManager.getDefaultSharedPreferences(context)
@@ -107,13 +112,20 @@ class AppConfigManager(private val contentRepository: ContentRepository?) {
     }
 
     fun activePromo(): HabiticaPromotion? {
+        var promo: HabiticaPromotion? = null
         for (event in worldState?.events ?: listOf(worldState?.currentEvent)) {
             if (event == null) return null
             if (event.promo != null) {
-                return getHabiticaPromotionFromKey(event.promo ?: "", event.start, event.end)
+                promo = getHabiticaPromotionFromKey(event.promo ?: "", event.start, event.end)
             }
         }
-        return null
+        if (promo == null && remoteConfig.getString("activePromo").isNotBlank()) {
+            promo = getHabiticaPromotionFromKey(remoteConfig.getString("activePromo"), null, null)
+        }
+        if (promo is HabiticaWebPromotion) {
+            promo.url = surveyURL()
+        }
+        return promo
     }
 
     fun knownIssues(): List<Map<String, String>> {

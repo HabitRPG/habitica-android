@@ -165,18 +165,15 @@ class StableRecyclerFragment : BaseFragment<FragmentRecyclerviewBinding>() {
         compositeSubscription.add(observable.zipWith(ownedObservable, { unsortedAnimals, ownedAnimals ->
             mapAnimals(unsortedAnimals, ownedAnimals)
         }).subscribe({ items -> adapter?.setItemList(items) }, RxErrorHandler.handleEmptyError()))
-
-        compositeSubscription.add(inventoryRepository.getOwnedItems("eggs")
-                .map {
-                    val map = mutableMapOf<String, OwnedItem>()
-                    it.forEach { item ->
-                        map[item.key ?: ""] = item
-                    }
-                    map
+        compositeSubscription.add(inventoryRepository.getOwnedItems(true).subscribe({ adapter?.setOwnedItems(it) }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(inventoryRepository.getMounts().subscribe({ adapter?.setExistingMounts(it) }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(inventoryRepository.getOwnedMounts()
+                .map { ownedMounts ->
+                    val mountMap = mutableMapOf<String, OwnedMount>()
+                    ownedMounts.forEach { mountMap[it.key ?: ""] = it }
+                    return@map mountMap
                 }
-                .subscribe({
-            adapter?.ownedEggs = it
-        }, RxErrorHandler.handleEmptyError()))
+                .subscribe({ adapter?.setOwnedMounts(it) }, RxErrorHandler.handleEmptyError()))
     }
 
     private fun mapAnimals(unsortedAnimals: RealmResults<out Animal>, ownedAnimals: Map<String, OwnedObject>): ArrayList<Any> {

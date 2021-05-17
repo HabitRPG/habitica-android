@@ -802,7 +802,7 @@
     <string name="remove_member">Üye Kaldır</string>
     <string name="transfer_ownership">Liderliği Devret</string>
     <string name="remove">Kaldır</string>
-    <string name="inbox_messages_title">%s üyesinden %d mesajın var</string>
+    <string name="inbox_messages_title">%2$s üyesinden %1$d mesajın var</string>
     <string name="inbox_messages_title_nosender">%d mesajın var</string>
     <string name="app_theme">Uygulama Teması</string>
     <string name="share_challenge_with">Mücadeleyi şunun ile paylaş</string>

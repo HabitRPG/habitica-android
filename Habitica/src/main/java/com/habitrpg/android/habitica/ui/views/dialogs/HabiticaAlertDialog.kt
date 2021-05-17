@@ -292,7 +292,7 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
                 if ((dialogQueue[0].context as? Activity)?.isFinishing != true) {
                     GlobalScope.launch(context = Dispatchers.Main) {
                         delay(500L)
-                        if (dialogQueue.size > 0) {
+                        if (dialogQueue.size > 0 && (dialogQueue[0].context as? Activity)?.isFinishing != true) {
                             dialogQueue[0].show()
                         }
                     }

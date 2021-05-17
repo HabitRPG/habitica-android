@@ -3,7 +3,7 @@
 //
 //import com.habitrpg.android.habitica.data.implementation.ApiClientImpl;
 //import com.habitrpg.android.habitica.helpers.NotificationsManager;
-//import com.habitrpg.android.habitica.proxy.implementation.EmptyCrashlyticsProxy;
+//import com.habitrpg.android.habitica.proxy.implementation.EmptyAnalyticsManager;
 //import com.habitrpg.android.habitica.data.ApiClient;
 //import com.habitrpg.android.habitica.BuildConfig;
 //import com.habitrpg.android.habitica.models.user.User;

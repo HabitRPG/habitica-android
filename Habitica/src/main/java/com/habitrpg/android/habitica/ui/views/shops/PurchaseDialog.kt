@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.ui.views.shops
 
 import android.content.Context
 import android.graphics.drawable.BitmapDrawable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
@@ -10,14 +11,17 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toDrawable
 import androidx.core.os.bundleOf
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.events.GearPurchasedEvent
 import com.habitrpg.android.habitica.events.ShowSnackbarEvent
+import com.habitrpg.android.habitica.extensions.DateUtils
 import com.habitrpg.android.habitica.extensions.addCancelButton
 import com.habitrpg.android.habitica.extensions.addCloseButton
+import com.habitrpg.android.habitica.extensions.getShortRemainingString
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
@@ -39,10 +43,17 @@ import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.realm.RealmResults
+import kotlinx.coroutines.*
 import org.greenrobot.eventbus.EventBus
+import java.time.Duration
+import java.time.temporal.TemporalUnit
 import java.util.*
 import javax.inject.Inject
 import kotlin.math.max
+import kotlin.time.DurationUnit
+import kotlin.time.ExperimentalTime
+import kotlin.time.minutes
+import kotlin.time.seconds
 
 class PurchaseDialog(context: Context, component: UserComponent?, val item: ShopItem) : HabiticaAlertDialog(context) {
 
@@ -74,24 +85,11 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
         set(value) {
             field = value
 
-            if (shopItem.isLimited) {
-                //TODO: replace with correct date once API is final
-                limitedTextView.text = context.getString(R.string.available_until, Date().toString())
-            } else {
-                limitedTextView.visibility = View.GONE
-            }
-
             if (shopItem.lockedReason(context) == null) {
                 updatePurchaseTotal()
                 priceLabel.currency = shopItem.currency
             } else {
                 limitedTextView.text = shopItem.lockedReason(context)
-            }
-            if (shopItem.locked) {
-                buyLabel.text = context.getString(R.string.locked)
-                limitedTextView.visibility = View.VISIBLE
-                limitedTextView.background = ContextCompat.getColor(context, R.color.offset_background).toDrawable()
-                limitedTextView.setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
             }
 
             priceLabel.isLocked = shopItem.locked || shopItem.lockedReason(context) != null
@@ -138,6 +136,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
 
             contentView.setItem(shopItem)
             setAdditionalContentView(contentView)
+            setLimitedTextView()
         }
 
     private fun updatePurchaseTotal() {
@@ -161,16 +160,49 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
     }
 
     private fun checkGearClass() {
-        val user = user ?: return
-
         if (shopItem.purchaseType == "gems") {
             return
         }
 
-        if (shopItem.habitClass != null && shopItem.habitClass != "special" && user.stats?.habitClass != shopItem.habitClass) {
+        setLimitedTextView()
+    }
+
+    private var limitedTextViewJob: Job? = null
+
+    @OptIn(ExperimentalTime::class)
+    private fun setLimitedTextView() {
+        if (user == null) return
+        if (shopItem.habitClass != null && shopItem.habitClass != "special" && user?.stats?.habitClass != shopItem.habitClass) {
             limitedTextView.text = context.getString(R.string.class_equipment_shop_dialog)
             limitedTextView.visibility = View.VISIBLE
             limitedTextView.setBackgroundColor(ContextCompat.getColor(context, R.color.inverted_background))
+        } else if (shopItem.event?.end != null) {
+            limitedTextViewJob?.cancel()
+            limitedTextViewJob = GlobalScope.launch(Dispatchers.Main) {
+                limitedTextView.visibility = View.VISIBLE
+                while (shopItem.event?.end?.after(Date()) == true) {
+                    limitedTextView.text = context.getString(R.string.available_for, shopItem.event?.end?.getShortRemainingString())
+                    val diff = (shopItem.event?.end?.time ?: 0) - Date().time
+                    delay(if (diff < (60 * 60 * 1000)) 1.seconds else 1.minutes)
+                }
+                if (shopItem.event?.end?.before(Date()) == true) {
+                    limitedTextView.text = context.getString(R.string.no_longer_available)
+                    limitedTextView.background = ContextCompat.getColor(context, R.color.offset_background).toDrawable()
+                    limitedTextView.setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
+                }
+            }
+        } else if (shopItem.locked) {
+            buyLabel.text = context.getString(R.string.locked)
+            limitedTextView.visibility = View.GONE
+            if (shopItem.isTypeGear && shopItem.key.last().toString().toIntOrNull() != null) {
+                val previousKey = "${shopItem.key.dropLast(1)}${(shopItem.key.last().toString().toIntOrNull() ?: 1) - 1}"
+                if (user?.items?.gear?.owned?.find { it.key == previousKey}?.owned != true) {
+                    limitedTextView.visibility = View.VISIBLE
+                    limitedTextView.text = context.getString(R.string.locked_equipment_shop_dialog)
+                    limitedTextView.background = ContextCompat.getColor(context, R.color.offset_background).toDrawable()
+                    limitedTextView.setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
+                }
+            }
         } else {
             limitedTextView.visibility = View.GONE
         }
@@ -255,6 +287,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
     override fun dismiss() {
         userRepository.close()
         inventoryRepository.close()
+        limitedTextViewJob?.cancel()
         if (!compositeSubscription.isDisposed) {
             compositeSubscription.dispose()
         }
@@ -297,6 +330,11 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
     }
 
     private fun buyItem(quantity: Int) {
+        FirebaseAnalytics.getInstance(context).logEvent("item_purchased", bundleOf(
+                Pair("shop", shopIdentifier),
+                Pair("type", shopItem.purchaseType),
+                Pair("key", shopItem.key)
+        ))
         val snackbarText = arrayOf("")
         val observable: Flowable<Any>
         if (shopIdentifier != null && shopIdentifier == Shop.TIME_TRAVELERS_SHOP || "mystery_set" == shopItem.purchaseType || shopItem.currency == "hourglasses") {
@@ -411,6 +449,10 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
             maybe = inventoryRepository.getPets().firstElement().filter {
                 val filteredPets = it.filter {pet ->
                     pet.type == "premium" || pet.type == "wacky"
+                }
+                if (it.firstOrNull()?.type == "wacky") {
+                    // Wacky pets can't be raised to mounts, so only need half as many
+                    totalCount = 9
                 }
                 shouldWarn = filteredPets.isNotEmpty()
                 return@filter shouldWarn

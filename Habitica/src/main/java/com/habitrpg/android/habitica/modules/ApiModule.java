@@ -9,7 +9,7 @@ import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.data.implementation.ApiClientImpl;
 import com.habitrpg.android.habitica.helpers.NotificationsManager;
 import com.habitrpg.android.habitica.helpers.KeyHelper;
-import com.habitrpg.android.habitica.proxy.CrashlyticsProxy;
+import com.habitrpg.android.habitica.proxy.AnalyticsManager;
 
 import javax.annotation.Nullable;
 import javax.inject.Singleton;
@@ -42,8 +42,8 @@ public class ApiModule {
 
     @Provides
     @Singleton
-    public ApiClient providesApiHelper(GsonConverterFactory gsonConverter, HostConfig hostConfig, CrashlyticsProxy crashlyticsProxy, NotificationsManager notificationsManager, Context context) {
-        return new ApiClientImpl(gsonConverter, hostConfig, crashlyticsProxy, notificationsManager, context);
+    public ApiClient providesApiHelper(GsonConverterFactory gsonConverter, HostConfig hostConfig, AnalyticsManager analyticsManager, NotificationsManager notificationsManager, Context context) {
+        return new ApiClientImpl(gsonConverter, hostConfig, analyticsManager, notificationsManager, context);
     }
 
     @Provides

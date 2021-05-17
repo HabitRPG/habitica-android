@@ -48,7 +48,7 @@ import com.habitrpg.android.habitica.extensions.addOkButton
 import com.habitrpg.android.habitica.extensions.updateStatusBarColor
 import com.habitrpg.android.habitica.helpers.*
 import com.habitrpg.android.habitica.models.auth.UserAuthResponse
-import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
+import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.willowtreeapps.signinwithapplebutton.SignInWithAppleConfiguration
@@ -75,7 +75,7 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
     @JvmField
     var keyHelper: KeyHelper? = null
     @Inject
-    lateinit var crashlyticsProxy: CrashlyticsProxy
+    lateinit var analyticsManager: AnalyticsManager
     @Inject
     lateinit var configManager: AppConfigManager
 
@@ -366,7 +366,7 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
         try {
             saveTokens(userAuthResponse.apiToken, userAuthResponse.id)
         } catch (e: Exception) {
-            crashlyticsProxy.logException(e)
+            analyticsManager.logException(e)
         }
 
         HabiticaBaseApplication.reloadUserComponent()

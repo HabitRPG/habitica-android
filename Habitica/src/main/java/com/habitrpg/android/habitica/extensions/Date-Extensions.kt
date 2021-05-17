@@ -8,13 +8,6 @@ import kotlin.math.round
 class DateUtils {
 
     companion object {
-        private fun minutesInMs(minutes: Int): Int {
-            return minutes * 60 * 1000
-        }
-
-        fun hoursInMs(hours: Int): Int {
-            return hours * minutesInMs(60)
-        }
 
         fun createDate(year: Int, month: Int, day: Int): Date {
             val cal = Calendar.getInstance()
@@ -90,4 +83,32 @@ fun Long.getRemainingString(res: Resources): String {
         diffMinutes == 1L -> res.getString(R.string.remaining_1Minute)
         else -> res.getString(R.string.remaining_minutes, diffMinutes)
     }
+}
+
+fun Date.getShortRemainingString(): String {
+    return time.getShortRemainingString()
+}
+
+fun Long.getShortRemainingString(): String {
+    var diff = this - Date().time
+
+    val diffDays = diff / (24 * 60 * 60 * 1000)
+    diff -= (diffDays * (24 * 60 * 60 * 1000))
+    val diffHours = diff / (60 * 60 * 1000)
+    diff -= (diffHours * (60 * 60 * 1000))
+    val diffMinutes = diff / (60 * 1000)
+    diff -= (diffMinutes * (60 * 1000))
+    val diffSeconds = diff / 1000
+
+    var str = "${diffMinutes}m"
+    if (diffHours > 0) {
+        str = "${diffHours}h $str"
+    }
+    if (diffDays > 0) {
+        str = "${diffDays}d $str"
+    }
+    if (diffDays == 0L && diffHours == 0L) {
+        str = "$str ${diffSeconds}s"
+    }
+    return str
 }
