@@ -450,6 +450,10 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
                 val filteredPets = it.filter {pet ->
                     pet.type == "premium" || pet.type == "wacky"
                 }
+                if (it.firstOrNull()?.type == "wacky") {
+                    // Wacky pets can't be raised to mounts, so only need half as many
+                    totalCount = 9
+                }
                 shouldWarn = filteredPets.isNotEmpty()
                 return@filter shouldWarn
             }.flatMap { inventoryRepository.getOwnedItems("hatchingPotions").firstElement() }
