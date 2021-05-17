@@ -15,8 +15,9 @@ import java.util.*
 class WorldStateSerialization: JsonDeserializer<WorldState> {
 
     override fun deserialize(json: JsonElement?, typeOfT: Type?, context: JsonDeserializationContext?): WorldState {
-        val worldBossObject = json?.asJsonObject?.get("worldBoss")?.asJsonObject
         val state = WorldState()
+        val obj = json?.asJsonObject ?: return state
+        val worldBossObject = obj.get("worldBoss")?.asJsonObject
         if (worldBossObject != null) {
             if (worldBossObject.has("active") && !worldBossObject["active"].isJsonNull) {
                 state.worldBossActive = worldBossObject["active"].asBoolean
@@ -48,17 +49,17 @@ class WorldStateSerialization: JsonDeserializer<WorldState> {
             }
         }
 
-        state.npcImageSuffix = json?.asJsonObject.getAsString("npcImageSuffix")
+        state.npcImageSuffix = obj.getAsString("npcImageSuffix")
 
         try {
-            if (json?.asJsonObject?.has("currentEvent") == true && json.asJsonObject?.get("currentEvent")?.isJsonObject == true) {
-                val event = json.asJsonObject?.getAsJsonObject("currentEvent")
+            if (obj.has("currentEvent") == true && obj.get("currentEvent")?.isJsonObject == true) {
+                val event = obj.getAsJsonObject("currentEvent")
                 if (event != null) {
                     state.currentEvent = context?.deserialize(event, WorldStateEvent::class.java)
                 }
-                if (json.asJsonObject.has("currentEventList")) {
+                if (obj.has("currentEventList")) {
                     val events = RealmList<WorldStateEvent>()
-                    for (element in json.asJsonObject.getAsJsonArray("currentEventList")) {
+                    for (element in obj.getAsJsonArray("currentEventList")) {
                         context?.deserialize<WorldStateEvent>(element, WorldStateEvent::class.java)?.let { events.add(it) }
                     }
                     state.events = events

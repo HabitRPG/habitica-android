@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.data.local.implementation
 
 import com.habitrpg.android.habitica.data.local.SocialLocalRepository
+import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.*
 import com.habitrpg.android.habitica.models.user.ContributorInfo
@@ -44,6 +45,16 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
                 executeTransaction {
                     membership.deleteFromRealm()
                 }
+            }
+        }
+    }
+
+    override fun saveGroup(group: Group) {
+        saveSyncronous(group)
+        if (group.quest == null) {
+            val existingQuest = realm.where(Quest::class.java).equalTo("id", group.id).findFirst()
+            executeTransaction {
+                existingQuest?.deleteFromRealm()
             }
         }
     }
