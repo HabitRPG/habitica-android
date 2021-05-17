@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.ui.views.shops
 
 import android.content.Context
 import android.graphics.drawable.BitmapDrawable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
@@ -170,6 +171,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
 
     @OptIn(ExperimentalTime::class)
     private fun setLimitedTextView() {
+        if (user == null) return
         if (shopItem.habitClass != null && shopItem.habitClass != "special" && user?.stats?.habitClass != shopItem.habitClass) {
             limitedTextView.text = context.getString(R.string.class_equipment_shop_dialog)
             limitedTextView.visibility = View.VISIBLE
@@ -193,9 +195,10 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
             buyLabel.text = context.getString(R.string.locked)
             limitedTextView.visibility = View.GONE
             if (shopItem.isTypeGear && shopItem.key.last().toString().toIntOrNull() != null) {
-                val previousKey = "${shopItem.key.dropLast(1)}${shopItem.key.last().toString().toIntOrNull()}"
-                if (user?.items?.gear?.owned?.find { it.key ==  previousKey} == null) {
+                val previousKey = "${shopItem.key.dropLast(1)}${(shopItem.key.last().toString().toIntOrNull() ?: 1) - 1}"
+                if (user?.items?.gear?.owned?.find { it.key == previousKey}?.owned != true) {
                     limitedTextView.visibility = View.VISIBLE
+                    limitedTextView.text = context.getString(R.string.locked_equipment_shop_dialog)
                     limitedTextView.background = ContextCompat.getColor(context, R.color.offset_background).toDrawable()
                     limitedTextView.setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
                 }

@@ -1152,4 +1152,6 @@
     <string name="go_to_survey">Go to Survey</string>
     <string name="survey_title">Habitica player survey</string>
     <string name="survey_menu_description">Fill out this 5 minute survey to help us grow and receive an achievement!</string>
+    <string name="locked_equipment_shop_dialog">You must purchase the previous items in this sequence to unlock</string>
+    <string name="caused_damage">You caused damage to the boss</string>
 </resources>
