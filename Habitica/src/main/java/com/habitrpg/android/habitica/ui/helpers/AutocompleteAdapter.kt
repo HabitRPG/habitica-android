@@ -101,8 +101,8 @@ class AutocompleteAdapter(val context: Context, val socialRepository: SocialRepo
         } ?: View(context)
     }
 
-    override fun getItem(position: Int): Any {
-        return if (isAutocompletingUsers) userResults[position] else emojiResults[position]
+    override fun getItem(position: Int): Any? {
+        return if (isAutocompletingUsers) userResults.getOrNull(position) else emojiResults.getOrNull(position)
     }
 
     override fun getItemId(position: Int): Long {

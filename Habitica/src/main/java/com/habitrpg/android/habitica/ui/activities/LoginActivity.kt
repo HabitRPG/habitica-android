@@ -29,10 +29,7 @@ import com.google.android.gms.auth.GoogleAuthException
 import com.google.android.gms.auth.GoogleAuthUtil
 import com.google.android.gms.auth.GooglePlayServicesAvailabilityException
 import com.google.android.gms.auth.UserRecoverableAuthException
-import com.google.android.gms.common.ConnectionResult
-import com.google.android.gms.common.GoogleApiAvailability
-import com.google.android.gms.common.GooglePlayServicesUtil
-import com.google.android.gms.common.Scopes
+import com.google.android.gms.common.*
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.HabiticaBaseApplication
@@ -420,6 +417,9 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
                 throw Exceptions.propagate(e)
             } catch (e: GoogleAuthException) {
                 throw Exceptions.propagate(e)
+            }
+            catch (e: UserRecoverableException) {
+                return@defer Flowable.empty()
             }
         }
                 .subscribeOn(Schedulers.io())

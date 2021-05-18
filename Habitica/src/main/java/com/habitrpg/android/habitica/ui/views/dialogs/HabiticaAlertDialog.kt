@@ -278,7 +278,7 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
             }
         }
 
-        window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+        window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
     }
 
     companion object {
@@ -292,7 +292,7 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
                 if ((dialogQueue[0].context as? Activity)?.isFinishing != true) {
                     GlobalScope.launch(context = Dispatchers.Main) {
                         delay(500L)
-                        if (dialogQueue.size > 0 && (dialogQueue[0].context as? Activity)?.isFinishing != true) {
+                        if (dialogQueue.size > 0 && (dialogQueue[0].context as? Activity)?.isFinishing == false) {
                             dialogQueue[0].show()
                         }
                     }

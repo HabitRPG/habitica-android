@@ -1048,7 +1048,7 @@
     <string name="broken_challenge">チャレンジのリンク切れ</string>
     <string name="leave_delete_x_tasks">やめる、%dタスクを削除する</string>
     <string name="leave_delete_task">やめる、タスクも削除する</string>
-    <string name="delete_challenge_task_description">このタスクは「%s」チャレンジの%dタスクの一部です。このタスクを削除するにはチャレンジを止めてください。</string>
+    <string name="delete_challenge_task_description">このタスクは「%2$s」チャレンジの%1$dタスクの一部です。このタスクを削除するにはチャレンジを止めてください。</string>
     <string name="can_hatch_pet">%sのたまごと%sたまごがえしの薬を融合させてこのペットを孵化させましょう！</string>
     <string name="suggest_pet_hatch_missing_potion">このペットの孵化には%sたまごがえしの薬が必要です</string>
     <string name="suggest_pet_hatch_missing_both">このペットの孵化には%sのたまごと%sたまごがえしの薬が必要です</string>

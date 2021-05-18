@@ -1021,7 +1021,7 @@
     <string name="broken_challenge">Thử thách Bị hủy</string>
     <string name="leave_delete_x_tasks">Rời &amp; Xóa %d Công việc</string>
     <string name="leave_delete_task">Rời &amp; Xóa Công việc</string>
-    <string name="delete_challenge_task_description">Đây là một trong %d công việc là phần của Thử thách \"%s\". Bạn phải rời Thử thách để xóa công việc này.</string>
+    <string name="delete_challenge_task_description">Đây là một trong %1$d công việc là phần của Thử thách “%2$s”. Bạn phải rời Thử thách để xóa công việc này.</string>
     <string name="delete_challenge_task_title">Xóa Công việc của Thử thách\?</string>
     <string name="hatch">Ấp</string>
     <string name="hatch_your_pet">Ấp thú cưng của bạn</string>

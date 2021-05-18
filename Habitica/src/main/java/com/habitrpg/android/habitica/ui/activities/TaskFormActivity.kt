@@ -185,6 +185,7 @@ class TaskFormActivity : BaseActivity() {
             taskId != null -> {
                 isCreating = false
                 compositeSubscription.add(taskRepository.getUnmanagedTask(taskId).firstElement().subscribe({
+                    if (!it.isValid) return@subscribe
                     task = it
                     //tintColor = ContextCompat.getColor(this, it.mediumTaskColor)
                     fillForm(it)

@@ -21,7 +21,7 @@ constructor(private val soundManager: SoundManager, threadExecutor: ThreadExecut
     override fun buildUseCaseObservable(requestValues: RequestValues): Flowable<Void> {
         return Flowable.defer {
             val data = requestValues.data
-            var snackbarText = StringBuilder(data?.drop?.dialog ?: "")
+            val snackbarText = StringBuilder(data?.drop?.dialog ?: "")
 
             if (data?.questItemsFound ?: 0 > 0 && requestValues.showQuestItems) {
                 if (snackbarText.isNotEmpty())
@@ -32,7 +32,7 @@ constructor(private val soundManager: SoundManager, threadExecutor: ThreadExecut
             if (snackbarText.isNotEmpty()) {
                 Handler().postDelayed({
                     HabiticaSnackbar.showSnackbar(requestValues.snackbarTargetView,
-                            snackbarText, HabiticaSnackbar.SnackbarDisplayType.DROP)
+                            snackbarText, HabiticaSnackbar.SnackbarDisplayType.DROP, true)
                     soundManager.loadAndPlayAudio(SoundManager.SoundItemDrop)
                 }, 3000L)
             }

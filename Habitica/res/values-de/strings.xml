@@ -1068,7 +1068,7 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="keep_x_tasks">%d Aufgaben behalten</string>
     <string name="broken_challenge_description">Dies ist eine von %d Aufgaben, die Teil einer Herausforderung sind, die nicht mehr existiert. Wie möchtest Du mit den übrig gebliebenen Aufgaben verfahren\?</string>
     <string name="leave_delete_x_tasks">Verlassen &amp; %d Aufgaben löschen</string>
-    <string name="delete_challenge_task_description">Dies ist eine von %d Aufgaben, die Teil der “%s” Herausforderung sind. Du musst die Herausforderung verlassen, um diese Aufgabe zu löschen.</string>
+    <string name="delete_challenge_task_description">Dies ist eine von %1$d Aufgaben, die Teil der “%2$s” Herausforderung sind. Du musst die Herausforderung verlassen, um diese Aufgabe zu löschen.</string>
     <string name="delete_challenge_task_title">Herausforderungsaufgabe löschen\?</string>
     <string name="use_saddle">Magischen Sattel benutzen</string>
     <string name="unhatched_pet">Nicht ausgebrütetes Haustier</string>

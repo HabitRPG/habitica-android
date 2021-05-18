@@ -1018,7 +1018,7 @@
     <string name="broken_challenge">Desafio quebrado</string>
     <string name="leave_delete_x_tasks">Sair &amp; Remover %d tarefas</string>
     <string name="leave_delete_task">Sair &amp; Remover tarefa</string>
-    <string name="delete_challenge_task_description">Esta é uma de %d tarefas que são parte do Desafio “%s”. Você precisa sair do Desafio para remover essa tarefa.</string>
+    <string name="delete_challenge_task_description">Esta é uma de %1$d tarefas que são parte do Desafio “%2$s”. Você precisa sair do Desafio para remover essa tarefa.</string>
     <string name="delete_challenge_task_title">Deletar Tarefa do Desafio\?</string>
     <string name="hatch">Chocar</string>
     <string name="hatch_your_pet">Chocar seu Mascote</string>

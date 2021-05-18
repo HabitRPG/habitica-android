@@ -45,13 +45,13 @@
             android:layout_marginTop="@dimen/spacing_small"
             android:layout_marginStart="@dimen/spacing_large"
             android:layout_marginEnd="@dimen/spacing_large"
+            android:hint="@string/name"
             android:textColorHint="@color/text_primary">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/group_name_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:hint="@string/name"
                 android:inputType="textCapSentences"
                 android:paddingStart="@dimen/spacing_large"
                 android:paddingEnd="@dimen/spacing_large"
@@ -66,6 +66,7 @@
                 android:layout_marginTop="@dimen/spacing_large"
                 android:layout_marginStart="@dimen/spacing_large"
                 android:layout_marginEnd="@dimen/spacing_large"
+                android:hint="@string/description"
                 android:textColorHint="@color/text_primary">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -73,7 +74,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:hint="@string/description"
                     android:inputType="textCapSentences|textMultiLine"
                     android:textColorHint="@color/text_primary"
                     android:gravity="top"

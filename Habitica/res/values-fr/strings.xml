@@ -1027,7 +1027,7 @@
     <string name="broken_challenge_description">Cette tâche est l\'une des %d tâches qui composent un défi qui n\'existe plus. Que voudriez-vous faire des tâches restantes \?</string>
     <string name="broken_challenge">Défi cassé</string>
     <string name="leave_delete_x_tasks">Quitter &amp; supprimer %d tâches</string>
-    <string name="delete_challenge_task_description">Cette tâche appartient aux %d tâches qui composent le défi “%s”. Vous devez quitter ce défi pour supprimer cette tâche.</string>
+    <string name="delete_challenge_task_description">Cette tâche appartient aux %1$d tâches qui composent le défi “%2$s”. Vous devez quitter ce défi pour supprimer cette tâche.</string>
     <string name="delete_challenge_task_title">Supprimer la tâche du défi \?</string>
     <string name="hatch">Faire éclore</string>
     <string name="hatch_your_pet">Faites éclore votre familier</string>

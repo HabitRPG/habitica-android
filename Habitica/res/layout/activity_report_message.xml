@@ -103,13 +103,13 @@
                     android:theme="@style/TextInputLayoutAppearanceTheme"
                     style="@style/TextInputLayoutAppearance"
                     android:layout_marginTop="@dimen/spacing_large"
+                    android:hint="@string/reason_for_report"
                     android:layout_marginBottom="@dimen/spacing_large">
                     <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/additional_info_edittext"
                         android:overScrollMode="always"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/reason_for_report"
                         android:textColor="@color/text_primary"
                         android:paddingBottom="34dp"
                         android:paddingTop="16dp"

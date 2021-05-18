@@ -1078,7 +1078,7 @@
     <string name="hatch_your_pet">Hatch your Pet</string>
     <string name="hatch">Hatch</string>
     <string name="delete_challenge_task_title">Delete Challenge Task?</string>
-    <string name="delete_challenge_task_description">This is one of %d tasks that are part of the “%s” Challenge. You must leave the Challenge to delete this task.</string>
+    <string name="delete_challenge_task_description">This is one of %1$d tasks that are part of the “%2$s” Challenge. You must leave the Challenge to delete this task.</string>
     <string name="leave_delete_task">Leave &amp; Delete Task</string>
     <string name="leave_delete_x_tasks">Leave &amp; Delete %d Tasks</string>
     <string name="broken_challenge">Broken Challenge</string>

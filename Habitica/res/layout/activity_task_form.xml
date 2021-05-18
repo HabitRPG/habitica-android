@@ -49,12 +49,12 @@
                     app:boxStrokeColor="?attr/colorPrimary"
                     app:hintTextColor="?colorPrimaryText"
                     android:backgroundTint="?attr/colorPrimaryText"
+                    android:hint="@string/task_title"
                     android:alpha="0.75">
                     <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/text_edit_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/task_title"
                         android:textColor="?attr/colorPrimaryText"
                         android:inputType="textCapSentences|textAutoCorrect"/>
                 </com.google.android.material.textfield.TextInputLayout>
@@ -66,13 +66,13 @@
                     app:boxStrokeColor="?attr/colorPrimary"
                     android:backgroundTint="?attr/colorPrimaryText"
                     app:hintTextColor="?colorPrimaryText"
+                    android:hint="@string/notes"
                     android:layout_marginTop="@dimen/spacing_large"
                     android:alpha="0.75">
                     <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/notes_edit_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/notes"
                         android:minLines="3"
                         android:gravity="top"
                         android:textColor="?attr/colorPrimaryText"
@@ -163,12 +163,12 @@
                         style="@style/TextInputLayoutAppearance"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:hint="@string/positive_habit_form"
                         android:layout_weight="1">
                         <androidx.appcompat.widget.AppCompatEditText
                             android:id="@+id/habit_adjust_positive_streak_view"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="@string/positive_habit_form"
                             android:inputType="number" />
                     </com.google.android.material.textfield.TextInputLayout>
                     <Space
@@ -178,12 +178,12 @@
                         style="@style/TextInputLayoutAppearance"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:hint="@string/negative_habit_form"
                         android:layout_weight="1">
                         <androidx.appcompat.widget.AppCompatEditText
                             android:id="@+id/habit_adjust_negative_streak_view"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="@string/negative_habit_form"
                             android:inputType="number"/>
                     </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>

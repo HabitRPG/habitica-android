@@ -1054,7 +1054,7 @@
     <string name="broken_challenge">Sfida mancante</string>
     <string name="leave_delete_x_tasks">Lascia e rimuovi le %d attività</string>
     <string name="leave_delete_task">Lascia e rimuovi le attività</string>
-    <string name="delete_challenge_task_description">Questa è una delle %d attività che fanno parte della sfida \"%s\". Devi abbandonare la sfida per eliminare questa attività.</string>
+    <string name="delete_challenge_task_description">Questa è una delle %1$d attività che fanno parte della sfida \"%2$s\". Devi abbandonare la sfida per eliminare questa attività.</string>
     <string name="delete_challenge_task_title">Eliminare le attività della sfida\?</string>
     <string name="hatch">Schiudi</string>
     <string name="hatch_your_pet">Schiudi il tuo animale</string>

@@ -1139,7 +1139,7 @@
     <string name="broken_challenge">Провалене випробування</string>
     <string name="leave_delete_x_tasks">Покинути і видалити завдання: %d</string>
     <string name="leave_delete_task">Покинути &amp; видалити завдання</string>
-    <string name="delete_challenge_task_description">Це одне з %d завдань що входять до складу “%s” випробування. Ви повинні покинути випробування щоб видалити це завдання.</string>
+    <string name="delete_challenge_task_description">Це одне з %1$d завдань що входять до складу “%2$s” випробування. Ви повинні покинути випробування щоб видалити це завдання.</string>
     <string name="hatch_your_pet">Вилупити вашу тварину</string>
     <string name="magic_potion">Магічний еліксир</string>
     <string name="magic_potions">Магічні еліксири</string>

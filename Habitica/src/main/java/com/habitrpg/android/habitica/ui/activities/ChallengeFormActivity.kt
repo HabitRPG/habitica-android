@@ -96,7 +96,7 @@ class ChallengeFormActivity : BaseActivity() {
             if (groupID != null) {
                 c.groupId = groupID
             } else {
-                if (locationAdapter.count > locationPos) {
+                if (locationAdapter.count > locationPos && locationPos >= 0) {
                     val locationGroup = locationAdapter.getItem(locationPos)
                     if (locationGroup != null) {
                         c.groupId = locationGroup.id

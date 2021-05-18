@@ -1010,7 +1010,7 @@
     <string name="keep_x_tasks">%d Görevi Koru</string>
     <string name="broken_challenge_description">Bu, artık var olmayan bir Meydan Okumanın parçası olan %d görevden biridir. Bu kalan görevlerle ne yapmak istersiniz\?</string>
     <string name="broken_challenge">Bozulmuş Mücadele</string>
-    <string name="delete_challenge_task_description">Bu, \"%s\" Meydan Okumasının parçası olan %d görevden biridir. Bu görevi silmek için Meydan Okumadan ayrılmalısınız.</string>
+    <string name="delete_challenge_task_description">Bu, “%2$s” Meydan Okumasının parçası olan %1$d görevden biridir. Bu görevi silmek için Meydan Okumadan ayrılmalısınız.</string>
     <string name="hatch">Yumurtadan Çıkar</string>
     <string name="hatch_your_pet">Evcil Hayvanınızı Yumurtadan Çıkarın</string>
     <string name="magic_potions">Sihirli İksirler</string>
