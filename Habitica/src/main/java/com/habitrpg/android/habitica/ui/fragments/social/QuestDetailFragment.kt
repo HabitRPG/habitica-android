@@ -17,6 +17,7 @@ import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.FragmentQuestDetailBinding
 import com.habitrpg.android.habitica.extensions.fromHtml
+import com.habitrpg.android.habitica.helpers.HapticFeedbackManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.inventory.QuestContent
@@ -201,6 +202,7 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
     }
 
     private fun onQuestBegin() {
+        HapticFeedbackManager.tap(requireView())
         val context = context
         if (context != null) {
             val alert = HabiticaAlertDialog(context)
@@ -218,6 +220,7 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
     }
 
     private fun onQuestCancel() {
+        HapticFeedbackManager.tap(requireView())
         context?.let {
             if (isQuestActive) {
                 val builder = AlertDialog.Builder(getActivity())
@@ -249,6 +252,7 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
     }
 
     private fun onQuestLeave() {
+        HapticFeedbackManager.tap(requireView())
         val builder = AlertDialog.Builder(getActivity())
                 .setMessage(if (quest?.active == true) R.string.quest_leave_message else R.string.quest_leave_message_nostart)
                 .setPositiveButton(R.string.yes) { _, _ ->

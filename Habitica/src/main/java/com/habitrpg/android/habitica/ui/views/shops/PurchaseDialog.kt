@@ -23,6 +23,7 @@ import com.habitrpg.android.habitica.extensions.addCancelButton
 import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.extensions.getShortRemainingString
 import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.HapticFeedbackManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.shops.Shop
@@ -336,6 +337,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
                 Pair("type", shopItem.purchaseType),
                 Pair("key", shopItem.key)
         ))
+        HapticFeedbackManager.tap(contentView)
         val snackbarText = arrayOf("")
         val observable: Flowable<Any>
         if (shopIdentifier != null && shopIdentifier == Shop.TIME_TRAVELERS_SHOP || "mystery_set" == shopItem.purchaseType || shopItem.currency == "hourglasses") {
