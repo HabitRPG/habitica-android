@@ -13,6 +13,7 @@ open class Flags : RealmObject() {
     var dropsEnabled = false
     var itemsEnabled = false
     var newStuff = false
+    var lastNewStuffRead: String? = null
     var classSelected = false
     var rebirthEnabled = false
     var welcomed = false
