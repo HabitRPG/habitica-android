@@ -44,7 +44,7 @@ constructor(threadExecutor: ThreadExecutor, postExecutionThread: PostExecutionTh
                 HabiticaSnackbar.showSnackbar(requestValues.snackbarTargetView, null, null, view, type)
             }
             if (requestValues.hasLeveledUp == true) {
-                return@defer levelUpUseCase.observable(LevelUpUseCase.RequestValues(requestValues.user, requestValues.level, requestValues.context))
+                return@defer levelUpUseCase.observable(LevelUpUseCase.RequestValues(requestValues.user, requestValues.level, requestValues.context, requestValues.snackbarTargetView))
                         .flatMap { userRepository.retrieveUser(true) }
                         .map { it.stats }
             } else {

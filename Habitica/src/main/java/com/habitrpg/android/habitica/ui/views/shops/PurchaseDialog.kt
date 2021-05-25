@@ -282,6 +282,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
         if (shopItem.isTypeGear) {
             checkGearClass()
         }
+        setLimitedTextView()
     }
 
     override fun dismiss() {
@@ -445,14 +446,15 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
                 return@filter shouldWarn
             }.flatMap { inventoryRepository.getOwnedItems("eggs").firstElement() }
         } else if (item.purchaseType == "hatchingPotions") {
-            totalCount = 18
+            totalCount = if (item.path?.contains("wacky") == true) {
+                // Wacky pets can't be raised to mounts, so only need half as many
+                9
+            } else {
+                18
+            }
             maybe = inventoryRepository.getPets().firstElement().filter {
                 val filteredPets = it.filter {pet ->
                     pet.type == "premium" || pet.type == "wacky"
-                }
-                if (it.firstOrNull()?.type == "wacky") {
-                    // Wacky pets can't be raised to mounts, so only need half as many
-                    totalCount = 9
                 }
                 shouldWarn = filteredPets.isNotEmpty()
                 return@filter shouldWarn
@@ -464,21 +466,21 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
                         if (!shouldWarn) {
                             onResult(-1)
                         }
-                        val remaining = 18 - ownedCount
+                        val remaining = totalCount - ownedCount
                         onResult(max(0, remaining))
                     }.flatMap {
-                for (thisItem in it) {
-                    if (thisItem.key == item.key) {
-                        ownedCount += thisItem.numberOwned
-                    }
-                }
-                inventoryRepository.getOwnedMounts().firstElement() }
-                    .flatMapPublisher {
-                        for (mount in it) {
-                        if (mount.key?.contains(item.key) == true) {
-                            ownedCount += if (mount.owned) 1 else 0
+                        for (thisItem in it) {
+                            if (thisItem.key == item.key) {
+                                ownedCount += thisItem.numberOwned
+                            }
                         }
-                    }
+                        inventoryRepository.getOwnedMounts().firstElement()
+                    }.flatMapPublisher {
+                        for (mount in it) {
+                            if (mount.key?.contains(item.key) == true) {
+                                ownedCount += if (mount.owned) 1 else 0
+                            }
+                        }
                         inventoryRepository.getOwnedPets()
                     }.firstElement().subscribe({
                         for (pet in it) {

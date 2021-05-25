@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.interactors
 
+import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import com.habitrpg.android.habitica.R
@@ -13,6 +14,7 @@ import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.AvatarView
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
+import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import io.reactivex.rxjava3.core.Flowable
 import org.greenrobot.eventbus.EventBus
@@ -27,10 +29,6 @@ constructor(private val soundManager: SoundManager, threadExecutor: ThreadExecut
             soundManager.loadAndPlayAudio(SoundManager.SoundLevelUp)
 
             val suppressedModals = requestValues.user.preferences?.suppressModals
-            if (suppressedModals?.levelUp == true) {
-                showClassSelection(requestValues)
-                return@defer Flowable.just<Stats>(requestValues.user.stats)
-            }
 
             if (requestValues.newLevel == 10) {
                 val binding = DialogLevelup10Binding.inflate(requestValues.activity.layoutInflater)
@@ -52,6 +50,12 @@ constructor(private val soundManager: SoundManager, threadExecutor: ThreadExecut
                     alert.enqueue()
                 }
             } else {
+                if (suppressedModals?.levelUp == true) {
+                    HabiticaSnackbar.showSnackbar(requestValues.snackbarTargetView,
+                            requestValues.activity.getString(R.string.levelup_header, requestValues.newLevel),
+                            HabiticaSnackbar.SnackbarDisplayType.SUCCESS, true)
+                    return@defer Flowable.just<Stats>(requestValues.user.stats)
+                }
                 val customView = requestValues.activity.layoutInflater.inflate(R.layout.dialog_levelup, null)
                 if (customView != null) {
                     val dialogAvatarView = customView.findViewById<AvatarView>(R.id.avatarView)
@@ -90,7 +94,7 @@ constructor(private val soundManager: SoundManager, threadExecutor: ThreadExecut
                 .subscribe({ }, RxErrorHandler.handleEmptyError())
     }
 
-    class RequestValues(val user: User, val level: Int?, val activity: AppCompatActivity) : UseCase.RequestValues {
+    class RequestValues(val user: User, val level: Int?, val activity: AppCompatActivity, val snackbarTargetView: ViewGroup) : UseCase.RequestValues {
         val newLevel: Int = level ?: 0
     }
 }

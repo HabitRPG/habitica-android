@@ -62,6 +62,7 @@ class SkillTasksRecyclerViewFragment : BaseFragment<FragmentRecyclerviewBinding>
         super.onResume()
 
         var tasks = taskRepository.getTasks(taskType ?: "", userId)
+        tasks.map { it.where().isEmpty("challengeID").and().isNull("group").findAll() }
         if (taskType == Task.TYPE_TODO) {
             tasks = tasks.map { it.where().equalTo("completed", false).findAll() }
         }

@@ -46,6 +46,7 @@ class Survey2021Promotion : HabiticaPromotion(), HabiticaWebPromotion {
     override fun configurePromoMenuView(view: PromoMenuView) {
         val context = view.context
         view.canClose = true
+        view.binding.closeButton.setColorFilter(ContextCompat.getColor(context, R.color.blue_100))
         view.setBackgroundColor(ContextCompat.getColor(context, R.color.blue_1))
         view.setTitleText(context.getString(R.string.survey_title))
         view.setSubtitleText(context.getString(R.string.survey_menu_description))

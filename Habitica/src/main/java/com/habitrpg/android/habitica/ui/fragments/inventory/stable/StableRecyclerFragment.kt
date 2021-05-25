@@ -20,7 +20,9 @@ import com.habitrpg.android.habitica.ui.adapter.inventory.StableRecyclerAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.helpers.MarginDecoration
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
+import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Maybe
+import io.reactivex.rxjava3.kotlin.combineLatest
 import io.realm.RealmResults
 import java.util.*
 import javax.inject.Inject
@@ -138,10 +140,10 @@ class StableRecyclerFragment : BaseFragment<FragmentRecyclerviewBinding>() {
         } else {
             inventoryRepository.getMounts().firstElement()
         }
-        val ownedObservable: Maybe<out Map<String, OwnedObject>> = if ("pets" == itemType) {
-            inventoryRepository.getOwnedPets().firstElement()
+        val ownedObservable: Flowable<out Map<String, OwnedObject>> = if ("pets" == itemType) {
+            inventoryRepository.getOwnedPets()
         } else {
-            inventoryRepository.getOwnedMounts().firstElement()
+            inventoryRepository.getOwnedMounts()
         }.map {
             val animalMap = mutableMapOf<String, OwnedObject>()
             it.forEach { animal ->
@@ -162,9 +164,11 @@ class StableRecyclerFragment : BaseFragment<FragmentRecyclerviewBinding>() {
                 .subscribe({
             adapter?.setEggs(it)
         }, RxErrorHandler.handleEmptyError()))
-        compositeSubscription.add(observable.zipWith(ownedObservable, { unsortedAnimals, ownedAnimals ->
-            mapAnimals(unsortedAnimals, ownedAnimals)
-        }).subscribe({ items -> adapter?.setItemList(items) }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(ownedObservable.combineLatest(observable.toFlowable())
+                .map { (ownedAnimals, unsortedAnimals) ->
+                    mapAnimals(unsortedAnimals, ownedAnimals)
+                }
+                .subscribe({ items -> adapter?.setItemList(items) }, RxErrorHandler.handleEmptyError()))
         compositeSubscription.add(inventoryRepository.getOwnedItems(true).subscribe({ adapter?.setOwnedItems(it) }, RxErrorHandler.handleEmptyError()))
         compositeSubscription.add(inventoryRepository.getMounts().subscribe({ adapter?.setExistingMounts(it) }, RxErrorHandler.handleEmptyError()))
         compositeSubscription.add(inventoryRepository.getOwnedMounts()
