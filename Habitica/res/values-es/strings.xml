@@ -833,7 +833,7 @@
     <string name="login_btn_apple">Registrarse con Apple</string>
     <string name="x_months">%d Meses</string>
     <string name="inbox_messages_title_nosender">Recibiste %d mensajes</string>
-    <string name="inbox_messages_title">Recibiste %d mensajes de %s</string>
+    <string name="inbox_messages_title">Recibiste %1$d mensajes de %2$s</string>
     <string name="create_task">Crear %s</string>
     <string name="take_me_back">Quiero regresar</string>
     <string name="not_now">Ahora no</string>

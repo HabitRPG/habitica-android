@@ -128,10 +128,8 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<an
                 ShopItem::class.java -> {
                     val item = obj as? ShopItem ?: return
                     val itemHolder = holder as? ShopItemViewHolder ?: return
-                    itemHolder.bind(item, item.canAfford(user, 1))
-                    ownedItems[item.key+"-"+item.purchaseType]?.let {
-                        itemHolder.itemCount = it.numberOwned
-                    }
+                    val numberOwned = ownedItems[item.key+"-"+item.purchaseType]?.numberOwned ?: 0
+                    itemHolder.bind(item, item.canAfford(user, 1), numberOwned)
                     itemHolder.isPinned = pinnedItemKeys.contains(item.key)
                 }
                 String::class.java -> (holder as? EmptyStateViewHolder)?.text = obj as? String

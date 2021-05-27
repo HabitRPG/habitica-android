@@ -16,6 +16,7 @@ interface SocialLocalRepository : BaseLocalRepository {
     fun getGroups(type: String): Flowable<RealmResults<Group>>
 
     fun getGroup(id: String): Flowable<Group>
+    fun saveGroup(group: Group)
 
     fun getGroupChat(groupId: String): Flowable<RealmResults<ChatMessage>>
 

@@ -21,23 +21,9 @@ class ShopItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), Vi
 
     var purchaseCardAction: ((ShopItem) -> Unit)? = null
 
-    var itemCount = 0
-    set(value) {
-        field = value
-        if (value > 0) {
-            binding.itemDetailIndicator.text = value.toString()
-            binding.itemDetailIndicator.background = if (context.isUsingNightModeResources()) {
-                BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfItemIndicatorNumberDark())
-            } else {
-                BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfItemIndicatorNumber())
-            }
-            binding.itemDetailIndicator.visibility = View.VISIBLE
-        }
-    }
-
     var isPinned = false
     set(value) {
-        field =value
+        field = value
         binding.pinIndicator.visibility = if (isPinned) View.VISIBLE else View.GONE
     }
 
@@ -47,7 +33,7 @@ class ShopItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), Vi
         binding.pinIndicator.setImageBitmap(HabiticaIconsHelper.imageOfPinnedItem())
     }
 
-    fun bind(item: ShopItem, canBuy: Boolean) {
+    fun bind(item: ShopItem, canBuy: Boolean, numberOwned: Int) {
         this.item = item
         binding.buyButton.visibility = View.VISIBLE
 
@@ -70,14 +56,22 @@ class ShopItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), Vi
             binding.priceLabel.visibility = View.GONE
             binding.unlockLabel.visibility = View.VISIBLE
         }
-        if (item.locked) {
+        if (numberOwned > 0) {
+                binding.itemDetailIndicator.text = numberOwned.toString()
+                binding.itemDetailIndicator.background = if (context.isUsingNightModeResources()) {
+                    BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfItemIndicatorNumberDark(item.isLimited || item.event?.end != null))
+                } else {
+                    BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfItemIndicatorNumber(item.isLimited || item.event?.end != null))
+                }
+                binding.itemDetailIndicator.visibility = View.VISIBLE
+        } else if (item.locked) {
             binding.itemDetailIndicator.background = if (context.isUsingNightModeResources()) {
-                BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfItemIndicatorLockedDark())
+                BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfItemIndicatorLockedDark(item.isLimited || item.event?.end != null))
             } else {
-                BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfItemIndicatorLocked())
+                BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfItemIndicatorLocked(item.isLimited || item.event?.end != null))
             }
             binding.itemDetailIndicator.visibility = View.VISIBLE
-        } else if (item.isLimited) {
+        } else if (item.isLimited || item.event?.end != null) {
             binding.itemDetailIndicator.background = BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfItemIndicatorLimited())
             binding.itemDetailIndicator.visibility = View.VISIBLE
         }

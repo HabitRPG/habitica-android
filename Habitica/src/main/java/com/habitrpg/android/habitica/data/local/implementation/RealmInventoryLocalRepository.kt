@@ -14,6 +14,8 @@ import io.realm.Realm
 import io.realm.RealmObject
 import io.realm.RealmResults
 import io.realm.Sort
+import java.util.*
+import kotlin.collections.HashMap
 
 
 class RealmInventoryLocalRepository(realm: Realm) : RealmContentLocalRepository(realm), InventoryLocalRepository {
@@ -371,5 +373,34 @@ class RealmInventoryLocalRepository(realm: Realm) : RealmContentLocalRepository(
             }
         }
         return user
+    }
+
+    override fun getAvailableLimitedItems(): Flowable<List<Item>> {
+        return Flowable.combineLatest(
+                realm.where(Egg::class.java)
+                        .lessThan("event.start", Date())
+                        .greaterThan("event.end", Date())
+                        .findAll().asFlowable(),
+                realm.where(Food::class.java)
+                        .lessThan("event.start", Date())
+                        .greaterThan("event.end", Date())
+                        .findAll().asFlowable(),
+                realm.where(HatchingPotion::class.java)
+                        .lessThan("event.start", Date())
+                        .greaterThan("event.end", Date())
+                        .findAll().asFlowable(),
+                realm.where(QuestContent::class.java)
+                        .lessThan("event.start", Date())
+                        .greaterThan("event.end", Date())
+                        .findAll().asFlowable(),
+                { eggs, food, potions, quests ->
+                    val items = mutableListOf<Item>()
+                    items.addAll(eggs)
+                    items.addAll(food)
+                    items.addAll(potions)
+                    items.addAll(quests)
+                    items
+                }
+        )
     }
 }

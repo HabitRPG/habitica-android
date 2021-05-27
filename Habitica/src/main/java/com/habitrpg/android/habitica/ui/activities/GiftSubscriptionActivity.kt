@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
-import androidx.core.view.isVisible
 import androidx.navigation.navArgs
 import com.habitrpg.android.habitica.HabiticaPurchaseVerifier
 import com.habitrpg.android.habitica.R
@@ -17,7 +16,7 @@ import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.PurchaseHandler
 import com.habitrpg.android.habitica.helpers.PurchaseTypes
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
+import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView
 import org.greenrobot.eventbus.Subscribe
@@ -31,7 +30,7 @@ class GiftSubscriptionActivity : BaseActivity() {
     private lateinit var binding: ActivityGiftSubscriptionBinding
 
     @Inject
-    lateinit var crashlyticsProxy: CrashlyticsProxy
+    lateinit var analyticsManager: AnalyticsManager
     @Inject
     lateinit var socialRepository: SocialRepository
     @Inject
@@ -96,7 +95,7 @@ class GiftSubscriptionActivity : BaseActivity() {
 
     override fun onStart() {
         super.onStart()
-        purchaseHandler = PurchaseHandler(this, crashlyticsProxy)
+        purchaseHandler = PurchaseHandler(this, analyticsManager)
         purchaseHandler?.startListening()
 
         purchaseHandler?.getAllGiftSubscriptionProducts {

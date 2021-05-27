@@ -811,7 +811,7 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="transfer_ownership">Gruppenleitung übertragen</string>
     <string name="remove">Entfernen</string>
     <string name="inbox_messages_title_nosender">Du hast %d Nachrichten erhalten</string>
-    <string name="inbox_messages_title">Du hast %d Nachricht(en) von %s erhalten</string>
+    <string name="inbox_messages_title">Du hast %1$d Nachricht(en) von %2$s erhalten</string>
     <string name="sent_card">Du hast eine %s gesendet</string>
     <string name="app_theme">App Musik</string>
     <string name="share_challenge_with">Herausforderung teilen mit</string>

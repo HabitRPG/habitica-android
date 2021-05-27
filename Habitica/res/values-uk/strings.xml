@@ -534,7 +534,7 @@
     <string name="transfer_ownership">Передати лідерство</string>
     <string name="remove">Видалити</string>
     <string name="inbox_messages_title_nosender">Ви отримали %d повідомлень</string>
-    <string name="inbox_messages_title">Ви отримали %d повідомлення від %s</string>
+    <string name="inbox_messages_title">Ви отримали %1$d повідомлення від %2$s</string>
     <string name="sent_card">Ви надіслали %s</string>
     <string name="app_theme">Тема додатку</string>
     <string name="share_challenge_with">Поділитись випробовуванням з</string>

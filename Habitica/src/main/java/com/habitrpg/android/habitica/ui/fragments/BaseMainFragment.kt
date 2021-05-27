@@ -4,9 +4,11 @@ import android.content.Context
 import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.*
+import androidx.core.os.bundleOf
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.tabs.TabLayout
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.UserRepository
@@ -67,6 +69,9 @@ abstract class BaseMainFragment<VB: ViewBinding> : BaseFragment<VB>() {
         } else {
             showToolbar()
             enableToolbarScrolling()
+        }
+        context?.let {
+            FirebaseAnalytics.getInstance(it).logEvent("fragment_view", bundleOf(Pair("fragment", this::class.java.canonicalName)))
         }
 
         return super.onCreateView(inflater, container, savedInstanceState)

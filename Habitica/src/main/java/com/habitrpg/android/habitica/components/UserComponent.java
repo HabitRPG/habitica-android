@@ -45,6 +45,7 @@ import com.habitrpg.android.habitica.ui.fragments.AchievementsFragment;
 import com.habitrpg.android.habitica.ui.fragments.NavigationDrawerFragment;
 import com.habitrpg.android.habitica.ui.fragments.NewsFragment;
 import com.habitrpg.android.habitica.ui.fragments.PromoInfoFragment;
+import com.habitrpg.android.habitica.ui.fragments.PromoWebFragment;
 import com.habitrpg.android.habitica.ui.fragments.StatsFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.customization.AvatarCustomizationFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.customization.AvatarEquipmentFragment;
@@ -340,4 +341,6 @@ public interface UserComponent {
     void inject(@NotNull TeamBoardFragment teamBoardFragment);
 
     void inject(@NotNull GuildOverviewFragment guildOverviewFragment);
+
+    void inject(@NotNull PromoWebFragment promoWebFragment);
 }

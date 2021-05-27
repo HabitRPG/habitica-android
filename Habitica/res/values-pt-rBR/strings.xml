@@ -787,7 +787,7 @@
     <string name="transfer_ownership">Transferir liderança</string>
     <string name="remove">Remover</string>
     <string name="inbox_messages_title_nosender">Você recebeu %d mensagens</string>
-    <string name="inbox_messages_title">Você recebeu %d mensagem(ns) de %s</string>
+    <string name="inbox_messages_title">Você recebeu %1$d mensagem(ns) de %2$s</string>
     <string name="sent_card">Você enviou um(a) %s</string>
     <string name="app_theme">Tema do aplicativo</string>
     <string name="share_challenge_with">Compartilhar Desafio com</string>

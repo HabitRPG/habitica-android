@@ -126,7 +126,7 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
     }
 
     override fun retrieveGroup(id: String): Flowable<Group> {
-        return Flowable.zip(apiClient.getGroup(id).doOnNext { localRepository.saveSyncronous(it) }, retrieveGroupChat(id)
+        return Flowable.zip(apiClient.getGroup(id).doOnNext { localRepository.saveGroup(it) }, retrieveGroupChat(id)
                 .toFlowable(),
                 { group, _ ->
                     group

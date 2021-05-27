@@ -125,19 +125,20 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
 
     override fun useSkill(key: String, target: String?, taskId: String): Flowable<SkillResponse> {
         return zipWithLiveUser(apiClient.useSkill(key, target ?: "", taskId)) { skillResponse, user ->
-            mergeUser(user, skillResponse.user)
+            skillResponse.user?.let { mergeUser(user, it) }
             skillResponse
         }
     }
 
     override fun useSkill(key: String, target: String?): Flowable<SkillResponse> {
         return zipWithLiveUser(apiClient.useSkill(key, target ?: "")) { response, user ->
-                    response.hpDiff = response.user.stats?.hp ?: 0 - (user.stats?.hp ?: 0.0)
-                    response.expDiff = response.user.stats?.exp ?: 0 - (user.stats?.exp ?: 0.0)
-                    response.goldDiff = response.user.stats?.gp ?: 0 - (user.stats?.gp ?: 0.0)
-                    mergeUser(user, response.user)
-                    response
-                }
+            response.hpDiff = response.user?.stats?.hp ?: 0 - (user.stats?.hp ?: 0.0)
+            response.expDiff = response.user?.stats?.exp ?: 0 - (user.stats?.exp ?: 0.0)
+            response.goldDiff = response.user?.stats?.gp ?: 0 - (user.stats?.gp ?: 0.0)
+            response.damage = (response.user?.party?.quest?.progress?.up ?: 0.0f) - (user.party?.quest?.progress?.up ?: 0.0f)
+            response.user?.let { mergeUser(user, it) }
+            response
+        }
     }
 
     override fun changeClass(): Flowable<User> = apiClient.changeClass().flatMap { retrieveUser(withTasks = false, forced = true) }

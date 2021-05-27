@@ -758,8 +758,8 @@
     <string name="remove_member">刪除會員</string>
     <string name="transfer_ownership">轉讓所有權</string>
     <string name="remove">去掉</string>
-    <string name="inbox_messages_title_nosender">你收到了％d條消息</string>
-    <string name="inbox_messages_title">你收到了％d條消息來自％s</string>
+    <string name="inbox_messages_title_nosender">你收到了 ％d 條消息</string>
+    <string name="inbox_messages_title">你收到了 ％1$d 條消息來自 ％2$s</string>
     <string name="sent_card">你發送了％s</string>
     <string name="app_theme">應用主題</string>
     <string name="share_challenge_with">分享挑戰與</string>

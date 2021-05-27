@@ -2,7 +2,7 @@ package com.habitrpg.android.habitica.helpers
 
 import android.util.Log
 import com.habitrpg.android.habitica.BuildConfig
-import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
+import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import io.reactivex.rxjava3.functions.Consumer
 import okhttp3.internal.http2.ConnectionShutdownException
 import retrofit2.HttpException
@@ -10,15 +10,15 @@ import java.io.EOFException
 import java.io.IOException
 
 class RxErrorHandler {
-    private var crashlyticsProxy: CrashlyticsProxy? = null
+    private var analyticsManager: AnalyticsManager? = null
 
     companion object {
 
         private var instance: RxErrorHandler? = null
 
-        fun init(crashlyticsProxy: CrashlyticsProxy) {
+        fun init(analyticsManager: AnalyticsManager) {
             instance = RxErrorHandler()
-            instance?.crashlyticsProxy = crashlyticsProxy
+            instance?.analyticsManager = analyticsManager
         }
 
         fun handleEmptyError(): Consumer<Throwable> {
@@ -39,7 +39,7 @@ class RxErrorHandler {
                         && !retrofit2.HttpException::class.java.isAssignableFrom(throwable.javaClass)
                         && !EOFException::class.java.isAssignableFrom(throwable.javaClass)
                         && throwable !is ConnectionShutdownException) {
-                    instance?.crashlyticsProxy?.logException(throwable)
+                    instance?.analyticsManager?.logException(throwable)
                 }
             }
         }

@@ -110,7 +110,7 @@ class SkillsFragment : BaseMainFragment<FragmentSkillsBinding>() {
     }
 
     private fun displaySkillResult(usedSkill: Skill?, response: SkillResponse) {
-        adapter?.mana = response.user.stats?.mp ?: 0.0
+        adapter?.mana = response.user?.stats?.mp ?: 0.0
         val activity = activity ?: return
         if ("special" == usedSkill?.habitClass) {
             showSnackbar(activity.snackbarContainer, context?.getString(R.string.used_skill_without_mana, usedSkill.text), HabiticaSnackbar.SnackbarDisplayType.BLUE)
@@ -121,6 +121,15 @@ class SkillsFragment : BaseMainFragment<FragmentSkillsBinding>() {
                         BitmapDrawable(resources, HabiticaIconsHelper.imageOfMagic()),
                         ContextCompat.getColor(it, R.color.blue_10), "-" + usedSkill?.mana,
                         HabiticaSnackbar.SnackbarDisplayType.BLUE)
+            }
+        }
+        if (response.damage > 0) {
+            context?.let {
+                showSnackbar(activity.snackbarContainer, null,
+                        context?.getString(R.string.caused_damage),
+                        BitmapDrawable(resources, HabiticaIconsHelper.imageOfDamage()),
+                        ContextCompat.getColor(it, R.color.green_10), "+" + response.damage,
+                        HabiticaSnackbar.SnackbarDisplayType.SUCCESS)
             }
         }
         compositeSubscription.add(userRepository.retrieveUser(false).subscribe({ }, RxErrorHandler.handleEmptyError()))

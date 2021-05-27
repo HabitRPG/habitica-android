@@ -31,7 +31,7 @@ import com.habitrpg.android.habitica.models.tasks.TaskList
 import com.habitrpg.android.habitica.models.user.Items
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
-import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
+import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.FlowableTransformer
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -57,7 +57,7 @@ import javax.net.ssl.SSLException
 
 class ApiClientImpl//private OnHabitsAPIResult mResultListener;
 //private HostConfig mConfig;
-(private val gsonConverter: GsonConverterFactory, override val hostConfig: HostConfig, private val crashlyticsProxy: CrashlyticsProxy, private val notificationsManager: NotificationsManager, private val context: Context) : Consumer<Throwable>, ApiClient {
+(private val gsonConverter: GsonConverterFactory, override val hostConfig: HostConfig, private val analyticsManager: AnalyticsManager, private val notificationsManager: NotificationsManager, private val context: Context) : Consumer<Throwable>, ApiClient {
 
 
     private lateinit var retrofitAdapter: Retrofit
@@ -85,8 +85,7 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
         this.notificationsManager.setApiClient(this)
 
         HabiticaBaseApplication.userComponent?.inject(this)
-        crashlyticsProxy.setUserIdentifier(this.hostConfig.userID)
-        Amplitude.getInstance().userId = this.hostConfig.userID
+        analyticsManager.setUserIdentifier(this.hostConfig.userID)
         buildRetrofit()
     }
 
@@ -215,9 +214,9 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
                 showConnectionProblemDialog(R.string.internal_error_api)
             }
         } else if (JsonSyntaxException::class.java.isAssignableFrom(throwableClass)) {
-            crashlyticsProxy.log("Json Error: " + lastAPICallURL + ",  " + throwable.message)
+            analyticsManager.logError("Json Error: " + lastAPICallURL + ",  " + throwable.message)
         } else {
-            crashlyticsProxy.logException(throwable)
+            analyticsManager.logException(throwable)
         }
     }
 
@@ -228,7 +227,7 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
         return try {
             errorConverter?.convert(errorResponse) as ErrorResponse
         } catch (e: IOException) {
-            crashlyticsProxy.log("Json Error: " + lastAPICallURL + ",  " + e.message)
+            analyticsManager.logError("Json Error: " + lastAPICallURL + ",  " + e.message)
             ErrorResponse()
         }
 
@@ -287,7 +286,7 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
     override fun updateAuthenticationCredentials(userID: String?, apiToken: String?) {
         this.hostConfig.userID = userID ?: ""
         this.hostConfig.apiKey = apiToken ?: ""
-        crashlyticsProxy.setUserIdentifier(this.hostConfig.userID)
+        analyticsManager.setUserIdentifier(this.hostConfig.userID)
         Amplitude.getInstance().userId = this.hostConfig.userID
     }
 
