@@ -270,12 +270,12 @@ class TaskSchedulingControls @JvmOverloads constructor(
     }
 
     private fun configureMonthlyRepeatViews() {
-        if (daysOfMonth != null && daysOfMonth?.isEmpty() != true) {
+        if (daysOfMonth?.isEmpty() == false) {
             styleButtonAsActive(binding.monthlyRepeatDays)
         } else {
             styleButtonAsInactive(binding.monthlyRepeatDays)
         }
-        if (weeksOfMonth != null && weeksOfMonth?.isEmpty() != true) {
+        if (weeksOfMonth?.isEmpty() == false) {
             styleButtonAsActive(binding.monthlyRepeatWeeks)
         } else {
             styleButtonAsInactive(binding.monthlyRepeatWeeks)

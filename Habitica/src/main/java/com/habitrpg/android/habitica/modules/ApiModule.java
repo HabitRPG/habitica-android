@@ -47,7 +47,7 @@ public class ApiModule {
     }
 
     @Provides
-    public MaintenanceApiService providesMaintenanceApiService(GsonConverterFactory gsonConverter, HostConfig hostConfig) {
+    public MaintenanceApiService providesMaintenanceApiService(GsonConverterFactory gsonConverter) {
         Retrofit adapter = new Retrofit.Builder()
                 .baseUrl("https://habitica-assets.s3.amazonaws.com/mobileApp/endpoint/")
                 .addCallAdapterFactory(RxJava3CallAdapterFactory.create())

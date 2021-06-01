@@ -39,7 +39,7 @@ open class Task : RealmObject, BaseObject, Parcelable {
     var text: String = ""
     var notes: String? = null
     @TaskTypes
-    var type: String = Task.TYPE_HABIT
+    var type: String = TYPE_HABIT
     var challengeID: String? = null
     var challengeBroken: String? = null
     var attribute: String? = Stats.STRENGTH
@@ -165,7 +165,7 @@ open class Task : RealmObject, BaseObject, Parcelable {
         }
 
     val isDisplayedActive: Boolean
-        get() = ((isDue == true && type == Task.TYPE_DAILY) || type == TYPE_TODO) && !completed
+        get() = ((isDue == true && type == TYPE_DAILY) || type == TYPE_TODO) && !completed
 
     val isChecklistDisplayActive: Boolean
         get() = this.checklist?.size != this.completedChecklistCount
@@ -182,7 +182,7 @@ open class Task : RealmObject, BaseObject, Parcelable {
 
     fun containsAllTagIds(tagIdList: List<String>): Boolean = tags?.mapTo(ArrayList()) { it.id }?.containsAll(tagIdList) ?: false
 
-    fun checkIfDue(): Boolean? = isDue == true
+    fun checkIfDue(): Boolean = isDue == true
 
     fun getNextReminderOccurence(oldTime: Date?): Date? {
         if (oldTime == null) {
@@ -282,6 +282,8 @@ open class Task : RealmObject, BaseObject, Parcelable {
         dest.writeList(this.reminders as? List<*>)
         dest.writeString(this.frequency)
         dest.writeValue(this.everyX)
+        dest.writeString(this.daysOfMonthString)
+        dest.writeString(this.weeksOfMonthString)
         dest.writeValue(this.streak)
         dest.writeLong(this.startDate?.time ?: -1)
         dest.writeParcelable(this.repeat, flags)
@@ -316,6 +318,8 @@ open class Task : RealmObject, BaseObject, Parcelable {
         `in`.readList(this.reminders as MutableList<Any?>, RemindersItem::class.java.classLoader)
         this.frequency = `in`.readString()
         this.everyX = `in`.readValue(Int::class.java.classLoader) as? Int ?: 1
+        this.daysOfMonthString = `in`.readString()
+        this.weeksOfMonthString = `in`.readString()
         this.streak = `in`.readValue(Int::class.java.classLoader) as? Int ?: 0
         val tmpStartDate = `in`.readLong()
         this.startDate = if (tmpStartDate == -1L) null else Date(tmpStartDate)
@@ -331,7 +335,11 @@ open class Task : RealmObject, BaseObject, Parcelable {
 
     fun setWeeksOfMonth(weeksOfMonth: List<Int>?) {
         this.weeksOfMonth = weeksOfMonth
-        this.weeksOfMonthString = this.weeksOfMonth?.toString()
+        if ((weeksOfMonth?.size ?: 0) > 0) {
+            this.weeksOfMonthString = this.weeksOfMonth?.toString()
+        } else {
+            weeksOfMonthString = "[]"
+        }
     }
 
     fun getWeeksOfMonth(): List<Int>? {
@@ -357,8 +365,11 @@ open class Task : RealmObject, BaseObject, Parcelable {
 
     fun setDaysOfMonth(daysOfMonth: List<Int>?) {
         this.daysOfMonth = daysOfMonth
-        this.daysOfMonthString = daysOfMonth.toString()
-    }
+        if ((daysOfMonth?.size ?: 0) > 0) {
+            this.daysOfMonthString = this.daysOfMonth?.toString()
+        } else {
+            daysOfMonthString = "[]"
+        }    }
 
     fun getDaysOfMonth(): List<Int>? {
         if (daysOfMonth == null) {

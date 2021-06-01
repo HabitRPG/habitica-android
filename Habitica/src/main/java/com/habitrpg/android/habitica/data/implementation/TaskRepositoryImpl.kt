@@ -249,7 +249,9 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
                     task1.id = task.id
                     task1
                 }
-                .doOnSuccess { localRepository.save(it) }
+                .doOnSuccess {
+                    localRepository.save(it)
+                }
                 .doOnError {
                     unmanagedTask.hasErrored = true
                     unmanagedTask.isSaving = false
