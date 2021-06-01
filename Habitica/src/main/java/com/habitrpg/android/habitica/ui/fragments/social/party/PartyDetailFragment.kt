@@ -16,6 +16,7 @@ import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentPartyDetailBinding
 import com.habitrpg.android.habitica.extensions.inflate
+import com.habitrpg.android.habitica.helpers.HapticFeedbackManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.QuestContent
@@ -353,11 +354,13 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
     }
 
     private fun onQuestAccept() {
+        HapticFeedbackManager.tap(requireView())
         viewModel?.acceptQuest()
     }
 
 
     private fun onQuestReject() {
+        HapticFeedbackManager.tap(requireView())
         viewModel?.rejectQuest()
     }
 

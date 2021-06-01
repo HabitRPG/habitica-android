@@ -10,6 +10,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.StatsViewBinding
 import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.extensions.setTintWith
+import com.habitrpg.android.habitica.helpers.HapticFeedbackManager
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 
 class StatsView(context: Context, attrs: AttributeSet?) : LinearLayout(context, attrs) {
@@ -64,7 +65,6 @@ class StatsView(context: Context, attrs: AttributeSet?) : LinearLayout(context, 
     private var statColor: Int = 0
 
     init {
-
         val attributes = context.theme?.obtainStyledAttributes(
                 attrs,
                 R.styleable.StatsView,
@@ -79,6 +79,7 @@ class StatsView(context: Context, attrs: AttributeSet?) : LinearLayout(context, 
         binding.titleWrapper.background = backgroundDrawable
 
         binding.allocateButton.setOnClickListener {
+            HapticFeedbackManager.tap(this)
             allocateAction?.invoke()
         }
 

@@ -40,6 +40,9 @@ open class User : RealmObject(), BaseObject, Avatar, VersionedObject {
             if (preferences?.isManaged != true) {
                 preferences?.userId = id
             }
+            if (purchased?.isManaged != true) {
+                purchased?.userId = id
+            }
             if (this.profile?.isManaged != true) {
                 this.profile?.userId = id
             }

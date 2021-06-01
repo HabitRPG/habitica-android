@@ -26,6 +26,7 @@ import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
 import com.habitrpg.android.habitica.modules.UserModule
 import com.habitrpg.android.habitica.modules.UserRepositoryModule
 import com.habitrpg.android.habitica.proxy.AnalyticsManager
@@ -49,6 +50,8 @@ abstract class HabiticaBaseApplication : Application() {
     internal lateinit var sharedPrefs: SharedPreferences
     @Inject
     internal lateinit var analyticsManager: AnalyticsManager
+    @Inject
+    internal lateinit var pushNotificationManager: PushNotificationManager
     /**
      * For better performance billing class should be used as singleton
      */
@@ -219,6 +222,7 @@ abstract class HabiticaBaseApplication : Application() {
         }
 
         fun logout(context: Context) {
+            getInstance(context)?.pushNotificationManager?.removePushDeviceUsingStoredToken()
             val realm = Realm.getDefaultInstance()
             getInstance(context)?.deleteDatabase(realm.path)
             realm.close()

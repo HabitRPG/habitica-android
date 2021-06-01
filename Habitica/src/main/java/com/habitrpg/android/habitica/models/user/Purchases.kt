@@ -7,6 +7,10 @@ import io.realm.annotations.PrimaryKey
 open class Purchases : RealmObject() {
     @PrimaryKey
     var userId: String? = null
+    set(value) {
+        field = value
+        customizations?.forEach { it.userID = value }
+    }
     @JvmField
     var customizations: RealmList<OwnedCustomization>? = null
     var user: User? = null
