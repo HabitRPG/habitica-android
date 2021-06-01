@@ -49,6 +49,7 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import kotlin.collections.ArrayList
 import kotlin.time.ExperimentalTime
+import kotlin.time.hours
 import kotlin.time.minutes
 import kotlin.time.seconds
 
@@ -165,11 +166,6 @@ class NavigationDrawerFragment : DialogFragment() {
             mCurrentSelectedPosition = savedInstanceState.getInt(STATE_SELECTED_POSITION)
             mFromSavedInstanceState = true
         }
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        // Indicate that this fragment would like to influence the set of actions in the action bar.
         setHasOptionsMenu(true)
     }
 
@@ -217,10 +213,9 @@ class NavigationDrawerFragment : DialogFragment() {
                         while (gearEvent?.end?.after(Date()) == true || pair.second.isNotEmpty()) {
                             updateSeasonalMenuEntries(pair.first, pair.second)
                             val diff = (gearEvent?.end?.time ?: 0) - Date().time
-                            delay(if (diff < (60 * 60 * 1000)) 1.seconds else 1.minutes)
+                            delay(if (diff < (1.hours.inMilliseconds)) 1.seconds else 1.minutes)
                         }
                     }
-            getItemWithIdentifier(SIDEBAR_SHOPS_SEASONAL)?.isVisible = false
         }, RxErrorHandler.handleEmptyError()))
 
         if (configManager.enableTeamBoards()) {
