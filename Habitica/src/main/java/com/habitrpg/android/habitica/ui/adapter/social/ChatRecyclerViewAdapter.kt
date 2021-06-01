@@ -1,10 +1,14 @@
 package com.habitrpg.android.habitica.ui.adapter.social
 
+import android.os.Build
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.databinding.ChatItemBinding
+import com.habitrpg.android.habitica.databinding.SystemChatMessageBinding
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.user.User
@@ -45,7 +49,10 @@ class ChatRecyclerViewAdapter(user: User?, private val isTavern: Boolean) : Base
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (data[position].isSystemMessage) {
-            (holder as? SystemChatMessageViewHolder)?.bind(data[position])
+            val sysChatHolder = holder as? SystemChatMessageViewHolder ?: return
+            sysChatHolder.bind(data[position],
+                    expandedMessageId == data[position].id)
+            sysChatHolder.onShouldExpand = { expandMessage(data[position].id, position)}
         } else {
             val chatHolder = holder as? ChatRecyclerMessageViewHolder ?: return
             val message = data[position]
@@ -103,9 +110,26 @@ class ChatRecyclerViewAdapter(user: User?, private val isTavern: Boolean) : Base
 
 class SystemChatMessageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val textView: TextView = itemView.findViewById(R.id.text_view)
+    private val timestamp: TextView = itemView.findViewById(R.id.system_message_timestamp)
+    private val dateTime = java.text.SimpleDateFormat("MMM dd, hh:mm aaa")
+    val binding = SystemChatMessageBinding.bind(itemView)
 
-    fun bind(chatMessage: ChatMessage?) {
+    var onShouldExpand: (() -> Unit)? = null
+
+    init{
+        textView.setOnClickListener {
+            onShouldExpand?.invoke()
+        }
+    }
+
+    fun bind(chatMessage: ChatMessage?, isExpanded: Boolean) {
         textView.text = chatMessage?.text?.removePrefix("`")?.removeSuffix("`")
+        timestamp.text = dateTime.format(chatMessage?.timestamp?.let { java.util.Date(it) })
+        if(isExpanded) {
+            binding.systemMessageTimestamp.visibility = View.VISIBLE
+        } else {
+            binding.systemMessageTimestamp.visibility = View.GONE
+        }
     }
 
 }
