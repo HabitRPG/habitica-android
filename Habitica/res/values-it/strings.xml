@@ -1073,6 +1073,7 @@
     <string name="suggest_pet_hatch_missing_egg">Hai bisogno di un uovo %s per poter schiudere questo animale</string>
     <string name="view_onboarding_tasks">Visualizza le attività introduttive</string>
     <string name="equip">Equipaggia</string>
+    <string name="unequip">Disequip</string>
     <string name="excessItemsNoneLeft">Hai già tutto il necessario per tutti gli animali %@. Sei sicuro di voler acquistare %d %ss\?</string>
     <string name="purchaseX">Acquista %d</string>
     <string name="excessItemsXLeft">Hai solo bisogno di %d %s per schiudere tutti i possibili animali. Sei sicuro di voler acquistare %d\?</string>

@@ -914,6 +914,7 @@
     <string name="magic_potions">Волшебные эликсиры</string>
     <string name="view_onboarding_tasks">Посмотреть первые задания</string>
     <string name="equip">Надеть</string>
+    <string name="unequip">Необорудовать</string>
     <string name="purchaseX">Купить: %d</string>
     <string name="excess_items">Лишние предметы</string>
     <string name="onboardingComplete_achievement_title">Вы выполнили свои первые задания!</string>

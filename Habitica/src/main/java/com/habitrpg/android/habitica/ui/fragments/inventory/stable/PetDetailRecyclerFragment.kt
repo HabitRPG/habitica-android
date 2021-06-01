@@ -22,7 +22,6 @@ import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemRecyclerFragment
 import com.habitrpg.android.habitica.ui.helpers.MarginDecoration
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
-import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.kotlin.Flowables
 import org.greenrobot.eventbus.Subscribe
@@ -104,7 +103,9 @@ class PetDetailRecyclerFragment : BaseMainFragment<FragmentRecyclerviewBinding>(
 
         compositeSubscription.add(adapter.getEquipFlowable()
                 .flatMap { key -> inventoryRepository.equip(user, "pet", key) }
-                .subscribe({ }, RxErrorHandler.handleEmptyError()))
+                .subscribe({
+                    user?.let { updatedUser -> adapter.setUser(updatedUser) }
+                }, RxErrorHandler.handleEmptyError()))
 
 
         view.post { setGridSpanCount(view.width) }
@@ -151,6 +152,7 @@ class PetDetailRecyclerFragment : BaseMainFragment<FragmentRecyclerviewBinding>(
                         return@map petMap
                     }.doOnNext {
                         adapter.setOwnedPets(it)
+                        user?.let { updatedUser -> adapter.setUser(updatedUser) }
                     }).map {
                         val items = mutableListOf<Any>()
                         var lastPet: Pet? = null

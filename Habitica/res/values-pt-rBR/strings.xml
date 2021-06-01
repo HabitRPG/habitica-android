@@ -1037,6 +1037,7 @@
     <string name="suggest_pet_hatch_missing_egg">Você ainda precisa de um Ovo de %s para chocar esse mascote</string>
     <string name="view_onboarding_tasks">Ver Tarefas Iniciais</string>
     <string name="equip">Equipar</string>
+    <string name="unequip">Desequipar</string>
     <string name="excessItemsNoneLeft">Você já tem tudo o que precisa para todos os %s mascotes. Você tem certeza que quer comprar %d %ss\?</string>
     <string name="purchaseX">Comprar %d</string>
     <string name="excessItemsXLeft">Você só precisa %d %s para chocar todos os mascotes possíveis. Você tem certeza que quer comprar %d\?</string>

@@ -9,6 +9,7 @@ import com.habitrpg.android.habitica.databinding.MountOverviewItemBinding
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.Mount
+import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.menu.BottomSheetMenu
 import com.habitrpg.android.habitica.ui.menu.BottomSheetMenuItem
@@ -20,6 +21,7 @@ class MountViewHolder(parent: ViewGroup, private val equipEvents: PublishSubject
     private var binding: MountOverviewItemBinding = MountOverviewItemBinding.bind(itemView)
     private var owned: Boolean = false
     var animal: Mount? = null
+    private var user: User? = null
 
     var resources: Resources = itemView.resources
 
@@ -27,9 +29,10 @@ class MountViewHolder(parent: ViewGroup, private val equipEvents: PublishSubject
         itemView.setOnClickListener(this)
     }
 
-    fun bind(item: Mount, owned: Boolean) {
+    fun bind(item: Mount, owned: Boolean, user: User?) {
         animal = item
         this.owned = owned
+        this.user = user
         binding.titleTextView.visibility = View.GONE
         binding.ownedTextView.visibility = View.GONE
         val imageName = "stable_Mount_Icon_" + item.animal + "-" + item.color
@@ -54,7 +57,10 @@ class MountViewHolder(parent: ViewGroup, private val equipEvents: PublishSubject
         }
         val menu = BottomSheetMenu(itemView.context)
         menu.setTitle(animal?.text)
-        menu.addMenuItem(BottomSheetMenuItem(resources.getString(R.string.equip)))
+
+        val hasCurrentMount = user?.currentMount.equals(animal?.key)
+        val labelId = if (hasCurrentMount) R.string.unequip else R.string.equip
+        menu.addMenuItem(BottomSheetMenuItem(resources.getString(labelId)))
         menu.setSelectionRunnable {
             animal?.let { equipEvents.onNext(it.key ?: "") }
         }

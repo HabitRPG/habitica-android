@@ -1040,6 +1040,7 @@
     <string name="suggest_pet_hatch_missing_egg">你還需要一個%s寵物蛋來孵化這個寵物任務</string>
     <string name="view_onboarding_tasks">查看新手任務</string>
     <string name="equip">裝備</string>
+    <string name="unequip">取消裝備</string>
     <string name="excessItemsNoneLeft">你已經有得到所有%s寵物所需的一切物品。你確定你要買%d個%s？</string>
     <string name="purchaseX">買%d個</string>
     <string name="excessItemsXLeft">你只需要%d個%s即可孵化所有可得到的這種寵物。你確定你想要買%d個？</string>

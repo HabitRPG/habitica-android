@@ -84,7 +84,9 @@ class MountDetailRecyclerFragment : BaseMainFragment<FragmentRecyclerviewBinding
             this.loadItems()
 
             adapter?.getEquipFlowable()?.flatMap { key -> inventoryRepository.equip(user, "mount", key) }
-                    ?.subscribe({ }, RxErrorHandler.handleEmptyError())?.let { compositeSubscription.add(it) }
+                    ?.subscribe({
+                        user?.let { updatedUser -> adapter?.setUser(updatedUser) }
+                    }, RxErrorHandler.handleEmptyError())?.let { compositeSubscription.add(it) }
         }
 
         if (savedInstanceState != null) {
@@ -124,6 +126,7 @@ class MountDetailRecyclerFragment : BaseMainFragment<FragmentRecyclerviewBinding
                         return@map mountMap
                     }.doOnNext {
                         adapter?.setOwnedMounts(it)
+                        user?.let { updatedUser -> adapter?.setUser(updatedUser) }
                     }, { unsortedAnimals, ownedAnimals ->
                         val items = mutableListOf<Any>()
                         var lastMount: Mount? = null

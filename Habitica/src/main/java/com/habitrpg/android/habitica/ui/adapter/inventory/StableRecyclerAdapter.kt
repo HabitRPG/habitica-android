@@ -13,8 +13,8 @@ import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.inventory.*
 import com.habitrpg.android.habitica.models.user.OwnedItem
+import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.models.user.OwnedMount
-import com.habitrpg.android.habitica.models.user.OwnedPet
 import com.habitrpg.android.habitica.ui.fragments.inventory.stable.StableFragmentDirections
 import com.habitrpg.android.habitica.ui.helpers.loadImage
 import com.habitrpg.android.habitica.ui.viewHolders.MountViewHolder
@@ -32,15 +32,21 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var eggs: Map<String, Egg> = mapOf()
     var animalIngredientsRetriever: ((Animal, ((Pair<Egg?, HatchingPotion?>) -> Unit)) -> Unit)? = null
     var itemType: String? = null
+    private var user: User? = null
     private val equipEvents = PublishSubject.create<String>()
-
     private var existingMounts: RealmResults<Mount>? = null
     private var ownedMounts: Map<String, OwnedMount>? = null
     private var ownedItems: Map<String, OwnedItem>? = null
     private var ownsSaddles: Boolean = false
+    private var itemList: List<Any> = ArrayList()
 
     fun getEquipFlowable(): Flowable<String> {
         return equipEvents.toFlowable(BackpressureStrategy.DROP)
+    }
+
+    fun setUser(user: User){
+        this.user = user
+        notifyDataSetChanged()
     }
 
     private fun canRaiseToMount(pet: Pet): Boolean {
@@ -55,6 +61,7 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private fun eggCount(pet: Pet): Int {
         return ownedItems?.get(pet.animal + "-eggs")?.numberOwned ?: 0
     }
+
     private fun potionCount(pet: Pet): Int {
         return ownedItems?.get(pet.color + "-hatchingPotions")?.numberOwned ?: 0
     }
@@ -75,11 +82,9 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         notifyDataSetChanged()
     }
 
-    private var itemList: List<Any> = ArrayList()
-
     fun setItemList(itemList: List<Any>) {
         this.itemList = itemList
-        this.notifyDataSetChanged()
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
@@ -107,17 +112,20 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 val isIndividualAnimal = item.type == "special" || item.type == "wacky"
                 if (isIndividualAnimal) {
                     if (item is Pet) {
-                        (holder as? PetViewHolder)?.bind(item,
-                                item.numberOwned,
-                                eggCount(item),
-                                potionCount(item),
-                                canRaiseToMount(item),
-                                ownsSaddles,
-                                ownedItems?.get(item.animal + "-eggs") != null,
-                                ownedItems?.get(item.color + "-hatchingPotions") != null,
-                                ownedMounts?.containsKey(item.key) == true)
+                        (holder as? PetViewHolder)?.bind(
+                            item = item,
+                            trained = item.numberOwned,
+                            eggCount = eggCount(item),
+                            potionCount = potionCount(item),
+                            canRaiseToMount = canRaiseToMount(item),
+                            ownsSaddles = ownsSaddles,
+                            hasUnlockedEgg = ownedItems?.get(item.animal + "-eggs") != null,
+                            hasUnlockedPotion = ownedItems?.get(item.color + "-hatchingPotions") != null,
+                            hasMount = ownedMounts?.containsKey(item.key) == true,
+                            user = user
+                        )
                     } else if (item is Mount) {
-                        (holder as? MountViewHolder)?.bind(item, item.numberOwned > 0)
+                        (holder as? MountViewHolder)?.bind(item, item.numberOwned > 0, user)
                     }
                     return
                 }
@@ -153,6 +161,7 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     override fun getItemCount(): Int = itemList.size
+
     fun setEggs(eggs: Map<String, Egg>) {
         this.eggs = eggs
         notifyDataSetChanged()
