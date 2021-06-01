@@ -1,13 +1,19 @@
 package com.habitrpg.android.habitica.ui.helpers
 
 import android.content.Context
+import android.graphics.Rect
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.method.LinkMovementMethod
 import android.widget.TextView
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import io.noties.markwon.AbstractMarkwonPlugin
 import io.noties.markwon.Markwon
+import io.noties.markwon.MarkwonConfiguration
+import io.noties.markwon.MarkwonPlugin
 import io.noties.markwon.ext.strikethrough.StrikethroughPlugin
+import io.noties.markwon.image.ImageSize
+import io.noties.markwon.image.ImageSizeResolverDef
 import io.noties.markwon.image.ImagesPlugin
 import io.noties.markwon.image.file.FileSchemeHandler
 import io.noties.markwon.image.network.OkHttpNetworkSchemeHandler
@@ -29,8 +35,36 @@ object MarkdownParser {
                     it.addSchemeHandler(OkHttpNetworkSchemeHandler.create())
                             .addSchemeHandler(FileSchemeHandler.createWithAssets(context.assets))
                 })
+                .usePlugin(this.createImageSizeResolverScaleDpiPlugin(context))
                 .usePlugin(MovementMethodPlugin.create(LinkMovementMethod.getInstance()))
                 .build()
+    }
+
+    /**
+     * Custom markwon plugin to scale image size according to dpi
+     */
+    private fun createImageSizeResolverScaleDpiPlugin(context: Context): MarkwonPlugin {
+        return object : AbstractMarkwonPlugin() {
+            override fun configureConfiguration(builder: MarkwonConfiguration.Builder) {
+                builder.imageSizeResolver(object : ImageSizeResolverDef() {
+                    override fun resolveImageSize(imageSize: ImageSize?, imageBounds: Rect, canvasWidth: Int, textSize: Float): Rect {
+                        val dpi = context.resources.displayMetrics.density
+                        var width = imageBounds.width()
+                        if (dpi > 1) {
+                            width = (dpi * width.toFloat()).toInt()
+                        }
+                        if (width > canvasWidth) {
+                            width = canvasWidth
+                        }
+
+                        val ratio = imageBounds.width().toFloat() / imageBounds.height()
+                        val height = (width / ratio + .5f).toInt()
+
+                        return Rect(0, 0, width, height)
+                    }
+                })
+            }
+        }
     }
 
     /**

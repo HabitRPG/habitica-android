@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.models.social
 
 import android.renderscript.BaseObj
+import android.text.Spanned
 import com.habitrpg.android.habitica.models.BaseObject
 import com.habitrpg.android.habitica.models.user.Backer
 import com.habitrpg.android.habitica.models.user.ContributorInfo
@@ -32,7 +33,7 @@ open class ChatMessage : RealmObject(), BaseObject {
     var text: String? = null
 
     @Ignore
-    var parsedText: CharSequence? = null
+    var parsedText: Spanned? = null
 
     var timestamp: Long? = null
 
