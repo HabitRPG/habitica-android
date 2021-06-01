@@ -149,8 +149,8 @@ android {
         buildConfigField "String", "TESTING_LEVEL", "\"production\""
         resConfigs "en", "bg", "de", "en-rGB", "es", "fr", "hr-rHR", "in", "it", "iw", "ja", "ko", "lt", "nl", "pl", "pt-rBR", "pt-rPT", "ru", "tr", "zh", "zh-rTW"
 
-        versionCode 2950
-        versionName "3.2.3"
+        versionCode 2956
+        versionName "3.2.4"
     }
 
     buildFeatures {

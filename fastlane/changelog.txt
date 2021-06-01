@@ -1,3 +1,2 @@
-We’ve added a countdown to all limited time items! No more guessing when our seasonal Galas may end. Now you can see exactly how much longer you have to get everything you want before time’s up. We hope you enjoy!
-
+This latest update improves the use of certain skills. Now we will display how much damage you do to a boss right when you use a skill like Brutal Smash. The list of tasks that displays when you use a skill will only show viable tasks as well now. We’ve also made some improvements to the mini notifications you receive when getting an item or level up, clarified the reason given for equipment being locked, and fixed a few pesky bugs in the process. Hope you enjoy!
 

@@ -63,6 +63,20 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
         component.inject(this)
     }
 
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        when {
+            this.isHatching -> {
+                dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            }
+            this.isFeeding -> {
+                dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            }
+            else -> {
+            }
+        }
+        return super.onCreateView(inflater, container, savedInstanceState)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -140,7 +154,6 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
 
         when {
             this.isHatching -> {
-                dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
                 binding?.titleTextView?.text = getString(R.string.hatch_with, this.hatchingItem?.text)
                 binding?.titleTextView?.visibility = View.VISIBLE
                 binding?.footerTextView?.text = getString(R.string.hatching_market_info)
@@ -148,7 +161,6 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
                 binding?.openMarketButton?.visibility = View.VISIBLE
             }
             this.isFeeding -> {
-                dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
                 binding?.titleTextView?.text = getString(R.string.dialog_feeding, this.feedingPet?.text)
                 binding?.titleTextView?.visibility = View.VISIBLE
                 binding?.footerTextView?.text = getString(R.string.feeding_market_info)
