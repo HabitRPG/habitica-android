@@ -467,6 +467,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
                     .doOnComplete {
                         if (!shouldWarn) {
                             onResult(-1)
+                            return@doOnComplete
                         }
                         val remaining = totalCount - ownedCount
                         onResult(max(0, remaining))
@@ -490,8 +491,6 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
                                 ownedCount += if (pet.trained > 0) 1 else 0
                             }
                         }
-                        val remaining = totalCount - ownedCount
-                        onResult(max(0, remaining))
                     }, RxErrorHandler.handleEmptyError())
         } else {
             onResult(-1)

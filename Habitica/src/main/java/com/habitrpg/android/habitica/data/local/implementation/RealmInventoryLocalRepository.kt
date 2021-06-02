@@ -14,6 +14,7 @@ import io.realm.Realm
 import io.realm.RealmObject
 import io.realm.RealmResults
 import io.realm.Sort
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.HashMap
 
@@ -351,7 +352,12 @@ class RealmInventoryLocalRepository(realm: Realm) : RealmContentLocalRepository(
                 .findAll()
                 .asFlowable()
                 .filter { it.isLoaded && it.size > 0}
-                .map { it.first() })
+                .map {
+                    val format = SimpleDateFormat("yyyyMM", Locale.US)
+                    it.first {
+                        it.key?.contains(format.format(Date())) == true
+                    }
+                })
     }
 
     override fun soldItem(userID: String, updatedUser: User): User {
