@@ -1,12 +1,13 @@
 package com.habitrpg.android.habitica.models.invitations
 
+import com.habitrpg.android.habitica.models.BaseObject
 import com.habitrpg.android.habitica.models.user.User
 
 import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
-open class Invitations : RealmObject() {
+open class Invitations : RealmObject(), BaseObject {
 
     @PrimaryKey
     var userId: String? = null

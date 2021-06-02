@@ -1,11 +1,12 @@
 package com.habitrpg.android.habitica.models.user
 
+import com.habitrpg.android.habitica.models.BaseObject
 import com.habitrpg.android.habitica.models.TutorialStep
 import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
-open class Flags : RealmObject() {
+open class Flags : RealmObject(), BaseObject {
     @PrimaryKey
     var userId: String? = null
     var tutorial: RealmList<TutorialStep>? = null

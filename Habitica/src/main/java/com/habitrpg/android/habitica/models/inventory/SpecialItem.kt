@@ -5,7 +5,6 @@ import android.content.Context
 import com.habitrpg.android.habitica.R
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
-import java.util.*
 
 open class SpecialItem : RealmObject(), Item {
     override val type: String

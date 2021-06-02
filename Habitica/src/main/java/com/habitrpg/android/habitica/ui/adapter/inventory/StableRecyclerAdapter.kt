@@ -23,7 +23,6 @@ import com.habitrpg.android.habitica.ui.viewHolders.SectionViewHolder
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.subjects.PublishSubject
-import io.realm.RealmResults
 
 
 class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -34,7 +33,7 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var itemType: String? = null
     private var user: User? = null
     private val equipEvents = PublishSubject.create<String>()
-    private var existingMounts: RealmResults<Mount>? = null
+    private var existingMounts: List<Mount>? = null
     private var ownedMounts: Map<String, OwnedMount>? = null
     private var ownedItems: Map<String, OwnedItem>? = null
     private var ownsSaddles: Boolean = false
@@ -77,7 +76,7 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         notifyDataSetChanged()
     }
 
-    fun setExistingMounts(existingMounts: RealmResults<Mount>) {
+    fun setExistingMounts(existingMounts: List<Mount>) {
         this.existingMounts = existingMounts
         notifyDataSetChanged()
     }

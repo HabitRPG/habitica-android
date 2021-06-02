@@ -19,7 +19,6 @@ import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.subjects.BehaviorSubject
-import io.realm.RealmResults
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -123,7 +122,7 @@ open class GroupViewModel : BaseViewModel() {
                 }, RxErrorHandler.handleEmptyError()))
     }
 
-    fun getChatMessages(): Flowable<RealmResults<ChatMessage>> {
+    fun getChatMessages(): Flowable<List<ChatMessage>> {
         return groupIDFlowable
                 .filterMapEmpty()
                 .flatMap { socialRepository.getGroupChat(it) }

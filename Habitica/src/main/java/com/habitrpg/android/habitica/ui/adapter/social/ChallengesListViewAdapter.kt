@@ -18,8 +18,8 @@ import com.habitrpg.android.habitica.ui.helpers.EmojiParser
 import io.realm.OrderedRealmCollection
 
 class ChallengesListViewAdapter(private val viewUserChallengesOnly: Boolean, private val userId: String) : BaseRecyclerViewAdapter<Challenge, ChallengesListViewAdapter.ChallengeViewHolder>() {
-    private var unfilteredData: OrderedRealmCollection<Challenge>? = null
-    private var challengeMemberships: OrderedRealmCollection<ChallengeMembership>? = null
+    private var unfilteredData: List<Challenge>? = null
+    private var challengeMemberships: List<ChallengeMembership>? = null
 
     private val openChallengeFragmentEvents = PublishSubject.create<String>()
 
@@ -40,17 +40,15 @@ class ChallengesListViewAdapter(private val viewUserChallengesOnly: Boolean, pri
         }
     }
 
-    fun updateUnfilteredData(data: OrderedRealmCollection<Challenge>?) {
+    fun updateUnfilteredData(data: List<Challenge>?) {
         this.data = data ?: emptyList()
         unfilteredData = data
     }
 
     fun filter(filterOptions: ChallengeFilterOptions) {
-        if (unfilteredData == null) {
-            return
-        }
+        val unfilteredData = unfilteredData as? OrderedRealmCollection ?: return
 
-        var query = unfilteredData?.where()
+        var query = unfilteredData.where()
 
         if (filterOptions.showByGroups != null && filterOptions.showByGroups.size > 0) {
             val groupIds = arrayOfNulls<String>(filterOptions.showByGroups.size)

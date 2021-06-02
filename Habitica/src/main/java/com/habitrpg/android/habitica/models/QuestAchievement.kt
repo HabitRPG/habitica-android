@@ -4,7 +4,7 @@ import io.realm.RealmObject
 import io.realm.annotations.Ignore
 import io.realm.annotations.PrimaryKey
 
-open class QuestAchievement: RealmObject() {
+open class QuestAchievement: RealmObject(), BaseObject {
     @PrimaryKey
     var combinedKey: String? = null
 

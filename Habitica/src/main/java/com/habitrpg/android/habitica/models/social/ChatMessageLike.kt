@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.models.social
 
+import com.habitrpg.android.habitica.models.BaseObject
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
@@ -7,7 +8,7 @@ import io.realm.annotations.PrimaryKey
  * Created by phillip on 30.06.17.
  */
 
-open class ChatMessageLike : RealmObject {
+open class ChatMessageLike : RealmObject, BaseObject {
 
     @PrimaryKey
     var key: String = ""

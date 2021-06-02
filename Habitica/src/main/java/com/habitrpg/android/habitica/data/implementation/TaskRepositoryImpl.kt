@@ -7,6 +7,7 @@ import com.habitrpg.android.habitica.data.local.TaskLocalRepository
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.interactors.ScoreTaskLocallyInteractor
+import com.habitrpg.android.habitica.models.BaseMainObject
 import com.habitrpg.android.habitica.models.BaseObject
 import com.habitrpg.android.habitica.models.responses.BulkTaskScoringData
 import com.habitrpg.android.habitica.models.responses.TaskDirection
@@ -19,27 +20,26 @@ import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Single
-import io.realm.RealmResults
 import java.text.SimpleDateFormat
 import java.util.*
 
 
 class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiClient, userID: String, val appConfigManager: AppConfigManager, val analyticsManager: AnalyticsManager) : BaseRepositoryImpl<TaskLocalRepository>(localRepository, apiClient, userID), TaskRepository {
-    override fun getTasksOfType(taskType: String): Flowable<RealmResults<Task>> = getTasks(taskType, userID)
+    override fun getTasksOfType(taskType: String): Flowable<out List<Task>> = getTasks(taskType, userID)
 
     private var lastTaskAction: Long = 0
 
-    override fun getTasks(taskType: String, userID: String): Flowable<RealmResults<Task>> =
+    override fun getTasks(taskType: String, userID: String): Flowable<out List<Task>> =
             this.localRepository.getTasks(taskType, userID)
 
-    override fun getTasks(userId: String): Flowable<RealmResults<Task>> =
+    override fun getTasks(userId: String): Flowable<out List<Task>> =
             this.localRepository.getTasks(userId)
 
-    override fun getCurrentUserTasks(taskType: String): Flowable<RealmResults<Task>> =
+    override fun getCurrentUserTasks(taskType: String): Flowable<out List<Task>> =
             this.localRepository.getTasks(taskType, userID)
 
-    override fun saveTasks(ownerID: String, order: TasksOrder, tasks: TaskList) {
-        localRepository.saveTasks(ownerID, order, tasks)
+    override fun saveTasks(userId: String, order: TasksOrder, tasks: TaskList) {
+        localRepository.saveTasks(userId, order, tasks)
     }
 
     override fun retrieveTasks(userId: String, tasksOrder: TasksOrder): Flowable<TaskList> {
@@ -154,10 +154,10 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
                 }
             }
             res._tmp?.drop?.key?.let { key ->
-                val type = when(res._tmp?.drop?.type?.toLowerCase(Locale.US)) {
+                val type = when(res._tmp?.drop?.type?.lowercase(Locale.US)) {
                     "hatchingpotion" -> "hatchingPotions"
                     "egg" -> "eggs"
-                    else -> res._tmp?.drop?.type?.toLowerCase(Locale.US)
+                    else -> res._tmp?.drop?.type?.lowercase(Locale.US)
                 }
                 var item = it.where(OwnedItem::class.java).equalTo("itemType", type).equalTo("key", key).findFirst()
                 if (item == null) {
@@ -175,7 +175,7 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
             stats?.exp = res.exp
             stats?.mp = res.mp
             stats?.gp = res.gp
-            stats?.lvl = res.lvl.toInt()
+            stats?.lvl = res.lvl
             bgUser.party?.quest?.progress?.up = (bgUser.party?.quest?.progress?.up
                     ?: 0F) + (res._tmp?.quest?.progressDelta?.toFloat() ?: 0F)
             bgUser.stats = stats
@@ -278,7 +278,7 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
         localRepository.saveReminder(remindersItem)
     }
 
-    override fun <T: BaseObject> modify(obj: T, transaction: (T) -> Unit) {
+    override fun <T: BaseMainObject> modify(obj: T, transaction: (T) -> Unit) {
         localRepository.modify(obj, transaction)
     }
 
@@ -330,7 +330,7 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
         return apiClient.unlinkAllTasks(challengeID, keepOption)
     }
 
-    override fun getTasksForChallenge(challengeID: String?): Flowable<RealmResults<Task>> {
+    override fun getTasksForChallenge(challengeID: String?): Flowable<out List<Task>> {
         return localRepository.getTasksForChallenge(challengeID, userID)
     }
 }

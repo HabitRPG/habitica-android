@@ -1,12 +1,13 @@
 package com.habitrpg.android.habitica.models.social
 
 import com.google.gson.annotations.SerializedName
+import com.habitrpg.android.habitica.models.BaseObject
 import com.habitrpg.android.habitica.models.inventory.Quest
 
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
-open class UserParty : RealmObject() {
+open class UserParty : RealmObject(), BaseObject {
     @PrimaryKey
     var userId: String? = null
     @SerializedName("_id")

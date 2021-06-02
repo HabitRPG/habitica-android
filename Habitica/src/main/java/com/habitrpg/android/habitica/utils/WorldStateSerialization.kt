@@ -52,7 +52,7 @@ class WorldStateSerialization: JsonDeserializer<WorldState> {
         state.npcImageSuffix = obj.getAsString("npcImageSuffix")
 
         try {
-            if (obj.has("currentEvent") == true && obj.get("currentEvent")?.isJsonObject == true) {
+            if (obj.has("currentEvent") && obj.get("currentEvent")?.isJsonObject == true) {
                 val event = obj.getAsJsonObject("currentEvent")
                 if (event != null) {
                     state.currentEvent = context?.deserialize(event, WorldStateEvent::class.java)

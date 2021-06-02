@@ -1,10 +1,11 @@
 package com.habitrpg.android.habitica.models.inventory
 
+import com.habitrpg.android.habitica.models.BaseObject
 import io.realm.RealmModel
 import io.realm.RealmObject
 import java.util.*
 
-open class ItemEvent : RealmObject() {
+open class ItemEvent : RealmObject(), BaseObject {
     var start: Date? = null
     var end: Date? = null
 }

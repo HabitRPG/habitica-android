@@ -6,6 +6,7 @@ import android.text.Spanned
 import androidx.annotation.StringDef
 import com.google.gson.annotations.SerializedName
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.models.BaseMainObject
 import com.habitrpg.android.habitica.models.BaseObject
 import com.habitrpg.android.habitica.models.Tag
 import com.habitrpg.android.habitica.models.user.Stats
@@ -18,7 +19,7 @@ import org.json.JSONArray
 import org.json.JSONException
 import java.util.*
 
-open class Task : RealmObject, BaseObject, Parcelable {
+open class Task : RealmObject, BaseMainObject, Parcelable {
 
     override val realmClass: Class<Task>
         get() = Task::class.java

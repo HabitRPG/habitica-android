@@ -1,10 +1,11 @@
 package com.habitrpg.android.habitica.models.user
 
+import com.habitrpg.android.habitica.models.BaseMainObject
 import com.habitrpg.android.habitica.models.BaseObject
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
-open class OwnedItem : RealmObject(), BaseObject, OwnedObject {
+open class OwnedItem : RealmObject(), BaseMainObject, OwnedObject {
 
     override val realmClass: Class<OwnedItem>
         get() = OwnedItem::class.java

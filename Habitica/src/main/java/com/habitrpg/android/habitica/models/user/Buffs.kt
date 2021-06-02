@@ -1,10 +1,11 @@
 package com.habitrpg.android.habitica.models.user
 
 import com.google.gson.annotations.SerializedName
+import com.habitrpg.android.habitica.models.BaseObject
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
-open class Buffs : RealmObject() {
+open class Buffs : RealmObject(), BaseObject {
     @PrimaryKey
     var userId: String? = null
     var con: Float? = null

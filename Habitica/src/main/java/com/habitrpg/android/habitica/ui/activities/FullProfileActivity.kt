@@ -8,7 +8,6 @@ import android.widget.ProgressBar
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
-import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import com.facebook.drawee.backends.pipeline.Fresco
@@ -35,15 +34,12 @@ import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.ui.AvatarView
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel
 import com.habitrpg.android.habitica.ui.adapter.social.AchievementProfileAdapter
-import com.habitrpg.android.habitica.ui.fragments.social.InboxOverviewFragmentDirections
-import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
 import com.habitrpg.android.habitica.ui.helpers.loadImage
 import com.habitrpg.android.habitica.ui.helpers.setMarkdown
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.SnackbarDisplayType
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import io.reactivex.rxjava3.core.Flowable
-import io.realm.RealmResults
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
@@ -51,7 +47,6 @@ import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
-import kotlin.coroutines.CoroutineContext
 import kotlin.math.floor
 import kotlin.math.min
 
@@ -350,7 +345,7 @@ class FullProfileActivity : BaseActivity() {
         addAttributeRow(getString(R.string.profile_level), byLevelStat, byLevelStat, byLevelStat, byLevelStat, true, false)
     }
 
-    private fun loadItemDataByOutfit(outfit: Outfit?): Flowable<RealmResults<Equipment>> {
+    private fun loadItemDataByOutfit(outfit: Outfit?): Flowable<out List<Equipment>> {
         val outfitList = ArrayList<String>()
         if (outfit != null) {
             outfitList.add(outfit.armor)
@@ -371,9 +366,7 @@ class FullProfileActivity : BaseActivity() {
 
         binding.equipmentTableLayout.removeAllViews()
         for (index in 1 until binding.attributesTableLayout.childCount) {
-            if (binding.attributesTableLayout != null) {
-                binding.attributesTableLayout.removeViewAt(index)
-            }
+            binding.attributesTableLayout.removeViewAt(index)
         }
 
         addLevelAttributes(user)

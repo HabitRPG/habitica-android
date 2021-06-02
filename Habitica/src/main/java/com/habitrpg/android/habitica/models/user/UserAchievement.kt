@@ -1,9 +1,10 @@
 package com.habitrpg.android.habitica.models.user
 
+import com.habitrpg.android.habitica.models.BaseObject
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
-open class UserAchievement : RealmObject {
+open class UserAchievement() : RealmObject(), BaseObject {
 
     @PrimaryKey
     var combinedKey: String? = null
@@ -18,7 +19,5 @@ open class UserAchievement : RealmObject {
             combinedKey = userId + field
         }
     var earned: Boolean = false
-
-    constructor()
 }
 

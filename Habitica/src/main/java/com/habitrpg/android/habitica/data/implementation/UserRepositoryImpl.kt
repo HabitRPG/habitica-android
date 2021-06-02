@@ -25,8 +25,6 @@ import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.functions.BiFunction
-import io.realm.RealmResults
-import org.reactivestreams.Publisher
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -117,10 +115,10 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
         return apiClient.sleep().map { user }
     }
 
-    override fun getSkills(user: User): Flowable<RealmResults<Skill>> =
+    override fun getSkills(user: User): Flowable<out List<Skill>> =
             localRepository.getSkills(user)
 
-    override fun getSpecialItems(user: User): Flowable<RealmResults<Skill>> =
+    override fun getSpecialItems(user: User): Flowable<out List<Skill>> =
             localRepository.getSpecialItems(user)
 
     override fun useSkill(key: String, target: String?, taskId: String): Flowable<SkillResponse> {
@@ -351,11 +349,11 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
         }
     }
 
-    override fun getAchievements(): Flowable<RealmResults<Achievement>> {
+    override fun getAchievements(): Flowable<out List<Achievement>> {
         return localRepository.getAchievements()
     }
 
-    override fun getQuestAchievements(): Flowable<RealmResults<QuestAchievement>> {
+    override fun getQuestAchievements(): Flowable<out List<QuestAchievement>> {
         return localRepository.getQuestAchievements(userID)
     }
 
@@ -366,7 +364,7 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
         }
     }
 
-    override fun getTeamPlans(): Flowable<RealmResults<TeamPlan>> {
+    override fun getTeamPlans(): Flowable<out List<TeamPlan>> {
         return localRepository.getTeamPlans(userID)
     }
 

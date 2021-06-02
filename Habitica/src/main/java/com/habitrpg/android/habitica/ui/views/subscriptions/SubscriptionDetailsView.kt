@@ -65,7 +65,7 @@ class SubscriptionDetailsView : LinearLayout {
             plan.dateTerminated != null -> binding.subscriptionDurationTextView.text = resources.getString(R.string.ending_on, DateFormat.getDateInstance().format(plan.dateTerminated ?: Date()))
         }
 
-        if (plan.extraMonths > 0) {
+        if ((plan.extraMonths ?: 0) > 0) {
             binding.subscriptionCreditWrapper.visibility = View.VISIBLE
             if (plan.extraMonths == 1) {
                 binding.subscriptionCreditTextView.text = resources.getString(R.string.one_month)

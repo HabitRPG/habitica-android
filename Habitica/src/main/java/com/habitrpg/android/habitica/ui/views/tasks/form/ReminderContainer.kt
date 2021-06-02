@@ -10,7 +10,6 @@ import androidx.core.view.updateMargins
 import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.models.tasks.RemindersItem
 import com.habitrpg.android.habitica.models.tasks.Task
-import io.realm.RealmList
 
 class ReminderContainer @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
@@ -24,9 +23,9 @@ class ReminderContainer @JvmOverloads constructor(
             }
         }
     }
-    var reminders: RealmList<RemindersItem>
+    var reminders: List<RemindersItem>
         get() {
-            val list = RealmList<RemindersItem>()
+            val list = mutableListOf<RemindersItem>()
             for (child in children) {
                 val view = child as? ReminderItemFormView ?: continue
                 if (view.item.time != null) {

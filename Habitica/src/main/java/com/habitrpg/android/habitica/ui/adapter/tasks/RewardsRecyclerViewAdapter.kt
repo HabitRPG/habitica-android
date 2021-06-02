@@ -17,28 +17,27 @@ import com.habitrpg.android.habitica.ui.viewHolders.tasks.RewardViewHolder
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.subjects.PublishSubject
-import io.realm.OrderedRealmCollection
 
-class RewardsRecyclerViewAdapter(private var customRewards: OrderedRealmCollection<Task>?, private val layoutResource: Int) : BaseRecyclerViewAdapter<Task, RecyclerView.ViewHolder>(), TaskRecyclerViewAdapter {
+class RewardsRecyclerViewAdapter(private var customRewards: List<Task>?, private val layoutResource: Int) : BaseRecyclerViewAdapter<Task, RecyclerView.ViewHolder>(), TaskRecyclerViewAdapter {
     var user: User? = null
     set(value) {
         field = value
         notifyDataSetChanged()
     }
     override var canScoreTasks = true
-    private var inAppRewards: OrderedRealmCollection<ShopItem>? = null
+    private var inAppRewards: List<ShopItem>? = null
 
-    private val errorButtonEventsSubject = PublishSubject.create<String>()
+    private val errorButtonEventsSubject: PublishSubject<String> = PublishSubject.create()
     override val errorButtonEvents: Flowable<String> = errorButtonEventsSubject.toFlowable(BackpressureStrategy.DROP)
-    private var taskScoreEventsSubject = PublishSubject.create<Pair<Task, TaskDirection>>()
+    private var taskScoreEventsSubject: PublishSubject<Pair<Task, TaskDirection>> = PublishSubject.create()
     override val taskScoreEvents: Flowable<Pair<Task, TaskDirection>> = taskScoreEventsSubject.toFlowable(BackpressureStrategy.LATEST)
-    private var checklistItemScoreSubject = PublishSubject.create<Pair<Task, ChecklistItem>>()
+    private var checklistItemScoreSubject: PublishSubject<Pair<Task, ChecklistItem>> = PublishSubject.create()
     override val checklistItemScoreEvents: Flowable<Pair<Task, ChecklistItem>> = checklistItemScoreSubject.toFlowable(BackpressureStrategy.DROP)
-    private var taskOpenEventsSubject = PublishSubject.create<Task>()
+    private var taskOpenEventsSubject: PublishSubject<Task> = PublishSubject.create()
     override val taskOpenEvents: Flowable<Task> = taskOpenEventsSubject.toFlowable(BackpressureStrategy.LATEST)
-    protected var brokenTaskEventsSubject = PublishSubject.create<Task>()
+    protected var brokenTaskEventsSubject: PublishSubject<Task> = PublishSubject.create()
     override val brokenTaskEvents: Flowable<Task> = brokenTaskEventsSubject.toFlowable(BackpressureStrategy.DROP)
-    private var purchaseCardSubject = PublishSubject.create<ShopItem>()
+    private var purchaseCardSubject: PublishSubject<ShopItem> = PublishSubject.create()
     val purchaseCardEvents: Flowable<ShopItem> = purchaseCardSubject.toFlowable(BackpressureStrategy.LATEST)
 
 
@@ -52,13 +51,13 @@ class RewardsRecyclerViewAdapter(private var customRewards: OrderedRealmCollecti
 
     private val inAppRewardCount: Int
         get() {
-            if (inAppRewards?.isValid != true) return 0
+            //if (inAppRewards?.isValid != true) return 0
             return inAppRewards?.size ?: 0
         }
 
     private val customRewardCount: Int
         get() {
-            if (customRewards?.isValid != true) return 0
+            //if (customRewards?.isValid != true) return 0
             return customRewards?.size ?: 0
         }
 
@@ -114,7 +113,7 @@ class RewardsRecyclerViewAdapter(private var customRewards: OrderedRealmCollecti
         }
     }
 
-    override fun updateUnfilteredData(data: OrderedRealmCollection<Task>?) {
+    override fun updateUnfilteredData(data: List<Task>?) {
         updateData(data)
     }
 
@@ -124,14 +123,14 @@ class RewardsRecyclerViewAdapter(private var customRewards: OrderedRealmCollecti
         return rewardCount
     }
 
-    fun updateData(tasks: OrderedRealmCollection<Task>?) {
+    fun updateData(tasks: List<Task>?) {
         this.customRewards = tasks
         notifyDataSetChanged()
     }
 
-    fun updateItemRewards(items: OrderedRealmCollection<ShopItem>) {
-        if (items.size > 0) {
-            if (Task::class.java.isAssignableFrom(items.first()!!.javaClass)) {
+    fun updateItemRewards(items: List<ShopItem>) {
+        if (items.isNotEmpty()) {
+            if (Task::class.java.isAssignableFrom(items.first().javaClass)) {
                 //this catches a weird bug where the observable gets a list of tasks for no apparent reason.
                 return
             }

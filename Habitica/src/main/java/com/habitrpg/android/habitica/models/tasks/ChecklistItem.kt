@@ -2,13 +2,14 @@ package com.habitrpg.android.habitica.models.tasks
 
 import android.os.Parcel
 import android.os.Parcelable
+import com.habitrpg.android.habitica.models.BaseMainObject
 import com.habitrpg.android.habitica.models.BaseObject
 import io.realm.RealmModel
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 import java.util.*
 
-open class ChecklistItem : RealmObject, BaseObject, Parcelable {
+open class ChecklistItem : RealmObject, BaseMainObject, Parcelable {
 
     override val realmClass: Class<ChecklistItem>
         get() = ChecklistItem::class.java

@@ -31,6 +31,7 @@ import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager
 import com.habitrpg.android.habitica.models.Tag
 import com.habitrpg.android.habitica.models.social.Challenge
+import com.habitrpg.android.habitica.models.tasks.ChecklistItem
 import com.habitrpg.android.habitica.models.tasks.HabitResetOption
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.user.Stats
@@ -456,8 +457,10 @@ class TaskFormActivity : BaseActivity() {
         resultIntent.putExtra(TASK_TYPE_KEY, taskType)
         if (!isChallengeTask) {
             if (taskType == Task.TYPE_DAILY || taskType == Task.TYPE_TODO) {
-                thisTask.checklist = binding.checklistContainer.checklistItems
-                thisTask.reminders = binding.remindersContainer.reminders
+                thisTask.checklist = RealmList()
+                thisTask.checklist?.addAll(binding.checklistContainer.checklistItems)
+                thisTask.reminders = RealmList()
+                thisTask.reminders?.addAll(binding.remindersContainer.reminders)
             }
             thisTask.tags = RealmList()
             binding.tagsWrapper.forEachIndexed { index, view ->

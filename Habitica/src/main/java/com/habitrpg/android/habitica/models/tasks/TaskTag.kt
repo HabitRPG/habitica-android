@@ -1,10 +1,11 @@
 package com.habitrpg.android.habitica.models.tasks
 
+import com.habitrpg.android.habitica.models.BaseObject
 import com.habitrpg.android.habitica.models.Tag
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
-open class TaskTag : RealmObject() {
+open class TaskTag : RealmObject(), BaseObject {
     var tag: Tag? = null
     set(value) {
         field = value

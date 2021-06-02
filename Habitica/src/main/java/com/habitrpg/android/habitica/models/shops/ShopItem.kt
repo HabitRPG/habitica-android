@@ -5,13 +5,14 @@ import android.content.res.Resources
 
 import com.google.gson.annotations.SerializedName
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.models.BaseObject
 import com.habitrpg.android.habitica.models.inventory.ItemEvent
 import com.habitrpg.android.habitica.models.user.User
 
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
-open class ShopItem : RealmObject() {
+open class ShopItem : RealmObject(), BaseObject {
     @PrimaryKey
     var key: String = ""
     set(value) {

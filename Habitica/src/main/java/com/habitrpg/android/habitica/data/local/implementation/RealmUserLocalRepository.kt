@@ -12,7 +12,6 @@ import com.habitrpg.android.habitica.models.user.User
 import hu.akarnokd.rxjava3.bridge.RxJavaBridge
 import io.reactivex.rxjava3.core.Flowable
 import io.realm.Realm
-import io.realm.RealmResults
 
 class RealmUserLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), UserLocalRepository {
     override fun getUserQuestStatus(userID: String): Flowable<UserQuestStatus> {
@@ -35,7 +34,7 @@ class RealmUserLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
                 }}
     }
 
-    override fun getAchievements(): Flowable<RealmResults<Achievement>> {
+    override fun getAchievements(): Flowable<out List<Achievement>> {
         return RxJavaBridge.toV3Flowable(realm.where(Achievement::class.java)
                 .sort("index")
                 .findAll()
@@ -43,7 +42,7 @@ class RealmUserLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
                 .filter { it.isLoaded })
     }
 
-    override fun getQuestAchievements(userID: String): Flowable<RealmResults<QuestAchievement>> {
+    override fun getQuestAchievements(userID: String): Flowable<out List<QuestAchievement>> {
         return RxJavaBridge.toV3Flowable(realm.where(QuestAchievement::class.java)
                 .equalTo("userID", userID)
                 .findAll()
@@ -51,8 +50,8 @@ class RealmUserLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
                 .filter { it.isLoaded })
 }
 
-    override fun getTutorialSteps(): Flowable<RealmResults<TutorialStep>> = RxJavaBridge.toV3Flowable(realm.where(TutorialStep::class.java).findAll().asFlowable()
-                .filter { it.isLoaded })
+    override fun getTutorialSteps(): Flowable<List<TutorialStep>> = RxJavaBridge.toV3Flowable(realm.where(TutorialStep::class.java).findAll().asFlowable()
+                .filter { it.isLoaded }.map { it })
 
     override fun getUser(userID: String): Flowable<User> {
         if (realm.isClosed) return Flowable.empty()
@@ -135,7 +134,7 @@ class RealmUserLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
         }
     }
 
-    override fun getTeamPlans(userID: String): Flowable<RealmResults<TeamPlan>> {
+    override fun getTeamPlans(userID: String): Flowable<out List<TeamPlan>> {
         return RxJavaBridge.toV3Flowable(realm.where(TeamPlan::class.java)
                 .equalTo("userID", userID)
                 .findAll()
@@ -153,7 +152,7 @@ class RealmUserLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
                 .map { teams -> teams.first() })
     }
 
-    override fun getSkills(user: User): Flowable<RealmResults<Skill>> {
+    override fun getSkills(user: User): Flowable<out List<Skill>> {
         val habitClass = if (user.preferences?.disableClasses == true) "none" else user.stats?.habitClass
         return RxJavaBridge.toV3Flowable(realm.where(Skill::class.java)
                 .equalTo("habitClass", habitClass)
@@ -163,7 +162,7 @@ class RealmUserLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
                 .filter { it.isLoaded })
 }
 
-    override fun getSpecialItems(user: User): Flowable<RealmResults<Skill>> {
+    override fun getSpecialItems(user: User): Flowable<out List<Skill>> {
         val specialItems = user.items?.special
         val ownedItems = ArrayList<String>()
         if (specialItems != null) {

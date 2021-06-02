@@ -1,11 +1,12 @@
 package com.habitrpg.android.habitica.models.user
 
+import com.habitrpg.android.habitica.models.BaseObject
 import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 import java.util.*
 
-open class Items : RealmObject {
+open class Items : RealmObject, BaseObject {
 
     @PrimaryKey
     var userId: String? = null

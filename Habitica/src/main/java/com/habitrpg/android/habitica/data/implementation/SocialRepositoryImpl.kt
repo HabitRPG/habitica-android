@@ -13,7 +13,6 @@ import com.habitrpg.android.habitica.models.social.*
 import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Single
-import io.realm.RealmResults
 import java.util.*
 import kotlin.collections.HashMap
 
@@ -49,7 +48,7 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
         return localRepository.getGroupMembership(userID, id)
     }
 
-    override fun getGroupMemberships(): Flowable<RealmResults<GroupMembership>> {
+    override fun getGroupMemberships(): Flowable<out List<GroupMembership>> {
         return localRepository.getGroupMemberships(userID)
     }
 
@@ -64,7 +63,7 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
                 .doOnSuccess { localRepository.saveChatMessages(groupId, it) }
     }
 
-    override fun getGroupChat(groupId: String): Flowable<RealmResults<ChatMessage>> {
+    override fun getGroupChat(groupId: String): Flowable<out List<ChatMessage>> {
         return localRepository.getGroupChat(groupId)
     }
 
@@ -199,13 +198,13 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
                 }
     }
 
-    override fun getGroups(type: String): Flowable<RealmResults<Group>> = localRepository.getGroups(type)
+    override fun getGroups(type: String): Flowable<out List<Group>> = localRepository.getGroups(type)
 
-    override fun getPublicGuilds(): Flowable<RealmResults<Group>> = localRepository.getPublicGuilds()
+    override fun getPublicGuilds(): Flowable<out List<Group>> = localRepository.getPublicGuilds()
 
-    override fun getInboxConversations(): Flowable<RealmResults<InboxConversation>> = localRepository.getInboxConversation(userID)
+    override fun getInboxConversations(): Flowable<out List<InboxConversation>> = localRepository.getInboxConversation(userID)
 
-    override fun getInboxMessages(replyToUserID: String?): Flowable<RealmResults<ChatMessage>> = localRepository.getInboxMessages(userID, replyToUserID)
+    override fun getInboxMessages(replyToUserID: String?): Flowable<out List<ChatMessage>> = localRepository.getInboxMessages(userID, replyToUserID)
 
     override fun retrieveInboxMessages(uuid: String, page: Int): Flowable<List<ChatMessage>> {
         return apiClient.retrieveInboxMessages(uuid, page).doOnNext { messages ->
@@ -233,7 +232,7 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
         return postPrivateMessage(recipientId, messageObject)
     }
 
-    override fun getGroupMembers(id: String): Flowable<RealmResults<Member>> = localRepository.getGroupMembers(id)
+    override fun getGroupMembers(id: String): Flowable<out List<Member>> = localRepository.getGroupMembers(id)
 
     override fun retrieveGroupMembers(id: String, includeAllPublicFields: Boolean): Flowable<List<Member>> {
         return apiClient.getGroupMembers(id, includeAllPublicFields)
@@ -271,7 +270,7 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
                 }
     }
 
-    override fun getUserGroups(type: String?): Flowable<RealmResults<Group>> = localRepository.getUserGroups(userID, type)
+    override fun getUserGroups(type: String?): Flowable<out List<Group>> = localRepository.getUserGroups(userID, type)
 
     override fun acceptQuest(user: User?, partyId: String): Flowable<Void> {
         return apiClient.acceptQuest(partyId)

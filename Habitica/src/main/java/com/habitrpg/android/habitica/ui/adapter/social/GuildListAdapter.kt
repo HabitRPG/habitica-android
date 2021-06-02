@@ -51,9 +51,9 @@ class GuildListAdapter : BaseRecyclerViewAdapter<Group, RecyclerView.ViewHolder>
         }
     }
 
-    private var unfilteredData: OrderedRealmCollection<Group>? = null
+    private var unfilteredData: List<Group>? = null
 
-    fun setUnfilteredData(data: OrderedRealmCollection<Group>?) {
+    fun setUnfilteredData(data: List<Group>?) {
         this.data = data ?: emptyList()
         unfilteredData = data
     }
@@ -68,7 +68,7 @@ class GuildListAdapter : BaseRecyclerViewAdapter<Group, RecyclerView.ViewHolder>
 
             override fun publishResults(constraint: CharSequence, results: FilterResults) {
                 unfilteredData?.let {
-                    if (constraint.isNotEmpty()) {
+                    if (constraint.isNotEmpty() && it is OrderedRealmCollection) {
                         data = it.where()
                                 .beginGroup()
                                 .contains("name", constraint.toString(), Case.INSENSITIVE)

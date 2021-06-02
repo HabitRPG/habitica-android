@@ -4,9 +4,10 @@ import io.realm.RealmObject
 import android.util.SparseIntArray
 import com.habitrpg.android.habitica.models.user.ContributorInfo
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.models.BaseObject
 import io.realm.annotations.PrimaryKey
 
-open class ContributorInfo : RealmObject() {
+open class ContributorInfo : RealmObject(), BaseObject {
     companion object {
         val CONTRIBUTOR_COLOR_DICT: SparseIntArray = SparseIntArray()
 

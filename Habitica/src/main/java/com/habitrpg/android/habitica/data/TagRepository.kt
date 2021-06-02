@@ -4,12 +4,11 @@ import com.habitrpg.android.habitica.models.Tag
 
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Single
-import io.realm.RealmResults
 
 interface TagRepository : BaseRepository {
 
-    fun getTags(): Flowable<RealmResults<Tag>>
-    fun getTags(userId: String): Flowable<RealmResults<Tag>>
+    fun getTags(): Flowable<out List<Tag>>
+    fun getTags(userId: String): Flowable<out List<Tag>>
 
     fun createTag(tag: Tag): Flowable<Tag>
     fun updateTag(tag: Tag): Flowable<Tag>

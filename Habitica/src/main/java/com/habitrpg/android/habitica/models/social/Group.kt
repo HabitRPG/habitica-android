@@ -1,7 +1,7 @@
 package com.habitrpg.android.habitica.models.social
 
 import com.google.gson.annotations.SerializedName
-import com.habitrpg.android.habitica.models.BaseObject
+import com.habitrpg.android.habitica.models.BaseMainObject
 import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.tasks.TaskList
 import com.habitrpg.android.habitica.models.tasks.TasksOrder
@@ -12,7 +12,7 @@ import io.realm.RealmObject
 import io.realm.annotations.Ignore
 import io.realm.annotations.PrimaryKey
 
-open class Group : RealmObject(), BaseObject {
+open class Group : RealmObject(), BaseMainObject {
 
     override val realmClass: Class<Group>
         get() = Group::class.java

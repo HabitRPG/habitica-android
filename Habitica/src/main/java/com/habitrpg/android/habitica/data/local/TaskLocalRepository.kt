@@ -7,12 +7,11 @@ import com.habitrpg.android.habitica.models.tasks.TasksOrder
 import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Maybe
-import io.realm.RealmResults
 
 interface TaskLocalRepository : BaseLocalRepository {
 
-    fun getTasks(taskType: String, userID: String): Flowable<RealmResults<Task>>
-    fun getTasks(userId: String): Flowable<RealmResults<Task>>
+    fun getTasks(taskType: String, userID: String): Flowable<out List<Task>>
+    fun getTasks(userId: String): Flowable<out List<Task>>
 
     fun saveTasks(userId: String, tasksOrder: TasksOrder, tasks: TaskList)
 
@@ -33,7 +32,7 @@ interface TaskLocalRepository : BaseLocalRepository {
 
     fun updateTaskPositions(taskOrder: List<String>)
     fun saveCompletedTodos(userId: String, tasks: MutableCollection<Task>)
-    fun getErroredTasks(userID: String): Flowable<RealmResults<Task>>
+    fun getErroredTasks(userID: String): Flowable<out List<Task>>
     fun getUser(userID: String): Flowable<User>
-    fun getTasksForChallenge(challengeID: String?, userID: String?): Flowable<RealmResults<Task>>
+    fun getTasksForChallenge(challengeID: String?, userID: String?): Flowable<out List<Task>>
 }

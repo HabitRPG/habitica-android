@@ -7,38 +7,37 @@ import com.habitrpg.android.habitica.models.user.OwnedMount
 import com.habitrpg.android.habitica.models.user.OwnedPet
 import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.rxjava3.core.Flowable
-import io.realm.RealmResults
 
 interface InventoryLocalRepository : ContentLocalRepository {
 
     fun getArmoireRemainingCount(): Long
-    fun getOwnedEquipment(): Flowable<RealmResults<Equipment>>
+    fun getOwnedEquipment(): Flowable<out List<Equipment>>
 
-    fun getMounts(): Flowable<RealmResults<Mount>>
+    fun getMounts(): Flowable<out List<Mount>>
 
-    fun getOwnedMounts(userID: String): Flowable<RealmResults<OwnedMount>>
+    fun getOwnedMounts(userID: String): Flowable<out List<OwnedMount>>
 
-    fun getPets(): Flowable<RealmResults<Pet>>
+    fun getPets(): Flowable<out List<Pet>>
 
-    fun getOwnedPets(userID: String): Flowable<RealmResults<OwnedPet>>
+    fun getOwnedPets(userID: String): Flowable<out List<OwnedPet>>
 
-    fun getInAppRewards(): Flowable<RealmResults<ShopItem>>
+    fun getInAppRewards(): Flowable<out List<ShopItem>>
     fun getQuestContent(key: String): Flowable<QuestContent>
-    fun getQuestContent(keys: List<String>): Flowable<RealmResults<QuestContent>>
+    fun getQuestContent(keys: List<String>): Flowable<out List<QuestContent>>
 
-    fun getEquipment(searchedKeys: List<String>): Flowable<RealmResults<Equipment>>
+    fun getEquipment(searchedKeys: List<String>): Flowable<out List<Equipment>>
 
-    fun getOwnedEquipment(type: String): Flowable<RealmResults<Equipment>>
+    fun getOwnedEquipment(type: String): Flowable<out List<Equipment>>
 
-    fun getItems(itemClass: Class<out Item>, keys: Array<String>): Flowable<out RealmResults<out Item>>
-    fun getItems(itemClass: Class<out Item>): Flowable<out RealmResults<out Item>>
-    fun getOwnedItems(itemType: String, userID: String, includeZero: Boolean): Flowable<RealmResults<OwnedItem>>
+    fun getItems(itemClass: Class<out Item>, keys: Array<String>): Flowable<out List<Item>>
+    fun getItems(itemClass: Class<out Item>): Flowable<out List<Item>>
+    fun getOwnedItems(itemType: String, userID: String, includeZero: Boolean): Flowable<out List<OwnedItem>>
     fun getOwnedItems(userID: String, includeZero: Boolean): Flowable<Map<String, OwnedItem>>
-    fun getEquipmentType(type: String, set: String): Flowable<RealmResults<Equipment>>
+    fun getEquipmentType(type: String, set: String): Flowable<out List<Equipment>>
 
     fun getEquipment(key: String): Flowable<Equipment>
-    fun getMounts(type: String?, group: String?, color: String?): Flowable<RealmResults<Mount>>
-    fun getPets(type: String?, group: String?, color: String?): Flowable<RealmResults<Pet>>
+    fun getMounts(type: String?, group: String?, color: String?): Flowable<out List<Mount>>
+    fun getPets(type: String?, group: String?, color: String?): Flowable<out List<Pet>>
 
     fun updateOwnedEquipment(user: User)
 

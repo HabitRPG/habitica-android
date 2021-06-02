@@ -14,7 +14,7 @@ import io.realm.annotations.Ignore
 import io.realm.annotations.PrimaryKey
 import java.util.*
 
-open class User : RealmObject(), BaseObject, Avatar, VersionedObject {
+open class User : RealmObject(), BaseMainObject, Avatar, VersionedObject {
 
     override val realmClass: Class<User>
         get() = User::class.java

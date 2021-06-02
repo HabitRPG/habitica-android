@@ -62,9 +62,9 @@ class SkillTasksRecyclerViewFragment : BaseFragment<FragmentRecyclerviewBinding>
         super.onResume()
 
         var tasks = taskRepository.getTasks(taskType ?: "", userId)
-                .map { it.where().isNull("challengeID").and().isNull("group").findAll() }
+                .map { it.filter { it.challengeID == null && it.group == null } }
         if (taskType == Task.TYPE_TODO) {
-            tasks = tasks.map { it.where().equalTo("completed", false).findAll() }
+            tasks = tasks.map { it.filter { !it.completed } }
         }
         compositeSubscription.add(tasks.subscribe({
             adapter.data = it

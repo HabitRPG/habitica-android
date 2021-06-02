@@ -240,7 +240,7 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
             compositeSubscription.add(inventoryRepository.getOwnedItems(type)
                     .doOnNext { items ->
                         val filteredItems = if (isFeeding) {
-                            items.where().notEqualTo("key", "Saddle").findAll()
+                            items.filter { it.key != "Saddle" }
                         } else {
                             items
                         }

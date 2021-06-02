@@ -2,11 +2,12 @@ package com.habitrpg.android.habitica.models.shops
 
 import android.content.Context
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.models.BaseObject
 
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
-open class ShopItemUnlockCondition : RealmObject() {
+open class ShopItemUnlockCondition : RealmObject(), BaseObject {
 
     @PrimaryKey
     var questKey: String? = null

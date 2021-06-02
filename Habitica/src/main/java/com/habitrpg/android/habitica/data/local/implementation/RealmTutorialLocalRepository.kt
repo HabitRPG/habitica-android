@@ -5,7 +5,6 @@ import com.habitrpg.android.habitica.models.TutorialStep
 import hu.akarnokd.rxjava3.bridge.RxJavaBridge
 import io.reactivex.rxjava3.core.Flowable
 import io.realm.Realm
-import io.realm.RealmResults
 
 
 class RealmTutorialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), TutorialLocalRepository {
@@ -31,7 +30,7 @@ class RealmTutorialLocalRepository(realm: Realm) : RealmBaseLocalRepository(real
                 .cast(TutorialStep::class.java))
     }
 
-    override fun getTutorialSteps(keys: List<String>): Flowable<RealmResults<TutorialStep>> {
+    override fun getTutorialSteps(keys: List<String>): Flowable<out List<TutorialStep>> {
         if (realm.isClosed) return Flowable.empty()
         return RxJavaBridge.toV3Flowable(realm.where(TutorialStep::class.java)
                 .`in`("identifier", keys.toTypedArray())

@@ -1,17 +1,15 @@
 package com.habitrpg.android.habitica.models.social
 
-import android.renderscript.BaseObj
 import android.text.Spanned
-import com.habitrpg.android.habitica.models.BaseObject
+import com.habitrpg.android.habitica.models.BaseMainObject
 import com.habitrpg.android.habitica.models.user.Backer
 import com.habitrpg.android.habitica.models.user.ContributorInfo
-import com.habitrpg.android.habitica.models.user.User
 import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.Ignore
 import io.realm.annotations.PrimaryKey
 
-open class ChatMessage : RealmObject(), BaseObject {
+open class ChatMessage : RealmObject(), BaseMainObject {
 
     override val realmClass: Class<ChatMessage>
         get() = ChatMessage::class.java

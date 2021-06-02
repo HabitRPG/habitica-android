@@ -8,12 +8,11 @@ import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Maybe
 import io.realm.Realm
 import io.realm.RealmObject
-import io.realm.RealmResults
 import io.realm.Sort
 
 class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), TaskLocalRepository {
 
-    override fun getTasks(taskType: String, userID: String): Flowable<RealmResults<Task>> {
+    override fun getTasks(taskType: String, userID: String): Flowable<out List<Task>> {
         if (realm.isClosed) {
             return Flowable.empty()
         }
@@ -26,7 +25,7 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
                 .filter { it.isLoaded }).retry(1)
     }
 
-    override fun getTasks(userId: String): Flowable<RealmResults<Task>> {
+    override fun getTasks(userId: String): Flowable<out List<Task>> {
         if (realm.isClosed) {
             return Flowable.empty()
         }
@@ -219,7 +218,7 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
         }
     }
 
-    override fun getErroredTasks(userID: String): Flowable<RealmResults<Task>> {
+    override fun getErroredTasks(userID: String): Flowable<out List<Task>> {
         return RxJavaBridge.toV3Flowable(realm.where(Task::class.java)
                 .equalTo("userId", userID)
                 .equalTo("hasErrored", true)
@@ -238,7 +237,7 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
                 .map { users -> users.first() })
     }
 
-    override fun getTasksForChallenge(challengeID: String?, userID: String?): Flowable<RealmResults<Task>> {
+    override fun getTasksForChallenge(challengeID: String?, userID: String?): Flowable<out List<Task>> {
         return RxJavaBridge.toV3Flowable(realm.where(Task::class.java)
                 .equalTo("challengeID", challengeID)
                 .equalTo("userId", userID)

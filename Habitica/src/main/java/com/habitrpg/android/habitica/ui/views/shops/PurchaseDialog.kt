@@ -43,7 +43,6 @@ import com.habitrpg.android.habitica.ui.views.tasks.form.StepperValueFormView
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import io.realm.RealmResults
 import kotlinx.coroutines.*
 import org.greenrobot.eventbus.EventBus
 import java.time.Duration
@@ -441,7 +440,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
         var totalCount = 20
         var ownedCount = 0
         var shouldWarn = true
-        var maybe: Maybe<RealmResults<OwnedItem>>? = null
+        var maybe: Maybe<out List<OwnedItem>>? = null
         if (item.purchaseType == "eggs") {
             maybe = inventoryRepository.getPets(item.key, "quest", null).firstElement().filter {
                 shouldWarn = it.size > 0

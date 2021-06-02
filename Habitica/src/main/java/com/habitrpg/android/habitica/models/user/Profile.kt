@@ -1,9 +1,10 @@
 package com.habitrpg.android.habitica.models.user
 
+import com.habitrpg.android.habitica.models.BaseObject
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
-open class Profile : RealmObject {
+open class Profile : RealmObject, BaseObject {
 
     @PrimaryKey
     var userId: String? = null

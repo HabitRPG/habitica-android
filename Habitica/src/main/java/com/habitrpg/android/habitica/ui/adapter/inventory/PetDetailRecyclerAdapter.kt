@@ -11,10 +11,9 @@ import com.habitrpg.android.habitica.ui.viewHolders.SectionViewHolder
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.subjects.PublishSubject
-import io.realm.RealmResults
 
 class PetDetailRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
-    private var existingMounts: RealmResults<Mount>? = null
+    private var existingMounts: List<Mount>? = null
     private var ownedPets: Map<String, OwnedPet>? = null
     private var ownedMounts: Map<String, OwnedMount>? = null
     private var ownedItems: Map<String, OwnedItem>? = null
@@ -87,7 +86,7 @@ class PetDetailRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapt
 
     override fun getItemCount(): Int = itemList.size
 
-    fun setExistingMounts(existingMounts: RealmResults<Mount>) {
+    fun setExistingMounts(existingMounts: List<Mount>) {
         this.existingMounts = existingMounts
         notifyDataSetChanged()
     }

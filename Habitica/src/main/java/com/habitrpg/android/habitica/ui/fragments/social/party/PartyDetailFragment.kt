@@ -36,7 +36,6 @@ import com.habitrpg.android.habitica.ui.viewHolders.GroupMemberViewHolder
 import com.habitrpg.android.habitica.ui.viewmodels.PartyViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
-import io.realm.RealmResults
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
@@ -236,7 +235,7 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
         }
     }
 
-    private fun updateMembersList(members: RealmResults<Member>?) {
+    private fun updateMembersList(members: List<Member>?) {
         val leaderID = viewModel?.leaderID
         members?.forEachIndexed { index, member ->
             val memberView = (if (binding?.membersWrapper?.childCount ?: 0 > index) {

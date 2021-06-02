@@ -2,13 +2,14 @@ package com.habitrpg.android.habitica.models.members
 
 import com.google.gson.annotations.SerializedName
 import com.habitrpg.android.habitica.models.Avatar
+import com.habitrpg.android.habitica.models.BaseObject
 import com.habitrpg.android.habitica.models.social.UserParty
 import com.habitrpg.android.habitica.models.user.*
 
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
-open class Member : RealmObject(), Avatar {
+open class Member : RealmObject(), Avatar, BaseObject {
 
     @PrimaryKey
     @SerializedName("_id")

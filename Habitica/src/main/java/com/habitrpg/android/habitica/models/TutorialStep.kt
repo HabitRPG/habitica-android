@@ -5,7 +5,7 @@ import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 import java.util.*
 
-open class TutorialStep: RealmObject(), BaseObject {
+open class TutorialStep: RealmObject(), BaseMainObject {
 
     @PrimaryKey
     var key: String? = null

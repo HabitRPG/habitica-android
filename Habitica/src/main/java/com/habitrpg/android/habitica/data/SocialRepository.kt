@@ -8,15 +8,14 @@ import com.habitrpg.android.habitica.models.social.*
 import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Single
-import io.realm.RealmResults
 import java.util.*
 
 interface SocialRepository : BaseRepository {
-    fun getPublicGuilds(): Flowable<RealmResults<Group>>
+    fun getPublicGuilds(): Flowable<out List<Group>>
 
-    fun getUserGroups(type: String?): Flowable<RealmResults<Group>>
+    fun getUserGroups(type: String?): Flowable<out List<Group>>
     fun retrieveGroupChat(groupId: String): Single<List<ChatMessage>>
-    fun getGroupChat(groupId: String): Flowable<RealmResults<ChatMessage>>
+    fun getGroupChat(groupId: String): Flowable<out List<ChatMessage>>
 
     fun markMessagesSeen(seenGroupId: String)
 
@@ -40,18 +39,18 @@ interface SocialRepository : BaseRepository {
     fun updateGroup(group: Group?, name: String?, description: String?, leader: String?, leaderCreateChallenge: Boolean?): Flowable<Group>
 
     fun retrieveGroups(type: String): Flowable<List<Group>>
-    fun getGroups(type: String): Flowable<RealmResults<Group>>
+    fun getGroups(type: String): Flowable<out List<Group>>
 
 
-    fun getInboxMessages(replyToUserID: String?): Flowable<RealmResults<ChatMessage>>
+    fun getInboxMessages(replyToUserID: String?): Flowable<out List<ChatMessage>>
     fun retrieveInboxMessages(uuid: String, page: Int): Flowable<List<ChatMessage>>
     fun retrieveInboxConversations(): Flowable<List<InboxConversation>>
-    fun getInboxConversations(): Flowable<RealmResults<InboxConversation>>
+    fun getInboxConversations(): Flowable<out List<InboxConversation>>
     fun postPrivateMessage(recipientId: String, messageObject: HashMap<String, String>): Flowable<List<ChatMessage>>
     fun postPrivateMessage(recipientId: String, message: String): Flowable<List<ChatMessage>>
 
 
-    fun getGroupMembers(id: String): Flowable<RealmResults<Member>>
+    fun getGroupMembers(id: String): Flowable<out List<Member>>
     fun retrieveGroupMembers(id: String, includeAllPublicFields: Boolean): Flowable<List<Member>>
 
     fun inviteToGroup(id: String, inviteData: Map<String, Any>): Flowable<Void>
@@ -85,7 +84,7 @@ interface SocialRepository : BaseRepository {
     fun transferGems(giftedID: String, amount: Int): Flowable<Void>
 
     fun getGroupMembership(id: String): Flowable<GroupMembership>
-    fun getGroupMemberships(): Flowable<RealmResults<GroupMembership>>
+    fun getGroupMemberships(): Flowable<out List<GroupMembership>>
     fun getChatmessage(messageID: String): Flowable<ChatMessage>
     fun blockMember(userID: String): Flowable<List<String>>
 }

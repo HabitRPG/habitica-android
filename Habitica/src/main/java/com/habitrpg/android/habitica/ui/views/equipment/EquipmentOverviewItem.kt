@@ -29,10 +29,10 @@ class EquipmentOverviewItem @JvmOverloads constructor(
 
     var identifier: String = ""
 
-    fun set(key: String, isTwoHanded: Boolean = false, isDisabledFromTwoHand: Boolean = false) {
-        identifier = key
+    fun set(key: String?, isTwoHanded: Boolean = false, isDisabledFromTwoHand: Boolean = false) {
+        identifier = key ?: ""
         binding.twoHandedIndicator.setImageDrawable(null)
-        if (key.isNotEmpty() && !key.endsWith("base_0")) {
+        if (identifier.isNotEmpty() && !identifier.endsWith("base_0")) {
             DataBindingUtils.loadImage(binding.iconView, "shop_$key")
             binding.localIconView.visibility = View.GONE
             binding.iconView.visibility = View.VISIBLE

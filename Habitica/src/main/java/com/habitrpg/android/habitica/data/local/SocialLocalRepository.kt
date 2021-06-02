@@ -7,22 +7,21 @@ import com.habitrpg.android.habitica.models.social.GroupMembership
 import com.habitrpg.android.habitica.models.social.InboxConversation
 import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.rxjava3.core.Flowable
-import io.realm.RealmResults
 
 interface SocialLocalRepository : BaseLocalRepository {
-    fun getPublicGuilds(): Flowable<RealmResults<Group>>
+    fun getPublicGuilds(): Flowable<out List<Group>>
 
-    fun getUserGroups(userID: String, type: String?): Flowable<RealmResults<Group>>
-    fun getGroups(type: String): Flowable<RealmResults<Group>>
+    fun getUserGroups(userID: String, type: String?): Flowable<out List<Group>>
+    fun getGroups(type: String): Flowable<out List<Group>>
 
     fun getGroup(id: String): Flowable<Group>
     fun saveGroup(group: Group)
 
-    fun getGroupChat(groupId: String): Flowable<RealmResults<ChatMessage>>
+    fun getGroupChat(groupId: String): Flowable<out List<ChatMessage>>
 
     fun deleteMessage(id: String)
 
-    fun getGroupMembers(partyId: String): Flowable<RealmResults<Member>>
+    fun getGroupMembers(partyId: String): Flowable<out List<Member>>
 
     fun updateRSVPNeeded(user: User?, newValue: Boolean)
 
@@ -39,12 +38,12 @@ interface SocialLocalRepository : BaseLocalRepository {
     fun doesGroupExist(id: String): Boolean
     fun updateMembership(userId: String, id: String, isMember: Boolean)
     fun getGroupMembership(userId: String, id: String): Flowable<GroupMembership>
-    fun getGroupMemberships(userId: String): Flowable<RealmResults<GroupMembership>>
+    fun getGroupMemberships(userId: String): Flowable<out List<GroupMembership>>
     fun rejectGroupInvitation(userID: String, groupID: String)
 
-    fun getInboxMessages(userId: String, replyToUserID: String?): Flowable<RealmResults<ChatMessage>>
+    fun getInboxMessages(userId: String, replyToUserID: String?): Flowable<out List<ChatMessage>>
 
-    fun getInboxConversation(userId: String): Flowable<RealmResults<InboxConversation>>
+    fun getInboxConversation(userId: String): Flowable<out List<InboxConversation>>
     fun saveGroupMemberships(userID: String?, memberships: List<GroupMembership>)
     fun saveInboxMessages(userID: String, recipientID: String, messages: List<ChatMessage>, page: Int)
     fun saveInboxConversations(userID: String, conversations: List<InboxConversation>)

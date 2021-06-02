@@ -34,7 +34,6 @@ import com.habitrpg.android.habitica.ui.views.ValueBar
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.realm.RealmList
 
 
 class QuestProgressView : LinearLayout {
@@ -246,7 +245,7 @@ class QuestProgressView : LinearLayout {
         alert.show()
     }
 
-    private fun setCollectionViews(collection: RealmList<QuestProgressCollect>, quest: QuestContent) {
+    private fun setCollectionViews(collection: List<QuestProgressCollect>, quest: QuestContent) {
         val inflater = LayoutInflater.from(context)
         for (collect in collection) {
             val contentCollect = quest.getCollectWithKey(collect.key) ?: continue

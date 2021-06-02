@@ -1,6 +1,8 @@
 package com.habitrpg.android.habitica.models.user
 
-interface OwnedObject {
+import com.habitrpg.android.habitica.models.BaseObject
+
+interface OwnedObject: BaseObject {
     var combinedKey: String?
     var userID: String?
     var key: String?

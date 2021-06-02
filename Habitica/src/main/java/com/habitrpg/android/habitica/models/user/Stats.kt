@@ -3,11 +3,12 @@ package com.habitrpg.android.habitica.models.user
 import android.content.Context
 import com.google.gson.annotations.SerializedName
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.models.BaseObject
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
 
-open class Stats : RealmObject() {
+open class Stats : RealmObject(), BaseObject {
 
     @PrimaryKey
     var userId: String? = null

@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.models.inventory
 
 import android.graphics.Color
+import com.habitrpg.android.habitica.models.BaseObject
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
@@ -8,7 +9,7 @@ import io.realm.annotations.PrimaryKey
  * Created by phillip on 31.01.18.
  */
 
-open class QuestColors : RealmObject() {
+open class QuestColors : RealmObject(), BaseObject {
 
     @PrimaryKey
     var key: String? = null

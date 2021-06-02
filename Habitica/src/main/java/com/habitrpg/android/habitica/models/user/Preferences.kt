@@ -3,12 +3,13 @@ package com.habitrpg.android.habitica.models.user
 
 import com.google.gson.annotations.SerializedName
 import com.habitrpg.android.habitica.models.AvatarPreferences
+import com.habitrpg.android.habitica.models.BaseObject
 
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 import java.util.*
 
-open class Preferences : RealmObject(), AvatarPreferences {
+open class Preferences : RealmObject(), AvatarPreferences, BaseObject {
 
     @PrimaryKey
     override var userId: String? = null
@@ -54,8 +55,4 @@ open class Preferences : RealmObject(), AvatarPreferences {
     var pushNotifications: PushNotificationsPreference? = null
     var emailNotifications: EmailNotificationsPreference? = null
     var autoEquip: Boolean = true
-
-    fun hasTaskBasedAllocation(): Boolean {
-        return allocationMode?.toLowerCase(Locale.ROOT) == "taskbased" && automaticAllocation
-    }
 }

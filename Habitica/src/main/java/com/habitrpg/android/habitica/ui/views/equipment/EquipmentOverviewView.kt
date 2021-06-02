@@ -33,14 +33,14 @@ class EquipmentOverviewView @JvmOverloads constructor(
 
     }
 
-    fun updateData(outfit: Outfit, isWeaponTwoHanded: Boolean = false) {
-        binding.weaponItem.set(outfit.weapon, isWeaponTwoHanded)
-        binding.shieldItem.set(outfit.shield, false, isWeaponTwoHanded)
-        binding.headItem.set(outfit.head)
-        binding.armorItem.set(outfit.armor)
-        binding.headAccessoryItem.set(outfit.headAccessory)
-        binding.bodyItem.set(outfit.body)
-        binding.backItem.set(outfit.back)
-        binding.eyewearItem.set(outfit.eyeWear)
+    fun updateData(outfit: Outfit?, isWeaponTwoHanded: Boolean = false) {
+        binding.weaponItem.set(outfit?.weapon, isWeaponTwoHanded)
+        binding.shieldItem.set(outfit?.shield, false, isWeaponTwoHanded)
+        binding.headItem.set(outfit?.head)
+        binding.armorItem.set(outfit?.armor)
+        binding.headAccessoryItem.set(outfit?.headAccessory)
+        binding.bodyItem.set(outfit?.body)
+        binding.backItem.set(outfit?.back)
+        binding.eyewearItem.set(outfit?.eyeWear)
     }
 }

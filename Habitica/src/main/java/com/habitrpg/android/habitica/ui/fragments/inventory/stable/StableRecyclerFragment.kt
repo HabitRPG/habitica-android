@@ -23,7 +23,6 @@ import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.kotlin.combineLatest
-import io.realm.RealmResults
 import java.util.*
 import javax.inject.Inject
 
@@ -136,7 +135,7 @@ class StableRecyclerFragment : BaseFragment<FragmentRecyclerviewBinding>() {
     }
 
     private fun loadItems() {
-        val observable: Maybe<out RealmResults<out Animal>> = if ("pets" == itemType) {
+        val observable: Maybe<out List<Animal>> = if ("pets" == itemType) {
             inventoryRepository.getPets().firstElement()
         } else {
             inventoryRepository.getMounts().firstElement()
@@ -181,9 +180,9 @@ class StableRecyclerFragment : BaseFragment<FragmentRecyclerviewBinding>() {
                 .subscribe({ adapter?.setOwnedMounts(it) }, RxErrorHandler.handleEmptyError()))
     }
 
-    private fun mapAnimals(unsortedAnimals: RealmResults<out Animal>, ownedAnimals: Map<String, OwnedObject>): ArrayList<Any> {
+    private fun mapAnimals(unsortedAnimals: List<Animal>, ownedAnimals: Map<String, OwnedObject>): ArrayList<Any> {
         val items = ArrayList<Any>()
-        var lastAnimal: Animal = unsortedAnimals[0] ?: return items
+        var lastAnimal: Animal = unsortedAnimals.firstOrNull() ?: return items
         var lastSection: StableSection? = null
         for (animal in unsortedAnimals) {
             val identifier = if (animal.animal.isNotEmpty() && (animal.type != "special" && animal.type != "wacky")) animal.animal else animal.key
@@ -216,11 +215,11 @@ class StableRecyclerFragment : BaseFragment<FragmentRecyclerviewBinding>() {
             }
             val isOwned = when (itemType) {
                 "pets" -> {
-                    val ownedPet = ownedAnimals[animal?.key] as? OwnedPet
+                    val ownedPet = ownedAnimals[animal.key] as? OwnedPet
                     ownedPet?.trained ?: 0 > 0
                 }
                 "mounts" -> {
-                    val ownedMount = ownedAnimals[animal?.key] as? OwnedMount
+                    val ownedMount = ownedAnimals[animal.key] as? OwnedMount
                     ownedMount?.owned == true
                 }
                 else -> false

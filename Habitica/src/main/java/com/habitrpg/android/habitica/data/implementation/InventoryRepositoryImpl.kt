@@ -11,10 +11,9 @@ import com.habitrpg.android.habitica.models.shops.Shop
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.models.user.*
 import io.reactivex.rxjava3.core.Flowable
-import io.realm.RealmResults
 
 class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClient: ApiClient, userID: String, var appConfigManager: AppConfigManager) : BaseRepositoryImpl<InventoryLocalRepository>(localRepository, apiClient, userID), InventoryRepository {
-    override fun getQuestContent(keys: List<String>): Flowable<RealmResults<QuestContent>> {
+    override fun getQuestContent(keys: List<String>): Flowable<out List<QuestContent>> {
         return localRepository.getQuestContent(keys)
     }
 
@@ -22,7 +21,7 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
         return localRepository.getQuestContent(key)
     }
 
-    override fun getEquipment(searchedKeys: List<String>): Flowable<RealmResults<Equipment>> {
+    override fun getEquipment(searchedKeys: List<String>): Flowable<out List<Equipment>> {
         return localRepository.getEquipment(searchedKeys)
     }
 
@@ -30,7 +29,7 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
         return localRepository.getArmoireRemainingCount()
     }
 
-    override fun getInAppRewards(): Flowable<RealmResults<ShopItem>> {
+    override fun getInAppRewards(): Flowable<out List<ShopItem>> {
         return localRepository.getInAppRewards()
     }
 
@@ -38,19 +37,19 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
         return apiClient.retrieveInAppRewards().doOnNext { localRepository.saveInAppRewards(it) }
     }
 
-    override fun getOwnedEquipment(type: String): Flowable<RealmResults<Equipment>> {
+    override fun getOwnedEquipment(type: String): Flowable<out List<Equipment>> {
         return localRepository.getOwnedEquipment(type)
     }
 
-    override fun getOwnedEquipment(): Flowable<RealmResults<Equipment>> {
+    override fun getOwnedEquipment(): Flowable<out List<Equipment>> {
         return localRepository.getOwnedEquipment()
     }
 
-    override fun getEquipmentType(type: String, set: String): Flowable<RealmResults<Equipment>> {
+    override fun getEquipmentType(type: String, set: String): Flowable<out List<Equipment>> {
         return localRepository.getEquipmentType(type, set)
     }
 
-    override fun getOwnedItems(itemType: String, includeZero: Boolean): Flowable<RealmResults<OwnedItem>> {
+    override fun getOwnedItems(itemType: String, includeZero: Boolean): Flowable<out List<OwnedItem>> {
         return localRepository.getOwnedItems(itemType, userID, includeZero)
     }
 
@@ -58,11 +57,11 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
         return localRepository.getOwnedItems(userID, includeZero)
     }
 
-    override fun getItems(itemClass: Class<out Item>, keys: Array<String>): Flowable<out RealmResults<out Item>> {
+    override fun getItems(itemClass: Class<out Item>, keys: Array<String>): Flowable<out List<Item>> {
         return localRepository.getItems(itemClass, keys)
     }
 
-    override fun getItems(itemClass: Class<out Item>): Flowable<out RealmResults<out Item>> {
+    override fun getItems(itemClass: Class<out Item>): Flowable<out List<Item>> {
         return localRepository.getItems(itemClass)
     }
 
@@ -86,27 +85,27 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
         localRepository.save(equipment)
     }
 
-    override fun getMounts(): Flowable<RealmResults<Mount>> {
+    override fun getMounts(): Flowable<out List<Mount>> {
         return localRepository.getMounts()
     }
 
-    override fun getMounts(type: String?, group: String?, color: String?): Flowable<RealmResults<Mount>> {
+    override fun getMounts(type: String?, group: String?, color: String?): Flowable<out List<Mount>> {
         return localRepository.getMounts(type, group, color)
     }
 
-    override fun getOwnedMounts(): Flowable<RealmResults<OwnedMount>> {
+    override fun getOwnedMounts(): Flowable<out List<OwnedMount>> {
         return localRepository.getOwnedMounts(userID)
     }
 
-    override fun getPets(): Flowable<RealmResults<Pet>> {
+    override fun getPets(): Flowable<out List<Pet>> {
         return localRepository.getPets()
     }
 
-    override fun getPets(type: String?, group: String?, color: String?): Flowable<RealmResults<Pet>> {
+    override fun getPets(type: String?, group: String?, color: String?): Flowable<out List<Pet>> {
         return localRepository.getPets(type, group, color)
     }
 
-    override fun getOwnedPets(): Flowable<RealmResults<OwnedPet>> {
+    override fun getOwnedPets(): Flowable<out List<OwnedPet>> {
         return localRepository.getOwnedPets(userID)
     }
 

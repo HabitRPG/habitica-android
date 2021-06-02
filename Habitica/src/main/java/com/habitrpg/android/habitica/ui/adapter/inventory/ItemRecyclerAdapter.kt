@@ -21,8 +21,6 @@ import com.habitrpg.android.habitica.ui.views.dialogs.DetailDialog
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.subjects.PublishSubject
-import io.realm.OrderedRealmCollection
-import io.realm.RealmResults
 import org.greenrobot.eventbus.EventBus
 import java.text.SimpleDateFormat
 import java.util.*
@@ -34,7 +32,7 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<OwnedI
     var hatchingItem: Item? = null
     var feedingPet: Pet? = null
     var fragment: ItemRecyclerFragment? = null
-    private var existingPets: RealmResults<Pet>? = null
+    private var existingPets: List<Pet>? = null
     private var ownedPets: Map<String, OwnedPet>? = null
     var items: Map<String, Item>? = null
     set(value) {
@@ -71,7 +69,7 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<OwnedI
         holder.bind(ownedItem, items?.get(ownedItem.key))
     }
 
-    fun setExistingPets(pets: RealmResults<Pet>) {
+    fun setExistingPets(pets: List<Pet>) {
         existingPets = pets
         notifyDataSetChanged()
     }
@@ -94,7 +92,7 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<OwnedI
                 } else {
                     hatchingItem?.key + "-" + item?.key
                 }
-                val pet = existingPets?.where()?.equalTo("key", petKey)?.notEqualTo("type", "special")?.findFirst()
+                val pet = existingPets?.firstOrNull { it.key == petKey && it.type != "special" }
                 return pet != null && ownedPets?.get(pet.key)?.trained ?: 0 <= 0
             }
 
