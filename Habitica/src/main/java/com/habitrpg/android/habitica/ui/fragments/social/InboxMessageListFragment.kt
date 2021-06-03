@@ -15,6 +15,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.FragmentInboxMessageListBinding
+import com.habitrpg.android.habitica.extensions.addOkButton
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
@@ -29,6 +30,7 @@ import com.habitrpg.android.habitica.ui.viewmodels.InboxViewModel
 import com.habitrpg.android.habitica.ui.viewmodels.InboxViewModelFactory
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.Companion.showSnackbar
+import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.Disposable
@@ -195,6 +197,13 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
                         viewModel?.invalidateDataSource()
             }, { error ->
                         RxErrorHandler.reportError(error)
+                        if (binding != null) {
+                            val alert = HabiticaAlertDialog(binding!!.chatBarView.context)
+                            alert.setTitle("You cannot reply to this conversation")
+                            alert.setMessage("This user is unable to receive your private message")
+                            alert.addOkButton()
+                            alert.show()
+                        }
                         binding?.chatBarView?.message = chatText
                     })
             KeyboardUtil.dismissKeyboard(getActivity())
