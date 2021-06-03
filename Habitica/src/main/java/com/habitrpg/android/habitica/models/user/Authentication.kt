@@ -6,7 +6,9 @@ import com.habitrpg.android.habitica.models.auth.LocalAuthentication
 
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
+import io.realm.annotations.RealmClass
 
+@RealmClass(embedded = true)
 open class Authentication : RealmObject(), BaseObject {
 
     @PrimaryKey

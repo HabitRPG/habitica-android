@@ -6,7 +6,9 @@ import com.habitrpg.android.habitica.models.inventory.Quest
 
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
+import io.realm.annotations.RealmClass
 
+@RealmClass(embedded = true)
 open class UserParty : RealmObject(), BaseObject {
     @PrimaryKey
     var userId: String? = null

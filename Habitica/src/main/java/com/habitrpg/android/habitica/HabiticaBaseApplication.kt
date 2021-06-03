@@ -111,7 +111,7 @@ abstract class HabiticaBaseApplication : Application() {
             .compactOnLaunch { totalBytes, usedBytes ->
 
                 // Compact if the file is over 100MB in size and less than 50% 'used'
-                val oneHundredMB = 100 * 1024 * 1024
+                val oneHundredMB = 50 * 1024 * 1024
                 (totalBytes > oneHundredMB) && (usedBytes / totalBytes) < 0.5
             }
         try {

@@ -6,7 +6,9 @@ import com.habitrpg.android.habitica.models.user.ContributorInfo
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.models.BaseObject
 import io.realm.annotations.PrimaryKey
+import io.realm.annotations.RealmClass
 
+@RealmClass(embedded = true)
 open class ContributorInfo : RealmObject(), BaseObject {
     companion object {
         val CONTRIBUTOR_COLOR_DICT: SparseIntArray = SparseIntArray()

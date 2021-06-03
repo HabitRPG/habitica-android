@@ -3,11 +3,9 @@ package com.habitrpg.android.habitica.models.social
 import com.habitrpg.android.habitica.models.BaseObject
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
+import io.realm.annotations.RealmClass
 
-/**
- * Created by phillip on 30.06.17.
- */
-
+@RealmClass(embedded = true)
 open class ChatMessageLike : RealmObject, BaseObject {
 
     @PrimaryKey
