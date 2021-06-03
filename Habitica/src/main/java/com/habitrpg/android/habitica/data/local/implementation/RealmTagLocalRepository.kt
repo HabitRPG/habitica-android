@@ -16,13 +16,4 @@ class RealmTagLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), T
     override fun getTags(userId: String): Flowable<out List<Tag>> {
         return RxJavaBridge.toV3Flowable(realm.where(Tag::class.java).equalTo("userId", userId).findAll().asFlowable())
     }
-
-    override fun removeOldTags(onlineTags: List<Tag>, userID: String) {
-        val localTags = realm.where(Tag::class.java).equalTo("userId", userID).findAll().createSnapshot()
-        for (localTag in localTags) {
-            if (!onlineTags.contains(localTag)) {
-                localTag.deleteFromRealm()
-            }
-        }
-    }
 }

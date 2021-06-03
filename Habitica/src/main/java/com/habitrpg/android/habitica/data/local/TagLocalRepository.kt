@@ -7,6 +7,5 @@ import io.reactivex.rxjava3.core.Flowable
 interface TagLocalRepository : BaseLocalRepository {
     fun getTags(userId: String): Flowable<out List<Tag>>
 
-    fun removeOldTags(onlineTags: List<Tag>, userID: String)
     fun deleteTag(tagID: String)
 }

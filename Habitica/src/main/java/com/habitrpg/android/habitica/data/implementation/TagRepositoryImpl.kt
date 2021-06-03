@@ -59,8 +59,4 @@ class TagRepositoryImpl(localRepository: TagLocalRepository, apiClient: ApiClien
                 .flatMap { this.deleteTag(it) }
         .toList()
     }
-
-    override fun removeOldTags(onlineTags: List<Tag>, userID: String) {
-        localRepository.removeOldTags(onlineTags, userID)
-    }
 }

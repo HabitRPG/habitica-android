@@ -248,26 +248,12 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
                     messagesToRemove.add(existingMessage)
                 }
             }
-            val idsToRemove = messagesToRemove.map { it.id }
-            val userStylestoRemove = realm.where(UserStyles::class.java).`in`("id", idsToRemove.toTypedArray()).findAll()
-            val contributorToRemove = realm.where(ContributorInfo::class.java).`in`("userId", idsToRemove.toTypedArray()).findAll()
             executeTransaction {
-                for (member in messagesToRemove) {
-                    member.deleteFromRealm()
+                for (message in messagesToRemove) {
+                    message.deleteFromRealm()
                 }
-                userStylestoRemove.deleteAllFromRealm()
-                contributorToRemove.deleteAllFromRealm()
             }
         }
-    }
-
-
-    private fun getMessage(id: String): Flowable<ChatMessage> {
-        return RxJavaBridge.toV3Flowable(realm.where(ChatMessage::class.java).equalTo("id", id)
-                .findAll()
-                .asFlowable()
-                .filter { messages -> messages.isLoaded && messages.isValid && !messages.isEmpty() }
-                .map { messages -> messages.first() })
     }
 
     override fun doesGroupExist(id: String): Boolean {

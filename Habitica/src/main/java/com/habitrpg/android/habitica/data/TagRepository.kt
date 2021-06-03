@@ -18,6 +18,4 @@ interface TagRepository : BaseRepository {
     fun createTags(tags: Collection<Tag>): Single<List<Tag>>
     fun updateTags(tags: Collection<Tag>): Single<List<Tag>>
     fun deleteTags(tagIds: Collection<String>): Single<List<Void>>
-
-    fun removeOldTags(onlineTags: List<Tag>, userID: String)
 }

@@ -48,11 +48,7 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
         val allReminders = ArrayList<RemindersItem>()
         sortedTasks.forEach {
             if (it.userId.isBlank()) it.userId = ownerID
-            it.checklist?.let { it1 -> allChecklistItems.addAll(it1) }
-            it.reminders?.let { it1 -> allReminders.addAll(it1) }
         }
-        removeOldReminders(allReminders)
-        removeOldChecklists(allChecklistItems)
 
         executeTransaction { realm1 -> realm1.insertOrUpdate(sortedTasks) }
     }
@@ -119,26 +115,6 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
                 localTask.checklist?.deleteAllFromRealm()
                 localTask.reminders?.deleteAllFromRealm()
                 localTask.deleteFromRealm()
-            }
-        }
-    }
-
-    private fun removeOldChecklists(onlineItems: List<ChecklistItem>) {
-        val localItems = realm.where(ChecklistItem::class.java).findAll().createSnapshot()
-        val itemsToDelete = localItems.filterNot { onlineItems.contains(it) }
-        executeTransaction {
-            for (item in itemsToDelete) {
-                item.deleteFromRealm()
-            }
-        }
-    }
-
-    private fun removeOldReminders(onlineReminders: List<RemindersItem>) {
-        val localReminders = realm.where(RemindersItem::class.java).findAll().createSnapshot()
-        val itemsToDelete = localReminders.filterNot { onlineReminders.contains(it) }
-        executeTransaction {
-            for (item in itemsToDelete) {
-                item.deleteFromRealm()
             }
         }
     }
