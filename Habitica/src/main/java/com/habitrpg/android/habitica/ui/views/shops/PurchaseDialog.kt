@@ -2,7 +2,6 @@ package com.habitrpg.android.habitica.ui.views.shops
 
 import android.content.Context
 import android.graphics.drawable.BitmapDrawable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
@@ -18,7 +17,6 @@ import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.events.GearPurchasedEvent
 import com.habitrpg.android.habitica.events.ShowSnackbarEvent
-import com.habitrpg.android.habitica.extensions.DateUtils
 import com.habitrpg.android.habitica.extensions.addCancelButton
 import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.extensions.getShortRemainingString
@@ -45,12 +43,10 @@ import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import kotlinx.coroutines.*
 import org.greenrobot.eventbus.EventBus
-import java.time.Duration
-import java.time.temporal.TemporalUnit
 import java.util.*
 import javax.inject.Inject
 import kotlin.math.max
-import kotlin.time.DurationUnit
+import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
 import kotlin.time.minutes
 import kotlin.time.seconds
@@ -183,7 +179,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
                 while (shopItem.event?.end?.after(Date()) == true) {
                     limitedTextView.text = context.getString(R.string.available_for, shopItem.event?.end?.getShortRemainingString())
                     val diff = (shopItem.event?.end?.time ?: 0) - Date().time
-                    delay(if (diff < (60 * 60 * 1000)) 1.seconds else 1.minutes)
+                    delay(if (diff < (60 * 60 * 1000)) Duration.seconds(1) else Duration.minutes(1))
                 }
                 if (shopItem.event?.end?.before(Date()) == true) {
                     limitedTextView.text = context.getString(R.string.no_longer_available)
@@ -443,7 +439,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
         var maybe: Maybe<out List<OwnedItem>>? = null
         if (item.purchaseType == "eggs") {
             maybe = inventoryRepository.getPets(item.key, "quest", null).firstElement().filter {
-                shouldWarn = it.size > 0
+                shouldWarn = it.isNotEmpty()
                 return@filter shouldWarn
             }.flatMap { inventoryRepository.getOwnedItems("eggs").firstElement() }
         } else if (item.purchaseType == "hatchingPotions") {

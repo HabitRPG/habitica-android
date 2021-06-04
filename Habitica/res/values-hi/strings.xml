@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <string name="action_refresh">ताज़ा करें</string>
     <string name="XP_default">अनुभव</string>
     <string name="HP_default">स्वास्थ्य</string>

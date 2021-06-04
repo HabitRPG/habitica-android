@@ -935,7 +935,7 @@
     <string name="level_unabbreviated">Cấp độ %d</string>
     <string name="delete_reminder">Xóa Nhắc nhở</string>
     <string name="number_responded">%1$d/%2$d Phản hồi</string>
-    <string name="gold_capitalilzed">Vàng</string>
+    <string name="gold_capitalized">Vàng</string>
     <string name="user_level_with_class_unabbreviated">Cấp độ %1$d %2$s</string>
     <string name="not_selected">Không chọn</string>
     <string name="selected">Đã chọn</string>

@@ -12,8 +12,6 @@ import javax.inject.Inject
 
 import io.reactivex.rxjava3.core.Flowable
 
-import com.habitrpg.android.habitica.ui.activities.MainActivity.Companion.SELECT_CLASS_RESULT
-
 class CheckClassSelectionUseCase @Inject constructor(postExecutionThread: PostExecutionThread) : UseCase<CheckClassSelectionUseCase.RequestValues, Void>(postExecutionThread) {
 
     override fun buildUseCaseObservable(requestValues: RequestValues): Flowable<Void> {
@@ -41,7 +39,7 @@ class CheckClassSelectionUseCase @Inject constructor(postExecutionThread: PostEx
 
         val intent = Intent(activity, ClassSelectionActivity::class.java)
         intent.putExtras(bundle)
-        activity.startActivityForResult(intent, SELECT_CLASS_RESULT)
+        activity.startActivity(intent)
     }
 
     class RequestValues(val user: User?, val isInitialSelection: Boolean, val currentClass: String?, val activity: Activity) : UseCase.RequestValues

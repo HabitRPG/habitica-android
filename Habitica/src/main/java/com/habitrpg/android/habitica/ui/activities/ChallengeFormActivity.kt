@@ -10,6 +10,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.TextView
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.AppCompatCheckedTextView
 import androidx.appcompat.widget.Toolbar
 import com.habitrpg.android.habitica.R
@@ -166,19 +167,6 @@ class ChallengeFormActivity : BaseActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (requestCode == 1000) {
-            if (resultCode == Activity.RESULT_OK) {
-                val task = data?.getParcelableExtra<Task>(TaskFormActivity.PARCELABLE_TASK)
-                if (task != null) {
-                    addOrUpdateTaskInList(task)
-                }
-            }
-        }
-    }
-
     private fun validateAllFields(): Boolean {
         val errorMessages = ArrayList<String>()
 
@@ -230,7 +218,10 @@ class ChallengeFormActivity : BaseActivity() {
         val intent = intent
         val bundle = intent.extras
 
-        challengeTasks = ChallengeTasksRecyclerViewAdapter(null, 0, this, "", false, true)
+        ChallengeTasksRecyclerViewAdapter(null, 0, this, "",
+            openTaskDisabled = false,
+            taskActionsDisabled = true
+        ).also { challengeTasks = it }
         compositeSubscription.add(challengeTasks.taskOpenEvents.subscribe {
             if (it.isValid) {
                 openNewTaskActivity(it.type, it)
@@ -379,10 +370,10 @@ class ChallengeFormActivity : BaseActivity() {
             false
         }
 
-        addHabit = createTask(ChallengeTasksRecyclerViewAdapter.TASK_TYPE_ADD_ITEM, resources.getString(R.string.add_habit))
-        addDaily = createTask(ChallengeTasksRecyclerViewAdapter.TASK_TYPE_ADD_ITEM, resources.getString(R.string.add_daily))
-        addTodo = createTask(ChallengeTasksRecyclerViewAdapter.TASK_TYPE_ADD_ITEM, resources.getString(R.string.add_todo))
-        addReward = createTask(ChallengeTasksRecyclerViewAdapter.TASK_TYPE_ADD_ITEM, resources.getString(R.string.add_reward))
+        addHabit = createTask(resources.getString(R.string.add_habit))
+        addDaily = createTask(resources.getString(R.string.add_daily))
+        addTodo = createTask(resources.getString(R.string.add_todo))
+        addReward = createTask(resources.getString(R.string.add_reward))
 
 
         val taskList = ArrayList<Task>()
@@ -455,7 +446,16 @@ class ChallengeFormActivity : BaseActivity() {
         val intent = Intent(this, TaskFormActivity::class.java)
         intent.putExtras(bundle)
 
-        startActivityForResult(intent, 1000)
+        newTaskResult.launch(intent)
+    }
+
+    private val newTaskResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if (it.resultCode == Activity.RESULT_OK) {
+            val task = it.data?.getParcelableExtra<Task>(TaskFormActivity.PARCELABLE_TASK)
+            if (task != null) {
+                addOrUpdateTaskInList(task)
+            }
+        }
     }
 
     private fun createChallenge(): Flowable<Challenge> {
@@ -534,17 +534,12 @@ class ChallengeFormActivity : BaseActivity() {
     companion object {
         const val CHALLENGE_ID_KEY = "challengeId"
 
-        private fun createTask(taskType: String, taskName: String): Task {
+        private fun createTask(taskName: String): Task {
             val t = Task()
 
             t.id = UUID.randomUUID().toString()
-            t.type = taskType
+            t.type = ChallengeTasksRecyclerViewAdapter.TASK_TYPE_ADD_ITEM
             t.text = taskName
-
-            if (taskType == Task.TYPE_HABIT) {
-                t.up = true
-                t.down = false
-            }
 
             return t
         }

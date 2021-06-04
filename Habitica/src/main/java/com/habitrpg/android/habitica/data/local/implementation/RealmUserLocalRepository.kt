@@ -43,11 +43,12 @@ class RealmUserLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
     }
 
     override fun getQuestAchievements(userID: String): Flowable<out List<QuestAchievement>> {
-        return RxJavaBridge.toV3Flowable(realm.where(QuestAchievement::class.java)
-                .equalTo("userID", userID)
+        return RxJavaBridge.toV3Flowable(realm.where(User::class.java)
+                .equalTo("id", userID)
                 .findAll()
                 .asFlowable()
-                .filter { it.isLoaded })
+                .filter { it.isLoaded }
+            .map { it.first()?.questAchievements ?: emptyList() })
 }
 
     override fun getTutorialSteps(): Flowable<List<TutorialStep>> = RxJavaBridge.toV3Flowable(realm.where(TutorialStep::class.java).findAll().asFlowable()
@@ -80,57 +81,12 @@ class RealmUserLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
             }
         }
         executeTransaction { realm1 -> realm1.insertOrUpdate(user) }
-        removeOldTags(user.id ?: "", user.tags)
-        if (user.challenges != null) {
-            removeOldChallenges(user.id ?: "", user.challenges ?: emptyList())
-        }
-        removeOldPets(user.id ?: "", user.items?.pets ?: emptyList())
-        removeOldMounts(user.id ?: "", user.items?.mounts ?: emptyList())
+
     }
 
     override fun saveMessages(messages: List<ChatMessage>) {
         executeTransaction {
             it.insertOrUpdate(messages)
-        }
-    }
-
-    private fun removeOldTags(userId: String, onlineTags: List<Tag>) {
-        val tags = realm.where(Tag::class.java).equalTo("userId", userId).findAll().createSnapshot()
-        val tagsToDelete = tags.filterNot { onlineTags.contains(it) }
-        executeTransaction {
-            for (tag in tagsToDelete) {
-                tag.deleteFromRealm()
-            }
-        }
-    }
-
-    private fun removeOldChallenges(userID: String, onlineChallenges: List<ChallengeMembership>) {
-        val memberships = realm.where(ChallengeMembership::class.java).equalTo("userID", userID).findAll().createSnapshot()
-        val membershipsToDelete = memberships.filterNot { onlineChallenges.contains(it) }
-        executeTransaction {
-            membershipsToDelete.forEach {
-                it.deleteFromRealm()
-            }
-        }
-    }
-
-    private fun removeOldPets(userID: String, onlinePets: List<OwnedPet>) {
-        val pets = realm.where(OwnedPet::class.java).equalTo("userID", userID).findAll().createSnapshot()
-        val petsToDelete = pets.filterNot { onlinePets.contains(it) }
-        executeTransaction {
-            petsToDelete.forEach {
-                it.deleteFromRealm()
-            }
-        }
-    }
-
-    private fun removeOldMounts(userID: String, onlineMounts: List<OwnedMount>) {
-        val mount = realm.where(OwnedMount::class.java).equalTo("userID", userID).findAll().createSnapshot()
-        val mountsToDelete = mount.filterNot { onlineMounts.contains(it) }
-        executeTransaction {
-            mountsToDelete.forEach {
-                it.deleteFromRealm()
-            }
         }
     }
 

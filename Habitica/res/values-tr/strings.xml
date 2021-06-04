@@ -708,7 +708,7 @@
     <string name="subscribe_listitem5_description">2 kat eşya düşürme oranı ile daha çok Habitica eşyası keşfet.</string>
     <string name="subscribe_listitem3_description_new">Şimdi abone olarak %s\'ı elde edebilir ve her ay yeni eşyalar kazanabilirsin!</string>
     <string name="subscribe_listitem5">İki kat eşya düşürme</string>
-    <string name="gold_capitalilzed">Altın</string>
+    <string name="gold_capitalized">Altın</string>
     <string name="create_account_short">hesap oluştur</string>
     <string name="login_incentive_short">Habitica\'ya düzenli olarak giriş yap</string>
     <string name="party_invite_short">Arkadaşlarını davet et</string>

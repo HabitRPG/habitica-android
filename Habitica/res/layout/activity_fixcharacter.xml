@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.habitrpg.android.habitica.ui.activities.FixCharacterValuesActivity"
-    android:background="?attr/colorContentBackground">
+    tools:context="com.habitrpg.android.habitica.ui.activities.FixCharacterValuesActivity">
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -181,7 +180,7 @@
                                 android:layout_width="0dp"
                                 android:layout_weight="1"
                                 android:background="@drawable/layout_rounded_bg_window"
-                                android:hint="@string/gold_capitalilzed"
+                                android:hint="@string/gold_capitalized"
                                 android:paddingStart="16dp">
                                 <com.google.android.material.textfield.TextInputEditText
                                     android:id="@+id/goldEditText"

@@ -10,7 +10,6 @@
         android:layout_height="match_parent"
         >
         <LinearLayout
-            android:background="@color/content_background"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingStart="@dimen/content_border"
@@ -50,7 +49,6 @@
             android:layout_height="1dp"
             android:background="@color/black_10_alpha"/>
         <LinearLayout
-            android:background="@color/content_background"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"

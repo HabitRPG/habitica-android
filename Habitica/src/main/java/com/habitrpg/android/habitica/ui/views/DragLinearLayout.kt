@@ -20,7 +20,6 @@ import android.view.ViewTreeObserver.OnPreDrawListener
 import android.widget.LinearLayout
 import android.widget.ScrollView
 import androidx.core.content.ContextCompat
-import androidx.core.view.MotionEventCompat
 import com.habitrpg.android.habitica.R
 import kotlin.math.abs
 import kotlin.math.max
@@ -424,12 +423,16 @@ open class DragLinearLayout @JvmOverloads constructor(context: Context, attrs: A
 
             val delta: Int
 
-            if (absTop < scrollSensitiveHeight) {
-                delta = (-MAX_DRAG_SCROLL_SPEED * smootherStep(scrollSensitiveHeight.toFloat(), 0f, absTop.toFloat())).toInt()
-            } else if (absTop > height - scrollSensitiveHeight) {
-                delta = (MAX_DRAG_SCROLL_SPEED * smootherStep((height - scrollSensitiveHeight).toFloat(), height.toFloat(), absTop.toFloat())).toInt()
-            } else {
-                delta = 0
+            delta = when {
+                absTop < scrollSensitiveHeight -> {
+                    (-MAX_DRAG_SCROLL_SPEED * smootherStep(scrollSensitiveHeight.toFloat(), 0f, absTop.toFloat())).toInt()
+                }
+                absTop > height - scrollSensitiveHeight -> {
+                    (MAX_DRAG_SCROLL_SPEED * smootherStep((height - scrollSensitiveHeight).toFloat(), height.toFloat(), absTop.toFloat())).toInt()
+                }
+                else -> {
+                    0
+                }
             }
 
             containerScrollView?.removeCallbacks(dragUpdater)
@@ -617,14 +620,14 @@ open class DragLinearLayout @JvmOverloads constructor(context: Context, attrs: A
 
     companion object {
         private val LOG_TAG = DragLinearLayout::class.java.simpleName
-        private val NOMINAL_SWITCH_DURATION: Long = 150
-        private val MIN_SWITCH_DURATION = NOMINAL_SWITCH_DURATION
-        private val MAX_SWITCH_DURATION = NOMINAL_SWITCH_DURATION * 2
-        private val NOMINAL_DISTANCE = 20f
+        private const val NOMINAL_SWITCH_DURATION: Long = 150
+        private const val MIN_SWITCH_DURATION = NOMINAL_SWITCH_DURATION
+        private const val MAX_SWITCH_DURATION = NOMINAL_SWITCH_DURATION * 2
+        private const val NOMINAL_DISTANCE = 20f
 
-        private val INVALID_POINTER_ID = -1
-        private val DEFAULT_SCROLL_SENSITIVE_AREA_HEIGHT_DP = 48
-        private val MAX_DRAG_SCROLL_SPEED = 16
+        private const val INVALID_POINTER_ID = -1
+        private const val DEFAULT_SCROLL_SENSITIVE_AREA_HEIGHT_DP = 48
+        private const val MAX_DRAG_SCROLL_SPEED = 16
 
         /**
          * By Ken Perlin. See [Smoothstep - Wikipedia](http://en.wikipedia.org/wiki/Smoothstep).

@@ -1,12 +1,11 @@
 package com.habitrpg.android.habitica.ui.fragments.preferences
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Configuration
-import android.os.Build
 import android.os.Bundle
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.preference.CheckBoxPreference
 import androidx.preference.ListPreference
@@ -126,12 +125,12 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                         val builder = AlertDialog.Builder(context)
                                 .setMessage(getString(R.string.change_class_confirmation))
                                 .setNegativeButton(getString(R.string.dialog_go_back)) { dialog, _ -> dialog.dismiss() }
-                                .setPositiveButton(getString(R.string.change_class)) { _, _ -> startActivityForResult(intent, MainActivity.SELECT_CLASS_RESULT) }
+                                .setPositiveButton(getString(R.string.change_class)) { _, _ -> classSelectionResult.launch(intent) }
                         val alert = builder.create()
                         alert.show()
                     }
                 } else {
-                    startActivityForResult(intent, MainActivity.SELECT_CLASS_RESULT)
+                    classSelectionResult.launch(intent)
                 }
                 return true
             }
@@ -155,6 +154,9 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
         return super.onPreferenceTreeClick(preference)
     }
 
+    private val classSelectionResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        userRepository.retrieveUser(true, forced = true)
+    }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
         when (key) {

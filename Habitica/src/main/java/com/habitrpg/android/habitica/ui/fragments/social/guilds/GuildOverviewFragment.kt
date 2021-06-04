@@ -4,13 +4,12 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.*
-import android.widget.RelativeLayout
-import android.widget.TextView
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentStatePagerAdapter
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.google.android.material.tabs.TabLayoutMediator
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
@@ -31,7 +30,7 @@ class GuildOverviewFragment : BaseMainFragment<FragmentViewpagerBinding>(), Sear
         return FragmentViewpagerBinding.inflate(inflater, container, false)
     }
 
-    private var statePagerAdapter: FragmentStatePagerAdapter? = null
+    private var statePagerAdapter: FragmentStateAdapter? = null
     private var userGuildsFragment: GuildListFragment? = GuildListFragment()
     private var publicGuildsFragment: GuildListFragment? = GuildListFragment()
 
@@ -84,7 +83,7 @@ class GuildOverviewFragment : BaseMainFragment<FragmentViewpagerBinding>(), Sear
         val dialog = HabiticaAlertDialog(context)
         dialog.setTitle(R.string.create_guild)
         dialog.setMessage(R.string.create_guild_description)
-        dialog.addButton(R.string.open_website, true, false) { _, _ ->
+        dialog.addButton(R.string.open_website, isPrimary = true, isDestructive = false) { _, _ ->
             val uriUrl = "https://habitica.com/groups/myGuilds".toUri()
             val launchBrowser = Intent(Intent.ACTION_VIEW, uriUrl)
             val l = context.packageManager.queryIntentActivities(launchBrowser, PackageManager.MATCH_DEFAULT_ONLY)
@@ -107,32 +106,35 @@ class GuildOverviewFragment : BaseMainFragment<FragmentViewpagerBinding>(), Sear
     private fun setViewPagerAdapter() {
         val fragmentManager = childFragmentManager
 
-        statePagerAdapter = object : FragmentStatePagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+        statePagerAdapter = object : FragmentStateAdapter(fragmentManager, lifecycle) {
 
-            override fun getItem(position: Int): Fragment {
-                return if (position == 0) {
-                    userGuildsFragment?.onlyShowUsersGuilds = true
-                    userGuildsFragment
+            override fun createFragment(position: Int): Fragment {
+                val fragment = GuildListFragment()
+                fragment.onlyShowUsersGuilds = position == 0
+                if (position == 0) {
+                    userGuildsFragment = fragment
                 } else {
-                    publicGuildsFragment?.onlyShowUsersGuilds = false
-                    publicGuildsFragment
-                } ?: Fragment()
-            }
-
-            override fun getCount(): Int {
-                return 2
-            }
-
-            override fun getPageTitle(position: Int): CharSequence {
-                return when (position) {
-                    0 -> getString(R.string.my_guilds)
-                    1 -> getString(R.string.discover)
-                    else -> ""
+                    publicGuildsFragment = fragment
                 }
+                return fragment
+            }
+
+            override fun getItemCount(): Int {
+                return 2
             }
         }
         binding?.viewPager?.adapter = statePagerAdapter
-        tabLayout?.setupWithViewPager(binding?.viewPager)
+        tabLayout?.let {
+            binding?.viewPager?.let { it1 ->
+                TabLayoutMediator(it, it1) { tab, position ->
+                    tab.text = when (position) {
+                        0 -> getString(R.string.my_guilds)
+                        1 -> getString(R.string.discover)
+                        else -> ""
+                    }
+                }.attach()
+            }
+        }
         statePagerAdapter?.notifyDataSetChanged()
     }
 

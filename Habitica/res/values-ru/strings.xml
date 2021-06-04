@@ -797,7 +797,7 @@
     <string name="ago_1month">1 месяц назад</string>
     <string name="authentication_error_body">Введённые данные некорректны.</string>
     <string name="inbox_messages_title_nosender">Вы получили %d сообщений</string>
-    <string name="gold_capitalilzed">Золото</string>
+    <string name="gold_capitalized">Золото</string>
     <string name="user_level_with_class_unabbreviated">Уровень %1$d %2$s</string>
     <string name="preference_email_kicked_group">Исключен из группы</string>
     <string name="learn_more">Подробнее</string>

@@ -327,7 +327,7 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
         fragment.itemType = "quests"
         fragment.itemTypeText = getString(R.string.quest)
         fragment.isModal = true
-        fragment.show(parentFragmentManager, "questDialog")
+        //fragment.show(parentFragmentManager, "questDialog")
     }
 
     internal fun leaveParty() {

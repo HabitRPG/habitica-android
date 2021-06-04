@@ -1006,7 +1006,7 @@
     <string name="level_unabbreviated">%d級</string>
     <string name="delete_reminder">刪除提醒</string>
     <string name="number_responded">%1$d/%2$d已回應</string>
-    <string name="gold_capitalilzed">金幣</string>
+    <string name="gold_capitalized">金幣</string>
     <string name="user_level_with_class_unabbreviated">%1$d級%2$s</string>
     <string name="not_selected">未選中</string>
     <string name="selected">已選擇</string>

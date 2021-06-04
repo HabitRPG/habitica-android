@@ -128,7 +128,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
 
     private var avatarInHeader: AvatarWithBarsViewModel? = null
-    private var notificationsViewModel: NotificationsViewModel? = null
+    var notificationsViewModel: NotificationsViewModel? = null
     private var faintDialog: HabiticaAlertDialog? = null
     private var sideAvatarView: AvatarView? = null
     private var activeTutorialView: TutorialView? = null
@@ -402,11 +402,6 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         super.startActivity(intent)
     }
 
-    override fun startActivityForResult(intent: Intent?, requestCode: Int) {
-        resumeFromActivity = true
-        super.startActivityForResult(intent, requestCode)
-    }
-
     override fun startActivity(intent: Intent?, options: Bundle?) {
         resumeFromActivity = true
         super.startActivity(intent, options)
@@ -496,31 +491,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     }
 
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (resultCode == SELECT_CLASS_RESULT) {
-            retrieveUser()
-        } else if (requestCode == GEM_PURCHASE_REQUEST) {
-            retrieveUser()
-        }
         super.onActivityResult(requestCode, resultCode, data)
-
-        if (resultCode == NOTIFICATION_CLICK && data?.hasExtra("notificationId") == true) {
-            notificationsViewModel?.click(
-                    data.getStringExtra("notificationId") ?: "",
-                    MainNavigationController
-            )
-        }
-
-        if (resultCode == NOTIFICATION_ACCEPT && data?.hasExtra("notificationId") == true) {
-            notificationsViewModel?.accept(
-                    data.getStringExtra("notificationId") ?: ""
-            )
-        }
-
-        if (resultCode == NOTIFICATION_REJECT && data?.hasExtra("notificationId") == true) {
-            notificationsViewModel?.reject(
-                    data.getStringExtra("notificationId") ?: ""
-            )
-        }
         PurchaseHandler.findForActivity(this)?.onResult(requestCode, resultCode, data)
     }
 
@@ -904,7 +875,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
             dialog.addButton(R.string.share, false) { hatchingDialog, _ ->
                 val event1 = ShareEvent()
                 event1.sharedMessage = getString(R.string.share_hatched, potionName, eggName)
-                event1.identifier = "hatchedPet";
+                event1.identifier = "hatchedPet"
                 val petImageSideLength = 140
                 val sharedImage = Bitmap.createBitmap(petImageSideLength, petImageSideLength, Bitmap.Config.ARGB_8888)
                 val canvas = Canvas(sharedImage)
@@ -919,16 +890,9 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         }.subscribe({ }, RxErrorHandler.handleEmptyError()))
     }
 
+    @Suppress("UNUSED_PARAMETER")
     @Subscribe
     fun onConsumablePurchased(event: ConsumablePurchasedEvent) {
         compositeSubscription.add(userRepository.retrieveUser(withTasks = false, forced = true).subscribe({}, RxErrorHandler.handleEmptyError()))
-    }
-
-    companion object {
-        const val SELECT_CLASS_RESULT = 11
-        const val GEM_PURCHASE_REQUEST = 111
-        const val NOTIFICATION_CLICK = 222
-        const val NOTIFICATION_ACCEPT = 223
-        const val NOTIFICATION_REJECT = 224
     }
 }

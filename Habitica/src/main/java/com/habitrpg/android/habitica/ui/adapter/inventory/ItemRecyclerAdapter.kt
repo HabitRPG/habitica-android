@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.res.Resources
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ItemItemBinding
@@ -31,7 +32,7 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<OwnedI
     var isFeeding: Boolean = false
     var hatchingItem: Item? = null
     var feedingPet: Pet? = null
-    var fragment: ItemRecyclerFragment? = null
+    var fragment: DialogFragment? = null
     private var existingPets: List<Pet>? = null
     private var ownedPets: Map<String, OwnedPet>? = null
     var items: Map<String, Item>? = null

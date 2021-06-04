@@ -244,7 +244,7 @@ class TaskSchedulingControls @JvmOverloads constructor(
             val isActive = isWeekdayActive(weekdayCode)
             val layoutParams = LayoutParams(size, size)
             button.layoutParams = layoutParams
-            button.text = weekdays[weekdayCode].first().toUpperCase().toString()
+            button.text = weekdays[weekdayCode].first().uppercaseChar().toString()
             button.contentDescription = toContentDescription(weekdays[weekdayCode], isActive)
             button.tag = weekdayCode
             if (isActive) {

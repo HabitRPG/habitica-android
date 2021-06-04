@@ -39,8 +39,6 @@ interface TaskRepository : BaseRepository {
 
     fun markTaskCompleted(taskId: String, isCompleted: Boolean)
 
-    fun saveReminder(remindersItem: RemindersItem)
-
     fun <T: BaseMainObject> modify(obj: T, transaction: (T) -> Unit)
 
     fun swapTaskPosition(firstPosition: Int, secondPosition: Int)

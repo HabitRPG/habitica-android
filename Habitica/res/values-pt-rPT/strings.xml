@@ -476,7 +476,7 @@
     <string name="subscribe_listitem3">Itens Misteriosos Mensais</string>
     <string name="subscribe_prompt">Torne-se um subscrito para receber benefícios exclusivos!</string>
     <string name="subscribe_title">Subscrições ajudam os desenvolvedores e também a manter o Habitica a funcionar</string>
-    <string name="gold_capitalilzed">Ouro</string>
+    <string name="gold_capitalized">Ouro</string>
     <string name="create_account_short">Criar uma conta</string>
     <string name="login_incentive_short_count">%d Check-ins</string>
     <string name="login_incentive_short">Entre em Habitica regularmente</string>

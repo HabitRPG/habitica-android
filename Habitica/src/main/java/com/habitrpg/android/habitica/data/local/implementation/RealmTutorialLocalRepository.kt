@@ -26,8 +26,7 @@ class RealmTutorialLocalRepository(realm: Realm) : RealmBaseLocalRepository(real
                         steps
                     }
                 }
-                .map { steps -> steps.first() }
-                .cast(TutorialStep::class.java))
+                .map { steps -> steps.first() })
     }
 
     override fun getTutorialSteps(keys: List<String>): Flowable<out List<TutorialStep>> {

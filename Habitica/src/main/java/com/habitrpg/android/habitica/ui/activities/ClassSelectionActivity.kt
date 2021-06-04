@@ -266,7 +266,6 @@ class ClassSelectionActivity : BaseActivity(), Consumer<User> {
     override fun accept(user: User) {
         if (shouldFinish == true) {
             progressDialog?.dismiss()
-            setResult(MainActivity.SELECT_CLASS_RESULT)
             finish()
         }
     }

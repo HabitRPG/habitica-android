@@ -35,7 +35,7 @@ class RewardsRecyclerViewAdapter(private var customRewards: List<Task>?, private
     override val checklistItemScoreEvents: Flowable<Pair<Task, ChecklistItem>> = checklistItemScoreSubject.toFlowable(BackpressureStrategy.DROP)
     private var taskOpenEventsSubject: PublishSubject<Task> = PublishSubject.create()
     override val taskOpenEvents: Flowable<Task> = taskOpenEventsSubject.toFlowable(BackpressureStrategy.LATEST)
-    protected var brokenTaskEventsSubject: PublishSubject<Task> = PublishSubject.create()
+    private var brokenTaskEventsSubject: PublishSubject<Task> = PublishSubject.create()
     override val brokenTaskEvents: Flowable<Task> = brokenTaskEventsSubject.toFlowable(BackpressureStrategy.DROP)
     private var purchaseCardSubject: PublishSubject<ShopItem> = PublishSubject.create()
     val purchaseCardEvents: Flowable<ShopItem> = purchaseCardSubject.toFlowable(BackpressureStrategy.LATEST)

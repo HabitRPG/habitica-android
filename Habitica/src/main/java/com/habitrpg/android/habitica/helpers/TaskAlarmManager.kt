@@ -102,8 +102,6 @@ class TaskAlarmManager(private var context: Context, private var taskRepository:
         val sender = PendingIntent.getBroadcast(context, intentId, intent, PendingIntent.FLAG_CANCEL_CURRENT)
 
         setAlarm(context, cal.timeInMillis, sender)
-
-        taskRepository.saveReminder(remindersItem)
     }
 
     private fun removeAlarmForRemindersItem(remindersItem: RemindersItem) {

@@ -594,7 +594,7 @@
     <string name="subscribe_listitem2">Mystiskt Timglas</string>
     <string name="subscribe_listitem3">Månatlig Mystiska Föremål</string>
     <string name="subscribe_listitem1">Guld för Juveler</string>
-    <string name="gold_capitalilzed">Guld</string>
+    <string name="gold_capitalized">Guld</string>
     <string name="user_level_with_class_unabbreviated">Nivå %1$d %2$s</string>
     <string name="remaining_1hour">1h kvar</string>
     <string name="remaining_hours">%dh kvar</string>

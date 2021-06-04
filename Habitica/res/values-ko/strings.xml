@@ -788,7 +788,7 @@
     <string name="remaining_months">%d 달 남음</string>
     <string name="ago_weeks">%d주 전</string>
     <string name="ago_months">%d 개월 전</string>
-    <string name="gold_capitalilzed">골드</string>
+    <string name="gold_capitalized">골드</string>
     <string name="login_incentive_short_count">체크인 %d 회</string>
     <string name="login_incentive_short">해비티카에 정기적으로 접속하세요</string>
     <string name="login_incentive_count">해비티카에 %d 회 접속해서 잠금해제하세요.</string>

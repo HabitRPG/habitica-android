@@ -52,6 +52,7 @@ import com.habitrpg.android.habitica.ui.fragments.inventory.customization.Avatar
 import com.habitrpg.android.habitica.ui.fragments.inventory.customization.AvatarOverviewFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.equipment.EquipmentDetailFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.equipment.EquipmentOverviewFragment;
+import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemDialogFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemRecyclerFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemsFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.shops.ShopFragment;
@@ -343,4 +344,6 @@ public interface UserComponent {
     void inject(@NotNull GuildOverviewFragment guildOverviewFragment);
 
     void inject(@NotNull PromoWebFragment promoWebFragment);
+
+    void inject(@NotNull ItemDialogFragment itemDialogFragment);
 }

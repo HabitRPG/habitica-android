@@ -4,7 +4,6 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:clickable="true"
-    android:background="?attr/colorContentBackground"
     android:focusable="true">
     <LinearLayout
         android:id="@+id/card_view"

@@ -19,6 +19,7 @@ import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.LinearLayout
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
@@ -285,20 +286,6 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
         super.onActivityResult(requestCode, resultCode, data)
         callbackManager.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == REQUEST_CODE_PICK_ACCOUNT) {
-            if (resultCode == Activity.RESULT_OK) {
-                googleEmail = data?.getStringExtra(AccountManager.KEY_ACCOUNT_NAME)
-                handleGoogleLoginResult()
-            }
-        }
-        if (requestCode == REQUEST_CODE_RECOVER_FROM_PLAY_SERVICES_ERROR) {
-            // RESULT_CANCELED occurs when user denies requested permissions. In this case we don't
-            // want to immediately ask them to accept permissions again. See Issue #1290 on github.
-            if (resultCode != Activity.RESULT_CANCELED) {
-                handleGoogleLoginResult()
-            }
-        }
-
         if (requestCode == FacebookSdk.getCallbackRequestCodeOffset()) {
             //This is necessary because the regular login callback is not called for some reason
             val accessToken = AccessToken.getCurrentAccessToken()
@@ -372,7 +359,7 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
             FirebaseAnalytics.getInstance(this).logEvent("user_registered", null)
         }
 
-        compositeSubscription.add(userRepository.retrieveUser(true, true)
+        compositeSubscription.add(userRepository.retrieveUser(withTasks = true, forced = true)
                 .subscribe({
                     if (userAuthResponse.newUser) {
                         this.startSetupActivity()
@@ -395,7 +382,7 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
         val intent = AccountManager.newChooseAccountIntent(null, null,
                 accountTypes, true, null, null, null, null)
         try {
-            startActivityForResult(intent, REQUEST_CODE_PICK_ACCOUNT)
+            pickAccountResult.launch(intent)
         } catch (e: ActivityNotFoundException) {
             val alert = HabiticaAlertDialog(this)
             alert.setTitle(R.string.authentication_error_title)
@@ -403,7 +390,13 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
             alert.addCloseButton()
             alert.show()
         }
+    }
 
+    private val pickAccountResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if (it.resultCode == Activity.RESULT_OK) {
+            googleEmail = it?.data?.getStringExtra(AccountManager.KEY_ACCOUNT_NAME)
+            handleGoogleLoginResult()
+        }
     }
 
     private fun handleGoogleLoginResult() {
@@ -455,7 +448,13 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
             // the app access to the account, but the user can fix this.
             // Forward the user to an activity in Google Play services.
             val intent = e.intent
-            startActivityForResult(intent, REQUEST_CODE_RECOVER_FROM_PLAY_SERVICES_ERROR)
+            recoverFromPlayServicesErrorResult.launch(intent)
+        }
+    }
+
+    private val recoverFromPlayServicesErrorResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if (it.resultCode != Activity.RESULT_CANCELED) {
+            handleGoogleLoginResult()
         }
     }
 

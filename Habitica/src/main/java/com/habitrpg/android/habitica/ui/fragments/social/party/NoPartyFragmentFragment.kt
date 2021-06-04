@@ -13,6 +13,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.os.bundleOf
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.habitrpg.android.habitica.R
@@ -100,7 +101,7 @@ class NoPartyFragmentFragment : BaseMainFragment<FragmentNoPartyBinding>() {
             val intent = Intent(activity, GroupFormActivity::class.java)
             intent.putExtras(bundle)
             intent.flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
-            startActivityForResult(intent, GroupFormActivity.GROUP_FORM_ACTIVITY)
+            groupFormResult.launch(intent)
         }
 
         context?.let { context ->
@@ -138,31 +139,26 @@ class NoPartyFragmentFragment : BaseMainFragment<FragmentNoPartyBinding>() {
         binding?.usernameTextview?.text = user?.formattedUsername
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        when (requestCode) {
-            GroupFormActivity.GROUP_FORM_ACTIVITY -> {
-                if (resultCode == Activity.RESULT_OK) {
-                    val bundle = data?.extras
-                    if (bundle?.getString("groupType") == "party") {
-                        socialRepository.createGroup(bundle.getString("name"),
-                                bundle.getString("description"),
-                                bundle.getString("leader"),
-                                "party",
-                                bundle.getString("privacy"),
-                                bundle.getBoolean("leaderCreateChallenge"))
-                                .flatMap {
-                                    userRepository.retrieveUser(false)
-                                }
-                                .subscribe({
-                                    if (isAdded) {
-                                        parentFragmentManager.popBackStack()
-                                    }
-                                    MainNavigationController.navigate(R.id.partyFragment,
-                                            bundleOf(Pair("partyID", user?.party?.id)))
-                                }, RxErrorHandler.handleEmptyError())
+    private val groupFormResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if (it.resultCode == Activity.RESULT_OK) {
+            val bundle = it.data?.extras
+            if (bundle?.getString("groupType") == "party") {
+                socialRepository.createGroup(bundle.getString("name"),
+                    bundle.getString("description"),
+                    bundle.getString("leader"),
+                    "party",
+                    bundle.getString("privacy"),
+                    bundle.getBoolean("leaderCreateChallenge"))
+                    .flatMap {
+                        userRepository.retrieveUser(false)
                     }
-                }
+                    .subscribe({
+                        if (isAdded) {
+                            parentFragmentManager.popBackStack()
+                        }
+                        MainNavigationController.navigate(R.id.partyFragment,
+                            bundleOf(Pair("partyID", user?.party?.id)))
+                    }, RxErrorHandler.handleEmptyError())
             }
         }
     }

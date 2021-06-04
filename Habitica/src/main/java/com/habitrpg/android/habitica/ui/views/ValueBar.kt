@@ -13,7 +13,6 @@ import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.extensions.isUsingNightModeResources
 import com.habitrpg.android.habitica.extensions.layoutInflater
-import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import java.math.RoundingMode
 import java.text.NumberFormat
 

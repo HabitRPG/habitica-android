@@ -345,7 +345,7 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
             if (habitResponse.notifications != null) {
                 notificationsManager.setNotifications(habitResponse.notifications)
             }
-            habitResponse.getData()
+            habitResponse.data
         }
     }
 
@@ -354,7 +354,7 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
             if (habitResponse.notifications != null) {
                 notificationsManager.setNotifications(habitResponse.notifications)
             }
-            habitResponse.getData()
+            habitResponse.data
         }
     }
 
@@ -385,7 +385,7 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
     override fun feedPet(petKey: String, foodKey: String): Flowable<FeedResponse> {
         return apiService.feedPet(petKey, foodKey)
                 .map {
-                    it.data.message = it.message
+                    it.data?.message = it.message
                     it
                 }
                 .compose(configureApiCallObserver())
@@ -604,7 +604,7 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
             if (habitResponse.notifications != null) {
                 notificationsManager.setNotifications(habitResponse.notifications)
             }
-            habitResponse.getData()
+            habitResponse.data
         }
     }
 

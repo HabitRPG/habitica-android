@@ -749,7 +749,7 @@
     <string name="confirm_delete_tag_title">Ви впевнені\?</string>
     <string name="edit_tag_btn_edit">Редагувати</string>
     <string name="chat_message_copied">Повідомлення скопійовано до буфера обміну</string>
-    <string name="gold_capitalilzed">Золото</string>
+    <string name="gold_capitalized">Золото</string>
     <string name="gold_plural">золото</string>
     <string name="successful_purchase">Придбано %1$s</string>
     <string name="create_account_short">створити акаунт</string>

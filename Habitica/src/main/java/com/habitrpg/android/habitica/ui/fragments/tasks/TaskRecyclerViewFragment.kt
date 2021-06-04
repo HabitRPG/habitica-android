@@ -417,7 +417,7 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
         intent.putExtras(bundle)
         TasksFragment.lastTaskFormOpen = Date()
         if (isAdded) {
-            startActivityForResult(intent, TasksFragment.TASK_UPDATED_RESULT)
+            startActivity(intent)
         }
     }
 

@@ -11,8 +11,7 @@
         android:scrollbarSize="3dp"
         android:scrollbarThumbVertical="@color/scrollbarThumb"
         android:scrollbars="vertical"
-        android:clipToPadding="false"
-        android:background="@color/content_background"/>
+        android:clipToPadding="false"/>
 
     <TextView
         android:layout_width="match_parent"

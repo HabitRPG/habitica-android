@@ -761,7 +761,7 @@
     <string name="subscribe_listitem5_description">Scopri ancora più oggetti in Habitica con un bonus 2x sul limite di bottini giornalieri.</string>
     <string name="subscribe_listitem3_description_new">Abbonati ora per ottenere %s e ricevere nuovi articoli ogni mese!</string>
     <string name="subscribe_listitem5">Raddoppia il Bottino</string>
-    <string name="gold_capitalilzed">Oro</string>
+    <string name="gold_capitalized">Oro</string>
     <string name="create_account_short">Crea un Account</string>
     <string name="login_incentive_short_count">%d Accessi</string>
     <string name="login_incentive_short">Accedi ad Habitica regolarmente</string>

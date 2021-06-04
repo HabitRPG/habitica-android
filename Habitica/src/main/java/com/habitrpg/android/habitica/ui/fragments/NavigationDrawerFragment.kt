@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.fragments
 
 
+import android.app.Activity
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.ColorStateList
@@ -9,6 +10,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.content.edit
 import androidx.core.os.bundleOf
@@ -34,7 +36,6 @@ import com.habitrpg.android.habitica.models.promotions.PromoType
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.MainActivity
-import com.habitrpg.android.habitica.ui.activities.MainActivity.Companion.NOTIFICATION_CLICK
 import com.habitrpg.android.habitica.ui.activities.NotificationsActivity
 import com.habitrpg.android.habitica.ui.adapter.NavigationDrawerAdapter
 import com.habitrpg.android.habitica.ui.fragments.social.TavernDetailFragment
@@ -450,7 +451,16 @@ class NavigationDrawerFragment : DialogFragment() {
             // NotificationsActivity will return a result intent with a notificationId if a
             // notification item was clicked
             val intent = Intent(activity, NotificationsActivity::class.java)
-            activity.startActivityForResult(intent, NOTIFICATION_CLICK)
+            notificationClickResult.launch(intent)
+        }
+    }
+
+    private val notificationClickResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if (it.resultCode == Activity.RESULT_OK) {
+            (activity as? MainActivity)?.notificationsViewModel?.click(
+                it.data?.getStringExtra("notificationId") ?: "",
+                MainNavigationController
+            )
         }
     }
 

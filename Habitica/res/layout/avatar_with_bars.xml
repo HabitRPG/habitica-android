@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:adjustViewBounds="true"
-    android:background="?attr/headerBackgroundColor"
     android:focusable="true"
     android:focusableInTouchMode="true"
     android:orientation="vertical"

@@ -41,10 +41,6 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
     var adapter: ItemRecyclerAdapter? = null
     var itemType: String? = null
     var itemTypeText: String? = null
-    var isHatching: Boolean = false
-    var isFeeding: Boolean = false
-    private var hatchingItem: Item? = null
-    var feedingPet: Pet? = null
     var user: User? = null
     internal var layoutManager: androidx.recyclerview.widget.LinearLayoutManager? = null
 
@@ -63,20 +59,6 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
         component.inject(this)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        when {
-            this.isHatching -> {
-                dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
-            }
-            this.isFeeding -> {
-                dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
-            }
-            else -> {
-            }
-        }
-        return super.onCreateView(inflater, container, savedInstanceState)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -93,15 +75,6 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
         if (adapter == null) {
             context?.let {
                 adapter = ItemRecyclerAdapter(context)
-                adapter?.isHatching = this.isHatching
-                adapter?.isFeeding = this.isFeeding
-                adapter?.fragment = this
-            }
-            if (this.hatchingItem != null) {
-                adapter?.hatchingItem = this.hatchingItem
-            }
-            if (this.feedingPet != null) {
-                adapter?.feedingPet = this.feedingPet
             }
             binding?.recyclerView?.adapter = adapter
 
@@ -114,11 +87,7 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
                         .flatMap { quest -> inventoryRepository.inviteToQuest(quest) }
                         .flatMap { socialRepository.retrieveGroup("party") }
                         .subscribe({
-                            if (isModal) {
-                                dismiss()
-                            } else {
-                                MainNavigationController.navigate(R.id.partyFragment)
-                            }
+                            MainNavigationController.navigate(R.id.partyFragment)
                         }, RxErrorHandler.handleEmptyError()))
                 compositeSubscription.add(adapter.getOpenMysteryItemFlowable()
                         .flatMap { inventoryRepository.openMysteryItem(user) }
@@ -152,30 +121,11 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
             this.itemType = savedInstanceState.getString(ITEM_TYPE_KEY, "")
         }
 
-        when {
-            this.isHatching -> {
-                binding?.titleTextView?.text = getString(R.string.hatch_with, this.hatchingItem?.text)
-                binding?.titleTextView?.visibility = View.VISIBLE
-                binding?.footerTextView?.text = getString(R.string.hatching_market_info)
-                binding?.footerTextView?.visibility = View.VISIBLE
-                binding?.openMarketButton?.visibility = View.VISIBLE
-            }
-            this.isFeeding -> {
-                binding?.titleTextView?.text = getString(R.string.dialog_feeding, this.feedingPet?.text)
-                binding?.titleTextView?.visibility = View.VISIBLE
-                binding?.footerTextView?.text = getString(R.string.feeding_market_info)
-                binding?.footerTextView?.visibility = View.VISIBLE
-                binding?.openMarketButton?.visibility = View.VISIBLE
-            }
-            else -> {
-                binding?.titleTextView?.visibility = View.GONE
-                binding?.footerTextView?.visibility = View.GONE
-                binding?.openMarketButton?.visibility = View.GONE
-            }
-        }
+        binding?.titleTextView?.visibility = View.GONE
+        binding?.footerTextView?.visibility = View.GONE
+        binding?.openMarketButton?.visibility = View.GONE
 
         binding?.openMarketButton?.setOnClickListener {
-            dismiss()
             openMarket()
         }
 
@@ -185,7 +135,7 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
     }
 
     private fun showHatchingDialog(item: Item) {
-        val fragment = ItemRecyclerFragment()
+        val fragment = ItemDialogFragment()
         if (item is Egg) {
             fragment.itemType = "hatchingPotions"
             fragment.hatchingItem = item
@@ -196,17 +146,6 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
         fragment.isHatching = true
         fragment.isFeeding = false
         parentFragmentManager.let { fragment.show(it, "hatchingDialog") }
-    }
-
-    override fun onResume() {
-        if ((this.isHatching || this.isFeeding) && dialog?.window != null) {
-            val params = dialog?.window?.attributes
-            params?.width = ViewGroup.LayoutParams.MATCH_PARENT
-            params?.verticalMargin = 60f
-            dialog?.window?.attributes = params
-        }
-
-        super.onResume()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -223,7 +162,6 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
     }
 
     private fun hatchPet(potion: HatchingPotion, egg: Egg) {
-        dismiss()
         (activity as? MainActivity)?.hatchPet(potion, egg)
     }
 
@@ -239,12 +177,7 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
         itemType?.let { type ->
             compositeSubscription.add(inventoryRepository.getOwnedItems(type)
                     .doOnNext { items ->
-                        val filteredItems = if (isFeeding) {
-                            items.filter { it.key != "Saddle" }
-                        } else {
-                            items
-                        }
-                        adapter?.data = filteredItems
+                        adapter?.data = items
                     }
                     .map { items -> items.mapNotNull { it.key } }
                     .flatMap { inventoryRepository.getItems(itemClass, it.toTypedArray()) }

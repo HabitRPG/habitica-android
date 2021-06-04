@@ -6,9 +6,12 @@ import android.content.SharedPreferences
 import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.*
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.FragmentPagerAdapter
+import androidx.fragment.app.Fragment
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
@@ -211,9 +214,9 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
     private fun loadTaskLists() {
         val fragmentManager = childFragmentManager
 
-        binding?.viewPager?.adapter = object : FragmentPagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+        binding?.viewPager?.adapter = object : FragmentStateAdapter(fragmentManager, lifecycle) {
 
-            override fun getItem(position: Int): androidx.fragment.app.Fragment {
+            override fun createFragment(position: Int): androidx.fragment.app.Fragment {
                 val fragment: TaskRecyclerViewFragment = when (position) {
                     0 -> TaskRecyclerViewFragment.newInstance(context, Task.TYPE_HABIT)
                     1 -> TaskRecyclerViewFragment.newInstance(context, Task.TYPE_DAILY)
@@ -222,8 +225,10 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
                 }
                 fragment.ownerID = userID
                 fragment.refreshAction = {
-                    compositeSubscription.add(userRepository.retrieveUser(true, true)
-                            .doOnTerminate {
+                    compositeSubscription.add(userRepository.retrieveUser(
+                        withTasks = true,
+                        forced = true
+                    ).doOnTerminate {
                                 it()
                             }.subscribe({ }, RxErrorHandler.handleEmptyError()))
                 }
@@ -232,26 +237,16 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
                 return fragment
             }
 
-            override fun getCount(): Int = 4
-
-            override fun getPageTitle(position: Int): CharSequence? = when (position) {
-                0 -> activity?.getString(R.string.habits)
-                1 -> activity?.getString(R.string.dailies)
-                2 -> activity?.getString(R.string.todos)
-                3 -> activity?.getString(R.string.rewards)
-                else -> ""
-            }
+            override fun getItemCount(): Int = 4
         }
 
-        binding?.viewPager?.addOnPageChangeListener(object : androidx.viewpager.widget.ViewPager.OnPageChangeListener {
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) { /* no-op */ }
-
+        binding?.viewPager?.registerOnPageChangeCallback(object :
+            ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
                 bottomNavigation?.selectedPosition = position
                 updateFilterIcon()
             }
-
-            override fun onPageScrollStateChanged(state: Int) { /* no-op */ }
         })
     }
 
@@ -348,22 +343,15 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
         intent.flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
         if (this.isAdded) {
             lastTaskFormOpen = Date()
-            startActivityForResult(intent, TASK_CREATED_RESULT)
+            taskCreateResult.launch(intent)
         }
     }
 
     //endregion Events
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        when (requestCode) {
-            TASK_CREATED_RESULT -> {
-                onTaskCreatedResult(resultCode, data)
-            }
-        }
+    private val taskCreateResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        onTaskCreatedResult(it.resultCode, it.data)
     }
-
     private fun onTaskCreatedResult(resultCode: Int, data: Intent?) {
         if (resultCode == Activity.RESULT_OK) {
             val taskType = data?.getStringExtra(TaskFormActivity.TASK_TYPE_KEY)
@@ -406,8 +394,6 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
 
     companion object {
         var lastTaskFormOpen: Date? = null
-        internal const val TASK_CREATED_RESULT = 1
-        const val TASK_UPDATED_RESULT = 2
     }
 
 

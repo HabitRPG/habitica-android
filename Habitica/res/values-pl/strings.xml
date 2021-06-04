@@ -670,7 +670,7 @@
     <string name="ago_weeks">%d tygodni temu</string>
     <string name="party_invite_short">Zaproś Znajomych</string>
     <string name="login_incentive_short">Odwiedzaj Habitica regularnie</string>
-    <string name="gold_capitalilzed">Złoto</string>
+    <string name="gold_capitalized">Złoto</string>
     <string name="create_account_short">stwórz konto</string>
     <string name="login_incentive_short_count">%d Wizyt</string>
     <string name="subscribe_listitem5">Podwój Łup</string>

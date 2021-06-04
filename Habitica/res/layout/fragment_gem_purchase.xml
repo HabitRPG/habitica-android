@@ -5,8 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:scrollbarSize="3dp"
     android:scrollbarThumbVertical="@color/scrollbarThumb"
-    android:scrollbars="vertical"
-    android:background="@color/content_background">
+    android:scrollbars="vertical">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

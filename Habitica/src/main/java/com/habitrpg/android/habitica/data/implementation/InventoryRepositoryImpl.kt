@@ -210,7 +210,7 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
         }
         return apiClient.hatchPet(egg.key, hatchingPotion.key)
                 .doOnNext {
-                    localRepository.save(it)
+                    localRepository.save(it, userID)
                     if (!appConfigManager.enableLocalChanges()) {
                         successFunction()
                     }

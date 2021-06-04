@@ -350,7 +350,7 @@
     <string name="create_account_short">create an account</string>
     <string name="successful_purchase">Purchased %1$s</string>
     <string name="gold_plural">gold</string>
-    <string name="gold_capitalilzed">Gold</string>
+    <string name="gold_capitalized">Gold</string>
     <string name="chat_message_copied">Message copied to Clipboard</string>
     <string name="edit_tag_btn_edit">Edit</string>
     <string name="confirm_delete_tag_title">Are you sure?</string>

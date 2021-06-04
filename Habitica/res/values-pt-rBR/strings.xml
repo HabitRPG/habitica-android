@@ -958,7 +958,7 @@
     <string name="level_unabbreviated">Nível %d</string>
     <string name="delete_reminder">Excluir lembrete</string>
     <string name="number_responded">%1$d/%2$d Respondeu</string>
-    <string name="gold_capitalilzed">Ouro</string>
+    <string name="gold_capitalized">Ouro</string>
     <string name="user_level_with_class_unabbreviated">Nível %1$d %2$s</string>
     <string name="not_selected">Não selecionado</string>
     <string name="selected">Selecionado</string>

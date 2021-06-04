@@ -9,6 +9,13 @@ import java.util.*
 
 @RealmClass(embedded = true)
 open class Items : RealmObject, BaseObject {
+    fun setItemTypes() {
+        hatchingPotions?.forEach { it.itemType = "hatchingPotions" }
+        eggs?.forEach { it.itemType = "eggs" }
+        food?.forEach { it.itemType = "food" }
+        quests?.forEach { it.itemType = "quests" }
+    }
+
     var eggs: RealmList<OwnedItem>? = null
     set(value) {
         field = value

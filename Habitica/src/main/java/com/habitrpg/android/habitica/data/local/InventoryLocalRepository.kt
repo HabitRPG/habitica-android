@@ -2,10 +2,7 @@ package com.habitrpg.android.habitica.data.local
 
 import com.habitrpg.android.habitica.models.inventory.*
 import com.habitrpg.android.habitica.models.shops.ShopItem
-import com.habitrpg.android.habitica.models.user.OwnedItem
-import com.habitrpg.android.habitica.models.user.OwnedMount
-import com.habitrpg.android.habitica.models.user.OwnedPet
-import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.android.habitica.models.user.*
 import io.reactivex.rxjava3.core.Flowable
 
 interface InventoryLocalRepository : ContentLocalRepository {
@@ -50,11 +47,12 @@ interface InventoryLocalRepository : ContentLocalRepository {
     fun decrementMysteryItemCount(user: User?)
     fun saveInAppRewards(onlineItems: List<ShopItem>)
 
-    fun changePetFeedStatus(key: String?, userID: String, feedStatus: Int)
     fun hatchPet(eggKey: String, potionKey: String, userID: String)
     fun unhatchPet(eggKey: String, potionKey: String, userID: String)
     fun feedPet(foodKey: String, petKey: String, feedValue: Int, userID: String)
     fun getLatestMysteryItem(): Flowable<Equipment>
     fun soldItem(userID: String, updatedUser: User): User
     fun getAvailableLimitedItems(): Flowable<List<Item>>
+
+    fun save(items: Items, userID: String)
 }

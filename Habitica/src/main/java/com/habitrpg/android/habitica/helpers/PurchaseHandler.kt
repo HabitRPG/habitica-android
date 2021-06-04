@@ -172,7 +172,8 @@ class PurchaseHandler(activity: Activity, val analyticsManager: AnalyticsManager
     fun purchaseGems(identifier: String) {
         checkout?.let {
             it.destroyPurchaseFlow()
-            billingRequests?.purchase(ProductTypes.IN_APP, identifier, null, it.createOneShotPurchaseFlow(object : RequestListener<Purchase> {
+            billingRequests?.purchase(ProductTypes.IN_APP, identifier, null, it.createOneShotPurchaseFlow(
+                PURCHASE_REQUEST_CODE, object : RequestListener<Purchase> {
                 override fun onSuccess(result: Purchase) {
                     billingRequests?.consume(result.token, object : RequestListener<Any> {
                         override fun onSuccess(o: Any) { /* no-op */ }
@@ -195,7 +196,8 @@ class PurchaseHandler(activity: Activity, val analyticsManager: AnalyticsManager
 
     fun purchaseNoRenewSubscription(sku: Sku) {
         checkout?.let {
-            billingRequests?.purchase(ProductTypes.IN_APP, sku.id.code, null, it.createOneShotPurchaseFlow(object : RequestListener<Purchase> {
+            billingRequests?.purchase(ProductTypes.IN_APP, sku.id.code, null, it.createOneShotPurchaseFlow(
+                PURCHASE_REQUEST_CODE, object : RequestListener<Purchase> {
                 override fun onSuccess(result: Purchase) {
                     billingRequests?.consume(result.token, object : RequestListener<Any> {
                         override fun onSuccess(o: Any) { /* no-op */ }
@@ -228,6 +230,8 @@ class PurchaseHandler(activity: Activity, val analyticsManager: AnalyticsManager
     companion object {
 
         private var handlers = WeakHashMap<Activity, PurchaseHandler>()
+
+        val PURCHASE_REQUEST_CODE = 51966
 
         fun findForActivity(activity: Activity): PurchaseHandler? {
             return handlers[activity]

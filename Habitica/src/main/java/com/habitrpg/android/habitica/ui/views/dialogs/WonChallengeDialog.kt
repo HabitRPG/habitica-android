@@ -13,7 +13,7 @@ import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 
 class WonChallengeDialog(context: Context) : HabiticaAlertDialog(context) {
     fun configure(data: ChallengeWonData?) {
-        val imageView = additionalContentView?.findViewById<SimpleDraweeView>(R.id.achievement_view);
+        val imageView = additionalContentView?.findViewById<SimpleDraweeView>(R.id.achievement_view)
         DataBindingUtils.loadImage(imageView, "achievement-karaoke-2x")
 
         if (data?.name != null) {

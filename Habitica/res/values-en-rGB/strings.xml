@@ -1004,7 +1004,7 @@
     <string name="level_unabbreviated">Level %d</string>
     <string name="delete_reminder">Delete Reminder</string>
     <string name="number_responded">%1$d/%2$d Responded</string>
-    <string name="gold_capitalilzed">Gold</string>
+    <string name="gold_capitalized">Gold</string>
     <string name="user_level_with_class_unabbreviated">Level %1$d %2$s</string>
     <string name="not_selected">Not selected</string>
     <string name="selected">Selected</string>

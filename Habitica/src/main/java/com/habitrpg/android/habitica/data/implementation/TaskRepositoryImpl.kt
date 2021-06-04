@@ -167,7 +167,13 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
                     item.userID = user.id
                 }
                 item.numberOwned += 1
-                it.insertOrUpdate(item)
+                when (type) {
+                    "eggs" -> bgUser.items?.eggs?.add(item)
+                    "food" -> bgUser.items?.food?.add(item)
+                    "hatchingPotions" -> bgUser.items?.hatchingPotions?.add(item)
+                    "quests" -> bgUser.items?.quests?.add(item)
+                    else -> ""
+                }
             }
 
             val stats = bgUser.stats
@@ -272,10 +278,6 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
 
     override fun markTaskCompleted(taskId: String, isCompleted: Boolean) {
         localRepository.markTaskCompleted(taskId, isCompleted)
-    }
-
-    override fun saveReminder(remindersItem: RemindersItem) {
-        localRepository.saveReminder(remindersItem)
     }
 
     override fun <T: BaseMainObject> modify(obj: T, transaction: (T) -> Unit) {

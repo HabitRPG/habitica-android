@@ -22,8 +22,6 @@ interface TaskLocalRepository : BaseLocalRepository {
 
     fun markTaskCompleted(taskId: String, isCompleted: Boolean)
 
-    fun saveReminder(remindersItem: RemindersItem)
-
     fun swapTaskPosition(firstPosition: Int, secondPosition: Int)
 
     fun getTaskAtPosition(taskType: String, position: Int): Flowable<Task>

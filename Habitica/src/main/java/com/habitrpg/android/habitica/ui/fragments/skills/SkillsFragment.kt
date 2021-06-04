@@ -7,12 +7,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.databinding.FragmentSkillsBinding
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
-import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.Skill
 import com.habitrpg.android.habitica.models.responses.SkillResponse
@@ -21,23 +21,17 @@ import com.habitrpg.android.habitica.ui.activities.SkillMemberActivity
 import com.habitrpg.android.habitica.ui.activities.SkillTasksActivity
 import com.habitrpg.android.habitica.ui.adapter.SkillsRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
-import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengesOverviewFragmentDirections
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.Companion.showSnackbar
 import io.reactivex.rxjava3.core.Flowable
-import io.reactivex.rxjava3.core.Observable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class SkillsFragment : BaseMainFragment<FragmentSkillsBinding>() {
-
-    private val TASK_SELECTION_ACTIVITY = 10
-    private val MEMBER_SELECTION_ACTIVITY = 11
-
     internal var adapter: SkillsRecyclerViewAdapter? = null
     private var selectedSkill: Skill? = null
 
@@ -104,12 +98,12 @@ class SkillsFragment : BaseMainFragment<FragmentSkillsBinding>() {
             "special" == skill.habitClass -> {
                 selectedSkill = skill
                 val intent = Intent(activity, SkillMemberActivity::class.java)
-                startActivityForResult(intent, MEMBER_SELECTION_ACTIVITY)
+                memberSelectionResult.launch(intent)
             }
             skill.target == "task" -> {
                 selectedSkill = skill
                 val intent = Intent(activity, SkillTasksActivity::class.java)
-                startActivityForResult(intent, TASK_SELECTION_ACTIVITY)
+                taskSelectionResult.launch(intent)
             }
             else -> useSkill(skill)
         }
@@ -144,22 +138,15 @@ class SkillsFragment : BaseMainFragment<FragmentSkillsBinding>() {
         compositeSubscription.add(userRepository.retrieveUser(false).subscribe({ }, RxErrorHandler.handleEmptyError()))
     }
 
+    private val taskSelectionResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if (it.resultCode == Activity.RESULT_OK) {
+            useSkill(selectedSkill, it.data?.getStringExtra("taskID"))
+        }
+    }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (data != null) {
-            when (requestCode) {
-                TASK_SELECTION_ACTIVITY -> {
-                    if (resultCode == Activity.RESULT_OK) {
-                        useSkill(selectedSkill, data.getStringExtra("taskID"))
-                    }
-                }
-                MEMBER_SELECTION_ACTIVITY -> {
-                    if (resultCode == Activity.RESULT_OK) {
-                        useSkill(selectedSkill, data.getStringExtra("member_id"))
-                    }
-                }
-            }
+    private val memberSelectionResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if (it.resultCode == Activity.RESULT_OK) {
+            useSkill(selectedSkill, it.data?.getStringExtra("member_id"))
         }
     }
 

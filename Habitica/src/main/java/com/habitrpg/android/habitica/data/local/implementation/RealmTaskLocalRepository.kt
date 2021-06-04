@@ -153,10 +153,6 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
         executeTransaction { task.completed = true }
     }
 
-    override fun saveReminder(remindersItem: RemindersItem) {
-        executeTransaction { it.insertOrUpdate(remindersItem) }
-    }
-
     override fun swapTaskPosition(firstPosition: Int, secondPosition: Int) {
         val firstTask = realm.where(Task::class.java).equalTo("position", firstPosition).findFirst()
         val secondTask = realm.where(Task::class.java).equalTo("position", secondPosition).findFirst()

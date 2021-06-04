@@ -19,6 +19,7 @@ import com.habitrpg.android.habitica.models.user.OwnedMount
 import com.habitrpg.android.habitica.models.user.OwnedPet
 import com.habitrpg.android.habitica.ui.adapter.inventory.PetDetailRecyclerAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
+import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemDialogFragment
 import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemRecyclerFragment
 import com.habitrpg.android.habitica.ui.helpers.MarginDecoration
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
@@ -182,7 +183,7 @@ class PetDetailRecyclerFragment : BaseMainFragment<FragmentRecyclerviewBinding>(
     @Subscribe
     fun showFeedingDialog(event: FeedCommand) {
         if (event.usingPet == null || event.usingFood == null) {
-            val fragment = ItemRecyclerFragment()
+            val fragment = ItemDialogFragment()
             fragment.feedingPet = event.usingPet
             fragment.isFeeding = true
             fragment.isHatching = false

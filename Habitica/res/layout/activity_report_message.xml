@@ -14,8 +14,7 @@
         android:id="@+id/bottom_sheet"
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
         app:behavior_peekHeight="350dp"
-        app:behavior_hideable="true"
-        android:background="@color/content_background">
+        app:behavior_hideable="true">
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/app_bar"
             android:layout_width="match_parent"

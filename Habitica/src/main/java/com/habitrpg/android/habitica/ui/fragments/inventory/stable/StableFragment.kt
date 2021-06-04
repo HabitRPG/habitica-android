@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentPagerAdapter
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.google.android.material.tabs.TabLayoutMediator
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.databinding.FragmentViewpagerBinding
@@ -39,10 +41,9 @@ class StableFragment : BaseMainFragment<FragmentViewpagerBinding>() {
     private fun setViewPagerAdapter() {
         val fragmentManager = childFragmentManager
 
-        binding?.viewPager?.adapter = object : FragmentPagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+        binding?.viewPager?.adapter = object : FragmentStateAdapter(fragmentManager, lifecycle) {
 
-            override fun getItem(position: Int): androidx.fragment.app.Fragment {
-
+            override fun createFragment(position: Int): androidx.fragment.app.Fragment {
                 val fragment = StableRecyclerFragment()
 
                 when (position) {
@@ -54,24 +55,26 @@ class StableFragment : BaseMainFragment<FragmentViewpagerBinding>() {
                     }
                 }
                 fragment.user = this@StableFragment.user
-                fragment.itemTypeText = this.getPageTitle(position).toString()
+                //fragment.itemTypeText = this.getPageTitle(position).toString()
 
                 return fragment
             }
 
-            override fun getCount(): Int {
+            override fun getItemCount(): Int {
                 return 2
             }
-
-            override fun getPageTitle(position: Int): CharSequence {
-                return when (position) {
-                    0 -> activity?.getString(R.string.pets)
-                    1 -> activity?.getString(R.string.mounts)
-                    else -> ""
-                } ?:  ""
+        }
+        tabLayout?.let {
+            binding?.viewPager?.let { it1 ->
+                TabLayoutMediator(it, it1) { tab, position ->
+                    tab.text = when (position) {
+                        0 -> activity?.getString(R.string.pets)
+                        1 -> activity?.getString(R.string.mounts)
+                        else -> ""
+                    } ?:  ""
+                }.attach()
             }
         }
-        tabLayout?.setupWithViewPager(binding?.viewPager)
     }
 
 
