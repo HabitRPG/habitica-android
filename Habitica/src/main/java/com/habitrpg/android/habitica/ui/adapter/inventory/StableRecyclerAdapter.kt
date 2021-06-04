@@ -49,7 +49,8 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     private fun canRaiseToMount(pet: Pet): Boolean {
-        for (mount in existingMounts ?: emptyList<Mount>()) {
+        if (pet.type == "special") return false
+        for (mount in existingMounts ?: emptyList()) {
             if (mount.key == pet.key) {
                 return !(ownedMounts?.get(mount.key)?.owned ?: false)
             }

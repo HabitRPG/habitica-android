@@ -40,7 +40,8 @@ class PetDetailRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapt
     var animalIngredientsRetriever: ((Animal, ((Pair<Egg?, HatchingPotion?>) -> Unit)) -> Unit)? = null
 
     private fun canRaiseToMount(pet: Pet): Boolean {
-        for (mount in existingMounts ?: emptyList<Mount>()) {
+        if (pet.type == "special") return false
+        for (mount in existingMounts ?: emptyList()) {
             if (mount.key == pet.key) {
                 return !(ownedMounts?.get(mount.key)?.owned ?: false)
             }
