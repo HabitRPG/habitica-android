@@ -114,6 +114,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/quest_begin"
                 style="@style/HabiticaButton.Yellow"
+                android:visibility="gone"
                 android:layout_marginEnd="16dp" />
             <Button
                 android:id="@+id/quest_leave_button"
@@ -122,6 +123,7 @@
                 android:layout_marginEnd="8dp"
                 android:layout_height="wrap_content"
                 android:text="@string/leave"
+                android:visibility="gone"
                 style="@style/HabiticaButton.Red" />
 
             <Button
@@ -130,6 +132,7 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="@string/quest_cancel"
+                android:visibility="gone"
                 style="@style/HabiticaButton.Red" />
         </LinearLayout>
     </LinearLayout>
