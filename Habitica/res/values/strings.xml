@@ -717,8 +717,10 @@
     <string name="expand_notes">Read More</string>
     <string name="collapse_notes">Show Less</string>
     <string name="reset_streak">Reset Streak</string>
-    <string name="week_reminder_title">How are your tasks going?</string>
-    <string name="week_reminder_text">Breaks are healthy, but you can still earn points for simple activities to level up and get cool gear!</string>
+    <string name="week_reminder_title">Getting things done?</string>
+    <string name="week_reminder_text">Check them off in Habitica now for rewards and XP!</string>
+    <string name="month_reminder_title">Need a change of routine?</string>
+    <string name="month_reminder_text">Sometimes starting fresh is the best option, Habitica can help!</string>
     <string name="last_login">Latest Check In</string>
     <string name="total_checkins">Total Checkins</string>
     <string name="two_handed">Two-Handed</string>
@@ -850,8 +852,9 @@
     <string name="share_challenge_with">Share Challenge with</string>
     <string name="app_theme">App Theme</string>
     <string name="sent_card">You sent a %s</string>
-    <string name="inbox_messages_title">You received %1$d messages from %2$s</string>
-    <string name="inbox_messages_title_nosender">You received %d messages</string>
+    <string name="inbox_messages_title_single">New Message from %1$s</string>
+    <string name="inbox_messages_title">%1$d New Messages from %2$s</string>
+    <string name="inbox_messages_title_nosender">%d new messages</string>
     <string name="remove">Remove</string>
     <string name="transfer_ownership">Transfer Leadership</string>
     <string name="remove_member">Remove Member</string>
