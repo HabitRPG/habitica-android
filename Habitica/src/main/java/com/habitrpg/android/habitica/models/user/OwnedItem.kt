@@ -12,27 +12,27 @@ open class OwnedItem : RealmObject(), BaseMainObject, OwnedObject {
     override val realmClass: Class<OwnedItem>
         get() = OwnedItem::class.java
     override val primaryIdentifier: String?
-        get() = combinedKey
+        get() = key
     override val primaryIdentifierName: String
         get() = "combinedKey"
 
-    @PrimaryKey
-    override var combinedKey: String? = null
     override var userID: String? = null
-    set(value) {
-        field = value
-        combinedKey = field + itemType + key
-    }
+
     override var key: String? = null
-    set(value) {
-        field = value
-        combinedKey = userID + itemType + field
-    }
 
     var itemType: String? = null
-        set(value) {
-            field = value
-            combinedKey = userID + field + key
-        }
     var numberOwned = 0
+
+    override fun equals(other: Any?): Boolean {
+        return if (other is OwnedItem) {
+            userID == other.userID && key == other.key && itemType == other.itemType
+        } else super.equals(other)
+    }
+
+    override fun hashCode(): Int {
+        var result = userID?.hashCode() ?: 0
+        result = 31 * result + (key?.hashCode() ?: 0)
+        result = 31 * result + (itemType?.hashCode() ?: 0)
+        return result
+    }
 }

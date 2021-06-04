@@ -12,9 +12,6 @@ import java.util.*
 @RealmClass(embedded = true)
 open class TaskGroupPlan : RealmObject(), BaseObject {
 
-    @PrimaryKey
-    internal var taskID: String? = null
-
     @SerializedName("id")
     var groupID: String? = null
     var managerNotes: String? = null

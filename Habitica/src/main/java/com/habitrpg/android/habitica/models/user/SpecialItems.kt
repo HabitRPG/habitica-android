@@ -9,18 +9,6 @@ import io.realm.annotations.RealmClass
 
 @RealmClass(embedded = true)
 open class SpecialItems : RealmObject(), BaseObject {
-
-    @PrimaryKey
-    var userId: String? = null
-        set(userId) {
-            field = userId
-            ownedItems?.forEach {
-                if (!it.isManaged) {
-                    it.userID = userId
-                    it.itemType = "special"
-                }
-            }
-        }
     var ownedItems: RealmList<OwnedItem>? = null
     var seafoam: Int = 0
     var shinySeed: Int = 0

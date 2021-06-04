@@ -15,7 +15,6 @@ import androidx.core.util.Pair
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.executors.PostExecutionThread
-import com.habitrpg.android.habitica.executors.ThreadExecutor
 import com.habitrpg.android.habitica.extensions.round
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
@@ -27,8 +26,8 @@ import javax.inject.Inject
 import kotlin.math.abs
 
 class NotifyUserUseCase @Inject
-constructor(threadExecutor: ThreadExecutor, postExecutionThread: PostExecutionThread,
-            private val levelUpUseCase: LevelUpUseCase, private val userRepository: UserRepository) : UseCase<NotifyUserUseCase.RequestValues, Stats>(threadExecutor, postExecutionThread) {
+constructor(postExecutionThread: PostExecutionThread,
+            private val levelUpUseCase: LevelUpUseCase, private val userRepository: UserRepository) : UseCase<NotifyUserUseCase.RequestValues, Stats>(postExecutionThread) {
 
     override fun buildUseCaseObservable(requestValues: RequestValues): Flowable<Stats> {
         return Flowable.defer {

@@ -1,13 +1,11 @@
 package com.habitrpg.android.habitica.interactors
 
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.DialogLevelup10Binding
 import com.habitrpg.android.habitica.events.ShareEvent
 import com.habitrpg.android.habitica.executors.PostExecutionThread
-import com.habitrpg.android.habitica.executors.ThreadExecutor
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.SoundManager
 import com.habitrpg.android.habitica.models.user.Stats
@@ -21,8 +19,8 @@ import org.greenrobot.eventbus.EventBus
 import javax.inject.Inject
 
 class LevelUpUseCase @Inject
-constructor(private val soundManager: SoundManager, threadExecutor: ThreadExecutor, postExecutionThread: PostExecutionThread,
-            private val checkClassSelectionUseCase: CheckClassSelectionUseCase) : UseCase<LevelUpUseCase.RequestValues, Stats>(threadExecutor, postExecutionThread) {
+constructor(private val soundManager: SoundManager, postExecutionThread: PostExecutionThread,
+            private val checkClassSelectionUseCase: CheckClassSelectionUseCase) : UseCase<LevelUpUseCase.RequestValues, Stats>(postExecutionThread) {
 
     override fun buildUseCaseObservable(requestValues: RequestValues): Flowable<Stats> {
         return Flowable.defer {

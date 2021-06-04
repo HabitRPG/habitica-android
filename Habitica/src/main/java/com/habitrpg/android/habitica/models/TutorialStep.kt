@@ -9,7 +9,6 @@ import java.util.*
 @RealmClass(embedded = true)
 open class TutorialStep: RealmObject(), BaseMainObject {
 
-    @PrimaryKey
     var key: String? = null
     var tutorialGroup: String? = null
         set(group) {

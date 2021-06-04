@@ -9,10 +9,6 @@ import java.util.*
 
 @RealmClass(embedded = true)
 open class AuthenticationTimestamps : RealmObject(), BaseObject {
-
-    @PrimaryKey
-    var userId: String? = null
-
     @SerializedName("loggedin")
     var lastLoggedIn: Date? = null
     @SerializedName("created")

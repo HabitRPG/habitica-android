@@ -7,9 +7,7 @@ import android.content.res.Resources
 import androidx.preference.PreferenceManager
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.ContentRepository
-import com.habitrpg.android.habitica.executors.JobExecutor
 import com.habitrpg.android.habitica.executors.PostExecutionThread
-import com.habitrpg.android.habitica.executors.ThreadExecutor
 import com.habitrpg.android.habitica.executors.UIThread
 import com.habitrpg.android.habitica.helpers.*
 import com.habitrpg.android.habitica.helpers.KeyHelper.Companion.getInstance
@@ -56,10 +54,10 @@ class AppModule(private val application: Application) {
     }
 
     @Provides
-    fun provideKeyHelper(context: Context?, sharedPreferences: SharedPreferences?, keyStore: KeyStore?): KeyHelper? {
+    fun provideKeyHelper(context: Context, sharedPreferences: SharedPreferences, keyStore: KeyStore?): KeyHelper? {
         return if (keyStore == null) {
             null
-        } else getInstance(context!!, sharedPreferences!!, keyStore)
+        } else getInstance(context, sharedPreferences, keyStore)
     }
 
     @Provides
@@ -82,12 +80,6 @@ class AppModule(private val application: Application) {
     @Singleton
     fun providesSoundManager(): SoundManager {
         return SoundManager()
-    }
-
-    @Provides
-    @Singleton
-    fun provideThreadExecutor(jobExecutor: JobExecutor): ThreadExecutor {
-        return jobExecutor
     }
 
     @Provides

@@ -63,8 +63,8 @@ class RealmChallengeLocalRepository(realm: Realm) : RealmBaseLocalRepository(rea
                 .findAll()
                 .asFlowable()
                 .filter { it.isLoaded })
-.flatMap {
-                    val ids = it.map {
+.flatMap { it ->
+    val ids = it.map {
                         return@map it.challengeID
                     }.toTypedArray()
                     realm.where(Challenge::class.java)

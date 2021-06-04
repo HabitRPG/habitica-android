@@ -7,10 +7,6 @@ import io.realm.annotations.RealmClass
 
 @RealmClass(embedded = true)
 open class Profile : RealmObject, BaseObject {
-
-    @PrimaryKey
-    var userId: String? = null
-
     internal var user: User? = null
     var name: String? = null
     var blurb: String? = null

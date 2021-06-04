@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.interactors;
 
 import com.habitrpg.android.habitica.executors.PostExecutionThread;
-import com.habitrpg.android.habitica.executors.ThreadExecutor;
 
 import io.reactivex.rxjava3.core.Flowable;
 
@@ -9,8 +8,7 @@ public abstract class UseCase<Q extends UseCase.RequestValues, T> {
 
     private final PostExecutionThread postExecutionThread;
 
-    protected UseCase(ThreadExecutor threadExecutor,
-                      PostExecutionThread postExecutionThread) {
+    protected UseCase(PostExecutionThread postExecutionThread) {
         this.postExecutionThread = postExecutionThread;
     }
 

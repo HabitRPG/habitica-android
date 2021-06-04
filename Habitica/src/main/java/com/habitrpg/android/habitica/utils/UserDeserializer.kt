@@ -87,6 +87,12 @@ class UserDeserializer : JsonDeserializer<User> {
             item.numberOwned = user.purchased?.plan?.mysteryItemCount ?: 0
             user.items?.special?.ownedItems = RealmList()
             user.items?.special?.ownedItems?.add(item)
+
+            user.items?.hatchingPotions?.forEach { it.itemType = "hatchingPotions" }
+            user.items?.eggs?.forEach { it.itemType = "eggs" }
+            user.items?.food?.forEach { it.itemType = "food" }
+            user.items?.quests?.forEach { it.itemType = "quests" }
+
         }
         if (obj.has("auth")) {
             user.authentication = context.deserialize(obj.get("auth"), Authentication::class.java)
@@ -132,9 +138,6 @@ class UserDeserializer : JsonDeserializer<User> {
                 achievements.add(achievement)
             }
             user.achievements = achievements
-            for (achievement in user.achievements) {
-                achievement.userId = user.id
-            }
         }
         if (obj.has("tasksOrder")) {
             user.tasksOrder = context.deserialize(obj.get("tasksOrder"), TasksOrder::class.java)

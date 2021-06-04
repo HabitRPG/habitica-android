@@ -8,8 +8,6 @@ import io.realm.annotations.RealmClass
 
 @RealmClass(embedded = true)
 open class Days() : RealmObject(), Parcelable {
-    @PrimaryKey
-    var taskId: String? = null
     var m: Boolean = true
     var t: Boolean = true
     var w: Boolean = true
@@ -19,7 +17,6 @@ open class Days() : RealmObject(), Parcelable {
     var su: Boolean = true
 
     override fun writeToParcel(dest: Parcel, flags: Int) {
-        dest.writeString(taskId)
         dest.writeByte(if (m) 1.toByte() else 0.toByte())
         dest.writeByte(if (t) 1.toByte() else 0.toByte())
         dest.writeByte(if (w) 1.toByte() else 0.toByte())
@@ -30,7 +27,6 @@ open class Days() : RealmObject(), Parcelable {
     }
 
     protected constructor(`in`: Parcel) : this() {
-        taskId = `in`.readString()
         m = `in`.readByte().toInt() != 0
         t = `in`.readByte().toInt() != 0
         w = `in`.readByte().toInt() != 0

@@ -8,12 +8,6 @@ import io.realm.annotations.RealmClass
 
 @RealmClass(embedded = true)
 open class Purchases : RealmObject(), BaseObject {
-    @PrimaryKey
-    var userId: String? = null
-    set(value) {
-        field = value
-        customizations?.forEach { it.userID = value }
-    }
     @JvmField
     var customizations: RealmList<OwnedCustomization>? = null
     var user: User? = null

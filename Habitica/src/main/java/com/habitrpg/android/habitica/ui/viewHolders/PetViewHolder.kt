@@ -136,17 +136,12 @@ class PetViewHolder(parent: ViewGroup, private val equipEvents: PublishSubject<S
                     }
                 }
                 1 -> {
-                    val event = FeedCommand()
-                    event.usingPet = animal
-                    EventBus.getDefault().post(event)
+                    EventBus.getDefault().post(FeedCommand(animal, null))
                 }
                 2 -> {
-                    val event = FeedCommand()
-                    event.usingPet = animal
                     val saddle = Food()
                     saddle.key = "Saddle"
-                    event.usingFood = saddle
-                    EventBus.getDefault().post(event)
+                    EventBus.getDefault().post(FeedCommand(animal, saddle))
                 }
             }
         }

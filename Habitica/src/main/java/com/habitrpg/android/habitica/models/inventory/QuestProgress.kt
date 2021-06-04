@@ -9,7 +9,6 @@ import io.realm.annotations.RealmClass
 @RealmClass(embedded = true)
 open class QuestProgress : RealmObject(), BaseObject {
 
-    @PrimaryKey
     var id: String? = null
     var key: String? = null
     var hp: Double = 0.0

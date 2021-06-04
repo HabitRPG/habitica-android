@@ -28,7 +28,7 @@ class ChatMessageDeserializer : JsonDeserializer<ChatMessage> {
             message.likes = RealmList()
             for ((key, value) in obj.getAsJsonObject("likes").entrySet()) {
                 if (value.asBoolean) {
-                    message.likes?.add(ChatMessageLike(key, message.id))
+                    message.likes?.add(ChatMessageLike(key))
                 }
             }
         }
@@ -49,7 +49,6 @@ class ChatMessageDeserializer : JsonDeserializer<ChatMessage> {
                     contributor.text = obj.get("contributor").asString
                     message.contributor = contributor
                 }
-                message.contributor?.userId = message.id
             }
         }
 

@@ -210,7 +210,6 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
         }
         return apiClient.hatchPet(egg.key, hatchingPotion.key)
                 .doOnNext {
-                    it.userId = userID
                     localRepository.save(it)
                     if (!appConfigManager.enableLocalChanges()) {
                         successFunction()
@@ -231,7 +230,6 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
                     }
                     val copiedUser = localRepository.getUnmanagedCopy(user)
                     if (buyResponse.items != null) {
-                        buyResponse.items.userId = user.id
                         copiedUser.items = buyResponse.items
                     }
                     if (buyResponse.hp != null) {

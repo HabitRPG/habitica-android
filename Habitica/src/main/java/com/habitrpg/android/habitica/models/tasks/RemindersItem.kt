@@ -11,7 +11,6 @@ import io.realm.annotations.RealmClass
 
 @RealmClass(embedded = true)
 open class RemindersItem : RealmObject, Parcelable {
-    @PrimaryKey
     var id: String? = null
     var startDate: Date? = null
     var time: Date? = null

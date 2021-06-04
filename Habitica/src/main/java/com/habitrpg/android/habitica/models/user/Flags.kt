@@ -9,8 +9,6 @@ import io.realm.annotations.RealmClass
 
 @RealmClass(embedded = true)
 open class Flags : RealmObject(), BaseObject {
-    @PrimaryKey
-    var userId: String? = null
     var tutorial: RealmList<TutorialStep>? = null
     var showTour = false
     var dropsEnabled = false

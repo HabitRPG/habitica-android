@@ -27,9 +27,6 @@ open class ContributorInfo : RealmObject(), BaseObject {
         }
     }
 
-    @PrimaryKey
-    var userId: String? = null
-    var user: User? = null
     var admin = false
     var contributions: String? = null
     var level = 0

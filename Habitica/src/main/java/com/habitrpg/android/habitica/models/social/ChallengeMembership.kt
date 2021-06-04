@@ -7,19 +7,8 @@ import io.realm.annotations.RealmClass
 
 @RealmClass(embedded = true)
 open class ChallengeMembership : RealmObject, BaseObject {
-    @PrimaryKey
-    var combinedID: String = ""
-
     var userID: String = ""
-        set(value) {
-            field = value
-            combinedID = userID + challengeID
-        }
     var challengeID: String = ""
-        set(value) {
-            field = value
-            combinedID = userID + challengeID
-        }
 
     constructor(userID: String, challengeID: String) : super() {
         this.userID = userID
@@ -29,14 +18,13 @@ open class ChallengeMembership : RealmObject, BaseObject {
     constructor() : super()
 
     override fun equals(other: Any?): Boolean {
-        return if (other?.javaClass == ChallengeMembership::class.java) {
-            this.combinedID == (other as ChallengeMembership).combinedID
+        return if (other is ChallengeMembership) {
+            this.userID == other.userID && challengeID == other.challengeID
         } else super.equals(other)
     }
 
     override fun hashCode(): Int {
-        var result = combinedID.hashCode()
-        result = 31 * result + userID.hashCode()
+        var result = userID.hashCode()
         result = 31 * result + challengeID.hashCode()
         return result
     }

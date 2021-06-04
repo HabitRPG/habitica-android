@@ -11,20 +11,6 @@ import io.realm.annotations.RealmClass
 
 @RealmClass(embedded = true)
 open class Stats : RealmObject(), BaseObject {
-
-    @PrimaryKey
-    var userId: String? = null
-        set(userId) {
-            field = userId
-            if (buffs?.isManaged == false) {
-                buffs?.userId = userId
-            }
-            if (training?.isManaged == false) {
-                training?.userId = userId
-            }
-        }
-
-    internal var user: User? = null
     @SerializedName("con")
     var constitution: Int? = null
     @SerializedName("str")

@@ -10,11 +10,6 @@ open class InboxConversation : RealmObject(), BaseObject {
 
     @PrimaryKey
     var combinedID: String = ""
-    set(value) {
-        field = value
-        userStyles?.id = value
-        contributor?.userId = value
-    }
     var uuid: String = ""
     set(value) {
         field = value

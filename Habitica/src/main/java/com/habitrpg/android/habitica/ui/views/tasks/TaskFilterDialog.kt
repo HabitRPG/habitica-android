@@ -15,6 +15,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.widget.CompoundButtonCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
+import com.habitrpg.android.habitica.data.TagRepository
 import com.habitrpg.android.habitica.extensions.OnChangeTextWatcher
 import com.habitrpg.android.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
@@ -28,6 +29,9 @@ import javax.inject.Inject
 class TaskFilterDialog(context: Context, component: UserComponent?) : HabiticaAlertDialog(context), RadioGroup.OnCheckedChangeListener {
 
     private var clearButton: Button
+
+    @Inject
+    lateinit var repository: TagRepository
 
     private var taskTypeTitle: TextView
     private var taskFilters: RadioGroup

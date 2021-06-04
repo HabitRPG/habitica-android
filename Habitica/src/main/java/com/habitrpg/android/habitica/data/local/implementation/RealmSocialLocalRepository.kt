@@ -97,7 +97,7 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
             val existingMemberships = realm.where(GroupMembership::class.java).equalTo("userID", userID).findAll()
             val membersToRemove = ArrayList<GroupMembership>()
             for (existingMembership in existingMemberships) {
-                val isStillMember = memberships.any { existingMembership.combinedID == it.combinedID }
+                val isStillMember = memberships.any { existingMembership.groupID == it.groupID }
                 if (!isStillMember) {
                     membersToRemove.add(existingMembership)
                 }
@@ -187,7 +187,7 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
         val liveMessage = getLiveObject(chatMessage)
         if (liked) {
             executeTransaction {
-                liveMessage?.likes?.add(ChatMessageLike(userId, chatMessage.id))
+                liveMessage?.likes?.add(ChatMessageLike(userId))
             }
         } else {
             liveMessage?.likes?.filter { userId == it.id }?.forEach { like ->

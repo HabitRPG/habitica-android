@@ -7,11 +7,6 @@ import io.realm.annotations.RealmClass
 
 @RealmClass(embedded = true)
 open class Hair : RealmObject, BaseObject {
-
-    @PrimaryKey
-    var userId: String? = null
-
-    var preferences: Preferences? = null
     var mustache: Int = 0
     var beard: Int = 0
     var bangs: Int = 0

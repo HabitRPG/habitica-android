@@ -7,9 +7,6 @@ import io.realm.annotations.RealmClass
 
 @RealmClass(embedded = true)
 open class SubscriptionPlanConsecutive : RealmObject(), BaseObject {
-    @PrimaryKey
-    var customerId: String? = null
-    var subscriptionPlan: SubscriptionPlan? = null
     var trinkets = 0
     var gemCapExtra = 0
     var offset = 0

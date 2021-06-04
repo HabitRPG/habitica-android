@@ -8,9 +8,6 @@ import io.realm.annotations.RealmClass
 
 @RealmClass(embedded = true)
 open class Training : RealmObject(), BaseObject {
-    @PrimaryKey
-    var userId: String? = null
-    var stats: Stats? = null
     var con: Float = 0f
     var str: Float = 0f
     var per: Float = 0f

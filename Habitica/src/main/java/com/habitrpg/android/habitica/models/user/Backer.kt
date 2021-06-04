@@ -6,7 +6,6 @@ import io.realm.annotations.RealmClass
 
 @RealmClass(embedded = true)
 open class Backer : RealmObject(), BaseObject {
-    var id: String? = null
     var npc: String? = null
     var tier: Int? = null
 }

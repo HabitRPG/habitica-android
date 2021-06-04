@@ -7,9 +7,6 @@ import io.realm.annotations.RealmClass
 
 @RealmClass(embedded = true)
 open class SuppressedModals : RealmObject(), BaseObject {
-    @PrimaryKey
-    var userId: String? = null
-    var preferences: Preferences? = null
     var streak: Boolean? = null
     var raisePet: Boolean? = null
     var hatchPet: Boolean? = null

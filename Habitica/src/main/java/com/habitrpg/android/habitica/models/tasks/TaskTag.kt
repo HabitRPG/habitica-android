@@ -9,24 +9,5 @@ import io.realm.annotations.RealmClass
 @RealmClass(embedded = true)
 open class TaskTag : RealmObject(), BaseObject {
     var tag: Tag? = null
-    set(value) {
-        field = value
-        tagId = tag?.id ?: ""
-        updatePrimaryKey()
-    }
     var task: Task? = null
-    set(value) {
-        field = value
-        taskId = task?.id ?: ""
-        updatePrimaryKey()
-    }
-
-    @PrimaryKey
-    var id: String? = null
-    private var tagId = ""
-    private var taskId: String? = ""
-
-    private fun updatePrimaryKey() {
-        id = taskId + "_" + tagId
-    }
 }

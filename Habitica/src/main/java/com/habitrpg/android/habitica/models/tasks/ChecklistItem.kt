@@ -20,7 +20,6 @@ open class ChecklistItem : RealmObject, BaseMainObject, Parcelable {
     override val primaryIdentifierName: String
         get() = "id"
 
-    @PrimaryKey
     var id: String? = null
     var text: String? = null
     var completed: Boolean = false

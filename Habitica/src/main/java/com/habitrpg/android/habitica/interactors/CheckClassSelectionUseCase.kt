@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 
 import com.habitrpg.android.habitica.executors.PostExecutionThread
-import com.habitrpg.android.habitica.executors.ThreadExecutor
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.ClassSelectionActivity
 
@@ -15,8 +14,7 @@ import io.reactivex.rxjava3.core.Flowable
 
 import com.habitrpg.android.habitica.ui.activities.MainActivity.Companion.SELECT_CLASS_RESULT
 
-class CheckClassSelectionUseCase @Inject
-constructor(threadExecutor: ThreadExecutor, postExecutionThread: PostExecutionThread) : UseCase<CheckClassSelectionUseCase.RequestValues, Void>(threadExecutor, postExecutionThread) {
+class CheckClassSelectionUseCase @Inject constructor(postExecutionThread: PostExecutionThread) : UseCase<CheckClassSelectionUseCase.RequestValues, Void>(postExecutionThread) {
 
     override fun buildUseCaseObservable(requestValues: RequestValues): Flowable<Void> {
         return Flowable.defer {

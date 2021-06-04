@@ -8,8 +8,6 @@ import io.realm.annotations.RealmClass
 
 @RealmClass(embedded = true)
 open class Buffs : RealmObject(), BaseObject {
-    @PrimaryKey
-    var userId: String? = null
     var con: Float? = null
     var str: Float? = null
     var per: Float? = null

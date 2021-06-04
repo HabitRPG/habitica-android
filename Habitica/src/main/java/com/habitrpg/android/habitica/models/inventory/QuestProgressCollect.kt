@@ -7,7 +7,6 @@ import io.realm.annotations.RealmClass
 
 @RealmClass(embedded = true)
 open class QuestProgressCollect : RealmObject(), BaseObject {
-    @PrimaryKey
     var key: String? = null
     var count = 0
 }

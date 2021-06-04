@@ -15,7 +15,6 @@ open class WorldStateEvent: RealmObject(), BaseMainObject {
         return (start?.before(now) == true) && (end?.after(now) == true)
     }
 
-    @PrimaryKey
     @SerializedName("event")
     var eventKey: String? = null
     var start: Date? = null

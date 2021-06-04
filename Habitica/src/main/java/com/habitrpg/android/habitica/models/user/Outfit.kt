@@ -11,11 +11,6 @@ import io.realm.annotations.RealmClass
 
 @RealmClass(embedded = true)
 open class Outfit : RealmObject(), BaseObject {
-
-    @PrimaryKey
-    var userId: String? = null
-
-    internal var gear: Gear? = null
     var armor: String = ""
     var back: String = ""
     var body: String = ""

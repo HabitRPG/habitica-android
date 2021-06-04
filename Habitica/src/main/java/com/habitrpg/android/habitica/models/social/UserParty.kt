@@ -10,8 +10,6 @@ import io.realm.annotations.RealmClass
 
 @RealmClass(embedded = true)
 open class UserParty : RealmObject(), BaseObject {
-    @PrimaryKey
-    var userId: String? = null
     @SerializedName("_id")
     var id: String = ""
     var quest: Quest? = null

@@ -53,7 +53,6 @@ class AutocompleteAdapter(val context: Context, val socialRepository: SocialRepo
                             val result = FindUsernameResult()
                             result.authentication = Authentication()
                             result.authentication?.localAuthentication = LocalAuthentication()
-                            result.authentication?.localAuthentication?.userID = message.uuid
                             result.authentication?.localAuthentication?.username = message.username
                             result.contributor = message.contributor
                             result.profile = Profile()

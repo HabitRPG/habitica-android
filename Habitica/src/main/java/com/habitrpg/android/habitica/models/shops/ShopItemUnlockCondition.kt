@@ -11,8 +11,6 @@ import io.realm.annotations.RealmClass
 @RealmClass(embedded = true)
 open class ShopItemUnlockCondition : RealmObject(), BaseObject {
 
-    @PrimaryKey
-    var questKey: String? = null
     private var condition: String? = null
     var incentiveThreshold: Int? = null
 

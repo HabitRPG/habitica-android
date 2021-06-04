@@ -11,15 +11,6 @@ import io.realm.annotations.RealmClass
 @RealmClass(embedded = true)
 open class MemberPreferences : RealmObject(), AvatarPreferences {
 
-    @PrimaryKey
-    override var userId: String? = null
-    set(value) {
-        field = value
-        if (hair?.isManaged != true) {
-            hair?.userId = userId
-        }
-    }
-
     override var hair: Hair? = null
     override var costume: Boolean = false
     override var disableClasses: Boolean = false

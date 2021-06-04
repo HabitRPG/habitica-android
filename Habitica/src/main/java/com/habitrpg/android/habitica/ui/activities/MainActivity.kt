@@ -715,7 +715,11 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         sharingIntent.type = "*/*"
         sharingIntent.putExtra(Intent.EXTRA_TEXT, event.sharedMessage)
         BitmapUtils.clearDirectoryContent("$filesDir/shared_images")
-        val f = BitmapUtils.saveToShareableFile("$filesDir/shared_images", "${Date()}.png", event.shareImage)
+        val f = event.shareImage?.let {
+            BitmapUtils.saveToShareableFile("$filesDir/shared_images", "${Date()}.png",
+                it
+            )
+        }
         val fileUri = f?.let { FileProvider.getUriForFile(this, getString(R.string.content_provider), it) }
         if (fileUri != null) {
             sharingIntent.putExtra(Intent.EXTRA_STREAM, fileUri)

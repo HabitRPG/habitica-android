@@ -12,19 +12,6 @@ import java.util.*
 
 @RealmClass(embedded = true)
 open class Preferences : RealmObject(), AvatarPreferences, BaseObject {
-
-    @PrimaryKey
-    override var userId: String? = null
-    set(value) {
-        field = value
-        if (hair?.isManaged == false) {
-            hair?.userId = value
-        }
-        if (suppressModals?.isManaged == false) {
-            suppressModals?.userId = value
-        }
-    }
-
     override var hair: Hair? = null
     var suppressModals: SuppressedModals? = null
     override var costume: Boolean = false

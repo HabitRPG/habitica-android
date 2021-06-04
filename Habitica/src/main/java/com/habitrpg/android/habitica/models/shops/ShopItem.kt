@@ -15,10 +15,6 @@ import io.realm.annotations.PrimaryKey
 open class ShopItem : RealmObject(), BaseObject {
     @PrimaryKey
     var key: String = ""
-    set(value) {
-        field = value
-        unlockCondition?.questKey = key
-    }
     var text: String? = ""
     var notes: String? = ""
     @SerializedName("class")
@@ -43,12 +39,6 @@ open class ShopItem : RealmObject(), BaseObject {
     var categoryIdentifier: String = ""
     var limitedNumberLeft: Int? = null
     var unlockCondition: ShopItemUnlockCondition? = null
-    set(value) {
-        field = value
-        if (key.isNotEmpty()) {
-            field?.questKey = key
-        }
-    }
     var path: String? = null
     var isSuggested: String? = null
     var pinType: String? = null

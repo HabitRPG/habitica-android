@@ -8,11 +8,6 @@ import io.realm.annotations.RealmClass
 
 @RealmClass(embedded = true)
 open class Inbox : RealmObject(), BaseObject {
-
-    @PrimaryKey
-    var userId: String? = null
-
-    internal var user: User? = null
     var optOut: Boolean = false
     var blocks: RealmList<String> = RealmList()
     var newMessages: Int = 0

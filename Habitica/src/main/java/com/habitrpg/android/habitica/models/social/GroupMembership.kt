@@ -7,19 +7,8 @@ import io.realm.annotations.RealmClass
 
 @RealmClass(embedded = true)
 open class GroupMembership : RealmObject, BaseObject {
-    @PrimaryKey
-    var combinedID: String = ""
-
     var userID: String = ""
-        set(value) {
-            field = value
-            combinedID = userID + groupID
-        }
     var groupID: String = ""
-        set(value) {
-            field = value
-            combinedID = userID + groupID
-        }
 
     constructor(userID: String, groupID: String) : super() {
         this.userID = userID

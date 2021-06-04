@@ -50,7 +50,7 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
         return FragmentRefreshRecyclerviewBinding.inflate(inflater, container, false)
     }
 
-    protected var recyclerSubscription: CompositeDisposable = CompositeDisposable()
+    private var recyclerSubscription: CompositeDisposable = CompositeDisposable()
     var recyclerAdapter: TaskRecyclerViewAdapter? = null
     var itemAnimator = SafeDefaultItemAnimator()
     var ownerID: String = ""
@@ -79,7 +79,6 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
     internal val className: String
         get() = this.taskType
 
-    // TODO needs a bit of cleanup
     private fun setInnerAdapter() {
         if (binding?.recyclerView?.adapter != null && binding?.recyclerView?.adapter == recyclerAdapter && !recyclerSubscription.isDisposed) {
             return
@@ -177,31 +176,22 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
         context?.let { binding?.recyclerView?.setBackgroundColor(ContextCompat.getColor(it, R.color.content_background)) }
         savedInstanceState?.let { this.taskType = savedInstanceState.getString(CLASS_TYPE_KEY, "") }
 
-        when (taskType) {
-            Task.TYPE_TODO -> taskFilterHelper.setActiveFilter(Task.TYPE_TODO, Task.FILTER_ACTIVE)
-            Task.TYPE_DAILY -> {
-                val user = (activity as? MainActivity)?.user
-                if (user?.isValid == true && user.preferences?.dailyDueDefaultView == true) {
-                    taskFilterHelper.setActiveFilter(Task.TYPE_DAILY, Task.FILTER_ACTIVE)
-                }
-            }
-        }
-
+        this.setInnerAdapter()
         recyclerAdapter?.filter()
 
         itemTouchCallback = object : ItemTouchHelper.Callback() {
             override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
                 super.onSelectedChanged(viewHolder, actionState)
-                if (viewHolder == null || viewHolder.adapterPosition == NO_POSITION) return
+                if (viewHolder == null || viewHolder.absoluteAdapterPosition == NO_POSITION) return
                 val taskViewHolder = viewHolder as? BaseTaskViewHolder
                 if (taskViewHolder != null) {
-                    taskViewHolder.movingFromPosition = viewHolder.adapterPosition
+                    taskViewHolder.movingFromPosition = viewHolder.absoluteAdapterPosition
                 }
                 binding?.refreshLayout?.isEnabled = false
             }
 
             override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
-                recyclerAdapter?.notifyItemMoved(viewHolder.adapterPosition, target.adapterPosition)
+                recyclerAdapter?.notifyItemMoved(viewHolder.absoluteAdapterPosition, target.absoluteAdapterPosition)
                 return true
             }
 
@@ -209,7 +199,7 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
 
             //defines the enabled move directions in each state (idle, swiping, dragging).
             override fun getMovementFlags(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int {
-                return if (recyclerAdapter?.getItemViewType(viewHolder.adapterPosition) ?: 0 == 2) {
+                return if (recyclerAdapter?.getItemViewType(viewHolder.absoluteAdapterPosition) ?: 0 == 2) {
                     makeFlag(ItemTouchHelper.ACTION_STATE_IDLE, 0)
                 } else {
                     makeFlag(ItemTouchHelper.ACTION_STATE_DRAG,
@@ -225,10 +215,10 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
                 super.clearView(recyclerView, viewHolder)
                 binding?.refreshLayout?.isEnabled = true
 
-                if (viewHolder.adapterPosition == NO_POSITION) return
+                if (viewHolder.absoluteAdapterPosition == NO_POSITION) return
                 val taskViewHolder = viewHolder as? BaseTaskViewHolder
                 val validTaskId = taskViewHolder?.task?.takeIf { it.isValid }?.id
-                if (viewHolder.adapterPosition != taskViewHolder?.movingFromPosition) {
+                if (viewHolder.absoluteAdapterPosition != taskViewHolder?.movingFromPosition) {
                     taskViewHolder?.movingFromPosition = null
                     updateTaskInRepository(validTaskId, viewHolder)
                 }
@@ -238,7 +228,7 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
                 if (validTaskId != null) {
                     recyclerAdapter?.ignoreUpdates = true
                     compositeSubscription.add(taskRepository.updateTaskPosition(
-                            taskType, validTaskId, viewHolder.adapterPosition
+                            taskType, validTaskId, viewHolder.absoluteAdapterPosition
                     )
                             .delay(1, TimeUnit.SECONDS)
                             .observeOn(AndroidSchedulers.mainThread())
@@ -254,8 +244,6 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
         layoutManager = getLayoutManager(context)
         layoutManager?.isItemPrefetchEnabled = false
         binding?.recyclerView?.layoutManager = layoutManager
-
-        this.setInnerAdapter()
 
         allowReordering()
 
@@ -298,7 +286,10 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
                             .flatMap { userRepository.retrieveUser(true, forced = true) }
                             .subscribe({}, RxErrorHandler.handleEmptyError())
                 }
-                dialog.addButton(it.getString(R.string.delete_x_tasks, taskCount), false, true) { _, _ ->
+                dialog.addButton(it.getString(R.string.delete_x_tasks, taskCount),
+                    isPrimary = false,
+                    isDestructive = true
+                ) { _, _ ->
                     if (!task.isValid) return@addButton
                     taskRepository.unlinkAllTasks(task.challengeID, "remove-all")
                             .flatMap { userRepository.retrieveUser(true, forced = true) }
@@ -383,8 +374,14 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
 
     override fun onStart() {
         super.onStart()
-        if (binding?.recyclerView?.adapter == null || recyclerAdapter == null) {
-            setInnerAdapter()
+        when (taskType) {
+            Task.TYPE_TODO -> taskFilterHelper.setActiveFilter(Task.TYPE_TODO, Task.FILTER_ACTIVE)
+            Task.TYPE_DAILY -> {
+                val user = (activity as? MainActivity)?.user
+                if (user?.isValid == true && user.preferences?.dailyDueDefaultView == true) {
+                    taskFilterHelper.setActiveFilter(Task.TYPE_DAILY, Task.FILTER_ACTIVE)
+                }
+            }
         }
     }
 
@@ -429,7 +426,6 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
 
         fun newInstance(context: Context?, classType: String): TaskRecyclerViewFragment {
             val fragment = TaskRecyclerViewFragment()
-            fragment.retainInstance = true
             fragment.taskType = classType
             var tutorialTexts: List<String>? = null
             if (context != null) {

@@ -366,13 +366,11 @@ class RealmInventoryLocalRepository(realm: Realm) : RealmContentLocalRepository(
         executeTransaction {
             val items = updatedUser.items
             if (items != null) {
-                items.userId = user.id
                 val newItems = realm.copyToRealmOrUpdate(items)
                 user.items = newItems
             }
             val stats = updatedUser.stats
             if (stats != null) {
-                stats.userId = user.id
                 val newStats = realm.copyToRealmOrUpdate(stats)
                 user.stats = newStats
             }

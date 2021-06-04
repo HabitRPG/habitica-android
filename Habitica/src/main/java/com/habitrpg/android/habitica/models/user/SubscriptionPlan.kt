@@ -9,14 +9,7 @@ import java.util.*
 
 @RealmClass(embedded = true)
 open class SubscriptionPlan : RealmObject(), BaseObject {
-    @PrimaryKey
     var customerId: String? = null
-    set(value) {
-        field = value
-        if (consecutive != null && consecutive?.isManaged == true) {
-            consecutive?.customerId = value
-        }
-    }
     var dateCreated: Date? = null
     var dateUpdated: Date? = null
     @JvmField

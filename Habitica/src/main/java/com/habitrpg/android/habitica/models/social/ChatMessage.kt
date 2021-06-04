@@ -20,13 +20,6 @@ open class ChatMessage : RealmObject(), BaseMainObject {
 
     @PrimaryKey
     var id: String = ""
-    set(value) {
-        field = value
-        likes?.forEach { it.messageId = value }
-        userStyles?.id = id
-        contributor?.userId = id
-        backer?.id = id
-    }
 
     var text: String? = null
 

@@ -31,10 +31,6 @@ open class Task : RealmObject, BaseMainObject, Parcelable {
     @PrimaryKey
     @SerializedName("_id")
     var id: String? = null
-    set(value) {
-        field = value
-        repeat?.taskId = value
-    }
     var userId: String = ""
     var priority: Float = 0.0f
     var text: String = ""
@@ -64,10 +60,6 @@ open class Task : RealmObject, BaseMainObject, Parcelable {
     var streak: Int? = 0
     var startDate: Date? = null
     var repeat: Days? = null
-    set(value) {
-        field = value
-        field?.taskId = id
-    }
     //todos
     @SerializedName("date")
     var dueDate: Date? = null

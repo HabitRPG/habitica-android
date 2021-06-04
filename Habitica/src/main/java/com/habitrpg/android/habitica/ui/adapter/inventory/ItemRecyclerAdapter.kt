@@ -167,9 +167,7 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<OwnedI
                         when (selectedItem) {
                             is Egg -> item?.let { startHatchingSubject.onNext(it) }
                             is Food -> {
-                                val event = FeedCommand()
-                                event.usingFood = selectedItem
-                                EventBus.getDefault().post(event)
+                                EventBus.getDefault().post(FeedCommand(null, selectedItem))
                             }
                             is HatchingPotion -> startHatchingSubject.onNext(selectedItem)
                             is QuestContent -> {
@@ -203,10 +201,7 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<OwnedI
                     return@let
                 }
             } else if (isFeeding) {
-                val event = FeedCommand()
-                event.usingPet = feedingPet
-                event.usingFood = item as? Food
-                EventBus.getDefault().post(event)
+                EventBus.getDefault().post(FeedCommand(feedingPet, item as? Food))
                 fragment?.dismiss()
             }
         }
