@@ -4,6 +4,7 @@ import android.content.res.Resources
 import android.graphics.drawable.BitmapDrawable
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.graphics.drawable.toBitmap
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.MountOverviewItemBinding
 import com.habitrpg.android.habitica.extensions.inflate
@@ -41,13 +42,9 @@ class MountViewHolder(parent: ViewGroup, private val equipEvents: PublishSubject
             binding.imageView.alpha = 0.2f
         }
         binding.imageView.background = null
-        DataBindingUtils.loadImage(imageName) {
-            val drawable = BitmapDrawable(itemView.context.resources, if (owned) it else it.extractAlpha())
-            Observable.just(drawable)
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({
-                        binding.imageView.background = drawable
-                    }, RxErrorHandler.handleEmptyError())
+        DataBindingUtils.loadImage(itemView.context, imageName) {
+            val drawable = if (owned) it else BitmapDrawable(itemView.context.resources, it.toBitmap().extractAlpha())
+            binding.imageView.background = drawable
         }
     }
 

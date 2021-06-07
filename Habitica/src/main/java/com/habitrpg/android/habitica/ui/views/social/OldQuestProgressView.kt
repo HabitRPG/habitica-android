@@ -6,10 +6,10 @@ import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.QuestProgressOldBinding
 import com.habitrpg.android.habitica.extensions.layoutInflater
@@ -88,7 +88,7 @@ class OldQuestProgressView : LinearLayout {
                 for (collect in progress.collect ?: emptyList<QuestProgressCollect>()) {
                     val contentCollect = quest.getCollectWithKey(collect.key) ?: continue
                     val view = inflater.inflate(R.layout.quest_collect, binding.collectionContainer, false)
-                    val iconView = view.findViewById(R.id.icon_view) as? SimpleDraweeView
+                    val iconView = view.findViewById(R.id.icon_view) as? ImageView
                     val nameView = view.findViewById(R.id.name_view) as? TextView
                     val valueView = view.findViewById(R.id.value_view) as? ValueBar
                     DataBindingUtils.loadImage(iconView, "quest_" + quest.key + "_" + collect.key)

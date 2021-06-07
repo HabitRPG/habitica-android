@@ -4,11 +4,10 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-    <com.facebook.drawee.view.SimpleDraweeView
+    <ImageView
         android:id="@+id/icon_view"
         android:layout_width="52dp"
         android:layout_height="56dp"
-        app:actualImageScaleType="fitCenter"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:layout_marginStart="30dp"/>

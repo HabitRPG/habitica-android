@@ -14,6 +14,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.graphics.drawable.toBitmap
 import androidx.core.os.bundleOf
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.habitrpg.android.habitica.R
@@ -105,19 +106,16 @@ class NoPartyFragmentFragment : BaseMainFragment<FragmentNoPartyBinding>() {
         }
 
         context?.let { context ->
-            DataBindingUtils.loadImage("timeTravelersShop_background_fall") {bitmap ->
+            DataBindingUtils.loadImage(context, "timeTravelersShop_background_fall") { drawable ->
+                val bitmap = drawable.toBitmap()
                 val aspectRatio = bitmap.width / bitmap.height.toFloat()
                 val height = context.resources.getDimension(R.dimen.shop_height).toInt()
                 val width = (height * aspectRatio).roundToInt()
-                val drawable = BitmapDrawable(context.resources, Bitmap.createScaledBitmap(bitmap, width, height, false))
-                drawable.tileModeX = Shader.TileMode.REPEAT
-                Observable.just(drawable)
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe({
-                            if (binding?.noPartyBackground != null) {
-                                binding?.noPartyBackground?.background = it
-                            }
-                        }, RxErrorHandler.handleEmptyError())
+                val bitmapDrawable = BitmapDrawable(context.resources, Bitmap.createScaledBitmap(bitmap, width, height, false))
+                bitmapDrawable.tileModeX = Shader.TileMode.REPEAT
+                if (binding?.noPartyBackground != null) {
+                    binding?.noPartyBackground?.background = bitmapDrawable
+                }
             }
         }
 

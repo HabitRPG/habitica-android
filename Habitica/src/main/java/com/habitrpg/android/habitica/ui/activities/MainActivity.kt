@@ -15,6 +15,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.FrameLayout
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.content.FileProvider
@@ -25,7 +26,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
-import com.facebook.drawee.view.SimpleDraweeView
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.perf.FirebasePerformance
 import com.habitrpg.android.habitica.HabiticaBaseApplication
@@ -514,7 +514,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                     HabiticaSnackbar.showSnackbar(snackbarContainer, feedResponse.message, SnackbarDisplayType.NORMAL)
                     if (feedResponse.value == -1) {
                         val mountWrapper = View.inflate(this, R.layout.pet_imageview, null) as? FrameLayout
-                        val mountImageView = mountWrapper?.findViewById(R.id.pet_imageview) as? SimpleDraweeView
+                        val mountImageView = mountWrapper?.findViewById(R.id.pet_imageview) as? ImageView
 
                         DataBindingUtils.loadImage(mountImageView, "Mount_Icon_" + event.usingPet.key)
                         val dialog = HabiticaAlertDialog(this@MainActivity)
@@ -756,7 +756,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         val factory = LayoutInflater.from(this)
         val view = factory.inflate(R.layout.dialog_login_incentive, null)
 
-        val imageView = view.findViewById(R.id.imageView) as? SimpleDraweeView
+        val imageView = view.findViewById(R.id.imageView) as? ImageView
         var imageKey = notificationData?.rewardKey?.get(0)
         if (imageKey?.contains("armor") == true) {
             imageKey = "slim_$imageKey"
@@ -860,7 +860,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     fun hatchPet(potion: HatchingPotion, egg: Egg) {
         compositeSubscription.add(this.inventoryRepository.hatchPet(egg, potion) {
             val petWrapper = View.inflate(this, R.layout.pet_imageview, null) as? FrameLayout
-            val petImageView = petWrapper?.findViewById(R.id.pet_imageview) as? SimpleDraweeView
+            val petImageView = petWrapper?.findViewById(R.id.pet_imageview) as? ImageView
 
             DataBindingUtils.loadImage(petImageView, "stable_Pet-" + egg.key + "-" + potion.key)
             val potionName = potion.text

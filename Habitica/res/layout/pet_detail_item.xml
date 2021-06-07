@@ -7,12 +7,11 @@
     android:background="@drawable/layout_rounded_bg_window"
     android:orientation="vertical"
     android:padding="8dp">
-    <com.facebook.drawee.view.SimpleDraweeView
+    <ImageView
         android:id="@+id/imageView"
         android:layout_width="68dp"
         android:layout_height="68dp"
-        android:layout_gravity="center"
-        app:actualImageScaleType="fitCenter"/>
+        android:layout_gravity="center"/>
     <ProgressBar
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
@@ -28,13 +27,13 @@
         android:layout_width="86dp"
         android:layout_height="68dp"
         android:layout_gravity="center">
-        <com.facebook.drawee.view.SimpleDraweeView
+        <ImageView
             android:id="@+id/hatchingPotion_view"
             android:layout_width="72dp"
             android:layout_height="72dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true" />
-        <com.facebook.drawee.view.SimpleDraweeView
+        <ImageView
             android:id="@+id/egg_view"
             android:layout_width="72dp"
             android:layout_height="72dp"

@@ -1,8 +1,5 @@
 package com.habitrpg.android.habitica.helpers
 
-import com.facebook.imagepipeline.request.BasePostprocessor
-import com.habitrpg.android.habitica.helpers.postProcessors.InvertPostProcessor
-import com.habitrpg.android.habitica.ui.AvatarView
 import java.util.*
 
 class AprilFoolsHandler {
@@ -20,13 +17,13 @@ class AprilFoolsHandler {
         }
 
         private fun invertFools() {
-            AvatarView.postProcessors[AvatarView.LayerType.PET] = {
+            /*AvatarView.postProcessors[AvatarView.LayerType.PET] = {
                 if (Date().after(eventEnd)) {
                     null
                 } else {
                     InvertPostProcessor()
                 }
-            }
+            }*/
         }
     }
 }

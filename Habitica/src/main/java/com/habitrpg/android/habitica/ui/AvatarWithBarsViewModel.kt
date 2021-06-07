@@ -46,7 +46,6 @@ class AvatarWithBarsViewModel(private val context: Context, private val binding:
         }
     }
 
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     fun updateData(user: Avatar) {
         userObject = user
 
@@ -65,7 +64,8 @@ class AvatarWithBarsViewModel(private val context: Context, private val binding:
         if (!user.hasClass()) {
             setUserLevel(context, binding.lvlTv, stats.lvl)
         } else {
-            setUserLevelWithClass(context, binding.lvlTv, stats.lvl, userClass.capitalize(Locale.getDefault()), stats.habitClass)
+            setUserLevelWithClass(context, binding.lvlTv, stats.lvl,
+                userClass.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }, stats.habitClass)
         }
 
         setHpBarData(stats.hp?.toFloat() ?: 0.toFloat(), stats.maxHealth ?: 0)

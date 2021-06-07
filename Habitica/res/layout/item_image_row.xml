@@ -8,11 +8,10 @@
     android:clickable="true"
     android:focusable="true"
     tools:parentTag="android.widget.LinearLayout">
-    <com.facebook.drawee.view.SimpleDraweeView
+    <ImageView
         android:id="@+id/imageView"
         android:layout_width="@dimen/gear_image_size"
         android:layout_height="@dimen/gear_image_size"
-        actualImageScaleType="fitCenter"
         android:layout_marginEnd="@dimen/row_padding"/>
     <LinearLayout
         android:layout_width="match_parent"

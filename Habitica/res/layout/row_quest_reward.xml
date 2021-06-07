@@ -2,18 +2,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/layout_rounded_bg_window"
     android:gravity="center_vertical"
     android:layout_marginBottom="4dp">
 
-    <com.facebook.drawee.view.SimpleDraweeView
+    <ImageView
         android:id="@+id/imageView"
         android:layout_width="@dimen/shopitem_image_size"
         android:layout_height="@dimen/shopitem_image_size"
         android:layout_marginEnd="8dp"
-        android:scaleType="center"
-        app:actualImageScaleType="fitCenter"/>
+        android:scaleType="center"/>
 
     <TextView
         android:id="@+id/titleTextView"

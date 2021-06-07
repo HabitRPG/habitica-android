@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -23,11 +22,10 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="66dp">
-            <com.facebook.drawee.view.SimpleDraweeView
+            <ImageView
                 android:id="@+id/achievement_icon"
                 android:layout_width="64dp"
                 android:layout_height="56dp"
-                app:actualImageScaleType="fitCenter"
                 android:layout_gravity="center"/>
         </FrameLayout>
         <TextView

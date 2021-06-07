@@ -1,8 +1,8 @@
 package com.habitrpg.android.habitica.ui.views.shops
 
 import android.content.Context
+import android.widget.ImageView
 import android.widget.TextView
-import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.databinding.DialogPurchaseGemsBinding
 import com.habitrpg.android.habitica.extensions.asDrawable
 import com.habitrpg.android.habitica.extensions.layoutInflater
@@ -11,7 +11,7 @@ import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 
 internal class PurchaseDialogGemsContent(context: Context) : PurchaseDialogContent(context) {
     internal val binding = DialogPurchaseGemsBinding.inflate(context.layoutInflater, this)
-    override val imageView: SimpleDraweeView
+    override val imageView: ImageView
         get() = binding.imageView
     override val titleTextView: TextView
         get() = binding.titleTextView

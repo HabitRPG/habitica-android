@@ -4,16 +4,10 @@ import android.content.Context
 import android.graphics.Typeface
 import android.os.Bundle
 import android.view.*
-import android.widget.ProgressBar
-import android.widget.TableLayout
-import android.widget.TableRow
-import android.widget.TextView
+import android.widget.*
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
-import com.facebook.drawee.backends.pipeline.Fresco
-import com.facebook.drawee.controller.BaseControllerListener
-import com.facebook.drawee.view.SimpleDraweeView
-import com.facebook.imagepipeline.image.ImageInfo
+import coil.load
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ApiClient
@@ -31,7 +25,6 @@ import com.habitrpg.android.habitica.models.inventory.Equipment
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.user.Outfit
 import com.habitrpg.android.habitica.models.user.Stats
-import com.habitrpg.android.habitica.ui.AvatarView
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel
 import com.habitrpg.android.habitica.ui.adapter.social.AchievementProfileAdapter
 import com.habitrpg.android.habitica.ui.helpers.loadImage
@@ -202,14 +195,7 @@ class FullProfileActivity : BaseActivity() {
         if (imageUrl == null || imageUrl.isEmpty()) {
             binding.profileImage.visibility = View.GONE
         } else {
-            binding.profileImage.controller = Fresco.newDraweeControllerBuilder()
-                    .setUri(imageUrl)
-                    .setControllerListener(object : BaseControllerListener<ImageInfo>() {
-                        override fun onFailure(id: String?, throwable: Throwable?) {
-                            binding.profileImage.visibility = View.GONE
-                        }
-                    })
-                    .build()
+            binding.profileImage.load(imageUrl)
         }
 
         val blurbText = profile.blurb
@@ -240,8 +226,8 @@ class FullProfileActivity : BaseActivity() {
         binding.petsFoundCount.text = user.petsFoundCount.toString()
         binding.mountsTamedCount.text = user.mountsTamedCount.toString()
 
-        binding.currentPetDrawee.loadImage("Pet-" + user.currentPet)
-        binding.currentMountDrawee.loadImage("Mount_Icon_" + user.currentMount)
+        if (user.currentPet?.isNotBlank() == true) binding.currentPetDrawee.loadImage("Pet-" + user.currentPet)
+        if (user.currentMount?.isNotBlank() == true) binding.currentMountDrawee.loadImage("Mount_Icon_" + user.currentMount)
     }
 
     // endregion
@@ -314,16 +300,9 @@ class FullProfileActivity : BaseActivity() {
     private fun addEquipmentRow(table: TableLayout, gearKey: String?, text: String?, stats: String?) {
         val gearRow = layoutInflater.inflate(R.layout.profile_gear_tablerow, table, false) as? TableRow
 
-        val draweeView = gearRow?.findViewById<SimpleDraweeView>(R.id.gear_drawee)
+        val draweeView = gearRow?.findViewById<ImageView>(R.id.gear_drawee)
 
-        draweeView?.controller = Fresco.newDraweeControllerBuilder()
-                .setUri(AvatarView.IMAGE_URI_ROOT + "shop_" + gearKey + ".png")
-                .setControllerListener(object : BaseControllerListener<ImageInfo>() {
-                    override fun onFailure(id: String?, throwable: Throwable?) {
-                        draweeView?.visibility = View.GONE
-                    }
-                })
-                .build()
+        draweeView?.loadImage("shop_$gearKey")
 
         val keyTextView = gearRow?.findViewById<TextView>(R.id.tableRowTextView1)
         keyTextView?.text = text
@@ -342,7 +321,10 @@ class FullProfileActivity : BaseActivity() {
 
     private fun addLevelAttributes(user: Member) {
         val byLevelStat = min((user.stats?.lvl ?: 0) / 2.0f, 50f)
-        addAttributeRow(getString(R.string.profile_level), byLevelStat, byLevelStat, byLevelStat, byLevelStat, true, false)
+        addAttributeRow(getString(R.string.profile_level), byLevelStat, byLevelStat, byLevelStat, byLevelStat,
+            roundDown = true,
+            isSummary = false
+        )
     }
 
     private fun loadItemDataByOutfit(outfit: Outfit?): Flowable<out List<Equipment>> {
@@ -393,7 +375,10 @@ class FullProfileActivity : BaseActivity() {
     private fun addNormalAddBuffAttributes(stats: Stats) {
         val buffs = stats.buffs
 
-        addAttributeRow(getString(R.string.profile_allocated), stats.strength?.toFloat() ?: 0f, stats.intelligence?.toFloat() ?: 0f, stats.constitution?.toFloat() ?: 0f, stats.per?.toFloat() ?: 0f, true, false)
+        addAttributeRow(getString(R.string.profile_allocated), stats.strength?.toFloat() ?: 0f, stats.intelligence?.toFloat() ?: 0f, stats.constitution?.toFloat() ?: 0f, stats.per?.toFloat() ?: 0f,
+            roundDown = true,
+            isSummary = false
+        )
         addAttributeRow(getString(R.string.buffs), buffs?.str
                 ?: 0f, buffs?._int ?: 0f, buffs?.con ?: 0f, buffs?.per ?: 0f, roundDown = true, isSummary = false)
 

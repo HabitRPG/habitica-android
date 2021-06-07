@@ -9,14 +9,20 @@ import android.content.pm.PackageManager
 import android.content.res.Resources
 import android.database.DatabaseErrorHandler
 import android.database.sqlite.SQLiteDatabase
+import android.os.Build.VERSION.SDK_INT
 import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
+import coil.Coil
+import coil.ImageLoader
+import coil.annotation.ExperimentalCoilApi
+import coil.decode.GifDecoder
+import coil.decode.ImageDecoderDecoder
+import coil.transition.CrossfadeTransition
+import coil.util.DebugLogger
 import com.amplitude.api.Amplitude
 import com.amplitude.api.Identify
-import com.facebook.drawee.backends.pipeline.Fresco
-import com.facebook.imagepipeline.core.ImagePipelineConfig
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.installations.FirebaseInstallations
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
@@ -67,6 +73,7 @@ abstract class HabiticaBaseApplication : Application() {
     var checkout: Checkout? = null
         private set
 
+    @OptIn(ExperimentalCoilApi::class)
     override fun onCreate() {
         super.onCreate()
         setupRealm()
@@ -90,10 +97,19 @@ abstract class HabiticaBaseApplication : Application() {
             }
 
         }
-        val config = ImagePipelineConfig.newBuilder(this)
-                .setDownsampleEnabled(true)
-                .build()
-        Fresco.initialize(this, config)
+        var builder = ImageLoader.Builder(this)
+            .transition(CrossfadeTransition())
+            .componentRegistry {
+                if (SDK_INT >= 28) {
+                    add(ImageDecoderDecoder(this@HabiticaBaseApplication))
+                } else {
+                    add(GifDecoder())
+                }
+            }
+        if (BuildConfig.DEBUG) {
+            builder = builder.logger(DebugLogger())
+        }
+        Coil.setImageLoader(builder.build())
 
         RxErrorHandler.init(analyticsManager)
 

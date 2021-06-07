@@ -4,6 +4,7 @@ import android.graphics.PorterDuff
 import android.graphics.drawable.BitmapDrawable
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.graphics.drawable.toBitmap
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.PetDetailItemBinding
 import com.habitrpg.android.habitica.events.commands.FeedCommand
@@ -98,14 +99,10 @@ class PetViewHolder(parent: ViewGroup, private val equipEvents: PublishSubject<S
             binding.trainedProgressBar.progressBackgroundTintMode = PorterDuff.Mode.SRC_OVER
         }
         binding.imageView.background = null
-        DataBindingUtils.loadImage(imageName) {
+        DataBindingUtils.loadImage(itemView.context, imageName) {
             val resources = itemView.context.resources ?: return@loadImage
-            val drawable = BitmapDrawable(resources, if (trained  == 0) it.extractAlpha() else it)
-            Observable.just(drawable)
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({
-                        binding.imageView.background = drawable
-                    }, RxErrorHandler.handleEmptyError())
+            val drawable = if (trained  == 0) BitmapDrawable(resources, it.toBitmap().extractAlpha()) else it
+            binding.imageView.background = drawable
         }
     }
 

@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.DialogPurchaseContentQuestBinding
 import com.habitrpg.android.habitica.extensions.layoutInflater
@@ -18,7 +17,7 @@ import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 
 class PurchaseDialogQuestContent(context: Context) : PurchaseDialogContent(context) {
     private val binding = DialogPurchaseContentQuestBinding.inflate(context.layoutInflater, this)
-    override val imageView: SimpleDraweeView
+    override val imageView: ImageView
         get() = binding.imageView
     override val titleTextView: TextView
         get() = binding.titleTextView
@@ -88,7 +87,7 @@ class PurchaseDialogQuestContent(context: Context) : PurchaseDialogContent(conte
 
     private fun addRewardsRow(inflater: LayoutInflater?, item: QuestDropItem, containerView: ViewGroup?) {
         val view = inflater?.inflate(R.layout.row_quest_reward, containerView, false) as? ViewGroup
-        val imageView = view?.findViewById(R.id.imageView) as? SimpleDraweeView
+        val imageView = view?.findViewById(R.id.imageView) as? ImageView
         val titleTextView = view?.findViewById(R.id.titleTextView) as? TextView
         DataBindingUtils.loadImage(imageView, item.imageName)
         if (item.count > 1) {

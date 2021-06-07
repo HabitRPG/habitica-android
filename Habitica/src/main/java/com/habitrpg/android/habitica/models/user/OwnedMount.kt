@@ -12,17 +12,4 @@ open class OwnedMount : RealmObject(), OwnedObject {
 
 
     var owned = false
-
-    override fun equals(other: Any?): Boolean {
-        return if (other is OwnedMount) {
-            userID == other.userID && key == other.key
-        } else super.equals(other)
-    }
-
-    override fun hashCode(): Int {
-        var result = userID?.hashCode() ?: 0
-        result = 31 * result + (key?.hashCode() ?: 0)
-        result = 31 * result + owned.hashCode()
-        return result
-    }
 }

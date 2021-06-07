@@ -22,17 +22,4 @@ open class OwnedItem : RealmObject(), BaseMainObject, OwnedObject {
 
     var itemType: String? = null
     var numberOwned = 0
-
-    override fun equals(other: Any?): Boolean {
-        return if (other is OwnedItem) {
-            userID == other.userID && key == other.key && itemType == other.itemType
-        } else super.equals(other)
-    }
-
-    override fun hashCode(): Int {
-        var result = userID?.hashCode() ?: 0
-        result = 31 * result + (key?.hashCode() ?: 0)
-        result = 31 * result + (itemType?.hashCode() ?: 0)
-        return result
-    }
 }

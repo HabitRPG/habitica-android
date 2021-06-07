@@ -5,6 +5,7 @@ import android.graphics.drawable.BitmapDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
+import androidx.core.graphics.drawable.toBitmap
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.DialogPetSuggestHatchBinding
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
@@ -143,9 +144,9 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
 
 
         val imageName = "stable_Pet-${pet.animal}-${pet.color}"
-        DataBindingUtils.loadImage(imageName) {
+        DataBindingUtils.loadImage(context, imageName) {
             val resources = context.resources ?: return@loadImage
-            val drawable = BitmapDrawable(resources, if (hasMount) it else it.extractAlpha())
+            val drawable = if (hasMount) it else BitmapDrawable(resources, it.toBitmap().extractAlpha())
             Observable.just(drawable)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({

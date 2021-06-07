@@ -1,26 +1,18 @@
 package com.habitrpg.android.habitica.ui.helpers
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.PorterDuff
-import android.graphics.drawable.Animatable
+import android.graphics.drawable.Drawable
 import android.view.View
-import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.Transformation
+import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.core.content.res.ResourcesCompat
-import androidx.core.net.toUri
-import com.facebook.common.executors.CallerThreadExecutor
-import com.facebook.common.references.CloseableReference
-import com.facebook.datasource.DataSource
-import com.facebook.drawee.backends.pipeline.Fresco
-import com.facebook.drawee.controller.BaseControllerListener
-import com.facebook.drawee.interfaces.DraweeController
-import com.facebook.drawee.view.SimpleDraweeView
-import com.facebook.imagepipeline.datasource.BaseBitmapDataSubscriber
-import com.facebook.imagepipeline.image.CloseableImage
-import com.facebook.imagepipeline.image.ImageInfo
-import com.facebook.imagepipeline.request.ImageRequestBuilder
+import coil.imageLoader
+import coil.load
+import coil.request.ImageRequest
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.setTintWith
 import com.habitrpg.android.habitica.helpers.AppConfigManager
@@ -28,67 +20,42 @@ import java.util.*
 import kotlin.collections.HashMap
 
 
-fun SimpleDraweeView.loadImage(imageName: String, imageFormat: String? = null) {
+fun ImageView.loadImage(imageName: String?, imageFormat: String? = null) {
     DataBindingUtils.loadImage(this, imageName, imageFormat)
 }
 
 object DataBindingUtils {
 
-    fun loadImage(view: SimpleDraweeView?, imageName: String) {
+    fun loadImage(view: ImageView?, imageName: String) {
         loadImage(view, imageName, null)
     }
 
-    fun loadImage(view: SimpleDraweeView?, imageName: String?, imageFormat: String? = null) {
+    fun loadImage(view: ImageView?, imageName: String?, imageFormat: String? = null) {
         if (view != null && imageName != null && view.visibility == View.VISIBLE) {
             val fullname = getFullFilename(imageName, imageFormat)
             if (view.tag == fullname) {
                 return
             }
             view.tag = fullname
-            val builder = Fresco.newDraweeControllerBuilder()
-                    .setUri("https://habitica-assets.s3.amazonaws.com/mobileApp/images/$fullname")
-                    .setControllerListener(object : BaseControllerListener<ImageInfo>() {
-                        override fun onFinalImageSet(id: String?, imageInfo: ImageInfo?, animatable: Animatable?) {
-                            if (imageInfo != null && view.layoutParams.height == ViewGroup.LayoutParams.WRAP_CONTENT) {
-                                view.aspectRatio = imageInfo.width.toFloat() / imageInfo.height
-                            }
-                            super.onFinalImageSet(id, imageInfo, animatable)
-                        }
-                    })
-                    .setAutoPlayAnimations(true)
-                    .setOldController(view.controller)
-            val controller: DraweeController = builder.build()
-            view.controller = controller
+            view.load(BASE_IMAGE_URL + fullname)
         }
     }
 
-    fun loadImage(imageName: String, imageResult: (Bitmap) -> Unit) {
-        loadImage(imageName, null, imageResult)
+    fun loadImage(context: Context, imageName: String, imageResult: (Drawable) -> Unit) {
+        loadImage(context, imageName, null, imageResult)
     }
 
-    fun loadImage(imageName: String, imageFormat: String?, imageResult: (Bitmap) -> Unit) {
-        val imageRequest = ImageRequestBuilder
-                .newBuilderWithSource("https://habitica-assets.s3.amazonaws.com/mobileApp/images/${getFullFilename(imageName, imageFormat)}".toUri())
-                .build()
-
-        val imagePipeline = Fresco.getImagePipeline()
-        val dataSource = imagePipeline.fetchDecodedImage(imageRequest, this)
-
-        dataSource.subscribe(object : BaseBitmapDataSubscriber() {
-            public override fun onNewResultImpl(bitmap: Bitmap?) {
-                if (dataSource.isFinished && bitmap != null) {
-                    imageResult(bitmap)
-                    dataSource.close()
-                }
+    fun loadImage(context: Context, imageName: String, imageFormat: String?, imageResult: (Drawable) -> Unit) {
+        val request = ImageRequest.Builder(context)
+            .data(BASE_IMAGE_URL + getFullFilename(imageName, imageFormat))
+            .target {
+                imageResult(it)
             }
-
-            override fun onFailureImpl(dataSource: DataSource<CloseableReference<CloseableImage>>) {
-                dataSource.close()
-            }
-        }, CallerThreadExecutor.getInstance())
+            .build()
+        context.imageLoader.enqueue(request)
     }
 
-    fun getFullFilename(imageName: String, imageFormat: String?): String {
+    fun getFullFilename(imageName: String, imageFormat: String? = null): String {
         val name = when {
             spriteSubstitutions.containsKey(imageName) -> spriteSubstitutions[imageName]
             FILENAME_MAP.containsKey(imageName) -> FILENAME_MAP[imageName]
@@ -126,6 +93,7 @@ object DataBindingUtils {
         override fun willChangeBounds(): Boolean = true
     }
 
+    val BASE_IMAGE_URL = "https://habitica-assets.s3.amazonaws.com/mobileApp/images/"
     private val FILEFORMAT_MAP: Map<String, String>
     private val FILENAME_MAP: Map<String, String>
 

@@ -10,7 +10,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
-import com.facebook.drawee.view.SimpleDraweeView
+import coil.load
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.CustomizationGridItemBinding
 import com.habitrpg.android.habitica.databinding.CustomizationSectionHeaderBinding
@@ -149,7 +149,7 @@ class CustomizationRecyclerViewAdapter() : androidx.recyclerview.widget.Recycler
             this.customization = customization
 
             if (customization.type == "background" && customization.identifier == "") {
-                binding.imageView.setActualImageResource(R.drawable.no_background)
+                binding.imageView.load(R.drawable.no_background)
             } else {
                 DataBindingUtils.loadImage(binding.imageView, customization.getIconName(userSize, hairColor))
             }
@@ -193,7 +193,7 @@ class CustomizationRecyclerViewAdapter() : androidx.recyclerview.widget.Recycler
                 } else {
                     val dialogContent = LayoutInflater.from(itemView.context).inflate(R.layout.dialog_purchase_customization, null) as LinearLayout
 
-                    val imageView = dialogContent.findViewById<SimpleDraweeView>(R.id.imageView)
+                    val imageView = dialogContent.findViewById<ImageView>(R.id.imageView)
                     DataBindingUtils.loadImage(imageView, customization?.getImageName(userSize, hairColor))
 
                     val priceLabel = dialogContent.findViewById<TextView>(R.id.priceLabel)
