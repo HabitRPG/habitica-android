@@ -24,11 +24,7 @@ abstract class BasePreferencesFragment : PreferenceFragmentCompat() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        val userID = preferenceManager.sharedPreferences.getString(context?.getString(R.string.SP_userID), null)
-        if (userID != null) {
-            compositeSubscription.add(userRepository.getUser(userID).subscribe({ this.setUser(it) }, RxErrorHandler.handleEmptyError()))
-        }
+        compositeSubscription.add(userRepository.getUser().subscribe({ this.setUser(it) }, RxErrorHandler.handleEmptyError()))
     }
 
     override fun onDestroy() {

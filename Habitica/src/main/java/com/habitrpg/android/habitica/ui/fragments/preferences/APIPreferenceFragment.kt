@@ -38,7 +38,7 @@ class APIPreferenceFragment: BasePreferencesFragment() {
     override fun setupPreferences() {
         for ((key, value) in preferenceScreen.sharedPreferences.all) {
             if (apiPreferences.contains(key) && value != null) {
-                findPreference(key).summary = value.toString()
+                findPreference<Preference>(key)?.summary = value.toString()
             }
         }
     }

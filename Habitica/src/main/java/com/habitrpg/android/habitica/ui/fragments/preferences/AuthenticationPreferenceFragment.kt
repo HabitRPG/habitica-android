@@ -9,6 +9,7 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.core.os.bundleOf
+import androidx.preference.ListPreference
 import androidx.preference.Preference
 import com.google.android.material.textfield.TextInputLayout
 import com.habitrpg.android.habitica.HabiticaBaseApplication
@@ -46,17 +47,17 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
         HabiticaBaseApplication.userComponent?.inject(this)
         super.onCreate(savedInstanceState)
 
-        findPreference("login_name").title = context?.getString(R.string.username)
-        findPreference("confirm_username").isVisible = user?.flags?.verifiedUsername != true
+        findPreference<Preference>("login_name")?.title = context?.getString(R.string.username)
+        findPreference<Preference>("confirm_username")?.isVisible = user?.flags?.verifiedUsername != true
     }
 
     private fun updateUserFields() {
         configurePreference(findPreference("login_name"), user?.authentication?.localAuthentication?.username, false)
         configurePreference(findPreference("email"), user?.authentication?.localAuthentication?.email, true)
-        findPreference("change_password").isVisible = user?.authentication?.localAuthentication?.email?.isNotEmpty() == true
-        findPreference("add_local_auth").isVisible = user?.authentication?.localAuthentication?.email?.isNotEmpty() != true
-        findPreference("confirm_username").isVisible = user?.flags?.verifiedUsername != true
-        val preference = findPreference("authentication_methods")
+        findPreference<Preference>("change_password")?.isVisible = user?.authentication?.localAuthentication?.email?.isNotEmpty() == true
+        findPreference<Preference>("add_local_auth")?.isVisible = user?.authentication?.localAuthentication?.email?.isNotEmpty() != true
+        findPreference<Preference>("confirm_username")?.isVisible = user?.flags?.verifiedUsername != true
+        val preference = findPreference<Preference>("authentication_methods")
         val methods = mutableListOf<String>()
         if (user?.authentication?.localAuthentication?.email != null) {
             context?.getString(R.string.local)?.let { methods.add(it) }
@@ -64,7 +65,7 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
         if (user?.authentication?.hasFacebookAuth == true) { context?.getString(R.string.facebook)?.let { methods.add(it) } }
         if (user?.authentication?.hasGoogleAuth == true) { context?.getString(R.string.google)?.let { methods.add(it) } }
         if (user?.authentication?.hasAppleAuth == true) { context?.getString(R.string.apple_sign_in)?.let { methods.add(it) } }
-        preference.summary = methods.joinToString(", ")
+        preference?.summary = methods.joinToString(", ")
     }
 
     private fun configurePreference(preference: Preference?, value: String?, hideIfEmpty: Boolean) {

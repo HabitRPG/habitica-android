@@ -236,15 +236,15 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                     .subscribe({ }, RxErrorHandler.handleEmptyError())
             "server_url" -> {
                 apiClient.updateServerUrl(sharedPreferences.getString(key, ""))
-                findPreference(key).summary = sharedPreferences.getString(key, "")
+                findPreference<Preference>(key)?.summary = sharedPreferences.getString(key, "")
             }
             "task_display" -> {
-                val preference = findPreference(key) as ListPreference
-                preference.summary = preference.entry
+                val preference = findPreference<ListPreference>(key)
+                preference?.summary = preference?.entry
             }
             "FirstDayOfTheWeek" -> {
-                val preference = findPreference(key) as ListPreference
-                preference.summary = preference.entry
+                val preference = findPreference<ListPreference>(key)
+                preference?.summary = preference?.entry
             }
             "disablePMs" -> {
                 val isDisabled = sharedPreferences.getBoolean("disablePMs", false)
@@ -254,8 +254,8 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                 }
             }
             "launch_screen" -> {
-                val preference = findPreference(key) as ListPreference
-                preference.summary = preference.entry ?: "Habits"
+                val preference = findPreference<ListPreference>(key)
+                preference?.summary = preference?.entry ?: "Habits"
             }
         }
     }
@@ -297,7 +297,7 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
         }
         val cdsTimePreference = findPreference("cds_time") as? TimePreference
         cdsTimePreference?.text = user?.preferences?.dayStart.toString() + ":00"
-        findPreference("dailyDueDefaultView").setDefaultValue(user?.preferences?.dailyDueDefaultView)
+        findPreference<Preference>("dailyDueDefaultView")?.setDefaultValue(user?.preferences?.dailyDueDefaultView)
         val languagePreference = findPreference("language") as? ListPreference
         languagePreference?.value = user?.preferences?.language
         languagePreference?.summary = languagePreference?.entry
@@ -305,19 +305,19 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
         audioThemePreference?.value = user?.preferences?.sound
         audioThemePreference?.summary = audioThemePreference?.entry
 
-        val preference = findPreference("authentication")
+        val preference = findPreference<Preference>("authentication")
         if (user?.flags?.verifiedUsername == true) {
-            preference.layoutResource = R.layout.preference_child_summary
-            preference.summary = context?.getString(R.string.authentication_summary)
+            preference?.layoutResource = R.layout.preference_child_summary
+            preference?.summary = context?.getString(R.string.authentication_summary)
         } else {
-            preference.layoutResource = R.layout.preference_child_summary_error
-            preference.summary = context?.getString(R.string.username_not_confirmed)
+            preference?.layoutResource = R.layout.preference_child_summary_error
+            preference?.summary = context?.getString(R.string.username_not_confirmed)
         }
 
         if (user?.party?.id?.isNotBlank() != true) {
-            val launchScreenPreference = findPreference("launch_screen") as ListPreference
-            launchScreenPreference.entries = resources.getStringArray(R.array.launch_screen_types).dropLast(1).toTypedArray()
-            launchScreenPreference.entryValues = resources.getStringArray(R.array.launch_screen_values).dropLast(1).toTypedArray()
+            val launchScreenPreference = findPreference<ListPreference>("launch_screen")
+            launchScreenPreference?.entries = resources.getStringArray(R.array.launch_screen_types).dropLast(1).toTypedArray()
+            launchScreenPreference?.entryValues = resources.getStringArray(R.array.launch_screen_values).dropLast(1).toTypedArray()
         }
 
         val disablePMsPreference = findPreference("disablePMs") as? CheckBoxPreference

@@ -36,8 +36,6 @@ object GSonFactoryCreator {
         val ownedMountListType = object : TypeToken<RealmList<OwnedMount?>?>() {}.type
         val achievementsListType = object : TypeToken<List<Achievement?>?>() {}.type
 
-
-        //Exclusion strategy needed for DBFlow https://github.com/Raizlabs/DBFlow/issues/121
         val gson = GsonBuilder()
                 .registerTypeAdapter(taskTagClassListType, TaskTagDeserializer())
                 .registerTypeAdapter(Boolean::class.java, BooleanAsIntAdapter())
