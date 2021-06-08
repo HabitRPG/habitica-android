@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
+import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentGiftGemBalanceBinding
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.members.Member
@@ -17,8 +18,12 @@ class GiftBalanceGemsFragment : BaseFragment<FragmentGiftGemBalanceBinding>() {
 
     @Inject
     lateinit var socialRepository: SocialRepository
+    @Inject
+    lateinit var userRepository: UserRepository
 
     override var binding: FragmentGiftGemBalanceBinding? = null
+
+    private var isGifting = false
 
     override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentGiftGemBalanceBinding {
         return FragmentGiftGemBalanceBinding.inflate(inflater, container, false)
@@ -48,10 +53,17 @@ class GiftBalanceGemsFragment : BaseFragment<FragmentGiftGemBalanceBinding>() {
     }
 
     private fun sendGift() {
+        if (isGifting) return
+        isGifting = true
         try {
             val amount = binding?.giftEditText?.text.toString().toInt()
             giftedMember?.id?.let {
-                compositeSubscription.add(socialRepository.transferGems(it, amount).subscribe({
+                compositeSubscription.add(socialRepository.transferGems(it, amount)
+                    .flatMap { userRepository.retrieveUser(false, true) }
+                    .doOnError {
+                        isGifting = false
+                    }
+                    .subscribe({
                     onCompleted?.invoke()
                 }, RxErrorHandler.handleEmptyError()))
             }
