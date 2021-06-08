@@ -29,8 +29,6 @@ import javax.inject.Inject
 
 open class ShopFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
 
-
-
     internal val currencyView: CurrencyViews by lazy {
         val view = CurrencyViews(context)
         view

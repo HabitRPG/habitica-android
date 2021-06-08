@@ -20,7 +20,7 @@ import java.util.*
 
 object GSonFactoryCreator {
     fun create(): GsonConverterFactory {
-        val skillListType = object : TypeToken<List<Skill?>?>() {}.type
+        val skillListType = object : TypeToken<List<Skill>?>() {}.type
         val taskTagClassListType = object : TypeToken<RealmList<Tag?>?>() {}.type
         val customizationListType = object : TypeToken<RealmList<Customization?>?>() {}.type
         val tutorialStepListType = object : TypeToken<RealmList<TutorialStep?>?>() {}.type
@@ -34,7 +34,7 @@ object GSonFactoryCreator {
         val ownedItemListType = object : TypeToken<RealmList<OwnedItem?>?>() {}.type
         val ownedPetListType = object : TypeToken<RealmList<OwnedPet?>?>() {}.type
         val ownedMountListType = object : TypeToken<RealmList<OwnedMount?>?>() {}.type
-        val achievementsListType = object : TypeToken<List<Achievement?>?>() {}.type
+        val achievementsListType = object : TypeToken<List<Achievement>?>() {}.type
 
         val gson = GsonBuilder()
                 .registerTypeAdapter(taskTagClassListType, TaskTagDeserializer())
@@ -57,7 +57,6 @@ object GSonFactoryCreator {
                 .registerTypeAdapter(Challenge::class.java, ChallengeDeserializer())
                 .registerTypeAdapter(User::class.java, UserDeserializer())
                 .registerTypeAdapter(questCollectListType, QuestCollectDeserializer())
-                .registerTypeAdapter(chatMessageListType, ChatMessageListDeserializer())
                 .registerTypeAdapter(challengeListType, ChallengeListDeserializer())
                 .registerTypeAdapter(challengeRealmListType, ChallengeListDeserializer())
                 .registerTypeAdapter(questDropItemListType, QuestDropItemsListSerialization())

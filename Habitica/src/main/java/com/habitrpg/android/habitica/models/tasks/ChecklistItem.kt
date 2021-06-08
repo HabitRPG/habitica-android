@@ -41,16 +41,6 @@ open class ChecklistItem : RealmObject, BaseMainObject, Parcelable {
         this.completed = item.completed
     }
 
-    override fun equals(other: Any?): Boolean {
-        return if (other?.javaClass == ChecklistItem::class.java && this.id != null) {
-            this.id == (other as? ChecklistItem)?.id
-        } else super.equals(other)
-    }
-
-    override fun hashCode(): Int {
-        return id?.hashCode() ?: 0
-    }
-
     override fun describeContents(): Int {
         return 0
     }

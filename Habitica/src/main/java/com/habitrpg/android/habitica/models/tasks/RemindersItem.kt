@@ -18,16 +18,6 @@ open class RemindersItem : RealmObject, Parcelable {
     //Use to store task type before a task is created
     var type: String? = null
 
-    override fun equals(other: Any?): Boolean {
-        return if (other?.javaClass == RemindersItem::class.java) {
-            this.id == (other as? RemindersItem)?.id
-        } else super.equals(other)
-    }
-
-    override fun hashCode(): Int {
-        return id?.hashCode() ?: 0
-    }
-
     override fun describeContents(): Int {
         return 0
     }
