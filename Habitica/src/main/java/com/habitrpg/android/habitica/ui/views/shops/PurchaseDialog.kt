@@ -436,6 +436,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
         var totalCount = 20
         var ownedCount = 0
         var shouldWarn = true
+        var calledResult = false
         var maybe: Maybe<out List<OwnedItem>>? = null
         if (item.purchaseType == "eggs") {
             maybe = inventoryRepository.getPets(item.key, "quest", null).firstElement().filter {
@@ -458,35 +459,44 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
             }.flatMap { inventoryRepository.getOwnedItems("hatchingPotions").firstElement() }
         }
         if (maybe != null) {
-            val sub = maybe
-                    .doOnComplete {
-                        if (!shouldWarn) {
-                            onResult(-1)
-                            return@doOnComplete
-                        }
-                        val remaining = totalCount - ownedCount
-                        onResult(max(0, remaining))
-                    }.flatMap {
-                        for (thisItem in it) {
-                            if (thisItem.key == item.key) {
-                                ownedCount += thisItem.numberOwned
-                            }
-                        }
-                        inventoryRepository.getOwnedMounts().firstElement()
-                    }.flatMapPublisher {
-                        for (mount in it) {
-                            if (mount.key?.contains(item.key) == true) {
-                                ownedCount += if (mount.owned) 1 else 0
-                            }
-                        }
-                        inventoryRepository.getOwnedPets()
-                    }.firstElement().subscribe({
-                        for (pet in it) {
-                            if (pet.key?.contains(item.key) == true) {
-                                ownedCount += if (pet.trained > 0) 1 else 0
-                            }
-                        }
-                    }, RxErrorHandler.handleEmptyError())
+            val sub = maybe.flatMap {
+                for (thisItem in it) {
+                    if (thisItem.key == item.key) {
+                        ownedCount += thisItem.numberOwned
+                    }
+                }
+                inventoryRepository.getOwnedMounts().firstElement()
+            }.flatMap {
+                for (mount in it) {
+                    if (mount.key?.contains(item.key) == true) {
+                        ownedCount += if (mount.owned) 1 else 0
+                    }
+                }
+                inventoryRepository.getOwnedPets().firstElement()
+            }.subscribe({
+                for (pet in it) {
+                    if (pet.key?.contains(item.key) == true) {
+                        ownedCount += if (pet.trained > 0) 1 else 0
+                    }
+                }
+                if (calledResult) return@subscribe
+                calledResult = true
+                if (!shouldWarn) {
+                    onResult(-1)
+                    return@subscribe
+                }
+                val remaining = totalCount - ownedCount
+                onResult(max(0, remaining))
+            }, RxErrorHandler.handleEmptyError(), {
+                if (calledResult) return@subscribe
+                calledResult = true
+                if (!shouldWarn) {
+                    onResult(-1)
+                    return@subscribe
+                }
+                val remaining = totalCount - ownedCount
+                onResult(max(0, remaining))
+            })
         } else {
             onResult(-1)
         }
