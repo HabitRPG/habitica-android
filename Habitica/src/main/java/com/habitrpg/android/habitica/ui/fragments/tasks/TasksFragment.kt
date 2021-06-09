@@ -24,6 +24,7 @@ import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.activities.TaskFormActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
+import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemRecyclerFragment
 import com.habitrpg.android.habitica.ui.views.navigation.HabiticaBottomNavigationViewListener
 import com.habitrpg.android.habitica.ui.views.tasks.TaskFilterDialog
 import io.reactivex.rxjava3.disposables.Disposable
@@ -216,7 +217,7 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
 
         binding?.viewPager?.adapter = object : FragmentStateAdapter(fragmentManager, lifecycle) {
 
-            override fun createFragment(position: Int): androidx.fragment.app.Fragment {
+            override fun createFragment(position: Int): Fragment {
                 val fragment: TaskRecyclerViewFragment = when (position) {
                     0 -> TaskRecyclerViewFragment.newInstance(context, Task.TYPE_HABIT)
                     1 -> TaskRecyclerViewFragment.newInstance(context, Task.TYPE_DAILY)

@@ -173,7 +173,6 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        context?.let { binding?.recyclerView?.setBackgroundColor(ContextCompat.getColor(it, R.color.content_background)) }
         savedInstanceState?.let { this.taskType = savedInstanceState.getString(CLASS_TYPE_KEY, "") }
 
         this.setInnerAdapter()
@@ -239,28 +238,16 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
             }
         }
 
-        binding?.recyclerView?.setScaledPadding(context, 0, 0, 0, 48)
+        binding?.recyclerView?.setScaledPadding(context, 0, 0, 0, 108)
 
         layoutManager = getLayoutManager(context)
-        layoutManager?.isItemPrefetchEnabled = false
         binding?.recyclerView?.layoutManager = layoutManager
 
         allowReordering()
 
-        val bottomPadding = ((binding?.recyclerView?.paddingBottom ?: 0) + TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 60f, resources.displayMetrics)).toInt()
-        binding?.recyclerView?.setPadding(0, 0, 0, bottomPadding)
         binding?.recyclerView?.itemAnimator = itemAnimator
 
         binding?.refreshLayout?.setOnRefreshListener(this)
-
-        binding?.recyclerView?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                super.onScrollStateChanged(recyclerView, newState)
-                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    binding?.refreshLayout?.isEnabled = (activity as? MainActivity)?.isAppBarExpanded ?: false
-                }
-            }
-        })
 
         setEmptyLabels()
 

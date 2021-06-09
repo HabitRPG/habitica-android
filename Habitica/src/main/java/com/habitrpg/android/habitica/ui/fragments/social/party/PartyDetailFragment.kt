@@ -28,6 +28,7 @@ import com.habitrpg.android.habitica.ui.AvatarView
 import com.habitrpg.android.habitica.ui.activities.FullProfileActivity
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
+import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemDialogFragment
 import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemRecyclerFragment
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
@@ -73,8 +74,6 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
         binding?.refreshLayout?.setOnRefreshListener { this.refreshParty() }
 
         binding?.questAcceptButton?.setOnClickListener { onQuestAccept() }
@@ -320,14 +319,15 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
         dialog?.addButton(android.R.string.cancel, false) { _, _ -> activity?.dismissKeyboard() }
         dialog?.setTitle(context?.getString(R.string.remove_member_confirm, displayName))
         dialog?.show()
+        dialog?.show()
     }
 
     private fun inviteNewQuest() {
-        val fragment = ItemRecyclerFragment()
+        val fragment = ItemDialogFragment()
         fragment.itemType = "quests"
         fragment.itemTypeText = getString(R.string.quest)
         fragment.isModal = true
-        //fragment.show(parentFragmentManager, "questDialog")
+        fragment.show(parentFragmentManager, "questDialog")
     }
 
     internal fun leaveParty() {

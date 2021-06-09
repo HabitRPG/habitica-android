@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
-import com.habitrpg.android.habitica.databinding.FragmentRecyclerviewBinding
+import com.habitrpg.android.habitica.data.UserRepository
+import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBinding
 import com.habitrpg.android.habitica.extensions.getTranslatedType
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
@@ -26,10 +28,13 @@ import io.reactivex.rxjava3.kotlin.combineLatest
 import java.util.*
 import javax.inject.Inject
 
-class StableRecyclerFragment : BaseFragment<FragmentRecyclerviewBinding>() {
+class StableRecyclerFragment : BaseFragment<FragmentRefreshRecyclerviewBinding>(),
+    SwipeRefreshLayout.OnRefreshListener {
 
     @Inject
     lateinit var inventoryRepository: InventoryRepository
+    @Inject
+    lateinit var userRepository: UserRepository
     @Inject
     lateinit var configManager: AppConfigManager
 
@@ -39,10 +44,10 @@ class StableRecyclerFragment : BaseFragment<FragmentRecyclerviewBinding>() {
     var user: User? = null
     internal var layoutManager: androidx.recyclerview.widget.GridLayoutManager? = null
 
-    override var binding: FragmentRecyclerviewBinding? = null
+    override var binding: FragmentRefreshRecyclerviewBinding? = null
 
-    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentRecyclerviewBinding {
-        return FragmentRecyclerviewBinding.inflate(inflater, container, false)
+    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentRefreshRecyclerviewBinding {
+        return FragmentRefreshRecyclerviewBinding.inflate(inflater, container, false)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -66,7 +71,8 @@ class StableRecyclerFragment : BaseFragment<FragmentRecyclerviewBinding>() {
         super.onViewCreated(view, savedInstanceState)
 
         binding?.recyclerView?.setEmptyView(binding?.emptyView)
-        binding?.emptyView?.text = getString(R.string.empty_items, itemTypeText)
+        binding?.emptyViewTitle?.text = getString(R.string.empty_items, itemTypeText)
+        binding?.refreshLayout?.setOnRefreshListener(this)
 
         layoutManager = androidx.recyclerview.widget.GridLayoutManager(activity, 2)
         layoutManager?.spanSizeLookup = object : androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup() {
@@ -242,5 +248,11 @@ class StableRecyclerFragment : BaseFragment<FragmentRecyclerviewBinding>() {
     companion object {
         private const val ITEM_TYPE_KEY = "CLASS_TYPE_KEY"
         private const val HEADER_VIEW_TYPE = 0
+    }
+
+    override fun onRefresh() {
+        compositeSubscription.add(userRepository.retrieveUser(false, true).subscribe({
+            binding?.refreshLayout?.isRefreshing = false
+        }, RxErrorHandler.handleEmptyError()))
     }
 }
