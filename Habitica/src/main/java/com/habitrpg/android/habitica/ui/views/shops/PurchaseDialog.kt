@@ -452,7 +452,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
             }
             maybe = inventoryRepository.getPets().firstElement().filter {
                 val filteredPets = it.filter {pet ->
-                    pet.type == "premium" || pet.type == "wacky"
+                    pet.animal == item.key && (pet.type == "premium" || pet.type == "wacky")
                 }
                 shouldWarn = filteredPets.isNotEmpty()
                 return@filter shouldWarn
