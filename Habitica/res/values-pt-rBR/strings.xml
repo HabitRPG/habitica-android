@@ -1038,9 +1038,9 @@
     <string name="view_onboarding_tasks">Ver Tarefas Iniciais</string>
     <string name="equip">Equipar</string>
     <string name="unequip">Desequipar</string>
-    <string name="excessItemsNoneLeft">Você já tem tudo o que precisa para todos os %s mascotes. Você tem certeza que quer comprar %d %ss\?</string>
+    <string name="excessItemsNoneLeft">Você já tem tudo o que precisa para todos os %1$s mascotes. Você tem certeza que quer comprar %2$d %3$ss\?</string>
     <string name="purchaseX">Comprar %d</string>
-    <string name="excessItemsXLeft">Você só precisa %d %s para chocar todos os mascotes possíveis. Você tem certeza que quer comprar %d\?</string>
+    <string name="excessItemsXLeft">Você só precisa %1$d %2$s para chocar todos os mascotes possíveis. Você tem certeza que quer comprar %3$d\?</string>
     <string name="excess_items">Itens em Excesso</string>
     <string name="onboardingComplete_achievement_title">Você completou suas Tarefas Iniciais!</string>
     <string name="onboardingCompleteDescription">Se você quiser ainda mais, confira suas Conquistas e comece a coletar!</string>

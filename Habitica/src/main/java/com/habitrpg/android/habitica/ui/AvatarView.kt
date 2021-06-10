@@ -109,7 +109,6 @@ class AvatarView : FrameLayout {
     }
 
     private fun showLayers(layerMap: Map<LayerType, String>) {
-        if (imageViewHolder.isNotEmpty()) return
         var i = 0
 
         currentLayers = layerMap
@@ -128,6 +127,9 @@ class AvatarView : FrameLayout {
             } else {
                 imageViewHolder[layerNumber]
             }
+
+            if (imageView.tag == layerName) continue
+            imageView.tag = layerName
 
             imageView.load(DataBindingUtils.BASE_IMAGE_URL + DataBindingUtils.getFullFilename(layerName)) {
                 allowHardware(false)
@@ -397,11 +399,10 @@ class AvatarView : FrameLayout {
         if (oldUser != null) {
             val newLayerMap = getLayerMap(avatar, false)
 
-            val equals = currentLayers != null && currentLayers == newLayerMap
+            val equals = currentLayers == newLayerMap
 
             if (!equals) {
-                imageViewHolder.clear()
-                numberLayersInProcess.set(0)
+                invalidate()
             }
         }
 
@@ -428,10 +429,7 @@ class AvatarView : FrameLayout {
         // draw only when user is set
         if (avatar?.isValid() != true) return
 
-        // request image layers if not yet processed
-        if (imageViewHolder.size == 0) {
-            showLayers(layerMap)
-        }
+        showLayers(layerMap)
     }
 
     override fun invalidateDrawable(drawable: Drawable) {

@@ -1020,9 +1020,9 @@
     <string name="hatch_pet">Yumurtadan Evcil Hayvan Çıkarıldı</string>
     <string name="suggest_pet_hatch_again_missing_both">Bu evcil hayvanı tekrar yumurtadan çıkarmak için %s ve %s İksirine ihtiyacınız var</string>
     <string name="view_onboarding_tasks">İlk Katılım Görevlerini Görüntüleyin</string>
-    <string name="excessItemsNoneLeft">Tüm %s evcil hayvanları için ihtiyacınız olan her şeye zaten sahipsiniz. %d %ss satın almak istediğinizden emin misiniz\?</string>
+    <string name="excessItemsNoneLeft">Tüm %1$s evcil hayvanları için ihtiyacınız olan her şeye zaten sahipsiniz. %2$d %3$ss satın almak istediğinizden emin misiniz\?</string>
     <string name="purchaseX">%d satın al</string>
-    <string name="excessItemsXLeft">Tüm olası evcil hayvanları yumurtadan çıkarmak için yalnızca %d %s gerekir. %d satın almak istediğinizden emin misiniz\?</string>
+    <string name="excessItemsXLeft">Tüm olası evcil hayvanları yumurtadan çıkarmak için yalnızca %1$d %2$s gerekir. %3$d satın almak istediğinizden emin misiniz\?</string>
     <string name="excess_items">Fazla Öğeler</string>
     <string name="onboardingComplete_achievement_title">İlk Katılım Görevlerinizi tamamladınız!</string>
     <string name="onboardingCompleteTitle">Çabalarınız karşılığında &lt;b&gt;5 Başarı&lt;/b&gt; ve &lt;font color = # EE9109&gt;&lt;b&gt;100 Altın&lt;/b&gt;&lt;/font&gt; kazandınız.</string>

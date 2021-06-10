@@ -870,7 +870,7 @@
     <string name="learn_more">Aprende más</string>
     <string name="experience_points">Puntos de Experiencia</string>
     <string name="purchaseX">Comprar %d</string>
-    <string name="excessItemsXLeft">Solo necesitas %d %s para eclosionar todas las mascotas posibles. ¿Estás seguro de que quieres comprar %d\?</string>
+    <string name="excessItemsXLeft">Solo necesitas %1$d %2$s para eclosionar todas las mascotas posibles. ¿Estás seguro de que quieres comprar %3$d\?</string>
     <string name="spooky_promo_info_instructions">Entre el 29 de Octubre y el 2 de Noviembre, simplemente compra cualquier paquete de Gemas como de costumbre y tu cuenta será acreditada con la cantidad promocional de Gemas. ¡Más Gemas para gastar, compartir o guardar para cualquier evento futuro!</string>
     <string name="view_gem_bundles">Ver paquetes de Gemas</string>
     <string name="fall_promo_info_prompt">La Gala de Otoño está en pleno apogeo, así que pensamos que era el momento perfecto para presentar nuestra primera Venta de Gemas! Ahora obtendrás más gemas con cada compra como nunca antes.</string>
@@ -906,7 +906,7 @@
     <string name="suggest_pet_hatch_missing_egg">Aún necesitas un huevo %s para eclosionar esta mascota</string>
     <string name="equip">Equipar</string>
     <string name="unequip">Desequipar</string>
-    <string name="excessItemsNoneLeft">Ya tienes todo lo que necesitas para todas las mascotas %s. ¿Estás seguro de que quieres comprar %d %ss\?</string>
+    <string name="excessItemsNoneLeft">Ya tienes todo lo que necesitas para todas las mascotas %1$s. ¿Estás seguro de que quieres comprar %2$d %3$ss\?</string>
     <string name="excess_items">Exceso de objetos</string>
     <string name="first_drop_title">¡Has encontrado nuevos objetos!</string>
     <string name="go_to_items">Ir a objetos</string>

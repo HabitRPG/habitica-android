@@ -1041,9 +1041,9 @@
     <string name="view_onboarding_tasks">查看新手任務</string>
     <string name="equip">裝備</string>
     <string name="unequip">取消裝備</string>
-    <string name="excessItemsNoneLeft">你已經有得到所有%s寵物所需的一切物品。你確定你要買%d個%s？</string>
+    <string name="excessItemsNoneLeft">你已經有得到所有%s寵物所需的一切物品。你確定你要買%2$d個%3$s？</string>
     <string name="purchaseX">買%d個</string>
-    <string name="excessItemsXLeft">你只需要%d個%s即可孵化所有可得到的這種寵物。你確定你想要買%d個？</string>
+    <string name="excessItemsXLeft">你只需要%d個%2$s即可孵化所有可得到的這種寵物。你確定你想要買%1$d個？</string>
     <string name="feedPet_description">完成任務有概率掉落寵物食品！這樣你就可以把寵物餵大長成坐騎啦！</string>
     <string name="excess_items">多餘物品</string>
     <string name="onboardingComplete_achievement_title">你完成了新手任務！</string>

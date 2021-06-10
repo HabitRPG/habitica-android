@@ -1025,9 +1025,9 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="view_onboarding_tasks">Einstiegsaufgaben ansehen</string>
     <string name="equip">Ausrüsten</string>
     <string name="unequip">Unausrüsten</string>
-    <string name="excessItemsNoneLeft">Du hast bereits alles, was Du für alle %s Haustiere benötigst. Bist Du Dir sicher, dass Du %d %ss kaufen willst\?</string>
+    <string name="excessItemsNoneLeft">Du hast bereits alles, was Du für alle %1$s Haustiere benötigst. Bist Du Dir sicher, dass Du %2$d %3$ss kaufen willst\?</string>
     <string name="purchaseX">%d kaufen</string>
-    <string name="excessItemsXLeft">Du brauchst nur %d %s um alle möglichen Haustiere zu schlüpfen. Bist Du Dir sicher, dass Du %d kaufen willst\?</string>
+    <string name="excessItemsXLeft">Du brauchst nur %1$d %2$s um alle möglichen Haustiere zu schlüpfen. Bist Du Dir sicher, dass Du %3$d kaufen willst\?</string>
     <string name="excess_items">Überschüssige Gegenstände</string>
     <string name="onboardingComplete_achievement_title">Du hast Deine Einstiegsaufgaben erledigt!</string>
     <string name="onboardingCompleteDescription">Falls Du noch mehr willst, sieh Dir Deine Erfolge an und beginne zu sammeln!</string>

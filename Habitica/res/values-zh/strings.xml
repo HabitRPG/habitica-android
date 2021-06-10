@@ -1019,8 +1019,8 @@
     <string name="view_onboarding_tasks">查看新手任务</string>
     <string name="equip">装备</string>
     <string name="unequip">取消装备</string>
-    <string name="excessItemsNoneLeft">你已经有得到所有%s宠物所需的一切物品。你确定你要买%d个%s？</string>
-    <string name="excessItemsXLeft">你只需要%d个%s即可孵化所有可得到的这种宠物。你确定你想要买%d个？</string>
+    <string name="excessItemsNoneLeft">你已经有得到所有%s宠物所需的一切物品。你确定你要买%2$d个%3$s？</string>
+    <string name="excessItemsXLeft">你只需要%1$d个%2$s即可孵化所有可得到的这种宠物。你确定你想要买%3$d个？</string>
     <string name="purchaseX">买%d个</string>
     <string name="excess_items">多余物品</string>
     <string name="onboardingComplete_achievement_title">你完成了新手任务！</string>

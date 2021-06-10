@@ -1042,9 +1042,9 @@
     <string name="view_onboarding_tasks">View Onboarding Tasks</string>
     <string name="equip">Equip</string>
     <string name="unequip">Unequip</string>
-    <string name="excessItemsNoneLeft">You already have everything you need for all %s pets. Are you sure you want to purchase %d %ss\?</string>
+    <string name="excessItemsNoneLeft">You already have everything you need for all %1$s pets. Are you sure you want to purchase %2$d %s3$s\?</string>
     <string name="purchaseX">Purchase %d</string>
-    <string name="excessItemsXLeft">You only need %d %s to hatch all possible pets. Are you sure you want to purchase %d\?</string>
+    <string name="excessItemsXLeft">You only need %1$d %2$s to hatch all possible pets. Are you sure you want to purchase %3$d\?</string>
     <string name="excess_items">Excess Items</string>
     <string name="onboardingComplete_achievement_title">If you want even more, check out Achievements and start collecting!</string>
     <string name="onboardingCompleteDescription">If you want even more, check out Achievements and start collecting!</string>

@@ -1154,9 +1154,9 @@
     <string name="suggest_pet_hatch_missing_potion">Вам все ще потрібне %s зілля щоб вилупити цю тварину</string>
     <string name="suggest_pet_hatch_missing_egg">Вам все ще потрібне %s яйце щоб вилупити цю тварину</string>
     <string name="view_onboarding_tasks">Подивитись перші завдання</string>
-    <string name="excessItemsNoneLeft">У вас вже є все для всіх %s тварин. Ви точно хочете заплатити %d %ss\?</string>
+    <string name="excessItemsNoneLeft">У вас вже є все для всіх %1$s тварин. Ви точно хочете заплатити %2$d %3$ss\?</string>
     <string name="purchaseX">Купити: %d</string>
-    <string name="excessItemsXLeft">Вам потрібно тільки %d %s щоб вилупити всіх тварин. Ви дійсно хочет заплатити %d\?</string>
+    <string name="excessItemsXLeft">Вам потрібно тільки %1$d %2$s щоб вилупити всіх тварин. Ви дійсно хочет заплатити %3$d\?</string>
     <string name="excess_items">Зайві предмети</string>
     <string name="onboardingComplete_achievement_title">Ви виконали свої перші завдання!</string>
     <string name="onboardingCompleteDescription">Хочет більше\? Подивіться список досягнень і почніть збирати колекцію!</string>

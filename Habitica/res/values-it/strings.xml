@@ -1074,9 +1074,9 @@
     <string name="view_onboarding_tasks">Visualizza le attività introduttive</string>
     <string name="equip">Equipaggia</string>
     <string name="unequip">Disequip</string>
-    <string name="excessItemsNoneLeft">Hai già tutto il necessario per tutti gli animali %@. Sei sicuro di voler acquistare %d %ss\?</string>
+    <string name="excessItemsNoneLeft">Hai già tutto il necessario per tutti gli animali %1$. Sei sicuro di voler acquistare %2$d %3$ss\?</string>
     <string name="purchaseX">Acquista %d</string>
-    <string name="excessItemsXLeft">Hai solo bisogno di %d %s per schiudere tutti i possibili animali. Sei sicuro di voler acquistare %d\?</string>
+    <string name="excessItemsXLeft">Hai solo bisogno di %1$d %2$s per schiudere tutti i possibili animali. Sei sicuro di voler acquistare %3$d\?</string>
     <string name="excess_items">Articoli in eccesso</string>
     <string name="onboardingComplete_achievement_title">Hai completato le attività introduttive!</string>
     <string name="onboardingCompleteDescription">Se ne vuoi di più, dai un\'occhiata alle Medaglie ed inizia a collezionarle!</string>
@@ -1089,11 +1089,9 @@
     <string name="unblock_user">Sblocca utente</string>
     <string name="block_user">Blocca utente</string>
     <string name="spooky_promo_info_prompt">La vendita di Gemme è tornata per infestare la fine del Gala Autunnale di quest\'anno! Questa è l\'ultima possibilità per ottenere più gemme che mai, quindi fanne scorta finché dura!</string>
-    <string name="spooky_promo_info_limitations">Questa promozione si applica solo durante l\'evento a tempo limitato. Questo evento inizia il 29 ottobre alle 14:00 ora italiana (12:00 UTC) e terminerà il 3 novembre alle 2:00 di mattina ora italiana (00:00 UTC). L\'offerta promozionale è disponibile solo se acquisti Gemme per te stesso.</string>
     <string name="spooky_promo_info_instructions">Tra il 29 ottobre e il 2 novembre acquista semplicemente un pacchetto di gemme e sul tuo account verrà accreditato l\'importo promozionale di gemme. Più gemme da spendere, condividere o risparmiare per eventuali oggetti futuri!</string>
     <string name="view_gem_bundles">Visualizza pacchetti di gemme</string>
     <string name="fall_promo_info_prompt">Il Gala Autunnale è in pieno svolgimento, quindi abbiamo pensato che fosse il momento perfetto per presentare la nostra prima vendita di Gemme in assoluto! Ora otterrai più gemme ogni acquisto più che mai.</string>
-    <string name="fall_promo_info_limitations">Questa promozione si applica solo durante l\'evento a tempo limitato. Questo evento inizia il 22 settembre alle 14:00 ora italiana (12:00 UTC) e terminerà il 1 ottobre alle 2:00 di mattina ora italiana (00:00 UTC). L\'offerta promozionale è disponibile solo se acquisti Gemme per te stesso.</string>
     <string name="fall_promo_info_instructions">Tra il 22 e il 30 settembre, acquista semplicemente un pacchetto di gemme e sul tuo account verrà accreditato l\'importo promozionale di gemme. Più gemme da spendere, condividere o risparmiare per eventuali oggetti futuri!</string>
     <string name="limitations">Limitazioni</string>
     <string name="how_it_works">Come funziona</string>

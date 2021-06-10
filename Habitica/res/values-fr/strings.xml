@@ -1047,9 +1047,9 @@
     <string name="view_onboarding_tasks">Voir les tâches d’intégration</string>
     <string name="equip">Équiper</string>
     <string name="unequip">Déséquiper</string>
-    <string name="excessItemsNoneLeft">Vous avez déjà tout le nécessaire pour tous les familiers %s. Voulez vous vraiment acheter %d %ss \?</string>
+    <string name="excessItemsNoneLeft">Vous avez déjà tout le nécessaire pour tous les familiers %1$s. Voulez vous vraiment acheter %2$d %3$ss \?</string>
     <string name="purchaseX">Acheter %d</string>
-    <string name="excessItemsXLeft">Vous avez seulement besoin de %d %@s pour faire éclore tous les familiers possibles. Voulez-vous vraiment acheter %d \?</string>
+    <string name="excessItemsXLeft">Vous avez seulement besoin de %1$d %2$ss pour faire éclore tous les familiers possibles. Voulez-vous vraiment acheter %3$d \?</string>
     <string name="excess_items">Objets en surplus</string>
     <string name="onboardingComplete_achievement_title">Vous avez terminé vos tâches de démarrage !</string>
     <string name="onboardingCompleteDescription">Si vous en voulez plus, allez regarder vos succès et commencez à les collectionner !</string>
