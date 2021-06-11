@@ -114,8 +114,4 @@ object ToolbarColorHelper {
             overflowViewParent.overflowIcon?.setTintMode(PorterDuff.Mode.SRC_ATOP)
         }
     }
-
-    private fun removeOnGlobalLayoutListener(v: View, listener: OnGlobalLayoutListener) {
-        v.viewTreeObserver.removeOnGlobalLayoutListener(listener)
-    }
 }
