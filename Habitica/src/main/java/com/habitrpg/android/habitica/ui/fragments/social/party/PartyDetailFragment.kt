@@ -12,6 +12,7 @@ import androidx.core.os.bundleOf
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
+import com.habitrpg.android.habitica.data.ChallengeRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentPartyDetailBinding
@@ -21,6 +22,7 @@ import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.members.Member
+import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.modules.AppModule
@@ -55,11 +57,17 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
     }
 
     @Inject
+    lateinit var challengeRepository: ChallengeRepository
+
+    @Inject
     lateinit var socialRepository: SocialRepository
+
     @Inject
     lateinit var userRepository: UserRepository
+
     @Inject
     lateinit var inventoryRepository: InventoryRepository
+
     @field:[Inject Named(AppModule.NAMED_USER_ID)]
     lateinit var userId: String
 
@@ -167,18 +175,18 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
         if ((user.invitations?.parties?.count() ?: 0) > 0) {
             binding?.partyInvitationWrapper?.visibility = View.VISIBLE
             user.invitations?.parties?.let {
-                for (invitation in it){
+                for (invitation in it) {
                     val leaderID = invitation.inviter
                     val groupName = invitation.name
 
                     leaderID.let { id ->
                         compositeSubscription.add(
-                            socialRepository.getMember(id)
-                                    .subscribe({ member ->
-                                        binding?.root?.findViewById<AvatarView>(R.id.groupleader_avatar_view)?.setAvatar(member)
-                                        binding?.root?.findViewById<TextView>(R.id.groupleader_text_view)?.text = getString(R.string.invitation_title, member.displayName, groupName)
-                                    }, RxErrorHandler.handleEmptyError())
-                                )
+                                socialRepository.getMember(id)
+                                        .subscribe({ member ->
+                                            binding?.root?.findViewById<AvatarView>(R.id.groupleader_avatar_view)?.setAvatar(member)
+                                            binding?.root?.findViewById<TextView>(R.id.groupleader_text_view)?.text = getString(R.string.invitation_title, member.displayName, groupName)
+                                        }, RxErrorHandler.handleEmptyError())
+                        )
                     }
 
                     view?.findViewById<Button>(R.id.accept_button)?.setOnClickListener {
@@ -330,25 +338,58 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
         fragment.show(parentFragmentManager, "questDialog")
     }
 
+    private fun getGroupChallenges(): List<Challenge> {
+        var groupChallenges = mutableListOf<Challenge>()
+        userRepository.getUser(userId).forEach {
+            it.challenges?.forEach {
+                challengeRepository.getChallenge(it.challengeID).forEach {
+                    if (it.groupId.equals(viewModel?.groupID)) {
+                        groupChallenges.add(it)
+                    }
+                }
+            }
+        }
+        return groupChallenges
+    }
+
     internal fun leaveParty() {
         val context = context
         if (context != null) {
-            val alert = HabiticaAlertDialog(context)
-            alert.setMessage(R.string.leave_party_confirmation)
-            alert.addButton(R.string.keep_challenges, true) { _, _ ->
-                viewModel?.leaveGroup(true) {
-                    parentFragmentManager.popBackStack()
-                    MainNavigationController.navigate(R.id.noPartyFragment)
+            var groupChallenges = getGroupChallenges()
+            GlobalScope.launch(Dispatchers.Main) {
+                delay(500)
+                if (groupChallenges.isNotEmpty()) {
+                    val alert = HabiticaAlertDialog(context)
+                    alert.setTitle(R.string.party_challenges)
+                    alert.setMessage(R.string.leave_party_challenges_confirmation)
+                    alert.addButton(R.string.keep_challenges, true) { _, _ ->
+                        viewModel?.leaveGroup(groupChallenges,true) {
+                            parentFragmentManager.popBackStack()
+                            MainNavigationController.navigate(R.id.noPartyFragment)
+                        }
+                    }
+                    alert.addButton(R.string.leave_challenges_delete_tasks, false, isDestructive = true) { _, _ ->
+                        viewModel?.leaveGroup(groupChallenges,false) {
+                            parentFragmentManager.popBackStack()
+                            MainNavigationController.navigate(R.id.noPartyFragment)
+                        }
+                    }
+                    alert.setExtraCloseButtonVisibility(View.VISIBLE)
+                    alert.show()
+                } else {
+                    val alert = HabiticaAlertDialog(context)
+                    alert.setTitle(R.string.leave_party_confirmation)
+                    alert.setMessage(R.string.rejoin_party)
+                    alert.addButton(R.string.leave, isPrimary = true, isDestructive = true) { _, _ ->
+                        viewModel?.leaveGroup(groupChallenges, false) {
+                            parentFragmentManager.popBackStack()
+                            MainNavigationController.navigate(R.id.noPartyFragment)
+                        }
+                    }
+                    alert.setExtraCloseButtonVisibility(View.VISIBLE)
+                    alert.show()
                 }
             }
-            alert.addButton(R.string.leave_challenges, true) { _, _ ->
-                viewModel?.leaveGroup(false) {
-                    parentFragmentManager.popBackStack()
-                    MainNavigationController.navigate(R.id.noPartyFragment)
-                }
-            }
-            alert.addButton(R.string.no, false)
-            alert.show()
         }
     }
 

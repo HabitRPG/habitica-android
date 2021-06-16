@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.habitrpg.android.habitica.components.UserComponent
+import com.habitrpg.android.habitica.data.ChallengeRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.extensions.Optional
 import com.habitrpg.android.habitica.extensions.asOptional
@@ -13,6 +14,7 @@ import com.habitrpg.android.habitica.helpers.NotificationsManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.notifications.NewChatMessageData
+import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.social.Group
 import io.reactivex.rxjava3.core.BackpressureStrategy
@@ -30,6 +32,8 @@ enum class GroupViewType(internal val order: String) {
 
 open class GroupViewModel : BaseViewModel() {
 
+    @Inject
+    lateinit var challengeRepository: ChallengeRepository
     @Inject
     lateinit var socialRepository: SocialRepository
     @Inject
@@ -162,7 +166,12 @@ open class GroupViewModel : BaseViewModel() {
         }
     }
 
-    fun leaveGroup(keepChallenges: Boolean = true, function: (() -> Unit)? = null) {
+    fun leaveGroup(groupChallenges: List<Challenge>, keepChallenges: Boolean = true, function: (() -> Unit)? = null) {
+        if(!keepChallenges) {
+            for (challenge in groupChallenges) {
+                challengeRepository.leaveChallenge(challenge, "remove-all").subscribe({}, RxErrorHandler.handleEmptyError())
+            }
+        }
         disposable.add(socialRepository.leaveGroup(this.group.value?.id ?: "", keepChallenges)
                 .flatMap { userRepository.retrieveUser(withTasks = false, forced = true) }
                 .subscribe({

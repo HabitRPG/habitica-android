@@ -440,7 +440,9 @@
     <string name="challenge_leave_title">Leave Challenge</string>
     <string name="challenge_leave_description">You can choose to keep this Challenge\'s tasks on your personal task board or delete them when you leave</string>
     <string name="leave_keep_tasks">Leave &amp; Keep Tasks</string>
-    <string name="leave_delte_tasks">Leave &amp; Delete Tasks</string>
+    <string name="leave_delete_tasks">Leave &amp; Delete Tasks</string>
+    <string name="guild_challenges">You\'re participating in a Guild Challenge</string>
+    <string name="party_challenges">You\'re participating in a Party Challenge</string>
     <string name="remove_tasks">Remove</string>
     <string name="keep_tasks">Keep</string>
     <string name="my_challenges">My Challenges</string>
@@ -542,7 +544,9 @@
     <string name="welcome_back">Welcome Back</string>
     <string name="yesterdaililes_prompt">Check off any Dailies you did yesterday:</string>
     <string name="start_day">Start My Day</string>
-    <string name="leave_party_confirmation">Do you want to leave the party and keep or leave the challenges?</string>
+    <string name="leave_party_confirmation">Are you sure you want to leave this party?</string>
+    <string name="leave_party_challenges_confirmation">Do you want to keep participating in the Challenge when leaving the Party?</string>
+    <string name="rejoin_party">You will not be able to rejoin this party unless invited.</string>
     <string name="pending">Pending</string>
     <string name="accepted">Accepted</string>
     <string name="declined">Declined</string>
@@ -818,7 +822,9 @@
     <string name="report_violation">Report Violation</string>
     <string name="trillion_abbrev">t</string>
     <string name="leave_guild">Leave Guild</string>
-    <string name="leave_guild_confirmation">Do you want to leave the guild and keep or leave the challenges?</string>
+    <string name="leave_guild_confirmation">Are you sure you want to leave this guild?</string>
+    <string name="leave_guild_challenges_confirmation">Do you want to keep participating in the Challenge when leaving the Guild?</string>
+    <string name="rejoin_guild">You can rejoin this guild from the Guilds: Discover page</string>
     <string name="left_guild">You left the guild</string>
     <string name="joined_guild">You joined the guild</string>
     <string name="cost">Cost</string>
@@ -887,6 +893,7 @@
     <string name="inviteFriendDescription">You invited a friend (or friends) who joined you on your adventure!</string>
     <string name="keep_challenges">Keep Challenges</string>
     <string name="leave_challenges">Leave Challenges</string>
+    <string name="leave_challenges_delete_tasks">Leave Challenges &amp; Delete Tasks</string>
     <string name="equip_automatically">Auto-equip new</string>
     <string name="accept">Accept</string>
     <string name="reject">Reject</string>

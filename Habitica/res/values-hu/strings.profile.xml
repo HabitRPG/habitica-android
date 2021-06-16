@@ -1,7 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="profile_level">Szint:</string>
-    <string name="profile_mounts_tamed">Megszelídített hátasok</string>
-    <string name="profile_pets_found">Megtalált háziállatok</string>
-    <string name="profile_pets_and_mounts">Háziállatok &amp; Hátasok</string>
-</resources>
+<resources />

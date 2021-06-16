@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <resources xmlns:tools="http://schemas.android.com/tools">
   <string name="action_refresh">Opdater</string>
   <string name="XP_default">Erfaring</string>
