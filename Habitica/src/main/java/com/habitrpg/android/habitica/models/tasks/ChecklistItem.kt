@@ -2,13 +2,16 @@ package com.habitrpg.android.habitica.models.tasks
 
 import android.os.Parcel
 import android.os.Parcelable
+import com.habitrpg.android.habitica.models.BaseMainObject
 import com.habitrpg.android.habitica.models.BaseObject
 import io.realm.RealmModel
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
+import io.realm.annotations.RealmClass
 import java.util.*
 
-open class ChecklistItem : RealmObject, BaseObject, Parcelable {
+@RealmClass(embedded = true)
+open class ChecklistItem : RealmObject, BaseMainObject, Parcelable {
 
     override val realmClass: Class<ChecklistItem>
         get() = ChecklistItem::class.java
@@ -17,7 +20,6 @@ open class ChecklistItem : RealmObject, BaseObject, Parcelable {
     override val primaryIdentifierName: String
         get() = "id"
 
-    @PrimaryKey
     var id: String? = null
     var text: String? = null
     var completed: Boolean = false
@@ -37,16 +39,6 @@ open class ChecklistItem : RealmObject, BaseObject, Parcelable {
         this.text = item.text
         this.id = item.id
         this.completed = item.completed
-    }
-
-    override fun equals(other: Any?): Boolean {
-        return if (other?.javaClass == ChecklistItem::class.java && this.id != null) {
-            this.id == (other as? ChecklistItem)?.id
-        } else super.equals(other)
-    }
-
-    override fun hashCode(): Int {
-        return id?.hashCode() ?: 0
     }
 
     override fun describeContents(): Int {

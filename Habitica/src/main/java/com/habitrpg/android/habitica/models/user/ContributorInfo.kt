@@ -4,9 +4,12 @@ import io.realm.RealmObject
 import android.util.SparseIntArray
 import com.habitrpg.android.habitica.models.user.ContributorInfo
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.models.BaseObject
 import io.realm.annotations.PrimaryKey
+import io.realm.annotations.RealmClass
 
-open class ContributorInfo : RealmObject() {
+@RealmClass(embedded = true)
+open class ContributorInfo : RealmObject(), BaseObject {
     companion object {
         val CONTRIBUTOR_COLOR_DICT: SparseIntArray = SparseIntArray()
 
@@ -24,9 +27,6 @@ open class ContributorInfo : RealmObject() {
         }
     }
 
-    @PrimaryKey
-    var userId: String? = null
-    var user: User? = null
     var admin = false
     var contributions: String? = null
     var level = 0

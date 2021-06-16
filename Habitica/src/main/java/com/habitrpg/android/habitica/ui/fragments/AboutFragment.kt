@@ -122,8 +122,9 @@ class AboutFragment : BaseMainFragment<FragmentAboutBinding>() {
     }
 
     private fun doTheThing() {
-        context?.let { FirebaseAnalytics.getInstance(it).logEvent("found_easter_egg", null) }
-        DataBindingUtils.loadImage("Pet-Sabretooth-Base") {bitmap ->
+        val context = context ?: return
+        FirebaseAnalytics.getInstance(context).logEvent("found_easter_egg", null)
+        DataBindingUtils.loadImage(context,"Pet-Sabretooth-Base") {bitmap ->
             activity?.runOnUiThread {
                 activity?.let {
                     ParticleSystem(it, 50, bitmap, 3000)
@@ -135,7 +136,7 @@ class AboutFragment : BaseMainFragment<FragmentAboutBinding>() {
                 }
             }
         }
-        DataBindingUtils.loadImage("Pet-Sabretooth-Golden") {bitmap ->
+        DataBindingUtils.loadImage(context,"Pet-Sabretooth-Golden") {bitmap ->
             activity?.runOnUiThread {
                 activity?.let {
                     ParticleSystem(it, 50, bitmap, 3000)
@@ -147,7 +148,7 @@ class AboutFragment : BaseMainFragment<FragmentAboutBinding>() {
                 }
             }
         }
-        DataBindingUtils.loadImage("Pet-Sabretooth-Red") {bitmap ->
+        DataBindingUtils.loadImage(context, "Pet-Sabretooth-Red") {bitmap ->
             activity?.runOnUiThread {
                 activity?.let {
                     ParticleSystem(it, 50, bitmap, 3000)

@@ -1,18 +1,19 @@
 package com.habitrpg.android.habitica.ui.views
 
 import android.graphics.drawable.Drawable
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.view.animation.AccelerateInterpolator
+import android.widget.*
 import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.habitrpg.android.habitica.R
+import com.plattysoft.leonids.ParticleSystem
 
 class HabiticaSnackbar
 /**
@@ -79,8 +80,9 @@ private constructor(parent: ViewGroup, content: View, callback: ContentViewCallb
         return this
     }
 
-    private class ContentViewCallback(private val content: View) : BaseTransientBottomBar.ContentViewCallback {
+    private class ContentViewCallback(private val content: View) : com.google.android.material.snackbar.ContentViewCallback {
 
+        @Suppress("SameParameterValue")
         override fun animateContentIn(delay: Int, duration: Int) {
             content.scaleY = 0f
             content.scaleX = 0f
@@ -116,24 +118,24 @@ private constructor(parent: ViewGroup, content: View, callback: ContentViewCallb
         }
 
 
-        fun showSnackbar(container: ViewGroup, content: CharSequence?, displayType: SnackbarDisplayType) {
-            showSnackbar(container, null, null, content, null, null, 0, null, displayType)
+        fun showSnackbar(container: ViewGroup, content: CharSequence?, displayType: SnackbarDisplayType, isCelebratory: Boolean = false) {
+            showSnackbar(container, null, null, content, null, null, 0, null, displayType, isCelebratory)
         }
 
-        fun showSnackbar(container: ViewGroup, leftImage: Drawable, title: CharSequence?, content: CharSequence?, displayType: SnackbarDisplayType) {
-            showSnackbar(container, leftImage, title, content, null, null, 0, null, displayType)
+        fun showSnackbar(container: ViewGroup, leftImage: Drawable, title: CharSequence?, content: CharSequence?, displayType: SnackbarDisplayType, isCelebratory: Boolean = false) {
+            showSnackbar(container, leftImage, title, content, null, null, 0, null, displayType, isCelebratory)
         }
 
 
-        fun showSnackbar(container: ViewGroup, title: CharSequence?, content: CharSequence?, rightIcon: Drawable, rightTextColor: Int, rightText: String, displayType: SnackbarDisplayType) {
-            showSnackbar(container, null, title, content, null, rightIcon, rightTextColor, rightText, displayType)
+        fun showSnackbar(container: ViewGroup, title: CharSequence?, content: CharSequence?, rightIcon: Drawable, rightTextColor: Int, rightText: String, displayType: SnackbarDisplayType, isCelebratory: Boolean = false) {
+            showSnackbar(container, null, title, content, null, rightIcon, rightTextColor, rightText, displayType, isCelebratory)
         }
 
-        fun showSnackbar(container: ViewGroup, title: CharSequence?, content: CharSequence?, specialView: View?, displayType: SnackbarDisplayType) {
-            showSnackbar(container, null, title, content, specialView, null, 0, null, displayType)
+        fun showSnackbar(container: ViewGroup, title: CharSequence?, content: CharSequence?, specialView: View?, displayType: SnackbarDisplayType, isCelebratory: Boolean = false) {
+            showSnackbar(container, null, title, content, specialView, null, 0, null, displayType, isCelebratory)
         }
 
-        fun showSnackbar(container: ViewGroup, leftImage: Drawable?, title: CharSequence?, content: CharSequence?, specialView: View?, rightIcon: Drawable?, rightTextColor: Int, rightText: String?, displayType: SnackbarDisplayType) {
+        fun showSnackbar(container: ViewGroup, leftImage: Drawable?, title: CharSequence?, content: CharSequence?, specialView: View?, rightIcon: Drawable?, rightTextColor: Int, rightText: String?, displayType: SnackbarDisplayType, isCelebratory: Boolean = false) {
             val snackbar = make(container, Snackbar.LENGTH_LONG)
                     .setTitle(title)
                     .setText(content)
@@ -149,6 +151,35 @@ private constructor(parent: ViewGroup, content: View, callback: ContentViewCallb
             }
 
             snackbar.show()
+
+            if (isCelebratory) {
+                container.postDelayed({
+                    ParticleSystem(container, 30, ContextCompat.getDrawable(container.context, R.drawable.confetti_blue), 6000)
+                            .setAcceleration(0.00070f, 90)
+                            .setRotationSpeed(144f)
+                            .setSpeedByComponentsRange(-0.15f, 0.15f, -0.15f, -0.45f)
+                            .setFadeOut(200, AccelerateInterpolator())
+                            .emitWithGravity(container, Gravity.BOTTOM, 7, 1000)
+                    ParticleSystem(container, 30, ContextCompat.getDrawable(container.context, R.drawable.confetti_red), 6000)
+                            .setAcceleration(0.00060f, 90)
+                            .setRotationSpeed(144f)
+                            .setSpeedByComponentsRange(-0.15f, 0.15f, -0.15f, -0.45f)
+                            .setFadeOut(200, AccelerateInterpolator())
+                            .emitWithGravity(container, Gravity.BOTTOM, 7, 1000)
+                    ParticleSystem(container, 30, ContextCompat.getDrawable(container.context, R.drawable.confetti_yellow), 6000)
+                            .setAcceleration(0.00070f, 90)
+                            .setRotationSpeed(144f)
+                            .setSpeedByComponentsRange(-0.15f, 0.15f, -0.15f, -0.45f)
+                            .setFadeOut(200, AccelerateInterpolator())
+                            .emitWithGravity(container, Gravity.BOTTOM, 7, 1000)
+                    ParticleSystem(container, 30, ContextCompat.getDrawable(container.context, R.drawable.confetti_purple), 6000)
+                            .setAcceleration(0.00090f, 90)
+                            .setRotationSpeed(144f)
+                            .setSpeedByComponentsRange(-0.15f, 0.15f, -0.15f, -0.45f)
+                            .setFadeOut(200, AccelerateInterpolator())
+                            .emitWithGravity(container, Gravity.BOTTOM, 7, 1000)
+                }, 500)
+            }
         }
     }
 }

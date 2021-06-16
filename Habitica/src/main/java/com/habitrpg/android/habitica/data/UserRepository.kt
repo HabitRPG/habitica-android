@@ -16,7 +16,6 @@ import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Maybe
-import io.realm.RealmResults
 
 interface UserRepository : BaseRepository {
     fun getUser(): Flowable<User>
@@ -34,13 +33,12 @@ interface UserRepository : BaseRepository {
 
     fun sleep(user: User): Flowable<User>
 
-    fun getSkills(user: User): Flowable<RealmResults<Skill>>
+    fun getSkills(user: User): Flowable<out List<Skill>>
 
-    fun getSpecialItems(user: User): Flowable<RealmResults<Skill>>
+    fun getSpecialItems(user: User): Flowable<out List<Skill>>
 
-    fun useSkill(user: User?, key: String, target: String?, taskId: String): Flowable<SkillResponse>
-
-    fun useSkill(user: User?, key: String, target: String?): Flowable<SkillResponse>
+    fun useSkill(key: String, target: String?, taskId: String): Flowable<SkillResponse>
+    fun useSkill(key: String, target: String?): Flowable<SkillResponse>
 
     fun changeClass(): Flowable<User>
 
@@ -73,18 +71,18 @@ interface UserRepository : BaseRepository {
     fun verifyUsername(username: String): Flowable<VerifyUsernameResponse>
 
     fun allocatePoint(stat: String): Flowable<Stats>
+    fun bulkAllocatePoints(strength: Int, intelligence: Int, constitution: Int, perception: Int): Flowable<Stats>
 
-    fun bulkAllocatePoints(user: User?, strength: Int, intelligence: Int, constitution: Int, perception: Int): Flowable<Stats>
-    fun useCustomization(user: User?, type: String, category: String?, identifier: String): Flowable<User>
+    fun useCustomization(type: String, category: String?, identifier: String): Flowable<User>
     fun retrieveAchievements(): Flowable<List<Achievement>>
-    fun getAchievements(): Flowable<RealmResults<Achievement>>
-    fun getQuestAchievements(): Flowable<RealmResults<QuestAchievement>>
+    fun getAchievements(): Flowable<out List<Achievement>>
+    fun getQuestAchievements(): Flowable<out List<QuestAchievement>>
 
     fun getUserQuestStatus(): Flowable<UserQuestStatus>
 
     fun reroll(): Flowable<User>
     fun retrieveTeamPlans(): Flowable<List<TeamPlan>>
-    fun getTeamPlans(): Flowable<RealmResults<TeamPlan>>
+    fun getTeamPlans(): Flowable<out List<TeamPlan>>
     fun retrieveTeamPlan(teamID: String): Flowable<Group>
     fun getTeamPlan(teamID: String): Flowable<Group>
 }

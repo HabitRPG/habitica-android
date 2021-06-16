@@ -1,9 +1,9 @@
 package com.habitrpg.android.habitica.ui.activities
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
@@ -19,7 +19,6 @@ import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.Notification
 import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.notifications.*
-import com.habitrpg.android.habitica.ui.activities.MainActivity.Companion.NOTIFICATION_CLICK
 import com.habitrpg.android.habitica.ui.viewmodels.NotificationsViewModel
 import javax.inject.Inject
 
@@ -244,7 +243,7 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         container?.setOnClickListener {
             val resultIntent = Intent()
             resultIntent.putExtra("notificationId", notification.id)
-            setResult(NOTIFICATION_CLICK, resultIntent)
+            setResult(Activity.RESULT_OK, resultIntent)
             finish()
         }
 
@@ -345,7 +344,7 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
             container?.setOnClickListener {
                 val resultIntent = Intent()
                 resultIntent.putExtra("notificationId", notification.id)
-                setResult(NOTIFICATION_CLICK, resultIntent)
+                setResult(Activity.RESULT_OK, resultIntent)
                 finish()
             }
         }

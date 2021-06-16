@@ -1,15 +1,13 @@
 package com.habitrpg.android.habitica.models.user
 
+import com.habitrpg.android.habitica.models.BaseObject
 import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
+import io.realm.annotations.RealmClass
 
-open class Inbox : RealmObject() {
-
-    @PrimaryKey
-    var userId: String? = null
-
-    internal var user: User? = null
+@RealmClass(embedded = true)
+open class Inbox : RealmObject(), BaseObject {
     var optOut: Boolean = false
     var blocks: RealmList<String> = RealmList()
     var newMessages: Int = 0

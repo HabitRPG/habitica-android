@@ -4,12 +4,14 @@ import android.graphics.PorterDuff
 import android.graphics.drawable.BitmapDrawable
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.graphics.drawable.toBitmap
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.PetDetailItemBinding
 import com.habitrpg.android.habitica.events.commands.FeedCommand
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.*
+import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.menu.BottomSheetMenu
 import com.habitrpg.android.habitica.ui.menu.BottomSheetMenuItem
@@ -27,6 +29,7 @@ class PetViewHolder(parent: ViewGroup, private val equipEvents: PublishSubject<S
     private var potionCount: Int = 0
     private var ownsSaddles = false
     private var animal: Pet? = null
+    private var user: User? = null
 
     private var binding: PetDetailItemBinding = PetDetailItemBinding.bind(itemView)
 
@@ -41,15 +44,18 @@ class PetViewHolder(parent: ViewGroup, private val equipEvents: PublishSubject<S
         itemView.setOnClickListener(this)
     }
 
-    fun bind(item: Pet,
-             trained: Int,
-             eggCount: Int,
-             potionCount: Int,
-             canRaiseToMount: Boolean,
-             ownsSaddles: Boolean,
-             hasUnlockedEgg: Boolean,
-             hasUnlockedPotion: Boolean,
-             hasMount: Boolean) {
+    fun bind(
+        item: Pet,
+        trained: Int,
+        eggCount: Int,
+        potionCount: Int,
+        canRaiseToMount: Boolean,
+        ownsSaddles: Boolean,
+        hasUnlockedEgg: Boolean,
+        hasUnlockedPotion: Boolean,
+        hasMount: Boolean,
+        user: User?
+    ) {
         this.animal = item
         isOwned = trained > 0
         binding.imageView.alpha = 1.0f
@@ -60,6 +66,7 @@ class PetViewHolder(parent: ViewGroup, private val equipEvents: PublishSubject<S
         this.hasUnlockedEgg = hasUnlockedEgg
         this.hasUnlockedPotion = hasUnlockedPotion
         this.hasMount = hasMount
+        this.user = user
         binding.imageView.visibility = View.VISIBLE
         binding.itemWrapper.visibility = View.GONE
         binding.checkmarkView.visibility = View.GONE
@@ -92,14 +99,10 @@ class PetViewHolder(parent: ViewGroup, private val equipEvents: PublishSubject<S
             binding.trainedProgressBar.progressBackgroundTintMode = PorterDuff.Mode.SRC_OVER
         }
         binding.imageView.background = null
-        DataBindingUtils.loadImage(imageName) {
+        DataBindingUtils.loadImage(itemView.context, imageName) {
             val resources = itemView.context.resources ?: return@loadImage
-            val drawable = BitmapDrawable(resources, if (trained  == 0) it.extractAlpha() else it)
-            Observable.just(drawable)
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({
-                        binding.imageView.background = drawable
-                    }, RxErrorHandler.handleEmptyError())
+            val drawable = if (trained  == 0) BitmapDrawable(resources, it.toBitmap().extractAlpha()) else it
+            binding.imageView.background = drawable
         }
     }
 
@@ -111,7 +114,11 @@ class PetViewHolder(parent: ViewGroup, private val equipEvents: PublishSubject<S
         val context = itemView.context
         val menu = BottomSheetMenu(context)
         menu.setTitle(animal?.text)
-        menu.addMenuItem(BottomSheetMenuItem(itemView.resources.getString(R.string.equip)))
+
+        val hasCurrentPet = user?.currentPet.equals(animal?.key)
+        val labelId = if (hasCurrentPet) R.string.unequip else R.string.equip
+        menu.addMenuItem(BottomSheetMenuItem(itemView.resources.getString(labelId)))
+
         if (canRaiseToMount) {
             menu.addMenuItem(BottomSheetMenuItem(itemView.resources.getString(R.string.feed)))
             if (ownsSaddles) {
@@ -126,17 +133,12 @@ class PetViewHolder(parent: ViewGroup, private val equipEvents: PublishSubject<S
                     }
                 }
                 1 -> {
-                    val event = FeedCommand()
-                    event.usingPet = animal
-                    EventBus.getDefault().post(event)
+                    EventBus.getDefault().post(FeedCommand(animal, null))
                 }
                 2 -> {
-                    val event = FeedCommand()
-                    event.usingPet = animal
                     val saddle = Food()
                     saddle.key = "Saddle"
-                    event.usingFood = saddle
-                    EventBus.getDefault().post(event)
+                    EventBus.getDefault().post(FeedCommand(animal, saddle))
                 }
             }
         }

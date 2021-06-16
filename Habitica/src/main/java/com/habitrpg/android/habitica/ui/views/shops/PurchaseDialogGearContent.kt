@@ -1,9 +1,9 @@
 package com.habitrpg.android.habitica.ui.views.shops
 
 import android.content.Context
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.DialogPurchaseContentGearBinding
 import com.habitrpg.android.habitica.extensions.layoutInflater
@@ -12,7 +12,7 @@ import com.habitrpg.android.habitica.models.shops.ShopItem
 
 internal class PurchaseDialogGearContent(context: Context) : PurchaseDialogContent(context) {
     val binding = DialogPurchaseContentGearBinding.inflate(context.layoutInflater, this)
-    override val imageView: SimpleDraweeView
+    override val imageView: ImageView
         get() = binding.imageView
     override val titleTextView: TextView
         get() = binding.titleTextView

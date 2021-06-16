@@ -1,12 +1,10 @@
 package com.habitrpg.android.habitica.models.inventory
 
+import com.habitrpg.android.habitica.models.BaseObject
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
-/**
- * Created by phillip on 25.07.17.
- */
-open class QuestDropItem : RealmObject() {
+open class QuestDropItem : RealmObject(), BaseObject {
     @PrimaryKey
     var combinedKey: String? = null
     var questKey: String? = null
@@ -21,7 +19,7 @@ open class QuestDropItem : RealmObject() {
     }
     var type: String? = null
     var text: String? = null
-    var isOnlyOwner = false
+    var onlyOwner = false
     var count = 0
 
     val imageName: String

@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.ui.views.stats
 
-import android.app.ProgressDialog
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
@@ -12,7 +12,6 @@ import com.habitrpg.android.habitica.databinding.DialogBulkAllocateBinding
 import com.habitrpg.android.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.rxjava3.disposables.Disposable
 import javax.inject.Inject
 
@@ -43,16 +42,6 @@ class BulkAllocateStatsDialog(context: Context, component: UserComponent?) : Ale
         binding.perceptionSliderView.maxValue = pointsToAllocate
     }
 
-    private var user: User? = null
-    set(value) {
-        field = value
-        pointsToAllocate = user?.stats?.points ?: 0
-        binding.strengthSliderView.previousValue = user?.stats?.strength ?: 0
-        binding.intelligenceSliderView.previousValue = user?.stats?.intelligence ?: 0
-        binding.constitutionSliderView.previousValue = user?.stats?.constitution ?: 0
-        binding.perceptionSliderView.previousValue = user?.stats?.per ?: 0
-    }
-
     init {
         component?.inject(this)
 
@@ -66,18 +55,15 @@ class BulkAllocateStatsDialog(context: Context, component: UserComponent?) : Ale
     }
 
     private fun saveChanges() {
-        @Suppress("DEPRECATION")
-        val progressDialog = ProgressDialog.show(context, context.getString(R.string.allocating_points), null, true)
-        userRepository.bulkAllocatePoints(user, binding.strengthSliderView.currentValue,
+        getButton(BUTTON_POSITIVE).isEnabled = false
+        userRepository.bulkAllocatePoints(binding.strengthSliderView.currentValue,
                 binding.intelligenceSliderView.currentValue,
                 binding.constitutionSliderView.currentValue,
                 binding.perceptionSliderView.currentValue)
                 .subscribe({
-                    progressDialog.dismiss()
                     this.dismiss()
                 }, {
                     RxErrorHandler.reportError(it)
-                    progressDialog.dismiss()
                     this.dismiss()
                 })
     }
@@ -85,7 +71,11 @@ class BulkAllocateStatsDialog(context: Context, component: UserComponent?) : Ale
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         subscription = userRepository.getUser().subscribe({
-            user = it
+            pointsToAllocate = it.stats?.points ?: 0
+            binding.strengthSliderView.previousValue = it.stats?.strength ?: 0
+            binding.intelligenceSliderView.previousValue = it.stats?.intelligence ?: 0
+            binding.constitutionSliderView.previousValue = it.stats?.constitution ?: 0
+            binding.perceptionSliderView.previousValue = it.stats?.per ?: 0
         }, RxErrorHandler.handleEmptyError())
 
         binding.strengthSliderView.allocateAction = {
@@ -141,6 +131,7 @@ class BulkAllocateStatsDialog(context: Context, component: UserComponent?) : Ale
         super.dismiss()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun updateTitle() {
         binding.allocatedTitle.text = "$allocatedPoints/$pointsToAllocate"
         if (allocatedPoints > 0) {

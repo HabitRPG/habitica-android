@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica.ui.fragments.preferences
 
-import android.app.ProgressDialog
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
@@ -10,6 +9,7 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.core.os.bundleOf
+import androidx.preference.ListPreference
 import androidx.preference.Preference
 import com.google.android.material.textfield.TextInputLayout
 import com.habitrpg.android.habitica.HabiticaBaseApplication
@@ -24,6 +24,7 @@ import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
+import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaProgressDialog
 import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionDetailsView
 import javax.inject.Inject
 
@@ -46,17 +47,17 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
         HabiticaBaseApplication.userComponent?.inject(this)
         super.onCreate(savedInstanceState)
 
-        findPreference("login_name").title = context?.getString(R.string.username)
-        findPreference("confirm_username").isVisible = user?.flags?.verifiedUsername != true
+        findPreference<Preference>("login_name")?.title = context?.getString(R.string.username)
+        findPreference<Preference>("confirm_username")?.isVisible = user?.flags?.verifiedUsername != true
     }
 
     private fun updateUserFields() {
         configurePreference(findPreference("login_name"), user?.authentication?.localAuthentication?.username, false)
         configurePreference(findPreference("email"), user?.authentication?.localAuthentication?.email, true)
-        findPreference("change_password").isVisible = user?.authentication?.localAuthentication?.email?.isNotEmpty() == true
-        findPreference("add_local_auth").isVisible = user?.authentication?.localAuthentication?.email?.isNotEmpty() != true
-        findPreference("confirm_username").isVisible = user?.flags?.verifiedUsername != true
-        val preference = findPreference("authentication_methods")
+        findPreference<Preference>("change_password")?.isVisible = user?.authentication?.localAuthentication?.email?.isNotEmpty() == true
+        findPreference<Preference>("add_local_auth")?.isVisible = user?.authentication?.localAuthentication?.email?.isNotEmpty() != true
+        findPreference<Preference>("confirm_username")?.isVisible = user?.flags?.verifiedUsername != true
+        val preference = findPreference<Preference>("authentication_methods")
         val methods = mutableListOf<String>()
         if (user?.authentication?.localAuthentication?.email != null) {
             context?.getString(R.string.local)?.let { methods.add(it) }
@@ -64,7 +65,7 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
         if (user?.authentication?.hasFacebookAuth == true) { context?.getString(R.string.facebook)?.let { methods.add(it) } }
         if (user?.authentication?.hasGoogleAuth == true) { context?.getString(R.string.google)?.let { methods.add(it) } }
         if (user?.authentication?.hasAppleAuth == true) { context?.getString(R.string.apple_sign_in)?.let { methods.add(it) } }
-        preference.summary = methods.joinToString(", ")
+        preference?.summary = methods.joinToString(", ")
     }
 
     private fun configurePreference(preference: Preference?, value: String?, hideIfEmpty: Boolean) {
@@ -225,13 +226,12 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
     }
 
     private fun deleteAccount(password: String) {
-        @Suppress("DEPRECATION")
-        val dialog = ProgressDialog.show(context, context?.getString(R.string.deleting_account), null, true)
+        val dialog = HabiticaProgressDialog.show(context, R.string.deleting_account)
         compositeSubscription.add(userRepository.deleteAccount(password).subscribe({ _ ->
             context?.let { HabiticaBaseApplication.logout(it) }
             activity?.finish()
         }) { throwable ->
-            dialog.dismiss()
+            dialog?.dismiss()
             RxErrorHandler.reportError(throwable)
         })
     }
@@ -264,10 +264,9 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
     }
 
     private fun resetAccount() {
-        @Suppress("DEPRECATION")
-        val dialog = ProgressDialog.show(context, context?.getString(R.string.resetting_account), null, true)
-        compositeSubscription.add(userRepository.resetAccount().subscribe({ dialog.dismiss() }) { throwable ->
-            dialog.dismiss()
+        val dialog = HabiticaProgressDialog.show(context, R.string.resetting_account)
+        compositeSubscription.add(userRepository.resetAccount().subscribe({ dialog?.dismiss() }) { throwable ->
+            dialog?.dismiss()
             RxErrorHandler.reportError(throwable)
         })
     }

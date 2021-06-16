@@ -5,18 +5,16 @@ import android.content.res.Resources
 
 import com.google.gson.annotations.SerializedName
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.models.BaseObject
+import com.habitrpg.android.habitica.models.inventory.ItemEvent
 import com.habitrpg.android.habitica.models.user.User
 
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
-open class ShopItem : RealmObject() {
+open class ShopItem : RealmObject(), BaseObject {
     @PrimaryKey
     var key: String = ""
-    set(value) {
-        field = value
-        unlockCondition?.questKey = key
-    }
     var text: String? = ""
     var notes: String? = ""
     @SerializedName("class")
@@ -41,12 +39,6 @@ open class ShopItem : RealmObject() {
     var categoryIdentifier: String = ""
     var limitedNumberLeft: Int? = null
     var unlockCondition: ShopItemUnlockCondition? = null
-    set(value) {
-        field = value
-        if (key.isNotEmpty()) {
-            field?.questKey = key
-        }
-    }
     var path: String? = null
     var isSuggested: String? = null
     var pinType: String? = null
@@ -55,6 +47,7 @@ open class ShopItem : RealmObject() {
     var previous: String? = null
     @SerializedName("lvl")
     var level: Int? = null
+    var event: ItemEvent? = null
 
     val isTypeItem: Boolean
         get() = "eggs" == purchaseType || "hatchingPotions" == purchaseType || "food" == purchaseType || "armoire" == purchaseType || "potion" == purchaseType || "debuffPotion" == purchaseType || "fortify" == purchaseType

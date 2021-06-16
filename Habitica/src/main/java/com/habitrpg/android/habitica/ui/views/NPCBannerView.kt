@@ -7,6 +7,7 @@ import android.graphics.drawable.BitmapDrawable
 import android.util.AttributeSet
 import android.widget.FrameLayout
 import android.widget.ImageView
+import androidx.core.graphics.drawable.toBitmap
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.NpcBannerBinding
 import com.habitrpg.android.habitica.extensions.layoutInflater
@@ -41,11 +42,11 @@ class NPCBannerView(context: Context, attrs: AttributeSet?) : FrameLayout(contex
 
         binding.backgroundView.scaleType = ImageView.ScaleType.FIT_START
 
-        DataBindingUtils.loadImage(identifier + "_background" + shopSpriteSuffix) {
-            val aspectRatio = it.width / it.height.toFloat()
+        DataBindingUtils.loadImage(context, identifier + "_background" + shopSpriteSuffix) {
+            val aspectRatio = it.intrinsicWidth / it.intrinsicHeight.toFloat()
             val height = context.resources.getDimension(R.dimen.shop_height).toInt()
             val width = (height * aspectRatio).roundToInt()
-            val drawable = BitmapDrawable(context.resources, Bitmap.createScaledBitmap(it, width, height, false))
+            val drawable = BitmapDrawable(context.resources, Bitmap.createScaledBitmap(it.toBitmap(), width, height, false))
             drawable.tileModeX = Shader.TileMode.REPEAT
             Observable.just(drawable)
                     .observeOn(AndroidSchedulers.mainThread())

@@ -47,7 +47,7 @@
         android:orientation="vertical">
 
 
-        <com.habitrpg.android.habitica.ui.views.HabiticaEmojiTextView
+        <TextView
             android:id="@+id/challenge_name"
             style="@style/ChallengeName"
             android:layout_width="match_parent"
@@ -56,7 +56,7 @@
             android:maxLines="3"
             tools:text="Name" />
 
-        <com.habitrpg.android.habitica.ui.views.HabiticaEmojiTextView
+        <TextView
             android:id="@+id/challenge_shorttext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

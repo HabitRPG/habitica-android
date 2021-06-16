@@ -244,7 +244,7 @@ class TaskSchedulingControls @JvmOverloads constructor(
             val isActive = isWeekdayActive(weekdayCode)
             val layoutParams = LayoutParams(size, size)
             button.layoutParams = layoutParams
-            button.text = weekdays[weekdayCode].first().toUpperCase().toString()
+            button.text = weekdays[weekdayCode].first().uppercaseChar().toString()
             button.contentDescription = toContentDescription(weekdays[weekdayCode], isActive)
             button.tag = weekdayCode
             if (isActive) {
@@ -270,12 +270,12 @@ class TaskSchedulingControls @JvmOverloads constructor(
     }
 
     private fun configureMonthlyRepeatViews() {
-        if (daysOfMonth != null && daysOfMonth?.isEmpty() != true) {
+        if (daysOfMonth?.isEmpty() == false) {
             styleButtonAsActive(binding.monthlyRepeatDays)
         } else {
             styleButtonAsInactive(binding.monthlyRepeatDays)
         }
-        if (weeksOfMonth != null && weeksOfMonth?.isEmpty() != true) {
+        if (weeksOfMonth?.isEmpty() == false) {
             styleButtonAsActive(binding.monthlyRepeatWeeks)
         } else {
             styleButtonAsInactive(binding.monthlyRepeatWeeks)

@@ -3,25 +3,14 @@ package com.habitrpg.android.habitica.models.user
 import android.content.Context
 import com.google.gson.annotations.SerializedName
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.models.BaseObject
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
+import io.realm.annotations.RealmClass
 
 
-open class Stats : RealmObject() {
-
-    @PrimaryKey
-    var userId: String? = null
-        set(userId) {
-            field = userId
-            if (buffs?.isManaged == false) {
-                buffs?.userId = userId
-            }
-            if (training?.isManaged == false) {
-                training?.userId = userId
-            }
-        }
-
-    internal var user: User? = null
+@RealmClass(embedded = true)
+open class Stats : RealmObject(), BaseObject {
     @SerializedName("con")
     var constitution: Int? = null
     @SerializedName("str")

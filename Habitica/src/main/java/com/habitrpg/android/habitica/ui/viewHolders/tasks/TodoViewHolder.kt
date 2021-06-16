@@ -12,12 +12,12 @@ class TodoViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> Un
 
     private val dateFormatter: DateFormat = android.text.format.DateFormat.getDateFormat(context)
 
-    override fun bind(newTask: Task, position: Int, displayMode: String) {
-        this.task = newTask
-        setChecklistIndicatorBackgroundActive(newTask.isChecklistDisplayActive)
+    override fun bind(data: Task, position: Int, displayMode: String) {
+        this.task = data
+        setChecklistIndicatorBackgroundActive(data.isChecklistDisplayActive)
         reminderTextView.visibility = View.GONE
         this.streakTextView.visibility = View.GONE
-        super.bind(newTask, position, displayMode)
+        super.bind(data, position, displayMode)
     }
 
     override fun configureSpecialTaskTextView(task: Task) {

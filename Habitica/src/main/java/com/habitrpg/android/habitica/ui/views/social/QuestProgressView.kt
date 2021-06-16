@@ -16,7 +16,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.content.edit
-import com.facebook.drawee.view.SimpleDraweeView
+import androidx.core.graphics.drawable.toBitmap
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.QuestProgressBinding
 import com.habitrpg.android.habitica.extensions.layoutInflater
@@ -34,7 +34,6 @@ import com.habitrpg.android.habitica.ui.views.ValueBar
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.realm.RealmList
 
 
 class QuestProgressView : LinearLayout {
@@ -182,10 +181,11 @@ class QuestProgressView : LinearLayout {
         progress?.rageStrikes?.sortedByDescending { it.wasHit }?.forEach { strike ->
             val iconView = ImageView(context)
             if (strike.wasHit) {
-                DataBindingUtils.loadImage("rage_strike_${strike.key}") {
+                DataBindingUtils.loadImage(context,"rage_strike_${strike.key}") {
                     Observable.just(it)
                             .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe({ bitmap ->
+                            .subscribe({ drawable ->
+                                val bitmap = drawable.toBitmap()
                                 val displayDensity = resources.displayMetrics.density
                                 val width = bitmap.width * displayDensity
                                 val height = bitmap.height * displayDensity
@@ -246,12 +246,12 @@ class QuestProgressView : LinearLayout {
         alert.show()
     }
 
-    private fun setCollectionViews(collection: RealmList<QuestProgressCollect>, quest: QuestContent) {
+    private fun setCollectionViews(collection: List<QuestProgressCollect>, quest: QuestContent) {
         val inflater = LayoutInflater.from(context)
         for (collect in collection) {
             val contentCollect = quest.getCollectWithKey(collect.key) ?: continue
             val view = inflater.inflate(R.layout.quest_collect, binding.collectionContainer, false)
-            val iconView: SimpleDraweeView = view.findViewById(R.id.icon_view)
+            val iconView: ImageView = view.findViewById(R.id.icon_view)
             val nameView: TextView = view.findViewById(R.id.name_view)
             val valueView: ValueBar = view.findViewById(R.id.value_view)
             DataBindingUtils.loadImage(iconView, "quest_" + quest.key + "_" + collect.key)

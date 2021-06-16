@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,7 +15,6 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.shops.ShopItem
-import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.activities.SkillMemberActivity
 import com.habitrpg.android.habitica.ui.adapter.tasks.RewardsRecyclerViewAdapter
@@ -61,7 +61,7 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
         (recyclerAdapter as? RewardsRecyclerViewAdapter)?.purchaseCardEvents?.subscribe({
             selectedCard = it
             val intent = Intent(activity, SkillMemberActivity::class.java)
-            startActivityForResult(intent, 11)
+            cardSelectedResult.launch(intent)
         }, RxErrorHandler.handleEmptyError())?.let { compositeSubscription.add(it) }
         recyclerAdapter?.brokenTaskEvents?.subscribeWithErrorHandler { showBrokenChallengeDialog(it) }?.let { compositeSubscription.add(it) }
 
@@ -76,7 +76,7 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
 
     override fun onRefresh() {
         binding?.refreshLayout?.isRefreshing = true
-        compositeSubscription.add(userRepository.retrieveUser(true, true)
+        compositeSubscription.add(userRepository.retrieveUser(withTasks = true, forced = true)
                 .flatMap { inventoryRepository.retrieveInAppRewards() }
                 .doOnTerminate {
                     binding?.refreshLayout?.isRefreshing = false
@@ -97,34 +97,24 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
         (layoutManager as? GridLayoutManager)?.spanCount = spanCount
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (data != null) {
-            when (requestCode) {
-                11 -> {
-                    if (resultCode == Activity.RESULT_OK) {
-                        userRepository.useSkill(null,
-                                selectedCard?.key ?: "",
-                                "member",
-                                data.getStringExtra("member_id") ?: "")
-                                .subscribeWithErrorHandler(Consumer {
-                                    val activity = (activity as? MainActivity) ?: return@Consumer
-                                    HabiticaSnackbar.showSnackbar(activity.snackbarContainer,
-                                            context?.getString(R.string.sent_card, selectedCard?.text),
-                                            HabiticaSnackbar.SnackbarDisplayType.BLUE)
-                                })
-                    }
-                }
-            }
+    private val cardSelectedResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if (it.resultCode == Activity.RESULT_OK) {
+            userRepository.useSkill(selectedCard?.key ?: "",
+                "member",
+                it.data?.getStringExtra("member_id") ?: "")
+                .subscribeWithErrorHandler(Consumer {
+                    val activity = (activity as? MainActivity) ?: return@Consumer
+                    HabiticaSnackbar.showSnackbar(activity.snackbarContainer,
+                        context?.getString(R.string.sent_card, selectedCard?.text),
+                        HabiticaSnackbar.SnackbarDisplayType.BLUE)
+                })
         }
     }
 
     companion object {
-
         fun newInstance(context: Context?, classType: String, showCustomRewards: Boolean): RewardsRecyclerviewFragment {
             val fragment = RewardsRecyclerviewFragment()
-            fragment.retainInstance = true
-            fragment.classType = classType
+            fragment.taskType = classType
             fragment.showCustomRewards = showCustomRewards
 
             if (context != null) {

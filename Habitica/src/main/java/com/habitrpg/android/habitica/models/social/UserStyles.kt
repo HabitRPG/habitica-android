@@ -7,17 +7,10 @@ import com.habitrpg.android.habitica.models.user.Preferences
 import com.habitrpg.android.habitica.models.user.Stats
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
+import io.realm.annotations.RealmClass
 
+@RealmClass(embedded = true)
 open class UserStyles : RealmObject(), Avatar {
-    @PrimaryKey
-    var id: String? = null
-        set(value) {
-            field = value
-            stats?.userId = id
-            preferences?.userId = id
-            items?.userId = id
-        }
-
     override val currentMount: String?
         get() = items?.currentMount
 

@@ -6,24 +6,26 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
-import com.habitrpg.android.habitica.databinding.FragmentRecyclerviewBinding
+import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBinding
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.ui.adapter.inventory.EquipmentRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import javax.inject.Inject
 
-class EquipmentDetailFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
+class EquipmentDetailFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>(),
+    SwipeRefreshLayout.OnRefreshListener {
 
     @Inject
     lateinit var inventoryRepository: InventoryRepository
 
-    override var binding: FragmentRecyclerviewBinding? = null
+    override var binding: FragmentRefreshRecyclerviewBinding? = null
 
-    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentRecyclerviewBinding {
-        return FragmentRecyclerviewBinding.inflate(inflater, container, false)
+    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentRefreshRecyclerviewBinding {
+        return FragmentRefreshRecyclerviewBinding.inflate(inflater, container, false)
     }
 
     var type: String? = null
@@ -49,6 +51,7 @@ class EquipmentDetailFragment : BaseMainFragment<FragmentRecyclerviewBinding>() 
             isCostume = args.isCostume
             equippedGear = args.equippedGear
         }
+        binding?.refreshLayout?.setOnRefreshListener(this)
 
         this.adapter.equippedGear = this.equippedGear
         this.adapter.isCostume = this.isCostume
@@ -69,5 +72,11 @@ class EquipmentDetailFragment : BaseMainFragment<FragmentRecyclerviewBinding>() 
 
     override fun injectFragment(component: UserComponent) {
         component.inject(this)
+    }
+
+    override fun onRefresh() {
+        compositeSubscription.add(userRepository.retrieveUser(false, true).subscribe({
+            binding?.refreshLayout?.isRefreshing = false
+        }, RxErrorHandler.handleEmptyError()))
     }
 }

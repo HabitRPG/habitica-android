@@ -6,16 +6,27 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.habitrpg.android.habitica.BuildConfig
+import com.habitrpg.android.habitica.data.ContentRepository
+import com.habitrpg.android.habitica.models.WorldState
 import com.habitrpg.android.habitica.models.promotions.HabiticaPromotion
+import com.habitrpg.android.habitica.models.promotions.HabiticaWebPromotion
 import com.habitrpg.android.habitica.models.promotions.getHabiticaPromotionFromKey
 import java.util.*
 
-class AppConfigManager {
+class AppConfigManager(contentRepository: ContentRepository?) {
+
+    private var worldState: WorldState? = null
+
+    init {
+        contentRepository?.getWorldState()?.subscribe( {
+            worldState = it
+        }, RxErrorHandler.handleEmptyError())
+    }
 
     private val remoteConfig = FirebaseRemoteConfig.getInstance()
 
     fun shopSpriteSuffix(): String {
-        return remoteConfig.getString("shopSpriteSuffix")
+        return worldState?.npcImageSuffix ?: remoteConfig.getString("shopSpriteSuffix")
     }
 
     fun maxChatLength(): Long {
@@ -59,10 +70,6 @@ class AppConfigManager {
         return remoteConfig.getBoolean("enableLocalTaskScoring")
     }
 
-    fun flipAddTaskBehaviour(): Boolean {
-        return remoteConfig.getBoolean("flipAddTaskBehaviour")
-    }
-
     fun insufficientGemPurchase(): Boolean {
         return remoteConfig.getBoolean("insufficientGemPurchase")
     }
@@ -87,6 +94,10 @@ class AppConfigManager {
         return remoteConfig.getString("feedbackURL")
     }
 
+    fun surveyURL(): String {
+        return remoteConfig.getString("surveyURL")
+    }
+
     fun taskDisplayMode(context: Context): String {
         return if (remoteConfig.getBoolean("enableTaskDisplayMode")) {
             val preferences = PreferenceManager.getDefaultSharedPreferences(context)
@@ -100,17 +111,21 @@ class AppConfigManager {
         return remoteConfig.getBoolean("enableAdventureGuide")
     }
 
-    fun activePromo(context: Context): HabiticaPromotion? {
-        val preferences = PreferenceManager.getDefaultSharedPreferences(context)
-        val key = preferences.getString("currentEvent", null)
-        if (key?.isNotBlank() == true) {
-            val startDateLong = preferences.getLong("currentEventStartDate", 0)
-            val startDate = if (startDateLong > 0) Date(startDateLong) else null
-            val endDateLong = preferences.getLong("currentEventEndDate", 0)
-            val endDate = if (endDateLong > 0) Date(endDateLong) else null
-            return getHabiticaPromotionFromKey(preferences.getString("currentEventPromo", null) ?: key, startDate, endDate)
+    fun activePromo(): HabiticaPromotion? {
+        var promo: HabiticaPromotion? = null
+        for (event in worldState?.events ?: listOf(worldState?.currentEvent)) {
+            if (event == null) return null
+            if (event.promo != null) {
+                promo = getHabiticaPromotionFromKey(event.promo ?: "", event.start, event.end)
+            }
         }
-        return null
+        if (promo == null && remoteConfig.getString("activePromo").isNotBlank()) {
+            promo = getHabiticaPromotionFromKey(remoteConfig.getString("activePromo"), null, null)
+        }
+        if (promo is HabiticaWebPromotion) {
+            promo.url = surveyURL()
+        }
+        return promo
     }
 
     fun knownIssues(): List<Map<String, String>> {

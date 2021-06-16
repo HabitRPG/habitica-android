@@ -1,10 +1,6 @@
 package com.habitrpg.android.habitica.ui.adapter
 
 import androidx.recyclerview.widget.RecyclerView
-import com.habitrpg.android.habitica.models.tasks.Task
-import com.habitrpg.android.habitica.ui.viewHolders.BindableViewHolder
-import io.realm.OrderedRealmCollection
-import io.realm.RealmModel
 
 abstract class BaseRecyclerViewAdapter<T, VH: RecyclerView.ViewHolder>: RecyclerView.Adapter<VH>() {
 

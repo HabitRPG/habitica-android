@@ -5,10 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
-import com.habitrpg.android.habitica.databinding.FragmentRecyclerviewBinding
+import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBinding
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.responses.UnlockResponse
@@ -20,15 +21,16 @@ import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import io.reactivex.rxjava3.core.Flowable
 import javax.inject.Inject
 
-class AvatarEquipmentFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
+class AvatarEquipmentFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>(),
+    SwipeRefreshLayout.OnRefreshListener {
 
     @Inject
     lateinit var inventoryRepository: InventoryRepository
 
-    override var binding: FragmentRecyclerviewBinding? = null
+    override var binding: FragmentRefreshRecyclerviewBinding? = null
 
-    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentRecyclerviewBinding {
-        return FragmentRecyclerviewBinding.inflate(inflater, container, false)
+    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentRefreshRecyclerviewBinding {
+        return FragmentRefreshRecyclerviewBinding.inflate(inflater, container, false)
     }
 
     var type: String? = null
@@ -70,7 +72,7 @@ class AvatarEquipmentFragment : BaseMainFragment<FragmentRecyclerviewBinding>() 
                 category = args.category
             }
         }
-
+        binding?.refreshLayout?.setOnRefreshListener(this)
         setGridSpanCount(view.width)
         val layoutManager = GridLayoutManager(activity, 4)
         layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
@@ -135,5 +137,11 @@ class AvatarEquipmentFragment : BaseMainFragment<FragmentRecyclerviewBinding>() 
             this.activeEquipment = activeEquipment
             this.adapter.activeEquipment = activeEquipment
         }
+    }
+
+    override fun onRefresh() {
+        compositeSubscription.add(userRepository.retrieveUser(false, true).subscribe({
+            binding?.refreshLayout?.isRefreshing = false
+        }, RxErrorHandler.handleEmptyError()))
     }
 }

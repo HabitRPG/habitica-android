@@ -41,7 +41,6 @@
         <item name="popupMenuStyle">@style/PopupTheme</item>
         <item name="actionOverflowMenuStyle">@style/PopupTheme</item>
         <item name="android:popupMenuStyle">@style/PopupTheme</item>
-        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
         <item name="android:textColorLink">@color/brand_400</item>
         <item name="alertDialogTheme">@style/AlertDialogTheme</item>
         <item name="android:windowTranslucentStatus">false</item>
@@ -813,10 +812,6 @@
     <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView">
         <item name="android:textColorHint">@color/white_50_alpha</item>
         <item name="searchHintIcon">@null</item>
-    </style>
-
-    <style name="PreferenceThemeOverlay.v14" tools:override="true">
-        <item name="android:background">@color/content_background</item>
     </style>
 
     <style name="FlatCardView">

@@ -4,9 +4,12 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentPagerAdapter
 import androidx.lifecycle.ViewModelProvider
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
@@ -15,7 +18,6 @@ import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.ui.activities.GroupFormActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.fragments.social.ChatFragment
-import com.habitrpg.android.habitica.ui.fragments.social.guilds.GuildFragmentArgs
 import com.habitrpg.android.habitica.ui.viewmodels.GroupViewModel
 import com.habitrpg.android.habitica.ui.viewmodels.GroupViewType
 
@@ -133,9 +135,9 @@ class GuildFragment : BaseMainFragment<FragmentViewpagerBinding>() {
     private fun setViewPagerAdapter() {
         val fragmentManager = childFragmentManager
 
-        binding?.viewPager?.adapter = object : FragmentPagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+        binding?.viewPager?.adapter = object : FragmentStateAdapter(fragmentManager, lifecycle) {
 
-            override fun getItem(position: Int): Fragment {
+            override fun createFragment(position: Int): Fragment {
                 val fragment: Fragment?
 
                 when (position) {
@@ -154,20 +156,12 @@ class GuildFragment : BaseMainFragment<FragmentViewpagerBinding>() {
                 return fragment ?: Fragment()
             }
 
-            override fun getCount(): Int {
+            override fun getItemCount(): Int {
                 return 2
-            }
-
-            override fun getPageTitle(position: Int): CharSequence? {
-                return when (position) {
-                    0 ->  context?.getString(R.string.guild)
-                    1 ->  context?.getString(R.string.chat)
-                    else -> ""
-                }
             }
         }
 
-        binding?.viewPager?.addOnPageChangeListener(object : androidx.viewpager.widget.ViewPager.OnPageChangeListener {
+        binding?.viewPager?.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
                 if (position == 1) {
                     chatFragment?.setNavigatedToFragment()
@@ -179,11 +173,19 @@ class GuildFragment : BaseMainFragment<FragmentViewpagerBinding>() {
                     chatFragment?.setNavigatedToFragment()
                 }
             }
-
-            override fun onPageScrollStateChanged(state: Int) { /* no-on */ }
         })
 
-        tabLayout?.setupWithViewPager(binding?.viewPager)
+        tabLayout?.let {
+            binding?.viewPager?.let { it1 ->
+                TabLayoutMediator(it, it1) { tab, position ->
+                    tab.text = when (position) {
+                        0 ->  context?.getString(R.string.guild)
+                        1 ->  context?.getString(R.string.chat)
+                        else -> ""
+                    }
+                }.attach()
+            }
+        }
     }
 
     private fun displayEditForm() {
@@ -200,18 +202,14 @@ class GuildFragment : BaseMainFragment<FragmentViewpagerBinding>() {
         val intent = Intent(activity, GroupFormActivity::class.java)
         intent.putExtras(bundle)
         intent.flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
-        startActivityForResult(intent, GroupFormActivity.GROUP_FORM_ACTIVITY)
+        groupFormResult.launch(intent)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        when (requestCode) {
-            GroupFormActivity.GROUP_FORM_ACTIVITY -> {
-                if (resultCode == Activity.RESULT_OK) {
-                    val bundle = data?.extras
-                    viewModel.updateGroup(bundle)
-                }
-            }
+
+    private val groupFormResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if (it.resultCode == Activity.RESULT_OK) {
+            val bundle = it?.data?.extras
+            viewModel.updateGroup(bundle)
         }
     }
 

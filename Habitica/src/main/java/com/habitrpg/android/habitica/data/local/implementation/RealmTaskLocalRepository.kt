@@ -8,12 +8,11 @@ import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Maybe
 import io.realm.Realm
 import io.realm.RealmObject
-import io.realm.RealmResults
 import io.realm.Sort
 
 class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), TaskLocalRepository {
 
-    override fun getTasks(taskType: String, userID: String): Flowable<RealmResults<Task>> {
+    override fun getTasks(taskType: String, userID: String): Flowable<out List<Task>> {
         if (realm.isClosed) {
             return Flowable.empty()
         }
@@ -26,7 +25,7 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
                 .filter { it.isLoaded }).retry(1)
     }
 
-    override fun getTasks(userId: String): Flowable<RealmResults<Task>> {
+    override fun getTasks(userId: String): Flowable<out List<Task>> {
         if (realm.isClosed) {
             return Flowable.empty()
         }
@@ -49,11 +48,7 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
         val allReminders = ArrayList<RemindersItem>()
         sortedTasks.forEach {
             if (it.userId.isBlank()) it.userId = ownerID
-            it.checklist?.let { it1 -> allChecklistItems.addAll(it1) }
-            it.reminders?.let { it1 -> allReminders.addAll(it1) }
         }
-        removeOldReminders(allReminders)
-        removeOldChecklists(allChecklistItems)
 
         executeTransaction { realm1 -> realm1.insertOrUpdate(sortedTasks) }
     }
@@ -124,26 +119,6 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
         }
     }
 
-    private fun removeOldChecklists(onlineItems: List<ChecklistItem>) {
-        val localItems = realm.where(ChecklistItem::class.java).findAll().createSnapshot()
-        val itemsToDelete = localItems.filterNot { onlineItems.contains(it) }
-        executeTransaction {
-            for (item in itemsToDelete) {
-                item.deleteFromRealm()
-            }
-        }
-    }
-
-    private fun removeOldReminders(onlineReminders: List<RemindersItem>) {
-        val localReminders = realm.where(RemindersItem::class.java).findAll().createSnapshot()
-        val itemsToDelete = localReminders.filterNot { onlineReminders.contains(it) }
-        executeTransaction {
-            for (item in itemsToDelete) {
-                item.deleteFromRealm()
-            }
-        }
-    }
-
     override fun deleteTask(taskID: String) {
         val task = realm.where(Task::class.java).equalTo("id", taskID).findFirstAsync()
         executeTransaction {
@@ -176,10 +151,6 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
     override fun markTaskCompleted(taskId: String, isCompleted: Boolean) {
         val task = realm.where(Task::class.java).equalTo("id", taskId).findFirstAsync()
         executeTransaction { task.completed = true }
-    }
-
-    override fun saveReminder(remindersItem: RemindersItem) {
-        executeTransaction { it.insertOrUpdate(remindersItem) }
     }
 
     override fun swapTaskPosition(firstPosition: Int, secondPosition: Int) {
@@ -219,7 +190,7 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
         }
     }
 
-    override fun getErroredTasks(userID: String): Flowable<RealmResults<Task>> {
+    override fun getErroredTasks(userID: String): Flowable<out List<Task>> {
         return RxJavaBridge.toV3Flowable(realm.where(Task::class.java)
                 .equalTo("userId", userID)
                 .equalTo("hasErrored", true)
@@ -238,7 +209,7 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
                 .map { users -> users.first() })
     }
 
-    override fun getTasksForChallenge(challengeID: String?, userID: String?): Flowable<RealmResults<Task>> {
+    override fun getTasksForChallenge(challengeID: String?, userID: String?): Flowable<out List<Task>> {
         return RxJavaBridge.toV3Flowable(realm.where(Task::class.java)
                 .equalTo("challengeID", challengeID)
                 .equalTo("userId", userID)

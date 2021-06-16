@@ -3,7 +3,6 @@
     android:id="@+id/notification_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/colorContentBackground"
     android:orientation="horizontal"
     android:paddingStart="20dp"
     android:paddingTop="10dp"

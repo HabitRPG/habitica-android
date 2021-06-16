@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -16,7 +15,7 @@
             android:layout_height="80dp"
             android:background="@drawable/layout_rounded_bg_window"
             android:layout_marginEnd="@dimen/spacing_large">
-            <com.facebook.drawee.view.SimpleDraweeView
+            <ImageView
                 android:id="@+id/egg_view"
                 android:layout_width="@dimen/gear_image_size"
                 android:layout_height="@dimen/gear_image_size"
@@ -26,7 +25,7 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:background="@drawable/layout_rounded_bg_window">
-            <com.facebook.drawee.view.SimpleDraweeView
+            <ImageView
                 android:id="@+id/hatchingPotion_view"
                 android:layout_width="@dimen/gear_image_size"
                 android:layout_height="@dimen/gear_image_size"

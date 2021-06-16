@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.activities.PrefsActivity"
-    android:orientation="vertical"
-    android:background="?attr/colorContentBackground">
+    android:orientation="vertical">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -48,13 +47,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:hintTextAppearance="@style/TextAppearance.AppCompat"
+                android:hint="@string/new_challenge_title"
                 android:id="@+id/create_challenge_title_input_layout">
 
-                <EditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="fill_horizontal"
-                    android:hint="@string/new_challenge_title"
                     android:id="@+id/create_challenge_title"
 
                     tools:text="Get in shape"
@@ -66,12 +65,12 @@
                 android:layout_height="wrap_content"
                 app:hintTextAppearance="@style/TextAppearance.AppCompat"
                 android:layout_marginBottom="12dp"
+                android:hint="@string/description_optional"
                 android:layout_marginTop="12dp">
 
-                <EditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/description_optional"
                     android:inputType="textMultiLine"
                     android:id="@+id/create_challenge_description"
                     android:maxLines="5"
@@ -185,14 +184,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:id="@+id/create_challenge_tag_input_layout"
+                android:hint="@string/identify_your_challenge_with_a_tag"
                 app:hintTextAppearance="@style/TextAppearance.AppCompat">
 
-                <EditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/create_challenge_tag"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
 
-                    android:hint="@string/identify_your_challenge_with_a_tag"
                     android:maxLines="1"
                     android:textColor="@color/text_secondary"
                     android:textColorHint="@color/text_ternary" />

@@ -3,8 +3,9 @@ package com.habitrpg.android.habitica.ui.fragments.social
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentPagerAdapter
 import androidx.lifecycle.ViewModelProvider
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.google.android.material.tabs.TabLayoutMediator
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
@@ -79,11 +80,11 @@ class TavernFragment : BaseMainFragment<FragmentViewpagerBinding>() {
 
     private fun setViewPagerAdapter() {
         val fragmentManager = childFragmentManager
-        binding?.viewPager?.adapter = object : FragmentPagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
-            override fun getItem(position: Int): Fragment {
+        binding?.viewPager?.adapter = object : FragmentStateAdapter(fragmentManager, lifecycle) {
+            override fun createFragment(position: Int): Fragment {
                 return when (position) {
                     0 -> {
-                        tavernDetailFragment
+                        TavernDetailFragment()
                     }
                     1 -> {
                         chatFragment = ChatFragment()
@@ -94,22 +95,24 @@ class TavernFragment : BaseMainFragment<FragmentViewpagerBinding>() {
                 }
             }
 
-            override fun getCount(): Int {
+            override fun getItemCount(): Int {
                 return if (viewModel.getGroupData().value?.quest?.active == true) {
                     3
                 } else 2
             }
-
-            override fun getPageTitle(position: Int): CharSequence? {
-                return when (position) {
-                    0 -> context?.getString(R.string.inn)
-                    1 -> context?.getString(R.string.chat)
-                    2 -> context?.getString(R.string.world_quest)
-                    else -> ""
-                }
+        }
+        tabLayout?.let {
+            binding?.viewPager?.let { it1 ->
+                TabLayoutMediator(it, it1) { tab, position ->
+                    tab.text = when (position) {
+                        0 -> context?.getString(R.string.inn)
+                        1 -> context?.getString(R.string.chat)
+                        2 -> context?.getString(R.string.world_quest)
+                        else -> ""
+                    }
+                }.attach()
             }
         }
-        tabLayout?.setupWithViewPager(binding?.viewPager)
     }
 
 }

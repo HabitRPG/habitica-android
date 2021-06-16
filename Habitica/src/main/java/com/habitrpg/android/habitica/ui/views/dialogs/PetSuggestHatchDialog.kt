@@ -4,15 +4,10 @@ import android.content.Context
 import android.graphics.drawable.BitmapDrawable
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.Button
 import android.widget.LinearLayout
-import android.widget.TextView
-import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toBitmap
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.DialogPetSuggestHatchBinding
-import com.habitrpg.android.habitica.extensions.dpToPx
-import com.habitrpg.android.habitica.extensions.getThemeColor
-import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.Animal
 import com.habitrpg.android.habitica.models.inventory.Egg
@@ -49,8 +44,16 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
         binding.eggView.alpha = if (hasEgg) 1.0f else 0.5f
         binding.hatchingPotionView.alpha = if (hasPotion) 1.0f else 0.5f
 
-        val eggName = egg?.text ?: pet.animal.capitalize(Locale.getDefault())
-        val potionName = potion?.text ?: pet.color.capitalize(Locale.getDefault())
+        val eggName = egg?.text ?: pet.animal.replaceFirstChar {
+            if (it.isLowerCase()) it.titlecase(
+                Locale.getDefault()
+            ) else it.toString()
+        }
+        val potionName = potion?.text ?: pet.color.replaceFirstChar {
+            if (it.isLowerCase()) it.titlecase(
+                Locale.getDefault()
+            ) else it.toString()
+        }
 
         if (hasEgg) {
             binding.eggCountView.visibility = View.VISIBLE
@@ -141,9 +144,9 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
 
 
         val imageName = "stable_Pet-${pet.animal}-${pet.color}"
-        DataBindingUtils.loadImage(imageName) {
+        DataBindingUtils.loadImage(context, imageName) {
             val resources = context.resources ?: return@loadImage
-            val drawable = BitmapDrawable(resources, if (hasMount) it else it.extractAlpha())
+            val drawable = if (hasMount) it else BitmapDrawable(resources, it.toBitmap().extractAlpha())
             Observable.just(drawable)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({

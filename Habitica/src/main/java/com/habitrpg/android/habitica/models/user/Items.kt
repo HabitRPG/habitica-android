@@ -1,61 +1,41 @@
 package com.habitrpg.android.habitica.models.user
 
+import com.habitrpg.android.habitica.models.BaseObject
 import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
+import io.realm.annotations.RealmClass
 import java.util.*
 
-open class Items : RealmObject {
+@RealmClass(embedded = true)
+open class Items : RealmObject, BaseObject {
+    fun setItemTypes() {
+        hatchingPotions?.forEach { it.itemType = "hatchingPotions" }
+        eggs?.forEach { it.itemType = "eggs" }
+        food?.forEach { it.itemType = "food" }
+        quests?.forEach { it.itemType = "quests" }
+    }
 
-    @PrimaryKey
-    var userId: String? = null
-        set(userId) {
-            field = userId
-            if (gear != null && gear?.isManaged == false) {
-                gear?.userId = userId
-            }
-            if (special != null && special?.isManaged == false) {
-                special?.userId = userId
-            }
-            eggs?.forEach {
-                if (!it.isManaged) {
-                    it.userID = userId
-                    it.itemType = "eggs"
-                }
-            }
-            food?.forEach {
-                if (!it.isManaged) {
-                    it.userID = userId
-                    it.itemType = "food"
-                }
-            }
-            hatchingPotions?.forEach {
-                if (!it.isManaged) {
-                    it.userID = userId
-                    it.itemType = "hatchingPotions"
-                }
-            }
-            quests?.forEach {
-                if (!it.isManaged) {
-                    it.userID = userId
-                    it.itemType = "quests"
-                }
-            }
-            pets?.forEach {
-                if (!it.isManaged) {
-                    it.userID = userId
-                }
-            }
-            mounts?.forEach {
-                if (!it.isManaged) {
-                    it.userID = userId
-                }
-            }
-        }
     var eggs: RealmList<OwnedItem>? = null
+    set(value) {
+        field = value
+        field?.forEach { it.itemType = "eggs" }
+    }
     var food: RealmList<OwnedItem>? = null
+        set(value) {
+            field = value
+            field?.forEach { it.itemType = "food" }
+        }
     var hatchingPotions: RealmList<OwnedItem>? = null
+        set(value) {
+            field = value
+            field?.forEach { it.itemType = "hatchingPotions" }
+        }
     var quests: RealmList<OwnedItem>? = null
+        set(value) {
+            field = value
+            field?.forEach { it.itemType = "quests" }
+        }
     var pets: RealmList<OwnedPet>? = null
     var mounts: RealmList<OwnedMount>? = null
     var currentMount: String? = null

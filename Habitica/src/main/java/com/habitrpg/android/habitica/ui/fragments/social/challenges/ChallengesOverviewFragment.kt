@@ -8,6 +8,8 @@ import android.widget.TextView
 import androidx.core.view.MenuItemCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentStatePagerAdapter
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.google.android.material.tabs.TabLayoutMediator
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ChallengeRepository
@@ -27,7 +29,7 @@ class ChallengesOverviewFragment : BaseMainFragment<FragmentViewpagerBinding>() 
         return FragmentViewpagerBinding.inflate(inflater, container, false)
     }
 
-    private var statePagerAdapter: FragmentStatePagerAdapter? = null
+    private var statePagerAdapter: FragmentStateAdapter? = null
     private var userChallengesFragment: ChallengeListFragment? = ChallengeListFragment()
     private var availableChallengesFragment: ChallengeListFragment? = ChallengeListFragment()
 
@@ -107,9 +109,9 @@ class ChallengesOverviewFragment : BaseMainFragment<FragmentViewpagerBinding>() 
     private fun setViewPagerAdapter() {
         val fragmentManager = childFragmentManager
 
-        statePagerAdapter = object : FragmentStatePagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+        statePagerAdapter = object : FragmentStateAdapter(fragmentManager, lifecycle) {
 
-            override fun getItem(position: Int): Fragment {
+            override fun createFragment(position: Int): Fragment {
                 return if (position == 0) {
                     userChallengesFragment
                 } else {
@@ -117,20 +119,23 @@ class ChallengesOverviewFragment : BaseMainFragment<FragmentViewpagerBinding>() 
                 } ?: Fragment()
             }
 
-            override fun getCount(): Int {
+            override fun getItemCount(): Int {
                 return 2
-            }
-
-            override fun getPageTitle(position: Int): CharSequence? {
-                return when (position) {
-                    0 -> getString(R.string.my_challenges)
-                    1 -> getString(R.string.discover)
-                    else -> ""
-                }
             }
         }
         binding?.viewPager?.adapter = statePagerAdapter
-        tabLayout?.setupWithViewPager(binding?.viewPager)
+        tabLayout?.let {
+            binding?.viewPager?.let { it1 ->
+                TabLayoutMediator(it, it1) { tab, position ->
+                    tab.text = when (position) {
+                        0 -> getString(R.string.my_challenges)
+                        1 -> getString(R.string.discover)
+                        1 -> getString(R.string.discover)
+                        else -> ""
+                    }
+                }.attach()
+            }
+        }
         statePagerAdapter?.notifyDataSetChanged()
     }
 }

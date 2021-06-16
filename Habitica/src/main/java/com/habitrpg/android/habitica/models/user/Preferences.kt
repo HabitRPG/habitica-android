@@ -3,25 +3,15 @@ package com.habitrpg.android.habitica.models.user
 
 import com.google.gson.annotations.SerializedName
 import com.habitrpg.android.habitica.models.AvatarPreferences
+import com.habitrpg.android.habitica.models.BaseObject
 
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
+import io.realm.annotations.RealmClass
 import java.util.*
 
-open class Preferences : RealmObject(), AvatarPreferences {
-
-    @PrimaryKey
-    override var userId: String? = null
-    set(value) {
-        field = value
-        if (hair?.isManaged == false) {
-            hair?.userId = value
-        }
-        if (suppressModals?.isManaged == false) {
-            suppressModals?.userId = value
-        }
-    }
-
+@RealmClass(embedded = true)
+open class Preferences : RealmObject(), AvatarPreferences, BaseObject {
     override var hair: Hair? = null
     var suppressModals: SuppressedModals? = null
     override var costume: Boolean = false
@@ -54,8 +44,4 @@ open class Preferences : RealmObject(), AvatarPreferences {
     var pushNotifications: PushNotificationsPreference? = null
     var emailNotifications: EmailNotificationsPreference? = null
     var autoEquip: Boolean = true
-
-    fun hasTaskBasedAllocation(): Boolean {
-        return allocationMode?.toLowerCase(Locale.ROOT) == "taskbased" && automaticAllocation
-    }
 }

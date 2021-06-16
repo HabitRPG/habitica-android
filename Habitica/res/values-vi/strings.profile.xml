@@ -2,7 +2,7 @@
 <resources>
     <string name="profile_pets_and_mounts">Thú cưng &amp; Thú cưỡi</string>
     <string name="profile_pets_found">Thú cưng Đã có</string>
-    <string name="profile_loading_data">Đang tải dữ liệu thành viên...</string>
+    <string name="profile_loading_data">Đang tải dữ liệu thành viên…</string>
     <string name="profile_send_message_to">Gửi tin nhắn tới %s</string>
     <string name="profile_message_sent_to">Tin nhắn đã gửi tới %s</string>
     <string name="profile_level">Cấp độ:</string>

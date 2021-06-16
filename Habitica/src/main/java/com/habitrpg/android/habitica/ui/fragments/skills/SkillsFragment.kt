@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
@@ -25,13 +26,12 @@ import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.Companion.showSnackbar
 import io.reactivex.rxjava3.core.Flowable
-import io.reactivex.rxjava3.core.Observable
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class SkillsFragment : BaseMainFragment<FragmentSkillsBinding>() {
-
-    private val TASK_SELECTION_ACTIVITY = 10
-    private val MEMBER_SELECTION_ACTIVITY = 11
-
     internal var adapter: SkillsRecyclerViewAdapter? = null
     private var selectedSkill: Skill? = null
 
@@ -98,19 +98,19 @@ class SkillsFragment : BaseMainFragment<FragmentSkillsBinding>() {
             "special" == skill.habitClass -> {
                 selectedSkill = skill
                 val intent = Intent(activity, SkillMemberActivity::class.java)
-                startActivityForResult(intent, MEMBER_SELECTION_ACTIVITY)
+                memberSelectionResult.launch(intent)
             }
             skill.target == "task" -> {
                 selectedSkill = skill
                 val intent = Intent(activity, SkillTasksActivity::class.java)
-                startActivityForResult(intent, TASK_SELECTION_ACTIVITY)
+                taskSelectionResult.launch(intent)
             }
             else -> useSkill(skill)
         }
     }
 
     private fun displaySkillResult(usedSkill: Skill?, response: SkillResponse) {
-        adapter?.mana = response.user.stats?.mp ?: 0.0
+        adapter?.mana = response.user?.stats?.mp ?: 0.0
         val activity = activity ?: return
         if ("special" == usedSkill?.habitClass) {
             showSnackbar(activity.snackbarContainer, context?.getString(R.string.used_skill_without_mana, usedSkill.text), HabiticaSnackbar.SnackbarDisplayType.BLUE)
@@ -123,25 +123,30 @@ class SkillsFragment : BaseMainFragment<FragmentSkillsBinding>() {
                         HabiticaSnackbar.SnackbarDisplayType.BLUE)
             }
         }
+        if (response.damage > 0) {
+            context?.let {
+                GlobalScope.launch(context = Dispatchers.Main) {
+                    delay(2000L)
+                    showSnackbar(activity.snackbarContainer, null,
+                            context?.getString(R.string.caused_damage),
+                            BitmapDrawable(resources, HabiticaIconsHelper.imageOfDamage()),
+                            ContextCompat.getColor(it, R.color.green_10), "+%.01f".format(response.damage),
+                            HabiticaSnackbar.SnackbarDisplayType.SUCCESS)
+                }
+            }
+        }
         compositeSubscription.add(userRepository.retrieveUser(false).subscribe({ }, RxErrorHandler.handleEmptyError()))
     }
 
+    private val taskSelectionResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if (it.resultCode == Activity.RESULT_OK) {
+            useSkill(selectedSkill, it.data?.getStringExtra("taskID"))
+        }
+    }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (data != null) {
-            when (requestCode) {
-                TASK_SELECTION_ACTIVITY -> {
-                    if (resultCode == Activity.RESULT_OK) {
-                        useSkill(selectedSkill, data.getStringExtra("taskID"))
-                    }
-                }
-                MEMBER_SELECTION_ACTIVITY -> {
-                    if (resultCode == Activity.RESULT_OK) {
-                        useSkill(selectedSkill, data.getStringExtra("member_id"))
-                    }
-                }
-            }
+    private val memberSelectionResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if (it.resultCode == Activity.RESULT_OK) {
+            useSkill(selectedSkill, it.data?.getStringExtra("member_id"))
         }
     }
 
@@ -150,9 +155,9 @@ class SkillsFragment : BaseMainFragment<FragmentSkillsBinding>() {
             return
         }
         val observable: Flowable<SkillResponse> = if (taskId != null) {
-            userRepository.useSkill(user, skill.key, skill.target, taskId)
+            userRepository.useSkill(skill.key, skill.target, taskId)
         } else {
-            userRepository.useSkill(user, skill.key, skill.target)
+            userRepository.useSkill(skill.key, skill.target)
         }
         compositeSubscription.add(observable.subscribe({ skillResponse -> this.displaySkillResult(skill, skillResponse) },
                 RxErrorHandler.handleEmptyError()))

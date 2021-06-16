@@ -28,7 +28,6 @@ import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.SnackbarDisplayTy
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.Disposable
-import io.realm.RealmResults
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -193,7 +192,7 @@ class ChatFragment : BaseFragment<FragmentChatBinding>() {
         }
     }
 
-    private fun setChatMessages(chatMessages: RealmResults<ChatMessage>) {
+    private fun setChatMessages(chatMessages: List<ChatMessage>) {
         chatAdapter?.data = chatMessages
         viewModel?.socialRepository?.getUnmanagedCopy(chatMessages)?.let { binding?.chatBarView?.chatMessages = it }
 

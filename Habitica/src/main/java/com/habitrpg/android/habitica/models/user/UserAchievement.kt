@@ -1,24 +1,13 @@
 package com.habitrpg.android.habitica.models.user
 
+import com.habitrpg.android.habitica.models.BaseObject
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
+import io.realm.annotations.RealmClass
 
-open class UserAchievement : RealmObject {
-
-    @PrimaryKey
-    var combinedKey: String? = null
-    var userId: String? = null
-        set(value) {
-            field = value
-            combinedKey = field + key
-        }
+@RealmClass(embedded = true)
+open class UserAchievement : RealmObject(), BaseObject {
     var key: String? = null
-        set(value) {
-            field = value
-            combinedKey = userId + field
-        }
     var earned: Boolean = false
-
-    constructor()
 }
 

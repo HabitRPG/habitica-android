@@ -4,7 +4,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:clickable="true"
-                android:background="@color/content_background"
                 android:focusable="true">
     <LinearLayout
         android:id="@+id/container"
@@ -15,7 +14,7 @@
         android:orientation="vertical"
         android:background="@drawable/layout_rounded_bg_shopitem"
         android:layout_centerInParent="true">
-        <com.facebook.drawee.view.SimpleDraweeView
+        <ImageView
             android:id="@+id/imageView"
             android:layout_width="@dimen/shopitem_image_size"
             android:layout_height="@dimen/shopitem_image_size"

@@ -20,7 +20,6 @@ import android.view.ViewTreeObserver.OnPreDrawListener
 import android.widget.LinearLayout
 import android.widget.ScrollView
 import androidx.core.content.ContextCompat
-import androidx.core.view.MotionEventCompat
 import com.habitrpg.android.habitica.R
 import kotlin.math.abs
 import kotlin.math.max
@@ -201,34 +200,6 @@ open class DragLinearLayout @JvmOverloads constructor(context: Context, attrs: A
     }
 
     /**
-     * Calls [.addView] followed by [.setViewDraggable].
-     */
-    fun addDragView(child: View, dragHandle: View) {
-        addView(child)
-        setViewDraggable(child, dragHandle)
-    }
-
-    /**
-     * Calls [.addView] followed by
-     * [.setViewDraggable] and correctly updates the
-     * drag-ability state of all existing views.
-     */
-    fun addDragView(child: View, dragHandle: View, index: Int) {
-        addView(child, index)
-
-        // update drag-able children mappings
-        val numMappings = draggableChildren.size()
-        for (i in numMappings - 1 downTo 0) {
-            val key = draggableChildren.keyAt(i)
-            if (key >= index) {
-                draggableChildren.put(key + 1, draggableChildren.get(key))
-            }
-        }
-
-        setViewDraggable(child, dragHandle)
-    }
-
-    /**
      * Makes the child a candidate for dragging. Must be an existing child of this layout.
      */
     fun setViewDraggable(child: View, dragHandle: View) {
@@ -250,42 +221,9 @@ open class DragLinearLayout @JvmOverloads constructor(context: Context, attrs: A
         }
     }
 
-    /**
-     * Calls [.removeView] and correctly updates the drag-ability state of
-     * all remaining views.
-     */
-    fun removeDragView(child: View) {
-        if (this === child.parent) {
-            val index = indexOfChild(child)
-            removeView(child)
-
-            // update drag-able children mappings
-            val mappings = draggableChildren.size()
-            for (i in 0 until mappings) {
-                val key = draggableChildren.keyAt(i)
-                if (key >= index) {
-                    val next = draggableChildren.get(key + 1)
-                    if (null == next) {
-                        draggableChildren.delete(key)
-                    } else {
-                        draggableChildren.put(key, next)
-                    }
-                }
-            }
-        }
-    }
-
     override fun removeAllViews() {
         super.removeAllViews()
         draggableChildren.clear()
-    }
-
-    /**
-     * If this layout is within a [android.widget.ScrollView], register it here so that it
-     * can be scrolled during item drags.
-     */
-    fun setContainerScrollView(scrollView: ScrollView) {
-        this.containerScrollView = scrollView
     }
 
     /**
@@ -485,12 +423,16 @@ open class DragLinearLayout @JvmOverloads constructor(context: Context, attrs: A
 
             val delta: Int
 
-            if (absTop < scrollSensitiveHeight) {
-                delta = (-MAX_DRAG_SCROLL_SPEED * smootherStep(scrollSensitiveHeight.toFloat(), 0f, absTop.toFloat())).toInt()
-            } else if (absTop > height - scrollSensitiveHeight) {
-                delta = (MAX_DRAG_SCROLL_SPEED * smootherStep((height - scrollSensitiveHeight).toFloat(), height.toFloat(), absTop.toFloat())).toInt()
-            } else {
-                delta = 0
+            delta = when {
+                absTop < scrollSensitiveHeight -> {
+                    (-MAX_DRAG_SCROLL_SPEED * smootherStep(scrollSensitiveHeight.toFloat(), 0f, absTop.toFloat())).toInt()
+                }
+                absTop > height - scrollSensitiveHeight -> {
+                    (MAX_DRAG_SCROLL_SPEED * smootherStep((height - scrollSensitiveHeight).toFloat(), height.toFloat(), absTop.toFloat())).toInt()
+                }
+                else -> {
+                    0
+                }
             }
 
             containerScrollView?.removeCallbacks(dragUpdater)
@@ -598,7 +540,7 @@ open class DragLinearLayout @JvmOverloads constructor(context: Context, attrs: A
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        when (MotionEventCompat.getActionMasked(event)) {
+        when (event.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
                 if (!draggedItem.detecting || draggedItem.settling()) return false
                 startDrag()
@@ -609,7 +551,7 @@ open class DragLinearLayout @JvmOverloads constructor(context: Context, attrs: A
                 if (INVALID_POINTER_ID == activePointerId) return false
 
                 val pointerIndex = event.findPointerIndex(activePointerId)
-                val lastEventY = MotionEventCompat.getY(event, pointerIndex).toInt()
+                val lastEventY = event.getY(pointerIndex).toInt()
                 val deltaY = lastEventY - downY
 
                 onDrag(deltaY)
@@ -617,8 +559,8 @@ open class DragLinearLayout @JvmOverloads constructor(context: Context, attrs: A
             }
             MotionEvent.ACTION_POINTER_UP -> {
                 run {
-                    val pointerIndex = MotionEventCompat.getActionIndex(event)
-                    val pointerId = MotionEventCompat.getPointerId(event, pointerIndex)
+                    val pointerIndex = event.actionIndex
+                    val pointerId = event.getPointerId(pointerIndex)
 
                     if (pointerId != activePointerId)
                         return false // if active pointer, fall through and cancel!
@@ -655,7 +597,8 @@ open class DragLinearLayout @JvmOverloads constructor(context: Context, attrs: A
     private inner class DragHandleOnTouchListener(private val view: View) : OnTouchListener {
 
         override fun onTouch(v: View, event: MotionEvent): Boolean {
-            if (MotionEvent.ACTION_DOWN == MotionEventCompat.getActionMasked(event)) {
+            view.performClick()
+            if (MotionEvent.ACTION_DOWN == event.actionMasked) {
                 startDetectingDrag(view)
             }
             return false
@@ -677,14 +620,14 @@ open class DragLinearLayout @JvmOverloads constructor(context: Context, attrs: A
 
     companion object {
         private val LOG_TAG = DragLinearLayout::class.java.simpleName
-        private val NOMINAL_SWITCH_DURATION: Long = 150
-        private val MIN_SWITCH_DURATION = NOMINAL_SWITCH_DURATION
-        private val MAX_SWITCH_DURATION = NOMINAL_SWITCH_DURATION * 2
-        private val NOMINAL_DISTANCE = 20f
+        private const val NOMINAL_SWITCH_DURATION: Long = 150
+        private const val MIN_SWITCH_DURATION = NOMINAL_SWITCH_DURATION
+        private const val MAX_SWITCH_DURATION = NOMINAL_SWITCH_DURATION * 2
+        private const val NOMINAL_DISTANCE = 20f
 
-        private val INVALID_POINTER_ID = -1
-        private val DEFAULT_SCROLL_SENSITIVE_AREA_HEIGHT_DP = 48
-        private val MAX_DRAG_SCROLL_SPEED = 16
+        private const val INVALID_POINTER_ID = -1
+        private const val DEFAULT_SCROLL_SENSITIVE_AREA_HEIGHT_DP = 48
+        private const val MAX_DRAG_SCROLL_SPEED = 16
 
         /**
          * By Ken Perlin. See [Smoothstep - Wikipedia](http://en.wikipedia.org/wiki/Smoothstep).

@@ -23,7 +23,7 @@ import com.habitrpg.android.habitica.helpers.PurchaseHandler
 import com.habitrpg.android.habitica.helpers.PurchaseTypes
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.User
-import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
+import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import com.habitrpg.android.habitica.ui.activities.GemPurchaseActivity
 import com.habitrpg.android.habitica.ui.activities.GiftSubscriptionActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
@@ -46,7 +46,7 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>(), GemPur
     }
 
     @Inject
-    lateinit var crashlyticsProxy: CrashlyticsProxy
+    lateinit var analyticsManager: AnalyticsManager
     @Inject
     lateinit var userRepository: UserRepository
     @Inject
@@ -77,7 +77,7 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>(), GemPur
         binding?.subscriptionDetails?.visibility = View.GONE
         binding?.subscriptionDetails?.onShowSubscriptionOptions = { showSubscriptionOptions() }
 
-        binding?.giftSubscriptionButton?.setOnClickListener { context?.let { context -> showGiftSubscriptionDialog(context, appConfigManager.activePromo(context)?.identifier == "g1g1") } }
+        binding?.giftSubscriptionButton?.setOnClickListener { context?.let { context -> showGiftSubscriptionDialog(context, appConfigManager.activePromo()?.identifier == "g1g1") } }
 
         binding?.subscription1month?.setOnPurchaseClickListener { selectSubscription(PurchaseTypes.Subscription1Month) }
         binding?.subscription3month?.setOnPurchaseClickListener { selectSubscription(PurchaseTypes.Subscription3Month) }
@@ -86,7 +86,7 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>(), GemPur
 
         binding?.subscribeButton?.setOnClickListener { subscribeUser() }
 
-        val promo = context?.let { appConfigManager.activePromo(it) }
+        val promo = appConfigManager.activePromo()
         if (promo != null) {
             binding?.let {
                 promo.configurePurchaseBanner(it)

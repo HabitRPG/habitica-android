@@ -2,9 +2,9 @@ package com.habitrpg.android.habitica.ui.adapter
 
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.AchievementChallengeItemBinding
 import com.habitrpg.android.habitica.databinding.AchievementQuestItemBinding
@@ -72,7 +72,7 @@ class AchievementsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         private var achievement: Achievement? = null
 
         private val achievementContainer: ViewGroup?
-        private val achievementIconView: SimpleDraweeView
+        private val achievementIconView: ImageView
         private val achievementCountView: TextView
         private val achievementTitleView: TextView
         private val achievementDescriptionView: TextView?

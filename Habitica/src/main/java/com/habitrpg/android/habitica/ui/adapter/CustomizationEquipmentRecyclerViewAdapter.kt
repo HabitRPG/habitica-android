@@ -8,7 +8,6 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
-import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.CustomizationGridItemBinding
 import com.habitrpg.android.habitica.helpers.MainNavigationController
@@ -118,7 +117,7 @@ class CustomizationEquipmentRecyclerViewAdapter : androidx.recyclerview.widget.R
             if (equipment?.owned != true && (equipment?.value ?: 0.0) > 0.0) {
                 val dialogContent = LayoutInflater.from(itemView.context).inflate(R.layout.dialog_purchase_customization, null) as LinearLayout
 
-                val imageView = dialogContent.findViewById<SimpleDraweeView>(R.id.imageView)
+                val imageView = dialogContent.findViewById<ImageView>(R.id.imageView)
                 DataBindingUtils.loadImage(imageView, "shop_" + this.equipment?.key)
 
                 val priceLabel = dialogContent.findViewById<TextView>(R.id.priceLabel)

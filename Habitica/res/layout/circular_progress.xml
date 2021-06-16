@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_gravity="center"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+<com.google.android.material.progressindicator.CircularProgressIndicator android:layout_width="60dp"
+    android:layout_height="60dp"
+    app:indicatorColor="@color/text_brand_neon"
+    android:indeterminateTint="@color/text_brand_neon"
+    android:progressTint="@color/text_brand_neon"
+    android:layout_gravity="center"
+    android:indeterminate="true" />
+</FrameLayout>

@@ -1,14 +1,12 @@
 package com.habitrpg.android.habitica.models.user
 
+import com.habitrpg.android.habitica.models.BaseObject
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
+import io.realm.annotations.RealmClass
 
-open class Hair : RealmObject {
-
-    @PrimaryKey
-    var userId: String? = null
-
-    var preferences: Preferences? = null
+@RealmClass(embedded = true)
+open class Hair : RealmObject, BaseObject {
     var mustache: Int = 0
     var beard: Int = 0
     var bangs: Int = 0

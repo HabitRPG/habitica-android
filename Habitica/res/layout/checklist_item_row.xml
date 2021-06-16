@@ -1,42 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:minHeight="@dimen/checklist_item_min_height"
     xmlns:tools="http://schemas.android.com/tools">
-    <LinearLayout
-        android:orientation="horizontal" android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        android:minHeight="@dimen/checklist_item_min_height">
-        <FrameLayout
-            android:id="@+id/checkBoxHolder"
-            android:layout_width="@dimen/button_width"
-            android:layout_height="match_parent"
-            tools:background="@color/red_10">
-            <View
-                android:id="@+id/checkBoxBackground"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:gravity="center"
-                android:background="@drawable/checklist_unchecked"
-                android:layout_gravity="center" />
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-                <ImageView
-                    android:id="@+id/checkmark"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_gravity="center"
-                    android:scaleType="center"
-                    android:src="@drawable/checkmark" />
-        </FrameLayout>
-        <com.habitrpg.android.habitica.ui.views.EllipsisTextView
-            android:id="@+id/checkedTextView"
-            style="@style/Body2"
+    <FrameLayout
+        android:id="@+id/checkBoxHolder"
+        android:layout_width="@dimen/button_width"
+        android:layout_height="match_parent"
+        tools:background="@color/red_10">
+        <View
+            android:id="@+id/checkBoxBackground"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:gravity="center"
+            android:background="@drawable/checklist_unchecked"
+            android:layout_gravity="center" />
+        <View
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:paddingStart="16dp"
-            android:layout_gravity="center_vertical"/>
-    </LinearLayout>
-</FrameLayout>
+            android:layout_height="match_parent"/>
+        <ImageView
+            android:id="@+id/checkmark"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:scaleType="center"
+            android:src="@drawable/checkmark" />
+    </FrameLayout>
+    <com.habitrpg.android.habitica.ui.views.EllipsisTextView
+        android:id="@+id/checkedTextView"
+        style="@style/Body2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:paddingStart="16dp"
+        android:layout_gravity="center_vertical"/>
+</LinearLayout>

@@ -2,8 +2,8 @@ package com.habitrpg.android.habitica.ui.views.dialogs
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.widget.ImageView
 import android.widget.TextView
-import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.extensions.fromHtml
@@ -12,7 +12,7 @@ import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 
 class AchievementDetailDialog(val achievement: Achievement, context: Context): HabiticaAlertDialog(context) {
 
-    private var iconView: SimpleDraweeView?
+    private var iconView: ImageView?
     private var descriptionView: TextView?
 
     init {

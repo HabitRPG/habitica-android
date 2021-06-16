@@ -46,10 +46,12 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int): Recycle
         }
 
     private val itemSelectedEvents = PublishSubject.create<HabiticaDrawerItem>()
+    private val promoClosedSubject = PublishSubject.create<String>()
 
     var activePromo: HabiticaPromotion? = null
 
     fun getItemSelectionEvents(): Flowable<HabiticaDrawerItem> = itemSelectedEvents.toFlowable(BackpressureStrategy.DROP)
+    fun getPromoCloseEvents(): Flowable<String> = promoClosedSubject.toFlowable(BackpressureStrategy.DROP)
 
     fun getItemWithIdentifier(identifier: String): HabiticaDrawerItem? =
             items.find { it.identifier == identifier }
@@ -114,6 +116,9 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int): Recycle
             getItemViewType(position) == 5 -> {
                 activePromo?.let { promo ->
                     (holder as? PromoMenuViewHolder)?.bind(promo)
+                    (holder as? PromoMenuViewHolder)?.promoView?.binding?.closeButton?.setOnClickListener {
+                        promoClosedSubject.onNext(promo.identifier)
+                    }
                 }
             }
         }

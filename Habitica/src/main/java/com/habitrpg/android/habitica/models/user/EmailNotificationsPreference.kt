@@ -1,8 +1,11 @@
 package com.habitrpg.android.habitica.models.user
 
+import com.habitrpg.android.habitica.models.BaseObject
 import io.realm.RealmObject
+import io.realm.annotations.RealmClass
 
-open class EmailNotificationsPreference : RealmObject() {
+@RealmClass(embedded = true)
+open class EmailNotificationsPreference : RealmObject(), BaseObject {
     var unsubscribeFromAll: Boolean = false
     var invitedParty: Boolean = false
     var invitedQuest: Boolean = false

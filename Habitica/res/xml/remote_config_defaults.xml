@@ -90,7 +90,11 @@
     </entry>
     <entry>
         <key>activePromo</key>
-        <value> </value>
+        <value />
+    </entry>
+    <entry>
+        <key>surveyURL</key>
+        <value />
     </entry>
     <entry>
         <key>knownIssues</key>

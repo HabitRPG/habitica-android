@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toDrawable
 import androidx.core.os.bundleOf
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
@@ -18,7 +19,9 @@ import com.habitrpg.android.habitica.events.GearPurchasedEvent
 import com.habitrpg.android.habitica.events.ShowSnackbarEvent
 import com.habitrpg.android.habitica.extensions.addCancelButton
 import com.habitrpg.android.habitica.extensions.addCloseButton
+import com.habitrpg.android.habitica.extensions.getShortRemainingString
 import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.HapticFeedbackManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.shops.Shop
@@ -38,11 +41,15 @@ import com.habitrpg.android.habitica.ui.views.tasks.form.StepperValueFormView
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import io.realm.RealmResults
+import kotlinx.coroutines.*
 import org.greenrobot.eventbus.EventBus
 import java.util.*
 import javax.inject.Inject
 import kotlin.math.max
+import kotlin.time.Duration
+import kotlin.time.ExperimentalTime
+import kotlin.time.minutes
+import kotlin.time.seconds
 
 class PurchaseDialog(context: Context, component: UserComponent?, val item: ShopItem) : HabiticaAlertDialog(context) {
 
@@ -74,24 +81,11 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
         set(value) {
             field = value
 
-            if (shopItem.isLimited) {
-                //TODO: replace with correct date once API is final
-                limitedTextView.text = context.getString(R.string.available_until, Date().toString())
-            } else {
-                limitedTextView.visibility = View.GONE
-            }
-
             if (shopItem.lockedReason(context) == null) {
                 updatePurchaseTotal()
                 priceLabel.currency = shopItem.currency
             } else {
                 limitedTextView.text = shopItem.lockedReason(context)
-            }
-            if (shopItem.locked) {
-                buyLabel.text = context.getString(R.string.locked)
-                limitedTextView.visibility = View.VISIBLE
-                limitedTextView.background = ContextCompat.getColor(context, R.color.offset_background).toDrawable()
-                limitedTextView.setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
             }
 
             priceLabel.isLocked = shopItem.locked || shopItem.lockedReason(context) != null
@@ -138,6 +132,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
 
             contentView.setItem(shopItem)
             setAdditionalContentView(contentView)
+            setLimitedTextView()
         }
 
     private fun updatePurchaseTotal() {
@@ -161,16 +156,49 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
     }
 
     private fun checkGearClass() {
-        val user = user ?: return
-
         if (shopItem.purchaseType == "gems") {
             return
         }
 
-        if (shopItem.habitClass != null && shopItem.habitClass != "special" && user.stats?.habitClass != shopItem.habitClass) {
+        setLimitedTextView()
+    }
+
+    private var limitedTextViewJob: Job? = null
+
+    @OptIn(ExperimentalTime::class)
+    private fun setLimitedTextView() {
+        if (user == null) return
+        if (shopItem.habitClass != null && shopItem.habitClass != "special" && user?.stats?.habitClass != shopItem.habitClass) {
             limitedTextView.text = context.getString(R.string.class_equipment_shop_dialog)
             limitedTextView.visibility = View.VISIBLE
             limitedTextView.setBackgroundColor(ContextCompat.getColor(context, R.color.inverted_background))
+        } else if (shopItem.event?.end != null) {
+            limitedTextViewJob?.cancel()
+            limitedTextViewJob = GlobalScope.launch(Dispatchers.Main) {
+                limitedTextView.visibility = View.VISIBLE
+                while (shopItem.event?.end?.after(Date()) == true) {
+                    limitedTextView.text = context.getString(R.string.available_for, shopItem.event?.end?.getShortRemainingString())
+                    val diff = (shopItem.event?.end?.time ?: 0) - Date().time
+                    delay(if (diff < (60 * 60 * 1000)) Duration.seconds(1) else Duration.minutes(1))
+                }
+                if (shopItem.event?.end?.before(Date()) == true) {
+                    limitedTextView.text = context.getString(R.string.no_longer_available)
+                    limitedTextView.background = ContextCompat.getColor(context, R.color.offset_background).toDrawable()
+                    limitedTextView.setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
+                }
+            }
+        } else if (shopItem.locked) {
+            buyLabel.text = context.getString(R.string.locked)
+            limitedTextView.visibility = View.GONE
+            if (shopItem.isTypeGear && shopItem.key.last().toString().toIntOrNull() != null) {
+                val previousKey = "${shopItem.key.dropLast(1)}${(shopItem.key.last().toString().toIntOrNull() ?: 1) - 1}"
+                if (user?.items?.gear?.owned?.find { it.key == previousKey}?.owned != true) {
+                    limitedTextView.visibility = View.VISIBLE
+                    limitedTextView.text = context.getString(R.string.locked_equipment_shop_dialog)
+                    limitedTextView.background = ContextCompat.getColor(context, R.color.offset_background).toDrawable()
+                    limitedTextView.setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
+                }
+            }
         } else {
             limitedTextView.visibility = View.GONE
         }
@@ -250,11 +278,13 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
         if (shopItem.isTypeGear) {
             checkGearClass()
         }
+        setLimitedTextView()
     }
 
     override fun dismiss() {
         userRepository.close()
         inventoryRepository.close()
+        limitedTextViewJob?.cancel()
         if (!compositeSubscription.isDisposed) {
             compositeSubscription.dispose()
         }
@@ -297,6 +327,12 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
     }
 
     private fun buyItem(quantity: Int) {
+        FirebaseAnalytics.getInstance(context).logEvent("item_purchased", bundleOf(
+                Pair("shop", shopIdentifier),
+                Pair("type", shopItem.purchaseType),
+                Pair("key", shopItem.key)
+        ))
+        HapticFeedbackManager.tap(contentView)
         val snackbarText = arrayOf("")
         val observable: Flowable<Any>
         if (shopIdentifier != null && shopIdentifier == Shop.TIME_TRAVELERS_SHOP || "mystery_set" == shopItem.purchaseType || shopItem.currency == "hourglasses") {
@@ -310,7 +346,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
         } else if (shopItem.purchaseType == "quests" && shopItem.currency == "gold") {
             observable = inventoryRepository.purchaseQuest(shopItem.key).cast(Any::class.java)
         } else if (shopItem.purchaseType == "debuffPotion") {
-            observable = userRepository.useSkill(user, shopItem.key, null).cast(Any::class.java)
+            observable = userRepository.useSkill(shopItem.key, null).cast(Any::class.java)
         } else if (shopItem.purchaseType == "card") {
             purchaseCardAction?.invoke(shopItem)
             dismiss()
@@ -400,53 +436,67 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
         var totalCount = 20
         var ownedCount = 0
         var shouldWarn = true
-        var maybe: Maybe<RealmResults<OwnedItem>>? = null
+        var calledResult = false
+        var maybe: Maybe<out List<OwnedItem>>? = null
         if (item.purchaseType == "eggs") {
             maybe = inventoryRepository.getPets(item.key, "quest", null).firstElement().filter {
-                shouldWarn = it.size > 0
+                shouldWarn = it.isNotEmpty()
                 return@filter shouldWarn
             }.flatMap { inventoryRepository.getOwnedItems("eggs").firstElement() }
         } else if (item.purchaseType == "hatchingPotions") {
-            totalCount = 18
+            totalCount = if (item.path?.contains("wacky") == true) {
+                // Wacky pets can't be raised to mounts, so only need half as many
+                9
+            } else {
+                18
+            }
             maybe = inventoryRepository.getPets().firstElement().filter {
                 val filteredPets = it.filter {pet ->
-                    pet.type == "premium" || pet.type == "wacky"
+                    pet.animal == item.key && (pet.type == "premium" || pet.type == "wacky")
                 }
                 shouldWarn = filteredPets.isNotEmpty()
                 return@filter shouldWarn
             }.flatMap { inventoryRepository.getOwnedItems("hatchingPotions").firstElement() }
         }
         if (maybe != null) {
-            val sub = maybe
-                    .doOnComplete {
-                        if (!shouldWarn) {
-                            onResult(-1)
-                        }
-                        val remaining = 18 - ownedCount
-                        onResult(max(0, remaining))
-                    }.flatMap {
+            val sub = maybe.flatMap {
                 for (thisItem in it) {
                     if (thisItem.key == item.key) {
                         ownedCount += thisItem.numberOwned
                     }
                 }
-                inventoryRepository.getOwnedMounts().firstElement() }
-                    .flatMapPublisher {
-                        for (mount in it) {
-                        if (mount.key?.contains(item.key) == true) {
-                            ownedCount += if (mount.owned) 1 else 0
-                        }
+                inventoryRepository.getOwnedMounts().firstElement()
+            }.flatMap {
+                for (mount in it) {
+                    if (mount.key?.contains(item.key) == true) {
+                        ownedCount += if (mount.owned) 1 else 0
                     }
-                        inventoryRepository.getOwnedPets()
-                    }.firstElement().subscribe({
-                        for (pet in it) {
-                            if (pet.key?.contains(item.key) == true) {
-                                ownedCount += if (pet.trained > 0) 1 else 0
-                            }
-                        }
-                        val remaining = totalCount - ownedCount
-                        onResult(max(0, remaining))
-                    }, RxErrorHandler.handleEmptyError())
+                }
+                inventoryRepository.getOwnedPets().firstElement()
+            }.subscribe({
+                for (pet in it) {
+                    if (pet.key?.contains(item.key) == true) {
+                        ownedCount += if (pet.trained > 0) 1 else 0
+                    }
+                }
+                if (calledResult) return@subscribe
+                calledResult = true
+                if (!shouldWarn) {
+                    onResult(-1)
+                    return@subscribe
+                }
+                val remaining = totalCount - ownedCount
+                onResult(max(0, remaining))
+            }, RxErrorHandler.handleEmptyError(), {
+                if (calledResult) return@subscribe
+                calledResult = true
+                if (!shouldWarn) {
+                    onResult(-1)
+                    return@subscribe
+                }
+                val remaining = totalCount - ownedCount
+                onResult(max(0, remaining))
+            })
         } else {
             onResult(-1)
         }

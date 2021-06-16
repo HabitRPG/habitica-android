@@ -9,16 +9,22 @@ import android.content.pm.PackageManager
 import android.content.res.Resources
 import android.database.DatabaseErrorHandler
 import android.database.sqlite.SQLiteDatabase
+import android.os.Build.VERSION.SDK_INT
 import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
+import coil.Coil
+import coil.ImageLoader
+import coil.annotation.ExperimentalCoilApi
+import coil.decode.GifDecoder
+import coil.decode.ImageDecoderDecoder
+import coil.transition.CrossfadeTransition
+import coil.util.DebugLogger
 import com.amplitude.api.Amplitude
 import com.amplitude.api.Identify
-import com.facebook.drawee.backends.pipeline.Fresco
-import com.facebook.imagepipeline.core.ImagePipelineConfig
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.google.firebase.iid.FirebaseInstanceId
+import com.google.firebase.installations.FirebaseInstallations
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import com.habitrpg.android.habitica.api.HostConfig
@@ -26,9 +32,10 @@ import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
 import com.habitrpg.android.habitica.modules.UserModule
 import com.habitrpg.android.habitica.modules.UserRepositoryModule
-import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
+import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import com.habitrpg.android.habitica.ui.activities.IntroActivity
 import com.habitrpg.android.habitica.ui.activities.LoginActivity
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
@@ -48,7 +55,9 @@ abstract class HabiticaBaseApplication : Application() {
     @Inject
     internal lateinit var sharedPrefs: SharedPreferences
     @Inject
-    internal lateinit var crashlyticsProxy: CrashlyticsProxy
+    internal lateinit var analyticsManager: AnalyticsManager
+    @Inject
+    internal lateinit var pushNotificationManager: PushNotificationManager
     /**
      * For better performance billing class should be used as singleton
      */
@@ -64,6 +73,7 @@ abstract class HabiticaBaseApplication : Application() {
     var checkout: Checkout? = null
         private set
 
+    @OptIn(ExperimentalCoilApi::class)
     override fun onCreate() {
         super.onCreate()
         setupRealm()
@@ -79,18 +89,29 @@ abstract class HabiticaBaseApplication : Application() {
         if (!BuildConfig.DEBUG) {
             try {
                 Amplitude.getInstance().initialize(this, getString(R.string.amplitude_app_id)).enableForegroundTracking(this)
-                val identify = Identify().setOnce("androidStore", BuildConfig.STORE)
+                val identify = Identify()
+                        .setOnce("androidStore", BuildConfig.STORE)
+                        .set("launch_screen", sharedPrefs.getString("launch_screen", ""))
                 Amplitude.getInstance().identify(identify)
             } catch (ignored: Resources.NotFoundException) {
             }
 
         }
-        val config = ImagePipelineConfig.newBuilder(this)
-                .setDownsampleEnabled(true)
-                .build()
-        Fresco.initialize(this, config)
+        var builder = ImageLoader.Builder(this)
+            .transition(CrossfadeTransition())
+            .componentRegistry {
+                if (SDK_INT >= 28) {
+                    add(ImageDecoderDecoder(this@HabiticaBaseApplication))
+                } else {
+                    add(GifDecoder())
+                }
+            }
+        if (BuildConfig.DEBUG) {
+            builder = builder.logger(DebugLogger())
+        }
+        Coil.setImageLoader(builder.build())
 
-        RxErrorHandler.init(crashlyticsProxy)
+        RxErrorHandler.init(analyticsManager)
 
         FirebaseAnalytics.getInstance(this).setUserProperty("app_testing_level", BuildConfig.TESTING_LEVEL)
 
@@ -103,6 +124,12 @@ abstract class HabiticaBaseApplication : Application() {
                 .schemaVersion(1)
                 .deleteRealmIfMigrationNeeded()
                 .allowWritesOnUiThread(true)
+            .compactOnLaunch { totalBytes, usedBytes ->
+
+                // Compact if the file is over 100MB in size and less than 50% 'used'
+                val oneHundredMB = 50 * 1024 * 1024
+                (totalBytes > oneHundredMB) && (usedBytes / totalBytes) < 0.5
+            }
         try {
             Realm.setDefaultConfiguration(builder.build())
         } catch (ignored: UnsatisfiedLinkError) {
@@ -170,7 +197,7 @@ abstract class HabiticaBaseApplication : Application() {
                 return "DONT-NEED-IT"
             }
 
-            override fun getCache(): Cache? {
+            override fun getCache(): Cache {
                 return Billing.newCache()
             }
 
@@ -193,16 +220,12 @@ abstract class HabiticaBaseApplication : Application() {
     }
 
     private fun setupNotifications() {
-        FirebaseInstanceId.getInstance().instanceId.addOnCompleteListener { task ->
+        FirebaseInstallations.getInstance().id.addOnCompleteListener { task ->
             if (!task.isSuccessful) {
                 Log.w("Token", "getInstanceId failed", task.exception)
                 return@addOnCompleteListener
             }
-
-            // Get new Instance ID token
-            val token = task.result?.token
-
-            // Log and toast
+            val token = task.result
             if (BuildConfig.DEBUG) {
                 Log.d("Token", "Firebase Notification Token: $token")
             }
@@ -221,6 +244,7 @@ abstract class HabiticaBaseApplication : Application() {
         }
 
         fun logout(context: Context) {
+            getInstance(context)?.pushNotificationManager?.removePushDeviceUsingStoredToken()
             val realm = Realm.getDefaultInstance()
             getInstance(context)?.deleteDatabase(realm.path)
             realm.close()
@@ -228,11 +252,13 @@ abstract class HabiticaBaseApplication : Application() {
             val useReminder = preferences.getBoolean("use_reminder", false)
             val reminderTime = preferences.getString("reminder_time", "19:00")
             val lightMode = preferences.getString("theme_mode", "system")
+            val launchScreen = preferences.getString("launch_screen", "")
             preferences.edit {
                 clear()
                 putBoolean("use_reminder", useReminder)
                 putString("reminder_time", reminderTime)
                 putString("theme_mode", lightMode)
+                putString("launch_screen", launchScreen)
             }
             reloadUserComponent()
             getInstance(context)?.lazyApiHelper?.updateAuthenticationCredentials(null, null)

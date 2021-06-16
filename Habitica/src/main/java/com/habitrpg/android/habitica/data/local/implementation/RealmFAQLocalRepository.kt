@@ -5,7 +5,6 @@ import com.habitrpg.android.habitica.models.FAQArticle
 import hu.akarnokd.rxjava3.bridge.RxJavaBridge
 import io.reactivex.rxjava3.core.Flowable
 import io.realm.Realm
-import io.realm.RealmResults
 
 class RealmFAQLocalRepository(realm: Realm) : RealmContentLocalRepository(realm), FAQLocalRepository {
     override fun getArticle(position: Int): Flowable<FAQArticle> {
@@ -17,7 +16,7 @@ class RealmFAQLocalRepository(realm: Realm) : RealmContentLocalRepository(realm)
                 .map { it.first() })
     }
 
-    override val articles: Flowable<RealmResults<FAQArticle>>
+    override val articles: Flowable<out List<FAQArticle>>
         get() =  RxJavaBridge.toV3Flowable(realm.where(FAQArticle::class.java)
                 .findAll()
                 .asFlowable()

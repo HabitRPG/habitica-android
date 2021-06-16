@@ -10,15 +10,18 @@ import androidx.navigation.navArgs
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
+import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.ActivityGiftGemsBinding
 import com.habitrpg.android.habitica.events.ConsumablePurchasedEvent
 import com.habitrpg.android.habitica.extensions.addOkButton
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.PurchaseHandler
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
+import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import com.habitrpg.android.habitica.ui.fragments.purchases.GiftBalanceGemsFragment
 import com.habitrpg.android.habitica.ui.fragments.purchases.GiftPurchaseGemsFragment
+import com.habitrpg.android.habitica.ui.views.CurrencyView
+import com.habitrpg.android.habitica.ui.views.CurrencyViews
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import org.greenrobot.eventbus.Subscribe
 import javax.inject.Inject
@@ -27,10 +30,17 @@ class GiftGemsActivity : BaseActivity() {
 
     private lateinit var binding: ActivityGiftGemsBinding
 
+    internal val currencyView: CurrencyView by lazy {
+        val view = CurrencyView(this, "gems", true)
+        view
+    }
+
     @Inject
-    lateinit var crashlyticsProxy: CrashlyticsProxy
+    lateinit var analyticsManager: AnalyticsManager
     @Inject
     lateinit var socialRepository: SocialRepository
+    @Inject
+    lateinit var userRepository: UserRepository
     @Inject
     lateinit var appConfigManager: AppConfigManager
 
@@ -61,8 +71,10 @@ class GiftGemsActivity : BaseActivity() {
 
         setTitle(R.string.gift_gems)
         setSupportActionBar(binding.toolbar)
+        binding.toolbarAccessoryContainer.addView(currencyView)
 
-        purchaseHandler = PurchaseHandler(this, crashlyticsProxy)
+
+        purchaseHandler = PurchaseHandler(this, analyticsManager)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
@@ -81,6 +93,10 @@ class GiftGemsActivity : BaseActivity() {
             giftedUsername = it.username
             purchaseFragment?.giftedMember = it
             balanceFragment?.giftedMember = it
+        }, RxErrorHandler.handleEmptyError()))
+
+        compositeSubscription.add(userRepository.getUser().subscribe({
+            currencyView.value = it.gemCount.toDouble()
         }, RxErrorHandler.handleEmptyError()))
     }
 
@@ -133,7 +149,7 @@ class GiftGemsActivity : BaseActivity() {
                 return 2
             }
 
-            override fun getPageTitle(position: Int): CharSequence? {
+            override fun getPageTitle(position: Int): CharSequence {
                 return when (position) {
                     0 -> getString(R.string.purchase)
                     1 -> getString(R.string.from_balance)
@@ -149,7 +165,9 @@ class GiftGemsActivity : BaseActivity() {
     fun onConsumablePurchased(event: ConsumablePurchasedEvent) {
         purchaseHandler?.consumePurchase(event.purchase)
         runOnUiThread {
-            displayConfirmationDialog()
+            if (event.recipientID == giftedUserID) {
+                displayConfirmationDialog()
+            }
         }
     }
 

@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.activities
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.content.res.Resources
@@ -32,7 +33,6 @@ import java.util.*
 
 
 abstract class BaseActivity : AppCompatActivity() {
-
     private var currentTheme: String? = null
     private var isNightMode: Boolean = false
     internal var forcedTheme: String? = null

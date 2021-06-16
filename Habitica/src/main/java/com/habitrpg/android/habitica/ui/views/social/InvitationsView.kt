@@ -16,7 +16,6 @@ class InvitationsView @JvmOverloads constructor(
     var setLeader: ((String) -> Unit)? = null
     var leaderID: String? = null
     var groupName: String? = null
-    var leaderName: String? = null
 
     init {
         orientation = VERTICAL

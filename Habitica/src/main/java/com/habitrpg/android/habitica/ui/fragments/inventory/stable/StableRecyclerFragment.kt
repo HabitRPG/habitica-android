@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
-import com.habitrpg.android.habitica.databinding.FragmentRecyclerviewBinding
+import com.habitrpg.android.habitica.data.UserRepository
+import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBinding
 import com.habitrpg.android.habitica.extensions.getTranslatedType
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
@@ -20,15 +22,19 @@ import com.habitrpg.android.habitica.ui.adapter.inventory.StableRecyclerAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.helpers.MarginDecoration
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
+import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Maybe
-import io.realm.RealmResults
+import io.reactivex.rxjava3.kotlin.combineLatest
 import java.util.*
 import javax.inject.Inject
 
-class StableRecyclerFragment : BaseFragment<FragmentRecyclerviewBinding>() {
+class StableRecyclerFragment : BaseFragment<FragmentRefreshRecyclerviewBinding>(),
+    SwipeRefreshLayout.OnRefreshListener {
 
     @Inject
     lateinit var inventoryRepository: InventoryRepository
+    @Inject
+    lateinit var userRepository: UserRepository
     @Inject
     lateinit var configManager: AppConfigManager
 
@@ -38,10 +44,10 @@ class StableRecyclerFragment : BaseFragment<FragmentRecyclerviewBinding>() {
     var user: User? = null
     internal var layoutManager: androidx.recyclerview.widget.GridLayoutManager? = null
 
-    override var binding: FragmentRecyclerviewBinding? = null
+    override var binding: FragmentRefreshRecyclerviewBinding? = null
 
-    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentRecyclerviewBinding {
-        return FragmentRecyclerviewBinding.inflate(inflater, container, false)
+    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentRefreshRecyclerviewBinding {
+        return FragmentRefreshRecyclerviewBinding.inflate(inflater, container, false)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -65,7 +71,8 @@ class StableRecyclerFragment : BaseFragment<FragmentRecyclerviewBinding>() {
         super.onViewCreated(view, savedInstanceState)
 
         binding?.recyclerView?.setEmptyView(binding?.emptyView)
-        binding?.emptyView?.text = getString(R.string.empty_items, itemTypeText)
+        binding?.emptyViewTitle?.text = getString(R.string.empty_items, itemTypeText)
+        binding?.refreshLayout?.setOnRefreshListener(this)
 
         layoutManager = androidx.recyclerview.widget.GridLayoutManager(activity, 2)
         layoutManager?.spanSizeLookup = object : androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup() {
@@ -86,6 +93,7 @@ class StableRecyclerFragment : BaseFragment<FragmentRecyclerviewBinding>() {
         adapter = binding?.recyclerView?.adapter as? StableRecyclerAdapter
         if (adapter == null) {
             adapter = StableRecyclerAdapter()
+            user?.let { adapter?.setUser(it) }
             adapter?.animalIngredientsRetriever = { animal, callback ->
                 Maybe.zip(
                         inventoryRepository.getItems(Egg::class.java, arrayOf(animal.animal)).firstElement(),
@@ -133,15 +141,15 @@ class StableRecyclerFragment : BaseFragment<FragmentRecyclerviewBinding>() {
     }
 
     private fun loadItems() {
-        val observable: Maybe<out RealmResults<out Animal>> = if ("pets" == itemType) {
+        val observable: Maybe<out List<Animal>> = if ("pets" == itemType) {
             inventoryRepository.getPets().firstElement()
         } else {
             inventoryRepository.getMounts().firstElement()
         }
-        val ownedObservable: Maybe<out Map<String, OwnedObject>> = if ("pets" == itemType) {
-            inventoryRepository.getOwnedPets().firstElement()
+        val ownedObservable: Flowable<out Map<String, OwnedObject>> = if ("pets" == itemType) {
+            inventoryRepository.getOwnedPets()
         } else {
-            inventoryRepository.getOwnedMounts().firstElement()
+            inventoryRepository.getOwnedMounts()
         }.map {
             val animalMap = mutableMapOf<String, OwnedObject>()
             it.forEach { animal ->
@@ -162,26 +170,25 @@ class StableRecyclerFragment : BaseFragment<FragmentRecyclerviewBinding>() {
                 .subscribe({
             adapter?.setEggs(it)
         }, RxErrorHandler.handleEmptyError()))
-        compositeSubscription.add(observable.zipWith(ownedObservable, { unsortedAnimals, ownedAnimals ->
-            mapAnimals(unsortedAnimals, ownedAnimals)
-        }).subscribe({ items -> adapter?.setItemList(items) }, RxErrorHandler.handleEmptyError()))
-
-        compositeSubscription.add(inventoryRepository.getOwnedItems("eggs")
-                .map {
-                    val map = mutableMapOf<String, OwnedItem>()
-                    it.forEach { item ->
-                        map[item.key ?: ""] = item
-                    }
-                    map
+        compositeSubscription.add(ownedObservable.combineLatest(observable.toFlowable())
+                .map { (ownedAnimals, unsortedAnimals) ->
+                    mapAnimals(unsortedAnimals, ownedAnimals)
                 }
-                .subscribe({
-            adapter?.ownedEggs = it
-        }, RxErrorHandler.handleEmptyError()))
+                .subscribe({ items -> adapter?.setItemList(items) }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(inventoryRepository.getOwnedItems(true).subscribe({ adapter?.setOwnedItems(it) }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(inventoryRepository.getMounts().subscribe({ adapter?.setExistingMounts(it) }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(inventoryRepository.getOwnedMounts()
+                .map { ownedMounts ->
+                    val mountMap = mutableMapOf<String, OwnedMount>()
+                    ownedMounts.forEach { mountMap[it.key ?: ""] = it }
+                    return@map mountMap
+                }
+                .subscribe({ adapter?.setOwnedMounts(it) }, RxErrorHandler.handleEmptyError()))
     }
 
-    private fun mapAnimals(unsortedAnimals: RealmResults<out Animal>, ownedAnimals: Map<String, OwnedObject>): ArrayList<Any> {
+    private fun mapAnimals(unsortedAnimals: List<Animal>, ownedAnimals: Map<String, OwnedObject>): ArrayList<Any> {
         val items = ArrayList<Any>()
-        var lastAnimal: Animal = unsortedAnimals[0] ?: return items
+        var lastAnimal: Animal = unsortedAnimals.firstOrNull() ?: return items
         var lastSection: StableSection? = null
         for (animal in unsortedAnimals) {
             val identifier = if (animal.animal.isNotEmpty() && (animal.type != "special" && animal.type != "wacky")) animal.animal else animal.key
@@ -214,11 +221,11 @@ class StableRecyclerFragment : BaseFragment<FragmentRecyclerviewBinding>() {
             }
             val isOwned = when (itemType) {
                 "pets" -> {
-                    val ownedPet = ownedAnimals[animal?.key] as? OwnedPet
+                    val ownedPet = ownedAnimals[animal.key] as? OwnedPet
                     ownedPet?.trained ?: 0 > 0
                 }
                 "mounts" -> {
-                    val ownedMount = ownedAnimals[animal?.key] as? OwnedMount
+                    val ownedMount = ownedAnimals[animal.key] as? OwnedMount
                     ownedMount?.owned == true
                 }
                 else -> false
@@ -241,5 +248,11 @@ class StableRecyclerFragment : BaseFragment<FragmentRecyclerviewBinding>() {
     companion object {
         private const val ITEM_TYPE_KEY = "CLASS_TYPE_KEY"
         private const val HEADER_VIEW_TYPE = 0
+    }
+
+    override fun onRefresh() {
+        compositeSubscription.add(userRepository.retrieveUser(false, true).subscribe({
+            binding?.refreshLayout?.isRefreshing = false
+        }, RxErrorHandler.handleEmptyError()))
     }
 }

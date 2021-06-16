@@ -16,6 +16,11 @@ class PromoMenuView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : RelativeLayout(context, attrs, defStyleAttr) {
 
+    var canClose: Boolean = false
+    set(value) {
+        field = value
+        binding.closeButton.visibility = if (value) View.VISIBLE else View.GONE
+    }
     var binding: PromoMenuBinding = PromoMenuBinding.inflate(context.layoutInflater, this)
 
     init {

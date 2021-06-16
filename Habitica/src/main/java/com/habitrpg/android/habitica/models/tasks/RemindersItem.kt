@@ -7,25 +7,16 @@ import java.util.Date
 
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
+import io.realm.annotations.RealmClass
 
+@RealmClass(embedded = true)
 open class RemindersItem : RealmObject, Parcelable {
-    @PrimaryKey
     var id: String? = null
     var startDate: Date? = null
     var time: Date? = null
 
     //Use to store task type before a task is created
     var type: String? = null
-
-    override fun equals(other: Any?): Boolean {
-        return if (other?.javaClass == RemindersItem::class.java) {
-            this.id == (other as? RemindersItem)?.id
-        } else super.equals(other)
-    }
-
-    override fun hashCode(): Int {
-        return id?.hashCode() ?: 0
-    }
 
     override fun describeContents(): Int {
         return 0

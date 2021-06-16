@@ -15,10 +15,7 @@ import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.social.FindUsernameResult
 import com.habitrpg.android.habitica.models.user.Authentication
 import com.habitrpg.android.habitica.models.user.Profile
-import com.habitrpg.android.habitica.ui.views.HabiticaEmojiTextView
 import com.habitrpg.android.habitica.ui.views.social.UsernameLabel
-import com.habitrpg.android.habitica.ui.helpers.EmojiMap
-import com.habitrpg.android.habitica.ui.helpers.EmojiParser
 import java.util.*
 
 class AutocompleteAdapter(val context: Context, val socialRepository: SocialRepository? = null, var autocompleteContext: String? = null, var groupID: String? = null, val remoteAutocomplete: Boolean = false) : BaseAdapter(), Filterable {
@@ -56,7 +53,6 @@ class AutocompleteAdapter(val context: Context, val socialRepository: SocialRepo
                             val result = FindUsernameResult()
                             result.authentication = Authentication()
                             result.authentication?.localAuthentication = LocalAuthentication()
-                            result.authentication?.localAuthentication?.userID = message.uuid
                             result.authentication?.localAuthentication?.username = message.username
                             result.contributor = message.contributor
                             result.profile = Profile()
@@ -97,16 +93,15 @@ class AutocompleteAdapter(val context: Context, val socialRepository: SocialRepo
         } else {
             val view = parent?.inflate(R.layout.autocomplete_emoji)
             val result = getItem(position) as? String
-            val emojiTextView = view?.findViewById<HabiticaEmojiTextView>(R.id.emoji_textview)
-            //emojiTextView?.setEmojiconSize(24.dpToPx(context))
+            val emojiTextView = view?.findViewById<TextView>(R.id.emoji_textview)
             emojiTextView?.text = EmojiParser.parseEmojis(result)
             view?.findViewById<TextView>(R.id.label)?.text = result
             view
         } ?: View(context)
     }
 
-    override fun getItem(position: Int): Any {
-        return if (isAutocompletingUsers) userResults[position] else emojiResults[position]
+    override fun getItem(position: Int): Any? {
+        return if (isAutocompletingUsers) userResults.getOrNull(position) else emojiResults.getOrNull(position)
     }
 
     override fun getItemId(position: Int): Long {

@@ -4,10 +4,12 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentPagerAdapter
 import androidx.lifecycle.ViewModelProvider
-import androidx.viewpager.widget.ViewPager
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.tabs.TabLayoutMediator
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.databinding.FragmentViewpagerBinding
@@ -25,7 +27,7 @@ class PartyFragment : BaseMainFragment<FragmentViewpagerBinding>() {
 
     private var detailFragment: PartyDetailFragment? = null
     private var chatFragment: ChatFragment? = null
-    private var viewPagerAdapter: FragmentPagerAdapter? = null
+    private var viewPagerAdapter: FragmentStateAdapter? = null
 
     internal lateinit var viewModel: PartyViewModel
 
@@ -42,17 +44,17 @@ class PartyFragment : BaseMainFragment<FragmentViewpagerBinding>() {
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         viewModel = ViewModelProvider(this)
-                .get(PartyViewModel::class.java)
+            .get(PartyViewModel::class.java)
         viewModel.groupViewType = GroupViewType.PARTY
 
         viewModel.getGroupData().observe(viewLifecycleOwner,
-                {
-                    updateGroupUI(it)
-                })
+            {
+                updateGroupUI(it)
+            })
 
 
         binding?.viewPager?.currentItem = 0
@@ -72,9 +74,8 @@ class PartyFragment : BaseMainFragment<FragmentViewpagerBinding>() {
         this.tutorialStepIdentifier = "party"
         this.tutorialText = getString(R.string.tutorial_party)
 
-        viewModel.retrieveGroup {  }
+        viewModel.retrieveGroup {}
     }
-
     override fun injectFragment(component: UserComponent) {
         component.inject(this)
     }
@@ -112,7 +113,7 @@ class PartyFragment : BaseMainFragment<FragmentViewpagerBinding>() {
             R.id.menu_invite_item -> {
                 val intent = Intent(activity, GroupInviteActivity::class.java)
                 intent.putExtra("groupType", "party")
-                startActivityForResult(intent, GroupInviteActivity.RESULT_SEND_INVITES)
+                sendInvitesResult.launch(intent)
                 return true
             }
             R.id.menu_guild_edit -> {
@@ -145,50 +146,46 @@ class PartyFragment : BaseMainFragment<FragmentViewpagerBinding>() {
         val intent = Intent(activity, GroupFormActivity::class.java)
         intent.putExtras(bundle)
         intent.flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
-        startActivityForResult(intent, GroupFormActivity.GROUP_FORM_ACTIVITY)
+        groupFormResult.launch(intent)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        when (requestCode) {
-            GroupFormActivity.GROUP_FORM_ACTIVITY -> {
-                if (resultCode == Activity.RESULT_OK) {
-                    viewModel.updateOrCreateGroup(data?.extras)
+    private val groupFormResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if (it.resultCode == Activity.RESULT_OK) {
+            viewModel.updateOrCreateGroup(it.data?.extras)
+        }
+    }
+
+    private val sendInvitesResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if (it.resultCode == Activity.RESULT_OK) {
+            val inviteData = HashMap<String, Any>()
+            inviteData["inviter"] = user?.profile?.name ?: ""
+            val emails = it.data?.getStringArrayExtra(GroupInviteActivity.EMAILS_KEY)
+            if (emails != null && emails.isNotEmpty()) {
+                val invites = ArrayList<HashMap<String, String>>()
+                emails.forEach { email ->
+                    val invite = HashMap<String, String>()
+                    invite["name"] = ""
+                    invite["email"] = email
+                    invites.add(invite)
                 }
+                inviteData["emails"] = invites
             }
-            GroupInviteActivity.RESULT_SEND_INVITES -> {
-                if (resultCode == Activity.RESULT_OK) {
-                    val inviteData = HashMap<String, Any>()
-                    inviteData["inviter"] = user?.profile?.name ?: ""
-                    val emails = data?.getStringArrayExtra(GroupInviteActivity.EMAILS_KEY)
-                    if (emails != null && emails.isNotEmpty()) {
-                        val invites = ArrayList<HashMap<String, String>>()
-                        emails.forEach { email ->
-                            val invite = HashMap<String, String>()
-                            invite["name"] = ""
-                            invite["email"] = email
-                            invites.add(invite)
-                        }
-                        inviteData["emails"] = invites
-                    }
-                    val userIDs = data?.getStringArrayExtra(GroupInviteActivity.USER_IDS_KEY)
-                    if (userIDs != null && userIDs.isNotEmpty()){
-                        val invites = ArrayList<String>()
-                        userIDs.forEach { invites.add(it) }
-                        inviteData["usernames"] = invites
-                    }
-                    viewModel.inviteToGroup(inviteData)
-                }
+            val userIDs = it.data?.getStringArrayExtra(GroupInviteActivity.USER_IDS_KEY)
+            if (userIDs != null && userIDs.isNotEmpty()){
+                val invites = ArrayList<String>()
+                userIDs.forEach { invites.add(it) }
+                inviteData["usernames"] = invites
             }
+            viewModel.inviteToGroup(inviteData)
         }
     }
 
     private fun setViewPagerAdapter() {
         val fragmentManager = childFragmentManager
 
-        viewPagerAdapter = object : FragmentPagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+        viewPagerAdapter = object : FragmentStateAdapter(fragmentManager, lifecycle) {
 
-            override fun getItem(position: Int): Fragment {
+            override fun createFragment(position: Int): Fragment {
                 return when (position) {
                     0 -> {
                         detailFragment = PartyDetailFragment()
@@ -196,10 +193,8 @@ class PartyFragment : BaseMainFragment<FragmentViewpagerBinding>() {
                         detailFragment
                     }
                     1 -> {
-                        if (chatFragment == null) {
-                            chatFragment = ChatFragment()
-                            chatFragment?.viewModel = viewModel
-                        }
+                        chatFragment = ChatFragment()
+                        chatFragment?.viewModel = viewModel
                         chatFragment
                     }
                     else -> Fragment()
@@ -207,21 +202,13 @@ class PartyFragment : BaseMainFragment<FragmentViewpagerBinding>() {
 
             }
 
-            override fun getCount(): Int {
+            override fun getItemCount(): Int {
                 return 2
-            }
-
-            override fun getPageTitle(position: Int): CharSequence? {
-                return when (position) {
-                    0 -> context?.getString(R.string.party)
-                    1 -> context?.getString(R.string.chat)
-                    else -> ""
-                } ?: ""
             }
         }
         binding?.viewPager?.adapter = viewPagerAdapter
 
-        binding?.viewPager?.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+        binding?.viewPager?.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
                 if (position == 1) {
                     chatFragment?.setNavigatedToFragment()
@@ -233,9 +220,18 @@ class PartyFragment : BaseMainFragment<FragmentViewpagerBinding>() {
                        chatFragment?.setNavigatedToFragment()
                 }
             }
-
-            override fun onPageScrollStateChanged(state: Int) { /* no-op */ }
         })
-        tabLayout?.setupWithViewPager(binding?.viewPager)
+
+        tabLayout?.let {
+            binding?.viewPager?.let { it1 ->
+                TabLayoutMediator(it, it1) { tab, position ->
+                    tab.text = when (position) {
+                        0 -> context?.getString(R.string.party)
+                        1 -> context?.getString(R.string.chat)
+                        else -> ""
+                    }
+                }.attach()
+            }
+        }
     }
 }

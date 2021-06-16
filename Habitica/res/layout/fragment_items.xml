@@ -16,7 +16,6 @@
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/content_background"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
             <com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport
                 android:id="@+id/recyclerView"

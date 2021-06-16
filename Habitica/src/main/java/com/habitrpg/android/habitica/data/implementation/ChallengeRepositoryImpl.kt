@@ -10,7 +10,6 @@ import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.tasks.TaskList
 import com.habitrpg.android.habitica.models.tasks.TasksOrder
 import io.reactivex.rxjava3.core.Flowable
-import io.realm.RealmResults
 
 
 class ChallengeRepositoryImpl(localRepository: ChallengeLocalRepository, apiClient: ApiClient, userID: String) : BaseRepositoryImpl<ChallengeLocalRepository>(localRepository, apiClient, userID), ChallengeRepository {
@@ -23,7 +22,7 @@ class ChallengeRepositoryImpl(localRepository: ChallengeLocalRepository, apiClie
         return localRepository.getChallengeMembership(userID, id)
     }
 
-    override fun getChallengeMemberships(): Flowable<RealmResults<ChallengeMembership>> {
+    override fun getChallengeMemberships(): Flowable<out List<ChallengeMembership>> {
         return localRepository.getChallengeMemberships(userID)
     }
 
@@ -31,7 +30,7 @@ class ChallengeRepositoryImpl(localRepository: ChallengeLocalRepository, apiClie
         return localRepository.getChallenge(challengeId)
     }
 
-    override fun getChallengeTasks(challengeId: String): Flowable<RealmResults<Task>> {
+    override fun getChallengeTasks(challengeId: String): Flowable<out List<Task>> {
         return localRepository.getTasks(challengeId)
     }
 
@@ -114,11 +113,11 @@ class ChallengeRepositoryImpl(localRepository: ChallengeLocalRepository, apiClie
         return apiClient.deleteChallenge(challengeId)
     }
 
-    override fun getChallenges(): Flowable<RealmResults<Challenge>> {
+    override fun getChallenges(): Flowable<out List<Challenge>> {
         return localRepository.challenges
     }
 
-    override fun getUserChallenges(userId: String?): Flowable<RealmResults<Challenge>> {
+    override fun getUserChallenges(userId: String?): Flowable<out List<Challenge>> {
         return localRepository.getUserChallenges(userId ?: userID)
     }
 

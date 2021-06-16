@@ -1,38 +1,34 @@
 package com.habitrpg.android.habitica.interactors
 
-import android.widget.ImageView
+import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.DialogLevelup10Binding
 import com.habitrpg.android.habitica.events.ShareEvent
 import com.habitrpg.android.habitica.executors.PostExecutionThread
-import com.habitrpg.android.habitica.executors.ThreadExecutor
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.SoundManager
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.AvatarView
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
+import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import io.reactivex.rxjava3.core.Flowable
 import org.greenrobot.eventbus.EventBus
 import javax.inject.Inject
 
 class LevelUpUseCase @Inject
-constructor(private val soundManager: SoundManager, threadExecutor: ThreadExecutor, postExecutionThread: PostExecutionThread,
-            private val checkClassSelectionUseCase: CheckClassSelectionUseCase) : UseCase<LevelUpUseCase.RequestValues, Stats>(threadExecutor, postExecutionThread) {
+constructor(private val soundManager: SoundManager, postExecutionThread: PostExecutionThread,
+            private val checkClassSelectionUseCase: CheckClassSelectionUseCase) : UseCase<LevelUpUseCase.RequestValues, Stats>(postExecutionThread) {
 
     override fun buildUseCaseObservable(requestValues: RequestValues): Flowable<Stats> {
         return Flowable.defer {
             soundManager.loadAndPlayAudio(SoundManager.SoundLevelUp)
 
             val suppressedModals = requestValues.user.preferences?.suppressModals
-            if (suppressedModals?.levelUp == true) {
-                showClassSelection(requestValues)
-                return@defer Flowable.just<Stats>(requestValues.user.stats)
-            }
 
-            if (requestValues.newLevel == 10L) {
+            if (requestValues.newLevel == 10) {
                 val binding = DialogLevelup10Binding.inflate(requestValues.activity.layoutInflater)
                 binding.healerIconView.setImageBitmap(HabiticaIconsHelper.imageOfHealerLightBg())
                 binding.mageIconView.setImageBitmap(HabiticaIconsHelper.imageOfMageLightBg())
@@ -52,6 +48,12 @@ constructor(private val soundManager: SoundManager, threadExecutor: ThreadExecut
                     alert.enqueue()
                 }
             } else {
+                if (suppressedModals?.levelUp == true) {
+                    HabiticaSnackbar.showSnackbar(requestValues.snackbarTargetView,
+                            requestValues.activity.getString(R.string.levelup_header, requestValues.newLevel),
+                            HabiticaSnackbar.SnackbarDisplayType.SUCCESS, true)
+                    return@defer Flowable.just<Stats>(requestValues.user.stats)
+                }
                 val customView = requestValues.activity.layoutInflater.inflate(R.layout.dialog_levelup, null)
                 if (customView != null) {
                     val dialogAvatarView = customView.findViewById<AvatarView>(R.id.avatarView)
@@ -59,6 +61,7 @@ constructor(private val soundManager: SoundManager, threadExecutor: ThreadExecut
                 }
 
                 val event = ShareEvent()
+                event.identifier = "levelup"
                 event.sharedMessage = requestValues.activity.getString(R.string.share_levelup, requestValues.newLevel)
                 val avatarView = AvatarView(requestValues.activity, showBackground = true, showMount = true, showPet = true)
                 avatarView.setAvatar(requestValues.user)
@@ -89,7 +92,7 @@ constructor(private val soundManager: SoundManager, threadExecutor: ThreadExecut
                 .subscribe({ }, RxErrorHandler.handleEmptyError())
     }
 
-    class RequestValues(val user: User, val level: Long?, val activity: AppCompatActivity) : UseCase.RequestValues {
-        val newLevel: Long = level ?: 0
+    class RequestValues(val user: User, val level: Int?, val activity: AppCompatActivity, val snackbarTargetView: ViewGroup) : UseCase.RequestValues {
+        val newLevel: Int = level ?: 0
     }
 }

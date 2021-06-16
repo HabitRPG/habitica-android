@@ -13,11 +13,10 @@
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_marginEnd="@dimen/row_padding">
-        <com.facebook.drawee.view.SimpleDraweeView
+        <ImageView
             android:layout_width="@dimen/gear_image_size"
             android:layout_height="@dimen/gear_image_size"
-            android:id="@+id/gear_image"
-            app:actualImageScaleType="fitCenter"/>
+            android:id="@+id/gear_image"/>
     </FrameLayout>
 
     <LinearLayout

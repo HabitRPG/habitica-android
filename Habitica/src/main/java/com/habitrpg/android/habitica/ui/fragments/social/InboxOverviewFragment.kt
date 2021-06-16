@@ -21,7 +21,6 @@ import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.social.UsernameLabel
-import io.realm.RealmResults
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -114,7 +113,7 @@ class InboxOverviewFragment : BaseMainFragment<FragmentInboxBinding>(), androidx
                             binding.progressCircular.visibility = View.GONE
                         })
             }
-            alert.addButton(getString(R.string.action_cancel), false) { dialog, _ ->
+            alert.addButton(getString(R.string.action_cancel), false) { _, _ ->
                 thisActivity.dismissKeyboard()
             }
             alert.setAdditionalContentView(binding.root)
@@ -141,7 +140,7 @@ class InboxOverviewFragment : BaseMainFragment<FragmentInboxBinding>(), androidx
         retrieveMessages()
     }
 
-    private fun setInboxMessages(messages: RealmResults<InboxConversation>) {
+    private fun setInboxMessages(messages: List<InboxConversation>) {
         if (binding?.inboxMessages == null) {
             return
         }

@@ -1,18 +1,15 @@
 package com.habitrpg.android.habitica.models.invitations
 
+import com.habitrpg.android.habitica.models.BaseObject
 import com.habitrpg.android.habitica.models.user.User
 
 import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
+import io.realm.annotations.RealmClass
 
-open class Invitations : RealmObject() {
-
-    @PrimaryKey
-    var userId: String? = null
-
-    internal var user: User? = null
-
+@RealmClass(embedded = true)
+open class Invitations : RealmObject(), BaseObject {
     var party: PartyInvite? = null
     var parties: RealmList<PartyInvite>? = null
     var guilds: RealmList<GuildInvite>? = null

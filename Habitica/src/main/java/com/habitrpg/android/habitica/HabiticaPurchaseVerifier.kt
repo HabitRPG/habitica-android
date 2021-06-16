@@ -19,9 +19,7 @@ import org.solovyev.android.checkout.ResponseCodes
 import retrofit2.HttpException
 import java.util.*
 
-/**
- * Created by Negue on 26.11.2015.
- */
+
 class HabiticaPurchaseVerifier(context: Context, apiClient: ApiClient) : BasePurchaseVerifier() {
     private val apiClient: ApiClient
     private val purchasedOrderList: MutableSet<String> = HashSet()
@@ -39,8 +37,8 @@ class HabiticaPurchaseVerifier(context: Context, apiClient: ApiClient) : BasePur
                         apiClient.validatePurchase(validationRequest).subscribe({
                             purchasedOrderList.add(purchase.orderId)
                             requestListener.onSuccess(verifiedPurchases)
-                            EventBus.getDefault().post(ConsumablePurchasedEvent(purchase))
-                            removeGift(purchase.sku)
+                            val giftedID = removeGift(purchase.sku)
+                            EventBus.getDefault().post(ConsumablePurchasedEvent(purchase, giftedID))
                         }) { throwable: Throwable ->
                             handleError(throwable, purchase, requestListener, verifiedPurchases)
                         }
@@ -50,8 +48,8 @@ class HabiticaPurchaseVerifier(context: Context, apiClient: ApiClient) : BasePur
                         apiClient.validateNoRenewSubscription(validationRequest).subscribe({
                             purchasedOrderList.add(purchase.orderId)
                             requestListener.onSuccess(verifiedPurchases)
-                            EventBus.getDefault().post(ConsumablePurchasedEvent(purchase))
-                            removeGift(purchase.sku)
+                            val giftedID = removeGift(purchase.sku)
+                            EventBus.getDefault().post(ConsumablePurchasedEvent(purchase, giftedID))
                         }) { throwable: Throwable ->
                             handleError(throwable, purchase, requestListener, verifiedPurchases)
                         }
@@ -114,7 +112,7 @@ class HabiticaPurchaseVerifier(context: Context, apiClient: ApiClient) : BasePur
     private fun loadPendingGifts(): MutableMap<String?, String?> {
         val outputMap: MutableMap<String?, String?> = HashMap()
         try {
-            val jsonString = preferences?.getString(PENDING_GIFTS_KEY, JSONObject().toString())
+            val jsonString = preferences?.getString(PENDING_GIFTS_KEY, JSONObject().toString()) ?: ""
             val jsonObject = JSONObject(jsonString)
             val keysItr = jsonObject.keys()
             while (keysItr.hasNext()) {
@@ -138,9 +136,10 @@ class HabiticaPurchaseVerifier(context: Context, apiClient: ApiClient) : BasePur
             savePendingGifts()
         }
 
-        private fun removeGift(sku: String) {
-            pendingGifts.remove(sku)
+        private fun removeGift(sku: String): String? {
+            val giftedID = pendingGifts.remove(sku)
             savePendingGifts()
+            return giftedID
         }
 
         private fun savePendingGifts() {

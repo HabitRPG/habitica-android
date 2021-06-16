@@ -12,7 +12,6 @@ import com.habitrpg.android.habitica.models.user.User
 import hu.akarnokd.rxjava3.bridge.RxJavaBridge
 import io.reactivex.rxjava3.core.Flowable
 import io.realm.Realm
-import io.realm.RealmResults
 
 class RealmUserLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), UserLocalRepository {
     override fun getUserQuestStatus(userID: String): Flowable<UserQuestStatus> {
@@ -35,7 +34,7 @@ class RealmUserLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
                 }}
     }
 
-    override fun getAchievements(): Flowable<RealmResults<Achievement>> {
+    override fun getAchievements(): Flowable<out List<Achievement>> {
         return RxJavaBridge.toV3Flowable(realm.where(Achievement::class.java)
                 .sort("index")
                 .findAll()
@@ -43,16 +42,17 @@ class RealmUserLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
                 .filter { it.isLoaded })
     }
 
-    override fun getQuestAchievements(userID: String): Flowable<RealmResults<QuestAchievement>> {
-        return RxJavaBridge.toV3Flowable(realm.where(QuestAchievement::class.java)
-                .equalTo("userID", userID)
+    override fun getQuestAchievements(userID: String): Flowable<out List<QuestAchievement>> {
+        return RxJavaBridge.toV3Flowable(realm.where(User::class.java)
+                .equalTo("id", userID)
                 .findAll()
                 .asFlowable()
-                .filter { it.isLoaded })
+                .filter { it.isLoaded }
+            .map { it.first()?.questAchievements ?: emptyList() })
 }
 
-    override fun getTutorialSteps(): Flowable<RealmResults<TutorialStep>> = RxJavaBridge.toV3Flowable(realm.where(TutorialStep::class.java).findAll().asFlowable()
-                .filter { it.isLoaded })
+    override fun getTutorialSteps(): Flowable<List<TutorialStep>> = RxJavaBridge.toV3Flowable(realm.where(TutorialStep::class.java).findAll().asFlowable()
+                .filter { it.isLoaded }.map { it })
 
     override fun getUser(userID: String): Flowable<User> {
         if (realm.isClosed) return Flowable.empty()
@@ -81,12 +81,7 @@ class RealmUserLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
             }
         }
         executeTransaction { realm1 -> realm1.insertOrUpdate(user) }
-        removeOldTags(user.id ?: "", user.tags)
-        if (user.challenges != null) {
-            removeOldChallenges(user.id ?: "", user.challenges ?: emptyList())
-        }
-        removeOldPets(user.id ?: "", user.items?.pets ?: emptyList())
-        removeOldMounts(user.id ?: "", user.items?.mounts ?: emptyList())
+
     }
 
     override fun saveMessages(messages: List<ChatMessage>) {
@@ -95,47 +90,7 @@ class RealmUserLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
         }
     }
 
-    private fun removeOldTags(userId: String, onlineTags: List<Tag>) {
-        val tags = realm.where(Tag::class.java).equalTo("userId", userId).findAll().createSnapshot()
-        val tagsToDelete = tags.filterNot { onlineTags.contains(it) }
-        executeTransaction {
-            for (tag in tagsToDelete) {
-                tag.deleteFromRealm()
-            }
-        }
-    }
-
-    private fun removeOldChallenges(userID: String, onlineChallenges: List<ChallengeMembership>) {
-        val memberships = realm.where(ChallengeMembership::class.java).equalTo("userID", userID).findAll().createSnapshot()
-        val membershipsToDelete = memberships.filterNot { onlineChallenges.contains(it) }
-        executeTransaction {
-            membershipsToDelete.forEach {
-                it.deleteFromRealm()
-            }
-        }
-    }
-
-    private fun removeOldPets(userID: String, onlinePets: List<OwnedPet>) {
-        val pets = realm.where(OwnedPet::class.java).equalTo("userID", userID).findAll().createSnapshot()
-        val petsToDelete = pets.filterNot { onlinePets.contains(it) }
-        executeTransaction {
-            petsToDelete.forEach {
-                it.deleteFromRealm()
-            }
-        }
-    }
-
-    private fun removeOldMounts(userID: String, onlineMounts: List<OwnedMount>) {
-        val mount = realm.where(OwnedMount::class.java).equalTo("userID", userID).findAll().createSnapshot()
-        val mountsToDelete = mount.filterNot { onlineMounts.contains(it) }
-        executeTransaction {
-            mountsToDelete.forEach {
-                it.deleteFromRealm()
-            }
-        }
-    }
-
-    override fun getTeamPlans(userID: String): Flowable<RealmResults<TeamPlan>> {
+    override fun getTeamPlans(userID: String): Flowable<out List<TeamPlan>> {
         return RxJavaBridge.toV3Flowable(realm.where(TeamPlan::class.java)
                 .equalTo("userID", userID)
                 .findAll()
@@ -153,7 +108,7 @@ class RealmUserLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
                 .map { teams -> teams.first() })
     }
 
-    override fun getSkills(user: User): Flowable<RealmResults<Skill>> {
+    override fun getSkills(user: User): Flowable<out List<Skill>> {
         val habitClass = if (user.preferences?.disableClasses == true) "none" else user.stats?.habitClass
         return RxJavaBridge.toV3Flowable(realm.where(Skill::class.java)
                 .equalTo("habitClass", habitClass)
@@ -163,7 +118,7 @@ class RealmUserLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
                 .filter { it.isLoaded })
 }
 
-    override fun getSpecialItems(user: User): Flowable<RealmResults<Skill>> {
+    override fun getSpecialItems(user: User): Flowable<out List<Skill>> {
         val specialItems = user.items?.special
         val ownedItems = ArrayList<String>()
         if (specialItems != null) {

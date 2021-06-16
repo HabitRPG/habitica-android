@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:context=".ui.activities.MainActivity">
-            <fragment
+            <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/nav_host_fragment"
                 android:name="androidx.navigation.fragment.NavHostFragment"
                 android:layout_width="match_parent"
@@ -79,7 +79,7 @@
                             <FrameLayout
                                 android:id="@+id/toolbar_accessory_container"
                                 android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
+                                android:layout_height="wrap_content"
                                 android:scaleType="centerCrop"
                                 android:adjustViewBounds="true"
                                 android:layout_centerVertical="true"
@@ -120,15 +120,13 @@
                 android:id="@+id/overlayFrameLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:minHeight="60dp"
                 android:layout_gravity="bottom|center_horizontal">
                 <FrameLayout
                     android:id="@+id/snackbar_container"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:minHeight="158dp"
+                    android:layout_height="400dp"
                     android:layout_alignParentBottom="true"
-                    android:paddingBottom="68dp"/>
+                    android:paddingBottom="50dp"/>
                 <com.habitrpg.android.habitica.ui.views.navigation.HabiticaBottomNavigationView
                     android:id="@+id/bottom_navigation"
                     android:layout_width="match_parent"
@@ -141,7 +139,7 @@
 
     <!-- The drawer is given a fixed width in dp and extends the full height of
          the container. -->
-    <fragment
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/navigation_drawer"
         class="com.habitrpg.android.habitica.ui.fragments.NavigationDrawerFragment"
         android:layout_width="match_parent"

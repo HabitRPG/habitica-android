@@ -1,27 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/card_view"
-    android:layout_width="match_parent"
+    android:id="@+id/wrapper"
+    android:layout_width="76dp"
     android:layout_height="wrap_content"
-    android:minHeight="60dp">
-
-    <LinearLayout
-        android:id="@+id/wrapper"
-        android:layout_width="76dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/layout_rounded_bg_window"
-        android:orientation="vertical"
-        android:layout_gravity="center">
-
-        <com.facebook.drawee.view.SimpleDraweeView
+    android:background="@drawable/layout_rounded_bg_window"
+    android:orientation="vertical"
+    android:layout_gravity="center">
+        <ImageView
             android:id="@+id/imageView"
             android:layout_width="76dp"
             android:layout_height="76dp"
             android:layout_gravity="start"
-            app:roundedCornerRadius="6dp"
-            app:roundingBorderWidth="6dp"
             android:scaleType="fitEnd" />
         <FrameLayout
             android:id="@+id/buy_button"
@@ -38,5 +29,4 @@
                 android:textSize="15sp"
                 android:layout_gravity="center" />
         </FrameLayout>
-    </LinearLayout>
-</FrameLayout>
+</LinearLayout>

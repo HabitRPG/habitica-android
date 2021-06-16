@@ -165,7 +165,7 @@
     <string name="quest_accept">Accept</string>
     <string name="quest_reject">Reject</string>
     <string name="quest_begin">Begin Quest</string>
-    <string name="quest_cancel">Cancel Invitation</string>
+    <string name="quest_cancel">Cancel</string>
     <string name="quest_abort">Abort Quest</string>
     <string name="version_info">Version %1$s (%2$d)</string>
 
@@ -240,7 +240,7 @@
     <string name="outfit_weapon">Main-Hand</string>
     <string name="wear_costume">Wear Costume</string>
     <string name="equipped">Equipped</string>
-    <string name="quest_cancel_message">Are you sure you want to cancel this quest? All invitation acceptances will be lost. The quest owner will retain possession of the quest scroll.</string>
+    <string name="quest_cancel_message">Are you sure you want to cancel this Quest? Canceling the Quest will cancel all accepted and pending invitations. The Quest will be returned to the owner’s inventory.</string>
     <string name="quest_begin_message">Are you sure? Only %1$d of your %2$d party members have joined this quest! Quests start automatically when all players have joined or rejected the invitation.</string>
     <string name="ago_1month">1 month ago</string>
     <string name="ago_months">%d months ago</string>
@@ -350,7 +350,7 @@
     <string name="create_account_short">create an account</string>
     <string name="successful_purchase">Purchased %1$s</string>
     <string name="gold_plural">gold</string>
-    <string name="gold_capitalilzed">Gold</string>
+    <string name="gold_capitalized">Gold</string>
     <string name="chat_message_copied">Message copied to Clipboard</string>
     <string name="edit_tag_btn_edit">Edit</string>
     <string name="confirm_delete_tag_title">Are you sure?</string>
@@ -463,7 +463,8 @@
     <string name="gem_shop">Gem</string>
     <string name="mystery_item">Mystery Item</string>
     <string name="myster_item_notes">Each month, subscribers will receive a mystery item. This is usually released about one week before the end of the month.</string>
-    <string name="open">Open</string>
+    <string name="open">Open</string>>
+    <string name="is_open">Open</string>
     <string name="checkInRewardEarned">You earned a %1$s as a reward for your devotion to improving your life.</string>
     <string name="nextPrizeUnlocks" tools:ignore="PluralsCandidate">Next prize in %1$d Check-Ins</string>
     <string name="pending_approval">pending approval</string>
@@ -552,13 +553,14 @@
     <string name="participants">Participants</string>
     <string name="invitations">Invitations</string>
     <string name="quest_leader_header">Started by %s</string>
-    <string name="quest_abort_message">Are you sure you want to abort this mission? It will abort it for everyone in your party and all progress will be lost. The quest scroll will be returned to the quest owner.</string>
+    <string name="quest_abort_message">Are you sure you want to cancel this Quest? All progress will be lost. The Quest will be returned to the owner’s inventory.</string>
     <string name="reloading_content">Reloading Content</string>
     <string name="reloaded_content">Reloaded Content</string>
     <string name="thousand_abbrev">k</string>
     <string name="million_abbrev">m</string>
     <string name="billion_abbrev">b</string>
     <string name="available_until">Available until %s</string>
+    <string name="available_for">Available for %s</string>
     <string name="gems_left_max">Monthly Gems: %1$d/%2$d Remaining</string>
     <string name="gems_left_nomax">Monthly Gems: %d Remaining</string>
     <string name="health">Health</string>
@@ -719,8 +721,10 @@
     <string name="expand_notes">Read More</string>
     <string name="collapse_notes">Show Less</string>
     <string name="reset_streak">Reset Streak</string>
-    <string name="week_reminder_title">How are your tasks going?</string>
-    <string name="week_reminder_text">Breaks are healthy, but you can still earn points for simple activities to level up and get cool gear!</string>
+    <string name="week_reminder_title">Getting things done?</string>
+    <string name="week_reminder_text">Check them off in Habitica now for rewards and XP!</string>
+    <string name="month_reminder_title">Need a change of routine?</string>
+    <string name="month_reminder_text">Sometimes starting fresh is the best option, Habitica can help!</string>
     <string name="last_login">Latest Check In</string>
     <string name="total_checkins">Total Checkins</string>
     <string name="two_handed">Two-Handed</string>
@@ -854,8 +858,9 @@
     <string name="share_challenge_with">Share Challenge with</string>
     <string name="app_theme">App Theme</string>
     <string name="sent_card">You sent a %s</string>
-    <string name="inbox_messages_title">You received %d messages from %s</string>
-    <string name="inbox_messages_title_nosender">You received %d messages</string>
+    <string name="inbox_messages_title_single">New Message from %1$s</string>
+    <string name="inbox_messages_title">%1$d New Messages from %2$s</string>
+    <string name="inbox_messages_title_nosender">%d new messages</string>
     <string name="remove">Remove</string>
     <string name="transfer_ownership">Transfer Leadership</string>
     <string name="remove_member">Remove Member</string>
@@ -1062,10 +1067,11 @@
     <string name="onboardingCompleteDescription">If you want even more, check out Achievements and start collecting!</string>
     <string name="onboardingComplete_achievement_title">You completed your OnboardingTasks!</string>
     <string name="excess_items">Excess Items</string>
-    <string name="excessItemsXLeft">You only need %d %s to hatch all possible pets. Are you sure you want to purchase %d?</string>
+    <string name="excessItemsXLeft">You only need %1$d %2$s to hatch all possible pets. Are you sure you want to purchase %3$d?</string>
     <string name="purchaseX">Purchase %d</string>
-    <string name="excessItemsNoneLeft">You already have everything you need for all %s pets. Are you sure you want to purchase %d %ss?</string>
+    <string name="excessItemsNoneLeft">You already have everything you need for all %1$s pets. Are you sure you want to purchase %2$d %3$ss?</string>
     <string name="equip">Equip</string>
+    <string name="unequip">Unequip</string>
     <string name="view_onboarding_tasks">View Onboarding Tasks</string>
     <string name="suggest_pet_hatch_missing_egg">You still need a %s Egg to hatch this pet</string>
     <string name="suggest_pet_hatch_missing_potion">You still need a %s Potion to hatch this pet</string>
@@ -1083,7 +1089,7 @@
     <string name="hatch_your_pet">Hatch your Pet</string>
     <string name="hatch">Hatch</string>
     <string name="delete_challenge_task_title">Delete Challenge Task?</string>
-    <string name="delete_challenge_task_description">This is one of %d tasks that are part of the “%s” Challenge. You must leave the Challenge to delete this task.</string>
+    <string name="delete_challenge_task_description">This is one of %1$d tasks that are part of the “%2$s” Challenge. You must leave the Challenge to delete this task.</string>
     <string name="leave_delete_task">Leave &amp; Delete Task</string>
     <string name="leave_delete_x_tasks">Leave &amp; Delete %d Tasks</string>
     <string name="broken_challenge">Broken Challenge</string>
@@ -1147,4 +1153,17 @@
     <string name="team_information">Team Information</string>
     <string name="mystery_item_title">You open the Mystery Box and find…</string>
     <string name="cant_like_own_message">Can\'t like your own messages</string>
+    <string name="quest_leave_message">Are you sure you want to leave the Quest? All your progress will be lost.</string>
+    <string name="quest_leave_message_nostart">Are you sure you want to leave the Quest? You won\'t be able to participate.</string>
+    <string name="launch_screen">Launch Screen</string>
+    <string name="something_new">New</string>
+    <string name="limited_potions_available">Seasonal items available</string>
+    <string name="open_for">Open for %s</string>
+    <string name="no_longer_available">No longer available</string>
+    <string name="go_to_survey">Go to Survey</string>
+    <string name="survey_title">Habitica player survey</string>
+    <string name="survey_menu_description">Fill out this 5 minute survey to help us grow and receive an achievement!</string>
+    <string name="locked_equipment_shop_dialog">You must purchase the previous items in this sequence to unlock</string>
+    <string name="caused_damage">You caused damage to the boss</string>
+    <string name="avatar_style">Style</string>
 </resources>

@@ -22,7 +22,6 @@ import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.utils.Action1
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.kotlin.Flowables
-import io.realm.RealmResults
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -50,7 +49,7 @@ class ChallengeListFragment : BaseFragment<FragmentChallengeslistBinding>(), and
     private var nextPageToLoad = 0
     private var loadedAllData = false
 
-    private var challenges: RealmResults<Challenge>? = null
+    private var challenges: List<Challenge>? = null
     private var filterGroups: MutableList<Group>? = null
 
     private var filterOptions: ChallengeFilterOptions? = null
@@ -121,7 +120,7 @@ class ChallengeListFragment : BaseFragment<FragmentChallengeslistBinding>(), and
     }
 
     private fun loadLocalChallenges() {
-        val observable: Flowable<RealmResults<Challenge>> = if (viewUserChallengesOnly) {
+        val observable: Flowable<out List<Challenge>> = if (viewUserChallengesOnly) {
             challengeRepository.getUserChallenges()
         } else {
             challengeRepository.getChallenges()

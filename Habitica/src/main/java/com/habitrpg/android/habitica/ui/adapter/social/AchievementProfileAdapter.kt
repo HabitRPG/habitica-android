@@ -1,25 +1,16 @@
 package com.habitrpg.android.habitica.ui.adapter.social
 
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.facebook.drawee.backends.pipeline.Fresco
-import com.facebook.drawee.controller.BaseControllerListener
-import com.facebook.imagepipeline.image.ImageInfo
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ProfileAchievementItemBinding
-import com.habitrpg.android.habitica.extensions.addOkButton
-import com.habitrpg.android.habitica.extensions.fromHtml
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.models.Achievement
-import com.habitrpg.android.habitica.ui.AvatarView
 import com.habitrpg.android.habitica.ui.activities.MainActivity
+import com.habitrpg.android.habitica.ui.helpers.loadImage
 import com.habitrpg.android.habitica.ui.viewHolders.SectionViewHolder
 import com.habitrpg.android.habitica.ui.views.dialogs.AchievementDetailDialog
-import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 
 class AchievementProfileAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -71,14 +62,7 @@ class AchievementProfileAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
         }
 
         fun bind(item: Achievement) {
-            val iconUrl = AvatarView.IMAGE_URI_ROOT + (if (!item.earned) "achievement-unearned" else item.icon) + "2x.png"
-
-            binding.achievementDrawee.controller = Fresco.newDraweeControllerBuilder()
-                    .setUri(iconUrl)
-                    .setControllerListener(object : BaseControllerListener<ImageInfo>() {
-                        override fun onFailure(id: String?, throwable: Throwable?) { /* no-on */ }
-                    })
-                    .build()
+            binding.achievementDrawee.loadImage((if (!item.earned) "achievement-unearned" else item.icon) + "2x.png")
 
             this.achievement = item
             binding.achievementText.text = item.title

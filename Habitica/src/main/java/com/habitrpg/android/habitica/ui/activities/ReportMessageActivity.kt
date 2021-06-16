@@ -56,7 +56,7 @@ class ReportMessageActivity : BaseActivity() {
         raisedElevation = binding.appBar.elevation
         setStatusBarDim(true)
 
-        binding.contentContainer.setOnTouchListener { _, _ -> true }
+        binding.bottomSheet.setOnTouchListener { _, _ -> true }
         binding.touchOutside.setOnClickListener { finish() }
         binding.reportExplanationTextview.setMarkdown(getString(R.string.report_explanation))
 

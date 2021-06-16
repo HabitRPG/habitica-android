@@ -6,7 +6,6 @@ import com.habitrpg.android.habitica.data.local.FAQLocalRepository
 import com.habitrpg.android.habitica.models.FAQArticle
 
 import io.reactivex.rxjava3.core.Flowable
-import io.realm.RealmResults
 
 
 class FAQRepositoryImpl(localRepository: FAQLocalRepository, apiClient: ApiClient, userID: String) : BaseRepositoryImpl<FAQLocalRepository>(localRepository, apiClient, userID), FAQRepository {
@@ -14,7 +13,7 @@ class FAQRepositoryImpl(localRepository: FAQLocalRepository, apiClient: ApiClien
         return localRepository.getArticle(position)
     }
 
-    override fun getArticles(): Flowable<RealmResults<FAQArticle>> {
+    override fun getArticles(): Flowable<out List<FAQArticle>> {
         return localRepository.articles
     }
 }

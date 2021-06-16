@@ -45,12 +45,14 @@ import com.habitrpg.android.habitica.ui.fragments.AchievementsFragment;
 import com.habitrpg.android.habitica.ui.fragments.NavigationDrawerFragment;
 import com.habitrpg.android.habitica.ui.fragments.NewsFragment;
 import com.habitrpg.android.habitica.ui.fragments.PromoInfoFragment;
+import com.habitrpg.android.habitica.ui.fragments.PromoWebFragment;
 import com.habitrpg.android.habitica.ui.fragments.StatsFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.customization.AvatarCustomizationFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.customization.AvatarEquipmentFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.customization.AvatarOverviewFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.equipment.EquipmentDetailFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.equipment.EquipmentOverviewFragment;
+import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemDialogFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemRecyclerFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemsFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.shops.ShopFragment;
@@ -79,7 +81,7 @@ import com.habitrpg.android.habitica.ui.fragments.social.guilds.GuildDetailFragm
 import com.habitrpg.android.habitica.ui.fragments.social.guilds.GuildFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.InboxMessageListFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.InboxOverviewFragment;
-import com.habitrpg.android.habitica.ui.fragments.social.NoPartyFragmentFragment;
+import com.habitrpg.android.habitica.ui.fragments.social.party.NoPartyFragmentFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.guilds.GuildListFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.QuestDetailFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.TavernDetailFragment;
@@ -340,4 +342,8 @@ public interface UserComponent {
     void inject(@NotNull TeamBoardFragment teamBoardFragment);
 
     void inject(@NotNull GuildOverviewFragment guildOverviewFragment);
+
+    void inject(@NotNull PromoWebFragment promoWebFragment);
+
+    void inject(@NotNull ItemDialogFragment itemDialogFragment);
 }

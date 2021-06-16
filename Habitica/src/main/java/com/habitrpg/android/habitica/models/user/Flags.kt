@@ -1,18 +1,20 @@
 package com.habitrpg.android.habitica.models.user
 
+import com.habitrpg.android.habitica.models.BaseObject
 import com.habitrpg.android.habitica.models.TutorialStep
 import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
+import io.realm.annotations.RealmClass
 
-open class Flags : RealmObject() {
-    @PrimaryKey
-    var userId: String? = null
+@RealmClass(embedded = true)
+open class Flags : RealmObject(), BaseObject {
     var tutorial: RealmList<TutorialStep>? = null
     var showTour = false
     var dropsEnabled = false
     var itemsEnabled = false
     var newStuff = false
+    var lastNewStuffRead: String? = null
     var classSelected = false
     var rebirthEnabled = false
     var welcomed = false

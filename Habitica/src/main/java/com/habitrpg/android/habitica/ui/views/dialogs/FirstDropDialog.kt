@@ -2,15 +2,15 @@ package com.habitrpg.android.habitica.ui.views.dialogs
 
 import android.content.Context
 import android.view.LayoutInflater
-import com.facebook.drawee.view.SimpleDraweeView
+import android.widget.ImageView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 
 class FirstDropDialog(context: Context) : HabiticaAlertDialog(context) {
 
-    private var eggView: SimpleDraweeView?
-    private var hatchingPotionView: SimpleDraweeView?
+    private var eggView: ImageView?
+    private var hatchingPotionView: ImageView?
 
     init {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as? LayoutInflater

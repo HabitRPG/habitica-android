@@ -3,7 +3,6 @@ package com.habitrpg.android.habitica.ui.views.stats
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.PorterDuff
-import android.os.Build
 import android.util.AttributeSet
 import android.view.Gravity
 import android.widget.LinearLayout

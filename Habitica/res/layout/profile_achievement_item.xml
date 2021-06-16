@@ -10,11 +10,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal">
-        <com.facebook.drawee.view.SimpleDraweeView
+        <ImageView
             android:id="@+id/achievement_drawee"
             android:layout_width="64dp"
             android:layout_height="56dp"
-            app:actualImageScaleType="fitCenter"
             android:layout_marginEnd="3dp" />
         <TextView
             android:id="@+id/achievement_count_label"

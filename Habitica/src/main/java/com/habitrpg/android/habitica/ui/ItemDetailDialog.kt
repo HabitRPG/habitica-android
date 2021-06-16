@@ -9,14 +9,13 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 
-import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 
 class ItemDetailDialog(context: Context) : AlertDialog(context) {
 
-    private val itemImageView: SimpleDraweeView
+    private val itemImageView: ImageView
     private val contentTextView: TextView
     private val priceTextView: TextView
     private val currencyImageView: ImageView
@@ -28,7 +27,7 @@ class ItemDetailDialog(context: Context) : AlertDialog(context) {
         contentViewLayout.orientation = LinearLayout.VERTICAL
 
         // Gear Image
-        itemImageView = SimpleDraweeView(context)
+        itemImageView = ImageView(context)
         val gearImageLayoutParams = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
 

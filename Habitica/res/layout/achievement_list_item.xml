@@ -9,11 +9,10 @@
 <RelativeLayout
     android:layout_width="100dp"
     android:layout_height="86dp">
-    <com.facebook.drawee.view.SimpleDraweeView
+    <ImageView
         android:id="@+id/achievement_icon"
         android:layout_width="64dp"
         android:layout_height="56dp"
-        app:actualImageScaleType="fitCenter"
         android:layout_centerInParent="true"/>
     <TextView
         android:id="@+id/achievement_count_label"

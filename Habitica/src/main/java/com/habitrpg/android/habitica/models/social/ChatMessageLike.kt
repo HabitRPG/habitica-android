@@ -1,31 +1,9 @@
 package com.habitrpg.android.habitica.models.social
 
+import com.habitrpg.android.habitica.models.BaseObject
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
+import io.realm.annotations.RealmClass
 
-/**
- * Created by phillip on 30.06.17.
- */
-
-open class ChatMessageLike : RealmObject {
-
-    @PrimaryKey
-    var key: String = ""
-
-    var messageId: String = ""
-        set(value) {
-            field = value
-            key = messageId + id
-        }
-    var id: String = ""
-        set(value) {
-            field = value
-            key = messageId + id
-        }
-    constructor(id: String, messageId: String) : super() {
-        this.id = id
-        this.key = messageId + id
-    }
-
-    constructor() : super()
-}
+@RealmClass(embedded = true)
+open class ChatMessageLike(var id: String = "") : RealmObject(), BaseObject

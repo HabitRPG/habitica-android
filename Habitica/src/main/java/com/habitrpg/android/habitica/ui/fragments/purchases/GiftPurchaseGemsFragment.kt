@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments.purchases
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +12,7 @@ import com.habitrpg.android.habitica.databinding.FragmentGiftGemPurchaseBinding
 import com.habitrpg.android.habitica.helpers.PurchaseHandler
 import com.habitrpg.android.habitica.helpers.PurchaseTypes
 import com.habitrpg.android.habitica.models.members.Member
-import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
+import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import com.habitrpg.android.habitica.ui.GemPurchaseOptionsView
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import javax.inject.Inject
@@ -19,7 +20,7 @@ import javax.inject.Inject
 class GiftPurchaseGemsFragment : BaseFragment<FragmentGiftGemPurchaseBinding>() {
 
     @Inject
-    lateinit var crashlyticsProxy: CrashlyticsProxy
+    lateinit var analyticsManager: AnalyticsManager
     @Inject
     lateinit var socialRepository: SocialRepository
 
@@ -30,6 +31,7 @@ class GiftPurchaseGemsFragment : BaseFragment<FragmentGiftGemPurchaseBinding>() 
     }
 
     var giftedMember: Member? = null
+    @SuppressLint("SetTextI18n")
     set(value) {
         field = value
         field?.let {
@@ -52,7 +54,7 @@ class GiftPurchaseGemsFragment : BaseFragment<FragmentGiftGemPurchaseBinding>() 
         binding?.gems4View?.setOnPurchaseClickListener { purchaseGems(PurchaseTypes.Purchase4Gems) }
         binding?.gems21View?.setOnPurchaseClickListener { purchaseGems(PurchaseTypes.Purchase21Gems) }
         binding?.gems42View?.setOnPurchaseClickListener { purchaseGems(PurchaseTypes.Purchase42Gems) }
-        binding?.gems84View?.setOnPurchaseClickListener({ purchaseGems(PurchaseTypes.Purchase84Gems) })
+        binding?.gems84View?.setOnPurchaseClickListener { purchaseGems(PurchaseTypes.Purchase84Gems) }
     }
 
     fun setupCheckout() {

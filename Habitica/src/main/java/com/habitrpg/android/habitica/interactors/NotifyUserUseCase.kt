@@ -15,7 +15,6 @@ import androidx.core.util.Pair
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.executors.PostExecutionThread
-import com.habitrpg.android.habitica.executors.ThreadExecutor
 import com.habitrpg.android.habitica.extensions.round
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
@@ -27,8 +26,8 @@ import javax.inject.Inject
 import kotlin.math.abs
 
 class NotifyUserUseCase @Inject
-constructor(threadExecutor: ThreadExecutor, postExecutionThread: PostExecutionThread,
-            private val levelUpUseCase: LevelUpUseCase, private val userRepository: UserRepository) : UseCase<NotifyUserUseCase.RequestValues, Stats>(threadExecutor, postExecutionThread) {
+constructor(postExecutionThread: PostExecutionThread,
+            private val levelUpUseCase: LevelUpUseCase, private val userRepository: UserRepository) : UseCase<NotifyUserUseCase.RequestValues, Stats>(postExecutionThread) {
 
     override fun buildUseCaseObservable(requestValues: RequestValues): Flowable<Stats> {
         return Flowable.defer {
@@ -37,23 +36,23 @@ constructor(threadExecutor: ThreadExecutor, postExecutionThread: PostExecutionTh
             }
             val stats = requestValues.user.stats
 
+            val pair = getNotificationAndAddStatsToUser(requestValues.context, requestValues.xp, requestValues.hp, requestValues.gold, requestValues.mp, requestValues.questDamage, requestValues.user)
+            val view = pair.first
+            val type = pair.second
+            if (view != null && type != null) {
+                HabiticaSnackbar.showSnackbar(requestValues.snackbarTargetView, null, null, view, type)
+            }
             if (requestValues.hasLeveledUp == true) {
-                return@defer levelUpUseCase.observable(LevelUpUseCase.RequestValues(requestValues.user, requestValues.level, requestValues.context))
+                return@defer levelUpUseCase.observable(LevelUpUseCase.RequestValues(requestValues.user, requestValues.level, requestValues.context, requestValues.snackbarTargetView))
                         .flatMap { userRepository.retrieveUser(true) }
                         .map { it.stats }
             } else {
-                val pair = getNotificationAndAddStatsToUser(requestValues.context, requestValues.xp, requestValues.hp, requestValues.gold, requestValues.mp, requestValues.questDamage, requestValues.user)
-                val view = pair.first
-                val type = pair.second
-                if (view != null && type != null) {
-                    HabiticaSnackbar.showSnackbar(requestValues.snackbarTargetView, null, null, view, type)
-                }
                 return@defer Flowable.just(stats)
             }
         }
     }
 
-    class RequestValues( val context: AppCompatActivity, val snackbarTargetView: ViewGroup, val user: User?, val xp: Double?, val hp: Double?, val gold: Double?, val mp: Double?, val questDamage: Double?, val hasLeveledUp: Boolean?, val level: Long?) : UseCase.RequestValues
+    class RequestValues( val context: AppCompatActivity, val snackbarTargetView: ViewGroup, val user: User?, val xp: Double?, val hp: Double?, val gold: Double?, val mp: Double?, val questDamage: Double?, val hasLeveledUp: Boolean?, val level: Int?) : UseCase.RequestValues
 
     companion object {
 
@@ -107,7 +106,7 @@ constructor(threadExecutor: ThreadExecutor, postExecutionThread: PostExecutionTh
             return textView
         }
 
-        fun getNotificationAndAddStatsToUserAsText(context: Context, xp: Double, hp: Double, gold: Double, mp: Double): Pair<SpannableStringBuilder, SnackbarDisplayType> {
+        fun getNotificationAndAddStatsToUserAsText(xp: Double, hp: Double, gold: Double, mp: Double): Pair<SpannableStringBuilder, SnackbarDisplayType> {
             val builder = SpannableStringBuilder()
             var displayType = SnackbarDisplayType.NORMAL
 

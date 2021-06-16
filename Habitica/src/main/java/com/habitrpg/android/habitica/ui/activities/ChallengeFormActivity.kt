@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.ui.activities
 
 import android.app.Activity
-import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.ColorDrawable
@@ -10,8 +9,9 @@ import android.view.*
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
+import android.widget.TextView
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.AppCompatCheckedTextView
-import androidx.appcompat.widget.AppCompatTextView
 import androidx.appcompat.widget.Toolbar
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
@@ -33,6 +33,7 @@ import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengesOv
 import com.habitrpg.android.habitica.ui.helpers.ToolbarColorHelper
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
+import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaProgressDialog
 import io.reactivex.rxjava3.core.Flowable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -96,7 +97,7 @@ class ChallengeFormActivity : BaseActivity() {
             if (groupID != null) {
                 c.groupId = groupID
             } else {
-                if (locationAdapter.count > locationPos) {
+                if (locationAdapter.count > locationPos && locationPos >= 0) {
                     val locationGroup = locationAdapter.getItem(locationPos)
                     if (locationGroup != null) {
                         c.groupId = locationGroup.id
@@ -130,8 +131,7 @@ class ChallengeFormActivity : BaseActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.action_save && !savingInProgress && validateAllFields()) {
             savingInProgress = true
-            @Suppress("DEPRECATION")
-            val dialog = ProgressDialog.show(this, "", "Saving challenge data. Please wait...", true, false)
+            val dialog = HabiticaProgressDialog.show(this, R.string.saving)
 
             val observable: Flowable<Challenge> = if (editMode) {
                 updateChallenge()
@@ -145,7 +145,7 @@ class ChallengeFormActivity : BaseActivity() {
                         challengeRepository.retrieveChallenges(0, true)
                     }
                     .subscribe({
-                        dialog.dismiss()
+                        dialog?.dismiss()
                         savingInProgress = false
                         finish()
                         if (!editMode) {
@@ -155,7 +155,7 @@ class ChallengeFormActivity : BaseActivity() {
                             }
                         }
                     }, { throwable ->
-                dialog.dismiss()
+                dialog?.dismiss()
                 savingInProgress = false
                 RxErrorHandler.reportError(throwable)
             }))
@@ -165,19 +165,6 @@ class ChallengeFormActivity : BaseActivity() {
         }
 
         return super.onOptionsItemSelected(item)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (requestCode == 1000) {
-            if (resultCode == Activity.RESULT_OK) {
-                val task = data?.getParcelableExtra<Task>(TaskFormActivity.PARCELABLE_TASK)
-                if (task != null) {
-                    addOrUpdateTaskInList(task)
-                }
-            }
-        }
     }
 
     private fun validateAllFields(): Boolean {
@@ -231,7 +218,10 @@ class ChallengeFormActivity : BaseActivity() {
         val intent = intent
         val bundle = intent.extras
 
-        challengeTasks = ChallengeTasksRecyclerViewAdapter(null, 0, this, "", false, true)
+        ChallengeTasksRecyclerViewAdapter(null, 0, this, "",
+            openTaskDisabled = false,
+            taskActionsDisabled = true
+        ).also { challengeTasks = it }
         compositeSubscription.add(challengeTasks.taskOpenEvents.subscribe {
             if (it.isValid) {
                 openNewTaskActivity(it.type, it)
@@ -380,10 +370,10 @@ class ChallengeFormActivity : BaseActivity() {
             false
         }
 
-        addHabit = createTask(ChallengeTasksRecyclerViewAdapter.TASK_TYPE_ADD_ITEM, resources.getString(R.string.add_habit))
-        addDaily = createTask(ChallengeTasksRecyclerViewAdapter.TASK_TYPE_ADD_ITEM, resources.getString(R.string.add_daily))
-        addTodo = createTask(ChallengeTasksRecyclerViewAdapter.TASK_TYPE_ADD_ITEM, resources.getString(R.string.add_todo))
-        addReward = createTask(ChallengeTasksRecyclerViewAdapter.TASK_TYPE_ADD_ITEM, resources.getString(R.string.add_reward))
+        addHabit = createTask(resources.getString(R.string.add_habit))
+        addDaily = createTask(resources.getString(R.string.add_daily))
+        addTodo = createTask(resources.getString(R.string.add_todo))
+        addReward = createTask(resources.getString(R.string.add_reward))
 
 
         val taskList = ArrayList<Task>()
@@ -456,7 +446,16 @@ class ChallengeFormActivity : BaseActivity() {
         val intent = Intent(this, TaskFormActivity::class.java)
         intent.putExtras(bundle)
 
-        startActivityForResult(intent, 1000)
+        newTaskResult.launch(intent)
+    }
+
+    private val newTaskResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if (it.resultCode == Activity.RESULT_OK) {
+            val task = it.data?.getParcelableExtra<Task>(TaskFormActivity.PARCELABLE_TASK)
+            if (task != null) {
+                addOrUpdateTaskInList(task)
+            }
+        }
     }
 
     private fun createChallenge(): Flowable<Challenge> {
@@ -520,7 +519,7 @@ class ChallengeFormActivity : BaseActivity() {
     private class GroupArrayAdapter(context: Context) : ArrayAdapter<Group>(context, android.R.layout.simple_spinner_item) {
 
         override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-            val checkedTextView = super.getView(position, convertView, parent) as? AppCompatTextView
+            val checkedTextView = super.getView(position, convertView, parent) as? TextView
             checkedTextView?.text = getItem(position)?.name
             return checkedTextView ?: View(context)
         }
@@ -535,17 +534,12 @@ class ChallengeFormActivity : BaseActivity() {
     companion object {
         const val CHALLENGE_ID_KEY = "challengeId"
 
-        private fun createTask(taskType: String, taskName: String): Task {
+        private fun createTask(taskName: String): Task {
             val t = Task()
 
             t.id = UUID.randomUUID().toString()
-            t.type = taskType
+            t.type = ChallengeTasksRecyclerViewAdapter.TASK_TYPE_ADD_ITEM
             t.text = taskName
-
-            if (taskType == Task.TYPE_HABIT) {
-                t.up = true
-                t.down = false
-            }
 
             return t
         }

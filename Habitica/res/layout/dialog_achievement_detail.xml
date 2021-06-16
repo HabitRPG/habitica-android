@@ -16,11 +16,10 @@
             android:layout_width="41dp"
             android:layout_height="wrap_content"
             android:src="@drawable/sparkles_left" />
-        <com.facebook.drawee.view.SimpleDraweeView
+        <ImageView
             android:id="@+id/icon_view"
             android:layout_width="52dp"
             android:layout_height="56dp"
-            app:actualImageScaleType="fitCenter"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp" />
         <ImageView

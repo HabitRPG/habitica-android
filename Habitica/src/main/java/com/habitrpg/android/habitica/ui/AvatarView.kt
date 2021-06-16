@@ -2,19 +2,16 @@ package com.habitrpg.android.habitica.ui
 
 import android.content.Context
 import android.graphics.*
-import android.graphics.drawable.Animatable
 import android.graphics.drawable.Drawable
 import android.text.TextUtils
 import android.util.AttributeSet
-import android.util.Log
 import android.view.View
-import com.facebook.drawee.backends.pipeline.Fresco
-import com.facebook.drawee.controller.BaseControllerListener
-import com.facebook.drawee.generic.GenericDraweeHierarchy
-import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder
-import com.facebook.drawee.view.DraweeHolder
-import com.facebook.drawee.view.MultiDraweeHolder
-import com.facebook.imagepipeline.image.ImageInfo
+import android.widget.FrameLayout
+import android.widget.ImageView
+import coil.imageLoader
+import coil.load
+import coil.request.ImageRequest
+import coil.target.ViewTarget
 import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.helpers.AppConfigManager
@@ -24,7 +21,7 @@ import io.reactivex.rxjava3.functions.Consumer
 import java.util.*
 import java.util.concurrent.atomic.AtomicInteger
 
-class AvatarView : View {
+class AvatarView : FrameLayout {
 
     private var showBackground = true
     private var showMount = true
@@ -33,8 +30,7 @@ class AvatarView : View {
     private var hasBackground: Boolean = false
     private var hasMount: Boolean = false
     private var hasPet: Boolean = false
-    private var isOrphan: Boolean = false
-    private val multiDraweeHolder = MultiDraweeHolder<GenericDraweeHierarchy>()
+    private val imageViewHolder = mutableListOf<ImageView>()
     private var avatar: Avatar? = null
     private var avatarRectF: RectF? = null
     private val avatarMatrix = Matrix()
@@ -50,6 +46,15 @@ class AvatarView : View {
             return getLayerMap(avatar, true)
         }
 
+    private var spriteSubstitutions: Map<String, Map<String, String>> = HashMap()
+        get() {
+            if (Date().time - (lastSubstitutionCheck?.time ?: 0) > 180000) {
+                field = AppConfigManager(null).spriteSubstitutions()
+                lastSubstitutionCheck = Date()
+            }
+            return field
+        }
+    private var lastSubstitutionCheck: Date? = null
 
     private val originalRect: Rect
         get() = if (showMount || showPet) FULL_HERO_RECT else if (showBackground) COMPACT_HERO_RECT else HERO_ONLY_RECT
@@ -81,11 +86,9 @@ class AvatarView : View {
     }
 
     constructor(context: Context, showBackground: Boolean, showMount: Boolean, showPet: Boolean) : super(context) {
-
         this.showBackground = showBackground
         this.showMount = showMount
         this.showPet = showPet
-        isOrphan = true
     }
 
     private fun init(attrs: AttributeSet?, defStyle: Int) {
@@ -101,10 +104,11 @@ class AvatarView : View {
         } finally {
             a.recycle()
         }
+
+        setWillNotDraw(false)
     }
 
     private fun showLayers(layerMap: Map<LayerType, String>) {
-        if (multiDraweeHolder.size() > 0) return
         var i = 0
 
         currentLayers = layerMap
@@ -114,45 +118,39 @@ class AvatarView : View {
         for ((layerKey, layerName) in layerMap) {
             val layerNumber = i++
 
-            val hierarchy = GenericDraweeHierarchyBuilder(resources)
-                    .setFadeDuration(0)
-                    .build()
+            val imageView = if (imageViewHolder.size <= layerNumber) {
+                val newImageView = ImageView(context)
+                newImageView.scaleType = ImageView.ScaleType.MATRIX
+                addView(newImageView)
+                imageViewHolder.add(newImageView)
+                newImageView
+            } else {
+                imageViewHolder[layerNumber]
+            }
 
-            val draweeHolder = DraweeHolder.create(hierarchy, context)
-            draweeHolder.topLevelDrawable?.callback = this
-            multiDraweeHolder.add(draweeHolder)
+            if (imageView.tag == layerName) continue
+            imageView.tag = layerName
 
-            val controller = Fresco.newDraweeControllerBuilder()
-                    .setUri(IMAGE_URI_ROOT + DataBindingUtils.getFullFilename(layerName, null))
-                    .setControllerListener(object : BaseControllerListener<ImageInfo>() {
-                        override fun onFinalImageSet(
-                                id: String?,
-                                imageInfo: ImageInfo?,
-                                anim: Animatable?) {
-                            if (imageInfo != null) {
-                                if (multiDraweeHolder.size() > layerNumber) {
-                                    multiDraweeHolder.get(layerNumber).topLevelDrawable?.bounds = getLayerBounds(layerKey, layerName, imageInfo)
-                                }
-                                onLayerComplete()
-                            }
-                        }
-
-                        override fun onFailure(id: String?, throwable: Throwable?) {
-                            Log.e(TAG, "Error loading layer: $layerName", throwable)
-                            onLayerComplete()
-                        }
-                    })
-                    .setAutoPlayAnimations(!isOrphan)
-                    .build()
-            draweeHolder.controller = controller
+            imageView.load(DataBindingUtils.BASE_IMAGE_URL + DataBindingUtils.getFullFilename(layerName)) {
+                allowHardware(false)
+                target({}, {
+                    onLayerComplete()
+                }, {
+                    val bounds = getLayerBounds(layerKey, layerName, it)
+                    imageView.load(it)
+                    imageView.imageMatrix = avatarMatrix
+                    val layoutParams = imageView.layoutParams as? FrameLayout.LayoutParams
+                    layoutParams?.topMargin = bounds.top
+                    layoutParams?.marginStart = bounds.left
+                    imageView.layoutParams = layoutParams
+                    onLayerComplete()
+                })
+            }
         }
-
-        if (isOrphan) multiDraweeHolder.onAttach()
     }
 
     private fun getLayerMap(avatar: Avatar, resetHasAttributes: Boolean): Map<LayerType, String> {
-        val substitutions = AppConfigManager().spriteSubstitutions()
-        val layerMap = getAvatarLayerMap(avatar, substitutions)
+        val layerMap = getAvatarLayerMap(avatar, spriteSubstitutions)
 
         if (resetHasAttributes) {
             hasPet = false
@@ -162,7 +160,7 @@ class AvatarView : View {
 
         var mountName = avatar.currentMount
         if (showMount && mountName?.isNotEmpty() == true) {
-            mountName = substituteOrReturn(substitutions["mounts"], mountName)
+            mountName = substituteOrReturn(spriteSubstitutions["mounts"], mountName)
             layerMap[LayerType.MOUNT_BODY] = "Mount_Body_$mountName"
             layerMap[LayerType.MOUNT_HEAD] = "Mount_Head_$mountName"
             if (resetHasAttributes) hasMount = true
@@ -170,14 +168,14 @@ class AvatarView : View {
 
         var petName = avatar.currentPet
         if (showPet && petName?.isNotEmpty() == true) {
-            petName = substituteOrReturn(substitutions["pets"], petName)
+            petName = substituteOrReturn(spriteSubstitutions["pets"], petName)
             layerMap[LayerType.PET] = "Pet-$petName"
             if (resetHasAttributes) hasPet = true
         }
 
         var backgroundName = avatar.preferences?.background
         if (showBackground && backgroundName?.isNotEmpty() == true) {
-            backgroundName = substituteOrReturn(substitutions["backgrounds"], backgroundName)
+            backgroundName = substituteOrReturn(spriteSubstitutions["backgrounds"], backgroundName)
             layerMap[LayerType.BACKGROUND] = "background_$backgroundName"
             if (resetHasAttributes) hasBackground = true
         }
@@ -243,6 +241,7 @@ class AvatarView : View {
             hasVisualBuffs = true
         }
 
+        val hair = prefs.hair
         if (!hasVisualBuffs) {
             if (!TextUtils.isEmpty(prefs.chair)) {
                 layerMap[LayerType.CHAIR] = prefs.chair
@@ -279,7 +278,6 @@ class AvatarView : View {
             layerMap[LayerType.SHIRT] = prefs.size + "_shirt_" + prefs.shirt
             layerMap[LayerType.HEAD_0] = "head_0"
 
-            val hair = prefs.hair
             if (hair != null) {
                 val hairColor = hair.color
 
@@ -295,25 +293,19 @@ class AvatarView : View {
                 if (hair.isAvailable(hair.beard)) {
                     layerMap[LayerType.HAIR_BEARD] = "hair_beard_" + hair.beard + "_" + hairColor
                 }
-                if (hair.isAvailable(hair.flower)) {
-                    layerMap[LayerType.HAIR_FLOWER] = "hair_flower_" + hair.flower
-                }
             }
-        } else {
-            val hair = prefs.hair
+        }
 
-            // Show flower all the time!
-            if (hair != null && hair.isAvailable(hair.flower)) {
-                layerMap[LayerType.HAIR_FLOWER] = "hair_flower_" + hair.flower
-            }
+        if (hair != null && hair.isAvailable(hair.flower)) {
+            layerMap[LayerType.HAIR_FLOWER] = "hair_flower_" + hair.flower
         }
 
         return layerMap
     }
 
-    private fun getLayerBounds(layerType: LayerType, layerName: String, layerImageInfo: ImageInfo): Rect {
+    private fun getLayerBounds(layerType: LayerType, layerName: String, drawable: Drawable): Rect {
         var offset: PointF? = null
-        val bounds = Rect(0, 0, layerImageInfo.width, layerImageInfo.height)
+        val bounds = Rect(0, 0, drawable.intrinsicWidth, drawable.intrinsicHeight)
         val boundsF = RectF(bounds)
 
         // lookup layer specific offset
@@ -356,7 +348,7 @@ class AvatarView : View {
                     // compact hero box
                     offset = PointF(0.0f, 18.0f)
                 }
-                LayerType.PET -> offset = PointF(0f, (FULL_HERO_RECT.height() - layerImageInfo.height).toFloat())
+                LayerType.PET -> offset = PointF(0f, (FULL_HERO_RECT.height() - bounds.height()).toFloat())
             }
         }
 
@@ -392,7 +384,7 @@ class AvatarView : View {
 
     fun onAvatarImageReady(consumer: Consumer<Bitmap?>) {
         avatarImageConsumer = consumer
-        if (multiDraweeHolder.size() > 0 && numberLayersInProcess.get() == 0) {
+        if (imageViewHolder.size > 0 && numberLayersInProcess.get() == 0) {
             avatarImageConsumer?.accept(avatarImage)
         } else {
             initAvatarRectMatrix()
@@ -407,41 +399,29 @@ class AvatarView : View {
         if (oldUser != null) {
             val newLayerMap = getLayerMap(avatar, false)
 
-            val equals = currentLayers != null && currentLayers == newLayerMap
+            val equals = currentLayers == newLayerMap
 
             if (!equals) {
-                multiDraweeHolder.clear()
-                numberLayersInProcess.set(0)
+                invalidate()
             }
         }
-        invalidate()
+
     }
 
     private fun initAvatarRectMatrix() {
         if (avatarRectF == null) {
             val srcRect = originalRect
-
-            if (isOrphan) {
-                avatarRectF = RectF(srcRect)
-
-                // change scale to not be 1:1
-                // a quick fix as fresco AnimatedDrawable/ScaleTypeDrawable
-                // will not translate matrix properly
-                avatarMatrix.setScale(1.2f, 1.2f)
-                avatarMatrix.mapRect(avatarRectF)
-            } else {
-                // full hero box when showMount and showPet is enabled (140w * 147h)
-                // compact hero box when only showBackground is enabled (114w * 114h)
-                // hero only box when all show settings disabled (90w * 90h)
-                avatarRectF = RectF(0f, 0f, width.toFloat(), height.toFloat())
-                avatarMatrix.setRectToRect(RectF(srcRect), avatarRectF, Matrix.ScaleToFit.START) // TODO support other ScaleToFit
-                avatarRectF = RectF(srcRect)
-                avatarMatrix.mapRect(avatarRectF)
-            }
+            // full hero box when showMount and showPet is enabled (140w * 147h)
+            // compact hero box when only showBackground is enabled (114w * 114h)
+            // hero only box when all show settings disabled (90w * 90h)
+            avatarRectF = RectF(0f, 0f, width.toFloat(), height.toFloat())
+            avatarMatrix.setRectToRect(RectF(srcRect), avatarRectF, Matrix.ScaleToFit.START) // TODO support other ScaleToFit
+            avatarRectF = RectF(srcRect)
+            avatarMatrix.mapRect(avatarRectF)
         }
     }
 
-    override fun onDraw(canvas: Canvas) {
+    override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
 
         initAvatarRectMatrix()
@@ -449,38 +429,7 @@ class AvatarView : View {
         // draw only when user is set
         if (avatar?.isValid() != true) return
 
-        // request image layers if not yet processed
-        if (multiDraweeHolder.size() == 0) {
-            showLayers(layerMap)
-        }
-
-        // manually call onAttach/onDetach if view is without parent as they will never be called otherwise
-        if (isOrphan) multiDraweeHolder.onAttach()
-        multiDraweeHolder.draw(canvas)
-    }
-
-    override fun onDetachedFromWindow() {
-        super.onDetachedFromWindow()
-        multiDraweeHolder.onDetach()
-    }
-
-    override fun onStartTemporaryDetach() {
-        super.onStartTemporaryDetach()
-        multiDraweeHolder.onDetach()
-    }
-
-    override fun onAttachedToWindow() {
-        super.onAttachedToWindow()
-        multiDraweeHolder.onAttach()
-    }
-
-    override fun onFinishTemporaryDetach() {
-        super.onFinishTemporaryDetach()
-        multiDraweeHolder.onAttach()
-    }
-
-    override fun verifyDrawable(who: Drawable): Boolean {
-        return multiDraweeHolder.verifyDrawable(who) || super.verifyDrawable(who)
+        showLayers(layerMap)
     }
 
     override fun invalidateDrawable(drawable: Drawable) {
@@ -515,11 +464,11 @@ class AvatarView : View {
     }
 
     companion object {
-        const val IMAGE_URI_ROOT = "https://habitica-assets.s3.amazonaws.com/mobileApp/images/"
         private const val TAG = "AvatarView"
         private val FULL_HERO_RECT = Rect(0, 0, 140, 147)
         private val COMPACT_HERO_RECT = Rect(0, 0, 114, 114)
         private val HERO_ONLY_RECT = Rect(0, 0, 90, 90)
 
+        //val postProcessors: MutableMap<LayerType, (() -> BasePostprocessor?)> = mutableMapOf()
     }
 }

@@ -1,13 +1,12 @@
 package com.habitrpg.android.habitica.models.user
 
+import com.habitrpg.android.habitica.models.BaseObject
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
+import io.realm.annotations.RealmClass
 
-open class ABTest: RealmObject() {
-
-    @PrimaryKey
-    var userID: String? = null
-
+@RealmClass(embedded = true)
+open class ABTest: RealmObject(), BaseObject {
     var name: String = ""
     var group: String = ""
 }

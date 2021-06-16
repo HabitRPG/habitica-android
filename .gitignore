@@ -69,3 +69,4 @@ fastlane/metadata/android/*/changelogs/
 /fastlane/Fastfile
 *.aab
 /Habitica/alpha
+output-metadata.json

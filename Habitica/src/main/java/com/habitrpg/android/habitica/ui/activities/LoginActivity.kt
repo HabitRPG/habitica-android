@@ -19,6 +19,7 @@ import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.LinearLayout
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
@@ -29,10 +30,7 @@ import com.google.android.gms.auth.GoogleAuthException
 import com.google.android.gms.auth.GoogleAuthUtil
 import com.google.android.gms.auth.GooglePlayServicesAvailabilityException
 import com.google.android.gms.auth.UserRecoverableAuthException
-import com.google.android.gms.common.ConnectionResult
-import com.google.android.gms.common.GoogleApiAvailability
-import com.google.android.gms.common.GooglePlayServicesUtil
-import com.google.android.gms.common.Scopes
+import com.google.android.gms.common.*
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.HabiticaBaseApplication
@@ -48,7 +46,7 @@ import com.habitrpg.android.habitica.extensions.addOkButton
 import com.habitrpg.android.habitica.extensions.updateStatusBarColor
 import com.habitrpg.android.habitica.helpers.*
 import com.habitrpg.android.habitica.models.auth.UserAuthResponse
-import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
+import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.willowtreeapps.signinwithapplebutton.SignInWithAppleConfiguration
@@ -75,7 +73,7 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
     @JvmField
     var keyHelper: KeyHelper? = null
     @Inject
-    lateinit var crashlyticsProxy: CrashlyticsProxy
+    lateinit var analyticsManager: AnalyticsManager
     @Inject
     lateinit var configManager: AppConfigManager
 
@@ -288,20 +286,6 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
         super.onActivityResult(requestCode, resultCode, data)
         callbackManager.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == REQUEST_CODE_PICK_ACCOUNT) {
-            if (resultCode == Activity.RESULT_OK) {
-                googleEmail = data?.getStringExtra(AccountManager.KEY_ACCOUNT_NAME)
-                handleGoogleLoginResult()
-            }
-        }
-        if (requestCode == REQUEST_CODE_RECOVER_FROM_PLAY_SERVICES_ERROR) {
-            // RESULT_CANCELED occurs when user denies requested permissions. In this case we don't
-            // want to immediately ask them to accept permissions again. See Issue #1290 on github.
-            if (resultCode != Activity.RESULT_CANCELED) {
-                handleGoogleLoginResult()
-            }
-        }
-
         if (requestCode == FacebookSdk.getCallbackRequestCodeOffset()) {
             //This is necessary because the regular login callback is not called for some reason
             val accessToken = AccessToken.getCurrentAccessToken()
@@ -364,9 +348,9 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
         hideProgress()
         dismissKeyboard()
         try {
-            saveTokens(userAuthResponse.token, userAuthResponse.id)
+            saveTokens(userAuthResponse.apiToken, userAuthResponse.id)
         } catch (e: Exception) {
-            crashlyticsProxy.logException(e)
+            analyticsManager.logException(e)
         }
 
         HabiticaBaseApplication.reloadUserComponent()
@@ -375,7 +359,7 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
             FirebaseAnalytics.getInstance(this).logEvent("user_registered", null)
         }
 
-        compositeSubscription.add(userRepository.retrieveUser(true)
+        compositeSubscription.add(userRepository.retrieveUser(withTasks = true, forced = true)
                 .subscribe({
                     if (userAuthResponse.newUser) {
                         this.startSetupActivity()
@@ -398,7 +382,7 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
         val intent = AccountManager.newChooseAccountIntent(null, null,
                 accountTypes, true, null, null, null, null)
         try {
-            startActivityForResult(intent, REQUEST_CODE_PICK_ACCOUNT)
+            pickAccountResult.launch(intent)
         } catch (e: ActivityNotFoundException) {
             val alert = HabiticaAlertDialog(this)
             alert.setTitle(R.string.authentication_error_title)
@@ -406,7 +390,13 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
             alert.addCloseButton()
             alert.show()
         }
+    }
 
+    private val pickAccountResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if (it.resultCode == Activity.RESULT_OK) {
+            googleEmail = it?.data?.getStringExtra(AccountManager.KEY_ACCOUNT_NAME)
+            handleGoogleLoginResult()
+        }
     }
 
     private fun handleGoogleLoginResult() {
@@ -420,6 +410,9 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
                 throw Exceptions.propagate(e)
             } catch (e: GoogleAuthException) {
                 throw Exceptions.propagate(e)
+            }
+            catch (e: UserRecoverableException) {
+                return@defer Flowable.empty()
             }
         }
                 .subscribeOn(Schedulers.io())
@@ -455,7 +448,13 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
             // the app access to the account, but the user can fix this.
             // Forward the user to an activity in Google Play services.
             val intent = e.intent
-            startActivityForResult(intent, REQUEST_CODE_RECOVER_FROM_PLAY_SERVICES_ERROR)
+            recoverFromPlayServicesErrorResult.launch(intent)
+        }
+    }
+
+    private val recoverFromPlayServicesErrorResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if (it.resultCode != Activity.RESULT_CANCELED) {
+            handleGoogleLoginResult()
         }
     }
 

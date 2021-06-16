@@ -2,17 +2,19 @@ package com.habitrpg.android.habitica.ui.adapter.inventory
 
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ShopHeaderBinding
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.inventory.*
 import com.habitrpg.android.habitica.models.user.OwnedItem
+import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.android.habitica.models.user.OwnedMount
 import com.habitrpg.android.habitica.ui.fragments.inventory.stable.StableFragmentDirections
 import com.habitrpg.android.habitica.ui.helpers.loadImage
 import com.habitrpg.android.habitica.ui.viewHolders.MountViewHolder
@@ -29,18 +31,60 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var eggs: Map<String, Egg> = mapOf()
     var animalIngredientsRetriever: ((Animal, ((Pair<Egg?, HatchingPotion?>) -> Unit)) -> Unit)? = null
     var itemType: String? = null
+    private var user: User? = null
     private val equipEvents = PublishSubject.create<String>()
-    var ownedEggs: Map<String, OwnedItem>? = null
+    private var existingMounts: List<Mount>? = null
+    private var ownedMounts: Map<String, OwnedMount>? = null
+    private var ownedItems: Map<String, OwnedItem>? = null
+    private var ownsSaddles: Boolean = false
+    private var itemList: List<Any> = ArrayList()
 
     fun getEquipFlowable(): Flowable<String> {
         return equipEvents.toFlowable(BackpressureStrategy.DROP)
     }
 
-    private var itemList: List<Any> = ArrayList()
+    fun setUser(user: User){
+        this.user = user
+        notifyDataSetChanged()
+    }
+
+    private fun canRaiseToMount(pet: Pet): Boolean {
+        if (pet.type == "special") return false
+        for (mount in existingMounts ?: emptyList()) {
+            if (mount.key == pet.key) {
+                return !(ownedMounts?.get(mount.key)?.owned ?: false)
+            }
+        }
+        return false
+    }
+
+    private fun eggCount(pet: Pet): Int {
+        return ownedItems?.get(pet.animal + "-eggs")?.numberOwned ?: 0
+    }
+
+    private fun potionCount(pet: Pet): Int {
+        return ownedItems?.get(pet.color + "-hatchingPotions")?.numberOwned ?: 0
+    }
+
+    fun setOwnedMounts(ownedMounts: Map<String, OwnedMount>) {
+        this.ownedMounts = ownedMounts
+        notifyDataSetChanged()
+    }
+
+    fun setOwnedItems(ownedItems: Map<String, OwnedItem>) {
+        this.ownedItems = ownedItems
+        ownsSaddles = if (ownedItems.containsKey("Saddle-food")) (ownedItems["Saddle-food"]?.numberOwned ?: 0)> 0 else false
+        notifyDataSetChanged()
+    }
+
+    fun setExistingMounts(existingMounts: List<Mount>) {
+        this.existingMounts = existingMounts
+        notifyDataSetChanged()
+    }
 
     fun setItemList(itemList: List<Any>) {
         this.itemList = itemList
-        this.notifyDataSetChanged()
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
@@ -68,17 +112,20 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 val isIndividualAnimal = item.type == "special" || item.type == "wacky"
                 if (isIndividualAnimal) {
                     if (item is Pet) {
-                        (holder as? PetViewHolder)?.bind(item,
-                                item.numberOwned,
-                                canRaiseToMount = false,
-                                eggCount = 0,
-                                potionCount = 0,
-                                ownsSaddles = false,
-                                hasUnlockedEgg = false,
-                                hasUnlockedPotion = false,
-                                hasMount = false)
+                        (holder as? PetViewHolder)?.bind(
+                            item = item,
+                            trained = item.numberOwned,
+                            eggCount = eggCount(item),
+                            potionCount = potionCount(item),
+                            canRaiseToMount = canRaiseToMount(item),
+                            ownsSaddles = ownsSaddles,
+                            hasUnlockedEgg = ownedItems?.get(item.animal + "-eggs") != null,
+                            hasUnlockedPotion = ownedItems?.get(item.color + "-hatchingPotions") != null,
+                            hasMount = ownedMounts?.containsKey(item.key) == true,
+                            user = user
+                        )
                     } else if (item is Mount) {
-                        (holder as? MountViewHolder)?.bind(item, item.numberOwned > 0)
+                        (holder as? MountViewHolder)?.bind(item, item.numberOwned > 0, user)
                     }
                     return
                 }
@@ -114,6 +161,7 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     override fun getItemCount(): Int = itemList.size
+
     fun setEggs(eggs: Map<String, Egg>) {
         this.eggs = eggs
         notifyDataSetChanged()
@@ -134,7 +182,7 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     internal inner class StableViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
         private var animal: Animal? = null
 
-        private val imageView: SimpleDraweeView = itemView.findViewById(R.id.imageView)
+        private val imageView: ImageView = itemView.findViewById(R.id.imageView)
         private val titleView: TextView = itemView.findViewById(R.id.titleTextView)
         private val ownedTextView: TextView = itemView.findViewById(R.id.ownedTextView)
 
@@ -154,7 +202,7 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             val imageName = if (itemType == "pets") {
                 "Pet_Egg_" + item.animal
             } else {
-                "Mount_Icon_" + item.key
+                "Mount_Icon_" + item.animal + "-Base"
             }
 
             this.ownedTextView.text = context.getString(R.string.pet_ownership_fraction, item.numberOwned, item.totalNumber)
@@ -165,7 +213,7 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             ownedTextView.visibility = View.VISIBLE
             imageView.loadImage(imageName)
 
-            val alpha = if (item.numberOwned <= 0 && ownedEggs?.containsKey(item.animal) != true) 0.2f else 1.0f
+            val alpha = if (item.numberOwned <= 0 && (ownedItems?.containsKey(item.animal) != true || itemType == "mounts")) 0.2f else 1.0f
             this.imageView.alpha = alpha
             this.titleView.alpha = alpha
             this.ownedTextView.alpha = alpha

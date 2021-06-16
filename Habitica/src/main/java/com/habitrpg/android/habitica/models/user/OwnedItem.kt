@@ -1,35 +1,25 @@
 package com.habitrpg.android.habitica.models.user
 
+import com.habitrpg.android.habitica.models.BaseMainObject
 import com.habitrpg.android.habitica.models.BaseObject
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
+import io.realm.annotations.RealmClass
 
-open class OwnedItem : RealmObject(), BaseObject, OwnedObject {
+@RealmClass(embedded = true)
+open class OwnedItem : RealmObject(), BaseMainObject, OwnedObject {
 
     override val realmClass: Class<OwnedItem>
         get() = OwnedItem::class.java
     override val primaryIdentifier: String?
-        get() = combinedKey
+        get() = key
     override val primaryIdentifierName: String
         get() = "combinedKey"
 
-    @PrimaryKey
-    override var combinedKey: String? = null
     override var userID: String? = null
-    set(value) {
-        field = value
-        combinedKey = field + itemType + key
-    }
+
     override var key: String? = null
-    set(value) {
-        field = value
-        combinedKey = userID + itemType + field
-    }
 
     var itemType: String? = null
-        set(value) {
-            field = value
-            combinedKey = userID + field + key
-        }
     var numberOwned = 0
 }

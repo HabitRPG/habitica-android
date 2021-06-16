@@ -18,6 +18,7 @@ import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
+import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaProgressDialog
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -73,8 +74,7 @@ class FixCharacterValuesActivity: BaseActivity() {
         val id = item.itemId
 
         if (id == R.id.action_save_changes) {
-            @Suppress("DEPRECATION")
-            val progressDialog = ProgressDialog.show(this, getString(R.string.saving), "")
+            val dialog = HabiticaProgressDialog.show(this, R.string.saving)
             val userInfo = HashMap<String, Any>()
             userInfo["stats.hp"] = binding.healthEditText.getDoubleValue()
             userInfo["stats.exp"] = binding.experienceEditText.getDoubleValue()
@@ -85,7 +85,7 @@ class FixCharacterValuesActivity: BaseActivity() {
             compositeSubscription.add(repository.updateUser(userInfo)
                     .flatMap { repository.retrieveUser(false, true, true) }
                     .subscribe({}, RxErrorHandler.handleEmptyError(), {
-                progressDialog.dismiss()
+                dialog?.dismiss()
                 finish()
             }))
             return true

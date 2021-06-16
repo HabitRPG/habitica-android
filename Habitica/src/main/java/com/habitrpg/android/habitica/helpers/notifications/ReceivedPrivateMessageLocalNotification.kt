@@ -39,6 +39,8 @@ class ReceivedPrivateMessageLocalNotification(context: Context, identifier: Stri
                     .setContentTitle(notificationTitle)
                     .setStyle(style)
             title = null
+        } else {
+            notification = notification.setContentTitle(context.getString(R.string.inbox_messages_title_single, data["senderName"]))
         }
         return notification
     }

@@ -5,13 +5,12 @@ import com.habitrpg.android.habitica.models.inventory.Customization
 import hu.akarnokd.rxjava3.bridge.RxJavaBridge
 import io.reactivex.rxjava3.core.Flowable
 import io.realm.Realm
-import io.realm.RealmResults
 import java.util.*
 
 
 class RealmCustomizationLocalRepository(realm: Realm) : RealmContentLocalRepository(realm), CustomizationLocalRepository {
 
-    override fun getCustomizations(type: String, category: String?, onlyAvailable: Boolean): Flowable<RealmResults<Customization>> {
+    override fun getCustomizations(type: String, category: String?, onlyAvailable: Boolean): Flowable<out List<Customization>> {
         var query = realm.where(Customization::class.java)
                 .equalTo("type", type)
                 .equalTo("category", category)
@@ -34,6 +33,7 @@ class RealmCustomizationLocalRepository(realm: Realm) : RealmContentLocalReposit
                 .sort("customizationSetName")
                 .findAll()
                 .asFlowable()
-                .filter { it.isLoaded })
+                .filter { it.isLoaded }
+                .map { it })
     }
 }

@@ -3,12 +3,11 @@ package com.habitrpg.android.habitica.helpers
 import android.app.Activity
 import android.content.Intent
 import com.habitrpg.android.habitica.HabiticaBaseApplication
-import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
+import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import org.solovyev.android.checkout.*
-import retrofit2.Response
 import java.util.*
 
-class PurchaseHandler(activity: Activity, val crashlyticsProxy: CrashlyticsProxy) {
+class PurchaseHandler(activity: Activity, val analyticsManager: AnalyticsManager) {
     private val billing = HabiticaBaseApplication.getInstance(activity.applicationContext)?.billing
     private val checkout = billing?.let { Checkout.forActivity(activity, it) }
     private val inventory = checkout?.makeInventory()
@@ -120,7 +119,7 @@ class PurchaseHandler(activity: Activity, val crashlyticsProxy: CrashlyticsProxy
                     }
                 }
 
-                override fun onError(i: Int, e: Exception) { crashlyticsProxy.logException(e) }
+                override fun onError(i: Int, e: Exception) { analyticsManager.logException(e) }
             })
         }
     }
@@ -157,7 +156,7 @@ class PurchaseHandler(activity: Activity, val crashlyticsProxy: CrashlyticsProxy
                             }
 
                             override fun onError(i: Int, e: Exception) {
-                                crashlyticsProxy.logException(e)
+                                analyticsManager.logException(e)
                             }
                         })
                     }
@@ -165,7 +164,7 @@ class PurchaseHandler(activity: Activity, val crashlyticsProxy: CrashlyticsProxy
             }
 
             override fun onError(i: Int, e: Exception) {
-                crashlyticsProxy.logException(e)
+                analyticsManager.logException(e)
             }
         })
     }
@@ -173,19 +172,20 @@ class PurchaseHandler(activity: Activity, val crashlyticsProxy: CrashlyticsProxy
     fun purchaseGems(identifier: String) {
         checkout?.let {
             it.destroyPurchaseFlow()
-            billingRequests?.purchase(ProductTypes.IN_APP, identifier, null, it.createOneShotPurchaseFlow(object : RequestListener<Purchase> {
+            billingRequests?.purchase(ProductTypes.IN_APP, identifier, null, it.createOneShotPurchaseFlow(
+                PURCHASE_REQUEST_CODE, object : RequestListener<Purchase> {
                 override fun onSuccess(result: Purchase) {
                     billingRequests?.consume(result.token, object : RequestListener<Any> {
                         override fun onSuccess(o: Any) { /* no-op */ }
 
                         override fun onError(i: Int, e: Exception) {
-                            crashlyticsProxy.logException(e)
+                            analyticsManager.logException(e)
                         }
                     })
                 }
 
                 override fun onError(response: Int, e: java.lang.Exception) {
-                    crashlyticsProxy.logException(e)
+                    analyticsManager.logException(e)
                     if (response == ResponseCodes.ITEM_ALREADY_OWNED) {
                         checkIfPendingPurchases()
                     }
@@ -196,19 +196,20 @@ class PurchaseHandler(activity: Activity, val crashlyticsProxy: CrashlyticsProxy
 
     fun purchaseNoRenewSubscription(sku: Sku) {
         checkout?.let {
-            billingRequests?.purchase(ProductTypes.IN_APP, sku.id.code, null, it.createOneShotPurchaseFlow(object : RequestListener<Purchase> {
+            billingRequests?.purchase(ProductTypes.IN_APP, sku.id.code, null, it.createOneShotPurchaseFlow(
+                PURCHASE_REQUEST_CODE, object : RequestListener<Purchase> {
                 override fun onSuccess(result: Purchase) {
                     billingRequests?.consume(result.token, object : RequestListener<Any> {
                         override fun onSuccess(o: Any) { /* no-op */ }
 
                         override fun onError(i: Int, e: Exception) {
-                            crashlyticsProxy.logException(e)
+                            analyticsManager.logException(e)
                         }
                     })
                 }
 
                 override fun onError(response: Int, e: java.lang.Exception) {
-                    crashlyticsProxy.logException(e)
+                    analyticsManager.logException(e)
                 }
             }))
         }
@@ -220,7 +221,7 @@ class PurchaseHandler(activity: Activity, val crashlyticsProxy: CrashlyticsProxy
                 override fun onSuccess(result: Any) { /* no-op */ }
 
                 override fun onError(response: Int, e: Exception) {
-                    crashlyticsProxy.logException(e)
+                    analyticsManager.logException(e)
                 }
             })
         }
@@ -229,6 +230,8 @@ class PurchaseHandler(activity: Activity, val crashlyticsProxy: CrashlyticsProxy
     companion object {
 
         private var handlers = WeakHashMap<Activity, PurchaseHandler>()
+
+        val PURCHASE_REQUEST_CODE = 51966
 
         fun findForActivity(activity: Activity): PurchaseHandler? {
             return handlers[activity]

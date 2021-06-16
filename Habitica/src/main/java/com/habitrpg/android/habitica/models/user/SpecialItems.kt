@@ -1,23 +1,14 @@
 package com.habitrpg.android.habitica.models.user
 
 
+import com.habitrpg.android.habitica.models.BaseObject
 import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
+import io.realm.annotations.RealmClass
 
-open class SpecialItems : RealmObject() {
-
-    @PrimaryKey
-    var userId: String? = null
-        set(userId) {
-            field = userId
-            ownedItems?.forEach {
-                if (!it.isManaged) {
-                    it.userID = userId
-                    it.itemType = "eggs"
-                }
-            }
-        }
+@RealmClass(embedded = true)
+open class SpecialItems : RealmObject(), BaseObject {
     var ownedItems: RealmList<OwnedItem>? = null
     var seafoam: Int = 0
     var shinySeed: Int = 0

@@ -18,33 +18,33 @@ class DailyViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> U
             return isVisible
         }
 
-    override fun bind(newTask: Task, position: Int, displayMode: String) {
-        this.task = newTask
-        setChecklistIndicatorBackgroundActive(newTask.isChecklistDisplayActive)
+    override fun bind(data: Task, position: Int, displayMode: String) {
+        this.task = data
+        setChecklistIndicatorBackgroundActive(data.isChecklistDisplayActive)
 
-        if (newTask.reminders?.size == 0) {
+        if (data.reminders?.size == 0) {
             reminderTextView.visibility = View.GONE
         } else {
             reminderTextView.visibility = View.VISIBLE
             val now = Date()
             val calendar = Calendar.getInstance()
-            val nextReminder = newTask.reminders?.firstOrNull {
+            val nextReminder = data.reminders?.firstOrNull {
                 calendar.time = now
                 calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DATE), it.time?.hours ?: 0, it.time?.minutes ?: 0, 0)
                 now < calendar.time
-            } ?: newTask.reminders?.first()
+            } ?: data.reminders?.first()
 
             var reminderString = ""
             if (nextReminder?.time != null) {
                 reminderString += formatter.format(nextReminder.time)
             }
-            if ((newTask.reminders?.size ?: 0) > 1) {
-                reminderString = "$reminderString (+${(newTask.reminders?.size ?: 0)-1})"
+            if ((data.reminders?.size ?: 0) > 1) {
+                reminderString = "$reminderString (+${(data.reminders?.size ?: 0)-1})"
             }
             reminderTextView.text = reminderString
         }
 
-        super.bind(newTask, position, displayMode)
+        super.bind(data, position, displayMode)
     }
 
     override fun shouldDisplayAsActive(newTask: Task?): Boolean {

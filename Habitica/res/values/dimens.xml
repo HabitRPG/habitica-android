@@ -3,7 +3,6 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">8dp</dimen>
-    <dimen name="card_horizontal_padding">4dip</dimen>
 
     <dimen name="card_medium_text">18.0sp</dimen>
     <dimen name="card_small_text">14.0sp</dimen>
@@ -11,9 +10,7 @@
     <dimen name="card_padding_compact">6dp</dimen>
     <dimen name="section_leftright_padding">6dp</dimen>
     <dimen name="section_top_padding">16dp</dimen>
-    <dimen name="card_margin">6dp</dimen>
 
-    <dimen name="party_invite_button">34dp</dimen>
     <dimen name="party_accept_button_start_margin">5dp</dimen>
     <dimen name="party_invite_avatar">46dp</dimen>  <!--50?-->
     <dimen name="party_invite_separator">4dp</dimen>

@@ -45,6 +45,7 @@ open class QuestContent : RealmObject(), Item {
         }
 
     var collect: RealmList<QuestCollect>? = null
+    override var event: ItemEvent? = null
 
     val isBossQuest: Boolean
         get() = this.boss != null
@@ -52,7 +53,7 @@ open class QuestContent : RealmObject(), Item {
     override val type: String
         get() =  "quests"
 
-    fun getCollectWithKey(key: String): QuestCollect? {
+    fun getCollectWithKey(key: String?): QuestCollect? {
         for (collect in this.collect ?: emptyList<QuestCollect>()) {
             if (collect.key == key) {
                 return collect

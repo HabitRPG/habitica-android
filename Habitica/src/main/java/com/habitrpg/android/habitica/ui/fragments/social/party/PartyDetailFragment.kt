@@ -17,6 +17,7 @@ import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentPartyDetailBinding
 import com.habitrpg.android.habitica.extensions.inflate
+import com.habitrpg.android.habitica.helpers.HapticFeedbackManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.QuestContent
@@ -29,6 +30,7 @@ import com.habitrpg.android.habitica.ui.AvatarView
 import com.habitrpg.android.habitica.ui.activities.FullProfileActivity
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
+import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemDialogFragment
 import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemRecyclerFragment
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
@@ -37,7 +39,6 @@ import com.habitrpg.android.habitica.ui.viewHolders.GroupMemberViewHolder
 import com.habitrpg.android.habitica.ui.viewmodels.PartyViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
-import io.realm.RealmResults
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
@@ -81,8 +82,6 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
         binding?.refreshLayout?.setOnRefreshListener { this.refreshParty() }
 
         binding?.questAcceptButton?.setOnClickListener { onQuestAccept() }
@@ -243,7 +242,7 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
         }
     }
 
-    private fun updateMembersList(members: RealmResults<Member>?) {
+    private fun updateMembersList(members: List<Member>?) {
         val leaderID = viewModel?.leaderID
         members?.forEachIndexed { index, member ->
             val memberView = (if (binding?.membersWrapper?.childCount ?: 0 > index) {
@@ -328,10 +327,11 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
         dialog?.addButton(android.R.string.cancel, false) { _, _ -> activity?.dismissKeyboard() }
         dialog?.setTitle(context?.getString(R.string.remove_member_confirm, displayName))
         dialog?.show()
+        dialog?.show()
     }
 
     private fun inviteNewQuest() {
-        val fragment = ItemRecyclerFragment()
+        val fragment = ItemDialogFragment()
         fragment.itemType = "quests"
         fragment.itemTypeText = getString(R.string.quest)
         fragment.isModal = true
@@ -394,17 +394,17 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
     }
 
     private fun onQuestAccept() {
+        HapticFeedbackManager.tap(requireView())
         viewModel?.acceptQuest()
     }
 
 
     private fun onQuestReject() {
+        HapticFeedbackManager.tap(requireView())
         viewModel?.rejectQuest()
     }
 
     private fun questDetailButtonClicked() {
-        viewModel?.getGroupData()?.value?.let { party ->
-            MainNavigationController.navigate(PartyFragmentDirections.openQuestDetail())
-        }
+        MainNavigationController.navigate(PartyFragmentDirections.openQuestDetail())
     }
 }

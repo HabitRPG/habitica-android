@@ -10,7 +10,6 @@ import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.realm.RealmResults
 import org.greenrobot.eventbus.EventBus
 
 class PartyViewModel: GroupViewModel() {
@@ -22,8 +21,8 @@ class PartyViewModel: GroupViewModel() {
         get() = !(getGroupData().value?.quest?.members?.none { it.key == getUserData().value?.id }
                 ?: true)
 
-    private val members: MutableLiveData<RealmResults<Member>?> by lazy {
-        MutableLiveData<RealmResults<Member>?>()
+    private val members: MutableLiveData<List<Member>?> by lazy {
+        MutableLiveData<List<Member>?>()
     }
 
     init {
@@ -35,7 +34,7 @@ class PartyViewModel: GroupViewModel() {
         component.inject(this)
     }
 
-    fun getMembersData(): LiveData<RealmResults<Member>?> = members
+    fun getMembersData(): LiveData<List<Member>?> = members
 
     private fun loadMembersFromLocal() {
         disposable.add(groupIDSubject.toFlowable(BackpressureStrategy.LATEST)

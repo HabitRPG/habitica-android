@@ -30,6 +30,12 @@
     <fragment
         android:id="@+id/tasksFragment"
         android:name="com.habitrpg.android.habitica.ui.fragments.tasks.TasksFragment">
+        <argument
+            android:name="taskType"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue=""/>
+        <deepLink app:uri="habitica.com/user/tasks/{taskType}" />
         <deepLink app:uri="habitica.com/tasks" />
         <deepLink app:uri="habitica.com" />
     </fragment>
@@ -53,7 +59,7 @@
     </fragment>
     <fragment
         android:id="@+id/noPartyFragment"
-        android:name="com.habitrpg.android.habitica.ui.fragments.social.NoPartyFragmentFragment"
+        android:name="com.habitrpg.android.habitica.ui.fragments.social.party.NoPartyFragmentFragment"
         android:label="@string/sidebar_party">
     </fragment>
     <fragment
@@ -424,6 +430,14 @@
         android:id="@+id/promoInfoFragment"
         android:name="com.habitrpg.android.habitica.ui.fragments.PromoInfoFragment"
         android:label="" />
+    <fragment
+        android:id="@+id/promoWebFragment"
+        android:name="com.habitrpg.android.habitica.ui.fragments.PromoWebFragment"
+        android:label="">
+        <argument
+            android:name="url"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/teamBoardFragment"
         android:name="com.habitrpg.android.habitica.ui.fragments.tasks.TeamBoardFragment"

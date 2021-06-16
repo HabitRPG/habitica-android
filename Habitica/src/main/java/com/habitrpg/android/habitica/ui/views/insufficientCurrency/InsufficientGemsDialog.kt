@@ -16,7 +16,7 @@ import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.PurchaseHandler
 import com.habitrpg.android.habitica.helpers.PurchaseTypes
-import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
+import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import javax.inject.Inject
@@ -31,7 +31,7 @@ class InsufficientGemsDialog(context: Context, var gemPrice: Int) : Insufficient
     @Inject
     lateinit var configManager: AppConfigManager
     @Inject
-    lateinit var crashlyticsProxy: CrashlyticsProxy
+    lateinit var analyticsManager: AnalyticsManager
 
     private var purchaseHandler: PurchaseHandler? = null
 
@@ -54,7 +54,7 @@ class InsufficientGemsDialog(context: Context, var gemPrice: Int) : Insufficient
         getActivity()?.let {
             if (configManager.insufficientGemPurchase()) {
                 purchaseButton = contentView.findViewById(R.id.purchase_button)
-                purchaseHandler = PurchaseHandler(it, crashlyticsProxy)
+                purchaseHandler = PurchaseHandler(it, analyticsManager)
                 purchaseHandler?.startListening()
                 purchaseHandler?.whenCheckoutReady = {
                     sku = if (configManager.insufficientGemPurchaseAdjust()) {

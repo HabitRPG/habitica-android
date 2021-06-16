@@ -1,22 +1,14 @@
 package com.habitrpg.android.habitica.models.social
 
+import com.habitrpg.android.habitica.models.BaseObject
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
+import io.realm.annotations.RealmClass
 
-open class ChallengeMembership : RealmObject {
-    @PrimaryKey
-    var combinedID: String = ""
-
+@RealmClass(embedded = true)
+open class ChallengeMembership : RealmObject, BaseObject {
     var userID: String = ""
-        set(value) {
-            field = value
-            combinedID = userID + challengeID
-        }
     var challengeID: String = ""
-        set(value) {
-            field = value
-            combinedID = userID + challengeID
-        }
 
     constructor(userID: String, challengeID: String) : super() {
         this.userID = userID
@@ -24,17 +16,4 @@ open class ChallengeMembership : RealmObject {
     }
 
     constructor() : super()
-
-    override fun equals(other: Any?): Boolean {
-        return if (other?.javaClass == ChallengeMembership::class.java) {
-            this.combinedID == (other as ChallengeMembership).combinedID
-        } else super.equals(other)
-    }
-
-    override fun hashCode(): Int {
-        var result = combinedID.hashCode()
-        result = 31 * result + userID.hashCode()
-        result = 31 * result + challengeID.hashCode()
-        return result
-    }
 }

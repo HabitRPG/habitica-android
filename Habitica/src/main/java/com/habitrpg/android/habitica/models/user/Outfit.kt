@@ -3,16 +3,14 @@ package com.habitrpg.android.habitica.models.user
 import android.text.TextUtils
 
 import com.google.gson.annotations.SerializedName
+import com.habitrpg.android.habitica.models.BaseObject
 
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
+import io.realm.annotations.RealmClass
 
-open class Outfit : RealmObject() {
-
-    @PrimaryKey
-    var userId: String? = null
-
-    internal var gear: Gear? = null
+@RealmClass(embedded = true)
+open class Outfit : RealmObject(), BaseObject {
     var armor: String = ""
     var back: String = ""
     var body: String = ""

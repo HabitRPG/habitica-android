@@ -7,8 +7,7 @@
     android:paddingStart="55dp"
     android:paddingEnd="@dimen/chat_horizontal_inset"
     android:paddingTop="4dp"
-    android:paddingBottom="4dp"
-    android:background="@color/content_background">
+    android:paddingBottom="4dp">
     <TextView
         android:background="@drawable/system_chat_background"
         android:id="@+id/text_view"
@@ -19,4 +18,16 @@
         android:textColor="@color/text_brand_neon"
         tools:text="System message"
         style="@style/Body1"/>
+    <TextView
+        android:id="@+id/system_message_timestamp"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:singleLine="true"
+        android:lines="1"
+        android:ellipsize="end"
+        tools:text="Apr 20, 2:32 PM"
+        android:textSize="12sp"
+        android:textColor="@color/text_quad"/>
 </LinearLayout>

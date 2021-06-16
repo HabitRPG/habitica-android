@@ -4,20 +4,20 @@ import com.habitrpg.android.habitica.data.local.InventoryLocalRepository
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.*
 import com.habitrpg.android.habitica.models.shops.ShopItem
-import com.habitrpg.android.habitica.models.user.OwnedItem
-import com.habitrpg.android.habitica.models.user.OwnedMount
-import com.habitrpg.android.habitica.models.user.OwnedPet
-import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.android.habitica.models.user.*
 import hu.akarnokd.rxjava3.bridge.RxJavaBridge
 import io.reactivex.rxjava3.core.Flowable
 import io.realm.Realm
+import io.realm.RealmList
 import io.realm.RealmObject
-import io.realm.RealmResults
 import io.realm.Sort
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.HashMap
 
 
 class RealmInventoryLocalRepository(realm: Realm) : RealmContentLocalRepository(realm), InventoryLocalRepository {
-    override fun getQuestContent(keys: List<String>): Flowable<RealmResults<QuestContent>> {
+    override fun getQuestContent(keys: List<String>): Flowable<out List<QuestContent>> {
         return RxJavaBridge.toV3Flowable(realm.where(QuestContent::class.java)
                 .`in`("key", keys.toTypedArray())
                 .findAll()
@@ -33,7 +33,7 @@ class RealmInventoryLocalRepository(realm: Realm) : RealmContentLocalRepository(
                 .map { content -> content.first() })
     }
 
-    override fun getEquipment(searchedKeys: List<String>): Flowable<RealmResults<Equipment>> {
+    override fun getEquipment(searchedKeys: List<String>): Flowable<out List<Equipment>> {
         return RxJavaBridge.toV3Flowable(realm.where(Equipment::class.java)
                 .`in`("key", searchedKeys.toTypedArray())
                 .findAll()
@@ -52,7 +52,7 @@ class RealmInventoryLocalRepository(realm: Realm) : RealmContentLocalRepository(
                 .count()
     }
 
-    override fun getOwnedEquipment(type: String): Flowable<RealmResults<Equipment>> {
+    override fun getOwnedEquipment(type: String): Flowable<out List<Equipment>> {
         return RxJavaBridge.toV3Flowable(realm.where(Equipment::class.java)
                 .equalTo("type", type)
                 .equalTo("owned", true)
@@ -61,7 +61,7 @@ class RealmInventoryLocalRepository(realm: Realm) : RealmContentLocalRepository(
                 .filter { it.isLoaded })
     }
 
-    override fun getOwnedEquipment(): Flowable<RealmResults<Equipment>> {
+    override fun getOwnedEquipment(): Flowable<out List<Equipment>> {
         return RxJavaBridge.toV3Flowable(realm.where(Equipment::class.java)
                 .equalTo("owned", true)
                 .findAll()
@@ -69,7 +69,7 @@ class RealmInventoryLocalRepository(realm: Realm) : RealmContentLocalRepository(
                 .filter { it.isLoaded })
     }
 
-    override fun getEquipmentType(type: String, set: String): Flowable<RealmResults<Equipment>> {
+    override fun getEquipmentType(type: String, set: String): Flowable<out List<Equipment>> {
         return RxJavaBridge.toV3Flowable(realm.where(Equipment::class.java)
                 .equalTo("type", type)
                 .equalTo("gearSet", set)
@@ -78,44 +78,46 @@ class RealmInventoryLocalRepository(realm: Realm) : RealmContentLocalRepository(
                 .filter { it.isLoaded })
     }
 
-    override fun getOwnedItems(itemType: String, userID: String, includeZero: Boolean): Flowable<RealmResults<OwnedItem>> {
-        var query = realm.where(OwnedItem::class.java)
-        if (!includeZero) {
-            query = query.greaterThan("numberOwned", 0)
+    override fun getOwnedItems(itemType: String, userID: String, includeZero: Boolean): Flowable<out List<OwnedItem>> {
+        return queryUser(userID).map {
+            val items = when (itemType) {
+                "eggs" -> it.items?.eggs
+                "hatchingPotions" -> it.items?.hatchingPotions
+                "food" -> it.items?.food
+                "quests" -> it.items?.quests
+                else -> emptyList()
+            } ?: emptyList()
+            if (includeZero) {
+                items
+            } else {
+                items.filter { it.numberOwned > 0 }
+            }
         }
-        return RxJavaBridge.toV3Flowable(query.equalTo("itemType", itemType)
-                .equalTo("userID", userID)
-                .sort("key")
-                .findAll()
-                .asFlowable()
-                .filter { it.isLoaded })
     }
 
-    override fun getItems(itemClass: Class<out Item>, keys: Array<String>): Flowable<out RealmResults<out Item>> {
+    override fun getItems(itemClass: Class<out Item>, keys: Array<String>): Flowable<out List<Item>> {
         return RxJavaBridge.toV3Flowable(realm.where(itemClass).`in`("key", keys).findAll().asFlowable()
                 .filter { it.isLoaded })
     }
 
-    override fun getItems(itemClass: Class<out Item>): Flowable<out RealmResults<out Item>> {
+    override fun getItems(itemClass: Class<out Item>): Flowable<out List<Item>> {
         return RxJavaBridge.toV3Flowable(realm.where(itemClass).findAll().asFlowable()
                 .filter { it.isLoaded })
     }
 
     override fun getOwnedItems(userID: String, includeZero: Boolean): Flowable<Map<String, OwnedItem>> {
-        var query = realm.where(OwnedItem::class.java)
-        if (!includeZero) {
-            query = query.greaterThan("numberOwned", 0)
+        return queryUser(userID).map {
+            val items = HashMap<String, OwnedItem>()
+            it.items?.eggs?.forEach { items[it.key + "-" + it.itemType] = it }
+            it.items?.food?.forEach { items[it.key + "-" + it.itemType] = it }
+            it.items?.hatchingPotions?.forEach { items[it.key + "-" + it.itemType] = it }
+            it.items?.quests?.forEach { items[it.key + "-" + it.itemType] = it }
+            if (includeZero) {
+                items
+            } else {
+                items.filter { it.value.numberOwned > 0 }
+            }
         }
-        return RxJavaBridge.toV3Flowable(query.equalTo("userID", userID)
-                .findAll()
-                .asFlowable()
-                .map {
-                    val items = HashMap<String, OwnedItem>()
-                    for (item in it) {
-                        items[item.key + "-" + item.itemType] = item
-                    }
-                    items
-                })
     }
 
     override fun getEquipment(key: String): Flowable<Equipment> {
@@ -127,7 +129,7 @@ class RealmInventoryLocalRepository(realm: Realm) : RealmContentLocalRepository(
                 .cast(Equipment::class.java))
     }
 
-    override fun getMounts(): Flowable<RealmResults<Mount>> {
+    override fun getMounts(): Flowable<out List<Mount>> {
         return RxJavaBridge.toV3Flowable(realm.where(Mount::class.java)
                 .sort("type", Sort.ASCENDING, "animal", Sort.ASCENDING)
                 .findAll()
@@ -135,7 +137,7 @@ class RealmInventoryLocalRepository(realm: Realm) : RealmContentLocalRepository(
                 .filter { it.isLoaded })
     }
 
-    override fun getMounts(type: String?, group: String?, color: String?): Flowable<RealmResults<Mount>> {
+    override fun getMounts(type: String?, group: String?, color: String?): Flowable<out List<Mount>> {
         var query = realm.where(Mount::class.java)
                 .sort("type", Sort.ASCENDING, if (color == null) "color" else "animal", Sort.ASCENDING)
         if (type != null) {
@@ -152,16 +154,15 @@ class RealmInventoryLocalRepository(realm: Realm) : RealmContentLocalRepository(
                 .filter { it.isLoaded })
     }
 
-    override fun getOwnedMounts(userID: String): Flowable<RealmResults<OwnedMount>> {
-        return RxJavaBridge.toV3Flowable(realm.where(OwnedMount::class.java)
-                .equalTo("owned", true)
-                .equalTo("userID", userID)
-                .findAll()
-                .asFlowable()
-                .filter { it.isLoaded })
+    override fun getOwnedMounts(userID: String): Flowable<out List<OwnedMount>> {
+        return queryUser(userID)
+            .map { it.items?.mounts?.filter {
+                it.owned == true
+            } ?: emptyList() }
     }
 
-    override fun getPets(): Flowable<RealmResults<Pet>> {
+
+    override fun getPets(): Flowable<out List<Pet>> {
         return RxJavaBridge.toV3Flowable(realm.where(Pet::class.java)
                 .sort("type", Sort.ASCENDING, "animal", Sort.ASCENDING)
                 .findAll()
@@ -169,7 +170,7 @@ class RealmInventoryLocalRepository(realm: Realm) : RealmContentLocalRepository(
                 .filter { it.isLoaded })
     }
 
-    override fun getPets(type: String?, group: String?, color: String?): Flowable<RealmResults<Pet>> {
+    override fun getPets(type: String?, group: String?, color: String?): Flowable<out List<Pet>> {
         var query = realm.where(Pet::class.java)
                 .sort("type", Sort.ASCENDING, if (color == null) "color" else "animal", Sort.ASCENDING)
         if (type != null) {
@@ -186,13 +187,15 @@ class RealmInventoryLocalRepository(realm: Realm) : RealmContentLocalRepository(
                 .filter { it.isLoaded })
     }
 
-    override fun getOwnedPets(userID: String): Flowable<RealmResults<OwnedPet>> {
-        return RxJavaBridge.toV3Flowable(realm.where(OwnedPet::class.java)
-                .greaterThan("trained", 0)
-                .equalTo("userID", userID)
+    override fun getOwnedPets(userID: String): Flowable<out List<OwnedPet>> {
+        return RxJavaBridge.toV3Flowable(realm.where(User::class.java)
+                .equalTo("id", userID)
                 .findAll()
-                .asFlowable()
-                .filter { it.isLoaded })
+                .asFlowable())
+            .filter { it.isLoaded && it.isValid && !it.isEmpty() }
+            .map { it.first()?.items?.pets?.filter {
+                it.trained > 0
+            } ?: emptyList() }
     }
 
     override fun updateOwnedEquipment(user: User) {
@@ -211,16 +214,23 @@ class RealmInventoryLocalRepository(realm: Realm) : RealmContentLocalRepository(
     }
 
     override fun getOwnedItem(userID: String, type: String, key: String, includeZero: Boolean): Flowable<OwnedItem> {
-        var query = realm.where(OwnedItem::class.java)
-                .equalTo("itemType", type)
-                .equalTo("key", key)
-                .equalTo("userID", userID)
-        if (!includeZero) {
-            query = query.greaterThan("numberOwned", 0)
+        return queryUser(userID).map {
+            var items = (when (type) {
+                "eggs" -> it.items?.eggs
+                "hatchingPotions" -> it.items?.hatchingPotions
+                "food" -> it.items?.food
+                "quests" -> it.items?.quests
+                else -> emptyList()
+            } ?: emptyList())
+            items = items.filter { it.key == key }
+            if (includeZero) {
+                items
+            } else {
+                items.filter { it.numberOwned > 0 }
+            }
         }
-        return RxJavaBridge.toV3Flowable(query.findFirstAsync()
-                .asFlowable<OwnedItem>()
-                .filter { realmObject -> realmObject.isLoaded })
+            .filter { it.isNotEmpty() }
+            .map { it.first() }
     }
 
     override fun getItem(type: String, key: String): Flowable<Item> {
@@ -229,6 +239,7 @@ class RealmInventoryLocalRepository(realm: Realm) : RealmContentLocalRepository(
             "hatchingPotions" -> HatchingPotion::class.java
             "food" -> Food::class.java
             "quests" -> QuestContent::class.java
+            "special" -> SpecialItem::class.java
             else -> Egg::class.java
         }
         return RxJavaBridge.toV3Flowable(realm.where(itemClass).equalTo("key", key).findFirstAsync().asFlowable<RealmObject>()
@@ -252,7 +263,7 @@ class RealmInventoryLocalRepository(realm: Realm) : RealmContentLocalRepository(
         }
     }
 
-    override fun getInAppRewards(): Flowable<RealmResults<ShopItem>> {
+    override fun getInAppRewards(): Flowable<out List<ShopItem>> {
         return RxJavaBridge.toV3Flowable(realm.where(ShopItem::class.java)
                 .findAll()
                 .asFlowable()
@@ -274,49 +285,41 @@ class RealmInventoryLocalRepository(realm: Realm) : RealmContentLocalRepository(
     override fun hatchPet(eggKey: String, potionKey: String, userID: String) {
         val newPet = OwnedPet()
         newPet.key = "$eggKey-$potionKey"
-        newPet.userID = userID
         newPet.trained = 5
-        val egg = realm.where(OwnedItem::class.java)
-                .equalTo("itemType", "eggs")
-                .equalTo("key", eggKey)
-                .equalTo("userID", userID)
-                .greaterThan("numberOwned", 0)
-                .findFirst() ?: return
-        val hatchingPotion = realm.where(OwnedItem::class.java)
-                .equalTo("itemType", "hatchingPotions")
-                .equalTo("key", potionKey)
-                .equalTo("userID", userID)
-                .greaterThan("numberOwned", 0)
-                .findFirst() ?: return
+        val user = realm.where(User::class.java).equalTo("id", userID).findFirst() ?: return
+        val egg = user.items?.eggs?.firstOrNull { it.key == eggKey } ?: return
+        val hatchingPotion = user.items?.hatchingPotions?.firstOrNull { it.key == potionKey } ?: return
         executeTransaction {
             egg.numberOwned -= 1
             hatchingPotion.numberOwned -= 1
-            it.insertOrUpdate(newPet)
+            user.items?.pets?.add(newPet)
+        }
+    }
+
+    override fun save(items: Items, userID: String) {
+        val user = realm.where(User::class.java).equalTo("id", userID).findFirst() ?: return
+        items.setItemTypes()
+        executeTransaction {
+            user.items = items
         }
     }
 
     override fun unhatchPet(eggKey: String, potionKey: String, userID: String) {
         val pet = realm.where(OwnedPet::class.java).equalTo("key", "$eggKey-$potionKey").findFirst()
-        val egg = realm.where(OwnedItem::class.java)
-                .equalTo("itemType", "eggs")
-                .equalTo("key", eggKey)
-                .equalTo("userID", userID)
-                .findFirst() ?: return
-        val hatchingPotion = realm.where(OwnedItem::class.java)
-                .equalTo("itemType", "hatchingPotions")
-                .equalTo("key", potionKey)
-                .equalTo("userID", userID)
-                .findFirst() ?: return
+        val user = realm.where(User::class.java).equalTo("id", userID).findFirst() ?: return
+        val egg = user.items?.eggs?.firstOrNull { it.key == eggKey } ?: return
+        val hatchingPotion = user.items?.hatchingPotions?.firstOrNull { it.key == potionKey } ?: return
         executeTransaction {
             egg.numberOwned += 1
             hatchingPotion.numberOwned += 1
-            pet?.deleteFromRealm()
+            user.items?.pets?.remove(pet)
         }
     }
 
     override fun feedPet(foodKey: String, petKey: String, feedValue: Int, userID: String) {
-        val pet = realm.where(OwnedPet::class.java).equalTo("key", petKey).findFirst() ?: return
-        val food = realm.where(OwnedItem::class.java).equalTo("key", foodKey).equalTo("itemType", "food").findFirst() ?: return
+        val user = realm.where(User::class.java).equalTo("id", userID).findFirst() ?: return
+        val pet = user.items?.pets?.firstOrNull { it.key == petKey } ?: return
+        val food = user.items?.food?.firstOrNull { it.key == foodKey } ?: return
         executeTransaction {
             pet.trained = feedValue
             food.numberOwned -= 1
@@ -324,20 +327,9 @@ class RealmInventoryLocalRepository(realm: Realm) : RealmContentLocalRepository(
             if (feedValue < 0) {
                 val mount = OwnedMount()
                 mount.key = petKey
-                mount.userID = userID
                 mount.owned = true
-                it.insertOrUpdate(mount)
+                user.items?.mounts?.add(mount)
             }
-        }
-    }
-
-    override fun changePetFeedStatus(key: String?, userID: String, feedStatus: Int) {
-        val newPet = OwnedPet()
-        newPet.key = key
-        newPet.userID = userID
-        newPet.trained = feedStatus
-        executeTransaction {
-            it.insertOrUpdate(newPet)
         }
     }
 
@@ -348,7 +340,12 @@ class RealmInventoryLocalRepository(realm: Realm) : RealmContentLocalRepository(
                 .findAll()
                 .asFlowable()
                 .filter { it.isLoaded && it.size > 0}
-                .map { it.first() })
+                .map {
+                    val format = SimpleDateFormat("yyyyMM", Locale.US)
+                    it.first {
+                        it.key?.contains(format.format(Date())) == true
+                    }
+                })
     }
 
     override fun soldItem(userID: String, updatedUser: User): User {
@@ -358,17 +355,44 @@ class RealmInventoryLocalRepository(realm: Realm) : RealmContentLocalRepository(
         executeTransaction {
             val items = updatedUser.items
             if (items != null) {
-                items.userId = user.id
                 val newItems = realm.copyToRealmOrUpdate(items)
                 user.items = newItems
             }
             val stats = updatedUser.stats
             if (stats != null) {
-                stats.userId = user.id
                 val newStats = realm.copyToRealmOrUpdate(stats)
                 user.stats = newStats
             }
         }
         return user
+    }
+
+    override fun getAvailableLimitedItems(): Flowable<List<Item>> {
+        return Flowable.combineLatest(
+                realm.where(Egg::class.java)
+                        .lessThan("event.start", Date())
+                        .greaterThan("event.end", Date())
+                        .findAll().asFlowable(),
+                realm.where(Food::class.java)
+                        .lessThan("event.start", Date())
+                        .greaterThan("event.end", Date())
+                        .findAll().asFlowable(),
+                realm.where(HatchingPotion::class.java)
+                        .lessThan("event.start", Date())
+                        .greaterThan("event.end", Date())
+                        .findAll().asFlowable(),
+                realm.where(QuestContent::class.java)
+                        .lessThan("event.start", Date())
+                        .greaterThan("event.end", Date())
+                        .findAll().asFlowable(),
+                { eggs, food, potions, quests ->
+                    val items = mutableListOf<Item>()
+                    items.addAll(eggs)
+                    items.addAll(food)
+                    items.addAll(potions)
+                    items.addAll(quests)
+                    items
+                }
+        )
     }
 }

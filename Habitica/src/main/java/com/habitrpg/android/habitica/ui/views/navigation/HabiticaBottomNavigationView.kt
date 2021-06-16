@@ -95,7 +95,7 @@ class HabiticaBottomNavigationView @JvmOverloads constructor(
             animateButtonTap()
             true
         }
-        binding.addButton.setOnTouchListener { view, event ->
+        binding.addButton.setOnTouchListener { _, event ->
             if (event.action == MotionEvent.ACTION_DOWN) {
                 val animX = ObjectAnimator.ofFloat(binding.addButton, "scaleX", 1f, 1.1f)
                 animX.duration = 100

@@ -16,7 +16,7 @@
         android:layout_marginTop="4dp"
         android:layout_marginBottom="4dp">
 
-        <com.facebook.drawee.view.SimpleDraweeView
+        <ImageView
             android:id="@+id/skill_image"
             android:layout_width="40dp"
             android:layout_height="40dp"
@@ -58,11 +58,13 @@
             <ImageView
                 android:id="@+id/button_icon_view"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"/>
             <TextView
                 android:id="@+id/price_label"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal" />
         </LinearLayout>
     </LinearLayout>
     <TextView

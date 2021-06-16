@@ -1,12 +1,11 @@
 package com.habitrpg.android.habitica.ui.fragments.preferences
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Configuration
-import android.os.Build
 import android.os.Bundle
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.preference.CheckBoxPreference
 import androidx.preference.ListPreference
@@ -86,6 +85,9 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
         val themeModePreference = findPreference("theme_mode") as? ListPreference
         themeModePreference?.summary = themeModePreference?.entry ?: "Follow System"
 
+        val launchScreenPreference = findPreference("launch_screen") as? ListPreference
+        launchScreenPreference?.summary = launchScreenPreference?.entry ?: "Habits"
+
 
         val taskDisplayPreference = findPreference("task_display") as? ListPreference
         if (configManager.enableTaskDisplayMode()) {
@@ -123,12 +125,12 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                         val builder = AlertDialog.Builder(context)
                                 .setMessage(getString(R.string.change_class_confirmation))
                                 .setNegativeButton(getString(R.string.dialog_go_back)) { dialog, _ -> dialog.dismiss() }
-                                .setPositiveButton(getString(R.string.change_class)) { _, _ -> startActivityForResult(intent, MainActivity.SELECT_CLASS_RESULT) }
+                                .setPositiveButton(getString(R.string.change_class)) { _, _ -> classSelectionResult.launch(intent) }
                         val alert = builder.create()
                         alert.show()
                     }
                 } else {
-                    startActivityForResult(intent, MainActivity.SELECT_CLASS_RESULT)
+                    classSelectionResult.launch(intent)
                 }
                 return true
             }
@@ -152,6 +154,9 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
         return super.onPreferenceTreeClick(preference)
     }
 
+    private val classSelectionResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        userRepository.retrieveUser(true, forced = true)
+    }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
         when (key) {
@@ -231,15 +236,15 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                     .subscribe({ }, RxErrorHandler.handleEmptyError())
             "server_url" -> {
                 apiClient.updateServerUrl(sharedPreferences.getString(key, ""))
-                findPreference(key).summary = sharedPreferences.getString(key, "")
+                findPreference<Preference>(key)?.summary = sharedPreferences.getString(key, "")
             }
             "task_display" -> {
-                val preference = findPreference(key) as ListPreference
-                preference.summary = preference.entry
+                val preference = findPreference<ListPreference>(key)
+                preference?.summary = preference?.entry
             }
             "FirstDayOfTheWeek" -> {
-                val preference = findPreference(key) as ListPreference
-                preference.summary = preference.entry
+                val preference = findPreference<ListPreference>(key)
+                preference?.summary = preference?.entry
             }
             "disablePMs" -> {
                 val isDisabled = sharedPreferences.getBoolean("disablePMs", false)
@@ -247,6 +252,10 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                     compositeSubscription.add(userRepository.updateUser("inbox.optOut", isDisabled)
                             .subscribe({ }, RxErrorHandler.handleEmptyError()))
                 }
+            }
+            "launch_screen" -> {
+                val preference = findPreference<ListPreference>(key)
+                preference?.summary = preference?.entry ?: "Habits"
             }
         }
     }
@@ -288,7 +297,7 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
         }
         val cdsTimePreference = findPreference("cds_time") as? TimePreference
         cdsTimePreference?.text = user?.preferences?.dayStart.toString() + ":00"
-        findPreference("dailyDueDefaultView").setDefaultValue(user?.preferences?.dailyDueDefaultView)
+        findPreference<Preference>("dailyDueDefaultView")?.setDefaultValue(user?.preferences?.dailyDueDefaultView)
         val languagePreference = findPreference("language") as? ListPreference
         languagePreference?.value = user?.preferences?.language
         languagePreference?.summary = languagePreference?.entry
@@ -296,13 +305,19 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
         audioThemePreference?.value = user?.preferences?.sound
         audioThemePreference?.summary = audioThemePreference?.entry
 
-        val preference = findPreference("authentication")
+        val preference = findPreference<Preference>("authentication")
         if (user?.flags?.verifiedUsername == true) {
-            preference.layoutResource = R.layout.preference_child_summary
-            preference.summary = context?.getString(R.string.authentication_summary)
+            preference?.layoutResource = R.layout.preference_child_summary
+            preference?.summary = context?.getString(R.string.authentication_summary)
         } else {
-            preference.layoutResource = R.layout.preference_child_summary_error
-            preference.summary = context?.getString(R.string.username_not_confirmed)
+            preference?.layoutResource = R.layout.preference_child_summary_error
+            preference?.summary = context?.getString(R.string.username_not_confirmed)
+        }
+
+        if (user?.party?.id?.isNotBlank() != true) {
+            val launchScreenPreference = findPreference<ListPreference>("launch_screen")
+            launchScreenPreference?.entries = resources.getStringArray(R.array.launch_screen_types).dropLast(1).toTypedArray()
+            launchScreenPreference?.entryValues = resources.getStringArray(R.array.launch_screen_values).dropLast(1).toTypedArray()
         }
 
         val disablePMsPreference = findPreference("disablePMs") as? CheckBoxPreference

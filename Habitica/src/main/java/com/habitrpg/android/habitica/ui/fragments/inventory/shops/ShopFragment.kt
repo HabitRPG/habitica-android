@@ -29,8 +29,6 @@ import javax.inject.Inject
 
 open class ShopFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
 
-
-
     internal val currencyView: CurrencyViews by lazy {
         val view = CurrencyViews(context)
         view
@@ -162,10 +160,19 @@ open class ShopFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
                         specialCategory.items.add(ShopItem.makeFortifyItem(context?.resources))
                         shop1.categories.add(specialCategory)
                     }
-                    if (shop1.identifier == Shop.TIME_TRAVELERS_SHOP) {
-                        formatTimeTravelersShop(shop1)
-                    } else {
-                        shop1
+                    when (shop1.identifier) {
+                        Shop.TIME_TRAVELERS_SHOP -> {
+                            formatTimeTravelersShop(shop1)
+                        }
+                        Shop.SEASONAL_SHOP -> {
+                            shop1.categories.sortWith(compareBy<ShopCategory> { it.items.size != 1 }
+                                    .thenBy { it.items.firstOrNull()?.currency != "gold" }
+                                    .thenByDescending { it.items.firstOrNull()?.event?.end })
+                            shop1
+                        }
+                        else -> {
+                            shop1
+                        }
                     }
                 }
                 .subscribe({

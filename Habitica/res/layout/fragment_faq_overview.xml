@@ -54,7 +54,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:subtitle="@string/currency"
-        app:title="@string/gold_capitalilzed"
+        app:title="@string/gold_capitalized"
         app:titleColor="@color/text_orange_white"
         android:layout_marginStart="@dimen/spacing_medium"
         android:layout_marginEnd="@dimen/spacing_medium"

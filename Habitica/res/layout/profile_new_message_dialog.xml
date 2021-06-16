@@ -25,6 +25,7 @@
             android:layout_height="wrap_content"
             android:minHeight="72dp"
             android:layout_weight="1"
+            android:hint="@string/write_message"
             app:hintTextAppearance="@style/TextAppearance.AppCompat">
 
             <androidx.appcompat.widget.AppCompatEditText
@@ -32,8 +33,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:hint="@string/write_message"
-                android:textColor="@android:color/black"
+                android:textColor="@color/text_primary"
                 android:inputType="textCapSentences|textMultiLine" />
 
         </com.google.android.material.textfield.TextInputLayout>

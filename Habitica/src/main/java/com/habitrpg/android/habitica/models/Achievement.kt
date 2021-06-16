@@ -3,7 +3,7 @@ package com.habitrpg.android.habitica.models
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
-open class Achievement : RealmObject() {
+open class Achievement : RealmObject(), BaseObject {
     @PrimaryKey
     var key: String? = null
     var type: String? = null

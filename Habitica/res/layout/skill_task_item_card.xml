@@ -1,32 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:background="?attr/colorContentBackground">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_centerVertical="true"
                 android:paddingStart="@dimen/spacing_large"
                 android:paddingEnd="@dimen/spacing_large"
                 android:paddingBottom="20dp"
                 android:paddingTop="20dp">
-                <com.habitrpg.android.habitica.ui.views.HabiticaEmojiTextView
+                <TextView
                     android:id="@+id/titleTextView"
                     style="@style/CardTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
-                <com.habitrpg.android.habitica.ui.views.HabiticaEmojiTextView
+                <TextView
                     android:id="@+id/notesTextView"
                     style="@style/CardText"
                     android:layout_width="match_parent"
@@ -34,13 +30,11 @@
             </LinearLayout>
             <View
                 android:id="@+id/rightBorderView"
-                android:layout_width="5dp"
+                android:layout_width="8dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true" />
-        </RelativeLayout>
-    </LinearLayout>
+                android:background="@color/red_10"/>
+        </LinearLayout>
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"

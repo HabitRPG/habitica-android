@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.components.UserComponent
@@ -21,7 +22,7 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-abstract class BaseFragment<VB: ViewBinding> : DialogFragment() {
+abstract class BaseFragment<VB: ViewBinding> : Fragment() {
 
     var isModal: Boolean = false
     abstract var binding: VB?
@@ -43,7 +44,6 @@ abstract class BaseFragment<VB: ViewBinding> : DialogFragment() {
         HabiticaBaseApplication.userComponent?.let {
             injectFragment(it)
         }
-        this.showsDialog = false
         super.onCreate(savedInstanceState)
     }
 
@@ -75,7 +75,7 @@ abstract class BaseFragment<VB: ViewBinding> : DialogFragment() {
     }
 
     private fun showTutorialIfNeeded() {
-        if (userVisibleHint && view != null) {
+        if (view != null) {
             if (this.tutorialStepIdentifier != null) {
                 compositeSubscription.add(tutorialRepository.getTutorialStep(this.tutorialStepIdentifier ?: "").firstElement()
                         .delay(1, TimeUnit.SECONDS)

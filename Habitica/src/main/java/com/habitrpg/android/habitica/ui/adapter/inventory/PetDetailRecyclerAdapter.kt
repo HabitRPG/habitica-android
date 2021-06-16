@@ -5,18 +5,19 @@ import com.habitrpg.android.habitica.models.inventory.*
 import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.OwnedMount
 import com.habitrpg.android.habitica.models.user.OwnedPet
+import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.viewHolders.PetViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.SectionViewHolder
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.subjects.PublishSubject
-import io.realm.RealmResults
 
 class PetDetailRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
-    private var existingMounts: RealmResults<Mount>? = null
+    private var existingMounts: List<Mount>? = null
     private var ownedPets: Map<String, OwnedPet>? = null
     private var ownedMounts: Map<String, OwnedMount>? = null
     private var ownedItems: Map<String, OwnedItem>? = null
+    private var user: User? = null
     private val equipEvents = PublishSubject.create<String>()
     private var ownsSaddles: Boolean = false
 
@@ -27,6 +28,11 @@ class PetDetailRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapt
         this.notifyDataSetChanged()
     }
 
+    fun setUser(user: User) {
+        this.user = user
+        notifyDataSetChanged()
+    }
+
     fun getEquipFlowable(): Flowable<String> {
         return equipEvents.toFlowable(BackpressureStrategy.DROP)
     }
@@ -34,7 +40,8 @@ class PetDetailRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapt
     var animalIngredientsRetriever: ((Animal, ((Pair<Egg?, HatchingPotion?>) -> Unit)) -> Unit)? = null
 
     private fun canRaiseToMount(pet: Pet): Boolean {
-        for (mount in existingMounts ?: emptyList<Mount>()) {
+        if (pet.type == "special") return false
+        for (mount in existingMounts ?: emptyList()) {
             if (mount.key == pet.key) {
                 return !(ownedMounts?.get(mount.key)?.owned ?: false)
             }
@@ -69,7 +76,8 @@ class PetDetailRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapt
                         ownsSaddles,
                         ownedItems?.get(obj.animal + "-eggs") != null,
                         ownedItems?.get(obj.color + "-hatchingPotions") != null,
-                        ownedMounts?.containsKey(obj.key) == true
+                        ownedMounts?.containsKey(obj.key) == true,
+                        user
                 )
             }
         }
@@ -79,7 +87,7 @@ class PetDetailRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapt
 
     override fun getItemCount(): Int = itemList.size
 
-    fun setExistingMounts(existingMounts: RealmResults<Mount>) {
+    fun setExistingMounts(existingMounts: List<Mount>) {
         this.existingMounts = existingMounts
         notifyDataSetChanged()
     }

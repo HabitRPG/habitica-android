@@ -12,7 +12,7 @@ import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.events.ConsumablePurchasedEvent
 import com.habitrpg.android.habitica.helpers.PurchaseHandler
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
+import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import com.habitrpg.android.habitica.ui.fragments.purchases.GemsPurchaseFragment
 import com.habitrpg.android.habitica.ui.fragments.purchases.SubscriptionFragment
 import org.greenrobot.eventbus.Subscribe
@@ -21,7 +21,7 @@ import javax.inject.Inject
 class GemPurchaseActivity : BaseActivity() {
 
     @Inject
-    lateinit var crashlyticsProxy: CrashlyticsProxy
+    lateinit var analyticsManager: AnalyticsManager
     @Inject
     lateinit var userRepository: UserRepository
 
@@ -51,7 +51,7 @@ class GemPurchaseActivity : BaseActivity() {
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.title = ""
 
-        purchaseHandler = PurchaseHandler(this, crashlyticsProxy)
+        purchaseHandler = PurchaseHandler(this, analyticsManager)
 
         if (intent.extras?.containsKey("openSubscription") == true) {
             if (intent.extras?.getBoolean("openSubscription") == false) {
