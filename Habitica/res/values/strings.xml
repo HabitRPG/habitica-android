@@ -1166,4 +1166,6 @@
     <string name="locked_equipment_shop_dialog">You must purchase the previous items in this sequence to unlock</string>
     <string name="caused_damage">You caused damage to the boss</string>
     <string name="avatar_style">Style</string>
+    <string name="daily_item_checkbox">Daily Checkbox</string>
+    <string name="todo_item_checkbox">Todo Checkbox</string>
 </resources>
