@@ -61,7 +61,7 @@ class SkillTasksRecyclerViewFragment : BaseFragment<FragmentRecyclerviewBinding>
     override fun onResume() {
         super.onResume()
 
-        var tasks = taskRepository.getTasks(taskType ?: "", userId)
+        var tasks = taskRepository.getTasks(taskType ?: "")
                 .map { it.filter { it.challengeID == null && it.group == null } }
         if (taskType == Task.TYPE_TODO) {
             tasks = tasks.map { it.filter { !it.completed } }

@@ -15,10 +15,7 @@ import io.reactivex.rxjava3.core.Single
 import java.util.*
 
 interface TaskRepository : BaseRepository {
-    fun getTasks(taskType: String, userID: String): Flowable<out List<Task>>
-    fun getTasks(userId: String): Flowable<out List<Task>>
-    fun getCurrentUserTasks(taskType: String): Flowable<out List<Task>>
-    fun getTasksOfType(taskType: String): Flowable<out List<Task>>
+    fun getTasks(taskType: String, userID: String? = null): Flowable<out List<Task>>
     fun saveTasks(userId: String, order: TasksOrder, tasks: TaskList)
 
     fun retrieveTasks(userId: String, tasksOrder: TasksOrder): Flowable<TaskList>
@@ -56,7 +53,7 @@ interface TaskRepository : BaseRepository {
     fun getTaskCopies(tasks: List<Task>): Flowable<List<Task>>
 
     fun retrieveDailiesFromDate(date: Date): Flowable<TaskList>
-    fun retrieveCompletedTodos(userId: String): Flowable<TaskList>
+    fun retrieveCompletedTodos(userId: String? = null): Flowable<TaskList>
     fun syncErroredTasks(): Single<List<Task>>
     fun unlinkAllTasks(challengeID: String?, keepOption: String): Flowable<Void>
     fun getTasksForChallenge(challengeID: String?): Flowable<out List<Task>>

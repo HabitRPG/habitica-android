@@ -24,18 +24,10 @@ import java.util.*
 
 
 class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiClient, userID: String, val appConfigManager: AppConfigManager, val analyticsManager: AnalyticsManager) : BaseRepositoryImpl<TaskLocalRepository>(localRepository, apiClient, userID), TaskRepository {
-    override fun getTasksOfType(taskType: String): Flowable<out List<Task>> = getTasks(taskType, userID)
-
     private var lastTaskAction: Long = 0
 
-    override fun getTasks(taskType: String, userID: String): Flowable<out List<Task>> =
-            this.localRepository.getTasks(taskType, userID)
-
-    override fun getTasks(userId: String): Flowable<out List<Task>> =
-            this.localRepository.getTasks(userId)
-
-    override fun getCurrentUserTasks(taskType: String): Flowable<out List<Task>> =
-            this.localRepository.getTasks(taskType, userID)
+    override fun getTasks(taskType: String, userID: String?): Flowable<out List<Task>> =
+            this.localRepository.getTasks(taskType, userID ?: this.userID)
 
     override fun saveTasks(userId: String, order: TasksOrder, tasks: TaskList) {
         localRepository.saveTasks(userId, order, tasks)
@@ -46,11 +38,11 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
                 .doOnNext { res -> this.localRepository.saveTasks(userId, tasksOrder, res) }
     }
 
-    override fun retrieveCompletedTodos(userId: String): Flowable<TaskList> {
+    override fun retrieveCompletedTodos(userId: String?): Flowable<TaskList> {
         return this.apiClient.getTasks("completedTodos")
                 .doOnNext { taskList ->
                     val tasks = taskList.tasks
-                    this.localRepository.saveCompletedTodos(userId, tasks.values)
+                    this.localRepository.saveCompletedTodos(userId ?: this.userID, tasks.values)
                 }
     }
 
@@ -304,7 +296,7 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
     }
 
     override fun getTaskCopies(userId: String): Flowable<List<Task>> =
-            getTasks(userId).map { localRepository.getUnmanagedCopy(it) }
+            localRepository.getTasks(userId).map { localRepository.getUnmanagedCopy(it) }
 
     override fun getTaskCopies(tasks: List<Task>): Flowable<List<Task>> =
             Flowable.just(localRepository.getUnmanagedCopy(tasks))

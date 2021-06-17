@@ -39,7 +39,7 @@ abstract class TaskListFactory internal constructor(val context: Context, intent
         }
         val mainHandler = Handler(context.mainLooper)
         mainHandler.post {
-            taskRepository.getCurrentUserTasks(taskType)
+            taskRepository.getTasks(taskType)
                     .firstElement()
                     .toObservable()
                     .flatMap { Observable.fromIterable(it) }

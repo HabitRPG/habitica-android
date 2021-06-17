@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
-import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -53,7 +52,6 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
     private var recyclerSubscription: CompositeDisposable = CompositeDisposable()
     var recyclerAdapter: TaskRecyclerViewAdapter? = null
     var itemAnimator = SafeDefaultItemAnimator()
-    var ownerID: String = ""
     @Inject
     lateinit var apiClient: ApiClient
     @Inject
@@ -115,7 +113,7 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
                 }?.subscribeWithErrorHandler {}?.let { recyclerSubscription.add(it) }
         recyclerAdapter?.brokenTaskEvents?.subscribeWithErrorHandler { showBrokenChallengeDialog(it) }?.let { recyclerSubscription.add(it) }
 
-        recyclerSubscription.add(taskRepository.getTasks(this.taskType, ownerID).subscribe({
+        recyclerSubscription.add(taskRepository.getTasks(this.taskType).subscribe({
             this.recyclerAdapter?.updateUnfilteredData(it)
             this.recyclerAdapter?.filter()
         }, RxErrorHandler.handleEmptyError()))
@@ -250,11 +248,6 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
         binding?.refreshLayout?.setOnRefreshListener(this)
 
         setEmptyLabels()
-
-        if (Task.TYPE_REWARD == className) {
-            compositeSubscription.add(taskRepository.getTasks(this.className, ownerID)
-                    .subscribe({ recyclerAdapter?.data = it }, RxErrorHandler.handleEmptyError()))
-        }
     }
 
     protected fun showBrokenChallengeDialog(task: Task) {
@@ -386,7 +379,7 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
         setEmptyLabels()
 
         if (activeFilter == Task.FILTER_COMPLETED) {
-            compositeSubscription.add(taskRepository.retrieveCompletedTodos(ownerID).subscribe({}, RxErrorHandler.handleEmptyError()))
+            compositeSubscription.add(taskRepository.retrieveCompletedTodos().subscribe({}, RxErrorHandler.handleEmptyError()))
         }
     }
 

@@ -90,7 +90,7 @@ abstract class BaseTasksRecyclerViewAdapter<VH : BindableViewHolder<Task>>(var t
 
     private fun loadContent(forced: Boolean) {
         if (this.content == null || forced) {
-            taskRepository.getTasks(this.taskType, this.userID ?: "")
+            taskRepository.getTasks(this.taskType)
                     .flatMap { Flowable.fromIterable(it) }
                     .map { task ->
                         task.parseMarkdown()

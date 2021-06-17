@@ -223,7 +223,6 @@ class TeamBoardFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchVi
                     3 -> RewardsRecyclerviewFragment.newInstance(context, Task.TYPE_REWARD, false)
                     else -> TaskRecyclerViewFragment.newInstance(context, Task.TYPE_TODO)
                 }
-                fragment.ownerID = teamID
                 fragment.canEditTasks = false
                 fragment.canScoreTaks = false
                 fragment.refreshAction = {

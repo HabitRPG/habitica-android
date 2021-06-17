@@ -224,7 +224,6 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
                     3 -> RewardsRecyclerviewFragment.newInstance(context, Task.TYPE_REWARD, true)
                     else -> TaskRecyclerViewFragment.newInstance(context, Task.TYPE_TODO)
                 }
-                fragment.ownerID = userID
                 fragment.refreshAction = {
                     compositeSubscription.add(userRepository.retrieveUser(
                         withTasks = true,
