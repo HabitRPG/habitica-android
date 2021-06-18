@@ -1,11 +1,16 @@
 package com.habitrpg.android.habitica.ui.helpers
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Rect
+import android.net.Uri
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.method.LinkMovementMethod
 import android.widget.TextView
+import androidx.core.content.ContextCompat.startActivity
+import com.habitrpg.android.habitica.BuildConfig
+import com.habitrpg.android.habitica.extensions.handleUrlClicks
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import io.noties.markwon.AbstractMarkwonPlugin
 import io.noties.markwon.Markwon
@@ -18,11 +23,10 @@ import io.noties.markwon.image.ImagesPlugin
 import io.noties.markwon.image.file.FileSchemeHandler
 import io.noties.markwon.image.network.OkHttpNetworkSchemeHandler
 import io.noties.markwon.movement.MovementMethodPlugin
-import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.functions.Consumer
 import io.reactivex.rxjava3.schedulers.Schedulers
-
 
 object MarkdownParser {
 
@@ -102,13 +106,31 @@ object MarkdownParser {
 
 
 fun TextView.setMarkdown(input: String?) {
-     MarkdownParser.markwon?.setParsedMarkdown(this, MarkdownParser.parseMarkdown(input))
+    MarkdownParser.markwon?.setParsedMarkdown(this, MarkdownParser.parseMarkdown(input))
+    this.handleUrlClicks {
+        handleUrlClicks(this.context, it)
+    }
 }
 
 fun TextView.setParsedMarkdown(input: Spanned?) {
     if (input != null) {
         MarkdownParser.markwon?.setParsedMarkdown(this, input)
+        this.handleUrlClicks {
+            handleUrlClicks(this.context, it)
+        }
     } else {
         text = null
+    }
+}
+
+private fun handleUrlClicks(context: Context, url: String) {
+    val webpage = if (url.startsWith("/")) {
+        Uri.parse("${BuildConfig.BASE_URL}${url}")
+    } else {
+        Uri.parse(url)
+    }
+    val intent = Intent(Intent.ACTION_VIEW, webpage)
+    if (intent.resolveActivity(context.packageManager) != null) {
+        context.startActivity(intent)
     }
 }
