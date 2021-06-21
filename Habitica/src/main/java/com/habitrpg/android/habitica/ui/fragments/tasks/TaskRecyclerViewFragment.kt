@@ -86,9 +86,9 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
         }
         recyclerSubscription = CompositeDisposable()
         val adapter: BaseRecyclerViewAdapter<*, *>? = when (this.taskType) {
-            Task.TYPE_HABIT -> HabitsRecyclerViewAdapter(null, true, R.layout.habit_item_card, taskFilterHelper)
-            Task.TYPE_DAILY -> DailiesRecyclerViewHolder(null, true, R.layout.daily_item_card, taskFilterHelper)
-            Task.TYPE_TODO -> TodosRecyclerViewAdapter(null, true, R.layout.todo_item_card, taskFilterHelper)
+            Task.TYPE_HABIT -> HabitsRecyclerViewAdapter(R.layout.habit_item_card, taskFilterHelper)
+            Task.TYPE_DAILY -> DailiesRecyclerViewHolder(R.layout.daily_item_card, taskFilterHelper)
+            Task.TYPE_TODO -> TodosRecyclerViewAdapter(R.layout.todo_item_card, taskFilterHelper)
             Task.TYPE_REWARD -> RewardsRecyclerViewAdapter(null, R.layout.reward_item_card)
             else -> null
         }
@@ -115,7 +115,6 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
 
         recyclerSubscription.add(taskRepository.getTasks(this.taskType).subscribe({
             this.recyclerAdapter?.updateUnfilteredData(it)
-            this.recyclerAdapter?.filter()
         }, RxErrorHandler.handleEmptyError()))
     }
 
@@ -223,14 +222,12 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
 
             private fun updateTaskInRepository(validTaskId: String?, viewHolder: RecyclerView.ViewHolder) {
                 if (validTaskId != null) {
-                    recyclerAdapter?.ignoreUpdates = true
                     compositeSubscription.add(taskRepository.updateTaskPosition(
                             taskType, validTaskId, viewHolder.absoluteAdapterPosition
                     )
                             .delay(1, TimeUnit.SECONDS)
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe({
-                                recyclerAdapter?.ignoreUpdates = false
                             }, RxErrorHandler.handleEmptyError()))
                 }
             }
@@ -248,6 +245,15 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
         binding?.refreshLayout?.setOnRefreshListener(this)
 
         setEmptyLabels()
+
+        binding?.recyclerView?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    binding?.refreshLayout?.isEnabled = (activity as? MainActivity)?.isAppBarExpanded ?: false
+                }
+            }
+        })
     }
 
     protected fun showBrokenChallengeDialog(task: Task) {

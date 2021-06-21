@@ -61,10 +61,6 @@ class RewardsRecyclerViewAdapter(private var customRewards: List<Task>?, private
             return customRewards?.size ?: 0
         }
 
-    override var ignoreUpdates: Boolean
-        get() = false
-        set(_) {}
-
     private fun getContentView(parent: ViewGroup): View {
         return LayoutInflater.from(parent.context).inflate(layoutResource, parent, false)
     }

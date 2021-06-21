@@ -32,10 +32,6 @@ abstract class BaseTasksRecyclerViewAdapter<VH : BindableViewHolder<Task>>(var t
     init {
         this.filteredContent = ArrayList()
         HabiticaBaseApplication.userComponent?.let { injectThis(it) }
-
-        if (loadFromDatabase()) {
-            this.loadContent(true)
-        }
     }
 
     protected abstract fun injectThis(component: UserComponent)
@@ -88,26 +84,9 @@ abstract class BaseTasksRecyclerViewAdapter<VH : BindableViewHolder<Task>>(var t
         this.notifyDataSetChanged()
     }
 
-    private fun loadContent(forced: Boolean) {
-        if (this.content == null || forced) {
-            taskRepository.getTasks(this.taskType)
-                    .flatMap { Flowable.fromIterable(it) }
-                    .map { task ->
-                        task.parseMarkdown()
-                        task
-                    }
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .toList()
-                    .subscribe({ this.setTasks(it) }, RxErrorHandler.handleEmptyError())
-        }
-    }
-
     fun setTasks(tasks: List<Task>) {
         this.content = ArrayList()
         this.content?.addAll(tasks)
         filter()
     }
-
-    open fun loadFromDatabase(): Boolean = true
 }

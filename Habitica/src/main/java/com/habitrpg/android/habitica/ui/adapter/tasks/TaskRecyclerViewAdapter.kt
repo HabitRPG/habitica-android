@@ -8,7 +8,6 @@ import io.reactivex.rxjava3.core.Flowable
 interface TaskRecyclerViewAdapter {
     var canScoreTasks: Boolean
     var data: List<Task>
-    var ignoreUpdates: Boolean
 
     val errorButtonEvents: Flowable<String>
 

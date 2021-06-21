@@ -16,15 +16,11 @@ import io.reactivex.rxjava3.subjects.PublishSubject
 import io.realm.OrderedRealmCollection
 
 abstract class RealmBaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(
-        private var unfilteredData: List<Task>?,
-        private val hasAutoUpdates: Boolean,
         private val layoutResource: Int,
         private val taskFilterHelper: TaskFilterHelper?
 ) : BaseRecyclerViewAdapter<Task, VH>(), TaskRecyclerViewAdapter {
     override var canScoreTasks = true
-
-    private var updateOnModification: Boolean = false
-    override var ignoreUpdates: Boolean = false
+    private var unfilteredData: List<Task>? = null
 
     override var taskDisplayMode: String = "standard"
     set(value) {
@@ -45,16 +41,12 @@ abstract class RealmBaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(
     protected var brokenTaskEventsSubject: PublishSubject<Task> = PublishSubject.create()
     override val brokenTaskEvents: Flowable<Task> = brokenTaskEventsSubject.toFlowable(BackpressureStrategy.DROP)
 
-    init {
-        this.updateOnModification = true
-        filter()
-    }
-
     override fun getItemId(index: Int): Long = index.toLong()
 
     override fun updateUnfilteredData(data: List<Task>?) {
         unfilteredData = data
         this.data = data ?: emptyList()
+        filter()
     }
 
     override fun onBindViewHolder(holder: VH, position: Int) {

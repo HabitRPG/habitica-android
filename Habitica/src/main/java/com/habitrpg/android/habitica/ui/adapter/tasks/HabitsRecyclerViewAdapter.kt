@@ -5,7 +5,7 @@ import com.habitrpg.android.habitica.helpers.TaskFilterHelper
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.HabitViewHolder
 
-class HabitsRecyclerViewAdapter(data: List<Task>?, autoUpdate: Boolean, layoutResource: Int, taskFilterHelper: TaskFilterHelper) : RealmBaseTasksRecyclerViewAdapter<HabitViewHolder>(data, autoUpdate, layoutResource, taskFilterHelper) {
+class HabitsRecyclerViewAdapter(layoutResource: Int, taskFilterHelper: TaskFilterHelper) : RealmBaseTasksRecyclerViewAdapter<HabitViewHolder>(layoutResource, taskFilterHelper) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HabitViewHolder =
             HabitViewHolder(getContentView(parent), { task, direction -> taskScoreEventsSubject.onNext(Pair(task, direction)) }, {

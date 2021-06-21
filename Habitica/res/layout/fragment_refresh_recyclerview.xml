@@ -1,52 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/refreshLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-    <FrameLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
-            android:id="@+id/emptyView"
-            style="@style/EmptyView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="60dp"
-            android:orientation="vertical"
-            android:visibility="gone"
-            tools:visibility="visible">
-
-            <ImageView
-                android:id="@+id/empty_icon_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp" />
-
-            <TextView
-                android:id="@+id/emptyViewTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="6dp"
-                android:gravity="center"
-                android:textColor="@color/text_ternary"
-                android:textSize="@dimen/card_medium_text"
-                tools:text="No Items" />
-
-            <TextView
-                android:id="@+id/emptyViewDescription"
-                style="@style/Body2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textColor="@color/text_ternary"
-                tools:text="No Items" />
-        </LinearLayout>
-
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
         <com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
@@ -55,6 +18,41 @@
             android:scrollbarSize="3dp"
             android:scrollbarThumbVertical="@color/scrollbarThumb"
             android:scrollbars="vertical" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-    </FrameLayout>
-</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    <LinearLayout
+        android:id="@+id/emptyView"
+        style="@style/EmptyView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:orientation="vertical"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <ImageView
+            android:id="@+id/empty_icon_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp" />
+
+        <TextView
+            android:id="@+id/emptyViewTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="6dp"
+            android:gravity="center"
+            android:textColor="@color/text_ternary"
+            android:textSize="@dimen/card_medium_text"
+            tools:text="No Items" />
+
+        <TextView
+            android:id="@+id/emptyViewDescription"
+            style="@style/Body2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/text_ternary"
+            tools:text="No Items" />
+    </LinearLayout>
+</LinearLayout>

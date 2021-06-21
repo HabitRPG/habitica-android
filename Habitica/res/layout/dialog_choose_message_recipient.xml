@@ -13,13 +13,15 @@
             android:layout_height="wrap_content"
             android:text="@string/enter_recipient_username"
         android:textSize="12sp"
-        android:textColor="@color/text_ternary"/>
+        android:textColor="@color/text_ternary"
+        android:labelFor="@id/uuidEditText"/>
     <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/uuidEditText" android:layout_gravity="center_horizontal"
             android:focusable="true"
-            android:maxLines="1"/>
+            android:maxLines="1"
+            android:inputType="textNoSuggestions" />
 
     <ProgressBar
         android:id="@+id/progress_circular"

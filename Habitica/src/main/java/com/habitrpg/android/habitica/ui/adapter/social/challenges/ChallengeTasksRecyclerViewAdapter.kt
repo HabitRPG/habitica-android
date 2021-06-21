@@ -32,10 +32,6 @@ class ChallengeTasksRecyclerViewAdapter(taskFilterHelper: TaskFilterHelper?, lay
         component.inject(this)
     }
 
-    override fun loadFromDatabase(): Boolean {
-        return false
-    }
-
     override fun getItemViewType(position: Int): Int {
         val task = this.filteredContent?.get(position)
 

@@ -175,7 +175,6 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
             stats?.lvl = res.lvl
             bgUser.party?.quest?.progress?.up = (bgUser.party?.quest?.progress?.up
                     ?: 0F) + (res._tmp?.quest?.progressDelta?.toFloat() ?: 0F)
-            bgUser.stats = stats
         }
     }
 
