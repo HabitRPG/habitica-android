@@ -17,6 +17,11 @@ class AnalyticsManagerImpl(context: Context): AnalyticsManager {
     }
 
     override fun logException(t: Throwable) {
+        if (t is org.solovyev.android.checkout.BillingException) {
+            if (t.response == org.solovyev.android.checkout.ResponseCodes.USER_CANCELED) {
+                return
+            }
+        }
         FirebaseCrashlytics.getInstance().recordException(t)
     }
 

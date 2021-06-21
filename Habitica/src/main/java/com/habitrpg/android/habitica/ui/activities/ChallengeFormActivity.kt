@@ -13,6 +13,7 @@ import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.AppCompatCheckedTextView
 import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ChallengeRepository
@@ -149,7 +150,7 @@ class ChallengeFormActivity : BaseActivity() {
                         savingInProgress = false
                         finish()
                         if (!editMode) {
-                            GlobalScope.launch(context = Dispatchers.Main) {
+                            lifecycleScope.launch(context = Dispatchers.Main) {
                                 delay(500L)
                                 MainNavigationController.navigate(ChallengesOverviewFragmentDirections.openChallengeDetail(challengeId ?: ""))
                             }

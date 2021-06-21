@@ -16,6 +16,7 @@ import androidx.core.content.edit
 import androidx.core.os.bundleOf
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.ContentRepository
@@ -209,7 +210,7 @@ class NavigationDrawerFragment : DialogFragment() {
                 }).subscribe( { pair ->
                     updateSeasonalMenuEntries(pair.first, pair.second)
                     seasonalShopJob?.cancel()
-                    seasonalShopJob = GlobalScope.launch(Dispatchers.Main) {
+                    seasonalShopJob = lifecycleScope.launch(Dispatchers.Main) {
                         val gearEvent = pair.first.events.firstOrNull { it.gear }
                         while (gearEvent?.end?.after(Date()) == true || pair.second.isNotEmpty()) {
                             updateSeasonalMenuEntries(pair.first, pair.second)

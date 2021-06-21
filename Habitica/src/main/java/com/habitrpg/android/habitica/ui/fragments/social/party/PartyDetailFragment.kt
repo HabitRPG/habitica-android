@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
+import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
@@ -135,7 +136,7 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
             binding?.newQuestButton?.visibility = View.GONE
             binding?.questDetailButton?.visibility = View.VISIBLE
             binding?.questImageWrapper?.visibility = View.VISIBLE
-            GlobalScope.launch(Dispatchers.Main) {
+            lifecycleScope.launch(Dispatchers.Main) {
                 delay(500)
                 inventoryRepository.getQuestContent(party.quest?.key ?: "")
                         .subscribe({ this@PartyDetailFragment.updateQuestContent(it) }, RxErrorHandler.handleEmptyError())
@@ -355,8 +356,8 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
     internal fun leaveParty() {
         val context = context
         if (context != null) {
-            var groupChallenges = getGroupChallenges()
-            GlobalScope.launch(Dispatchers.Main) {
+            val groupChallenges = getGroupChallenges()
+            lifecycleScope.launch(Dispatchers.Main) {
                 delay(500)
                 if (groupChallenges.isNotEmpty()) {
                     val alert = HabiticaAlertDialog(context)

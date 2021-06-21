@@ -8,7 +8,6 @@ import android.text.SpannableString
 import android.text.Spanned
 import android.text.method.LinkMovementMethod
 import android.widget.TextView
-import androidx.core.content.ContextCompat.startActivity
 import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.extensions.handleUrlClicks
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
