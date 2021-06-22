@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.data.local.implementation
 
 import com.habitrpg.android.habitica.data.local.InventoryLocalRepository
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.models.BaseMainObject
 import com.habitrpg.android.habitica.models.inventory.*
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.models.user.*
@@ -11,6 +12,7 @@ import io.realm.Realm
 import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.Sort
+import io.realm.kotlin.isManaged
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.HashMap
@@ -251,8 +253,8 @@ class RealmInventoryLocalRepository(realm: Realm) : RealmContentLocalRepository(
         if (user == null) {
             return
         }
-        val item = realm.where(OwnedItem::class.java).equalTo("combinedKey", "${user.id}specialinventory_present").findFirst()
         val liveUser = getLiveObject(user)
+        val item = liveUser?.items?.special?.ownedItems?.first { it.key == "specialinventory_present" }
         executeTransaction {
             if (item != null && item.isValid) {
                 item.numberOwned = item.numberOwned - 1
@@ -294,6 +296,12 @@ class RealmInventoryLocalRepository(realm: Realm) : RealmContentLocalRepository(
             hatchingPotion.numberOwned -= 1
             user.items?.pets?.add(newPet)
         }
+    }
+
+    override fun getLiveObject(obj: OwnedItem): OwnedItem? {
+        if (isClosed) return null
+        if (!obj.isManaged) return obj
+        return realm.where(OwnedItem::class.java).equalTo("key", obj.key).equalTo("itemType", obj.itemType).findFirst()
     }
 
     override fun save(items: Items, userID: String) {

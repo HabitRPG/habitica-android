@@ -68,7 +68,6 @@ class FullProfileActivity : BaseActivity() {
     private var avatarWithBars: AvatarWithBarsViewModel? = null
     private lateinit var binding: ActivityFullProfileBinding
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupToolbar(binding.toolbar)
@@ -84,9 +83,9 @@ class FullProfileActivity : BaseActivity() {
         avatarWithBars = AvatarWithBarsViewModel(this, binding.avatarWithBars)
 
         binding.avatarWithBars.root.setBackgroundColor(ContextCompat.getColor(this, R.color.transparent))
-        binding.avatarWithBars.hpBar.barBackgroundColor = getThemeColor(R.color.content_background)
-        binding.avatarWithBars.xpBar.barBackgroundColor = getThemeColor(R.color.content_background)
-        binding.avatarWithBars.mpBar.barBackgroundColor = getThemeColor(R.color.content_background)
+        binding.avatarWithBars.hpBar.barBackgroundColor = getThemeColor(R.color.window_background)
+        binding.avatarWithBars.xpBar.barBackgroundColor = getThemeColor(R.color.window_background)
+        binding.avatarWithBars.mpBar.barBackgroundColor = getThemeColor(R.color.window_background)
 
         attributeRows.clear()
         binding.attributesCardView.setOnClickListener { toggleAttributeDetails() }

@@ -62,7 +62,7 @@ class AchievementProfileAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
         }
 
         fun bind(item: Achievement) {
-            binding.achievementDrawee.loadImage((if (!item.earned) "achievement-unearned" else item.icon) + "2x.png")
+            binding.achievementDrawee.loadImage((if (!item.earned) "achievement-unearned" else item.icon) + "2x")
 
             this.achievement = item
             binding.achievementText.text = item.title

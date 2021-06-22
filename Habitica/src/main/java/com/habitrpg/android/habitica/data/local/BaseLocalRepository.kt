@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.data.local
 
 import com.habitrpg.android.habitica.models.BaseMainObject
 import com.habitrpg.android.habitica.models.BaseObject
+import com.habitrpg.android.habitica.models.user.OwnedObject
 import io.realm.Realm
 import io.realm.RealmModel
 

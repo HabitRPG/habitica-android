@@ -55,4 +55,6 @@ interface InventoryLocalRepository : ContentLocalRepository {
     fun getAvailableLimitedItems(): Flowable<List<Item>>
 
     fun save(items: Items, userID: String)
+
+    fun getLiveObject(obj: OwnedItem): OwnedItem?
 }

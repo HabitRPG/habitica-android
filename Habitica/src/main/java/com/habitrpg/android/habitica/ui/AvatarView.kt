@@ -396,16 +396,15 @@ class AvatarView : FrameLayout {
         val oldUser = this.avatar
         this.avatar = avatar
 
+        var equals = false
         if (oldUser != null) {
             val newLayerMap = getLayerMap(avatar, false)
 
-            val equals = currentLayers == newLayerMap
-
-            if (!equals) {
-                invalidate()
-            }
+            equals = currentLayers == newLayerMap
         }
-
+        if (!equals) {
+            invalidate()
+        }
     }
 
     private fun initAvatarRectMatrix() {

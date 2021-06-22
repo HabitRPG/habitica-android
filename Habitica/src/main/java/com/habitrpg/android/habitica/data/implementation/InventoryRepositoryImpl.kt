@@ -136,11 +136,9 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
     }
 
     private fun sellItem(item: Item, ownedItem: OwnedItem): Flowable<User> {
-        if (appConfigManager.enableLocalChanges()) {
-            localRepository.executeTransaction {
-                val liveItem = localRepository.getLiveObject(ownedItem)
-                liveItem?.numberOwned = (liveItem?.numberOwned ?: 0) - 1
-            }
+        localRepository.executeTransaction {
+            val liveItem = localRepository.getLiveObject(ownedItem)
+            liveItem?.numberOwned = (liveItem?.numberOwned ?: 0) - 1
         }
         return apiClient.sellItem(item.type, item.key)
                 .map { user ->
@@ -153,7 +151,7 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
     }
 
     override fun equip(user: User?, type: String, key: String): Flowable<Items> {
-        if (user != null && appConfigManager.enableLocalChanges()) {
+        if (user != null) {
             localRepository.modify(user) { liveUser ->
                 if (type == "mount") {
                     liveUser.items?.currentMount = key
