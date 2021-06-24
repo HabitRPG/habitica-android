@@ -37,6 +37,7 @@
             android:gravity="center"
             android:textColor="@color/text_secondary"
             android:background="@color/offset_background"
+            android:breakStrategy="high_quality"
             android:paddingStart="@dimen/spacing_medium"
             android:paddingEnd="@dimen/spacing_medium"
             android:paddingTop="@dimen/spacing_small"
