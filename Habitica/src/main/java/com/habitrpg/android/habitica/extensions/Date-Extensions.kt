@@ -93,15 +93,15 @@ fun Date.getShortRemainingString(): String {
 
 @OptIn(ExperimentalTime::class)
 fun Long.getShortRemainingString(): String {
-    var diff = (this - Date().time).milliseconds
+    var diff = Duration.milliseconds((this - Date().time))
 
-    val diffDays = diff.inDays
-    diff -= diffDays.days
-    val diffHours = diff.inHours
-    diff -= diffHours.hours
-    val diffMinutes = diff.inMinutes
-    diff -= diffMinutes.minutes
-    val diffSeconds = diff.inSeconds
+    val diffDays = diff.toInt(DurationUnit.DAYS)
+    diff -= Duration.days(diffDays)
+    val diffHours = diff.toInt(DurationUnit.HOURS)
+    diff -= Duration.hours(diffHours)
+    val diffMinutes = diff.toInt(DurationUnit.MINUTES)
+    diff -= Duration.minutes(diffMinutes)
+    val diffSeconds = diff.toInt(DurationUnit.SECONDS)
 
     var str = "${diffMinutes}m"
     if (diffHours > 0) {
@@ -110,7 +110,7 @@ fun Long.getShortRemainingString(): String {
     if (diffDays > 0) {
         str = "${diffDays}d $str"
     }
-    if (diffDays == 0.0 && diffHours == 0.0) {
+    if (diffDays == 0 && diffHours == 0) {
         str = "$str ${diffSeconds}s"
     }
     return str
