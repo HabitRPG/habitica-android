@@ -46,7 +46,7 @@ class TaskSerializer : JsonSerializer<Task>, JsonDeserializer<Task> {
         task.completed = obj.get("completed")?.asBoolean ?: false
         task.up = obj.get("up")?.asBoolean ?: false
         task.down = obj.get("down")?.asBoolean ?: false
-        task.streak = obj.get("streak")?.asInt
+        task.streak = obj.safeGet("streak")?.asInt
         if (obj.getAsJsonObject("challenge").has("id")) {
             task.challengeID = obj.getAsJsonObject("challenge").get("id").asString
 
@@ -195,4 +195,11 @@ class TaskSerializer : JsonSerializer<Task>, JsonDeserializer<Task> {
         }
         return jsonArray
     }
+}
+
+private fun JsonObject.safeGet(key: String): JsonElement? {
+    if (has("streak") && !get(key).isJsonNull) {
+        return get(key)
+    }
+    return null
 }
