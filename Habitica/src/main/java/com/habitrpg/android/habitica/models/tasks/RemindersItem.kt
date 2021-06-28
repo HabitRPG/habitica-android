@@ -9,8 +9,8 @@ import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 import io.realm.annotations.RealmClass
 
-@RealmClass(embedded = true)
 open class RemindersItem : RealmObject, Parcelable {
+    @PrimaryKey
     var id: String? = null
     var startDate: Date? = null
     var time: Date? = null
@@ -42,4 +42,15 @@ open class RemindersItem : RealmObject, Parcelable {
     }
 
     constructor()
+
+
+    override fun equals(other: Any?): Boolean {
+        return if (other is RemindersItem) {
+            this.id == other.id
+        } else super.equals(other)
+    }
+
+    override fun hashCode(): Int {
+        return id?.hashCode() ?: 0
+    }
 }
