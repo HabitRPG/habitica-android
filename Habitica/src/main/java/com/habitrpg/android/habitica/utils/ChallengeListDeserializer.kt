@@ -16,9 +16,6 @@ class ChallengeListDeserializer : JsonDeserializer<List<Challenge>> {
     override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): List<Challenge> {
         val challenges = RealmList<Challenge>()
 
-        val realm = Realm.getDefaultInstance()
-        realm.close()
-
         for (element in json.asJsonArray) {
             var challenge: Challenge?
             if (element.isJsonObject) {

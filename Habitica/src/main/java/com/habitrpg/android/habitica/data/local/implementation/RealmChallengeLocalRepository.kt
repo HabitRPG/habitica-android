@@ -4,6 +4,7 @@ import com.habitrpg.android.habitica.data.local.ChallengeLocalRepository
 import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.social.ChallengeMembership
 import com.habitrpg.android.habitica.models.tasks.Task
+import com.habitrpg.android.habitica.models.user.User
 import hu.akarnokd.rxjava3.bridge.RxJavaBridge
 import io.reactivex.rxjava3.core.Flowable
 import io.realm.Realm
@@ -82,14 +83,13 @@ class RealmChallengeLocalRepository(realm: Realm) : RealmBaseLocalRepository(rea
     }
 
     override fun setParticipating(userID: String, challengeID: String, isParticipating: Boolean) {
-        if (isParticipating) {
-            save(ChallengeMembership(userID, challengeID))
-        } else {
-            val membership = realm.where(ChallengeMembership::class.java).equalTo("userID", userID).equalTo("challengeID", challengeID).findFirst()
-            if (membership != null) {
-                executeTransaction {
-                    membership.deleteFromRealm()
-                }
+        val user = realm.where(User::class.java).equalTo("id", userID).findFirst() ?: return
+        executeTransaction {
+            if (isParticipating) {
+                user.challenges?.add(ChallengeMembership(userID, challengeID))
+            } else {
+                val membership = user.challenges?.firstOrNull { it.challengeID == challengeID } ?: return@executeTransaction
+                user.challenges?.remove(membership)
             }
         }
     }
