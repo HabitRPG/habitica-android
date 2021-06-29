@@ -761,7 +761,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         if (imageKey?.contains("armor") == true) {
             imageKey = "slim_$imageKey"
         }
-        DataBindingUtils.loadImage(imageView, imageKey)
+        DataBindingUtils.loadImage(imageView, "shop_$imageKey")
 
         val youEarnedMessage = this.getString(R.string.checkInRewardEarned, notificationData?.rewardText)
         val youEarnedTexView = view.findViewById(R.id.you_earned_message) as? TextView

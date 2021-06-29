@@ -17,6 +17,7 @@ import com.habitrpg.android.habitica.data.ChallengeRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentPartyDetailBinding
+import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.helpers.HapticFeedbackManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
@@ -217,6 +218,14 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
         if (questContent.hasGifImage()) {
             DataBindingUtils.loadImage(binding?.questImageView, "quest_" + questContent.key, "gif")
         } else {
+            context?.let { context ->
+                DataBindingUtils.loadImage(context, "quest_" + questContent.key) {
+                    binding?.questImageView?.setImageDrawable(it)
+                    val params = binding?.questImageView?.layoutParams ?: return@loadImage
+                    params.height = it.intrinsicHeight.dpToPx(context)
+                    binding?.questImageView?.layoutParams = params
+                }
+            }
             DataBindingUtils.loadImage(binding?.questImageView, "quest_" + questContent.key)
         }
         binding?.questImageWrapper?.alpha = 1.0f

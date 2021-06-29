@@ -228,6 +228,7 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
     private fun deleteAccount(password: String) {
         val dialog = HabiticaProgressDialog.show(context, R.string.deleting_account)
         compositeSubscription.add(userRepository.deleteAccount(password).subscribe({ _ ->
+            dialog?.dismiss()
             context?.let { HabiticaBaseApplication.logout(it) }
             activity?.finish()
         }) { throwable ->

@@ -6,8 +6,8 @@
     android:layout_height="match_parent"
     android:gravity="center_horizontal">
     <ImageView
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="@dimen/shopitem_image_size"
+        android:layout_height="@dimen/shopitem_image_size"
         android:id="@+id/imageView"
         android:layout_marginTop="16dp" />
 

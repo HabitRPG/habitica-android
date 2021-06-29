@@ -8,6 +8,7 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
+import coil.clear
 import coil.imageLoader
 import coil.load
 import coil.request.ImageRequest
@@ -146,6 +147,10 @@ class AvatarView : FrameLayout {
                     onLayerComplete()
                 })
             }
+        }
+        while (i < (imageViewHolder.size-1)) {
+            i++
+            imageViewHolder[i].clear()
         }
     }
 

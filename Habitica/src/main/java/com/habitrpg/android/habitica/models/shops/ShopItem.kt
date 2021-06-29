@@ -27,7 +27,7 @@ open class ShopItem : RealmObject(), BaseObject {
                 field
             }
         } else {
-            "shop_" + key
+            "shop_$key"
         }
     }
 
