@@ -249,8 +249,11 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>(), GemPur
     private fun checkIfNeedsCancellation() {
         if (user?.purchased?.plan?.paymentMethod == "Google" &&
                 user?.purchased?.plan?.isActive == true &&
+                user?.purchased?.plan?.dateTerminated == null &&
                 (purchasedSubscription?.autoRenewing == false ||purchasedSubscription == null)) {
-            compositeSubscription.add(apiClient.cancelSubscription().subscribe({
+            compositeSubscription.add(apiClient.cancelSubscription()
+                .flatMap { userRepository.retrieveUser(false, true) }
+                .subscribe({
                 refresh()
             }, RxErrorHandler.handleEmptyError()))
         }
