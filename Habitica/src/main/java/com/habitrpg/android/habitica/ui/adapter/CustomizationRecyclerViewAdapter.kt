@@ -101,7 +101,7 @@ class CustomizationRecyclerViewAdapter() : androidx.recyclerview.widget.Recycler
         this.customizationList = ArrayList()
         var lastSet = CustomizationSet()
         val today = Date()
-        for (customization in newCustomizationList.reversed()) {
+        for (customization in newCustomizationList) {
             if (customization.availableFrom != null || customization.availableUntil != null) {
                 if ((customization.availableFrom?.compareTo(today) ?: 0 > 0 || customization.availableUntil?.compareTo(today) ?: 0 < 0) && !customization.isUsable(ownedCustomizations.contains(customization.id))) {
                     continue
