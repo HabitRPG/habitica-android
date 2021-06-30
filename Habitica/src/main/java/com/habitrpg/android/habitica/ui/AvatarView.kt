@@ -148,9 +148,10 @@ class AvatarView : FrameLayout {
                 })
             }
         }
-        while (i < (imageViewHolder.size-1)) {
-            i++
+        while (i < (imageViewHolder.size)) {
             imageViewHolder[i].clear()
+            imageViewHolder[i].setImageResource(0)
+            i++
         }
     }
 
