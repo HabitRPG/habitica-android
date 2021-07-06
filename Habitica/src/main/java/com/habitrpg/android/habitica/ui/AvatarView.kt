@@ -13,6 +13,7 @@ import coil.imageLoader
 import coil.load
 import coil.request.ImageRequest
 import coil.target.ViewTarget
+import coil.transition.Transition
 import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.helpers.AppConfigManager
@@ -143,9 +144,9 @@ class AvatarView : FrameLayout {
                         return@target
                     }
                     val bounds = getLayerBounds(layerKey, layerName, it)
-                    imageView.load(it)
+                    imageView.setImageDrawable(it)
                     imageView.imageMatrix = avatarMatrix
-                    val layoutParams = imageView.layoutParams as? FrameLayout.LayoutParams
+                    val layoutParams = imageView.layoutParams as? LayoutParams
                     layoutParams?.topMargin = bounds.top
                     layoutParams?.marginStart = bounds.left
                     imageView.layoutParams = layoutParams
