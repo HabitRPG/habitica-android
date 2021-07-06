@@ -41,23 +41,4 @@
         android:text="@string/open_market"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"/>
-
-    <LinearLayout
-        android:id="@+id/emptyView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/empty_text_view"
-            style="@style/EmptyView"
-            android:gravity="center" />
-        <Button
-            android:id="@+id/openEmptyMarketButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/open_market"/>
-    </LinearLayout>
 </LinearLayout>

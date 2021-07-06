@@ -12,6 +12,7 @@ import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.FragmentRecyclerviewBinding
+import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBinding
 import com.habitrpg.android.habitica.events.GearPurchasedEvent
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
@@ -22,12 +23,13 @@ import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.adapter.inventory.ShopRecyclerAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
+import com.habitrpg.android.habitica.ui.helpers.RecyclerViewState
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.views.CurrencyViews
 import org.greenrobot.eventbus.Subscribe
 import javax.inject.Inject
 
-open class ShopFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
+open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>() {
 
     internal val currencyView: CurrencyViews by lazy {
         val view = CurrencyViews(context)
@@ -48,10 +50,10 @@ open class ShopFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
 
     private var gearCategories: MutableList<ShopCategory>? = null
 
-    override var binding: FragmentRecyclerviewBinding? = null
+    override var binding: FragmentRefreshRecyclerviewBinding? = null
 
-    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentRecyclerviewBinding {
-        return FragmentRecyclerviewBinding.inflate(inflater, container, false)
+    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentRefreshRecyclerviewBinding {
+        return FragmentRefreshRecyclerviewBinding.inflate(inflater, container, false)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -70,7 +72,12 @@ open class ShopFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
         super.onViewCreated(view, savedInstanceState)
         toolbarAccessoryContainer?.addView(currencyView)
         binding?.recyclerView?.setBackgroundResource(R.color.content_background)
-
+        binding?.recyclerView?.onRefresh = {
+            loadShopInventory()
+        }
+        binding?.refreshLayout?.setOnRefreshListener {
+            loadShopInventory()
+        }
         adapter = binding?.recyclerView?.adapter as? ShopRecyclerAdapter
         if (adapter == null) {
             adapter = ShopRecyclerAdapter()
@@ -178,7 +185,12 @@ open class ShopFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
                 .subscribe({
                     this.shop = it
                     this.adapter?.setShop(it)
-                }, RxErrorHandler.handleEmptyError()))
+                }, {
+                    binding?.recyclerView?.state = RecyclerViewState.FAILED
+                    RxErrorHandler.reportError(it)
+                }, {
+                    binding?.refreshLayout?.isRefreshing = false
+                }))
 
         compositeSubscription.add(this.inventoryRepository.getOwnedItems()
                 .subscribe({ adapter?.setOwnedItems(it) }, RxErrorHandler.handleEmptyError()))

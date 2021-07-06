@@ -20,6 +20,7 @@ import com.habitrpg.android.habitica.models.inventory.StableSection
 import com.habitrpg.android.habitica.models.user.*
 import com.habitrpg.android.habitica.ui.adapter.inventory.StableRecyclerAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
+import com.habitrpg.android.habitica.ui.helpers.EmptyItem
 import com.habitrpg.android.habitica.ui.helpers.MarginDecoration
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import io.reactivex.rxjava3.core.Flowable
@@ -70,8 +71,8 @@ class StableRecyclerFragment : BaseFragment<FragmentRefreshRecyclerviewBinding>(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding?.recyclerView?.setEmptyView(binding?.emptyView)
-        binding?.emptyViewTitle?.text = getString(R.string.empty_items, itemTypeText)
+        binding?.recyclerView?.emptyItem = EmptyItem(
+            getString(R.string.empty_items, itemTypeText))
         binding?.refreshLayout?.setOnRefreshListener(this)
 
         layoutManager = androidx.recyclerview.widget.GridLayoutManager(activity, 2)

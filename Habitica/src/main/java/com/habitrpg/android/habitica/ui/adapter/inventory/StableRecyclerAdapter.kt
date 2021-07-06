@@ -135,6 +135,7 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     override fun getItemViewType(position: Int): Int {
+        if (itemList.size <= position) { return 0 }
         val item = itemList[position]
         return if (item == "header") {
             0

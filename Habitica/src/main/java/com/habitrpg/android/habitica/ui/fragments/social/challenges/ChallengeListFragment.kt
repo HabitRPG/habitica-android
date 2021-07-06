@@ -10,7 +10,7 @@ import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ChallengeRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
-import com.habitrpg.android.habitica.databinding.FragmentChallengeslistBinding
+import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBinding
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.social.Challenge
@@ -26,7 +26,7 @@ import javax.inject.Inject
 import javax.inject.Named
 
 
-class ChallengeListFragment : BaseFragment<FragmentChallengeslistBinding>(), androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener {
+class ChallengeListFragment : BaseFragment<FragmentRefreshRecyclerviewBinding>(), androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener {
 
     @Inject
     lateinit var challengeRepository: ChallengeRepository
@@ -37,10 +37,10 @@ class ChallengeListFragment : BaseFragment<FragmentChallengeslistBinding>(), and
     @field:[Inject Named(AppModule.NAMED_USER_ID)]
     lateinit var userId: String
 
-    override var binding: FragmentChallengeslistBinding? = null
+    override var binding: FragmentRefreshRecyclerviewBinding? = null
 
-    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentChallengeslistBinding {
-        return FragmentChallengeslistBinding.inflate(inflater, container, false)
+    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentRefreshRecyclerviewBinding {
+        return FragmentRefreshRecyclerviewBinding.inflate(inflater, container, false)
     }
 
     private var challengeAdapter: ChallengesListViewAdapter? = null
@@ -84,7 +84,6 @@ class ChallengeListFragment : BaseFragment<FragmentChallengeslistBinding>(), and
             filterGroups?.addAll(it.second)
         }, RxErrorHandler.handleEmptyError()))
 
-        binding?.recyclerView?.setEmptyView(binding?.emptyView)
         binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
 
         challengeAdapter?.updateUnfilteredData(challenges)

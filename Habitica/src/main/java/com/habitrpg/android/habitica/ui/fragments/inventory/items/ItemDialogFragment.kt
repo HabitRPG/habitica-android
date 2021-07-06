@@ -22,7 +22,7 @@ import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.adapter.inventory.ItemRecyclerAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseDialogFragment
-import com.habitrpg.android.habitica.ui.fragments.BaseFragment
+import com.habitrpg.android.habitica.ui.helpers.EmptyItem
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.helpers.loadImage
 import com.habitrpg.android.habitica.ui.views.dialogs.OpenedMysteryitemDialog
@@ -78,9 +78,13 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsBinding>(), SwipeRefr
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding?.recyclerView?.setEmptyView(binding?.emptyView)
         binding?.refreshLayout?.setOnRefreshListener(this)
-        binding?.emptyTextView?.text = getString(R.string.empty_items, itemTypeText)
+        binding?.recyclerView?.emptyItem = EmptyItem(
+            getString(R.string.empty_items, itemTypeText),
+            getString(R.string.open_market)
+        ) {
+            openMarket()
+        }
 
         val context = activity
 
@@ -176,7 +180,7 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsBinding>(), SwipeRefr
             openMarket()
         }
 
-        binding?.openEmptyMarketButton?.setOnClickListener { openMarket() }
+        //binding?.openEmptyMarketButton?.setOnClickListener { openMarket() }
 
         this.loadItems()
     }

@@ -29,6 +29,7 @@ import com.habitrpg.android.habitica.ui.activities.TaskFormActivity
 import com.habitrpg.android.habitica.ui.adapter.BaseRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.adapter.tasks.*
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
+import com.habitrpg.android.habitica.ui.helpers.EmptyItem
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.BaseTaskViewHolder
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
@@ -288,51 +289,61 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
     }
 
     private fun setEmptyLabels() {
-        binding?.recyclerView?.setEmptyView(binding?.emptyView)
-        context?.let { binding?.emptyIconView?.setColorFilter(ContextCompat.getColor(it, R.color.text_dimmed), android.graphics.PorterDuff.Mode.MULTIPLY) }
-        if (taskFilterHelper.howMany(taskType) > 0) {
+        binding?.recyclerView?.emptyItem = if (taskFilterHelper.howMany(taskType) > 0) {
             when (this.taskType) {
                 Task.TYPE_HABIT -> {
-                    binding?.emptyIconView?.setImageResource(R.drawable.icon_habits)
-                    binding?.emptyViewTitle?.setText(R.string.empty_title_habits_filtered)
-                    binding?.emptyViewDescription?.setText(R.string.empty_description_habits_filtered)
+                    EmptyItem(
+                        getString(R.string.empty_title_habits_filtered),
+                        getString(R.string.empty_description_habits_filtered),
+                        R.drawable.icon_habits)
                 }
                 Task.TYPE_DAILY -> {
-                    binding?.emptyIconView?.setImageResource(R.drawable.icon_dailies)
-                    binding?.emptyViewTitle?.setText(R.string.empty_title_dailies_filtered)
-                    binding?.emptyViewDescription?.setText(R.string.empty_description_dailies_filtered)
+                    EmptyItem(
+                        getString(R.string.empty_title_dailies_filtered),
+                        getString(R.string.empty_description_dailies_filtered),
+                        R.drawable.icon_dailies)
                 }
                 Task.TYPE_TODO -> {
-                    binding?.emptyIconView?.setImageResource(R.drawable.icon_todos)
-                    binding?.emptyViewTitle?.setText(R.string.empty_title_todos_filtered)
-                    binding?.emptyViewDescription?.setText(R.string.empty_description_todos_filtered)
+                    EmptyItem(
+                        getString(R.string.empty_title_todos_filtered),
+                        getString(R.string.empty_description_todos_filtered),
+                        R.drawable.icon_todos)
                 }
                 Task.TYPE_REWARD -> {
-                    binding?.emptyIconView?.setImageResource(R.drawable.icon_rewards)
-                    binding?.emptyViewTitle?.setText(R.string.empty_title_rewards)
+                    EmptyItem(
+                        getString(R.string.empty_title_rewards_filtered),
+                        null,
+                        R.drawable.icon_rewards)
                 }
+                else -> EmptyItem("")
             }
         } else {
             when (this.taskType) {
                 Task.TYPE_HABIT -> {
-                    binding?.emptyIconView?.setImageResource(R.drawable.icon_habits)
-                    binding?.emptyViewTitle?.setText(R.string.empty_title_habits)
-                    binding?.emptyViewDescription?.setText(R.string.empty_description_habits)
+                    EmptyItem(
+                        getString(R.string.empty_title_habits),
+                        getString(R.string.empty_description_habits),
+                        R.drawable.icon_habits)
                 }
                 Task.TYPE_DAILY -> {
-                    binding?.emptyIconView?.setImageResource(R.drawable.icon_dailies)
-                    binding?.emptyViewTitle?.setText(R.string.empty_title_dailies)
-                    binding?.emptyViewDescription?.setText(R.string.empty_description_dailies)
+                    EmptyItem(
+                        getString(R.string.empty_title_dailies),
+                        getString(R.string.empty_description_dailies),
+                        R.drawable.icon_dailies)
                 }
                 Task.TYPE_TODO -> {
-                    binding?.emptyIconView?.setImageResource(R.drawable.icon_todos)
-                    binding?.emptyViewTitle?.setText(R.string.empty_title_todos)
-                    binding?.emptyViewDescription?.setText(R.string.empty_description_todos)
+                    EmptyItem(
+                        getString(R.string.empty_title_todos),
+                        getString(R.string.empty_description_todos),
+                        R.drawable.icon_todos)
                 }
                 Task.TYPE_REWARD -> {
-                    binding?.emptyIconView?.setImageResource(R.drawable.icon_rewards)
-                    binding?.emptyViewTitle?.setText(R.string.empty_title_rewards)
+                    EmptyItem(
+                        getString(R.string.empty_title_rewards),
+                        null,
+                        R.drawable.icon_rewards)
                 }
+                else -> EmptyItem("")
             }
         }
     }

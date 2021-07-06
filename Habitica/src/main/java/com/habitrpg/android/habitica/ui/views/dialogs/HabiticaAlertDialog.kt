@@ -9,10 +9,12 @@ import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.view.children
+import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.extensions.layoutInflater
+import com.habitrpg.android.habitica.ui.activities.BaseActivity
 import com.habitrpg.android.habitica.ui.views.login.LockableScrollView
 import com.plattysoft.leonids.ParticleSystem
 import kotlinx.coroutines.Dispatchers
@@ -289,10 +291,11 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
                 dialogQueue.removeAt(0)
             }
             if (dialogQueue.size > 0) {
-                if ((dialogQueue[0].context as? Activity)?.isFinishing != true) {
-                    GlobalScope.launch(context = Dispatchers.Main) {
+                if ((dialogQueue[0].context as? BaseActivity)?.isFinishing != true) {
+                    (dialogQueue[0].context as? BaseActivity)?.lifecycleScope?.launch(context = Dispatchers.Main) {
                         delay(500L)
-                        if (dialogQueue.size > 0 && (dialogQueue[0].context as? Activity)?.isFinishing == false) {
+                        if (dialogQueue.size > 0 && ((dialogQueue[0].context as? Activity)?.isFinishing == false ||
+                                ((dialogQueue[0].context as? ContextThemeWrapper)?.baseContext as? Activity)?.isFinishing == false)) {
                             dialogQueue[0].show()
                         }
                     }

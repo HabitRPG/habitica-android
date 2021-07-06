@@ -30,13 +30,17 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<an
     var shopSpriteSuffix: String = ""
     set(value) {
         field = value
-        notifyItemChanged(0)
+        if (items.size > 0) {
+            notifyItemChanged(0)
+        }
     }
     var context: Context? = null
     var user: User? = null
     set(value) {
         field = value
-        this.notifyDataSetChanged()
+        if (items.size > 0) {
+            this.notifyDataSetChanged()
+        }
     }
     private var pinnedItemKeys: List<String> = ArrayList()
 
@@ -49,7 +53,7 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<an
     internal var selectedGearCategory: String = ""
     set(value) {
         field = value
-        if (field != "") {
+        if (field != "" && items.size > 0) {
             notifyDataSetChanged()
         }
     }
@@ -200,12 +204,16 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<an
 
     fun setOwnedItems(ownedItems: Map<String, OwnedItem>) {
         this.ownedItems = ownedItems
-        this.notifyDataSetChanged()
+        if (items.size > 0) {
+            this.notifyDataSetChanged()
+        }
     }
 
     fun setPinnedItemKeys(pinnedItemKeys: List<String>) {
         this.pinnedItemKeys = pinnedItemKeys
-        this.notifyDataSetChanged()
+        if (items.size > 0) {
+            this.notifyDataSetChanged()
+        }
     }
 
     internal class ShopHeaderViewHolder(parent: ViewGroup) : androidx.recyclerview.widget.RecyclerView.ViewHolder(parent.inflate(R.layout.shop_header)) {

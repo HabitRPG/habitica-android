@@ -7,12 +7,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBinding
+import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.ui.adapter.inventory.EquipmentRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
+import com.habitrpg.android.habitica.ui.helpers.EmptyItem
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import javax.inject.Inject
 
@@ -29,6 +32,7 @@ class EquipmentDetailFragment : BaseMainFragment<FragmentRefreshRecyclerviewBind
     }
 
     var type: String? = null
+    var typeText: String? = null
     var equippedGear: String? = null
     var isCostume: Boolean? = null
 
@@ -52,6 +56,15 @@ class EquipmentDetailFragment : BaseMainFragment<FragmentRefreshRecyclerviewBind
             equippedGear = args.equippedGear
         }
         binding?.refreshLayout?.setOnRefreshListener(this)
+        binding?.recyclerView?.onRefresh = { onRefresh() }
+        binding?.recyclerView?.emptyItem = EmptyItem(
+            getString(R.string.empty_title),
+            getString(R.string.empty_equipment_description),
+            null,
+            getString(R.string.open_market)
+        ) {
+            MainNavigationController.navigate(R.id.marketFragment)
+        }
 
         this.adapter.equippedGear = this.equippedGear
         this.adapter.isCostume = this.isCostume

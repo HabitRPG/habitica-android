@@ -21,6 +21,9 @@ import io.reactivex.rxjava3.subjects.PublishSubject
 class RewardsRecyclerViewAdapter(private var customRewards: List<Task>?, private val layoutResource: Int) : BaseRecyclerViewAdapter<Task, RecyclerView.ViewHolder>(), TaskRecyclerViewAdapter {
     var user: User? = null
     set(value) {
+        if (field?.versionNumber == value?.versionNumber) {
+            return
+        }
         field = value
         notifyDataSetChanged()
     }

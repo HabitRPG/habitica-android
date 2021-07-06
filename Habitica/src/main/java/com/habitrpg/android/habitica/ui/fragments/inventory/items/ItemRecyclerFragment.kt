@@ -1,11 +1,9 @@
 package com.habitrpg.android.habitica.ui.fragments.inventory.items
 
-import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
@@ -23,10 +21,9 @@ import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.adapter.inventory.ItemRecyclerAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
-import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
+import com.habitrpg.android.habitica.ui.helpers.EmptyItem
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.helpers.loadImage
-import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.dialogs.OpenedMysteryitemDialog
 import javax.inject.Inject
 
@@ -62,9 +59,15 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding?.recyclerView?.setEmptyView(binding?.emptyView)
         binding?.refreshLayout?.setOnRefreshListener(this)
-        binding?.emptyTextView?.text = getString(R.string.empty_items, itemTypeText)
+        binding?.recyclerView?.emptyItem = EmptyItem(
+            getString(R.string.empty_items, itemTypeText ?: itemType),
+            null,
+            null,
+            getString(R.string.open_market)
+        ) {
+            openMarket()
+        }
 
         val context = activity
 
@@ -129,8 +132,6 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
             openMarket()
         }
 
-        binding?.openEmptyMarketButton?.setOnClickListener { openMarket() }
-
         this.loadItems()
     }
 
@@ -176,20 +177,21 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
         }
         itemType?.let { type ->
             compositeSubscription.add(inventoryRepository.getOwnedItems(type)
-                    .doOnNext { items ->
-                        adapter?.data = items
+                .map { it.distinctBy { it.key } }
+                .doOnNext { items ->
+                    adapter?.data = items
+                }
+                .map { items -> items.mapNotNull { it.key } }
+                .flatMap { inventoryRepository.getItems(itemClass, it.toTypedArray()) }
+                .map {
+                    val itemMap = mutableMapOf<String, Item>()
+                    for (item in it) {
+                        itemMap[item.key] = item
                     }
-                    .map { items -> items.mapNotNull { it.key } }
-                    .flatMap { inventoryRepository.getItems(itemClass, it.toTypedArray()) }
-                    .map {
-                        val itemMap = mutableMapOf<String, Item>()
-                        for (item in it) {
-                            itemMap[item.key] = item
-                        }
-                        itemMap
-                    }
-                    .subscribe({ items ->
-                    adapter?.items = items
+                    itemMap
+                }
+                .subscribe({ items ->
+                adapter?.items = items
             }, RxErrorHandler.handleEmptyError()))
         }
 
