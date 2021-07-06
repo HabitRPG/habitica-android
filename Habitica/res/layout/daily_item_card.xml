@@ -26,7 +26,9 @@
                     android:id="@+id/checkBoxHolder"
                     android:layout_width="@dimen/button_width"
                     android:layout_height="match_parent"
-                    tools:background="@color/red_10">
+                    tools:background="@color/red_10"
+                    android:focusable="true"
+                    android:contentDescription="@string/daily_item_checkbox">
                     <View
                         android:id="@+id/checkBoxBackground"
                         android:layout_width="24dp"

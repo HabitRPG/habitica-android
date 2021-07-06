@@ -167,7 +167,7 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
                 }
             }
 
-            val stats = bgUser.stats
+            val stats = it.copyFromRealm(bgUser.stats)
             stats?.hp = res.hp
             stats?.exp = res.exp
             stats?.mp = res.mp
