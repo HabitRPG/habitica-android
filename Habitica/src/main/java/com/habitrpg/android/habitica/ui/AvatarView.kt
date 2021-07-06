@@ -131,12 +131,17 @@ class AvatarView : FrameLayout {
 
             if (imageView.tag == layerName) continue
             imageView.tag = layerName
+            imageView.clear()
+            imageView.setImageResource(0)
 
             imageView.load(DataBindingUtils.BASE_IMAGE_URL + DataBindingUtils.getFullFilename(layerName)) {
                 allowHardware(false)
                 target({}, {
                     onLayerComplete()
                 }, {
+                    if (imageView.tag != layerName) {
+                        return@target
+                    }
                     val bounds = getLayerBounds(layerKey, layerName, it)
                     imageView.load(it)
                     imageView.imageMatrix = avatarMatrix
