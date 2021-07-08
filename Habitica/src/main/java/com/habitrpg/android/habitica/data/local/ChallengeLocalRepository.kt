@@ -17,7 +17,7 @@ interface ChallengeLocalRepository : BaseLocalRepository {
 
     fun setParticipating(userID: String, challengeID: String, isParticipating: Boolean)
 
-    fun saveChallenges(challenges: List<Challenge>, clearChallenges: Boolean, memberOnly: Boolean)
+    fun saveChallenges(challenges: List<Challenge>, clearChallenges: Boolean, memberOnly: Boolean, userID: String)
     fun getChallengeMembership(userId: String, id: String): Flowable<ChallengeMembership>
     fun getChallengeMemberships(userId: String): Flowable<out List<ChallengeMembership>>
     fun isChallengeMember(userID: String, challengeID: String): Flowable<Boolean>

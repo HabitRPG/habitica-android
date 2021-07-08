@@ -1173,6 +1173,7 @@
     <string name="empty_equipment_description">You don\'t have any equipment of this type yet. You can purchase equipment from the market using the gold you earned.</string>
     <string name="todo_item_checkbox">Todo Checkbox</string>
     <string name="open_shop">Open Shop</string>
-    <string name="empty_challenge_list">You aren\'t a member of any Challenges. Head over to the Discover tab to find some to join!</string>
-    <string name="empty_guilds_list">You aren\'t a member of any Guilds. Head over to the Discover tab to find some to join!</string>
+    <string name="empty_challenge_list">You aren\'t a member of any Challenges.</string>
+    <string name="empty_guilds_list">You aren\'t a member of any Guilds.</string>
+    <string name="empty_discover_description">Head over to the Discover tab to find some to join!</string>
 </resources>

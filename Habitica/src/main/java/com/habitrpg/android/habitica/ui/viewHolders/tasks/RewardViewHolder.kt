@@ -58,6 +58,7 @@ class RewardViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> 
 
     fun bind(reward: Task, position: Int, canBuy: Boolean, displayMode: String) {
         this.task = reward
+        streakTextView.visibility = View.GONE
         super.bind(reward, position, displayMode)
         binding.priceLabel.text = NumberAbbreviator.abbreviate(itemView.context, this.task?.value ?: 0.0)
 
@@ -79,6 +80,5 @@ class RewardViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> 
                 binding.buyButton.setBackgroundColor(ColorUtils.setAlphaComponent(ContextCompat.getColor(context, R.color.offset_background), 127))
             }
         }
-        streakTextView.visibility = View.GONE
     }
 }

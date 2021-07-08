@@ -45,7 +45,6 @@ import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManag
 import com.habitrpg.android.habitica.interactors.CheckClassSelectionUseCase
 import com.habitrpg.android.habitica.interactors.DisplayItemDropUseCase
 import com.habitrpg.android.habitica.interactors.NotifyUserUseCase
-import com.habitrpg.android.habitica.models.Notification
 import com.habitrpg.android.habitica.models.TutorialStep
 import com.habitrpg.android.habitica.models.inventory.Egg
 import com.habitrpg.android.habitica.models.inventory.HatchingPotion
@@ -72,12 +71,12 @@ import com.habitrpg.android.habitica.widget.AvatarStatsWidgetProvider
 import com.habitrpg.android.habitica.widget.DailiesWidgetProvider
 import com.habitrpg.android.habitica.widget.HabitButtonWidgetProvider
 import com.habitrpg.android.habitica.widget.TodoListWidgetProvider
-import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.functions.Consumer
 import io.reactivex.rxjava3.schedulers.Schedulers
 import io.realm.kotlin.isValid
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -763,7 +762,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         if (imageKey?.contains("armor") == true) {
             imageKey = "slim_$imageKey"
         }
-        DataBindingUtils.loadImage(imageView, "shop_$imageKey")
+        DataBindingUtils.loadImage(imageView, imageKey)
 
         val youEarnedMessage = this.getString(R.string.checkInRewardEarned, notificationData?.rewardText)
         val youEarnedTexView = view.findViewById(R.id.you_earned_message) as? TextView
@@ -776,24 +775,22 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
             nextUnlockTextView?.visibility = View.GONE
         }
 
-        compositeSubscription.add(Completable.complete()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    val alert = HabiticaAlertDialog(this)
-                    alert.setAdditionalContentView(view)
-                    alert.setTitle(title)
-                    alert.addButton(R.string.see_you_tomorrow, true) { _, _ ->
-                        apiClient.readNotification(event.notification.id)
-                                .subscribe({ }, RxErrorHandler.handleEmptyError())
-                    }
-                    alert.show()
-                }, RxErrorHandler.handleEmptyError()))
+        lifecycleScope.launch(context = Dispatchers.Main) {
+            val alert = HabiticaAlertDialog(this@MainActivity)
+            alert.setAdditionalContentView(view)
+            alert.setTitle(title)
+            alert.addButton(R.string.see_you_tomorrow, true) { _, _ ->
+                apiClient.readNotification(event.notification.id)
+                        .subscribe({ }, RxErrorHandler.handleEmptyError())
+            }
+            alert.show()
+        }
     }
 
     @Subscribe
     fun showAchievementDialog(event: ShowAchievementDialog) {
         retrieveUser(true)
-        lifecycleScope.launch {
+        lifecycleScope.launch(context = Dispatchers.Main) {
             val dialog = AchievementDialog(this@MainActivity)
             dialog.isLastOnboardingAchievement = event.isLastOnboardingAchievement
             dialog.setType(event.type, event.message, event.text)
@@ -806,7 +803,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     @Subscribe
     fun showFirstDropDialog(event: ShowFirstDropDialog) {
         retrieveUser(true)
-        lifecycleScope.launch {
+        lifecycleScope.launch(context = Dispatchers.Main) {
             val dialog = FirstDropDialog(this@MainActivity)
             dialog.configure(event.egg, event.hatchingPotion)
             dialog.enqueue()
@@ -818,7 +815,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     @Subscribe
     fun showWonAchievementDialog(event: ShowWonChallengeDialog) {
         retrieveUser(true)
-        lifecycleScope.launch {
+        lifecycleScope.launch(context = Dispatchers.Main) {
             val dialog = WonChallengeDialog(this@MainActivity)
             dialog.configure(event.data)
             dialog.enqueue()

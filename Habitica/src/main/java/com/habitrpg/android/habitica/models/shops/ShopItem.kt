@@ -134,6 +134,8 @@ open class ShopItem : RealmObject(), BaseObject {
             item.value = 20
             item.currency = "gold"
             item.purchaseType = "gems"
+            item.pinType = "gem"
+            item.path = "special.gems"
             return item
         }
 

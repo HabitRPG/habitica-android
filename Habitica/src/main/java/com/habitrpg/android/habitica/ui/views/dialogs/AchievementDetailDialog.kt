@@ -2,9 +2,11 @@ package com.habitrpg.android.habitica.ui.views.dialogs
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.databinding.DialogAchievementDetailBinding
 import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.extensions.fromHtml
 import com.habitrpg.android.habitica.models.Achievement
@@ -16,11 +18,12 @@ class AchievementDetailDialog(val achievement: Achievement, context: Context): H
     private var descriptionView: TextView?
 
     init {
-        val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as? LayoutInflater
-        val view = inflater?.inflate(R.layout.dialog_achievement_detail, null)
-        iconView = view?.findViewById(R.id.icon_view)
-        descriptionView = view?.findViewById(R.id.description_view)
-        setAdditionalContentView(view)
+        val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val binding = DialogAchievementDetailBinding.inflate(inflater)
+        binding.onboardingDoneIcon.visibility = View.GONE
+        iconView = binding.iconView
+        descriptionView = binding.descriptionView
+        setAdditionalContentView(binding.root)
         setTitle(achievement.title)
         descriptionView?.setText(achievement.text?.fromHtml(), TextView.BufferType.SPANNABLE)
         val iconName = if (achievement.earned) {

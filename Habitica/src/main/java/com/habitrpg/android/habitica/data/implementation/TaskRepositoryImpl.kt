@@ -167,12 +167,11 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
                 }
             }
 
-            val stats = it.copyFromRealm(bgUser.stats)
-            stats?.hp = res.hp
-            stats?.exp = res.exp
-            stats?.mp = res.mp
-            stats?.gp = res.gp
-            stats?.lvl = res.lvl
+            bgUser.stats?.hp = res.hp
+            bgUser.stats?.exp = res.exp
+            bgUser.stats?.mp = res.mp
+            bgUser.stats?.gp = res.gp
+            bgUser.stats?.lvl = res.lvl
             bgUser.party?.quest?.progress?.up = (bgUser.party?.quest?.progress?.up
                     ?: 0F) + (res._tmp?.quest?.progressDelta?.toFloat() ?: 0F)
         }

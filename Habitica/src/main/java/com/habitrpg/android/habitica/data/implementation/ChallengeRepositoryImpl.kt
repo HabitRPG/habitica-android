@@ -123,7 +123,7 @@ class ChallengeRepositoryImpl(localRepository: ChallengeLocalRepository, apiClie
 
     override fun retrieveChallenges(page: Int, memberOnly: Boolean): Flowable<List<Challenge>> {
         return apiClient.getUserChallenges(page, memberOnly)
-                .doOnNext { localRepository.saveChallenges(it, page == 0, memberOnly) }
+                .doOnNext { localRepository.saveChallenges(it, page == 0, memberOnly, userID) }
     }
 
     override fun leaveChallenge(challenge: Challenge, keepTasks: String): Flowable<Void> {

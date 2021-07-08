@@ -35,6 +35,7 @@ import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.SnackbarDisplayTy
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import io.reactivex.rxjava3.core.Flowable
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -175,7 +176,7 @@ class FullProfileActivity : BaseActivity() {
 
     private fun showSendMessageToUserDialog() {
         finish()
-        lifecycleScope.launch(context = Dispatchers.Main) {
+        GlobalScope.launch(context = Dispatchers.Main) {
             delay(1000L)
             MainNavigationController.navigate(R.id.inboxMessageListFragment, bundleOf(Pair("username", username), Pair("userID", userID)))
         }

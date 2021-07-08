@@ -34,7 +34,7 @@ abstract class ContentRepositoryImpl<T : ContentLocalRepository>(localRepository
                 localRepository.saveContent(it)
             }
         } else {
-            Flowable.empty()
+            Flowable.just(ContentResult())
         }
     }
 
@@ -51,7 +51,7 @@ abstract class ContentRepositoryImpl<T : ContentLocalRepository>(localRepository
                 }
             }
         } else {
-            Flowable.empty()
+            Flowable.just(WorldState())
         }
     }
 

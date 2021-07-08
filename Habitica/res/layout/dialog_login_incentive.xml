@@ -32,5 +32,4 @@
         android:textColor="@color/text_secondary"
         android:gravity="center_horizontal"
         style="@style/Body1"/>
-
 </LinearLayout>

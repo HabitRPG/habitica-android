@@ -41,7 +41,8 @@ class GuildListFragment : BaseFragment<FragmentRefreshRecyclerviewBinding>(), Se
         viewAdapter.socialRepository = socialRepository
         binding?.recyclerView?.adapter = viewAdapter
         binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
-        binding?.recyclerView?.emptyItem = EmptyItem(getString(R.string.empty_guilds_list))
+        binding?.recyclerView?.emptyItem = EmptyItem(getString(R.string.empty_guilds_list),
+            getString(R.string.empty_discover_description))
 
         binding?.refreshLayout?.setOnRefreshListener(this)
 

@@ -75,7 +75,8 @@ class ChallengeListFragment : BaseFragment<FragmentRefreshRecyclerviewBinding>()
 
         if (viewUserChallengesOnly) {
             binding?.recyclerView?.emptyItem = EmptyItem(
-                getString(R.string.empty_challenge_list)
+                getString(R.string.empty_challenge_list),
+                getString(R.string.empty_discover_description)
             )
         }
         binding?.recyclerView?.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this.activity)

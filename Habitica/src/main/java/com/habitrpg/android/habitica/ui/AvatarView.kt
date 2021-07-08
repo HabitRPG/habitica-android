@@ -5,15 +5,10 @@ import android.graphics.*
 import android.graphics.drawable.Drawable
 import android.text.TextUtils
 import android.util.AttributeSet
-import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
 import coil.clear
-import coil.imageLoader
 import coil.load
-import coil.request.ImageRequest
-import coil.target.ViewTarget
-import coil.transition.Transition
 import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.helpers.AppConfigManager
@@ -130,7 +125,9 @@ class AvatarView : FrameLayout {
                 imageViewHolder[layerNumber]
             }
 
-            if (imageView.tag == layerName) continue
+            if (imageView.tag == layerName) {
+                continue
+            }
             imageView.tag = layerName
             imageView.clear()
             imageView.setImageResource(0)
@@ -157,6 +154,7 @@ class AvatarView : FrameLayout {
         while (i < (imageViewHolder.size)) {
             imageViewHolder[i].clear()
             imageViewHolder[i].setImageResource(0)
+            imageViewHolder[i].tag = null
             i++
         }
     }
@@ -426,7 +424,7 @@ class AvatarView : FrameLayout {
             // compact hero box when only showBackground is enabled (114w * 114h)
             // hero only box when all show settings disabled (90w * 90h)
             avatarRectF = RectF(0f, 0f, width.toFloat(), height.toFloat())
-            avatarMatrix.setRectToRect(RectF(srcRect), avatarRectF, Matrix.ScaleToFit.START) // TODO support other ScaleToFit
+            avatarMatrix.setRectToRect(RectF(srcRect), avatarRectF, Matrix.ScaleToFit.START)
             avatarRectF = RectF(srcRect)
             avatarMatrix.mapRect(avatarRectF)
         }
@@ -475,11 +473,8 @@ class AvatarView : FrameLayout {
     }
 
     companion object {
-        private const val TAG = "AvatarView"
         private val FULL_HERO_RECT = Rect(0, 0, 140, 147)
         private val COMPACT_HERO_RECT = Rect(0, 0, 114, 114)
         private val HERO_ONLY_RECT = Rect(0, 0, 90, 90)
-
-        //val postProcessors: MutableMap<LayerType, (() -> BasePostprocessor?)> = mutableMapOf()
     }
 }
