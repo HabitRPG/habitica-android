@@ -41,6 +41,7 @@ class AchievementProfileAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
     }
 
     override fun getItemViewType(position: Int): Int {
+        if (itemList.size <= position) return 0
         return if (this.itemList[position].javaClass == String::class.java) {
             0
         } else {

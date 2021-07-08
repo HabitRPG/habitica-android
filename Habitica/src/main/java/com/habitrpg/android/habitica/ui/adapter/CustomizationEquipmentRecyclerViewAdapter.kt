@@ -56,6 +56,7 @@ class CustomizationEquipmentRecyclerViewAdapter : androidx.recyclerview.widget.R
     }
 
     override fun getItemViewType(position: Int): Int {
+        if (equipmentList.size <= position) return 0
         return if (this.equipmentList[position].javaClass == CustomizationSet::class.java) {
             0
         } else {

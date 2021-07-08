@@ -55,7 +55,7 @@ class StableFragment : BaseMainFragment<FragmentViewpagerBinding>() {
                     }
                 }
                 fragment.user = this@StableFragment.user
-                //fragment.itemTypeText = this.getPageTitle(position).toString()
+                fragment.itemTypeText = getPageTitle(position).toString()
 
                 return fragment
             }
@@ -67,15 +67,17 @@ class StableFragment : BaseMainFragment<FragmentViewpagerBinding>() {
         tabLayout?.let {
             binding?.viewPager?.let { it1 ->
                 TabLayoutMediator(it, it1) { tab, position ->
-                    tab.text = when (position) {
-                        0 -> activity?.getString(R.string.pets)
-                        1 -> activity?.getString(R.string.mounts)
-                        else -> ""
-                    } ?:  ""
+                    tab.text = getPageTitle(position)
                 }.attach()
             }
         }
     }
 
-
+    private fun getPageTitle(position: Int): String {
+        return when (position) {
+            0 -> activity?.getString(R.string.pets)
+            1 -> activity?.getString(R.string.mounts)
+            else -> ""
+        } ?:  ""
+    }
 }

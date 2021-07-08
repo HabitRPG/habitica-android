@@ -18,6 +18,7 @@ import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.adapter.social.ChallengesListViewAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
+import com.habitrpg.android.habitica.ui.helpers.EmptyItem
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.utils.Action1
 import io.reactivex.rxjava3.core.Flowable
@@ -72,6 +73,11 @@ class ChallengeListFragment : BaseFragment<FragmentRefreshRecyclerviewBinding>()
 
         binding?.refreshLayout?.setOnRefreshListener(this)
 
+        if (viewUserChallengesOnly) {
+            binding?.recyclerView?.emptyItem = EmptyItem(
+                getString(R.string.empty_challenge_list)
+            )
+        }
         binding?.recyclerView?.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this.activity)
         binding?.recyclerView?.adapter = challengeAdapter
         if (!viewUserChallengesOnly) {

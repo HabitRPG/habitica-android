@@ -4,13 +4,14 @@ import android.os.Bundle
 import android.view.*
 import androidx.appcompat.widget.SearchView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
-import com.habitrpg.android.habitica.databinding.FragmentGuildListBinding
 import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBinding
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.ui.adapter.social.GuildListAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
+import com.habitrpg.android.habitica.ui.helpers.EmptyItem
 import com.habitrpg.android.habitica.ui.helpers.KeyboardUtil
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import javax.inject.Inject
@@ -40,6 +41,7 @@ class GuildListFragment : BaseFragment<FragmentRefreshRecyclerviewBinding>(), Se
         viewAdapter.socialRepository = socialRepository
         binding?.recyclerView?.adapter = viewAdapter
         binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
+        binding?.recyclerView?.emptyItem = EmptyItem(getString(R.string.empty_guilds_list))
 
         binding?.refreshLayout?.setOnRefreshListener(this)
 

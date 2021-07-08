@@ -89,6 +89,7 @@ class CustomizationRecyclerViewAdapter() : androidx.recyclerview.widget.Recycler
     }
 
     override fun getItemViewType(position: Int): Int {
+        if (customizationList.size <= position) return 0
         return if (this.customizationList[position].javaClass == CustomizationSet::class.java) {
             0
         } else {

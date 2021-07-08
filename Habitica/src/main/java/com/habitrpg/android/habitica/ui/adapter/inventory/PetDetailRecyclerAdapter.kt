@@ -83,7 +83,7 @@ class PetDetailRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapt
         }
     }
 
-    override fun getItemViewType(position: Int): Int = if (itemList[position] is StableSection) 1 else 2
+    override fun getItemViewType(position: Int): Int = if (itemList.size > position && itemList[position] is StableSection) 1 else 2
 
     override fun getItemCount(): Int = itemList.size
 

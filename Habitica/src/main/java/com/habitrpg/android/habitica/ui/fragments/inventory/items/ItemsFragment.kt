@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -67,10 +66,10 @@ class ItemsFragment : BaseMainFragment<FragmentViewpagerBinding>() {
                     else -> ""
                 }
                 fragment.user = this@ItemsFragment.user
-                /*fragment.itemTypeText =
+                fragment.itemTypeText =
                     if (position == 4) getString(R.string.special_items)
-                    else this.getPageTitle(position).toString()
-*/
+                    else getPageTitle(position)
+
                 return fragment
             }
 
@@ -81,17 +80,21 @@ class ItemsFragment : BaseMainFragment<FragmentViewpagerBinding>() {
         tabLayout?.let {
             binding?.viewPager?.let { it1 ->
                 TabLayoutMediator(it, it1) { tab, position ->
-                    tab.text = when (position) {
-                        0 -> activity?.getString(R.string.eggs)
-                        1 -> activity?.getString(R.string.hatching_potions)
-                        2 -> activity?.getString(R.string.food)
-                        3 -> activity?.getString(R.string.quests)
-                        4 -> activity?.getString(R.string.special)
-                        else -> ""
-                    } ?: ""
+                    tab.text = getPageTitle(position)
                 }.attach()
             }
         }
         tabLayout?.tabMode = TabLayout.MODE_SCROLLABLE
+    }
+
+    private fun getPageTitle(position: Int): String {
+        return when (position) {
+            0 -> activity?.getString(R.string.eggs)
+            1 -> activity?.getString(R.string.hatching_potions)
+            2 -> activity?.getString(R.string.food)
+            3 -> activity?.getString(R.string.quests)
+            4 -> activity?.getString(R.string.special)
+            else -> ""
+        } ?: ""
     }
 }

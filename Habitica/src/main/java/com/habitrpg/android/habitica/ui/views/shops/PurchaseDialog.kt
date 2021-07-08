@@ -199,7 +199,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
                     limitedTextView.setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
                 }
             }
-        } else {
+        } else if ("gems" != shopItem.purchaseType) {
             limitedTextView.visibility = View.GONE
         }
     }

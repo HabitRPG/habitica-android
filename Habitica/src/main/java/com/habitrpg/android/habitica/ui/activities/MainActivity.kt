@@ -23,6 +23,7 @@ import androidx.core.content.edit
 import androidx.core.os.bundleOf
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -77,6 +78,7 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.functions.Consumer
 import io.reactivex.rxjava3.schedulers.Schedulers
 import io.realm.kotlin.isValid
+import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import java.util.*
@@ -606,19 +608,19 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     protected fun retrieveUser(forced: Boolean = false) {
         if (hostConfig.hasAuthentication()) {
             compositeSubscription.add(
-                    contentRepository.retrieveWorldState(this)
-                            .flatMap { userRepository.retrieveUser(true, forced) }
-                            .doOnNext { user1 ->
-                                FirebaseAnalytics.getInstance(this).setUserProperty("has_party", if (user1.party?.id?.isNotEmpty() == true) "true" else "false")
-                                FirebaseAnalytics.getInstance(this).setUserProperty("is_subscribed", if (user1.isSubscribed) "true" else "false")
-                                FirebaseAnalytics.getInstance(this).setUserProperty("checkin_count", user1.loginIncentives.toString())
-                                FirebaseAnalytics.getInstance(this).setUserProperty("level", user1.stats?.lvl?.toString() ?: "")
-                                pushNotificationManager.setUser(user1)
-                                pushNotificationManager.addPushDeviceUsingStoredToken()
-                            }
-                            .flatMap { userRepository.retrieveTeamPlans() }
-                            .flatMap { contentRepository.retrieveContent(this) }
-                            .subscribe({ }, RxErrorHandler.handleEmptyError()))
+                contentRepository.retrieveWorldState(this)
+                        .flatMap { userRepository.retrieveUser(true, forced) }
+                        .doOnNext { user1 ->
+                            FirebaseAnalytics.getInstance(this).setUserProperty("has_party", if (user1.party?.id?.isNotEmpty() == true) "true" else "false")
+                            FirebaseAnalytics.getInstance(this).setUserProperty("is_subscribed", if (user1.isSubscribed) "true" else "false")
+                            FirebaseAnalytics.getInstance(this).setUserProperty("checkin_count", user1.loginIncentives.toString())
+                            FirebaseAnalytics.getInstance(this).setUserProperty("level", user1.stats?.lvl?.toString() ?: "")
+                            pushNotificationManager.setUser(user1)
+                            pushNotificationManager.addPushDeviceUsingStoredToken()
+                        }
+                        .flatMap { userRepository.retrieveTeamPlans() }
+                        .flatMap { contentRepository.retrieveContent(this) }
+                        .subscribe({ }, RxErrorHandler.handleEmptyError()))
         }
     }
 
@@ -790,57 +792,39 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
     @Subscribe
     fun showAchievementDialog(event: ShowAchievementDialog) {
-        if (User.ONBOARDING_ACHIEVEMENT_KEYS.contains(event.type) || event.type == Notification.Type.ACHIEVEMENT_ONBOARDING_COMPLETE.type) {
-            if (!appConfigManager.enableAdventureGuide()) {
-                compositeSubscription.add(apiClient.readNotification(event.id)
-                        .subscribe({ }, RxErrorHandler.handleEmptyError()))
-                return
-            }
+        retrieveUser(true)
+        lifecycleScope.launch {
+            val dialog = AchievementDialog(this@MainActivity)
+            dialog.isLastOnboardingAchievement = event.isLastOnboardingAchievement
+            dialog.setType(event.type, event.message, event.text)
+            dialog.enqueue()
+            apiClient.readNotification(event.id)
+                    .subscribe({ }, RxErrorHandler.handleEmptyError())
         }
-        compositeSubscription.add(Completable.complete()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    retrieveUser(true)
-                    val dialog = AchievementDialog(this)
-                    dialog.isLastOnboardingAchievement = event.isLastOnboardingAchievement
-                    dialog.setType(event.type, event.message, event.text)
-                    dialog.enqueue()
-                    apiClient.readNotification(event.id)
-                            .subscribe({ }, RxErrorHandler.handleEmptyError())
-                }, RxErrorHandler.handleEmptyError()))
     }
 
     @Subscribe
     fun showFirstDropDialog(event: ShowFirstDropDialog) {
-        if (!appConfigManager.enableAdventureGuide()) {
-            compositeSubscription.add(apiClient.readNotification(event.id)
-                    .subscribe({ }, RxErrorHandler.handleEmptyError()))
-            return
+        retrieveUser(true)
+        lifecycleScope.launch {
+            val dialog = FirstDropDialog(this@MainActivity)
+            dialog.configure(event.egg, event.hatchingPotion)
+            dialog.enqueue()
+            apiClient.readNotification(event.id)
+                .subscribe({ }, RxErrorHandler.handleEmptyError())
         }
-        compositeSubscription.add(Completable.complete()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    retrieveUser(true)
-                    val dialog = FirstDropDialog(this)
-                    dialog.configure(event.egg, event.hatchingPotion)
-                    dialog.enqueue()
-                    apiClient.readNotification(event.id)
-                            .subscribe({ }, RxErrorHandler.handleEmptyError())
-                }, RxErrorHandler.handleEmptyError()))
     }
 
     @Subscribe
     fun showWonAchievementDialog(event: ShowWonChallengeDialog) {
-        compositeSubscription.add(Completable.complete()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    retrieveUser(true)
-                    val dialog = WonChallengeDialog(this)
-                    dialog.configure(event.data)
-                    dialog.enqueue()
-                    apiClient.readNotification(event.id)
-                            .subscribe({ }, RxErrorHandler.handleEmptyError())
-                }, RxErrorHandler.handleEmptyError()))
+        retrieveUser(true)
+        lifecycleScope.launch {
+            val dialog = WonChallengeDialog(this@MainActivity)
+            dialog.configure(event.data)
+            dialog.enqueue()
+            apiClient.readNotification(event.id)
+                    .subscribe({ }, RxErrorHandler.handleEmptyError())
+        }
     }
 
     override fun onEvent(event: ShowConnectionProblemEvent) {

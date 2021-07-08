@@ -71,6 +71,7 @@ class ChatRecyclerViewAdapter(user: User?, private val isTavern: Boolean) : Base
     }
 
     override fun getItemViewType(position: Int): Int {
+        if (data.size <= position) return 0
         return if (data[position].isSystemMessage) 0 else 1
     }
 

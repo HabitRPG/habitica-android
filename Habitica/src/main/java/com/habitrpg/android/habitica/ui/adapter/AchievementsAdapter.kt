@@ -47,6 +47,7 @@ class AchievementsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     override fun getItemViewType(position: Int): Int {
+        if (entries.size <= position) return 0
         val entry = entries[position]
         return if (entry is Pair<*, *>) {
             0

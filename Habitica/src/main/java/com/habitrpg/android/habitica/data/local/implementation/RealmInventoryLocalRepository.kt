@@ -255,7 +255,8 @@ class RealmInventoryLocalRepository(realm: Realm) : RealmContentLocalRepository(
             return
         }
         val liveUser = getLiveObject(user)
-        val item = liveUser?.items?.special?.ownedItems?.first { it.key == "specialinventory_present" }
+        val ownedItems = liveUser?.items?.special?.ownedItems
+        val item = ownedItems?.firstOrNull() { it.key == "inventory_present" }
         executeTransaction {
             if (item != null && item.isValid) {
                 item.numberOwned = item.numberOwned - 1

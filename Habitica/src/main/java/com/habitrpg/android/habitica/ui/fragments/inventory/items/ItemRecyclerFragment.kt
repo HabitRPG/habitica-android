@@ -64,9 +64,13 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
             getString(R.string.empty_items, itemTypeText ?: itemType),
             null,
             null,
-            getString(R.string.open_market)
+            if (itemType == "special") null else getString(R.string.open_shop)
         ) {
-            openMarket()
+            if (itemType == "quests") {
+                MainNavigationController.navigate(R.id.questShopFragment)
+            } else {
+                openMarket()
+            }
         }
 
         val context = activity
