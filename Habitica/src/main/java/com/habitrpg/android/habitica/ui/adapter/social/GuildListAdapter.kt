@@ -76,6 +76,8 @@ class GuildListAdapter : BaseRecyclerViewAdapter<Group, RecyclerView.ViewHolder>
                                 .contains("summary", constraint.toString(), Case.INSENSITIVE)
                                 .endGroup()
                                 .findAll()
+                    } else {
+                        data = it
                     }
                 }
             }

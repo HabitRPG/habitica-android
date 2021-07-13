@@ -16,7 +16,7 @@ import com.habitrpg.android.habitica.ui.helpers.KeyboardUtil
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import javax.inject.Inject
 
-class GuildListFragment : BaseFragment<FragmentRefreshRecyclerviewBinding>(), SearchView.OnQueryTextListener, SwipeRefreshLayout.OnRefreshListener {
+class GuildListFragment : BaseFragment<FragmentRefreshRecyclerviewBinding>(), SearchView.OnQueryTextListener, SearchView.OnCloseListener, SwipeRefreshLayout.OnRefreshListener {
 
     @Inject
     lateinit var socialRepository: SocialRepository
@@ -87,4 +87,8 @@ class GuildListFragment : BaseFragment<FragmentRefreshRecyclerviewBinding>(), Se
         fetchGuilds()
     }
 
+    override fun onClose(): Boolean {
+        viewAdapter.filter.filter("")
+        return false
+    }
 }

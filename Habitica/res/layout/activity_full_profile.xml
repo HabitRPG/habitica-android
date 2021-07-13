@@ -398,12 +398,6 @@
                         android:text="@string/profile_achievements"
                         android:textStyle="bold" />
 
-                    <ProgressBar
-                        android:id="@+id/achievement_progress"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:indeterminate="true" />
-
                     <com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport
                         android:id="@+id/achievement_group_list"
                         android:layout_width="match_parent"

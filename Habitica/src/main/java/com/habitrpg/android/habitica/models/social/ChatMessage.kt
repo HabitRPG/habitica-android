@@ -52,8 +52,7 @@ open class ChatMessage : RealmObject(), BaseMainObject {
     val isSystemMessage: Boolean
         get() = uuid == "system"
 
-    val likeCount: Int
-        get() = likes?.size ?: 0
+    var likeCount: Int = 0
 
     var username: String? = null
     val formattedUsername: String?

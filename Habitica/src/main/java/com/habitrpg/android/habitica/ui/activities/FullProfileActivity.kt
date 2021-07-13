@@ -28,6 +28,7 @@ import com.habitrpg.android.habitica.models.user.Outfit
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel
 import com.habitrpg.android.habitica.ui.adapter.social.AchievementProfileAdapter
+import com.habitrpg.android.habitica.ui.helpers.RecyclerViewState
 import com.habitrpg.android.habitica.ui.helpers.loadImage
 import com.habitrpg.android.habitica.ui.helpers.setMarkdown
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
@@ -260,7 +261,7 @@ class FullProfileActivity : BaseActivity() {
         binding.achievementGroupList.layoutManager = layoutManager
         binding.achievementGroupList.adapter = adapter
 
-        stopAndHideProgress(binding.achievementProgress)
+        binding.achievementGroupList.state = RecyclerViewState.DISPLAYING_DATA
     }
 
     private fun fillAchievements(labelID: Int, achievements: List<Achievement>, targetList: MutableList<Any>) {
@@ -270,11 +271,6 @@ class FullProfileActivity : BaseActivity() {
 
         targetList.add(getString(labelID))
         targetList.addAll(achievementList)
-    }
-
-    private fun stopAndHideProgress(bar: ProgressBar) {
-        bar.isIndeterminate = false
-        bar.visibility = View.GONE
     }
 
     private fun getFloorValueString(`val`: Float, roundDown: Boolean): String {

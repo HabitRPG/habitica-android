@@ -59,6 +59,9 @@ class GuildOverviewFragment : BaseMainFragment<FragmentViewpagerBinding>(), Sear
         context?.let { theTextArea?.setHintTextColor(ContextCompat.getColor(it, R.color.white)) }
         guildSearchView?.queryHint = getString(R.string.guild_search_hint)
         guildSearchView?.setOnQueryTextListener(this)
+        guildSearchView?.setOnCloseListener {
+            getActiveFragment()?.onClose() ?: true
+        }
     }
 
     @Suppress("ReturnCount")

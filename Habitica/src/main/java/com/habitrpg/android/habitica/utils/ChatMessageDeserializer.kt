@@ -31,6 +31,7 @@ class ChatMessageDeserializer : JsonDeserializer<ChatMessage> {
                     message.likes?.add(ChatMessageLike(key))
                 }
             }
+            message.likeCount = message.likes?.size ?: 0
         }
         if (obj.has("flagCount")) {
             message.flagCount = obj.get("flagCount").asInt
