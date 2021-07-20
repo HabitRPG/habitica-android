@@ -215,6 +215,8 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
                  item.key = category.identifier
                  item.text = category.text
                  item.imageName = "shop_set_mystery_${item.key}"
+                 item.pinType = "mystery_set"
+                 item.path = "mystery.${item.key}"
                  newCategory.items.add(item)
              }
         }
