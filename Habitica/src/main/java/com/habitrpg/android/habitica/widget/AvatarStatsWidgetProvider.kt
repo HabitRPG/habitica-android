@@ -45,7 +45,7 @@ class AvatarStatsWidgetProvider : BaseWidgetProvider() {
 
     override fun configureRemoteViews(remoteViews: RemoteViews, widgetId: Int, columns: Int, rows: Int): RemoteViews {
         if (columns > 3) {
-            remoteViews.setViewVisibility(R.id.avatar_view, View.VISIBLE)
+            remoteViews.setViewVisibility(R.id.avatar_view, View.GONE)
         } else {
             remoteViews.setViewVisibility(R.id.avatar_view, View.GONE)
         }
@@ -84,7 +84,7 @@ class AvatarStatsWidgetProvider : BaseWidgetProvider() {
             remoteViews.setTextViewText(R.id.exp_TV_value, expValueString)
             remoteViews.setTextViewText(R.id.mp_TV_value, mpValueString)
 
-            remoteViews.setImageViewBitmap(R.id.ic_hp_header, HabiticaIconsHelper.imageOfHeartDarkBg())
+            remoteViews.setImageViewBitmap(R.id.ic_hp_header, HabiticaIconsHelper.imageOfHeartLightBg())
             remoteViews.setImageViewBitmap(R.id.ic_exp_header, HabiticaIconsHelper.imageOfExperience())
             remoteViews.setImageViewBitmap(R.id.ic_mp_header, HabiticaIconsHelper.imageOfMagic())
 
@@ -118,7 +118,6 @@ class AvatarStatsWidgetProvider : BaseWidgetProvider() {
                 appWidgetManager.partiallyUpdateAppWidget(allWidgetIds, finalRemoteViews)
             }
 
-            //If user click on life and xp: open the app
             val openAppIntent = Intent(context.applicationContext, MainActivity::class.java)
             val openApp = PendingIntent.getActivity(context, 0, openAppIntent, PendingIntent.FLAG_UPDATE_CURRENT)
             remoteViews.setOnClickPendingIntent(R.id.widget_main_view, openApp)

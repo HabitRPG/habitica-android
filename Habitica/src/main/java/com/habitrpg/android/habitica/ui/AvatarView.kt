@@ -11,6 +11,7 @@ import coil.clear
 import coil.load
 import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.models.Avatar
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
@@ -63,6 +64,7 @@ class AvatarView : FrameLayout {
             }
             val canvasRect = Rect()
             avatarRectF?.round(canvasRect)
+            if (canvasRect.isEmpty) return null
             avatarBitmap = Bitmap.createBitmap(canvasRect.width(), canvasRect.height(), Bitmap.Config.ARGB_8888)
             avatarBitmap?.let { avatarCanvas = Canvas(it) }
             draw(avatarCanvas)
@@ -423,7 +425,9 @@ class AvatarView : FrameLayout {
             // full hero box when showMount and showPet is enabled (140w * 147h)
             // compact hero box when only showBackground is enabled (114w * 114h)
             // hero only box when all show settings disabled (90w * 90h)
-            avatarRectF = RectF(0f, 0f, width.toFloat(), height.toFloat())
+            val width = if (this.width > 0) this.width.toFloat() else 140.dpToPx(context).toFloat()
+            val height = if (this.height > 0) this.height.toFloat() else 147.dpToPx(context).toFloat()
+            avatarRectF = RectF(0f, 0f, width, height)
             avatarMatrix.setRectToRect(RectF(srcRect), avatarRectF, Matrix.ScaleToFit.START)
             avatarRectF = RectF(srcRect)
             avatarMatrix.mapRect(avatarRectF)

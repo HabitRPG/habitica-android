@@ -3,7 +3,7 @@
     <!-- Define the background properties like color etc -->
     <item android:id="@android:id/background">
         <shape>
-            <solid android:color="@color/brand_50" />
+            <solid android:color="@color/widget_bar_background" />
             <corners android:radius="@dimen/bar_radius" />
         </shape>
     </item>
