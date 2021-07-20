@@ -69,14 +69,12 @@
     </LinearLayout>
     <TextView
         android:id="@+id/count_label"
-        android:layout_width="24dp"
+        android:layout_width="wrap_content"
         android:layout_height="24dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:layout_marginStart="13dp"
-        android:background="@drawable/circle_gray300"
-        tools:text="1"
-        android:textColor="@color/white"
-        android:gravity="center"
+        tools:text="10000"
+        style="@style/CountLabel"
         />
 </RelativeLayout>

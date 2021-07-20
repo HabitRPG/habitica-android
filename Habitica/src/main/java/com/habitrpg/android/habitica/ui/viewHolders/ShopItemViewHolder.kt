@@ -3,9 +3,11 @@ package com.habitrpg.android.habitica.ui.viewHolders
 import android.content.Context
 import android.graphics.drawable.BitmapDrawable
 import android.view.View
+import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.databinding.RowShopitemBinding
+import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.extensions.isUsingNightModeResources
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
@@ -74,6 +76,16 @@ class ShopItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), Vi
         } else if (item.isLimited || item.event?.end != null) {
             binding.itemDetailIndicator.background = BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfItemIndicatorLimited())
             binding.itemDetailIndicator.visibility = View.VISIBLE
+        }
+
+        if (binding.itemDetailIndicator.visibility == View.VISIBLE) {
+            val layoutParams = binding.itemDetailIndicator.layoutParams
+            layoutParams.width = if (binding.itemDetailIndicator.text.isBlank()) {
+                24.dpToPx(context)
+            } else {
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            }
+            binding.itemDetailIndicator.layoutParams = layoutParams
         }
 
         binding.priceLabel.isLocked = item.locked || !canBuy
