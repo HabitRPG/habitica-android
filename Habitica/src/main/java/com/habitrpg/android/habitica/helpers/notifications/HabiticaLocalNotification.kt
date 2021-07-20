@@ -14,7 +14,7 @@ import java.util.*
 /**
  * Created by keithholliday on 6/28/16.
  */
-abstract class HabiticaLocalNotification(protected var context: Context, protected var identifier: String) {
+abstract class HabiticaLocalNotification(protected var context: Context, protected var identifier: String?) {
 
     protected var data: Map<String, String>? = null
     protected var title: String? = null
@@ -56,8 +56,6 @@ abstract class HabiticaLocalNotification(protected var context: Context, protect
 
     protected open fun setNotificationActions(data: Map<String, String>)  {
         val intent = Intent(context, MainActivity::class.java)
-        intent.putExtra("notificationIdentifier", identifier)
-        intent.putExtra("notificationTimeStamp", Date().time)
         configureMainIntent(intent)
         val pendingIntent = PendingIntent.getActivity(
                 context,
@@ -69,6 +67,11 @@ abstract class HabiticaLocalNotification(protected var context: Context, protect
     }
 
     protected open fun configureMainIntent(intent: Intent) {
+        intent.putExtra("notificationIdentifier", identifier)
+        intent.putExtra("notificationTimeStamp", Date().time)
+        if (data?.containsKey("openURL") == true) {
+            intent.putExtra("openURL", data?.get("openURL"))
+        }
     }
 
     protected open fun getNotificationID(data: MutableMap<String, String>): Int {

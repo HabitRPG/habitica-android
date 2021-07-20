@@ -10,7 +10,7 @@ import com.habitrpg.android.habitica.receivers.LocalNotificationActionReceiver
 /**
  * Created by keithholliday on 7/1/16.
  */
-class GuildInviteLocalNotification(context: Context, identifier: String) : HabiticaLocalNotification(context, identifier) {
+class GuildInviteLocalNotification(context: Context, identifier: String?) : HabiticaLocalNotification(context, identifier) {
 
     override fun configureMainIntent(intent: Intent) {
         super.configureMainIntent(intent)

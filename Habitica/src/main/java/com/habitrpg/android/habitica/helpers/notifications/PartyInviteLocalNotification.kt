@@ -10,7 +10,7 @@ import com.habitrpg.android.habitica.receivers.LocalNotificationActionReceiver
 /**
  * Created by keithholliday on 6/28/16.
  */
-class PartyInviteLocalNotification(context: Context, identifier: String) : HabiticaLocalNotification(context, identifier) {
+class PartyInviteLocalNotification(context: Context, identifier: String?) : HabiticaLocalNotification(context, identifier) {
 
     override fun setNotificationActions(data: Map<String, String>) {
         super.setNotificationActions(data)

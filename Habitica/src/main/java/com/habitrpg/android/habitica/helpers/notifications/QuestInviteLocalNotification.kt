@@ -9,7 +9,7 @@ import com.habitrpg.android.habitica.receivers.LocalNotificationActionReceiver
 /**
  * Created by keithholliday on 7/1/16.
  */
-class QuestInviteLocalNotification(context: Context, identifier: String) : HabiticaLocalNotification(context, identifier) {
+class QuestInviteLocalNotification(context: Context, identifier: String?) : HabiticaLocalNotification(context, identifier) {
 
     override fun getNotificationID(data: MutableMap<String, String>): Int {
         return 1000

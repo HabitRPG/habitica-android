@@ -15,7 +15,7 @@ import com.habitrpg.android.habitica.ui.helpers.EmojiParser
 import java.text.SimpleDateFormat
 import java.util.*
 
-class GroupActivityNotification(context: Context, identifier: String) : HabiticaLocalNotification(context, identifier) {
+class GroupActivityNotification(context: Context, identifier: String?) : HabiticaLocalNotification(context, identifier) {
 
     override fun getNotificationID(data: MutableMap<String, String>): Int {
         return data["groupID"].hashCode()

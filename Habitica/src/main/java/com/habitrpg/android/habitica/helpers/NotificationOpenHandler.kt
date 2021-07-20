@@ -27,8 +27,8 @@ class NotificationOpenHandler {
                     PushNotificationManager.GROUP_ACTIVITY_NOTIFICATION_KEY -> handleChatMessage(intent.getStringExtra("type"), intent.getStringExtra("groupID"))
                     PushNotificationManager.G1G1_PROMO_KEY -> openGiftOneGetOneInfoScreen()
                     else -> {
-                        if (intent.hasExtra("openURL")) {
-                            MainNavigationController.navigate(intent.getStringExtra("openURL"))
+                        intent.getStringExtra("openURL")?.let {
+                            MainNavigationController.navigate(it)
                         }
                     }
                 }

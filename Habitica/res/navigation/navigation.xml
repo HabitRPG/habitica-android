@@ -71,7 +71,7 @@
         android:id="@+id/skillsFragment"
         android:name="com.habitrpg.android.habitica.ui.fragments.skills.SkillsFragment"
         android:label="@string/sidebar_skills">
-
+        <deepLink app:uri="habitica.com/user/skills" />
     </fragment>
     <fragment
         android:id="@+id/statsFragment"
@@ -111,6 +111,7 @@
         android:id="@+id/avatarOverviewFragment"
         android:name="com.habitrpg.android.habitica.ui.fragments.inventory.customization.AvatarOverviewFragment"
         android:label="@string/sidebar_avatar" >
+        <deepLink app:uri="habitica.com/user/avatar" />
         <action
             android:id="@+id/openAvatarDetail"
             app:destination="@id/avatarCustomizationFragment" />
@@ -145,6 +146,7 @@
         android:id="@+id/subscriptionPurchaseActivity"
         android:name="com.habitrpg.android.habitica.ui.activities.GemPurchaseActivity"
         android:label="@string/gem_purchase_toolbartitle" >
+        <deepLink app:uri="habitica.com/user/settings/subscription" />
         <argument
             android:name="openSubscription"
             app:argType="boolean"
@@ -154,6 +156,7 @@
         android:id="@+id/gemPurchaseActivity"
         android:name="com.habitrpg.android.habitica.ui.activities.GemPurchaseActivity"
         android:label="@string/gem_purchase_toolbartitle">
+        <deepLink app:uri="habitica.com/user/settings/gems" />
         <argument
             android:name="openSubscription"
             app:argType="boolean"
@@ -188,7 +191,9 @@
     <fragment
         android:id="@+id/newsFragment"
         android:name="com.habitrpg.android.habitica.ui.fragments.NewsFragment"
-        android:label="@string/sidebar_news" />
+        android:label="@string/sidebar_news">
+        <deepLink app:uri="habitica.com/static/new-stuff" />
+    </fragment>
     <fragment
         android:id="@+id/FAQOverviewFragment"
         android:name="com.habitrpg.android.habitica.ui.fragments.support.FAQOverviewFragment"
@@ -218,11 +223,14 @@
     <fragment
         android:id="@+id/aboutFragment"
         android:name="com.habitrpg.android.habitica.ui.fragments.AboutFragment"
-        android:label="@string/sidebar_about" />
+        android:label="@string/sidebar_about">
+        <deepLink app:uri="habitica.com/static/about" />
+    </fragment>
     <fragment
         android:id="@+id/inboxFragment"
         android:name="com.habitrpg.android.habitica.ui.fragments.social.InboxOverviewFragment"
-        android:label="@string/sidebar_inbox" >
+        android:label="@string/sidebar_inbox">
+        <deepLink app:uri="habitica.com/private-messages" />
         <action
             android:id="@+id/openInboxDetail"
             app:destination="@id/inboxMessageListFragment" />
@@ -279,6 +287,7 @@
         android:name="com.habitrpg.android.habitica.ui.activities.PrefsActivity"
         android:label="@string/app_settings"
         tools:layout="@layout/activity_prefs">
+        <deepLink app:uri="habitica.com/settings" />
     </activity>
     <fragment
         android:id="@+id/inboxMessageListFragment"
@@ -296,6 +305,7 @@
         android:id="@+id/notificationsActivity"
         android:name="com.habitrpg.android.habitica.ui.activities.NotificationsActivity"
         android:label="@string/notifications">
+        <deepLink app:uri="habitica.com/user/notifications" />
     </activity>
     <fragment
         android:id="@+id/petDetailRecyclerFragment"
@@ -389,6 +399,7 @@
         android:id="@+id/achievementsFragment"
         android:name="com.habitrpg.android.habitica.ui.fragments.AchievementsFragment"
         android:label="@string/sidebar_achievements" >
+        <deepLink app:uri="habitica.com/user/achievements" />
         <argument
             android:name="userID"
             app:argType="string"
@@ -397,19 +408,27 @@
     <fragment
         android:id="@+id/marketFragment"
         android:name="com.habitrpg.android.habitica.ui.fragments.inventory.shops.MarketFragment"
-        android:label="@string/market" />
+        android:label="@string/market">
+        <deepLink app:uri="habitica.com/inventory/market" />
+    </fragment>
     <fragment
         android:id="@+id/questShopFragment"
         android:name="com.habitrpg.android.habitica.ui.fragments.inventory.shops.QuestShopFragment"
-        android:label="@string/questShop" />
+        android:label="@string/questShop">
+        <deepLink app:uri="habitica.com/inventory/quests" />
+    </fragment>
     <fragment
         android:id="@+id/seasonalShopFragment"
         android:name="com.habitrpg.android.habitica.ui.fragments.inventory.shops.SeasonalShopFragment"
-        android:label="@string/seasonalShop" />
+        android:label="@string/seasonalShop">
+        <deepLink app:uri="habitica.com/inventory/seasonal" />
+    </fragment>
     <fragment
         android:id="@+id/timeTravelersShopFragment"
         android:name="com.habitrpg.android.habitica.ui.fragments.inventory.shops.TimeTravelersShopFragment"
-        android:label="@string/timeTravelers" />
+        android:label="@string/timeTravelers">
+        <deepLink app:uri="habitica.com/inventory/time" />
+    </fragment>
     <fragment
         android:id="@+id/supportMainFragment"
         android:name="com.habitrpg.android.habitica.ui.fragments.support.SupportMainFragment"
@@ -425,7 +444,9 @@
     <activity
         android:id="@+id/adventureGuideActivity"
         android:name="com.habitrpg.android.habitica.ui.activities.AdventureGuideActivity"
-        android:label="" />
+        android:label="">
+        <deepLink app:uri="habitica.com/user/onboarding" />
+    </activity>
     <fragment
         android:id="@+id/promoInfoFragment"
         android:name="com.habitrpg.android.habitica.ui.fragments.PromoInfoFragment"

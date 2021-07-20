@@ -374,7 +374,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
             putBoolean("preventDailyReminder", false)
         }
 
-        if (intent.hasExtra("notificationIdentifier") && lastNotificationOpen != intent.getLongExtra("notificationTimeStamp", 0)) {
+        if ((intent.hasExtra("notificationIdentifier") || intent.hasExtra("openURL")) && lastNotificationOpen != intent.getLongExtra("notificationTimeStamp", 0)) {
             lastNotificationOpen = intent.getLongExtra("notificationTimeStamp", 0)
             val identifier = intent.getStringExtra("notificationIdentifier") ?: ""
             val additionalData = HashMap<String, Any>()
