@@ -6,9 +6,11 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.view.View
+import android.view.ViewGroup
 import android.widget.RemoteViews
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.helpers.HealthFormatter
 import com.habitrpg.android.habitica.helpers.NumberAbbreviator
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
@@ -22,6 +24,7 @@ class AvatarStatsWidgetProvider : BaseWidgetProvider() {
     private var appWidgetManager: AppWidgetManager? = null
 
     private var showManaBar: Boolean = true
+    private var showAvatar: Boolean = true
 
     override fun layoutResourceId(): Int {
         return R.layout.widget_avatar_stats
@@ -44,18 +47,17 @@ class AvatarStatsWidgetProvider : BaseWidgetProvider() {
     }
 
     override fun configureRemoteViews(remoteViews: RemoteViews, widgetId: Int, columns: Int, rows: Int): RemoteViews {
-        if (columns > 3) {
-            remoteViews.setViewVisibility(R.id.avatar_view, View.GONE)
+        showAvatar = columns > 3
+        if (showAvatar) {
+            remoteViews.setViewVisibility(R.id.avatar_view, View.VISIBLE)
         } else {
             remoteViews.setViewVisibility(R.id.avatar_view, View.GONE)
         }
 
         showManaBar = rows > 1
         if (rows > 1) {
-            remoteViews.setViewVisibility(R.id.mp_wrapper, View.VISIBLE)
             remoteViews.setViewVisibility(R.id.detail_info_view, View.VISIBLE)
         } else {
-            remoteViews.setViewVisibility(R.id.mp_wrapper, View.GONE)
             remoteViews.setViewVisibility(R.id.detail_info_view, View.GONE)
         }
 
@@ -109,13 +111,17 @@ class AvatarStatsWidgetProvider : BaseWidgetProvider() {
             remoteViews.setImageViewBitmap(R.id.gold_icon, HabiticaIconsHelper.imageOfGold())
             remoteViews.setTextViewText(R.id.lvl_tv, context.getString(R.string.user_level, user.stats?.lvl ?: 0))
 
-            val avatarView = AvatarView(context, showBackground = true, showMount = true, showPet = true)
-
-            avatarView.setAvatar(user)
-            val finalRemoteViews = remoteViews
-            avatarView.onAvatarImageReady { bitmap ->
-                finalRemoteViews.setImageViewBitmap(R.id.avatar_view, bitmap)
-                appWidgetManager.partiallyUpdateAppWidget(allWidgetIds, finalRemoteViews)
+            if (showAvatar) {
+                val avatarView =
+                    AvatarView(context, showBackground = true, showMount = true, showPet = true)
+                val layoutParams = ViewGroup.LayoutParams(140.dpToPx(context), 147.dpToPx(context))
+                avatarView.layoutParams = layoutParams
+                avatarView.setAvatar(user)
+                val finalRemoteViews = remoteViews
+                avatarView.onAvatarImageReady { bitmap ->
+                    finalRemoteViews.setImageViewBitmap(R.id.avatar_view, bitmap)
+                    appWidgetManager.partiallyUpdateAppWidget(allWidgetIds, finalRemoteViews)
+                }
             }
 
             val openAppIntent = Intent(context.applicationContext, MainActivity::class.java)

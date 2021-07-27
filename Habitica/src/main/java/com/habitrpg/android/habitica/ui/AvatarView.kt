@@ -7,6 +7,10 @@ import android.text.TextUtils
 import android.util.AttributeSet
 import android.widget.FrameLayout
 import android.widget.ImageView
+import androidx.core.graphics.drawable.toBitmap
+import androidx.core.view.drawToBitmap
+import androidx.core.view.marginStart
+import androidx.core.view.marginTop
 import coil.clear
 import coil.load
 import com.habitrpg.android.habitica.BuildConfig
@@ -62,12 +66,15 @@ class AvatarView : FrameLayout {
             if (BuildConfig.DEBUG && (avatar == null || avatarRectF == null)) {
                 error("Assertion failed")
             }
-            val canvasRect = Rect()
-            avatarRectF?.round(canvasRect)
+            val canvasRect = Rect(0, 0, 140.dpToPx(context), 147.dpToPx(context))
             if (canvasRect.isEmpty) return null
             avatarBitmap = Bitmap.createBitmap(canvasRect.width(), canvasRect.height(), Bitmap.Config.ARGB_8888)
             avatarBitmap?.let { avatarCanvas = Canvas(it) }
-            draw(avatarCanvas)
+            imageViewHolder.forEach {
+                val lp = it.layoutParams
+                val bitmap = it.drawable?.toBitmap(lp.width, lp.height) ?: return@forEach
+                avatarCanvas?.drawBitmap(bitmap, Rect(0, 0, bitmap.width, bitmap.height), Rect(it.marginStart, it.marginTop, bitmap.width, bitmap.height), null)
+            }
 
             return avatarBitmap
         }
@@ -148,6 +155,8 @@ class AvatarView : FrameLayout {
                     val layoutParams = imageView.layoutParams as? LayoutParams
                     layoutParams?.topMargin = bounds.top
                     layoutParams?.marginStart = bounds.left
+                    layoutParams?.width = bounds.right
+                    layoutParams?.height = bounds.bottom
                     imageView.layoutParams = layoutParams
                     onLayerComplete()
                 })

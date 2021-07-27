@@ -400,7 +400,7 @@ class TeamBoardFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchVi
         var lastTaskFormOpen: Date? = null
     }
 
-    override fun onTabSelected(taskType: String) {
+    override fun onTabSelected(taskType: String, smooth: Boolean) {
         val newItem = when (taskType) {
             Task.TYPE_HABIT -> 0
             Task.TYPE_DAILY -> 1
@@ -408,7 +408,7 @@ class TeamBoardFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchVi
             Task.TYPE_REWARD -> 3
             else -> 0
         }
-        binding?.viewPager?.currentItem = newItem
+        binding?.viewPager?.setCurrentItem(newItem, smooth)
         updateBottomBarBadges()
     }
 

@@ -11,6 +11,7 @@ import android.os.IBinder
 import android.text.SpannableStringBuilder
 import android.text.style.DynamicDrawableSpan
 import android.view.View
+import android.view.ViewOutlineProvider
 import android.widget.RemoteViews
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.HabiticaBaseApplication
@@ -22,6 +23,7 @@ import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
 import java.util.*
 import javax.inject.Inject
+import kotlin.math.min
 
 class HabitButtonWidgetService : Service() {
     @Inject
@@ -57,8 +59,7 @@ class HabitButtonWidgetService : Service() {
             val parsedText = MarkdownParser.parseMarkdown(task.text)
 
             val builder = SpannableStringBuilder(parsedText)
-
-            remoteViews.setTextViewText(R.id.habit_title, builder)
+            remoteViews.setTextViewText(R.id.habit_title, builder.substring(0, min(builder.length, 70)))
 
             if (task.up != true) {
                 remoteViews.setViewVisibility(R.id.btnPlusWrapper, View.GONE)

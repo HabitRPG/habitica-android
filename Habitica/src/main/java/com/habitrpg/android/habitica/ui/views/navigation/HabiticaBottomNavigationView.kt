@@ -22,7 +22,7 @@ import com.habitrpg.android.habitica.extensions.setTintWith
 import com.habitrpg.android.habitica.models.tasks.Task
 
 interface HabiticaBottomNavigationViewListener {
-    fun onTabSelected(taskType: String)
+    fun onTabSelected(taskType: String, smooth: Boolean)
     fun onAdd(taskType: String)
 }
 
@@ -56,7 +56,7 @@ class HabiticaBottomNavigationView @JvmOverloads constructor(
         field = value
         if (wasChanged) {
             updateItemSelection()
-            listener?.onTabSelected(value)
+            listener?.onTabSelected(value, true)
         }
     }
 

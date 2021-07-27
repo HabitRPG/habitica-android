@@ -24,7 +24,6 @@ import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.activities.TaskFormActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
-import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemRecyclerFragment
 import com.habitrpg.android.habitica.ui.views.navigation.HabiticaBottomNavigationViewListener
 import com.habitrpg.android.habitica.ui.views.tasks.TaskFilterDialog
 import io.reactivex.rxjava3.disposables.Disposable
@@ -86,10 +85,10 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
                 switchToTaskTab(taskType)
             } else {
                 when (sharedPreferences.getString("launch_screen", "")) {
-                    "/user/tasks/habits" -> binding?.viewPager?.currentItem = 0
-                    "/user/tasks/dailies" -> binding?.viewPager?.currentItem = 1
-                    "/user/tasks/todos" -> binding?.viewPager?.currentItem = 2
-                    "/user/tasks/rewards" -> binding?.viewPager?.currentItem = 3
+                    "/user/tasks/habits" -> onTabSelected(Task.TYPE_HABIT, false)
+                    "/user/tasks/dailies" -> onTabSelected(Task.TYPE_DAILY, false)
+                    "/user/tasks/todos" -> onTabSelected(Task.TYPE_TODO, false)
+                    "/user/tasks/rewards" -> onTabSelected(Task.TYPE_REWARD, false)
                 }
             }
         }
@@ -104,6 +103,7 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
             3 -> Task.TYPE_REWARD
             else -> Task.TYPE_HABIT
         }
+        binding?.viewPager?.currentItem = binding?.viewPager?.currentItem ?: 0
         bottomNavigation?.listener = this
         bottomNavigation?.canAddTasks = true
     }
@@ -397,7 +397,7 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
     }
 
 
-    override fun onTabSelected(taskType: String) {
+    override fun onTabSelected(taskType: String, smooth: Boolean) {
         val newItem = when (taskType) {
             Task.TYPE_HABIT -> 0
             Task.TYPE_DAILY -> 1
@@ -405,7 +405,7 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
             Task.TYPE_REWARD -> 3
             else -> 0
         }
-        binding?.viewPager?.currentItem = newItem
+        binding?.viewPager?.setCurrentItem(newItem, smooth)
         updateBottomBarBadges()
     }
 

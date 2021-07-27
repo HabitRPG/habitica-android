@@ -63,7 +63,7 @@ class AppConfigManager(contentRepository: ContentRepository?) {
     }
 
     fun testingLevel(): AppTestingLevel {
-        return AppTestingLevel.valueOf(BuildConfig.TESTING_LEVEL.toUpperCase(Locale.US))
+        return AppTestingLevel.valueOf(BuildConfig.TESTING_LEVEL.uppercase())
     }
 
     fun enableLocalTaskScoring(): Boolean {
