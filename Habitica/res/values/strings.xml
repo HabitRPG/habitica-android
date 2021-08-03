@@ -1177,4 +1177,6 @@
     <string name="empty_guilds_list">You aren\'t a member of any Guilds.</string>
     <string name="empty_discover_description">Head over to the Discover tab to find some to join!</string>
     <string name="all_tasks_completed">You completed all your tasks. Well done!</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="terms_of_service">Terms of Service</string>
 </resources>

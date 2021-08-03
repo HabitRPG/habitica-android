@@ -2,12 +2,15 @@ package com.habitrpg.android.habitica.ui.fragments.tasks
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
+import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.core.content.edit
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.NO_POSITION
@@ -67,6 +70,8 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
     lateinit var soundManager: SoundManager
     @Inject
     lateinit var configManager: AppConfigManager
+    @Inject
+    lateinit var sharedPreferences: SharedPreferences
 
     internal var layoutManager: RecyclerView.LayoutManager? = null
 
@@ -351,6 +356,16 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
     private fun scoreTask(task: Task, direction: TaskDirection) {
         compositeSubscription.add(taskRepository.taskChecked(null, task, direction == TaskDirection.UP, false) { result ->
             handleTaskResult(result, task.value.toInt())
+            if (!DateUtils.isToday(sharedPreferences.getLong("last_task_reporting", 0))) {
+                AmplitudeManager.sendEvent(
+                    "task score",
+                    AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR,
+                    AmplitudeManager.EVENT_HITTYPE_EVENT
+                )
+                sharedPreferences.edit {
+                    putLong("last_task_reporting", Date().time)
+                }
+            }
         }.subscribeWithErrorHandler {})
     }
 

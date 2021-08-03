@@ -47,10 +47,6 @@ class NotificationPublisher : BroadcastReceiver() {
             HabiticaBaseApplication.userComponent?.inject(this)
         }
 
-        val additionalData = HashMap<String, Any>()
-        additionalData["identifier"] = "daily_reminder"
-        AmplitudeManager.sendEvent("receive notification", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT, additionalData)
-
         var wasInactive = false
         //Show special notification if user hasn't logged in for a week
         if (sharedPreferences.getLong("lastAppLaunch", Date().time) < (Date().time - 604800000L)) {

@@ -35,6 +35,8 @@ class AboutFragment : BaseMainFragment<FragmentAboutBinding>() {
         component.inject(this)
     }
 
+    private val privacyPolicyLink = "https://habitica.com/static/privacy"
+    private val termsLink = "https://habitica.com/static/terms"
     private val androidSourceCodeLink = "https://github.com/HabitRPG/habitrpg-android/"
     private val twitterLink = "https://twitter.com/habitica"
 
@@ -107,6 +109,8 @@ class AboutFragment : BaseMainFragment<FragmentAboutBinding>() {
             binding?.updateAvailableWrapper?.visibility = View.GONE
         }
 
+        binding?.privacyPolicyButton?.setOnClickListener { openBrowserLink(privacyPolicyLink) }
+        binding?.termsButton?.setOnClickListener { openBrowserLink(termsLink) }
         binding?.sourceCodeLink?.setOnClickListener { openBrowserLink(androidSourceCodeLink) }
         binding?.twitter?.setOnClickListener { openBrowserLink(twitterLink) }
         binding?.sourceCodeButton?.setOnClickListener { openBrowserLink(androidSourceCodeLink) }

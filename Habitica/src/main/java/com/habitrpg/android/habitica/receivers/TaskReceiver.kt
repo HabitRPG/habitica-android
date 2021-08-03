@@ -50,10 +50,6 @@ class TaskReceiver : BroadcastReceiver() {
                             return@Consumer
                         }
 
-                        val additionalData = HashMap<String, Any>()
-                        additionalData["identifier"] = "task_reminder"
-                        AmplitudeManager.sendEvent("receive notification", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT, additionalData)
-
                         createNotification(context, it)
                     }, RxErrorHandler.handleEmptyError())
         }

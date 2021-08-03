@@ -377,9 +377,16 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         if ((intent.hasExtra("notificationIdentifier") || intent.hasExtra("openURL")) && lastNotificationOpen != intent.getLongExtra("notificationTimeStamp", 0)) {
             lastNotificationOpen = intent.getLongExtra("notificationTimeStamp", 0)
             val identifier = intent.getStringExtra("notificationIdentifier") ?: ""
-            val additionalData = HashMap<String, Any>()
-            additionalData["identifier"] = identifier
-            AmplitudeManager.sendEvent("open notification", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT, additionalData)
+            if (intent.hasExtra("isPromo")) {
+                val additionalData = HashMap<String, Any>()
+                additionalData["identifier"] = identifier
+                AmplitudeManager.sendEvent(
+                    "open notification",
+                    AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR,
+                    AmplitudeManager.EVENT_HITTYPE_EVENT,
+                    additionalData
+                )
+            }
             retrieveUser(true)
             NotificationOpenHandler.handleOpenedByNotification(identifier, intent)
         }

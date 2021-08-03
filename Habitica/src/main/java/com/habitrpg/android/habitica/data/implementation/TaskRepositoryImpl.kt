@@ -92,6 +92,7 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
                 }
                 .map { (res, user): Pair<TaskDirectionData, User> ->
                     // save local task changes
+
                     analyticsManager.logEvent("task_scored", bundleOf(
                             Pair("type", task.type),
                             Pair("scored_up", up),
