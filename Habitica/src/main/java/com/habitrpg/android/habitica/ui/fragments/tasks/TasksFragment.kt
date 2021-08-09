@@ -5,10 +5,12 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.PorterDuff
 import android.os.Bundle
+import android.text.format.DateUtils
 import android.view.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
+import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
@@ -362,6 +364,17 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
                 if (index != -1) {
                     val fragment = viewFragmentsDictionary?.get(index)
                     fragment?.binding?.recyclerView?.scrollToPosition(0)
+                }
+            }
+
+            if (!DateUtils.isToday(sharedPreferences.getLong("last_creation_reporting", 0))) {
+                AmplitudeManager.sendEvent(
+                    "task created",
+                    AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR,
+                    AmplitudeManager.EVENT_HITTYPE_EVENT
+                )
+                sharedPreferences.edit {
+                    putLong("last_creation_reporting", Date().time)
                 }
             }
         }

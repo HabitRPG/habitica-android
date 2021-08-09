@@ -84,6 +84,8 @@ class GemsPurchaseFragment : BaseFragment<FragmentGemPurchaseBinding>(), GemPurc
         } else {
             binding?.promoBanner?.visibility = View.GONE
         }
+
+        AmplitudeManager.sendNavigationEvent("gem screen")
     }
 
     override fun setupCheckout() {

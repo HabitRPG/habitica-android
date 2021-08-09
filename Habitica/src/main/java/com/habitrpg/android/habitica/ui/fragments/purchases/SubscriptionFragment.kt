@@ -18,6 +18,7 @@ import com.habitrpg.android.habitica.events.UserSubscribedEvent
 import com.habitrpg.android.habitica.extensions.addCancelButton
 import com.habitrpg.android.habitica.extensions.isUsingNightModeResources
 import com.habitrpg.android.habitica.extensions.layoutInflater
+import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.PurchaseHandler
 import com.habitrpg.android.habitica.helpers.PurchaseTypes
@@ -108,6 +109,8 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>(), GemPur
             DataBindingUtils.loadImage(binding?.subBenefitsMysteryItemIcon, "shop_set_mystery_${it.key?.split("_")?.last()}")
             binding?.subBenefitsMysteryItemText?.text = context?.getString(R.string.subscribe_listitem3_description_new, it.text)
         }, RxErrorHandler.handleEmptyError()))
+
+        AmplitudeManager.sendNavigationEvent("subscription screen")
     }
 
     override fun onResume() {

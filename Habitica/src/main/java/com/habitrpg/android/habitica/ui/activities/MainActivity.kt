@@ -377,7 +377,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         if ((intent.hasExtra("notificationIdentifier") || intent.hasExtra("openURL")) && lastNotificationOpen != intent.getLongExtra("notificationTimeStamp", 0)) {
             lastNotificationOpen = intent.getLongExtra("notificationTimeStamp", 0)
             val identifier = intent.getStringExtra("notificationIdentifier") ?: ""
-            if (intent.hasExtra("isPromo")) {
+            if (intent.hasExtra("sendAnalytics")) {
                 val additionalData = HashMap<String, Any>()
                 additionalData["identifier"] = identifier
                 AmplitudeManager.sendEvent(

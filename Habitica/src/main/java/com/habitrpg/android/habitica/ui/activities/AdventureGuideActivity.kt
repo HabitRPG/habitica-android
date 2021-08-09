@@ -15,6 +15,7 @@ import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.ActivityAdventureGuideBinding
 import com.habitrpg.android.habitica.databinding.AdventureGuideItemBinding
 import com.habitrpg.android.habitica.extensions.fromHtml
+import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
@@ -66,6 +67,8 @@ class AdventureGuideActivity : BaseActivity() {
 
         val descriptionText = getString(R.string.adventure_guide_description)
         binding.descriptionView.setText(descriptionText.fromHtml(), TextView.BufferType.SPANNABLE)
+
+        AmplitudeManager.sendNavigationEvent("adventure guide screen")
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

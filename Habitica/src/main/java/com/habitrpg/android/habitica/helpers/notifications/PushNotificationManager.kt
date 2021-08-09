@@ -70,7 +70,7 @@ class PushNotificationManager(var apiClient: ApiClient, private val sharedPrefer
         val notificationFactory = HabiticaLocalNotificationFactory()
         val notification = notificationFactory.build(remoteMessageIdentifier, context)
         if (userIsSubscribedToNotificationType(remoteMessageIdentifier) && notification != null) {
-            if (remoteMessage.data.containsKey("isPromo")) {
+            if (remoteMessage.data.containsKey("sendAnalytics")) {
                 val additionalData = HashMap<String, Any>()
                 additionalData["identifier"] = remoteMessageIdentifier ?: ""
                 AmplitudeManager.sendEvent(

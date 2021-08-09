@@ -4,7 +4,7 @@ import com.amplitude.api.Amplitude
 import com.habitrpg.android.habitica.BuildConfig
 import org.json.JSONException
 import org.json.JSONObject
-
+import java.util.HashMap
 
 object AmplitudeManager {
     var EVENT_CATEGORY_BEHAVIOUR = "behaviour"
@@ -34,5 +34,11 @@ object AmplitudeManager {
         } catch (exception: JSONException) {
         }
         Amplitude.getInstance().logEvent(eventAction, eventProperties)
+    }
+
+    fun sendNavigationEvent(page: String) {
+        val additionalData = HashMap<String, Any>()
+        additionalData["page"] = page
+        sendEvent("navigated", EVENT_CATEGORY_NAVIGATION, EVENT_HITTYPE_PAGEVIEW, additionalData)
     }
 }

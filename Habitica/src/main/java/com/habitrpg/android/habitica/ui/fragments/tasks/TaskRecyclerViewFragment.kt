@@ -358,7 +358,7 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
             handleTaskResult(result, task.value.toInt())
             if (!DateUtils.isToday(sharedPreferences.getLong("last_task_reporting", 0))) {
                 AmplitudeManager.sendEvent(
-                    "task score",
+                    "task scored",
                     AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR,
                     AmplitudeManager.EVENT_HITTYPE_EVENT
                 )

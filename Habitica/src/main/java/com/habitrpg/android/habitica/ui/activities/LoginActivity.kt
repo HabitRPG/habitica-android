@@ -149,7 +149,6 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
 
         val additionalData = HashMap<String, Any>()
         additionalData["page"] = this.javaClass.simpleName
-        AmplitudeManager.sendEvent("navigate", AmplitudeManager.EVENT_CATEGORY_NAVIGATION, AmplitudeManager.EVENT_HITTYPE_PAGEVIEW, additionalData)
 
         binding.backgroundContainer.post { binding.backgroundContainer.scrollTo(0, binding.backgroundContainer.bottom) }
         binding.backgroundContainer.isScrollable = false

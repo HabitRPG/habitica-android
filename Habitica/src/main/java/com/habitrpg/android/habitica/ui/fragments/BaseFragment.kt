@@ -59,10 +59,6 @@ abstract class BaseFragment<VB: ViewBinding> : Fragment() {
 
         }
 
-        val additionalData = HashMap<String, Any>()
-        additionalData["page"] = this.javaClass.simpleName
-        AmplitudeManager.sendEvent("navigate", AmplitudeManager.EVENT_CATEGORY_NAVIGATION, AmplitudeManager.EVENT_HITTYPE_PAGEVIEW, additionalData)
-
         binding = createBinding(inflater, container)
         return binding?.root
     }
