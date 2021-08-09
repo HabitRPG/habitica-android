@@ -119,7 +119,9 @@ class AvatarCustomizationFragment : BaseMainFragment<FragmentRefreshRecyclerview
 
     private fun loadCustomizations() {
         val type = this.type ?: return
-        compositeSubscription.add(customizationRepository.getCustomizations(type, category, false).subscribe({ adapter.setCustomizations(it) }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(customizationRepository.getCustomizations(type, category, false).subscribe({
+            adapter.setCustomizations(if (type == "background") { it.reversed() } else { it })
+                                                                                                             }, RxErrorHandler.handleEmptyError()))
         if (type == "hair" && (category == "beard" || category == "mustache")) {
             val otherCategory = if (category == "mustache") "beard" else "mustache"
             compositeSubscription.add(customizationRepository.getCustomizations(type, otherCategory, true).subscribe({ adapter.additionalSetItems = it }, RxErrorHandler.handleEmptyError()))
