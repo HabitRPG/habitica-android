@@ -69,8 +69,9 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
         observable
                 .filter { it.data != null }
                 .map { habitResponse ->
-                    if (habitResponse.notifications != null) {
-                        notificationsManager.setNotifications(habitResponse.notifications)
+                    habitResponse.notifications?.let {
+                        notificationsManager.setNotifications(it)
+
                     }
                     habitResponse.data
                 }
@@ -341,21 +342,11 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
     }
 
     override fun validateSubscription(request: SubscriptionValidationRequest): Flowable<Any> {
-        return apiService.validateSubscription(request).map { habitResponse ->
-            if (habitResponse.notifications != null) {
-                notificationsManager.setNotifications(habitResponse.notifications)
-            }
-            habitResponse.data
-        }
+        return apiService.validateSubscription(request).compose(configureApiCallObserver())
     }
 
     override fun validateNoRenewSubscription(request: PurchaseValidationRequest): Flowable<Any> {
-        return apiService.validateNoRenewSubscription(request).map { habitResponse ->
-            if (habitResponse.notifications != null) {
-                notificationsManager.setNotifications(habitResponse.notifications)
-            }
-            habitResponse.data
-        }
+        return apiService.validateNoRenewSubscription(request).compose(configureApiCallObserver())
     }
 
     override fun cancelSubscription(): Flowable<Void> {
@@ -600,12 +591,7 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
     }
 
     override fun validatePurchase(request: PurchaseValidationRequest): Flowable<PurchaseValidationResult> {
-        return apiService.validatePurchase(request).map { habitResponse ->
-            if (habitResponse.notifications != null) {
-                notificationsManager.setNotifications(habitResponse.notifications)
-            }
-            habitResponse.data
-        }
+        return apiService.validatePurchase(request).compose(configureApiCallObserver())
     }
 
     override fun changeCustomDayStart(updateObject: Map<String, Any>): Flowable<User> {
