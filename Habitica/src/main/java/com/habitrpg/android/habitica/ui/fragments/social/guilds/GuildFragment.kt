@@ -58,21 +58,23 @@ class GuildFragment : BaseMainFragment<FragmentViewpagerBinding>() {
             viewModel.setGroupID(args.groupID)
         }
 
-        binding?.viewPager?.currentItem = 0
-
         setViewPagerAdapter()
         setFragments()
-
-        arguments?.let {
-            val args = GuildFragmentArgs.fromBundle(it)
-            binding?.viewPager?.currentItem = args.tabToOpen
-        }
 
         if (viewModel.groupID == "f2db2a7f-13c5-454d-b3ee-ea1f5089e601") {
             context?.let { FirebaseAnalytics.getInstance(it).logEvent("opened_no_party_guild", null) }
         }
 
         viewModel.retrieveGroup {  }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        arguments?.let {
+            val args = GuildFragmentArgs.fromBundle(it)
+            binding?.viewPager?.setCurrentItem(args.tabToOpen, false)
+        }
     }
 
     private fun setFragments() {
