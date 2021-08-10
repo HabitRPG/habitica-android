@@ -219,7 +219,10 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
                     task1.dateCreated = Date()
                     task1
                 }
-                .doOnNext { localRepository.save(it) }
+                .doOnNext {
+                    it.tags = task.tags
+                    localRepository.save(it)
+                }
                 .doOnError {
                     task.hasErrored = true
                     task.isSaving = false
@@ -246,6 +249,7 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
                     task1
                 }
                 .doOnSuccess {
+                    it.tags = task.tags
                     localRepository.save(it)
                 }
                 .doOnError {
