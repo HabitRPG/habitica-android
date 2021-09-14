@@ -263,3 +263,4 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
             replyToUserUUID?.let { FullProfileActivity.open(it) }
         }
     }
+    
