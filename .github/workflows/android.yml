@@ -66,5 +66,5 @@ jobs:
         target: "Habitica/google-services.json"
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
-    - name: Build with Gradle
-      run: ./gradlew check
+    - name: Run Ktlint
+      run: ./gradlew ktlint
