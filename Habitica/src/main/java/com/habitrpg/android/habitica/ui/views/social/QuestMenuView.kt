@@ -17,6 +17,7 @@ import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
+import java.util.Locale
 
 class QuestMenuView : LinearLayout {
     private val binding = QuestMenuViewBinding.inflate(context.layoutInflater, this, true)
@@ -62,7 +63,7 @@ class QuestMenuView : LinearLayout {
     }
 
     fun configure(user: User) {
-        binding.pendingDamageTextView.text = String.format("%.01f", (user.party?.quest?.progress?.up ?: 0f))
+        binding.pendingDamageTextView.text = String.format(Locale.getDefault(), "%.01f", (user.party?.quest?.progress?.up ?: 0f))
     }
 
     fun hideBossArt() {

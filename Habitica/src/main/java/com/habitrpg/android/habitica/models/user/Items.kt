@@ -39,18 +39,18 @@ open class Items : RealmObject, BaseObject {
     var mounts: RealmList<OwnedMount>? = null
     var currentMount: String? = null
     var currentPet: String? = null
-    var lastDrop_count: Int = 0
-    var lastDrop_date: Date? = null
+    var lastDropCount: Int = 0
+    var lastDropDate: Date? = null
 
     // private QuestContent quest;
     var gear: Gear? = null
     var special: SpecialItems? = null
 
-    constructor(currentMount: String, currentPet: String, lastDrop_count: Int, lastDrop_date: Date) {
+    constructor(currentMount: String, currentPet: String, lastDropCount: Int, lastDropDate: Date) {
         this.currentMount = currentMount
         this.currentPet = currentPet
-        this.lastDrop_count = lastDrop_count
-        this.lastDrop_date = lastDrop_date
+        this.lastDropCount = lastDropCount
+        this.lastDropDate = lastDropDate
     }
 
     constructor()

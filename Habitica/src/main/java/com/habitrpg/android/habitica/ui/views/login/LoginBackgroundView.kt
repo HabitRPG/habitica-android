@@ -83,15 +83,9 @@ class LoginBackgroundView(context: Context, attrs: AttributeSet?) : RelativeLayo
 
     private fun generateStars(largeCount: Int, mediumCount: Int, smallCount: Int) {
         removeStarViews()
-        for (x in 0 until largeCount) {
-            generateStar(2)
-        }
-        for (x in 0 until mediumCount) {
-            generateStar(1)
-        }
-        for (x in 0 until smallCount) {
-            generateStar(0)
-        }
+        repeat((0 until largeCount).count()) { generateStar(2) }
+        repeat((0 until mediumCount).count()) { generateStar(1) }
+        repeat((0 until smallCount).count()) { generateStar(0) }
         requestLayout()
     }
 

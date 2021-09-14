@@ -12,6 +12,7 @@ import com.habitrpg.android.habitica.executors.UIThread
 import com.habitrpg.android.habitica.helpers.*
 import com.habitrpg.android.habitica.helpers.KeyHelper.Companion.getInstance
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
+import com.habitrpg.shared.habitica.HLogger
 import dagger.Module
 import dagger.Provides
 import java.io.IOException
@@ -42,13 +43,13 @@ class AppModule(private val application: Application) {
             keyStore.load(null)
             return keyStore
         } catch (e: KeyStoreException) {
-            e.printStackTrace()
+            HLogger.logException("KeyHelper", "Error initializing", e)
         } catch (e: CertificateException) {
-            e.printStackTrace()
+            HLogger.logException("KeyHelper", "Error initializing", e)
         } catch (e: NoSuchAlgorithmException) {
-            e.printStackTrace()
+            HLogger.logException("KeyHelper", "Error initializing", e)
         } catch (e: IOException) {
-            e.printStackTrace()
+            HLogger.logException("KeyHelper", "Error initializing", e)
         }
         return null
     }

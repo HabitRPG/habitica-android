@@ -114,7 +114,7 @@ class OldQuestProgressView : LinearLayout {
         val collectedItems = user.party?.quest?.progress?.collectedItems
         if (userOnQuest == true) {
             binding.bossHealthView.pendingValue = value
-            binding.bossHealthView.description = String.format("%.01f dmg pending", value)
+            binding.bossHealthView.description = context.getString(R.string.damage_pending, value)
             binding.bossHealthView.descriptionIconVisibility = View.VISIBLE
             binding.collectedItemsNumberView.text = context.getString(R.string.quest_items_found, collectedItems)
         } else {

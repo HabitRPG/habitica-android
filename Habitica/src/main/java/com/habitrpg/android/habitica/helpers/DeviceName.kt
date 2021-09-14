@@ -398,7 +398,7 @@ object DeviceName {
     @WorkerThread
     fun getDeviceInfo(context: Context, codename: String?, model: String?): DeviceInfo {
         val prefs = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
-        val key = String.format("%s:%s", codename, model)
+        val key = String.format(Locale.getDefault(), "%s:%s", codename, model)
         val savedJson = prefs.getString(key, null)
         if (savedJson != null) {
             try {

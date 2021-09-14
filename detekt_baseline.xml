@@ -1,7 +1,64 @@
 <?xml version="1.0" ?>
 <SmellBaseline>
-  <Blacklist></Blacklist>
-  <Whitelist>
+  <ManuallySuppressedIssues></ManuallySuppressedIssues>
+  <CurrentIssues>
+    <ID>ComplexCondition:AutocompleteAdapter.kt$AutocompleteAdapter.&lt;no name provided&gt;$constraint[0] == '@' &amp;&amp; constraint.length &gt;= 3 &amp;&amp; socialRepository != null &amp;&amp; remoteAutocomplete</ID>
+    <ID>ComplexCondition:AvatarStatsWidgetProvider.kt$AvatarStatsWidgetProvider$showManaBar &amp;&amp; (stats.habitClass == null || (stats.lvl ?: 0) &lt; 10 || user.preferences?.disableClasses == true)</ID>
+    <ID>ComplexCondition:AvatarStatsWidgetProvider.kt$AvatarStatsWidgetProvider$user == null || stats == null || context == null || appWidgetManager == null</ID>
+    <ID>ComplexCondition:BaseDialogFragment.kt$BaseDialogFragment$step != null &amp;&amp; step.isValid &amp;&amp; step.isManaged &amp;&amp; step.shouldDisplay()</ID>
+    <ID>ComplexCondition:BaseFragment.kt$BaseFragment$step != null &amp;&amp; step.isValid &amp;&amp; step.isManaged &amp;&amp; step.shouldDisplay()</ID>
+    <ID>ComplexCondition:ChallengeListFragment.kt$ChallengeListFragment$(!forced &amp;&amp; binding?.refreshLayout?.isRefreshing == true) || loadedAllData || !this::challengeRepository.isInitialized</ID>
+    <ID>ComplexCondition:ChatRecyclerViewHolder.kt$ChatRecyclerMessageViewHolder$(name != null &amp;&amp; msg.text?.contains("@$name") == true) || (username != null &amp;&amp; msg.text?.contains(username) == true)</ID>
+    <ID>ComplexCondition:HabitViewHolder.kt$HabitViewHolder$data.counterUp != null &amp;&amp; data.counterUp ?: 0 &gt; 0 &amp;&amp; data.counterDown != null &amp;&amp; data.counterDown ?: 0 &gt; 0</ID>
+    <ID>ComplexCondition:LoginActivity.kt$LoginActivity$username.isEmpty() || password.isEmpty() || email.isEmpty() || confirmPassword.isEmpty()</ID>
+    <ID>ComplexCondition:LoginBackgroundView.kt$LoginBackgroundView$viewWidth &lt;= 0 || viewHeight &lt;= 0 || didLayoutStars || starViews?.size == 0</ID>
+    <ID>ComplexCondition:NavigationDrawerFragment.kt$NavigationDrawerFragment$adapter.selectedItem != null &amp;&amp; adapter.selectedItem == transitionId &amp;&amp; bundle == null &amp;&amp; preventReselection</ID>
+    <ID>ComplexCondition:PurchaseDialog.kt$PurchaseDialog$(shopItem.currency != "gold" || shopItem.canAfford(user, purchaseQuantity)) &amp;&amp; !shopItem.locked &amp;&amp; purchaseQuantity &gt;= 1</ID>
+    <ID>ComplexCondition:PurchaseDialog.kt$PurchaseDialog$shopIdentifier != null &amp;&amp; shopIdentifier == Shop.TIME_TRAVELERS_SHOP || "mystery_set" == shopItem.purchaseType || shopItem.currency == "hourglasses"</ID>
+    <ID>ComplexCondition:PushNotificationManager.kt$PushNotificationManager$this.refreshedToken.isEmpty() || this.user == null || this.userHasPushDevice() || !this.userIsSubscribedToNotifications()</ID>
+    <ID>ComplexCondition:QuestProgressView.kt$QuestProgressView$quest == null || progress == null || !quest.isValid || !progress.isValid</ID>
+    <ID>ComplexCondition:RealmTaskLocalRepository.kt$RealmTaskLocalRepository$firstTask != null &amp;&amp; secondTask != null &amp;&amp; firstTask.isValid &amp;&amp; secondTask.isValid</ID>
+    <ID>ComplexCondition:RxErrorHandler.kt$RxErrorHandler.Companion$!IOException::class.java.isAssignableFrom(throwable.javaClass) &amp;&amp; !HttpException::class.java.isAssignableFrom(throwable.javaClass) &amp;&amp; !retrofit2.HttpException::class.java.isAssignableFrom(throwable.javaClass) &amp;&amp; !EOFException::class.java.isAssignableFrom(throwable.javaClass) &amp;&amp; throwable !is ConnectionShutdownException</ID>
+    <ID>ComplexCondition:SafeDefaultItemAnimator.kt$SafeDefaultItemAnimator$!removalsPending &amp;&amp; !movesPending &amp;&amp; !additionsPending &amp;&amp; !changesPending</ID>
+    <ID>ComplexCondition:SubscriptionFragment.kt$SubscriptionFragment$user?.purchased?.plan?.paymentMethod == "Google" &amp;&amp; user?.purchased?.plan?.isActive == true &amp;&amp; user?.purchased?.plan?.dateTerminated == null &amp;&amp; (purchasedSubscription?.autoRenewing == false || purchasedSubscription == null)</ID>
+    <ID>ComplexMethod:AvatarStatsWidgetProvider.kt$AvatarStatsWidgetProvider$private fun updateData(user: User?)</ID>
+    <ID>ComplexMethod:AvatarView.kt$AvatarView$@Suppress("ReturnCount") private fun getAvatarLayerMap(avatar: Avatar, substitutions: Map&lt;String, Map&lt;String, String&gt;&gt;): EnumMap&lt;LayerType, String&gt;</ID>
+    <ID>ComplexMethod:AvatarView.kt$AvatarView$private fun getLayerBounds(layerType: LayerType, layerName: String, drawable: Drawable): Rect</ID>
+    <ID>ComplexMethod:BaseActivity.kt$BaseActivity$internal open fun loadTheme(sharedPreferences: SharedPreferences, forced: Boolean = false)</ID>
+    <ID>ComplexMethod:BaseTaskViewHolder.kt$BaseTaskViewHolder$override fun bind(data: Task, position: Int, displayMode: String)</ID>
+    <ID>ComplexMethod:ChatMessageDeserializer.kt$ChatMessageDeserializer$@Throws(JsonParseException::class) override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): ChatMessage</ID>
+    <ID>ComplexMethod:ChatRecyclerViewHolder.kt$ChatRecyclerMessageViewHolder$fun bind(msg: ChatMessage, uuid: String, user: User?, isExpanded: Boolean)</ID>
+    <ID>ComplexMethod:ChecklistedViewHolder.kt$ChecklistedViewHolder$private fun updateChecklistDisplay()</ID>
+    <ID>ComplexMethod:CustomizationSetupAdapter.kt$CustomizationSetupAdapter$private fun isCustomizationActive(customization: SetupCustomization): Boolean</ID>
+    <ID>ComplexMethod:DeviceName.kt$DeviceName$ fun getDeviceName(codename: String?, model: String?, fallback: String?): String?</ID>
+    <ID>ComplexMethod:GroupSerialization.kt$GroupSerialization$@Throws(JsonParseException::class) override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): Group</ID>
+    <ID>ComplexMethod:HabitViewHolder.kt$HabitViewHolder$override fun bind(data: Task, position: Int, displayMode: String)</ID>
+    <ID>ComplexMethod:ItemRecyclerAdapter.kt$ItemRecyclerAdapter.ItemViewHolder$override fun onClick(v: View)</ID>
+    <ID>ComplexMethod:LocalNotificationActionReceiver.kt$LocalNotificationActionReceiver$private fun handleLocalNotificationAction(action: String?)</ID>
+    <ID>ComplexMethod:MemberSerialization.kt$MemberSerialization$@Throws(JsonParseException::class) override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): Member</ID>
+    <ID>ComplexMethod:NavigationDrawerFragment.kt$NavigationDrawerFragment$private fun updateUser(user: User)</ID>
+    <ID>ComplexMethod:Notification.kt$Notification$fun getDataType(): java.lang.reflect.Type?</ID>
+    <ID>ComplexMethod:NotificationsManager.kt$NotificationsManager$private fun handlePopupNotifications(notifications: List&lt;Notification&gt;): Boolean?</ID>
+    <ID>ComplexMethod:PetSuggestHatchDialog.kt$PetSuggestHatchDialog$fun configure(pet: Animal, egg: Egg?, potion: HatchingPotion?, eggCount: Int, potionCount: Int, hasUnlockedEgg: Boolean, hasUnlockedPotion: Boolean, hasMount: Boolean)</ID>
+    <ID>ComplexMethod:PreferencesFragment.kt$PreferencesFragment$override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String)</ID>
+    <ID>ComplexMethod:PurchaseDialog.kt$PurchaseDialog$private fun buyItem(quantity: Int)</ID>
+    <ID>ComplexMethod:SafeDefaultItemAnimator.kt$SafeDefaultItemAnimator$override fun runPendingAnimations()</ID>
+    <ID>ComplexMethod:SetupCustomizationRepositoryImpl.kt$SetupCustomizationRepositoryImpl$override fun getCustomizations(type: String, subtype: String?, user: User): List&lt;SetupCustomization&gt;</ID>
+    <ID>ComplexMethod:StableRecyclerFragment.kt$StableRecyclerFragment$private fun mapAnimals(unsortedAnimals: List&lt;Animal&gt;, ownedAnimals: Map&lt;String, OwnedObject&gt;): ArrayList&lt;Any&gt;</ID>
+    <ID>ComplexMethod:StatsFragment.kt$StatsFragment$private fun updateStats(user: User)</ID>
+    <ID>ComplexMethod:SubscriptionDetailsView.kt$SubscriptionDetailsView$fun setPlan(plan: SubscriptionPlan)</ID>
+    <ID>ComplexMethod:TaskFormActivity.kt$TaskFormActivity$override fun onCreate(savedInstanceState: Bundle?)</ID>
+    <ID>ComplexMethod:TaskFormActivity.kt$TaskFormActivity$private fun fillForm(task: Task)</ID>
+    <ID>ComplexMethod:TaskRepositoryImpl.kt$TaskRepositoryImpl$@Suppress("ReturnCount") override fun taskChecked(user: User?, task: Task, up: Boolean, force: Boolean, notifyFunc: ((TaskScoringResult) -&gt; Unit)?): Flowable&lt;TaskScoringResult?&gt;</ID>
+    <ID>ComplexMethod:TaskRepositoryImpl.kt$TaskRepositoryImpl$private fun handleTaskResponse(user: User, res: TaskDirectionData, task: Task, up: Boolean, localDelta: Float)</ID>
+    <ID>ComplexMethod:TaskSchedulingControls.kt$TaskSchedulingControls$private fun generateSummary()</ID>
+    <ID>ComplexMethod:TaskSerializer.kt$TaskSerializer$override fun deserialize(json: JsonElement?, typeOfT: Type?, context: JsonDeserializationContext): Task</ID>
+    <ID>ComplexMethod:UserDeserializer.kt$UserDeserializer$@Throws(JsonParseException::class) override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): User</ID>
+    <ID>ComplexMethod:UserStatComputer.kt$UserStatComputer$fun computeClassBonus(equipmentList: List&lt;Equipment&gt;, user: Avatar): List&lt;StatsRow&gt;</ID>
+    <ID>ComplexMethod:WorldStateSerialization.kt$WorldStateSerialization$override fun deserialize(json: JsonElement?, typeOfT: Type?, context: JsonDeserializationContext?): WorldState</ID>
+    <ID>ConstructorParameterNaming:BoughtGemsEvent.kt$BoughtGemsEvent$var NewGemsToAdd: Int</ID>
+    <ID>ConstructorParameterNaming:Days.kt$Days$`in`: Parcel</ID>
+    <ID>ConstructorParameterNaming:Task.kt$Task$`in`: Parcel</ID>
     <ID>DuplicateCaseInWhenExpression:Notification.kt$Notification$when (type) { Type.LOGIN_INCENTIVE.type -&gt; LoginIncentiveData::class.java Type.NEW_STUFF.type -&gt; NewStuffData::class.java Type.NEW_CHAT_MESSAGE.type -&gt; NewChatMessageData::class.java Type.GROUP_TASK_NEEDS_WORK.type -&gt; GroupTaskNeedsWorkData::class.java Type.GROUP_TASK_APPROVED.type -&gt; GroupTaskApprovedData::class.java Type.GROUP_TASK_REQUIRES_APPROVAL.type -&gt; GroupTaskRequiresApprovalData::class.java Type.UNALLOCATED_STATS_POINTS.type -&gt; UnallocatedPointsData::class.java Type.GUILD_INVITATION.type -&gt; GuildInvitationData::class.java Type.PARTY_INVITATION.type -&gt; PartyInvitationData::class.java Type.QUEST_INVITATION.type -&gt; QuestInvitationData::class.java Type.FIRST_DROP.type -&gt; FirstDropData::class.java Type.ACHIEVEMENT_GENERIC.type -&gt; AchievementData::class.java Type.WON_CHALLENGE.type -&gt; ChallengeWonData::class.java Type.ACHIEVEMENT_ALL_YOUR_BASE.type -&gt; AchievementData::class.java Type.ACHIEVEMENT_BACK_TO_BASICS.type -&gt; AchievementData::class.java Type.ACHIEVEMENT_JUST_ADD_WATER.type -&gt; AchievementData::class.java Type.ACHIEVEMENT_LOST_MASTERCLASSER.type -&gt; AchievementData::class.java Type.ACHIEVEMENT_MIND_OVER_MATTER.type -&gt; AchievementData::class.java Type.ACHIEVEMENT_DUST_DEVIL.type -&gt; AchievementData::class.java Type.ACHIEVEMENT_ARID_AUTHORITY.type -&gt; AchievementData::class.java Type.ACHIEVEMENT_MONSTER_MAGUS.type -&gt; AchievementData::class.java Type.ACHIEVEMENT_UNDEAD_UNDERTAKER.type -&gt; AchievementData::class.java Type.ACHIEVEMENT_PRIMED_FOR_PAINTING.type -&gt; AchievementData::class.java Type.ACHIEVEMENT_PEARLY_PRO.type -&gt; AchievementData::class.java Type.ACHIEVEMENT_TICKLED_PINK.type -&gt; AchievementData::class.java Type.ACHIEVEMENT_ROSY_OUTLOOK.type -&gt; AchievementData::class.java Type.ACHIEVEMENT_BUG_BONANZA.type -&gt; AchievementData::class.java Type.ACHIEVEMENT_BARE_NECESSITIES.type -&gt; AchievementData::class.java Type.ACHIEVEMENT_FRESHWATER_FRIENDS.type -&gt; AchievementData::class.java Type.ACHIEVEMENT_GOOD_AS_GOLD.type -&gt; AchievementData::class.java Type.ACHIEVEMENT_ALL_THAT_GLITTERS.type -&gt; AchievementData::class.java Type.ACHIEVEMENT_GOOD_AS_GOLD.type -&gt; AchievementData::class.java Type.ACHIEVEMENT_BONE_COLLECTOR.type -&gt; AchievementData::class.java Type.ACHIEVEMENT_SKELETON_CREW.type -&gt; AchievementData::class.java Type.ACHIEVEMENT_SEEING_RED.type -&gt; AchievementData::class.java Type.ACHIEVEMENT_RED_LETTER_DAY.type -&gt; AchievementData::class.java else -&gt; null }</ID>
     <ID>DuplicateCaseInWhenExpression:NotificationsManager.kt$NotificationsManager$when (it.type) { Notification.Type.LOGIN_INCENTIVE.type -&gt; displayLoginIncentiveNotification(it) Notification.Type.ACHIEVEMENT_PARTY_UP.type -&gt; displayAchievementNotification(it) Notification.Type.ACHIEVEMENT_PARTY_ON.type -&gt; displayAchievementNotification(it) Notification.Type.ACHIEVEMENT_BEAST_MASTER.type -&gt; displayAchievementNotification(it) Notification.Type.ACHIEVEMENT_MOUNT_MASTER.type -&gt; displayAchievementNotification(it) Notification.Type.ACHIEVEMENT_TRIAD_BINGO.type -&gt; displayAchievementNotification(it) Notification.Type.ACHIEVEMENT_GUILD_JOINED.type -&gt; displayAchievementNotification(it) Notification.Type.ACHIEVEMENT_CHALLENGE_JOINED.type -&gt; displayAchievementNotification(it) Notification.Type.ACHIEVEMENT_INVITED_FRIEND.type -&gt; displayAchievementNotification(it) Notification.Type.WON_CHALLENGE.type -&gt; displayWonChallengeNotificaiton(it) Notification.Type.ACHIEVEMENT_ALL_YOUR_BASE.type -&gt; displayAchievementNotification(it) Notification.Type.ACHIEVEMENT_BACK_TO_BASICS.type -&gt; displayAchievementNotification(it) Notification.Type.ACHIEVEMENT_JUST_ADD_WATER.type -&gt; displayAchievementNotification(it) Notification.Type.ACHIEVEMENT_LOST_MASTERCLASSER.type -&gt; displayAchievementNotification(it) Notification.Type.ACHIEVEMENT_MIND_OVER_MATTER.type -&gt; displayAchievementNotification(it) Notification.Type.ACHIEVEMENT_DUST_DEVIL.type -&gt; displayAchievementNotification(it) Notification.Type.ACHIEVEMENT_ARID_AUTHORITY.type -&gt; displayAchievementNotification(it) Notification.Type.ACHIEVEMENT_MONSTER_MAGUS.type -&gt; displayAchievementNotification(it) Notification.Type.ACHIEVEMENT_UNDEAD_UNDERTAKER.type -&gt; displayAchievementNotification(it) Notification.Type.ACHIEVEMENT_PRIMED_FOR_PAINTING.type -&gt; displayAchievementNotification(it) Notification.Type.ACHIEVEMENT_PEARLY_PRO.type -&gt; displayAchievementNotification(it) Notification.Type.ACHIEVEMENT_TICKLED_PINK.type -&gt; displayAchievementNotification(it) Notification.Type.ACHIEVEMENT_ROSY_OUTLOOK.type -&gt; displayAchievementNotification(it) Notification.Type.ACHIEVEMENT_BUG_BONANZA.type -&gt; displayAchievementNotification(it) Notification.Type.ACHIEVEMENT_BARE_NECESSITIES.type -&gt; displayAchievementNotification(it) Notification.Type.ACHIEVEMENT_FRESHWATER_FRIENDS.type -&gt; displayAchievementNotification(it) Notification.Type.ACHIEVEMENT_GOOD_AS_GOLD.type -&gt; displayAchievementNotification(it) Notification.Type.ACHIEVEMENT_ALL_THAT_GLITTERS.type -&gt; displayAchievementNotification(it) Notification.Type.ACHIEVEMENT_GOOD_AS_GOLD.type -&gt; displayAchievementNotification(it) Notification.Type.ACHIEVEMENT_BONE_COLLECTOR.type -&gt; displayAchievementNotification(it) Notification.Type.ACHIEVEMENT_SKELETON_CREW.type -&gt; displayAchievementNotification(it) Notification.Type.ACHIEVEMENT_SEEING_RED.type -&gt; displayAchievementNotification(it) Notification.Type.ACHIEVEMENT_RED_LETTER_DAY.type -&gt; displayAchievementNotification(it) Notification.Type.ACHIEVEMENT_GENERIC.type -&gt; displayAchievementNotification( it, notifications.find { notif -&gt; notif.type == Notification.Type.ACHIEVEMENT_ONBOARDING_COMPLETE.type } != null ) Notification.Type.ACHIEVEMENT_ONBOARDING_COMPLETE.type -&gt; displayAchievementNotification(it) Notification.Type.FIRST_DROP.type -&gt; displayFirstDropNotification(it) else -&gt; false }</ID>
     <ID>EmptyCatchBlock:AmplitudeManager.kt$AmplitudeManager${ }</ID>
@@ -16,6 +73,77 @@
     <ID>EmptyFunctionBlock:SpookyExtraGemsHabiticaPromotion.kt$SpookyExtraGemsHabiticaPromotion${ }</ID>
     <ID>EmptyFunctionBlock:Survey2021Promotion.kt$Survey2021Promotion${ }</ID>
     <ID>EmptySecondaryConstructor:Server.kt$Server${}</ID>
+    <ID>FunctionParameterNaming:BaseLocalRepository.kt$BaseLocalRepository$`object`: T</ID>
+    <ID>FunctionParameterNaming:DragLinearLayout.kt$DragLinearLayout.Companion$`val`: Float</ID>
+    <ID>FunctionParameterNaming:FullProfileActivity.kt$FullProfileActivity$`val`: Float</ID>
+    <ID>LargeClass:MainActivity.kt$MainActivity : BaseActivityOnTutorialReaction</ID>
+    <ID>LongMethod:AvatarView.kt$AvatarView$@Suppress("ReturnCount") private fun getAvatarLayerMap(avatar: Avatar, substitutions: Map&lt;String, Map&lt;String, String&gt;&gt;): EnumMap&lt;LayerType, String&gt;</ID>
+    <ID>LongMethod:BaseTaskViewHolder.kt$BaseTaskViewHolder$override fun bind(data: Task, position: Int, displayMode: String)</ID>
+    <ID>LongMethod:ChallengeDetailFragment.kt$ChallengeDetailFragment$@Suppress("ReturnCount") override fun onViewCreated(view: View, savedInstanceState: Bundle?)</ID>
+    <ID>LongMethod:ChatRecyclerViewHolder.kt$ChatRecyclerMessageViewHolder$fun bind(msg: ChatMessage, uuid: String, user: User?, isExpanded: Boolean)</ID>
+    <ID>LongMethod:ContentDeserializer.kt$ContentDeserializer$@Throws(JsonParseException::class) override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): ContentResult</ID>
+    <ID>LongMethod:DeviceName.kt$DeviceName$ fun getDeviceName(codename: String?, model: String?, fallback: String?): String?</ID>
+    <ID>LongMethod:GroupSerialization.kt$GroupSerialization$@Throws(JsonParseException::class) override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): Group</ID>
+    <ID>LongMethod:HabitViewHolder.kt$HabitViewHolder$override fun bind(data: Task, position: Int, displayMode: String)</ID>
+    <ID>LongMethod:ItemDialogFragment.kt$ItemDialogFragment$override fun onViewCreated(view: View, savedInstanceState: Bundle?)</ID>
+    <ID>LongMethod:ItemRecyclerFragment.kt$ItemRecyclerFragment$override fun onViewCreated(view: View, savedInstanceState: Bundle?)</ID>
+    <ID>LongMethod:NavigationDrawerFragment.kt$NavigationDrawerFragment$@OptIn(ExperimentalTime::class) override fun onViewCreated(view: View, savedInstanceState: Bundle?)</ID>
+    <ID>LongMethod:NavigationDrawerFragment.kt$NavigationDrawerFragment$private fun updateUser(user: User)</ID>
+    <ID>LongMethod:PetSuggestHatchDialog.kt$PetSuggestHatchDialog$fun configure(pet: Animal, egg: Egg?, potion: HatchingPotion?, eggCount: Int, potionCount: Int, hasUnlockedEgg: Boolean, hasUnlockedPotion: Boolean, hasMount: Boolean)</ID>
+    <ID>LongMethod:PreferencesFragment.kt$PreferencesFragment$override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String)</ID>
+    <ID>LongMethod:SafeDefaultItemAnimator.kt$SafeDefaultItemAnimator$override fun endAnimations()</ID>
+    <ID>LongMethod:SafeDefaultItemAnimator.kt$SafeDefaultItemAnimator$override fun runPendingAnimations()</ID>
+    <ID>LongMethod:TaskFormActivity.kt$TaskFormActivity$override fun onCreate(savedInstanceState: Bundle?)</ID>
+    <ID>LongMethod:UserDeserializer.kt$UserDeserializer$@Throws(JsonParseException::class) override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): User</ID>
+    <ID>LongMethod:UserStatComputer.kt$UserStatComputer$fun computeClassBonus(equipmentList: List&lt;Equipment&gt;, user: Avatar): List&lt;StatsRow&gt;</ID>
+    <ID>LongParameterList:FullProfileActivity.kt$FullProfileActivity$(label: String, strVal: Float, intVal: Float, conVal: Float, perVal: Float, roundDown: Boolean, isSummary: Boolean)</ID>
+    <ID>LongParameterList:HabiticaSnackbar.kt$HabiticaSnackbar.Companion$(container: ViewGroup, leftImage: Drawable, title: CharSequence?, content: CharSequence?, displayType: SnackbarDisplayType, isCelebratory: Boolean = false)</ID>
+    <ID>LongParameterList:HabiticaSnackbar.kt$HabiticaSnackbar.Companion$(container: ViewGroup, leftImage: Drawable?, title: CharSequence?, content: CharSequence?, specialView: View?, rightIcon: Drawable?, rightTextColor: Int, rightText: String?, displayType: SnackbarDisplayType, isCelebratory: Boolean = false)</ID>
+    <ID>LongParameterList:HabiticaSnackbar.kt$HabiticaSnackbar.Companion$(container: ViewGroup, title: CharSequence?, content: CharSequence?, rightIcon: Drawable, rightTextColor: Int, rightText: String, displayType: SnackbarDisplayType, isCelebratory: Boolean = false)</ID>
+    <ID>LongParameterList:HabiticaSnackbar.kt$HabiticaSnackbar.Companion$(container: ViewGroup, title: CharSequence?, content: CharSequence?, specialView: View?, displayType: SnackbarDisplayType, isCelebratory: Boolean = false)</ID>
+    <ID>LongParameterList:NotifyUserUseCase.kt$NotifyUserUseCase.Companion$(context: Context, xp: Double?, hp: Double?, gold: Double?, mp: Double?, questDamage: Double?, user: User?)</ID>
+    <ID>LongParameterList:NotifyUserUseCase.kt$NotifyUserUseCase.RequestValues$(val context: AppCompatActivity, val snackbarTargetView: ViewGroup, val user: User?, val xp: Double?, val hp: Double?, val gold: Double?, val mp: Double?, val questDamage: Double?, val hasLeveledUp: Boolean?, val level: Int?)</ID>
+    <ID>LongParameterList:PetSuggestHatchDialog.kt$PetSuggestHatchDialog$(pet: Animal, egg: Egg?, potion: HatchingPotion?, eggCount: Int, potionCount: Int, hasUnlockedEgg: Boolean, hasUnlockedPotion: Boolean, hasMount: Boolean)</ID>
+    <ID>LongParameterList:PetViewHolder.kt$PetViewHolder$( item: Pet, trained: Int, eggCount: Int, potionCount: Int, canRaiseToMount: Boolean, ownsSaddles: Boolean, hasUnlockedEgg: Boolean, hasUnlockedPotion: Boolean, hasMount: Boolean, user: User? )</ID>
+    <ID>LongParameterList:ScoreTaskLocallyInteractor.kt$ScoreTaskLocallyInteractor.Companion$(result: TaskDirectionData, delta: Double, stats: Stats, computedStats: Stats, task: Task, direction: TaskDirection)</ID>
+    <ID>LongParameterList:SocialRepository.kt$SocialRepository$(name: String?, description: String?, leader: String?, type: String?, privacy: String?, leaderCreateChallenge: Boolean?)</ID>
+    <ID>MatchingDeclarationName:Date-Extensions.kt$DateUtils</ID>
+    <ID>MayBeConst:PurchaseHandler.kt$PurchaseHandler.Companion$val PURCHASE_REQUEST_CODE = 51966</ID>
+    <ID>MemberNameEqualsClassName:DeviceName.kt$DeviceName$/** * Get the consumer friendly name of the device. * * @return the market name of the current device. * @see .getDeviceName */ val deviceName: String? get() = getDeviceName(Build.DEVICE, Build.MODEL, Build.MODEL.capitalize(Locale.getDefault()))</ID>
+    <ID>MemberNameEqualsClassName:DeviceName.kt$DeviceName.Request$ fun request(callback: Callback)</ID>
+    <ID>MemberNameEqualsClassName:KeyHelper.kt$KeyHelper.Companion$private var keyHelper: KeyHelper? = null</ID>
+    <ID>MemberNameEqualsClassName:Status.kt$Status$var status: String? = null</ID>
+    <ID>NestedBlockDepth:AvatarView.kt$AvatarView$private fun getLayerBounds(layerType: LayerType, layerName: String, drawable: Drawable): Rect</ID>
+    <ID>NestedBlockDepth:BaseTaskViewHolder.kt$BaseTaskViewHolder$override fun bind(data: Task, position: Int, displayMode: String)</ID>
+    <ID>NestedBlockDepth:BaseTaskViewHolder.kt$BaseTaskViewHolder$override fun onTouch(view: View?, motionEvent: MotionEvent?): Boolean</ID>
+    <ID>NestedBlockDepth:ChallengeDeserializer.kt$ChallengeDeserializer$@Throws(JsonParseException::class) override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): Challenge</ID>
+    <ID>NestedBlockDepth:ChecklistedViewHolder.kt$ChecklistedViewHolder$private fun updateChecklistDisplay()</ID>
+    <ID>NestedBlockDepth:CustomizationDeserializer.kt$CustomizationDeserializer$@Throws(JsonParseException::class) override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): List&lt;Customization&gt;</ID>
+    <ID>NestedBlockDepth:DeviceName.kt$DeviceName$ @WorkerThread fun getDeviceInfo(context: Context, codename: String?, model: String?): DeviceInfo</ID>
+    <ID>NestedBlockDepth:GroupSerialization.kt$GroupSerialization$@Throws(JsonParseException::class) override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): Group</ID>
+    <ID>NestedBlockDepth:GuildDetailFragment.kt$GuildDetailFragment$private fun getGroupChallenges(): List&lt;Challenge&gt;</ID>
+    <ID>NestedBlockDepth:InsufficientGemsDialog.kt$InsufficientGemsDialog$override fun onAttachedToWindow()</ID>
+    <ID>NestedBlockDepth:ItemRecyclerAdapter.kt$ItemRecyclerAdapter.ItemViewHolder$override fun onClick(v: View)</ID>
+    <ID>NestedBlockDepth:MainActivity.kt$MainActivity$private fun setUserData()</ID>
+    <ID>NestedBlockDepth:MemberSerialization.kt$MemberSerialization$@Throws(JsonParseException::class) override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): Member</ID>
+    <ID>NestedBlockDepth:NavigationDrawerFragment.kt$NavigationDrawerFragment$private fun updateUser(user: User)</ID>
+    <ID>NestedBlockDepth:PartyDetailFragment.kt$PartyDetailFragment$private fun getGroupChallenges(): List&lt;Challenge&gt;</ID>
+    <ID>NestedBlockDepth:PartyDetailFragment.kt$PartyDetailFragment$private fun updateUser(user: User?)</ID>
+    <ID>NestedBlockDepth:PurchaseDialog.kt$PurchaseDialog$private fun onBuyButtonClicked()</ID>
+    <ID>NestedBlockDepth:QuestDetailFragment.kt$QuestDetailFragment$private fun setQuestParticipants(participants: List&lt;Member&gt;?)</ID>
+    <ID>NestedBlockDepth:QuestDropItemsListSerialization.kt$QuestDropItemsListSerialization$@Throws(JsonParseException::class) override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): RealmList&lt;QuestDropItem&gt;</ID>
+    <ID>NestedBlockDepth:SafeDefaultItemAnimator.kt$SafeDefaultItemAnimator$override fun endAnimation(item: RecyclerView.ViewHolder)</ID>
+    <ID>NestedBlockDepth:ShopRecyclerAdapter.kt$ShopRecyclerAdapter$@Suppress("ReturnCount") override fun onBindViewHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder, position: Int)</ID>
+    <ID>NestedBlockDepth:Task.kt$Task$fun getDaysOfMonth(): List&lt;Int&gt;?</ID>
+    <ID>NestedBlockDepth:Task.kt$Task$fun getWeeksOfMonth(): List&lt;Int&gt;?</ID>
+    <ID>NestedBlockDepth:TaskFilterHelper.kt$TaskFilterHelper$fun createQuery(unfilteredData: OrderedRealmCollection&lt;Task&gt;): RealmQuery&lt;Task&gt;?</ID>
+    <ID>NestedBlockDepth:TaskListDeserializer.kt$TaskListDeserializer$override fun deserialize(json: JsonElement, typeOfT: Type, ctx: JsonDeserializationContext): TaskList</ID>
+    <ID>NestedBlockDepth:TaskListDeserializer.kt$TaskListDeserializer$private fun handleTags(databaseTags: List&lt;Tag&gt;, json: JsonArray?, context: JsonDeserializationContext): RealmList&lt;Tag&gt;</ID>
+    <ID>NestedBlockDepth:TaskTagDeserializer.kt$TaskTagDeserializer$@Throws(JsonParseException::class) override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): List&lt;Tag&gt;</ID>
+    <ID>NestedBlockDepth:ToolbarColorHelper.kt$ToolbarColorHelper$ fun colorizeToolbar(toolbar: Toolbar, activity: Activity?, overrideModernHeader: Boolean? = null)</ID>
+    <ID>NestedBlockDepth:UserDeserializer.kt$UserDeserializer$@Throws(JsonParseException::class) override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): User</ID>
+    <ID>NestedBlockDepth:WorldStateSerialization.kt$WorldStateSerialization$override fun deserialize(json: JsonElement?, typeOfT: Type?, context: JsonDeserializationContext?): WorldState</ID>
+    <ID>ProtectedMemberInFinalClass:InboxViewModel.kt$InboxViewModel$protected var memberIDSubject = BehaviorSubject.create&lt;Optional&lt;String&gt;&gt;()</ID>
     <ID>ReturnCount:BaseTaskViewHolder.kt$BaseTaskViewHolder$override fun onTouch(view: View?, motionEvent: MotionEvent?): Boolean</ID>
     <ID>ReturnCount:Customization.kt$Customization$fun getImageName(userSize: String?, hairColor: String?): String</ID>
     <ID>ReturnCount:DeviceName.kt$DeviceName$ @WorkerThread fun getDeviceInfo(context: Context, codename: String?, model: String?): DeviceInfo</ID>
@@ -31,12 +159,8 @@
     <ID>ReturnCount:RealmInventoryLocalRepository.kt$RealmInventoryLocalRepository$override fun hatchPet(eggKey: String, potionKey: String, userID: String)</ID>
     <ID>ReturnCount:RealmInventoryLocalRepository.kt$RealmInventoryLocalRepository$override fun unhatchPet(eggKey: String, potionKey: String, userID: String)</ID>
     <ID>ReturnCount:StableRecyclerAdapter.kt$StableRecyclerAdapter$private fun canRaiseToMount(pet: Pet): Boolean</ID>
-    <ID>StringLiteralDuplication:GuildInviteLocalNotification.kt$GuildInviteLocalNotification$"groupID"</ID>
-    <ID>StringLiteralDuplication:RealmInventoryLocalRepository.kt$RealmInventoryLocalRepository$"animal"</ID>
-    <ID>StringLiteralDuplication:RealmSocialLocalRepository.kt$RealmSocialLocalRepository$"userID"</ID>
-    <ID>StringLiteralDuplication:RealmTaskLocalRepository.kt$RealmTaskLocalRepository$"position"</ID>
-    <ID>StringLiteralDuplication:RealmTaskLocalRepository.kt$RealmTaskLocalRepository$"userId"</ID>
-    <ID>StringLiteralDuplication:SafeDefaultItemAnimator.kt$SafeDefaultItemAnimator$"$toX, $fromX, $deltaX"</ID>
+    <ID>ThrowingExceptionsWithoutMessageOrCause:EllipsisTextView.kt$EllipsisTextView$NullPointerException()</ID>
+    <ID>ThrowingExceptionsWithoutMessageOrCause:HabiticaPurchaseVerifier.kt$HabiticaPurchaseVerifier$Exception()</ID>
     <ID>TooGenericExceptionCaught:CustomizationDeserializer.kt$CustomizationDeserializer$e: Exception</ID>
     <ID>TooGenericExceptionCaught:DeviceName.kt$DeviceName$e: Exception</ID>
     <ID>TooGenericExceptionCaught:DeviceName.kt$DeviceName.Request.GetDeviceRunnable$e: Exception</ID>
@@ -52,10 +176,52 @@
     <ID>TooGenericExceptionCaught:TaskListDeserializer.kt$TaskListDeserializer$e: RuntimeException</ID>
     <ID>TooGenericExceptionCaught:TaskTagDeserializer.kt$TaskTagDeserializer$e: RuntimeException</ID>
     <ID>TooGenericExceptionCaught:WorldStateSerialization.kt$WorldStateSerialization$e: Exception</ID>
-    <ID>UseIfInsteadOfWhen:MainActivity.kt$MainActivity$when (userQuestStatus) { UserQuestStatus.QUEST_BOSS -&gt; data.questDamage else -&gt; 0.0 }</ID>
-    <ID>UseIfInsteadOfWhen:MountDetailRecyclerAdapter.kt$MountDetailRecyclerAdapter$when (viewType) { 1 -&gt; SectionViewHolder(parent) else -&gt; MountViewHolder(parent, equipEvents) }</ID>
-    <ID>UseIfInsteadOfWhen:PetDetailRecyclerAdapter.kt$PetDetailRecyclerAdapter$when (viewType) { 1 -&gt; SectionViewHolder(parent) else -&gt; PetViewHolder(parent, equipEvents, animalIngredientsRetriever) }</ID>
-    <ID>UseIfInsteadOfWhen:RecyclerViewEmptySupport.kt$RecyclerViewEmptySupport$when (field) { RecyclerViewState.DISPLAYING_DATA -&gt; updateAdapter(actualAdapter) else -&gt; { updateAdapter(emptyAdapter) emptyAdapter.notifyDataSetChanged() } }</ID>
-    <ID>UseIfInsteadOfWhen:ShopItem.kt$ShopItem$when (currency) { "gold" -&gt; (value * quantity) &lt;= (user?.stats?.gp ?: 0.0) else -&gt; true }</ID>
-  </Whitelist>
+    <ID>TooManyFunctions:ApiClient.kt$ApiClient</ID>
+    <ID>TooManyFunctions:ApiClientImpl.kt$ApiClientImpl : ConsumerApiClient</ID>
+    <ID>TooManyFunctions:ApiService.kt$ApiService</ID>
+    <ID>TooManyFunctions:InventoryRepository.kt$InventoryRepository : BaseRepository</ID>
+    <ID>TooManyFunctions:InventoryRepositoryImpl.kt$InventoryRepositoryImpl : BaseRepositoryImplInventoryRepository</ID>
+    <ID>TooManyFunctions:MainActivity.kt$MainActivity : BaseActivityOnTutorialReaction</ID>
+    <ID>TooManyFunctions:SocialRepository.kt$SocialRepository : BaseRepository</ID>
+    <ID>TooManyFunctions:SocialRepositoryImpl.kt$SocialRepositoryImpl : BaseRepositoryImplSocialRepository</ID>
+    <ID>TooManyFunctions:UserRepository.kt$UserRepository : BaseRepository</ID>
+    <ID>TooManyFunctions:UserRepositoryImpl.kt$UserRepositoryImpl : BaseRepositoryImplUserRepository</ID>
+    <ID>UnnecessaryAbstractClass:HabiticaLocalNotification.kt$HabiticaLocalNotification</ID>
+    <ID>UnnecessaryAbstractClass:HabiticaPromotion.kt$HabiticaPromotion</ID>
+    <ID>UnusedPrivateMember:AppTestingLevel.kt$AppTestingLevel$identifier: String</ID>
+    <ID>UnusedPrivateMember:BaseTasksRecyclerViewAdapter.kt$BaseTasksRecyclerViewAdapter$private fun updateTask(task: Task)</ID>
+    <ID>UnusedPrivateMember:BaseTasksRecyclerViewAdapter.kt$BaseTasksRecyclerViewAdapter$private val userID: String?</ID>
+    <ID>UnusedPrivateMember:ClassSelectionActivity.kt$ClassSelectionActivity$val dialog = HabiticaProgressDialog.show(this, progressText)</ID>
+    <ID>UnusedPrivateMember:DragLinearLayout.kt$DragLinearLayout.Companion$`val`: Float</ID>
+    <ID>UnusedPrivateMember:FullProfileActivity.kt$FullProfileActivity$`val`: Float</ID>
+    <ID>UnusedPrivateMember:GemsPurchaseFragment.kt$GemsPurchaseFragment$private fun showGiftSubscriptionDialog()</ID>
+    <ID>UnusedPrivateMember:GroupFormActivity.kt$GroupFormActivity$private var autocompleteAdapter: AutocompleteAdapter? = null</ID>
+    <ID>UnusedPrivateMember:GroupInviteActivity.kt$GroupInviteActivity$private var userIdToInvite: String? = null</ID>
+    <ID>UnusedPrivateMember:NotificationOpenHandler.kt$NotificationOpenHandler.Companion$private fun openQuestDetailSCreen()</ID>
+    <ID>UnusedPrivateMember:NotificationsManager.kt$NotificationsManager$val sub = Completable.complete() .delay(delay, TimeUnit.MILLISECONDS) .subscribe( { EventBus.getDefault().post(ShowAchievementDialog(achievement, notification.id, data?.message, data?.modalText, isLastOnboardingAchievement)) }, RxErrorHandler.handleEmptyError() )</ID>
+    <ID>UnusedPrivateMember:PurchaseDialog.kt$PurchaseDialog$val sub = maybe.flatMap { for (thisItem in it) { if (thisItem.key == item.key) { ownedCount += thisItem.numberOwned } } inventoryRepository.getOwnedMounts().firstElement() }.flatMap { for (mount in it) { if (mount.key?.contains(item.key) == true) { ownedCount += if (mount.owned) 1 else 0 } } inventoryRepository.getOwnedPets().firstElement() }.subscribe( { for (pet in it) { if (pet.key?.contains(item.key) == true) { ownedCount += if (pet.trained &gt; 0) 1 else 0 } } if (calledResult) return@subscribe calledResult = true if (!shouldWarn) { onResult(-1) return@subscribe } val remaining = totalCount - ownedCount onResult(max(0, remaining)) }, RxErrorHandler.handleEmptyError(), { if (calledResult) return@subscribe calledResult = true if (!shouldWarn) { onResult(-1) return@subscribe } val remaining = totalCount - ownedCount onResult(max(0, remaining)) } )</ID>
+    <ID>UnusedPrivateMember:PurchaseDialog.kt$PurchaseDialog$val subscription = observable .doOnNext { val event = ShowSnackbarEvent() if (snackbarText[0].isNotEmpty()) { event.text = snackbarText[0] } else { event.text = context.getString(R.string.successful_purchase, shopItem.text) } event.type = HabiticaSnackbar.SnackbarDisplayType.NORMAL event.rightIcon = priceLabel.compoundDrawables[0] when (item.currency) { "gold" -&gt; event.rightTextColor = ContextCompat.getColor(context, R.color.text_yellow) "gems" -&gt; event.rightTextColor = ContextCompat.getColor(context, R.color.text_green) "hourglasses" -&gt; event.rightTextColor = ContextCompat.getColor(context, R.color.text_brand) } event.rightText = "-" + priceLabel.text EventBus.getDefault().post(event) } .flatMap { userRepository.retrieveUser(withTasks = false, forced = true) } .flatMap { inventoryRepository.retrieveInAppRewards() } .subscribe({ if (item.isTypeGear || item.currency == "hourglasses") { EventBus.getDefault().post(GearPurchasedEvent(item)) } }) { throwable -&gt; if (throwable.javaClass.isAssignableFrom(retrofit2.HttpException::class.java)) { val error = throwable as retrofit2.HttpException if (error.code() == 401 &amp;&amp; shopItem.currency == "gems") { MainNavigationController.navigate(R.id.gemPurchaseActivity, bundleOf(Pair("openSubscription", false))) } } }</ID>
+    <ID>UnusedPrivateMember:ScoreTaskLocallyInteractor.kt$ScoreTaskLocallyInteractor.Companion$direction: TaskDirection</ID>
+    <ID>UnusedPrivateMember:ScoreTaskLocallyInteractor.kt$ScoreTaskLocallyInteractor.Companion$task: Task</ID>
+    <ID>UnusedPrivateMember:ScoreTaskLocallyInteractor.kt$ScoreTaskLocallyInteractor.Companion$user: User</ID>
+    <ID>UnusedPrivateMember:ShopFragment.kt$ShopFragment$event: GearPurchasedEvent</ID>
+    <ID>UnusedPrivateMember:SubscriptionFragment.kt$SubscriptionFragment$event: UserSubscribedEvent?</ID>
+    <ID>UnusedPrivateMember:SubscriptionFragment.kt$SubscriptionFragment.Companion$iSG1G1: Boolean</ID>
+    <ID>UnusedPrivateMember:TaskAlarmManager.kt$TaskAlarmManager$private fun removeAlarmsForTask(task: Task)</ID>
+    <ID>UtilityClassWithPublicConstructor:AprilFoolsHandler.kt$AprilFoolsHandler</ID>
+    <ID>UtilityClassWithPublicConstructor:Date-Extensions.kt$DateUtils</ID>
+    <ID>UtilityClassWithPublicConstructor:HapticFeedbackManager.kt$HapticFeedbackManager</ID>
+    <ID>UtilityClassWithPublicConstructor:KeyboardUtil.kt$KeyboardUtil</ID>
+    <ID>UtilityClassWithPublicConstructor:NotificationOpenHandler.kt$NotificationOpenHandler</ID>
+    <ID>UtilityClassWithPublicConstructor:ScoreTaskLocallyInteractor.kt$ScoreTaskLocallyInteractor</ID>
+    <ID>VariableNaming:Buffs.kt$Buffs$@SerializedName("int") var _int: Float? = null</ID>
+    <ID>VariableNaming:Equipment.kt$Equipment$@SerializedName("int") var _int: Int = 0</ID>
+    <ID>VariableNaming:InboxAdapter.kt$InboxAdapter$private val FIRST_MESSAGE = 0</ID>
+    <ID>VariableNaming:InboxAdapter.kt$InboxAdapter$private val NORMAL_MESSAGE = 1</ID>
+    <ID>VariableNaming:Quest.kt$Quest$var RSVPNeeded: Boolean = false</ID>
+    <ID>VariableNaming:TaskDirectionData.kt$TaskDirectionData$var _tmp: TaskDirectionDataTemp? = null</ID>
+    <ID>VariableNaming:Training.kt$Training$@SerializedName("int") var _int: Float = 0f</ID>
+    <ID>VariableNaming:UserAuthSocialTokens.kt$UserAuthSocialTokens$var access_token: String? = null</ID>
+    <ID>VariableNaming:UserAuthSocialTokens.kt$UserAuthSocialTokens$var client_id: String? = null</ID>
+  </CurrentIssues>
 </SmellBaseline>

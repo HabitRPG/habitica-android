@@ -8,6 +8,7 @@ import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties
 import android.util.Base64
 import androidx.core.content.edit
+import com.habitrpg.shared.habitica.HLogger
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.IOException
@@ -40,7 +41,7 @@ constructor(ctx: Context, var sharedPreferences: SharedPreferences, var keyStore
             try {
                 this.generateAESKey()
             } catch (e: Exception) {
-                e.printStackTrace()
+                HLogger.logException("KeyHelper", "Error initializing", e)
             }
         }
     }
@@ -144,14 +145,14 @@ constructor(ctx: Context, var sharedPreferences: SharedPreferences, var keyStore
             try {
                 c.init(Cipher.ENCRYPT_MODE, aesKeyFromKS, GCMParameterSpec(128, Base64.decode(publicIV, Base64.DEFAULT)))
             } catch (e: Exception) {
-                e.printStackTrace()
+                HLogger.logException("KeyHelper", "Error encrypting", e)
             }
         } else {
             c = Cipher.getInstance(AES_MODE_M)
             try {
                 c.init(Cipher.ENCRYPT_MODE, getSecretKey(), GCMParameterSpec(128, Base64.decode(publicIV, Base64.DEFAULT)))
             } catch (e: Exception) {
-                e.printStackTrace()
+                HLogger.logException("KeyHelper", "Error encrypting", e)
             }
         }
         val encodedBytes = c.doFinal(input.toByteArray(charset("UTF-8")))
@@ -168,14 +169,14 @@ constructor(ctx: Context, var sharedPreferences: SharedPreferences, var keyStore
             try {
                 c.init(Cipher.DECRYPT_MODE, aesKeyFromKS, GCMParameterSpec(128, Base64.decode(publicIV, Base64.DEFAULT)))
             } catch (e: Exception) {
-                e.printStackTrace()
+                HLogger.logException("KeyHelper", "Error decrypting", e)
             }
         } else {
             c = Cipher.getInstance(AES_MODE_M)
             try {
                 c.init(Cipher.DECRYPT_MODE, getSecretKey(), GCMParameterSpec(128, Base64.decode(publicIV, Base64.DEFAULT)))
             } catch (e: Exception) {
-                e.printStackTrace()
+                HLogger.logException("KeyHelper", "Error decrypting", e)
             }
         }
 
@@ -221,19 +222,19 @@ constructor(ctx: Context, var sharedPreferences: SharedPreferences, var keyStore
                 try {
                     keyHelper = KeyHelper(ctx, sharedPreferences, keyStore)
                 } catch (e: NoSuchPaddingException) {
-                    e.printStackTrace()
+                    HLogger.logException("KeyHelper", "Error initializing", e)
                 } catch (e: NoSuchProviderException) {
-                    e.printStackTrace()
+                    HLogger.logException("KeyHelper", "Error initializing", e)
                 } catch (e: NoSuchAlgorithmException) {
-                    e.printStackTrace()
+                    HLogger.logException("KeyHelper", "Error initializing", e)
                 } catch (e: InvalidAlgorithmParameterException) {
-                    e.printStackTrace()
+                    HLogger.logException("KeyHelper", "Error initializing", e)
                 } catch (e: KeyStoreException) {
-                    e.printStackTrace()
+                    HLogger.logException("KeyHelper", "Error initializing", e)
                 } catch (e: CertificateException) {
-                    e.printStackTrace()
+                    HLogger.logException("KeyHelper", "Error initializing", e)
                 } catch (e: IOException) {
-                    e.printStackTrace()
+                    HLogger.logException("KeyHelper", "Error initializing", e)
                 }
             }
             return keyHelper

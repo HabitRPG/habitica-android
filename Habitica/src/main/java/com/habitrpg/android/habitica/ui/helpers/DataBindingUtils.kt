@@ -91,7 +91,7 @@ object DataBindingUtils {
         override fun willChangeBounds(): Boolean = true
     }
 
-    val BASE_IMAGE_URL = "https://habitica-assets.s3.amazonaws.com/mobileApp/images/"
+    const val BASE_IMAGE_URL = "https://habitica-assets.s3.amazonaws.com/mobileApp/images/"
     private val FILEFORMAT_MAP: Map<String, String>
     private val FILENAME_MAP: Map<String, String>
 

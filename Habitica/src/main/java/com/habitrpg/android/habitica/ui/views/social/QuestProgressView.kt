@@ -168,7 +168,7 @@ class QuestProgressView : LinearLayout {
     }
 
     fun configure(user: User) {
-        binding.pendingDamageTextView.text = String.format("%.01f dmg pending", (user.party?.quest?.progress?.up ?: 0F))
+        binding.pendingDamageTextView.text = context.getString(R.string.damage_pending, (user.party?.quest?.progress?.up ?: 0F))
         val collectedItems = user.party?.quest?.progress?.collectedItems ?: 0
         binding.collectedItemsNumberView.text = context.getString(R.string.quest_items_found, collectedItems)
     }

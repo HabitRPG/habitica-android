@@ -25,7 +25,6 @@ object BitmapUtils {
             out.close()
             return File(name)
         } catch (ignored: Exception) {
-            ignored.printStackTrace()
         }
 
         return null

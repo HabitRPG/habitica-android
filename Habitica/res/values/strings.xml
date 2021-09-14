@@ -1179,4 +1179,5 @@
     <string name="all_tasks_completed">You completed all your tasks. Well done!</string>
     <string name="privacy_policy">Privacy Policy</string>
     <string name="terms_of_service">Terms of Service</string>
+    <string name="damage_pending">%.01f dmg pending</string>
 </resources>
