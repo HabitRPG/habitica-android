@@ -105,7 +105,6 @@ class CustomizationDeserializer : JsonDeserializer<List<Customization>> {
                     customization.availableUntil = format.parse(setInfo.get("availableUntil").asString)
                 }
             } catch (e: Exception) {
-                e.printStackTrace()
             }
         }
 

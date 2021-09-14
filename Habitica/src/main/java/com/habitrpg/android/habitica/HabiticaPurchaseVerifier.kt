@@ -120,7 +120,6 @@ class HabiticaPurchaseVerifier(context: Context, apiClient: ApiClient) : BasePur
                 outputMap[key] = value
             }
         } catch (e: Exception) {
-            e.printStackTrace()
         }
         return outputMap
     }

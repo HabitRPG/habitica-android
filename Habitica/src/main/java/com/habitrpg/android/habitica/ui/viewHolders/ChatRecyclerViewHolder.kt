@@ -15,6 +15,7 @@ import com.habitrpg.android.habitica.events.ShowSnackbarEvent
 import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.extensions.getAgoString
 import com.habitrpg.android.habitica.extensions.setScaledPadding
+import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.user.User
@@ -189,7 +190,7 @@ class ChatRecyclerMessageViewHolder(itemView: View, private var userId: String, 
                         chatMessage?.parsedText = parsedText
                         binding.messageText.setParsedMarkdown(parsedText)
                     },
-                    { it.printStackTrace() }
+                    RxErrorHandler.handleEmptyError()
                 )
         }
 

@@ -24,7 +24,6 @@ class GuidelinesActivity : BaseActivity() {
         val request = Request.Builder().url("https://s3.amazonaws.com/habitica-assets/mobileApp/endpoint/community-guidelines.md").build()
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
-                e.printStackTrace()
             }
 
             @Throws(IOException::class)

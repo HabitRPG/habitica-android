@@ -212,7 +212,6 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
                 override fun onCancel() { /* no-on */ }
 
                 override fun onError(exception: FacebookException) {
-                    exception.printStackTrace()
                 }
             }
         )
@@ -438,7 +437,6 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
                 .subscribe(
                     this@LoginActivity,
                     { throwable ->
-                        throwable.printStackTrace()
                         hideProgress()
                         throwable.cause?.let {
                             if (GoogleAuthException::class.java.isAssignableFrom(it.javaClass)) {

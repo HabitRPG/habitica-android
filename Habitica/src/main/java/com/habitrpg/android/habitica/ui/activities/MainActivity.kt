@@ -756,7 +756,6 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                                         startActivity(intent)
                                     }
                                 } catch (e: PackageManager.NameNotFoundException) {
-                                    e.printStackTrace()
                                 }
                             }
                         }

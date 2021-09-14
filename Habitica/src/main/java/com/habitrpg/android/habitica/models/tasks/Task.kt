@@ -345,7 +345,6 @@ open class Task : RealmObject, BaseMainObject, Parcelable {
                         i += 1
                     }
                 } catch (e: JSONException) {
-                    e.printStackTrace()
                 }
             }
             this.weeksOfMonth = weeksOfMonth.toList()
@@ -374,7 +373,6 @@ open class Task : RealmObject, BaseMainObject, Parcelable {
                         i += 1
                     }
                 } catch (e: JSONException) {
-                    e.printStackTrace()
                 }
             }
             this.daysOfMonth = daysOfMonth

@@ -83,7 +83,6 @@ constructor(private val context: Context) : SetupCustomizationRepository {
         return try {
             context.resources.getIdentifier(resName, "drawable", context.packageName)
         } catch (e: Exception) {
-            e.printStackTrace()
             -1
         }
     }
