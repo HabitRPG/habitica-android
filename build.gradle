@@ -43,9 +43,9 @@ detekt {
             enabled = true                                // Enable/Disable HTML report (default: true)
             destination = file("build/reports/detekt.html") // Path where HTML report will be stored (default: `build/reports/detekt/detekt.html`)
         }
-        txt {
+        sarif {
             enabled = true                                // Enable/Disable TXT report (default: true)
-            destination = file("build/reports/detekt.txt") // Path where TXT report will be stored (default: `build/reports/detekt/detekt.txt`)
+            destination = file("build/reports/detekt.sarif") // Path where TXT report will be stored (default: `build/reports/detekt/detekt.txt`)
         }
     }
 }
