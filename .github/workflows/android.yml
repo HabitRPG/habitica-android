@@ -21,6 +21,16 @@ jobs:
 
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
+    - name: copy properties file
+      uses: canastro/copy-file-action@master
+      with:
+        source: "habitica.properties.example"
+        target: "habitica.properties"
+    - name: copy resources file
+      uses: canastro/copy-file-action@master
+      with:
+        source: "habitica.resources.example"
+        target: "habitica.resources"
     - name: Build with Gradle
       run: ./gradlew build
   lint:
@@ -34,7 +44,16 @@ jobs:
         java-version: '11'
         distribution: 'adopt'
         cache: gradle
-
+    - name: copy properties file
+      uses: canastro/copy-file-action@master
+      with:
+        source: "habitica.properties.example"
+        target: "habitica.properties"
+    - name: copy resources file
+      uses: canastro/copy-file-action@master
+      with:
+        source: "habitica.resources.example"
+        target: "habitica.resources"
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
     - name: Build with Gradle
