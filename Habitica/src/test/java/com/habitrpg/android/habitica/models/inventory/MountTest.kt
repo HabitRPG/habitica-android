@@ -6,8 +6,8 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.getTranslatedType
 import org.junit.Test
 import org.mockito.Mock
-import org.mockito.Mockito.`when`
 import org.mockito.Mockito.mock
+import org.mockito.Mockito.`when`
 
 private const val FAKE_STANDARD = "Standard"
 private const val FAKE_PREMIUM = "premium"

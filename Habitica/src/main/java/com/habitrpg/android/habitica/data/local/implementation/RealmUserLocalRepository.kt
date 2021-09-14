@@ -31,7 +31,7 @@ class RealmUserLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
                     it.quest?.progress?.collect?.isNotEmpty() ?: false -> UserQuestStatus.QUEST_COLLECT
                     it.quest?.progress?.hp ?: 0.0 > 0.0 -> UserQuestStatus.QUEST_BOSS
                     else -> UserQuestStatus.QUEST_UNKNOWN
-                } 
+                }
             }
     }
 
