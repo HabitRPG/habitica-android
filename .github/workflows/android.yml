@@ -37,7 +37,7 @@ jobs:
         source: "Habitica/google-services.json.example"
         target: "Habitica/google-services.json"
     - name: Build with Gradle
-      run: ./gradlew build
+      run: ./gradlew assembleDebug -PdisablePreDex
   lint:
     runs-on: ubuntu-latest
 
@@ -68,3 +68,33 @@ jobs:
       run: chmod +x gradlew
     - name: Run Ktlint
       run: ./gradlew ktlint
+  detekt:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: set up JDK 11
+      uses: actions/setup-java@v2
+      with:
+        java-version: '11'
+        distribution: 'adopt'
+        cache: gradle
+    - name: copy properties file
+      uses: canastro/copy-file-action@master
+      with:
+        source: "habitica.properties.example"
+        target: "habitica.properties"
+    - name: copy resources file
+      uses: canastro/copy-file-action@master
+      with:
+        source: "habitica.resources.example"
+        target: "habitica.resources"
+    - name: copy google services file
+      uses: canastro/copy-file-action@master
+      with:
+        source: "Habitica/google-services.json.example"
+        target: "Habitica/google-services.json"
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+    - name: Run detekt
+      run: ./gradlew detekt

@@ -96,23 +96,24 @@ class BugFixFragment : BaseMainFragment<FragmentSupportBugFixBinding>() {
         val version = Build.VERSION.SDK_INT
         val deviceName = deviceInfo?.name ?: DeviceName.deviceName
         val manufacturer = deviceInfo?.manufacturer ?: Build.MANUFACTURER
+        val newLine = "%0D%0A"
         var bodyOfEmail = Uri.encode("Device: $manufacturer $deviceName") +
-            "%0D%0A" + Uri.encode("Android Version: $version") +
-            "%0D%0A" + Uri.encode("AppVersion: " + getString(R.string.version_info, versionName, versionCode))
+            newLine + Uri.encode("Android Version: $version") +
+            newLine + Uri.encode("AppVersion: " + getString(R.string.version_info, versionName, versionCode))
 
         if (appConfigManager.testingLevel().name != AppTestingLevel.PRODUCTION.name) {
-            bodyOfEmail += "%0D%0A" + Uri.encode(appConfigManager.testingLevel().name)
+            bodyOfEmail += newLine + Uri.encode(appConfigManager.testingLevel().name)
         }
-        bodyOfEmail += "%0D%0A" + Uri.encode("User ID: $userId")
+        bodyOfEmail += newLine + Uri.encode("User ID: $userId")
 
         val user = this.user
         if (user != null) {
-            bodyOfEmail += "%0D%0A" + Uri.encode("Level: " + (user.stats?.lvl ?: 0)) +
-                "%0D%0A" + Uri.encode("Class: " + (if (user.preferences?.disableClasses == true) "Disabled" else (user.stats?.habitClass ?: "None"))) +
-                "%0D%0A" + Uri.encode("Is in Inn: " + (user.preferences?.sleep ?: false)) +
-                "%0D%0A" + Uri.encode("Uses Costume: " + (user.preferences?.costume ?: false)) +
-                "%0D%0A" + Uri.encode("Custom Day Start: " + (user.preferences?.dayStart ?: 0)) +
-                "%0D%0A" + Uri.encode("Timezone Offset: " + (user.preferences?.timezoneOffset ?: 0))
+            bodyOfEmail += newLine + Uri.encode("Level: " + (user.stats?.lvl ?: 0)) +
+                newLine + Uri.encode("Class: " + (if (user.preferences?.disableClasses == true) "Disabled" else (user.stats?.habitClass ?: "None"))) +
+                newLine + Uri.encode("Is in Inn: " + (user.preferences?.sleep ?: false)) +
+                newLine + Uri.encode("Uses Costume: " + (user.preferences?.costume ?: false)) +
+                newLine + Uri.encode("Custom Day Start: " + (user.preferences?.dayStart ?: 0)) +
+                newLine + Uri.encode("Timezone Offset: " + (user.preferences?.timezoneOffset ?: 0))
         }
 
         bodyOfEmail += "%0D%0ADetails:%0D%0A%0D%0A"

@@ -33,6 +33,7 @@ allprojects {
 detekt {
     input = files("Habitica/src/main/java")
     config = files("detekt.yml")
+    baseline = file("${rootProject.projectDir}/detekt_baseline.xml")
     reports {
         xml {
             enabled = true                                // Enable/Disable XML report (default: true)

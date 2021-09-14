@@ -131,7 +131,6 @@ class ChallengesOverviewFragment : BaseMainFragment<FragmentViewpagerBinding>() 
                     tab.text = when (position) {
                         0 -> getString(R.string.my_challenges)
                         1 -> getString(R.string.discover)
-                        1 -> getString(R.string.discover)
                         else -> ""
                     }
                 }.attach()

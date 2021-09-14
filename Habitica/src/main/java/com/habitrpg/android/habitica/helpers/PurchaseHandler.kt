@@ -120,7 +120,7 @@ class PurchaseHandler(activity: Activity, val analyticsManager: AnalyticsManager
                                             onSuccess()
                                         }
 
-                                        override fun onError(response: Int, e: java.lang.Exception) {}
+                                        override fun onError(response: Int, e: java.lang.Exception) { analyticsManager.logException(e) }
                                     })
                                 )
                             }

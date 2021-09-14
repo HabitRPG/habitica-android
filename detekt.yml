@@ -157,7 +157,7 @@ complexity:
     active: false
   StringLiteralDuplication:
     active: true
-    threshold: 4
+    threshold: 6
     ignoreAnnotation: true
     excludeStringsWithLessThan5Characters: true
     ignoreStringsRegex: '$^'

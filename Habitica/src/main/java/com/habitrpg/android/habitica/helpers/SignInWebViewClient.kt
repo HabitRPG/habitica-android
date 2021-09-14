@@ -45,13 +45,10 @@ class SignInWebViewClient(
                 val userID = url.getQueryParameter("userID")
                 val apiKey = url.getQueryParameter("key")
 
-                when {
-                    userID == null || apiKey == null -> {
-                        callback(SignInWithAppleResult.Failure(IllegalArgumentException("data not returned")))
-                    }
-                    else -> {
-                        callback(SignInWithAppleResult.Success(userID, apiKey, url.getQueryParameter("newUser") == "true"))
-                    }
+                if (userID == null || apiKey == null) {
+                    callback(SignInWithAppleResult.Failure(IllegalArgumentException("data not returned")))
+                } else {
+                    callback(SignInWithAppleResult.Success(userID, apiKey, url.getQueryParameter("newUser") == "true"))
                 }
 
                 true

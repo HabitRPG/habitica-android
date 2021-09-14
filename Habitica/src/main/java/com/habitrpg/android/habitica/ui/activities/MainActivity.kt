@@ -361,11 +361,9 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         MainNavigationController.setup(navigationController)
         navigationController.addOnDestinationChangedListener { _, destination, arguments -> updateToolbarTitle(destination, arguments) }
 
-        when (launchScreen) {
-            "/party" -> {
-                if (user == null || user?.party?.id != null) {
-                    MainNavigationController.navigate(R.id.partyFragment)
-                }
+        if (launchScreen == "/party") {
+            if (user == null || user?.party?.id != null) {
+                MainNavigationController.navigate(R.id.partyFragment)
             }
         }
         launchScreen = null
@@ -583,10 +581,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
             )
         }
 
-        val showItemsFound = when (userQuestStatus) {
-            UserQuestStatus.QUEST_COLLECT -> true
-            else -> false
-        }
+        val showItemsFound = userQuestStatus == UserQuestStatus.QUEST_COLLECT
         compositeSubscription.add(
             displayItemDropUseCase.observable(DisplayItemDropUseCase.RequestValues(data, this, snackbarContainer, showItemsFound))
                 .subscribe({ }, RxErrorHandler.handleEmptyError())
