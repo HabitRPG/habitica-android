@@ -30,9 +30,10 @@ class CurrencyView : androidx.appcompat.widget.AppCompatTextView {
 
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
         val attributes = context.theme?.obtainStyledAttributes(
-                attrs,
-                R.styleable.CurrencyViews,
-                0, 0)
+            attrs,
+            R.styleable.CurrencyViews,
+            0, 0
+        )
         val fallBackLight = !context.isUsingNightModeResources()
         lightBackground = try {
             attributes?.getBoolean(R.styleable.CurrencyView_hasLightBackground, fallBackLight) ?: fallBackLight
@@ -87,39 +88,43 @@ class CurrencyView : androidx.appcompat.widget.AppCompatTextView {
     private var drawable: BitmapDrawable? = null
 
     var icon: Bitmap? = null
-    set(value) {
-        field = value
-        if (value != null) {
-            drawable = BitmapDrawable(resources, value)
-            this.setCompoundDrawablesWithIntrinsicBounds(drawable,
-                    null, null, null)
-            val padding = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
-                    6f, context.resources.displayMetrics).toInt()
-            compoundDrawablePadding = padding
-            this.gravity = Gravity.CENTER_VERTICAL
+        set(value) {
+            field = value
+            if (value != null) {
+                drawable = BitmapDrawable(resources, value)
+                this.setCompoundDrawablesWithIntrinsicBounds(
+                    drawable,
+                    null, null, null
+                )
+                val padding = TypedValue.applyDimension(
+                    TypedValue.COMPLEX_UNIT_DIP,
+                    6f, context.resources.displayMetrics
+                ).toInt()
+                compoundDrawablePadding = padding
+                this.gravity = Gravity.CENTER_VERTICAL
+            }
         }
-    }
 
     var value = 0.0
-    set(value) {
-        field = value
-        val abbreviatedValue = NumberAbbreviator.abbreviate(context, value)
-        text = abbreviatedValue
-        contentDescription = "$abbreviatedValue $currencyContentDescription"
-        updateVisibility()
-    }
+        set(value) {
+            field = value
+            val abbreviatedValue = NumberAbbreviator.abbreviate(context, value)
+            text = abbreviatedValue
+            contentDescription = "$abbreviatedValue $currencyContentDescription"
+            updateVisibility()
+        }
 
     var isLocked = false
-    set(value) {
-        field = value
-        if (isLocked) {
-            this.setTextColor(ContextCompat.getColor(context, R.color.text_quad))
-            drawable?.alpha = 127
-        } else {
-            drawable?.alpha = 255
+        set(value) {
+            field = value
+            if (isLocked) {
+                this.setTextColor(ContextCompat.getColor(context, R.color.text_quad))
+                drawable?.alpha = 127
+            } else {
+                drawable?.alpha = 255
+            }
+            this.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null)
         }
-        this.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null)
-    }
 
     private fun updateVisibility() {
         visibility = if (hideWhenEmpty) {

@@ -12,14 +12,13 @@ import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 
-
 class HabiticaClassArrayAdapter(context: Context, resource: Int, objects: List<CharSequence>) : ArrayAdapter<CharSequence>(context, resource, R.id.textView, objects) {
 
     override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup?): View =
-            createView(position, convertView ?: parent?.inflate(R.layout.class_spinner_dropdown_item, false))
+        createView(position, convertView ?: parent?.inflate(R.layout.class_spinner_dropdown_item, false))
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View =
-            createView(position, convertView ?: parent.inflate(R.layout.class_spinner_dropdown_item_selected, false))
+        createView(position, convertView ?: parent.inflate(R.layout.class_spinner_dropdown_item_selected, false))
 
     private fun createView(position: Int, row: View?): View {
         val textView: TextView? = row?.findViewById(R.id.textView)

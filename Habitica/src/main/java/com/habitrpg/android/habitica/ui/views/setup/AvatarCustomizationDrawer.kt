@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica.ui.views.setup
 
-
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.LinearLayout

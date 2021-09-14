@@ -2,12 +2,9 @@ package com.habitrpg.android.habitica.models.tasks
 
 import android.os.Parcel
 import android.os.Parcelable
-
-import java.util.Date
-
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
-import io.realm.annotations.RealmClass
+import java.util.Date
 
 open class RemindersItem : RealmObject, Parcelable {
     @PrimaryKey
@@ -15,7 +12,7 @@ open class RemindersItem : RealmObject, Parcelable {
     var startDate: Date? = null
     var time: Date? = null
 
-    //Use to store task type before a task is created
+    // Use to store task type before a task is created
     var type: String? = null
 
     override fun describeContents(): Int {
@@ -26,10 +23,9 @@ open class RemindersItem : RealmObject, Parcelable {
         dest.writeString(id)
         dest.writeLong(this.startDate?.time ?: -1)
         dest.writeLong(this.time?.time ?: -1)
-
     }
 
-    companion object CREATOR: Parcelable.Creator<RemindersItem> {
+    companion object CREATOR : Parcelable.Creator<RemindersItem> {
         override fun createFromParcel(source: Parcel): RemindersItem = RemindersItem(source)
 
         override fun newArray(size: Int): Array<RemindersItem?> = arrayOfNulls(size)
@@ -42,7 +38,6 @@ open class RemindersItem : RealmObject, Parcelable {
     }
 
     constructor()
-
 
     override fun equals(other: Any?): Boolean {
         return if (other is RemindersItem) {

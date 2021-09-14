@@ -87,5 +87,4 @@ class IntroFragment : BaseFragment<FragmentIntroBinding>() {
         this.backgroundColor = color
         binding?.containerView?.setBackgroundColor(color)
     }
-
 }

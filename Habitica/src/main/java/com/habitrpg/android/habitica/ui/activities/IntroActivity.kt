@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.ui.activities
 
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
@@ -20,7 +19,6 @@ import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.ui.fragments.setup.IntroFragment
 import com.viewpagerindicator.IconPagerAdapter
 import javax.inject.Inject
-
 
 class IntroActivity : BaseActivity(), View.OnClickListener, ViewPager.OnPageChangeListener {
 
@@ -47,7 +45,6 @@ class IntroActivity : BaseActivity(), View.OnClickListener, ViewPager.OnPageChan
         binding.finishButton.setOnClickListener(this)
 
         compositeSubscription.add(contentRepository.retrieveContent(this).subscribe({ }, RxErrorHandler.handleEmptyError()))
-
 
         window.statusBarColor = ContextCompat.getColor(this, R.color.black_20_alpha)
         window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)

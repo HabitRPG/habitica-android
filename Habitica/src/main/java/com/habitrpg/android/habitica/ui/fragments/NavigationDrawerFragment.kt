@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica.ui.fragments
 
-
 import android.app.Activity
 import android.content.Intent
 import android.content.SharedPreferences
@@ -55,7 +54,6 @@ import kotlin.time.hours
 import kotlin.time.minutes
 import kotlin.time.seconds
 
-
 class NavigationDrawerFragment : DialogFragment() {
 
     private var binding: DrawerMainBinding? = null
@@ -89,15 +87,15 @@ class NavigationDrawerFragment : DialogFragment() {
         get() = drawerLayout?.isDrawerOpen(GravityCompat.START) ?: false
 
     private var questContent: QuestContent? = null
-    set(value) {
-        field = value
-        updateQuestDisplay()
-    }
+        set(value) {
+            field = value
+            updateQuestDisplay()
+        }
     private var quest: Quest? = null
-    set(value) {
-        field = value
-        updateQuestDisplay()
-    }
+        set(value) {
+            field = value
+            updateQuestDisplay()
+        }
 
     private fun updateQuestDisplay() {
         val quest = this.quest
@@ -124,7 +122,6 @@ class NavigationDrawerFragment : DialogFragment() {
         binding?.questMenuView?.configure(questContent)
         adapter.tintColor = questContent.colors?.extraLightColor ?: 0
         adapter.backgroundTintColor = questContent.colors?.darkColor ?: 0
-
 
         binding?.messagesBadge?.visibility = View.GONE
         binding?.settingsBadge?.visibility = View.GONE
@@ -171,8 +168,11 @@ class NavigationDrawerFragment : DialogFragment() {
         setHasOptionsMenu(true)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? = inflater.inflate(R.layout.drawer_main, container, false) as? ViewGroup
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? = inflater.inflate(R.layout.drawer_main, container, false) as? ViewGroup
 
     private var seasonalShopJob: Job? = null
 
@@ -185,29 +185,48 @@ class NavigationDrawerFragment : DialogFragment() {
         binding?.recyclerView?.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
         initializeMenuItems()
 
-        subscriptions?.add(adapter.getItemSelectionEvents().subscribe({
-            setSelection(it.transitionId, it.bundle, true)
-        }, RxErrorHandler.handleEmptyError()))
-        subscriptions?.add(adapter.getPromoCloseEvents().subscribe({
-            sharedPreferences.edit {
-                putBoolean("hide${it}", true)
-            }
-            updatePromo()
-            adapter.notifyDataSetChanged()
-        }, RxErrorHandler.handleEmptyError()))
-
-        subscriptions?.add(socialRepository.getGroup(Group.TAVERN_ID)
-                .doOnNext {  quest = it.quest }
-                .filter { it.hasActiveQuest }
-                .flatMapMaybe { inventoryRepository.getQuestContent(it.quest?.key ?: "").firstElement() }
-                .subscribe({
-                   questContent = it
-                }, RxErrorHandler.handleEmptyError()))
+        subscriptions?.add(
+            adapter.getItemSelectionEvents().subscribe(
+                {
+                    setSelection(it.transitionId, it.bundle, true)
+                },
+                RxErrorHandler.handleEmptyError()
+            )
+        )
+        subscriptions?.add(
+            adapter.getPromoCloseEvents().subscribe(
+                {
+                    sharedPreferences.edit {
+                        putBoolean("hide$it", true)
+                    }
+                    updatePromo()
+                    adapter.notifyDataSetChanged()
+                },
+                RxErrorHandler.handleEmptyError()
+            )
+        )
 
         subscriptions?.add(
-                Flowable.combineLatest(contentRepository.getWorldState(), inventoryRepository.getAvailableLimitedItems(), { state, items ->
+            socialRepository.getGroup(Group.TAVERN_ID)
+                .doOnNext { quest = it.quest }
+                .filter { it.hasActiveQuest }
+                .flatMapMaybe { inventoryRepository.getQuestContent(it.quest?.key ?: "").firstElement() }
+                .subscribe(
+                    {
+                        questContent = it
+                    },
+                    RxErrorHandler.handleEmptyError()
+                )
+        )
+
+        subscriptions?.add(
+            Flowable.combineLatest(
+                contentRepository.getWorldState(), inventoryRepository.getAvailableLimitedItems(),
+                { state, items ->
                     return@combineLatest Pair(state, items)
-                }).subscribe( { pair ->
+                }
+            ).subscribe(
+                { pair ->
                     updateSeasonalMenuEntries(pair.first, pair.second)
                     seasonalShopJob?.cancel()
                     seasonalShopJob = lifecycleScope.launch(Dispatchers.Main) {
@@ -218,22 +237,35 @@ class NavigationDrawerFragment : DialogFragment() {
                             delay(if (diff < (1.hours.inMilliseconds)) 1.seconds else 1.minutes)
                         }
                     }
-        }, RxErrorHandler.handleEmptyError()))
+                },
+                RxErrorHandler.handleEmptyError()
+            )
+        )
 
         if (configManager.enableTeamBoards()) {
-            subscriptions?.add(userRepository.getTeamPlans()
+            subscriptions?.add(
+                userRepository.getTeamPlans()
                     .distinctUntilChanged { firstTeams, secondTeams -> firstTeams == secondTeams }
-                    .subscribe({
-                        getItemWithIdentifier(SIDEBAR_TEAMS)?.isVisible = it.size != 0
-                        adapter.setTeams(it)
-                    }, RxErrorHandler.handleEmptyError()))
+                    .subscribe(
+                        {
+                            getItemWithIdentifier(SIDEBAR_TEAMS)?.isVisible = it.size != 0
+                            adapter.setTeams(it)
+                        },
+                        RxErrorHandler.handleEmptyError()
+                    )
+            )
         } else {
             getItemWithIdentifier(SIDEBAR_TEAMS)?.isVisible = false
         }
 
-        subscriptions?.add(userRepository.getUser().subscribe({
-            updateUser(it)
-        }, RxErrorHandler.handleEmptyError()))
+        subscriptions?.add(
+            userRepository.getUser().subscribe(
+                {
+                    updateUser(it)
+                },
+                RxErrorHandler.handleEmptyError()
+            )
+        )
 
         binding?.messagesButtonWrapper?.setOnClickListener { setSelection(R.id.inboxFragment, null, true, preventReselection = false) }
         binding?.settingsButtonWrapper?.setOnClickListener { setSelection(R.id.prefsActivity, null, true, preventReselection = false) }
@@ -265,7 +297,7 @@ class NavigationDrawerFragment : DialogFragment() {
 
     private fun updateUser(user: User) {
         setMessagesCount(user.inbox?.newMessages ?: 0)
-        setSettingsCount(if (user.flags?.verifiedUsername != true) 1 else 0 )
+        setSettingsCount(if (user.flags?.verifiedUsername != true) 1 else 0)
         setDisplayName(user.profile?.name)
         setUsername(user.formattedUsername)
         binding?.avatarView?.setAvatar(user)
@@ -373,7 +405,7 @@ class NavigationDrawerFragment : DialogFragment() {
 
     private fun initializeMenuItems() {
         val items = ArrayList<HabiticaDrawerItem>()
-        context?.let {context ->
+        context?.let { context ->
             val adventureItem = HabiticaDrawerItem(R.id.adventureGuideActivity, SIDEBAR_ADVENTURE_GUIDE)
             adventureItem.itemViewType = 4
             items.add(adventureItem)
@@ -411,7 +443,6 @@ class NavigationDrawerFragment : DialogFragment() {
             items.add(HabiticaDrawerItem(R.id.supportMainFragment, SIDEBAR_HELP, context.getString(R.string.sidebar_help)))
             items.add(HabiticaDrawerItem(R.id.aboutFragment, SIDEBAR_ABOUT, context.getString(R.string.sidebar_about)))
         }
-
 
         val promoItem = HabiticaDrawerItem(R.id.subscriptionPurchaseActivity, SIDEBAR_PROMO)
         promoItem.itemViewType = 5
@@ -479,16 +510,22 @@ class NavigationDrawerFragment : DialogFragment() {
         this.drawerLayout?.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START)
         // set UP the drawer's list view with items and click listener
 
-        subscriptions?.add(viewModel.getNotificationCount().subscribeWithErrorHandler {
-            setNotificationsCount(it)
-        })
-        subscriptions?.add(viewModel.allNotificationsSeen().subscribeWithErrorHandler {
-            setNotificationsSeen(it)
-        })
-        subscriptions?.add(viewModel.getHasPartyNotification().subscribeWithErrorHandler {
-            val partyMenuItem = getItemWithIdentifier(SIDEBAR_PARTY)
-            partyMenuItem?.showBubble = it
-        })
+        subscriptions?.add(
+            viewModel.getNotificationCount().subscribeWithErrorHandler {
+                setNotificationsCount(it)
+            }
+        )
+        subscriptions?.add(
+            viewModel.allNotificationsSeen().subscribeWithErrorHandler {
+                setNotificationsSeen(it)
+            }
+        )
+        subscriptions?.add(
+            viewModel.getHasPartyNotification().subscribeWithErrorHandler {
+                val partyMenuItem = getItemWithIdentifier(SIDEBAR_PARTY)
+                partyMenuItem?.showBubble = it
+            }
+        )
     }
 
     fun openDrawer() {
@@ -506,7 +543,7 @@ class NavigationDrawerFragment : DialogFragment() {
     }
 
     private fun getItemWithIdentifier(identifier: String): HabiticaDrawerItem? =
-            adapter.getItemWithIdentifier(identifier)
+        adapter.getItemWithIdentifier(identifier)
 
     private fun updateItem(item: HabiticaDrawerItem) {
         adapter.updateItem(item)

@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.utils
 
 import android.text.TextUtils
-
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
@@ -10,7 +9,6 @@ import com.google.gson.JsonParseException
 import com.google.gson.JsonSerializationContext
 import com.google.gson.JsonSerializer
 import com.habitrpg.android.habitica.models.social.Challenge
-
 import java.lang.reflect.Type
 import java.util.Date
 
@@ -121,7 +119,6 @@ class ChallengeDeserializer : JsonDeserializer<Challenge>, JsonSerializer<Challe
 
         obj.addProperty("group", src.groupId)
         obj.add("tasksOrder", context.serialize(src.tasksOrder))
-
 
         return obj
     }

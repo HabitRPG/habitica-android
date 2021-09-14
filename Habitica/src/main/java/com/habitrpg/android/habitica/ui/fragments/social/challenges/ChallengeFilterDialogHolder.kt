@@ -24,11 +24,14 @@ internal class ChallengeFilterDialogHolder private constructor(view: View, priva
         binding.challengeFilterButtonNone.setOnClickListener { noneClicked() }
     }
 
-    fun bind(builder: AlertDialog.Builder, filterGroups: List<Group>,
-             currentFilter: ChallengeFilterOptions?,
-             selectedGroupsCallback: Action1<ChallengeFilterOptions>) {
+    fun bind(
+        builder: AlertDialog.Builder,
+        filterGroups: List<Group>,
+        currentFilter: ChallengeFilterOptions?,
+        selectedGroupsCallback: Action1<ChallengeFilterOptions>
+    ) {
         builder.setPositiveButton(context.getString(R.string.done)) { _, _ -> doneClicked() }
-                .show()
+            .show()
         this.filterGroups = filterGroups
         this.currentFilter = currentFilter
         this.selectedGroupsCallback = selectedGroupsCallback
@@ -70,20 +73,21 @@ internal class ChallengeFilterDialogHolder private constructor(view: View, priva
 
     companion object {
 
-        fun showDialog(activity: Activity, filterGroups: List<Group>,
-                       currentFilter: ChallengeFilterOptions?,
-                       selectedGroupsCallback: Action1<ChallengeFilterOptions>) {
+        fun showDialog(
+            activity: Activity,
+            filterGroups: List<Group>,
+            currentFilter: ChallengeFilterOptions?,
+            selectedGroupsCallback: Action1<ChallengeFilterOptions>
+        ) {
             val dialogLayout = activity.layoutInflater.inflate(R.layout.dialog_challenge_filter, null)
 
             val challengeFilterDialogHolder = ChallengeFilterDialogHolder(dialogLayout, activity)
 
             val builder = AlertDialog.Builder(activity)
-                    .setTitle(R.string.filter)
-                    .setView(dialogLayout)
+                .setTitle(R.string.filter)
+                .setView(dialogLayout)
 
             challengeFilterDialogHolder.bind(builder, filterGroups, currentFilter, selectedGroupsCallback)
         }
     }
-
 }
-

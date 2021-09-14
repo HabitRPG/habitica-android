@@ -22,8 +22,7 @@ import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.subjects.PublishSubject
 
-
-class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var tintColor: Int = tintColor
         set(value) {
@@ -36,7 +35,6 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int): Recycle
             field = value
             notifyDataSetChanged()
         }
-
 
     internal val items: MutableList<HabiticaDrawerItem> = ArrayList()
     var selectedItem: Int? = null
@@ -54,10 +52,10 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int): Recycle
     fun getPromoCloseEvents(): Flowable<String> = promoClosedSubject.toFlowable(BackpressureStrategy.DROP)
 
     fun getItemWithIdentifier(identifier: String): HabiticaDrawerItem? =
-            items.find { it.identifier == identifier }
+        items.find { it.identifier == identifier }
 
     private fun getItemPosition(identifier: String): Int =
-            items.indexOfFirst { it.identifier == identifier }
+        items.indexOfFirst { it.identifier == identifier }
 
     fun updateItem(item: HabiticaDrawerItem) {
         val position = getItemPosition(item.identifier)
@@ -83,7 +81,7 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int): Recycle
             }
         }
         if (teamHeaderIndex != -1 && nextHeaderIndex != -1) {
-            for (x in nextHeaderIndex-1 downTo teamHeaderIndex+1) {
+            for (x in nextHeaderIndex - 1 downTo teamHeaderIndex + 1) {
                 items.removeAt(x)
             }
             for ((index, team) in teams.withIndex()) {
@@ -141,24 +139,24 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int): Recycle
             2 -> {
                 val itemView = SubscriptionBuyGemsPromoView(parent.context)
                 itemView.layoutParams = ViewGroup.LayoutParams(
-                        ViewGroup.LayoutParams.MATCH_PARENT,
-                        148.dpToPx(parent.context)
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    148.dpToPx(parent.context)
                 )
                 SubscriptionBuyGemsPromoViewHolder(itemView)
             }
             4 -> {
                 val itemView = AdventureGuideMenuBanner(parent.context)
                 itemView.layoutParams = ViewGroup.LayoutParams(
-                        ViewGroup.LayoutParams.MATCH_PARENT,
-                        104.dpToPx(parent.context)
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    104.dpToPx(parent.context)
                 )
                 SubscriptionBuyGemsPromoViewHolder(itemView)
             }
             5 -> {
                 val promoView = PromoMenuView(parent.context)
                 promoView.layoutParams = ViewGroup.LayoutParams(
-                        ViewGroup.LayoutParams.MATCH_PARENT,
-                        148.dpToPx(parent.context)
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    148.dpToPx(parent.context)
                 )
                 PromoMenuViewHolder(promoView)
             }
@@ -206,7 +204,7 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int): Recycle
             } else {
                 pillView?.visibility = View.GONE
             }
-            if (drawerItem.subtitle != null){
+            if (drawerItem.subtitle != null) {
                 additionalInfoView?.let { additionalInfoView ->
                     additionalInfoView.text = drawerItem.subtitle
                     additionalInfoView.visibility = View.VISIBLE

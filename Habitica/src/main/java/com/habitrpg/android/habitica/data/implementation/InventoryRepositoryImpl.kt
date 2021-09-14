@@ -71,14 +71,14 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
 
     override fun openMysteryItem(user: User?): Flowable<Equipment> {
         return apiClient.openMysteryItem()
-                .flatMap { localRepository.getEquipment(it.key ?: "").firstElement().toFlowable() }
-                .doOnNext { itemData ->
-                    val liveEquipment = localRepository.getLiveObject(itemData)
-                    localRepository.executeTransaction {
-                        liveEquipment?.owned = true
-                    }
-            localRepository.decrementMysteryItemCount(user)
-        }
+            .flatMap { localRepository.getEquipment(it.key ?: "").firstElement().toFlowable() }
+            .doOnNext { itemData ->
+                val liveEquipment = localRepository.getLiveObject(itemData)
+                localRepository.executeTransaction {
+                    liveEquipment?.owned = true
+                }
+                localRepository.decrementMysteryItemCount(user)
+            }
     }
 
     override fun saveEquipment(equipment: Equipment) {
@@ -119,12 +119,12 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
 
     override fun sellItem(type: String, key: String): Flowable<User> {
         return localRepository.getOwnedItem(userID, type, key, true)
-                .flatMap { item -> sellItem(item) }
+            .flatMap { item -> sellItem(item) }
     }
 
     override fun sellItem(item: OwnedItem): Flowable<User> {
         return localRepository.getItem(item.itemType ?: "", item.key ?: "")
-                .flatMap { newItem -> sellItem(newItem, item) }
+            .flatMap { newItem -> sellItem(newItem, item) }
     }
 
     override fun getLatestMysteryItem(): Flowable<Equipment> {
@@ -141,9 +141,9 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
             liveItem?.numberOwned = (liveItem?.numberOwned ?: 0) - 1
         }
         return apiClient.sellItem(item.type, item.key)
-                .map { user ->
-                    localRepository.soldItem(userID, user)
-                }
+            .map { user ->
+                localRepository.soldItem(userID, user)
+            }
     }
 
     override fun equipGear(user: User?, equipment: String, asCostume: Boolean): Flowable<Items> {
@@ -176,29 +176,29 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
             }
         }
         return apiClient.equipItem(type, key)
-                .doOnNext { items ->
-                    if (user == null) {
-                        return@doOnNext
-                    }
-                    localRepository.modify(user) { liveUser ->
-                        val newEquipped = items.gear?.equipped
-                        val oldEquipped = liveUser.items?.gear?.equipped
-                        val newCostume = items.gear?.costume
-                        val oldCostume = liveUser.items?.gear?.costume
-                        newEquipped?.let { equipped -> oldEquipped?.updateWith(equipped) }
-                        newCostume?.let { costume -> oldCostume?.updateWith(costume) }
-                        liveUser.items?.currentMount = items.currentMount
-                        liveUser.items?.currentPet = items.currentPet
-                        liveUser.balance = liveUser.balance
-                    }
+            .doOnNext { items ->
+                if (user == null) {
+                    return@doOnNext
                 }
+                localRepository.modify(user) { liveUser ->
+                    val newEquipped = items.gear?.equipped
+                    val oldEquipped = liveUser.items?.gear?.equipped
+                    val newCostume = items.gear?.costume
+                    val oldCostume = liveUser.items?.gear?.costume
+                    newEquipped?.let { equipped -> oldEquipped?.updateWith(equipped) }
+                    newCostume?.let { costume -> oldCostume?.updateWith(costume) }
+                    liveUser.items?.currentMount = items.currentMount
+                    liveUser.items?.currentPet = items.currentPet
+                    liveUser.balance = liveUser.balance
+                }
+            }
     }
 
     override fun feedPet(pet: Pet, food: Food): Flowable<FeedResponse> {
         return apiClient.feedPet(pet.key ?: "", food.key)
-                .doOnNext { feedResponse ->
-                    localRepository.feedPet(food.key, pet.key ?: "", feedResponse.value ?: 0, userID)
-                }
+            .doOnNext { feedResponse ->
+                localRepository.feedPet(food.key, pet.key ?: "", feedResponse.value ?: 0, userID)
+            }
     }
 
     override fun hatchPet(egg: Egg, hatchingPotion: HatchingPotion, successFunction: () -> Unit): Flowable<Items> {
@@ -207,48 +207,48 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
             successFunction()
         }
         return apiClient.hatchPet(egg.key, hatchingPotion.key)
-                .doOnNext {
-                    localRepository.save(it, userID)
-                    if (!appConfigManager.enableLocalChanges()) {
-                        successFunction()
-                    }
+            .doOnNext {
+                localRepository.save(it, userID)
+                if (!appConfigManager.enableLocalChanges()) {
+                    successFunction()
                 }
+            }
     }
 
     override fun inviteToQuest(quest: QuestContent): Flowable<Quest> {
         return apiClient.inviteToQuest("party", quest.key)
-                .doOnNext { localRepository.changeOwnedCount("quests", quest.key, userID, -1) }
+            .doOnNext { localRepository.changeOwnedCount("quests", quest.key, userID, -1) }
     }
 
     override fun buyItem(user: User?, id: String, value: Double, purchaseQuantity: Int): Flowable<BuyResponse> {
         return apiClient.buyItem(id, purchaseQuantity)
-                .doOnNext { buyResponse ->
-                    if (user == null) {
-                        return@doOnNext
-                    }
-                    val copiedUser = localRepository.getUnmanagedCopy(user)
-                    if (buyResponse.items != null) {
-                        copiedUser.items = buyResponse.items
-                    }
-                    if (buyResponse.hp != null) {
-                        copiedUser.stats?.hp = buyResponse.hp
-                    }
-                    if (buyResponse.exp != null) {
-                        copiedUser.stats?.exp = buyResponse.exp
-                    }
-                    if (buyResponse.mp != null) {
-                        copiedUser.stats?.mp = buyResponse.mp
-                    }
-                    if (buyResponse.gp != null) {
-                        copiedUser.stats?.gp = buyResponse.gp
-                    } else {
-                        copiedUser.stats?.gp = copiedUser.stats?.gp ?: 0 - (value * purchaseQuantity)
-                    }
-                    if (buyResponse.lvl != null) {
-                        copiedUser.stats?.lvl = buyResponse.lvl
-                    }
-                    localRepository.save(copiedUser)
+            .doOnNext { buyResponse ->
+                if (user == null) {
+                    return@doOnNext
                 }
+                val copiedUser = localRepository.getUnmanagedCopy(user)
+                if (buyResponse.items != null) {
+                    copiedUser.items = buyResponse.items
+                }
+                if (buyResponse.hp != null) {
+                    copiedUser.stats?.hp = buyResponse.hp
+                }
+                if (buyResponse.exp != null) {
+                    copiedUser.stats?.exp = buyResponse.exp
+                }
+                if (buyResponse.mp != null) {
+                    copiedUser.stats?.mp = buyResponse.mp
+                }
+                if (buyResponse.gp != null) {
+                    copiedUser.stats?.gp = buyResponse.gp
+                } else {
+                    copiedUser.stats?.gp = copiedUser.stats?.gp ?: 0 - (value * purchaseQuantity)
+                }
+                if (buyResponse.lvl != null) {
+                    copiedUser.stats?.lvl = buyResponse.lvl
+                }
+                localRepository.save(copiedUser)
+            }
     }
 
     override fun getAvailableLimitedItems(): Flowable<List<Item>> {
@@ -287,6 +287,6 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
         return if (!item.isValid) {
             Flowable.empty()
         } else apiClient.togglePinnedItem(item.pinType ?: "", item.path ?: "")
-                .flatMap { retrieveInAppRewards() }
+            .flatMap { retrieveInAppRewards() }
     }
 }

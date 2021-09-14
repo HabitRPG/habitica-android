@@ -12,7 +12,6 @@ import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.databinding.FragmentNewsBinding
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 
-
 class NewsFragment : BaseMainFragment<FragmentNewsBinding>() {
 
     override var binding: FragmentNewsBinding? = null

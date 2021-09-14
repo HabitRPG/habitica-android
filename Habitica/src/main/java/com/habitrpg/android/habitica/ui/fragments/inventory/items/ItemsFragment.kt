@@ -20,8 +20,11 @@ class ItemsFragment : BaseMainFragment<FragmentViewpagerBinding>() {
         return FragmentViewpagerBinding.inflate(inflater, container, false)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         this.usesTabLayout = true
         this.hidesToolbar = true
         return super.onCreateView(inflater, container, savedInstanceState)
@@ -36,12 +39,12 @@ class ItemsFragment : BaseMainFragment<FragmentViewpagerBinding>() {
         arguments?.let {
             val args = ItemsFragmentArgs.fromBundle(it)
             binding?.viewPager?.currentItem = when (args.itemType) {
-                    "hatchingPotions" -> 1
-                    "food" -> 2
-                    "quests" -> 3
-                    "special" -> 4
-                    else -> 0
-                }
+                "hatchingPotions" -> 1
+                "food" -> 2
+                "quests" -> 3
+                "special" -> 4
+                else -> 0
+            }
         }
     }
 

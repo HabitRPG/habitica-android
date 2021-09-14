@@ -22,7 +22,6 @@ import com.habitrpg.android.habitica.ui.viewmodels.GroupViewType
 import com.habitrpg.android.habitica.ui.viewmodels.PartyViewModel
 import java.util.*
 
-
 class PartyFragment : BaseMainFragment<FragmentViewpagerBinding>() {
 
     private var detailFragment: PartyDetailFragment? = null
@@ -37,8 +36,11 @@ class PartyFragment : BaseMainFragment<FragmentViewpagerBinding>() {
         return FragmentViewpagerBinding.inflate(inflater, container, false)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         this.usesTabLayout = true
         this.hidesToolbar = true
         return super.onCreateView(inflater, container, savedInstanceState)
@@ -51,11 +53,12 @@ class PartyFragment : BaseMainFragment<FragmentViewpagerBinding>() {
             .get(PartyViewModel::class.java)
         viewModel.groupViewType = GroupViewType.PARTY
 
-        viewModel.getGroupData().observe(viewLifecycleOwner,
+        viewModel.getGroupData().observe(
+            viewLifecycleOwner,
             {
                 updateGroupUI(it)
-            })
-
+            }
+        )
 
         binding?.viewPager?.currentItem = 0
 
@@ -125,7 +128,7 @@ class PartyFragment : BaseMainFragment<FragmentViewpagerBinding>() {
                 return true
             }
             R.id.menu_guild_refresh -> {
-                viewModel.retrieveGroup {  }
+                viewModel.retrieveGroup { }
                 return true
             }
         }
@@ -171,7 +174,7 @@ class PartyFragment : BaseMainFragment<FragmentViewpagerBinding>() {
                 inviteData["emails"] = invites
             }
             val userIDs = it.data?.getStringArrayExtra(GroupInviteActivity.USER_IDS_KEY)
-            if (userIDs != null && userIDs.isNotEmpty()){
+            if (userIDs != null && userIDs.isNotEmpty()) {
                 val invites = ArrayList<String>()
                 userIDs.forEach { invites.add(it) }
                 inviteData["usernames"] = invites
@@ -199,7 +202,6 @@ class PartyFragment : BaseMainFragment<FragmentViewpagerBinding>() {
                     }
                     else -> Fragment()
                 } ?: Fragment()
-
             }
 
             override fun getItemCount(): Int {
@@ -217,7 +219,7 @@ class PartyFragment : BaseMainFragment<FragmentViewpagerBinding>() {
 
             override fun onPageSelected(position: Int) {
                 if (position == 1) {
-                       chatFragment?.setNavigatedToFragment()
+                    chatFragment?.setNavigatedToFragment()
                 }
             }
         })

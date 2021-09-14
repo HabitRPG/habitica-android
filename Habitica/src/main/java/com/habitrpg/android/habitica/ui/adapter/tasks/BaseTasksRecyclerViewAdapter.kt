@@ -7,20 +7,21 @@ import android.view.ViewGroup
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.TaskRepository
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.TaskFilterHelper
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import com.habitrpg.android.habitica.ui.adapter.BaseRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.viewHolders.BindableViewHolder
-import io.reactivex.rxjava3.core.Flowable
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.schedulers.Schedulers
 import java.util.*
 import javax.inject.Inject
 
-abstract class BaseTasksRecyclerViewAdapter<VH : BindableViewHolder<Task>>(var taskType: String, private val taskFilterHelper: TaskFilterHelper?, private val layoutResource: Int,
-                                                                     newContext: Context, private val userID: String?) : BaseRecyclerViewAdapter<Task, VH>() {
+abstract class BaseTasksRecyclerViewAdapter<VH : BindableViewHolder<Task>>(
+    var taskType: String,
+    private val taskFilterHelper: TaskFilterHelper?,
+    private val layoutResource: Int,
+    newContext: Context,
+    private val userID: String?
+) : BaseRecyclerViewAdapter<Task, VH>() {
     @Inject
     lateinit var analyticsManager: AnalyticsManager
     @Inject
@@ -53,7 +54,7 @@ abstract class BaseTasksRecyclerViewAdapter<VH : BindableViewHolder<Task>>(var t
     internal fun getContentView(parent: ViewGroup): View = getContentView(parent, layoutResource)
 
     protected fun getContentView(parent: ViewGroup, layoutResource: Int): View =
-            LayoutInflater.from(parent.context).inflate(layoutResource, parent, false)
+        LayoutInflater.from(parent.context).inflate(layoutResource, parent, false)
 
     private fun updateTask(task: Task) {
         if (taskType != task.type)

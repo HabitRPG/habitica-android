@@ -9,7 +9,6 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.PurchaseSubscriptionViewBinding
 import com.habitrpg.android.habitica.extensions.layoutInflater
 
-
 class SubscriptionOptionView(context: Context, attrs: AttributeSet) : FrameLayout(context, attrs) {
 
     private val binding = PurchaseSubscriptionViewBinding.inflate(context.layoutInflater, this, true)
@@ -18,9 +17,10 @@ class SubscriptionOptionView(context: Context, attrs: AttributeSet) : FrameLayou
 
     init {
         val a = context.theme.obtainStyledAttributes(
-                attrs,
-                R.styleable.SubscriptionOptionView,
-                0, 0)
+            attrs,
+            R.styleable.SubscriptionOptionView,
+            0, 0
+        )
 
         if (a.getBoolean(R.styleable.SubscriptionOptionView_isNonRecurring, false)) {
             binding.descriptionTextView.text = context.getString(R.string.subscription_duration_norenew, a.getText(R.styleable.SubscriptionOptionView_recurringText))
@@ -37,7 +37,6 @@ class SubscriptionOptionView(context: Context, attrs: AttributeSet) : FrameLayou
         } else {
             binding.hourglassTextView.visibility = View.GONE
         }
-
     }
 
     fun setOnPurchaseClickListener(listener: OnClickListener) {

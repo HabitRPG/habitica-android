@@ -41,8 +41,14 @@ class SafeDefaultItemAnimator : SimpleItemAnimator() {
         var toX: Int = 0
         var toY: Int = 0
 
-        constructor(oldHolder: RecyclerView.ViewHolder, newHolder: RecyclerView.ViewHolder,
-                             fromX: Int, fromY: Int, toX: Int, toY: Int) : this(oldHolder, newHolder) {
+        constructor(
+            oldHolder: RecyclerView.ViewHolder,
+            newHolder: RecyclerView.ViewHolder,
+            fromX: Int,
+            fromY: Int,
+            toX: Int,
+            toY: Int
+        ) : this(oldHolder, newHolder) {
             this.fromX = fromX
             this.fromY = fromY
             this.toX = toX
@@ -50,14 +56,16 @@ class SafeDefaultItemAnimator : SimpleItemAnimator() {
         }
 
         override fun toString(): String {
-            return ("ChangeInfo{"
-                    + "oldHolder=" + oldHolder
-                    + ", newHolder=" + newHolder
-                    + ", fromX=" + fromX
-                    + ", fromY=" + fromY
-                    + ", toX=" + toX
-                    + ", toY=" + toY
-                    + '}'.toString())
+            return (
+                "ChangeInfo{" +
+                    "oldHolder=" + oldHolder +
+                    ", newHolder=" + newHolder +
+                    ", fromX=" + fromX +
+                    ", fromY=" + fromY +
+                    ", toX=" + toX +
+                    ", toY=" + toY +
+                    '}'.toString()
+                )
         }
     }
 
@@ -85,8 +93,12 @@ class SafeDefaultItemAnimator : SimpleItemAnimator() {
             pendingMoves.clear()
             val mover = Runnable {
                 for (moveInfo in moves) {
-                    moveInfo.holder?.let { animateMoveImpl(it, moveInfo.fromX, moveInfo.fromY,
-                            moveInfo.toX, moveInfo.toY) }
+                    moveInfo.holder?.let {
+                        animateMoveImpl(
+                            it, moveInfo.fromX, moveInfo.fromY,
+                            moveInfo.toX, moveInfo.toY
+                        )
+                    }
                 }
                 moves.clear()
                 movesList.remove(moves)
@@ -161,19 +173,19 @@ class SafeDefaultItemAnimator : SimpleItemAnimator() {
         val animation = view.animate()
         removeAnimations.add(holder)
         animation.setDuration(removeDuration).alpha(0f).setListener(
-                object : AnimatorListenerAdapter() {
-                    override fun onAnimationStart(animator: Animator) {
-                        dispatchRemoveStarting(holder)
-                    }
+            object : AnimatorListenerAdapter() {
+                override fun onAnimationStart(animator: Animator) {
+                    dispatchRemoveStarting(holder)
+                }
 
-                    override fun onAnimationEnd(animator: Animator) {
-                        animation.setListener(null)
-                        view.alpha = 1f
-                        dispatchRemoveFinished(holder)
-                        removeAnimations.remove(holder)
-                        dispatchFinishedWhenDone()
-                    }
-                }).start()
+                override fun onAnimationEnd(animator: Animator) {
+                    animation.setListener(null)
+                    view.alpha = 1f
+                    dispatchRemoveFinished(holder)
+                    removeAnimations.remove(holder)
+                    dispatchFinishedWhenDone()
+                }
+            }).start()
     }
 
     override fun animateAdd(holder: RecyclerView.ViewHolder): Boolean {
@@ -188,26 +200,31 @@ class SafeDefaultItemAnimator : SimpleItemAnimator() {
         val animation = view.animate()
         addAnimations.add(holder)
         animation.alpha(1f).setDuration(addDuration)
-                .setListener(object : AnimatorListenerAdapter() {
-                    override fun onAnimationStart(animator: Animator) {
-                        dispatchAddStarting(holder)
-                    }
+            .setListener(object : AnimatorListenerAdapter() {
+                override fun onAnimationStart(animator: Animator) {
+                    dispatchAddStarting(holder)
+                }
 
-                    override fun onAnimationCancel(animator: Animator) {
-                        view.alpha = 1f
-                    }
+                override fun onAnimationCancel(animator: Animator) {
+                    view.alpha = 1f
+                }
 
-                    override fun onAnimationEnd(animator: Animator) {
-                        animation.setListener(null)
-                        dispatchAddFinished(holder)
-                        addAnimations.remove(holder)
-                        dispatchFinishedWhenDone()
-                    }
-                }).start()
+                override fun onAnimationEnd(animator: Animator) {
+                    animation.setListener(null)
+                    dispatchAddFinished(holder)
+                    addAnimations.remove(holder)
+                    dispatchFinishedWhenDone()
+                }
+            }).start()
     }
 
-    override fun animateMove(holder: RecyclerView.ViewHolder, fromX: Int, fromY: Int,
-                             toX: Int, toY: Int): Boolean {
+    override fun animateMove(
+        holder: RecyclerView.ViewHolder,
+        fromX: Int,
+        fromY: Int,
+        toX: Int,
+        toY: Int
+    ): Boolean {
         var newFromX = fromX
         var newFromY = fromY
         val view = holder.itemView
@@ -271,8 +288,14 @@ class SafeDefaultItemAnimator : SimpleItemAnimator() {
         }).start()
     }
 
-    override fun animateChange(oldHolder: RecyclerView.ViewHolder, newHolder: RecyclerView.ViewHolder?,
-                               fromX: Int, fromY: Int, toX: Int, toY: Int): Boolean {
+    override fun animateChange(
+        oldHolder: RecyclerView.ViewHolder,
+        newHolder: RecyclerView.ViewHolder?,
+        fromX: Int,
+        fromY: Int,
+        toX: Int,
+        toY: Int
+    ): Boolean {
         if (oldHolder === newHolder) {
             // Don't know how to run change animations when the same view holder is re-used.
             // run a move animation to handle position changes.
@@ -308,7 +331,8 @@ class SafeDefaultItemAnimator : SimpleItemAnimator() {
         val newView = newHolder?.itemView
         if (view != null) {
             val oldViewAnim = view.animate().setDuration(
-                    changeDuration)
+                changeDuration
+            )
             changeInfo.oldHolder?.let { changeAnimations.add(it) }
             oldViewAnim.translationX((changeInfo.toX - changeInfo.fromX).toFloat())
             oldViewAnim.translationY((changeInfo.toY - changeInfo.fromY).toFloat())
@@ -332,21 +356,21 @@ class SafeDefaultItemAnimator : SimpleItemAnimator() {
             val newViewAnimation = newView.animate()
             changeInfo.newHolder?.let { changeAnimations.add(it) }
             newViewAnimation.translationX(0f).translationY(0f).setDuration(changeDuration)
-                    .alpha(1f).setListener(object : AnimatorListenerAdapter() {
-                        override fun onAnimationStart(animator: Animator) {
-                            dispatchChangeStarting(changeInfo.newHolder, false)
-                        }
+                .alpha(1f).setListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationStart(animator: Animator) {
+                        dispatchChangeStarting(changeInfo.newHolder, false)
+                    }
 
-                        override fun onAnimationEnd(animator: Animator) {
-                            newViewAnimation.setListener(null)
-                            newView.alpha = 1f
-                            newView.translationX = 0f
-                            newView.translationY = 0f
-                            dispatchChangeFinished(changeInfo.newHolder, false)
-                            changeInfo.newHolder?.let { changeAnimations.add(it) }
-                            dispatchFinishedWhenDone()
-                        }
-                    }).start()
+                    override fun onAnimationEnd(animator: Animator) {
+                        newViewAnimation.setListener(null)
+                        newView.alpha = 1f
+                        newView.translationX = 0f
+                        newView.translationY = 0f
+                        dispatchChangeFinished(changeInfo.newHolder, false)
+                        changeInfo.newHolder?.let { changeAnimations.add(it) }
+                        dispatchFinishedWhenDone()
+                    }
+                }).start()
         }
     }
 
@@ -465,17 +489,19 @@ class SafeDefaultItemAnimator : SimpleItemAnimator() {
     }
 
     override fun isRunning(): Boolean {
-        return (pendingAdditions.isNotEmpty()
-                || pendingChanges.isNotEmpty()
-                || pendingMoves.isNotEmpty()
-                || pendingRemovals.isNotEmpty()
-                || moveAnimations.isNotEmpty()
-                || removeAnimations.isNotEmpty()
-                || addAnimations.isNotEmpty()
-                || changeAnimations.isNotEmpty()
-                || movesList.isNotEmpty()
-                || additionsList.isNotEmpty()
-                || changesList.isNotEmpty())
+        return (
+            pendingAdditions.isNotEmpty() ||
+                pendingChanges.isNotEmpty() ||
+                pendingMoves.isNotEmpty() ||
+                pendingRemovals.isNotEmpty() ||
+                moveAnimations.isNotEmpty() ||
+                removeAnimations.isNotEmpty() ||
+                addAnimations.isNotEmpty() ||
+                changeAnimations.isNotEmpty() ||
+                movesList.isNotEmpty() ||
+                additionsList.isNotEmpty() ||
+                changesList.isNotEmpty()
+            )
     }
 
     /**
@@ -596,8 +622,10 @@ class SafeDefaultItemAnimator : SimpleItemAnimator() {
      *
      *
      */
-    override fun canReuseUpdatedViewHolder(viewHolder: RecyclerView.ViewHolder,
-                                           payloads: List<Any>): Boolean {
+    override fun canReuseUpdatedViewHolder(
+        viewHolder: RecyclerView.ViewHolder,
+        payloads: List<Any>
+    ): Boolean {
         return payloads.isNotEmpty() || super.canReuseUpdatedViewHolder(viewHolder, payloads)
     }
 

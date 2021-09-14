@@ -5,7 +5,6 @@ import com.habitrpg.android.habitica.models.Avatar
 import com.habitrpg.android.habitica.models.BaseObject
 import com.habitrpg.android.habitica.models.social.UserParty
 import com.habitrpg.android.habitica.models.user.*
-
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
@@ -47,7 +46,7 @@ open class Member : RealmObject(), Avatar, BaseObject {
         get() = this.items?.mounts?.size ?: 0
 
     val username: String?
-    get() = authentication?.localAuthentication?.username
+        get() = authentication?.localAuthentication?.username
     val formattedUsername: String?
         get() = if (username != null) "@$username" else null
 

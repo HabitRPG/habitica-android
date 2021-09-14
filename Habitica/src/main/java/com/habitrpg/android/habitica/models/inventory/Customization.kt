@@ -9,10 +9,10 @@ open class Customization : RealmObject(), BaseObject {
     @PrimaryKey
     var id: String? = null
     var identifier: String? = null
-    set(value) {
-        field = value
-        updateID()
-    }
+        set(value) {
+            field = value
+            updateID()
+        }
     var category: String? = null
         set(value) {
             field = value
@@ -36,11 +36,11 @@ open class Customization : RealmObject(), BaseObject {
         id = identifier + "_" + type + "_" + this.category
     }
 
-    //Not released yet
+    // Not released yet
     val purchasable: Boolean
         get() {
             val today = Date()
-            if (availableFrom != null && !availableFrom!!.before(today)) { //Not released yet
+            if (availableFrom != null && !availableFrom!!.before(today)) { // Not released yet
                 return false
             }
             return !(availableUntil != null && !availableUntil!!.after(today))

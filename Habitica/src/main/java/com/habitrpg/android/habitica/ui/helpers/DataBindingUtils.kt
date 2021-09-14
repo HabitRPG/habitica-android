@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.ui.helpers
 
 import android.content.Context
-import android.graphics.Bitmap
 import android.graphics.PorterDuff
 import android.graphics.drawable.Drawable
 import android.view.View
@@ -18,7 +17,6 @@ import com.habitrpg.android.habitica.extensions.setTintWith
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import java.util.*
 import kotlin.collections.HashMap
-
 
 fun ImageView.loadImage(imageName: String?, imageFormat: String? = null) {
     DataBindingUtils.loadImage(this, imageName, imageFormat)
@@ -98,13 +96,13 @@ object DataBindingUtils {
     private val FILENAME_MAP: Map<String, String>
 
     private var spriteSubstitutions: Map<String, String> = HashMap()
-    get() {
-        if (Date().time - (lastSubstitutionCheck?.time ?: 0) > 180000) {
-            field = AppConfigManager(null).spriteSubstitutions()["generic"] ?: HashMap()
-            lastSubstitutionCheck = Date()
+        get() {
+            if (Date().time - (lastSubstitutionCheck?.time ?: 0) > 180000) {
+                field = AppConfigManager(null).spriteSubstitutions()["generic"] ?: HashMap()
+                lastSubstitutionCheck = Date()
+            }
+            return field
         }
-        return field
-    }
     private var lastSubstitutionCheck: Date? = null
 
     init {
@@ -140,7 +138,6 @@ object DataBindingUtils {
         tempMap["Pet_HatchingPotion_Windup"] = "gif"
         tempMap["quest_solarSystem"] = "gif"
         FILEFORMAT_MAP = Collections.unmodifiableMap(tempMap)
-
 
         val tempNameMap = HashMap<String, String>()
         tempNameMap["head_special_1"] = "ContributorOnly-Equip-CrystalHelmet"

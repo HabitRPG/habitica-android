@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.data.local
 
 import com.habitrpg.android.habitica.models.inventory.Customization
-
 import io.reactivex.rxjava3.core.Flowable
 
 interface CustomizationLocalRepository : ContentLocalRepository {

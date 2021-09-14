@@ -34,8 +34,11 @@ class GuildOverviewFragment : BaseMainFragment<FragmentViewpagerBinding>(), Sear
     private var userGuildsFragment: GuildListFragment? = GuildListFragment()
     private var publicGuildsFragment: GuildListFragment? = GuildListFragment()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         this.usesTabLayout = true
         this.hidesToolbar = true
         return super.onCreateView(inflater, container, savedInstanceState)
@@ -79,7 +82,6 @@ class GuildOverviewFragment : BaseMainFragment<FragmentViewpagerBinding>(), Sear
 
         return super.onOptionsItemSelected(item)
     }
-
 
     private fun showCreationDialog() {
         val context = context ?: return

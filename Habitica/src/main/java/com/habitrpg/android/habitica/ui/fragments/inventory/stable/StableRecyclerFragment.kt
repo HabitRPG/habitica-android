@@ -29,7 +29,8 @@ import io.reactivex.rxjava3.kotlin.combineLatest
 import java.util.*
 import javax.inject.Inject
 
-class StableRecyclerFragment : BaseFragment<FragmentRefreshRecyclerviewBinding>(),
+class StableRecyclerFragment :
+    BaseFragment<FragmentRefreshRecyclerviewBinding>(),
     SwipeRefreshLayout.OnRefreshListener {
 
     @Inject
@@ -72,7 +73,8 @@ class StableRecyclerFragment : BaseFragment<FragmentRefreshRecyclerviewBinding>(
         super.onViewCreated(view, savedInstanceState)
 
         binding?.recyclerView?.emptyItem = EmptyItem(
-            getString(R.string.empty_items, itemTypeText))
+            getString(R.string.empty_items, itemTypeText)
+        )
         binding?.refreshLayout?.setOnRefreshListener(this)
 
         layoutManager = androidx.recyclerview.widget.GridLayoutManager(activity, 2)
@@ -97,13 +99,17 @@ class StableRecyclerFragment : BaseFragment<FragmentRefreshRecyclerviewBinding>(
             user?.let { adapter?.setUser(it) }
             adapter?.animalIngredientsRetriever = { animal, callback ->
                 Maybe.zip(
-                        inventoryRepository.getItems(Egg::class.java, arrayOf(animal.animal)).firstElement(),
-                        inventoryRepository.getItems(HatchingPotion::class.java, arrayOf(animal.color)).firstElement(), { eggs, potions ->
-                    Pair(eggs.first() as? Egg, potions.first() as? HatchingPotion)
-                }
-                ).subscribe({
-                    callback(it)
-                }, RxErrorHandler.handleEmptyError())
+                    inventoryRepository.getItems(Egg::class.java, arrayOf(animal.animal)).firstElement(),
+                    inventoryRepository.getItems(HatchingPotion::class.java, arrayOf(animal.color)).firstElement(),
+                    { eggs, potions ->
+                        Pair(eggs.first() as? Egg, potions.first() as? HatchingPotion)
+                    }
+                ).subscribe(
+                    {
+                        callback(it)
+                    },
+                    RxErrorHandler.handleEmptyError()
+                )
             }
             adapter?.itemType = this.itemType
             adapter?.shopSpriteSuffix = configManager.shopSpriteSuffix()
@@ -111,12 +117,14 @@ class StableRecyclerFragment : BaseFragment<FragmentRefreshRecyclerviewBinding>(
             binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
 
             adapter?.let {
-                compositeSubscription.add(it.getEquipFlowable()
+                compositeSubscription.add(
+                    it.getEquipFlowable()
                         .flatMap { key -> inventoryRepository.equip(user, if (itemType == "pets") "pet" else "mount", key) }
-                        .subscribe({ }, RxErrorHandler.handleEmptyError()))
+                        .subscribe({ }, RxErrorHandler.handleEmptyError())
+                )
             }
         }
-        
+
         this.loadItems()
         view.post { setGridSpanCount(view.width) }
     }
@@ -125,7 +133,6 @@ class StableRecyclerFragment : BaseFragment<FragmentRefreshRecyclerviewBinding>(
         super.onSaveInstanceState(outState)
         outState.putString(ITEM_TYPE_KEY, this.itemType)
     }
-
 
     private fun setGridSpanCount(width: Int) {
         var spanCount = 0
@@ -160,7 +167,8 @@ class StableRecyclerFragment : BaseFragment<FragmentRefreshRecyclerviewBinding>(
             animalMap
         }
 
-        compositeSubscription.add(inventoryRepository.getItems(Egg::class.java)
+        compositeSubscription.add(
+            inventoryRepository.getItems(Egg::class.java)
                 .map {
                     val eggMap = mutableMapOf<String, Egg>()
                     it.forEach { egg ->
@@ -168,23 +176,31 @@ class StableRecyclerFragment : BaseFragment<FragmentRefreshRecyclerviewBinding>(
                     }
                     eggMap
                 }
-                .subscribe({
-            adapter?.setEggs(it)
-        }, RxErrorHandler.handleEmptyError()))
-        compositeSubscription.add(ownedObservable.combineLatest(observable.toFlowable())
+                .subscribe(
+                    {
+                        adapter?.setEggs(it)
+                    },
+                    RxErrorHandler.handleEmptyError()
+                )
+        )
+        compositeSubscription.add(
+            ownedObservable.combineLatest(observable.toFlowable())
                 .map { (ownedAnimals, unsortedAnimals) ->
                     mapAnimals(unsortedAnimals, ownedAnimals)
                 }
-                .subscribe({ items -> adapter?.setItemList(items) }, RxErrorHandler.handleEmptyError()))
+                .subscribe({ items -> adapter?.setItemList(items) }, RxErrorHandler.handleEmptyError())
+        )
         compositeSubscription.add(inventoryRepository.getOwnedItems(true).subscribe({ adapter?.setOwnedItems(it) }, RxErrorHandler.handleEmptyError()))
         compositeSubscription.add(inventoryRepository.getMounts().subscribe({ adapter?.setExistingMounts(it) }, RxErrorHandler.handleEmptyError()))
-        compositeSubscription.add(inventoryRepository.getOwnedMounts()
+        compositeSubscription.add(
+            inventoryRepository.getOwnedMounts()
                 .map { ownedMounts ->
                     val mountMap = mutableMapOf<String, OwnedMount>()
                     ownedMounts.forEach { mountMap[it.key ?: ""] = it }
                     return@map mountMap
                 }
-                .subscribe({ adapter?.setOwnedMounts(it) }, RxErrorHandler.handleEmptyError()))
+                .subscribe({ adapter?.setOwnedMounts(it) }, RxErrorHandler.handleEmptyError())
+        )
     }
 
     private fun mapAnimals(unsortedAnimals: List<Animal>, ownedAnimals: Map<String, OwnedObject>): ArrayList<Any> {
@@ -205,7 +221,6 @@ class StableRecyclerFragment : BaseFragment<FragmentRefreshRecyclerviewBinding>(
                 }
                 lastAnimal = animal
             }
-
 
             if (animal.type != lastSection?.key && animal.type != "premium") {
                 if (items.size > 0 && items[items.size - 1].javaClass == StableSection::class.java) {
@@ -252,8 +267,13 @@ class StableRecyclerFragment : BaseFragment<FragmentRefreshRecyclerviewBinding>(
     }
 
     override fun onRefresh() {
-        compositeSubscription.add(userRepository.retrieveUser(false, true).subscribe({
-            binding?.refreshLayout?.isRefreshing = false
-        }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(
+            userRepository.retrieveUser(false, true).subscribe(
+                {
+                    binding?.refreshLayout?.isRefreshing = false
+                },
+                RxErrorHandler.handleEmptyError()
+            )
+        )
     }
 }

@@ -12,9 +12,9 @@ import com.habitrpg.android.habitica.models.Notification
 import com.habitrpg.android.habitica.models.notifications.*
 import com.habitrpg.android.habitica.models.social.UserParty
 import com.habitrpg.android.habitica.models.user.User
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.functions.BiFunction
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import java.util.*
@@ -28,18 +28,18 @@ open class NotificationsViewModel : BaseViewModel() {
     lateinit var socialRepository: SocialRepository
 
     private val supportedNotificationTypes = listOf(
-            Notification.Type.NEW_STUFF.type,
-            Notification.Type.NEW_CHAT_MESSAGE.type,
-            Notification.Type.NEW_MYSTERY_ITEMS.type,
-            Notification.Type.GROUP_TASK_NEEDS_WORK.type,
-            Notification.Type.GROUP_TASK_APPROVED.type,
-            Notification.Type.UNALLOCATED_STATS_POINTS.type
+        Notification.Type.NEW_STUFF.type,
+        Notification.Type.NEW_CHAT_MESSAGE.type,
+        Notification.Type.NEW_MYSTERY_ITEMS.type,
+        Notification.Type.GROUP_TASK_NEEDS_WORK.type,
+        Notification.Type.GROUP_TASK_APPROVED.type,
+        Notification.Type.UNALLOCATED_STATS_POINTS.type
     )
 
     private val actionableNotificationTypes = listOf(
-            Notification.Type.GUILD_INVITATION.type,
-            Notification.Type.PARTY_INVITATION.type,
-            Notification.Type.QUEST_INVITATION.type
+        Notification.Type.GUILD_INVITATION.type,
+        Notification.Type.PARTY_INVITATION.type,
+        Notification.Type.QUEST_INVITATION.type
     )
 
     private var party: UserParty? = null
@@ -53,63 +53,67 @@ open class NotificationsViewModel : BaseViewModel() {
     init {
         customNotifications.onNext(emptyList())
 
-        disposable.add(userRepository.getUser()
-                .subscribe({
-                    party = it.party
-                    var notifications = convertInvitationsToNotifications(it)
-                    if (it.flags?.newStuff == true) {
-                        val notification = Notification()
-                        notification.id = "new-stuff-notification"
-                        notification.type = Notification.Type.NEW_STUFF.type
-                        val data = NewStuffData()
-                        notification.data = data
-                        notifications.add(notification)
-                    }
-                    customNotifications.onNext(notifications)
-                }, RxErrorHandler.handleEmptyError()))
+        disposable.add(
+            userRepository.getUser()
+                .subscribe(
+                    {
+                        party = it.party
+                        var notifications = convertInvitationsToNotifications(it)
+                        if (it.flags?.newStuff == true) {
+                            val notification = Notification()
+                            notification.id = "new-stuff-notification"
+                            notification.type = Notification.Type.NEW_STUFF.type
+                            val data = NewStuffData()
+                            notification.data = data
+                            notifications.add(notification)
+                        }
+                        customNotifications.onNext(notifications)
+                    },
+                    RxErrorHandler.handleEmptyError()
+                )
+        )
     }
-
 
     fun getNotifications(): Flowable<List<Notification>> {
         val serverNotifications = notificationsManager.getNotifications()
-                .map { filterSupportedTypes(it) }
+            .map { filterSupportedTypes(it) }
 
         return Flowable.combineLatest(
-                serverNotifications,
-                customNotifications.toFlowable(BackpressureStrategy.LATEST),
-                BiFunction<List<Notification>, List<Notification>, List<Notification>> {
-                    serverNotificationsList, customNotificationsList ->
-                    if (serverNotificationsList.firstOrNull { notification -> notification.type == Notification.Type.NEW_STUFF.type } != null) {
-                        return@BiFunction serverNotificationsList + customNotificationsList.filter { notification -> notification.type != Notification.Type.NEW_STUFF.type }
-                    }
-                    return@BiFunction serverNotificationsList + customNotificationsList
+            serverNotifications,
+            customNotifications.toFlowable(BackpressureStrategy.LATEST),
+            BiFunction<List<Notification>, List<Notification>, List<Notification>> {
+                serverNotificationsList, customNotificationsList ->
+                if (serverNotificationsList.firstOrNull { notification -> notification.type == Notification.Type.NEW_STUFF.type } != null) {
+                    return@BiFunction serverNotificationsList + customNotificationsList.filter { notification -> notification.type != Notification.Type.NEW_STUFF.type }
                 }
+                return@BiFunction serverNotificationsList + customNotificationsList
+            }
         )
-                .map { it.sortedBy { notification -> notification.priority } }
-                .observeOn(AndroidSchedulers.mainThread())
+            .map { it.sortedBy { notification -> notification.priority } }
+            .observeOn(AndroidSchedulers.mainThread())
     }
 
     fun getNotificationCount(): Flowable<Int> {
         return getNotifications()
-                .map { it.count() }
-                .distinctUntilChanged()
+            .map { it.count() }
+            .distinctUntilChanged()
     }
 
     fun allNotificationsSeen(): Flowable<Boolean> {
         return getNotifications()
-                .map { it.all { notification -> notification.seen != false } }
-                .distinctUntilChanged()
+            .map { it.all { notification -> notification.seen != false } }
+            .distinctUntilChanged()
     }
 
     fun getHasPartyNotification(): Flowable<Boolean> {
         return getNotifications()
-                .map {
-                    it.find { notification ->
-                        val data = notification.data as? NewChatMessageData
-                        isPartyMessage(data)
-                    } != null
-                }
-                .distinctUntilChanged()
+            .map {
+                it.find { notification ->
+                    val data = notification.data as? NewChatMessageData
+                    isPartyMessage(data)
+                } != null
+            }
+            .distinctUntilChanged()
     }
 
     fun refreshNotifications(): Flowable<*> {
@@ -123,25 +127,29 @@ open class NotificationsViewModel : BaseViewModel() {
     private fun convertInvitationsToNotifications(user: User): MutableList<Notification> {
         val notifications = mutableListOf<Notification>()
 
-        notifications.addAll(user.invitations?.parties?.map {
-            val notification = Notification()
-            notification.id = "custom-party-invitation-" + it.id
-            notification.type = Notification.Type.PARTY_INVITATION.type
-            val data = PartyInvitationData()
-            data.invitation = it
-            notification.data = data
-            notification
-        } ?: emptyList())
+        notifications.addAll(
+            user.invitations?.parties?.map {
+                val notification = Notification()
+                notification.id = "custom-party-invitation-" + it.id
+                notification.type = Notification.Type.PARTY_INVITATION.type
+                val data = PartyInvitationData()
+                data.invitation = it
+                notification.data = data
+                notification
+            } ?: emptyList()
+        )
 
-        notifications.addAll(user.invitations?.guilds?.map {
-            val notification = Notification()
-            notification.id = "custom-guild-invitation-" + it.id
-            notification.type = Notification.Type.GUILD_INVITATION.type
-            val data = GuildInvitationData()
-            data.invitation = it
-            notification.data = data
-            notification
-        } ?: emptyList())
+        notifications.addAll(
+            user.invitations?.guilds?.map {
+                val notification = Notification()
+                notification.id = "custom-guild-invitation-" + it.id
+                notification.type = Notification.Type.GUILD_INVITATION.type
+                val data = GuildInvitationData()
+                data.invitation = it
+                notification.data = data
+                notification
+            } ?: emptyList()
+        )
 
         val quest = user.party?.quest
         if (quest != null && quest.RSVPNeeded) {
@@ -179,15 +187,17 @@ open class NotificationsViewModel : BaseViewModel() {
             return
         }
 
-        disposable.add(userRepository.readNotification(notification.id)
-                .subscribe({}, RxErrorHandler.handleEmptyError()))
+        disposable.add(
+            userRepository.readNotification(notification.id)
+                .subscribe({}, RxErrorHandler.handleEmptyError())
+        )
     }
 
     fun dismissAllNotifications(notifications: List<Notification>) {
         val dismissableIds = notifications
-                .filter { !isCustomNotification(it) }
-                .filter { !actionableNotificationTypes.contains(it.type) }
-                .map { it.id }
+            .filter { !isCustomNotification(it) }
+            .filter { !actionableNotificationTypes.contains(it.type) }
+            .map { it.id }
 
         if (dismissableIds.isEmpty()) {
             return
@@ -196,15 +206,17 @@ open class NotificationsViewModel : BaseViewModel() {
         val notificationIds = HashMap<String, List<String>>()
         notificationIds["notificationIds"] = dismissableIds
 
-        disposable.add(userRepository.readNotifications(notificationIds)
-                .subscribe({}, RxErrorHandler.handleEmptyError()))
+        disposable.add(
+            userRepository.readNotifications(notificationIds)
+                .subscribe({}, RxErrorHandler.handleEmptyError())
+        )
     }
 
     fun markNotificationsAsSeen(notifications: List<Notification>) {
         val unseenIds = notifications
-                .filter { !isCustomNotification(it) }
-                .filter { it.seen == false }
-                .map { it.id }
+            .filter { !isCustomNotification(it) }
+            .filter { it.seen == false }
+            .map { it.id }
 
         if (unseenIds.isEmpty()) {
             return
@@ -213,8 +225,10 @@ open class NotificationsViewModel : BaseViewModel() {
         val notificationIds = HashMap<String, List<String>>()
         notificationIds["notificationIds"] = unseenIds
 
-        disposable.add(userRepository.seeNotifications(notificationIds)
-                .subscribe({}, RxErrorHandler.handleEmptyError()))
+        disposable.add(
+            userRepository.seeNotifications(notificationIds)
+                .subscribe({}, RxErrorHandler.handleEmptyError())
+        )
     }
 
     private fun findNotification(id: String): Notification? {
@@ -312,41 +326,61 @@ open class NotificationsViewModel : BaseViewModel() {
 
     private fun acceptGroupInvitation(groupId: String?) {
         groupId?.let {
-            disposable.add(socialRepository.joinGroup(it)
+            disposable.add(
+                socialRepository.joinGroup(it)
                     .flatMap { userRepository.retrieveUser(false, forced = true) }
-                    .subscribe({
-                        refreshNotifications()
-                    }, RxErrorHandler.handleEmptyError()))
+                    .subscribe(
+                        {
+                            refreshNotifications()
+                        },
+                        RxErrorHandler.handleEmptyError()
+                    )
+            )
         }
     }
 
     fun rejectGroupInvite(groupId: String?) {
         groupId?.let {
-            disposable.add(socialRepository.rejectGroupInvite(it)
+            disposable.add(
+                socialRepository.rejectGroupInvite(it)
                     .flatMap { userRepository.retrieveUser(false, forced = true) }
-                    .subscribe({
-                        refreshNotifications()
-                    }, RxErrorHandler.handleEmptyError()))
+                    .subscribe(
+                        {
+                            refreshNotifications()
+                        },
+                        RxErrorHandler.handleEmptyError()
+                    )
+            )
         }
     }
 
     private fun acceptQuestInvitation() {
         party?.id?.let {
-            disposable.add(socialRepository.acceptQuest(null, it)
+            disposable.add(
+                socialRepository.acceptQuest(null, it)
                     .flatMap { userRepository.retrieveUser(false, forced = true) }
-                    .subscribe({
-                        refreshNotifications()
-                    }, RxErrorHandler.handleEmptyError()))
+                    .subscribe(
+                        {
+                            refreshNotifications()
+                        },
+                        RxErrorHandler.handleEmptyError()
+                    )
+            )
         }
     }
 
     private fun rejectQuestInvitation() {
         party?.id?.let {
-            disposable.add(socialRepository.rejectQuest(null, it)
+            disposable.add(
+                socialRepository.rejectQuest(null, it)
                     .flatMap { userRepository.retrieveUser(false, forced = true) }
-                    .subscribe({
-                        refreshNotifications()
-                    }, RxErrorHandler.handleEmptyError()))
+                    .subscribe(
+                        {
+                            refreshNotifications()
+                        },
+                        RxErrorHandler.handleEmptyError()
+                    )
+            )
         }
     }
 

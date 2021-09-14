@@ -9,11 +9,11 @@ import android.view.View
 import android.widget.TextView
 
 fun TextView.handleUrlClicks(onClicked: ((String) -> Unit)? = null) {
-    //create span builder and replaces current text with it
+    // create span builder and replaces current text with it
     text = SpannableStringBuilder.valueOf(text).apply {
-        //search for all URL spans and replace all spans with our own clickable spans
+        // search for all URL spans and replace all spans with our own clickable spans
         getSpans(0, length, URLSpan::class.java).forEach {
-            //add new clickable span at the same position
+            // add new clickable span at the same position
             setSpan(
                 object : ClickableSpan() {
                     override fun onClick(widget: View) {
@@ -24,10 +24,10 @@ fun TextView.handleUrlClicks(onClicked: ((String) -> Unit)? = null) {
                 getSpanEnd(it),
                 Spanned.SPAN_INCLUSIVE_EXCLUSIVE
             )
-            //remove old URLSpan
+            // remove old URLSpan
             removeSpan(it)
         }
     }
-    //make sure movement method is set
+    // make sure movement method is set
     movementMethod = LinkMovementMethod.getInstance()
 }

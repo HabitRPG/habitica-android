@@ -6,7 +6,7 @@ import com.google.gson.JsonElement
 import com.google.gson.JsonParseException
 import com.habitrpg.android.habitica.models.Skill
 import java.lang.reflect.Type
-import java.util.*
+import java.util.ArrayList
 
 /**
  * Created by viirus on 25/11/15.
@@ -14,8 +14,11 @@ import java.util.*
 class SkillDeserializer : JsonDeserializer<List<Skill>> {
 
     @Throws(JsonParseException::class)
-    override fun deserialize(json: JsonElement, type: Type,
-                             context: JsonDeserializationContext): List<Skill> {
+    override fun deserialize(
+        json: JsonElement,
+        type: Type,
+        context: JsonDeserializationContext
+    ): List<Skill> {
         val jsonObject = json.asJsonObject
         val skills = ArrayList<Skill>()
         for ((classname, value) in jsonObject.entrySet()) {

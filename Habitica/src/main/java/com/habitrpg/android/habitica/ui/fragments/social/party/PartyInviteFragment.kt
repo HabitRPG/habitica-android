@@ -27,7 +27,6 @@ class PartyInviteFragment : BaseFragment<FragmentPartyInviteBinding>() {
 
     var isEmailInvite: Boolean = false
 
-
     val values: Array<String>
         get() {
             val values = ArrayList<String>()

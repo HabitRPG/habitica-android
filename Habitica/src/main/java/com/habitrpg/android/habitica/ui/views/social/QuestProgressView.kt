@@ -32,9 +32,8 @@ import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.NPCBannerView
 import com.habitrpg.android.habitica.ui.views.ValueBar
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
-import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-
+import io.reactivex.rxjava3.core.Observable
 
 class QuestProgressView : LinearLayout {
     private val binding = QuestProgressBinding.inflate(context.layoutInflater, this, true)
@@ -43,15 +42,15 @@ class QuestProgressView : LinearLayout {
     private val displayDensity = context.resources.displayMetrics.density
 
     var quest: QuestContent? = null
-    set(value) {
-        field = value
-        configure()
-    }
+        set(value) {
+            field = value
+            configure()
+        }
     var progress: Quest? = null
-    set(value) {
-        field = value
-        configure()
-    }
+        set(value) {
+            field = value
+            configure()
+        }
 
     constructor(context: Context) : super(context) {
         setupView(context)
@@ -149,16 +148,17 @@ class QuestProgressView : LinearLayout {
             }
         }
         binding.questDescription.setMarkdown(quest.notes)
-        DataBindingUtils.loadImage(binding.questImageView, "quest_"+quest.key, "gif")
-        DataBindingUtils.loadImage(binding.questFlourishesImageView, "quest_"+quest.key+"_flourishes")
-        val lightColor =  quest.colors?.lightColor
+        DataBindingUtils.loadImage(binding.questImageView, "quest_" + quest.key, "gif")
+        DataBindingUtils.loadImage(binding.questFlourishesImageView, "quest_" + quest.key + "_flourishes")
+        val lightColor = quest.colors?.lightColor
         if (lightColor != null) {
             binding.questDescriptionSection.separatorColor = lightColor
             binding.questImageSeparator.setBackgroundColor(lightColor)
 
             val gradientDrawable = GradientDrawable(
-                    GradientDrawable.Orientation.TOP_BOTTOM,
-                    intArrayOf(ContextCompat.getColor(context, R.color.transparent), lightColor))
+                GradientDrawable.Orientation.TOP_BOTTOM,
+                intArrayOf(ContextCompat.getColor(context, R.color.transparent), lightColor)
+            )
             gradientDrawable.cornerRadius = 0f
             binding.questImageWrapper.background = gradientDrawable
         }
@@ -168,7 +168,7 @@ class QuestProgressView : LinearLayout {
     }
 
     fun configure(user: User) {
-        binding.pendingDamageTextView.text = String.format("%.01f dmg pending", (user.party?.quest?.progress?.up ?: 0F) )
+        binding.pendingDamageTextView.text = String.format("%.01f dmg pending", (user.party?.quest?.progress?.up ?: 0F))
         val collectedItems = user.party?.quest?.progress?.collectedItems ?: 0
         binding.collectedItemsNumberView.text = context.getString(R.string.quest_items_found, collectedItems)
     }
@@ -181,10 +181,11 @@ class QuestProgressView : LinearLayout {
         progress?.rageStrikes?.sortedByDescending { it.wasHit }?.forEach { strike ->
             val iconView = ImageView(context)
             if (strike.wasHit) {
-                DataBindingUtils.loadImage(context,"rage_strike_${strike.key}") {
+                DataBindingUtils.loadImage(context, "rage_strike_${strike.key}") {
                     Observable.just(it)
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe({ drawable ->
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                            { drawable ->
                                 val bitmap = drawable.toBitmap()
                                 val displayDensity = resources.displayMetrics.density
                                 val width = bitmap.width * displayDensity
@@ -194,7 +195,9 @@ class QuestProgressView : LinearLayout {
                                 iconView.setOnClickListener {
                                     showActiveStrikeAlert(strike.key)
                                 }
-                            }, RxErrorHandler.handleEmptyError())
+                            },
+                            RxErrorHandler.handleEmptyError()
+                        )
                 }
             } else {
                 iconView.setImageBitmap(HabiticaIconsHelper.imageOfRageStrikeInactive())
@@ -228,7 +231,7 @@ class QuestProgressView : LinearLayout {
         val alert = HabiticaAlertDialog(context)
         alert.setTitle(R.string.pending_strike_title)
 //        alert.setSubtitle(R.string.pending_strike_subtitle)
-        //alert.setMessage(R.string.pending_strike_description)
+        // alert.setMessage(R.string.pending_strike_description)
         alert.setButton(AlertDialog.BUTTON_POSITIVE, context.getString(R.string.close)) { dialog, _ ->
             dialog.dismiss()
         }
@@ -239,7 +242,7 @@ class QuestProgressView : LinearLayout {
         val alert = HabiticaAlertDialog(context)
         alert.setTitle(R.string.strike_description_title)
 //        alert.setSubtitle(R.string.strike_description_subtitle)
-        //alert.setMessage(R.string.strike_description_description)
+        // alert.setMessage(R.string.strike_description_description)
         alert.setButton(AlertDialog.BUTTON_POSITIVE, context.getString(R.string.close)) { dialog, _ ->
             dialog.dismiss()
         }
@@ -284,10 +287,9 @@ class QuestProgressView : LinearLayout {
         }
     }
 
-
     private fun showQuestImage() {
         binding.questImageWrapper.visibility = View.VISIBLE
-        DataBindingUtils.loadImage(binding.questImageView, "quest_"+quest?.key)
+        DataBindingUtils.loadImage(binding.questImageView, "quest_" + quest?.key)
         preferences?.edit { putBoolean("boss_art_collapsed", false) }
         updateCaretImage()
     }

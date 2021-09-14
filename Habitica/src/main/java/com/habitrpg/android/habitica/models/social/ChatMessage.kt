@@ -62,4 +62,3 @@ open class ChatMessage : RealmObject(), BaseMainObject {
         return likes?.any { userId == it.id } ?: false
     }
 }
-

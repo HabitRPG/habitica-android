@@ -7,7 +7,7 @@ import com.habitrpg.android.habitica.models.user.OwnedItem
 import io.realm.RealmList
 import java.lang.reflect.Type
 
-class OwnedItemListDeserializer: JsonDeserializer<List<OwnedItem>> {
+class OwnedItemListDeserializer : JsonDeserializer<List<OwnedItem>> {
     override fun deserialize(json: JsonElement?, typeOfT: Type?, context: JsonDeserializationContext?): List<OwnedItem> {
         val ownedItems = RealmList<OwnedItem>()
         val entrySet = json?.asJsonObject?.entrySet()

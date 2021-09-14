@@ -6,7 +6,6 @@ import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.tasks.TaskList
 import com.habitrpg.android.habitica.models.tasks.TasksOrder
 import com.habitrpg.android.habitica.models.user.User
-
 import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.Ignore
@@ -42,7 +41,6 @@ open class Group : RealmObject(), BaseMainObject {
     var leaderOnlyGetGems: Boolean = false
     var categories: RealmList<GroupCategory>? = null
 
-
     @Ignore
     var tasksOrder: TasksOrder? = null
     @Ignore
@@ -54,7 +52,6 @@ open class Group : RealmObject(), BaseMainObject {
         }
         val group = other as? Group
         return id == group?.id
-
     }
 
     override fun hashCode(): Int {
@@ -66,12 +63,12 @@ open class Group : RealmObject(), BaseMainObject {
     }
 
     val hasActiveQuest: Boolean
-    get() {
-        return quest?.active ?: false
-    }
+        get() {
+            return quest?.active ?: false
+        }
 
     val gemCount: Int
-    get() {
-        return (balance * 4.0).toInt()
-    }
+        get() {
+            return (balance * 4.0).toInt()
+        }
 }

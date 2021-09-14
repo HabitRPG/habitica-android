@@ -7,5 +7,4 @@ open class LoginIncentiveData : NotificationData {
     var rewardText: String? = null
     var rewardKey: List<String>? = null
     var reward: List<Reward>? = null
-
 }

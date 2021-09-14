@@ -19,7 +19,6 @@ import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.FlowableTransformer
 import retrofit2.HttpException
 
-
 interface ApiClient {
 
     val hostConfig: HostConfig
@@ -31,7 +30,6 @@ interface ApiClient {
     /* user API */
 
     val user: Flowable<User>
-
 
     val tasks: Flowable<TaskList>
 
@@ -74,7 +72,6 @@ interface ApiClient {
     fun getTasks(type: String): Flowable<TaskList>
     fun getTasks(type: String, dueDate: String): Flowable<TaskList>
 
-
     fun unlockPath(path: String): Flowable<UnlockResponse>
 
     fun getTask(id: String): Flowable<Task>
@@ -93,7 +90,6 @@ interface ApiClient {
     fun updateTask(id: String, item: Task): Flowable<Task>
 
     fun deleteTask(id: String): Flowable<Void>
-
 
     fun createTag(tag: Tag): Flowable<Tag>
 
@@ -179,7 +175,7 @@ interface ApiClient {
 
     fun changeCustomDayStart(updateObject: Map<String, Any>): Flowable<User>
 
-    //Members URL
+    // Members URL
     fun getMember(memberId: String): Flowable<Member>
     fun getMemberWithUsername(username: String): Flowable<Member>
 
@@ -189,7 +185,7 @@ interface ApiClient {
 
     fun retrieveShopIventory(identifier: String): Flowable<Shop>
 
-    //Push notifications
+    // Push notifications
     fun addPushDevice(pushDeviceData: Map<String, String>): Flowable<List<Void>>
 
     fun deletePushDevice(regId: String): Flowable<List<Void>>
@@ -202,7 +198,6 @@ interface ApiClient {
 
     fun leaveChallenge(challengeId: String, body: LeaveChallengeBody): Flowable<Void>
 
-
     fun createChallenge(challenge: Challenge): Flowable<Challenge>
 
     fun createChallengeTasks(challengeId: String, tasks: List<Task>): Flowable<List<Task>>
@@ -210,7 +205,7 @@ interface ApiClient {
     fun updateChallenge(challenge: Challenge): Flowable<Challenge>
     fun deleteChallenge(challengeId: String): Flowable<Void>
 
-    //DEBUG: These calls only work on a local development server
+    // DEBUG: These calls only work on a local development server
 
     fun debugAddTenGems(): Flowable<Void>
 

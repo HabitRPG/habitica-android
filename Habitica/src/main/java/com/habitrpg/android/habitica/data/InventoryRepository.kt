@@ -8,7 +8,6 @@ import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.models.user.*
 import io.reactivex.rxjava3.core.Flowable
 
-
 interface InventoryRepository : BaseRepository {
 
     fun getArmoireRemainingCount(): Long

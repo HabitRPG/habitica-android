@@ -3,9 +3,7 @@ package com.habitrpg.android.habitica.helpers
 import android.media.AudioAttributes
 import android.media.AudioManager
 import android.media.MediaPlayer
-import android.os.Build
 import java.io.File
-
 
 class SoundFile(val theme: String, private val fileName: String) : MediaPlayer.OnCompletionListener {
     var file: File? = null
@@ -33,9 +31,9 @@ class SoundFile(val theme: String, private val fileName: String) : MediaPlayer.O
         try {
             m.setDataSource(file?.path)
             val attributes = AudioAttributes.Builder()
-                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                    .setLegacyStreamType(AudioManager.STREAM_NOTIFICATION)
-                    .build()
+                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                .setLegacyStreamType(AudioManager.STREAM_NOTIFICATION)
+                .build()
             m.setAudioAttributes(attributes)
             m.prepare()
 
@@ -47,7 +45,6 @@ class SoundFile(val theme: String, private val fileName: String) : MediaPlayer.O
         } catch (e: Exception) {
             e.printStackTrace()
         }
-
     }
 
     override fun onCompletion(mediaPlayer: MediaPlayer) {

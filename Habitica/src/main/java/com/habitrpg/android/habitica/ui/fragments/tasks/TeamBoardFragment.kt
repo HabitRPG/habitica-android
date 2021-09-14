@@ -4,7 +4,12 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.PorterDuff
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
@@ -18,17 +23,21 @@ import com.habitrpg.android.habitica.data.TagRepository
 import com.habitrpg.android.habitica.databinding.FragmentViewpagerBinding
 import com.habitrpg.android.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.extensions.setTintWith
-import com.habitrpg.android.habitica.helpers.*
+import com.habitrpg.android.habitica.helpers.AmplitudeManager
+import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.MainNavigationController
+import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.TaskFilterHelper
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.activities.TaskFormActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.views.navigation.HabiticaBottomNavigationViewListener
 import com.habitrpg.android.habitica.ui.views.tasks.TaskFilterDialog
 import io.reactivex.rxjava3.disposables.Disposable
-import java.util.*
+import java.util.Date
+import java.util.HashMap
+import java.util.WeakHashMap
 import javax.inject.Inject
-import kotlin.collections.ArrayList
-
 
 class TeamBoardFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.OnQueryTextListener, HabiticaBottomNavigationViewListener {
 
@@ -63,8 +72,11 @@ class TeamBoardFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchVi
             return fragment
         }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         this.usesTabLayout = false
         this.hidesToolbar = true
         this.usesBottomNavigation = true
@@ -79,10 +91,15 @@ class TeamBoardFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchVi
             teamID = args.teamID
         }
 
-        compositeSubscription.add(userRepository.getTeamPlan(teamID)
-                .subscribe( {
-                    activity?.title = it.name
-                }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(
+            userRepository.getTeamPlan(teamID)
+                .subscribe(
+                    {
+                        activity?.title = it.name
+                    },
+                    RxErrorHandler.handleEmptyError()
+                )
+        )
 
         compositeSubscription.add(userRepository.retrieveTeamPlan(teamID).subscribe({ }, RxErrorHandler.handleEmptyError()))
 
@@ -177,7 +194,7 @@ class TeamBoardFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchVi
         context?.let {
             val disposable: Disposable
             val dialog = TaskFilterDialog(it, HabiticaBaseApplication.userComponent)
-            disposable = tagRepository.getTags().subscribe({ tagsList -> dialog.setTags(tagsList)}, RxErrorHandler.handleEmptyError())
+            disposable = tagRepository.getTags().subscribe({ tagsList -> dialog.setTags(tagsList) }, RxErrorHandler.handleEmptyError())
             dialog.setActiveTags(taskFilterHelper.tags)
             if (activeFragment != null) {
                 val taskType = activeFragment?.taskType
@@ -226,10 +243,12 @@ class TeamBoardFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchVi
                 fragment.canEditTasks = false
                 fragment.canScoreTaks = false
                 fragment.refreshAction = {
-                    compositeSubscription.add(userRepository.retrieveTeamPlan(teamID)
+                    compositeSubscription.add(
+                        userRepository.retrieveTeamPlan(teamID)
                             .doOnTerminate {
                                 it()
-                            }.subscribe({ }, RxErrorHandler.handleEmptyError()))
+                            }.subscribe({ }, RxErrorHandler.handleEmptyError())
+                    )
                 }
 
                 viewFragmentsDictionary?.put(position, fragment)
@@ -241,11 +260,11 @@ class TeamBoardFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchVi
         }
 
         binding?.viewPager?.registerOnPageChangeCallback(object :
-            ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-                bottomNavigation?.selectedPosition = position
-                updateFilterIcon()
-            }
+                ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    bottomNavigation?.selectedPosition = position
+                    updateFilterIcon()
+                }
             })
     }
 
@@ -277,47 +296,52 @@ class TeamBoardFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchVi
         if (bottomNavigation == null) {
             return
         }
-        compositeSubscription.add(tutorialRepository.getTutorialSteps(listOf("habits", "dailies", "todos", "rewards")).subscribe({ tutorialSteps ->
-            val activeTutorialFragments = ArrayList<String>()
-            for (step in tutorialSteps) {
-                var id = -1
-                val taskType = when (step.identifier) {
-                    "habits" -> {
-                        id = R.id.habits_tab
-                        Task.TYPE_HABIT
+        compositeSubscription.add(
+            tutorialRepository.getTutorialSteps(listOf("habits", "dailies", "todos", "rewards")).subscribe(
+                { tutorialSteps ->
+                    val activeTutorialFragments = ArrayList<String>()
+                    for (step in tutorialSteps) {
+                        var id = -1
+                        val taskType = when (step.identifier) {
+                            "habits" -> {
+                                id = R.id.habits_tab
+                                Task.TYPE_HABIT
+                            }
+                            "dailies" -> {
+                                id = R.id.dailies_tab
+                                Task.TYPE_DAILY
+                            }
+                            "todos" -> {
+                                id = R.id.todos_tab
+                                Task.TYPE_TODO
+                            }
+                            "rewards" -> {
+                                id = R.id.rewards_tab
+                                Task.TYPE_REWARD
+                            }
+                            else -> ""
+                        }
+                        val tab = bottomNavigation?.tabWithId(id)
+                        if (step.shouldDisplay()) {
+                            tab?.badgeCount = 1
+                            activeTutorialFragments.add(taskType)
+                        } else {
+                            tab?.badgeCount = 0
+                        }
                     }
-                    "dailies" -> {
-                        id = R.id.dailies_tab
-                        Task.TYPE_DAILY
+                    if (activeTutorialFragments.size == 1) {
+                        val fragment = viewFragmentsDictionary?.get(indexForTaskType(activeTutorialFragments[0]))
+                        if (fragment?.tutorialTexts != null && context != null) {
+                            val finalText = context?.getString(R.string.tutorial_tasks_complete)
+                            if (!fragment.tutorialTexts.contains(finalText) && finalText != null) {
+                                fragment.tutorialTexts.add(finalText)
+                            }
+                        }
                     }
-                    "todos" -> {
-                        id = R.id.todos_tab
-                        Task.TYPE_TODO
-                    }
-                    "rewards" -> {
-                        id = R.id.rewards_tab
-                        Task.TYPE_REWARD
-                    }
-                    else -> ""
-                }
-                val tab = bottomNavigation?.tabWithId(id)
-                if (step.shouldDisplay()) {
-                    tab?.badgeCount = 1
-                    activeTutorialFragments.add(taskType)
-                } else {
-                    tab?.badgeCount = 0
-                }
-            }
-            if (activeTutorialFragments.size == 1) {
-                val fragment = viewFragmentsDictionary?.get(indexForTaskType(activeTutorialFragments[0]))
-                if (fragment?.tutorialTexts != null && context != null) {
-                    val finalText = context?.getString(R.string.tutorial_tasks_complete)
-                    if (!fragment.tutorialTexts.contains(finalText) && finalText != null) {
-                        fragment.tutorialTexts.add(finalText)
-                    }
-                }
-            }
-        }, RxErrorHandler.handleEmptyError()))
+                },
+                RxErrorHandler.handleEmptyError()
+            )
+        )
     }
     // endregion
 

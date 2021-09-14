@@ -49,7 +49,6 @@ fun getHabiticaPromotionFromKey(key: String, startDate: Date?, endDate: Date?): 
     }
 }
 
-
 interface HabiticaWebPromotion {
     var url: String?
 }

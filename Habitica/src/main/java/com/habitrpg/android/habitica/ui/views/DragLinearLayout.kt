@@ -246,7 +246,7 @@ open class DragLinearLayout @JvmOverloads constructor(context: Context, attrs: A
      */
     private fun startDetectingDrag(child: View) {
         if (draggedItem.detecting)
-            return  // existing drag in process, only one at a time is allowed
+            return // existing drag in process, only one at a time is allowed
 
         val position = indexOfChild(child)
 
@@ -273,19 +273,23 @@ open class DragLinearLayout @JvmOverloads constructor(context: Context, attrs: A
      * Animates the dragged item to its final resting position.
      */
     private fun onDragStop() {
-        draggedItem.settleAnimation = ValueAnimator.ofFloat(draggedItem.totalDragOffset.toFloat(),
-                (draggedItem.totalDragOffset - draggedItem.targetTopOffset).toFloat())
-                .setDuration(getTranslateAnimationDuration(draggedItem.targetTopOffset.toFloat()))
-        draggedItem.settleAnimation?.addUpdateListener(ValueAnimator.AnimatorUpdateListener { animation ->
-            if (!draggedItem.detecting) return@AnimatorUpdateListener  // already stopped
+        draggedItem.settleAnimation = ValueAnimator.ofFloat(
+            draggedItem.totalDragOffset.toFloat(),
+            (draggedItem.totalDragOffset - draggedItem.targetTopOffset).toFloat()
+        )
+            .setDuration(getTranslateAnimationDuration(draggedItem.targetTopOffset.toFloat()))
+        draggedItem.settleAnimation?.addUpdateListener(
+            ValueAnimator.AnimatorUpdateListener { animation ->
+                if (!draggedItem.detecting) return@AnimatorUpdateListener // already stopped
 
-            draggedItem.setTotalOffset((animation.animatedValue as? Float)?.toInt() ?: 0)
+                draggedItem.setTotalOffset((animation.animatedValue as? Float)?.toInt() ?: 0)
 
-            val shadowAlpha = ((1 - animation.animatedFraction) * 255).toInt()
-            if (null != dragTopShadowDrawable) dragTopShadowDrawable.alpha = shadowAlpha
-            dragBottomShadowDrawable?.alpha = shadowAlpha
-            invalidate()
-        })
+                val shadowAlpha = ((1 - animation.animatedFraction) * 255).toInt()
+                if (null != dragTopShadowDrawable) dragTopShadowDrawable.alpha = shadowAlpha
+                dragBottomShadowDrawable?.alpha = shadowAlpha
+                invalidate()
+            }
+        )
         draggedItem.settleAnimation?.addListener(object : AnimatorListenerAdapter() {
             override fun onAnimationStart(animation: Animator) {
                 draggedItem.onDragStop()
@@ -293,7 +297,7 @@ open class DragLinearLayout @JvmOverloads constructor(context: Context, attrs: A
 
             override fun onAnimationEnd(animation: Animator) {
                 if (!draggedItem.detecting) {
-                    return  // already stopped
+                    return // already stopped
                 }
 
                 draggedItem.settleAnimation = null
@@ -367,7 +371,7 @@ open class DragLinearLayout @JvmOverloads constructor(context: Context, attrs: A
                     switchViewObserver.removeOnPreDrawListener(this)
 
                     val switchAnimator = ObjectAnimator.ofFloat(switchView, "y", switchViewStartY, switchView.top.toFloat())
-                            .setDuration(getTranslateAnimationDuration(switchView.top - switchViewStartY))
+                        .setDuration(getTranslateAnimationDuration(switchView.top - switchViewStartY))
                     switchAnimator.addListener(object : AnimatorListenerAdapter() {
                         override fun onAnimationStart(animation: Animator) {
                             draggableChildren.get(originalPosition).swapAnimation = switchAnimator

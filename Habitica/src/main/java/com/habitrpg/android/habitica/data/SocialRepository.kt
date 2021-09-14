@@ -41,14 +41,12 @@ interface SocialRepository : BaseRepository {
     fun retrieveGroups(type: String): Flowable<List<Group>>
     fun getGroups(type: String): Flowable<out List<Group>>
 
-
     fun getInboxMessages(replyToUserID: String?): Flowable<out List<ChatMessage>>
     fun retrieveInboxMessages(uuid: String, page: Int): Flowable<List<ChatMessage>>
     fun retrieveInboxConversations(): Flowable<List<InboxConversation>>
     fun getInboxConversations(): Flowable<out List<InboxConversation>>
     fun postPrivateMessage(recipientId: String, messageObject: HashMap<String, String>): Flowable<List<ChatMessage>>
     fun postPrivateMessage(recipientId: String, message: String): Flowable<List<ChatMessage>>
-
 
     fun getGroupMembers(id: String): Flowable<out List<Member>>
     fun retrieveGroupMembers(id: String, includeAllPublicFields: Boolean): Flowable<List<Member>>
@@ -61,7 +59,6 @@ interface SocialRepository : BaseRepository {
     fun findUsernames(username: String, context: String? = null, id: String? = null): Flowable<List<FindUsernameResult>>
 
     fun markPrivateMessagesRead(user: User?): Flowable<Void>
-
 
     fun transferGroupOwnership(groupID: String, userID: String): Flowable<Group>
     fun removeMemberFromGroup(groupID: String, userID: String): Flowable<List<Member>>

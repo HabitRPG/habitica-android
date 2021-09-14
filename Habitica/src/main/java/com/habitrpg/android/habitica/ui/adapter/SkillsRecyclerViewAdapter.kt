@@ -35,10 +35,10 @@ class SkillsRecyclerViewAdapter : RecyclerView.Adapter<SkillsRecyclerViewAdapter
             notifyDataSetChanged()
         }
     var specialItems: SpecialItems? = null
-    set(value) {
-        field = value
-        notifyDataSetChanged()
-    }
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
     private var skillList: List<Skill> = emptyList()
 
     fun setSkillList(skillList: List<Skill>) {
@@ -125,7 +125,6 @@ class SkillsRecyclerViewAdapter : RecyclerView.Adapter<SkillsRecyclerViewAdapter
                 }
             }
             DataBindingUtils.loadImage(binding.skillImage, "shop_" + skill.key)
-
         }
 
         override fun onClick(v: View) {

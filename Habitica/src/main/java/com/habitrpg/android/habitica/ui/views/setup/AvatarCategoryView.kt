@@ -1,14 +1,13 @@
 package com.habitrpg.android.habitica.ui.views.setup
 
-
 import android.content.Context
 import android.graphics.PorterDuff
 import android.graphics.drawable.Drawable
-import androidx.core.content.ContextCompat
 import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.setTintWith
 
@@ -22,9 +21,10 @@ class AvatarCategoryView(context: Context, attrs: AttributeSet?) : LinearLayout(
 
         textView = findViewById(R.id.text_view)
         val a = context.theme.obtainStyledAttributes(
-                attrs,
-                R.styleable.AvatarCategoryView,
-                0, 0)
+            attrs,
+            R.styleable.AvatarCategoryView,
+            0, 0
+        )
 
         textView.text = a.getText(R.styleable.AvatarCategoryView_categoryTitle)
 

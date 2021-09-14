@@ -20,7 +20,7 @@ import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.helpers.ToolbarColorHelper
 import javax.inject.Inject
 
-abstract class BaseMainFragment<VB: ViewBinding> : BaseFragment<VB>() {
+abstract class BaseMainFragment<VB : ViewBinding> : BaseFragment<VB>() {
 
     @Inject
     lateinit var apiClient: ApiClient
@@ -49,8 +49,11 @@ abstract class BaseMainFragment<VB: ViewBinding> : BaseFragment<VB>() {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         compositeSubscription.add(userRepository.getUser().subscribe({ user = it }, RxErrorHandler.handleEmptyError()))
 
         if (this.usesBottomNavigation) {
@@ -125,7 +128,6 @@ abstract class BaseMainFragment<VB: ViewBinding> : BaseFragment<VB>() {
         val params = collapsingToolbar?.layoutParams as? AppBarLayout.LayoutParams
         params?.scrollFlags = AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL or AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED
     }
-
 
     protected fun tintMenuIcon(item: MenuItem?) {
         context?.getThemeColor(R.attr.headerTextColor)?.let {

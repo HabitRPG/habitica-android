@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
@@ -53,9 +52,14 @@ class GemsPurchaseFragment : BaseFragment<FragmentGemPurchaseBinding>(), GemPurc
         binding?.gems42View?.setOnPurchaseClickListener { purchaseGems(PurchaseTypes.Purchase42Gems) }
         binding?.gems84View?.setOnPurchaseClickListener { purchaseGems(PurchaseTypes.Purchase84Gems) }
 
-        compositeSubscription.add(userRepository.getUser().subscribe({
-            binding?.subscriptionPromo?.visibility = if (it.isSubscribed) View.GONE else View.VISIBLE
-        }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(
+            userRepository.getUser().subscribe(
+                {
+                    binding?.subscriptionPromo?.visibility = if (it.isSubscribed) View.GONE else View.VISIBLE
+                },
+                RxErrorHandler.handleEmptyError()
+            )
+        )
 
         binding?.giftGemsButton?.setOnClickListener { showGiftGemsDialog() }
 
@@ -77,9 +81,9 @@ class GemsPurchaseFragment : BaseFragment<FragmentGemPurchaseBinding>(), GemPurc
             binding?.promoBanner?.setOnClickListener {
                 val fragment = PromoInfoFragment()
                 parentFragmentManager
-                        .beginTransaction()
-                        .replace(R.id.fragment_container, fragment as Fragment)
-                        .commit()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, fragment as Fragment)
+                    .commit()
             }
         } else {
             binding?.promoBanner?.visibility = View.GONE

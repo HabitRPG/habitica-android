@@ -4,12 +4,11 @@ import com.google.gson.annotations.SerializedName
 import com.habitrpg.android.habitica.models.inventory.QuestProgress
 import com.habitrpg.android.habitica.models.inventory.QuestRageStrike
 import io.realm.RealmList
-import io.realm.RealmModel
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 import java.util.*
 
-open class WorldState: RealmObject(), BaseObject {
+open class WorldState : RealmObject(), BaseObject {
     @PrimaryKey
     var id = "habitica"
     var worldBossKey: String = ""

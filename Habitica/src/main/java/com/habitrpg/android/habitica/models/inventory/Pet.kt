@@ -8,17 +8,17 @@ open class Pet : RealmObject(), Animal {
     @PrimaryKey
     override var key: String? = null
     override var animal: String = ""
-    get() {
-        return if (field.isBlank()) {
-            key?.split("-")?.toTypedArray()?.get(0) ?: ""
-        } else field
-    }
+        get() {
+            return if (field.isBlank()) {
+                key?.split("-")?.toTypedArray()?.get(0) ?: ""
+            } else field
+        }
     override var color: String = ""
-    get() {
-        return if (field.isBlank()) {
-            key?.split("-")?.toTypedArray()?.get(1) ?: ""
-        } else field
-    }
+        get() {
+            return if (field.isBlank()) {
+                key?.split("-")?.toTypedArray()?.get(1) ?: ""
+            } else field
+        }
     override var text: String? = null
     override var type: String? = null
     override var premium = false

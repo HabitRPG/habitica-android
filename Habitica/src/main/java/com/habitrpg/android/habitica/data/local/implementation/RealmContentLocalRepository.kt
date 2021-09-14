@@ -8,9 +8,7 @@ import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.social.Group
 import hu.akarnokd.rxjava3.bridge.RxJavaBridge
 import io.reactivex.rxjava3.core.Flowable
-
 import io.realm.Realm
-
 
 open class RealmContentLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), ContentLocalRepository {
 
@@ -37,18 +35,22 @@ open class RealmContentLocalRepository(realm: Realm) : RealmBaseLocalRepository(
     }
 
     override fun getWorldState(): Flowable<WorldState> {
-        return RxJavaBridge.toV3Flowable(realm.where(WorldState::class.java)
+        return RxJavaBridge.toV3Flowable(
+            realm.where(WorldState::class.java)
                 .findAll()
                 .asFlowable()
                 .filter { it.isLoaded && it.size > 0 }
-                .map { it.first() })
-                .skipNull()
+                .map { it.first() }
+        )
+            .skipNull()
     }
 
     override fun saveWorldState(worldState: WorldState) {
-        val tavern = getUnmanagedCopy(realm.where(Group::class.java)
+        val tavern = getUnmanagedCopy(
+            realm.where(Group::class.java)
                 .equalTo("id", Group.TAVERN_ID)
-                .findFirst() ?: Group())
+                .findFirst() ?: Group()
+        )
         if (!tavern.isManaged) {
             tavern.id = Group.TAVERN_ID
         }

@@ -9,9 +9,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.IBinder
 import android.text.SpannableStringBuilder
-import android.text.style.DynamicDrawableSpan
 import android.view.View
-import android.view.ViewOutlineProvider
 import android.widget.RemoteViews
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.HabiticaBaseApplication
@@ -107,7 +105,9 @@ class HabitButtonWidgetService : Service() {
         taskIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId)
         taskIntent.putExtra(HabitButtonWidgetProvider.TASK_ID, taskId)
         taskIntent.putExtra(HabitButtonWidgetProvider.TASK_DIRECTION, direction)
-        return PendingIntent.getBroadcast(context, widgetId + direction.hashCode(), taskIntent,
-                PendingIntent.FLAG_UPDATE_CURRENT)
+        return PendingIntent.getBroadcast(
+            context, widgetId + direction.hashCode(), taskIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT
+        )
     }
 }

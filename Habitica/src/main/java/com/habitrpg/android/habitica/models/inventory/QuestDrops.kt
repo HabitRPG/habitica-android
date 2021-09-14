@@ -11,16 +11,16 @@ import io.realm.annotations.PrimaryKey
 open class QuestDrops : RealmObject(), BaseObject {
     @PrimaryKey
     var key: String? = null
-    set(value) {
-        field = value
-        items?.forEach { it.questKey = key }
-    }
+        set(value) {
+            field = value
+            items?.forEach { it.questKey = key }
+        }
     var gp = 0
     var exp = 0
     var unlock: String? = null
     var items: RealmList<QuestDropItem>? = null
-    set(value) {
-        field = value
-        items?.forEach { it.questKey = key }
-    }
+        set(value) {
+            field = value
+            items?.forEach { it.questKey = key }
+        }
 }

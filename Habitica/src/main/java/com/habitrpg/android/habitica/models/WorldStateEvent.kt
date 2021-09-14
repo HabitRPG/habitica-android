@@ -3,17 +3,16 @@ package com.habitrpg.android.habitica.models
 import com.google.gson.annotations.SerializedName
 import io.realm.RealmModel
 import io.realm.RealmObject
-import io.realm.annotations.PrimaryKey
 import io.realm.annotations.RealmClass
 import java.util.*
 
 @RealmClass(embedded = true)
-open class WorldStateEvent: RealmObject(), BaseMainObject {
+open class WorldStateEvent : RealmObject(), BaseMainObject {
     val isCurrentlyActive: Boolean
-    get() {
-        val now = Date()
-        return (start?.before(now) == true) && (end?.after(now) == true)
-    }
+        get() {
+            val now = Date()
+            return (start?.before(now) == true) && (end?.after(now) == true)
+        }
 
     @SerializedName("event")
     var eventKey: String? = null

@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.models
 
 import com.google.gson.annotations.SerializedName
-import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
@@ -13,7 +12,7 @@ open class TeamPlan : RealmObject(), BaseObject {
     var summary: String = ""
     @SerializedName("leader")
     var leaderID: String? = null
-    //var managers: RealmList<String> = RealmList()
+    // var managers: RealmList<String> = RealmList()
     var isActive: Boolean = false
 
     override fun equals(other: Any?): Boolean {

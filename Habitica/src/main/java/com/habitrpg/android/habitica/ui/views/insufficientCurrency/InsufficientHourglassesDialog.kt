@@ -14,7 +14,7 @@ class InsufficientHourglassesDialog(context: Context) : InsufficientCurrencyDial
         imageView.setImageBitmap(HabiticaIconsHelper.imageOfHourglassShop())
         textView.setText(R.string.insufficientHourglasses)
 
-        addButton(R.string.get_hourglasses, true) { _, _ -> MainNavigationController.navigate(R.id.gemPurchaseActivity, bundleOf(Pair("openSubscription", true)))  }
+        addButton(R.string.get_hourglasses, true) { _, _ -> MainNavigationController.navigate(R.id.gemPurchaseActivity, bundleOf(Pair("openSubscription", true))) }
         addCloseButton()
     }
 }

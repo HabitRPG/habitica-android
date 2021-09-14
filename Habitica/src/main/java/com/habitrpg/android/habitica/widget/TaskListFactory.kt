@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Handler
 import android.text.SpannableStringBuilder
-import android.text.style.DynamicDrawableSpan
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService
 import com.habitrpg.android.habitica.HabiticaBaseApplication
@@ -15,8 +14,8 @@ import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
-import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Observable
 import java.util.*
 import javax.inject.Inject
 
@@ -40,21 +39,23 @@ abstract class TaskListFactory internal constructor(val context: Context, intent
         val mainHandler = Handler(context.mainLooper)
         mainHandler.post {
             taskRepository.getTasks(taskType)
-                    .firstElement()
-                    .toObservable()
-                    .flatMap { Observable.fromIterable(it) }
-                    .filter { task -> task.type == Task.TYPE_TODO && !task.completed || task.isDisplayedActive }
-                    .toList()
-                    .flatMapMaybe { tasks -> taskRepository.getTaskCopies(tasks).firstElement() }
-                    .subscribeOn(AndroidSchedulers.mainThread())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({ tasks ->
+                .firstElement()
+                .toObservable()
+                .flatMap { Observable.fromIterable(it) }
+                .filter { task -> task.type == Task.TYPE_TODO && !task.completed || task.isDisplayedActive }
+                .toList()
+                .flatMapMaybe { tasks -> taskRepository.getTaskCopies(tasks).firstElement() }
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    { tasks ->
                         reloadData = false
                         taskList = tasks
                         AppWidgetManager.getInstance(context).notifyAppWidgetViewDataChanged(widgetId, R.id.list_view)
-                    }, RxErrorHandler.handleEmptyError())
+                    },
+                    RxErrorHandler.handleEmptyError()
+                )
         }
-
     }
 
     override fun onCreate() {

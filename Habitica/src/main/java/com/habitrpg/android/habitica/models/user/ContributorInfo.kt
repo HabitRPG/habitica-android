@@ -1,11 +1,9 @@
 package com.habitrpg.android.habitica.models.user
 
-import io.realm.RealmObject
 import android.util.SparseIntArray
-import com.habitrpg.android.habitica.models.user.ContributorInfo
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.models.BaseObject
-import io.realm.annotations.PrimaryKey
+import io.realm.RealmObject
 import io.realm.annotations.RealmClass
 
 @RealmClass(embedded = true)

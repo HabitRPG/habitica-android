@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.models.shops
 
 import android.content.Context
-
 import com.habitrpg.android.habitica.R
 
 class Shop {

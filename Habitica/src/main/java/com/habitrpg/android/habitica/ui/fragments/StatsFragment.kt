@@ -10,7 +10,6 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.FragmentStatsBinding
-
 import com.habitrpg.android.habitica.extensions.addOkButton
 import com.habitrpg.android.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.extensions.setScaledPadding
@@ -22,14 +21,12 @@ import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.stats.BulkAllocateStatsDialog
-import io.reactivex.rxjava3.functions.Consumer
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Named
 import kotlin.math.min
 
-
-class StatsFragment: BaseMainFragment<FragmentStatsBinding>() {
+class StatsFragment : BaseMainFragment<FragmentStatsBinding>() {
 
     override var binding: FragmentStatsBinding? = null
 
@@ -89,12 +86,17 @@ class StatsFragment: BaseMainFragment<FragmentStatsBinding>() {
             binding?.distributeTaskHelpButton?.setImageBitmap(HabiticaIconsHelper.imageOfInfoIcon(color))
         }
 
-        compositeSubscription.add(userRepository.getUser().subscribe({ user ->
-            canAllocatePoints = user?.stats?.lvl ?: 0 >= 10 && user?.stats?.points ?: 0 > 0
-            binding?.unlockAtLevel?.visibility = if (user.stats?.lvl ?: 0 < 10) View.VISIBLE else View.GONE
-            updateStats(user)
-            updateAttributePoints(user)
-        }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(
+            userRepository.getUser().subscribe(
+                { user ->
+                    canAllocatePoints = user?.stats?.lvl ?: 0 >= 10 && user?.stats?.points ?: 0 > 0
+                    binding?.unlockAtLevel?.visibility = if (user.stats?.lvl ?: 0 < 10) View.VISIBLE else View.GONE
+                    updateStats(user)
+                    updateAttributePoints(user)
+                },
+                RxErrorHandler.handleEmptyError()
+            )
+        )
 
         binding?.distributeEvenlyButton?.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
@@ -112,7 +114,7 @@ class StatsFragment: BaseMainFragment<FragmentStatsBinding>() {
             }
         }
 
-        binding?.automaticAllocationSwitch?.setOnCheckedChangeListener{ _, isChecked ->
+        binding?.automaticAllocationSwitch?.setOnCheckedChangeListener { _, isChecked ->
             userRepository.updateUser("preferences.automaticAllocation", isChecked).subscribe({}, RxErrorHandler.handleEmptyError())
         }
 
@@ -144,7 +146,6 @@ class StatsFragment: BaseMainFragment<FragmentStatsBinding>() {
         binding?.distributeEvenlyButton?.isChecked = allocationMode == Stats.AUTO_ALLOCATE_FLAT
         binding?.distributeClassButton?.isChecked = allocationMode == Stats.AUTO_ALLOCATE_CLASSBASED
         binding?.distributeTaskButton?.isChecked = allocationMode == Stats.AUTO_ALLOCATE_TASKBASED
-
     }
 
     private fun showHelpAlert(resourceId: Int) {
@@ -217,65 +218,69 @@ class StatsFragment: BaseMainFragment<FragmentStatsBinding>() {
             outfitList.add(thisOutfit.weapon)
         }
 
-        compositeSubscription.add(inventoryRepository.getEquipment(outfitList).firstElement()
+        compositeSubscription.add(
+            inventoryRepository.getEquipment(outfitList).firstElement()
                 .retry(1)
-                .subscribe( {
-                    val levelStat = min((user.stats?.lvl ?: 0) / 2.0f, 50f).toInt()
+                .subscribe(
+                    {
+                        val levelStat = min((user.stats?.lvl ?: 0) / 2.0f, 50f).toInt()
 
-                    totalStrength = levelStat
-                    totalIntelligence = levelStat
-                    totalConstitution = levelStat
-                    totalPerception = levelStat
+                        totalStrength = levelStat
+                        totalIntelligence = levelStat
+                        totalConstitution = levelStat
+                        totalPerception = levelStat
 
-                    binding?.strengthStatsView?.levelValue = levelStat
-                    binding?.intelligenceStatsView?.levelValue = levelStat
-                    binding?.constitutionStatsView?.levelValue = levelStat
-                    binding?.perceptionStatsView?.levelValue = levelStat
+                        binding?.strengthStatsView?.levelValue = levelStat
+                        binding?.intelligenceStatsView?.levelValue = levelStat
+                        binding?.constitutionStatsView?.levelValue = levelStat
+                        binding?.perceptionStatsView?.levelValue = levelStat
 
-                    totalStrength += user.stats?.buffs?.str?.toInt() ?: 0
-                    totalIntelligence += user.stats?.buffs?._int?.toInt() ?: 0
-                    totalConstitution += user.stats?.buffs?.con?.toInt() ?: 0
-                    totalPerception += user.stats?.buffs?.per?.toInt() ?: 0
-                    binding?.strengthStatsView?.buffValue = user.stats?.buffs?.str?.toInt() ?: 0
-                    binding?.intelligenceStatsView?.buffValue = user.stats?.buffs?._int?.toInt() ?: 0
-                    binding?.constitutionStatsView?.buffValue = user.stats?.buffs?.con?.toInt() ?: 0
-                    binding?.perceptionStatsView?.buffValue = user.stats?.buffs?.per?.toInt() ?: 0
+                        totalStrength += user.stats?.buffs?.str?.toInt() ?: 0
+                        totalIntelligence += user.stats?.buffs?._int?.toInt() ?: 0
+                        totalConstitution += user.stats?.buffs?.con?.toInt() ?: 0
+                        totalPerception += user.stats?.buffs?.per?.toInt() ?: 0
+                        binding?.strengthStatsView?.buffValue = user.stats?.buffs?.str?.toInt() ?: 0
+                        binding?.intelligenceStatsView?.buffValue = user.stats?.buffs?._int?.toInt() ?: 0
+                        binding?.constitutionStatsView?.buffValue = user.stats?.buffs?.con?.toInt() ?: 0
+                        binding?.perceptionStatsView?.buffValue = user.stats?.buffs?.per?.toInt() ?: 0
 
-                    totalStrength += user.stats?.strength ?: 0
-                    totalIntelligence += user.stats?.intelligence ?: 0
-                    totalConstitution += user.stats?.constitution ?: 0
-                    totalPerception += user.stats?.per ?: 0
-                    binding?.strengthStatsView?.allocatedValue = user.stats?.strength ?: 0
-                    binding?.intelligenceStatsView?.allocatedValue = user.stats?.intelligence ?: 0
-                    binding?.constitutionStatsView?.allocatedValue = user.stats?.constitution ?: 0
-                    binding?.perceptionStatsView?.allocatedValue = user.stats?.per ?: 0
-                    val userStatComputer = UserStatComputer()
-                    val statsRows = userStatComputer.computeClassBonus(it, user)
+                        totalStrength += user.stats?.strength ?: 0
+                        totalIntelligence += user.stats?.intelligence ?: 0
+                        totalConstitution += user.stats?.constitution ?: 0
+                        totalPerception += user.stats?.per ?: 0
+                        binding?.strengthStatsView?.allocatedValue = user.stats?.strength ?: 0
+                        binding?.intelligenceStatsView?.allocatedValue = user.stats?.intelligence ?: 0
+                        binding?.constitutionStatsView?.allocatedValue = user.stats?.constitution ?: 0
+                        binding?.perceptionStatsView?.allocatedValue = user.stats?.per ?: 0
+                        val userStatComputer = UserStatComputer()
+                        val statsRows = userStatComputer.computeClassBonus(it, user)
 
-                    var strength = 0
-                    var intelligence = 0
-                    var constitution = 0
-                    var perception = 0
+                        var strength = 0
+                        var intelligence = 0
+                        var constitution = 0
+                        var perception = 0
 
-                    for (row in statsRows) {
-                        if (row.javaClass == UserStatComputer.AttributeRow::class.java) {
-                            val attributeRow = row as UserStatComputer.AttributeRow
-                            strength += attributeRow.strVal.toInt()
-                            intelligence += attributeRow.intVal.toInt()
-                            constitution += attributeRow.conVal.toInt()
-                            perception += attributeRow.perVal.toInt()
+                        for (row in statsRows) {
+                            if (row.javaClass == UserStatComputer.AttributeRow::class.java) {
+                                val attributeRow = row as UserStatComputer.AttributeRow
+                                strength += attributeRow.strVal.toInt()
+                                intelligence += attributeRow.intVal.toInt()
+                                constitution += attributeRow.conVal.toInt()
+                                perception += attributeRow.perVal.toInt()
+                            }
                         }
-                    }
 
-                    totalStrength += strength
-                    totalIntelligence += intelligence
-                    totalConstitution += constitution
-                    totalPerception += perception
-                    binding?.strengthStatsView?.equipmentValue = strength
-                    binding?.intelligenceStatsView?.equipmentValue = intelligence
-                    binding?.constitutionStatsView?.equipmentValue = constitution
-                    binding?.perceptionStatsView?.equipmentValue = perception
-
-                }, RxErrorHandler.handleEmptyError()))
+                        totalStrength += strength
+                        totalIntelligence += intelligence
+                        totalConstitution += constitution
+                        totalPerception += perception
+                        binding?.strengthStatsView?.equipmentValue = strength
+                        binding?.intelligenceStatsView?.equipmentValue = intelligence
+                        binding?.constitutionStatsView?.equipmentValue = constitution
+                        binding?.perceptionStatsView?.equipmentValue = perception
+                    },
+                    RxErrorHandler.handleEmptyError()
+                )
+        )
     }
 }

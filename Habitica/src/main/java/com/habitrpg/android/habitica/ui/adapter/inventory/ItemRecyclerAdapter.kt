@@ -14,7 +14,6 @@ import com.habitrpg.android.habitica.models.inventory.*
 import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.OwnedPet
 import com.habitrpg.android.habitica.ui.adapter.BaseRecyclerViewAdapter
-import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemRecyclerFragment
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.menu.BottomSheetMenu
 import com.habitrpg.android.habitica.ui.menu.BottomSheetMenuItem
@@ -36,10 +35,10 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<OwnedI
     private var existingPets: List<Pet>? = null
     private var ownedPets: Map<String, OwnedPet>? = null
     var items: Map<String, Item>? = null
-    set(value) {
-        field = value
-        notifyDataSetChanged()
-    }
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
 
     private val sellItemEvents = PublishSubject.create<OwnedItem>()
     private val questInvitationEvents = PublishSubject.create<QuestContent>()
@@ -191,11 +190,11 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<OwnedI
                 }
                 item?.let { firstItem ->
                     if (firstItem is Egg) {
-                        (hatchingItem as? HatchingPotion)?.let {potion ->
+                        (hatchingItem as? HatchingPotion)?.let { potion ->
                             hatchPetSubject.onNext(Pair(potion, firstItem))
                         }
                     } else if (firstItem is HatchingPotion) {
-                        (hatchingItem as? Egg)?.let {egg ->
+                        (hatchingItem as? Egg)?.let { egg ->
                             hatchPetSubject.onNext(Pair(firstItem, egg))
                         }
                     }

@@ -5,7 +5,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.navigation.NavController
-import androidx.navigation.NavDeepLink
 import androidx.navigation.NavDeepLinkRequest
 import androidx.navigation.NavDirections
 import java.lang.ref.WeakReference
@@ -18,7 +17,7 @@ object MainNavigationController {
     private var controllerReference: WeakReference<NavController>? = null
 
     private val navController: NavController?
-    get() { return controllerReference?.get() }
+        get() { return controllerReference?.get() }
 
     fun setup(navController: NavController) {
         this.controllerReference = WeakReference(navController)
@@ -41,7 +40,7 @@ object MainNavigationController {
         if (abs((lastNavigation?.time ?: 0) - Date().time) > 500) {
             lastNavigation = Date()
             try {
-            navController?.navigate(directions)
+                navController?.navigate(directions)
             } catch (_: IllegalArgumentException) {}
         }
     }

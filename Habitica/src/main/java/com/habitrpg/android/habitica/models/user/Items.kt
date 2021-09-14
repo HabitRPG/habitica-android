@@ -3,7 +3,6 @@ package com.habitrpg.android.habitica.models.user
 import com.habitrpg.android.habitica.models.BaseObject
 import io.realm.RealmList
 import io.realm.RealmObject
-import io.realm.annotations.PrimaryKey
 import io.realm.annotations.RealmClass
 import java.util.*
 
@@ -17,10 +16,10 @@ open class Items : RealmObject, BaseObject {
     }
 
     var eggs: RealmList<OwnedItem>? = null
-    set(value) {
-        field = value
-        field?.forEach { it.itemType = "eggs" }
-    }
+        set(value) {
+            field = value
+            field?.forEach { it.itemType = "eggs" }
+        }
     var food: RealmList<OwnedItem>? = null
         set(value) {
             field = value
@@ -43,7 +42,7 @@ open class Items : RealmObject, BaseObject {
     var lastDrop_count: Int = 0
     var lastDrop_date: Date? = null
 
-    //private QuestContent quest;
+    // private QuestContent quest;
     var gear: Gear? = null
     var special: SpecialItems? = null
 

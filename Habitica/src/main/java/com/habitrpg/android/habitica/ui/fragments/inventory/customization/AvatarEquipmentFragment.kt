@@ -21,7 +21,8 @@ import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import io.reactivex.rxjava3.core.Flowable
 import javax.inject.Inject
 
-class AvatarEquipmentFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>(),
+class AvatarEquipmentFragment :
+    BaseMainFragment<FragmentRefreshRecyclerviewBinding>(),
     SwipeRefreshLayout.OnRefreshListener {
 
     @Inject
@@ -40,25 +41,34 @@ class AvatarEquipmentFragment : BaseMainFragment<FragmentRefreshRecyclerviewBind
     internal var adapter: CustomizationEquipmentRecyclerViewAdapter = CustomizationEquipmentRecyclerViewAdapter()
     internal var layoutManager: GridLayoutManager = GridLayoutManager(activity, 2)
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         showsBackButton = true
-        compositeSubscription.add(adapter.getSelectCustomizationEvents()
+        compositeSubscription.add(
+            adapter.getSelectCustomizationEvents()
                 .flatMap { equipment ->
                     val key = (if (equipment.key?.isNotBlank() != true) activeEquipment else equipment.key) ?: ""
                     inventoryRepository.equip(user, if (user?.preferences?.costume == true) "costume" else "equipped", key)
                 }
-                .subscribe({ }, RxErrorHandler.handleEmptyError()))
-        compositeSubscription.add(adapter.getUnlockCustomizationEvents()
+                .subscribe({ }, RxErrorHandler.handleEmptyError())
+        )
+        compositeSubscription.add(
+            adapter.getUnlockCustomizationEvents()
                 .flatMap<UnlockResponse> {
                     Flowable.empty()
                 }
-                .subscribe({ }, RxErrorHandler.handleEmptyError()))
-        compositeSubscription.add(adapter.getUnlockSetEvents()
+                .subscribe({ }, RxErrorHandler.handleEmptyError())
+        )
+        compositeSubscription.add(
+            adapter.getUnlockSetEvents()
                 .flatMap { set ->
                     userRepository.unlockPath(set)
                 }
-                .subscribe({ }, RxErrorHandler.handleEmptyError()))
+                .subscribe({ }, RxErrorHandler.handleEmptyError())
+        )
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
@@ -91,9 +101,11 @@ class AvatarEquipmentFragment : BaseMainFragment<FragmentRefreshRecyclerviewBind
         binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
         this.loadEquipment()
 
-        compositeSubscription.add(userRepository.getUser().subscribeWithErrorHandler {
-            updateUser(it)
-        })
+        compositeSubscription.add(
+            userRepository.getUser().subscribeWithErrorHandler {
+                updateUser(it)
+            }
+        )
     }
 
     override fun injectFragment(component: UserComponent) {
@@ -102,9 +114,14 @@ class AvatarEquipmentFragment : BaseMainFragment<FragmentRefreshRecyclerviewBind
 
     private fun loadEquipment() {
         val type = this.type ?: return
-        compositeSubscription.add(inventoryRepository.getEquipmentType(type, category ?: "").subscribe({
-            adapter.setEquipment(it)
-        }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(
+            inventoryRepository.getEquipmentType(type, category ?: "").subscribe(
+                {
+                    adapter.setEquipment(it)
+                },
+                RxErrorHandler.handleEmptyError()
+            )
+        )
     }
 
     private fun setGridSpanCount(width: Int) {
@@ -140,8 +157,13 @@ class AvatarEquipmentFragment : BaseMainFragment<FragmentRefreshRecyclerviewBind
     }
 
     override fun onRefresh() {
-        compositeSubscription.add(userRepository.retrieveUser(false, true).subscribe({
-            binding?.refreshLayout?.isRefreshing = false
-        }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(
+            userRepository.retrieveUser(false, true).subscribe(
+                {
+                    binding?.refreshLayout?.isRefreshing = false
+                },
+                RxErrorHandler.handleEmptyError()
+            )
+        )
     }
 }

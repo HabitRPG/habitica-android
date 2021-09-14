@@ -2,7 +2,6 @@ package com.habitrpg.android.habitica.proxy
 
 import android.os.Bundle
 
-
 interface AnalyticsManager {
     fun logException(t: Throwable)
     fun setUserIdentifier(identifier: String)

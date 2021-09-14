@@ -10,4 +10,3 @@ class DailiesWidgetProvider : TaskListWidgetProvider() {
     override val titleResId: Int
         get() = R.string.dailies
 }
-

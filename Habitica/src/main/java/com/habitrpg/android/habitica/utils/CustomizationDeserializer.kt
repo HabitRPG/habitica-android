@@ -1,7 +1,11 @@
 package com.habitrpg.android.habitica.utils
 
 import android.annotation.SuppressLint
-import com.google.gson.*
+import com.google.gson.JsonDeserializationContext
+import com.google.gson.JsonDeserializer
+import com.google.gson.JsonElement
+import com.google.gson.JsonObject
+import com.google.gson.JsonParseException
 import com.habitrpg.android.habitica.models.inventory.Customization
 import io.realm.Realm
 import io.realm.RealmList
@@ -103,7 +107,6 @@ class CustomizationDeserializer : JsonDeserializer<List<Customization>> {
             } catch (e: Exception) {
                 e.printStackTrace()
             }
-
         }
 
         return customization

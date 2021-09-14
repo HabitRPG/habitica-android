@@ -3,7 +3,6 @@ package com.habitrpg.android.habitica.models.user
 import com.google.gson.annotations.SerializedName
 import com.habitrpg.android.habitica.models.BaseObject
 import io.realm.RealmObject
-import io.realm.annotations.PrimaryKey
 import io.realm.annotations.RealmClass
 
 @RealmClass(embedded = true)
@@ -24,7 +23,6 @@ open class Buffs : RealmObject(), BaseObject {
         get() { return field ?: false }
     var streaks: Boolean? = null
         get() { return field ?: false }
-
 
     fun merge(stats: Buffs?) {
         if (stats == null) {

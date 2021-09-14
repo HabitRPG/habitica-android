@@ -28,12 +28,12 @@ import io.reactivex.rxjava3.kotlin.Flowables
 import org.greenrobot.eventbus.Subscribe
 import javax.inject.Inject
 
-class PetDetailRecyclerFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>(),
+class PetDetailRecyclerFragment :
+    BaseMainFragment<FragmentRefreshRecyclerviewBinding>(),
     SwipeRefreshLayout.OnRefreshListener {
 
     @Inject
     lateinit var inventoryRepository: InventoryRepository
-
 
     var adapter: PetDetailRecyclerAdapter = PetDetailRecyclerAdapter()
     private var animalType: String? = null
@@ -92,24 +92,32 @@ class PetDetailRecyclerFragment : BaseMainFragment<FragmentRefreshRecyclerviewBi
         binding?.recyclerView?.addItemDecoration(MarginDecoration(getActivity()))
         adapter.animalIngredientsRetriever = { animal, callback ->
             Maybe.zip(
-                    inventoryRepository.getItems(Egg::class.java, arrayOf(animal.animal)).firstElement(),
-                    inventoryRepository.getItems(HatchingPotion::class.java, arrayOf(animal.color)).firstElement(), { eggs, potions ->
-                Pair(eggs.first() as? Egg, potions.first() as? HatchingPotion)
-            }
-            ).subscribe({
-                callback(it)
-            }, RxErrorHandler.handleEmptyError())
+                inventoryRepository.getItems(Egg::class.java, arrayOf(animal.animal)).firstElement(),
+                inventoryRepository.getItems(HatchingPotion::class.java, arrayOf(animal.color)).firstElement(),
+                { eggs, potions ->
+                    Pair(eggs.first() as? Egg, potions.first() as? HatchingPotion)
+                }
+            ).subscribe(
+                {
+                    callback(it)
+                },
+                RxErrorHandler.handleEmptyError()
+            )
         }
         binding?.recyclerView?.adapter = adapter
         binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
         this.loadItems()
 
-        compositeSubscription.add(adapter.getEquipFlowable()
+        compositeSubscription.add(
+            adapter.getEquipFlowable()
                 .flatMap { key -> inventoryRepository.equip(user, "pet", key) }
-                .subscribe({
-                    user?.let { updatedUser -> adapter.setUser(updatedUser) }
-                }, RxErrorHandler.handleEmptyError()))
-
+                .subscribe(
+                    {
+                        user?.let { updatedUser -> adapter.setUser(updatedUser) }
+                    },
+                    RxErrorHandler.handleEmptyError()
+                )
+        )
 
         view.post { setGridSpanCount(view.width) }
     }
@@ -140,47 +148,53 @@ class PetDetailRecyclerFragment : BaseMainFragment<FragmentRefreshRecyclerviewBi
 
     private fun loadItems() {
         if (animalType?.isNotEmpty() == true || animalGroup?.isNotEmpty() == true) {
-            compositeSubscription.add(inventoryRepository.getOwnedMounts()
+            compositeSubscription.add(
+                inventoryRepository.getOwnedMounts()
                     .map { ownedMounts ->
                         val mountMap = mutableMapOf<String, OwnedMount>()
                         ownedMounts.forEach { mountMap[it.key ?: ""] = it }
                         return@map mountMap
                     }
-                    .subscribe({ adapter.setOwnedMounts(it) }, RxErrorHandler.handleEmptyError()))
+                    .subscribe({ adapter.setOwnedMounts(it) }, RxErrorHandler.handleEmptyError())
+            )
             compositeSubscription.add(inventoryRepository.getOwnedItems(true).subscribe({ adapter.setOwnedItems(it) }, RxErrorHandler.handleEmptyError()))
-            compositeSubscription.add(Flowables.combineLatest(inventoryRepository.getPets(animalType, animalGroup, animalColor), inventoryRepository.getOwnedPets()
-                    .map { ownedPets ->
-                        val petMap = mutableMapOf<String, OwnedPet>()
-                        ownedPets.forEach { petMap[it.key ?: ""] = it }
-                        return@map petMap
-                    }.doOnNext {
-                        adapter.setOwnedPets(it)
-                        user?.let { updatedUser -> adapter.setUser(updatedUser) }
-                    }).map {
-                        val items = mutableListOf<Any>()
-                        var lastPet: Pet? = null
-                        var currentSection: StableSection? = null
-                        for (pet in it.first) {
-                            if (pet.type == "wacky" || pet.type == "special") continue
-                            if (pet.type != lastPet?.type) {
-                                currentSection = StableSection(pet.type, pet.getTranslatedType(context) ?: "")
-                                items.add(currentSection)
-                            }
-                            currentSection?.let {section ->
-                                section.totalCount += 1
-                                if (it.second.containsKey(pet.key)) {
-                                    section.ownedCount += 1
-                                }
-                            }
-                            items.add(pet)
-                            lastPet = pet
+            compositeSubscription.add(
+                Flowables.combineLatest(
+                    inventoryRepository.getPets(animalType, animalGroup, animalColor),
+                    inventoryRepository.getOwnedPets()
+                        .map { ownedPets ->
+                            val petMap = mutableMapOf<String, OwnedPet>()
+                            ownedPets.forEach { petMap[it.key ?: ""] = it }
+                            return@map petMap
+                        }.doOnNext {
+                            adapter.setOwnedPets(it)
+                            user?.let { updatedUser -> adapter.setUser(updatedUser) }
                         }
-                        items
-                    }.subscribe({ adapter.setItemList(it) }, RxErrorHandler.handleEmptyError()))
+                ).map {
+                    val items = mutableListOf<Any>()
+                    var lastPet: Pet? = null
+                    var currentSection: StableSection? = null
+                    for (pet in it.first) {
+                        if (pet.type == "wacky" || pet.type == "special") continue
+                        if (pet.type != lastPet?.type) {
+                            currentSection = StableSection(pet.type, pet.getTranslatedType(context) ?: "")
+                            items.add(currentSection)
+                        }
+                        currentSection?.let { section ->
+                            section.totalCount += 1
+                            if (it.second.containsKey(pet.key)) {
+                                section.ownedCount += 1
+                            }
+                        }
+                        items.add(pet)
+                        lastPet = pet
+                    }
+                    items
+                }.subscribe({ adapter.setItemList(it) }, RxErrorHandler.handleEmptyError())
+            )
             compositeSubscription.add(inventoryRepository.getMounts(animalType, animalGroup, animalColor).subscribe({ adapter.setExistingMounts(it) }, RxErrorHandler.handleEmptyError()))
         }
     }
-
 
     @Subscribe
     fun showFeedingDialog(event: FeedCommand) {
@@ -200,8 +214,13 @@ class PetDetailRecyclerFragment : BaseMainFragment<FragmentRefreshRecyclerviewBi
     }
 
     override fun onRefresh() {
-        compositeSubscription.add(userRepository.retrieveUser(false, true).subscribe({
-            binding?.refreshLayout?.isRefreshing = false
-        }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(
+            userRepository.retrieveUser(false, true).subscribe(
+                {
+                    binding?.refreshLayout?.isRefreshing = false
+                },
+                RxErrorHandler.handleEmptyError()
+            )
+        )
     }
 }

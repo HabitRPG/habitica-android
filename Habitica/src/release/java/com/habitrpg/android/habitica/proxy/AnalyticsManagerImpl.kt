@@ -1,14 +1,12 @@
 package com.habitrpg.android.habitica.proxy
 
-import com.google.firebase.crashlytics.FirebaseCrashlytics
-import com.google.firebase.crashlytics.internal.common.CrashlyticsCore
-import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import android.content.Context
-import com.google.firebase.analytics.FirebaseAnalytics
-import com.amplitude.api.Amplitude
 import android.os.Bundle
+import com.amplitude.api.Amplitude
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 
-class AnalyticsManagerImpl(context: Context): AnalyticsManager {
+class AnalyticsManagerImpl(context: Context) : AnalyticsManager {
 
     private val firebaseAnalytics: com.google.firebase.analytics.FirebaseAnalytics
 

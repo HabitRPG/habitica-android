@@ -9,5 +9,5 @@ import java.util.concurrent.TimeUnit
 
 fun runDelayed(interval: Long, timeUnit: TimeUnit, function: () -> Unit) {
     Completable.complete().delay(interval, timeUnit)
-            .subscribe(function)
+        .subscribe(function)
 }

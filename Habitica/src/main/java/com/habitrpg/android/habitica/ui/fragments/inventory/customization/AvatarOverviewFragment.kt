@@ -40,9 +40,11 @@ class AvatarOverviewFragment : BaseMainFragment<FragmentAvatarOverviewBinding>()
         binding?.avatarHairMustacheView?.setOnClickListener { displayCustomizationFragment("hair", "mustache") }
         binding?.avatarBackgroundView?.setOnClickListener { displayCustomizationFragment("background", null) }
 
-        compositeSubscription.add(userRepository.getUser().subscribeWithErrorHandler {
-            updateUser(it)
-        })
+        compositeSubscription.add(
+            userRepository.getUser().subscribeWithErrorHandler {
+                updateUser(it)
+            }
+        )
     }
 
     override fun injectFragment(component: UserComponent) {
@@ -94,11 +96,11 @@ class AvatarOverviewFragment : BaseMainFragment<FragmentAvatarOverviewBinding>()
     override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
         val newSize: String = if (position == 0) "slim" else "broad"
 
-        compositeSubscription.add(userRepository.updateUser("preferences.size", newSize)
-                    .subscribe({ }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(
+            userRepository.updateUser("preferences.size", newSize)
+                .subscribe({ }, RxErrorHandler.handleEmptyError())
+        )
     }
 
     override fun onNothingSelected(parent: AdapterView<*>) { /* no-on */ }
-
-
 }

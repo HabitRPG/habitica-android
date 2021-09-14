@@ -26,12 +26,16 @@ interface ChallengeRepository : BaseRepository {
      * @param removedTaskList tasks that has be to be removed
      * @return Observable with the updated challenge
      */
-    fun updateChallenge(challenge: Challenge, fullTaskList: List<Task>,
-                        addedTaskList: List<Task>, updatedTaskList: List<Task>, removedTaskList: List<String>): Flowable<Challenge>
+    fun updateChallenge(
+        challenge: Challenge,
+        fullTaskList: List<Task>,
+        addedTaskList: List<Task>,
+        updatedTaskList: List<Task>,
+        removedTaskList: List<String>
+    ): Flowable<Challenge>
 
     fun deleteChallenge(challengeId: String): Flowable<Void>
     fun getUserChallenges(userId: String? = null): Flowable<out List<Challenge>>
-
 
     fun leaveChallenge(challenge: Challenge, keepTasks: String): Flowable<Void>
 

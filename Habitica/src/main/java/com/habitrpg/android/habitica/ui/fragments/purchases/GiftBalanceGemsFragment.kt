@@ -58,14 +58,19 @@ class GiftBalanceGemsFragment : BaseFragment<FragmentGiftGemBalanceBinding>() {
         try {
             val amount = binding?.giftEditText?.text.toString().toInt()
             giftedMember?.id?.let {
-                compositeSubscription.add(socialRepository.transferGems(it, amount)
-                    .flatMap { userRepository.retrieveUser(false, true) }
-                    .doOnError {
-                        isGifting = false
-                    }
-                    .subscribe({
-                    onCompleted?.invoke()
-                }, RxErrorHandler.handleEmptyError()))
+                compositeSubscription.add(
+                    socialRepository.transferGems(it, amount)
+                        .flatMap { userRepository.retrieveUser(false, true) }
+                        .doOnError {
+                            isGifting = false
+                        }
+                        .subscribe(
+                            {
+                                onCompleted?.invoke()
+                            },
+                            RxErrorHandler.handleEmptyError()
+                        )
+                )
             }
         } catch (ignored: NumberFormatException) {}
     }

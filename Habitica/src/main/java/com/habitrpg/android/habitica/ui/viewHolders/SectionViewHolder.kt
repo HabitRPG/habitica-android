@@ -26,7 +26,7 @@ class SectionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     init {
         itemView.findViewById<View?>(R.id.purchaseSetButton)?.visibility = View.GONE
-        selectionSpinner?.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+        selectionSpinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 spinnerSelectionChanged?.invoke()
             }
@@ -57,16 +57,16 @@ class SectionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     }
 
     var spinnerAdapter: ArrayAdapter<CharSequence>? = null
-    set(value) {
-        field = value
-        selectionSpinner?.adapter = field
-        selectionSpinner?.visibility = if (value != null) View.VISIBLE else View.GONE
-    }
+        set(value) {
+            field = value
+            selectionSpinner?.adapter = field
+            selectionSpinner?.visibility = if (value != null) View.VISIBLE else View.GONE
+        }
 
     var selectedItem: Int = 0
         get() = selectionSpinner?.selectedItemPosition ?: 0
-    set(value) {
-        field = value
-        selectionSpinner?.setSelection(field)
-    }
+        set(value) {
+            field = value
+            selectionSpinner?.setSelection(field)
+        }
 }

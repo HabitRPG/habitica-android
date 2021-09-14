@@ -34,7 +34,6 @@ class SkillsFragment : BaseMainFragment<FragmentSkillsBinding>() {
     internal var adapter: SkillsRecyclerViewAdapter? = null
     private var selectedSkill: Skill? = null
 
-
     override var binding: FragmentSkillsBinding? = null
 
     override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentSkillsBinding {
@@ -77,18 +76,21 @@ class SkillsFragment : BaseMainFragment<FragmentSkillsBinding>() {
         adapter?.level = this.user?.stats?.lvl ?: 0
         adapter?.specialItems = this.user?.items?.special
         user?.let { user ->
-            Flowable.combineLatest(userRepository.getSkills(user),
-                    userRepository.getSpecialItems(user), { skills, items ->
-                val allEntries = mutableListOf<Skill>()
-                for (skill in skills) {
-                    allEntries.add(skill)
+            Flowable.combineLatest(
+                userRepository.getSkills(user),
+                userRepository.getSpecialItems(user),
+                { skills, items ->
+                    val allEntries = mutableListOf<Skill>()
+                    for (skill in skills) {
+                        allEntries.add(skill)
+                    }
+                    for (item in items) {
+                        allEntries.add(item)
+                    }
+                    return@combineLatest allEntries
                 }
-                for (item in items) {
-                    allEntries.add(item)
-                }
-                return@combineLatest allEntries
-            })
-                    .subscribe({ skills -> adapter?.setSkillList(skills) }, RxErrorHandler.handleEmptyError())
+            )
+                .subscribe({ skills -> adapter?.setSkillList(skills) }, RxErrorHandler.handleEmptyError())
         }
     }
 
@@ -116,22 +118,26 @@ class SkillsFragment : BaseMainFragment<FragmentSkillsBinding>() {
             showSnackbar(activity.snackbarContainer, context?.getString(R.string.used_skill_without_mana, usedSkill.text), HabiticaSnackbar.SnackbarDisplayType.BLUE)
         } else {
             context?.let {
-                showSnackbar(activity.snackbarContainer, null,
-                        context?.getString(R.string.used_skill_without_mana, usedSkill?.text),
-                        BitmapDrawable(resources, HabiticaIconsHelper.imageOfMagic()),
-                        ContextCompat.getColor(it, R.color.blue_10), "-" + usedSkill?.mana,
-                        HabiticaSnackbar.SnackbarDisplayType.BLUE)
+                showSnackbar(
+                    activity.snackbarContainer, null,
+                    context?.getString(R.string.used_skill_without_mana, usedSkill?.text),
+                    BitmapDrawable(resources, HabiticaIconsHelper.imageOfMagic()),
+                    ContextCompat.getColor(it, R.color.blue_10), "-" + usedSkill?.mana,
+                    HabiticaSnackbar.SnackbarDisplayType.BLUE
+                )
             }
         }
         if (response.damage > 0) {
             lifecycleScope.launch {
                 delay(2000L)
                 if (!isAdded) return@launch
-                showSnackbar(activity.snackbarContainer, null,
+                showSnackbar(
+                    activity.snackbarContainer, null,
                     context?.getString(R.string.caused_damage),
                     BitmapDrawable(resources, HabiticaIconsHelper.imageOfDamage()),
                     ContextCompat.getColor(activity, R.color.green_10), "+%.01f".format(response.damage),
-                    HabiticaSnackbar.SnackbarDisplayType.SUCCESS)
+                    HabiticaSnackbar.SnackbarDisplayType.SUCCESS
+                )
             }
         }
         compositeSubscription.add(userRepository.retrieveUser(false).subscribe({ }, RxErrorHandler.handleEmptyError()))
@@ -158,7 +164,11 @@ class SkillsFragment : BaseMainFragment<FragmentSkillsBinding>() {
         } else {
             userRepository.useSkill(skill.key, skill.target)
         }
-        compositeSubscription.add(observable.subscribe({ skillResponse -> this.displaySkillResult(skill, skillResponse) },
-                RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(
+            observable.subscribe(
+                { skillResponse -> this.displaySkillResult(skill, skillResponse) },
+                RxErrorHandler.handleEmptyError()
+            )
+        )
     }
 }

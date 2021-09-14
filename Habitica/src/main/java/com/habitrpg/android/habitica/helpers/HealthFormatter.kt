@@ -11,11 +11,11 @@ object HealthFormatter {
 
     @JvmStatic
     fun format(input: Double) =
-            if (input < 1 && input > 0) {
-                ceil(input * 10) / 10
-            } else {
-                floor(input)
-            }
+        if (input < 1 && input > 0) {
+            ceil(input * 10) / 10
+        } else {
+            floor(input)
+        }
 
     fun formatToString(input: Int, locale: Locale = getDefaultLocale()) = formatToString(input.toDouble(), locale)
 

@@ -21,13 +21,13 @@ abstract class HabiticaLocalNotification(protected var context: Context, protect
     protected var message: String? = null
 
     protected var notificationBuilder = NotificationCompat.Builder(context, "default")
-            .setSmallIcon(R.drawable.ic_gryphon_white)
-            .setAutoCancel(true)
+        .setSmallIcon(R.drawable.ic_gryphon_white)
+        .setAutoCancel(true)
 
     open fun configureNotificationBuilder(data: MutableMap<String, String>): NotificationCompat.Builder {
         val path = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
         return notificationBuilder
-                .setSound(path)
+            .setSound(path)
     }
 
     @CallSuper
@@ -54,14 +54,14 @@ abstract class HabiticaLocalNotification(protected var context: Context, protect
         this.data = data
     }
 
-    protected open fun setNotificationActions(data: Map<String, String>)  {
+    protected open fun setNotificationActions(data: Map<String, String>) {
         val intent = Intent(context, MainActivity::class.java)
         configureMainIntent(intent)
         val pendingIntent = PendingIntent.getActivity(
-                context,
-                3000,
-                intent,
-                PendingIntent.FLAG_UPDATE_CURRENT
+            context,
+            3000,
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT
         )
         notificationBuilder.setContentIntent(pendingIntent)
     }

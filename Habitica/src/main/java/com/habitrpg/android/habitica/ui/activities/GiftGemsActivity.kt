@@ -21,7 +21,6 @@ import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import com.habitrpg.android.habitica.ui.fragments.purchases.GiftBalanceGemsFragment
 import com.habitrpg.android.habitica.ui.fragments.purchases.GiftPurchaseGemsFragment
 import com.habitrpg.android.habitica.ui.views.CurrencyView
-import com.habitrpg.android.habitica.ui.views.CurrencyViews
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import org.greenrobot.eventbus.Subscribe
 import javax.inject.Inject
@@ -45,7 +44,6 @@ class GiftGemsActivity : BaseActivity() {
     lateinit var appConfigManager: AppConfigManager
 
     private var purchaseHandler: PurchaseHandler? = null
-
 
     private var giftedUsername: String? = null
     private var giftedUserID: String? = null
@@ -73,7 +71,6 @@ class GiftGemsActivity : BaseActivity() {
         setSupportActionBar(binding.toolbar)
         binding.toolbarAccessoryContainer.addView(currencyView)
 
-
         purchaseHandler = PurchaseHandler(this, analyticsManager)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -88,16 +85,26 @@ class GiftGemsActivity : BaseActivity() {
 
         setViewPagerAdapter()
 
-        compositeSubscription.add(socialRepository.getMember(giftedUsername ?: giftedUserID).firstElement().subscribe({
-            giftedUserID = it.id
-            giftedUsername = it.username
-            purchaseFragment?.giftedMember = it
-            balanceFragment?.giftedMember = it
-        }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(
+            socialRepository.getMember(giftedUsername ?: giftedUserID).firstElement().subscribe(
+                {
+                    giftedUserID = it.id
+                    giftedUsername = it.username
+                    purchaseFragment?.giftedMember = it
+                    balanceFragment?.giftedMember = it
+                },
+                RxErrorHandler.handleEmptyError()
+            )
+        )
 
-        compositeSubscription.add(userRepository.getUser().subscribe({
-            currencyView.value = it.gemCount.toDouble()
-        }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(
+            userRepository.getUser().subscribe(
+                {
+                    currencyView.value = it.gemCount.toDouble()
+                },
+                RxErrorHandler.handleEmptyError()
+            )
+        )
     }
 
     override fun onStart() {
@@ -130,13 +137,13 @@ class GiftGemsActivity : BaseActivity() {
 
             override fun getItem(position: Int): Fragment {
                 return if (position == 0) {
-                     val fragment = GiftPurchaseGemsFragment()
+                    val fragment = GiftPurchaseGemsFragment()
                     fragment.setPurchaseHandler(purchaseHandler)
                     fragment.setupCheckout()
                     purchaseFragment = fragment
                     fragment
                 } else {
-                     val fragment = GiftBalanceGemsFragment()
+                    val fragment = GiftBalanceGemsFragment()
                     fragment.onCompleted = {
                         displayConfirmationDialog()
                     }

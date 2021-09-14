@@ -16,14 +16,12 @@ import com.habitrpg.android.habitica.models.inventory.Item
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.views.CurrencyView
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import java.util.*
 
-
 class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
-
 
     private lateinit var binding: DialogPetSuggestHatchBinding
 
@@ -69,9 +67,11 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
         }
 
         if (hasEgg && hasPotion) {
-            binding.descriptionView.text = context.getString(R.string.can_hatch_pet,
-                    eggName,
-                    potionName)
+            binding.descriptionView.text = context.getString(
+                R.string.can_hatch_pet,
+                eggName,
+                potionName
+            )
             addButton(R.string.hatch, true, false) { _, _ ->
                 val thisPotion = potion ?: return@addButton
                 val thisEgg = egg ?: return@addButton
@@ -109,7 +109,6 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
 
             if (!hasPotion) {
                 hatchPrice += getItemPrice(pet, potion, hasUnlockedPotion)
-
             }
 
             addButton(R.string.close, true)
@@ -132,26 +131,31 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
                         observable = observable.flatMap { activity.inventoryRepository.purchaseItem("hatchingPotions", thisPotion.key, 1) }
                     }
                     observable
-                            .flatMap { activity.userRepository.retrieveUser(true, forced = true) }
-                            .subscribe({
-                        (getActivity() as? MainActivity)?.hatchPet(thisPotion, thisEgg)
-                    }, RxErrorHandler.handleEmptyError())
+                        .flatMap { activity.userRepository.retrieveUser(true, forced = true) }
+                        .subscribe(
+                            {
+                                (getActivity() as? MainActivity)?.hatchPet(thisPotion, thisEgg)
+                            },
+                            RxErrorHandler.handleEmptyError()
+                        )
                 }
             }
 
             setTitle(R.string.unhatched_pet)
         }
 
-
         val imageName = "stable_Pet-${pet.animal}-${pet.color}"
         DataBindingUtils.loadImage(context, imageName) {
             val resources = context.resources ?: return@loadImage
             val drawable = if (hasMount) it else BitmapDrawable(resources, it.toBitmap().extractAlpha())
             Observable.just(drawable)
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
                         binding.petView.background = drawable
-                    }, RxErrorHandler.handleEmptyError())
+                    },
+                    RxErrorHandler.handleEmptyError()
+                )
         }
     }
 

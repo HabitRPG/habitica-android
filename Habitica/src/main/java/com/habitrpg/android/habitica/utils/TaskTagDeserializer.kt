@@ -8,7 +8,7 @@ import com.habitrpg.android.habitica.models.Tag
 import io.realm.Realm
 import io.realm.RealmList
 import java.lang.reflect.Type
-import java.util.*
+import java.util.ArrayList
 
 class TaskTagDeserializer : JsonDeserializer<List<Tag>> {
     @Throws(JsonParseException::class)
@@ -20,7 +20,7 @@ class TaskTagDeserializer : JsonDeserializer<List<Tag>> {
             databaseTags = realm.copyFromRealm(realm.where(Tag::class.java).findAll())
             realm.close()
         } catch (e: RuntimeException) {
-            //Tests don't have a database
+            // Tests don't have a database
             databaseTags = ArrayList()
         }
 
@@ -41,11 +41,8 @@ class TaskTagDeserializer : JsonDeserializer<List<Tag>> {
                             }
                         }
                     } catch (ignored: UnsupportedOperationException) {
-
                     }
-
                 }
-
             }
         }
 

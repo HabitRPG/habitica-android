@@ -16,12 +16,10 @@ limitations under the License.
 package com.habitrpg.android.habitica.ui.helpers
 
 import android.app.Activity
-import android.graphics.Color
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.os.Build
 import android.view.View
-import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.view.menu.ActionMenuItemView
@@ -60,15 +58,15 @@ object ToolbarColorHelper {
         for (i in 0 until toolbar.childCount) {
             val v = toolbar.getChildAt(i)
 
-            //Step 1 : Changing the color of back button (or open drawer button).
+            // Step 1 : Changing the color of back button (or open drawer button).
             if (v is ImageButton) {
-                //Action Bar back button
+                // Action Bar back button
                 v.drawable.colorFilter = colorFilter
             } else if (v is ActionMenuView) {
                 for (j in 0 until v.childCount) {
 
-                    //Step 2: Changing the color of any ActionMenuViews - icons that are not back button, nor text, nor overflow menu icon.
-                    //Colorize the ActionViews -> all icons that are NOT: back button | overflow menu
+                    // Step 2: Changing the color of any ActionMenuViews - icons that are not back button, nor text, nor overflow menu icon.
+                    // Colorize the ActionViews -> all icons that are NOT: back button | overflow menu
                     val innerView = v.getChildAt(j)
                     if (innerView is ActionMenuItemView) {
                         innerView.setTextColor(toolbarIconsColor)
@@ -86,11 +84,11 @@ object ToolbarColorHelper {
             }
         }
 
-        //Step 3: Changing the color of title and subtitle.
+        // Step 3: Changing the color of title and subtitle.
         toolbar.setTitleTextColor(toolbarIconsColor)
         toolbar.setSubtitleTextColor(toolbarIconsColor)
 
-        //Step 4: Changing the color of the Overflow Menu icon.
+        // Step 4: Changing the color of the Overflow Menu icon.
         setOverflowButtonColor(activity, toolbarIconsColor)
     }
 
@@ -102,10 +100,12 @@ object ToolbarColorHelper {
      */
     private fun setOverflowButtonColor(activity: Activity, color: Int) {
         val overflowDescription = activity.getString(R.string.abc_action_menu_overflow_description)
-        activity.window.decorView .waitForLayout {
+        activity.window.decorView.waitForLayout {
             val outViews = ArrayList<View>()
-            findViewsWithText(outViews, overflowDescription,
-                    View.FIND_VIEWS_WITH_CONTENT_DESCRIPTION)
+            findViewsWithText(
+                outViews, overflowDescription,
+                View.FIND_VIEWS_WITH_CONTENT_DESCRIPTION
+            )
             if (outViews.isEmpty()) {
                 return@waitForLayout
             }

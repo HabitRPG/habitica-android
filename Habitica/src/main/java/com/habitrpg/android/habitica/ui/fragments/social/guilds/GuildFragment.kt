@@ -33,8 +33,11 @@ class GuildFragment : BaseMainFragment<FragmentViewpagerBinding>() {
         return FragmentViewpagerBinding.inflate(inflater, container, false)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         this.usesTabLayout = true
         this.hidesToolbar = true
         return super.onCreateView(inflater, container, savedInstanceState)
@@ -65,7 +68,7 @@ class GuildFragment : BaseMainFragment<FragmentViewpagerBinding>() {
             context?.let { FirebaseAnalytics.getInstance(it).logEvent("opened_no_party_guild", null) }
         }
 
-        viewModel.retrieveGroup {  }
+        viewModel.retrieveGroup { }
     }
 
     override fun onResume() {
@@ -127,7 +130,7 @@ class GuildFragment : BaseMainFragment<FragmentViewpagerBinding>() {
                 return true
             }
             R.id.menu_guild_refresh -> {
-                viewModel.retrieveGroup {  }
+                viewModel.retrieveGroup { }
                 return true
             }
         }
@@ -181,8 +184,8 @@ class GuildFragment : BaseMainFragment<FragmentViewpagerBinding>() {
             binding?.viewPager?.let { it1 ->
                 TabLayoutMediator(it, it1) { tab, position ->
                     tab.text = when (position) {
-                        0 ->  context?.getString(R.string.guild)
-                        1 ->  context?.getString(R.string.chat)
+                        0 -> context?.getString(R.string.guild)
+                        1 -> context?.getString(R.string.chat)
                         else -> ""
                     }
                 }.attach()
@@ -200,13 +203,11 @@ class GuildFragment : BaseMainFragment<FragmentViewpagerBinding>() {
         bundle.putString("leader", guild?.leaderID)
         bundle.putBoolean("leaderOnlyChallenges", guild?.leaderOnlyChallenges ?: true)
 
-
         val intent = Intent(activity, GroupFormActivity::class.java)
         intent.putExtras(bundle)
         intent.flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
         groupFormResult.launch(intent)
     }
-
 
     private val groupFormResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if (it.resultCode == Activity.RESULT_OK) {
@@ -224,5 +225,4 @@ class GuildFragment : BaseMainFragment<FragmentViewpagerBinding>() {
             chatFragment?.autocompleteContext = "privateGuild"
         }
     }
-
 }

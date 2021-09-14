@@ -35,16 +35,21 @@ abstract class TaskListWidgetProvider : BaseWidgetProvider() {
     override fun onReceive(context: Context, intent: Intent) {
         setUp()
         if (intent.action == DAILY_ACTION) {
-            val appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
-                    AppWidgetManager.INVALID_APPWIDGET_ID)
+            val appWidgetId = intent.getIntExtra(
+                AppWidgetManager.EXTRA_APPWIDGET_ID,
+                AppWidgetManager.INVALID_APPWIDGET_ID
+            )
             val taskId = intent.getStringExtra(TASK_ID_ITEM)
 
             if (taskId != null) {
                 userRepository.getUser().firstElement().flatMap { user -> taskRepository.taskChecked(user, taskId, up = true, force = false, notifyFunc = null) }
-                        .subscribe({ taskDirectionData ->
+                    .subscribe(
+                        { taskDirectionData ->
                             showToastForTaskDirection(context, taskDirectionData)
                             AppWidgetManager.getInstance(context).notifyAppWidgetViewDataChanged(appWidgetId, R.id.list_view)
-                        }, RxErrorHandler.handleEmptyError())
+                        },
+                        RxErrorHandler.handleEmptyError()
+                    )
             }
         }
         super.onReceive(context, intent)
@@ -58,8 +63,10 @@ abstract class TaskListWidgetProvider : BaseWidgetProvider() {
 
         for (widgetId in allWidgetIds) {
             val options = appWidgetManager.getAppWidgetOptions(widgetId)
-            appWidgetManager.partiallyUpdateAppWidget(widgetId,
-                    sizeRemoteViews(context, options, widgetId))
+            appWidgetManager.partiallyUpdateAppWidget(
+                widgetId,
+                sizeRemoteViews(context, options, widgetId)
+            )
         }
 
         for (appWidgetId in appWidgetIds) {
@@ -80,8 +87,10 @@ abstract class TaskListWidgetProvider : BaseWidgetProvider() {
             taskIntent.action = DAILY_ACTION
             taskIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
             intent.data = Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME))
-            val toastPendingIntent = PendingIntent.getBroadcast(context, 0, taskIntent,
-                    PendingIntent.FLAG_UPDATE_CURRENT)
+            val toastPendingIntent = PendingIntent.getBroadcast(
+                context, 0, taskIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT
+            )
             rv.setPendingIntentTemplate(R.id.list_view, toastPendingIntent)
 
             appWidgetManager.updateAppWidget(appWidgetId, rv)

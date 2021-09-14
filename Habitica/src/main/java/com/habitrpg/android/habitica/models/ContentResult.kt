@@ -22,4 +22,3 @@ class ContentResult {
     var faq = RealmList<FAQArticle>()
     var special = RealmList<SpecialItem>()
 }
-

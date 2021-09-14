@@ -66,14 +66,19 @@ class MaintenanceActivity : BaseActivity() {
     override fun onResume() {
         super.onResume()
         if (!isDeprecationNotice) {
-            compositeSubscription.add(this.maintenanceService.maintenanceStatus
+            compositeSubscription.add(
+                this.maintenanceService.maintenanceStatus
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({ maintenanceResponse ->
-                        if (!maintenanceResponse.activeMaintenance) {
-                            finish()
-                        }
-                    }, RxErrorHandler.handleEmptyError()))
+                    .subscribe(
+                        { maintenanceResponse ->
+                            if (!maintenanceResponse.activeMaintenance) {
+                                finish()
+                            }
+                        },
+                        RxErrorHandler.handleEmptyError()
+                    )
+            )
         }
     }
 
@@ -84,6 +89,5 @@ class MaintenanceActivity : BaseActivity() {
         } catch (anfe: android.content.ActivityNotFoundException) {
             startActivity(Intent(Intent.ACTION_VIEW, "https://play.google.com/store/apps/details?id=$appPackageName".toUri()))
         }
-
     }
 }

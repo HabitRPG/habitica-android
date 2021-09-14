@@ -28,7 +28,8 @@ class SoundFileLoader(private val context: Context) {
     @SuppressLint("SetWorldReadable", "ReturnCount")
     fun download(files: List<SoundFile>): Single<List<SoundFile>> {
         return Observable.fromIterable(files)
-                .flatMap({ audioFile ->
+            .flatMap(
+                { audioFile ->
                     val file = File(getFullAudioFilePath(audioFile))
                     if (file.exists() && file.length() > 5000) {
                         // Important, or else the MediaPlayer can't access this file
@@ -67,10 +68,12 @@ class SoundFileLoader(private val context: Context) {
                         sub.onComplete()
                     }
                     fileObservable.subscribeOn(Schedulers.io())
-                }, 5)
-                .toList()
+                },
+                5
+            )
+            .toList()
     }
 
     private fun getFullAudioFilePath(soundFile: SoundFile): String =
-            externalCacheDir + File.separator + soundFile.filePath
+        externalCacheDir + File.separator + soundFile.filePath
 }

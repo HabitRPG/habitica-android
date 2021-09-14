@@ -23,5 +23,4 @@ class LockableScrollView(context: Context, attrs: AttributeSet) : NestedScrollVi
         else
             super.onInterceptTouchEvent(ev)
     }
-
 }

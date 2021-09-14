@@ -1,9 +1,6 @@
 package com.habitrpg.android.habitica.ui
 
-
-import android.annotation.TargetApi
 import android.content.Context
-import android.os.Build
 import android.util.AttributeSet
 import android.util.DisplayMetrics
 import android.view.WindowManager
@@ -40,7 +37,7 @@ class MaxHeightLinearLayout : LinearLayout {
     private fun init(context: Context, attrs: AttributeSet?) {
         if (attrs != null) {
             val styledAttrs = context.obtainStyledAttributes(attrs, R.styleable.MaxHeightLinearLayout)
-            //200 is a defualt value
+            // 200 is a defualt value
             maxHeight = styledAttrs.getFloat(R.styleable.MaxHeightLinearLayout_maxHeightMultiplier, defaultHeight)
 
             styledAttrs.recycle()
@@ -56,6 +53,5 @@ class MaxHeightLinearLayout : LinearLayout {
         heightMeasurement = min(heightMeasurement, MeasureSpec.makeMeasureSpec(height, MeasureSpec.AT_MOST))
 
         super.onMeasure(widthMeasureSpec, heightMeasurement)
-
     }
 }

@@ -5,17 +5,17 @@ import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.inflate
+import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.user.User
-import com.habitrpg.android.habitica.ui.viewHolders.ChatRecyclerViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.ChatRecyclerIntroViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.ChatRecyclerMessageViewHolder
+import com.habitrpg.android.habitica.ui.viewHolders.ChatRecyclerViewHolder
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.subjects.PublishSubject
-import com.habitrpg.android.habitica.models.members.Member
 
-class InboxAdapter(private var user: User?, private var replyToUser : Member) : PagedListAdapter<ChatMessage, ChatRecyclerViewHolder>(DIFF_CALLBACK) {
+class InboxAdapter(private var user: User?, private var replyToUser: Member) : PagedListAdapter<ChatMessage, ChatRecyclerViewHolder>(DIFF_CALLBACK) {
     private val FIRST_MESSAGE = 0
     private val NORMAL_MESSAGE = 1
 
@@ -27,7 +27,7 @@ class InboxAdapter(private var user: User?, private var replyToUser : Member) : 
     private val replyMessageEvents = PublishSubject.create<String>()
     private val copyMessageEvents = PublishSubject.create<ChatMessage>()
 
-    private fun isPositionIntroMessage(position: Int) : Boolean {
+    private fun isPositionIntroMessage(position: Int): Boolean {
         return (position == super.getItemCount() - 1)
     }
 
@@ -39,7 +39,7 @@ class InboxAdapter(private var user: User?, private var replyToUser : Member) : 
         return if (isPositionIntroMessage(position)) -1 else super.getItemId(position)
     }
 
-    override fun getItem(position: Int) : ChatMessage? {
+    override fun getItem(position: Int): ChatMessage? {
         return if (isPositionIntroMessage(position)) ChatMessage() else super.getItem(position)
     }
 
@@ -49,19 +49,20 @@ class InboxAdapter(private var user: User?, private var replyToUser : Member) : 
     }
 
     override fun onBindViewHolder(holder: ChatRecyclerViewHolder, position: Int) {
-        val firstMessage : Boolean = getItemViewType(position) == FIRST_MESSAGE
+        val firstMessage: Boolean = getItemViewType(position) == FIRST_MESSAGE
         if (firstMessage) {
             val introHolder = holder as ChatRecyclerIntroViewHolder
             introHolder.bind(replyToUser)
             introHolder.onOpenProfile = { userLabelClickEvents.onNext(it) }
-        }
-        else {
-            val message : ChatMessage = getItem(position) ?: return
+        } else {
+            val message: ChatMessage = getItem(position) ?: return
             val messageHolder = holder as ChatRecyclerMessageViewHolder
-            messageHolder.bind(message,
+            messageHolder.bind(
+                message,
                 user?.id ?: "",
                 user,
-                expandedMessageId == message.id)
+                expandedMessageId == message.id
+            )
             messageHolder.onShouldExpand = { expandMessage(message.id, position) }
             messageHolder.onLikeMessage = { likeMessageEvents.onNext(it) }
             messageHolder.onOpenProfile = { userLabelClickEvents.onNext(it) }
@@ -101,14 +102,18 @@ class InboxAdapter(private var user: User?, private var replyToUser : Member) : 
 
     companion object {
         private val DIFF_CALLBACK = object :
-                DiffUtil.ItemCallback<ChatMessage>() {
+            DiffUtil.ItemCallback<ChatMessage>() {
             // Concert details may have changed if reloaded from the database,
             // but ID is fixed.
-            override fun areItemsTheSame(oldConcert: ChatMessage,
-                                         newConcert: ChatMessage) = oldConcert.id == newConcert.id
+            override fun areItemsTheSame(
+                oldConcert: ChatMessage,
+                newConcert: ChatMessage
+            ) = oldConcert.id == newConcert.id
 
-            override fun areContentsTheSame(oldConcert: ChatMessage,
-                                            newConcert: ChatMessage) = oldConcert.text == newConcert.text
+            override fun areContentsTheSame(
+                oldConcert: ChatMessage,
+                newConcert: ChatMessage
+            ) = oldConcert.text == newConcert.text
         }
     }
 }

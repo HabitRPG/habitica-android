@@ -26,7 +26,6 @@ import io.reactivex.rxjava3.kotlin.Flowables
 import javax.inject.Inject
 import javax.inject.Named
 
-
 class ChallengeListFragment : BaseFragment<FragmentRefreshRecyclerviewBinding>(), androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener {
 
     @Inject
@@ -69,7 +68,7 @@ class ChallengeListFragment : BaseFragment<FragmentRefreshRecyclerviewBinding>()
 
         challengeAdapter = ChallengesListViewAdapter(viewUserChallengesOnly, userId)
         challengeAdapter?.getOpenDetailFragmentFlowable()?.subscribe({ openDetailFragment(it) }, RxErrorHandler.handleEmptyError())
-                ?.let { compositeSubscription.add(it) }
+            ?.let { compositeSubscription.add(it) }
 
         binding?.refreshLayout?.setOnRefreshListener(this)
 
@@ -85,11 +84,16 @@ class ChallengeListFragment : BaseFragment<FragmentRefreshRecyclerviewBinding>()
             binding?.recyclerView?.setBackgroundResource(R.color.content_background)
         }
 
-        compositeSubscription.add(Flowables.combineLatest(socialRepository.getGroup(Group.TAVERN_ID), socialRepository.getUserGroups("guild")).subscribe({
-            this.filterGroups = mutableListOf()
-            filterGroups?.add(it.first)
-            filterGroups?.addAll(it.second)
-        }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(
+            Flowables.combineLatest(socialRepository.getGroup(Group.TAVERN_ID), socialRepository.getUserGroups("guild")).subscribe(
+                {
+                    this.filterGroups = mutableListOf()
+                    filterGroups?.add(it.first)
+                    filterGroups?.addAll(it.second)
+                },
+                RxErrorHandler.handleEmptyError()
+            )
+        )
 
         binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
 
@@ -132,13 +136,18 @@ class ChallengeListFragment : BaseFragment<FragmentRefreshRecyclerviewBinding>()
             challengeRepository.getChallenges()
         }
 
-        compositeSubscription.add(observable.subscribe({ challenges ->
-            if (challenges.size == 0) {
-                retrieveChallengesPage()
-            }
-            this.challenges = challenges
-            challengeAdapter?.updateUnfilteredData(challenges)
-        }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(
+            observable.subscribe(
+                { challenges ->
+                    if (challenges.size == 0) {
+                        retrieveChallengesPage()
+                    }
+                    this.challenges = challenges
+                    challengeAdapter?.updateUnfilteredData(challenges)
+                },
+                RxErrorHandler.handleEmptyError()
+            )
+        )
     }
 
     internal fun retrieveChallengesPage(forced: Boolean = false) {
@@ -146,25 +155,33 @@ class ChallengeListFragment : BaseFragment<FragmentRefreshRecyclerviewBinding>()
             return
         }
         setRefreshing(true)
-        compositeSubscription.add(challengeRepository.retrieveChallenges(nextPageToLoad, viewUserChallengesOnly).doOnComplete {
-            setRefreshing(false)
-        } .subscribe({
-            if (it.size < 10) {
-                loadedAllData = true
-            }
-            nextPageToLoad += 1
-        }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(
+            challengeRepository.retrieveChallenges(nextPageToLoad, viewUserChallengesOnly).doOnComplete {
+                setRefreshing(false)
+            }.subscribe(
+                {
+                    if (it.size < 10) {
+                        loadedAllData = true
+                    }
+                    nextPageToLoad += 1
+                },
+                RxErrorHandler.handleEmptyError()
+            )
+        )
     }
 
     internal fun showFilterDialog() {
         activity?.let {
-            ChallengeFilterDialogHolder.showDialog(it,
-                    filterGroups ?: emptyList(),
-                    filterOptions, object : Action1<ChallengeFilterOptions> {
-                override fun call(t: ChallengeFilterOptions) {
-                    changeFilter(t)
+            ChallengeFilterDialogHolder.showDialog(
+                it,
+                filterGroups ?: emptyList(),
+                filterOptions,
+                object : Action1<ChallengeFilterOptions> {
+                    override fun call(t: ChallengeFilterOptions) {
+                        changeFilter(t)
+                    }
                 }
-            })
+            )
         }
     }
 

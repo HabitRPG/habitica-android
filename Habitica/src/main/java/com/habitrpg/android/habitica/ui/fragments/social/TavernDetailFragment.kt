@@ -60,10 +60,15 @@ class TavernDetailFragment : BaseFragment<FragmentTavernDetailBinding>() {
 
         shopSpriteSuffix = configManager.shopSpriteSuffix()
 
-        compositeSubscription.add(userRepository.getUser(userId).subscribe({
-            this.user = it
-            this.updatePausedState()
-        }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(
+            userRepository.getUser(userId).subscribe(
+                {
+                    this.user = it
+                    this.updatePausedState()
+                },
+                RxErrorHandler.handleEmptyError()
+            )
+        )
 
         binding?.shopHeader?.descriptionView?.setText(R.string.tavern_description)
         binding?.shopHeader?.namePlate?.setText(R.string.tavern_owner)
@@ -74,8 +79,9 @@ class TavernDetailFragment : BaseFragment<FragmentTavernDetailBinding>() {
         addPlayerTiers()
         bindButtons()
 
-        compositeSubscription.add(socialRepository.getGroup(Group.TAVERN_ID)
-                .doOnNext {  if (!it.hasActiveQuest) binding?.worldBossSection?.visibility = View.GONE }
+        compositeSubscription.add(
+            socialRepository.getGroup(Group.TAVERN_ID)
+                .doOnNext { if (!it.hasActiveQuest) binding?.worldBossSection?.visibility = View.GONE }
                 .filter { it.hasActiveQuest }
                 .doOnNext {
                     binding?.questProgressView?.progress = it.quest
@@ -89,10 +95,14 @@ class TavernDetailFragment : BaseFragment<FragmentTavernDetailBinding>() {
                     }
                 }
                 .flatMapMaybe { inventoryRepository.getQuestContent(it.quest?.key ?: "").firstElement() }
-                .subscribe({
-                    binding?.questProgressView?.quest = it
-                    binding?.worldBossSection?.visibility = View.VISIBLE
-                }, RxErrorHandler.handleEmptyError()))
+                .subscribe(
+                    {
+                        binding?.questProgressView?.quest = it
+                        binding?.worldBossSection?.visibility = View.VISIBLE
+                    },
+                    RxErrorHandler.handleEmptyError()
+                )
+        )
 
         compositeSubscription.add(socialRepository.retrieveGroup(Group.TAVERN_ID).subscribe({ }, RxErrorHandler.handleEmptyError()))
 
@@ -129,7 +139,6 @@ class TavernDetailFragment : BaseFragment<FragmentTavernDetailBinding>() {
         }
     }
 
-
     private fun updatePausedState() {
         if (binding?.innButton == null) {
             return
@@ -150,9 +159,10 @@ class TavernDetailFragment : BaseFragment<FragmentTavernDetailBinding>() {
                 label.tier = tier.id
                 label.username = tier.title
                 val params = FrameLayout.LayoutParams(
-                        FrameLayout.LayoutParams.WRAP_CONTENT,
-                        FrameLayout.LayoutParams.WRAP_CONTENT,
-                        Gravity.CENTER)
+                    FrameLayout.LayoutParams.WRAP_CONTENT,
+                    FrameLayout.LayoutParams.WRAP_CONTENT,
+                    Gravity.CENTER
+                )
                 container.addView(label, params)
                 binding?.playerTiersView?.addView(container)
                 val padding = context?.resources?.getDimension(R.dimen.spacing_medium)?.toInt() ?: 0
@@ -172,7 +182,7 @@ class TavernDetailFragment : BaseFragment<FragmentTavernDetailBinding>() {
             val alert = HabiticaAlertDialog(context)
             val bossName = quest.boss?.name ?: ""
             alert.setTitle(R.string.world_boss_description_title)
-            //alert.setSubtitle(context.getString(R.string.world_boss_description_subtitle, bossName))
+            // alert.setSubtitle(context.getString(R.string.world_boss_description_subtitle, bossName))
             alert.setAdditionalContentView(R.layout.world_boss_description_view)
 
             val descriptionView = alert.getContentView()
@@ -186,6 +196,7 @@ class TavernDetailFragment : BaseFragment<FragmentTavernDetailBinding>() {
             alert.setButton(AlertDialog.BUTTON_POSITIVE, context.getString(R.string.close)) { dialog, _ ->
                 dialog.dismiss()
             }
-            alert.show() }
+            alert.show()
+        }
     }
 }

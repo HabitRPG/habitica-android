@@ -11,7 +11,9 @@ import com.habitrpg.android.habitica.extensions.setScaledPadding
 import com.habitrpg.android.habitica.models.user.Outfit
 
 class EquipmentOverviewView @JvmOverloads constructor(
-        context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr) {
 
     var onNavigate: ((String, String) -> Unit)? = null
@@ -19,7 +21,7 @@ class EquipmentOverviewView @JvmOverloads constructor(
 
     init {
         background = ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_gray_50)
-        setScaledPadding(context, 12, 12, 12 ,12)
+        setScaledPadding(context, 12, 12, 12, 12)
         orientation = VERTICAL
 
         binding.weaponItem.setOnClickListener { onNavigate?.invoke("weapon", binding.weaponItem.identifier) }
@@ -30,7 +32,6 @@ class EquipmentOverviewView @JvmOverloads constructor(
         binding.bodyItem.setOnClickListener { onNavigate?.invoke("body", binding.bodyItem.identifier) }
         binding.backItem.setOnClickListener { onNavigate?.invoke("back", binding.backItem.identifier) }
         binding.eyewearItem.setOnClickListener { onNavigate?.invoke("eyewear", binding.eyewearItem.identifier) }
-
     }
 
     fun updateData(outfit: Outfit?, isWeaponTwoHanded: Boolean = false) {

@@ -37,7 +37,6 @@ import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaProgressDialog
 import io.reactivex.rxjava3.core.Flowable
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.lang.NumberFormatException
@@ -46,7 +45,6 @@ import javax.inject.Inject
 import javax.inject.Named
 
 class ChallengeFormActivity : BaseActivity() {
-
 
     private lateinit var binding: ActivityCreateChallengeBinding
 
@@ -121,7 +119,6 @@ class ChallengeFormActivity : BaseActivity() {
         component?.inject(this)
     }
 
-
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val inflater = menuInflater
         inflater.inflate(R.menu.menu_create_challenge, menu)
@@ -140,26 +137,31 @@ class ChallengeFormActivity : BaseActivity() {
                 createChallenge()
             }
 
-            compositeSubscription.add(observable
+            compositeSubscription.add(
+                observable
                     .flatMap {
                         challengeId = it.id
                         challengeRepository.retrieveChallenges(0, true)
                     }
-                    .subscribe({
-                        dialog?.dismiss()
-                        savingInProgress = false
-                        finish()
-                        if (!editMode) {
-                            lifecycleScope.launch(context = Dispatchers.Main) {
-                                delay(500L)
-                                MainNavigationController.navigate(ChallengesOverviewFragmentDirections.openChallengeDetail(challengeId ?: ""))
+                    .subscribe(
+                        {
+                            dialog?.dismiss()
+                            savingInProgress = false
+                            finish()
+                            if (!editMode) {
+                                lifecycleScope.launch(context = Dispatchers.Main) {
+                                    delay(500L)
+                                    MainNavigationController.navigate(ChallengesOverviewFragmentDirections.openChallengeDetail(challengeId ?: ""))
+                                }
                             }
+                        },
+                        { throwable ->
+                            dialog?.dismiss()
+                            savingInProgress = false
+                            RxErrorHandler.reportError(throwable)
                         }
-                    }, { throwable ->
-                dialog?.dismiss()
-                savingInProgress = false
-                RxErrorHandler.reportError(throwable)
-            }))
+                    )
+            )
         } else if (item.itemId == android.R.id.home) {
             finish()
             return true
@@ -219,15 +221,18 @@ class ChallengeFormActivity : BaseActivity() {
         val intent = intent
         val bundle = intent.extras
 
-        ChallengeTasksRecyclerViewAdapter(null, 0, this, "",
+        ChallengeTasksRecyclerViewAdapter(
+            null, 0, this, "",
             openTaskDisabled = false,
             taskActionsDisabled = true
         ).also { challengeTasks = it }
-        compositeSubscription.add(challengeTasks.taskOpenEvents.subscribe {
-            if (it.isValid) {
-                openNewTaskActivity(it.type, it)
+        compositeSubscription.add(
+            challengeTasks.taskOpenEvents.subscribe {
+                if (it.isValid) {
+                    openNewTaskActivity(it.type, it)
+                }
             }
-        })
+        )
         locationAdapter = GroupArrayAdapter(this)
 
         if (bundle != null) {
@@ -246,7 +251,6 @@ class ChallengeFormActivity : BaseActivity() {
         binding.challengeAddGemBtn.setOnClickListener { onAddGem() }
         binding.challengeRemoveGemBtn.setOnClickListener { onRemoveGem() }
     }
-
 
     public override fun onDestroy() {
         socialRepository.close()
@@ -333,29 +337,37 @@ class ChallengeFormActivity : BaseActivity() {
         }
 
         locationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        compositeSubscription.add(socialRepository.getUserGroups("guild").zipWith(userRepository.getUser()
-                .map { it.party?.id ?: "" }
-                .distinctUntilChanged()
-                .flatMap {
-                    if (it.isBlank()) {
-                        return@flatMap Flowable.empty<Group>()
-                    }
-                    socialRepository.retrieveGroup(it)
-                }, { user, groups -> Pair(user, groups) })
-                .subscribe({ groups ->
-            val mutableGroups = groups.first.toMutableList()
-            if (groups.first.firstOrNull { it.id == "00000000-0000-4000-A000-000000000000" } == null) {
-                val tavern = Group()
-                tavern.id = "00000000-0000-4000-A000-000000000000"
-                tavern.name = getString(R.string.public_challenge)
-                mutableGroups.add(0, tavern)
-            }
-            if (groups.second != null) {
-                mutableGroups.add(groups.second)
-            }
-            locationAdapter.clear()
-            locationAdapter.addAll(mutableGroups)
-        }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(
+            socialRepository.getUserGroups("guild").zipWith(
+                userRepository.getUser()
+                    .map { it.party?.id ?: "" }
+                    .distinctUntilChanged()
+                    .flatMap {
+                        if (it.isBlank()) {
+                            return@flatMap Flowable.empty<Group>()
+                        }
+                        socialRepository.retrieveGroup(it)
+                    },
+                { user, groups -> Pair(user, groups) }
+            )
+                .subscribe(
+                    { groups ->
+                        val mutableGroups = groups.first.toMutableList()
+                        if (groups.first.firstOrNull { it.id == "00000000-0000-4000-A000-000000000000" } == null) {
+                            val tavern = Group()
+                            tavern.id = "00000000-0000-4000-A000-000000000000"
+                            tavern.name = getString(R.string.public_challenge)
+                            mutableGroups.add(0, tavern)
+                        }
+                        if (groups.second != null) {
+                            mutableGroups.add(groups.second)
+                        }
+                        locationAdapter.clear()
+                        locationAdapter.addAll(mutableGroups)
+                    },
+                    RxErrorHandler.handleEmptyError()
+                )
+        )
 
         binding.challengeLocationSpinner.adapter = locationAdapter
         binding.challengeLocationSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -376,7 +388,6 @@ class ChallengeFormActivity : BaseActivity() {
         addTodo = createTask(resources.getString(R.string.add_todo))
         addReward = createTask(resources.getString(R.string.add_reward))
 
-
         val taskList = ArrayList<Task>()
         addHabit?.let { taskList.add(it) }
         addDaily?.let { taskList.add(it) }
@@ -384,14 +395,19 @@ class ChallengeFormActivity : BaseActivity() {
         addReward?.let { taskList.add(it) }
 
         challengeTasks.setTasks(taskList)
-        compositeSubscription.add(challengeTasks.addItemObservable().subscribe({ t ->
-            when (t) {
-                addHabit -> openNewTaskActivity(Task.TYPE_HABIT, null)
-                addDaily -> openNewTaskActivity(Task.TYPE_DAILY, null)
-                addTodo -> openNewTaskActivity(Task.TYPE_TODO, null)
-                addReward -> openNewTaskActivity(Task.TYPE_REWARD, null)
-            }
-        }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(
+            challengeTasks.addItemObservable().subscribe(
+                { t ->
+                    when (t) {
+                        addHabit -> openNewTaskActivity(Task.TYPE_HABIT, null)
+                        addDaily -> openNewTaskActivity(Task.TYPE_DAILY, null)
+                        addTodo -> openNewTaskActivity(Task.TYPE_TODO, null)
+                        addReward -> openNewTaskActivity(Task.TYPE_REWARD, null)
+                    }
+                },
+                RxErrorHandler.handleEmptyError()
+            )
+        )
 
         binding.createChallengeTaskList.addOnItemTouchListener(object : androidx.recyclerview.widget.RecyclerView.SimpleOnItemTouchListener() {
             override fun onInterceptTouchEvent(rv: androidx.recyclerview.widget.RecyclerView, e: MotionEvent): Boolean {
@@ -405,30 +421,36 @@ class ChallengeFormActivity : BaseActivity() {
 
     private fun fillControlsByChallenge() {
         challengeId?.let {
-            challengeRepository.getChallenge(it).subscribe({ challenge ->
-                groupID = challenge.groupId
-                editMode = true
-                binding.createChallengeTitle.setText(challenge.name)
-                binding.createChallengeDescription.setText(challenge.description)
-                binding.createChallengeTag.setText(challenge.shortName)
-                binding.createChallengePrize.setText(challenge.prize.toString())
-                binding.challengeCreationViews.visibility = View.GONE
+            challengeRepository.getChallenge(it).subscribe(
+                { challenge ->
+                    groupID = challenge.groupId
+                    editMode = true
+                    binding.createChallengeTitle.setText(challenge.name)
+                    binding.createChallengeDescription.setText(challenge.description)
+                    binding.createChallengeTag.setText(challenge.shortName)
+                    binding.createChallengePrize.setText(challenge.prize.toString())
+                    binding.challengeCreationViews.visibility = View.GONE
 
-                for (i in 0 until locationAdapter.count) {
-                    val group = locationAdapter.getItem(i)
+                    for (i in 0 until locationAdapter.count) {
+                        val group = locationAdapter.getItem(i)
 
-                    if (group != null && challenge.groupId == group.id) {
-                        binding.challengeLocationSpinner.setSelection(i)
-                        break
+                        if (group != null && challenge.groupId == group.id) {
+                            binding.challengeLocationSpinner.setSelection(i)
+                            break
+                        }
                     }
-                }
-                checkPrizeAndMinimumForTavern()
-            }, RxErrorHandler.handleEmptyError())
-            challengeRepository.getChallengeTasks(it).subscribe({ tasks ->
-                tasks.forEach { task ->
-                    addOrUpdateTaskInList(task, true)
-                }
-            }, RxErrorHandler.handleEmptyError())
+                    checkPrizeAndMinimumForTavern()
+                },
+                RxErrorHandler.handleEmptyError()
+            )
+            challengeRepository.getChallengeTasks(it).subscribe(
+                { tasks ->
+                    tasks.forEach { task ->
+                        addOrUpdateTaskInList(task, true)
+                    }
+                },
+                RxErrorHandler.handleEmptyError()
+            )
         }
     }
 
@@ -480,9 +502,10 @@ class ChallengeFormActivity : BaseActivity() {
         taskList.remove(addTodo)
         taskList.remove(addReward)
 
-        return challengeRepository.updateChallenge(c, taskList, ArrayList(addedTasks.values),
-                ArrayList(updatedTasks.values),
-                ArrayList(removedTasks.keys)
+        return challengeRepository.updateChallenge(
+            c, taskList, ArrayList(addedTasks.values),
+            ArrayList(updatedTasks.values),
+            ArrayList(removedTasks.keys)
         )
     }
 
@@ -494,7 +517,7 @@ class ChallengeFormActivity : BaseActivity() {
                 Task.TYPE_TODO -> addTodo
                 else -> addReward
             }
-            if(!isExistingTask){
+            if (!isExistingTask) {
                 // If the task is new we create a unique id for it
                 // Doing it we solve the issue #1278
                 task.id = UUID.randomUUID().toString()

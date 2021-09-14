@@ -8,11 +8,16 @@ import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.members.MemberPreferences
 import com.habitrpg.android.habitica.models.social.UserParty
-import com.habitrpg.android.habitica.models.user.*
+import com.habitrpg.android.habitica.models.user.Authentication
+import com.habitrpg.android.habitica.models.user.Backer
+import com.habitrpg.android.habitica.models.user.ContributorInfo
+import com.habitrpg.android.habitica.models.user.Inbox
+import com.habitrpg.android.habitica.models.user.Items
+import com.habitrpg.android.habitica.models.user.Outfit
+import com.habitrpg.android.habitica.models.user.Profile
+import com.habitrpg.android.habitica.models.user.Stats
 import io.realm.Realm
 import java.lang.reflect.Type
-
-
 
 class MemberSerialization : JsonDeserializer<Member> {
     @Throws(JsonParseException::class)

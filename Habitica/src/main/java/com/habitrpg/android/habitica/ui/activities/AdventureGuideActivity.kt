@@ -21,10 +21,8 @@ import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import javax.inject.Inject
 
-
 class AdventureGuideActivity : BaseActivity() {
     private lateinit var binding: ActivityAdventureGuideBinding
-
 
     private lateinit var achievementTitles: Map<String, String>
     private lateinit var achievementDescriptions: Map<String, String>
@@ -51,18 +49,18 @@ class AdventureGuideActivity : BaseActivity() {
         setupToolbar(binding.toolbar)
 
         achievementTitles = mapOf(
-                Pair("createdTask", getString(R.string.create_task_title)),
-                Pair("completedTask", getString(R.string.complete_task_title)),
-                Pair("hatchedPet", getString(R.string.hatch_pet_title)),
-                Pair("fedPet", getString(R.string.feedPet_title)),
-                Pair("purchasedEquipment", getString(R.string.purchase_equipment_title))
+            Pair("createdTask", getString(R.string.create_task_title)),
+            Pair("completedTask", getString(R.string.complete_task_title)),
+            Pair("hatchedPet", getString(R.string.hatch_pet_title)),
+            Pair("fedPet", getString(R.string.feedPet_title)),
+            Pair("purchasedEquipment", getString(R.string.purchase_equipment_title))
         )
         achievementDescriptions = mapOf(
-                Pair("createdTask", getString(R.string.create_task_description)),
-                Pair("completedTask", getString(R.string.complete_task_description)),
-                Pair("hatchedPet", getString(R.string.hatch_pet_description)),
-                Pair("fedPet", getString(R.string.feedPet_description)),
-                Pair("purchasedEquipment", getString(R.string.purchase_equipment_description))
+            Pair("createdTask", getString(R.string.create_task_description)),
+            Pair("completedTask", getString(R.string.complete_task_description)),
+            Pair("hatchedPet", getString(R.string.hatch_pet_description)),
+            Pair("fedPet", getString(R.string.feedPet_description)),
+            Pair("purchasedEquipment", getString(R.string.purchase_equipment_description))
         )
 
         val descriptionText = getString(R.string.adventure_guide_description)
@@ -83,9 +81,14 @@ class AdventureGuideActivity : BaseActivity() {
 
     override fun onStart() {
         super.onStart()
-        compositeSubscription.add(userRepository.getUser().subscribe({
-            updateUser(it)
-        }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(
+            userRepository.getUser().subscribe(
+                {
+                    updateUser(it)
+                },
+                RxErrorHandler.handleEmptyError()
+            )
+        )
     }
 
     private fun updateUser(user: User) {
@@ -125,5 +128,4 @@ class AdventureGuideActivity : BaseActivity() {
             }
         }
     }
-
 }

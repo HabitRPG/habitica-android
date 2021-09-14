@@ -30,7 +30,6 @@ class KeyboardUtil {
     }
 }
 
-
 fun Activity.dismissKeyboard() {
     KeyboardUtil.dismissKeyboard(this)
 }

@@ -36,20 +36,20 @@ constructor(private val context: Context) : SetupCustomizationRepository {
     override fun getCustomizations(type: String, subtype: String?, user: User): List<SetupCustomization> {
         return when (type) {
             SetupCustomizationRepository.CATEGORY_BODY -> {
-                    when (subtype) {
-                        SetupCustomizationRepository.SUBCATEGORY_SIZE -> sizes
-                        SetupCustomizationRepository.SUBCATEGORY_SHIRT -> getShirts(user.preferences?.size ?: "slim")
-                        else -> emptyList()
-                    }
+                when (subtype) {
+                    SetupCustomizationRepository.SUBCATEGORY_SIZE -> sizes
+                    SetupCustomizationRepository.SUBCATEGORY_SHIRT -> getShirts(user.preferences?.size ?: "slim")
+                    else -> emptyList()
+                }
             }
             SetupCustomizationRepository.CATEGORY_SKIN -> skins
             SetupCustomizationRepository.CATEGORY_HAIR -> {
-                    when (subtype) {
-                        SetupCustomizationRepository.SUBCATEGORY_BANGS -> getBangs(user.preferences?.hair?.color ?: "")
-                        SetupCustomizationRepository.SUBCATEGORY_PONYTAIL -> getHairBases(user.preferences?.hair?.color ?: "")
-                        SetupCustomizationRepository.SUBCATEGORY_COLOR -> hairColors
-                        else -> emptyList()
-                    }
+                when (subtype) {
+                    SetupCustomizationRepository.SUBCATEGORY_BANGS -> getBangs(user.preferences?.hair?.color ?: "")
+                    SetupCustomizationRepository.SUBCATEGORY_PONYTAIL -> getHairBases(user.preferences?.hair?.color ?: "")
+                    SetupCustomizationRepository.SUBCATEGORY_COLOR -> hairColors
+                    else -> emptyList()
+                }
             }
             SetupCustomizationRepository.CATEGORY_EXTRAS -> {
                 when (subtype) {
@@ -86,6 +86,5 @@ constructor(private val context: Context) : SetupCustomizationRepository {
             e.printStackTrace()
             -1
         }
-
     }
 }

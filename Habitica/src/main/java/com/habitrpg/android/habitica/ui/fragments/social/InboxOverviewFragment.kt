@@ -50,18 +50,25 @@ class InboxOverviewFragment : BaseMainFragment<FragmentInboxBinding>(), androidx
 
         binding?.inboxRefreshLayout?.setOnRefreshListener(this)
 
-        compositeSubscription.add(userRepository.getUser().map { it.inbox?.optOut ?: false }.distinctUntilChanged().subscribe {
-            binding?.optOutView?.visibility = if (it) View.VISIBLE else View.GONE
-        })
+        compositeSubscription.add(
+            userRepository.getUser().map { it.inbox?.optOut ?: false }.distinctUntilChanged().subscribe {
+                binding?.optOutView?.visibility = if (it) View.VISIBLE else View.GONE
+            }
+        )
 
         loadMessages()
         retrieveMessages()
     }
 
     private fun loadMessages() {
-        compositeSubscription.add(socialRepository.getInboxConversations().subscribe({
-            setInboxMessages(it)
-        }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(
+            socialRepository.getInboxConversations().subscribe(
+                {
+                    setInboxMessages(it)
+                },
+                RxErrorHandler.handleEmptyError()
+            )
+        )
     }
 
     override fun onDestroy() {
@@ -95,23 +102,26 @@ class InboxOverviewFragment : BaseMainFragment<FragmentInboxBinding>(), androidx
             val alert = HabiticaAlertDialog(thisActivity)
             alert.setTitle(getString(R.string.choose_recipient_title))
             alert.addButton(
-                    getString(R.string.action_continue),
-                    true,
-                    isDestructive = false,
-                    autoDismiss = false
+                getString(R.string.action_continue),
+                true,
+                isDestructive = false,
+                autoDismiss = false
             ) { _, _ ->
                 binding.errorTextView.visibility = View.GONE
                 binding.progressCircular.visibility = View.VISIBLE
                 val username = binding.uuidEditText.text?.toString() ?: ""
                 socialRepository.getMemberWithUsername(username)
-                        .subscribe({
+                    .subscribe(
+                        {
                             alert.dismiss()
                             openInboxMessages("", username)
                             binding.progressCircular.visibility = View.GONE
-                        }, {
+                        },
+                        {
                             binding.errorTextView.visibility = View.VISIBLE
                             binding.progressCircular.visibility = View.GONE
-                        })
+                        }
+                    )
             }
             alert.addButton(getString(R.string.action_cancel), false) { _, _ ->
                 thisActivity.dismissKeyboard()
@@ -120,19 +130,22 @@ class InboxOverviewFragment : BaseMainFragment<FragmentInboxBinding>(), androidx
             binding.uuidEditText.requestFocus()
             alert.show()
         }
-
     }
 
     override fun injectFragment(component: UserComponent) {
         component.inject(this)
     }
 
-
     private fun retrieveMessages() {
-        compositeSubscription.add(this.socialRepository.retrieveInboxConversations()
-                .subscribe({
-                    binding?.inboxRefreshLayout?.isRefreshing = false
-                }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(
+            this.socialRepository.retrieveInboxConversations()
+                .subscribe(
+                    {
+                        binding?.inboxRefreshLayout?.isRefreshing = false
+                    },
+                    RxErrorHandler.handleEmptyError()
+                )
+        )
     }
 
     override fun onRefresh() {
@@ -186,5 +199,4 @@ class InboxOverviewFragment : BaseMainFragment<FragmentInboxBinding>(), androidx
     private fun openInboxMessages(userID: String, username: String) {
         MainNavigationController.navigate(InboxOverviewFragmentDirections.openInboxDetail(userID, username))
     }
-
 }

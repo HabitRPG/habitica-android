@@ -34,7 +34,6 @@ import javax.inject.Inject
 import javax.inject.Named
 import kotlin.collections.ArrayList
 
-
 class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.OnQueryTextListener, HabiticaBottomNavigationViewListener {
 
     override var binding: FragmentViewpagerBinding? = null
@@ -70,8 +69,11 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
             return fragment
         }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         this.usesTabLayout = false
         this.usesBottomNavigation = true
         return super.onCreateView(inflater, container, savedInstanceState)
@@ -180,7 +182,7 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
         context?.let {
             val disposable: Disposable
             val dialog = TaskFilterDialog(it, HabiticaBaseApplication.userComponent)
-            disposable = tagRepository.getTags().subscribe({ tagsList -> dialog.setTags(tagsList)}, RxErrorHandler.handleEmptyError())
+            disposable = tagRepository.getTags().subscribe({ tagsList -> dialog.setTags(tagsList) }, RxErrorHandler.handleEmptyError())
             dialog.setActiveTags(taskFilterHelper.tags)
             if (activeFragment != null) {
                 val taskType = activeFragment?.taskType
@@ -227,12 +229,14 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
                     else -> TaskRecyclerViewFragment.newInstance(context, Task.TYPE_TODO)
                 }
                 fragment.refreshAction = {
-                    compositeSubscription.add(userRepository.retrieveUser(
-                        withTasks = true,
-                        forced = true
-                    ).doOnTerminate {
-                                it()
-                            }.subscribe({ }, RxErrorHandler.handleEmptyError()))
+                    compositeSubscription.add(
+                        userRepository.retrieveUser(
+                            withTasks = true,
+                            forced = true
+                        ).doOnTerminate {
+                            it()
+                        }.subscribe({ }, RxErrorHandler.handleEmptyError())
+                    )
                 }
                 viewFragmentsDictionary?.put(position, fragment)
 
@@ -243,13 +247,13 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
         }
 
         binding?.viewPager?.registerOnPageChangeCallback(object :
-            ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-                super.onPageSelected(position)
-                bottomNavigation?.selectedPosition = position
-                updateFilterIcon()
-            }
-        })
+                ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    super.onPageSelected(position)
+                    bottomNavigation?.selectedPosition = position
+                    updateFilterIcon()
+                }
+            })
     }
 
     private fun updateFilterIcon() {
@@ -276,47 +280,52 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
         if (bottomNavigation == null) {
             return
         }
-        compositeSubscription.add(tutorialRepository.getTutorialSteps(listOf("habits", "dailies", "todos", "rewards")).subscribe({ tutorialSteps ->
-            val activeTutorialFragments = ArrayList<String>()
-            for (step in tutorialSteps) {
-                var id = -1
-                val taskType = when (step.identifier) {
-                    "habits" -> {
-                        id = R.id.habits_tab
-                        Task.TYPE_HABIT
+        compositeSubscription.add(
+            tutorialRepository.getTutorialSteps(listOf("habits", "dailies", "todos", "rewards")).subscribe(
+                { tutorialSteps ->
+                    val activeTutorialFragments = ArrayList<String>()
+                    for (step in tutorialSteps) {
+                        var id = -1
+                        val taskType = when (step.identifier) {
+                            "habits" -> {
+                                id = R.id.habits_tab
+                                Task.TYPE_HABIT
+                            }
+                            "dailies" -> {
+                                id = R.id.dailies_tab
+                                Task.TYPE_DAILY
+                            }
+                            "todos" -> {
+                                id = R.id.todos_tab
+                                Task.TYPE_TODO
+                            }
+                            "rewards" -> {
+                                id = R.id.rewards_tab
+                                Task.TYPE_REWARD
+                            }
+                            else -> ""
+                        }
+                        val tab = bottomNavigation?.tabWithId(id)
+                        if (step.shouldDisplay()) {
+                            tab?.badgeCount = 1
+                            activeTutorialFragments.add(taskType)
+                        } else {
+                            tab?.badgeCount = 0
+                        }
                     }
-                    "dailies" -> {
-                        id = R.id.dailies_tab
-                        Task.TYPE_DAILY
+                    if (activeTutorialFragments.size == 1) {
+                        val fragment = viewFragmentsDictionary?.get(indexForTaskType(activeTutorialFragments[0]))
+                        if (fragment?.tutorialTexts != null && context != null) {
+                            val finalText = context?.getString(R.string.tutorial_tasks_complete)
+                            if (!fragment.tutorialTexts.contains(finalText) && finalText != null) {
+                                fragment.tutorialTexts.add(finalText)
+                            }
+                        }
                     }
-                    "todos" -> {
-                        id = R.id.todos_tab
-                        Task.TYPE_TODO
-                    }
-                    "rewards" -> {
-                        id = R.id.rewards_tab
-                        Task.TYPE_REWARD
-                    }
-                    else -> ""
-                }
-                val tab = bottomNavigation?.tabWithId(id)
-                if (step.shouldDisplay()) {
-                    tab?.badgeCount = 1
-                    activeTutorialFragments.add(taskType)
-                } else {
-                    tab?.badgeCount = 0
-                }
-            }
-            if (activeTutorialFragments.size == 1) {
-                val fragment = viewFragmentsDictionary?.get(indexForTaskType(activeTutorialFragments[0]))
-                if (fragment?.tutorialTexts != null && context != null) {
-                    val finalText = context?.getString(R.string.tutorial_tasks_complete)
-                    if (!fragment.tutorialTexts.contains(finalText) && finalText != null) {
-                        fragment.tutorialTexts.add(finalText)
-                    }
-                }
-            }
-        }, RxErrorHandler.handleEmptyError()))
+                },
+                RxErrorHandler.handleEmptyError()
+            )
+        )
     }
     // endregion
 
@@ -408,7 +417,6 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
     companion object {
         var lastTaskFormOpen: Date? = null
     }
-
 
     override fun onTabSelected(taskType: String, smooth: Boolean) {
         val newItem = when (taskType) {

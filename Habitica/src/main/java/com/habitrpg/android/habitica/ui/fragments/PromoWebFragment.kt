@@ -40,7 +40,6 @@ class PromoWebFragment : BaseMainFragment<FragmentNewsBinding>() {
             var url = args.url
             url = url.replace("USER_ID", userID)
             binding?.newsWebview?.loadUrl(url)
-
         }
     }
 

@@ -13,8 +13,8 @@ import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.inventory.*
 import com.habitrpg.android.habitica.models.user.OwnedItem
-import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.models.user.OwnedMount
+import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.fragments.inventory.stable.StableFragmentDirections
 import com.habitrpg.android.habitica.ui.helpers.loadImage
 import com.habitrpg.android.habitica.ui.viewHolders.MountViewHolder
@@ -23,7 +23,6 @@ import com.habitrpg.android.habitica.ui.viewHolders.SectionViewHolder
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.subjects.PublishSubject
-
 
 class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -43,7 +42,7 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         return equipEvents.toFlowable(BackpressureStrategy.DROP)
     }
 
-    fun setUser(user: User){
+    fun setUser(user: User) {
         this.user = user
         notifyDataSetChanged()
     }
@@ -88,14 +87,14 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
-            when (viewType) {
-                1 -> SectionViewHolder(parent)
-                4 -> StableViewHolder(parent.inflate(R.layout.pet_overview_item))
-                5 -> StableViewHolder(parent.inflate(R.layout.mount_overview_item))
-                2 -> PetViewHolder(parent, equipEvents, animalIngredientsRetriever)
-                3 -> MountViewHolder(parent, equipEvents)
-                else -> StableHeaderViewHolder(parent)
-            }
+        when (viewType) {
+            1 -> SectionViewHolder(parent)
+            4 -> StableViewHolder(parent.inflate(R.layout.pet_overview_item))
+            5 -> StableViewHolder(parent.inflate(R.layout.mount_overview_item))
+            2 -> PetViewHolder(parent, equipEvents, animalIngredientsRetriever)
+            3 -> MountViewHolder(parent, equipEvents)
+            else -> StableHeaderViewHolder(parent)
+        }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (val item = this.itemList[position]) {

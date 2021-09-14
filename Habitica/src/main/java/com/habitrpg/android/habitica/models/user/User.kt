@@ -22,7 +22,7 @@ open class User : RealmObject(), BaseMainObject, Avatar, VersionedObject {
         get() = id
     override val primaryIdentifierName: String
         get() = "id"
-    
+
     @Ignore
     var tasks: TaskList? = null
 
@@ -82,7 +82,7 @@ open class User : RealmObject(), BaseMainObject, Avatar, VersionedObject {
     val contributorColor: Int
         get() = this.contributor?.contributorColor ?: R.color.text_primary
     val username: String?
-    get() = authentication?.localAuthentication?.username
+        get() = authentication?.localAuthentication?.username
     val formattedUsername: String?
         get() = if (username != null) "@$username" else null
 

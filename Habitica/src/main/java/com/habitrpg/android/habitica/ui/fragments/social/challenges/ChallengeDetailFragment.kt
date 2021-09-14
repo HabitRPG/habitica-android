@@ -2,16 +2,9 @@ package com.habitrpg.android.habitica.ui.fragments.social.challenges
 
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Color
-import android.graphics.PorterDuff
-import android.graphics.PorterDuffColorFilter
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
 import android.view.*
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
@@ -23,7 +16,6 @@ import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.members.Member
-import com.habitrpg.android.habitica.models.responses.TaskDirection
 import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.activities.ChallengeFormActivity
@@ -40,8 +32,7 @@ import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import java.util.*
 import javax.inject.Inject
 
-
-class ChallengeDetailFragment: BaseMainFragment<FragmentChallengeDetailBinding>() {
+class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>() {
 
     @Inject
     lateinit var challengeRepository: ChallengeRepository
@@ -87,7 +78,8 @@ class ChallengeDetailFragment: BaseMainFragment<FragmentChallengeDetailBinding>(
         }
 
         challengeID?.let { id ->
-            compositeSubscription.add(challengeRepository.getChallenge(id)
+            compositeSubscription.add(
+                challengeRepository.getChallenge(id)
                     .doOnNext {
                         set(it)
                     }
@@ -98,49 +90,64 @@ class ChallengeDetailFragment: BaseMainFragment<FragmentChallengeDetailBinding>(
                     .flatMap { creatorID ->
                         return@flatMap socialRepository.getMember(creatorID)
                     }
-                    .subscribe({ set(it) }, RxErrorHandler.handleEmptyError()))
-            compositeSubscription.add(challengeRepository.getChallengeTasks(id).subscribe({ taskList ->
-                binding?.taskGroupLayout?.removeAllViewsInLayout()
+                    .subscribe({ set(it) }, RxErrorHandler.handleEmptyError())
+            )
+            compositeSubscription.add(
+                challengeRepository.getChallengeTasks(id).subscribe(
+                    { taskList ->
+                        binding?.taskGroupLayout?.removeAllViewsInLayout()
 
-                val todos = ArrayList<Task>()
-                val habits = ArrayList<Task>()
-                val dailies = ArrayList<Task>()
-                val rewards = ArrayList<Task>()
+                        val todos = ArrayList<Task>()
+                        val habits = ArrayList<Task>()
+                        val dailies = ArrayList<Task>()
+                        val rewards = ArrayList<Task>()
 
-                for (entry in taskList) {
-                    when (entry.type) {
-                        Task.TYPE_TODO -> todos.add(entry)
-                        Task.TYPE_HABIT -> habits.add(entry)
-                        Task.TYPE_DAILY -> dailies.add(entry)
-                        Task.TYPE_REWARD -> rewards.add(entry)
-                    }
-                }
+                        for (entry in taskList) {
+                            when (entry.type) {
+                                Task.TYPE_TODO -> todos.add(entry)
+                                Task.TYPE_HABIT -> habits.add(entry)
+                                Task.TYPE_DAILY -> dailies.add(entry)
+                                Task.TYPE_REWARD -> rewards.add(entry)
+                            }
+                        }
 
-                if (habits.size > 0) {
-                    addHabits(habits)
-                }
+                        if (habits.size > 0) {
+                            addHabits(habits)
+                        }
 
-                if (dailies.size > 0) {
-                    addDailys(dailies)
-                }
+                        if (dailies.size > 0) {
+                            addDailys(dailies)
+                        }
 
-                if (todos.size > 0) {
-                    addTodos(todos)
-                }
+                        if (todos.size > 0) {
+                            addTodos(todos)
+                        }
 
-                if (rewards.size > 0) {
-                    addRewards(rewards)
-                }
-            }, RxErrorHandler.handleEmptyError()))
+                        if (rewards.size > 0) {
+                            addRewards(rewards)
+                        }
+                    },
+                    RxErrorHandler.handleEmptyError()
+                )
+            )
 
-            compositeSubscription.add(challengeRepository.isChallengeMember(id).subscribe({ isMember ->
-                setJoined(isMember)
-            }, RxErrorHandler.handleEmptyError()))
+            compositeSubscription.add(
+                challengeRepository.isChallengeMember(id).subscribe(
+                    { isMember ->
+                        setJoined(isMember)
+                    },
+                    RxErrorHandler.handleEmptyError()
+                )
+            )
         }
 
-        binding?.joinButton?.setOnClickListener { challenge?.let { challenge -> challengeRepository.joinChallenge(challenge)
-                .flatMap { userRepository.retrieveUser(true) }
-                .subscribe({}, RxErrorHandler.handleEmptyError()) } }
+        binding?.joinButton?.setOnClickListener {
+            challenge?.let { challenge ->
+                challengeRepository.joinChallenge(challenge)
+                    .flatMap { userRepository.retrieveUser(true) }
+                    .subscribe({}, RxErrorHandler.handleEmptyError())
+            }
+        }
         binding?.leaveButton?.setOnClickListener { showChallengeLeaveDialog() }
 
         refresh()
@@ -186,7 +193,7 @@ class ChallengeDetailFragment: BaseMainFragment<FragmentChallengeDetailBinding>(
         dialog.setTitle(R.string.action_end_challenge)
         dialog.setMessage(R.string.end_challenge_description)
         dialog.addButton(R.string.open_website, true, false) { _, _ ->
-            val uriUrl = "https://habitica.com/challenges/${challengeID}".toUri()
+            val uriUrl = "https://habitica.com/challenges/$challengeID".toUri()
             val launchBrowser = Intent(Intent.ACTION_VIEW, uriUrl)
             val l = context.packageManager.queryIntentActivities(launchBrowser, PackageManager.MATCH_DEFAULT_ONLY)
             val notHabitica = l.firstOrNull { !it.activityInfo.processName.contains("habitica") }
@@ -202,8 +209,8 @@ class ChallengeDetailFragment: BaseMainFragment<FragmentChallengeDetailBinding>(
     private fun refresh() {
         challengeID?.let { id ->
             challengeRepository.retrieveChallenge(id)
-                    .flatMap { challengeRepository.retrieveChallengeTasks(id) }
-                    .subscribe({ }, RxErrorHandler.handleEmptyError(), { })
+                .flatMap { challengeRepository.retrieveChallengeTasks(id) }
+                .subscribe({ }, RxErrorHandler.handleEmptyError(), { })
         }
     }
 

@@ -16,19 +16,19 @@ import io.reactivex.rxjava3.subjects.PublishSubject
 import io.realm.OrderedRealmCollection
 
 abstract class RealmBaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(
-        private val layoutResource: Int,
-        private val taskFilterHelper: TaskFilterHelper?
+    private val layoutResource: Int,
+    private val taskFilterHelper: TaskFilterHelper?
 ) : BaseRecyclerViewAdapter<Task, VH>(), TaskRecyclerViewAdapter {
     override var canScoreTasks = true
     private var unfilteredData: List<Task>? = null
 
     override var taskDisplayMode: String = "standard"
-    set(value) {
-        if (field != value) {
-            field = value
-            notifyDataSetChanged()
+        set(value) {
+            if (field != value) {
+                field = value
+                notifyDataSetChanged()
+            }
         }
-    }
 
     private var errorButtonEventsSubject: PublishSubject<String> = PublishSubject.create()
     override val errorButtonEvents: Flowable<String> = errorButtonEventsSubject.toFlowable(BackpressureStrategy.DROP)
@@ -63,7 +63,7 @@ abstract class RealmBaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(
     internal fun getContentView(parent: ViewGroup): View = getContentView(parent, layoutResource)
 
     private fun getContentView(parent: ViewGroup, layoutResource: Int): View =
-            LayoutInflater.from(parent.context).inflate(layoutResource, parent, false)
+        LayoutInflater.from(parent.context).inflate(layoutResource, parent, false)
 
     final override fun filter() {
         val unfilteredData = this.unfilteredData ?: return

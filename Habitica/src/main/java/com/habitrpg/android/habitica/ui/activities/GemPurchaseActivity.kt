@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica.ui.activities
 
-
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
@@ -94,9 +93,9 @@ class GemPurchaseActivity : BaseActivity() {
         }
         fragment.setPurchaseHandler(purchaseHandler)
         supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.fragment_container, fragment as Fragment)
-                .commit()
+            .beginTransaction()
+            .replace(R.id.fragment_container, fragment as Fragment)
+            .commit()
         this.fragment = fragment
     }
 

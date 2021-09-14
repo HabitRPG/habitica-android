@@ -1,11 +1,22 @@
 package com.habitrpg.android.habitica.utils
 
-import com.google.gson.*
+import com.google.gson.JsonArray
+import com.google.gson.JsonDeserializationContext
+import com.google.gson.JsonDeserializer
+import com.google.gson.JsonElement
+import com.google.gson.JsonObject
+import com.google.gson.JsonSerializationContext
+import com.google.gson.JsonSerializer
 import com.habitrpg.android.habitica.extensions.getAsString
-import com.habitrpg.android.habitica.models.tasks.*
+import com.habitrpg.android.habitica.models.tasks.ChecklistItem
+import com.habitrpg.android.habitica.models.tasks.Days
+import com.habitrpg.android.habitica.models.tasks.RemindersItem
+import com.habitrpg.android.habitica.models.tasks.Task
+import com.habitrpg.android.habitica.models.tasks.TaskGroupPlan
 import io.realm.RealmList
 import java.lang.reflect.Type
-import java.util.*
+import java.util.ArrayList
+import java.util.Date
 
 class TaskSerializer : JsonSerializer<Task>, JsonDeserializer<Task> {
 
@@ -72,11 +83,13 @@ class TaskSerializer : JsonSerializer<Task>, JsonDeserializer<Task> {
             task.checklist = RealmList()
             for (checklistElement in obj.getAsJsonArray("checklist")) {
                 val checklistObject = checklistElement.asJsonObject
-                task.checklist?.add(ChecklistItem(
+                task.checklist?.add(
+                    ChecklistItem(
                         checklistObject.getAsString("id"),
                         checklistObject.getAsString("text"),
                         checklistObject.get("completed").asBoolean
-                ))
+                    )
+                )
             }
         }
         if (obj.has("reminders")) {
@@ -108,7 +121,7 @@ class TaskSerializer : JsonSerializer<Task>, JsonDeserializer<Task> {
         // Work around since Realm does not support Arrays of ints
         getMonthlyDays(json, task)
 
-        //Workaround, since gson doesn't call setter methods
+        // Workaround, since gson doesn't call setter methods
         task.id = obj.getAsString("_id")
         return task
     }

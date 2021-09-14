@@ -8,27 +8,27 @@ import com.willowtreeapps.signinwithapplebutton.SignInWithAppleConfiguration
 import java.util.*
 
 class SignInWithAppleService(
-        private val fragmentManager: FragmentManager,
-        private val fragmentTag: String,
-        private val configuration: SignInWithAppleConfiguration,
-        private val callback: (SignInWithAppleResult) -> Unit
+    private val fragmentManager: FragmentManager,
+    private val fragmentTag: String,
+    private val configuration: SignInWithAppleConfiguration,
+    private val callback: (SignInWithAppleResult) -> Unit
 ) {
 
     init {
         val fragmentIfShown =
-                fragmentManager.findFragmentByTag(fragmentTag) as? SignInWebViewDialogFragment
+            fragmentManager.findFragmentByTag(fragmentTag) as? SignInWebViewDialogFragment
         fragmentIfShown?.configure(callback)
     }
 
     data class AuthenticationAttempt(
-            val authenticationUri: String,
-            val redirectUri: String,
-            val state: String
+        val authenticationUri: String,
+        val redirectUri: String,
+        val state: String
     ) : Parcelable {
         constructor(parcel: Parcel) : this(
-                parcel.readString() ?: "invalid",
-                parcel.readString() ?: "invalid",
-                parcel.readString() ?: "invalid"
+            parcel.readString() ?: "invalid",
+            parcel.readString() ?: "invalid",
+            parcel.readString() ?: "invalid"
         )
 
         override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -59,22 +59,22 @@ class SignInWithAppleService(
             https://developer.apple.com/documentation/signinwithapplejs/configuring_your_webpage_for_sign_in_with_apple
             */
             fun create(
-                    configuration: SignInWithAppleConfiguration,
-                    state: String = UUID.randomUUID().toString()
+                configuration: SignInWithAppleConfiguration,
+                state: String = UUID.randomUUID().toString()
             ): AuthenticationAttempt {
                 val authenticationUri = Uri
-                        .parse("https://appleid.apple.com/auth/authorize")
-                        .buildUpon().apply {
-                            appendQueryParameter("response_type", "code")
-                            appendQueryParameter("v", "1.1.6")
-                            appendQueryParameter("client_id", configuration.clientId)
-                            appendQueryParameter("redirect_uri", configuration.redirectUri)
-                            appendQueryParameter("scope", configuration.scope)
-                            appendQueryParameter("state", state)
-                            appendQueryParameter("response_mode", "form_post")
-                        }
-                        .build()
-                        .toString()
+                    .parse("https://appleid.apple.com/auth/authorize")
+                    .buildUpon().apply {
+                        appendQueryParameter("response_type", "code")
+                        appendQueryParameter("v", "1.1.6")
+                        appendQueryParameter("client_id", configuration.clientId)
+                        appendQueryParameter("redirect_uri", configuration.redirectUri)
+                        appendQueryParameter("scope", configuration.scope)
+                        appendQueryParameter("state", state)
+                        appendQueryParameter("response_mode", "form_post")
+                    }
+                    .build()
+                    .toString()
 
                 return AuthenticationAttempt(authenticationUri, configuration.redirectUri, state)
             }

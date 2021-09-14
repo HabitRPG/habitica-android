@@ -23,7 +23,6 @@ open class Mount : RealmObject(), Animal {
     override var type: String? = null
     override var premium = false
 
-
     @Ignore
     override var numberOwned: Int = 0
     @Ignore

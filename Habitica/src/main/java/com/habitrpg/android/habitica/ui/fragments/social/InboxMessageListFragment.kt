@@ -6,10 +6,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AlertDialog
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.paging.DataSource
-import androidx.paging.PagedList
 import com.habitrpg.android.habitica.MainNavDirections
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
@@ -34,9 +31,6 @@ import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.Disposable
-import io.reactivex.rxjava3.functions.Action
-import io.reactivex.rxjava3.functions.Consumer
-import java.lang.Exception
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -60,8 +54,11 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
     private var viewModel: InboxViewModel? = null
     private var refreshDisposable: Disposable? = null
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         this.hidesToolbar = true
         return super.onCreateView(inflater, container, savedInstanceState)
     }
@@ -85,23 +82,33 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
         } else {
             apiClient.getMemberWithUsername(chatRoomUser ?: "")
         }
-        compositeSubscription.add(observable.subscribe( { member ->
-            setReceivingUser(member.username, member.id)
-            activity?.title = member.displayName
-            chatAdapter = InboxAdapter(user, member)
-            viewModel?.messages?.observe(this.viewLifecycleOwner, { chatAdapter?.submitList(it) })
+        compositeSubscription.add(
+            observable.subscribe(
+                { member ->
+                    setReceivingUser(member.username, member.id)
+                    activity?.title = member.displayName
+                    chatAdapter = InboxAdapter(user, member)
+                    viewModel?.messages?.observe(this.viewLifecycleOwner, { chatAdapter?.submitList(it) })
 
-            binding?.recyclerView?.adapter = chatAdapter
-            binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
-            chatAdapter?.let { adapter ->
-                compositeSubscription.add(adapter.getUserLabelClickFlowable().subscribe({
-                    FullProfileActivity.open(it)
-                }, RxErrorHandler.handleEmptyError()))
-                compositeSubscription.add(adapter.getDeleteMessageFlowable().subscribe({ this.showDeleteConfirmationDialog(it) }, RxErrorHandler.handleEmptyError()))
-                compositeSubscription.add(adapter.getFlagMessageClickFlowable().subscribe({ this.showFlagConfirmationDialog(it) }, RxErrorHandler.handleEmptyError()))
-                compositeSubscription.add(adapter.getCopyMessageFlowable().subscribe({ this.copyMessageToClipboard(it) }, RxErrorHandler.handleEmptyError()))
-            }
-        }, RxErrorHandler.handleEmptyError()))
+                    binding?.recyclerView?.adapter = chatAdapter
+                    binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
+                    chatAdapter?.let { adapter ->
+                        compositeSubscription.add(
+                            adapter.getUserLabelClickFlowable().subscribe(
+                                {
+                                    FullProfileActivity.open(it)
+                                },
+                                RxErrorHandler.handleEmptyError()
+                            )
+                        )
+                        compositeSubscription.add(adapter.getDeleteMessageFlowable().subscribe({ this.showDeleteConfirmationDialog(it) }, RxErrorHandler.handleEmptyError()))
+                        compositeSubscription.add(adapter.getFlagMessageClickFlowable().subscribe({ this.showFlagConfirmationDialog(it) }, RxErrorHandler.handleEmptyError()))
+                        compositeSubscription.add(adapter.getCopyMessageFlowable().subscribe({ this.copyMessageToClipboard(it) }, RxErrorHandler.handleEmptyError()))
+                    }
+                },
+                RxErrorHandler.handleEmptyError()
+            )
+        )
 
         binding?.chatBarView?.sendAction = { sendMessage(it) }
         binding?.chatBarView?.maxChatLength = configManager.maxChatLength()
@@ -124,7 +131,6 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
         super.onAttach(context)
     }
 
-
     override fun onDestroyView() {
         super.onDestroyView()
         stopAutoRefreshing()
@@ -134,7 +140,6 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
         super.onPause()
         stopAutoRefreshing()
     }
-
 
     override fun onDestroy() {
         socialRepository.close()
@@ -165,10 +170,13 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
             refreshDisposable?.dispose()
         }
         refreshDisposable = Observable.interval(30, TimeUnit.SECONDS)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                {
                     refreshConversation()
-                }, RxErrorHandler.handleEmptyError())
+                },
+                RxErrorHandler.handleEmptyError()
+            )
         refreshConversation()
     }
 
@@ -181,21 +189,28 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
 
     private fun refreshConversation() {
         if (viewModel?.memberID?.isNotBlank() != true) { return }
-        compositeSubscription.add(this.socialRepository.retrieveInboxMessages(replyToUserUUID ?: "", 0)
-                .subscribe({}, RxErrorHandler.handleEmptyError(), {
-                    viewModel?.invalidateDataSource()
-                }))
+        compositeSubscription.add(
+            this.socialRepository.retrieveInboxMessages(replyToUserUUID ?: "", 0)
+                .subscribe(
+                    {}, RxErrorHandler.handleEmptyError(),
+                    {
+                        viewModel?.invalidateDataSource()
+                    }
+                )
+        )
     }
 
     private fun sendMessage(chatText: String) {
-        viewModel?.memberID?.let {userID ->
+        viewModel?.memberID?.let { userID ->
             socialRepository.postPrivateMessage(userID, chatText)
-                    .delay(200, TimeUnit.MILLISECONDS)
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({
+                .delay(200, TimeUnit.MILLISECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
                         binding?.recyclerView?.scrollToPosition(0)
                         viewModel?.invalidateDataSource()
-            }, { error ->
+                    },
+                    { error ->
                         RxErrorHandler.reportError(error)
                         if (binding != null) {
                             val alert = HabiticaAlertDialog(binding!!.chatBarView.context)
@@ -205,7 +220,8 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
                             alert.show()
                         }
                         binding?.chatBarView?.message = chatText
-                    })
+                    }
+                )
             KeyboardUtil.dismissKeyboard(getActivity())
         }
     }
@@ -235,11 +251,11 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
         val context = context
         if (context != null) {
             AlertDialog.Builder(context)
-                    .setTitle(R.string.confirm_delete_tag_title)
-                    .setMessage(R.string.confirm_delete_tag_message)
-                    .setIcon(android.R.drawable.ic_dialog_alert)
-                    .setPositiveButton(R.string.yes) { _, _ -> socialRepository.deleteMessage(chatMessage).subscribe({ }, RxErrorHandler.handleEmptyError()) }
-                    .setNegativeButton(R.string.no, null).show()
+                .setTitle(R.string.confirm_delete_tag_title)
+                .setMessage(R.string.confirm_delete_tag_message)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setPositiveButton(R.string.yes) { _, _ -> socialRepository.deleteMessage(chatMessage).subscribe({ }, RxErrorHandler.handleEmptyError()) }
+                .setNegativeButton(R.string.no, null).show()
         }
     }
 

@@ -4,7 +4,6 @@ import com.habitrpg.android.habitica.data.local.SocialLocalRepository
 import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.*
-import com.habitrpg.android.habitica.models.user.ContributorInfo
 import com.habitrpg.android.habitica.models.user.User
 import hu.akarnokd.rxjava3.bridge.RxJavaBridge
 import io.reactivex.rxjava3.core.Flowable
@@ -12,28 +11,33 @@ import io.realm.Realm
 import io.realm.Sort
 import java.util.*
 
-
 class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), SocialLocalRepository {
-    override fun getChatMessage(messageID: String): Flowable<ChatMessage> = RxJavaBridge.toV3Flowable(realm.where(ChatMessage::class.java)
+    override fun getChatMessage(messageID: String): Flowable<ChatMessage> = RxJavaBridge.toV3Flowable(
+        realm.where(ChatMessage::class.java)
             .equalTo("id", messageID)
             .findAll()
             .asFlowable()
             .filter { it.isLoaded && it.isNotEmpty() }
-            .map { it.first() })
+            .map { it.first() }
+    )
 
-    override fun getGroupMembership(userId: String, id: String): Flowable<GroupMembership> = RxJavaBridge.toV3Flowable(realm.where(GroupMembership::class.java)
+    override fun getGroupMembership(userId: String, id: String): Flowable<GroupMembership> = RxJavaBridge.toV3Flowable(
+        realm.where(GroupMembership::class.java)
             .equalTo("userID", userId)
             .equalTo("groupID", id)
             .findAll()
             .asFlowable()
             .filter { it.isLoaded && it.isNotEmpty() }
-            .map { it.first() })
+            .map { it.first() }
+    )
 
-    override fun getGroupMemberships(userId: String): Flowable<out List<GroupMembership>> = RxJavaBridge.toV3Flowable(realm.where(GroupMembership::class.java)
+    override fun getGroupMemberships(userId: String): Flowable<out List<GroupMembership>> = RxJavaBridge.toV3Flowable(
+        realm.where(GroupMembership::class.java)
             .equalTo("userID", userId)
             .findAll()
             .asFlowable()
-            .filter { it.isLoaded })
+            .filter { it.isLoaded }
+    )
 
     override fun updateMembership(userId: String, id: String, isMember: Boolean) {
         if (isMember) {
@@ -108,60 +112,73 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
         }
     }
 
-    override fun getPublicGuilds(): Flowable<out List<Group>> = RxJavaBridge.toV3Flowable(realm.where(Group::class.java)
+    override fun getPublicGuilds(): Flowable<out List<Group>> = RxJavaBridge.toV3Flowable(
+        realm.where(Group::class.java)
             .equalTo("type", "guild")
             .equalTo("privacy", "public")
             .notEqualTo("id", Group.TAVERN_ID)
             .sort("memberCount", Sort.DESCENDING)
             .findAll()
             .asFlowable()
-            .filter { it.isLoaded })
+            .filter { it.isLoaded }
+    )
 
-    override fun getUserGroups(userID: String, type: String?): Flowable<out List<Group>> = RxJavaBridge.toV3Flowable(realm.where(GroupMembership::class.java)
+    override fun getUserGroups(userID: String, type: String?): Flowable<out List<Group>> = RxJavaBridge.toV3Flowable(
+        realm.where(GroupMembership::class.java)
             .equalTo("userID", userID)
             .findAll()
             .asFlowable()
-            .filter { it.isLoaded })
-.flatMap {memberships ->
-                RxJavaBridge.toV3Flowable(realm.where(Group::class.java)
-                        .equalTo("type", type ?: "guild")
-                        .notEqualTo("id", Group.TAVERN_ID)
-                        .`in`("id", memberships.map {
+            .filter { it.isLoaded }
+    )
+        .flatMap { memberships ->
+            RxJavaBridge.toV3Flowable(
+                realm.where(Group::class.java)
+                    .equalTo("type", type ?: "guild")
+                    .notEqualTo("id", Group.TAVERN_ID)
+                    .`in`(
+                        "id",
+                        memberships.map {
                             return@map it.groupID
-                        }.toTypedArray())
-                        .sort("memberCount", Sort.DESCENDING)
-                        .findAll()
-                        .asFlowable()
-                        .filter { it.isLoaded })
-            }
-
-
+                        }.toTypedArray()
+                    )
+                    .sort("memberCount", Sort.DESCENDING)
+                    .findAll()
+                    .asFlowable()
+                    .filter { it.isLoaded }
+            )
+        }
 
     override fun getGroups(type: String): Flowable<out List<Group>> {
-        return RxJavaBridge.toV3Flowable(realm.where(Group::class.java)
+        return RxJavaBridge.toV3Flowable(
+            realm.where(Group::class.java)
                 .equalTo("type", type)
                 .findAll()
                 .asFlowable()
-                .filter { it.isLoaded })
+                .filter { it.isLoaded }
+        )
     }
 
     override fun getGroup(id: String): Flowable<Group> {
-        return RxJavaBridge.toV3Flowable(realm.where(Group::class.java)
+        return RxJavaBridge.toV3Flowable(
+            realm.where(Group::class.java)
                 .equalTo("id", id)
                 .findAll()
                 .asFlowable()
                 .filter { group -> group.isLoaded && group.isValid && !group.isEmpty() }
-                .map { groups -> groups.first() })
+                .map { groups -> groups.first() }
+        )
     }
 
     override fun getGroupChat(groupId: String): Flowable<out List<ChatMessage>> {
-        return RxJavaBridge.toV3Flowable(realm.where(ChatMessage::class.java)
+        return RxJavaBridge.toV3Flowable(
+            realm.where(ChatMessage::class.java)
                 .equalTo("groupId", groupId)
                 .sort("timestamp", Sort.DESCENDING)
                 .findAll()
                 .asFlowable()
-                .filter { it.isLoaded })
-}
+                .filter { it.isLoaded }
+        )
+    }
 
     override fun deleteMessage(id: String) {
         val chatMessage = realm.where(ChatMessage::class.java).equalTo("id", id).findFirst()
@@ -169,12 +186,14 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
     }
 
     override fun getGroupMembers(partyId: String): Flowable<out List<Member>> {
-        return RxJavaBridge.toV3Flowable(realm.where(Member::class.java)
+        return RxJavaBridge.toV3Flowable(
+            realm.where(Member::class.java)
                 .equalTo("party.id", partyId)
                 .findAll()
                 .asFlowable()
-                .filter { it.isLoaded })
-}
+                .filter { it.isLoaded }
+        )
+    }
 
     override fun updateRSVPNeeded(user: User?, newValue: Boolean) {
         executeTransaction { user?.party?.quest?.RSVPNeeded = newValue }
@@ -192,9 +211,11 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
             }
         } else {
             liveMessage?.likes?.filter { userId == it.id }?.forEach { like ->
-                executeTransaction(Realm.Transaction {
-                    like.deleteFromRealm()
-                })
+                executeTransaction(
+                    Realm.Transaction {
+                        like.deleteFromRealm()
+                    }
+                )
             }
             executeTransaction {
                 liveMessage?.likeCount = liveMessage?.likes?.size ?: 0
@@ -266,22 +287,26 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
     }
 
     override fun getInboxMessages(userId: String, replyToUserID: String?): Flowable<out List<ChatMessage>> {
-        return RxJavaBridge.toV3Flowable(realm.where(ChatMessage::class.java)
+        return RxJavaBridge.toV3Flowable(
+            realm.where(ChatMessage::class.java)
                 .equalTo("isInboxMessage", true)
                 .equalTo("uuid", replyToUserID)
                 .equalTo("userID", userId)
                 .sort("timestamp", Sort.DESCENDING)
                 .findAll()
                 .asFlowable()
-                .filter { it.isLoaded })
-}
+                .filter { it.isLoaded }
+        )
+    }
 
     override fun getInboxConversation(userId: String): Flowable<out List<InboxConversation>> {
-        return RxJavaBridge.toV3Flowable(realm.where(InboxConversation::class.java)
+        return RxJavaBridge.toV3Flowable(
+            realm.where(InboxConversation::class.java)
                 .equalTo("userID", userId)
                 .sort("timestamp", Sort.DESCENDING)
                 .findAll()
                 .asFlowable()
-                .filter { it.isLoaded })
-}
+                .filter { it.isLoaded }
+        )
+    }
 }

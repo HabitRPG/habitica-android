@@ -106,12 +106,14 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : HabiticaAl
     private fun createTagViews() {
         tagsList.removeAllViews()
         val colorStateList = ColorStateList(
-                arrayOf(intArrayOf(-android.R.attr.state_checked), //disabled
-                        intArrayOf(android.R.attr.state_checked) //enabled
-                ),
-                intArrayOf(Color.LTGRAY, //disabled
-                        context.getThemeColor(R.attr.colorAccent) //enabled
-                )
+            arrayOf(
+                intArrayOf(-android.R.attr.state_checked), // disabled
+                intArrayOf(android.R.attr.state_checked) // enabled
+            ),
+            intArrayOf(
+                Color.LTGRAY, // disabled
+                context.getThemeColor(R.attr.colorAccent) // enabled
+            )
         )
         val leftPadding = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16f, context.resources.displayMetrics).toInt()
         val verticalPadding = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 12f, context.resources.displayMetrics).toInt()
@@ -120,10 +122,12 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : HabiticaAl
             tagCheckbox.text = tag.name
             tagCheckbox.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
             tagCheckbox.isChecked = activeTags.contains(tag.id)
-            tagCheckbox.setPadding(tagCheckbox.paddingLeft + leftPadding,
-                    verticalPadding,
-                    tagCheckbox.paddingRight,
-                    verticalPadding)
+            tagCheckbox.setPadding(
+                tagCheckbox.paddingLeft + leftPadding,
+                verticalPadding,
+                tagCheckbox.paddingRight,
+                verticalPadding
+            )
             tagCheckbox.setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
             CompoundButtonCompat.setButtonTintList(tagCheckbox, colorStateList)
             tagCheckbox.setOnCheckedChangeListener { _, isChecked ->
@@ -196,7 +200,8 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : HabiticaAl
         val wrapper = inflater.inflate(R.layout.edit_tag_item, tagsList, false) as? LinearLayout
         val tagEditText = wrapper?.findViewById<View>(R.id.edit_text) as? EditText
         tagEditText?.setText(tag.name)
-        tagEditText?.addTextChangedListener(OnChangeTextWatcher { s, _, _, _ ->
+        tagEditText?.addTextChangedListener(
+            OnChangeTextWatcher { s, _, _, _ ->
                 if (index >= tags.size) {
                     return@OnChangeTextWatcher
                 }
@@ -208,7 +213,8 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : HabiticaAl
                     editedTags[changedTag.id] = changedTag
                 }
                 tags[index] = changedTag
-        })
+            }
+        )
         val deleteButton = wrapper?.findViewById<View>(R.id.delete_button) as? ImageButton
         deleteButton?.setOnClickListener {
             deletedTags.add(tag.id)
@@ -332,11 +338,13 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : HabiticaAl
 
     private fun filtersChanged() {
         clearButton.isEnabled = hasActiveFilters()
-        clearButton.setTextColor(if (clearButton.isEnabled) {
-            context.getThemeColor(R.attr.colorAccent)
-        } else {
-            ContextCompat.getColor(context, R.color.text_dimmed)
-        })
+        clearButton.setTextColor(
+            if (clearButton.isEnabled) {
+                context.getThemeColor(R.attr.colorAccent)
+            } else {
+                ContextCompat.getColor(context, R.color.text_dimmed)
+            }
+        )
     }
 
     private fun hasActiveFilters(): Boolean {

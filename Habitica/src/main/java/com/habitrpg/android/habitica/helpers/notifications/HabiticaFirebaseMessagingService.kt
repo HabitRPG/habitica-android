@@ -5,14 +5,12 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.components.UserComponent
-import com.habitrpg.android.habitica.data.UserRepository
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import javax.inject.Inject
 
 class HabiticaFirebaseMessagingService : FirebaseMessagingService() {
 
     private val userComponent: UserComponent?
-    get() = HabiticaBaseApplication.userComponent
+        get() = HabiticaBaseApplication.userComponent
 
     @Inject
     internal lateinit var pushNotificationManager: PushNotificationManager
@@ -23,7 +21,7 @@ class HabiticaFirebaseMessagingService : FirebaseMessagingService() {
             pushNotificationManager.displayNotification(remoteMessage)
 
             if (remoteMessage.data["identifier"]?.contains(PushNotificationManager.WON_CHALLENGE_PUSH_NOTIFICATION_KEY) == true) {
-                //userRepository.retrieveUser(true).subscribe({}, RxErrorHandler.handleEmptyError())
+                // userRepository.retrieveUser(true).subscribe({}, RxErrorHandler.handleEmptyError())
             }
         }
     }
@@ -37,6 +35,5 @@ class HabiticaFirebaseMessagingService : FirebaseMessagingService() {
                 pushNotificationManager.refreshedToken = refreshedToken
             }
         }
-
     }
 }

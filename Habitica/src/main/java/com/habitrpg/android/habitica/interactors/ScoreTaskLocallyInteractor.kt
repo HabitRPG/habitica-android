@@ -27,8 +27,10 @@ class ScoreTaskLocallyInteractor {
 
             if (task.checklist?.size ?: 0 > 0) {
                 if (task.type == Task.TYPE_TODO) {
-                    nextDelta *= 1 + (task.checklist?.map { if (it.completed) 1 else 0 }?.reduce { _, _ -> 0 }
-                            ?: 0)
+                    nextDelta *= 1 + (
+                        task.checklist?.map { if (it.completed) 1 else 0 }?.reduce { _, _ -> 0 }
+                            ?: 0
+                        )
                 }
             }
 
@@ -36,15 +38,12 @@ class ScoreTaskLocallyInteractor {
         }
 
         private fun scoreHabit(user: User, task: Task, direction: TaskDirection) {
-
         }
 
         private fun scoreDaily(user: User, task: Task, direction: TaskDirection) {
-
         }
 
         private fun scoreToDo(user: User, task: Task, direction: TaskDirection) {
-
         }
 
         fun score(user: User, task: Task, direction: TaskDirection): TaskDirectionData? {
@@ -98,8 +97,10 @@ class ScoreTaskLocallyInteractor {
 
         private fun addPoints(result: TaskDirectionData, delta: Double, stats: Stats, computedStats: Stats, task: Task, direction: TaskDirection) {
             val intBonus = 1f + ((computedStats.intelligence?.toFloat() ?: 0f) * 0.025f)
-            result.exp = (stats.exp
-                    ?: 0.0) + (delta * intBonus * task.priority * 6).roundToLong().toDouble()
+            result.exp = (
+                stats.exp
+                    ?: 0.0
+                ) + (delta * intBonus * task.priority * 6).roundToLong().toDouble()
 
             val perBonus = 1f + ((computedStats.per?.toFloat() ?: 0f) * 0.02f)
             val goldMod = delta * task.priority * perBonus

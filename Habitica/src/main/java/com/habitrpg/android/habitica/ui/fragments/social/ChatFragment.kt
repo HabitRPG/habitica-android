@@ -25,8 +25,8 @@ import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.viewmodels.GroupViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.Companion.showSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.SnackbarDisplayType
-import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.Disposable
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -64,10 +64,15 @@ class ChatFragment : BaseFragment<FragmentChatBinding>() {
         binding?.recyclerView?.layoutManager = layoutManager
 
         chatAdapter = ChatRecyclerViewAdapter(null, true)
-        chatAdapter?.let {adapter ->
-            compositeSubscription.add(adapter.getUserLabelClickFlowable().subscribe({ userId ->
-                FullProfileActivity.open(userId)
-            }, RxErrorHandler.handleEmptyError()))
+        chatAdapter?.let { adapter ->
+            compositeSubscription.add(
+                adapter.getUserLabelClickFlowable().subscribe(
+                    { userId ->
+                        FullProfileActivity.open(userId)
+                    },
+                    RxErrorHandler.handleEmptyError()
+                )
+            )
             compositeSubscription.add(adapter.getDeleteMessageFlowable().subscribe({ this.showDeleteConfirmationDialog(it) }, RxErrorHandler.handleEmptyError()))
             compositeSubscription.add(adapter.getFlagMessageClickFlowable().subscribe({ this.showFlagConfirmationDialog(it) }, RxErrorHandler.handleEmptyError()))
             compositeSubscription.add(adapter.getReplyMessageEvents().subscribe({ setReplyTo(it) }, RxErrorHandler.handleEmptyError()))
@@ -92,15 +97,17 @@ class ChatFragment : BaseFragment<FragmentChatBinding>() {
 
         viewModel?.getChatMessages()?.subscribe({ this.setChatMessages(it) }, RxErrorHandler.handleEmptyError())?.let { compositeSubscription.add(it) }
 
-
-        binding?.chatBarView?.onCommunityGuidelinesAccepted =  {
+        binding?.chatBarView?.onCommunityGuidelinesAccepted = {
             viewModel?.updateUser("flags.communityGuidelinesAccepted", true)
         }
 
-        viewModel?.getUserData()?.observe(viewLifecycleOwner, {
-            chatAdapter?.user = it
-            binding?.chatBarView?.hasAcceptedGuidelines = it?.flags?.communityGuidelinesAccepted == true
-        })
+        viewModel?.getUserData()?.observe(
+            viewLifecycleOwner,
+            {
+                chatAdapter?.user = it
+                binding?.chatBarView?.hasAcceptedGuidelines = it?.flags?.communityGuidelinesAccepted == true
+            }
+        )
     }
 
     override fun onDestroyView() {
@@ -123,10 +130,13 @@ class ChatFragment : BaseFragment<FragmentChatBinding>() {
             refreshDisposable?.dispose()
         }
         refreshDisposable = Observable.interval(30, TimeUnit.SECONDS)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-            refresh()
-        }, RxErrorHandler.handleEmptyError())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                {
+                    refresh()
+                },
+                RxErrorHandler.handleEmptyError()
+            )
         refresh()
     }
 
@@ -184,11 +194,11 @@ class ChatFragment : BaseFragment<FragmentChatBinding>() {
         val context = context
         if (context != null) {
             AlertDialog.Builder(context)
-                    .setTitle(R.string.confirm_delete_tag_title)
-                    .setMessage(R.string.confirm_delete_tag_message)
-                    .setIcon(android.R.drawable.ic_dialog_alert)
-                    .setPositiveButton(R.string.yes) { _, _ -> viewModel?.deleteMessage(chatMessage) }
-                    .setNegativeButton(R.string.no, null).show()
+                .setTitle(R.string.confirm_delete_tag_title)
+                .setMessage(R.string.confirm_delete_tag_message)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setPositiveButton(R.string.yes) { _, _ -> viewModel?.deleteMessage(chatMessage) }
+                .setNegativeButton(R.string.no, null).show()
         }
     }
 
@@ -202,9 +212,12 @@ class ChatFragment : BaseFragment<FragmentChatBinding>() {
     }
 
     private fun sendChatMessage(chatText: String) {
-        viewModel?.postGroupChat(chatText, {
-            binding?.recyclerView?.scrollToPosition(0)
-        }) {
+        viewModel?.postGroupChat(
+            chatText,
+            {
+                binding?.recyclerView?.scrollToPosition(0)
+            }
+        ) {
             binding?.chatBarView?.message = chatText
         }
     }

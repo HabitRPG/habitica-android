@@ -25,7 +25,6 @@ import org.solovyev.android.checkout.Inventory
 import org.solovyev.android.checkout.Sku
 import javax.inject.Inject
 
-
 class GiftSubscriptionActivity : BaseActivity() {
 
     private lateinit var binding: ActivityGiftSubscriptionBinding
@@ -79,14 +78,19 @@ class GiftSubscriptionActivity : BaseActivity() {
             selectedSubscriptionSku?.let { sku -> purchaseSubscription(sku) }
         }
 
-        compositeSubscription.add(socialRepository.getMember(giftedUsername ?: giftedUserID).subscribe({
-            binding.avatarView.setAvatar(it)
-            binding.displayNameTextView.username = it.profile?.name
-            binding.displayNameTextView.tier = it.contributor?.level ?: 0
-            binding.usernameTextView.text = "@${it.username}"
-            giftedUserID = it.id
-            giftedUsername = it.username
-        }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(
+            socialRepository.getMember(giftedUsername ?: giftedUserID).subscribe(
+                {
+                    binding.avatarView.setAvatar(it)
+                    binding.displayNameTextView.username = it.profile?.name
+                    binding.displayNameTextView.tier = it.contributor?.level ?: 0
+                    binding.usernameTextView.text = "@${it.username}"
+                    giftedUserID = it.id
+                    giftedUsername = it.username
+                },
+                RxErrorHandler.handleEmptyError()
+            )
+        )
 
         if (appConfigManager.activePromo()?.identifier == "g1g1") {
             binding.giftSubscriptionContainer.visibility = View.VISIBLE
@@ -185,7 +189,6 @@ class GiftSubscriptionActivity : BaseActivity() {
         purchaseHandler?.purchaseNoRenewSubscription(sku)
     }
 
-
     @Subscribe
     fun onConsumablePurchased(event: ConsumablePurchasedEvent) {
         purchaseHandler?.consumePurchase(event.purchase)
@@ -205,18 +208,21 @@ class GiftSubscriptionActivity : BaseActivity() {
     }
 
     private fun displayConfirmationDialog() {
-        val message = getString(if (appConfigManager.activePromo()?.identifier == "g1g1") {
-            R.string.gift_confirmation_text_sub_g1g1
-        } else {
-            R.string.gift_confirmation_text_sub
-        }, giftedUsername, selectedDurationString())
+        val message = getString(
+            if (appConfigManager.activePromo()?.identifier == "g1g1") {
+                R.string.gift_confirmation_text_sub_g1g1
+            } else {
+                R.string.gift_confirmation_text_sub
+            },
+            giftedUsername, selectedDurationString()
+        )
         val alert = HabiticaAlertDialog(this)
         alert.setTitle(R.string.gift_confirmation_title)
         alert.setMessage(message)
         alert.addOkButton { dialog, _ ->
-                    dialog.dismiss()
-                    finish()
-                }
+            dialog.dismiss()
+            finish()
+        }
         alert.enqueue()
     }
 }

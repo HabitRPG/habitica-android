@@ -7,33 +7,34 @@ import io.reactivex.rxjava3.core.Flowable
 import io.realm.Realm
 import java.util.*
 
-
 class RealmCustomizationLocalRepository(realm: Realm) : RealmContentLocalRepository(realm), CustomizationLocalRepository {
 
     override fun getCustomizations(type: String, category: String?, onlyAvailable: Boolean): Flowable<out List<Customization>> {
         var query = realm.where(Customization::class.java)
-                .equalTo("type", type)
-                .equalTo("category", category)
+            .equalTo("type", type)
+            .equalTo("category", category)
         if (onlyAvailable) {
             val today = Date()
             query = query
-                    .beginGroup()
-                    .beginGroup()
-                    .lessThanOrEqualTo("availableFrom", today)
-                    .greaterThanOrEqualTo("availableUntil", today)
-                    .endGroup()
-                    .or()
-                    .beginGroup()
-                    .isNull("availableFrom")
-                    .isNull("availableUntil")
-                    .endGroup()
-                    .endGroup()
+                .beginGroup()
+                .beginGroup()
+                .lessThanOrEqualTo("availableFrom", today)
+                .greaterThanOrEqualTo("availableUntil", today)
+                .endGroup()
+                .or()
+                .beginGroup()
+                .isNull("availableFrom")
+                .isNull("availableUntil")
+                .endGroup()
+                .endGroup()
         }
-        return RxJavaBridge.toV3Flowable(query
+        return RxJavaBridge.toV3Flowable(
+            query
                 .sort("customizationSetName")
                 .findAll()
                 .asFlowable()
                 .filter { it.isLoaded }
-                .map { it })
+                .map { it }
+        )
     }
 }

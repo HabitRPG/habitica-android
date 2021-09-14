@@ -39,7 +39,7 @@ class DailyViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> U
                 reminderString += formatter.format(nextReminder.time)
             }
             if ((data.reminders?.size ?: 0) > 1) {
-                reminderString = "$reminderString (+${(data.reminders?.size ?: 0)-1})"
+                reminderString = "$reminderString (+${(data.reminders?.size ?: 0) - 1})"
             }
             reminderTextView.text = reminderString
         }

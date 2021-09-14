@@ -22,12 +22,11 @@ import io.reactivex.rxjava3.core.Single
 import java.text.SimpleDateFormat
 import java.util.*
 
-
 class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiClient, userID: String, val appConfigManager: AppConfigManager, val analyticsManager: AnalyticsManager) : BaseRepositoryImpl<TaskLocalRepository>(localRepository, apiClient, userID), TaskRepository {
     private var lastTaskAction: Long = 0
 
     override fun getTasks(taskType: String, userID: String?): Flowable<out List<Task>> =
-            this.localRepository.getTasks(taskType, userID ?: this.userID)
+        this.localRepository.getTasks(taskType, userID ?: this.userID)
 
     override fun saveTasks(userId: String, order: TasksOrder, tasks: TaskList) {
         localRepository.saveTasks(userId, order, tasks)
@@ -35,27 +34,27 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
 
     override fun retrieveTasks(userId: String, tasksOrder: TasksOrder): Flowable<TaskList> {
         return this.apiClient.tasks
-                .doOnNext { res -> this.localRepository.saveTasks(userId, tasksOrder, res) }
+            .doOnNext { res -> this.localRepository.saveTasks(userId, tasksOrder, res) }
     }
 
     override fun retrieveCompletedTodos(userId: String?): Flowable<TaskList> {
         return this.apiClient.getTasks("completedTodos")
-                .doOnNext { taskList ->
-                    val tasks = taskList.tasks
-                    this.localRepository.saveCompletedTodos(userId ?: this.userID, tasks.values)
-                }
+            .doOnNext { taskList ->
+                val tasks = taskList.tasks
+                this.localRepository.saveCompletedTodos(userId ?: this.userID, tasks.values)
+            }
     }
 
     override fun retrieveTasks(userId: String, tasksOrder: TasksOrder, dueDate: Date): Flowable<TaskList> {
         val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZZZZZ", Locale.US)
         return this.apiClient.getTasks("dailys", formatter.format(dueDate))
-                .doOnNext { res -> this.localRepository.saveTasks(userId, tasksOrder, res) }
+            .doOnNext { res -> this.localRepository.saveTasks(userId, tasksOrder, res) }
     }
 
     @Suppress("ReturnCount")
     override fun taskChecked(user: User?, task: Task, up: Boolean, force: Boolean, notifyFunc: ((TaskScoringResult) -> Unit)?): Flowable<TaskScoringResult?> {
         val localData = if (user != null && appConfigManager.enableLocalTaskScoring()) {
-             ScoreTaskLocallyInteractor.score(user, task, if (up) TaskDirection.UP else TaskDirection.DOWN)
+            ScoreTaskLocallyInteractor.score(user, task, if (up) TaskDirection.UP else TaskDirection.DOWN)
         } else null
         if (user != null && localData != null) {
             val stats = user.stats
@@ -82,44 +81,47 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
 
         lastTaskAction = now
         return this.apiClient.postTaskDirection(id, (if (up) TaskDirection.UP else TaskDirection.DOWN).text)
-                .flatMapMaybe {
-                    // There are cases where the user object is not set correctly. So the app refetches it as a fallback
-                    if (user == null) {
-                        localRepository.getUser(userID).firstElement()
-                    } else {
-                        Maybe.just(user)
-                    }.map { user -> Pair(it, user) }
-                }
-                .map { (res, user): Pair<TaskDirectionData, User> ->
-                    // save local task changes
+            .flatMapMaybe {
+                // There are cases where the user object is not set correctly. So the app refetches it as a fallback
+                if (user == null) {
+                    localRepository.getUser(userID).firstElement()
+                } else {
+                    Maybe.just(user)
+                }.map { user -> Pair(it, user) }
+            }
+            .map { (res, user): Pair<TaskDirectionData, User> ->
+                // save local task changes
 
-                    analyticsManager.logEvent("task_scored", bundleOf(
-                            Pair("type", task.type),
-                            Pair("scored_up", up),
-                            Pair("value", task.value)
-                    ))
-                    val result = TaskScoringResult()
-                    if (res.lvl == 0) {
-                        // Team tasks that require approval have weird data that we should just ignore.
-                        return@map result
-                    }
-                    val stats = user.stats
-
-                    result.healthDelta = res.hp - (stats?.hp ?: 0.0)
-                    result.experienceDelta = res.exp - (stats?.exp ?: 0.0)
-                    result.manaDelta = res.mp - (stats?.mp ?: 0.0)
-                    result.goldDelta = res.gp - (stats?.gp ?: 0.0)
-                    result.hasLeveledUp = res.lvl > stats?.lvl ?: 0
-                    result.level = res.lvl
-                    result.questDamage = res._tmp?.quest?.progressDelta
-                    result.questItemsFound = res._tmp?.quest?.collection
-                    result.drop = res._tmp?.drop
-                    if (localData == null) {
-                        notifyFunc?.invoke(result)
-                    }
-                    handleTaskResponse(user, res, task, up, localData?.delta ?: 0f)
-                    result
+                analyticsManager.logEvent(
+                    "task_scored",
+                    bundleOf(
+                        Pair("type", task.type),
+                        Pair("scored_up", up),
+                        Pair("value", task.value)
+                    )
+                )
+                val result = TaskScoringResult()
+                if (res.lvl == 0) {
+                    // Team tasks that require approval have weird data that we should just ignore.
+                    return@map result
                 }
+                val stats = user.stats
+
+                result.healthDelta = res.hp - (stats?.hp ?: 0.0)
+                result.experienceDelta = res.exp - (stats?.exp ?: 0.0)
+                result.manaDelta = res.mp - (stats?.mp ?: 0.0)
+                result.goldDelta = res.gp - (stats?.gp ?: 0.0)
+                result.hasLeveledUp = res.lvl > stats?.lvl ?: 0
+                result.level = res.lvl
+                result.questDamage = res._tmp?.quest?.progressDelta
+                result.questItemsFound = res._tmp?.quest?.collection
+                result.drop = res._tmp?.drop
+                if (localData == null) {
+                    notifyFunc?.invoke(result)
+                }
+                handleTaskResponse(user, res, task, up, localData?.delta ?: 0f)
+                result
+            }
     }
 
     override fun bulkScoreTasks(data: List<Map<String, String>>): Flowable<BulkTaskScoringData> {
@@ -146,7 +148,7 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
                 }
             }
             res._tmp?.drop?.key?.let { key ->
-                val type = when(res._tmp?.drop?.type?.lowercase(Locale.US)) {
+                val type = when (res._tmp?.drop?.type?.lowercase(Locale.US)) {
                     "hatchingpotion" -> "hatchingPotions"
                     "egg" -> "eggs"
                     else -> res._tmp?.drop?.type?.lowercase(Locale.US)
@@ -173,25 +175,27 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
             bgUser.stats?.mp = res.mp
             bgUser.stats?.gp = res.gp
             bgUser.stats?.lvl = res.lvl
-            bgUser.party?.quest?.progress?.up = (bgUser.party?.quest?.progress?.up
-                    ?: 0F) + (res._tmp?.quest?.progressDelta?.toFloat() ?: 0F)
+            bgUser.party?.quest?.progress?.up = (
+                bgUser.party?.quest?.progress?.up
+                    ?: 0F
+                ) + (res._tmp?.quest?.progressDelta?.toFloat() ?: 0F)
         }
     }
 
     override fun taskChecked(user: User?, taskId: String, up: Boolean, force: Boolean, notifyFunc: ((TaskScoringResult) -> Unit)?): Maybe<TaskScoringResult?> {
         return localRepository.getTask(taskId).firstElement()
-                .flatMap { task -> taskChecked(user, task, up, force, notifyFunc).singleElement() }
+            .flatMap { task -> taskChecked(user, task, up, force, notifyFunc).singleElement() }
     }
 
     override fun scoreChecklistItem(taskId: String, itemId: String): Flowable<Task> {
         return apiClient.scoreChecklistItem(taskId, itemId)
-                .flatMapMaybe { localRepository.getTask(taskId).firstElement() }
-                .doOnNext { task ->
-                    val updatedItem: ChecklistItem? = task.checklist?.lastOrNull { itemId == it.id }
-                    if (updatedItem != null) {
-                        localRepository.modify(updatedItem) { liveItem -> liveItem.completed = !liveItem.completed }
-                    }
+            .flatMapMaybe { localRepository.getTask(taskId).firstElement() }
+            .doOnNext { task ->
+                val updatedItem: ChecklistItem? = task.checklist?.lastOrNull { itemId == it.id }
+                if (updatedItem != null) {
+                    localRepository.modify(updatedItem) { liveItem -> liveItem.completed = !liveItem.completed }
                 }
+            }
     }
 
     override fun getTask(taskId: String): Flowable<Task> = localRepository.getTask(taskId)
@@ -200,7 +204,7 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
 
     override fun createTask(task: Task, force: Boolean): Flowable<Task> {
         val now = Date().time
-        if (lastTaskAction > now - 500  && !force) {
+        if (lastTaskAction > now - 500 && !force) {
             return Flowable.empty()
         }
         lastTaskAction = now
@@ -215,25 +219,25 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
         localRepository.saveSyncronous(task)
 
         return apiClient.createTask(task)
-                .map { task1 ->
-                    task1.dateCreated = Date()
-                    task1
-                }
-                .doOnNext {
-                    it.tags = task.tags
-                    localRepository.save(it)
-                }
-                .doOnError {
-                    task.hasErrored = true
-                    task.isSaving = false
-                    localRepository.saveSyncronous(task)
-                }
+            .map { task1 ->
+                task1.dateCreated = Date()
+                task1
+            }
+            .doOnNext {
+                it.tags = task.tags
+                localRepository.save(it)
+            }
+            .doOnError {
+                task.hasErrored = true
+                task.isSaving = false
+                localRepository.saveSyncronous(task)
+            }
     }
 
     @Suppress("ReturnCount")
     override fun updateTask(task: Task, force: Boolean): Maybe<Task> {
         val now = Date().time
-        if ((lastTaskAction > now - 500  && !force)|| !task.isValid ) {
+        if ((lastTaskAction > now - 500 && !force) || !task.isValid) {
             return Maybe.just(task)
         }
         lastTaskAction = now
@@ -243,25 +247,25 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
         unmanagedTask.hasErrored = false
         localRepository.saveSyncronous(unmanagedTask)
         return apiClient.updateTask(id, unmanagedTask).singleElement()
-                .map { task1 ->
-                    task1.position = task.position
-                    task1.id = task.id
-                    task1
-                }
-                .doOnSuccess {
-                    it.tags = task.tags
-                    localRepository.save(it)
-                }
-                .doOnError {
-                    unmanagedTask.hasErrored = true
-                    unmanagedTask.isSaving = false
-                    localRepository.saveSyncronous(unmanagedTask)
-                }
+            .map { task1 ->
+                task1.position = task.position
+                task1.id = task.id
+                task1
+            }
+            .doOnSuccess {
+                it.tags = task.tags
+                localRepository.save(it)
+            }
+            .doOnError {
+                unmanagedTask.hasErrored = true
+                unmanagedTask.isSaving = false
+                localRepository.saveSyncronous(unmanagedTask)
+            }
     }
 
     override fun deleteTask(taskId: String): Flowable<Void> {
         return apiClient.deleteTask(taskId)
-                .doOnNext { localRepository.deleteTask(taskId) }
+            .doOnNext { localRepository.deleteTask(taskId) }
     }
 
     override fun saveTask(task: Task) {
@@ -274,7 +278,7 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
         localRepository.markTaskCompleted(taskId, isCompleted)
     }
 
-    override fun <T: BaseMainObject> modify(obj: T, transaction: (T) -> Unit) {
+    override fun <T : BaseMainObject> modify(obj: T, transaction: (T) -> Unit) {
         localRepository.modify(obj, transaction)
     }
 
@@ -284,11 +288,11 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
 
     override fun updateTaskPosition(taskType: String, taskID: String, newPosition: Int): Maybe<List<String>> {
         return apiClient.postTaskNewPosition(taskID, newPosition).firstElement()
-                .doOnSuccess { localRepository.updateTaskPositions(it) }
+            .doOnSuccess { localRepository.updateTaskPositions(it) }
     }
 
     override fun getUnmanagedTask(taskid: String): Flowable<Task> =
-            getTask(taskid).map { localRepository.getUnmanagedCopy(it) }
+        getTask(taskid).map { localRepository.getUnmanagedCopy(it) }
 
     override fun updateTaskInBackground(task: Task) {
         updateTask(task).subscribe({ }, RxErrorHandler.handleEmptyError())
@@ -299,10 +303,10 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
     }
 
     override fun getTaskCopies(userId: String): Flowable<List<Task>> =
-            localRepository.getTasks(userId).map { localRepository.getUnmanagedCopy(it) }
+        localRepository.getTasks(userId).map { localRepository.getUnmanagedCopy(it) }
 
     override fun getTaskCopies(tasks: List<Task>): Flowable<List<Task>> =
-            Flowable.just(localRepository.getUnmanagedCopy(tasks))
+        Flowable.just(localRepository.getUnmanagedCopy(tasks))
 
     override fun retrieveDailiesFromDate(date: Date): Flowable<TaskList> {
         val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZZZZZ", Locale.US)
@@ -311,15 +315,15 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
 
     override fun syncErroredTasks(): Single<List<Task>> {
         return localRepository.getErroredTasks(userID).firstElement()
-                .flatMapPublisher { Flowable.fromIterable(it) }
-                .map { localRepository.getUnmanagedCopy(it) }
-                .flatMap {
-                    return@flatMap if (it.isCreating) {
-                        createTask(it, true)
-                    } else {
-                        updateTask(it, true).toFlowable()
-                    }
-                }.toList()
+            .flatMapPublisher { Flowable.fromIterable(it) }
+            .map { localRepository.getUnmanagedCopy(it) }
+            .flatMap {
+                return@flatMap if (it.isCreating) {
+                    createTask(it, true)
+                } else {
+                    updateTask(it, true).toFlowable()
+                }
+            }.toList()
     }
 
     override fun unlinkAllTasks(challengeID: String?, keepOption: String): Flowable<Void> {

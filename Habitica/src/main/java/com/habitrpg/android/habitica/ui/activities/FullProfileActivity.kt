@@ -7,7 +7,6 @@ import android.view.*
 import android.widget.*
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
-import androidx.lifecycle.lifecycleScope
 import coil.load
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
@@ -95,10 +94,15 @@ class FullProfileActivity : BaseActivity() {
         binding.sendMessageButton.setOnClickListener { showSendMessageToUserDialog() }
         binding.giftGemsButton.setOnClickListener { MainNavigationController.navigate(R.id.giftGemsActivity, bundleOf(Pair("userID", userID), Pair("username", null))) }
         binding.giftSubscriptionButton.setOnClickListener { MainNavigationController.navigate(R.id.giftSubscriptionActivity, bundleOf(Pair("userID", userID), Pair("username", null))) }
-        compositeSubscription.add(userRepository.getUser().subscribe({
-            blocks = it.inbox?.blocks ?: listOf()
-            binding.blockedDisclaimerView.visibility = if (isUserBlocked()) View.VISIBLE else View.GONE
-        }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(
+            userRepository.getUser().subscribe(
+                {
+                    blocks = it.inbox?.blocks ?: listOf()
+                    binding.blockedDisclaimerView.visibility = if (isUserBlocked()) View.VISIBLE else View.GONE
+                },
+                RxErrorHandler.handleEmptyError()
+            )
+        )
     }
 
     override fun onDestroy() {
@@ -132,16 +136,20 @@ class FullProfileActivity : BaseActivity() {
                 val clipboard = this.getSystemService(Context.CLIPBOARD_SERVICE) as? android.content.ClipboardManager
                 val clip = android.content.ClipData.newPlainText(username, username)
                 clipboard?.setPrimaryClip(clip)
-                HabiticaSnackbar.showSnackbar(this@FullProfileActivity.binding.scrollView.getChildAt(0) as ViewGroup,
-                        String.format(getString(R.string.username_copied), userDisplayName), SnackbarDisplayType.NORMAL)
+                HabiticaSnackbar.showSnackbar(
+                    this@FullProfileActivity.binding.scrollView.getChildAt(0) as ViewGroup,
+                    String.format(getString(R.string.username_copied), userDisplayName), SnackbarDisplayType.NORMAL
+                )
                 true
             }
             R.id.copy_userid -> {
                 val clipboard = this.getSystemService(Context.CLIPBOARD_SERVICE) as? android.content.ClipboardManager
                 val clip = android.content.ClipData.newPlainText(userID, userID)
                 clipboard?.setPrimaryClip(clip)
-                HabiticaSnackbar.showSnackbar(this@FullProfileActivity.binding.scrollView.getChildAt(0) as ViewGroup,
-                        String.format(getString(R.string.id_copied), userDisplayName), SnackbarDisplayType.NORMAL)
+                HabiticaSnackbar.showSnackbar(
+                    this@FullProfileActivity.binding.scrollView.getChildAt(0) as ViewGroup,
+                    String.format(getString(R.string.id_copied), userDisplayName), SnackbarDisplayType.NORMAL
+                )
                 true
             }
             R.id.block_user -> {
@@ -157,11 +165,16 @@ class FullProfileActivity : BaseActivity() {
     }
 
     private fun useBlock() {
-        compositeSubscription.add(socialRepository.blockMember(userID).flatMap {
-            userRepository.retrieveUser()
-        }.subscribe({
-            invalidateOptionsMenu()
-        }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(
+            socialRepository.blockMember(userID).flatMap {
+                userRepository.retrieveUser()
+            }.subscribe(
+                {
+                    invalidateOptionsMenu()
+                },
+                RxErrorHandler.handleEmptyError()
+            )
+        )
     }
 
     private fun showBlockDialog() {
@@ -217,7 +230,6 @@ class FullProfileActivity : BaseActivity() {
         } else {
             binding.costumeCard.visibility = View.GONE
         }
-
 
         // Load the members achievements now
         compositeSubscription.add(socialRepository.getMemberAchievements(this.userID).subscribe({ this.fillAchievements(it) }, RxErrorHandler.handleEmptyError()))
@@ -312,12 +324,12 @@ class FullProfileActivity : BaseActivity() {
         }
 
         table.addView(gearRow)
-
     }
 
     private fun addLevelAttributes(user: Member) {
         val byLevelStat = min((user.stats?.lvl ?: 0) / 2.0f, 50f)
-        addAttributeRow(getString(R.string.profile_level), byLevelStat, byLevelStat, byLevelStat, byLevelStat,
+        addAttributeRow(
+            getString(R.string.profile_level), byLevelStat, byLevelStat, byLevelStat, byLevelStat,
             roundDown = true,
             isSummary = false
         )
@@ -371,12 +383,17 @@ class FullProfileActivity : BaseActivity() {
     private fun addNormalAddBuffAttributes(stats: Stats) {
         val buffs = stats.buffs
 
-        addAttributeRow(getString(R.string.profile_allocated), stats.strength?.toFloat() ?: 0f, stats.intelligence?.toFloat() ?: 0f, stats.constitution?.toFloat() ?: 0f, stats.per?.toFloat() ?: 0f,
+        addAttributeRow(
+            getString(R.string.profile_allocated), stats.strength?.toFloat() ?: 0f, stats.intelligence?.toFloat() ?: 0f, stats.constitution?.toFloat() ?: 0f, stats.per?.toFloat() ?: 0f,
             roundDown = true,
             isSummary = false
         )
-        addAttributeRow(getString(R.string.buffs), buffs?.str
-                ?: 0f, buffs?._int ?: 0f, buffs?.con ?: 0f, buffs?.per ?: 0f, roundDown = true, isSummary = false)
+        addAttributeRow(
+            getString(R.string.buffs),
+            buffs?.str
+                ?: 0f,
+            buffs?._int ?: 0f, buffs?.con ?: 0f, buffs?.per ?: 0f, roundDown = true, isSummary = false
+        )
 
         // Summary row
         addAttributeRow("", attributeStrSum, attributeIntSum, attributeConSum, attributePerSum, roundDown = false, isSummary = true)
@@ -399,7 +416,6 @@ class FullProfileActivity : BaseActivity() {
         val perTextView = tableRow.findViewById<TextView>(R.id.tv_attribute_per)
         perTextView?.text = getFloorValueString(perVal, roundDown)
 
-
         if (isSummary) {
             strTextView?.setTypeface(null, Typeface.BOLD)
             intTextView?.setTypeface(null, Typeface.BOLD)
@@ -415,22 +431,25 @@ class FullProfileActivity : BaseActivity() {
         }
 
         binding.attributesTableLayout.addView(tableRow)
-
     }
 
     private fun toggleAttributeDetails() {
         attributeDetailsHidden = !attributeDetailsHidden
 
-        binding.attributesCollapseIcon.setImageDrawable(ContextCompat.getDrawable(this, if (attributeDetailsHidden)
-            R.drawable.ic_keyboard_arrow_right_black_24dp
-        else
-            R.drawable.ic_keyboard_arrow_down_black_24dp))
+        binding.attributesCollapseIcon.setImageDrawable(
+            ContextCompat.getDrawable(
+                this,
+                if (attributeDetailsHidden)
+                    R.drawable.ic_keyboard_arrow_right_black_24dp
+                else
+                    R.drawable.ic_keyboard_arrow_down_black_24dp
+            )
+        )
 
         for (row in attributeRows) {
             row.visibility = if (attributeDetailsHidden) View.GONE else View.VISIBLE
         }
     }
-
 
     // endregion
 
@@ -475,5 +494,4 @@ class FullProfileActivity : BaseActivity() {
     }
 
     // endregion
-
 }

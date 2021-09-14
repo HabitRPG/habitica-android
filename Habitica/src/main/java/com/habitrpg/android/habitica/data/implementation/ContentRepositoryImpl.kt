@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.data.implementation
 
 import android.content.Context
-import androidx.preference.PreferenceManager
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.ContentRepository
 import com.habitrpg.android.habitica.data.local.ContentLocalRepository
@@ -19,7 +18,7 @@ abstract class ContentRepositoryImpl<T : ContentLocalRepository>(localRepository
     private var lastWorldStateSync = 0L
 
     override fun retrieveContent(context: Context?): Flowable<ContentResult> {
-        return retrieveContent(context,false)
+        return retrieveContent(context, false)
     }
 
     override fun retrieveContent(context: Context?, forced: Boolean): Flowable<ContentResult> {
@@ -27,7 +26,7 @@ abstract class ContentRepositoryImpl<T : ContentLocalRepository>(localRepository
         return if (forced || now - this.lastContentSync > 300000) {
             lastContentSync = now
             apiClient.content.doOnNext {
-                context?.let {context ->
+                context?.let { context ->
                     it.special = RealmList()
                     it.special.add(SpecialItem.makeMysteryItem(context))
                 }

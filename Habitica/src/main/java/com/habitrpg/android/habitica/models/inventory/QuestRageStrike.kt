@@ -10,10 +10,8 @@ open class QuestRageStrike() : RealmObject(), BaseObject {
     var key = ""
     var wasHit = false
 
-
-    constructor(key: String, wasHit: Boolean): this() {
+    constructor(key: String, wasHit: Boolean) : this() {
         this.key = key
         this.wasHit = wasHit
     }
 }
-

@@ -19,44 +19,42 @@ import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.viewHolders.SectionViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.ShopItemViewHolder
 
-
 class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
 
     private val items: MutableList<Any> = ArrayList()
     private var shopIdentifier: String? = null
     private var ownedItems: Map<String, OwnedItem> = HashMap()
 
-
     var shopSpriteSuffix: String = ""
-    set(value) {
-        field = value
-        if (items.size > 0) {
-            notifyItemChanged(0)
+        set(value) {
+            field = value
+            if (items.size > 0) {
+                notifyItemChanged(0)
+            }
         }
-    }
     var context: Context? = null
     var user: User? = null
-    set(value) {
-        field = value
-        if (items.size > 0) {
-            this.notifyDataSetChanged()
+        set(value) {
+            field = value
+            if (items.size > 0) {
+                this.notifyDataSetChanged()
+            }
         }
-    }
     private var pinnedItemKeys: List<String> = ArrayList()
 
     var gearCategories: MutableList<ShopCategory> = ArrayList()
-    set(value) {
-        field = value
-        notifyDataSetChanged()
-    }
-
-    internal var selectedGearCategory: String = ""
-    set(value) {
-        field = value
-        if (field != "" && items.size > 0) {
+        set(value) {
+            field = value
             notifyDataSetChanged()
         }
-    }
+
+    internal var selectedGearCategory: String = ""
+        set(value) {
+            field = value
+            if (field != "" && items.size > 0) {
+                notifyDataSetChanged()
+            }
+        }
 
     private val emptyViewResource: Int
         get() = when (this.shopIdentifier) {
@@ -85,17 +83,17 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<an
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder =
-            when (viewType) {
-                0 -> ShopHeaderViewHolder(parent)
-                1 -> SectionViewHolder(parent.inflate(R.layout.shop_section_header))
-                2 -> EmptyStateViewHolder(parent.inflate(emptyViewResource))
-                else -> {
-                    val view = parent.inflate(R.layout.row_shopitem)
-                    val viewHolder = ShopItemViewHolder(view)
-                    viewHolder.shopIdentifier = shopIdentifier
-                    viewHolder
-                }
+        when (viewType) {
+            0 -> ShopHeaderViewHolder(parent)
+            1 -> SectionViewHolder(parent.inflate(R.layout.shop_section_header))
+            2 -> EmptyStateViewHolder(parent.inflate(emptyViewResource))
+            else -> {
+                val view = parent.inflate(R.layout.row_shopitem)
+                val viewHolder = ShopItemViewHolder(view)
+                viewHolder.shopIdentifier = shopIdentifier
+                viewHolder
             }
+        }
 
     @Suppress("ReturnCount")
     override fun onBindViewHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder, position: Int) {
@@ -108,7 +106,7 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<an
                     val sectionHolder = holder as? SectionViewHolder ?: return
                     sectionHolder.bind(category?.text ?: "")
                     if (gearCategories.contains(category)) {
-                        context?.let {context ->
+                        context?.let { context ->
                             val adapter = HabiticaClassArrayAdapter(context, R.layout.class_spinner_dropdown_item, gearCategories.map { it.identifier })
                             sectionHolder.spinnerAdapter = adapter
                             sectionHolder.selectedItem = gearCategories.indexOf(category)
@@ -132,7 +130,7 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<an
                 ShopItem::class.java -> {
                     val item = obj as? ShopItem ?: return
                     val itemHolder = holder as? ShopItemViewHolder ?: return
-                    val numberOwned = ownedItems[item.key+"-"+item.purchaseType]?.numberOwned ?: 0
+                    val numberOwned = ownedItems[item.key + "-" + item.purchaseType]?.numberOwned ?: 0
                     itemHolder.bind(item, item.canAfford(user, 1), numberOwned)
                     itemHolder.isPinned = pinnedItemKeys.contains(item.key)
                 }
@@ -156,19 +154,19 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<an
                     category?.text = context?.getString(R.string.class_equipment) ?: ""
                     category
                 }
-                getSelectedShopCategory()?.items?.size ?: 0 <= position-2 -> return context?.getString(R.string.equipment_empty)
-                else -> getSelectedShopCategory()?.items?.get(position-2)
+                getSelectedShopCategory()?.items?.size ?: 0 <= position - 2 -> return context?.getString(R.string.equipment_empty)
+                else -> getSelectedShopCategory()?.items?.get(position - 2)
             }
         } else {
             val itemPosition = position - getGearItemCount()
-            if (itemPosition > items.size-1) {
+            if (itemPosition > items.size - 1) {
                 return null
             }
             return items[itemPosition]
         }
     }
 
-    override fun getItemViewType(position: Int): Int = when(getItem(position)?.javaClass) {
+    override fun getItemViewType(position: Int): Int = when (getItem(position)?.javaClass) {
         Shop::class.java -> 0
         ShopCategory::class.java -> 1
         ShopItem::class.java -> 3
@@ -191,7 +189,7 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<an
                 if (selectedCategory.items.size == 0) {
                     2
                 } else {
-                    selectedCategory.items.size+1
+                    selectedCategory.items.size + 1
                 }
             } else {
                 0
@@ -200,7 +198,7 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<an
     }
 
     private fun getSelectedShopCategory() =
-            gearCategories.firstOrNull { selectedGearCategory == it.identifier }
+        gearCategories.firstOrNull { selectedGearCategory == it.identifier }
 
     fun setOwnedItems(ownedItems: Map<String, OwnedItem>) {
         this.ownedItems = ownedItems
@@ -230,7 +228,6 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<an
             binding.descriptionView.text = shop.notes.fromHtml()
             binding.namePlate.setText(shop.npcNameResource)
         }
-
     }
 
     class EmptyStateViewHolder(view: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(view) {
@@ -242,9 +239,9 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<an
         }
 
         var text: String? = null
-        set(value) {
-            field = value
-            textView?.text = field
-        }
+            set(value) {
+                field = value
+                textView?.text = field
+            }
     }
 }

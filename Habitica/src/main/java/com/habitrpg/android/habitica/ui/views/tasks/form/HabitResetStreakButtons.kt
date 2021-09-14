@@ -14,19 +14,22 @@ import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.models.tasks.HabitResetOption
 
 class HabitResetStreakButtons @JvmOverloads constructor(
-        context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr) {
 
     var tintColor: Int = ContextCompat.getColor(context, R.color.brand_300)
 
     var selectedResetOption: HabitResetOption = HabitResetOption.DAILY
-    set(value) {
-        field = value
-        removeAllViews()
-        addAllButtons()
-        selectedButton.sendAccessibilityEvent(
-                AccessibilityEvent.CONTENT_CHANGE_TYPE_CONTENT_DESCRIPTION)
-    }
+        set(value) {
+            field = value
+            removeAllViews()
+            addAllButtons()
+            selectedButton.sendAccessibilityEvent(
+                AccessibilityEvent.CONTENT_CHANGE_TYPE_CONTENT_DESCRIPTION
+            )
+        }
 
     private lateinit var selectedButton: TextView
 

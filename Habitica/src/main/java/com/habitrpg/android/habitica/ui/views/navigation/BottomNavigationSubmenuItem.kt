@@ -8,28 +8,30 @@ import com.habitrpg.android.habitica.databinding.BottomNavigationSubmenuBinding
 import com.habitrpg.android.habitica.extensions.layoutInflater
 
 class BottomNavigationSubmenuItem @JvmOverloads constructor(
-        context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
 ) : RelativeLayout(context, attrs, defStyleAttr) {
     private val binding = BottomNavigationSubmenuBinding.inflate(context.layoutInflater, this)
 
     var onAddListener: (() -> Unit)? = null
 
     val measuredTitleWidth: Int
-    get() {
-        binding.titleView.measure(width, height)
-        return binding.titleView.measuredWidth
-    }
+        get() {
+            binding.titleView.measure(width, height)
+            return binding.titleView.measuredWidth
+        }
 
     var icon: Drawable? = null
-    set(value) {
-        field = value
-        binding.iconView.setImageDrawable(value)
-    }
+        set(value) {
+            field = value
+            binding.iconView.setImageDrawable(value)
+        }
     var title: String? = null
-    set(value) {
-        field = value
-        binding.titleView.text = title
-    }
+        set(value) {
+            field = value
+            binding.titleView.text = title
+        }
 
     init {
         binding.iconView.setOnClickListener { onAddListener?.invoke() }
@@ -41,5 +43,4 @@ class BottomNavigationSubmenuItem @JvmOverloads constructor(
         layoutParams?.width = width
         binding.titleView.layoutParams = layoutParams
     }
-
 }

@@ -80,8 +80,10 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
         val currentDeviceLanguage = Locale.getDefault().language
         for (language in resources.getStringArray(R.array.LanguageValues)) {
             if (language == currentDeviceLanguage) {
-                compositeSubscription.add(apiClient.registrationLanguage(currentDeviceLanguage)
-                        .subscribe({ }, RxErrorHandler.handleEmptyError()))
+                compositeSubscription.add(
+                    apiClient.registrationLanguage(currentDeviceLanguage)
+                        .subscribe({ }, RxErrorHandler.handleEmptyError())
+                )
             }
         }
 
@@ -203,12 +205,17 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
             additionalData["status"] = "completed"
             AmplitudeManager.sendEvent("setup", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT, additionalData)
 
-            compositeSubscription.add(userRepository.updateUser("flags.welcomed", true).subscribe({
-                if (!compositeSubscription.isDisposed) {
-                    compositeSubscription.dispose()
-                }
-                startMainActivity()
-            }, RxErrorHandler.handleEmptyError()))
+            compositeSubscription.add(
+                userRepository.updateUser("flags.welcomed", true).subscribe(
+                    {
+                        if (!compositeSubscription.isDisposed) {
+                            compositeSubscription.dispose()
+                        }
+                        startMainActivity()
+                    },
+                    RxErrorHandler.handleEmptyError()
+                )
+            )
             return
         }
         this.user = user
@@ -227,9 +234,11 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
     }
 
     private fun confirmNames(displayName: String, username: String) {
-        compositeSubscription.add(userRepository.updateUser("profile.name", displayName)
+        compositeSubscription.add(
+            userRepository.updateUser("profile.name", displayName)
                 .flatMap { userRepository.updateLoginName(username).toFlowable() }
-                .subscribe({  }, RxErrorHandler.handleEmptyError()))
+                .subscribe({ }, RxErrorHandler.handleEmptyError())
+        )
     }
 
     private inner class ViewPageAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT), IconPagerAdapter {

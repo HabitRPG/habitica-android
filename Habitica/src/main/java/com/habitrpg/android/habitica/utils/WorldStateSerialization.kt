@@ -10,9 +10,8 @@ import com.habitrpg.android.habitica.models.inventory.QuestProgress
 import com.habitrpg.android.habitica.models.inventory.QuestRageStrike
 import io.realm.RealmList
 import java.lang.reflect.Type
-import java.util.*
 
-class WorldStateSerialization: JsonDeserializer<WorldState> {
+class WorldStateSerialization : JsonDeserializer<WorldState> {
 
     override fun deserialize(json: JsonElement?, typeOfT: Type?, context: JsonDeserializationContext?): WorldState {
         val state = WorldState()
@@ -66,10 +65,8 @@ class WorldStateSerialization: JsonDeserializer<WorldState> {
                 }
             }
         } catch (e: Exception) {
-
         }
 
         return state
     }
-
 }

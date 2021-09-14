@@ -22,5 +22,4 @@ class TaskAlarmBootReceiver : BroadcastReceiver() {
         taskAlarmManager.scheduleAllSavedAlarms(sharedPreferences.getBoolean("preventDailyReminder", false))
         HLogger.log(LogLevel.INFO, this::javaClass.name, "onReceive")
     }
-
 }

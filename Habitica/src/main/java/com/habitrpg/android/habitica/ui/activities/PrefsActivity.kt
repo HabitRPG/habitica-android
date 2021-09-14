@@ -20,8 +20,8 @@ class PrefsActivity : BaseActivity(), PreferenceFragmentCompat.OnPreferenceStart
         setupToolbar(findViewById(R.id.toolbar))
 
         supportFragmentManager.beginTransaction()
-                .add(R.id.fragment_container, PreferencesFragment())
-                .commit()
+            .add(R.id.fragment_container, PreferencesFragment())
+            .commit()
     }
 
     override fun injectActivity(component: UserComponent?) {
@@ -36,17 +36,19 @@ class PrefsActivity : BaseActivity(), PreferenceFragmentCompat.OnPreferenceStart
         return super.onSupportNavigateUp()
     }
 
-    override fun onPreferenceStartScreen(preferenceFragment: PreferenceFragmentCompat,
-                                         preferenceScreen: PreferenceScreen): Boolean {
+    override fun onPreferenceStartScreen(
+        preferenceFragment: PreferenceFragmentCompat,
+        preferenceScreen: PreferenceScreen
+    ): Boolean {
         val fragment = createNextPage(preferenceScreen)
         if (fragment != null) {
             val arguments = Bundle()
             arguments.putString(PreferenceFragmentCompat.ARG_PREFERENCE_ROOT, preferenceScreen.key)
             fragment.arguments = arguments
             supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container, fragment)
-                    .addToBackStack(null)
-                    .commit()
+                .replace(R.id.fragment_container, fragment)
+                .addToBackStack(null)
+                .commit()
             return true
         }
         return false
@@ -58,13 +60,12 @@ class PrefsActivity : BaseActivity(), PreferenceFragmentCompat.OnPreferenceStart
     }
 
     private fun createNextPage(preferenceScreen: PreferenceScreen): PreferenceFragmentCompat? =
-            when (preferenceScreen.key) {
-                "profile" -> ProfilePreferencesFragment()
-                "authentication" -> AuthenticationPreferenceFragment()
-                "api" -> APIPreferenceFragment()
-                "pushNotifications" -> PushNotificationsPreferencesFragment()
-                "emailNotifications" -> EmailNotificationsPreferencesFragment()
-                else -> null
-            }
+        when (preferenceScreen.key) {
+            "profile" -> ProfilePreferencesFragment()
+            "authentication" -> AuthenticationPreferenceFragment()
+            "api" -> APIPreferenceFragment()
+            "pushNotifications" -> PushNotificationsPreferencesFragment()
+            "emailNotifications" -> EmailNotificationsPreferencesFragment()
+            else -> null
+        }
 }
-

@@ -97,11 +97,11 @@ class TaskFilterHelper {
             }
             if (searchQuery?.isNotEmpty() == true) {
                 query = query
-                        .beginGroup()
-                        .contains("text", searchQuery ?: "", Case.INSENSITIVE)
-                        .or()
-                        .contains("notes", searchQuery ?: "", Case.INSENSITIVE)
-                        .endGroup()
+                    .beginGroup()
+                    .contains("text", searchQuery ?: "", Case.INSENSITIVE)
+                    .or()
+                    .contains("notes", searchQuery ?: "", Case.INSENSITIVE)
+                    .endGroup()
             }
             if (activeFilter != null && activeFilter != Task.FILTER_ALL) {
                 when (activeFilter) {

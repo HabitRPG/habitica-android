@@ -30,12 +30,10 @@ interface ApiService {
     @get:GET("user/")
     val user: Flowable<HabitResponse<User>>
 
-
     @GET("inbox/messages")
     fun getInboxMessages(@Query("conversation") uuid: String, @Query("page") page: Int): Flowable<HabitResponse<List<ChatMessage>>>
     @GET("inbox/conversations")
     fun getInboxConversations(): Flowable<HabitResponse<List<InboxConversation>>>
-
 
     @get:GET("tasks/user")
     val tasks: Flowable<HabitResponse<TaskList>>
@@ -94,7 +92,6 @@ interface ApiService {
     @GET("tasks/user")
     fun getTasks(@Query("type") type: String, @Query("dueDate") dueDate: String): Flowable<HabitResponse<TaskList>>
 
-
     @POST("user/unlock")
     fun unlockPath(@Query("path") path: String): Flowable<HabitResponse<UnlockResponse>>
 
@@ -123,7 +120,6 @@ interface ApiService {
 
     @DELETE("tasks/{id}")
     fun deleteTask(@Path("id") id: String): Flowable<HabitResponse<Void>>
-
 
     @POST("tags")
     fun createTag(@Body tag: Tag): Flowable<HabitResponse<Tag>>
@@ -169,7 +165,6 @@ interface ApiService {
 
     @POST("user/mark-pms-read")
     fun markPrivateMessagesRead(): Flowable<Void>
-
 
     /* Group API */
 
@@ -264,7 +259,7 @@ interface ApiService {
     @POST("user/custom-day-start")
     fun changeCustomDayStart(@Body updateObject: Map<String, Any>): Flowable<HabitResponse<User>>
 
-    //Members URL
+    // Members URL
     @GET("members/{mid}")
     fun getMember(@Path("mid") memberId: String): Flowable<HabitResponse<Member>>
 
@@ -289,7 +284,7 @@ interface ApiService {
     @GET("shops/market-gear")
     fun retrieveMarketGear(): Flowable<HabitResponse<Shop>>
 
-    //Push notifications
+    // Push notifications
     @POST("user/push-devices")
     fun addPushDevice(@Body pushDeviceData: Map<String, String>): Flowable<HabitResponse<List<Void>>>
 
@@ -331,8 +326,7 @@ interface ApiService {
     @DELETE("challenges/{challengeId}")
     fun deleteChallenge(@Path("challengeId") challengeId: String): Flowable<HabitResponse<Void>>
 
-
-    //DEBUG: These calls only work on a local development server
+    // DEBUG: These calls only work on a local development server
 
     @POST("debug/add-ten-gems")
     fun debugAddTenGems(): Flowable<HabitResponse<Void>>

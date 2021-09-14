@@ -7,5 +7,4 @@ interface TutorialRepository : BaseRepository {
 
     fun getTutorialStep(key: String): Flowable<TutorialStep>
     fun getTutorialSteps(keys: List<String>): Flowable<out List<TutorialStep>>
-
 }

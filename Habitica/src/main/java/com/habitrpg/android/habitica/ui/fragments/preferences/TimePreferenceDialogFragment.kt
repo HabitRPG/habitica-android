@@ -3,10 +3,10 @@ package com.habitrpg.android.habitica.ui.fragments.preferences
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
-import androidx.preference.PreferenceDialogFragmentCompat
-import androidx.preference.PreferenceFragmentCompat
 import android.view.View
 import android.widget.TimePicker
+import androidx.preference.PreferenceDialogFragmentCompat
+import androidx.preference.PreferenceFragmentCompat
 import com.habitrpg.android.habitica.prefs.TimePreference
 import java.util.*
 
@@ -66,13 +66,14 @@ class TimePreferenceDialogFragment : PreferenceDialogFragmentCompat() {
                 preference.text = time
             }
         }
-
     }
 
     companion object {
         val TAG = TimePreferenceDialogFragment::class.java.simpleName
         fun newInstance(
-                preferenceFragment: PreferenceFragmentCompat, key: String): TimePreferenceDialogFragment {
+            preferenceFragment: PreferenceFragmentCompat,
+            key: String
+        ): TimePreferenceDialogFragment {
             val fragment = TimePreferenceDialogFragment()
             val arguments = Bundle(1)
             arguments.putString(ARG_KEY, key)
@@ -82,4 +83,3 @@ class TimePreferenceDialogFragment : PreferenceDialogFragmentCompat() {
         }
     }
 }
-

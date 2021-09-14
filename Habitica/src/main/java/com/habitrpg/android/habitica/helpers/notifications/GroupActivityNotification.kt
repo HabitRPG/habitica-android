@@ -25,8 +25,8 @@ class GroupActivityNotification(context: Context, identifier: String?) : Habitic
         val user = Person.Builder().setName("You").build()
         val message = makeMessageFromData(data)
         var style = NotificationCompat.MessagingStyle(user)
-                .setGroupConversation(true)
-                .setConversationTitle(data["groupName"])
+            .setGroupConversation(true)
+            .setConversationTitle(data["groupName"])
 
         val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as? NotificationManager
         val existingNotifications = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -39,8 +39,8 @@ class GroupActivityNotification(context: Context, identifier: String?) : Habitic
         style = style.addMessage(message)
         oldMessages.add(data)
         return super.configureNotificationBuilder(data)
-                .setStyle(style)
-                .setExtras(bundleOf(Pair("messages", bundleOf(Pair("messages", oldMessages)))))
+            .setStyle(style)
+            .setExtras(bundleOf(Pair("messages", bundleOf(Pair("messages", oldMessages)))))
     }
 
     private fun makeMessageFromData(data: Map<String, String>): NotificationCompat.MessagingStyle.Message {
@@ -49,9 +49,9 @@ class GroupActivityNotification(context: Context, identifier: String?) : Habitic
         val timestamp = dateFormat.parse(data["timestamp"]) ?: Date()
         val messageText = EmojiParser.parseEmojis(data["message"]?.trim { it <= ' ' })
         return NotificationCompat.MessagingStyle.Message(
-                messageText,
-                timestamp.time,
-                sender
+            messageText,
+            timestamp.time,
+            sender
         )
     }
 
@@ -69,15 +69,19 @@ class GroupActivityNotification(context: Context, identifier: String?) : Habitic
         intent.action = actionName
         intent.putExtra("groupID", groupID)
         val replyPendingIntent: PendingIntent =
-                PendingIntent.getBroadcast(context, groupID.hashCode(),
-                        intent,
-                        PendingIntent.FLAG_UPDATE_CURRENT)
+            PendingIntent.getBroadcast(
+                context, groupID.hashCode(),
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT
+            )
 
         val action: NotificationCompat.Action =
-                NotificationCompat.Action.Builder(R.drawable.ic_send_grey_600_24dp,
-                        context.getString(R.string.reply), replyPendingIntent)
-                        .addRemoteInput(remoteInput)
-                        .build()
+            NotificationCompat.Action.Builder(
+                R.drawable.ic_send_grey_600_24dp,
+                context.getString(R.string.reply), replyPendingIntent
+            )
+                .addRemoteInput(remoteInput)
+                .build()
         notificationBuilder.addAction(action)
     }
 

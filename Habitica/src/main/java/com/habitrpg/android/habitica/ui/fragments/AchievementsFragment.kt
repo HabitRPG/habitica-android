@@ -18,7 +18,7 @@ import io.reactivex.rxjava3.kotlin.Flowables
 import io.reactivex.rxjava3.kotlin.combineLatest
 import javax.inject.Inject
 
-class AchievementsFragment: BaseMainFragment<FragmentRefreshRecyclerviewBinding>(), SwipeRefreshLayout.OnRefreshListener {
+class AchievementsFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>(), SwipeRefreshLayout.OnRefreshListener {
 
     @Inject
     lateinit var inventoryRepository: InventoryRepository
@@ -32,12 +32,11 @@ class AchievementsFragment: BaseMainFragment<FragmentRefreshRecyclerviewBinding>
     private var menuID: Int = 0
     private lateinit var adapter: AchievementsAdapter
     private var useGridLayout = false
-    set(value) {
-        field = value
-        adapter.useGridLayout = value
-        adapter.notifyDataSetChanged()
-    }
-
+        set(value) {
+            field = value
+            adapter.useGridLayout = value
+            adapter.notifyDataSetChanged()
+        }
 
     override fun injectFragment(component: UserComponent) {
         component.inject(this)
@@ -81,48 +80,63 @@ class AchievementsFragment: BaseMainFragment<FragmentRefreshRecyclerviewBinding>
 
         binding?.refreshLayout?.setOnRefreshListener(this)
 
-        compositeSubscription.add(userRepository.getAchievements().map { achievements ->
-            achievements.sortedBy {
-                if (it.category == "onboarding") {
-                    it.index
-                } else {
-                    (it.category?.first()?.toInt() ?: 2) * it.index
+        compositeSubscription.add(
+            userRepository.getAchievements().map { achievements ->
+                achievements.sortedBy {
+                    if (it.category == "onboarding") {
+                        it.index
+                    } else {
+                        (it.category?.first()?.toInt() ?: 2) * it.index
+                    }
                 }
-            }
-        }.combineLatest(Flowables.combineLatest(userRepository.getQuestAchievements(), userRepository.getQuestAchievements()
-                .map { it.mapNotNull { achievement -> achievement.questKey } }
-                .flatMap { inventoryRepository.getQuestContent(it) })).subscribe({
-            val achievements = it.first
-            val entries = mutableListOf<Any>()
-            var lastCategory = ""
-            achievements.forEach { achievement ->
-                val categoryIdentifier = achievement.category ?: ""
-                if (categoryIdentifier != lastCategory) {
-                    val category = Pair(categoryIdentifier, achievements.count { check ->
-                        check.category == categoryIdentifier && check.earned
-                    })
-                    entries.add(category)
-                    lastCategory = categoryIdentifier
-                }
-                entries.add(achievement)
-            }
-            val questAchievements = it.second
-            entries.add(Pair("Quests completed", questAchievements.first.size))
-            entries.addAll(questAchievements.first.map { achievement ->
-                val questContent = questAchievements.second.firstOrNull { achievement.questKey == it.key }
-                achievement.title = questContent?.text
-                achievement
-            })
+            }.combineLatest(
+                Flowables.combineLatest(
+                    userRepository.getQuestAchievements(),
+                    userRepository.getQuestAchievements()
+                        .map { it.mapNotNull { achievement -> achievement.questKey } }
+                        .flatMap { inventoryRepository.getQuestContent(it) }
+                )
+            ).subscribe(
+                {
+                    val achievements = it.first
+                    val entries = mutableListOf<Any>()
+                    var lastCategory = ""
+                    achievements.forEach { achievement ->
+                        val categoryIdentifier = achievement.category ?: ""
+                        if (categoryIdentifier != lastCategory) {
+                            val category = Pair(
+                                categoryIdentifier,
+                                achievements.count { check ->
+                                    check.category == categoryIdentifier && check.earned
+                                }
+                            )
+                            entries.add(category)
+                            lastCategory = categoryIdentifier
+                        }
+                        entries.add(achievement)
+                    }
+                    val questAchievements = it.second
+                    entries.add(Pair("Quests completed", questAchievements.first.size))
+                    entries.addAll(
+                        questAchievements.first.map { achievement ->
+                            val questContent = questAchievements.second.firstOrNull { achievement.questKey == it.key }
+                            achievement.title = questContent?.text
+                            achievement
+                        }
+                    )
 
-            val challengeAchievementCount = user?.challengeAchievements?.size ?: 0
-            if (challengeAchievementCount > 0) {
-                entries.add(Pair("Challenges won", challengeAchievementCount))
-                user?.challengeAchievements?.let { it1 -> entries.addAll(it1) }
-            }
+                    val challengeAchievementCount = user?.challengeAchievements?.size ?: 0
+                    if (challengeAchievementCount > 0) {
+                        entries.add(Pair("Challenges won", challengeAchievementCount))
+                        user?.challengeAchievements?.let { it1 -> entries.addAll(it1) }
+                    }
 
-            adapter.entries = entries
-            adapter.notifyDataSetChanged()
-        }, RxErrorHandler.handleEmptyError()))
+                    adapter.entries = entries
+                    adapter.notifyDataSetChanged()
+                },
+                RxErrorHandler.handleEmptyError()
+            )
+        )
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -132,7 +146,6 @@ class AchievementsFragment: BaseMainFragment<FragmentRefreshRecyclerviewBinding>
             menuItem?.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
             menuItem?.setIcon(R.drawable.ic_round_view_list_24px)
             tintMenuIcon(menuItem)
-
         } else {
             val menuItem = menu.add(R.string.switch_to_grid_view)
             menuID = menuItem?.itemId ?: 0
@@ -155,8 +168,12 @@ class AchievementsFragment: BaseMainFragment<FragmentRefreshRecyclerviewBinding>
     }
 
     override fun onRefresh() {
-        compositeSubscription.add(userRepository.retrieveAchievements().subscribe({
-        }, RxErrorHandler.handleEmptyError(), { binding?.refreshLayout?.isRefreshing = false }))
+        compositeSubscription.add(
+            userRepository.retrieveAchievements().subscribe(
+                {
+                },
+                RxErrorHandler.handleEmptyError(), { binding?.refreshLayout?.isRefreshing = false }
+            )
+        )
     }
-
 }

@@ -17,14 +17,18 @@ class AddTaskWidgetProvider : BaseWidgetProvider() {
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
         super.onUpdate(context, appWidgetManager, appWidgetIds)
         // Get all ids
-        val thisWidget = ComponentName(context,
-                AddTaskWidgetProvider::class.java)
+        val thisWidget = ComponentName(
+            context,
+            AddTaskWidgetProvider::class.java
+        )
         val allWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget)
 
         for (widgetId in allWidgetIds) {
             val options = appWidgetManager.getAppWidgetOptions(widgetId)
-            appWidgetManager.partiallyUpdateAppWidget(widgetId,
-                    sizeRemoteViews(context, options, widgetId))
+            appWidgetManager.partiallyUpdateAppWidget(
+                widgetId,
+                sizeRemoteViews(context, options, widgetId)
+            )
         }
     }
 

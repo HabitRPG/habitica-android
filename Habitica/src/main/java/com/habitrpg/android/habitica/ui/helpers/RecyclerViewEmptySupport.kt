@@ -31,16 +31,16 @@ enum class RecyclerViewState {
 class RecyclerViewEmptySupport : RecyclerView {
     var onRefresh: (() -> Unit)? = null
     var state: RecyclerViewState = RecyclerViewState.LOADING
-    set(value) {
-        field = value
-        when (field) {
-            RecyclerViewState.DISPLAYING_DATA -> updateAdapter(actualAdapter)
-            else -> {
-                updateAdapter(emptyAdapter)
-                emptyAdapter.notifyDataSetChanged()
+        set(value) {
+            field = value
+            when (field) {
+                RecyclerViewState.DISPLAYING_DATA -> updateAdapter(actualAdapter)
+                else -> {
+                    updateAdapter(emptyAdapter)
+                    emptyAdapter.notifyDataSetChanged()
+                }
             }
         }
-    }
 
     private fun updateAdapter(newAdapter: Adapter<*>?) {
         if (adapter != newAdapter) {
@@ -49,10 +49,10 @@ class RecyclerViewEmptySupport : RecyclerView {
     }
 
     var emptyItem: EmptyItem? = null
-    set(value) {
-        field = value
-        emptyAdapter.notifyDataSetChanged()
-    }
+        set(value) {
+            field = value
+            emptyAdapter.notifyDataSetChanged()
+        }
 
     private var actualAdapter: Adapter<*>? = null
     private val emptyAdapter: Adapter<ViewHolder> = object : Adapter<ViewHolder>() {
@@ -160,7 +160,7 @@ class EmptyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         binding.emptyViewTitle.text = emptyItem?.title
         binding.emptyViewDescription.text = emptyItem?.text
 
-        val buttonLabel =emptyItem?.buttonLabel
+        val buttonLabel = emptyItem?.buttonLabel
         if (buttonLabel != null) {
             binding.button.visibility = View.VISIBLE
             binding.button.text = buttonLabel

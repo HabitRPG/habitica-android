@@ -64,14 +64,14 @@ class EquipmentRecyclerViewAdapter : BaseRecyclerViewAdapter<Equipment, Equipmen
             if (gear.key == equippedGear) {
                 binding.equippedIndicator.visibility = View.VISIBLE
                 binding.gearContainer.setBackgroundColor(ContextCompat.getColor(context, R.color.lightly_tinted_background))
-                binding.gearIconBackgroundView .background = ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_content)
+                binding.gearIconBackgroundView.background = ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_content)
             } else {
                 binding.equippedIndicator.visibility = View.GONE
                 binding.gearContainer.setBackgroundResource(R.drawable.selection_highlight)
                 binding.gearIconBackgroundView.background = ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_window)
             }
             binding.twoHandedView.visibility = if (gear.twoHanded) View.VISIBLE else View.GONE
-            DataBindingUtils.loadImage(binding.gearImage, "shop_"+gear.key)
+            DataBindingUtils.loadImage(binding.gearImage, "shop_" + gear.key)
 
             set(binding.strLabel, binding.strValue, gear.str)
             set(binding.conLabel, binding.conValue, gear.con)

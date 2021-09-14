@@ -19,7 +19,8 @@ import com.habitrpg.android.habitica.ui.helpers.EmptyItem
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import javax.inject.Inject
 
-class EquipmentDetailFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>(),
+class EquipmentDetailFragment :
+    BaseMainFragment<FragmentRefreshRecyclerviewBinding>(),
     SwipeRefreshLayout.OnRefreshListener {
 
     @Inject
@@ -38,10 +39,15 @@ class EquipmentDetailFragment : BaseMainFragment<FragmentRefreshRecyclerviewBind
 
     private var adapter: EquipmentRecyclerViewAdapter = EquipmentRecyclerViewAdapter()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        compositeSubscription.add(this.adapter.equipEvents.flatMapMaybe { key -> inventoryRepository.equipGear(user, key, isCostume ?: false).firstElement() }
-                .subscribe({ }, RxErrorHandler.handleEmptyError()))
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        compositeSubscription.add(
+            this.adapter.equipEvents.flatMapMaybe { key -> inventoryRepository.equipGear(user, key, isCostume ?: false).firstElement() }
+                .subscribe({ }, RxErrorHandler.handleEmptyError())
+        )
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
@@ -88,8 +94,13 @@ class EquipmentDetailFragment : BaseMainFragment<FragmentRefreshRecyclerviewBind
     }
 
     override fun onRefresh() {
-        compositeSubscription.add(userRepository.retrieveUser(false, true).subscribe({
-            binding?.refreshLayout?.isRefreshing = false
-        }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(
+            userRepository.retrieveUser(false, true).subscribe(
+                {
+                    binding?.refreshLayout?.isRefreshing = false
+                },
+                RxErrorHandler.handleEmptyError()
+            )
+        )
     }
 }

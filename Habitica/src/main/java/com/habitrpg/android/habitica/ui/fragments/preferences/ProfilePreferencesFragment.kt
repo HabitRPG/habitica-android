@@ -10,13 +10,13 @@ import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.rxjava3.core.Flowable
 
-class ProfilePreferencesFragment: BasePreferencesFragment(), SharedPreferences.OnSharedPreferenceChangeListener {
+class ProfilePreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnSharedPreferenceChangeListener {
 
     override var user: User? = null
-    set(value) {
-        field = value
-        updateUserFields()
-    }
+        set(value) {
+            field = value
+            updateUserFields()
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         HabiticaBaseApplication.userComponent?.inject(this)
@@ -26,7 +26,6 @@ class ProfilePreferencesFragment: BasePreferencesFragment(), SharedPreferences.O
     override fun onResume() {
         super.onResume()
         preferenceManager.sharedPreferences.registerOnSharedPreferenceChangeListener(this)
-
     }
 
     override fun onPause() {

@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica.ui
 
-
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
@@ -15,9 +14,10 @@ class SpeechBubbleView(context: Context, attrs: AttributeSet) : FrameLayout(cont
 
     init {
         val attributes = context.theme.obtainStyledAttributes(
-                attrs,
-                R.styleable.SpeechBubbleView,
-                0, 0)
+            attrs,
+            R.styleable.SpeechBubbleView,
+            0, 0
+        )
 
         binding.namePlate.text = attributes.getString(R.styleable.SpeechBubbleView_namePlate)
         binding.textView.text = attributes.getString(R.styleable.SpeechBubbleView_text)

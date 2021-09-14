@@ -11,10 +11,10 @@ open class InboxConversation : RealmObject(), BaseObject {
     @PrimaryKey
     var combinedID: String = ""
     var uuid: String = ""
-    set(value) {
-        field = value
-        combinedID = userID + value
-    }
+        set(value) {
+            field = value
+            combinedID = userID + value
+        }
     var userID: String = ""
         set(value) {
             field = value

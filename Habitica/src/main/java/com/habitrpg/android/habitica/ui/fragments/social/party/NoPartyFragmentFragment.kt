@@ -31,11 +31,8 @@ import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.helpers.setMarkdown
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
-import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import javax.inject.Inject
 import kotlin.math.roundToInt
-
 
 class NoPartyFragmentFragment : BaseMainFragment<FragmentNoPartyBinding>() {
 
@@ -62,12 +59,17 @@ class NoPartyFragmentFragment : BaseMainFragment<FragmentNoPartyBinding>() {
 
         binding?.invitationsView?.acceptCall = {
             socialRepository.joinGroup(it)
-                    .flatMap { userRepository.retrieveUser(false) }
-                    .subscribe({
+                .flatMap { userRepository.retrieveUser(false) }
+                .subscribe(
+                    {
                         parentFragmentManager.popBackStack()
-                        MainNavigationController.navigate(R.id.partyFragment,
-                                bundleOf(Pair("partyID", user?.party?.id)))
-                    }, RxErrorHandler.handleEmptyError())
+                        MainNavigationController.navigate(
+                            R.id.partyFragment,
+                            bundleOf(Pair("partyID", user?.party?.id))
+                        )
+                    },
+                    RxErrorHandler.handleEmptyError()
+                )
         }
 
         binding?.invitationsView?.rejectCall = {
@@ -77,11 +79,14 @@ class NoPartyFragmentFragment : BaseMainFragment<FragmentNoPartyBinding>() {
 
         binding?.invitationsView?.setLeader = { leader ->
             compositeSubscription.add(
-                    socialRepository.getMember(leader)
-                            .subscribe({
-                                binding?.root?.findViewById<AvatarView>(R.id.groupleader_avatar_view)?.setAvatar(it)
-                                binding?.root?.findViewById<TextView>(R.id.groupleader_text_view)?.text = getString(R.string.invitation_title,it.displayName, binding?.invitationsView?.groupName)
-                            }, RxErrorHandler.handleEmptyError())
+                socialRepository.getMember(leader)
+                    .subscribe(
+                        {
+                            binding?.root?.findViewById<AvatarView>(R.id.groupleader_avatar_view)?.setAvatar(it)
+                            binding?.root?.findViewById<TextView>(R.id.groupleader_text_view)?.text = getString(R.string.invitation_title, it.displayName, binding?.invitationsView?.groupName)
+                        },
+                        RxErrorHandler.handleEmptyError()
+                    )
             )
         }
 
@@ -141,33 +146,42 @@ class NoPartyFragmentFragment : BaseMainFragment<FragmentNoPartyBinding>() {
         if (it.resultCode == Activity.RESULT_OK) {
             val bundle = it.data?.extras
             if (bundle?.getString("groupType") == "party") {
-                socialRepository.createGroup(bundle.getString("name"),
+                socialRepository.createGroup(
+                    bundle.getString("name"),
                     bundle.getString("description"),
                     bundle.getString("leader"),
                     "party",
                     bundle.getString("privacy"),
-                    bundle.getBoolean("leaderCreateChallenge"))
+                    bundle.getBoolean("leaderCreateChallenge")
+                )
                     .flatMap {
                         userRepository.retrieveUser(false)
                     }
-                    .subscribe({
-                        if (isAdded) {
-                            parentFragmentManager.popBackStack()
-                        }
-                        MainNavigationController.navigate(R.id.partyFragment,
-                            bundleOf(Pair("partyID", user?.party?.id)))
-                    }, RxErrorHandler.handleEmptyError())
+                    .subscribe(
+                        {
+                            if (isAdded) {
+                                parentFragmentManager.popBackStack()
+                            }
+                            MainNavigationController.navigate(
+                                R.id.partyFragment,
+                                bundleOf(Pair("partyID", user?.party?.id))
+                            )
+                        },
+                        RxErrorHandler.handleEmptyError()
+                    )
             }
         }
     }
 
     private fun refresh() {
-        compositeSubscription.add(userRepository.retrieveUser(false, forced = true)
+        compositeSubscription.add(
+            userRepository.retrieveUser(false, forced = true)
                 .filter { it.hasParty() }
                 .flatMap { socialRepository.retrieveGroup("party") }
                 .flatMap { group1 -> socialRepository.retrieveGroupMembers(group1.id, true) }
                 .doOnComplete { binding?.refreshLayout?.isRefreshing = false }
-                .subscribe({  }, RxErrorHandler.handleEmptyError()))
+                .subscribe({ }, RxErrorHandler.handleEmptyError())
+        )
     }
 
     override fun onDestroy() {
@@ -191,5 +205,4 @@ class NoPartyFragmentFragment : BaseMainFragment<FragmentNoPartyBinding>() {
             return fragment
         }
     }
-
 }

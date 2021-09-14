@@ -22,20 +22,20 @@ class QuestInviteLocalNotification(context: Context, identifier: String?) : Habi
         val acceptInviteIntent = Intent(context, LocalNotificationActionReceiver::class.java)
         acceptInviteIntent.action = res.getString(R.string.accept_quest_invite)
         val pendingIntentAccept = PendingIntent.getBroadcast(
-                context,
-                3000,
-                acceptInviteIntent,
-                PendingIntent.FLAG_UPDATE_CURRENT
+            context,
+            3000,
+            acceptInviteIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT
         )
         notificationBuilder.addAction(0, "Accept", pendingIntentAccept)
 
         val rejectInviteIntent = Intent(context, LocalNotificationActionReceiver::class.java)
         rejectInviteIntent.action = res.getString(R.string.reject_quest_invite)
         val pendingIntentReject = PendingIntent.getBroadcast(
-                context,
-                2000,
-                rejectInviteIntent,
-                PendingIntent.FLAG_UPDATE_CURRENT
+            context,
+            2000,
+            rejectInviteIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT
         )
         notificationBuilder.addAction(0, "Reject", pendingIntentReject)
     }

@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica.ui.activities
 
-import android.app.ProgressDialog
 import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.Menu
@@ -22,7 +21,7 @@ import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaProgressDialog
 import javax.inject.Inject
 import javax.inject.Named
 
-class FixCharacterValuesActivity: BaseActivity() {
+class FixCharacterValuesActivity : BaseActivity() {
 
     private lateinit var binding: ActivityFixcharacterBinding
     @Inject
@@ -48,9 +47,14 @@ class FixCharacterValuesActivity: BaseActivity() {
         setTitle(R.string.fix_character_values)
         setupToolbar(binding.toolbar)
 
-        compositeSubscription.add(repository.getUser(userId).firstElement().subscribe({
-            user = it
-        }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(
+            repository.getUser(userId).firstElement().subscribe(
+                {
+                    user = it
+                },
+                RxErrorHandler.handleEmptyError()
+            )
+        )
 
         setIconBackground(binding.healthIconBackgroundView, ContextCompat.getColor(this, R.color.red_500))
         setIconBackground(binding.experienceIconBackgroundView, ContextCompat.getColor(this, R.color.yellow_500))
@@ -82,12 +86,17 @@ class FixCharacterValuesActivity: BaseActivity() {
             userInfo["stats.mp"] = binding.manaEditText.getDoubleValue()
             userInfo["stats.lvl"] = binding.levelEditText.getDoubleValue().toInt()
             userInfo["achievements.streak"] = binding.streakEditText.getDoubleValue().toInt()
-            compositeSubscription.add(repository.updateUser(userInfo)
+            compositeSubscription.add(
+                repository.updateUser(userInfo)
                     .flatMap { repository.retrieveUser(false, true, true) }
-                    .subscribe({}, RxErrorHandler.handleEmptyError(), {
-                dialog?.dismiss()
-                finish()
-            }))
+                    .subscribe(
+                        {}, RxErrorHandler.handleEmptyError(),
+                        {
+                            dialog?.dismiss()
+                            finish()
+                        }
+                    )
+            )
             return true
         }
 
@@ -95,12 +104,12 @@ class FixCharacterValuesActivity: BaseActivity() {
     }
 
     private var user: User? = null
-    set(value) {
-        field = value
-        if (value != null) {
-            updateFields(value)
+        set(value) {
+            field = value
+            if (value != null) {
+                updateFields(value)
+            }
         }
-    }
 
     private fun updateFields(user: User) {
         val stats = user.stats ?: return
@@ -146,5 +155,4 @@ class FixCharacterValuesActivity: BaseActivity() {
             0.0
         }
     }
-
 }

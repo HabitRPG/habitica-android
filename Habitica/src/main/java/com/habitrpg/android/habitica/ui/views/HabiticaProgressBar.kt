@@ -16,21 +16,20 @@ import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import kotlin.math.min
 
-
 class HabiticaProgressBar(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs) {
     val binding = ProgressBarBinding.inflate(context.layoutInflater, this)
 
     var barForegroundColor: Int = 0
-    set(value) {
-        field = value
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
-            DataBindingUtils.setRoundedBackground(binding.bar, value)
-        } else {
-            val bar: ImageView = findViewById(R.id.bar)
-            ImageViewCompat.setImageTintList(bar, ColorStateList.valueOf(field))
-            ImageViewCompat.setImageTintMode(bar, PorterDuff.Mode.SRC_IN)
+        set(value) {
+            field = value
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+                DataBindingUtils.setRoundedBackground(binding.bar, value)
+            } else {
+                val bar: ImageView = findViewById(R.id.bar)
+                ImageViewCompat.setImageTintList(bar, ColorStateList.valueOf(field))
+                ImageViewCompat.setImageTintMode(bar, PorterDuff.Mode.SRC_IN)
+            }
         }
-    }
 
     var barPendingColor: Int = 0
         set(value) {
@@ -39,12 +38,12 @@ class HabiticaProgressBar(context: Context, attrs: AttributeSet?) : FrameLayout(
         }
 
     var barBackgroundColor: Int = 0
-    set(value) {
-        field = value
-        if (value != 0) {
-            DataBindingUtils.setRoundedBackground(this, value)
+        set(value) {
+            field = value
+            if (value != 0) {
+                DataBindingUtils.setRoundedBackground(this, value)
+            }
         }
-    }
 
     private var currentValue: Double = 0.0
     private var maxValue: Double = 0.0
@@ -73,15 +72,15 @@ class HabiticaProgressBar(context: Context, attrs: AttributeSet?) : FrameLayout(
         View.inflate(context, R.layout.progress_bar, this)
 
         val attributes = context.theme?.obtainStyledAttributes(
-                attrs,
-                R.styleable.HabiticaProgressBar,
-                0, 0)
+            attrs,
+            R.styleable.HabiticaProgressBar,
+            0, 0
+        )
 
         barForegroundColor = attributes?.getColor(R.styleable.HabiticaProgressBar_barForegroundColor, 0) ?: 0
         barPendingColor = attributes?.getColor(R.styleable.HabiticaProgressBar_barPendingColor, 0) ?: 0
         barBackgroundColor = attributes?.getColor(R.styleable.HabiticaProgressBar_barBackgroundColor, 0) ?: 0
     }
-
 
     private fun setBarWeight(percent: Double) {
         setLayoutWeight(binding.bar, percent)
@@ -91,7 +90,6 @@ class HabiticaProgressBar(context: Context, attrs: AttributeSet?) : FrameLayout(
         setLayoutWeight(binding.pendingBar, percent)
         setLayoutWeight(binding.pendingEmptyBarSpace, 1.0f - percent)
     }
-
 
     fun set(value: Double, valueMax: Double) {
         currentValue = value

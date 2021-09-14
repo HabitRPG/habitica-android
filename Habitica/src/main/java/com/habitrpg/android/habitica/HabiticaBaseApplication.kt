@@ -48,7 +48,7 @@ import org.solovyev.android.checkout.Checkout
 import org.solovyev.android.checkout.PurchaseVerifier
 import javax.inject.Inject
 
-//contains all HabiticaApplicationLogic except dagger componentInitialisation
+// contains all HabiticaApplicationLogic except dagger componentInitialisation
 abstract class HabiticaBaseApplication : Application() {
     @Inject
     internal lateinit var lazyApiHelper: ApiClient
@@ -90,12 +90,11 @@ abstract class HabiticaBaseApplication : Application() {
             try {
                 Amplitude.getInstance().initialize(this, getString(R.string.amplitude_app_id)).enableForegroundTracking(this)
                 val identify = Identify()
-                        .setOnce("androidStore", BuildConfig.STORE)
-                        .set("launch_screen", sharedPrefs.getString("launch_screen", ""))
+                    .setOnce("androidStore", BuildConfig.STORE)
+                    .set("launch_screen", sharedPrefs.getString("launch_screen", ""))
                 Amplitude.getInstance().identify(identify)
             } catch (ignored: Resources.NotFoundException) {
             }
-
         }
         var builder = ImageLoader.Builder(this)
             .transition(CrossfadeTransition())
@@ -121,9 +120,9 @@ abstract class HabiticaBaseApplication : Application() {
     protected open fun setupRealm() {
         Realm.init(this)
         val builder = RealmConfiguration.Builder()
-                .schemaVersion(1)
-                .deleteRealmIfMigrationNeeded()
-                .allowWritesOnUiThread(true)
+            .schemaVersion(1)
+            .deleteRealmIfMigrationNeeded()
+            .allowWritesOnUiThread(true)
             .compactOnLaunch { totalBytes, usedBytes ->
 
                 // Compact if the file is over 100MB in size and less than 50% 'used'
@@ -133,9 +132,8 @@ abstract class HabiticaBaseApplication : Application() {
         try {
             Realm.setDefaultConfiguration(builder.build())
         } catch (ignored: UnsatisfiedLinkError) {
-            //Catch crash in tests
+            // Catch crash in tests
         }
-
     }
 
     private fun checkIfNewVersion() {
@@ -168,13 +166,20 @@ abstract class HabiticaBaseApplication : Application() {
 
     protected abstract fun initDagger(): AppComponent
 
-    override fun openOrCreateDatabase(name: String,
-                                      mode: Int, factory: SQLiteDatabase.CursorFactory?): SQLiteDatabase {
+    override fun openOrCreateDatabase(
+        name: String,
+        mode: Int,
+        factory: SQLiteDatabase.CursorFactory?
+    ): SQLiteDatabase {
         return super.openOrCreateDatabase(getDatabasePath(name).absolutePath, mode, factory)
     }
 
-    override fun openOrCreateDatabase(name: String,
-                                      mode: Int, factory: SQLiteDatabase.CursorFactory?, errorHandler: DatabaseErrorHandler?): SQLiteDatabase {
+    override fun openOrCreateDatabase(
+        name: String,
+        mode: Int,
+        factory: SQLiteDatabase.CursorFactory?,
+        errorHandler: DatabaseErrorHandler?
+    ): SQLiteDatabase {
         return super.openOrCreateDatabase(getDatabasePath(name).absolutePath, mode, factory, errorHandler)
     }
 
@@ -192,19 +197,22 @@ abstract class HabiticaBaseApplication : Application() {
     }
 
     private fun createBillingAndCheckout() {
-        billing = Billing(this, object : Billing.DefaultConfiguration() {
-            override fun getPublicKey(): String {
-                return "DONT-NEED-IT"
-            }
+        billing = Billing(
+            this,
+            object : Billing.DefaultConfiguration() {
+                override fun getPublicKey(): String {
+                    return "DONT-NEED-IT"
+                }
 
-            override fun getCache(): Cache {
-                return Billing.newCache()
-            }
+                override fun getCache(): Cache {
+                    return Billing.newCache()
+                }
 
-            override fun getPurchaseVerifier(): PurchaseVerifier {
-                return HabiticaPurchaseVerifier(this@HabiticaBaseApplication, lazyApiHelper)
+                override fun getPurchaseVerifier(): PurchaseVerifier {
+                    return HabiticaPurchaseVerifier(this@HabiticaBaseApplication, lazyApiHelper)
+                }
             }
-        })
+        )
 
         billing?.let { checkout = Checkout.forApplication(it) }
     }
@@ -212,8 +220,8 @@ abstract class HabiticaBaseApplication : Application() {
     private fun setupRemoteConfig() {
         val remoteConfig = FirebaseRemoteConfig.getInstance()
         val configSettings = FirebaseRemoteConfigSettings.Builder()
-                .setMinimumFetchIntervalInSeconds(if (BuildConfig.DEBUG) 0 else 3600)
-                .build()
+            .setMinimumFetchIntervalInSeconds(if (BuildConfig.DEBUG) 0 else 3600)
+            .build()
         remoteConfig.setConfigSettingsAsync(configSettings)
         remoteConfig.setDefaultsAsync(R.xml.remote_config_defaults)
         remoteConfig.fetchAndActivate()

@@ -21,37 +21,38 @@ class UsernameLabel(context: Context?, attrs: AttributeSet?) : LinearLayout(cont
     private val tierIconView = ImageView(context)
 
     var username: String? = ""
-    set(value) {
-        field = value
-        textView.text = value
-    }
+        set(value) {
+            field = value
+            textView.text = value
+        }
 
     var isNPC: Boolean = false
-    set(value) {
-        field = value
-        tier = tier
-    }
+        set(value) {
+            field = value
+            tier = tier
+        }
 
     var tier: Int = 0
-    set(value) {
-        field = value
-        if (isNPC) {
-            textView.setTextColor(ContextCompat.getColor(context, R.color.contributor_npc))
-        } else {
-            textView.setTextColor(PlayerTier.getColorForTier(context, value))
+        set(value) {
+            field = value
+            if (isNPC) {
+                textView.setTextColor(ContextCompat.getColor(context, R.color.contributor_npc))
+            } else {
+                textView.setTextColor(PlayerTier.getColorForTier(context, value))
+            }
+            if (value == 0) {
+                tierIconView.visibility = View.GONE
+            } else {
+                tierIconView.visibility = View.VISIBLE
+                tierIconView.setImageBitmap(HabiticaIconsHelper.imageOfContributorBadge(value.toFloat(), isNPC))
+            }
         }
-        if (value == 0) {
-            tierIconView.visibility = View.GONE
-        } else {
-            tierIconView.visibility = View.VISIBLE
-            tierIconView.setImageBitmap(HabiticaIconsHelper.imageOfContributorBadge(value.toFloat(), isNPC))
-        }
-    }
 
     init {
         val textViewParams = LayoutParams(
-                FrameLayout.LayoutParams.WRAP_CONTENT,
-                FrameLayout.LayoutParams.WRAP_CONTENT)
+            FrameLayout.LayoutParams.WRAP_CONTENT,
+            FrameLayout.LayoutParams.WRAP_CONTENT
+        )
         textViewParams.gravity = Gravity.CENTER_VERTICAL
         textViewParams.weight = 1.0f
         addView(textView, textViewParams)
@@ -60,8 +61,9 @@ class UsernameLabel(context: Context?, attrs: AttributeSet?) : LinearLayout(cont
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14f)
         TextViewCompat.setTextAppearance(textView, R.style.Body1)
         val iconViewParams = LayoutParams(
-                FrameLayout.LayoutParams.WRAP_CONTENT,
-                FrameLayout.LayoutParams.WRAP_CONTENT)
+            FrameLayout.LayoutParams.WRAP_CONTENT,
+            FrameLayout.LayoutParams.WRAP_CONTENT
+        )
         iconViewParams.gravity = Gravity.CENTER_VERTICAL
         addView(tierIconView, iconViewParams)
     }

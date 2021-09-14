@@ -8,18 +8,20 @@ import com.habitrpg.android.habitica.extensions.filterOptionalDoOnEmpty
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
-import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.BackpressureStrategy
 import org.greenrobot.eventbus.EventBus
 
-class PartyViewModel: GroupViewModel() {
+class PartyViewModel : GroupViewModel() {
 
     internal val isQuestActive: Boolean
         get() = getGroupData().value?.quest?.active == true
 
     internal val isUserOnQuest: Boolean
-        get() = !(getGroupData().value?.quest?.members?.none { it.key == getUserData().value?.id }
-                ?: true)
+        get() = !(
+            getGroupData().value?.quest?.members?.none { it.key == getUserData().value?.id }
+                ?: true
+            )
 
     private val members: MutableLiveData<List<Member>?> by lazy {
         MutableLiveData<List<Member>?>()
@@ -37,38 +39,50 @@ class PartyViewModel: GroupViewModel() {
     fun getMembersData(): LiveData<List<Member>?> = members
 
     private fun loadMembersFromLocal() {
-        disposable.add(groupIDSubject.toFlowable(BackpressureStrategy.LATEST)
+        disposable.add(
+            groupIDSubject.toFlowable(BackpressureStrategy.LATEST)
                 .filterOptionalDoOnEmpty { members.value = null }
                 .flatMap { socialRepository.getGroupMembers(it) }
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ members.value = it }, RxErrorHandler.handleEmptyError()))
+                .subscribe({ members.value = it }, RxErrorHandler.handleEmptyError())
+        )
     }
 
     fun acceptQuest() {
         groupIDSubject.value?.value?.let { groupID ->
-            disposable.add(socialRepository.acceptQuest(null, groupID)
+            disposable.add(
+                socialRepository.acceptQuest(null, groupID)
                     .flatMap { userRepository.retrieveUser() }
                     .flatMap { socialRepository.retrieveGroup(groupID) }
-                    .subscribe({
-                        val event = ShowSnackbarEvent()
-                        event.type = HabiticaSnackbar.SnackbarDisplayType.SUCCESS
-                        event.text = "Quest invitation accepted"
-                        EventBus.getDefault().post(event)
-                    }, RxErrorHandler.handleEmptyError()))
+                    .subscribe(
+                        {
+                            val event = ShowSnackbarEvent()
+                            event.type = HabiticaSnackbar.SnackbarDisplayType.SUCCESS
+                            event.text = "Quest invitation accepted"
+                            EventBus.getDefault().post(event)
+                        },
+                        RxErrorHandler.handleEmptyError()
+                    )
+            )
         }
     }
 
     fun rejectQuest() {
         groupIDSubject.value?.value?.let { groupID ->
-            disposable.add(socialRepository.rejectQuest(null, groupID)
+            disposable.add(
+                socialRepository.rejectQuest(null, groupID)
                     .flatMap { userRepository.retrieveUser() }
                     .flatMap { socialRepository.retrieveGroup(groupID) }
-                    .subscribe({
-                        val event = ShowSnackbarEvent()
-                        event.type = HabiticaSnackbar.SnackbarDisplayType.FAILURE
-                        event.text = "Quest invitation rejected"
-                        EventBus.getDefault().post(event)
-                    }, RxErrorHandler.handleEmptyError()))
+                    .subscribe(
+                        {
+                            val event = ShowSnackbarEvent()
+                            event.type = HabiticaSnackbar.SnackbarDisplayType.FAILURE
+                            event.text = "Quest invitation rejected"
+                            EventBus.getDefault().post(event)
+                        },
+                        RxErrorHandler.handleEmptyError()
+                    )
+            )
         }
     }
 
@@ -78,11 +92,16 @@ class PartyViewModel: GroupViewModel() {
     }
 
     fun loadPartyID() {
-        disposable.add(userRepository.getUser()
+        disposable.add(
+            userRepository.getUser()
                 .map { it.party?.id ?: "" }
                 .distinctUntilChanged()
-                .subscribe({ groupID ->
-                    setGroupID(groupID)
-                }, RxErrorHandler.handleEmptyError()))
+                .subscribe(
+                    { groupID ->
+                        setGroupID(groupID)
+                    },
+                    RxErrorHandler.handleEmptyError()
+                )
+        )
     }
 }

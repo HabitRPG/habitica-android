@@ -22,7 +22,6 @@ import com.plattysoft.leonids.ParticleSystem
 import javax.inject.Inject
 import javax.inject.Named
 
-
 class AboutFragment : BaseMainFragment<FragmentAboutBinding>() {
 
     @field:[Inject Named(AppModule.NAMED_USER_ID)]
@@ -128,39 +127,39 @@ class AboutFragment : BaseMainFragment<FragmentAboutBinding>() {
     private fun doTheThing() {
         val context = context ?: return
         FirebaseAnalytics.getInstance(context).logEvent("found_easter_egg", null)
-        DataBindingUtils.loadImage(context,"Pet-Sabretooth-Base") {bitmap ->
+        DataBindingUtils.loadImage(context, "Pet-Sabretooth-Base") { bitmap ->
             activity?.runOnUiThread {
                 activity?.let {
                     ParticleSystem(it, 50, bitmap, 3000)
-                            .setAcceleration(0.00013f, 90)
-                            .setSpeedByComponentsRange(-0.08f, 0.08f, 0.05f, 0.1f)
-                            .setFadeOut(200, AccelerateInterpolator())
-                            .setRotationSpeed(100f)
-                            .emitWithGravity(binding?.anchor, Gravity.BOTTOM, 20, 10000)
+                        .setAcceleration(0.00013f, 90)
+                        .setSpeedByComponentsRange(-0.08f, 0.08f, 0.05f, 0.1f)
+                        .setFadeOut(200, AccelerateInterpolator())
+                        .setRotationSpeed(100f)
+                        .emitWithGravity(binding?.anchor, Gravity.BOTTOM, 20, 10000)
                 }
             }
         }
-        DataBindingUtils.loadImage(context,"Pet-Sabretooth-Golden") {bitmap ->
+        DataBindingUtils.loadImage(context, "Pet-Sabretooth-Golden") { bitmap ->
             activity?.runOnUiThread {
                 activity?.let {
                     ParticleSystem(it, 50, bitmap, 3000)
-                            .setAcceleration(0.00013f, 90)
-                            .setSpeedByComponentsRange(-0.08f, 0.08f, 0.05f, 0.1f)
-                            .setFadeOut(200, AccelerateInterpolator())
-                            .setRotationSpeed(100f)
-                            .emitWithGravity(binding?.anchor, Gravity.BOTTOM, 20, 10000)
+                        .setAcceleration(0.00013f, 90)
+                        .setSpeedByComponentsRange(-0.08f, 0.08f, 0.05f, 0.1f)
+                        .setFadeOut(200, AccelerateInterpolator())
+                        .setRotationSpeed(100f)
+                        .emitWithGravity(binding?.anchor, Gravity.BOTTOM, 20, 10000)
                 }
             }
         }
-        DataBindingUtils.loadImage(context, "Pet-Sabretooth-Red") {bitmap ->
+        DataBindingUtils.loadImage(context, "Pet-Sabretooth-Red") { bitmap ->
             activity?.runOnUiThread {
                 activity?.let {
                     ParticleSystem(it, 50, bitmap, 3000)
-                            .setAcceleration(0.00013f, 90)
-                            .setSpeedByComponentsRange(-0.08f, 0.08f, 0.05f, 0.1f)
-                            .setFadeOut(200, AccelerateInterpolator())
-                            .setRotationSpeed(100f)
-                            .emitWithGravity(binding?.anchor, Gravity.BOTTOM, 20, 10000)
+                        .setAcceleration(0.00013f, 90)
+                        .setSpeedByComponentsRange(-0.08f, 0.08f, 0.05f, 0.1f)
+                        .setFadeOut(200, AccelerateInterpolator())
+                        .setRotationSpeed(100f)
+                        .emitWithGravity(binding?.anchor, Gravity.BOTTOM, 20, 10000)
                 }
             }
         }

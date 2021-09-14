@@ -65,7 +65,6 @@ class PurchaseHandler(activity: Activity, val analyticsManager: AnalyticsManager
         getSKU(ProductTypes.IN_APP, identifier, onSuccess)
     }
 
-
     private fun getSKUs(type: String, identifiers: List<String>, onSuccess: ((List<Sku>) -> Unit)) {
         getProduct(type, identifiers) {
             onSuccess(it.skus)
@@ -73,19 +72,25 @@ class PurchaseHandler(activity: Activity, val analyticsManager: AnalyticsManager
     }
 
     private fun getProduct(type: String, identifiers: List<String>, onSuccess: ((Inventory.Product) -> Unit)) {
-        loadInventory(type, identifiers, Inventory.Callback { products ->
-            val purchases = products.get(type)
-            if (!purchases.supported) return@Callback
-            onSuccess(purchases)
-        })
+        loadInventory(
+            type, identifiers,
+            Inventory.Callback { products ->
+                val purchases = products.get(type)
+                if (!purchases.supported) return@Callback
+                onSuccess(purchases)
+            }
+        )
     }
 
     private fun getSKU(type: String, identifier: String, onSuccess: ((Sku) -> Unit)) {
-        loadInventory(type, listOf(identifier), Inventory.Callback { products ->
-            val purchases = products.get(type)
-            if (!purchases.supported) return@Callback
-            purchases.skus.firstOrNull()?.let { onSuccess(it) }
-        })
+        loadInventory(
+            type, listOf(identifier),
+            Inventory.Callback { products ->
+                val purchases = products.get(type)
+                if (!purchases.supported) return@Callback
+                purchases.skus.firstOrNull()?.let { onSuccess(it) }
+            }
+        )
     }
 
     private fun loadInventory(type: String, skus: List<String>, callback: Inventory.Callback) {
@@ -101,132 +106,166 @@ class PurchaseHandler(activity: Activity, val analyticsManager: AnalyticsManager
 
     fun purchaseSubscription(sku: Sku, onSuccess: (() -> Unit)) {
         sku.id.code?.let { code ->
-            billingRequests?.isPurchased(ProductTypes.SUBSCRIPTION, code, object : RequestListener<Boolean> {
-                override fun onSuccess(aBoolean: Boolean) {
-                    if (!aBoolean) {
-                        // no current product exist
-                        checkout?.let {
-                            billingRequests?.purchase(ProductTypes.SUBSCRIPTION, code, null, it.createOneShotPurchaseFlow(object : RequestListener<Purchase> {
-                                override fun onSuccess(result: Purchase) {
-                                    onSuccess()
-                                }
+            billingRequests?.isPurchased(
+                ProductTypes.SUBSCRIPTION, code,
+                object : RequestListener<Boolean> {
+                    override fun onSuccess(aBoolean: Boolean) {
+                        if (!aBoolean) {
+                            // no current product exist
+                            checkout?.let {
+                                billingRequests?.purchase(
+                                    ProductTypes.SUBSCRIPTION, code, null,
+                                    it.createOneShotPurchaseFlow(object : RequestListener<Purchase> {
+                                        override fun onSuccess(result: Purchase) {
+                                            onSuccess()
+                                        }
 
-                                override fun onError(response: Int, e: java.lang.Exception) {}
-                            }))
+                                        override fun onError(response: Int, e: java.lang.Exception) {}
+                                    })
+                                )
+                            }
+                        } else {
+                            onSuccess()
                         }
-                    } else {
-                        onSuccess()
                     }
-                }
 
-                override fun onError(i: Int, e: Exception) { analyticsManager.logException(e) }
-            })
+                    override fun onError(i: Int, e: Exception) { analyticsManager.logException(e) }
+                }
+            )
         }
     }
 
     fun checkForSubscription(onSubscriptionFound: ((Purchase) -> Unit)) {
-        billingRequests?.getPurchases(ProductTypes.SUBSCRIPTION, null, object : RequestListener<Purchases> {
-            override fun onSuccess(result: Purchases) {
-                var lastPurchase: Purchase? = null
-                for (purchase in result.list) {
-                    if (lastPurchase != null && lastPurchase.time > purchase.time) {
-                        continue
-                    } else {
-                        lastPurchase = purchase
+        billingRequests?.getPurchases(
+            ProductTypes.SUBSCRIPTION, null,
+            object : RequestListener<Purchases> {
+                override fun onSuccess(result: Purchases) {
+                    var lastPurchase: Purchase? = null
+                    for (purchase in result.list) {
+                        if (lastPurchase != null && lastPurchase.time > purchase.time) {
+                            continue
+                        } else {
+                            lastPurchase = purchase
+                        }
+                    }
+                    if (lastPurchase != null) {
+                        onSubscriptionFound(lastPurchase)
                     }
                 }
-                if (lastPurchase != null) {
-                    onSubscriptionFound(lastPurchase)
+
+                override fun onError(response: Int, e: java.lang.Exception) {
                 }
             }
-
-            override fun onError(response: Int, e: java.lang.Exception) {
-            }
-        })
+        )
     }
 
     private fun checkIfPendingPurchases() {
-        billingRequests?.getAllPurchases(ProductTypes.IN_APP, object : RequestListener<Purchases> {
-            override fun onSuccess(purchases: Purchases) {
-                for (purchase in purchases.list) {
-                    if (PurchaseTypes.allGemTypes.contains(purchase.sku)) {
-                        billingRequests?.consume(purchase.token, object : RequestListener<Any> {
-                            override fun onSuccess(o: Any) {
-                                //EventBus.getDefault().post(new BoughtGemsEvent(GEMS_TO_ADD));
-                            }
+        billingRequests?.getAllPurchases(
+            ProductTypes.IN_APP,
+            object : RequestListener<Purchases> {
+                override fun onSuccess(purchases: Purchases) {
+                    for (purchase in purchases.list) {
+                        if (PurchaseTypes.allGemTypes.contains(purchase.sku)) {
+                            billingRequests?.consume(
+                                purchase.token,
+                                object : RequestListener<Any> {
+                                    override fun onSuccess(o: Any) {
+                                        // EventBus.getDefault().post(new BoughtGemsEvent(GEMS_TO_ADD));
+                                    }
 
-                            override fun onError(i: Int, e: Exception) {
-                                analyticsManager.logException(e)
-                            }
-                        })
+                                    override fun onError(i: Int, e: Exception) {
+                                        analyticsManager.logException(e)
+                                    }
+                                }
+                            )
+                        }
                     }
                 }
-            }
 
-            override fun onError(i: Int, e: Exception) {
-                analyticsManager.logException(e)
+                override fun onError(i: Int, e: Exception) {
+                    analyticsManager.logException(e)
+                }
             }
-        })
+        )
     }
 
     fun purchaseGems(identifier: String) {
         checkout?.let {
             it.destroyPurchaseFlow()
-            billingRequests?.purchase(ProductTypes.IN_APP, identifier, null, it.createOneShotPurchaseFlow(
-                PURCHASE_REQUEST_CODE, object : RequestListener<Purchase> {
-                override fun onSuccess(result: Purchase) {
-                    billingRequests?.consume(result.token, object : RequestListener<Any> {
-                        override fun onSuccess(o: Any) { /* no-op */ }
+            billingRequests?.purchase(
+                ProductTypes.IN_APP, identifier, null,
+                it.createOneShotPurchaseFlow(
+                    PURCHASE_REQUEST_CODE,
+                    object : RequestListener<Purchase> {
+                        override fun onSuccess(result: Purchase) {
+                            billingRequests?.consume(
+                                result.token,
+                                object : RequestListener<Any> {
+                                    override fun onSuccess(o: Any) { /* no-op */ }
 
-                        override fun onError(i: Int, e: Exception) {
-                            analyticsManager.logException(e)
+                                    override fun onError(i: Int, e: Exception) {
+                                        analyticsManager.logException(e)
+                                    }
+                                }
+                            )
                         }
-                    })
-                }
 
-                override fun onError(response: Int, e: java.lang.Exception) {
-                    analyticsManager.logException(e)
-                    if (response == ResponseCodes.ITEM_ALREADY_OWNED) {
-                        checkIfPendingPurchases()
+                        override fun onError(response: Int, e: java.lang.Exception) {
+                            analyticsManager.logException(e)
+                            if (response == ResponseCodes.ITEM_ALREADY_OWNED) {
+                                checkIfPendingPurchases()
+                            }
+                        }
                     }
-                }
-            }))
+                )
+            )
         }
     }
 
     fun purchaseNoRenewSubscription(sku: Sku) {
         checkout?.let {
-            billingRequests?.purchase(ProductTypes.IN_APP, sku.id.code, null, it.createOneShotPurchaseFlow(
-                PURCHASE_REQUEST_CODE, object : RequestListener<Purchase> {
-                override fun onSuccess(result: Purchase) {
-                    billingRequests?.consume(result.token, object : RequestListener<Any> {
-                        override fun onSuccess(o: Any) { /* no-op */ }
+            billingRequests?.purchase(
+                ProductTypes.IN_APP, sku.id.code, null,
+                it.createOneShotPurchaseFlow(
+                    PURCHASE_REQUEST_CODE,
+                    object : RequestListener<Purchase> {
+                        override fun onSuccess(result: Purchase) {
+                            billingRequests?.consume(
+                                result.token,
+                                object : RequestListener<Any> {
+                                    override fun onSuccess(o: Any) { /* no-op */ }
 
-                        override fun onError(i: Int, e: Exception) {
+                                    override fun onError(i: Int, e: Exception) {
+                                        analyticsManager.logException(e)
+                                    }
+                                }
+                            )
+                        }
+
+                        override fun onError(response: Int, e: java.lang.Exception) {
                             analyticsManager.logException(e)
                         }
-                    })
-                }
-
-                override fun onError(response: Int, e: java.lang.Exception) {
-                    analyticsManager.logException(e)
-                }
-            }))
+                    }
+                )
+            )
         }
     }
 
     fun consumePurchase(purchase: Purchase) {
         if (PurchaseTypes.allGemTypes.contains(purchase.sku) || PurchaseTypes.allSubscriptionNoRenewTypes.contains(purchase.sku)) {
-            billingRequests?.consume(purchase.token, object : RequestListener<Any> {
-                override fun onSuccess(result: Any) { /* no-op */ }
+            billingRequests?.consume(
+                purchase.token,
+                object : RequestListener<Any> {
+                    override fun onSuccess(result: Any) { /* no-op */ }
 
-                override fun onError(response: Int, e: Exception) {
-                    analyticsManager.logException(e)
+                    override fun onError(response: Int, e: Exception) {
+                        analyticsManager.logException(e)
+                    }
                 }
-            })
+            )
         }
     }
-    
+
     companion object {
 
         private var handlers = WeakHashMap<Activity, PurchaseHandler>()

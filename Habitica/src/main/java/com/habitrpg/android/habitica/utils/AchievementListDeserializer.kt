@@ -7,7 +7,7 @@ import com.habitrpg.android.habitica.extensions.getAsString
 import com.habitrpg.android.habitica.models.Achievement
 import java.lang.reflect.Type
 
-class AchievementListDeserializer: JsonDeserializer<List<Achievement?>> {
+class AchievementListDeserializer : JsonDeserializer<List<Achievement?>> {
 
     override fun deserialize(json: JsonElement?, typeOfT: Type?, context: JsonDeserializationContext?): List<Achievement?> {
         val achievements = mutableListOf<Achievement>()
@@ -29,5 +29,4 @@ class AchievementListDeserializer: JsonDeserializer<List<Achievement?>> {
         }
         return achievements
     }
-
 }

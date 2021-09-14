@@ -9,12 +9,12 @@ import com.habitrpg.android.habitica.extensions.isUsingNightModeResources
 
 class CurrencyViews : LinearLayout {
     var lightBackground: Boolean = false
-    set(value) {
-        field = value
-        hourglassTextView.lightBackground = value
-        gemTextView.lightBackground = value
-        goldTextView.lightBackground = value
-    }
+        set(value) {
+            field = value
+            hourglassTextView.lightBackground = value
+            gemTextView.lightBackground = value
+            goldTextView.lightBackground = value
+        }
     private val hourglassTextView: CurrencyView = CurrencyView(context, "hourglasses", lightBackground)
     private val goldTextView: CurrencyView = CurrencyView(context, "gold", lightBackground)
     private val gemTextView: CurrencyView = CurrencyView(context, "gems", lightBackground)
@@ -42,12 +42,12 @@ class CurrencyViews : LinearLayout {
         get() = gemTextView.visibility
         set(value) { gemTextView.visibility = value }
 
-
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {
         val attributes = context?.theme?.obtainStyledAttributes(
-                attrs,
-                R.styleable.CurrencyViews,
-                0, 0)
+            attrs,
+            R.styleable.CurrencyViews,
+            0, 0
+        )
         setupViews()
         val fallBackLight = context?.isUsingNightModeResources() != true
         lightBackground = attributes?.getBoolean(R.styleable.CurrencyViews_hasLightBackground, fallBackLight) ?: fallBackLight

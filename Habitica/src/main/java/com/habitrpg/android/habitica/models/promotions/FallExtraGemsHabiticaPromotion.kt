@@ -37,12 +37,12 @@ class FallExtraGemsHabiticaPromotion(startDate: Date?, endDate: Date?) : Habitic
 
     override fun promoBackgroundDrawable(context: Context): Drawable {
         return ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_gray_10)
-                ?: ShapeDrawable()
+            ?: ShapeDrawable()
     }
 
     override fun buttonDrawable(context: Context): Drawable {
         return ContextCompat.getDrawable(context, R.drawable.fall_promo_button_bg)
-                ?: ShapeDrawable()
+            ?: ShapeDrawable()
     }
 
     override fun configurePromoMenuView(view: PromoMenuView) {
@@ -54,8 +54,8 @@ class FallExtraGemsHabiticaPromotion(startDate: Date?, endDate: Date?) : Habitic
         view.setSubtitleText(null)
 
         view.setDecoration(
-                ContextCompat.getDrawable(context, R.drawable.fall_promo_menu_left),
-                ContextCompat.getDrawable(context, R.drawable.fall_promo_menu_right)
+            ContextCompat.getDrawable(context, R.drawable.fall_promo_menu_left),
+            ContextCompat.getDrawable(context, R.drawable.fall_promo_menu_right)
         )
 
         view.binding.button.backgroundTintList = ContextCompat.getColorStateList(context, R.color.gray_1)
@@ -78,9 +78,11 @@ class FallExtraGemsHabiticaPromotion(startDate: Date?, endDate: Date?) : Habitic
         binding.promoBannerRightImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.fall_promo_banner_right))
         binding.promoBannerTitleImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.fall_promo_title))
         val formatter = SimpleDateFormat("MMM d", Locale.getDefault())
-        binding.promoBannerDurationView.text = context.getString(R.string.x_to_y,
-                formatter.format(startDate),
-                formatter.format(endDate))
+        binding.promoBannerDurationView.text = context.getString(
+            R.string.x_to_y,
+            formatter.format(startDate),
+            formatter.format(endDate)
+        )
         binding.promoBannerDurationView.setTextColor(Color.parseColor("#FEE2B6"))
     }
 
@@ -92,18 +94,20 @@ class FallExtraGemsHabiticaPromotion(startDate: Date?, endDate: Date?) : Habitic
         binding.root.background = promoBackgroundDrawable(context)
         binding.purchaseButton.background = buttonDrawable(context)
         val colors = listOf(
-                ContextCompat.getColor(context, R.color.red_10),
-                ContextCompat.getColor(context, R.color.blue_50),
-                ContextCompat.getColor(context, R.color.green_50),
-                ContextCompat.getColor(context, R.color.brand_300)
+            ContextCompat.getColor(context, R.color.red_10),
+            ContextCompat.getColor(context, R.color.blue_50),
+            ContextCompat.getColor(context, R.color.green_50),
+            ContextCompat.getColor(context, R.color.brand_300)
         ).shuffled()
-        val drawable = BitmapDrawable(context.resources,
-                HabiticaIconsHelper.imageOfFallGemPromoBG(
-                        colors[0],
-                        colors[1],
-                        colors[2],
-                        colors[3]
-                ))
+        val drawable = BitmapDrawable(
+            context.resources,
+            HabiticaIconsHelper.imageOfFallGemPromoBG(
+                colors[0],
+                colors[1],
+                colors[2],
+                colors[3]
+            )
+        )
         binding.amountBackgroundLeft.background = drawable
         binding.amountBackgroundRight.background = drawable
         binding.gemAmount.setTextColor(Color.parseColor("#FEE2B6"))
@@ -128,9 +132,11 @@ class FallExtraGemsHabiticaPromotion(startDate: Date?, endDate: Date?) : Habitic
         fragment.binding?.promoBannerSubtitleView?.setText(R.string.limited_event)
         fragment.binding?.promoBannerDurationView?.setTextColor(Color.parseColor("#FEE2B6"))
         val formatter = SimpleDateFormat("MMM d", Locale.getDefault())
-        fragment.binding?.promoBannerDurationView?.text = context.getString(R.string.x_to_y,
-                formatter.format(startDate),
-                formatter.format(endDate))
+        fragment.binding?.promoBannerDurationView?.text = context.getString(
+            R.string.x_to_y,
+            formatter.format(startDate),
+            formatter.format(endDate)
+        )
         fragment.binding?.promoBannerDurationView?.setTextColor(ContextCompat.getColor(context, R.color.white))
         fragment.binding?.promptText?.setText(R.string.fall_promo_info_prompt)
         fragment.binding?.promptText?.setTextColor(Color.parseColor("#F78E2F"))

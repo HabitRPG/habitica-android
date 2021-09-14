@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica.ui.views.subscriptions
 
-
 import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.BitmapDrawable
@@ -82,14 +81,14 @@ class SubscriptionDetailsView : LinearLayout {
             "Google" -> binding.paymentProcessorImageView.setImageResource(R.drawable.payment_google)
             "PayPal" -> binding.paymentProcessorImageView.setImageResource(R.drawable.payment_paypal)
             "Stripe" -> binding.paymentProcessorImageView.setImageResource(R.drawable.payment_stripe)
-             else -> {
-                 if (plan.isGiftedSub) {
-                     binding.paymentProcessorImageView.setImageResource(R.drawable.payment_gift)
-                     binding.subscriptionPaymentMethodTextview.text = context.getString(R.string.gifted)
-                 } else {
-                     binding.paymentProcessorWrapper.visibility = View.GONE
-                 }
-             }
+            else -> {
+                if (plan.isGiftedSub) {
+                    binding.paymentProcessorImageView.setImageResource(R.drawable.payment_gift)
+                    binding.subscriptionPaymentMethodTextview.text = context.getString(R.string.gifted)
+                } else {
+                    binding.paymentProcessorWrapper.visibility = View.GONE
+                }
+            }
         }
 
         if (plan.consecutive?.count == 1) {
@@ -111,9 +110,9 @@ class SubscriptionDetailsView : LinearLayout {
                     /*if (plan.ownerID == currentUserID) {
                         binding.changeSubscriptionDescription.setText(R.string.cancel_subscription_group_plan_owner)
                     } else {*/
-                        binding.changeSubscriptionDescription.setText(R.string.cancel_subscription_group_plan)
-                        binding.changeSubscriptionButton.visibility = View.GONE
-                    //}
+                    binding.changeSubscriptionDescription.setText(R.string.cancel_subscription_group_plan)
+                    binding.changeSubscriptionButton.visibility = View.GONE
+                    // }
                 } else {
                     binding.changeSubscriptionDescription.setText(R.string.cancel_subscription_notgoogle_description)
                 }

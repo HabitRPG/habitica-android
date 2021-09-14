@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica.ui.views.login
 
-
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
@@ -12,7 +11,6 @@ import androidx.appcompat.widget.AppCompatImageView
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 
 class StarView : AppCompatImageView {
-
 
     private var blinkDurations: List<Int>? = null
     private var blinkIndex = 0
@@ -61,6 +59,5 @@ class StarView : AppCompatImageView {
             animator.start()
         } catch (ignored: NullPointerException) {
         }
-
     }
 }

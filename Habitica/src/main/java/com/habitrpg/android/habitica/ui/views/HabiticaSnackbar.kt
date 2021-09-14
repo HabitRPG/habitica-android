@@ -117,7 +117,6 @@ private constructor(parent: ViewGroup, content: View, callback: ContentViewCallb
             return customSnackbar
         }
 
-
         fun showSnackbar(container: ViewGroup, content: CharSequence?, displayType: SnackbarDisplayType, isCelebratory: Boolean = false) {
             showSnackbar(container, null, null, content, null, null, 0, null, displayType, isCelebratory)
         }
@@ -125,7 +124,6 @@ private constructor(parent: ViewGroup, content: View, callback: ContentViewCallb
         fun showSnackbar(container: ViewGroup, leftImage: Drawable, title: CharSequence?, content: CharSequence?, displayType: SnackbarDisplayType, isCelebratory: Boolean = false) {
             showSnackbar(container, leftImage, title, content, null, null, 0, null, displayType, isCelebratory)
         }
-
 
         fun showSnackbar(container: ViewGroup, title: CharSequence?, content: CharSequence?, rightIcon: Drawable, rightTextColor: Int, rightText: String, displayType: SnackbarDisplayType, isCelebratory: Boolean = false) {
             showSnackbar(container, null, title, content, null, rightIcon, rightTextColor, rightText, displayType, isCelebratory)
@@ -137,11 +135,11 @@ private constructor(parent: ViewGroup, content: View, callback: ContentViewCallb
 
         fun showSnackbar(container: ViewGroup, leftImage: Drawable?, title: CharSequence?, content: CharSequence?, specialView: View?, rightIcon: Drawable?, rightTextColor: Int, rightText: String?, displayType: SnackbarDisplayType, isCelebratory: Boolean = false) {
             val snackbar = make(container, Snackbar.LENGTH_LONG)
-                    .setTitle(title)
-                    .setText(content)
-                    .setSpecialView(specialView)
-                    .setLeftIcon(leftImage)
-                    .setRightDiff(rightIcon, rightTextColor, rightText)
+                .setTitle(title)
+                .setText(content)
+                .setSpecialView(specialView)
+                .setLeftIcon(leftImage)
+                .setRightDiff(rightIcon, rightTextColor, rightText)
 
             when (displayType) {
                 SnackbarDisplayType.FAILURE -> snackbar.setBackgroundResource(R.drawable.snackbar_background_red)
@@ -153,32 +151,35 @@ private constructor(parent: ViewGroup, content: View, callback: ContentViewCallb
             snackbar.show()
 
             if (isCelebratory) {
-                container.postDelayed({
-                    ParticleSystem(container, 30, ContextCompat.getDrawable(container.context, R.drawable.confetti_blue), 6000)
+                container.postDelayed(
+                    {
+                        ParticleSystem(container, 30, ContextCompat.getDrawable(container.context, R.drawable.confetti_blue), 6000)
                             .setAcceleration(0.00070f, 90)
                             .setRotationSpeed(144f)
                             .setSpeedByComponentsRange(-0.15f, 0.15f, -0.15f, -0.45f)
                             .setFadeOut(200, AccelerateInterpolator())
                             .emitWithGravity(container, Gravity.BOTTOM, 7, 1000)
-                    ParticleSystem(container, 30, ContextCompat.getDrawable(container.context, R.drawable.confetti_red), 6000)
+                        ParticleSystem(container, 30, ContextCompat.getDrawable(container.context, R.drawable.confetti_red), 6000)
                             .setAcceleration(0.00060f, 90)
                             .setRotationSpeed(144f)
                             .setSpeedByComponentsRange(-0.15f, 0.15f, -0.15f, -0.45f)
                             .setFadeOut(200, AccelerateInterpolator())
                             .emitWithGravity(container, Gravity.BOTTOM, 7, 1000)
-                    ParticleSystem(container, 30, ContextCompat.getDrawable(container.context, R.drawable.confetti_yellow), 6000)
+                        ParticleSystem(container, 30, ContextCompat.getDrawable(container.context, R.drawable.confetti_yellow), 6000)
                             .setAcceleration(0.00070f, 90)
                             .setRotationSpeed(144f)
                             .setSpeedByComponentsRange(-0.15f, 0.15f, -0.15f, -0.45f)
                             .setFadeOut(200, AccelerateInterpolator())
                             .emitWithGravity(container, Gravity.BOTTOM, 7, 1000)
-                    ParticleSystem(container, 30, ContextCompat.getDrawable(container.context, R.drawable.confetti_purple), 6000)
+                        ParticleSystem(container, 30, ContextCompat.getDrawable(container.context, R.drawable.confetti_purple), 6000)
                             .setAcceleration(0.00090f, 90)
                             .setRotationSpeed(144f)
                             .setSpeedByComponentsRange(-0.15f, 0.15f, -0.15f, -0.45f)
                             .setFadeOut(200, AccelerateInterpolator())
                             .emitWithGravity(container, Gravity.BOTTOM, 7, 1000)
-                }, 500)
+                    },
+                    500
+                )
             }
         }
     }

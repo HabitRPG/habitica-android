@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica.ui.fragments.preferences
 
-
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
@@ -44,8 +43,8 @@ class DayStartPreferenceDialogFragment : PreferenceDialogFragmentCompat() {
         val padding = resources.getDimension(R.dimen.card_padding).toInt()
         descriptionTextView?.setPadding(padding, padding, padding, padding)
         val lp = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
         )
         wrapper.addView(picker, lp)
         wrapper.addView(descriptionTextView, lp)
@@ -92,14 +91,15 @@ class DayStartPreferenceDialogFragment : PreferenceDialogFragmentCompat() {
                 preference.text = time
             }
         }
-
     }
 
     companion object {
         val TAG: String? = TimePreferenceDialogFragment::class.java.simpleName
 
         fun newInstance(
-                preferenceFragment: PreferenceFragmentCompat, key: String): DayStartPreferenceDialogFragment {
+            preferenceFragment: PreferenceFragmentCompat,
+            key: String
+        ): DayStartPreferenceDialogFragment {
             val fragment = DayStartPreferenceDialogFragment()
             val arguments = Bundle(1)
             arguments.putString(ARG_KEY, key)

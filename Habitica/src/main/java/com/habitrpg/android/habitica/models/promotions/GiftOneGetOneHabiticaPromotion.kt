@@ -1,8 +1,6 @@
 package com.habitrpg.android.habitica.models.promotions
 
 import android.content.Context
-import android.graphics.Color
-import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.ShapeDrawable
 import android.view.View
@@ -16,7 +14,6 @@ import com.habitrpg.android.habitica.extensions.isUsingNightModeResources
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.ui.fragments.PromoInfoFragment
 import com.habitrpg.android.habitica.ui.fragments.purchases.SubscriptionFragment
-import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.promo.PromoMenuView
 import java.text.SimpleDateFormat
 import java.util.*
@@ -39,12 +36,12 @@ class GiftOneGetOneHabiticaPromotion(startDate: Date?, endDate: Date?) : Habitic
 
     override fun promoBackgroundDrawable(context: Context): Drawable {
         return ContextCompat.getDrawable(context, R.drawable.g1g1_promo_background)
-                ?: ShapeDrawable()
+            ?: ShapeDrawable()
     }
 
     override fun buttonDrawable(context: Context): Drawable {
         return ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_content)
-                ?: ShapeDrawable()
+            ?: ShapeDrawable()
     }
 
     override fun configurePromoMenuView(view: PromoMenuView) {
@@ -54,8 +51,8 @@ class GiftOneGetOneHabiticaPromotion(startDate: Date?, endDate: Date?) : Habitic
         view.setSubtitleText(context.getString(R.string.promo_g1g1_description))
 
         view.setDecoration(
-                ContextCompat.getDrawable(context, R.drawable.g1g1_promo_menu_left),
-                ContextCompat.getDrawable(context, R.drawable.g1g1_promo_menu_right)
+            ContextCompat.getDrawable(context, R.drawable.g1g1_promo_menu_left),
+            ContextCompat.getDrawable(context, R.drawable.g1g1_promo_menu_right)
         )
 
         view.binding.button.backgroundTintList = ContextCompat.getColorStateList(context, R.color.content_background)
@@ -113,9 +110,11 @@ class GiftOneGetOneHabiticaPromotion(startDate: Date?, endDate: Date?) : Habitic
         fragment.binding?.promoBannerTitleText?.text = context.getString(R.string.gift_one_get_one)
         fragment.binding?.promoBannerSubtitleView?.setText(R.string.limited_event)
         val formatter = SimpleDateFormat("MMM d", Locale.getDefault())
-        fragment.binding?.promoBannerDurationView?.text = context.getString(R.string.x_to_y,
-                formatter.format(startDate),
-                formatter.format(endDate))
+        fragment.binding?.promoBannerDurationView?.text = context.getString(
+            R.string.x_to_y,
+            formatter.format(startDate),
+            formatter.format(endDate)
+        )
         fragment.binding?.promoBannerDurationView?.setTextColor(ContextCompat.getColor(context, R.color.white))
         fragment.binding?.promptText?.setText(R.string.g1g1_promo_info_prompt)
         fragment.binding?.promptText?.setTextColor(ContextCompat.getColor(context, R.color.text_teal))

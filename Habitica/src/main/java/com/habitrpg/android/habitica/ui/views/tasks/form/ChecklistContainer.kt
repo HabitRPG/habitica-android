@@ -11,7 +11,9 @@ import com.habitrpg.android.habitica.models.tasks.ChecklistItem
 import com.habitrpg.android.habitica.ui.views.DragLinearLayout
 
 class ChecklistContainer @JvmOverloads constructor(
-        context: Context, attrs: AttributeSet? = null) : DragLinearLayout(context, attrs) {
+    context: Context,
+    attrs: AttributeSet? = null
+) : DragLinearLayout(context, attrs) {
     var checklistItems: List<ChecklistItem>
         get() {
             val list = mutableListOf<ChecklistItem>()
@@ -35,7 +37,7 @@ class ChecklistContainer @JvmOverloads constructor(
                 }
             }
             for (item in value) {
-                addChecklistViewAt(childCount-1, item)
+                addChecklistViewAt(childCount - 1, item)
             }
             val animatedTransitions = LayoutTransition()
             layoutTransition = animatedTransitions
@@ -60,7 +62,7 @@ class ChecklistContainer @JvmOverloads constructor(
                 view.isAddButton = false
                 setViewDraggable(view, view.dragGrip)
             } else if (shouldBecomeNewAddButton(view)) {
-                removeViewAt(childCount-1)
+                removeViewAt(childCount - 1)
                 view.animDuration = 300
                 view.isAddButton = true
                 removeViewDraggable(view)
@@ -84,8 +86,8 @@ class ChecklistContainer @JvmOverloads constructor(
     }
 
     private fun shouldBecomeNewAddButton(view: ChecklistItemFormView): Boolean {
-        if (childCount > 2 && view.item.text?.isEmpty() != false && children.indexOf(view) == childCount-2) {
-            val lastView = (getChildAt(childCount-1) as? ChecklistItemFormView)
+        if (childCount > 2 && view.item.text?.isEmpty() != false && children.indexOf(view) == childCount - 2) {
+            val lastView = (getChildAt(childCount - 1) as? ChecklistItemFormView)
             if (lastView != null && lastView.item.text?.isEmpty() != false) {
                 return true
             }

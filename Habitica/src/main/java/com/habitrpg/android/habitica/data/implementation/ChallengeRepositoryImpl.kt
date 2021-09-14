@@ -11,7 +11,6 @@ import com.habitrpg.android.habitica.models.tasks.TaskList
 import com.habitrpg.android.habitica.models.tasks.TasksOrder
 import io.reactivex.rxjava3.core.Flowable
 
-
 class ChallengeRepositoryImpl(localRepository: ChallengeLocalRepository, apiClient: ApiClient, userID: String) : BaseRepositoryImpl<ChallengeLocalRepository>(localRepository, apiClient, userID), ChallengeRepository {
 
     override fun isChallengeMember(challengeID: String): Flowable<Boolean> {
@@ -85,16 +84,21 @@ class ChallengeRepositoryImpl(localRepository: ChallengeLocalRepository, apiClie
         }
     }
 
-    override fun updateChallenge(challenge: Challenge, fullTaskList: List<Task>,
-                                 addedTaskList: List<Task>, updatedTaskList: List<Task>, removedTaskList: List<String>): Flowable<Challenge> {
+    override fun updateChallenge(
+        challenge: Challenge,
+        fullTaskList: List<Task>,
+        addedTaskList: List<Task>,
+        updatedTaskList: List<Task>,
+        removedTaskList: List<String>
+    ): Flowable<Challenge> {
 
         var flowable: Flowable<*> = Flowable.just("")
 
         updatedTaskList
-                .map { localRepository.getUnmanagedCopy(it) }
-                .forEach { task ->
-            flowable = flowable.flatMap { apiClient.updateTask(task.id ?: "", task) }
-        }
+            .map { localRepository.getUnmanagedCopy(it) }
+            .forEach { task ->
+                flowable = flowable.flatMap { apiClient.updateTask(task.id ?: "", task) }
+            }
 
         removedTaskList.forEach { task ->
             flowable = flowable.flatMap { apiClient.deleteTask(task) }
@@ -106,7 +110,7 @@ class ChallengeRepositoryImpl(localRepository: ChallengeLocalRepository, apiClie
         challenge.tasksOrder = getTaskOrders(fullTaskList)
 
         return flowable.flatMap { apiClient.updateChallenge(challenge) }
-                .doOnNext { localRepository.save(challenge) }
+            .doOnNext { localRepository.save(challenge) }
     }
 
     override fun deleteChallenge(challengeId: String): Flowable<Void> {
@@ -123,16 +127,16 @@ class ChallengeRepositoryImpl(localRepository: ChallengeLocalRepository, apiClie
 
     override fun retrieveChallenges(page: Int, memberOnly: Boolean): Flowable<List<Challenge>> {
         return apiClient.getUserChallenges(page, memberOnly)
-                .doOnNext { localRepository.saveChallenges(it, page == 0, memberOnly, userID) }
+            .doOnNext { localRepository.saveChallenges(it, page == 0, memberOnly, userID) }
     }
 
     override fun leaveChallenge(challenge: Challenge, keepTasks: String): Flowable<Void> {
         return apiClient.leaveChallenge(challenge.id ?: "", LeaveChallengeBody(keepTasks))
-                .doOnNext { localRepository.setParticipating(userID, challenge.id ?: "", false) }
+            .doOnNext { localRepository.setParticipating(userID, challenge.id ?: "", false) }
     }
 
     override fun joinChallenge(challenge: Challenge): Flowable<Challenge> {
         return apiClient.joinChallenge(challenge.id ?: "")
-                .doOnNext { localRepository.setParticipating(userID, challenge.id ?: "", true) }
+            .doOnNext { localRepository.setParticipating(userID, challenge.id ?: "", true) }
     }
 }

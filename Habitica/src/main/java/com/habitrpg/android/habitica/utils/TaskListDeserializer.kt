@@ -1,14 +1,19 @@
 package com.habitrpg.android.habitica.utils
 
 import com.google.firebase.perf.FirebasePerformance
-import com.google.gson.*
+import com.google.gson.JsonArray
+import com.google.gson.JsonDeserializationContext
+import com.google.gson.JsonDeserializer
+import com.google.gson.JsonElement
+import com.google.gson.JsonObject
 import com.habitrpg.android.habitica.models.Tag
-import com.habitrpg.android.habitica.models.tasks.*
+import com.habitrpg.android.habitica.models.tasks.Task
+import com.habitrpg.android.habitica.models.tasks.TaskList
 import io.realm.Realm
 import io.realm.RealmList
-
 import java.lang.reflect.Type
-import java.util.*
+import java.util.ArrayList
+import java.util.HashMap
 
 class TaskListDeserializer : JsonDeserializer<TaskList> {
     override fun deserialize(json: JsonElement, typeOfT: Type, ctx: JsonDeserializationContext): TaskList {
@@ -22,7 +27,7 @@ class TaskListDeserializer : JsonDeserializer<TaskList> {
             databaseTags = realm.copyFromRealm(realm.where(Tag::class.java).findAll())
             realm.close()
         } catch (e: RuntimeException) {
-            //Tests don't have a database
+            // Tests don't have a database
             databaseTags = ArrayList()
         }
 
@@ -35,9 +40,7 @@ class TaskListDeserializer : JsonDeserializer<TaskList> {
                     task.id?.let { taskMap[it] = task }
                 }
             } catch (ignored: ClassCastException) {
-
             } catch (ignored: java.lang.UnsupportedOperationException) {
-
             }
         }
 
@@ -64,9 +67,7 @@ class TaskListDeserializer : JsonDeserializer<TaskList> {
                         }
                     }
                 } catch (ignored: UnsupportedOperationException) {
-
                 }
-
             }
         }
         return tags

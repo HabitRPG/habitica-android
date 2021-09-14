@@ -37,7 +37,7 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
     @Inject
     lateinit var soundManager: SoundManager
     @Inject
-    lateinit  var pushNotificationManager: PushNotificationManager
+    lateinit var pushNotificationManager: PushNotificationManager
     @Inject
     lateinit var configManager: AppConfigManager
     @Inject
@@ -88,7 +88,6 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
         val launchScreenPreference = findPreference("launch_screen") as? ListPreference
         launchScreenPreference?.summary = launchScreenPreference?.entry ?: "Habits"
 
-
         val taskDisplayPreference = findPreference("task_display") as? ListPreference
         if (configManager.enableTaskDisplayMode()) {
             taskDisplayPreference?.summary = taskDisplayPreference?.entry
@@ -108,7 +107,7 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
     }
 
     override fun onPreferenceTreeClick(preference: Preference): Boolean {
-        when(preference.key) {
+        when (preference.key) {
             "logout" -> {
                 context?.let { HabiticaBaseApplication.logout(it) }
                 activity?.finish()
@@ -123,9 +122,9 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                 if (user?.flags?.classSelected == true && user?.preferences?.disableClasses == false) {
                     context?.let { context ->
                         val builder = AlertDialog.Builder(context)
-                                .setMessage(getString(R.string.change_class_confirmation))
-                                .setNegativeButton(getString(R.string.dialog_go_back)) { dialog, _ -> dialog.dismiss() }
-                                .setPositiveButton(getString(R.string.change_class)) { _, _ -> classSelectionResult.launch(intent) }
+                            .setMessage(getString(R.string.change_class_confirmation))
+                            .setNegativeButton(getString(R.string.dialog_go_back)) { dialog, _ -> dialog.dismiss() }
+                            .setPositiveButton(getString(R.string.change_class)) { _, _ -> classSelectionResult.launch(intent) }
                         val alert = builder.create()
                         alert.show()
                     }
@@ -139,12 +138,15 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                 event.text = context?.getString(R.string.reloading_content)
                 event.type = HabiticaSnackbar.SnackbarDisplayType.NORMAL
                 EventBus.getDefault().post(event)
-                contentRepository.retrieveContent(context,true).subscribe({
-                    val completedEvent = ShowSnackbarEvent()
-                    completedEvent.text = context?.getString(R.string.reloaded_content)
-                    completedEvent.type = HabiticaSnackbar.SnackbarDisplayType.SUCCESS
-                    EventBus.getDefault().post(completedEvent)
-                }, RxErrorHandler.handleEmptyError())
+                contentRepository.retrieveContent(context, true).subscribe(
+                    {
+                        val completedEvent = ShowSnackbarEvent()
+                        completedEvent.text = context?.getString(R.string.reloaded_content)
+                        completedEvent.type = HabiticaSnackbar.SnackbarDisplayType.SUCCESS
+                        EventBus.getDefault().post(completedEvent)
+                    },
+                    RxErrorHandler.handleEmptyError()
+                )
             }
             "fixCharacterValues" -> {
                 val intent = Intent(activity, FixCharacterValuesActivity::class.java)
@@ -208,8 +210,8 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                 }
 
                 userRepository.updateLanguage(languageHelper.languageCode ?: "en")
-                        .flatMap { contentRepository.retrieveContent(context,true) }
-                        .subscribe({ }, RxErrorHandler.handleEmptyError())
+                    .flatMap { contentRepository.retrieveContent(context, true) }
+                    .subscribe({ }, RxErrorHandler.handleEmptyError())
 
                 val intent = Intent(activity, MainActivity::class.java)
                 this.startActivity(intent)
@@ -218,8 +220,10 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
             "audioTheme" -> {
                 val newAudioTheme = sharedPreferences.getString(key, "off")
                 if (newAudioTheme != null) {
-                    compositeSubscription.add(userRepository.updateUser("preferences.sound", newAudioTheme)
-                            .subscribe({ }, RxErrorHandler.handleEmptyError()))
+                    compositeSubscription.add(
+                        userRepository.updateUser("preferences.sound", newAudioTheme)
+                            .subscribe({ }, RxErrorHandler.handleEmptyError())
+                    )
                     soundManager.soundTheme = newAudioTheme
                     soundManager.preloadAllFiles()
                 }
@@ -233,7 +237,7 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                 activity.reload()
             }
             "dailyDueDefaultView" -> userRepository.updateUser("preferences.dailyDueDefaultView", sharedPreferences.getBoolean(key, false))
-                    .subscribe({ }, RxErrorHandler.handleEmptyError())
+                .subscribe({ }, RxErrorHandler.handleEmptyError())
             "server_url" -> {
                 apiClient.updateServerUrl(sharedPreferences.getString(key, ""))
                 findPreference<Preference>(key)?.summary = sharedPreferences.getString(key, "")
@@ -249,8 +253,10 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
             "disablePMs" -> {
                 val isDisabled = sharedPreferences.getBoolean("disablePMs", false)
                 if (user?.inbox?.optOut != isDisabled) {
-                    compositeSubscription.add(userRepository.updateUser("inbox.optOut", isDisabled)
-                            .subscribe({ }, RxErrorHandler.handleEmptyError()))
+                    compositeSubscription.add(
+                        userRepository.updateUser("inbox.optOut", isDisabled)
+                            .subscribe({ }, RxErrorHandler.handleEmptyError())
+                    )
                 }
             }
             "launch_screen" -> {
@@ -265,12 +271,12 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
             if (preference.getKey() == "cds_time") {
                 if (parentFragmentManager.findFragmentByTag(DayStartPreferenceDialogFragment.TAG) == null) {
                     DayStartPreferenceDialogFragment.newInstance(this, preference.getKey())
-                                .show(parentFragmentManager, DayStartPreferenceDialogFragment.TAG)
+                        .show(parentFragmentManager, DayStartPreferenceDialogFragment.TAG)
                 }
             } else {
                 if (parentFragmentManager.findFragmentByTag(TimePreferenceDialogFragment.TAG) == null) {
-                        TimePreferenceDialogFragment.newInstance(this, preference.getKey())
-                                .show(parentFragmentManager, TimePreferenceDialogFragment.TAG)
+                    TimePreferenceDialogFragment.newInstance(this, preference.getKey())
+                        .show(parentFragmentManager, TimePreferenceDialogFragment.TAG)
                 }
             }
         } else {

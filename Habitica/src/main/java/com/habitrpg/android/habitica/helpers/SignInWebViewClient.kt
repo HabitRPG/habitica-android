@@ -11,8 +11,8 @@ import androidx.annotation.RequiresApi
 import com.habitrpg.android.habitica.BuildConfig
 
 class SignInWebViewClient(
-        private val attempt: SignInWithAppleService.AuthenticationAttempt,
-        private val callback: (SignInWithAppleResult) -> Unit
+    private val attempt: SignInWithAppleService.AuthenticationAttempt,
+    private val callback: (SignInWithAppleResult) -> Unit
 ) : WebViewClient() {
 
     // for API levels < 24
@@ -61,7 +61,6 @@ class SignInWebViewClient(
             }
         }
     }
-
 }
 
 sealed class SignInWithAppleResult {

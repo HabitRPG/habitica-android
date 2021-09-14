@@ -30,14 +30,18 @@ class HabitButtonWidgetProvider : BaseWidgetProvider() {
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
         super.onUpdate(context, appWidgetManager, appWidgetIds)
         setUp()
-        val thisWidget = ComponentName(context,
-                HabitButtonWidgetProvider::class.java)
+        val thisWidget = ComponentName(
+            context,
+            HabitButtonWidgetProvider::class.java
+        )
         val allWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget)
 
         for (widgetId in allWidgetIds) {
             val options = appWidgetManager.getAppWidgetOptions(widgetId)
-            appWidgetManager.partiallyUpdateAppWidget(widgetId,
-                    sizeRemoteViews(context, options, widgetId))
+            appWidgetManager.partiallyUpdateAppWidget(
+                widgetId,
+                sizeRemoteViews(context, options, widgetId)
+            )
         }
 
         // Build the intent to call the service
@@ -54,8 +58,10 @@ class HabitButtonWidgetProvider : BaseWidgetProvider() {
         setUp()
         if (intent.action == HABIT_ACTION) {
             val mgr = AppWidgetManager.getInstance(context)
-            val appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
-                    AppWidgetManager.INVALID_APPWIDGET_ID)
+            val appWidgetId = intent.getIntExtra(
+                AppWidgetManager.EXTRA_APPWIDGET_ID,
+                AppWidgetManager.INVALID_APPWIDGET_ID
+            )
             val taskId = intent.getStringExtra(TASK_ID)
             val direction = intent.getStringExtra(TASK_DIRECTION)
 
@@ -63,7 +69,7 @@ class HabitButtonWidgetProvider : BaseWidgetProvider() {
 
             if (taskId != null) {
                 userRepository.getUser().firstElement().flatMap { user -> taskRepository.taskChecked(user, taskId, TaskDirection.UP.text == direction, false, null) }
-                        .subscribe({ taskDirectionData -> showToastForTaskDirection(context, taskDirectionData) }, RxErrorHandler.handleEmptyError(), { this.onUpdate(context, mgr, ids) })
+                    .subscribe({ taskDirectionData -> showToastForTaskDirection(context, taskDirectionData) }, RxErrorHandler.handleEmptyError(), { this.onUpdate(context, mgr, ids) })
             }
         }
         super.onReceive(context, intent)

@@ -74,9 +74,12 @@ class LocalNotificationActionReceiver : BroadcastReceiver() {
             context?.getString(R.string.group_message_reply) -> {
                 groupID?.let {
                     getMessageText(context?.getString(R.string.group_message_reply))?.let { message ->
-                        socialRepository.postGroupChat(it, message).subscribe({
-                            context?.let { c -> NotificationManagerCompat.from(c).cancel(it.hashCode()) }
-                        }, RxErrorHandler.handleEmptyError())
+                        socialRepository.postGroupChat(it, message).subscribe(
+                            {
+                                context?.let { c -> NotificationManagerCompat.from(c).cancel(it.hashCode()) }
+                            },
+                            RxErrorHandler.handleEmptyError()
+                        )
                     }
                 }
             }

@@ -11,7 +11,6 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SocialRepository
-import com.habitrpg.android.habitica.databinding.FragmentRecyclerviewBinding
 import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBinding
 import com.habitrpg.android.habitica.events.GearPurchasedEvent
 import com.habitrpg.android.habitica.helpers.AppConfigManager
@@ -120,18 +119,28 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
             }
         }
 
-        compositeSubscription.add(userRepository.getUser().subscribe({
-            adapter?.user = user
-            updateCurrencyView(it)
-        }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(
+            userRepository.getUser().subscribe(
+                {
+                    adapter?.user = user
+                    updateCurrencyView(it)
+                },
+                RxErrorHandler.handleEmptyError()
+            )
+        )
 
-        compositeSubscription.add(socialRepository.getGroup(Group.TAVERN_ID)
+        compositeSubscription.add(
+            socialRepository.getGroup(Group.TAVERN_ID)
                 .filter { it.hasActiveQuest }
                 .filter { group -> group.quest?.rageStrikes?.any { it.key == shopIdentifier } ?: false }
                 .filter { group -> group.quest?.rageStrikes?.filter { it.key == shopIdentifier }?.get(0)?.wasHit == true }
-                .subscribe({
-                    adapter?.shopSpriteSuffix = "_"+it.quest?.key
-                }, RxErrorHandler.handleEmptyError()))
+                .subscribe(
+                    {
+                        adapter?.shopSpriteSuffix = "_" + it.quest?.key
+                    },
+                    RxErrorHandler.handleEmptyError()
+                )
+        )
 
         view.post { setGridSpanCount(view.width) }
 
@@ -153,7 +162,8 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
             Shop.SEASONAL_SHOP -> "seasonal"
             else -> ""
         }
-        compositeSubscription.add(this.inventoryRepository.retrieveShopInventory(shopUrl)
+        compositeSubscription.add(
+            this.inventoryRepository.retrieveShopInventory(shopUrl)
                 .map { shop1 ->
                     if (shop1.identifier == Shop.MARKET) {
                         val user = user
@@ -172,9 +182,11 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
                             formatTimeTravelersShop(shop1)
                         }
                         Shop.SEASONAL_SHOP -> {
-                            shop1.categories.sortWith(compareBy<ShopCategory> { it.items.size != 1 }
+                            shop1.categories.sortWith(
+                                compareBy<ShopCategory> { it.items.size != 1 }
                                     .thenBy { it.items.firstOrNull()?.currency != "gold" }
-                                    .thenByDescending { it.items.firstOrNull()?.event?.end })
+                                    .thenByDescending { it.items.firstOrNull()?.event?.end }
+                            )
                             shop1
                         }
                         else -> {
@@ -182,64 +194,81 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
                         }
                     }
                 }
-                .subscribe({
-                    this.shop = it
-                    this.adapter?.setShop(it)
-                }, {
-                    binding?.recyclerView?.state = RecyclerViewState.FAILED
-                    RxErrorHandler.reportError(it)
-                }, {
-                    binding?.refreshLayout?.isRefreshing = false
-                }))
+                .subscribe(
+                    {
+                        this.shop = it
+                        this.adapter?.setShop(it)
+                    },
+                    {
+                        binding?.recyclerView?.state = RecyclerViewState.FAILED
+                        RxErrorHandler.reportError(it)
+                    },
+                    {
+                        binding?.refreshLayout?.isRefreshing = false
+                    }
+                )
+        )
 
-        compositeSubscription.add(this.inventoryRepository.getOwnedItems()
-                .subscribe({ adapter?.setOwnedItems(it) }, RxErrorHandler.handleEmptyError()))
-        compositeSubscription.add(this.inventoryRepository.getInAppRewards()
+        compositeSubscription.add(
+            this.inventoryRepository.getOwnedItems()
+                .subscribe({ adapter?.setOwnedItems(it) }, RxErrorHandler.handleEmptyError())
+        )
+        compositeSubscription.add(
+            this.inventoryRepository.getInAppRewards()
                 .map { rewards -> rewards.map { it.key } }
-                .subscribe({ adapter?.setPinnedItemKeys(it) }, RxErrorHandler.handleEmptyError()))
+                .subscribe({ adapter?.setPinnedItemKeys(it) }, RxErrorHandler.handleEmptyError())
+        )
     }
 
     private fun formatTimeTravelersShop(shop: Shop): Shop {
         val newCategories = mutableListOf<ShopCategory>()
         for (category in shop.categories) {
-             if (category.pinType != "mystery_set") {
-                 newCategories.add(category)
-             } else {
-                 val newCategory = newCategories.find { it.identifier == "mystery_sets" } ?: ShopCategory()
-                 if (newCategory.identifier.isEmpty()) {
-                     newCategory.identifier = "mystery_sets"
-                     newCategory.text = getString(R.string.mystery_sets)
-                     newCategories.add(newCategory)
-                 }
-                 val item = category.items.firstOrNull() ?: continue
-                 item.key = category.identifier
-                 item.text = category.text
-                 item.imageName = "shop_set_mystery_${item.key}"
-                 item.pinType = "mystery_set"
-                 item.path = "mystery.${item.key}"
-                 newCategory.items.add(item)
-             }
+            if (category.pinType != "mystery_set") {
+                newCategories.add(category)
+            } else {
+                val newCategory = newCategories.find { it.identifier == "mystery_sets" } ?: ShopCategory()
+                if (newCategory.identifier.isEmpty()) {
+                    newCategory.identifier = "mystery_sets"
+                    newCategory.text = getString(R.string.mystery_sets)
+                    newCategories.add(newCategory)
+                }
+                val item = category.items.firstOrNull() ?: continue
+                item.key = category.identifier
+                item.text = category.text
+                item.imageName = "shop_set_mystery_${item.key}"
+                item.pinType = "mystery_set"
+                item.path = "mystery.${item.key}"
+                newCategory.items.add(item)
+            }
         }
         shop.categories = newCategories
         return shop
     }
 
     private fun loadMarketGear() {
-        compositeSubscription.add(inventoryRepository.retrieveMarketGear()
-                .zipWith(inventoryRepository.getOwnedEquipment().map { equipment -> equipment.map { it.key } }, { shop, equipment ->
-                    for (category in shop.categories) {
-                        val items = category.items.asSequence().filter {
-                            !equipment.contains(it.key)
-                        }.sortedBy { it.locked }.toList()
-                        category.items.clear()
-                        category.items.addAll(items)
+        compositeSubscription.add(
+            inventoryRepository.retrieveMarketGear()
+                .zipWith(
+                    inventoryRepository.getOwnedEquipment().map { equipment -> equipment.map { it.key } },
+                    { shop, equipment ->
+                        for (category in shop.categories) {
+                            val items = category.items.asSequence().filter {
+                                !equipment.contains(it.key)
+                            }.sortedBy { it.locked }.toList()
+                            category.items.clear()
+                            category.items.addAll(items)
+                        }
+                        shop
                     }
-                    shop
-                })
-                .subscribe({
-                    this.gearCategories = it.categories
-                    adapter?.gearCategories = it.categories
-                }, RxErrorHandler.handleEmptyError()))
+                )
+                .subscribe(
+                    {
+                        this.gearCategories = it.categories
+                        adapter?.gearCategories = it.categories
+                    },
+                    RxErrorHandler.handleEmptyError()
+                )
+        )
     }
 
     override fun injectFragment(component: UserComponent) {
@@ -277,7 +306,6 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
             loadShopInventory()
         }
     }
-
 
     private fun updateCurrencyView(user: User) {
         currencyView.gold = user.stats?.gp ?: 0.0

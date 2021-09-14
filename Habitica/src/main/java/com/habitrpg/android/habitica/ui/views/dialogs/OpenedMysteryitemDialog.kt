@@ -5,7 +5,7 @@ import com.habitrpg.android.habitica.databinding.DialogOpenMysteryitemBinding
 import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.extensions.layoutInflater
 
-class OpenedMysteryitemDialog(context: Context): HabiticaAlertDialog(context) {
+class OpenedMysteryitemDialog(context: Context) : HabiticaAlertDialog(context) {
 
     val binding = DialogOpenMysteryitemBinding.inflate(context.layoutInflater)
 

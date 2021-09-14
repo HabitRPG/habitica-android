@@ -34,13 +34,14 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
 
     override fun getUser(): Flowable<User> = getUser(userID)
 
-
     override fun getUser(userID: String): Flowable<User> = localRepository.getUser(userID)
 
     private fun updateUser(userID: String, updateData: Map<String, Any>): Flowable<User> {
-        return Flowable.zip(apiClient.updateUser(updateData),
-                localRepository.getUser(userID).firstElement().toFlowable(),
-                { newUser, user -> mergeUser(user, newUser) })
+        return Flowable.zip(
+            apiClient.updateUser(updateData),
+            localRepository.getUser(userID).firstElement().toFlowable(),
+            { newUser, user -> mergeUser(user, newUser) }
+        )
     }
 
     private fun updateUser(userID: String, key: String, value: Any): Flowable<User> {
@@ -58,7 +59,7 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
     }
 
     override fun retrieveUser(withTasks: Boolean): Flowable<User> =
-            retrieveUser(withTasks, false)
+        retrieveUser(withTasks, false)
 
     @Suppress("ReturnCount")
     override fun retrieveUser(withTasks: Boolean, forced: Boolean, overrideExisting: Boolean): Flowable<User> {
@@ -66,48 +67,48 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
         if (forced || this.lastSync == null || Date().time - (this.lastSync?.time ?: 0) > 180000) {
             lastSync = Date()
             return apiClient.retrieveUser(withTasks)
-                    .doOnNext { localRepository.saveUser(it, overrideExisting) }
-                    .doOnNext { user ->
-                        if (withTasks) {
-                            val id = user.id
-                            val tasksOrder = user.tasksOrder
-                            val tasks = user.tasks
-                            if (id != null && tasksOrder != null && tasks != null) {
-                                taskRepository.saveTasks(id, tasksOrder, tasks)
-                            }
+                .doOnNext { localRepository.saveUser(it, overrideExisting) }
+                .doOnNext { user ->
+                    if (withTasks) {
+                        val id = user.id
+                        val tasksOrder = user.tasksOrder
+                        val tasks = user.tasks
+                        if (id != null && tasksOrder != null && tasks != null) {
+                            taskRepository.saveTasks(id, tasksOrder, tasks)
                         }
                     }
-                    .flatMap { user ->
-                        val calendar = GregorianCalendar()
-                        val timeZone = calendar.timeZone
-                        val offset = -TimeUnit.MINUTES.convert(timeZone.getOffset(calendar.timeInMillis).toLong(), TimeUnit.MILLISECONDS)
-                        if (offset.toInt() != user.preferences?.timezoneOffset ?: 0) {
-                            return@flatMap updateUser(user.id ?: "", "preferences.timezoneOffset", offset.toString())
-                        } else {
-                            return@flatMap Flowable.just(user)
-                        }
+                }
+                .flatMap { user ->
+                    val calendar = GregorianCalendar()
+                    val timeZone = calendar.timeZone
+                    val offset = -TimeUnit.MINUTES.convert(timeZone.getOffset(calendar.timeInMillis).toLong(), TimeUnit.MILLISECONDS)
+                    if (offset.toInt() != user.preferences?.timezoneOffset ?: 0) {
+                        return@flatMap updateUser(user.id ?: "", "preferences.timezoneOffset", offset.toString())
+                    } else {
+                        return@flatMap Flowable.just(user)
                     }
+                }
         } else {
             return getUser().take(1)
         }
     }
 
     override fun revive(user: User): Flowable<User> =
-            apiClient.revive().map { newUser -> mergeUser(user, newUser) }
-                    .flatMap { retrieveUser(false, true) }
+        apiClient.revive().map { newUser -> mergeUser(user, newUser) }
+            .flatMap { retrieveUser(false, true) }
 
     override fun resetTutorial() {
         localRepository.getTutorialSteps()
-                .firstElement()
-                .map<Map<String, Any>> { tutorialSteps ->
-                    val updateData = HashMap<String, Any>()
-                    for (step in tutorialSteps) {
-                        updateData["flags.tutorial." + step.tutorialGroup + "." + step.identifier] = false
-                    }
-                    updateData
+            .firstElement()
+            .map<Map<String, Any>> { tutorialSteps ->
+                val updateData = HashMap<String, Any>()
+                for (step in tutorialSteps) {
+                    updateData["flags.tutorial." + step.tutorialGroup + "." + step.identifier] = false
                 }
-                .flatMap { updateData -> updateUser(updateData).firstElement() }
-                .subscribe({ }, RxErrorHandler.handleEmptyError())
+                updateData
+            }
+            .flatMap { updateData -> updateUser(updateData).firstElement() }
+            .subscribe({ }, RxErrorHandler.handleEmptyError())
     }
 
     override fun sleep(user: User): Flowable<User> {
@@ -116,10 +117,10 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
     }
 
     override fun getSkills(user: User): Flowable<out List<Skill>> =
-            localRepository.getSkills(user)
+        localRepository.getSkills(user)
 
     override fun getSpecialItems(user: User): Flowable<out List<Skill>> =
-            localRepository.getSpecialItems(user)
+        localRepository.getSpecialItems(user)
 
     override fun useSkill(key: String, target: String?, taskId: String): Flowable<SkillResponse> {
         return zipWithLiveUser(apiClient.useSkill(key, target ?: "", taskId)) { response, user ->
@@ -174,16 +175,20 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
             return Flowable.just(null)
         }
         path = path.substring(1)
-        return Flowable.zip(apiClient.unlockPath(path), localRepository.getUser(userID).firstElement().toFlowable()
+        return Flowable.zip(
+            apiClient.unlockPath(path),
+            localRepository.getUser(userID).firstElement().toFlowable()
                 .map { localRepository.getUnmanagedCopy(it) }
-                .skipNull(), { unlockResponse, copiedUser ->
-                    copiedUser.preferences = unlockResponse.preferences
-                    copiedUser.purchased = unlockResponse.purchased
-                    copiedUser.items = unlockResponse.items
-                    copiedUser.balance = copiedUser.balance - set.price / 4.0
-                    localRepository.saveUser(copiedUser, false)
-            unlockResponse
-                })
+                .skipNull(),
+            { unlockResponse, copiedUser ->
+                copiedUser.preferences = unlockResponse.preferences
+                copiedUser.purchased = unlockResponse.purchased
+                copiedUser.items = unlockResponse.items
+                copiedUser.balance = copiedUser.balance - set.price / 4.0
+                localRepository.saveUser(copiedUser, false)
+                unlockResponse
+            }
+        )
     }
 
     override fun runCron() {
@@ -197,14 +202,14 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
 
     override fun reroll(): Flowable<User> {
         return apiClient.reroll()
-                .flatMap { retrieveUser(true, true, true) }
+            .flatMap { retrieveUser(true, true, true) }
     }
 
     override fun readNotifications(notificationIds: Map<String, List<String>>): Flowable<List<Any>> =
-            apiClient.readNotifications(notificationIds)
+        apiClient.readNotifications(notificationIds)
 
     override fun seeNotifications(notificationIds: Map<String, List<String>>): Flowable<List<Any>> =
-            apiClient.seeNotifications(notificationIds)
+        apiClient.seeNotifications(notificationIds)
 
     override fun changeCustomDayStart(dayStartTime: Int): Flowable<User> {
         val updateObject = HashMap<String, Any>()
@@ -214,7 +219,7 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
 
     override fun updateLanguage(languageCode: String): Flowable<User> {
         return updateUser("preferences.language", languageCode)
-                .doOnNext { apiClient.setLanguageCode(languageCode) }
+            .doOnNext { apiClient.setLanguageCode(languageCode) }
     }
 
     override fun resetAccount(): Flowable<User> {
@@ -222,46 +227,51 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
     }
 
     override fun deleteAccount(password: String): Flowable<Void> =
-            apiClient.deleteAccount(password)
+        apiClient.deleteAccount(password)
 
     override fun sendPasswordResetEmail(email: String): Flowable<Void> =
-            apiClient.sendPasswordResetEmail(email)
+        apiClient.sendPasswordResetEmail(email)
 
     override fun updateLoginName(newLoginName: String, password: String?): Maybe<User> {
-        return (if (password != null && password.isNotEmpty()) {
-            apiClient.updateLoginName(newLoginName.trim(), password.trim())
-        } else {
-            apiClient.updateUsername(newLoginName.trim())
-        }).flatMapMaybe { localRepository.getUser(userID).firstElement() }
-                .doOnNext { user ->
-                    localRepository.modify(user) { liveUser ->
-                        liveUser.authentication?.localAuthentication?.username = newLoginName
-                        liveUser.flags?.verifiedUsername = true
-                    }
+        return (
+            if (password != null && password.isNotEmpty()) {
+                apiClient.updateLoginName(newLoginName.trim(), password.trim())
+            } else {
+                apiClient.updateUsername(newLoginName.trim())
+            }
+            ).flatMapMaybe { localRepository.getUser(userID).firstElement() }
+            .doOnNext { user ->
+                localRepository.modify(user) { liveUser ->
+                    liveUser.authentication?.localAuthentication?.username = newLoginName
+                    liveUser.flags?.verifiedUsername = true
                 }
-                .firstElement()
+            }
+            .firstElement()
     }
 
     override fun verifyUsername(username: String): Flowable<VerifyUsernameResponse> = apiClient.verifyUsername(username.trim())
 
     override fun updateEmail(newEmail: String, password: String): Flowable<Void> =
-            apiClient.updateEmail(newEmail.trim(), password)
+        apiClient.updateEmail(newEmail.trim(), password)
 
     override fun updatePassword(oldPassword: String, newPassword: String, newPasswordConfirmation: String): Flowable<Void> =
-            apiClient.updatePassword(oldPassword.trim(), newPassword.trim(), newPasswordConfirmation.trim())
+        apiClient.updatePassword(oldPassword.trim(), newPassword.trim(), newPasswordConfirmation.trim())
 
     override fun allocatePoint(stat: String): Flowable<Stats> {
-        getLiveUser().firstElement().subscribe( { liveUser ->
-            localRepository.executeTransaction {
-                when (stat) {
-                    Stats.STRENGTH -> liveUser.stats?.strength = liveUser.stats?.strength?.inc()
-                    Stats.INTELLIGENCE -> liveUser.stats?.intelligence = liveUser.stats?.intelligence?.inc()
-                    Stats.CONSTITUTION -> liveUser.stats?.constitution= liveUser.stats?.constitution?.inc()
-                    Stats.PERCEPTION -> liveUser.stats?.per = liveUser.stats?.per?.inc()
+        getLiveUser().firstElement().subscribe(
+            { liveUser ->
+                localRepository.executeTransaction {
+                    when (stat) {
+                        Stats.STRENGTH -> liveUser.stats?.strength = liveUser.stats?.strength?.inc()
+                        Stats.INTELLIGENCE -> liveUser.stats?.intelligence = liveUser.stats?.intelligence?.inc()
+                        Stats.CONSTITUTION -> liveUser.stats?.constitution = liveUser.stats?.constitution?.inc()
+                        Stats.PERCEPTION -> liveUser.stats?.per = liveUser.stats?.per?.inc()
+                    }
+                    liveUser.stats?.points = liveUser.stats?.points?.dec()
                 }
-                liveUser.stats?.points = liveUser.stats?.points?.dec()
-            }
-        }, RxErrorHandler.handleEmptyError())
+            },
+            RxErrorHandler.handleEmptyError()
+        )
         return zipWithLiveUser(apiClient.allocatePoint(stat)) { stats, user ->
             localRepository.modify(user) { liveUser ->
                 liveUser.stats?.strength = stats.strength
@@ -276,28 +286,28 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
     }
 
     override fun bulkAllocatePoints(strength: Int, intelligence: Int, constitution: Int, perception: Int): Flowable<Stats> =
-            zipWithLiveUser(apiClient.bulkAllocatePoints(strength, intelligence, constitution, perception)) { stats, user ->
-                            localRepository.modify(user) { liveUser ->
-                                liveUser.stats?.strength = stats.strength
-                                liveUser.stats?.constitution = stats.constitution
-                                liveUser.stats?.per = stats.per
-                                liveUser.stats?.intelligence = stats.intelligence
-                                liveUser.stats?.points = stats.points
-                                liveUser.stats?.mp = stats.mp
-                            }
-                stats
+        zipWithLiveUser(apiClient.bulkAllocatePoints(strength, intelligence, constitution, perception)) { stats, user ->
+            localRepository.modify(user) { liveUser ->
+                liveUser.stats?.strength = stats.strength
+                liveUser.stats?.constitution = stats.constitution
+                liveUser.stats?.per = stats.per
+                liveUser.stats?.intelligence = stats.intelligence
+                liveUser.stats?.points = stats.points
+                liveUser.stats?.mp = stats.mp
             }
+            stats
+        }
 
     override fun runCron(tasks: MutableList<Task>) {
         var observable: Maybe<Any> = localRepository.getUser(userID).firstElement()
-                .filter { it.needsCron }
-                .map {  user ->
-                    localRepository.modify(user) { liveUser ->
-                        liveUser.needsCron = false
-                        liveUser.lastCron = Date()
-                    }
-                    user
+            .filter { it.needsCron }
+            .map { user ->
+                localRepository.modify(user) { liveUser ->
+                    liveUser.needsCron = false
+                    liveUser.lastCron = Date()
                 }
+                user
+            }
         if (tasks.isNotEmpty()) {
             val scoringList = mutableListOf<Map<String, String>>()
             for (task in tasks) {
@@ -309,32 +319,35 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
             observable = observable.flatMap { taskRepository.bulkScoreTasks(scoringList).firstElement() }
         }
         observable.flatMap { apiClient.runCron().firstElement() }
-                .flatMap { this.retrieveUser(withTasks = true, forced = true).firstElement() }
-                .subscribe({ }, RxErrorHandler.handleEmptyError())
+            .flatMap { this.retrieveUser(withTasks = true, forced = true).firstElement() }
+            .subscribe({ }, RxErrorHandler.handleEmptyError())
     }
 
     override fun useCustomization(type: String, category: String?, identifier: String): Flowable<User> {
         if (appConfigManager.enableLocalChanges()) {
-            localRepository.getUser(userID).firstElement().subscribe( { liveUser ->
-                localRepository.modify(liveUser) { liveUser ->
-                    when (type) {
-                        "skin" -> liveUser.preferences?.skin = identifier
-                        "shirt" -> liveUser.preferences?.shirt = identifier
-                        "hair" -> {
-                            when (category) {
-                                "color" -> liveUser.preferences?.hair?.color = identifier
-                                "flower" -> liveUser.preferences?.hair?.flower = identifier.toInt()
-                                "mustache" -> liveUser.preferences?.hair?.mustache = identifier.toInt()
-                                "beard" -> liveUser.preferences?.hair?.beard = identifier.toInt()
-                                "bangs" -> liveUser.preferences?.hair?.bangs = identifier.toInt()
-                                "base" -> liveUser.preferences?.hair?.base = identifier.toInt()
+            localRepository.getUser(userID).firstElement().subscribe(
+                { liveUser ->
+                    localRepository.modify(liveUser) { liveUser ->
+                        when (type) {
+                            "skin" -> liveUser.preferences?.skin = identifier
+                            "shirt" -> liveUser.preferences?.shirt = identifier
+                            "hair" -> {
+                                when (category) {
+                                    "color" -> liveUser.preferences?.hair?.color = identifier
+                                    "flower" -> liveUser.preferences?.hair?.flower = identifier.toInt()
+                                    "mustache" -> liveUser.preferences?.hair?.mustache = identifier.toInt()
+                                    "beard" -> liveUser.preferences?.hair?.beard = identifier.toInt()
+                                    "bangs" -> liveUser.preferences?.hair?.bangs = identifier.toInt()
+                                    "base" -> liveUser.preferences?.hair?.base = identifier.toInt()
+                                }
                             }
+                            "background" -> liveUser.preferences?.background = identifier
+                            "chair" -> liveUser.preferences?.chair = identifier
                         }
-                        "background" -> liveUser.preferences?.background = identifier
-                        "chair" -> liveUser.preferences?.chair = identifier
                     }
-                }
-            }, RxErrorHandler.handleEmptyError())
+                },
+                RxErrorHandler.handleEmptyError()
+            )
         }
         var updatePath = "preferences.$type"
         if (category != null) {
@@ -369,20 +382,22 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
     }
 
     override fun retrieveTeamPlan(teamID: String): Flowable<Group> {
-        return Flowable.zip(apiClient.getGroup(teamID), apiClient.getTeamPlanTasks(teamID),
-                { team, tasks ->
-                    team.tasks = tasks
-                    team
-                })
-                .doOnNext { localRepository.save(it) }
-                .doOnNext { team ->
-                    val id = team.id
-                    val tasksOrder = team.tasksOrder
-                    val tasks = team.tasks
-                    if (id.isNotBlank() && tasksOrder != null && tasks != null) {
-                        taskRepository.saveTasks(id, tasksOrder, tasks)
-                    }
+        return Flowable.zip(
+            apiClient.getGroup(teamID), apiClient.getTeamPlanTasks(teamID),
+            { team, tasks ->
+                team.tasks = tasks
+                team
+            }
+        )
+            .doOnNext { localRepository.save(it) }
+            .doOnNext { team ->
+                val id = team.id
+                val tasksOrder = team.tasksOrder
+                val tasks = team.tasks
+                if (id.isNotBlank() && tasksOrder != null && tasks != null) {
+                    taskRepository.saveTasks(id, tasksOrder, tasks)
                 }
+            }
     }
 
     override fun getTeamPlan(teamID: String): Flowable<Group> {
@@ -391,8 +406,8 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
 
     private fun getLiveUser(): Flowable<User> {
         return localRepository.getUser(userID)
-                .map { localRepository.getLiveObject(it) }
-                .skipNull()
+            .map { localRepository.getLiveObject(it) }
+            .skipNull()
     }
 
     private fun <T> zipWithLiveUser(flowable: Flowable<T>, mergeFunc: BiFunction<T, User, T>): Flowable<T> {

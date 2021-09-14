@@ -1,13 +1,11 @@
 package com.habitrpg.android.habitica.ui.views
 
-
 import android.content.Context
-import androidx.core.content.ContextCompat
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
 import android.util.AttributeSet
-
+import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import kotlinx.coroutines.*
 
@@ -23,7 +21,6 @@ class Typewriter : androidx.appcompat.widget.AppCompatTextView {
 
     val isAnimating: Boolean
         get() = index < stringBuilder?.length ?: 0
-
 
     constructor(context: Context) : super(context) {
         setupTextColors(context)

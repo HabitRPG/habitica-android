@@ -5,14 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.DialogAchievementDetailBinding
 import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.extensions.fromHtml
 import com.habitrpg.android.habitica.models.Achievement
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 
-class AchievementDetailDialog(val achievement: Achievement, context: Context): HabiticaAlertDialog(context) {
+class AchievementDetailDialog(val achievement: Achievement, context: Context) : HabiticaAlertDialog(context) {
 
     private var iconView: ImageView?
     private var descriptionView: TextView?

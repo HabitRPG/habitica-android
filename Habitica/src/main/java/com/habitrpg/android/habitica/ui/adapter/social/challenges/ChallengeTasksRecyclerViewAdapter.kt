@@ -16,9 +16,14 @@ import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.subjects.PublishSubject
 
-class ChallengeTasksRecyclerViewAdapter(taskFilterHelper: TaskFilterHelper?, layoutResource: Int,
-                                        newContext: Context, userID: String,
-                                        private val openTaskDisabled: Boolean, private val taskActionsDisabled: Boolean) :  BaseTasksRecyclerViewAdapter<BindableViewHolder<Task>>("", taskFilterHelper, layoutResource, newContext, userID) {
+class ChallengeTasksRecyclerViewAdapter(
+    taskFilterHelper: TaskFilterHelper?,
+    layoutResource: Int,
+    newContext: Context,
+    userID: String,
+    private val openTaskDisabled: Boolean,
+    private val taskActionsDisabled: Boolean
+) : BaseTasksRecyclerViewAdapter<BindableViewHolder<Task>>("", taskFilterHelper, layoutResource, newContext, userID) {
 
     private val addItemSubject = PublishSubject.create<Task>()
 
@@ -78,7 +83,6 @@ class ChallengeTasksRecyclerViewAdapter(taskFilterHelper: TaskFilterHelper?, lay
         (viewHolder as? BaseTaskViewHolder)?.setDisabled(openTaskDisabled, taskActionsDisabled)
         return viewHolder
     }
-
 
     /**
      * @param task

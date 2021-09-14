@@ -47,11 +47,14 @@ class SoundManager {
             val soundFiles = ArrayList<SoundFile>()
 
             soundFiles.add(SoundFile(soundTheme, type))
-            soundFileLoader.download(soundFiles).observeOn(Schedulers.newThread()).subscribe({
-                val file = soundFiles[0]
-                loadedSoundFiles[type] = file
-                file.play()
-            }, RxErrorHandler.handleEmptyError())
+            soundFileLoader.download(soundFiles).observeOn(Schedulers.newThread()).subscribe(
+                {
+                    val file = soundFiles[0]
+                    loadedSoundFiles[type] = file
+                    file.play()
+                },
+                RxErrorHandler.handleEmptyError()
+            )
         }
     }
 
@@ -68,5 +71,4 @@ class SoundManager {
         const val SoundTodo = "Todo"
         const val SoundThemeOff = "off"
     }
-
 }

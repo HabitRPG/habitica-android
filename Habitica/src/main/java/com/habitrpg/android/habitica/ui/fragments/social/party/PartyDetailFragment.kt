@@ -12,8 +12,8 @@ import androidx.core.os.bundleOf
 import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
-import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.ChallengeRepository
+import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentPartyDetailBinding
@@ -33,7 +33,6 @@ import com.habitrpg.android.habitica.ui.activities.FullProfileActivity
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemDialogFragment
-import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemRecyclerFragment
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
 import com.habitrpg.android.habitica.ui.helpers.setMarkdown
@@ -42,7 +41,6 @@ import com.habitrpg.android.habitica.ui.viewmodels.PartyViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -96,20 +94,23 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
 
         binding?.invitationsView?.acceptCall = {
             viewModel?.joinGroup(it) {
-                compositeSubscription.add(userRepository.retrieveUser(false)
+                compositeSubscription.add(
+                    userRepository.retrieveUser(false)
                         .subscribe { user ->
                             parentFragmentManager.popBackStack()
-                            MainNavigationController.navigate(R.id.partyFragment,
-                                    bundleOf(Pair("partyID", user.party?.id)))
-
-                        })
+                            MainNavigationController.navigate(
+                                R.id.partyFragment,
+                                bundleOf(Pair("partyID", user.party?.id))
+                            )
+                        }
+                )
             }
         }
 
         binding?.invitationsView?.rejectCall = {
             socialRepository.rejectGroupInvite(it)
-                    .flatMap { userRepository.retrieveUser(false, true) }
-                    .subscribe({ }, RxErrorHandler.handleEmptyError())
+                .flatMap { userRepository.retrieveUser(false, true) }
+                .subscribe({ }, RxErrorHandler.handleEmptyError())
         }
 
         viewModel?.getGroupData()?.observe(viewLifecycleOwner, { updateParty(it) })
@@ -140,7 +141,7 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
             lifecycleScope.launch(Dispatchers.Main) {
                 delay(500)
                 inventoryRepository.getQuestContent(party.quest?.key ?: "")
-                        .subscribe({ this@PartyDetailFragment.updateQuestContent(it) }, RxErrorHandler.handleEmptyError())
+                    .subscribe({ this@PartyDetailFragment.updateQuestContent(it) }, RxErrorHandler.handleEmptyError())
             }
         } else {
             binding?.newQuestButton?.visibility = View.VISIBLE
@@ -183,11 +184,14 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
 
                     leaderID.let { id ->
                         compositeSubscription.add(
-                                socialRepository.getMember(id)
-                                        .subscribe({ member ->
-                                            binding?.root?.findViewById<AvatarView>(R.id.groupleader_avatar_view)?.setAvatar(member)
-                                            binding?.root?.findViewById<TextView>(R.id.groupleader_text_view)?.text = getString(R.string.invitation_title, member.displayName, groupName)
-                                        }, RxErrorHandler.handleEmptyError())
+                            socialRepository.getMember(id)
+                                .subscribe(
+                                    { member ->
+                                        binding?.root?.findViewById<AvatarView>(R.id.groupleader_avatar_view)?.setAvatar(member)
+                                        binding?.root?.findViewById<TextView>(R.id.groupleader_text_view)?.text = getString(R.string.invitation_title, member.displayName, groupName)
+                                    },
+                                    RxErrorHandler.handleEmptyError()
+                                )
                         )
                     }
 
@@ -255,13 +259,15 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
     private fun updateMembersList(members: List<Member>?) {
         val leaderID = viewModel?.leaderID
         members?.forEachIndexed { index, member ->
-            val memberView = (if (binding?.membersWrapper?.childCount ?: 0 > index) {
-                binding?.membersWrapper?.getChildAt(index)
-            } else {
-                val view = binding?.membersWrapper?.inflate(R.layout.party_member, false)
-                binding?.membersWrapper?.addView(view)
-                view
-            }) ?: return@forEachIndexed
+            val memberView = (
+                if (binding?.membersWrapper?.childCount ?: 0 > index) {
+                    binding?.membersWrapper?.getChildAt(index)
+                } else {
+                    val view = binding?.membersWrapper?.inflate(R.layout.party_member, false)
+                    binding?.membersWrapper?.addView(view)
+                    view
+                }
+                ) ?: return@forEachIndexed
             val viewHolder = GroupMemberViewHolder(memberView)
             viewHolder.bind(member, leaderID ?: "", viewModel?.getUserData()?.value?.id)
             viewHolder.onClickEvent = {
@@ -291,12 +297,17 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
         val addMessageDialog = context?.let { HabiticaAlertDialog(it) }
         addMessageDialog?.addButton(android.R.string.ok, true) { _, _ ->
             socialRepository.postPrivateMessage(userID, emojiEditText.text.toString())
-                    .subscribe({
+                .subscribe(
+                    {
                         (activity as? MainActivity)?.snackbarContainer?.let { it1 ->
-                            HabiticaSnackbar.showSnackbar(it1,
-                                    String.format(getString(R.string.profile_message_sent_to), username), HabiticaSnackbar.SnackbarDisplayType.NORMAL)
+                            HabiticaSnackbar.showSnackbar(
+                                it1,
+                                String.format(getString(R.string.profile_message_sent_to), username), HabiticaSnackbar.SnackbarDisplayType.NORMAL
+                            )
                         }
-                    }, RxErrorHandler.handleEmptyError())
+                    },
+                    RxErrorHandler.handleEmptyError()
+                )
             activity?.dismissKeyboard()
         }
         addMessageDialog?.addButton(android.R.string.cancel, false) { _, _ -> activity?.dismissKeyboard() }
@@ -308,12 +319,17 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
         val dialog = context?.let { HabiticaAlertDialog(it) }
         dialog?.addButton(R.string.transfer, true) { _, _ ->
             socialRepository.transferGroupOwnership(viewModel?.groupID ?: "", userID)
-                    .subscribe({
+                .subscribe(
+                    {
                         (activity as? MainActivity)?.snackbarContainer?.let { it1 ->
-                            HabiticaSnackbar.showSnackbar(it1,
-                                    String.format(getString(R.string.transferred_ownership), displayName), HabiticaSnackbar.SnackbarDisplayType.NORMAL)
+                            HabiticaSnackbar.showSnackbar(
+                                it1,
+                                String.format(getString(R.string.transferred_ownership), displayName), HabiticaSnackbar.SnackbarDisplayType.NORMAL
+                            )
                         }
-                    }, RxErrorHandler.handleEmptyError())
+                    },
+                    RxErrorHandler.handleEmptyError()
+                )
             activity?.dismissKeyboard()
         }
         dialog?.addButton(android.R.string.cancel, false) { _, _ -> activity?.dismissKeyboard() }
@@ -326,12 +342,17 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
         val dialog = context?.let { HabiticaAlertDialog(it) }
         dialog?.addButton(R.string.remove, true) { _, _ ->
             socialRepository.removeMemberFromGroup(viewModel?.groupID ?: "", userID)
-                    .subscribe({
+                .subscribe(
+                    {
                         (activity as? MainActivity)?.snackbarContainer?.let { it1 ->
-                            HabiticaSnackbar.showSnackbar(it1,
-                                    String.format(getString(R.string.removed_member), displayName), HabiticaSnackbar.SnackbarDisplayType.NORMAL)
+                            HabiticaSnackbar.showSnackbar(
+                                it1,
+                                String.format(getString(R.string.removed_member), displayName), HabiticaSnackbar.SnackbarDisplayType.NORMAL
+                            )
                         }
-                    }, RxErrorHandler.handleEmptyError())
+                    },
+                    RxErrorHandler.handleEmptyError()
+                )
             activity?.dismissKeyboard()
         }
         dialog?.addButton(android.R.string.cancel, false) { _, _ -> activity?.dismissKeyboard() }
@@ -373,13 +394,13 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
                     alert.setTitle(R.string.party_challenges)
                     alert.setMessage(R.string.leave_party_challenges_confirmation)
                     alert.addButton(R.string.keep_challenges, true) { _, _ ->
-                        viewModel?.leaveGroup(groupChallenges,true) {
+                        viewModel?.leaveGroup(groupChallenges, true) {
                             parentFragmentManager.popBackStack()
                             MainNavigationController.navigate(R.id.noPartyFragment)
                         }
                     }
                     alert.addButton(R.string.leave_challenges_delete_tasks, false, isDestructive = true) { _, _ ->
-                        viewModel?.leaveGroup(groupChallenges,false) {
+                        viewModel?.leaveGroup(groupChallenges, false) {
                             parentFragmentManager.popBackStack()
                             MainNavigationController.navigate(R.id.noPartyFragment)
                         }
@@ -407,7 +428,6 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
         HapticFeedbackManager.tap(requireView())
         viewModel?.acceptQuest()
     }
-
 
     private fun onQuestReject() {
         HapticFeedbackManager.tap(requireView())

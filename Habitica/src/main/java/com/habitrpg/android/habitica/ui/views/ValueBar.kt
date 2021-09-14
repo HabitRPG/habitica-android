@@ -16,7 +16,6 @@ import com.habitrpg.android.habitica.extensions.layoutInflater
 import java.math.RoundingMode
 import java.text.NumberFormat
 
-
 class ValueBar(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs) {
 
     var descriptionIconVisibility: Int
@@ -58,18 +57,18 @@ class ValueBar(context: Context, attrs: AttributeSet?) : FrameLayout(context, at
         }
 
     var barHeight: Int? = null
-    set(value) {
-        field = value
-        if (value != null) {
-            binding.progressBar.layoutParams.height = value
+        set(value) {
+            field = value
+            if (value != null) {
+                binding.progressBar.layoutParams.height = value
+            }
         }
-    }
 
     var description: String = ""
-    set(value) {
-        field = value
-        binding.descriptionTextView.text = description
-    }
+        set(value) {
+            field = value
+            binding.descriptionTextView.text = description
+        }
 
     private fun updateBar() {
         binding.progressBar.set(currentValue, maxValue)
@@ -80,9 +79,10 @@ class ValueBar(context: Context, attrs: AttributeSet?) : FrameLayout(context, at
     init {
 
         val attributes = context.theme?.obtainStyledAttributes(
-                attrs,
-                R.styleable.ValueBar,
-                0, 0)
+            attrs,
+            R.styleable.ValueBar,
+            0, 0
+        )
         setLightBackground(attributes?.getBoolean(R.styleable.ValueBar_lightBackground, !context.isUsingNightModeResources()) == true)
 
         binding.progressBar.barForegroundColor = attributes?.getColor(R.styleable.ValueBar_barForegroundColor, 0) ?: 0

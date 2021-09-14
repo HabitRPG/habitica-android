@@ -5,4 +5,3 @@ class PurchaseValidationRequest {
     var transaction: Transaction? = null
     var gift: IAPGift? = null
 }
-

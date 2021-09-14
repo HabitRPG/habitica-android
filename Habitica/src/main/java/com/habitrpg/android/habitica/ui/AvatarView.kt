@@ -3,7 +3,6 @@ package com.habitrpg.android.habitica.ui
 import android.content.Context
 import android.graphics.*
 import android.graphics.drawable.Drawable
-import android.os.Build
 import android.text.TextUtils
 import android.util.AttributeSet
 import android.widget.FrameLayout
@@ -12,8 +11,6 @@ import androidx.core.graphics.drawable.toBitmap
 import androidx.core.view.marginStart
 import androidx.core.view.marginTop
 import coil.clear
-import coil.decode.GifDecoder
-import coil.decode.ImageDecoderDecoder
 import coil.load
 import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.R
@@ -102,7 +99,8 @@ class AvatarView : FrameLayout {
     private fun init(attrs: AttributeSet?, defStyle: Int) {
         // Load attributes
         val a = context.obtainStyledAttributes(
-                attrs, R.styleable.AvatarView, defStyle, 0)
+            attrs, R.styleable.AvatarView, defStyle, 0
+        )
 
         try {
             showBackground = a.getBoolean(R.styleable.AvatarView_showBackground, true)
@@ -145,23 +143,27 @@ class AvatarView : FrameLayout {
 
             imageView.load(DataBindingUtils.BASE_IMAGE_URL + DataBindingUtils.getFullFilename(layerName)) {
                 allowHardware(false)
-                target({}, {
-                    onLayerComplete()
-                }, {
-                    if (imageView.tag != layerName) {
-                        return@target
+                target(
+                    {},
+                    {
+                        onLayerComplete()
+                    },
+                    {
+                        if (imageView.tag != layerName) {
+                            return@target
+                        }
+                        val bounds = getLayerBounds(layerKey, layerName, it)
+                        imageView.setImageDrawable(it)
+                        imageView.imageMatrix = avatarMatrix
+                        val layoutParams = imageView.layoutParams as? LayoutParams
+                        layoutParams?.topMargin = bounds.top
+                        layoutParams?.marginStart = bounds.left
+                        layoutParams?.width = bounds.right
+                        layoutParams?.height = bounds.bottom
+                        imageView.layoutParams = layoutParams
+                        onLayerComplete()
                     }
-                    val bounds = getLayerBounds(layerKey, layerName, it)
-                    imageView.setImageDrawable(it)
-                    imageView.imageMatrix = avatarMatrix
-                    val layoutParams = imageView.layoutParams as? LayoutParams
-                    layoutParams?.topMargin = bounds.top
-                    layoutParams?.marginStart = bounds.left
-                    layoutParams?.width = bounds.right
-                    layoutParams?.height = bounds.bottom
-                    imageView.layoutParams = layoutParams
-                    onLayerComplete()
-                })
+                )
             }
         }
         while (i < (imageViewHolder.size)) {
@@ -375,14 +377,13 @@ class AvatarView : FrameLayout {
             }
         }
 
-
         if (offset != null) {
             when (layerName) {
-                "head_special_0" -> offset = PointF(offset.x-3, offset.y-18)
-                "weapon_special_0" -> offset = PointF(offset.x-12, offset.y+4)
-                "weapon_special_1" -> offset = PointF(offset.x-12, offset.y+4)
-                "weapon_special_critical" -> offset = PointF(offset.x-12, offset.y+4)
-                "head_special_1" -> offset = PointF(offset.x, offset.y+3)
+                "head_special_0" -> offset = PointF(offset.x - 3, offset.y - 18)
+                "weapon_special_0" -> offset = PointF(offset.x - 12, offset.y + 4)
+                "weapon_special_1" -> offset = PointF(offset.x - 12, offset.y + 4)
+                "weapon_special_critical" -> offset = PointF(offset.x - 12, offset.y + 4)
+                "head_special_1" -> offset = PointF(offset.x, offset.y + 3)
             }
 
             val translateMatrix = Matrix()
@@ -396,8 +397,6 @@ class AvatarView : FrameLayout {
 
         return bounds
     }
-
-
 
     private fun onLayerComplete() {
         if (numberLayersInProcess.decrementAndGet() == 0) {

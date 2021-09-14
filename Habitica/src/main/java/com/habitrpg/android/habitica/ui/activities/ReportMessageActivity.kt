@@ -21,7 +21,6 @@ import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
 import com.habitrpg.android.habitica.ui.helpers.setMarkdown
 import javax.inject.Inject
 
-
 class ReportMessageActivity : BaseActivity() {
 
     private lateinit var binding: ActivityReportMessageBinding
@@ -61,30 +60,35 @@ class ReportMessageActivity : BaseActivity() {
         binding.reportExplanationTextview.setMarkdown(getString(R.string.report_explanation))
 
         BottomSheetBehavior.from<View>(binding.bottomSheet)
-                .addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
-                    @SuppressLint("SwitchIntDef")
-                    override fun onStateChanged(bottomSheet: View, newState: Int) {
-                        when (newState) {
-                            BottomSheetBehavior.STATE_HIDDEN -> finish()
-                            BottomSheetBehavior.STATE_EXPANDED -> setStatusBarDim(false)
-                            else -> setStatusBarDim(true)
-                        }
+            .addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+                @SuppressLint("SwitchIntDef")
+                override fun onStateChanged(bottomSheet: View, newState: Int) {
+                    when (newState) {
+                        BottomSheetBehavior.STATE_HIDDEN -> finish()
+                        BottomSheetBehavior.STATE_EXPANDED -> setStatusBarDim(false)
+                        else -> setStatusBarDim(true)
                     }
+                }
 
-                    override fun onSlide(bottomSheet: View, slideOffset: Float) {
-                        // no op
-                    }
-                })
+                override fun onSlide(bottomSheet: View, slideOffset: Float) {
+                    // no op
+                }
+            })
 
         val args = navArgs<ReportMessageActivityArgs>().value
         messageID = args.messageID
         binding.titleTextView.text = getString(R.string.report_message_title, args.profileName)
         binding.messageTextView.text = args.text
 
-        messageID?.let {messageID ->
-            compositeSubscription.add(socialRepository.getChatmessage(messageID).subscribe({
-                chatMessage = it
-            }, RxErrorHandler.handleEmptyError()))
+        messageID?.let { messageID ->
+            compositeSubscription.add(
+                socialRepository.getChatmessage(messageID).subscribe(
+                    {
+                        chatMessage = it
+                    },
+                    RxErrorHandler.handleEmptyError()
+                )
+            )
         }
 
         binding.reportButton.setOnClickListener { reportMessage() }
@@ -103,10 +107,13 @@ class ReportMessageActivity : BaseActivity() {
         chatMessage?.let {
             isReporting = true
             socialRepository.flagMessage(it, binding.additionalInfoEdittext.text.toString())
-                    .doOnError { isReporting = false }
-                    .subscribe({
-                finish()
-            }, RxErrorHandler.handleEmptyError())
+                .doOnError { isReporting = false }
+                .subscribe(
+                    {
+                        finish()
+                    },
+                    RxErrorHandler.handleEmptyError()
+                )
         }
     }
 

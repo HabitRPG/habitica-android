@@ -26,8 +26,11 @@ import javax.inject.Inject
 import kotlin.math.abs
 
 class NotifyUserUseCase @Inject
-constructor(postExecutionThread: PostExecutionThread,
-            private val levelUpUseCase: LevelUpUseCase, private val userRepository: UserRepository) : UseCase<NotifyUserUseCase.RequestValues, Stats>(postExecutionThread) {
+constructor(
+    postExecutionThread: PostExecutionThread,
+    private val levelUpUseCase: LevelUpUseCase,
+    private val userRepository: UserRepository
+) : UseCase<NotifyUserUseCase.RequestValues, Stats>(postExecutionThread) {
 
     override fun buildUseCaseObservable(requestValues: RequestValues): Flowable<Stats> {
         return Flowable.defer {
@@ -44,15 +47,15 @@ constructor(postExecutionThread: PostExecutionThread,
             }
             if (requestValues.hasLeveledUp == true) {
                 return@defer levelUpUseCase.observable(LevelUpUseCase.RequestValues(requestValues.user, requestValues.level, requestValues.context, requestValues.snackbarTargetView))
-                        .flatMap { userRepository.retrieveUser(true) }
-                        .map { it.stats }
+                    .flatMap { userRepository.retrieveUser(true) }
+                    .map { it.stats }
             } else {
                 return@defer Flowable.just(stats)
             }
         }
     }
 
-    class RequestValues( val context: AppCompatActivity, val snackbarTargetView: ViewGroup, val user: User?, val xp: Double?, val hp: Double?, val gold: Double?, val mp: Double?, val questDamage: Double?, val hasLeveledUp: Boolean?, val level: Int?) : UseCase.RequestValues
+    class RequestValues(val context: AppCompatActivity, val snackbarTargetView: ViewGroup, val user: User?, val xp: Double?, val hp: Double?, val gold: Double?, val mp: Double?, val questDamage: Double?, val hasLeveledUp: Boolean?, val level: Int?) : UseCase.RequestValues
 
     companion object {
 
@@ -66,27 +69,27 @@ constructor(postExecutionThread: PostExecutionThread,
             if (xp != null && xp > 0) {
                 container.addView(createTextView(context, xp, HabiticaIconsHelper.imageOfExperience()))
             }
-            if (hp  != null && hp != 0.0) {
+            if (hp != null && hp != 0.0) {
                 displayType = SnackbarDisplayType.FAILURE
                 container.addView(createTextView(context, hp, HabiticaIconsHelper.imageOfHeartDarkBg()))
             }
-            if (gold  != null && gold != 0.0) {
+            if (gold != null && gold != 0.0) {
                 container.addView(createTextView(context, gold, HabiticaIconsHelper.imageOfGold()))
                 if (gold < 0) {
                     displayType = SnackbarDisplayType.FAILURE
                 }
             }
-            if (mp  != null && mp > 0 && user?.hasClass() == true) {
+            if (mp != null && mp > 0 && user?.hasClass() == true) {
                 container.addView(createTextView(context, mp, HabiticaIconsHelper.imageOfMagic()))
             }
-            if (questDamage  != null && questDamage > 0) {
+            if (questDamage != null && questDamage > 0) {
                 container.addView(createTextView(context, questDamage, HabiticaIconsHelper.imageOfDamage()))
             }
 
             val padding = context.resources.getDimension(R.dimen.spacing_medium).toInt()
             (1 until container.childCount)
-                    .map { container.getChildAt(it) }
-                    .forEach { it.setPadding(padding, 0, 0, 0) }
+                .map { container.getChildAt(it) }
+                .forEach { it.setPadding(padding, 0, 0, 0) }
 
             return Pair(container, displayType)
         }

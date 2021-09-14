@@ -48,8 +48,8 @@ class PurchaseDialogQuestContent(context: Context) : PurchaseDialogContent(conte
 
         if (questContent.drop != null && questContent.drop?.items != null) {
             questContent.drop?.items
-                    ?.filterNot { it.onlyOwner }
-                    ?.forEach { addRewardsRow(inflater, it, binding.rewardsList) }
+                ?.filterNot { it.onlyOwner }
+                ?.forEach { addRewardsRow(inflater, it, binding.rewardsList) }
 
             var hasOwnerRewards = false
             for (item in questContent.drop?.items ?: emptyList<QuestDropItem>()) {

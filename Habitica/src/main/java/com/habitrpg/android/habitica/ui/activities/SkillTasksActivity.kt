@@ -99,7 +99,6 @@ class SkillTasksActivity : BaseActivity() {
             }
         }
 
-
         binding.tabLayout.setupWithViewPager(binding.viewPager)
     }
 
@@ -120,4 +119,3 @@ class SkillTasksActivity : BaseActivity() {
         }
     }
 }
-

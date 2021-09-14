@@ -46,9 +46,9 @@ class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
         BitmapDrawable(resources, HabiticaIconsHelper.imageOfAlertIcon())
     }
     val username: String
-    get() = binding?.usernameEditText?.text?.toString() ?: ""
+        get() = binding?.usernameEditText?.text?.toString() ?: ""
     val displayName: String
-    get() = binding?.displayNameEditText?.text?.toString() ?: ""
+        get() = binding?.displayNameEditText?.text?.toString() ?: ""
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -57,14 +57,19 @@ class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
 
         super.onCreate(savedInstanceState)
 
-        binding?.displayNameEditText?.addTextChangedListener(OnChangeTextWatcher { p0, _, _, _ ->
+        binding?.displayNameEditText?.addTextChangedListener(
+            OnChangeTextWatcher { p0, _, _, _ ->
                 displayNameVerificationEvents.onNext(p0.toString())
-        })
-        binding?.usernameEditText?.addTextChangedListener(OnChangeTextWatcher { p0, _, _, _ ->
+            }
+        )
+        binding?.usernameEditText?.addTextChangedListener(
+            OnChangeTextWatcher { p0, _, _, _ ->
                 usernameVerificationEvents.onNext(p0.toString())
-        })
+            }
+        )
 
-        compositeSubscription.add(displayNameVerificationEvents.toFlowable(BackpressureStrategy.DROP)
+        compositeSubscription.add(
+            displayNameVerificationEvents.toFlowable(BackpressureStrategy.DROP)
                 .map { it.length in 1..30 }
                 .subscribeWithErrorHandler {
                     if (it) {
@@ -75,8 +80,10 @@ class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
                         binding?.issuesTextView?.visibility = View.VISIBLE
                         binding?.issuesTextView?.text = context?.getString(R.string.display_name_length_error)
                     }
-                })
-        compositeSubscription.add(usernameVerificationEvents.toFlowable(BackpressureStrategy.DROP)
+                }
+        )
+        compositeSubscription.add(
+            usernameVerificationEvents.toFlowable(BackpressureStrategy.DROP)
                 .filter { it.length in 1..30 }
                 .throttleLast(1, TimeUnit.SECONDS)
                 .flatMap { userRepository.verifyUsername(it) }
@@ -90,14 +97,17 @@ class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
                         binding?.issuesTextView?.text = it.issues.joinToString("\n")
                     }
                     nameValidEvents.onNext(it.isUsable)
-                })
+                }
+        )
 
-        compositeSubscription.add(userRepository.getUser().firstElement().subscribe {
-            binding?.displayNameEditText?.setText(it.profile?.name)
-            displayNameVerificationEvents.onNext(it.profile?.name ?: "")
-            binding?.usernameEditText?.setText(it.username)
-            usernameVerificationEvents.onNext(it.username ?: "")
-        })
+        compositeSubscription.add(
+            userRepository.getUser().firstElement().subscribe {
+                binding?.displayNameEditText?.setText(it.profile?.name)
+                displayNameVerificationEvents.onNext(it.profile?.name ?: "")
+                binding?.usernameEditText?.setText(it.username)
+                usernameVerificationEvents.onNext(it.username ?: "")
+            }
+        )
     }
 
     override fun injectFragment(component: UserComponent) {

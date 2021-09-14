@@ -13,7 +13,6 @@ import com.habitrpg.android.habitica.models.responses.TaskScoringResult
 import java.util.*
 import javax.inject.Inject
 
-
 abstract class BaseWidgetProvider : AppWidgetProvider() {
 
     @Inject
@@ -42,19 +41,22 @@ abstract class BaseWidgetProvider : AppWidgetProvider() {
         this.context = context
         val options = appWidgetManager.getAppWidgetOptions(appWidgetId)
 
-        appWidgetManager.partiallyUpdateAppWidget(appWidgetId,
-                sizeRemoteViews(context, options, appWidgetId))
+        appWidgetManager.partiallyUpdateAppWidget(
+            appWidgetId,
+            sizeRemoteViews(context, options, appWidgetId)
+        )
 
-        super.onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId,
-                newOptions)
-
+        super.onAppWidgetOptionsChanged(
+            context, appWidgetManager, appWidgetId,
+            newOptions
+        )
     }
 
     fun sizeRemoteViews(context: Context?, options: Bundle, widgetId: Int): RemoteViews {
         this.context = context
         val minWidth = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH)
         val minHeight = options
-                .getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT)
+            .getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT)
 
         // First find out rows and columns based on width provided.
         val rows = getCellsForSize(minHeight)

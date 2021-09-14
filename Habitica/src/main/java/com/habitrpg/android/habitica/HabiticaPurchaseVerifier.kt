@@ -19,7 +19,6 @@ import org.solovyev.android.checkout.ResponseCodes
 import retrofit2.HttpException
 import java.util.*
 
-
 class HabiticaPurchaseVerifier(context: Context, apiClient: ApiClient) : BasePurchaseVerifier() {
     private val apiClient: ApiClient
     private val purchasedOrderList: MutableSet<String> = HashSet()
@@ -93,7 +92,7 @@ class HabiticaPurchaseVerifier(context: Context, apiClient: ApiClient) : BasePur
     }
 
     private fun handleError(throwable: Throwable, purchase: Purchase, requestListener: RequestListener<List<Purchase>>, verifiedPurchases: MutableList<Purchase>) {
-        (throwable as? HttpException)?.let {error ->
+        (throwable as? HttpException)?.let { error ->
             if (error.code() == 401) {
                 val res = apiClient.getErrorResponse(throwable)
                 if (res.message != null && res.message == "RECEIPT_ALREADY_USED") {

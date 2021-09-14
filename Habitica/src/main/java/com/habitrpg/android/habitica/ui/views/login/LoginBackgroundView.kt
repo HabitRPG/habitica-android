@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica.ui.views.login
 
-
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
 import android.content.Context
@@ -118,7 +117,7 @@ class LoginBackgroundView(context: Context, attrs: AttributeSet?) : RelativeLayo
     }
 
     private fun updateStarLayoutParams() {
-        if (viewWidth <= 0 ||viewHeight <= 0 || didLayoutStars || starViews?.size == 0) {
+        if (viewWidth <= 0 || viewHeight <= 0 || didLayoutStars || starViews?.size == 0) {
             return
         }
         for (view in starViews ?: emptyList()) {

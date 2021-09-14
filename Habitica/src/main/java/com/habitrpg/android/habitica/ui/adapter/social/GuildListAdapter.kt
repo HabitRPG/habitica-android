@@ -70,12 +70,12 @@ class GuildListAdapter : BaseRecyclerViewAdapter<Group, RecyclerView.ViewHolder>
                 unfilteredData?.let {
                     if (constraint.isNotEmpty() && it is OrderedRealmCollection) {
                         data = it.where()
-                                .beginGroup()
-                                .contains("name", constraint.toString(), Case.INSENSITIVE)
-                                .or()
-                                .contains("summary", constraint.toString(), Case.INSENSITIVE)
-                                .endGroup()
-                                .findAll()
+                            .beginGroup()
+                            .contains("name", constraint.toString(), Case.INSENSITIVE)
+                            .or()
+                            .contains("summary", constraint.toString(), Case.INSENSITIVE)
+                            .endGroup()
+                            .findAll()
                     } else {
                         data = it
                     }
@@ -97,11 +97,13 @@ class GuildListAdapter : BaseRecyclerViewAdapter<Group, RecyclerView.ViewHolder>
             }
             val formattedNumber = NumberAbbreviator.abbreviate(itemView.context, guild.memberCount.toDouble(), number)
             binding.guildBadgeView.setImageBitmap(
-                    HabiticaIconsHelper.imageOfGuildCrest(itemView.context,
-                            false,
-                            false,
-                            guild.memberCount.toFloat(),
-                            formattedNumber)
+                HabiticaIconsHelper.imageOfGuildCrest(
+                    itemView.context,
+                    false,
+                    false,
+                    guild.memberCount.toFloat(),
+                    formattedNumber
+                )
             )
         }
     }

@@ -1,12 +1,11 @@
 package com.habitrpg.android.habitica.ui.views
 
 import android.content.Context
-import androidx.viewpager.widget.ViewPager
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import androidx.viewpager.widget.ViewPager
 import kotlin.math.abs
-
 
 class FadingViewPager : ViewPager {
     var disableFading: Boolean = false

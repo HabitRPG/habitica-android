@@ -8,12 +8,12 @@ open class QuestContent : RealmObject(), Item {
 
     @PrimaryKey
     override var key: String = ""
-    set(value) {
-        field = value
-        drop?.key = value
-        colors?.key = value
-        boss?.key = value
-    }
+        set(value) {
+            field = value
+            drop?.key = value
+            colors?.key = value
+            boss?.key = value
+        }
     override var text: String = ""
     var notes: String = ""
     var completion: String = ""
@@ -51,7 +51,7 @@ open class QuestContent : RealmObject(), Item {
         get() = this.boss != null
 
     override val type: String
-        get() =  "quests"
+        get() = "quests"
 
     fun getCollectWithKey(key: String?): QuestCollect? {
         for (collect in this.collect ?: emptyList<QuestCollect>()) {

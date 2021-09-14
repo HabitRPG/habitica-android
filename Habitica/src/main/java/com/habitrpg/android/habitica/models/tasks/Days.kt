@@ -3,7 +3,6 @@ package com.habitrpg.android.habitica.models.tasks
 import android.os.Parcel
 import android.os.Parcelable
 import io.realm.RealmObject
-import io.realm.annotations.PrimaryKey
 import io.realm.annotations.RealmClass
 
 @RealmClass(embedded = true)
@@ -35,7 +34,7 @@ open class Days() : RealmObject(), Parcelable {
         s = `in`.readByte().toInt() != 0
         su = `in`.readByte().toInt() != 0
     }
-    
+
     override fun describeContents(): Int {
         return 0
     }

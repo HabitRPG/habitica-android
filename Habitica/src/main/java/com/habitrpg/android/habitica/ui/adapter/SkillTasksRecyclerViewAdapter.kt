@@ -13,7 +13,6 @@ import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.subjects.PublishSubject
 import java.util.*
 
-
 class SkillTasksRecyclerViewAdapter : BaseRecyclerViewAdapter<Task, SkillTasksRecyclerViewAdapter.TaskViewHolder>() {
 
     private val taskSelectionEvents = PublishSubject.create<Task>()
@@ -28,7 +27,7 @@ class SkillTasksRecyclerViewAdapter : BaseRecyclerViewAdapter<Task, SkillTasksRe
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
         val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.skill_task_item_card, parent, false)
+            .inflate(R.layout.skill_task_item_card, parent, false)
         return TaskViewHolder(view)
     }
 

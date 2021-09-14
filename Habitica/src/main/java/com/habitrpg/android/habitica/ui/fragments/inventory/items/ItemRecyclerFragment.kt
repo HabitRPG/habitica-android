@@ -86,17 +86,25 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
             binding?.recyclerView?.adapter = adapter
 
             adapter?.let { adapter ->
-                compositeSubscription.add(adapter.getSellItemFlowable()
+                compositeSubscription.add(
+                    adapter.getSellItemFlowable()
                         .flatMap { item -> inventoryRepository.sellItem(item) }
-                        .subscribe({ }, RxErrorHandler.handleEmptyError()))
+                        .subscribe({ }, RxErrorHandler.handleEmptyError())
+                )
 
-                compositeSubscription.add(adapter.getQuestInvitationFlowable()
+                compositeSubscription.add(
+                    adapter.getQuestInvitationFlowable()
                         .flatMap { quest -> inventoryRepository.inviteToQuest(quest) }
                         .flatMap { socialRepository.retrieveGroup("party") }
-                        .subscribe({
-                            MainNavigationController.navigate(R.id.partyFragment)
-                        }, RxErrorHandler.handleEmptyError()))
-                compositeSubscription.add(adapter.getOpenMysteryItemFlowable()
+                        .subscribe(
+                            {
+                                MainNavigationController.navigate(R.id.partyFragment)
+                            },
+                            RxErrorHandler.handleEmptyError()
+                        )
+                )
+                compositeSubscription.add(
+                    adapter.getOpenMysteryItemFlowable()
                         .flatMap { inventoryRepository.openMysteryItem(user) }
                         .doOnNext {
                             val activity = activity as? MainActivity
@@ -108,13 +116,14 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
                                 dialog.binding.titleView.text = it.text
                                 dialog.binding.descriptionView.text = it.notes
                                 dialog.addButton(R.string.equip, true) { _, _ ->
-                                    inventoryRepository.equip(user, "equipped", it.key ?: "").subscribe( {}, RxErrorHandler.handleEmptyError())
+                                    inventoryRepository.equip(user, "equipped", it.key ?: "").subscribe({}, RxErrorHandler.handleEmptyError())
                                 }
                                 dialog.addCloseButton()
                                 dialog.enqueue()
                             }
                         }
-                        .subscribe({ }, RxErrorHandler.handleEmptyError()))
+                        .subscribe({ }, RxErrorHandler.handleEmptyError())
+                )
                 compositeSubscription.add(adapter.startHatchingEvents.subscribeWithErrorHandler { showHatchingDialog(it) })
                 compositeSubscription.add(adapter.hatchPetEvents.subscribeWithErrorHandler { hatchPet(it.first, it.second) })
             }
@@ -160,10 +169,12 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
 
     override fun onRefresh() {
         binding?.refreshLayout?.isRefreshing = true
-        compositeSubscription.add(userRepository.retrieveUser(true, true)
+        compositeSubscription.add(
+            userRepository.retrieveUser(true, true)
                 .doOnTerminate {
                     binding?.refreshLayout?.isRefreshing = false
-                }.subscribe({ }, RxErrorHandler.handleEmptyError()))
+                }.subscribe({ }, RxErrorHandler.handleEmptyError())
+        )
     }
 
     private fun hatchPet(potion: HatchingPotion, egg: Egg) {
@@ -180,33 +191,40 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
             else -> Egg::class.java
         }
         itemType?.let { type ->
-            compositeSubscription.add(inventoryRepository.getOwnedItems(type)
-                .map { it.distinctBy { it.key } }
-                .doOnNext { items ->
-                    adapter?.data = items
-                }
-                .map { items -> items.mapNotNull { it.key } }
-                .flatMap { inventoryRepository.getItems(itemClass, it.toTypedArray()) }
-                .map {
-                    val itemMap = mutableMapOf<String, Item>()
-                    for (item in it) {
-                        itemMap[item.key] = item
+            compositeSubscription.add(
+                inventoryRepository.getOwnedItems(type)
+                    .map { it.distinctBy { it.key } }
+                    .doOnNext { items ->
+                        adapter?.data = items
                     }
-                    itemMap
-                }
-                .subscribe({ items ->
-                adapter?.items = items
-            }, RxErrorHandler.handleEmptyError()))
+                    .map { items -> items.mapNotNull { it.key } }
+                    .flatMap { inventoryRepository.getItems(itemClass, it.toTypedArray()) }
+                    .map {
+                        val itemMap = mutableMapOf<String, Item>()
+                        for (item in it) {
+                            itemMap[item.key] = item
+                        }
+                        itemMap
+                    }
+                    .subscribe(
+                        { items ->
+                            adapter?.items = items
+                        },
+                        RxErrorHandler.handleEmptyError()
+                    )
+            )
         }
 
         compositeSubscription.add(inventoryRepository.getPets().subscribe({ adapter?.setExistingPets(it) }, RxErrorHandler.handleEmptyError()))
-        compositeSubscription.add(inventoryRepository.getOwnedPets()
+        compositeSubscription.add(
+            inventoryRepository.getOwnedPets()
                 .map { ownedMounts ->
                     val mountMap = mutableMapOf<String, OwnedPet>()
                     ownedMounts.forEach { mountMap[it.key ?: ""] = it }
                     return@map mountMap
                 }
-                .subscribe({ adapter?.setOwnedPets(it) }, RxErrorHandler.handleEmptyError()))
+                .subscribe({ adapter?.setOwnedPets(it) }, RxErrorHandler.handleEmptyError())
+        )
     }
 
     private fun openMarket() {

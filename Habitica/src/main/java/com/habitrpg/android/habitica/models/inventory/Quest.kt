@@ -2,7 +2,6 @@ package com.habitrpg.android.habitica.models.inventory
 
 import com.habitrpg.android.habitica.models.BaseObject
 import com.habitrpg.android.habitica.models.members.Member
-
 import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
@@ -10,15 +9,15 @@ import io.realm.annotations.PrimaryKey
 open class Quest : RealmObject(), BaseObject {
     @PrimaryKey
     var id: String? = null
-    set(value) {
-        field = value
-        progress?.id = value
-    }
+        set(value) {
+            field = value
+            progress?.id = value
+        }
     var key: String = ""
-    set(value) {
-        field = value
-        progress?.key = key
-    }
+        set(value) {
+            field = value
+            progress?.key = key
+        }
     var active: Boolean = false
     var leader: String? = null
     var RSVPNeeded: Boolean = false
@@ -43,7 +42,7 @@ open class Quest : RealmObject(), BaseObject {
     }
 
     val activeRageStrikeNumber: Int
-    get() {
-        return rageStrikes?.filter { it.wasHit }?.size ?: 0
-    }
+        get() {
+            return rageStrikes?.filter { it.wasHit }?.size ?: 0
+        }
 }

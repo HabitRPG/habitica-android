@@ -42,10 +42,8 @@ constructor(ctx: Context, var sharedPreferences: SharedPreferences, var keyStore
             } catch (e: Exception) {
                 e.printStackTrace()
             }
-
         }
     }
-
 
     @Throws(NoSuchProviderException::class, NoSuchAlgorithmException::class, InvalidAlgorithmParameterException::class, KeyStoreException::class, CertificateException::class, IOException::class)
     private fun generateEncryptKey(ctx: Context) {
@@ -55,12 +53,15 @@ constructor(ctx: Context, var sharedPreferences: SharedPreferences, var keyStore
             if (!keyStore.containsAlias(KEY_ALIAS)) {
                 val keyGenerator = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, AndroidKeyStore)
                 keyGenerator.init(
-                        KeyGenParameterSpec.Builder(KEY_ALIAS,
-                                KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT)
-                                .setBlockModes(KeyProperties.BLOCK_MODE_GCM)
-                                .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)
-                                .setRandomizedEncryptionRequired(false)
-                                .build())
+                    KeyGenParameterSpec.Builder(
+                        KEY_ALIAS,
+                        KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT
+                    )
+                        .setBlockModes(KeyProperties.BLOCK_MODE_GCM)
+                        .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)
+                        .setRandomizedEncryptionRequired(false)
+                        .build()
+                )
                 keyGenerator.generateKey()
             }
         } else {
@@ -70,12 +71,12 @@ constructor(ctx: Context, var sharedPreferences: SharedPreferences, var keyStore
                 val end = Calendar.getInstance()
                 end.add(Calendar.YEAR, 30)
                 val spec = KeyPairGeneratorSpec.Builder(ctx)
-                        .setAlias(KEY_ALIAS)
-                        .setSubject(X500Principal("CN=$KEY_ALIAS"))
-                        .setSerialNumber(BigInteger.TEN)
-                        .setStartDate(start.time)
-                        .setEndDate(end.time)
-                        .build()
+                    .setAlias(KEY_ALIAS)
+                    .setSubject(X500Principal("CN=$KEY_ALIAS"))
+                    .setSerialNumber(BigInteger.TEN)
+                    .setStartDate(start.time)
+                    .setEndDate(end.time)
+                    .build()
                 val kpg = KeyPairGenerator.getInstance("RSA", AndroidKeyStore)
                 kpg.initialize(spec)
                 kpg.generateKeyPair()
@@ -104,7 +105,8 @@ constructor(ctx: Context, var sharedPreferences: SharedPreferences, var keyStore
         val output = Cipher.getInstance(RSA_MODE, "AndroidOpenSSL")
         output.init(Cipher.DECRYPT_MODE, privateKeyEntry?.privateKey)
         val cipherInputStream = CipherInputStream(
-                ByteArrayInputStream(encrypted), output)
+            ByteArrayInputStream(encrypted), output
+        )
         return cipherInputStream.readBytes()
     }
 
@@ -122,7 +124,6 @@ constructor(ctx: Context, var sharedPreferences: SharedPreferences, var keyStore
             }
         }
     }
-
 
     @Throws(Exception::class)
     private fun getSecretKey(): Key {
@@ -152,12 +153,10 @@ constructor(ctx: Context, var sharedPreferences: SharedPreferences, var keyStore
             } catch (e: Exception) {
                 e.printStackTrace()
             }
-
         }
         val encodedBytes = c.doFinal(input.toByteArray(charset("UTF-8")))
         return Base64.encodeToString(encodedBytes, Base64.DEFAULT)
     }
-
 
     @Throws(NoSuchAlgorithmException::class, NoSuchPaddingException::class, NoSuchProviderException::class, BadPaddingException::class, IllegalBlockSizeException::class, UnsupportedEncodingException::class)
     fun decrypt(encrypted: String): String? {
@@ -178,7 +177,6 @@ constructor(ctx: Context, var sharedPreferences: SharedPreferences, var keyStore
             } catch (e: Exception) {
                 e.printStackTrace()
             }
-
         }
 
         return try {
@@ -237,7 +235,6 @@ constructor(ctx: Context, var sharedPreferences: SharedPreferences, var keyStore
                 } catch (e: IOException) {
                     e.printStackTrace()
                 }
-
             }
             return keyHelper
         }

@@ -9,7 +9,6 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.core.os.bundleOf
-import androidx.preference.ListPreference
 import androidx.preference.Preference
 import com.google.android.material.textfield.TextInputLayout
 import com.habitrpg.android.habitica.HabiticaBaseApplication
@@ -28,7 +27,7 @@ import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaProgressDialog
 import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionDetailsView
 import javax.inject.Inject
 
-class AuthenticationPreferenceFragment: BasePreferencesFragment() {
+class AuthenticationPreferenceFragment : BasePreferencesFragment() {
 
     @Inject
     lateinit var configManager: AppConfigManager
@@ -41,7 +40,6 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
             field = value
             updateUserFields()
         }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         HabiticaBaseApplication.userComponent?.inject(this)
@@ -116,9 +114,12 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
             dialog.setTitle(R.string.change_password)
             dialog.addButton(R.string.change, true) { _, _ ->
                 userRepository.updatePassword(oldPasswordEditText?.text.toString(), passwordEditText?.text.toString(), passwordRepeatEditText?.text.toString())
-                        .subscribe({
+                    .subscribe(
+                        {
                             Toast.makeText(activity, R.string.password_changed, Toast.LENGTH_SHORT).show()
-                        }, RxErrorHandler.handleEmptyError())
+                        },
+                        RxErrorHandler.handleEmptyError()
+                    )
             }
             dialog.addCancelButton()
             dialog.setAdditionalContentView(view)
@@ -139,9 +140,12 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
             dialog.setTitle(R.string.change_email)
             dialog.addButton(R.string.change, true) { _, _ ->
                 userRepository.updateEmail(emailEditText?.text.toString(), passwordEditText?.text.toString())
-                        .subscribe({
+                    .subscribe(
+                        {
                             configurePreference(findPreference("email"), emailEditText?.text.toString(), true)
-                        }, RxErrorHandler.handleEmptyError())
+                        },
+                        RxErrorHandler.handleEmptyError()
+                    )
             }
             dialog.addCancelButton()
             dialog.setAdditionalContentView(view)
@@ -161,9 +165,12 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
             dialog.setTitle(R.string.change_username)
             dialog.addButton(R.string.save, true) { _, _ ->
                 userRepository.updateLoginName(loginNameEditText?.text.toString())
-                        .subscribe({
+                    .subscribe(
+                        {
                             configurePreference(findPreference("login_name"), loginNameEditText?.text.toString(), true)
-                        }, RxErrorHandler.handleEmptyError())
+                        },
+                        RxErrorHandler.handleEmptyError()
+                    )
             }
             dialog.addCancelButton()
             dialog.setAdditionalContentView(view)
@@ -213,10 +220,13 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
                 }
                 thisDialog.dismiss()
                 apiClient.registerUser(user?.username ?: "", emailEditText?.text.toString(), passwordEditText?.text.toString(), passwordRepeatEditText?.text.toString())
-                        .flatMap { userRepository.retrieveUser(false) }
-                        .subscribe({
+                    .flatMap { userRepository.retrieveUser(false) }
+                    .subscribe(
+                        {
                             configurePreference(findPreference("email"), emailEditText?.text.toString(), true)
-                        }, RxErrorHandler.handleEmptyError())
+                        },
+                        RxErrorHandler.handleEmptyError()
+                    )
             }
             dialog.addCancelButton()
             dialog.setAdditionalContentView(view)
@@ -227,14 +237,16 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
 
     private fun deleteAccount(password: String) {
         val dialog = HabiticaProgressDialog.show(context, R.string.deleting_account)
-        compositeSubscription.add(userRepository.deleteAccount(password).subscribe({ _ ->
-            dialog?.dismiss()
-            context?.let { HabiticaBaseApplication.logout(it) }
-            activity?.finish()
-        }) { throwable ->
-            dialog?.dismiss()
-            RxErrorHandler.reportError(throwable)
-        })
+        compositeSubscription.add(
+            userRepository.deleteAccount(password).subscribe({ _ ->
+                dialog?.dismiss()
+                context?.let { HabiticaBaseApplication.logout(it) }
+                activity?.finish()
+            }) { throwable ->
+                dialog?.dismiss()
+                RxErrorHandler.reportError(throwable)
+            }
+        )
     }
 
     private fun showAccountResetConfirmation() {
@@ -258,7 +270,7 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
         dialog.setMessage(R.string.confirm_username_description)
         dialog.addButton(R.string.confirm, true) { _, _ ->
             userRepository.updateLoginName(user?.authentication?.localAuthentication?.username ?: "")
-                    .subscribe({ }, RxErrorHandler.handleEmptyError())
+                .subscribe({ }, RxErrorHandler.handleEmptyError())
         }
         dialog.addCancelButton()
         dialog.show()
@@ -266,10 +278,12 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
 
     private fun resetAccount() {
         val dialog = HabiticaProgressDialog.show(context, R.string.resetting_account)
-        compositeSubscription.add(userRepository.resetAccount().subscribe({ dialog?.dismiss() }) { throwable ->
-            dialog?.dismiss()
-            RxErrorHandler.reportError(throwable)
-        })
+        compositeSubscription.add(
+            userRepository.resetAccount().subscribe({ dialog?.dismiss() }) { throwable ->
+                dialog?.dismiss()
+                RxErrorHandler.reportError(throwable)
+            }
+        )
     }
 
     private fun showSubscriptionStatusDialog() {

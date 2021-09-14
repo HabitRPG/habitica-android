@@ -12,17 +12,19 @@ import com.habitrpg.android.habitica.models.tasks.RemindersItem
 import com.habitrpg.android.habitica.models.tasks.Task
 
 class ReminderContainer @JvmOverloads constructor(
-        context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr) {
     var taskType = Task.TYPE_DAILY
-    set(value) {
-        field = value
-        for (view in children) {
-            if (view is ReminderItemFormView) {
-                view.taskType = taskType
+        set(value) {
+            field = value
+            for (view in children) {
+                if (view is ReminderItemFormView) {
+                    view.taskType = taskType
+                }
             }
         }
-    }
     var reminders: List<RemindersItem>
         get() {
             val list = mutableListOf<RemindersItem>()
@@ -46,7 +48,7 @@ class ReminderContainer @JvmOverloads constructor(
                 }
             }
             for (item in value) {
-                addReminderViewAt(childCount-1, item)
+                addReminderViewAt(childCount - 1, item)
             }
             val animatedTransitions = LayoutTransition()
             layoutTransition = animatedTransitions

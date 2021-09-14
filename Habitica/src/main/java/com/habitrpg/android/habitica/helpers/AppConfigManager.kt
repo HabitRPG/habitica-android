@@ -18,9 +18,12 @@ class AppConfigManager(contentRepository: ContentRepository?) {
     private var worldState: WorldState? = null
 
     init {
-        contentRepository?.getWorldState()?.subscribe( {
-            worldState = it
-        }, RxErrorHandler.handleEmptyError())
+        contentRepository?.getWorldState()?.subscribe(
+            {
+                worldState = it
+            },
+            RxErrorHandler.handleEmptyError()
+        )
     }
 
     private val remoteConfig = FirebaseRemoteConfig.getInstance()

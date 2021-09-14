@@ -71,8 +71,8 @@ import com.habitrpg.android.habitica.widget.AvatarStatsWidgetProvider
 import com.habitrpg.android.habitica.widget.DailiesWidgetProvider
 import com.habitrpg.android.habitica.widget.HabitButtonWidgetProvider
 import com.habitrpg.android.habitica.widget.TodoListWidgetProvider
-import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.functions.Consumer
 import io.reactivex.rxjava3.schedulers.Schedulers
 import io.realm.kotlin.isValid
@@ -124,9 +124,8 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     lateinit var binding: ActivityMainBinding
 
     val snackbarContainer: ViewGroup
-    get() = binding.snackbarContainer
+        get() = binding.snackbarContainer
     var user: User? = null
-
 
     private var avatarInHeader: AvatarWithBarsViewModel? = null
     var notificationsViewModel: NotificationsViewModel? = null
@@ -145,7 +144,6 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     val isAppBarExpanded: Boolean
         get() = binding.appbar.height - binding.appbar.bottom == 0
 
-
     override fun getLayoutResId(): Int {
         return R.layout.activity_main
     }
@@ -161,11 +159,9 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         try {
             launchTrace = FirebasePerformance.getInstance().newTrace("MainActivityLaunch")
         } catch (_: IllegalStateException) {
-
         }
         launchTrace?.start()
         super.onCreate(savedInstanceState)
-
 
         if (!HabiticaBaseApplication.checkUserAuthentication(this, hostConfig)) {
             return
@@ -177,14 +173,21 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         avatarInHeader = AvatarWithBarsViewModel(this, binding.avatarWithBars, userRepository)
         sideAvatarView = AvatarView(this, showBackground = true, showMount = false, showPet = false)
 
-        compositeSubscription.add(userRepository.getUser()
-                .subscribe({ newUser ->
-                    this@MainActivity.user = newUser
-                    this@MainActivity.setUserData()
-                }, RxErrorHandler.handleEmptyError()))
-        compositeSubscription.add(userRepository.getUserQuestStatus().subscribeWithErrorHandler {
-            userQuestStatus = it
-        })
+        compositeSubscription.add(
+            userRepository.getUser()
+                .subscribe(
+                    { newUser ->
+                        this@MainActivity.user = newUser
+                        this@MainActivity.setUserData()
+                    },
+                    RxErrorHandler.handleEmptyError()
+                )
+        )
+        compositeSubscription.add(
+            userRepository.getUserQuestStatus().subscribeWithErrorHandler {
+                userQuestStatus = it
+            }
+        )
 
         val viewModel = ViewModelProvider(this).get(NotificationsViewModel::class.java)
         notificationsViewModel = viewModel
@@ -196,10 +199,10 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         drawerFragment?.setUp(R.id.navigation_drawer, drawerLayout, viewModel)
 
         drawerToggle = object : ActionBarDrawerToggle(
-                this, /* host Activity */
-                drawerLayout, /* DrawerLayout object */
-                R.string.navigation_drawer_open, /* "open drawer" description */
-                R.string.navigation_drawer_close  /* "close drawer" description */
+            this, /* host Activity */
+            drawerLayout, /* DrawerLayout object */
+            R.string.navigation_drawer_open, /* "open drawer" description */
+            R.string.navigation_drawer_close /* "close drawer" description */
         ) {}
         drawerToggle?.drawerArrowDrawable = drawerIcon
         // Set the drawer toggle as the DrawerListener
@@ -240,7 +243,6 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
             }
 
             override fun onDrawerStateChanged(newState: Int) {
-
             }
         })
 
@@ -277,14 +279,19 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
             ""
         }
         if (destination.id == R.id.petDetailRecyclerFragment || destination.id == R.id.mountDetailRecyclerFragment) {
-            compositeSubscription.add(inventoryRepository.getItem("egg", arguments?.getString("type") ?: "").firstElement().subscribe({
-                if (!it.isValid()) return@subscribe
-                binding.toolbarTitle.text = if (destination.id == R.id.petDetailRecyclerFragment) {
-                    (it as? Egg)?.text
-                } else {
-                    (it as? Egg)?.mountText
-                }
-            }, RxErrorHandler.handleEmptyError()))
+            compositeSubscription.add(
+                inventoryRepository.getItem("egg", arguments?.getString("type") ?: "").firstElement().subscribe(
+                    {
+                        if (!it.isValid()) return@subscribe
+                        binding.toolbarTitle.text = if (destination.id == R.id.petDetailRecyclerFragment) {
+                            (it as? Egg)?.text
+                        } else {
+                            (it as? Egg)?.mountText
+                        }
+                    },
+                    RxErrorHandler.handleEmptyError()
+                )
+            )
         }
         drawerFragment?.setSelection(destination.id, null, false)
     }
@@ -299,9 +306,10 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channelId = "default"
             val channel = NotificationChannel(
-                    channelId,
-                    "Habitica Notifications",
-                    NotificationManager.IMPORTANCE_DEFAULT)
+                channelId,
+                "Habitica Notifications",
+                NotificationManager.IMPORTANCE_DEFAULT
+            )
             val manager = getSystemService(NotificationManager::class.java)
             manager?.createNotificationChannel(channel)
         }
@@ -362,13 +370,13 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         }
         launchScreen = null
 
-        if(!resumeFromActivity){
+        if (!resumeFromActivity) {
             retrieveUser()
             this.checkMaintenance()
         }
         resumeFromActivity = false
 
-        //Track when the app was last opened, so that we can use this to send out special reminders after a week of inactivity
+        // Track when the app was last opened, so that we can use this to send out special reminders after a week of inactivity
         sharedPreferences.edit {
             putLong("lastAppLaunch", Date().time)
             putBoolean("preventDailyReminder", false)
@@ -393,7 +401,6 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
         launchTrace?.stop()
         launchTrace = null
-
 
         if (binding.toolbarTitle.text?.isNotBlank() != true) {
             navigationController.currentDestination?.let { updateToolbarTitle(it, null) }
@@ -456,11 +463,16 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
             val quest = user?.party?.quest
             if (quest?.completed?.isNotBlank() == true) {
-                compositeSubscription.add(inventoryRepository.getQuestContent(user?.party?.quest?.completed ?: "").firstElement().subscribe({
-                    QuestCompletedDialog.showWithQuest(this, it)
+                compositeSubscription.add(
+                    inventoryRepository.getQuestContent(user?.party?.quest?.completed ?: "").firstElement().subscribe(
+                        {
+                            QuestCompletedDialog.showWithQuest(this, it)
 
-                    userRepository.updateUser("party.quest.completed", "").subscribe({}, RxErrorHandler.handleEmptyError())
-                }, RxErrorHandler.handleEmptyError()))
+                            userRepository.updateUser("party.quest.completed", "").subscribe({}, RxErrorHandler.handleEmptyError())
+                        },
+                        RxErrorHandler.handleEmptyError()
+                    )
+                )
             }
 
             if (user?.flags?.welcomed == false) {
@@ -517,34 +529,39 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
             return
         }
         val pet = event.usingPet
-        compositeSubscription.add(this.inventoryRepository.feedPet(event.usingPet, event.usingFood)
-                .subscribe({ feedResponse ->
-                    HabiticaSnackbar.showSnackbar(snackbarContainer, feedResponse.message, SnackbarDisplayType.NORMAL)
-                    if (feedResponse.value == -1) {
-                        val mountWrapper = View.inflate(this, R.layout.pet_imageview, null) as? FrameLayout
-                        val mountImageView = mountWrapper?.findViewById(R.id.pet_imageview) as? ImageView
+        compositeSubscription.add(
+            this.inventoryRepository.feedPet(event.usingPet, event.usingFood)
+                .subscribe(
+                    { feedResponse ->
+                        HabiticaSnackbar.showSnackbar(snackbarContainer, feedResponse.message, SnackbarDisplayType.NORMAL)
+                        if (feedResponse.value == -1) {
+                            val mountWrapper = View.inflate(this, R.layout.pet_imageview, null) as? FrameLayout
+                            val mountImageView = mountWrapper?.findViewById(R.id.pet_imageview) as? ImageView
 
-                        DataBindingUtils.loadImage(mountImageView, "Mount_Icon_" + event.usingPet.key)
-                        val dialog = HabiticaAlertDialog(this@MainActivity)
-                        dialog.setTitle(getString(R.string.evolved_pet_title, pet.text))
-                        dialog.setAdditionalContentView(mountWrapper)
-                        dialog.addButton(R.string.onwards, true)
-                        dialog.addButton(R.string.share, false) { hatchingDialog, _ ->
-                                    val event1 = ShareEvent()
-                                    event1.identifier = "raisedPet"
-                                    event1.sharedMessage = getString(R.string.share_raised, pet.text)
-                                    val mountImageSideLength = 99
-                                    val sharedImage = Bitmap.createBitmap(mountImageSideLength, mountImageSideLength, Bitmap.Config.ARGB_8888)
-                                    val canvas = Canvas(sharedImage)
-                                    mountImageView?.drawable?.setBounds(0, 0, mountImageSideLength, mountImageSideLength)
-                                    mountImageView?.drawable?.draw(canvas)
-                                    event1.shareImage = sharedImage
-                                    EventBus.getDefault().post(event1)
-                                    hatchingDialog.dismiss()
-                                }
-                        dialog.enqueue()
-                    }
-                }, RxErrorHandler.handleEmptyError()))
+                            DataBindingUtils.loadImage(mountImageView, "Mount_Icon_" + event.usingPet.key)
+                            val dialog = HabiticaAlertDialog(this@MainActivity)
+                            dialog.setTitle(getString(R.string.evolved_pet_title, pet.text))
+                            dialog.setAdditionalContentView(mountWrapper)
+                            dialog.addButton(R.string.onwards, true)
+                            dialog.addButton(R.string.share, false) { hatchingDialog, _ ->
+                                val event1 = ShareEvent()
+                                event1.identifier = "raisedPet"
+                                event1.sharedMessage = getString(R.string.share_raised, pet.text)
+                                val mountImageSideLength = 99
+                                val sharedImage = Bitmap.createBitmap(mountImageSideLength, mountImageSideLength, Bitmap.Config.ARGB_8888)
+                                val canvas = Canvas(sharedImage)
+                                mountImageView?.drawable?.setBounds(0, 0, mountImageSideLength, mountImageSideLength)
+                                mountImageView?.drawable?.draw(canvas)
+                                event1.shareImage = sharedImage
+                                EventBus.getDefault().post(event1)
+                                hatchingDialog.dismiss()
+                            }
+                            dialog.enqueue()
+                        }
+                    },
+                    RxErrorHandler.handleEmptyError()
+                )
+        )
     }
 
     // endregion
@@ -555,19 +572,26 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                 UserQuestStatus.QUEST_BOSS -> data.questDamage
                 else -> 0.0
             }
-            compositeSubscription.add(notifyUserUseCase.observable(NotifyUserUseCase.RequestValues(this, snackbarContainer,
-                    user, data.experienceDelta, data.healthDelta, data.goldDelta, data.manaDelta, damageValue, data.hasLeveledUp, data.level))
-                    .subscribe({ }, RxErrorHandler.handleEmptyError()))
+            compositeSubscription.add(
+                notifyUserUseCase.observable(
+                    NotifyUserUseCase.RequestValues(
+                        this, snackbarContainer,
+                        user, data.experienceDelta, data.healthDelta, data.goldDelta, data.manaDelta, damageValue, data.hasLeveledUp, data.level
+                    )
+                )
+                    .subscribe({ }, RxErrorHandler.handleEmptyError())
+            )
         }
 
         val showItemsFound = when (userQuestStatus) {
             UserQuestStatus.QUEST_COLLECT -> true
             else -> false
         }
-        compositeSubscription.add(displayItemDropUseCase.observable(DisplayItemDropUseCase.RequestValues(data, this, snackbarContainer, showItemsFound))
-                .subscribe({ }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(
+            displayItemDropUseCase.observable(DisplayItemDropUseCase.RequestValues(data, this, snackbarContainer, showItemsFound))
+                .subscribe({ }, RxErrorHandler.handleEmptyError())
+        )
     }
-
 
     private fun displayDeathDialogIfNeeded() {
         if (user?.stats?.hp ?: 1.0 > 0) {
@@ -591,16 +615,15 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
             faintDialog?.setTitle(R.string.faint_header)
             faintDialog?.setAdditionalContentView(customView)
             faintDialog?.addButton(R.string.faint_button, true) { _, _ ->
-                        faintDialog = null
-                        user?.let {
-                            userRepository.revive(it).subscribe({ }, RxErrorHandler.handleEmptyError())
-                        }
-                    }
+                faintDialog = null
+                user?.let {
+                    userRepository.revive(it).subscribe({ }, RxErrorHandler.handleEmptyError())
+                }
+            }
             soundManager.loadAndPlayAudio(SoundManager.SoundDeath)
             this.faintDialog?.enqueue()
         }
     }
-
 
     override fun onKeyUp(keyCode: Int, event: KeyEvent): Boolean {
         if (keyCode == KeyEvent.KEYCODE_MENU) {
@@ -615,18 +638,19 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         if (hostConfig.hasAuthentication()) {
             compositeSubscription.add(
                 contentRepository.retrieveWorldState(this)
-                        .flatMap { userRepository.retrieveUser(true, forced) }
-                        .doOnNext { user1 ->
-                            FirebaseAnalytics.getInstance(this).setUserProperty("has_party", if (user1.party?.id?.isNotEmpty() == true) "true" else "false")
-                            FirebaseAnalytics.getInstance(this).setUserProperty("is_subscribed", if (user1.isSubscribed) "true" else "false")
-                            FirebaseAnalytics.getInstance(this).setUserProperty("checkin_count", user1.loginIncentives.toString())
-                            FirebaseAnalytics.getInstance(this).setUserProperty("level", user1.stats?.lvl?.toString() ?: "")
-                            pushNotificationManager.setUser(user1)
-                            pushNotificationManager.addPushDeviceUsingStoredToken()
-                        }
-                        .flatMap { userRepository.retrieveTeamPlans() }
-                        .flatMap { contentRepository.retrieveContent(this) }
-                        .subscribe({ }, RxErrorHandler.handleEmptyError()))
+                    .flatMap { userRepository.retrieveUser(true, forced) }
+                    .doOnNext { user1 ->
+                        FirebaseAnalytics.getInstance(this).setUserProperty("has_party", if (user1.party?.id?.isNotEmpty() == true) "true" else "false")
+                        FirebaseAnalytics.getInstance(this).setUserProperty("is_subscribed", if (user1.isSubscribed) "true" else "false")
+                        FirebaseAnalytics.getInstance(this).setUserProperty("checkin_count", user1.loginIncentives.toString())
+                        FirebaseAnalytics.getInstance(this).setUserProperty("level", user1.stats?.lvl?.toString() ?: "")
+                        pushNotificationManager.setUser(user1)
+                        pushNotificationManager.addPushDeviceUsingStoredToken()
+                    }
+                    .flatMap { userRepository.retrieveTeamPlans() }
+                    .flatMap { contentRepository.retrieveContent(this) }
+                    .subscribe({ }, RxErrorHandler.handleEmptyError())
+            )
         }
     }
 
@@ -663,8 +687,10 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     }
 
     override fun onTutorialCompleted(step: TutorialStep) {
-        compositeSubscription.add(userRepository.updateUser("flags.tutorial." + step.tutorialGroup + "." + step.identifier, true)
-                .subscribe({ }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(
+            userRepository.updateUser("flags.tutorial." + step.tutorialGroup + "." + step.identifier, true)
+                .subscribe({ }, RxErrorHandler.handleEmptyError())
+        )
         binding.overlayFrameLayout.removeView(this.activeTutorialView)
         this.removeActiveTutorialView()
 
@@ -695,7 +721,8 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         sharingIntent.putExtra(Intent.EXTRA_TEXT, event.sharedMessage)
         BitmapUtils.clearDirectoryContent("$filesDir/shared_images")
         val f = event.shareImage?.let {
-            BitmapUtils.saveToShareableFile("$filesDir/shared_images", "${Date()}.png",
+            BitmapUtils.saveToShareableFile(
+                "$filesDir/shared_images", "${Date()}.png",
                 it
             )
         }
@@ -712,32 +739,36 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     }
 
     private fun checkMaintenance() {
-        compositeSubscription.add(this.maintenanceService.maintenanceStatus
+        compositeSubscription.add(
+            this.maintenanceService.maintenanceStatus
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(Consumer { maintenanceResponse ->
-                    if (maintenanceResponse == null) {
-                        return@Consumer
-                    }
-                    if (maintenanceResponse.activeMaintenance) {
-                        val intent = createMaintenanceIntent(maintenanceResponse, false)
-                        startActivity(intent)
-                    } else {
-                        if (maintenanceResponse.minBuild != null) {
-                            try {
-                                val packageInfo = packageManager.getPackageInfo(packageName, 0)
-                                @Suppress("DEPRECATION")
-                                if (packageInfo.versionCode < maintenanceResponse.minBuild) {
-                                    val intent = createMaintenanceIntent(maintenanceResponse, true)
-                                    startActivity(intent)
-                                }
-                            } catch (e: PackageManager.NameNotFoundException) {
-                                e.printStackTrace()
-                            }
-
+                .subscribe(
+                    Consumer { maintenanceResponse ->
+                        if (maintenanceResponse == null) {
+                            return@Consumer
                         }
-                    }
-                }, RxErrorHandler.handleEmptyError()))
+                        if (maintenanceResponse.activeMaintenance) {
+                            val intent = createMaintenanceIntent(maintenanceResponse, false)
+                            startActivity(intent)
+                        } else {
+                            if (maintenanceResponse.minBuild != null) {
+                                try {
+                                    val packageInfo = packageManager.getPackageInfo(packageName, 0)
+                                    @Suppress("DEPRECATION")
+                                    if (packageInfo.versionCode < maintenanceResponse.minBuild) {
+                                        val intent = createMaintenanceIntent(maintenanceResponse, true)
+                                        startActivity(intent)
+                                    }
+                                } catch (e: PackageManager.NameNotFoundException) {
+                                    e.printStackTrace()
+                                }
+                            }
+                        }
+                    },
+                    RxErrorHandler.handleEmptyError()
+                )
+        )
     }
 
     private fun createMaintenanceIntent(maintenanceResponse: MaintenanceResponse, isDeprecationNotice: Boolean): Intent {
@@ -788,7 +819,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
             alert.setTitle(title)
             alert.addButton(R.string.see_you_tomorrow, true) { _, _ ->
                 apiClient.readNotification(event.notification.id)
-                        .subscribe({ }, RxErrorHandler.handleEmptyError())
+                    .subscribe({ }, RxErrorHandler.handleEmptyError())
             }
             alert.show()
         }
@@ -803,7 +834,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
             dialog.setType(event.type, event.message, event.text)
             dialog.enqueue()
             apiClient.readNotification(event.id)
-                    .subscribe({ }, RxErrorHandler.handleEmptyError())
+                .subscribe({ }, RxErrorHandler.handleEmptyError())
         }
     }
 
@@ -827,7 +858,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
             dialog.configure(event.data)
             dialog.enqueue()
             apiClient.readNotification(event.id)
-                    .subscribe({ }, RxErrorHandler.handleEmptyError())
+                .subscribe({ }, RxErrorHandler.handleEmptyError())
         }
     }
 
@@ -837,45 +868,52 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         } else {
             binding.connectionIssueTextview.visibility = View.VISIBLE
             binding.connectionIssueTextview.text = event.message
-            compositeSubscription.add(Observable.just("")
+            compositeSubscription.add(
+                Observable.just("")
                     .delay(500, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
-                    .subscribe( {
-                        binding.connectionIssueTextview.visibility = View.GONE
-                    }, {}))
+                    .subscribe(
+                        {
+                            binding.connectionIssueTextview.visibility = View.GONE
+                        },
+                        {}
+                    )
+            )
         }
     }
 
     fun hatchPet(potion: HatchingPotion, egg: Egg) {
-        compositeSubscription.add(this.inventoryRepository.hatchPet(egg, potion) {
-            val petWrapper = View.inflate(this, R.layout.pet_imageview, null) as? FrameLayout
-            val petImageView = petWrapper?.findViewById(R.id.pet_imageview) as? ImageView
+        compositeSubscription.add(
+            this.inventoryRepository.hatchPet(egg, potion) {
+                val petWrapper = View.inflate(this, R.layout.pet_imageview, null) as? FrameLayout
+                val petImageView = petWrapper?.findViewById(R.id.pet_imageview) as? ImageView
 
-            DataBindingUtils.loadImage(petImageView, "stable_Pet-" + egg.key + "-" + potion.key)
-            val potionName = potion.text
-            val eggName = egg.text
-            val dialog = HabiticaAlertDialog(this)
-            dialog.setTitle(getString(R.string.hatched_pet_title, potionName, eggName))
-            dialog.setAdditionalContentView(petWrapper)
-            dialog.addButton(R.string.equip, true) { _, _ ->
-                inventoryRepository.equip(user, "pet", egg.key + "-" + potion.key)
+                DataBindingUtils.loadImage(petImageView, "stable_Pet-" + egg.key + "-" + potion.key)
+                val potionName = potion.text
+                val eggName = egg.text
+                val dialog = HabiticaAlertDialog(this)
+                dialog.setTitle(getString(R.string.hatched_pet_title, potionName, eggName))
+                dialog.setAdditionalContentView(petWrapper)
+                dialog.addButton(R.string.equip, true) { _, _ ->
+                    inventoryRepository.equip(user, "pet", egg.key + "-" + potion.key)
                         .subscribe({}, RxErrorHandler.handleEmptyError())
-            }
-            dialog.addButton(R.string.share, false) { hatchingDialog, _ ->
-                val event1 = ShareEvent()
-                event1.sharedMessage = getString(R.string.share_hatched, potionName, eggName)
-                event1.identifier = "hatchedPet"
-                val petImageSideLength = 140
-                val sharedImage = Bitmap.createBitmap(petImageSideLength, petImageSideLength, Bitmap.Config.ARGB_8888)
-                val canvas = Canvas(sharedImage)
-                petImageView?.drawable?.setBounds(0, 0, petImageSideLength, petImageSideLength)
-                petImageView?.drawable?.draw(canvas)
-                event1.shareImage = sharedImage
-                EventBus.getDefault().post(event1)
-                hatchingDialog.dismiss()
-            }
-            dialog.setExtraCloseButtonVisibility(View.VISIBLE)
-            dialog.enqueue()
-        }.subscribe({ }, RxErrorHandler.handleEmptyError()))
+                }
+                dialog.addButton(R.string.share, false) { hatchingDialog, _ ->
+                    val event1 = ShareEvent()
+                    event1.sharedMessage = getString(R.string.share_hatched, potionName, eggName)
+                    event1.identifier = "hatchedPet"
+                    val petImageSideLength = 140
+                    val sharedImage = Bitmap.createBitmap(petImageSideLength, petImageSideLength, Bitmap.Config.ARGB_8888)
+                    val canvas = Canvas(sharedImage)
+                    petImageView?.drawable?.setBounds(0, 0, petImageSideLength, petImageSideLength)
+                    petImageView?.drawable?.draw(canvas)
+                    event1.shareImage = sharedImage
+                    EventBus.getDefault().post(event1)
+                    hatchingDialog.dismiss()
+                }
+                dialog.setExtraCloseButtonVisibility(View.VISIBLE)
+                dialog.enqueue()
+            }.subscribe({ }, RxErrorHandler.handleEmptyError())
+        )
     }
 
     @Suppress("UNUSED_PARAMETER")

@@ -8,7 +8,6 @@ import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.helpers.KeyHelper
 
-
 /**
  * The configuration of the host<br></br>
  * Currently, the Port isn't used at all.
@@ -69,6 +68,4 @@ class HostConfig {
     fun hasAuthentication(): Boolean {
         return userID.isNotEmpty() && apiKey.isNotEmpty()
     }
-
 }
-

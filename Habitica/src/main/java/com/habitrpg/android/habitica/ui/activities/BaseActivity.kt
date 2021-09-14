@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.ui.activities
 
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.content.res.Resources
@@ -30,7 +29,6 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import java.util.*
-
 
 abstract class BaseActivity : AppCompatActivity() {
     private var currentTheme: String? = null
@@ -90,7 +88,6 @@ abstract class BaseActivity : AppCompatActivity() {
         loadTheme(PreferenceManager.getDefaultSharedPreferences(this))
     }
 
-
     override fun onPause() {
         isActivityVisible = false
         super.onPause()
@@ -118,28 +115,32 @@ abstract class BaseActivity : AppCompatActivity() {
         val modernHeaderStyle = overrideModernHeader ?: sharedPreferences.getBoolean("modern_header_style", true)
         if (theme != currentTheme || forced) {
             if (forcedIsNight ?: isNightMode) {
-                setTheme(when (theme) {
-                    "maroon" -> R.style.MainAppTheme_Maroon_Dark
-                    "red" -> R.style.MainAppTheme_Red_Dark
-                    "orange" -> R.style.MainAppTheme_Orange_Dark
-                    "yellow" -> R.style.MainAppTheme_Yellow_Dark
-                    "green" -> R.style.MainAppTheme_Green_Dark
-                    "teal" -> R.style.MainAppTheme_Teal_Dark
-                    "blue" -> R.style.MainAppTheme_Blue_Dark
-                    else -> R.style.MainAppTheme_Dark
-                })
+                setTheme(
+                    when (theme) {
+                        "maroon" -> R.style.MainAppTheme_Maroon_Dark
+                        "red" -> R.style.MainAppTheme_Red_Dark
+                        "orange" -> R.style.MainAppTheme_Orange_Dark
+                        "yellow" -> R.style.MainAppTheme_Yellow_Dark
+                        "green" -> R.style.MainAppTheme_Green_Dark
+                        "teal" -> R.style.MainAppTheme_Teal_Dark
+                        "blue" -> R.style.MainAppTheme_Blue_Dark
+                        else -> R.style.MainAppTheme_Dark
+                    }
+                )
             } else {
-                setTheme(when (theme) {
-                    "maroon" -> R.style.MainAppTheme_Maroon
-                    "red" -> R.style.MainAppTheme_Red
-                    "orange" -> R.style.MainAppTheme_Orange
-                    "yellow" -> R.style.MainAppTheme_Yellow
-                    "green" -> R.style.MainAppTheme_Green
-                    "teal" -> R.style.MainAppTheme_Teal
-                    "blue" -> R.style.MainAppTheme_Blue
-                    "taskform" -> R.style.MainAppTheme_TaskForm
-                    else -> R.style.MainAppTheme
-                })
+                setTheme(
+                    when (theme) {
+                        "maroon" -> R.style.MainAppTheme_Maroon
+                        "red" -> R.style.MainAppTheme_Red
+                        "orange" -> R.style.MainAppTheme_Orange
+                        "yellow" -> R.style.MainAppTheme_Yellow
+                        "green" -> R.style.MainAppTheme_Green
+                        "teal" -> R.style.MainAppTheme_Teal
+                        "blue" -> R.style.MainAppTheme_Blue
+                        "taskform" -> R.style.MainAppTheme_TaskForm
+                        else -> R.style.MainAppTheme
+                    }
+                )
             }
         }
 

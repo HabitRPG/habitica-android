@@ -8,15 +8,15 @@ open class QuestDropItem : RealmObject(), BaseObject {
     @PrimaryKey
     var combinedKey: String? = null
     var questKey: String? = null
-    set(value) {
-        field = value
-        combinedKey = value + key
-    }
+        set(value) {
+            field = value
+            combinedKey = value + key
+        }
     var key: String = ""
-    set(value) {
-        field = value
-        combinedKey = questKey + value
-    }
+        set(value) {
+            field = value
+            combinedKey = questKey + value
+        }
     var type: String? = null
     var text: String? = null
     var onlyOwner = false
@@ -24,10 +24,10 @@ open class QuestDropItem : RealmObject(), BaseObject {
 
     val imageName: String
         get() = when (type) {
-                "quests" -> "inventory_quest_scroll_$key"
-                "eggs" -> "Pet_Egg_$key"
-                "food" -> "Pet_Food_$key"
-                "hatchingPotions" -> "Pet_HatchingPotion_$key"
-                else -> "shop_$key"
-            }
+            "quests" -> "inventory_quest_scroll_$key"
+            "eggs" -> "Pet_Egg_$key"
+            "food" -> "Pet_Food_$key"
+            "hatchingPotions" -> "Pet_HatchingPotion_$key"
+            else -> "shop_$key"
+        }
 }

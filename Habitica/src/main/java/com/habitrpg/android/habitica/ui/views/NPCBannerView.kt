@@ -13,8 +13,8 @@ import com.habitrpg.android.habitica.databinding.NpcBannerBinding
 import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
-import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Observable
 import kotlin.math.roundToInt
 
 class NPCBannerView(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs) {
@@ -32,10 +32,10 @@ class NPCBannerView(context: Context, attrs: AttributeSet?) : FrameLayout(contex
             }
         }
     var identifier: String = ""
-    set(value) {
-        field = value
-        setImage()
-    }
+        set(value) {
+            field = value
+            setImage()
+        }
 
     private fun setImage() {
         DataBindingUtils.loadImage(binding.sceneView, identifier + "_scene" + shopSpriteSuffix)
@@ -49,10 +49,13 @@ class NPCBannerView(context: Context, attrs: AttributeSet?) : FrameLayout(contex
             val drawable = BitmapDrawable(context.resources, Bitmap.createScaledBitmap(it.toBitmap(), width, height, false))
             drawable.tileModeX = Shader.TileMode.REPEAT
             Observable.just(drawable)
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
                         binding.backgroundView.background = it
-                    }, RxErrorHandler.handleEmptyError())
+                    },
+                    RxErrorHandler.handleEmptyError()
+                )
         }
     }
 }

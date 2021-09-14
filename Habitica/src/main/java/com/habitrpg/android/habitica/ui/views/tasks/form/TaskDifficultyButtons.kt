@@ -17,18 +17,20 @@ import com.habitrpg.android.habitica.models.tasks.TaskDifficulty
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 
 class TaskDifficultyButtons @JvmOverloads constructor(
-        context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr) {
 
     var tintColor: Int = ContextCompat.getColor(context, R.color.brand_300)
     var textTintColor: Int? = null
     var selectedDifficulty: Float = 1f
-    set(value) {
-        field = value
-        removeAllViews()
-        addAllButtons()
-        selectedButton.sendAccessibilityEvent(AccessibilityEvent.CONTENT_CHANGE_TYPE_CONTENT_DESCRIPTION)
-    }
+        set(value) {
+            field = value
+            removeAllViews()
+            addAllButtons()
+            selectedButton.sendAccessibilityEvent(AccessibilityEvent.CONTENT_CHANGE_TYPE_CONTENT_DESCRIPTION)
+        }
     private lateinit var selectedButton: View
 
     override fun onAttachedToWindow() {

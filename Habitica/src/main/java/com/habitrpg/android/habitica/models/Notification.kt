@@ -15,7 +15,7 @@ class Notification {
         UNALLOCATED_STATS_POINTS("UNALLOCATED_STATS_POINTS"),
         WON_CHALLENGE("WON_CHALLENGE"),
 
-        //Achievements
+        // Achievements
         ACHIEVEMENT_PARTY_UP("ACHIEVEMENT_PARTY_UP"),
         ACHIEVEMENT_PARTY_ON("ACHIEVEMENT_PARTY_ON"),
         ACHIEVEMENT_BEAST_MASTER("ACHIEVEMENT_BEAST_MASTER"),
@@ -104,21 +104,21 @@ class Notification {
             Type.ACHIEVEMENT_SKELETON_CREW.type -> AchievementData::class.java
             Type.ACHIEVEMENT_SEEING_RED.type -> AchievementData::class.java
             Type.ACHIEVEMENT_RED_LETTER_DAY.type -> AchievementData::class.java
-            
+
             else -> null
         }
     }
 
     val priority: Int
-    get() {
-        return when (type) {
-            Type.NEW_STUFF.type -> 1
-            Type.GUILD_INVITATION.type -> 2
-            Type.PARTY_INVITATION.type -> 3
-            Type.UNALLOCATED_STATS_POINTS.type -> 4
-            Type.NEW_MYSTERY_ITEMS.type -> 5
-            Type.NEW_CHAT_MESSAGE.type -> 6
-            else -> 100
+        get() {
+            return when (type) {
+                Type.NEW_STUFF.type -> 1
+                Type.GUILD_INVITATION.type -> 2
+                Type.PARTY_INVITATION.type -> 3
+                Type.UNALLOCATED_STATS_POINTS.type -> 4
+                Type.NEW_MYSTERY_ITEMS.type -> 5
+                Type.NEW_CHAT_MESSAGE.type -> 6
+                else -> 100
+            }
         }
-    }
 }

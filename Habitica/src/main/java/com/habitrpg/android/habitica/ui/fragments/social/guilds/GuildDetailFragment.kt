@@ -21,7 +21,6 @@ import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.modules.AppModule
-import com.habitrpg.android.habitica.ui.activities.GroupFormActivity
 import com.habitrpg.android.habitica.ui.activities.GroupInviteActivity
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
@@ -32,7 +31,6 @@ import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.*
@@ -88,7 +86,7 @@ class GuildDetailFragment : BaseFragment<FragmentGuildDetailBinding>() {
             sendInvitesResult.launch(intent)
         }
         binding?.leaderWrapper?.setOnClickListener {
-            viewModel?.getGroupData()?.value?.leaderID?.let {leaderID ->
+            viewModel?.getGroupData()?.value?.leaderID?.let { leaderID ->
                 val profileDirections = MainNavDirections.openProfileActivity(leaderID)
                 MainNavigationController.navigate(profileDirections)
             }

@@ -52,9 +52,14 @@ class SkillTasksRecyclerViewFragment : BaseFragment<FragmentRecyclerviewBinding>
         binding?.recyclerView?.layoutManager = layoutManager
 
         adapter = SkillTasksRecyclerViewAdapter()
-        compositeSubscription.add(adapter.getTaskSelectionEvents().subscribe({
-            taskSelectionEvents.onNext(it)
-        }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(
+            adapter.getTaskSelectionEvents().subscribe(
+                {
+                    taskSelectionEvents.onNext(it)
+                },
+                RxErrorHandler.handleEmptyError()
+            )
+        )
         binding?.recyclerView?.adapter = adapter
     }
 
@@ -62,12 +67,17 @@ class SkillTasksRecyclerViewFragment : BaseFragment<FragmentRecyclerviewBinding>
         super.onResume()
 
         var tasks = taskRepository.getTasks(taskType ?: "")
-                .map { it.filter { it.challengeID == null && it.group == null } }
+            .map { it.filter { it.challengeID == null && it.group == null } }
         if (taskType == Task.TYPE_TODO) {
             tasks = tasks.map { it.filter { !it.completed } }
         }
-        compositeSubscription.add(tasks.subscribe({
-            adapter.data = it
-        }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(
+            tasks.subscribe(
+                {
+                    adapter.data = it
+                },
+                RxErrorHandler.handleEmptyError()
+            )
+        )
     }
 }

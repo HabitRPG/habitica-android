@@ -16,63 +16,63 @@ import com.habitrpg.android.habitica.extensions.layoutInflater
 
 class CollapsibleSectionView(context: Context, attrs: AttributeSet?) : LinearLayout(context, attrs) {
     val infoIconView: ImageView
-    get() = binding.infoIconView
+        get() = binding.infoIconView
     private val binding = ViewCollapsibleSectionBinding.inflate(context.layoutInflater, this)
     private var preferences: SharedPreferences? = null
     private val padding = context.resources?.getDimension(R.dimen.spacing_large)?.toInt() ?: 0
     private val bottomPadding = context.resources?.getDimension(R.dimen.collapsible_section_padding)?.toInt() ?: 0
 
     var title: CharSequence
-    get() {
-        return binding.titleTextView.text
-    }
-    set(value) {
-        binding.titleTextView.text = value
-    }
+        get() {
+            return binding.titleTextView.text
+        }
+        set(value) {
+            binding.titleTextView.text = value
+        }
 
     private var isCollapsed = false
-    set(value) {
-        field = value
-        if (value) {
-            hideViews()
-        } else {
-            showViews()
+        set(value) {
+            field = value
+            if (value) {
+                hideViews()
+            } else {
+                showViews()
+            }
         }
-    }
 
     var caretColor: Int = 0
-    set(value) {
-        field = value
-        setCaretImage()
-    }
+        set(value) {
+            field = value
+            setCaretImage()
+        }
 
     var identifier: String? = null
 
     var separatorColor: Int
-    get() {
-        return (binding.separator.background as? ColorDrawable)?.color ?: 0
-    }
-    set(value) {
-        binding.separator.setBackgroundColor(value)
-    }
+        get() {
+            return (binding.separator.background as? ColorDrawable)?.color ?: 0
+        }
+        set(value) {
+            binding.separator.setBackgroundColor(value)
+        }
 
     private fun showViews() {
         updatePreferences()
         setCaretImage()
         (0 until childCount)
-                .map { getChildAt(it) }
-                .forEach { it.visibility = View.VISIBLE }
+            .map { getChildAt(it) }
+            .forEach { it.visibility = View.VISIBLE }
     }
 
     private fun hideViews() {
         updatePreferences()
         setCaretImage()
         (2 until childCount)
-                .map { getChildAt(it) }
-                .filter { it != binding.sectionTitleView }
-                .forEach {
-                    it.visibility = View.GONE
-                }
+            .map { getChildAt(it) }
+            .filter { it != binding.sectionTitleView }
+            .forEach {
+                it.visibility = View.GONE
+            }
     }
 
     private fun updatePreferences() {
@@ -88,13 +88,13 @@ class CollapsibleSectionView(context: Context, attrs: AttributeSet?) : LinearLay
 
     private fun setChildMargins() {
         (2 until childCount)
-                .map { getChildAt(it) }
-                .filter { it != binding.sectionTitleView }
-                .forEach {
-                    val lp = it.layoutParams as? LayoutParams
-                    lp?.setMargins(padding, 0, padding, bottomPadding)
-                    it.layoutParams = lp
-                }
+            .map { getChildAt(it) }
+            .filter { it != binding.sectionTitleView }
+            .forEach {
+                val lp = it.layoutParams as? LayoutParams
+                lp?.setMargins(padding, 0, padding, bottomPadding)
+                it.layoutParams = lp
+            }
     }
 
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
@@ -109,13 +109,13 @@ class CollapsibleSectionView(context: Context, attrs: AttributeSet?) : LinearLay
         measureChildWithMargins(binding.sectionTitleView, widthMeasureSpec, 0, heightMeasureSpec, height)
         height += binding.sectionTitleView.measuredHeight
         (2 until childCount)
-                .map { getChildAt(it) }
-                .forEach {
-                    if (it.visibility != View.GONE) {
-                        measureChildWithMargins(it, widthMeasureSpec, 0, heightMeasureSpec, height)
-                        height += it.measuredHeight + bottomPadding
-                    }
+            .map { getChildAt(it) }
+            .forEach {
+                if (it.visibility != View.GONE) {
+                    measureChildWithMargins(it, widthMeasureSpec, 0, heightMeasureSpec, height)
+                    height += it.measuredHeight + bottomPadding
                 }
+            }
         if (!isCollapsed) {
             height += padding
         }
@@ -129,9 +129,10 @@ class CollapsibleSectionView(context: Context, attrs: AttributeSet?) : LinearLay
             isCollapsed = !isCollapsed
         }
         val attributes = context.theme?.obtainStyledAttributes(
-                attrs,
-                R.styleable.CollapsibleSectionView,
-                0, 0)
+            attrs,
+            R.styleable.CollapsibleSectionView,
+            0, 0
+        )
         title = attributes?.getString(R.styleable.CollapsibleSectionView_title) ?: ""
         identifier = attributes?.getString(R.styleable.CollapsibleSectionView_identifier)
 

@@ -19,7 +19,6 @@ import io.reactivex.rxjava3.core.Completable
 import javax.inject.Inject
 import javax.inject.Named
 
-
 class SupportMainFragment : BaseMainFragment<FragmentSupportMainBinding>() {
     private var deviceInfo: DeviceName.DeviceInfo? = null
 
@@ -36,8 +35,11 @@ class SupportMainFragment : BaseMainFragment<FragmentSupportMainBinding>() {
     @Inject
     lateinit var appConfigManager: AppConfigManager
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         hidesToolbar = true
         return super.onCreateView(inflater, container, savedInstanceState)
     }
@@ -58,9 +60,11 @@ class SupportMainFragment : BaseMainFragment<FragmentSupportMainBinding>() {
             }
         }
 
-        compositeSubscription.add(Completable.fromAction {
-            deviceInfo = context?.let { DeviceName.getDeviceInfo(it) }
-        }.subscribe())
+        compositeSubscription.add(
+            Completable.fromAction {
+                deviceInfo = context?.let { DeviceName.getDeviceInfo(it) }
+            }.subscribe()
+        )
 
         binding?.resetTutorialButton?.setOnClickListener {
             userRepository.resetTutorial()

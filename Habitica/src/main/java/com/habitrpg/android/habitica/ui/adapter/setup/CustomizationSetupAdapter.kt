@@ -131,7 +131,6 @@ internal class CustomizationSetupAdapter : RecyclerView.Adapter<CustomizationSet
                     updateUserEventsSubject.onNext(updateData)
                 }
             }
-
         }
     }
 }

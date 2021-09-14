@@ -21,5 +21,4 @@ class SimpleSpinnerAdapter(context: Context, resource: Int) : ArrayAdapter<CharS
         (view as? TextView)?.text = getItem(position)
         return view
     }
-
 }

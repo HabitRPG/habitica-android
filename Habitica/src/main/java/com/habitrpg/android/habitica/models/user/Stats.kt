@@ -5,9 +5,7 @@ import com.google.gson.annotations.SerializedName
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.models.BaseObject
 import io.realm.RealmObject
-import io.realm.annotations.PrimaryKey
 import io.realm.annotations.RealmClass
-
 
 @RealmClass(embedded = true)
 open class Stats : RealmObject(), BaseObject {
@@ -53,9 +51,9 @@ open class Stats : RealmObject(), BaseObject {
     val isBuffed: Boolean
         get() {
             return buffs?.str ?: 0f > 0 ||
-                    buffs?.con ?: 0f > 0 ||
-                    buffs?._int ?: 0f > 0 ||
-                    buffs?.per ?: 0f > 0
+                buffs?.con ?: 0f > 0 ||
+                buffs?._int ?: 0f > 0 ||
+                buffs?.per ?: 0f > 0
         }
 
     fun getTranslatedClassName(context: Context): String {
@@ -95,7 +93,6 @@ open class Stats : RealmObject(), BaseObject {
         const val INTELLIGENCE = "int"
         const val CONSTITUTION = "con"
         const val PERCEPTION = "per"
-
 
         const val WARRIOR = "warrior"
         const val MAGE = "wizard"

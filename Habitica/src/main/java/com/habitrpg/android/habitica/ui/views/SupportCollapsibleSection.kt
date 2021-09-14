@@ -26,7 +26,8 @@ class SupportCollapsibleSection : LinearLayout {
     private fun init(attrs: AttributeSet?, defStyle: Int) {
         val binding = SupportCollapsibleSectionBinding.inflate(context.layoutInflater, this)
         val a = context.obtainStyledAttributes(
-                attrs, R.styleable.SupportCollapsibleSection, defStyle, 0)
+            attrs, R.styleable.SupportCollapsibleSection, defStyle, 0
+        )
 
         orientation = VERTICAL
 
@@ -40,10 +41,10 @@ class SupportCollapsibleSection : LinearLayout {
         a.recycle()
 
         setOnClickListener {
-            binding.descriptionView.visibility = if (binding.descriptionView.visibility == View.VISIBLE){
+            binding.descriptionView.visibility = if (binding.descriptionView.visibility == View.VISIBLE) {
                 binding.caretView.setImageResource(R.drawable.ic_keyboard_arrow_down_black_24dp)
                 View.GONE
-            } else{
+            } else {
                 binding.caretView.setImageResource(R.drawable.ic_keyboard_arrow_up_black_24dp)
                 View.VISIBLE
             }

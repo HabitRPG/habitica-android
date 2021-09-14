@@ -31,8 +31,10 @@ constructor(private val soundManager: SoundManager, postExecutionThread: PostExe
             if (snackbarText.isNotEmpty()) {
                 GlobalScope.launch(context = Dispatchers.Main) {
                     delay(3000L)
-                    HabiticaSnackbar.showSnackbar(requestValues.snackbarTargetView,
-                        snackbarText, HabiticaSnackbar.SnackbarDisplayType.DROP, true)
+                    HabiticaSnackbar.showSnackbar(
+                        requestValues.snackbarTargetView,
+                        snackbarText, HabiticaSnackbar.SnackbarDisplayType.DROP, true
+                    )
                     soundManager.loadAndPlayAudio(SoundManager.SoundItemDrop)
                 }
             }

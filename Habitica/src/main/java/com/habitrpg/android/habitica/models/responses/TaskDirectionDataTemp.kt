@@ -18,5 +18,4 @@ class TaskDirectionDataDrop {
     var key: String? = null
     var type: String? = null
     var dialog: String? = null
-
 }

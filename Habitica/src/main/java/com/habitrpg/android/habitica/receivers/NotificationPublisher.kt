@@ -6,7 +6,6 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
@@ -15,7 +14,6 @@ import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
-import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager
 import com.habitrpg.android.habitica.models.tasks.Task
@@ -25,9 +23,8 @@ import io.reactivex.rxjava3.functions.BiFunction
 import java.util.*
 import javax.inject.Inject
 
-
 @Suppress("DEPRECATION")
-//https://gist.github.com/BrandonSmith/6679223
+// https://gist.github.com/BrandonSmith/6679223
 class NotificationPublisher : BroadcastReceiver() {
 
     @Inject
@@ -48,7 +45,7 @@ class NotificationPublisher : BroadcastReceiver() {
         }
 
         var wasInactive = false
-        //Show special notification if user hasn't logged in for a week
+        // Show special notification if user hasn't logged in for a week
         if (sharedPreferences.getLong("lastAppLaunch", Date().time) < (Date().time - 604800000L)) {
             wasInactive = true
             sharedPreferences.edit { putBoolean("preventDailyReminder", true) }
@@ -57,21 +54,26 @@ class NotificationPublisher : BroadcastReceiver() {
         }
         val checkDailies = intent.getBooleanExtra(CHECK_DAILIES, false)
         if (checkDailies) {
-            taskRepository.getTasks(Task.TYPE_DAILY).firstElement().zipWith(userRepository.getUser().firstElement(), BiFunction<List<Task>, User, Pair<List<Task>, User>> { tasks, user ->
-                return@BiFunction Pair(tasks, user)
-            }).subscribe({ pair ->
-                var showNotifications = false
-                for (task in pair.first) {
-                    if (task.checkIfDue()) {
-                        showNotifications = true
-                        break
+            taskRepository.getTasks(Task.TYPE_DAILY).firstElement().zipWith(
+                userRepository.getUser().firstElement(),
+                BiFunction<List<Task>, User, Pair<List<Task>, User>> { tasks, user ->
+                    return@BiFunction Pair(tasks, user)
+                }
+            ).subscribe(
+                { pair ->
+                    var showNotifications = false
+                    for (task in pair.first) {
+                        if (task.checkIfDue()) {
+                            showNotifications = true
+                            break
+                        }
                     }
-                }
-                if (showNotifications) {
-                    notify(intent, buildNotification(wasInactive, pair.second.authentication?.timestamps?.createdAt))
-                }
-            }, RxErrorHandler.handleEmptyError())
-
+                    if (showNotifications) {
+                        notify(intent, buildNotification(wasInactive, pair.second.authentication?.timestamps?.createdAt))
+                    }
+                },
+                RxErrorHandler.handleEmptyError()
+            )
         } else {
             notify(intent, buildNotification(wasInactive))
         }
@@ -93,12 +95,14 @@ class NotificationPublisher : BroadcastReceiver() {
             val registrationCal = Calendar.getInstance()
             registrationCal.time = registrationDate
             val todayCal = Calendar.getInstance()
-            val isSameDay = (registrationCal.get(Calendar.YEAR) == todayCal.get(Calendar.YEAR) &&
+            val isSameDay = (
+                registrationCal.get(Calendar.YEAR) == todayCal.get(Calendar.YEAR) &&
                     registrationCal.get(Calendar.DAY_OF_YEAR) == todayCal.get(Calendar.DAY_OF_YEAR)
-                    )
-            val isPreviousDay = (registrationCal.get(Calendar.YEAR) == todayCal.get(Calendar.YEAR) &&
+                )
+            val isPreviousDay = (
+                registrationCal.get(Calendar.YEAR) == todayCal.get(Calendar.YEAR) &&
                     registrationCal.get(Calendar.DAY_OF_YEAR) == (todayCal.get(Calendar.DAY_OF_YEAR) - 1)
-                    )
+                )
             if (isSameDay) {
                 builder.setContentTitle(thisContext.getString(R.string.same_day_reminder_title))
                 notificationText = thisContext.getString(R.string.same_day_reminder_text)
@@ -120,8 +124,10 @@ class NotificationPublisher : BroadcastReceiver() {
 
         notificationIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
 
-        val intent = PendingIntent.getActivity(thisContext, 0,
-                notificationIntent, 0)
+        val intent = PendingIntent.getActivity(
+            thisContext, 0,
+            notificationIntent, 0
+        )
         builder.setContentIntent(intent)
 
         builder.color = ContextCompat.getColor(thisContext, R.color.brand_300)

@@ -2,13 +2,12 @@ package com.habitrpg.android.habitica.ui
 
 import android.content.Context
 import android.content.DialogInterface
-import androidx.appcompat.app.AlertDialog
 import android.view.Gravity
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-
+import androidx.appcompat.app.AlertDialog
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
@@ -29,7 +28,8 @@ class ItemDetailDialog(context: Context) : AlertDialog(context) {
         // Gear Image
         itemImageView = ImageView(context)
         val gearImageLayoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+            LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT
+        )
 
         gearImageLayoutParams.gravity = Gravity.CENTER_HORIZONTAL or Gravity.CENTER_VERTICAL
         gearImageLayoutParams.setMargins(0, 0, 0, 20)
@@ -47,7 +47,8 @@ class ItemDetailDialog(context: Context) : AlertDialog(context) {
         val goldPriceLayout = LinearLayout(context)
         goldPriceLayout.gravity = Gravity.CENTER_HORIZONTAL
         val goldPriceLayoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+            LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT
+        )
         goldPriceLayoutParams.setMargins(0, 0, 0, 16)
         goldPriceLayoutParams.gravity = Gravity.CENTER_HORIZONTAL or Gravity.CENTER_VERTICAL
 
@@ -99,7 +100,6 @@ class ItemDetailDialog(context: Context) : AlertDialog(context) {
 
     fun setValue(value: Int?) {
         priceTextView.text = value?.toString()
-
     }
 
     fun setImage(imageName: String) {

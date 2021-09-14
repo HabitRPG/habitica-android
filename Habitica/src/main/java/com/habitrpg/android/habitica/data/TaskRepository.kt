@@ -1,10 +1,8 @@
 package com.habitrpg.android.habitica.data
 
 import com.habitrpg.android.habitica.models.BaseMainObject
-import com.habitrpg.android.habitica.models.BaseObject
 import com.habitrpg.android.habitica.models.responses.BulkTaskScoringData
 import com.habitrpg.android.habitica.models.responses.TaskScoringResult
-import com.habitrpg.android.habitica.models.tasks.RemindersItem
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.tasks.TaskList
 import com.habitrpg.android.habitica.models.tasks.TasksOrder
@@ -36,7 +34,7 @@ interface TaskRepository : BaseRepository {
 
     fun markTaskCompleted(taskId: String, isCompleted: Boolean)
 
-    fun <T: BaseMainObject> modify(obj: T, transaction: (T) -> Unit)
+    fun <T : BaseMainObject> modify(obj: T, transaction: (T) -> Unit)
 
     fun swapTaskPosition(firstPosition: Int, secondPosition: Int)
 

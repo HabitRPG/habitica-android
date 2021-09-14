@@ -68,16 +68,17 @@ class PetDetailRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapt
                 (holder as? SectionViewHolder)?.bind(obj)
             }
             is Pet -> {
-                (holder as? PetViewHolder)?.bind(obj,
-                        ownedPets?.get(obj.key ?: "")?.trained ?: 0,
-                        eggCount(obj),
-                        potionCount(obj),
-                        canRaiseToMount(obj),
-                        ownsSaddles,
-                        ownedItems?.get(obj.animal + "-eggs") != null,
-                        ownedItems?.get(obj.color + "-hatchingPotions") != null,
-                        ownedMounts?.containsKey(obj.key) == true,
-                        user
+                (holder as? PetViewHolder)?.bind(
+                    obj,
+                    ownedPets?.get(obj.key ?: "")?.trained ?: 0,
+                    eggCount(obj),
+                    potionCount(obj),
+                    canRaiseToMount(obj),
+                    ownsSaddles,
+                    ownedItems?.get(obj.animal + "-eggs") != null,
+                    ownedItems?.get(obj.color + "-hatchingPotions") != null,
+                    ownedMounts?.containsKey(obj.key) == true,
+                    user
                 )
             }
         }

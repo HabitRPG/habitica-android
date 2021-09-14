@@ -12,7 +12,6 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.receivers.LocalNotificationActionReceiver
 import com.habitrpg.android.habitica.ui.helpers.EmojiParser
 
-
 class ReceivedPrivateMessageLocalNotification(context: Context, identifier: String?) : HabiticaLocalNotification(context, identifier) {
     override fun configureNotificationBuilder(data: MutableMap<String, String>): NotificationCompat.Builder {
         val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as? NotificationManager
@@ -28,7 +27,7 @@ class ReceivedPrivateMessageLocalNotification(context: Context, identifier: Stri
         style = style.addLine(messageText)
         oldMessages.add(messageText)
         var notification = super.configureNotificationBuilder(data)
-                .setExtras(bundleOf(Pair("messages", oldMessages)))
+            .setExtras(bundleOf(Pair("messages", oldMessages)))
         if (oldMessages.size > 1) {
             val notificationTitle = if (data["senderName"] != null) {
                 context.getString(R.string.inbox_messages_title, oldMessages.size, data["senderName"])
@@ -36,8 +35,8 @@ class ReceivedPrivateMessageLocalNotification(context: Context, identifier: Stri
                 context.getString(R.string.inbox_messages_title_nosender, oldMessages.size)
             }
             notification = notification
-                    .setContentTitle(notificationTitle)
-                    .setStyle(style)
+                .setContentTitle(notificationTitle)
+                .setStyle(style)
             title = null
         } else {
             notification = notification.setContentTitle(context.getString(R.string.inbox_messages_title_single, data["senderName"]))
@@ -63,15 +62,19 @@ class ReceivedPrivateMessageLocalNotification(context: Context, identifier: Stri
         intent.action = actionName
         intent.putExtra("senderID", senderID)
         val replyPendingIntent: PendingIntent =
-                PendingIntent.getBroadcast(context, senderID.hashCode(),
-                        intent,
-                        PendingIntent.FLAG_UPDATE_CURRENT)
+            PendingIntent.getBroadcast(
+                context, senderID.hashCode(),
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT
+            )
 
         val action: NotificationCompat.Action =
-                NotificationCompat.Action.Builder(R.drawable.ic_send_grey_600_24dp,
-                        context.getString(R.string.reply), replyPendingIntent)
-                        .addRemoteInput(remoteInput)
-                        .build()
+            NotificationCompat.Action.Builder(
+                R.drawable.ic_send_grey_600_24dp,
+                context.getString(R.string.reply), replyPendingIntent
+            )
+                .addRemoteInput(remoteInput)
+                .build()
         notificationBuilder.addAction(action)
     }
 }

@@ -32,8 +32,11 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
     @Inject
     lateinit var faqRepository: FAQRepository
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         hidesToolbar = true
         showsBackButton = true
         return super.onCreateView(inflater, container, savedInstanceState)
@@ -67,18 +70,22 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
     }
 
     private fun loadArticles() {
-        compositeSubscription.add(faqRepository.getArticles().subscribe(Consumer {
-            val context = context ?: return@Consumer
-            for (article in it) {
-                val binding = SupportFaqItemBinding.inflate(context.layoutInflater, binding?.faqLinearLayout, true)
-                binding.textView.text = article.question
-                binding.root.setOnClickListener {
-                    val direction = FAQOverviewFragmentDirections.openFAQDetail(null, null)
-                    direction.position = article.position ?: 0
-                    MainNavigationController.navigate(direction)
-                }
-            }
-        }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(
+            faqRepository.getArticles().subscribe(
+                Consumer {
+                    val context = context ?: return@Consumer
+                    for (article in it) {
+                        val binding = SupportFaqItemBinding.inflate(context.layoutInflater, binding?.faqLinearLayout, true)
+                        binding.textView.text = article.question
+                        binding.root.setOnClickListener {
+                            val direction = FAQOverviewFragmentDirections.openFAQDetail(null, null)
+                            direction.position = article.position ?: 0
+                            MainNavigationController.navigate(direction)
+                        }
+                    }
+                },
+                RxErrorHandler.handleEmptyError()
+            )
+        )
     }
-
 }

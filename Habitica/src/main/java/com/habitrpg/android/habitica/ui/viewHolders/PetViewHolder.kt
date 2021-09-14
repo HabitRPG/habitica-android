@@ -9,15 +9,12 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.PetDetailItemBinding
 import com.habitrpg.android.habitica.events.commands.FeedCommand
 import com.habitrpg.android.habitica.extensions.inflate
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.*
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.menu.BottomSheetMenu
 import com.habitrpg.android.habitica.ui.menu.BottomSheetMenuItem
 import com.habitrpg.android.habitica.ui.views.dialogs.PetSuggestHatchDialog
-import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.subjects.PublishSubject
 import org.greenrobot.eventbus.EventBus
 
@@ -101,7 +98,7 @@ class PetViewHolder(parent: ViewGroup, private val equipEvents: PublishSubject<S
         binding.imageView.background = null
         DataBindingUtils.loadImage(itemView.context, imageName) {
             val resources = itemView.context.resources ?: return@loadImage
-            val drawable = if (trained  == 0) BitmapDrawable(resources, it.toBitmap().extractAlpha()) else it
+            val drawable = if (trained == 0) BitmapDrawable(resources, it.toBitmap().extractAlpha()) else it
             binding.imageView.background = drawable
         }
     }
@@ -150,14 +147,16 @@ class PetViewHolder(parent: ViewGroup, private val equipEvents: PublishSubject<S
         val dialog = PetSuggestHatchDialog(context)
         animal?.let {
             animalIngredientsRetriever?.invoke(it) { ingredients ->
-                dialog.configure(it,
-                        ingredients.first,
-                        ingredients.second,
-                        eggCount,
-                        potionCount,
-                        hasUnlockedEgg,
-                        hasUnlockedPotion,
-                        hasMount)
+                dialog.configure(
+                    it,
+                    ingredients.first,
+                    ingredients.second,
+                    eggCount,
+                    potionCount,
+                    hasUnlockedEgg,
+                    hasUnlockedPotion,
+                    hasMount
+                )
                 dialog.show()
             }
         }

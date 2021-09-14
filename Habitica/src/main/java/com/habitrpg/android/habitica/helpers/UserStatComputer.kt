@@ -128,7 +128,6 @@ class UserStatComputer {
         attributeRow.summary = false
         skillRows.add(attributeRow)
 
-
         val attributeRow2 = AttributeRow()
         attributeRow2.labelId = R.string.profile_class_bonus
         attributeRow2.strVal = strClassBonus

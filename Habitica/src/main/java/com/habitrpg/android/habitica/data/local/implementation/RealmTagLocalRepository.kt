@@ -6,7 +6,6 @@ import hu.akarnokd.rxjava3.bridge.RxJavaBridge
 import io.reactivex.rxjava3.core.Flowable
 import io.realm.Realm
 
-
 class RealmTagLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), TagLocalRepository {
     override fun deleteTag(tagID: String) {
         val tag = realm.where(Tag::class.java).equalTo("id", tagID).findFirst()

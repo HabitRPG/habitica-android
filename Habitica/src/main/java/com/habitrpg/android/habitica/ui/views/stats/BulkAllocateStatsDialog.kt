@@ -24,23 +24,23 @@ class BulkAllocateStatsDialog(context: Context, component: UserComponent?) : Ale
 
     private val allocatedPoints: Int
         get() {
-        var value = 0
-        value += binding.strengthSliderView.currentValue
-        value += binding.intelligenceSliderView.currentValue
-        value += binding.constitutionSliderView.currentValue
-        value += binding.perceptionSliderView.currentValue
-        return value
-    }
+            var value = 0
+            value += binding.strengthSliderView.currentValue
+            value += binding.intelligenceSliderView.currentValue
+            value += binding.constitutionSliderView.currentValue
+            value += binding.perceptionSliderView.currentValue
+            return value
+        }
 
     private var pointsToAllocate = 0
-    set(value) {
-        field = value
-        updateTitle()
-        binding.strengthSliderView.maxValue = pointsToAllocate
-        binding.intelligenceSliderView.maxValue = pointsToAllocate
-        binding.constitutionSliderView.maxValue = pointsToAllocate
-        binding.perceptionSliderView.maxValue = pointsToAllocate
-    }
+        set(value) {
+            field = value
+            updateTitle()
+            binding.strengthSliderView.maxValue = pointsToAllocate
+            binding.intelligenceSliderView.maxValue = pointsToAllocate
+            binding.constitutionSliderView.maxValue = pointsToAllocate
+            binding.perceptionSliderView.maxValue = pointsToAllocate
+        }
 
     init {
         component?.inject(this)
@@ -56,27 +56,35 @@ class BulkAllocateStatsDialog(context: Context, component: UserComponent?) : Ale
 
     private fun saveChanges() {
         getButton(BUTTON_POSITIVE).isEnabled = false
-        userRepository.bulkAllocatePoints(binding.strengthSliderView.currentValue,
-                binding.intelligenceSliderView.currentValue,
-                binding.constitutionSliderView.currentValue,
-                binding.perceptionSliderView.currentValue)
-                .subscribe({
+        userRepository.bulkAllocatePoints(
+            binding.strengthSliderView.currentValue,
+            binding.intelligenceSliderView.currentValue,
+            binding.constitutionSliderView.currentValue,
+            binding.perceptionSliderView.currentValue
+        )
+            .subscribe(
+                {
                     this.dismiss()
-                }, {
+                },
+                {
                     RxErrorHandler.reportError(it)
                     this.dismiss()
-                })
+                }
+            )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        subscription = userRepository.getUser().subscribe({
-            pointsToAllocate = it.stats?.points ?: 0
-            binding.strengthSliderView.previousValue = it.stats?.strength ?: 0
-            binding.intelligenceSliderView.previousValue = it.stats?.intelligence ?: 0
-            binding.constitutionSliderView.previousValue = it.stats?.constitution ?: 0
-            binding.perceptionSliderView.previousValue = it.stats?.per ?: 0
-        }, RxErrorHandler.handleEmptyError())
+        subscription = userRepository.getUser().subscribe(
+            {
+                pointsToAllocate = it.stats?.points ?: 0
+                binding.strengthSliderView.previousValue = it.stats?.strength ?: 0
+                binding.intelligenceSliderView.previousValue = it.stats?.intelligence ?: 0
+                binding.constitutionSliderView.previousValue = it.stats?.constitution ?: 0
+                binding.perceptionSliderView.previousValue = it.stats?.per ?: 0
+            },
+            RxErrorHandler.handleEmptyError()
+        )
 
         binding.strengthSliderView.allocateAction = {
             checkRedistribution(binding.strengthSliderView)

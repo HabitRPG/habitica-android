@@ -5,7 +5,6 @@ import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
 import com.google.gson.JsonParseException
 import com.habitrpg.android.habitica.models.responses.FeedResponse
-
 import java.lang.reflect.Type
 
 class FeedResponseDeserializer : JsonDeserializer<FeedResponse> {

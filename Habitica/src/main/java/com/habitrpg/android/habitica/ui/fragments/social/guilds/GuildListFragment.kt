@@ -41,8 +41,10 @@ class GuildListFragment : BaseFragment<FragmentRefreshRecyclerviewBinding>(), Se
         viewAdapter.socialRepository = socialRepository
         binding?.recyclerView?.adapter = viewAdapter
         binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
-        binding?.recyclerView?.emptyItem = EmptyItem(getString(R.string.empty_guilds_list),
-            getString(R.string.empty_discover_description))
+        binding?.recyclerView?.emptyItem = EmptyItem(
+            getString(R.string.empty_guilds_list),
+            getString(R.string.empty_discover_description)
+        )
 
         binding?.refreshLayout?.setOnRefreshListener(this)
 
@@ -50,10 +52,15 @@ class GuildListFragment : BaseFragment<FragmentRefreshRecyclerviewBinding>(), Se
         if (onlyShowUsersGuilds) {
             compositeSubscription.add(socialRepository.getUserGroups("guild").subscribe({ viewAdapter.setUnfilteredData(it) }, RxErrorHandler.handleEmptyError()))
         } else {
-            compositeSubscription.add(this.socialRepository.getPublicGuilds()
-                    .subscribe({ groups ->
-                        this@GuildListFragment.viewAdapter.setUnfilteredData(groups)
-                    }, RxErrorHandler.handleEmptyError()))
+            compositeSubscription.add(
+                this.socialRepository.getPublicGuilds()
+                    .subscribe(
+                        { groups ->
+                            this@GuildListFragment.viewAdapter.setUnfilteredData(groups)
+                        },
+                        RxErrorHandler.handleEmptyError()
+                    )
+            )
         }
         this.fetchGuilds()
     }
@@ -64,10 +71,15 @@ class GuildListFragment : BaseFragment<FragmentRefreshRecyclerviewBinding>(), Se
     }
 
     internal fun fetchGuilds() {
-        compositeSubscription.add(this.socialRepository.retrieveGroups(if (onlyShowUsersGuilds) "guilds" else "publicGuilds")
-                .subscribe({
-                           binding?.refreshLayout?.isRefreshing = false
-                }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(
+            this.socialRepository.retrieveGroups(if (onlyShowUsersGuilds) "guilds" else "publicGuilds")
+                .subscribe(
+                    {
+                        binding?.refreshLayout?.isRefreshing = false
+                    },
+                    RxErrorHandler.handleEmptyError()
+                )
+        )
     }
 
     override fun onQueryTextSubmit(s: String?): Boolean {

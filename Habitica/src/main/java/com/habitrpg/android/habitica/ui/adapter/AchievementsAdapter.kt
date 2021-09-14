@@ -15,7 +15,7 @@ import com.habitrpg.android.habitica.models.QuestAchievement
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.views.dialogs.AchievementDetailDialog
 
-class AchievementsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class AchievementsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var useGridLayout: Boolean = false
     var entries = listOf<Any>()
@@ -25,11 +25,13 @@ class AchievementsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             0 -> SectionViewHolder(parent.inflate(R.layout.achievement_section_header))
             3 -> QuestAchievementViewHolder(parent.inflate(R.layout.achievement_quest_item))
             4 -> ChallengeAchievementViewHolder(parent.inflate(R.layout.achievement_challenge_item))
-            else -> AchievementViewHolder(if (useGridLayout) {
-                parent.inflate(R.layout.achievement_grid_item)
-            } else {
-                parent.inflate(R.layout.achievement_list_item)
-            })
+            else -> AchievementViewHolder(
+                if (useGridLayout) {
+                    parent.inflate(R.layout.achievement_grid_item)
+                } else {
+                    parent.inflate(R.layout.achievement_list_item)
+                }
+            )
         }
     }
 
@@ -60,7 +62,7 @@ class AchievementsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
     }
 
-    class SectionViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+    class SectionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private var binding = AchievementSectionHeaderBinding.bind(itemView)
 
         fun bind(category: Pair<*, *>) {
@@ -69,7 +71,7 @@ class AchievementsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
     }
 
-    class AchievementViewHolder(itemView: View): RecyclerView.ViewHolder(itemView), View.OnClickListener {
+    class AchievementViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
         private var achievement: Achievement? = null
 
         private val achievementContainer: ViewGroup?
@@ -113,7 +115,7 @@ class AchievementsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
     }
 
-    class QuestAchievementViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+    class QuestAchievementViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private var binding = AchievementQuestItemBinding.bind(itemView)
         private var achievement: QuestAchievement? = null
 
@@ -124,7 +126,7 @@ class AchievementsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
     }
 
-    class ChallengeAchievementViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+    class ChallengeAchievementViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private var binding = AchievementChallengeItemBinding.bind(itemView)
 
         fun bind(challengeName: String) {

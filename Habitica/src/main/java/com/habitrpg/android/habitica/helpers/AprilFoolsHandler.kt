@@ -11,7 +11,7 @@ class AprilFoolsHandler {
             if (endDate != null) {
                 this.eventEnd = endDate
             }
-            when(name) {
+            when (name) {
                 "invert" -> invertFools()
             }
         }

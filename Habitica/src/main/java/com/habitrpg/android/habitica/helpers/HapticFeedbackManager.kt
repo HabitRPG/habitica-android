@@ -2,7 +2,6 @@ package com.habitrpg.android.habitica.helpers
 
 import android.view.HapticFeedbackConstants
 import android.view.View
-import android.view.Window
 
 class HapticFeedbackManager {
     companion object {

@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica.ui.adapter.tasks
 
-
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,13 +19,13 @@ import io.reactivex.rxjava3.subjects.PublishSubject
 
 class RewardsRecyclerViewAdapter(private var customRewards: List<Task>?, private val layoutResource: Int) : BaseRecyclerViewAdapter<Task, RecyclerView.ViewHolder>(), TaskRecyclerViewAdapter {
     var user: User? = null
-    set(value) {
-        if (field?.versionNumber == value?.versionNumber) {
-            return
+        set(value) {
+            if (field?.versionNumber == value?.versionNumber) {
+                return
+            }
+            field = value
+            notifyDataSetChanged()
         }
-        field = value
-        notifyDataSetChanged()
-    }
     override var canScoreTasks = true
     private var inAppRewards: List<ShopItem>? = null
 
@@ -43,7 +42,6 @@ class RewardsRecyclerViewAdapter(private var customRewards: List<Task>?, private
     private var purchaseCardSubject: PublishSubject<ShopItem> = PublishSubject.create()
     val purchaseCardEvents: Flowable<ShopItem> = purchaseCardSubject.toFlowable(BackpressureStrategy.LATEST)
 
-
     override var taskDisplayMode: String = "standard"
         set(value) {
             if (field != value) {
@@ -54,13 +52,13 @@ class RewardsRecyclerViewAdapter(private var customRewards: List<Task>?, private
 
     private val inAppRewardCount: Int
         get() {
-            //if (inAppRewards?.isValid != true) return 0
+            // if (inAppRewards?.isValid != true) return 0
             return inAppRewards?.size ?: 0
         }
 
     private val customRewardCount: Int
         get() {
-            //if (customRewards?.isValid != true) return 0
+            // if (customRewards?.isValid != true) return 0
             return customRewards?.size ?: 0
         }
 
@@ -70,14 +68,20 @@ class RewardsRecyclerViewAdapter(private var customRewards: List<Task>?, private
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == VIEWTYPE_CUSTOM_REWARD) {
-            RewardViewHolder(getContentView(parent), { task, direction ->
-                if (task.value <= (user?.stats?.gp ?: 0.0)) {
-                    taskScoreEventsSubject.onNext(Pair(task, direction))
+            RewardViewHolder(
+                getContentView(parent),
+                { task, direction ->
+                    if (task.value <= (user?.stats?.gp ?: 0.0)) {
+                        taskScoreEventsSubject.onNext(Pair(task, direction))
+                    }
+                },
+                {
+                    task ->
+                    taskOpenEventsSubject.onNext(task)
                 }
-                                                     }, {
-                task -> taskOpenEventsSubject.onNext(task)
-            }) {
-                task -> brokenTaskEventsSubject.onNext(task)
+            ) {
+                task ->
+                brokenTaskEventsSubject.onNext(task)
             }
         } else {
             val viewHolder = ShopItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.row_shopitem, parent, false))
@@ -130,7 +134,7 @@ class RewardsRecyclerViewAdapter(private var customRewards: List<Task>?, private
     fun updateItemRewards(items: List<ShopItem>) {
         if (items.isNotEmpty()) {
             if (Task::class.java.isAssignableFrom(items.first().javaClass)) {
-                //this catches a weird bug where the observable gets a list of tasks for no apparent reason.
+                // this catches a weird bug where the observable gets a list of tasks for no apparent reason.
                 return
             }
         }

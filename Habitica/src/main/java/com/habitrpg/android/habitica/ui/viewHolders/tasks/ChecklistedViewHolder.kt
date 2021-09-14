@@ -16,8 +16,8 @@ import com.habitrpg.android.habitica.models.tasks.ChecklistItem
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
 import com.habitrpg.android.habitica.ui.helpers.setParsedMarkdown
-import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.schedulers.Schedulers
 
 abstract class ChecklistedViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> Unit), var scoreChecklistItemFunc: ((Task, ChecklistItem) -> Unit), openTaskFunc: ((Task) -> Unit), brokenTaskFunc: ((Task) -> Unit)) : BaseTaskViewHolder(itemView, scoreTaskFunc, openTaskFunc, brokenTaskFunc) {
@@ -83,7 +83,7 @@ abstract class ChecklistedViewHolder(itemView: View, scoreTaskFunc: ((Task, Task
     abstract fun shouldDisplayAsActive(newTask: Task?): Boolean
 
     private fun updateChecklistDisplay() {
-        //This needs to be a LinearLayout, as ListViews can not be inside other ListViews.
+        // This needs to be a LinearLayout, as ListViews can not be inside other ListViews.
         if (this.shouldDisplayExpandedChecklist()) {
             val layoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as? LayoutInflater
             if (this.task?.checklist?.isValid == true) {
@@ -94,27 +94,35 @@ abstract class ChecklistedViewHolder(itemView: View, scoreTaskFunc: ((Task, Task
                     if (task?.type == Task.TYPE_TODO) {
                         checkboxBackground?.setBackgroundResource(R.drawable.round_checklist_unchecked)
                     }
-                    checkboxBackground?.backgroundTintList = ContextCompat.getColorStateList(context, (if (context.isUsingNightModeResources()) {
-                        if (task?.completed == true || (task?.type == Task.TYPE_DAILY && task?.isDue == false)) {
-                            R.color.checkbox_fill
-                        } else {
-                            task?.lightTaskColor
-                        }
-                    } else {
-                        R.color.checkbox_fill
-                    }) ?: R.color.checkbox_fill)
+                    checkboxBackground?.backgroundTintList = ContextCompat.getColorStateList(
+                        context,
+                        (
+                            if (context.isUsingNightModeResources()) {
+                                if (task?.completed == true || (task?.type == Task.TYPE_DAILY && task?.isDue == false)) {
+                                    R.color.checkbox_fill
+                                } else {
+                                    task?.lightTaskColor
+                                }
+                            } else {
+                                R.color.checkbox_fill
+                            }
+                            ) ?: R.color.checkbox_fill
+                    )
                     val textView = itemView?.findViewById<TextView>(R.id.checkedTextView)
                     // Populate the data into the template view using the data object
                     textView?.text = item.text
                     textView?.setTextColor(ContextCompat.getColor(context, if (item.completed) R.color.text_dimmed else R.color.text_secondary))
                     if (item.text != null) {
                         Observable.just(item.text)
-                                .map { MarkdownParser.parseMarkdown(it) }
-                                .subscribeOn(Schedulers.io())
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe({
+                            .map { MarkdownParser.parseMarkdown(it) }
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(
+                                {
                                     textView?.setParsedMarkdown(it)
-                                }, RxErrorHandler.handleEmptyError())
+                                },
+                                RxErrorHandler.handleEmptyError()
+                            )
                     }
                     val checkmark = itemView?.findViewById<ImageView>(R.id.checkmark)
                     checkmark?.drawable?.setTintMode(PorterDuff.Mode.SRC_ATOP)
@@ -123,14 +131,17 @@ abstract class ChecklistedViewHolder(itemView: View, scoreTaskFunc: ((Task, Task
                     checkboxHolder?.setOnClickListener { _ ->
                         task?.let { scoreChecklistItemFunc(it, item) }
                     }
-                    val color = ContextCompat.getColor(context, if (task?.completed == true || (task?.type == Task.TYPE_DAILY && task?.isDue == false)) {
-                        checkmark?.drawable?.setTint(ContextCompat.getColor(context, R.color.text_dimmed))
-                        R.color.offset_background
-                    } else {
-                        val color = if (context.isUsingNightModeResources()) task?.darkestTaskColor else task?.darkTaskColor
-                        checkmark?.drawable?.setTint(ContextCompat.getColor(context, color ?: R.color.text_dimmed))
-                        task?.extraLightTaskColor ?: R.color.offset_background
-                    })
+                    val color = ContextCompat.getColor(
+                        context,
+                        if (task?.completed == true || (task?.type == Task.TYPE_DAILY && task?.isDue == false)) {
+                            checkmark?.drawable?.setTint(ContextCompat.getColor(context, R.color.text_dimmed))
+                            R.color.offset_background
+                        } else {
+                            val color = if (context.isUsingNightModeResources()) task?.darkestTaskColor else task?.darkTaskColor
+                            checkmark?.drawable?.setTint(ContextCompat.getColor(context, color ?: R.color.text_dimmed))
+                            task?.extraLightTaskColor ?: R.color.offset_background
+                        }
+                    )
                     color.let { checkboxHolder?.setBackgroundColor(it) }
                     this.checklistView.addView(itemView)
                 }

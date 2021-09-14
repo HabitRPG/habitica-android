@@ -52,10 +52,15 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
 
         viewModel = ViewModelProvider(this).get(NotificationsViewModel::class.java)
 
-        compositeSubscription.add(viewModel.getNotifications().subscribe({
-            this.setNotifications(it)
-            viewModel.markNotificationsAsSeen(it)
-        }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(
+            viewModel.getNotifications().subscribe(
+                {
+                    this.setNotifications(it)
+                    viewModel.markNotificationsAsSeen(it)
+                },
+                RxErrorHandler.handleEmptyError()
+            )
+        )
 
         binding.notificationsRefreshLayout.setOnRefreshListener(this)
     }
@@ -75,9 +80,14 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
     override fun onRefresh() {
         binding.notificationsRefreshLayout.isRefreshing = true
 
-        compositeSubscription.add(viewModel.refreshNotifications().subscribe({
-            binding.notificationsRefreshLayout.isRefreshing = false
-        }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(
+            viewModel.refreshNotifications().subscribe(
+                {
+                    binding.notificationsRefreshLayout.isRefreshing = false
+                },
+                RxErrorHandler.handleEmptyError()
+            )
+        )
     }
 
     private fun setNotifications(notifications: List<Notification>) {
@@ -102,7 +112,7 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         binding.notificationItems.showDividers = LinearLayout.SHOW_DIVIDER_MIDDLE or LinearLayout.SHOW_DIVIDER_END
 
         binding.notificationItems.addView(
-                createNotificationsHeaderView(notifications.count())
+            createNotificationsHeaderView(notifications.count())
         )
 
         notifications.map {
@@ -143,8 +153,8 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         val stringId = if (viewModel.isPartyMessage(data)) R.string.new_msg_party else R.string.new_msg_guild
 
         return createDismissableNotificationItem(
-                notification,
-                fromHtml(getString(stringId, data?.group?.name))
+            notification,
+            fromHtml(getString(stringId, data?.group?.name))
         )
     }
 
@@ -157,9 +167,9 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         }
 
         return createDismissableNotificationItem(
-                notification,
-                text,
-                R.drawable.notifications_bailey
+            notification,
+            text,
+            R.drawable.notifications_bailey
         )
     }
 
@@ -167,17 +177,17 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         val data = notification.data as? UnallocatedPointsData
 
         return createDismissableNotificationItem(
-                notification,
-                fromHtml(getString(R.string.unallocated_stats_points, data?.points.toString())),
-                R.drawable.notification_stat_sparkles
+            notification,
+            fromHtml(getString(R.string.unallocated_stats_points, data?.points.toString())),
+            R.drawable.notification_stat_sparkles
         )
     }
 
     private fun createMysteryItemsNotification(notification: Notification): View? {
         return createDismissableNotificationItem(
-                notification,
-                fromHtml(getString(R.string.new_subscriber_item)),
-                R.drawable.notification_mystery_item
+            notification,
+            fromHtml(getString(R.string.new_subscriber_item)),
+            R.drawable.notification_mystery_item
         )
     }
 
@@ -186,10 +196,10 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         val message = convertGroupMessageHtml(data?.message ?: "")
 
         return createDismissableNotificationItem(
-                notification,
-                fromHtml(message),
-                null,
-                R.color.yellow_5
+            notification,
+            fromHtml(message),
+            null,
+            R.color.yellow_5
         )
     }
 
@@ -198,10 +208,10 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         val message = convertGroupMessageHtml(data?.message ?: "")
 
         return createDismissableNotificationItem(
-                notification,
-                fromHtml(message),
-                null,
-                R.color.green_10
+            notification,
+            fromHtml(message),
+            null,
+            R.color.green_10
         )
     }
 
@@ -210,10 +220,10 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         val message = convertGroupMessageHtml(data?.message ?: "")
 
         val item = createActionableNotificationItem(
-                notification,
-                fromHtml(message)
+            notification,
+            fromHtml(message)
         )
-        //Hide for now
+        // Hide for now
         item?.visibility = View.GONE
         return item
     }
@@ -232,10 +242,10 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
     }
 
     private fun createDismissableNotificationItem(
-            notification: Notification,
-            messageText: CharSequence,
-            imageResourceId: Int? = null,
-            textColor: Int? = null
+        notification: Notification,
+        messageText: CharSequence,
+        imageResourceId: Int? = null,
+        textColor: Int? = null
     ): View? {
         val item = inflater?.inflate(R.layout.notification_item, binding.notificationItems, false)
 
@@ -270,8 +280,8 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         val data = notification.data as? PartyInvitationData
 
         return createActionableNotificationItem(
-                notification,
-                fromHtml(getString(R.string.invited_to_party_notification, data?.invitation?.name))
+            notification,
+            fromHtml(getString(R.string.invited_to_party_notification, data?.invitation?.name))
         )
     }
 
@@ -280,9 +290,9 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         val stringId = if (data?.invitation?.publicGuild == false) R.string.invited_to_private_guild else R.string.invited_to_public_guild
 
         return createActionableNotificationItem(
-                notification,
-                fromHtml(getString(stringId, data?.invitation?.name)),
-                data?.invitation?.publicGuild == true
+            notification,
+            fromHtml(getString(stringId, data?.invitation?.name)),
+            data?.invitation?.publicGuild == true
         )
     }
 
@@ -294,11 +304,16 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         // hide view until we have loaded quest data and populated the values
         view?.visibility = View.GONE
 
-        compositeSubscription.add(inventoryRepository.getQuestContent(data?.questKey ?: "")
+        compositeSubscription.add(
+            inventoryRepository.getQuestContent(data?.questKey ?: "")
                 .firstElement()
-                .subscribe({
-                    updateQuestInvitationView(view, it)
-                }, RxErrorHandler.handleEmptyError()))
+                .subscribe(
+                    {
+                        updateQuestInvitationView(view, it)
+                    },
+                    RxErrorHandler.handleEmptyError()
+                )
+        )
 
         return view
     }
@@ -334,9 +349,10 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
     }
 
     private fun createActionableNotificationItem(
-            notification: Notification,
-            messageText: CharSequence,
-            openable: Boolean = false): View? {
+        notification: Notification,
+        messageText: CharSequence,
+        openable: Boolean = false
+    ): View? {
         val item = inflater?.inflate(R.layout.notification_item_actionable, binding.notificationItems, false)
 
         if (openable) {

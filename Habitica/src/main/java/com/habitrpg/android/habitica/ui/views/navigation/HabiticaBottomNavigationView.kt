@@ -27,52 +27,54 @@ interface HabiticaBottomNavigationViewListener {
 }
 
 class HabiticaBottomNavigationView @JvmOverloads constructor(
-        context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
 ) : RelativeLayout(context, attrs, defStyleAttr) {
     private val binding = MainNavigationViewBinding.inflate(context.layoutInflater, this)
 
     private var isShowingSubmenu: Boolean = false
     var selectedPosition: Int
-    get() {
-        return when (activeTaskType) {
-            Task.TYPE_DAILY -> 1
-            Task.TYPE_REWARD -> 2
-            Task.TYPE_TODO -> 3
-            else -> 0
+        get() {
+            return when (activeTaskType) {
+                Task.TYPE_DAILY -> 1
+                Task.TYPE_REWARD -> 2
+                Task.TYPE_TODO -> 3
+                else -> 0
+            }
         }
-    }
-    set(value) {
-        activeTaskType = when (value) {
-            1 -> Task.TYPE_DAILY
-            2 -> Task.TYPE_TODO
-            3 -> Task.TYPE_REWARD
-            else -> Task.TYPE_HABIT
+        set(value) {
+            activeTaskType = when (value) {
+                1 -> Task.TYPE_DAILY
+                2 -> Task.TYPE_TODO
+                3 -> Task.TYPE_REWARD
+                else -> Task.TYPE_HABIT
+            }
         }
-    }
     var listener: HabiticaBottomNavigationViewListener? = null
     var activeTaskType: String = Task.TYPE_HABIT
-    set(value) {
-        val wasChanged = field != value
-        field = value
-        if (wasChanged) {
-            updateItemSelection()
-            listener?.onTabSelected(value, true)
+        set(value) {
+            val wasChanged = field != value
+            field = value
+            if (wasChanged) {
+                updateItemSelection()
+                listener?.onTabSelected(value, true)
+            }
         }
-    }
 
     var canAddTasks = true
-    set(value) {
-        field = value
-        if (field) {
-            binding.cutoutWrapper.visibility = View.VISIBLE
-            binding.cutoutSpace.visibility = View.VISIBLE
-            binding.addButtonBackground.visibility = View.VISIBLE
-        } else {
-            binding.cutoutWrapper.visibility = View.GONE
-            binding.cutoutSpace.visibility = View.GONE
-            binding.addButtonBackground.visibility = View.GONE
+        set(value) {
+            field = value
+            if (field) {
+                binding.cutoutWrapper.visibility = View.VISIBLE
+                binding.cutoutSpace.visibility = View.VISIBLE
+                binding.addButtonBackground.visibility = View.VISIBLE
+            } else {
+                binding.cutoutWrapper.visibility = View.GONE
+                binding.cutoutSpace.visibility = View.GONE
+                binding.addButtonBackground.visibility = View.GONE
+            }
         }
-    }
 
     val barHeight: Int
         get() = binding.itemWrapper.measuredHeight
@@ -225,7 +227,7 @@ class HabiticaBottomNavigationView @JvmOverloads constructor(
     }
 
     fun tabWithId(id: Int): BottomNavigationItem? {
-        return when(id) {
+        return when (id) {
             R.id.habits_tab -> binding.habitsTab
             R.id.dailies_tab -> binding.dailiesTab
             R.id.todos_tab -> binding.todosTab

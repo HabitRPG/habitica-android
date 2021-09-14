@@ -22,5 +22,4 @@ actual class PlatformLogger actual constructor() {
     actual fun logError(tag: String, message: String, exception: Throwable) {
         Log.e(tag, message, exception)
     }
-
 }

@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica.ui.activities
 
-import android.app.ProgressDialog
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
@@ -27,22 +26,22 @@ class ClassSelectionActivity : BaseActivity(), Consumer<User> {
     private lateinit var binding: ActivityClassSelectionBinding
     private var currentClass: String? = null
     private var newClass: String = "healer"
-    set(value) {
-        field = value
-        when (value) {
-            "healer" -> healerSelected()
-            "wizard" -> mageSelected()
-            "mage" -> mageSelected()
-            "rogue" -> rogueSelected()
-            "warrior" -> warriorSelected()
+        set(value) {
+            field = value
+            when (value) {
+                "healer" -> healerSelected()
+                "wizard" -> mageSelected()
+                "mage" -> mageSelected()
+                "rogue" -> rogueSelected()
+                "warrior" -> warriorSelected()
+            }
         }
-    }
     private var className: String? = null
-    set(value) {
-        field = value
-        binding.selectedTitleTextView.text = getString(R.string.x_class, className)
-        binding.selectedButton.text = getString(R.string.become_x, className)
-    }
+        set(value) {
+            field = value
+            binding.selectedTitleTextView.text = getString(R.string.x_class, className)
+            binding.selectedButton.text = getString(R.string.become_x, className)
+        }
     private var isInitialSelection: Boolean = false
     private var classWasUnset: Boolean? = false
     private var shouldFinish: Boolean? = false
@@ -73,17 +72,24 @@ class ClassSelectionActivity : BaseActivity(), Consumer<User> {
 
         newClass = currentClass ?: "healer"
 
-        compositeSubscription.add(userRepository.getUser().firstElement().subscribe({
-            it.preferences?.let {preferences ->
-                val unmanagedPrefs = userRepository.getUnmanagedCopy(preferences)
-                unmanagedPrefs.costume = false
-                setAvatarViews(unmanagedPrefs)
-            }
-        }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(
+            userRepository.getUser().firstElement().subscribe(
+                {
+                    it.preferences?.let { preferences ->
+                        val unmanagedPrefs = userRepository.getUnmanagedCopy(preferences)
+                        unmanagedPrefs.costume = false
+                        setAvatarViews(unmanagedPrefs)
+                    }
+                },
+                RxErrorHandler.handleEmptyError()
+            )
+        )
 
         if (!isInitialSelection) {
-            compositeSubscription.add(userRepository.changeClass()
-                    .subscribe({ classWasUnset = true }, RxErrorHandler.handleEmptyError()))
+            compositeSubscription.add(
+                userRepository.changeClass()
+                    .subscribe({ classWasUnset = true }, RxErrorHandler.handleEmptyError())
+            )
         }
 
         binding.healerWrapper.setOnClickListener { newClass = "healer" }
@@ -92,7 +98,6 @@ class ClassSelectionActivity : BaseActivity(), Consumer<User> {
         binding.warriorWrapper.setOnClickListener { newClass = "warrior" }
         binding.selectedButton.setOnClickListener { displayConfirmationDialogForClass() }
     }
-
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.class_selection, menu)
@@ -167,7 +172,7 @@ class ClassSelectionActivity : BaseActivity(), Consumer<User> {
         binding.selectedTitleTextView.setTextColor(ContextCompat.getColor(this, R.color.dark_brown))
         binding.selectedDescriptionTextView.setTextColor(ContextCompat.getColor(this, R.color.dark_brown))
         binding.selectedButton.setBackgroundResource(R.drawable.layout_rounded_bg_yellow_10)
-        updateButtonBackgrounds(binding.healerButton, ContextCompat.getDrawable(this,R.drawable.layout_rounded_bg_window_yellow_border))
+        updateButtonBackgrounds(binding.healerButton, ContextCompat.getDrawable(this, R.drawable.layout_rounded_bg_window_yellow_border))
     }
 
     private fun mageSelected() {
@@ -177,7 +182,7 @@ class ClassSelectionActivity : BaseActivity(), Consumer<User> {
         binding.selectedTitleTextView.setTextColor(ContextCompat.getColor(this, R.color.white))
         binding.selectedDescriptionTextView.setTextColor(ContextCompat.getColor(this, R.color.white))
         binding.selectedButton.setBackgroundResource(R.drawable.layout_rounded_bg_gray_alpha)
-        updateButtonBackgrounds(binding.mageButton, ContextCompat.getDrawable(this,R.drawable.layout_rounded_bg_window_blue_border))
+        updateButtonBackgrounds(binding.mageButton, ContextCompat.getDrawable(this, R.drawable.layout_rounded_bg_window_blue_border))
     }
 
     private fun rogueSelected() {
@@ -187,7 +192,7 @@ class ClassSelectionActivity : BaseActivity(), Consumer<User> {
         binding.selectedTitleTextView.setTextColor(ContextCompat.getColor(this, R.color.white))
         binding.selectedDescriptionTextView.setTextColor(ContextCompat.getColor(this, R.color.white))
         binding.selectedButton.setBackgroundResource(R.drawable.layout_rounded_bg_gray_alpha)
-        updateButtonBackgrounds(binding.rogueButton, ContextCompat.getDrawable(this,R.drawable.layout_rounded_bg_window_brand_border))
+        updateButtonBackgrounds(binding.rogueButton, ContextCompat.getDrawable(this, R.drawable.layout_rounded_bg_window_brand_border))
     }
 
     private fun warriorSelected() {
@@ -197,7 +202,7 @@ class ClassSelectionActivity : BaseActivity(), Consumer<User> {
         binding.selectedTitleTextView.setTextColor(ContextCompat.getColor(this, R.color.white))
         binding.selectedDescriptionTextView.setTextColor(ContextCompat.getColor(this, R.color.white))
         binding.selectedButton.setBackgroundResource(R.drawable.layout_rounded_bg_gray_alpha)
-        updateButtonBackgrounds(binding.warriorButton, ContextCompat.getDrawable(this,R.drawable.layout_rounded_bg_window_red_border))
+        updateButtonBackgrounds(binding.warriorButton, ContextCompat.getDrawable(this, R.drawable.layout_rounded_bg_window_red_border))
     }
 
     private fun updateButtonBackgrounds(selectedButton: TextView, background: Drawable?) {
@@ -225,9 +230,9 @@ class ClassSelectionActivity : BaseActivity(), Consumer<User> {
             alert.setTitle(getString(R.string.change_class_confirmation))
             alert.setMessage(getString(R.string.change_class_equipment_warning, currentClass))
             alert.addButton(R.string.choose_class, true) { _, _ ->
-                        selectClass(newClass)
-                        displayClassChanged()
-                    }
+                selectClass(newClass)
+                displayClassChanged()
+            }
             alert.addButton(R.string.dialog_go_back, false)
             alert.show()
         } else {

@@ -11,13 +11,12 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.api.HostConfig
 import javax.inject.Inject
 
-class APIPreferenceFragment: BasePreferencesFragment() {
+class APIPreferenceFragment : BasePreferencesFragment() {
     @Inject
     lateinit var hostConfig: HostConfig
 
     private val apiPreferences: List<String>
         get() = listOf(getString(R.string.SP_APIToken), getString(R.string.SP_userID))
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         HabiticaBaseApplication.userComponent?.inject(this)
@@ -26,11 +25,13 @@ class APIPreferenceFragment: BasePreferencesFragment() {
 
     override fun onPreferenceTreeClick(preference: Preference): Boolean {
         val clipMan = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
-        clipMan?.setPrimaryClip(if (preference.key == getString(R.string.SP_APIToken)) {
-            ClipData.newPlainText(preference.key, hostConfig.apiKey)
-        } else {
-            ClipData.newPlainText(preference.key, preference.summary)
-        })
+        clipMan?.setPrimaryClip(
+            if (preference.key == getString(R.string.SP_APIToken)) {
+                ClipData.newPlainText(preference.key, hostConfig.apiKey)
+            } else {
+                ClipData.newPlainText(preference.key, preference.summary)
+            }
+        )
         Toast.makeText(activity, "Copied " + preference.key + " to clipboard.", Toast.LENGTH_SHORT).show()
         return super.onPreferenceTreeClick(preference)
     }
@@ -42,5 +43,4 @@ class APIPreferenceFragment: BasePreferencesFragment() {
             }
         }
     }
-
 }

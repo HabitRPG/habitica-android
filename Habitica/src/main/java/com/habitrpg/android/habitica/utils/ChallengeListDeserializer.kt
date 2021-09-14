@@ -5,11 +5,8 @@ import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
 import com.google.gson.JsonParseException
 import com.habitrpg.android.habitica.models.social.Challenge
-
-import java.lang.reflect.Type
-
-import io.realm.Realm
 import io.realm.RealmList
+import java.lang.reflect.Type
 
 class ChallengeListDeserializer : JsonDeserializer<List<Challenge>> {
     @Throws(JsonParseException::class)

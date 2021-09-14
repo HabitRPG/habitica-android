@@ -24,7 +24,7 @@ class TaskAlarmManager(private var context: Context, private var taskRepository:
             for (reminder in it) {
                 var currentReminder = reminder
                 if (task.type == Task.TYPE_DAILY) {
-                    //Ensure that we set to the next available time
+                    // Ensure that we set to the next available time
                     currentReminder = this.setTimeForDailyReminder(currentReminder, task)
                 }
                 this.setAlarmForRemindersItem(task, currentReminder)
@@ -40,22 +40,22 @@ class TaskAlarmManager(private var context: Context, private var taskRepository:
         }
     }
 
-    //This function is used from the TaskReceiver since we do not have access to the task
-    //We currently only use this function to schedule the next reminder for dailies
-    //We may be able to use repeating alarms instead of this in the future
+    // This function is used from the TaskReceiver since we do not have access to the task
+    // We currently only use this function to schedule the next reminder for dailies
+    // We may be able to use repeating alarms instead of this in the future
     fun addAlarmForTaskId(taskId: String) {
         taskRepository.getTaskCopy(taskId)
-                .filter { task -> task.isValid && task.isManaged && Task.TYPE_DAILY == task.type }
-                .firstElement()
-                .subscribe({ this.setAlarmsForTask(it) }, RxErrorHandler.handleEmptyError())
+            .filter { task -> task.isValid && task.isManaged && Task.TYPE_DAILY == task.type }
+            .firstElement()
+            .subscribe({ this.setAlarmsForTask(it) }, RxErrorHandler.handleEmptyError())
     }
 
     fun scheduleAllSavedAlarms(preventDailyReminder: Boolean) {
         taskRepository.getTaskCopies(userId)
-                .firstElement()
-                .toFlowable()
-                .flatMap { Flowable.fromIterable(it) }
-                .subscribe({ this.setAlarmsForTask(it) }, RxErrorHandler.handleEmptyError())
+            .firstElement()
+            .toFlowable()
+            .flatMap { Flowable.fromIterable(it) }
+            .subscribe({ this.setAlarmsForTask(it) }, RxErrorHandler.handleEmptyError())
 
         if (!preventDailyReminder) {
             scheduleDailyReminder(context)
@@ -92,7 +92,7 @@ class TaskAlarmManager(private var context: Context, private var taskRepository:
         intent.putExtra(TASK_ID_INTENT_KEY, reminderItemTask.id)
 
         val intentId = remindersItem.id?.hashCode() ?: 0 and 0xfffffff
-        //Cancel alarm if already exists
+        // Cancel alarm if already exists
         val previousSender = PendingIntent.getBroadcast(context, intentId, intent, PendingIntent.FLAG_NO_CREATE)
         if (previousSender != null) {
             previousSender.cancel()

@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica.models
 
-
 class SetupCustomization {
 
     var key: String = ""

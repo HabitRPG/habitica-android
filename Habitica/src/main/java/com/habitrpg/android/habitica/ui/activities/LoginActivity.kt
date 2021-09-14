@@ -23,7 +23,11 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
-import com.facebook.*
+import com.facebook.AccessToken
+import com.facebook.CallbackManager
+import com.facebook.FacebookCallback
+import com.facebook.FacebookException
+import com.facebook.FacebookSdk
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.google.android.gms.auth.GoogleAuthException
@@ -100,11 +104,13 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
                 return@OnClickListener
             }
             apiClient.registerUser(username, email, password, confirmPassword)
-                    .subscribe(this@LoginActivity,
-                            {
-                                hideProgress()
-                                RxErrorHandler.reportError(it)
-                            })
+                .subscribe(
+                    this@LoginActivity,
+                    {
+                        hideProgress()
+                        RxErrorHandler.reportError(it)
+                    }
+                )
         } else {
             val username: String = binding.username.text.toString().trim { it <= ' ' }
             val password: String = binding.password.text.toString()
@@ -112,11 +118,13 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
                 showValidationError(R.string.login_validation_error_fieldsmissing)
                 return@OnClickListener
             }
-            apiClient.connectUser(username, password).subscribe(this@LoginActivity,
-                    {
-                        hideProgress()
-                        RxErrorHandler.reportError(it)
-                    })
+            apiClient.connectUser(username, password).subscribe(
+                this@LoginActivity,
+                {
+                    hideProgress()
+                    RxErrorHandler.reportError(it)
+                }
+            )
         }
     }
 
@@ -132,8 +140,8 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-            supportActionBar?.hide()
-        //Set default values to avoid null-responses when requesting unedited settings
+        supportActionBar?.hide()
+        // Set default values to avoid null-responses when requesting unedited settings
         PreferenceManager.setDefaultValues(this, R.xml.preferences_fragment, false)
 
         setupFacebookLogin()
@@ -164,9 +172,9 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
         binding.googleLoginButton.setOnClickListener { handleGoogleLogin() }
         binding.appleLoginButton.setOnClickListener {
             val configuration = SignInWithAppleConfiguration(
-                    clientId = BuildConfig.APPLE_AUTH_CLIENT_ID,
-                    redirectUri = "${hostConfig.address}/api/v4/user/auth/apple",
-                    scope = "name email"
+                clientId = BuildConfig.APPLE_AUTH_CLIENT_ID,
+                redirectUri = "${hostConfig.address}/api/v4/user/auth/apple",
+                scope = "name email"
             )
             val fragmentTag = "SignInWithAppleButton-SignInWebViewDialogFragment"
 
@@ -190,21 +198,24 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
 
     private fun setupFacebookLogin() {
         callbackManager = CallbackManager.Factory.create()
-        loginManager.registerCallback(callbackManager,
-                object : FacebookCallback<LoginResult> {
-                    override fun onSuccess(loginResult: LoginResult) {
-                        val accessToken = AccessToken.getCurrentAccessToken()
-                        compositeSubscription.add(apiClient.connectSocial("facebook", accessToken.userId, accessToken.token)
-                                .subscribe(this@LoginActivity, RxErrorHandler.handleEmptyError()))
-                    }
+        loginManager.registerCallback(
+            callbackManager,
+            object : FacebookCallback<LoginResult> {
+                override fun onSuccess(loginResult: LoginResult) {
+                    val accessToken = AccessToken.getCurrentAccessToken()
+                    compositeSubscription.add(
+                        apiClient.connectSocial("facebook", accessToken?.userId ?: "", accessToken?.token ?: "")
+                            .subscribe(this@LoginActivity, RxErrorHandler.handleEmptyError())
+                    )
+                }
 
-                    override fun onCancel() { /* no-on */ }
+                override fun onCancel() { /* no-on */ }
 
-                    override fun onError(exception: FacebookException) {
-                        exception.printStackTrace()
-                    }
-                })
-
+                override fun onError(exception: FacebookException) {
+                    exception.printStackTrace()
+                }
+            }
+        )
     }
 
     override fun onBackPressed() {
@@ -286,11 +297,13 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
         callbackManager.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == FacebookSdk.getCallbackRequestCodeOffset()) {
-            //This is necessary because the regular login callback is not called for some reason
+            // This is necessary because the regular login callback is not called for some reason
             val accessToken = AccessToken.getCurrentAccessToken()
             if (accessToken != null && accessToken.token != null) {
-                compositeSubscription.add(apiClient.connectSocial("facebook", accessToken.userId, accessToken.token)
-                        .subscribe(this@LoginActivity, { hideProgress() }))
+                compositeSubscription.add(
+                    apiClient.connectSocial("facebook", accessToken.userId, accessToken.token)
+                        .subscribe(this@LoginActivity, { hideProgress() })
+                )
             }
         }
     }
@@ -307,20 +320,19 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
         this.apiClient.updateAuthenticationCredentials(user, api)
         sharedPrefs.edit {
             putString(getString(R.string.SP_userID), user)
-                val encryptedKey = if (keyHelper != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    try {
-                        keyHelper?.encrypt(api)
-                    } catch (e: Exception) {
-                        null
-                    }
-                } else null
-                if (encryptedKey?.length ?: 0 > 5) {
-                    putString(user, encryptedKey)
-                } else {
-                    //Something might have gone wrong with encryption, so fall back to this.
-                    putString(getString(R.string.SP_APIToken), api)
+            val encryptedKey = if (keyHelper != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                try {
+                    keyHelper?.encrypt(api)
+                } catch (e: Exception) {
+                    null
                 }
-
+            } else null
+            if (encryptedKey?.length ?: 0 > 5) {
+                putString(user, encryptedKey)
+            } else {
+                // Something might have gone wrong with encryption, so fall back to this.
+                putString(getString(R.string.SP_APIToken), api)
+            }
         }
     }
 
@@ -358,15 +370,20 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
             FirebaseAnalytics.getInstance(this).logEvent("user_registered", null)
         }
 
-        compositeSubscription.add(userRepository.retrieveUser(withTasks = true, forced = true)
-                .subscribe({
-                    if (userAuthResponse.newUser) {
-                        this.startSetupActivity()
-                    } else {
-                        this.startMainActivity()
-                        AmplitudeManager.sendEvent("login", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT)
-                    }
-                }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(
+            userRepository.retrieveUser(withTasks = true, forced = true)
+                .subscribe(
+                    {
+                        if (userAuthResponse.newUser) {
+                            this.startSetupActivity()
+                        } else {
+                            this.startMainActivity()
+                            AmplitudeManager.sendEvent("login", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT)
+                        }
+                    },
+                    RxErrorHandler.handleEmptyError()
+                )
+        )
     }
 
     private fun handleFacebookLogin() {
@@ -378,8 +395,10 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
             return
         }
         val accountTypes = arrayOf("com.google")
-        val intent = AccountManager.newChooseAccountIntent(null, null,
-                accountTypes, true, null, null, null, null)
+        val intent = AccountManager.newChooseAccountIntent(
+            null, null,
+            accountTypes, true, null, null, null, null
+        )
         try {
             pickAccountResult.launch(intent)
         } catch (e: ActivityNotFoundException) {
@@ -401,31 +420,34 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
     private fun handleGoogleLoginResult() {
         val scopesString = Scopes.PROFILE + " " + Scopes.EMAIL
         val scopes = "oauth2:$scopesString"
-        compositeSubscription.add(Flowable.defer {
-            try {
-                @Suppress("Deprecation")
-                return@defer Flowable.just(GoogleAuthUtil.getToken(this, googleEmail, scopes))
-            } catch (e: IOException) {
-                throw Exceptions.propagate(e)
-            } catch (e: GoogleAuthException) {
-                throw Exceptions.propagate(e)
+        compositeSubscription.add(
+            Flowable.defer {
+                try {
+                    @Suppress("Deprecation")
+                    return@defer Flowable.just(GoogleAuthUtil.getToken(this, googleEmail, scopes))
+                } catch (e: IOException) {
+                    throw Exceptions.propagate(e)
+                } catch (e: GoogleAuthException) {
+                    throw Exceptions.propagate(e)
+                } catch (e: UserRecoverableException) {
+                    return@defer Flowable.empty()
+                }
             }
-            catch (e: UserRecoverableException) {
-                return@defer Flowable.empty()
-            }
-        }
                 .subscribeOn(Schedulers.io())
                 .flatMap { token -> apiClient.connectSocial("google", googleEmail ?: "", token) }
-                .subscribe(this@LoginActivity, { throwable ->
-                    throwable.printStackTrace()
-                    hideProgress()
-                    throwable.cause?.let {
-                        if (GoogleAuthException::class.java.isAssignableFrom(it.javaClass)) {
-                            handleGoogleAuthException(throwable.cause as GoogleAuthException)
+                .subscribe(
+                    this@LoginActivity,
+                    { throwable ->
+                        throwable.printStackTrace()
+                        hideProgress()
+                        throwable.cause?.let {
+                            if (GoogleAuthException::class.java.isAssignableFrom(it.javaClass)) {
+                                handleGoogleAuthException(throwable.cause as GoogleAuthException)
+                            }
                         }
                     }
-
-                }))
+                )
+        )
     }
 
     private fun handleGoogleAuthException(e: Exception) {
@@ -434,13 +456,14 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
             // Show a dialog created by Google Play services that allows
             // the user to update the APK
             val statusCode = e
-                    .connectionStatusCode
+                .connectionStatusCode
             GoogleApiAvailability.getInstance()
             @Suppress("DEPRECATION")
-            GooglePlayServicesUtil.showErrorDialogFragment(statusCode,
-                    this@LoginActivity,
-                    REQUEST_CODE_RECOVER_FROM_PLAY_SERVICES_ERROR) {
-
+            GooglePlayServicesUtil.showErrorDialogFragment(
+                statusCode,
+                this@LoginActivity,
+                REQUEST_CODE_RECOVER_FROM_PLAY_SERVICES_ERROR
+            ) {
             }
         } else if (e is UserRecoverableAuthException) {
             // Unable to authenticate, such as when the user has not yet granted
@@ -487,7 +510,6 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
             hideForm()
         }
     }
-
 
     private fun showForm() {
         isShowingForm = true
@@ -578,16 +600,17 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
         }
         input.inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
         val lp = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.MATCH_PARENT)
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.MATCH_PARENT
+        )
         input.layoutParams = lp
         val alertDialog = HabiticaAlertDialog(this)
         alertDialog.setTitle(R.string.forgot_password_title)
         alertDialog.setMessage(R.string.forgot_password_description)
         alertDialog.setAdditionalContentView(input)
         alertDialog.addButton(R.string.send, true) { _, _ ->
-                    userRepository.sendPasswordResetEmail(input.text.toString()).subscribe({ showPasswordEmailConfirmation() }, RxErrorHandler.handleEmptyError())
-                }
+            userRepository.sendPasswordResetEmail(input.text.toString()).subscribe({ showPasswordEmailConfirmation() }, RxErrorHandler.handleEmptyError())
+        }
         alertDialog.addCancelButton()
         alertDialog.show()
     }
@@ -608,7 +631,6 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
         internal const val REQUEST_CODE_PICK_ACCOUNT = 1000
         private const val REQUEST_CODE_RECOVER_FROM_PLAY_SERVICES_ERROR = 1001
         private const val PLAY_SERVICES_RESOLUTION_REQUEST = 9000
-
 
         fun show(v: View) {
             v.visibility = View.VISIBLE

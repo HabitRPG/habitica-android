@@ -11,8 +11,7 @@ import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
 
-
-class GuidelinesActivity: BaseActivity() {
+class GuidelinesActivity : BaseActivity() {
     override fun getLayoutResId(): Int = R.layout.activity_guidelines
 
     override fun injectActivity(component: UserComponent?) { /* no-on */ }

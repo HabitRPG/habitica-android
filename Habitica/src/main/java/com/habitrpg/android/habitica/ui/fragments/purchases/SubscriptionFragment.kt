@@ -95,9 +95,9 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>(), GemPur
             binding?.promoBanner?.setOnClickListener {
                 val fragment = PromoInfoFragment()
                 parentFragmentManager
-                        .beginTransaction()
-                        .replace(R.id.fragment_container, fragment as Fragment)
-                        .commit()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, fragment as Fragment)
+                    .commit()
             }
         } else {
             binding?.promoBanner?.visibility = View.GONE
@@ -105,10 +105,15 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>(), GemPur
 
         binding?.refreshLayout?.setOnRefreshListener { refresh() }
 
-        compositeSubscription.add(inventoryRepository.getLatestMysteryItem().subscribe({
-            DataBindingUtils.loadImage(binding?.subBenefitsMysteryItemIcon, "shop_set_mystery_${it.key?.split("_")?.last()}")
-            binding?.subBenefitsMysteryItemText?.text = context?.getString(R.string.subscribe_listitem3_description_new, it.text)
-        }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(
+            inventoryRepository.getLatestMysteryItem().subscribe(
+                {
+                    DataBindingUtils.loadImage(binding?.subBenefitsMysteryItemIcon, "shop_set_mystery_${it.key?.split("_")?.last()}")
+                    binding?.subBenefitsMysteryItemText?.text = context?.getString(R.string.subscribe_listitem3_description_new, it.text)
+                },
+                RxErrorHandler.handleEmptyError()
+            )
+        )
 
         AmplitudeManager.sendNavigationEvent("subscription screen")
     }
@@ -119,10 +124,15 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>(), GemPur
     }
 
     private fun refresh() {
-        compositeSubscription.add(userRepository.retrieveUser(withTasks = false, forced = true).subscribe({
-            this.setUser(it)
-            binding?.refreshLayout?.isRefreshing = false
-        }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(
+            userRepository.retrieveUser(withTasks = false, forced = true).subscribe(
+                {
+                    this.setUser(it)
+                    binding?.refreshLayout?.isRefreshing = false
+                },
+                RxErrorHandler.handleEmptyError()
+            )
+        )
     }
 
     override fun injectFragment(component: UserComponent) {
@@ -251,22 +261,31 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>(), GemPur
 
     private fun checkIfNeedsCancellation() {
         if (user?.purchased?.plan?.paymentMethod == "Google" &&
-                user?.purchased?.plan?.isActive == true &&
-                user?.purchased?.plan?.dateTerminated == null &&
-                (purchasedSubscription?.autoRenewing == false ||purchasedSubscription == null)) {
-            compositeSubscription.add(apiClient.cancelSubscription()
-                .flatMap { userRepository.retrieveUser(false, true) }
-                .subscribe({
-                refresh()
-            }, RxErrorHandler.handleEmptyError()))
+            user?.purchased?.plan?.isActive == true &&
+            user?.purchased?.plan?.dateTerminated == null &&
+            (purchasedSubscription?.autoRenewing == false || purchasedSubscription == null)
+        ) {
+            compositeSubscription.add(
+                apiClient.cancelSubscription()
+                    .flatMap { userRepository.retrieveUser(false, true) }
+                    .subscribe(
+                        {
+                            refresh()
+                        },
+                        RxErrorHandler.handleEmptyError()
+                    )
+            )
         }
     }
 
     private fun showSubscriptionOptions() {
         binding?.subscriptionOptions?.visibility = View.VISIBLE
-        binding?.subscriptionOptions?.postDelayed({
-            binding?.scrollView?.smoothScrollTo(0, binding?.subscriptionOptions?.top ?: 0)
-        }, 500)
+        binding?.subscriptionOptions?.postDelayed(
+            {
+                binding?.scrollView?.smoothScrollTo(0, binding?.subscriptionOptions?.top ?: 0)
+            },
+            500
+        )
     }
 
     private fun subscribeUser() {
@@ -277,20 +296,20 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>(), GemPur
         fun showGiftSubscriptionDialog(context: Context, iSG1G1: Boolean) {
             val chooseRecipientDialogView = context.layoutInflater.inflate(R.layout.dialog_choose_message_recipient, null)
 
-                val alert = HabiticaAlertDialog(context)
-                alert.setTitle(context.getString(R.string.gift_title))
-                alert.addButton(context.getString(R.string.action_continue), true) { _, _ ->
-                    val usernameEditText = chooseRecipientDialogView?.findViewById<View>(R.id.uuidEditText) as? EditText
-                    val intent = Intent(context, GiftSubscriptionActivity::class.java).apply {
-                        putExtra("username", usernameEditText?.text.toString())
-                    }
-                    context.startActivity(intent)
+            val alert = HabiticaAlertDialog(context)
+            alert.setTitle(context.getString(R.string.gift_title))
+            alert.addButton(context.getString(R.string.action_continue), true) { _, _ ->
+                val usernameEditText = chooseRecipientDialogView?.findViewById<View>(R.id.uuidEditText) as? EditText
+                val intent = Intent(context, GiftSubscriptionActivity::class.java).apply {
+                    putExtra("username", usernameEditText?.text.toString())
                 }
-                alert.addCancelButton { _, _ ->
-                   //context.dismissKeyboard()
-                }
-                alert.setAdditionalContentView(chooseRecipientDialogView)
-                alert.show()
+                context.startActivity(intent)
+            }
+            alert.addCancelButton { _, _ ->
+                // context.dismissKeyboard()
+            }
+            alert.setAdditionalContentView(chooseRecipientDialogView)
+            alert.show()
         }
     }
 }

@@ -7,8 +7,7 @@ import com.google.gson.JsonParseException
 import com.habitrpg.android.habitica.models.inventory.QuestDropItem
 import io.realm.RealmList
 import java.lang.reflect.Type
-import java.util.*
-
+import java.util.ArrayList
 
 class QuestDropItemsListSerialization : JsonDeserializer<RealmList<QuestDropItem>> {
     @Throws(JsonParseException::class)
@@ -30,7 +29,6 @@ class QuestDropItemsListSerialization : JsonDeserializer<RealmList<QuestDropItem
                 keys.add(item.key)
             }
         }
-
 
         return items
     }

@@ -14,16 +14,16 @@ import java.util.*
 class PushNotificationManager(var apiClient: ApiClient, private val sharedPreferences: SharedPreferences, private val context: Context) {
 
     var refreshedToken: String = ""
-    set(value) {
-        if (value.isEmpty()) {
-            return
-        }
+        set(value) {
+            if (value.isEmpty()) {
+                return
+            }
 
-        field = value
-        sharedPreferences.edit {
-            putString(DEVICE_TOKEN_PREFERENCE_KEY, value)
+            field = value
+            sharedPreferences.edit {
+                putString(DEVICE_TOKEN_PREFERENCE_KEY, value)
+            }
         }
-    }
     private var user: User? = null
 
     fun setUser(user: User) {
@@ -65,7 +65,6 @@ class PushNotificationManager(var apiClient: ApiClient, private val sharedPrefer
 
     fun displayNotification(remoteMessage: RemoteMessage) {
         val remoteMessageIdentifier = remoteMessage.data["identifier"]
-
 
         val notificationFactory = HabiticaLocalNotificationFactory()
         val notification = notificationFactory.build(remoteMessageIdentifier, context)

@@ -53,21 +53,34 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
         binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
 
         if (showCustomRewards) {
-            compositeSubscription.add(inventoryRepository.getInAppRewards().subscribe({
-                (recyclerAdapter as? RewardsRecyclerViewAdapter)?.updateItemRewards(it)
-            }, RxErrorHandler.handleEmptyError()))
+            compositeSubscription.add(
+                inventoryRepository.getInAppRewards().subscribe(
+                    {
+                        (recyclerAdapter as? RewardsRecyclerViewAdapter)?.updateItemRewards(it)
+                    },
+                    RxErrorHandler.handleEmptyError()
+                )
+            )
         }
 
-        (recyclerAdapter as? RewardsRecyclerViewAdapter)?.purchaseCardEvents?.subscribe({
-            selectedCard = it
-            val intent = Intent(activity, SkillMemberActivity::class.java)
-            cardSelectedResult.launch(intent)
-        }, RxErrorHandler.handleEmptyError())?.let { compositeSubscription.add(it) }
+        (recyclerAdapter as? RewardsRecyclerViewAdapter)?.purchaseCardEvents?.subscribe(
+            {
+                selectedCard = it
+                val intent = Intent(activity, SkillMemberActivity::class.java)
+                cardSelectedResult.launch(intent)
+            },
+            RxErrorHandler.handleEmptyError()
+        )?.let { compositeSubscription.add(it) }
         recyclerAdapter?.brokenTaskEvents?.subscribeWithErrorHandler { showBrokenChallengeDialog(it) }?.let { compositeSubscription.add(it) }
 
-        compositeSubscription.add(userRepository.getUser().subscribe({
-            (recyclerAdapter as? RewardsRecyclerViewAdapter)?.user = it
-        }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(
+            userRepository.getUser().subscribe(
+                {
+                    (recyclerAdapter as? RewardsRecyclerViewAdapter)?.user = it
+                },
+                RxErrorHandler.handleEmptyError()
+            )
+        )
     }
 
     override fun getLayoutManager(context: Context?): LinearLayoutManager {
@@ -76,11 +89,13 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
 
     override fun onRefresh() {
         binding?.refreshLayout?.isRefreshing = true
-        compositeSubscription.add(userRepository.retrieveUser(withTasks = true, forced = true)
+        compositeSubscription.add(
+            userRepository.retrieveUser(withTasks = true, forced = true)
                 .flatMap { inventoryRepository.retrieveInAppRewards() }
                 .doOnTerminate {
                     binding?.refreshLayout?.isRefreshing = false
-                }.subscribe({ }, RxErrorHandler.handleEmptyError()))
+                }.subscribe({ }, RxErrorHandler.handleEmptyError())
+        )
     }
 
     private fun setGridSpanCount(width: Int) {
@@ -99,15 +114,21 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
 
     private val cardSelectedResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if (it.resultCode == Activity.RESULT_OK) {
-            userRepository.useSkill(selectedCard?.key ?: "",
+            userRepository.useSkill(
+                selectedCard?.key ?: "",
                 "member",
-                it.data?.getStringExtra("member_id") ?: "")
-                .subscribeWithErrorHandler(Consumer {
-                    val activity = (activity as? MainActivity) ?: return@Consumer
-                    HabiticaSnackbar.showSnackbar(activity.snackbarContainer,
-                        context?.getString(R.string.sent_card, selectedCard?.text),
-                        HabiticaSnackbar.SnackbarDisplayType.BLUE)
-                })
+                it.data?.getStringExtra("member_id") ?: ""
+            )
+                .subscribeWithErrorHandler(
+                    Consumer {
+                        val activity = (activity as? MainActivity) ?: return@Consumer
+                        HabiticaSnackbar.showSnackbar(
+                            activity.snackbarContainer,
+                            context?.getString(R.string.sent_card, selectedCard?.text),
+                            HabiticaSnackbar.SnackbarDisplayType.BLUE
+                        )
+                    }
+                )
         }
     }
 

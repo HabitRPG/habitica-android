@@ -11,14 +11,14 @@ abstract class BaseRepositoryImpl<T : BaseLocalRepository>(protected val localRe
         this.localRepository.close()
     }
 
-    override fun <T: BaseObject> getUnmanagedCopy(list: List<T>): List<T> {
+    override fun <T : BaseObject> getUnmanagedCopy(list: List<T>): List<T> {
         return localRepository.getUnmanagedCopy(list)
     }
 
     override val isClosed: Boolean
         get() = localRepository.isClosed
 
-    override fun <T: BaseObject> getUnmanagedCopy(obj: T): T {
+    override fun <T : BaseObject> getUnmanagedCopy(obj: T): T {
         return localRepository.getUnmanagedCopy(obj)
     }
 }

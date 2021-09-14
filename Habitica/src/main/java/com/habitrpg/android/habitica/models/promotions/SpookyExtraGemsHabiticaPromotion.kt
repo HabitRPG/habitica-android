@@ -37,12 +37,12 @@ class SpookyExtraGemsHabiticaPromotion(startDate: Date?, endDate: Date?) : Habit
 
     override fun promoBackgroundDrawable(context: Context): Drawable {
         return ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_gray_10)
-                ?: ShapeDrawable()
+            ?: ShapeDrawable()
     }
 
     override fun buttonDrawable(context: Context): Drawable {
         return ContextCompat.getDrawable(context, R.drawable.spooky_promo_button_bg)
-                ?: ShapeDrawable()
+            ?: ShapeDrawable()
     }
 
     override fun configurePromoMenuView(view: PromoMenuView) {
@@ -54,8 +54,8 @@ class SpookyExtraGemsHabiticaPromotion(startDate: Date?, endDate: Date?) : Habit
         view.setSubtitleText(null)
 
         view.setDecoration(
-                ContextCompat.getDrawable(context, R.drawable.spooky_promo_menu_left),
-                ContextCompat.getDrawable(context, R.drawable.spooky_promo_menu_right)
+            ContextCompat.getDrawable(context, R.drawable.spooky_promo_menu_left),
+            ContextCompat.getDrawable(context, R.drawable.spooky_promo_menu_right)
         )
 
         view.binding.button.backgroundTintList = ContextCompat.getColorStateList(context, R.color.gray_1)
@@ -78,9 +78,11 @@ class SpookyExtraGemsHabiticaPromotion(startDate: Date?, endDate: Date?) : Habit
         binding.promoBannerRightImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.spooky_promo_banner_right))
         binding.promoBannerTitleImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.spooky_promo_title))
         val formatter = SimpleDateFormat("MMM d", Locale.getDefault())
-        binding.promoBannerDurationView.text = context.getString(R.string.x_to_y,
-                formatter.format(startDate),
-                formatter.format(endDate))
+        binding.promoBannerDurationView.text = context.getString(
+            R.string.x_to_y,
+            formatter.format(startDate),
+            formatter.format(endDate)
+        )
         binding.promoBannerDurationView.setTextColor(ContextCompat.getColor(context, R.color.white))
     }
 
@@ -91,8 +93,10 @@ class SpookyExtraGemsHabiticaPromotion(startDate: Date?, endDate: Date?) : Habit
         val context = binding.root.context
         binding.root.background = promoBackgroundDrawable(context)
         binding.purchaseButton.background = buttonDrawable(context)
-        val drawable = BitmapDrawable(context.resources,
-                HabiticaIconsHelper.imageOfSpookyGemPromoBG())
+        val drawable = BitmapDrawable(
+            context.resources,
+            HabiticaIconsHelper.imageOfSpookyGemPromoBG()
+        )
         binding.amountBackgroundLeft.background = drawable
         binding.amountBackgroundRight.background = drawable
         binding.gemAmount.setTextColor(Color.parseColor("#FEE2B6"))
@@ -117,9 +121,11 @@ class SpookyExtraGemsHabiticaPromotion(startDate: Date?, endDate: Date?) : Habit
         fragment.binding?.promoBannerSubtitleView?.setText(R.string.limited_event)
         fragment.binding?.promoBannerDurationView?.setTextColor(ContextCompat.getColor(context, R.color.white))
         val formatter = SimpleDateFormat("MMM d", Locale.getDefault())
-        fragment.binding?.promoBannerDurationView?.text = context.getString(R.string.x_to_y,
-                formatter.format(startDate),
-                formatter.format(endDate))
+        fragment.binding?.promoBannerDurationView?.text = context.getString(
+            R.string.x_to_y,
+            formatter.format(startDate),
+            formatter.format(endDate)
+        )
         fragment.binding?.promoBannerDurationView?.setTextColor(ContextCompat.getColor(context, R.color.white))
         fragment.binding?.promptText?.setText(R.string.spooky_promo_info_prompt)
         fragment.binding?.promptText?.setTextColor(ContextCompat.getColor(context, R.color.orange_50))
@@ -130,5 +136,6 @@ class SpookyExtraGemsHabiticaPromotion(startDate: Date?, endDate: Date?) : Habit
 
         fragment.binding?.instructionDescriptionView?.text = context.getString(R.string.spooky_promo_info_instructions, formatter.format(startDate), formatter.format(endDate))
         val limitationsFormatter = SimpleDateFormat.getDateTimeInstance()
-        fragment.binding?.limitationsDescriptionView?.text = context.getString(R.string.gems_promo_info_limitations, limitationsFormatter.format(startDate), limitationsFormatter.format(endDate))    }
+        fragment.binding?.limitationsDescriptionView?.text = context.getString(R.string.gems_promo_info_limitations, limitationsFormatter.format(startDate), limitationsFormatter.format(endDate))
+    }
 }

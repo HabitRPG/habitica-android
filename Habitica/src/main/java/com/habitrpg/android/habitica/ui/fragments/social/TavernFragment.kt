@@ -32,8 +32,11 @@ class TavernFragment : BaseMainFragment<FragmentViewpagerBinding>() {
     internal var tavernDetailFragment = TavernDetailFragment()
     private var chatFragment: ChatFragment? = null
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         this.usesTabLayout = true
         this.hidesToolbar = true
         this.tutorialStepIdentifier = "tavern"
@@ -71,7 +74,7 @@ class TavernFragment : BaseMainFragment<FragmentViewpagerBinding>() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menu_guild_refresh -> {
-                viewModel.retrieveGroup {  }
+                viewModel.retrieveGroup { }
                 return true
             }
         }
@@ -114,5 +117,4 @@ class TavernFragment : BaseMainFragment<FragmentViewpagerBinding>() {
             }
         }
     }
-
 }

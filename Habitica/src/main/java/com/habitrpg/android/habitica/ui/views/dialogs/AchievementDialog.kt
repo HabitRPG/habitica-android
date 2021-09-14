@@ -54,7 +54,7 @@ class AchievementDialog(context: Context) : HabiticaAlertDialog(context) {
         DataBindingUtils.loadImage(binding.iconView, "achievement-${iconName}2x")
         if (iconName == "onboardingComplete") {
             setTitle(R.string.onboardingComplete_achievement_title)
-            binding.titleView.setTextSize(TypedValue.COMPLEX_UNIT_SP,14f)
+            binding.titleView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14f)
             binding.achievementWrapper.visibility = View.GONE
             binding.onboardingDoneIcon.visibility = View.VISIBLE
             binding.titleView.typeface = Typeface.DEFAULT

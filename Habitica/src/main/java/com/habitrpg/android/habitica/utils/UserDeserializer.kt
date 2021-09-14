@@ -15,11 +15,25 @@ import com.habitrpg.android.habitica.models.invitations.Invitations
 import com.habitrpg.android.habitica.models.social.ChallengeMembership
 import com.habitrpg.android.habitica.models.social.UserParty
 import com.habitrpg.android.habitica.models.tasks.TasksOrder
-import com.habitrpg.android.habitica.models.user.*
+import com.habitrpg.android.habitica.models.user.ABTest
+import com.habitrpg.android.habitica.models.user.Authentication
+import com.habitrpg.android.habitica.models.user.Backer
+import com.habitrpg.android.habitica.models.user.ContributorInfo
+import com.habitrpg.android.habitica.models.user.Flags
+import com.habitrpg.android.habitica.models.user.Inbox
+import com.habitrpg.android.habitica.models.user.Items
+import com.habitrpg.android.habitica.models.user.OwnedItem
+import com.habitrpg.android.habitica.models.user.Preferences
+import com.habitrpg.android.habitica.models.user.Profile
+import com.habitrpg.android.habitica.models.user.Purchases
+import com.habitrpg.android.habitica.models.user.Stats
+import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.android.habitica.models.user.UserAchievement
 import io.realm.Realm
 import io.realm.RealmList
 import java.lang.reflect.Type
-import java.util.*
+import java.util.ArrayList
+import java.util.Date
 
 class UserDeserializer : JsonDeserializer<User> {
     @Throws(JsonParseException::class)
@@ -114,9 +128,11 @@ class UserDeserializer : JsonDeserializer<User> {
             user.invitations = context.deserialize(obj.get("invitations"), Invitations::class.java)
         }
         if (obj.has("tags")) {
-            user.tags = context.deserialize(obj.get("tags"), object : TypeToken<RealmList<Tag>>() {
-
-            }.type)
+            user.tags = context.deserialize(
+                obj.get("tags"),
+                object : TypeToken<RealmList<Tag>>() {
+                }.type
+            )
             for (tag in user.tags) {
                 tag.userId = user.id
             }
@@ -147,8 +163,8 @@ class UserDeserializer : JsonDeserializer<User> {
         if (obj.has("pushDevices")) {
             user.pushDevices = ArrayList()
             obj.getAsJsonArray("pushDevices")
-                    .map { context.deserialize<PushDevice>(it, PushDevice::class.java) }
-                    .forEach { (user.pushDevices as? ArrayList<PushDevice>)?.add(it) }
+                .map { context.deserialize<PushDevice>(it, PushDevice::class.java) }
+                .forEach { (user.pushDevices as? ArrayList<PushDevice>)?.add(it) }
         }
 
         if (obj.has("lastCron")) {

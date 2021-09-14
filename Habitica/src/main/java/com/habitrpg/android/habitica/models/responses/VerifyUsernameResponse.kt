@@ -4,5 +4,4 @@ class VerifyUsernameResponse {
 
     var isUsable: Boolean = false
     var issues = emptyList<String>()
-
 }

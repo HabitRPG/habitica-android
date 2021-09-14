@@ -8,17 +8,21 @@ import io.realm.Realm
 
 class RealmFAQLocalRepository(realm: Realm) : RealmContentLocalRepository(realm), FAQLocalRepository {
     override fun getArticle(position: Int): Flowable<FAQArticle> {
-        return RxJavaBridge.toV3Flowable(realm.where(FAQArticle::class.java)
+        return RxJavaBridge.toV3Flowable(
+            realm.where(FAQArticle::class.java)
                 .equalTo("position", position)
                 .findAll()
                 .asFlowable()
-                .filter{ it.isLoaded && it.count() > 0 }
-                .map { it.first() })
+                .filter { it.isLoaded && it.count() > 0 }
+                .map { it.first() }
+        )
     }
 
     override val articles: Flowable<out List<FAQArticle>>
-        get() =  RxJavaBridge.toV3Flowable(realm.where(FAQArticle::class.java)
+        get() = RxJavaBridge.toV3Flowable(
+            realm.where(FAQArticle::class.java)
                 .findAll()
                 .asFlowable()
-                .filter{ it.isLoaded })
+                .filter { it.isLoaded }
+        )
 }

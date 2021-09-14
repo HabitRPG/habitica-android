@@ -9,15 +9,15 @@ class PlayerTier(val title: String, val id: Int) {
     companion object {
         fun getTiers(): List<PlayerTier> {
             return arrayListOf(
-                    PlayerTier("Tier 1 (Friend)", 1),
-                    PlayerTier("Tier 2 (Friend)", 2),
-                    PlayerTier("Tier 3 (Elite)", 3),
-                    PlayerTier("Tier 4 (Elite)", 4),
-                    PlayerTier("Tier 5 (Champion)", 5),
-                    PlayerTier("Tier 6 (Champion)", 6),
-                    PlayerTier("Tier 7 (Legendary)", 7),
-                    PlayerTier("Moderator (Guardian)", 8),
-                    PlayerTier("Staff (Heroic)", 9)
+                PlayerTier("Tier 1 (Friend)", 1),
+                PlayerTier("Tier 2 (Friend)", 2),
+                PlayerTier("Tier 3 (Elite)", 3),
+                PlayerTier("Tier 4 (Elite)", 4),
+                PlayerTier("Tier 5 (Champion)", 5),
+                PlayerTier("Tier 6 (Champion)", 6),
+                PlayerTier("Tier 7 (Legendary)", 7),
+                PlayerTier("Moderator (Guardian)", 8),
+                PlayerTier("Staff (Heroic)", 9)
             )
         }
 

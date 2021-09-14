@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.content.ContextCompat
-import androidx.core.text.TextUtilsCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.extensions.getThemeColor
@@ -19,8 +18,8 @@ import com.habitrpg.android.habitica.ui.helpers.*
 import com.habitrpg.android.habitica.ui.viewHolders.BindableViewHolder
 import com.habitrpg.android.habitica.ui.views.EllipsisTextView
 import io.noties.markwon.utils.NoCopySpannableFactory
-import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.functions.Action
 import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.coroutines.Dispatchers
@@ -87,11 +86,11 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
 
         titleTextView.setOnClickListener { onTouch(it, null) }
         notesTextView?.setOnClickListener { onTouch(it, null) }
-        errorIconView?.setOnClickListener { errorButtonClicked?.run()}
+        errorIconView?.setOnClickListener { errorButtonClicked?.run() }
 
-        //Re enable when we find a way to only react when a link is tapped.
-        //notesTextView.movementMethod = LinkMovementMethod.getInstance()
-        //titleTextView.movementMethod = LinkMovementMethod.getInstance()
+        // Re enable when we find a way to only react when a link is tapped.
+        // notesTextView.movementMethod = LinkMovementMethod.getInstance()
+        // titleTextView.movementMethod = LinkMovementMethod.getInstance()
 
         expandNotesButton?.setOnClickListener { expandTask() }
         iconViewChallenge?.setOnClickListener {
@@ -134,7 +133,7 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
         if (data.notes?.isNotEmpty() == true) {
             notesTextView?.visibility = View.VISIBLE
             notesTextView?.setTextColor(ContextCompat.getColor(context, R.color.text_ternary))
-            //expandNotesButton.visibility = if (notesTextView.hadEllipses() || notesExpanded) View.VISIBLE else View.GONE
+            // expandNotesButton.visibility = if (notesTextView.hadEllipses() || notesExpanded) View.VISIBLE else View.GONE
         } else {
             notesTextView?.visibility = View.GONE
         }
@@ -147,14 +146,17 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
                 titleTextView.setSpannableFactory(NoCopySpannableFactory.getInstance())
                 if (data.text.isNotEmpty()) {
                     Single.just(data.text)
-                            .map { TextUtils.concat(it, "\u200B").toString() }
-                            .map { MarkdownParser.parseMarkdown(it) }
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe({ parsedText ->
+                        .map { TextUtils.concat(it, "\u200B").toString() }
+                        .map { MarkdownParser.parseMarkdown(it) }
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                            { parsedText ->
                                 data.parsedText = parsedText
                                 titleTextView.setParsedMarkdown(parsedText)
-                            }, RxErrorHandler.handleEmptyError())
+                            },
+                            RxErrorHandler.handleEmptyError()
+                        )
                 }
                 if (displayMode != "minimal") {
                     if (data.parsedNotes != null) {
@@ -162,19 +164,22 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
                     } else {
                         notesTextView?.text = data.notes
                         notesTextView?.setSpannableFactory(NoCopySpannableFactory.getInstance())
-                        data.notes?.let {notes ->
+                        data.notes?.let { notes ->
                             if (notes.isEmpty()) {
                                 return@let
                             }
                             Single.just(notes)
-                                    .map { TextUtils.concat(it, "\u200B").toString() }
-                                    .map { MarkdownParser.parseMarkdown(it) }
-                                    .subscribeOn(Schedulers.io())
-                                    .observeOn(AndroidSchedulers.mainThread())
-                                    .subscribe({ parsedNotes ->
+                                .map { TextUtils.concat(it, "\u200B").toString() }
+                                .map { MarkdownParser.parseMarkdown(it) }
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(
+                                    { parsedNotes ->
                                         notesTextView?.text = parsedNotes
                                         notesTextView?.setParsedMarkdown(parsedNotes)
-                                    }, RxErrorHandler.handleEmptyError())
+                                    },
+                                    RxErrorHandler.handleEmptyError()
+                                )
                         }
                     }
                 } else {
@@ -215,7 +220,6 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
             taskIconWrapper?.visibility = View.GONE
         }
 
-
         if (data.isPendingApproval) {
             approvalRequiredTextView?.visibility = View.VISIBLE
         } else {
@@ -225,7 +229,6 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
         syncingView?.visibility = if (task?.isSaving == true) View.VISIBLE else View.GONE
         errorIconView?.visibility = if (task?.hasErrored == true) View.VISIBLE else View.GONE
     }
-
 
     protected open fun configureSpecialTaskTextView(task: Task) {
         specialTaskTextView?.visibility = View.INVISIBLE
@@ -257,7 +260,7 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
                             onRightActionTouched()
                             return true
                         }
-                    }  else {
+                    } else {
                         if (motionEvent.y <= (checkboxHolder.height + 5.dpToPx(context))) {
                             if (motionEvent.x <= 72.dpToPx(context)) {
                                 onLeftActionTouched()

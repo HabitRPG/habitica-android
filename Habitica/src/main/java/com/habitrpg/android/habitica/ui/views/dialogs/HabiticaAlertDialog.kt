@@ -18,19 +18,17 @@ import com.habitrpg.android.habitica.ui.activities.BaseActivity
 import com.habitrpg.android.habitica.ui.views.login.LockableScrollView
 import com.plattysoft.leonids.ParticleSystem
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.lang.ref.WeakReference
 
-
 open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.HabiticaAlertDialogTheme) {
 
     var buttonAxis: Int = LinearLayout.VERTICAL
-    set(value) {
-        field = value
-        updateButtonLayout()
-    }
+        set(value) {
+            field = value
+            updateButtonLayout()
+        }
     var isCelebratory: Boolean = false
     private val view: RelativeLayout = LayoutInflater.from(context).inflate(R.layout.dialog_habitica_base, null) as RelativeLayout
     private val dialogWrapper: LinearLayout
@@ -47,27 +45,27 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
     internal var additionalContentView: View? = null
 
     var isScrollingLayout: Boolean = false
-    get() {
-        if (forceScrollableLayout) return true
-        return field
-    }
-    set(value) {
-        field = value
-        updateButtonLayout()
-    }
+        get() {
+            if (forceScrollableLayout) return true
+            return field
+        }
+        set(value) {
+            field = value
+            updateButtonLayout()
+        }
     var forceScrollableLayout = false
-    set(value) {
-        field = value
-        updateButtonLayout()
-    }
+        set(value) {
+            field = value
+            updateButtonLayout()
+        }
 
     var dialogWidth = 320
-    set(value) {
-        field = value
-        val layoutParams = dialogWrapper.layoutParams
-        layoutParams.width = value
-        dialogWrapper.layoutParams = layoutParams
-    }
+        set(value) {
+            field = value
+            val layoutParams = dialogWrapper.layoutParams
+            layoutParams.width = value
+            dialogWrapper.layoutParams = layoutParams
+        }
 
     init {
         setView(view)
@@ -199,7 +197,6 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
         return addButton(button, autoDismiss, function) as Button
     }
 
-
     fun addButton(buttonView: View, autoDismiss: Boolean = true, function: ((HabiticaAlertDialog, Int) -> Unit)? = null): View {
         val weakThis = WeakReference(this)
         val buttonIndex = buttonsWrapper.childCount
@@ -254,29 +251,29 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
             titleTextView.post {
                 val confettiContainer = view.findViewById<RelativeLayout>(R.id.confetti_container)
                 ParticleSystem(confettiContainer, 40, ContextCompat.getDrawable(context, R.drawable.confetti_blue), 6000)
-                        .setAcceleration(0.00010f, 90)
-                        .setRotationSpeed(144f)
-                        .setSpeedByComponentsRange(-0.15f, 0.15f, -0.1f, -0.4f)
-                        .setFadeOut(200, AccelerateInterpolator())
-                        .emitWithGravity(titleTextView, Gravity.BOTTOM, 10, 2000)
+                    .setAcceleration(0.00010f, 90)
+                    .setRotationSpeed(144f)
+                    .setSpeedByComponentsRange(-0.15f, 0.15f, -0.1f, -0.4f)
+                    .setFadeOut(200, AccelerateInterpolator())
+                    .emitWithGravity(titleTextView, Gravity.BOTTOM, 10, 2000)
                 ParticleSystem(confettiContainer, 40, ContextCompat.getDrawable(context, R.drawable.confetti_red), 6000)
-                        .setAcceleration(0.00010f, 90)
-                        .setRotationSpeed(144f)
-                        .setSpeedByComponentsRange(-0.15f, 0.15f, -0.1f, -0.4f)
-                        .setFadeOut(200, AccelerateInterpolator())
-                        .emitWithGravity(titleTextView, Gravity.BOTTOM, 10, 2000)
+                    .setAcceleration(0.00010f, 90)
+                    .setRotationSpeed(144f)
+                    .setSpeedByComponentsRange(-0.15f, 0.15f, -0.1f, -0.4f)
+                    .setFadeOut(200, AccelerateInterpolator())
+                    .emitWithGravity(titleTextView, Gravity.BOTTOM, 10, 2000)
                 ParticleSystem(confettiContainer, 40, ContextCompat.getDrawable(context, R.drawable.confetti_yellow), 6000)
-                        .setAcceleration(0.00010f, 90)
-                        .setRotationSpeed(144f)
-                        .setSpeedByComponentsRange(-0.15f, 0.15f, -0.1f, -0.4f)
-                        .setFadeOut(200, AccelerateInterpolator())
-                        .emitWithGravity(titleTextView, Gravity.BOTTOM, 10, 2000)
+                    .setAcceleration(0.00010f, 90)
+                    .setRotationSpeed(144f)
+                    .setSpeedByComponentsRange(-0.15f, 0.15f, -0.1f, -0.4f)
+                    .setFadeOut(200, AccelerateInterpolator())
+                    .emitWithGravity(titleTextView, Gravity.BOTTOM, 10, 2000)
                 ParticleSystem(confettiContainer, 40, ContextCompat.getDrawable(context, R.drawable.confetti_purple), 6000)
-                        .setAcceleration(0.00010f, 90)
-                        .setRotationSpeed(144f)
-                        .setSpeedByComponentsRange(-0.15f, 0.15f, -0.1f, -0.4f)
-                        .setFadeOut(200, AccelerateInterpolator())
-                        .emitWithGravity(titleTextView, Gravity.BOTTOM, 10, 2000)
+                    .setAcceleration(0.00010f, 90)
+                    .setRotationSpeed(144f)
+                    .setSpeedByComponentsRange(-0.15f, 0.15f, -0.1f, -0.4f)
+                    .setFadeOut(200, AccelerateInterpolator())
+                    .emitWithGravity(titleTextView, Gravity.BOTTOM, 10, 2000)
             }
         }
 
@@ -294,8 +291,11 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
                 if ((dialogQueue[0].context as? BaseActivity)?.isFinishing != true) {
                     (dialogQueue[0].context as? BaseActivity)?.lifecycleScope?.launch(context = Dispatchers.Main) {
                         delay(500L)
-                        if (dialogQueue.size > 0 && ((dialogQueue[0].context as? Activity)?.isFinishing == false ||
-                                ((dialogQueue[0].context as? ContextThemeWrapper)?.baseContext as? Activity)?.isFinishing == false)) {
+                        if (dialogQueue.size > 0 && (
+                            (dialogQueue[0].context as? Activity)?.isFinishing == false ||
+                                ((dialogQueue[0].context as? ContextThemeWrapper)?.baseContext as? Activity)?.isFinishing == false
+                            )
+                        ) {
                             dialogQueue[0].show()
                         }
                     }

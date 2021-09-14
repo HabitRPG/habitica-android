@@ -128,7 +128,6 @@ class AvatarStatsWidgetProvider : BaseWidgetProvider() {
             val openApp = PendingIntent.getActivity(context, 0, openAppIntent, PendingIntent.FLAG_UPDATE_CURRENT)
             remoteViews.setOnClickPendingIntent(R.id.widget_main_view, openApp)
 
-
             val options = appWidgetManager.getAppWidgetOptions(widgetId)
             remoteViews = sizeRemoteViews(context, options, widgetId)
 

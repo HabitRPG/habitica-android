@@ -3,7 +3,6 @@ package com.habitrpg.android.habitica.models.promotions
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.ShapeDrawable
-import android.view.View
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.FragmentGemPurchaseBinding
@@ -35,12 +34,12 @@ class Survey2021Promotion : HabiticaPromotion(), HabiticaWebPromotion {
 
     override fun promoBackgroundDrawable(context: Context): Drawable {
         return ContextCompat.getDrawable(context, R.drawable.g1g1_promo_background)
-                ?: ShapeDrawable()
+            ?: ShapeDrawable()
     }
 
     override fun buttonDrawable(context: Context): Drawable {
         return ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_content)
-                ?: ShapeDrawable()
+            ?: ShapeDrawable()
     }
 
     override fun configurePromoMenuView(view: PromoMenuView) {
@@ -52,8 +51,8 @@ class Survey2021Promotion : HabiticaPromotion(), HabiticaWebPromotion {
         view.setSubtitleText(context.getString(R.string.survey_menu_description))
 
         view.setDecoration(
-                ContextCompat.getDrawable(context, R.drawable.survey_art_left),
-                ContextCompat.getDrawable(context, R.drawable.survey_art_right)
+            ContextCompat.getDrawable(context, R.drawable.survey_art_left),
+            ContextCompat.getDrawable(context, R.drawable.survey_art_right)
         )
 
         view.binding.button.backgroundTintList = ContextCompat.getColorStateList(context, R.color.white)

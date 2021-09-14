@@ -5,9 +5,7 @@ import android.content.Context
 import android.content.res.Resources
 import android.graphics.drawable.BitmapDrawable
 import android.text.method.LinkMovementMethod
-import android.util.Log
 import android.view.View
-import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
@@ -17,18 +15,17 @@ import com.habitrpg.android.habitica.events.ShowSnackbarEvent
 import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.extensions.getAgoString
 import com.habitrpg.android.habitica.extensions.setScaledPadding
+import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
-import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
-import io.reactivex.rxjava3.core.Maybe
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.schedulers.Schedulers
-import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.ui.helpers.setParsedMarkdown
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
-import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Maybe
+import io.reactivex.rxjava3.schedulers.Schedulers
 import org.greenrobot.eventbus.EventBus
 
 open class ChatRecyclerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
@@ -52,7 +49,6 @@ class ChatRecyclerIntroViewHolder(itemView: View, replyToUUID: String) : ChatRec
     }
 }
 
-
 class ChatRecyclerMessageViewHolder(itemView: View, private var userId: String, private val isTavern: Boolean) : ChatRecyclerViewHolder(itemView) {
     val binding = ChatItemBinding.bind(itemView)
 
@@ -75,7 +71,7 @@ class ChatRecyclerMessageViewHolder(itemView: View, private var userId: String, 
         }
         binding.tvLikes.setOnClickListener {
             chatMessage?.let {
-                if(it.uuid != userId) {
+                if (it.uuid != userId) {
                     onLikeMessage?.invoke(it)
                 } else {
                     val event = ShowSnackbarEvent()
@@ -96,17 +92,25 @@ class ChatRecyclerMessageViewHolder(itemView: View, private var userId: String, 
                 chatMessage?.user?.let { onReply?.invoke(it) }
             }
         }
-        binding.replyButton.setCompoundDrawablesWithIntrinsicBounds(BitmapDrawable(res, HabiticaIconsHelper.imageOfChatReplyIcon()),
-                null, null, null)
+        binding.replyButton.setCompoundDrawablesWithIntrinsicBounds(
+            BitmapDrawable(res, HabiticaIconsHelper.imageOfChatReplyIcon()),
+            null, null, null
+        )
         binding.copyButton.setOnClickListener { chatMessage?.let { onCopyMessage?.invoke(it) } }
-        binding.copyButton.setCompoundDrawablesWithIntrinsicBounds(BitmapDrawable(res, HabiticaIconsHelper.imageOfChatCopyIcon()),
-                null, null, null)
+        binding.copyButton.setCompoundDrawablesWithIntrinsicBounds(
+            BitmapDrawable(res, HabiticaIconsHelper.imageOfChatCopyIcon()),
+            null, null, null
+        )
         binding.reportButton.setOnClickListener { chatMessage?.let { onFlagMessage?.invoke(it) } }
-        binding.reportButton.setCompoundDrawablesWithIntrinsicBounds(BitmapDrawable(res, HabiticaIconsHelper.imageOfChatReportIcon()),
-                null, null, null)
+        binding.reportButton.setCompoundDrawablesWithIntrinsicBounds(
+            BitmapDrawable(res, HabiticaIconsHelper.imageOfChatReportIcon()),
+            null, null, null
+        )
         binding.deleteButton.setOnClickListener { chatMessage?.let { onDeleteMessage?.invoke(it) } }
-        binding.deleteButton.setCompoundDrawablesWithIntrinsicBounds(BitmapDrawable(res, HabiticaIconsHelper.imageOfChatDeleteIcon()),
-                null, null, null)
+        binding.deleteButton.setCompoundDrawablesWithIntrinsicBounds(
+            BitmapDrawable(res, HabiticaIconsHelper.imageOfChatDeleteIcon()),
+            null, null, null
+        )
     }
 
     fun bind(msg: ChatMessage, uuid: String, user: User?, isExpanded: Boolean) {
@@ -177,13 +181,16 @@ class ChatRecyclerMessageViewHolder(itemView: View, private var userId: String, 
         if (msg.parsedText == null) {
             binding.messageText.text = chatMessage?.text
             Maybe.just(chatMessage?.text ?: "")
-                    .map { MarkdownParser.parseMarkdown(it) }
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({ parsedText ->
+                .map { MarkdownParser.parseMarkdown(it) }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    { parsedText ->
                         chatMessage?.parsedText = parsedText
                         binding.messageText.setParsedMarkdown(parsedText)
-                    }, { it.printStackTrace() })
+                    },
+                    { it.printStackTrace() }
+                )
         }
 
         val username = user?.formattedUsername

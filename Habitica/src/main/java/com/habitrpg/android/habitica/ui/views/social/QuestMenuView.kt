@@ -57,7 +57,7 @@ class QuestMenuView : LinearLayout {
         binding.healthBarView.setMaxValue(questContent.boss?.hp?.toDouble() ?: 0.0)
         binding.bottomView.setBackgroundColor(questContent.colors?.darkColor ?: 0)
         binding.bossArtView.setBackgroundColor(questContent.colors?.mediumColor ?: 0)
-        DataBindingUtils.loadImage(binding.bossArtView, "quest_"+questContent.key)
+        DataBindingUtils.loadImage(binding.bossArtView, "quest_" + questContent.key)
         binding.bossNameView.text = questContent.boss?.name
     }
 

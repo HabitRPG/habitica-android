@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.core.os.bundleOf
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
@@ -25,7 +24,7 @@ import io.reactivex.rxjava3.core.Completable
 import javax.inject.Inject
 import javax.inject.Named
 
-class BugFixFragment: BaseMainFragment<FragmentSupportBugFixBinding>() {
+class BugFixFragment : BaseMainFragment<FragmentSupportBugFixBinding>() {
     private var deviceInfo: DeviceName.DeviceInfo? = null
 
     override var binding: FragmentSupportBugFixBinding? = null
@@ -42,8 +41,11 @@ class BugFixFragment: BaseMainFragment<FragmentSupportBugFixBinding>() {
         component.inject(this)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         hidesToolbar = true
         showsBackButton = true
         return super.onCreateView(inflater, container, savedInstanceState)
@@ -52,9 +54,11 @@ class BugFixFragment: BaseMainFragment<FragmentSupportBugFixBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        compositeSubscription.add(Completable.fromAction {
-            deviceInfo = context?.let { DeviceName.getDeviceInfo(it) }
-        }.subscribe())
+        compositeSubscription.add(
+            Completable.fromAction {
+                deviceInfo = context?.let { DeviceName.getDeviceInfo(it) }
+            }.subscribe()
+        )
 
         binding?.reportBugButton?.setOnClickListener {
             sendEmail("[Android] Bugreport")
@@ -93,8 +97,8 @@ class BugFixFragment: BaseMainFragment<FragmentSupportBugFixBinding>() {
         val deviceName = deviceInfo?.name ?: DeviceName.deviceName
         val manufacturer = deviceInfo?.manufacturer ?: Build.MANUFACTURER
         var bodyOfEmail = Uri.encode("Device: $manufacturer $deviceName") +
-                "%0D%0A" + Uri.encode("Android Version: $version") +
-                "%0D%0A" + Uri.encode("AppVersion: " + getString(R.string.version_info, versionName, versionCode))
+            "%0D%0A" + Uri.encode("Android Version: $version") +
+            "%0D%0A" + Uri.encode("AppVersion: " + getString(R.string.version_info, versionName, versionCode))
 
         if (appConfigManager.testingLevel().name != AppTestingLevel.PRODUCTION.name) {
             bodyOfEmail += "%0D%0A" + Uri.encode(appConfigManager.testingLevel().name)
@@ -104,11 +108,11 @@ class BugFixFragment: BaseMainFragment<FragmentSupportBugFixBinding>() {
         val user = this.user
         if (user != null) {
             bodyOfEmail += "%0D%0A" + Uri.encode("Level: " + (user.stats?.lvl ?: 0)) +
-                    "%0D%0A" + Uri.encode("Class: " + (if (user.preferences?.disableClasses == true) "Disabled" else (user.stats?.habitClass ?: "None"))) +
-                    "%0D%0A" + Uri.encode("Is in Inn: " + (user.preferences?.sleep ?: false)) +
-                    "%0D%0A" + Uri.encode("Uses Costume: " + (user.preferences?.costume ?: false)) +
-                    "%0D%0A" + Uri.encode("Custom Day Start: " + (user.preferences?.dayStart ?: 0)) +
-                    "%0D%0A" + Uri.encode("Timezone Offset: " + (user.preferences?.timezoneOffset ?: 0))
+                "%0D%0A" + Uri.encode("Class: " + (if (user.preferences?.disableClasses == true) "Disabled" else (user.stats?.habitClass ?: "None"))) +
+                "%0D%0A" + Uri.encode("Is in Inn: " + (user.preferences?.sleep ?: false)) +
+                "%0D%0A" + Uri.encode("Uses Costume: " + (user.preferences?.costume ?: false)) +
+                "%0D%0A" + Uri.encode("Custom Day Start: " + (user.preferences?.dayStart ?: 0)) +
+                "%0D%0A" + Uri.encode("Timezone Offset: " + (user.preferences?.timezoneOffset ?: 0))
         }
 
         bodyOfEmail += "%0D%0ADetails:%0D%0A%0D%0A"
@@ -116,8 +120,8 @@ class BugFixFragment: BaseMainFragment<FragmentSupportBugFixBinding>() {
         activity?.let {
             val emailIntent = Intent(Intent.ACTION_SENDTO)
             val mailto = "mailto:" + appConfigManager.supportEmail() +
-                    "?subject=" + Uri.encode(subject) +
-                    "&body=" + bodyOfEmail
+                "?subject=" + Uri.encode(subject) +
+                "&body=" + bodyOfEmail
             emailIntent.data = Uri.parse(mailto)
 
             startActivity(Intent.createChooser(emailIntent, "Choose an Email client:"))

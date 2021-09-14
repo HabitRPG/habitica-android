@@ -1,7 +1,7 @@
 package com.habitrpg.android.habitica.models.auth
 
 class UserAuthResponse {
-    //we need apiToken and token, as both are possible returns
+    // we need apiToken and token, as both are possible returns
     var apiToken: String = ""
     var token: String
         get() {

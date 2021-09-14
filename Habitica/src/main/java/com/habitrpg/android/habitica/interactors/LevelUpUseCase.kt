@@ -19,8 +19,11 @@ import org.greenrobot.eventbus.EventBus
 import javax.inject.Inject
 
 class LevelUpUseCase @Inject
-constructor(private val soundManager: SoundManager, postExecutionThread: PostExecutionThread,
-            private val checkClassSelectionUseCase: CheckClassSelectionUseCase) : UseCase<LevelUpUseCase.RequestValues, Stats>(postExecutionThread) {
+constructor(
+    private val soundManager: SoundManager,
+    postExecutionThread: PostExecutionThread,
+    private val checkClassSelectionUseCase: CheckClassSelectionUseCase
+) : UseCase<LevelUpUseCase.RequestValues, Stats>(postExecutionThread) {
 
     override fun buildUseCaseObservable(requestValues: RequestValues): Flowable<Stats> {
         return Flowable.defer {
@@ -49,9 +52,11 @@ constructor(private val soundManager: SoundManager, postExecutionThread: PostExe
                 }
             } else {
                 if (suppressedModals?.levelUp == true) {
-                    HabiticaSnackbar.showSnackbar(requestValues.snackbarTargetView,
-                            requestValues.activity.getString(R.string.levelup_header, requestValues.newLevel),
-                            HabiticaSnackbar.SnackbarDisplayType.SUCCESS, true)
+                    HabiticaSnackbar.showSnackbar(
+                        requestValues.snackbarTargetView,
+                        requestValues.activity.getString(R.string.levelup_header, requestValues.newLevel),
+                        HabiticaSnackbar.SnackbarDisplayType.SUCCESS, true
+                    )
                     return@defer Flowable.just<Stats>(requestValues.user.stats)
                 }
                 val customView = requestValues.activity.layoutInflater.inflate(R.layout.dialog_levelup, null)
@@ -89,7 +94,7 @@ constructor(private val soundManager: SoundManager, postExecutionThread: PostExe
 
     private fun showClassSelection(requestValues: RequestValues) {
         checkClassSelectionUseCase.observable(CheckClassSelectionUseCase.RequestValues(requestValues.user, true, null, requestValues.activity))
-                .subscribe({ }, RxErrorHandler.handleEmptyError())
+            .subscribe({ }, RxErrorHandler.handleEmptyError())
     }
 
     class RequestValues(val user: User, val level: Int?, val activity: AppCompatActivity, val snackbarTargetView: ViewGroup) : UseCase.RequestValues {

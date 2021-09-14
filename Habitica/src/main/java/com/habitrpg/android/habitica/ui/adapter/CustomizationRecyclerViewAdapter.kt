@@ -33,16 +33,16 @@ class CustomizationRecyclerViewAdapter() : androidx.recyclerview.widget.Recycler
     var gemBalance: Int = 0
     var unsortedCustomizations: List<Customization> = ArrayList()
     var customizationList: MutableList<Any> = ArrayList()
-    set(value) {
-        field = value
-        notifyDataSetChanged()
-    }
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
     var additionalSetItems: List<Customization> = ArrayList()
     var activeCustomization: String? = null
-    set(value) {
-        field = value
-        this.notifyDataSetChanged()
-    }
+        set(value) {
+            field = value
+            this.notifyDataSetChanged()
+        }
 
     var ownedCustomizations: List<String> = listOf()
 
@@ -59,7 +59,7 @@ class CustomizationRecyclerViewAdapter() : androidx.recyclerview.widget.Recycler
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder {
         return if (viewType == 0) {
             val view = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.customization_section_header, parent, false)
+                .inflate(R.layout.customization_section_header, parent, false)
             SectionViewHolder(view)
         } else {
             val viewID: Int = if (customizationType == "background") {
@@ -71,7 +71,6 @@ class CustomizationRecyclerViewAdapter() : androidx.recyclerview.widget.Recycler
             val view = LayoutInflater.from(parent.context).inflate(viewID, parent, false)
             CustomizationViewHolder(view)
         }
-
     }
 
     override fun onBindViewHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder, position: Int) {
@@ -80,7 +79,6 @@ class CustomizationRecyclerViewAdapter() : androidx.recyclerview.widget.Recycler
             (holder as SectionViewHolder).bind(obj as CustomizationSet)
         } else {
             (holder as CustomizationViewHolder).bind(customizationList[position] as Customization)
-
         }
     }
 
@@ -261,25 +259,25 @@ class CustomizationRecyclerViewAdapter() : androidx.recyclerview.widget.Recycler
 
             val dialog = HabiticaAlertDialog(context)
             dialog.addButton(R.string.purchase_button, true) { _, _ ->
-                        if (set?.price ?: 0 > gemBalance) {
-                            MainNavigationController.navigate(R.id.gemPurchaseActivity, bundleOf(Pair("openSubscription", false)))
-                            return@addButton
-                        }
-                        set?.customizations = ArrayList()
-                        customizationList
-                                .filter { Customization::class.java.isAssignableFrom(it.javaClass) }
-                                .map { it as Customization }
-                                .filter { it.customizationSet != null && it.customizationSet == set?.identifier }
-                                .forEach { set?.customizations?.add(it) }
-                        if (additionalSetItems.isNotEmpty()) {
-                            additionalSetItems
-                                    .filter { !it.isUsable(ownedCustomizations.contains(it.id)) && it.customizationSet == set?.identifier }
-                                    .forEach { set?.customizations?.add(it) }
-                        }
-                        set?.let {
-                            unlockSetEvents.onNext(it)
-                        }
-                    }
+                if (set?.price ?: 0 > gemBalance) {
+                    MainNavigationController.navigate(R.id.gemPurchaseActivity, bundleOf(Pair("openSubscription", false)))
+                    return@addButton
+                }
+                set?.customizations = ArrayList()
+                customizationList
+                    .filter { Customization::class.java.isAssignableFrom(it.javaClass) }
+                    .map { it as Customization }
+                    .filter { it.customizationSet != null && it.customizationSet == set?.identifier }
+                    .forEach { set?.customizations?.add(it) }
+                if (additionalSetItems.isNotEmpty()) {
+                    additionalSetItems
+                        .filter { !it.isUsable(ownedCustomizations.contains(it.id)) && it.customizationSet == set?.identifier }
+                        .forEach { set?.customizations?.add(it) }
+                }
+                set?.let {
+                    unlockSetEvents.onNext(it)
+                }
+            }
             dialog.setTitle(context.getString(R.string.purchase_set_title, set?.text))
             dialog.setAdditionalContentView(dialogContent)
             dialog.addButton(R.string.reward_dialog_dismiss, false)

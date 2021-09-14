@@ -7,7 +7,6 @@ import androidx.annotation.StringDef
 import com.google.gson.annotations.SerializedName
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.models.BaseMainObject
-import com.habitrpg.android.habitica.models.BaseObject
 import com.habitrpg.android.habitica.models.Tag
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
@@ -45,22 +44,22 @@ open class Task : RealmObject, BaseMainObject, Parcelable {
     var dateCreated: Date? = null
     var position: Int = 0
     var group: TaskGroupPlan? = null
-    //Habits
+    // Habits
     var up: Boolean? = false
     var down: Boolean? = false
     var counterUp: Int? = 0
     var counterDown: Int? = 0
-    //todos/dailies
+    // todos/dailies
     var completed: Boolean = false
     var checklist: RealmList<ChecklistItem>? = RealmList()
     var reminders: RealmList<RemindersItem>? = RealmList()
-    //dailies
+    // dailies
     var frequency: String? = null
     var everyX: Int? = 0
     var streak: Int? = 0
     var startDate: Date? = null
     var repeat: Days? = null
-    //todos
+    // todos
     @SerializedName("date")
     var dueDate: Date? = null
     // used for buyable items
@@ -74,7 +73,7 @@ open class Task : RealmObject, BaseMainObject, Parcelable {
 
     var nextDue: RealmList<Date>? = null
 
-    //Needed for offline creating/updating
+    // Needed for offline creating/updating
     var isSaving: Boolean = false
     var hasErrored: Boolean = false
     var isCreating: Boolean = false
@@ -325,7 +324,6 @@ open class Task : RealmObject, BaseMainObject, Parcelable {
         this.counterDown = `in`.readInt()
     }
 
-
     fun setWeeksOfMonth(weeksOfMonth: List<Int>?) {
         this.weeksOfMonth = weeksOfMonth
         if ((weeksOfMonth?.size ?: 0) > 0) {
@@ -349,7 +347,6 @@ open class Task : RealmObject, BaseMainObject, Parcelable {
                 } catch (e: JSONException) {
                     e.printStackTrace()
                 }
-
             }
             this.weeksOfMonth = weeksOfMonth.toList()
         }
@@ -362,7 +359,8 @@ open class Task : RealmObject, BaseMainObject, Parcelable {
             this.daysOfMonthString = this.daysOfMonth?.toString()
         } else {
             daysOfMonthString = "[]"
-        }    }
+        }
+    }
 
     fun getDaysOfMonth(): List<Int>? {
         if (daysOfMonth == null) {
@@ -378,7 +376,6 @@ open class Task : RealmObject, BaseMainObject, Parcelable {
                 } catch (e: JSONException) {
                     e.printStackTrace()
                 }
-
             }
             this.daysOfMonth = daysOfMonth
         }

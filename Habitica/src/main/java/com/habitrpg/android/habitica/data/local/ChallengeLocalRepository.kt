@@ -1,10 +1,8 @@
 package com.habitrpg.android.habitica.data.local
 
-
 import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.social.ChallengeMembership
 import com.habitrpg.android.habitica.models.tasks.Task
-
 import io.reactivex.rxjava3.core.Flowable
 
 interface ChallengeLocalRepository : BaseLocalRepository {
@@ -21,5 +19,4 @@ interface ChallengeLocalRepository : BaseLocalRepository {
     fun getChallengeMembership(userId: String, id: String): Flowable<ChallengeMembership>
     fun getChallengeMemberships(userId: String): Flowable<out List<ChallengeMembership>>
     fun isChallengeMember(userID: String, challengeID: String): Flowable<Boolean>
-
 }

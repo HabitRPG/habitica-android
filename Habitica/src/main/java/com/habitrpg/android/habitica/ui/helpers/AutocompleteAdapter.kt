@@ -49,7 +49,7 @@ class AutocompleteAdapter(val context: Context, val socialRepository: SocialRepo
                         isAutocompletingUsers = true
                         userResults = chatMessages.distinctBy {
                             it.username
-                        }.filter { it.username?.startsWith(constraint.toString().drop(1)) ?: false }.map {message ->
+                        }.filter { it.username?.startsWith(constraint.toString().drop(1)) ?: false }.map { message ->
                             val result = FindUsernameResult()
                             result.authentication = Authentication()
                             result.authentication?.localAuthentication = LocalAuthentication()
@@ -111,6 +111,4 @@ class AutocompleteAdapter(val context: Context, val socialRepository: SocialRepo
     override fun getCount(): Int {
         return if (isAutocompletingUsers) userResults.size else emojiResults.size
     }
-
-
 }

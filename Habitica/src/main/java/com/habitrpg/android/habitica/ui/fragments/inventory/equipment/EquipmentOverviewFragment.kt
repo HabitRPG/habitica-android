@@ -72,18 +72,28 @@ class EquipmentOverviewFragment : BaseMainFragment<FragmentEquipmentOverviewBind
 
     private fun updateGearData(gear: Gear) {
         if (gear.equipped?.weapon?.isNotEmpty() == true) {
-            compositeSubscription.add(inventoryRepository.getEquipment(gear.equipped?.weapon ?: "").firstElement()
-                    .subscribe({
-                        binding?.battlegearView?.updateData(gear.equipped, it.twoHanded)
-                    }, RxErrorHandler.handleEmptyError()))
+            compositeSubscription.add(
+                inventoryRepository.getEquipment(gear.equipped?.weapon ?: "").firstElement()
+                    .subscribe(
+                        {
+                            binding?.battlegearView?.updateData(gear.equipped, it.twoHanded)
+                        },
+                        RxErrorHandler.handleEmptyError()
+                    )
+            )
         } else {
             binding?.battlegearView?.updateData(gear.equipped)
         }
         if (gear.costume?.weapon?.isNotEmpty() == true) {
-            compositeSubscription.add(inventoryRepository.getEquipment(gear.costume?.weapon ?: "").firstElement()
-                    .subscribe({
-                        binding?.costumeView?.updateData(gear.costume, it.twoHanded)
-                    }, RxErrorHandler.handleEmptyError()))
+            compositeSubscription.add(
+                inventoryRepository.getEquipment(gear.costume?.weapon ?: "").firstElement()
+                    .subscribe(
+                        {
+                            binding?.costumeView?.updateData(gear.costume, it.twoHanded)
+                        },
+                        RxErrorHandler.handleEmptyError()
+                    )
+            )
         } else {
             binding?.costumeView?.updateData(gear.costume)
         }

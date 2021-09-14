@@ -2,13 +2,11 @@ package com.habitrpg.android.habitica.models.shops
 
 import android.content.Context
 import android.content.res.Resources
-
 import com.google.gson.annotations.SerializedName
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.models.BaseObject
 import com.habitrpg.android.habitica.models.inventory.ItemEvent
 import com.habitrpg.android.habitica.models.user.User
-
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
@@ -19,17 +17,17 @@ open class ShopItem : RealmObject(), BaseObject {
     var notes: String? = ""
     @SerializedName("class")
     var imageName: String? = null
-    get() {
-        return if (field != null) {
-            if (field!!.contains(" ")) {
-                field!!.split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[1]
+        get() {
+            return if (field != null) {
+                if (field!!.contains(" ")) {
+                    field!!.split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[1]
+                } else {
+                    field
+                }
             } else {
-                field
+                "shop_$key"
             }
-        } else {
-            "shop_$key"
         }
-    }
 
     var value: Int = 0
     var locked: Boolean = false
@@ -64,7 +62,7 @@ open class ShopItem : RealmObject(), BaseObject {
     val canPurchaseBulk: Boolean
         get() = "eggs" == purchaseType || "hatchingPotions" == purchaseType || "food" == purchaseType || "gems" == purchaseType
 
-    fun canAfford(user: User?, quantity: Int): Boolean = when(currency) {
+    fun canAfford(user: User?, quantity: Int): Boolean = when (currency) {
         "gold" -> (value * quantity) <= (user?.stats?.gp ?: 0.0)
         else -> true
     }

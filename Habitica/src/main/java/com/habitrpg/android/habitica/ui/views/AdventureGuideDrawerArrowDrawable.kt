@@ -6,7 +6,6 @@ import androidx.appcompat.graphics.drawable.DrawerArrowDrawable
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 
-
 class AdventureGuideDrawerArrowDrawable(context: Context?) : DrawerArrowDrawable(context) {
     private val backgroundPaint: Paint = Paint()
     private val icon: Bitmap = BitmapFactory.decodeResource(context?.resources, R.drawable.star)

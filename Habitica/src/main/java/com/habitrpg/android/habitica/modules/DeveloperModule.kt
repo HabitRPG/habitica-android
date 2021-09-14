@@ -7,7 +7,7 @@ import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
-//provide proxy class for libraries(to avoid 65k limit)
+// provide proxy class for libraries(to avoid 65k limit)
 @Module
 open class DeveloperModule {
     @Provides

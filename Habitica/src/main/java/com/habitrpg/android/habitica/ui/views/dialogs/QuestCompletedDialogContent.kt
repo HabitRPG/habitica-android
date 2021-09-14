@@ -20,7 +20,6 @@ import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 
 class QuestCompletedDialogContent : LinearLayout {
 
-
     private lateinit var binding: DialogCompletedQuestContentBinding
 
     constructor(context: Context) : super(context) {
@@ -47,8 +46,8 @@ class QuestCompletedDialogContent : LinearLayout {
 
         if (questContent.drop != null && questContent.drop?.items != null) {
             questContent.drop?.items
-                    ?.filterNot { it.onlyOwner }
-                    ?.forEach { addRewardsRow(inflater, it, binding.rewardsList) }
+                ?.filterNot { it.onlyOwner }
+                ?.forEach { addRewardsRow(inflater, it, binding.rewardsList) }
 
             var hasOwnerRewards = false
             for (item in questContent.drop?.items ?: emptyList<QuestDropItem>()) {

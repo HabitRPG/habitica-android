@@ -13,7 +13,6 @@ import java.lang.reflect.Type
  */
 class FAQArticleListDeserilializer : JsonDeserializer<List<FAQArticle>> {
 
-
     @Throws(JsonParseException::class)
     override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): List<FAQArticle> {
         val articles = RealmList<FAQArticle>()

@@ -13,7 +13,6 @@ package com.habitrpg.android.habitica.ui.views
  * http://stackoverflow.com/questions/4005933/how-do-i-tell-if-my-textview-has-been-ellipsized
  */
 
-
 import android.content.Context
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatTextView

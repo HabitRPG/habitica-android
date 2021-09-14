@@ -10,7 +10,6 @@ import androidx.core.app.NotificationManagerCompat
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.TaskRepository
-import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager
 import com.habitrpg.android.habitica.models.tasks.Task
@@ -20,9 +19,6 @@ import com.habitrpg.shared.habitica.LogLevel
 import io.reactivex.rxjava3.functions.Consumer
 import java.util.*
 import javax.inject.Inject
-
-
-
 
 class TaskReceiver : BroadcastReceiver() {
 
@@ -38,20 +34,23 @@ class TaskReceiver : BroadcastReceiver() {
         val extras = intent.extras
         if (extras != null) {
             val taskId = extras.getString(TaskAlarmManager.TASK_ID_INTENT_KEY)
-            //This will set up the next reminders for dailies
+            // This will set up the next reminders for dailies
             if (taskId != null) {
                 taskAlarmManager.addAlarmForTaskId(taskId)
             }
 
             taskRepository.getTask(taskId ?: "")
-                    .firstElement()
-                    .subscribe(Consumer {
+                .firstElement()
+                .subscribe(
+                    Consumer {
                         if (!it.isValid || it.completed) {
                             return@Consumer
                         }
 
                         createNotification(context, it)
-                    }, RxErrorHandler.handleEmptyError())
+                    },
+                    RxErrorHandler.handleEmptyError()
+                )
         }
     }
 
@@ -64,22 +63,22 @@ class TaskReceiver : BroadcastReceiver() {
         val soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
 
         val notificationBuilder = NotificationCompat.Builder(context, "default")
-                .setSmallIcon(R.drawable.ic_gryphon_white)
-                .setContentTitle(task.text)
-                .setPriority(NotificationCompat.PRIORITY_MAX)
-                .setSound(soundUri)
-                .setAutoCancel(true)
-                .setContentIntent(pendingIntent)
+            .setSmallIcon(R.drawable.ic_gryphon_white)
+            .setContentTitle(task.text)
+            .setPriority(NotificationCompat.PRIORITY_MAX)
+            .setSound(soundUri)
+            .setAutoCancel(true)
+            .setContentIntent(pendingIntent)
 
         if (task.type == Task.TYPE_DAILY || task.type == Task.TYPE_TODO) {
             val completeIntent = Intent(context, LocalNotificationActionReceiver::class.java)
             completeIntent.action = context.getString(R.string.complete_task_action)
             completeIntent.putExtra("taskID", task.id)
             val pendingIntentComplete = PendingIntent.getBroadcast(
-                    context,
-                    3000,
-                    completeIntent,
-                    PendingIntent.FLAG_UPDATE_CURRENT
+                context,
+                3000,
+                completeIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT
             )
             notificationBuilder.addAction(0, context.getString(R.string.complete), pendingIntentComplete)
         }

@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica.models.responses
 
-
 class TaskDirectionData {
     var delta: Float = 0.toFloat()
     var _tmp: TaskDirectionDataTemp? = null

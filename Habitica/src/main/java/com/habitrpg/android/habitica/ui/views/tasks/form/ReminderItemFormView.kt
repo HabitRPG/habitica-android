@@ -24,19 +24,20 @@ import com.habitrpg.android.habitica.models.tasks.Task
 import java.text.DateFormat
 import java.util.*
 
-
 class ReminderItemFormView @JvmOverloads constructor(
-        context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr), TimePickerDialog.OnTimeSetListener, DatePickerDialog.OnDateSetListener {
     private val formattedTime: CharSequence?
-    get() {
-        val time = item.time
-        return if (time != null) {
-            formatter.format(time)
-        } else {
-            ""
+        get() {
+            val time = item.time
+            return if (time != null) {
+                formatter.format(time)
+            } else {
+                ""
+            }
         }
-    }
     private val binding = TaskFormReminderItemBinding.inflate(context.layoutInflater, this)
 
     private val formatter: DateFormat
@@ -103,16 +104,20 @@ class ReminderItemFormView @JvmOverloads constructor(
             val calendar = Calendar.getInstance()
             item.time?.let { calendar.time = it }
             if (taskType == Task.TYPE_DAILY) {
-                val timePickerDialog = TimePickerDialog(context, this,
-                        calendar.get(Calendar.HOUR_OF_DAY),
-                        calendar.get(Calendar.MINUTE),
-                        android.text.format.DateFormat.is24HourFormat(context))
+                val timePickerDialog = TimePickerDialog(
+                    context, this,
+                    calendar.get(Calendar.HOUR_OF_DAY),
+                    calendar.get(Calendar.MINUTE),
+                    android.text.format.DateFormat.is24HourFormat(context)
+                )
                 timePickerDialog.show()
             } else {
-                val timePickerDialog = DatePickerDialog(context, this,
-                        calendar.get(Calendar.YEAR),
-                        calendar.get(Calendar.MONTH),
-                        calendar.get(Calendar.DAY_OF_MONTH))
+                val timePickerDialog = DatePickerDialog(
+                    context, this,
+                    calendar.get(Calendar.YEAR),
+                    calendar.get(Calendar.MONTH),
+                    calendar.get(Calendar.DAY_OF_MONTH)
+                )
                 if ((firstDayOfWeek ?: -1) >= 0) {
                     timePickerDialog.datePicker.firstDayOfWeek = firstDayOfWeek ?: 0
                 }
@@ -144,10 +149,12 @@ class ReminderItemFormView @JvmOverloads constructor(
             binding.textView.text = formattedTime
             item.time?.let { date -> it(date) }
 
-            val timePickerDialog = TimePickerDialog(context, this,
-                    calendar.get(Calendar.HOUR_OF_DAY),
-                    calendar.get(Calendar.MINUTE),
-                    android.text.format.DateFormat.is24HourFormat(context))
+            val timePickerDialog = TimePickerDialog(
+                context, this,
+                calendar.get(Calendar.HOUR_OF_DAY),
+                calendar.get(Calendar.MINUTE),
+                android.text.format.DateFormat.is24HourFormat(context)
+            )
             timePickerDialog.show()
         }
     }

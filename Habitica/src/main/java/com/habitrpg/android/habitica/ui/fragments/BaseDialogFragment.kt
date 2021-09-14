@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.components.UserComponent
@@ -23,7 +22,7 @@ import java.util.HashMap
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-abstract class BaseDialogFragment<VB: ViewBinding> : DialogFragment() {
+abstract class BaseDialogFragment<VB : ViewBinding> : DialogFragment() {
 
     var isModal: Boolean = false
     abstract var binding: VB?
@@ -57,7 +56,6 @@ abstract class BaseDialogFragment<VB: ViewBinding> : DialogFragment() {
         try {
             EventBus.getDefault().register(this)
         } catch (ignored: EventBusException) {
-
         }
 
         val additionalData = HashMap<String, Any>()
@@ -78,19 +76,24 @@ abstract class BaseDialogFragment<VB: ViewBinding> : DialogFragment() {
     private fun showTutorialIfNeeded() {
         if (view != null) {
             if (this.tutorialStepIdentifier != null) {
-                compositeSubscription.add(tutorialRepository.getTutorialStep(this.tutorialStepIdentifier ?: "").firstElement()
-                    .delay(1, TimeUnit.SECONDS)
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(Consumer { step ->
-                        if (step != null && step.isValid && step.isManaged && step.shouldDisplay()) {
-                            val mainActivity = activity as? MainActivity ?: return@Consumer
-                            if (tutorialText != null) {
-                                mainActivity.displayTutorialStep(step, tutorialText ?: "", tutorialCanBeDeferred)
-                            } else {
-                                mainActivity.displayTutorialStep(step, tutorialTexts, tutorialCanBeDeferred)
-                            }
-                        }
-                    }, RxErrorHandler.handleEmptyError()))
+                compositeSubscription.add(
+                    tutorialRepository.getTutorialStep(this.tutorialStepIdentifier ?: "").firstElement()
+                        .delay(1, TimeUnit.SECONDS)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                            Consumer { step ->
+                                if (step != null && step.isValid && step.isManaged && step.shouldDisplay()) {
+                                    val mainActivity = activity as? MainActivity ?: return@Consumer
+                                    if (tutorialText != null) {
+                                        mainActivity.displayTutorialStep(step, tutorialText ?: "", tutorialCanBeDeferred)
+                                    } else {
+                                        mainActivity.displayTutorialStep(step, tutorialTexts, tutorialCanBeDeferred)
+                                    }
+                                }
+                            },
+                            RxErrorHandler.handleEmptyError()
+                        )
+                )
             }
         }
     }
@@ -110,7 +113,7 @@ abstract class BaseDialogFragment<VB: ViewBinding> : DialogFragment() {
     override fun onDestroy() {
         try {
             tutorialRepository.close()
-        } catch (exception: UninitializedPropertyAccessException) {/* no-on */ }
+        } catch (exception: UninitializedPropertyAccessException) { /* no-on */ }
         super.onDestroy()
     }
 

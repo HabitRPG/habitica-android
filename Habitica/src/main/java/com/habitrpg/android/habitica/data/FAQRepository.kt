@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.data
 
 import com.habitrpg.android.habitica.models.FAQArticle
-
 import io.reactivex.rxjava3.core.Flowable
 
 interface FAQRepository : BaseRepository {

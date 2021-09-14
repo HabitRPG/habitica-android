@@ -8,10 +8,10 @@ class ChatMentionNotification(context: Context, identifier: String?) : HabiticaL
 
     override fun configureNotificationBuilder(data: MutableMap<String, String>): NotificationCompat.Builder {
         val style = NotificationCompat.BigTextStyle()
-                .setBigContentTitle(title)
-                .bigText(message)
+            .setBigContentTitle(title)
+            .bigText(message)
         return super.configureNotificationBuilder(data)
-                .setStyle(style)
+            .setStyle(style)
     }
 
     override fun configureMainIntent(intent: Intent) {

@@ -103,5 +103,4 @@ class AppModule(private val application: Application) {
     companion object {
         const val NAMED_USER_ID = "userId"
     }
-
 }

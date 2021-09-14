@@ -11,7 +11,7 @@ import com.habitrpg.android.habitica.models.user.Backer
 import com.habitrpg.android.habitica.models.user.ContributorInfo
 import io.realm.RealmList
 import java.lang.reflect.Type
-import java.util.*
+import java.util.Date
 
 class ChatMessageDeserializer : JsonDeserializer<ChatMessage> {
     @Throws(JsonParseException::class)

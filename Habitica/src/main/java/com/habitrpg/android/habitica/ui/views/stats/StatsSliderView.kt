@@ -19,26 +19,26 @@ class StatsSliderView(context: Context, attrs: AttributeSet?) : LinearLayout(con
     private val binding = StatsSliderViewBinding.inflate(context.layoutInflater, this)
 
     var previousValue = 0
-    set(value) {
-        field = value
-        binding.previousValueTextView.text = value.toString()
-    }
+        set(value) {
+            field = value
+            binding.previousValueTextView.text = value.toString()
+        }
 
     var maxValue = 0
-    set(value) {
-        field = value
-        binding.statsSeekBar.max = field
-    }
+        set(value) {
+            field = value
+            binding.statsSeekBar.max = field
+        }
 
     var currentValue = 0
-    set(value) {
-        field = value
-        binding.statsSeekBar.progress = value
-        binding.valueEditText.setText(value.toString())
-        if (binding.valueEditText.isFocused) {
-            binding.valueEditText.setSelection(binding.valueEditText.length())
+        set(value) {
+            field = value
+            binding.statsSeekBar.progress = value
+            binding.valueEditText.setText(value.toString())
+            if (binding.valueEditText.isFocused) {
+                binding.valueEditText.setSelection(binding.valueEditText.length())
+            }
         }
-    }
 
     var allocateAction: ((Int) -> Unit)? = null
 
@@ -57,7 +57,8 @@ class StatsSliderView(context: Context, attrs: AttributeSet?) : LinearLayout(con
             binding.statsSeekBar.thumb = thumbDrawable
         }
 
-        binding.valueEditText.addTextChangedListener(AfterChangeTextWatcher {s ->
+        binding.valueEditText.addTextChangedListener(
+            AfterChangeTextWatcher { s ->
                 val newValue = try {
                     s.toString().toInt()
                 } catch (e: NumberFormatException) {
@@ -70,7 +71,8 @@ class StatsSliderView(context: Context, attrs: AttributeSet?) : LinearLayout(con
                     binding.valueEditText.setText(currentValue.toString())
                     binding.valueEditText.setSelection(binding.valueEditText.length())
                 }
-        })
+            }
+        )
 
         binding.statsSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
@@ -87,6 +89,4 @@ class StatsSliderView(context: Context, attrs: AttributeSet?) : LinearLayout(con
 
         currentValue = 0
     }
-
 }
-

@@ -10,9 +10,9 @@ fun Animal.getTranslatedType(c: Context?): String? {
     }
 
     return when (type) {
-        "drop"    -> c.getString(R.string.standard)
-        "quest"   -> c.getString(R.string.quest)
-        "wacky"   -> c.getString(R.string.wacky)
+        "drop" -> c.getString(R.string.standard)
+        "quest" -> c.getString(R.string.quest)
+        "wacky" -> c.getString(R.string.wacky)
         "special" -> c.getString(R.string.special)
         "premium" -> c.getString(R.string.magic_potion)
         else -> {

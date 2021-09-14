@@ -5,4 +5,4 @@ import android.content.res.TypedArray
 import android.util.AttributeSet
 
 fun AttributeSet.styledAttributes(context: Context?, style: IntArray): TypedArray? =
-        context?.theme?.obtainStyledAttributes(this, style, 0, 0)
+    context?.theme?.obtainStyledAttributes(this, style, 0, 0)

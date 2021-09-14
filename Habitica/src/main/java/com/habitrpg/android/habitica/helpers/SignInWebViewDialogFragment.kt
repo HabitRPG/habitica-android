@@ -42,9 +42,9 @@ class SignInWebViewDialogFragment : DialogFragment() {
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
 
@@ -73,10 +73,10 @@ class SignInWebViewDialogFragment : DialogFragment() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putBundle(
-                WEB_VIEW_KEY,
-                Bundle().apply {
-                    webViewIfCreated?.saveState(this)
-                }
+            WEB_VIEW_KEY,
+            Bundle().apply {
+                webViewIfCreated?.saveState(this)
+            }
         )
     }
 

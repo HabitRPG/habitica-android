@@ -171,16 +171,25 @@ object DeviceName {
         if (codename != null && codename == "HWBND-H" || model != null && (model == "BND-L21" || model == "BND-L24" || model == "BND-L31")) {
             return "Honor 7X"
         }
-        if (codename != null && codename == "HWBKL" || model != null && (model == "BKL-L04" || model ==
-                        "BKL-L09")) {
+        if (codename != null && codename == "HWBKL" || model != null && (
+            model == "BKL-L04" || model ==
+                "BKL-L09"
+            )
+        ) {
             return "Honor View 10"
         }
-        if (codename != null && codename == "HWALP" || model != null && (model == "ALP-AL00" || model ==
-                        "ALP-L09" || model == "ALP-L29" || model == "ALP-TL00")) {
+        if (codename != null && codename == "HWALP" || model != null && (
+            model == "ALP-AL00" || model ==
+                "ALP-L09" || model == "ALP-L29" || model == "ALP-TL00"
+            )
+        ) {
             return "Mate 10"
         }
-        if (codename != null && codename == "HWMHA" || model != null && (model == "MHA-AL00" || model ==
-                        "MHA-L09" || model == "MHA-L29" || model == "MHA-TL00")) {
+        if (codename != null && codename == "HWMHA" || model != null && (
+            model == "MHA-AL00" || model ==
+                "MHA-L09" || model == "MHA-L29" || model == "MHA-TL00"
+            )
+        ) {
             return "Mate 9"
         }
         if (codename != null && codename == "angler") {
@@ -188,11 +197,14 @@ object DeviceName {
         }
         // ----------------------------------------------------------------------------
         // LGE
-        if (codename != null && codename == "h1" || model != null && (model == "LG-F700K" || model ==
-                        "LG-F700L" || model == "LG-F700S" || model == "LG-H820" || model == "LG-H820PR" || model ==
-                        "LG-H830" || model == "LG-H831" || model == "LG-H850" || model == "LG-H858" || model ==
-                        "LG-H860" || model == "LG-H868" || model == "LGAS992" || model == "LGLS992" || model ==
-                        "LGUS992" || model == "RS988" || model == "VS987")) {
+        if (codename != null && codename == "h1" || model != null && (
+            model == "LG-F700K" || model ==
+                "LG-F700L" || model == "LG-F700S" || model == "LG-H820" || model == "LG-H820PR" || model ==
+                "LG-H830" || model == "LG-H831" || model == "LG-H850" || model == "LG-H858" || model ==
+                "LG-H860" || model == "LG-H868" || model == "LGAS992" || model == "LGLS992" || model ==
+                "LGUS992" || model == "RS988" || model == "VS987"
+            )
+        ) {
             return "LG G5"
         }
         if (codename != null && codename == "lucye" || model != null && (model == "LG-AS993" || model == "LG-H870" || model == "LG-H870AR" || model == "LG-H870DS" || model == "LG-H870I" || model == "LG-H870S" || model == "LG-H871" || model == "LG-H871S" || model == "LG-H872" || model == "LG-H872PR" || model == "LG-H873" || model == "LG-LS993" || model == "LGM-G600K" || model == "LGM-G600L" || model == "LGM-G600S" || model == "LGUS997" || model == "VS988")) {
@@ -212,8 +224,11 @@ object DeviceName {
         }
         // ----------------------------------------------------------------------------
         // Motorola
-        if (codename != null && codename == "griffin" || model != null && (model == "XT1650" || model ==
-                        "XT1650-05")) {
+        if (codename != null && codename == "griffin" || model != null && (
+            model == "XT1650" || model ==
+                "XT1650-05"
+            )
+        ) {
             return "Moto Z"
         }
         if (codename != null && codename == "shamu") {
@@ -232,15 +247,21 @@ object DeviceName {
         if (codename != null && codename == "OnePlus6" || model != null && model == "ONEPLUS A6003") {
             return "OnePlus 6"
         }
-        if (codename != null && (codename == "OnePlus6T" || codename == "OnePlus6TSingle") || (model != null
-                        && model == "ONEPLUS A6013")) {
+        if (codename != null && (codename == "OnePlus6T" || codename == "OnePlus6TSingle") || (
+            model != null &&
+                model == "ONEPLUS A6013"
+            )
+        ) {
             return "OnePlus 6T"
         }
         if (codename != null && codename == "OnePlus7" || model != null && model == "GM1905") {
             return "OnePlus 7"
         }
-        if (codename != null && (codename == "OnePlus7Pro" || codename == "OnePlus7ProTMO") || (model != null
-                        && (model == "GM1915" || model == "GM1917"))) {
+        if (codename != null && (codename == "OnePlus7Pro" || codename == "OnePlus7ProTMO") || (
+            model != null &&
+                (model == "GM1915" || model == "GM1917")
+            )
+        ) {
             return "OnePlus 7 Pro"
         }
         // ----------------------------------------------------------------------------
@@ -266,8 +287,11 @@ object DeviceName {
         if (codename != null && (codename == "SC-04L" || codename == "SCV42" || codename == "beyond2" || codename == "beyond2q") || model != null && (model == "SC-04L" || model == "SCV42" || model == "SM-G9750" || model == "SM-G9758" || model == "SM-G975F" || model == "SM-G975N" || model == "SM-G975U" || model == "SM-G975U1" || model == "SM-G975W")) {
             return "Galaxy S10+"
         }
-        if (codename != null && (codename == "beyond0" || codename == "beyond0q") || (model != null
-                        && (model == "SM-G9700" || model == "SM-G9708" || model == "SM-G970F" || model == "SM-G970N" || model == "SM-G970U" || model == "SM-G970U1" || model == "SM-G970W"))) {
+        if (codename != null && (codename == "beyond0" || codename == "beyond0q") || (
+            model != null &&
+                (model == "SM-G9700" || model == "SM-G9708" || model == "SM-G970F" || model == "SM-G970N" || model == "SM-G970U" || model == "SM-G970U1" || model == "SM-G970W")
+            )
+        ) {
             return "Galaxy S10e"
         }
         if (codename != null && (codename == "SC-04F" || codename == "SCL23" || codename == "k3g" || codename == "klte" || codename == "klteMetroPCS" || codename == "klteacg" || codename == "klteaio" || codename == "klteatt" || codename == "kltecan" || codename == "klteduoszn" || codename == "kltektt" || codename == "kltelgt" || codename == "kltelra" || codename == "klteskt" || codename == "kltespr" || codename == "kltetfnvzw" || codename == "kltetmo" || codename == "klteusc" || codename == "kltevzw" || codename == "kwifi" || codename == "lentisltektt" || codename == "lentisltelgt" || codename == "lentislteskt") || model != null && (model == "SAMSUNG-SM-G900A" || model == "SAMSUNG-SM-G900AZ" || model == "SC-04F" || model == "SCL23" || model == "SM-G9006W" || model == "SM-G9008W" || model == "SM-G9009W" || model == "SM-G900F" || model == "SM-G900FQ" || model == "SM-G900H" || model == "SM-G900I" || model == "SM-G900K" || model == "SM-G900L" || model == "SM-G900M" || model == "SM-G900MD" || model == "SM-G900P" || model == "SM-G900R4" || model == "SM-G900R6" || model == "SM-G900R7" || model == "SM-G900S" || model == "SM-G900T" || model == "SM-G900T1" || model == "SM-G900T3" || model == "SM-G900T4" || model == "SM-G900V" || model == "SM-G900W8" || model == "SM-G900X" || model == "SM-G906K" || model == "SM-G906L" || model == "SM-G906S" || model == "SM-S903VL")) {
@@ -285,13 +309,16 @@ object DeviceName {
         if (codename != null && (codename == "zenlte" || codename == "zenlteatt" || codename == "zenltebmc" || codename == "zenltechn" || codename == "zenltektt" || codename == "zenltekx" || codename == "zenltelgt" || codename == "zenlteskt" || codename == "zenltespr" || codename == "zenltetmo" || codename == "zenlteusc" || codename == "zenltevzw") || model != null && (model == "SAMSUNG-SM-G928A" || model == "SM-G9280" || model == "SM-G9287C" || model == "SM-G928C" || model == "SM-G928G" || model == "SM-G928I" || model == "SM-G928K" || model == "SM-G928L" || model == "SM-G928N0" || model == "SM-G928P" || model == "SM-G928R4" || model == "SM-G928S" || model == "SM-G928T" || model == "SM-G928V" || model == "SM-G928W8" || model == "SM-G928X")) {
             return "Galaxy S6 Edge+"
         }
-        if (codename != null && (codename == "herolte" || codename == "heroltebmc" || codename ==
-                        "heroltektt" || codename == "heroltelgt" || codename == "herolteskt" || codename ==
-                        "heroqlteacg" || codename == "heroqlteaio" || codename == "heroqlteatt" || codename ==
-                        "heroqltecctvzw" || codename == "heroqltechn" || codename == "heroqltelra" || codename ==
-                        "heroqltemtr" || codename == "heroqltespr" || codename == "heroqltetfnvzw" || codename ==
-                        "heroqltetmo" || codename == "heroqlteue" || codename == "heroqlteusc" || codename ==
-                        "heroqltevzw") || model != null && (model == "SAMSUNG-SM-G930A" || model == "SAMSUNG-SM-G930AZ" || model == "SM-G9300" || model == "SM-G9308" || model == "SM-G930F" || model == "SM-G930K" || model == "SM-G930L" || model == "SM-G930P" || model == "SM-G930R4" || model == "SM-G930R6" || model == "SM-G930R7" || model == "SM-G930S" || model == "SM-G930T" || model == "SM-G930T1" || model == "SM-G930U" || model == "SM-G930V" || model == "SM-G930VC" || model == "SM-G930VL" || model == "SM-G930W8" || model == "SM-G930X")) {
+        if (codename != null && (
+            codename == "herolte" || codename == "heroltebmc" || codename ==
+                "heroltektt" || codename == "heroltelgt" || codename == "herolteskt" || codename ==
+                "heroqlteacg" || codename == "heroqlteaio" || codename == "heroqlteatt" || codename ==
+                "heroqltecctvzw" || codename == "heroqltechn" || codename == "heroqltelra" || codename ==
+                "heroqltemtr" || codename == "heroqltespr" || codename == "heroqltetfnvzw" || codename ==
+                "heroqltetmo" || codename == "heroqlteue" || codename == "heroqlteusc" || codename ==
+                "heroqltevzw"
+            ) || model != null && (model == "SAMSUNG-SM-G930A" || model == "SAMSUNG-SM-G930AZ" || model == "SM-G9300" || model == "SM-G9308" || model == "SM-G930F" || model == "SM-G930K" || model == "SM-G930L" || model == "SM-G930P" || model == "SM-G930R4" || model == "SM-G930R6" || model == "SM-G930R7" || model == "SM-G930S" || model == "SM-G930T" || model == "SM-G930T1" || model == "SM-G930U" || model == "SM-G930V" || model == "SM-G930VC" || model == "SM-G930VL" || model == "SM-G930W8" || model == "SM-G930X")
+        ) {
             return "Galaxy S7"
         }
         if (codename != null && (codename == "SC-02H" || codename == "SCV33" || codename == "hero2lte" || codename == "hero2ltebmc" || codename == "hero2ltektt" || codename == "hero2lteskt" || codename == "hero2qlteatt" || codename == "hero2qltecctvzw" || codename == "hero2qltespr" || codename == "hero2qltetmo" || codename == "hero2qlteusc" || codename == "hero2qltevzw") || model != null && (model == "SAMSUNG-SM-G935A" || model == "SC-02H" || model == "SCV33" || model == "SM-G935K" || model == "SM-G935P" || model == "SM-G935R4" || model == "SM-G935S" || model == "SM-G935T" || model == "SM-G935V" || model == "SM-G935VC" || model == "SM-G935W8" || model == "SM-G935X")) {
@@ -405,8 +432,9 @@ object DeviceName {
                 while (i < len) {
                     val json = jsonArray.getJSONObject(i)
                     val info = DeviceInfo(json)
-                    if (codename.equals(info.codename, ignoreCase = true) && model == null
-                            || codename.equals(info.codename, ignoreCase = true) && model.equals(info.model, ignoreCase = true)) {
+                    if (codename.equals(info.codename, ignoreCase = true) && model == null ||
+                        codename.equals(info.codename, ignoreCase = true) && model.equals(info.model, ignoreCase = true)
+                    ) {
                         // Save to SharedPreferences so we don't need to make another request.
                         val editor = prefs.edit()
                         editor.putString(key, json.toString())

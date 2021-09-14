@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import com.habitrpg.android.habitica.R
@@ -20,8 +19,11 @@ class StableFragment : BaseMainFragment<FragmentViewpagerBinding>() {
         return FragmentViewpagerBinding.inflate(inflater, container, false)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         this.usesTabLayout = true
         this.hidesToolbar = true
         return super.onCreateView(inflater, container, savedInstanceState)
@@ -78,6 +80,6 @@ class StableFragment : BaseMainFragment<FragmentViewpagerBinding>() {
             0 -> activity?.getString(R.string.pets)
             1 -> activity?.getString(R.string.mounts)
             else -> ""
-        } ?:  ""
+        } ?: ""
     }
 }

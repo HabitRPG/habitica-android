@@ -24,17 +24,17 @@ import java.util.*
 class CustomizationEquipmentRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
 
     var gemBalance: Int = 0
-    var equipmentList
-            : MutableList<Equipment> = ArrayList()
-    set(value) {
-        field = value
-        notifyDataSetChanged()
-    }
+    var equipmentList: MutableList<Equipment> =
+        ArrayList()
+        set(value) {
+                field = value
+                notifyDataSetChanged()
+            }
     var activeEquipment: String? = null
-    set(value) {
-        field = value
-        this.notifyDataSetChanged()
-    }
+        set(value) {
+            field = value
+            this.notifyDataSetChanged()
+        }
 
     private val selectCustomizationEvents = PublishSubject.create<Equipment>()
     private val unlockCustomizationEvents = PublishSubject.create<Equipment>()

@@ -1,10 +1,8 @@
 package com.habitrpg.android.habitica.ui
 
-import android.annotation.TargetApi
 import android.content.Context
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
-import android.os.Build
 import android.view.View
 import android.widget.TextView
 import androidx.core.os.bundleOf
@@ -64,8 +62,10 @@ class AvatarWithBarsViewModel(private val context: Context, private val binding:
         if (!user.hasClass()) {
             setUserLevel(context, binding.lvlTv, stats.lvl)
         } else {
-            setUserLevelWithClass(context, binding.lvlTv, stats.lvl,
-                userClass.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }, stats.habitClass)
+            setUserLevelWithClass(
+                context, binding.lvlTv, stats.lvl,
+                userClass.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }, stats.habitClass
+            )
         }
 
         setHpBarData(stats.hp?.toFloat() ?: 0.toFloat(), stats.maxHealth ?: 0)
@@ -98,7 +98,7 @@ class AvatarWithBarsViewModel(private val context: Context, private val binding:
     }
 
     private fun setXpBarData(value: Float, valueMax: Int) {
-        if (valueMax != 0)  {
+        if (valueMax != 0) {
             cachedMaxExp = valueMax
         }
         binding.xpBar.set(floor(value.toDouble()), cachedMaxExp.toDouble())

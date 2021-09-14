@@ -1,13 +1,11 @@
 package com.habitrpg.android.habitica.data.local.implementation
 
-import android.renderscript.BaseObj
 import com.habitrpg.android.habitica.data.local.BaseLocalRepository
 import com.habitrpg.android.habitica.models.BaseMainObject
 import com.habitrpg.android.habitica.models.BaseObject
 import com.habitrpg.android.habitica.models.user.User
 import hu.akarnokd.rxjava3.bridge.RxJavaBridge
 import io.reactivex.rxjava3.core.Flowable
-
 import io.realm.Realm
 import io.realm.RealmObject
 
@@ -72,15 +70,15 @@ abstract class RealmBaseLocalRepository internal constructor(override var realm:
         realm.executeTransaction { realm1 -> realm1.insertOrUpdate(`object`) }
     }
 
-    override fun <T: BaseMainObject> modify(obj: T, transaction: (T) -> Unit) {
+    override fun <T : BaseMainObject> modify(obj: T, transaction: (T) -> Unit) {
         if (isClosed) { return }
-        val liveObject =  getLiveObject(obj) ?: return
+        val liveObject = getLiveObject(obj) ?: return
         realm.executeTransaction {
             transaction(liveObject)
         }
     }
 
-    override fun <T: BaseMainObject> modifyWithRealm(obj: T, transaction: (Realm, T) -> Unit) {
+    override fun <T : BaseMainObject> modifyWithRealm(obj: T, transaction: (Realm, T) -> Unit) {
         if (isClosed) { return }
         val liveObject = getLiveObject(obj) ?: return
         realm.executeTransaction {
@@ -88,19 +86,20 @@ abstract class RealmBaseLocalRepository internal constructor(override var realm:
         }
     }
 
-    override fun <T: BaseObject> getLiveObject(obj: T): T? {
+    override fun <T : BaseObject> getLiveObject(obj: T): T? {
         if (isClosed) return null
         if (!(obj is RealmObject) || !obj.isManaged) return obj
         val baseObject = obj as? BaseMainObject ?: return null
         return realm.where(baseObject.realmClass).equalTo(baseObject.primaryIdentifierName, baseObject.primaryIdentifier).findFirst() as? T
     }
 
-
     fun queryUser(userID: String): Flowable<User> {
-        return RxJavaBridge.toV3Flowable(realm.where(User::class.java)
-            .equalTo("id", userID)
-            .findAll()
-            .asFlowable())
+        return RxJavaBridge.toV3Flowable(
+            realm.where(User::class.java)
+                .equalTo("id", userID)
+                .findAll()
+                .asFlowable()
+        )
             .filter { it.isLoaded && it.isValid && !it.isEmpty() }
             .map { it.first() }
     }

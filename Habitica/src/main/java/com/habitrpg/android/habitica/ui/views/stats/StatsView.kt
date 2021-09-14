@@ -66,9 +66,10 @@ class StatsView(context: Context, attrs: AttributeSet?) : LinearLayout(context, 
 
     init {
         val attributes = context.theme?.obtainStyledAttributes(
-                attrs,
-                R.styleable.StatsView,
-                0, 0)
+            attrs,
+            R.styleable.StatsView,
+            0, 0
+        )
 
         val backgroundDrawable = ContextCompat.getDrawable(context, R.drawable.layout_top_rounded_bg_white)
         if (attributes != null) {

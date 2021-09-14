@@ -5,7 +5,6 @@ import com.habitrpg.android.habitica.models.BaseMainObject
 import io.realm.RealmModel
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
-import io.realm.annotations.RealmClass
 
 open class GroupCategory : RealmObject(), BaseMainObject {
     override val realmClass: Class<out RealmModel>

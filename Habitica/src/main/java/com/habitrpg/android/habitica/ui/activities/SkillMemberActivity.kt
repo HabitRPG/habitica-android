@@ -45,16 +45,21 @@ class SkillMemberActivity : BaseActivity() {
     private fun loadMemberList() {
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         viewAdapter = PartyMemberRecyclerViewAdapter()
-        viewAdapter?.getUserClickedEvents()?.subscribe({ userId ->
-            val resultIntent = Intent()
-            resultIntent.putExtra("member_id", userId)
-            setResult(Activity.RESULT_OK, resultIntent)
-            finish()
-        }, RxErrorHandler.handleEmptyError())?.let { compositeSubscription.add(it) }
+        viewAdapter?.getUserClickedEvents()?.subscribe(
+            { userId ->
+                val resultIntent = Intent()
+                resultIntent.putExtra("member_id", userId)
+                setResult(Activity.RESULT_OK, resultIntent)
+                finish()
+            },
+            RxErrorHandler.handleEmptyError()
+        )?.let { compositeSubscription.add(it) }
         binding.recyclerView.adapter = viewAdapter
 
-        compositeSubscription.add(userRepository.getUser()
+        compositeSubscription.add(
+            userRepository.getUser()
                 .flatMap { user -> socialRepository.getGroupMembers(user.party?.id ?: "") }
-                .subscribe({ viewAdapter?.data = it }, RxErrorHandler.handleEmptyError()))
+                .subscribe({ viewAdapter?.data = it }, RxErrorHandler.handleEmptyError())
+        )
     }
 }

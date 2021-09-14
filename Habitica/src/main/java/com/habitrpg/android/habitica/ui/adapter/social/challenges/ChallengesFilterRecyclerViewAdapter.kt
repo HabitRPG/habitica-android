@@ -11,7 +11,6 @@ import java.util.*
 
 class ChallengesFilterRecyclerViewAdapter(entries: List<Group>) : RecyclerView.Adapter<ChallengesFilterRecyclerViewAdapter.ChallengeViewHolder>() {
 
-
     private val entries: List<Group>
     private val holderList: MutableList<ChallengeViewHolder>
     val checkedEntries: List<Group>
@@ -35,7 +34,7 @@ class ChallengesFilterRecyclerViewAdapter(entries: List<Group>) : RecyclerView.A
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChallengeViewHolder {
         val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.dialog_challenge_filter_group_item, parent, false)
+            .inflate(R.layout.dialog_challenge_filter_group_item, parent, false)
 
         val challengeViewHolder = ChallengeViewHolder(view)
         holderList.add(challengeViewHolder)

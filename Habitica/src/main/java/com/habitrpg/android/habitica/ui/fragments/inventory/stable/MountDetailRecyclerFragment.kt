@@ -20,7 +20,8 @@ import com.habitrpg.android.habitica.ui.helpers.MarginDecoration
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import javax.inject.Inject
 
-class MountDetailRecyclerFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>(),
+class MountDetailRecyclerFragment :
+    BaseMainFragment<FragmentRefreshRecyclerviewBinding>(),
     SwipeRefreshLayout.OnRefreshListener {
 
     @Inject
@@ -87,9 +88,12 @@ class MountDetailRecyclerFragment : BaseMainFragment<FragmentRefreshRecyclerview
             this.loadItems()
 
             adapter?.getEquipFlowable()?.flatMap { key -> inventoryRepository.equip(user, "mount", key) }
-                    ?.subscribe({
+                ?.subscribe(
+                    {
                         user?.let { updatedUser -> adapter?.setUser(updatedUser) }
-                    }, RxErrorHandler.handleEmptyError())?.let { compositeSubscription.add(it) }
+                    },
+                    RxErrorHandler.handleEmptyError()
+                )?.let { compositeSubscription.add(it) }
         }
 
         if (savedInstanceState != null) {
@@ -104,10 +108,10 @@ class MountDetailRecyclerFragment : BaseMainFragment<FragmentRefreshRecyclerview
         outState.putString(ANIMAL_TYPE_KEY, this.animalType)
     }
 
-
     private fun setGridSpanCount(width: Int) {
         var spanCount = 0
-        context?.resources?.let { resources
+        context?.resources?.let {
+            resources
             val itemWidth: Float = resources.getDimension(R.dimen.mount_width)
 
             spanCount = (width / itemWidth).toInt()
@@ -121,37 +125,42 @@ class MountDetailRecyclerFragment : BaseMainFragment<FragmentRefreshRecyclerview
 
     private fun loadItems() {
         if (animalType != null || animalGroup != null) {
-            compositeSubscription.add(inventoryRepository.getMounts(animalType, animalGroup, animalColor)
-                    .zipWith(inventoryRepository.getOwnedMounts()
-                    .map { ownedMounts ->
-                        val mountMap = mutableMapOf<String, OwnedMount>()
-                        ownedMounts.forEach { mountMap[it.key ?: ""] = it }
-                        return@map mountMap
-                    }.doOnNext {
-                        adapter?.setOwnedMounts(it)
-                        user?.let { updatedUser -> adapter?.setUser(updatedUser) }
-                    }, { unsortedAnimals, ownedAnimals ->
-                        val items = mutableListOf<Any>()
-                        var lastMount: Mount? = null
-                        var currentSection: StableSection? = null
-                        for (mount in unsortedAnimals) {
-                            if (mount.type == "wacky" || mount.type == "special") continue
-                            if (mount.type != lastMount?.type) {
-                                currentSection = StableSection(mount.type, mount.getTranslatedType(context) ?: "")
-                                items.add(currentSection)
-                            }
-                            currentSection?.let {
-                                it.totalCount += 1
-                                if (ownedAnimals.containsKey(mount.key)) {
-                                    it.ownedCount += 1
+            compositeSubscription.add(
+                inventoryRepository.getMounts(animalType, animalGroup, animalColor)
+                    .zipWith(
+                        inventoryRepository.getOwnedMounts()
+                            .map { ownedMounts ->
+                                val mountMap = mutableMapOf<String, OwnedMount>()
+                                ownedMounts.forEach { mountMap[it.key ?: ""] = it }
+                                return@map mountMap
+                            }.doOnNext {
+                                adapter?.setOwnedMounts(it)
+                                user?.let { updatedUser -> adapter?.setUser(updatedUser) }
+                            },
+                        { unsortedAnimals, ownedAnimals ->
+                            val items = mutableListOf<Any>()
+                            var lastMount: Mount? = null
+                            var currentSection: StableSection? = null
+                            for (mount in unsortedAnimals) {
+                                if (mount.type == "wacky" || mount.type == "special") continue
+                                if (mount.type != lastMount?.type) {
+                                    currentSection = StableSection(mount.type, mount.getTranslatedType(context) ?: "")
+                                    items.add(currentSection)
                                 }
+                                currentSection?.let {
+                                    it.totalCount += 1
+                                    if (ownedAnimals.containsKey(mount.key)) {
+                                        it.ownedCount += 1
+                                    }
+                                }
+                                items.add(mount)
+                                lastMount = mount
                             }
-                            items.add(mount)
-                            lastMount = mount
+                            items
                         }
-                        items
-                    })
-                    .subscribe({ adapter?.setItemList(it) }, RxErrorHandler.handleEmptyError()))
+                    )
+                    .subscribe({ adapter?.setItemList(it) }, RxErrorHandler.handleEmptyError())
+            )
         }
     }
 
@@ -160,8 +169,13 @@ class MountDetailRecyclerFragment : BaseMainFragment<FragmentRefreshRecyclerview
     }
 
     override fun onRefresh() {
-        compositeSubscription.add(userRepository.retrieveUser(false, true).subscribe({
-            binding?.refreshLayout?.isRefreshing = false
-        }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(
+            userRepository.retrieveUser(false, true).subscribe(
+                {
+                    binding?.refreshLayout?.isRefreshing = false
+                },
+                RxErrorHandler.handleEmptyError()
+            )
+        )
     }
 }

@@ -52,9 +52,17 @@ class OldQuestProgressView : LinearLayout {
     }
 
     override fun onDraw(canvas: Canvas?) {
-        rect.set(0.0f, 0.0f, (canvas?.width?.toFloat()
-                ?: 1.0f) / displayDensity, (canvas?.height?.toFloat()
-                ?: 1.0f) / displayDensity)
+        rect.set(
+            0.0f, 0.0f,
+            (
+                canvas?.width?.toFloat()
+                    ?: 1.0f
+                ) / displayDensity,
+            (
+                canvas?.height?.toFloat()
+                    ?: 1.0f
+                ) / displayDensity
+        )
         canvas?.scale(displayDensity, displayDensity)
         HabiticaIcons.drawQuestBackground(canvas, rect, lightGray, darkGray, mediumGray)
         canvas?.scale(1.0f / displayDensity, 1.0f / displayDensity)
@@ -116,5 +124,4 @@ class OldQuestProgressView : LinearLayout {
             binding.collectedItemsNumberView.text = ""
         }
     }
-
 }

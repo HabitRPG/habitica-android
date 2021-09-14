@@ -24,10 +24,10 @@ class ShopItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), Vi
     var purchaseCardAction: ((ShopItem) -> Unit)? = null
 
     var isPinned = false
-    set(value) {
-        field = value
-        binding.pinIndicator.visibility = if (isPinned) View.VISIBLE else View.GONE
-    }
+        set(value) {
+            field = value
+            binding.pinIndicator.visibility = if (isPinned) View.VISIBLE else View.GONE
+        }
 
     init {
         itemView.setOnClickListener(this)
@@ -59,13 +59,13 @@ class ShopItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), Vi
             binding.unlockLabel.visibility = View.VISIBLE
         }
         if (numberOwned > 0) {
-                binding.itemDetailIndicator.text = numberOwned.toString()
-                binding.itemDetailIndicator.background = if (context.isUsingNightModeResources()) {
-                    BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfItemIndicatorNumberDark(item.isLimited || item.event?.end != null))
-                } else {
-                    BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfItemIndicatorNumber(item.isLimited || item.event?.end != null))
-                }
-                binding.itemDetailIndicator.visibility = View.VISIBLE
+            binding.itemDetailIndicator.text = numberOwned.toString()
+            binding.itemDetailIndicator.background = if (context.isUsingNightModeResources()) {
+                BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfItemIndicatorNumberDark(item.isLimited || item.event?.end != null))
+            } else {
+                BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfItemIndicatorNumber(item.isLimited || item.event?.end != null))
+            }
+            binding.itemDetailIndicator.visibility = View.VISIBLE
         } else if (item.locked) {
             binding.itemDetailIndicator.background = if (context.isUsingNightModeResources()) {
                 BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfItemIndicatorLockedDark(item.isLimited || item.event?.end != null))

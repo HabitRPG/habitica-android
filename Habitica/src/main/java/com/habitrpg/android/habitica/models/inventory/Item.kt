@@ -10,7 +10,6 @@ open class ItemEvent : RealmObject(), BaseObject {
     var end: Date? = null
 }
 
-
 interface Item : RealmModel {
     val type: String
     val key: String

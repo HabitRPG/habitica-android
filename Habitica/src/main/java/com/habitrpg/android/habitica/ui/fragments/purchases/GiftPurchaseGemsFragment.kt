@@ -31,16 +31,16 @@ class GiftPurchaseGemsFragment : BaseFragment<FragmentGiftGemPurchaseBinding>() 
     }
 
     var giftedMember: Member? = null
-    @SuppressLint("SetTextI18n")
-    set(value) {
-        field = value
-        field?.let {
-            binding?.avatarView?.setAvatar(it)
-            binding?.displayNameTextview?.username = it.profile?.name
-            binding?.displayNameTextview?.tier = it.contributor?.level ?: 0
-            binding?.usernameTextview?.text = "@${it.username}"
+        @SuppressLint("SetTextI18n")
+        set(value) {
+            field = value
+            field?.let {
+                binding?.avatarView?.setAvatar(it)
+                binding?.displayNameTextview?.username = it.profile?.name
+                binding?.displayNameTextview?.tier = it.contributor?.level ?: 0
+                binding?.usernameTextview?.text = "@${it.username}"
+            }
         }
-    }
 
     private var purchaseHandler: PurchaseHandler? = null
 

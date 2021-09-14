@@ -2,12 +2,11 @@ package com.habitrpg.android.habitica.models
 
 import io.realm.RealmModel
 import io.realm.RealmObject
-import io.realm.annotations.PrimaryKey
 import io.realm.annotations.RealmClass
 import java.util.*
 
 @RealmClass(embedded = true)
-open class TutorialStep: RealmObject(), BaseMainObject {
+open class TutorialStep : RealmObject(), BaseMainObject {
 
     var key: String? = null
     var tutorialGroup: String? = null
@@ -24,7 +23,7 @@ open class TutorialStep: RealmObject(), BaseMainObject {
     var displayedOn: Date? = null
 
     fun shouldDisplay(): Boolean =
-            !this.wasCompleted && (this.displayedOn == null || Date().time - (displayedOn?.time ?: 0) > 86400000)
+        !this.wasCompleted && (this.displayedOn == null || Date().time - (displayedOn?.time ?: 0) > 86400000)
 
     override val realmClass: Class<out RealmModel>
         get() = TutorialStep::class.java

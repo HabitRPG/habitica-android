@@ -215,6 +215,4 @@ class AvatarSetupFragment : BaseFragment<FragmentSetupAvatarBinding>() {
         params?.marginStart = location[0] + px
         binding?.customizationDrawer?.binding?.caretView?.layoutParams = params
     }
-
-
 }

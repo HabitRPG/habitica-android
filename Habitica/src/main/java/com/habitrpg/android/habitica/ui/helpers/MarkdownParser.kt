@@ -33,14 +33,16 @@ object MarkdownParser {
 
     fun setup(context: Context) {
         markwon = Markwon.builder(context)
-                .usePlugin(StrikethroughPlugin.create())
-                .usePlugin(ImagesPlugin.create {
+            .usePlugin(StrikethroughPlugin.create())
+            .usePlugin(
+                ImagesPlugin.create {
                     it.addSchemeHandler(OkHttpNetworkSchemeHandler.create())
-                            .addSchemeHandler(FileSchemeHandler.createWithAssets(context.assets))
-                })
-                .usePlugin(this.createImageSizeResolverScaleDpiPlugin(context))
-                .usePlugin(MovementMethodPlugin.create(LinkMovementMethod.getInstance()))
-                .build()
+                        .addSchemeHandler(FileSchemeHandler.createWithAssets(context.assets))
+                }
+            )
+            .usePlugin(this.createImageSizeResolverScaleDpiPlugin(context))
+            .usePlugin(MovementMethodPlugin.create(LinkMovementMethod.getInstance()))
+            .build()
     }
 
     /**
@@ -86,10 +88,10 @@ object MarkdownParser {
 
     fun parseMarkdownAsync(input: String?, onSuccess: Consumer<Spanned>) {
         Single.just(input ?: "")
-                .map { this.parseMarkdown(it) }
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(onSuccess, RxErrorHandler.handleEmptyError())
+            .map { this.parseMarkdown(it) }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(onSuccess, RxErrorHandler.handleEmptyError())
     }
 
     /**
@@ -102,7 +104,6 @@ object MarkdownParser {
         return EmojiParser.convertToCheatCode(input.toString())
     }
 }
-
 
 fun TextView.setMarkdown(input: String?) {
     MarkdownParser.markwon?.setParsedMarkdown(this, MarkdownParser.parseMarkdown(input))
@@ -124,7 +125,7 @@ fun TextView.setParsedMarkdown(input: Spanned?) {
 
 private fun handleUrlClicks(context: Context, url: String) {
     val webpage = if (url.startsWith("/")) {
-        Uri.parse("${BuildConfig.BASE_URL}${url}")
+        Uri.parse("${BuildConfig.BASE_URL}$url")
     } else {
         Uri.parse(url)
     }

@@ -23,7 +23,9 @@ import java.text.DateFormatSymbols
 import java.util.*
 
 class TaskSchedulingControls @JvmOverloads constructor(
-        context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr), DatePickerDialog.OnDateSetListener {
     private val binding = TaskFormTaskSchedulingBinding.inflate(context.layoutInflater, this)
     var tintColor: Int = ContextCompat.getColor(context, R.color.brand_300)
@@ -32,71 +34,73 @@ class TaskSchedulingControls @JvmOverloads constructor(
     private val frequencyAdapter = SimpleSpinnerAdapter(context, R.array.repeatables_frequencies)
 
     var taskType = Task.TYPE_DAILY
-    set(value) {
-        field = value
-        configureViewsForType()
-        if (value == Task.TYPE_TODO) {
-            dueDate = null
+        set(value) {
+            field = value
+            configureViewsForType()
+            if (value == Task.TYPE_TODO) {
+                dueDate = null
+            }
         }
-    }
     var startDate = Date()
-    set(value) {
-        field = value
-        binding.startDateTextview.text = dateFormatter.format(value)
-        startDateCalendar.time = value
-        generateSummary()
-    }
+        set(value) {
+            field = value
+            binding.startDateTextview.text = dateFormatter.format(value)
+            startDateCalendar.time = value
+            generateSummary()
+        }
     private var startDateCalendar = Calendar.getInstance()
     var dueDate: Date? = null
-    set(value) {
-        field = value
-        if (value != null) {
-            binding.startDateTextview.text = dateFormatter.format(value)
-        } else {
-            binding.startDateTextview.text = null
+        set(value) {
+            field = value
+            if (value != null) {
+                binding.startDateTextview.text = dateFormatter.format(value)
+            } else {
+                binding.startDateTextview.text = null
+            }
         }
-    }
     var frequency = Task.FREQUENCY_DAILY
-    set(value) {
-        field = value
-        binding.repeatsEverySpinner.setSelection(when (value) {
-            Task.FREQUENCY_WEEKLY -> 1
-            Task.FREQUENCY_MONTHLY -> 2
-            Task.FREQUENCY_YEARLY -> 3
-            else -> 0
-        })
-        configureViewsForFrequency()
-        generateSummary()
-    }
+        set(value) {
+            field = value
+            binding.repeatsEverySpinner.setSelection(
+                when (value) {
+                    Task.FREQUENCY_WEEKLY -> 1
+                    Task.FREQUENCY_MONTHLY -> 2
+                    Task.FREQUENCY_YEARLY -> 3
+                    else -> 0
+                }
+            )
+            configureViewsForFrequency()
+            generateSummary()
+        }
     var everyX
         get() = (binding.repeatsEveryEdittext.text ?: "1").toString().toIntOrNull() ?: 1
-    set(value) {
-        try {
-            binding.repeatsEveryEdittext.setText(value.toString())
-        } catch (e: NumberFormatException) {
-            binding.repeatsEveryEdittext.setText("1")
+        set(value) {
+            try {
+                binding.repeatsEveryEdittext.setText(value.toString())
+            } catch (e: NumberFormatException) {
+                binding.repeatsEveryEdittext.setText("1")
+            }
+            generateSummary()
         }
-        generateSummary()
-    }
     var weeklyRepeat: Days = Days()
-    set(value) {
-        field = value
-        createWeeklyRepeatViews()
-        generateSummary()
-    }
+        set(value) {
+            field = value
+            createWeeklyRepeatViews()
+            generateSummary()
+        }
 
     var daysOfMonth: List<Int>? = null
-    set(value) {
-        field = value
-        configureMonthlyRepeatViews()
-        generateSummary()
-    }
+        set(value) {
+            field = value
+            configureMonthlyRepeatViews()
+            generateSummary()
+        }
     var weeksOfMonth: List<Int>? = null
-    set(value) {
-        field = value
-        configureMonthlyRepeatViews()
-        generateSummary()
-    }
+        set(value) {
+            field = value
+            configureMonthlyRepeatViews()
+            generateSummary()
+        }
 
     var firstDayOfWeek: Int? = null
 
@@ -133,10 +137,12 @@ class TaskSchedulingControls @JvmOverloads constructor(
         }
 
         binding.startDateWrapper.setOnClickListener {
-            val datePickerDialog = DatePickerDialog(context, this,
-                    startDateCalendar.get(Calendar.YEAR),
-                    startDateCalendar.get(Calendar.MONTH),
-                    startDateCalendar.get(Calendar.DAY_OF_MONTH))
+            val datePickerDialog = DatePickerDialog(
+                context, this,
+                startDateCalendar.get(Calendar.YEAR),
+                startDateCalendar.get(Calendar.MONTH),
+                startDateCalendar.get(Calendar.DAY_OF_MONTH)
+            )
             datePickerDialog.setButton(DialogInterface.BUTTON_NEUTRAL, resources.getString(R.string.today)) { _, _ ->
                 if (taskType == Task.TYPE_TODO) {
                     dueDate = Date()
@@ -175,7 +181,7 @@ class TaskSchedulingControls @JvmOverloads constructor(
     private fun configureViewsForType() {
         binding.startDateTitle.text = context.getString(if (taskType == Task.TYPE_DAILY) R.string.start_date else R.string.due_date)
         binding.repeatsEveryWrapper.visibility = if (taskType == Task.TYPE_DAILY) View.VISIBLE else View.GONE
-        binding.summaryTextview.visibility =  if (taskType == Task.TYPE_DAILY) View.VISIBLE else View.GONE
+        binding.summaryTextview.visibility = if (taskType == Task.TYPE_DAILY) View.VISIBLE else View.GONE
         binding.weeklyRepeatWrapper.visibility = if (taskType == Task.TYPE_DAILY) View.VISIBLE else View.GONE
     }
 
@@ -189,12 +195,14 @@ class TaskSchedulingControls @JvmOverloads constructor(
     }
 
     private fun configureViewsForFrequency() {
-        binding.repeatsEveryTitle.text = context.getText(when (frequency) {
-            Task.FREQUENCY_WEEKLY -> R.string.weeks
-            Task.FREQUENCY_MONTHLY -> R.string.months
-            Task.FREQUENCY_YEARLY -> R.string.years
-            else -> R.string.days
-        })
+        binding.repeatsEveryTitle.text = context.getText(
+            when (frequency) {
+                Task.FREQUENCY_WEEKLY -> R.string.weeks
+                Task.FREQUENCY_MONTHLY -> R.string.months
+                Task.FREQUENCY_YEARLY -> R.string.years
+                else -> R.string.days
+            }
+        )
         binding.weeklyRepeatWrapper.visibility = if (frequency == Task.FREQUENCY_WEEKLY && taskType == Task.TYPE_DAILY) View.VISIBLE else View.GONE
         binding.monthlyRepeatWrapper.visibility = if (frequency == Task.FREQUENCY_MONTHLY && taskType == Task.TYPE_DAILY) View.VISIBLE else View.GONE
         if (frequency == Task.FREQUENCY_WEEKLY) {
@@ -218,7 +226,8 @@ class TaskSchedulingControls @JvmOverloads constructor(
         }
         createWeeklyRepeatViews()
         binding.weeklyRepeatWrapper.findViewWithTag<TextView>(weekday).sendAccessibilityEvent(
-                AccessibilityEvent.CONTENT_CHANGE_TYPE_CONTENT_DESCRIPTION)
+            AccessibilityEvent.CONTENT_CHANGE_TYPE_CONTENT_DESCRIPTION
+        )
         generateSummary()
     }
 
@@ -305,7 +314,7 @@ class TaskSchedulingControls @JvmOverloads constructor(
         var frequencyQualifier = ""
 
         when (frequency) {
-            "daily" ->  frequencyQualifier = if (everyX == 1) "day" else "days"
+            "daily" -> frequencyQualifier = if (everyX == 1) "day" else "days"
             "weekly" -> frequencyQualifier = if (everyX == 1) "week" else "weeks"
             "monthly" -> frequencyQualifier = if (everyX == 1) "month" else "months"
             "yearly" -> frequencyQualifier = if (everyX == 1) "year" else "years"

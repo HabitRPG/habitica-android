@@ -8,7 +8,6 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.databinding.ActivityGroupFormBinding
 import com.habitrpg.android.habitica.ui.helpers.AutocompleteAdapter
-import com.habitrpg.android.habitica.ui.helpers.AutocompleteTokenizer
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
 
@@ -37,7 +36,7 @@ class GroupFormActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        intent.extras?.let {bundle ->
+        intent.extras?.let { bundle ->
             groupID = bundle.getString("groupID")
             groupType = bundle.getString("groupType")
             groupName = bundle.getString("name")
@@ -65,7 +64,6 @@ class GroupFormActivity : BaseActivity() {
             finishActivitySuccessfuly()
         }
     }
-
 
     override fun injectActivity(component: UserComponent?) {
         component?.inject(this)

@@ -20,19 +20,18 @@ import com.habitrpg.android.habitica.ui.helpers.AutocompleteAdapter
 import com.habitrpg.android.habitica.ui.helpers.AutocompleteTokenizer
 import javax.inject.Inject
 
-
 class ChatBarView : LinearLayout {
 
     var hasAcceptedGuidelines: Boolean = false
-    set(value) {
-        field = value
-        if (field) {
-            binding.communityGuidelinesView.visibility = View.GONE
-            binding.chatBarContent.visibility = View.VISIBLE
-        } else {
-            binding.chatBarContent.visibility = View.GONE
+        set(value) {
+            field = value
+            if (field) {
+                binding.communityGuidelinesView.visibility = View.GONE
+                binding.chatBarContent.visibility = View.VISIBLE
+            } else {
+                binding.chatBarContent.visibility = View.GONE
+            }
         }
-    }
     var onCommunityGuidelinesAccepted: (() -> Unit)? = null
 
     @Inject
@@ -64,8 +63,8 @@ class ChatBarView : LinearLayout {
         }
 
     var message: String
-    get() = binding.chatEditText.text.toString()
-    set(value) = binding.chatEditText.setText(value, TextView.BufferType.EDITABLE)
+        get() = binding.chatEditText.text.toString()
+        set(value) = binding.chatEditText.setText(value, TextView.BufferType.EDITABLE)
 
     constructor(context: Context) : super(context) {
         setupView(context)
@@ -83,10 +82,12 @@ class ChatBarView : LinearLayout {
 
         HabiticaBaseApplication.userComponent?.inject(this)
 
-        binding.chatEditText.addTextChangedListener(OnChangeTextWatcher { _, _, _, _ ->
+        binding.chatEditText.addTextChangedListener(
+            OnChangeTextWatcher { _, _, _, _ ->
                 setSendButtonEnabled(binding.chatEditText.text.isNotEmpty() && binding.chatEditText.text.length <= maxChatLength)
                 updateTextIndicator(binding.chatEditText.text.toString())
-        })
+            }
+        )
 
         binding.sendButton.setOnClickListener { sendButtonPressed() }
 

@@ -192,7 +192,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
             limitedTextView.visibility = View.GONE
             if (shopItem.isTypeGear && shopItem.key.last().toString().toIntOrNull() != null) {
                 val previousKey = "${shopItem.key.dropLast(1)}${(shopItem.key.last().toString().toIntOrNull() ?: 1) - 1}"
-                if (user?.items?.gear?.owned?.find { it.key == previousKey}?.owned != true) {
+                if (user?.items?.gear?.owned?.find { it.key == previousKey }?.owned != true) {
                     limitedTextView.visibility = View.VISIBLE
                     limitedTextView.text = context.getString(R.string.locked_equipment_shop_dialog)
                     limitedTextView.background = ContextCompat.getColor(context, R.color.offset_background).toDrawable()
@@ -305,7 +305,6 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
                     }
                     buyItem(purchaseQuantity)
                 }
-
             } else {
                 when {
                     "gems" == shopItem.purchaseType -> {
@@ -327,11 +326,14 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
     }
 
     private fun buyItem(quantity: Int) {
-        FirebaseAnalytics.getInstance(context).logEvent("item_purchased", bundleOf(
+        FirebaseAnalytics.getInstance(context).logEvent(
+            "item_purchased",
+            bundleOf(
                 Pair("shop", shopIdentifier),
                 Pair("type", shopItem.purchaseType),
                 Pair("key", shopItem.key)
-        ))
+            )
+        )
         HapticFeedbackManager.tap(contentView)
         val snackbarText = arrayOf("")
         val observable: Flowable<Any>
@@ -366,37 +368,37 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
             observable = inventoryRepository.purchaseItem(shopItem.purchaseType, shopItem.key, quantity).cast(Any::class.java)
         }
         val subscription = observable
-                .doOnNext {
-                    val event = ShowSnackbarEvent()
-                    if (snackbarText[0].isNotEmpty()) {
-                        event.text = snackbarText[0]
-                    } else {
-                        event.text = context.getString(R.string.successful_purchase, shopItem.text)
-                    }
-                    event.type = HabiticaSnackbar.SnackbarDisplayType.NORMAL
-                    event.rightIcon = priceLabel.compoundDrawables[0]
-                    when (item.currency) {
-                        "gold" -> event.rightTextColor = ContextCompat.getColor(context, R.color.text_yellow)
-                        "gems" -> event.rightTextColor = ContextCompat.getColor(context, R.color.text_green)
-                        "hourglasses" -> event.rightTextColor = ContextCompat.getColor(context, R.color.text_brand)
-                    }
-                    event.rightText = "-" + priceLabel.text
-                    EventBus.getDefault().post(event)
+            .doOnNext {
+                val event = ShowSnackbarEvent()
+                if (snackbarText[0].isNotEmpty()) {
+                    event.text = snackbarText[0]
+                } else {
+                    event.text = context.getString(R.string.successful_purchase, shopItem.text)
                 }
-                .flatMap { userRepository.retrieveUser(withTasks = false, forced = true) }
-                .flatMap { inventoryRepository.retrieveInAppRewards() }
-                .subscribe({
-                    if (item.isTypeGear || item.currency == "hourglasses") {
-                        EventBus.getDefault().post(GearPurchasedEvent(item))
-                    }
-                }) { throwable ->
-                    if (throwable.javaClass.isAssignableFrom(retrofit2.HttpException::class.java)) {
-                        val error = throwable as retrofit2.HttpException
-                        if (error.code() == 401 && shopItem.currency == "gems") {
-                            MainNavigationController.navigate(R.id.gemPurchaseActivity, bundleOf(Pair("openSubscription", false)))
-                        }
+                event.type = HabiticaSnackbar.SnackbarDisplayType.NORMAL
+                event.rightIcon = priceLabel.compoundDrawables[0]
+                when (item.currency) {
+                    "gold" -> event.rightTextColor = ContextCompat.getColor(context, R.color.text_yellow)
+                    "gems" -> event.rightTextColor = ContextCompat.getColor(context, R.color.text_green)
+                    "hourglasses" -> event.rightTextColor = ContextCompat.getColor(context, R.color.text_brand)
+                }
+                event.rightText = "-" + priceLabel.text
+                EventBus.getDefault().post(event)
+            }
+            .flatMap { userRepository.retrieveUser(withTasks = false, forced = true) }
+            .flatMap { inventoryRepository.retrieveInAppRewards() }
+            .subscribe({
+                if (item.isTypeGear || item.currency == "hourglasses") {
+                    EventBus.getDefault().post(GearPurchasedEvent(item))
+                }
+            }) { throwable ->
+                if (throwable.javaClass.isAssignableFrom(retrofit2.HttpException::class.java)) {
+                    val error = throwable as retrofit2.HttpException
+                    if (error.code() == 401 && shopItem.currency == "gems") {
+                        MainNavigationController.navigate(R.id.gemPurchaseActivity, bundleOf(Pair("openSubscription", false)))
                     }
                 }
+            }
     }
 
     private fun displayPurchaseConfirmationDialog(quantity: Int) {
@@ -451,7 +453,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
                 18
             }
             maybe = inventoryRepository.getPets().firstElement().filter {
-                val filteredPets = it.filter {pet ->
+                val filteredPets = it.filter { pet ->
                     pet.animal == item.key && (pet.type == "premium" || pet.type == "wacky")
                 }
                 shouldWarn = filteredPets.isNotEmpty()
@@ -473,33 +475,36 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
                     }
                 }
                 inventoryRepository.getOwnedPets().firstElement()
-            }.subscribe({
-                for (pet in it) {
-                    if (pet.key?.contains(item.key) == true) {
-                        ownedCount += if (pet.trained > 0) 1 else 0
+            }.subscribe(
+                {
+                    for (pet in it) {
+                        if (pet.key?.contains(item.key) == true) {
+                            ownedCount += if (pet.trained > 0) 1 else 0
+                        }
                     }
+                    if (calledResult) return@subscribe
+                    calledResult = true
+                    if (!shouldWarn) {
+                        onResult(-1)
+                        return@subscribe
+                    }
+                    val remaining = totalCount - ownedCount
+                    onResult(max(0, remaining))
+                },
+                RxErrorHandler.handleEmptyError(),
+                {
+                    if (calledResult) return@subscribe
+                    calledResult = true
+                    if (!shouldWarn) {
+                        onResult(-1)
+                        return@subscribe
+                    }
+                    val remaining = totalCount - ownedCount
+                    onResult(max(0, remaining))
                 }
-                if (calledResult) return@subscribe
-                calledResult = true
-                if (!shouldWarn) {
-                    onResult(-1)
-                    return@subscribe
-                }
-                val remaining = totalCount - ownedCount
-                onResult(max(0, remaining))
-            }, RxErrorHandler.handleEmptyError(), {
-                if (calledResult) return@subscribe
-                calledResult = true
-                if (!shouldWarn) {
-                    onResult(-1)
-                    return@subscribe
-                }
-                val remaining = totalCount - ownedCount
-                onResult(max(0, remaining))
-            })
+            )
         } else {
             onResult(-1)
         }
     }
 }
-

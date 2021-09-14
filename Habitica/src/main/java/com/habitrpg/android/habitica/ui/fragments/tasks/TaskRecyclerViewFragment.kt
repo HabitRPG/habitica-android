@@ -105,33 +105,44 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
 
         context?.let { recyclerAdapter?.taskDisplayMode = configManager.taskDisplayMode(it) }
 
-        recyclerAdapter?.errorButtonEvents?.subscribe({
-            taskRepository.syncErroredTasks().subscribe({}, RxErrorHandler.handleEmptyError())
-        }, RxErrorHandler.handleEmptyError())?.let { recyclerSubscription.add(it) }
+        recyclerAdapter?.errorButtonEvents?.subscribe(
+            {
+                taskRepository.syncErroredTasks().subscribe({}, RxErrorHandler.handleEmptyError())
+            },
+            RxErrorHandler.handleEmptyError()
+        )?.let { recyclerSubscription.add(it) }
         recyclerAdapter?.taskOpenEvents?.subscribeWithErrorHandler {
             openTaskForm(it)
         }?.let { recyclerSubscription.add(it) }
         recyclerAdapter?.taskScoreEvents
-                ?.doOnNext { playSound(it.second) }
-                ?.subscribeWithErrorHandler { scoreTask(it.first, it.second) }?.let { recyclerSubscription.add(it) }
+            ?.doOnNext { playSound(it.second) }
+            ?.subscribeWithErrorHandler { scoreTask(it.first, it.second) }?.let { recyclerSubscription.add(it) }
         recyclerAdapter?.checklistItemScoreEvents
-                ?.flatMap { taskRepository.scoreChecklistItem(it.first.id ?: "", it.second.id ?: "")
-                }?.subscribeWithErrorHandler {}?.let { recyclerSubscription.add(it) }
+            ?.flatMap {
+                taskRepository.scoreChecklistItem(it.first.id ?: "", it.second.id ?: "")
+            }?.subscribeWithErrorHandler {}?.let { recyclerSubscription.add(it) }
         recyclerAdapter?.brokenTaskEvents?.subscribeWithErrorHandler { showBrokenChallengeDialog(it) }?.let { recyclerSubscription.add(it) }
 
-        recyclerSubscription.add(taskRepository.getTasks(this.taskType).subscribe({
-            this.recyclerAdapter?.updateUnfilteredData(it)
-        }, RxErrorHandler.handleEmptyError()))
+        recyclerSubscription.add(
+            taskRepository.getTasks(this.taskType).subscribe(
+                {
+                    this.recyclerAdapter?.updateUnfilteredData(it)
+                },
+                RxErrorHandler.handleEmptyError()
+            )
+        )
     }
 
     private fun handleTaskResult(result: TaskScoringResult, value: Int) {
         if (taskType == Task.TYPE_REWARD) {
             (activity as? MainActivity)?.let { activity ->
-                HabiticaSnackbar.showSnackbar(activity.snackbarContainer, null, getString(R.string.notification_purchase_reward),
-                        BitmapDrawable(resources, HabiticaIconsHelper.imageOfGold()),
-                        ContextCompat.getColor(activity, R.color.yellow_10),
-                        "-$value",
-                        HabiticaSnackbar.SnackbarDisplayType.DROP)
+                HabiticaSnackbar.showSnackbar(
+                    activity.snackbarContainer, null, getString(R.string.notification_purchase_reward),
+                    BitmapDrawable(resources, HabiticaIconsHelper.imageOfGold()),
+                    ContextCompat.getColor(activity, R.color.yellow_10),
+                    "-$value",
+                    HabiticaSnackbar.SnackbarDisplayType.DROP
+                )
             }
         } else {
             (activity as? MainActivity)?.displayTaskScoringResponse(result)
@@ -199,13 +210,15 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) { /* no-on */ }
 
-            //defines the enabled move directions in each state (idle, swiping, dragging).
+            // defines the enabled move directions in each state (idle, swiping, dragging).
             override fun getMovementFlags(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int {
                 return if (recyclerAdapter?.getItemViewType(viewHolder.absoluteAdapterPosition) ?: 0 == 2) {
                     makeFlag(ItemTouchHelper.ACTION_STATE_IDLE, 0)
                 } else {
-                    makeFlag(ItemTouchHelper.ACTION_STATE_DRAG,
-                            ItemTouchHelper.DOWN or ItemTouchHelper.UP)
+                    makeFlag(
+                        ItemTouchHelper.ACTION_STATE_DRAG,
+                        ItemTouchHelper.DOWN or ItemTouchHelper.UP
+                    )
                 }
             }
 
@@ -228,13 +241,18 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
 
             private fun updateTaskInRepository(validTaskId: String?, viewHolder: RecyclerView.ViewHolder) {
                 if (validTaskId != null) {
-                    compositeSubscription.add(taskRepository.updateTaskPosition(
+                    compositeSubscription.add(
+                        taskRepository.updateTaskPosition(
                             taskType, validTaskId, viewHolder.absoluteAdapterPosition
-                    )
+                        )
                             .delay(1, TimeUnit.SECONDS)
                             .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe({
-                            }, RxErrorHandler.handleEmptyError()))
+                            .subscribe(
+                                {
+                                },
+                                RxErrorHandler.handleEmptyError()
+                            )
+                    )
                 }
             }
         }
@@ -267,29 +285,33 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
             if (!task.isValid) {
                 return
             }
-            taskRepository.getTasksForChallenge(task.challengeID).firstElement().subscribe({ tasks ->
-                val taskCount = tasks.size
-                val dialog = HabiticaAlertDialog(it)
-                dialog.setTitle(R.string.broken_challenge)
-                dialog.setMessage(it.getString(R.string.broken_challenge_description, taskCount))
-                dialog.addButton(it.getString(R.string.keep_x_tasks, taskCount), true) { _, _ ->
-                    if (!task.isValid) return@addButton
-                    taskRepository.unlinkAllTasks(task.challengeID, "keep-all")
+            taskRepository.getTasksForChallenge(task.challengeID).firstElement().subscribe(
+                { tasks ->
+                    val taskCount = tasks.size
+                    val dialog = HabiticaAlertDialog(it)
+                    dialog.setTitle(R.string.broken_challenge)
+                    dialog.setMessage(it.getString(R.string.broken_challenge_description, taskCount))
+                    dialog.addButton(it.getString(R.string.keep_x_tasks, taskCount), true) { _, _ ->
+                        if (!task.isValid) return@addButton
+                        taskRepository.unlinkAllTasks(task.challengeID, "keep-all")
                             .flatMap { userRepository.retrieveUser(true, forced = true) }
                             .subscribe({}, RxErrorHandler.handleEmptyError())
-                }
-                dialog.addButton(it.getString(R.string.delete_x_tasks, taskCount),
-                    isPrimary = false,
-                    isDestructive = true
-                ) { _, _ ->
-                    if (!task.isValid) return@addButton
-                    taskRepository.unlinkAllTasks(task.challengeID, "remove-all")
+                    }
+                    dialog.addButton(
+                        it.getString(R.string.delete_x_tasks, taskCount),
+                        isPrimary = false,
+                        isDestructive = true
+                    ) { _, _ ->
+                        if (!task.isValid) return@addButton
+                        taskRepository.unlinkAllTasks(task.challengeID, "remove-all")
                             .flatMap { userRepository.retrieveUser(true, forced = true) }
                             .subscribe({}, RxErrorHandler.handleEmptyError())
-                }
-                dialog.setExtraCloseButtonVisibility(View.VISIBLE)
-                dialog.show()
-            }, RxErrorHandler.handleEmptyError())
+                    }
+                    dialog.setExtraCloseButtonVisibility(View.VISIBLE)
+                    dialog.show()
+                },
+                RxErrorHandler.handleEmptyError()
+            )
         }
     }
 
@@ -300,25 +322,29 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
                     EmptyItem(
                         getString(R.string.empty_title_habits_filtered),
                         getString(R.string.empty_description_habits_filtered),
-                        R.drawable.icon_habits)
+                        R.drawable.icon_habits
+                    )
                 }
                 Task.TYPE_DAILY -> {
                     EmptyItem(
                         getString(R.string.empty_title_dailies_filtered),
                         getString(R.string.empty_description_dailies_filtered),
-                        R.drawable.icon_dailies)
+                        R.drawable.icon_dailies
+                    )
                 }
                 Task.TYPE_TODO -> {
                     EmptyItem(
                         getString(R.string.empty_title_todos_filtered),
                         getString(R.string.empty_description_todos_filtered),
-                        R.drawable.icon_todos)
+                        R.drawable.icon_todos
+                    )
                 }
                 Task.TYPE_REWARD -> {
                     EmptyItem(
                         getString(R.string.empty_title_rewards_filtered),
                         null,
-                        R.drawable.icon_rewards)
+                        R.drawable.icon_rewards
+                    )
                 }
                 else -> EmptyItem("")
             }
@@ -328,25 +354,29 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
                     EmptyItem(
                         getString(R.string.empty_title_habits),
                         getString(R.string.empty_description_habits),
-                        R.drawable.icon_habits)
+                        R.drawable.icon_habits
+                    )
                 }
                 Task.TYPE_DAILY -> {
                     EmptyItem(
                         getString(R.string.empty_title_dailies),
                         getString(R.string.empty_description_dailies),
-                        R.drawable.icon_dailies)
+                        R.drawable.icon_dailies
+                    )
                 }
                 Task.TYPE_TODO -> {
                     EmptyItem(
                         getString(R.string.empty_title_todos),
                         getString(R.string.empty_description_todos),
-                        R.drawable.icon_todos)
+                        R.drawable.icon_todos
+                    )
                 }
                 Task.TYPE_REWARD -> {
                     EmptyItem(
                         getString(R.string.empty_title_rewards),
                         null,
-                        R.drawable.icon_rewards)
+                        R.drawable.icon_rewards
+                    )
                 }
                 else -> EmptyItem("")
             }
@@ -354,19 +384,21 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
     }
 
     private fun scoreTask(task: Task, direction: TaskDirection) {
-        compositeSubscription.add(taskRepository.taskChecked(null, task, direction == TaskDirection.UP, false) { result ->
-            handleTaskResult(result, task.value.toInt())
-            if (!DateUtils.isToday(sharedPreferences.getLong("last_task_reporting", 0))) {
-                AmplitudeManager.sendEvent(
-                    "task scored",
-                    AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR,
-                    AmplitudeManager.EVENT_HITTYPE_EVENT
-                )
-                sharedPreferences.edit {
-                    putLong("last_task_reporting", Date().time)
+        compositeSubscription.add(
+            taskRepository.taskChecked(null, task, direction == TaskDirection.UP, false) { result ->
+                handleTaskResult(result, task.value.toInt())
+                if (!DateUtils.isToday(sharedPreferences.getLong("last_task_reporting", 0))) {
+                    AmplitudeManager.sendEvent(
+                        "task scored",
+                        AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR,
+                        AmplitudeManager.EVENT_HITTYPE_EVENT
+                    )
+                    sharedPreferences.edit {
+                        putLong("last_task_reporting", Date().time)
+                    }
                 }
-            }
-        }.subscribeWithErrorHandler {})
+            }.subscribeWithErrorHandler {}
+        )
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

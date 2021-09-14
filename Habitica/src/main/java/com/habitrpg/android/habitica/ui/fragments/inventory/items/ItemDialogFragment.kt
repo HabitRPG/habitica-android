@@ -108,39 +108,48 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsBinding>(), SwipeRefr
             binding?.recyclerView?.adapter = adapter
 
             adapter?.let { adapter ->
-                compositeSubscription.add(adapter.getSellItemFlowable()
-                    .flatMap { item -> inventoryRepository.sellItem(item) }
-                    .subscribe({ }, RxErrorHandler.handleEmptyError()))
+                compositeSubscription.add(
+                    adapter.getSellItemFlowable()
+                        .flatMap { item -> inventoryRepository.sellItem(item) }
+                        .subscribe({ }, RxErrorHandler.handleEmptyError())
+                )
 
-                compositeSubscription.add(adapter.getQuestInvitationFlowable()
-                    .flatMap { quest -> inventoryRepository.inviteToQuest(quest) }
-                    .flatMap { socialRepository.retrieveGroup("party") }
-                    .subscribe({
-                        if (isModal) {
-                            dismiss()
-                        } else {
-                            MainNavigationController.navigate(R.id.partyFragment)
-                        }
-                    }, RxErrorHandler.handleEmptyError()))
-                compositeSubscription.add(adapter.getOpenMysteryItemFlowable()
-                    .flatMap { inventoryRepository.openMysteryItem(user) }
-                    .doOnNext {
-                        val activity = activity as? MainActivity
-                        if (activity != null) {
-                            val dialog = OpenedMysteryitemDialog(activity)
-                            dialog.isCelebratory = true
-                            dialog.setTitle(R.string.mystery_item_title)
-                            dialog.binding.iconView.loadImage("shop_${it.key}")
-                            dialog.binding.titleView.text = it.text
-                            dialog.binding.descriptionView.text = it.notes
-                            dialog.addButton(R.string.equip, true) { _, _ ->
-                                inventoryRepository.equip(user, "equipped", it.key ?: "").subscribe( {}, RxErrorHandler.handleEmptyError())
+                compositeSubscription.add(
+                    adapter.getQuestInvitationFlowable()
+                        .flatMap { quest -> inventoryRepository.inviteToQuest(quest) }
+                        .flatMap { socialRepository.retrieveGroup("party") }
+                        .subscribe(
+                            {
+                                if (isModal) {
+                                    dismiss()
+                                } else {
+                                    MainNavigationController.navigate(R.id.partyFragment)
+                                }
+                            },
+                            RxErrorHandler.handleEmptyError()
+                        )
+                )
+                compositeSubscription.add(
+                    adapter.getOpenMysteryItemFlowable()
+                        .flatMap { inventoryRepository.openMysteryItem(user) }
+                        .doOnNext {
+                            val activity = activity as? MainActivity
+                            if (activity != null) {
+                                val dialog = OpenedMysteryitemDialog(activity)
+                                dialog.isCelebratory = true
+                                dialog.setTitle(R.string.mystery_item_title)
+                                dialog.binding.iconView.loadImage("shop_${it.key}")
+                                dialog.binding.titleView.text = it.text
+                                dialog.binding.descriptionView.text = it.notes
+                                dialog.addButton(R.string.equip, true) { _, _ ->
+                                    inventoryRepository.equip(user, "equipped", it.key ?: "").subscribe({}, RxErrorHandler.handleEmptyError())
+                                }
+                                dialog.addCloseButton()
+                                dialog.enqueue()
                             }
-                            dialog.addCloseButton()
-                            dialog.enqueue()
                         }
-                    }
-                    .subscribe({ }, RxErrorHandler.handleEmptyError()))
+                        .subscribe({ }, RxErrorHandler.handleEmptyError())
+                )
                 compositeSubscription.add(adapter.hatchPetEvents.subscribeWithErrorHandler { hatchPet(it.first, it.second) })
             }
         }
@@ -180,11 +189,10 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsBinding>(), SwipeRefr
             openMarket()
         }
 
-        //binding?.openEmptyMarketButton?.setOnClickListener { openMarket() }
+        // binding?.openEmptyMarketButton?.setOnClickListener { openMarket() }
 
         this.loadItems()
     }
-
 
     override fun onResume() {
         if ((this.isHatching || this.isFeeding) && dialog?.window != null) {
@@ -204,10 +212,12 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsBinding>(), SwipeRefr
 
     override fun onRefresh() {
         binding?.refreshLayout?.isRefreshing = true
-        compositeSubscription.add(userRepository.retrieveUser(true, true)
-            .doOnTerminate {
-                binding?.refreshLayout?.isRefreshing = false
-            }.subscribe({ }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(
+            userRepository.retrieveUser(true, true)
+                .doOnTerminate {
+                    binding?.refreshLayout?.isRefreshing = false
+                }.subscribe({ }, RxErrorHandler.handleEmptyError())
+        )
     }
 
     private fun hatchPet(potion: HatchingPotion, egg: Egg) {
@@ -225,37 +235,44 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsBinding>(), SwipeRefr
             else -> Egg::class.java
         }
         itemType?.let { type ->
-            compositeSubscription.add(inventoryRepository.getOwnedItems(type)
-                .doOnNext { items ->
-                    val filteredItems = if (isFeeding) {
-                        items.filter { it.key != "Saddle" }
-                    } else {
-                        items
+            compositeSubscription.add(
+                inventoryRepository.getOwnedItems(type)
+                    .doOnNext { items ->
+                        val filteredItems = if (isFeeding) {
+                            items.filter { it.key != "Saddle" }
+                        } else {
+                            items
+                        }
+                        adapter?.data = filteredItems
                     }
-                    adapter?.data = filteredItems
-                }
-                .map { items -> items.mapNotNull { it.key } }
-                .flatMap { inventoryRepository.getItems(itemClass, it.toTypedArray()) }
-                .map {
-                    val itemMap = mutableMapOf<String, Item>()
-                    for (item in it) {
-                        itemMap[item.key] = item
+                    .map { items -> items.mapNotNull { it.key } }
+                    .flatMap { inventoryRepository.getItems(itemClass, it.toTypedArray()) }
+                    .map {
+                        val itemMap = mutableMapOf<String, Item>()
+                        for (item in it) {
+                            itemMap[item.key] = item
+                        }
+                        itemMap
                     }
-                    itemMap
-                }
-                .subscribe({ items ->
-                    adapter?.items = items
-                }, RxErrorHandler.handleEmptyError()))
+                    .subscribe(
+                        { items ->
+                            adapter?.items = items
+                        },
+                        RxErrorHandler.handleEmptyError()
+                    )
+            )
         }
 
         compositeSubscription.add(inventoryRepository.getPets().subscribe({ adapter?.setExistingPets(it) }, RxErrorHandler.handleEmptyError()))
-        compositeSubscription.add(inventoryRepository.getOwnedPets()
-            .map { ownedMounts ->
-                val mountMap = mutableMapOf<String, OwnedPet>()
-                ownedMounts.forEach { mountMap[it.key ?: ""] = it }
-                return@map mountMap
-            }
-            .subscribe({ adapter?.setOwnedPets(it) }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(
+            inventoryRepository.getOwnedPets()
+                .map { ownedMounts ->
+                    val mountMap = mutableMapOf<String, OwnedPet>()
+                    ownedMounts.forEach { mountMap[it.key ?: ""] = it }
+                    return@map mountMap
+                }
+                .subscribe({ adapter?.setOwnedPets(it) }, RxErrorHandler.handleEmptyError())
+        )
     }
 
     private fun openMarket() {
