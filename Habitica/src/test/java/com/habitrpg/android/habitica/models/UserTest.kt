@@ -1,14 +1,13 @@
 package com.habitrpg.android.habitica.models
 
 import com.habitrpg.android.habitica.models.user.Items
-
+import com.habitrpg.android.habitica.models.user.OwnedMount
+import com.habitrpg.android.habitica.models.user.OwnedPet
+import com.habitrpg.android.habitica.models.user.User
+import io.realm.RealmList
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import io.realm.RealmList
-import com.habitrpg.android.habitica.models.user.OwnedPet
-import com.habitrpg.android.habitica.models.user.OwnedMount
-import com.habitrpg.android.habitica.models.user.User
-import org.junit.jupiter.api.Assertions
 
 class UserTest {
     private var user: User? = null

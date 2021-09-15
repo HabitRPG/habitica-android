@@ -1,14 +1,11 @@
 package com.habitrpg.android.habitica.models
 
 import com.habitrpg.android.habitica.models.user.SubscriptionPlan
-import org.junit.Before
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import java.lang.Exception
 import java.util.Calendar
 import java.util.Date
-import kotlin.Throws
 
 class SubscriptionPlanTest {
     private var plan: SubscriptionPlan? = null

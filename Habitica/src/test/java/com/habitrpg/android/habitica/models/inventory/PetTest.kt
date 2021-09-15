@@ -6,9 +6,7 @@ import com.habitrpg.android.habitica.extensions.getTranslatedType
 import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
-import io.mockk.verify
 import org.junit.jupiter.api.Test
-
 
 private const val FAKE_STANDARD = "Standard"
 private const val FAKE_PREMIUM = "premium"

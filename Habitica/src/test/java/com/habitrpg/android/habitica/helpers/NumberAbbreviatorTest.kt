@@ -1,8 +1,8 @@
 package com.habitrpg.android.habitica.helpers
 
 import android.content.Context
-import com.habitrpg.android.habitica.helpers.NumberAbbreviator.abbreviate
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.helpers.NumberAbbreviator.abbreviate
 import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
