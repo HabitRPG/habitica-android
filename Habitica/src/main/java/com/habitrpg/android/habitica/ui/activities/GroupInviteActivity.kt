@@ -7,7 +7,8 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentPagerAdapter
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.google.android.material.tabs.TabLayoutMediator
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
@@ -19,7 +20,6 @@ import com.habitrpg.android.habitica.ui.fragments.social.party.PartyInviteFragme
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.Companion.showSnackbar
-import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Named
@@ -36,7 +36,6 @@ class GroupInviteActivity : BaseActivity() {
     lateinit var userRepository: UserRepository
 
     internal var fragments: MutableList<PartyInviteFragment> = ArrayList()
-    private var userIdToInvite: String? = null
 
     override fun getLayoutResId(): Int {
         return R.layout.activity_party_invite
@@ -91,7 +90,6 @@ class GroupInviteActivity : BaseActivity() {
     private fun createResultIntent(): Intent {
         val intent = Intent()
         if (fragments.size == 0) return intent
-        val fragment = fragments[binding.viewPager.currentItem]
         intent.putExtra(EMAILS_KEY, fragments[1].values)
         intent.putExtra(USER_IDS_KEY, fragments[0].values)
         return intent
@@ -100,34 +98,27 @@ class GroupInviteActivity : BaseActivity() {
     private fun setViewPagerAdapter() {
         val fragmentManager = supportFragmentManager
 
-        binding.viewPager.adapter = object : FragmentPagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
-
-            override fun getItem(position: Int): Fragment {
+        val statePagerAdapter = object : FragmentStateAdapter(fragmentManager, lifecycle) {
+            override fun createFragment(position: Int): Fragment {
                 val fragment = PartyInviteFragment()
                 fragment.isEmailInvite = position == 1
-                if (fragments.size > position) {
-                    fragments[position] = fragment
-                } else {
-                    fragments.add(fragment)
-                }
-
+                fragments.add(fragment)
                 return fragment
             }
 
-            override fun getCount(): Int {
+            override fun getItemCount(): Int {
                 return 2
             }
-
-            override fun getPageTitle(position: Int): CharSequence? {
-                return when (position) {
-                    0 -> getString(R.string.invite_existing_users)
-                    1 -> getString(R.string.by_email)
-                    else -> ""
-                }
-            }
         }
-
-        binding.tabLayout.setupWithViewPager(binding.viewPager)
+        binding.viewPager.adapter = statePagerAdapter
+        TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
+            tab.text = when (position) {
+                0 -> getString(R.string.invite_existing_users)
+                1 -> getString(R.string.by_email)
+                else -> ""
+            }
+        }.attach()
+        statePagerAdapter.notifyDataSetChanged()
     }
 
     companion object {

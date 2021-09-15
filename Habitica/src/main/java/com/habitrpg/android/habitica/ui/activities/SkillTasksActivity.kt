@@ -6,9 +6,9 @@ import android.os.Bundle
 import android.util.SparseArray
 import android.view.MenuItem
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentPagerAdapter
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.google.android.material.tabs.TabLayoutMediator
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.TaskRepository
@@ -21,7 +21,6 @@ import javax.inject.Inject
 import javax.inject.Named
 
 class SkillTasksActivity : BaseActivity() {
-
     private lateinit var binding: ActivitySkillTasksBinding
 
     @Inject
@@ -51,55 +50,34 @@ class SkillTasksActivity : BaseActivity() {
     }
 
     private fun loadTaskLists() {
-        val fragmentManager = supportFragmentManager
+        val statePagerAdapter = object : FragmentStateAdapter(supportFragmentManager, lifecycle) {
 
-        binding.viewPager.adapter = object : FragmentPagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
-
-            override fun getItem(position: Int): Fragment {
+            override fun createFragment(position: Int): Fragment {
                 val fragment = SkillTasksRecyclerViewFragment()
                 fragment.taskType = when (position) {
                     0 -> Task.TYPE_HABIT
                     1 -> Task.TYPE_DAILY
                     else -> Task.TYPE_TODO
                 }
-
                 compositeSubscription.add(fragment.getTaskSelectionEvents().subscribe({ task -> taskSelected(task) }, RxErrorHandler.handleEmptyError()))
-
                 viewFragmentsDictionary.put(position, fragment)
-
                 return fragment
             }
 
-            override fun instantiateItem(container: ViewGroup, position: Int): Any {
-                val item = super.instantiateItem(container, position)
-                if (item is SkillTasksRecyclerViewFragment) {
-                    item.taskType = when (position) {
-                        0 -> Task.TYPE_HABIT
-                        1 -> Task.TYPE_DAILY
-                        else -> Task.TYPE_TODO
-                    }
-
-                    compositeSubscription.add(item.getTaskSelectionEvents().subscribe({ task -> taskSelected(task) }, RxErrorHandler.handleEmptyError()))
-                    viewFragmentsDictionary.put(position, item)
-                }
-                return item
-            }
-
-            override fun getCount(): Int {
+            override fun getItemCount(): Int {
                 return 3
             }
-
-            override fun getPageTitle(position: Int): CharSequence? {
-                return when (position) {
-                    0 -> getString(R.string.habits)
-                    1 -> getString(R.string.dailies)
-                    2 -> getString(R.string.todos)
-                    else -> ""
-                }
-            }
         }
-
-        binding.tabLayout.setupWithViewPager(binding.viewPager)
+        binding.viewPager.adapter = statePagerAdapter
+        TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
+            tab.text = when (position) {
+                0 -> getString(R.string.habits)
+                1 -> getString(R.string.dailies)
+                2 -> getString(R.string.todos)
+                else -> ""
+            }
+        }.attach()
+        statePagerAdapter.notifyDataSetChanged()
     }
 
     fun taskSelected(task: Task) {

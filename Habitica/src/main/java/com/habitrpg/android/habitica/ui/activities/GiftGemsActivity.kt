@@ -5,8 +5,9 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentPagerAdapter
 import androidx.navigation.navArgs
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.google.android.material.tabs.TabLayoutMediator
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
@@ -131,11 +132,8 @@ class GiftGemsActivity : BaseActivity() {
     }
 
     private fun setViewPagerAdapter() {
-        val fragmentManager = supportFragmentManager
-
-        binding.viewPager.adapter = object : FragmentPagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
-
-            override fun getItem(position: Int): Fragment {
+        val statePagerAdapter = object : FragmentStateAdapter(supportFragmentManager, lifecycle) {
+            override fun createFragment(position: Int): Fragment {
                 return if (position == 0) {
                     val fragment = GiftPurchaseGemsFragment()
                     fragment.setPurchaseHandler(purchaseHandler)
@@ -152,20 +150,19 @@ class GiftGemsActivity : BaseActivity() {
                 }
             }
 
-            override fun getCount(): Int {
+            override fun getItemCount(): Int {
                 return 2
             }
-
-            override fun getPageTitle(position: Int): CharSequence {
-                return when (position) {
-                    0 -> getString(R.string.purchase)
-                    1 -> getString(R.string.from_balance)
-                    else -> ""
-                }
-            }
         }
-
-        binding.tabLayout.setupWithViewPager(binding.viewPager)
+        binding.viewPager.adapter = statePagerAdapter
+        TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
+            tab.text = when (position) {
+                0 -> getString(R.string.purchase)
+                1 -> getString(R.string.from_balance)
+                else -> ""
+            }
+        }.attach()
+        statePagerAdapter.notifyDataSetChanged()
     }
 
     @Subscribe

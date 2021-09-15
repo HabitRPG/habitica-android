@@ -285,7 +285,7 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
                 }
                 is WelcomeFragment -> {
                     welcomeFragment = item
-                    item.nameValidEvents.toFlowable(BackpressureStrategy.DROP)?.subscribe {
+                    item.nameValidEvents.toFlowable(BackpressureStrategy.DROP).subscribe {
                         setNextButtonEnabled(it)
                     }
                 }
