@@ -158,7 +158,8 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     public override fun onCreate(savedInstanceState: Bundle?) {
         try {
             launchTrace = FirebasePerformance.getInstance().newTrace("MainActivityLaunch")
-        } catch (_: IllegalStateException) {
+        } catch (e: IllegalStateException) {
+            RxErrorHandler.reportError(e)
         }
         launchTrace?.start()
         super.onCreate(savedInstanceState)
@@ -756,6 +757,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                                         startActivity(intent)
                                     }
                                 } catch (e: PackageManager.NameNotFoundException) {
+                                    RxErrorHandler.reportError(e)
                                 }
                             }
                         }

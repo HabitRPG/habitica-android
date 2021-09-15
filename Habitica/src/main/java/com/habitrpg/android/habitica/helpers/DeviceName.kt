@@ -404,6 +404,7 @@ object DeviceName {
             try {
                 return DeviceInfo(JSONObject(savedJson))
             } catch (e: JSONException) {
+                RxErrorHandler.reportError(e)
             }
         }
 
@@ -443,6 +444,7 @@ object DeviceName {
                     i++
                 }
             } catch (e: Exception) {
+                RxErrorHandler.reportError(e)
             }
         }
         return if (codename == Build.DEVICE && Build.MODEL == model) {

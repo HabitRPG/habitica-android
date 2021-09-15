@@ -1,30 +1,27 @@
 package com.habitrpg.android.habitica.models.inventory
 
 import android.content.Context
-import com.google.common.truth.Truth.assertThat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.getTranslatedType
-import org.junit.Test
-import org.mockito.Mock
-import org.mockito.Mockito.mock
-import org.mockito.Mockito.`when`
+import io.kotest.matchers.shouldBe
+import io.mockk.every
+import io.mockk.impl.annotations.MockK
+import org.junit.jupiter.api.Test
 
 private const val FAKE_STANDARD = "Standard"
 private const val FAKE_PREMIUM = "premium"
 
 class MountTest {
-    @Mock
-    private var mockContext: Context = mock(Context::class.java)
+    @MockK private lateinit var mockContext: Context
     private var mount: Mount = Mount()
 
     @Test
     fun testGetTranslatedStringReturnsStandard() {
         mount.type = "drop"
-        `when`(mockContext.getString(R.string.standard)).thenReturn(FAKE_STANDARD)
+        every { mockContext.getString(R.string.standard) } returns FAKE_STANDARD
 
         val result = mount.getTranslatedType(mockContext)
-
-        assertThat(result).isEqualTo(FAKE_STANDARD)
+        result shouldBe FAKE_STANDARD
     }
 
     @Test
@@ -32,7 +29,6 @@ class MountTest {
         mount.type = "premium"
 
         val result = mount.getTranslatedType(null)
-
-        assertThat(result).isEqualTo(FAKE_PREMIUM)
+        result shouldBe FAKE_PREMIUM
     }
 }

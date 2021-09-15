@@ -6,6 +6,7 @@ import android.text.Spanned
 import androidx.annotation.StringDef
 import com.google.gson.annotations.SerializedName
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.BaseMainObject
 import com.habitrpg.android.habitica.models.Tag
 import com.habitrpg.android.habitica.models.user.Stats
@@ -345,6 +346,7 @@ open class Task : RealmObject, BaseMainObject, Parcelable {
                         i += 1
                     }
                 } catch (e: JSONException) {
+                    RxErrorHandler.reportError(e)
                 }
             }
             this.weeksOfMonth = weeksOfMonth.toList()
@@ -373,6 +375,7 @@ open class Task : RealmObject, BaseMainObject, Parcelable {
                         i += 1
                     }
                 } catch (e: JSONException) {
+                    RxErrorHandler.reportError(e)
                 }
             }
             this.daysOfMonth = daysOfMonth

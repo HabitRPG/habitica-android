@@ -9,6 +9,7 @@ import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.events.ConsumablePurchasedEvent
 import com.habitrpg.android.habitica.events.UserSubscribedEvent
 import com.habitrpg.android.habitica.helpers.PurchaseTypes
+import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.*
 import org.greenrobot.eventbus.EventBus
 import org.json.JSONObject
@@ -120,6 +121,7 @@ class HabiticaPurchaseVerifier(context: Context, apiClient: ApiClient) : BasePur
                 outputMap[key] = value
             }
         } catch (e: Exception) {
+            RxErrorHandler.reportError(e)
         }
         return outputMap
     }

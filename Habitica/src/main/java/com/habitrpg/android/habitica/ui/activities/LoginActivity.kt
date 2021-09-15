@@ -212,6 +212,7 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
                 override fun onCancel() { /* no-on */ }
 
                 override fun onError(exception: FacebookException) {
+                    RxErrorHandler.reportError(exception)
                 }
             }
         )

@@ -5,6 +5,7 @@ import android.view.MenuItem
 import android.widget.TextView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
+import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.ui.helpers.setMarkdown
 import okhttp3.*
 import java.io.BufferedReader
@@ -24,6 +25,7 @@ class GuidelinesActivity : BaseActivity() {
         val request = Request.Builder().url("https://s3.amazonaws.com/habitica-assets/mobileApp/endpoint/community-guidelines.md").build()
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
+                RxErrorHandler.reportError(e)
             }
 
             @Throws(IOException::class)

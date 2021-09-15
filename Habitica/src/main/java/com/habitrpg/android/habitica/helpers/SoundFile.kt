@@ -43,6 +43,7 @@ class SoundFile(val theme: String, private val fileName: String) : MediaPlayer.O
             isPlaying = true
             m.start()
         } catch (e: Exception) {
+            RxErrorHandler.reportError(e)
         }
     }
 
