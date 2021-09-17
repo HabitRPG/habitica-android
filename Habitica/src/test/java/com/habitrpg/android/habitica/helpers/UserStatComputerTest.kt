@@ -1,17 +1,17 @@
 package com.habitrpg.android.habitica.helpers
 
+import com.habitrpg.android.habitica.BaseAnnotationTestCase
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.helpers.UserStatComputer.AttributeRow
 import com.habitrpg.android.habitica.helpers.UserStatComputer.EquipmentRow
 import com.habitrpg.android.habitica.models.inventory.Equipment
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.user.Stats
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertFalse
-import org.junit.jupiter.api.Test
+import io.kotest.matchers.shouldBe
+
 import java.util.ArrayList
 
-class UserStatComputerTest {
+class UserStatComputerTest: BaseAnnotationTestCase() {
     private val userStatComputer: UserStatComputer = UserStatComputer()
     private val user: Member = Member()
     private val equipment: Equipment
@@ -26,9 +26,9 @@ class UserStatComputerTest {
     fun shouldReturnCorrectEquipmentRow() {
         val statsRows = userStatComputer.computeClassBonus(equipmentList, user)
         val equipmentRow = statsRows[0] as EquipmentRow
-        assertEquals(key, equipmentRow.gearKey)
-        assertEquals(text, equipmentRow.text)
-        assertEquals("STR 1, INT 2, CON 4, PER 3", equipmentRow.stats)
+        key shouldBe equipmentRow.gearKey
+        text shouldBe equipmentRow.text
+        "STR 1, INT 2, CON 4, PER 3" shouldBe equipmentRow.stats
     }
 
     @Test
@@ -37,13 +37,13 @@ class UserStatComputerTest {
         equipment.klass = Stats.ROGUE
         val statsRows = userStatComputer.computeClassBonus(equipmentList, user)
         val attributeRow = statsRows[2] as AttributeRow
-        assertEquals(R.string.profile_class_bonus.toLong(), attributeRow.labelId.toLong())
-        assertEquals((str * 0.5f).toDouble(), attributeRow.strVal.toDouble(), 0.01)
-        assertEquals((intStat * 0.0f).toDouble(), attributeRow.intVal.toDouble(), 0.01)
-        assertEquals((con * 0.0f).toDouble(), attributeRow.conVal.toDouble(), 0.01)
-        assertEquals((per * 0.5f).toDouble(), attributeRow.perVal.toDouble(), 0.01)
-        assertFalse(attributeRow.roundDown)
-        assertFalse(attributeRow.summary)
+        R.string.profile_class_bonus.toLong() shouldBe attributeRow.labelId.toLong()
+        (str * 0.5f).toDouble() shouldBe attributeRow.strVal.toDouble()
+        (intStat * 0.0f).toDouble() shouldBe attributeRow.intVal.toDouble()
+        (con * 0.0f).toDouble() shouldBe attributeRow.conVal.toDouble()
+        (per * 0.5f).toDouble() shouldBe attributeRow.perVal.toDouble()
+        attributeRow.roundDown shouldBe false
+        attributeRow.summary shouldBe false
     }
 
     @Test
@@ -53,13 +53,13 @@ class UserStatComputerTest {
         equipment.specialClass = Stats.ROGUE
         val statsRows = userStatComputer.computeClassBonus(equipmentList, user)
         val attributeRow = statsRows[2] as AttributeRow
-        assertEquals(R.string.profile_class_bonus.toLong(), attributeRow.labelId.toLong())
-        assertEquals((str * 0.5f).toDouble(), attributeRow.strVal.toDouble(), 0.01)
-        assertEquals((intStat * 0.0f).toDouble(), attributeRow.intVal.toDouble(), 0.01)
-        assertEquals((con * 0.0f).toDouble(), attributeRow.conVal.toDouble(), 0.01)
-        assertEquals((per * 0.5f).toDouble(), attributeRow.perVal.toDouble(), 0.01)
-        assertFalse(attributeRow.roundDown)
-        assertFalse(attributeRow.summary)
+        R.string.profile_class_bonus.toLong() shouldBe attributeRow.labelId.toLong()
+        (str * 0.5f).toDouble() shouldBe attributeRow.strVal.toDouble()
+        (intStat * 0.0f).toDouble() shouldBe attributeRow.intVal.toDouble()
+        (con * 0.0f).toDouble() shouldBe attributeRow.conVal.toDouble()
+        (per * 0.5f).toDouble() shouldBe attributeRow.perVal.toDouble()
+        attributeRow.roundDown shouldBe false
+        attributeRow.summary shouldBe false
     }
 
     @Test
@@ -69,13 +69,13 @@ class UserStatComputerTest {
         equipment.specialClass = ""
         val statsRows = userStatComputer.computeClassBonus(equipmentList, user)
         val attributeRow = statsRows[2] as AttributeRow
-        assertEquals(R.string.profile_class_bonus.toLong(), attributeRow.labelId.toLong())
-        assertEquals((str * 0.0f).toDouble(), attributeRow.strVal.toDouble(), 0.01)
-        assertEquals((intStat * 0.0f).toDouble(), attributeRow.intVal.toDouble(), 0.01)
-        assertEquals((con * 0.0f).toDouble(), attributeRow.conVal.toDouble(), 0.01)
-        assertEquals((per * 0.0f).toDouble(), attributeRow.perVal.toDouble())
-        assertFalse(attributeRow.roundDown)
-        assertFalse(attributeRow.summary)
+        R.string.profile_class_bonus.toLong() shouldBe attributeRow.labelId.toLong()
+        (str * 0.0f).toDouble() shouldBe attributeRow.strVal.toDouble()
+        (intStat * 0.0f).toDouble() shouldBe attributeRow.intVal.toDouble()
+        (con * 0.0f).toDouble() shouldBe attributeRow.conVal.toDouble()
+        (per * 0.0f).toDouble() shouldBe attributeRow.perVal.toDouble()
+        attributeRow.roundDown shouldBe false
+        attributeRow.summary shouldBe false
     }
 
     init {

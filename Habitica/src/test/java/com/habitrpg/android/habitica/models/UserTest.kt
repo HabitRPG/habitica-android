@@ -1,15 +1,14 @@
 package com.habitrpg.android.habitica.models
 
+import com.habitrpg.android.habitica.BaseAnnotationTestCase
 import com.habitrpg.android.habitica.models.user.Items
 import com.habitrpg.android.habitica.models.user.OwnedMount
 import com.habitrpg.android.habitica.models.user.OwnedPet
 import com.habitrpg.android.habitica.models.user.User
+import io.kotest.matchers.shouldBe
 import io.realm.RealmList
-import org.junit.jupiter.api.Assertions
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
 
-class UserTest {
+class UserTest: BaseAnnotationTestCase() {
     private var user: User? = null
     @BeforeEach
     fun setup() {
@@ -28,13 +27,13 @@ class UserTest {
             pets.add(OwnedPet())
             pets.add(OwnedPet())
             user!!.items!!.pets = pets
-            Assertions.assertEquals(5, user!!.petsFoundCount)
+            user?.petsFoundCount shouldBe 5
         }
 
     @get:Test
     val petsFoundCount_onNoPetCollectionAvailable_shouldReturnZero: Unit
         get() {
-            Assertions.assertEquals(0, user!!.petsFoundCount)
+            user?.petsFoundCount shouldBe  0
         }
 
     @get:Test
@@ -47,12 +46,12 @@ class UserTest {
             mounts.add(OwnedMount())
             mounts.add(OwnedMount())
             user!!.items!!.mounts = mounts
-            Assertions.assertEquals(5, user!!.mountsTamedCount)
+            user?.mountsTamedCount shouldBe 5
         }
 
     @get:Test
     val mountsTamedCount_onNoMountCollectionAvailable_shouldReturnZero: Unit
         get() {
-            Assertions.assertEquals(0, user!!.mountsTamedCount)
+            user?.mountsTamedCount shouldBe  0
         }
 }

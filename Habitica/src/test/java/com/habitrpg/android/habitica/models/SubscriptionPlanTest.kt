@@ -1,15 +1,15 @@
 package com.habitrpg.android.habitica.models
 
+import com.habitrpg.android.habitica.BaseAnnotationTestCase
 import com.habitrpg.android.habitica.models.user.SubscriptionPlan
-import org.junit.jupiter.api.Assertions
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
+import io.kotest.core.spec.style.AnnotationSpec
+import io.kotest.matchers.shouldBe
 import java.util.Calendar
 import java.util.Date
 
-class SubscriptionPlanTest {
+class SubscriptionPlanTest: BaseAnnotationTestCase() {
     private var plan: SubscriptionPlan? = null
-    @BeforeEach
+    @AnnotationSpec.BeforeEach
     fun setUp() {
         plan = SubscriptionPlan()
         plan!!.customerId = "fake_customer_id"
@@ -19,7 +19,7 @@ class SubscriptionPlanTest {
     @get:Test
     val isActiveForNoTerminationDate: Unit
         get() {
-            Assertions.assertTrue(plan!!.isActive)
+            plan?.isActive shouldBe true
         }
 
     @get:Test
@@ -29,7 +29,7 @@ class SubscriptionPlanTest {
             calendar.time = Date()
             calendar.add(Calendar.DATE, 1)
             plan!!.dateTerminated = calendar.time
-            Assertions.assertTrue(plan!!.isActive)
+            plan?.isActive shouldBe true
         }
 
     @get:Test
@@ -39,6 +39,6 @@ class SubscriptionPlanTest {
             calendar.time = Date()
             calendar.add(Calendar.DATE, -1)
             plan!!.dateTerminated = calendar.time
-            Assertions.assertFalse(plan!!.isActive)
+            plan?.isActive shouldBe false
         }
 }

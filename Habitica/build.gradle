@@ -47,7 +47,6 @@ dependencies {
 
     //Dependency Injection
     implementation 'com.google.dagger:dagger:2.38'
-    testImplementation 'junit:junit:4.12'
     kapt 'com.google.dagger:dagger-compiler:2.38'
     compileOnly 'javax.annotation:javax.annotation-api:1.3.2'
     compileOnly 'com.github.pengrad:jdk9-deps:1.0'
@@ -84,9 +83,9 @@ dependencies {
     // Image Management Library
     implementation("io.coil-kt:coil:1.2.2")
     implementation("io.coil-kt:coil-gif:1.2.2")
+
     //Tests
-    testImplementation(platform('org.junit:junit-bom:5.8.0'))
-    testImplementation('org.junit.jupiter:junit-jupiter')
+    testImplementation 'io.kotest:kotest-runner-junit5:4.6.2'
     testImplementation 'androidx.test:core:1.4.0'
     testImplementation "io.mockk:mockk:1.12.0"
     testImplementation "io.mockk:mockk-android:1.12.0"
@@ -257,6 +256,12 @@ android {
             // dynamic feature APK.
             enableSplit = false
         }
+    }
+}
+
+android.testOptions {
+    unitTests.all {
+        useJUnitPlatform()
     }
 }
 

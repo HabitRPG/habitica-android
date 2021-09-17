@@ -1,18 +1,16 @@
 package com.habitrpg.android.habitica.models.inventory
 
 import android.content.Context
+import com.habitrpg.android.habitica.BaseAnnotationTestCase
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.getTranslatedType
 import io.kotest.matchers.shouldBe
 import io.mockk.every
-import io.mockk.impl.annotations.MockK
-import org.junit.jupiter.api.Test
 
 private const val FAKE_STANDARD = "Standard"
 private const val FAKE_PREMIUM = "premium"
 
-class PetTest {
-    @MockK private lateinit var mockContext: Context
+class PetTest: BaseAnnotationTestCase() {
     private var pet: Pet = Pet()
 
     @Test

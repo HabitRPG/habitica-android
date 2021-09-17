@@ -1,19 +1,23 @@
 package com.habitrpg.android.habitica.extensions
 
-import junit.framework.TestCase
-import java.util.*
+import com.habitrpg.android.habitica.BaseAnnotationTestCase
+import io.kotest.matchers.shouldBe
+import java.util.Date
 
-class DateExtensionsTest : TestCase() {
+class DateExtensionsTest : BaseAnnotationTestCase() {
 
+    @Test
     fun testGetShortRemainingStringWithDay() {
-        assertEquals("24d 1h 3m", (Date().time + 2077400000L).getShortRemainingString())
+        "24d 1h 3m" shouldBe (Date().time + 2077400000L).getShortRemainingString()
     }
 
+    @Test
     fun testGetShortRemainingStringWithHour() {
-        assertEquals("5h 46m", (Date().time + 20774000L).getShortRemainingString())
+        "5h 46m" shouldBe (Date().time + 20774000L).getShortRemainingString()
     }
 
+    @Test
     fun testGetShortRemainingStringWithMinute() {
-        assertEquals("34m 37s", (Date().time + 2077400L).getShortRemainingString())
+        "34m 37s" shouldBe (Date().time + 2077400L).getShortRemainingString()
     }
 }
