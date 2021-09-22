@@ -90,8 +90,13 @@ class GroupInviteActivity : BaseActivity() {
     private fun createResultIntent(): Intent {
         val intent = Intent()
         if (fragments.size == 0) return intent
-        intent.putExtra(EMAILS_KEY, fragments[1].values)
-        intent.putExtra(USER_IDS_KEY, fragments[0].values)
+        for (fragment in fragments) {
+            if (fragment.isEmailInvite) {
+                intent.putExtra(EMAILS_KEY, fragment.values)
+            } else {
+                intent.putExtra(USER_IDS_KEY, fragment.values)
+            }
+        }
         return intent
     }
 
