@@ -5,7 +5,7 @@ import io.kotest.core.spec.style.AnnotationSpec
 import io.mockk.MockKAnnotations
 import io.mockk.impl.annotations.MockK
 
-open class BaseAnnotationTestCase: AnnotationSpec() {
+open class BaseAnnotationTestCase : AnnotationSpec() {
     @MockK
     lateinit var mockContext: Context
 

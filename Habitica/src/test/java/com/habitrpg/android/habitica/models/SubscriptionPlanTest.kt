@@ -7,7 +7,7 @@ import io.kotest.matchers.shouldBe
 import java.util.Calendar
 import java.util.Date
 
-class SubscriptionPlanTest: BaseAnnotationTestCase() {
+class SubscriptionPlanTest : BaseAnnotationTestCase() {
     private var plan: SubscriptionPlan? = null
     @AnnotationSpec.BeforeEach
     fun setUp() {

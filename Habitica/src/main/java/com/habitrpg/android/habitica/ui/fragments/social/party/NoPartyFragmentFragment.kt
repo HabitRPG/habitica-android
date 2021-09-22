@@ -176,7 +176,7 @@ class NoPartyFragmentFragment : BaseMainFragment<FragmentNoPartyBinding>() {
     private fun refresh() {
         compositeSubscription.add(
             userRepository.retrieveUser(false, forced = true)
-                .filter { it.hasParty() }
+                .filter { it.hasParty }
                 .flatMap { socialRepository.retrieveGroup("party") }
                 .flatMap { group1 -> socialRepository.retrieveGroupMembers(group1.id, true) }
                 .doOnComplete { binding?.refreshLayout?.isRefreshing = false }

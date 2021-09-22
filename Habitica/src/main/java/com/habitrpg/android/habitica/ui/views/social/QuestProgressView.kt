@@ -119,7 +119,7 @@ class QuestProgressView : LinearLayout {
             binding.bossHealthView.set(progress.progress?.hp ?: 0.0, quest.boss?.hp?.toDouble() ?: 0.0)
             binding.collectedItemsNumberView.visibility = View.GONE
 
-            if (quest.boss?.hasRage() == true) {
+            if (quest.boss?.hasRage == true) {
                 binding.rageMeterView.visibility = View.VISIBLE
                 binding.bossRageView.visibility = View.VISIBLE
                 binding.rageMeterView.text = quest.boss?.rage?.title

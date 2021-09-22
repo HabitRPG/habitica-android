@@ -76,7 +76,7 @@ class OldQuestProgressView : LinearLayout {
             if (progress != null) {
                 binding.bossHealthView.set(progress.hp, quest.boss?.hp?.toDouble() ?: 0.0)
             }
-            if (quest.boss?.hasRage() == true) {
+            if (quest.boss?.hasRage == true) {
                 binding.bossRageView.visibility = View.VISIBLE
                 binding.bossRageView.set(progress?.rage ?: 0.0, quest.boss?.rage?.value ?: 0.0)
             } else {

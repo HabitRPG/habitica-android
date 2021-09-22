@@ -49,7 +49,7 @@
     <ID>ComplexMethod:SubscriptionDetailsView.kt$SubscriptionDetailsView$fun setPlan(plan: SubscriptionPlan)</ID>
     <ID>ComplexMethod:TaskFormActivity.kt$TaskFormActivity$override fun onCreate(savedInstanceState: Bundle?)</ID>
     <ID>ComplexMethod:TaskFormActivity.kt$TaskFormActivity$private fun fillForm(task: Task)</ID>
-    <ID>ComplexMethod:TaskRepositoryImpl.kt$TaskRepositoryImpl$@Suppress("ReturnCount") override fun taskChecked(user: User?, task: Task, up: Boolean, force: Boolean, notifyFunc: ((TaskScoringResult) -&gt; Unit)?): Flowable&lt;TaskScoringResult?&gt;</ID>
+    <ID>ComplexMethod:TaskRepositoryImpl.kt$TaskRepositoryImpl$@Suppress("ReturnCount") override fun taskChecked(user: User?, task: Task, up: Boolean, force: Boolean, notifyFunc: ((TaskScoringResult) -&gt; Unit)?): Flowable&lt;TaskScoringResult&gt;</ID>
     <ID>ComplexMethod:TaskRepositoryImpl.kt$TaskRepositoryImpl$private fun handleTaskResponse(user: User, res: TaskDirectionData, task: Task, up: Boolean, localDelta: Float)</ID>
     <ID>ComplexMethod:TaskSchedulingControls.kt$TaskSchedulingControls$private fun generateSummary()</ID>
     <ID>ComplexMethod:TaskSerializer.kt$TaskSerializer$override fun deserialize(json: JsonElement?, typeOfT: Type?, context: JsonDeserializationContext): Task</ID>

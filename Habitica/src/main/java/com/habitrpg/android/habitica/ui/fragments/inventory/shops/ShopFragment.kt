@@ -171,7 +171,7 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
                         specialCategory.text = getString(R.string.special)
                         if (user?.isValid == true && user.purchased?.plan?.isActive == true) {
                             val item = ShopItem.makeGemItem(context?.resources)
-                            item.limitedNumberLeft = user.purchased?.plan?.numberOfGemsLeft()
+                            item.limitedNumberLeft = user.purchased?.plan?.numberOfGemsLeft
                             specialCategory.items.add(item)
                         }
                         specialCategory.items.add(ShopItem.makeFortifyItem(context?.resources))

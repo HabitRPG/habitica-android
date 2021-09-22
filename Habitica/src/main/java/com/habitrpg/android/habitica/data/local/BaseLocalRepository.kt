@@ -12,9 +12,7 @@ interface BaseLocalRepository {
     fun close()
 
     fun executeTransaction(transaction: (Realm) -> Unit)
-    fun executeTransaction(transaction: Realm.Transaction)
     fun executeTransactionAsync(transaction: (Realm) -> Unit)
-    fun executeTransactionAsync(transaction: Realm.Transaction)
     fun <T : BaseMainObject> modify(obj: T, transaction: (T) -> Unit)
     fun <T : BaseMainObject> modifyWithRealm(obj: T, transaction: (Realm, T) -> Unit)
     fun <T : BaseObject> getLiveObject(obj: T): T?

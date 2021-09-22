@@ -16,6 +16,7 @@ open class Member : RealmObject(), Avatar, BaseObject {
     override var stats: Stats? = null
     var inbox: Inbox? = null
     override var preferences: MemberPreferences? = null
+    override var flags: MemberFlags? = null
     override val gemCount: Int
         get() = 0
     override val hourglassCount: Int
@@ -50,9 +51,10 @@ open class Member : RealmObject(), Avatar, BaseObject {
     val formattedUsername: String?
         get() = if (username != null) "@$username" else null
 
-    override fun hasClass(): Boolean {
-        return preferences?.disableClasses == false && stats?.habitClass?.isNotEmpty() == true
-    }
+    override val hasClass: Boolean
+        get() {
+            return preferences?.disableClasses == false && stats?.habitClass?.isNotEmpty() == true
+        }
 
     override val sleep: Boolean
         get() = preferences?.sleep ?: false

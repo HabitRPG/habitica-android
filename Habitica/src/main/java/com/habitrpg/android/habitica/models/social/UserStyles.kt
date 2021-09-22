@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.models.social
 
 import com.habitrpg.android.habitica.models.Avatar
+import com.habitrpg.android.habitica.models.AvatarFlags
 import com.habitrpg.android.habitica.models.user.Items
 import com.habitrpg.android.habitica.models.user.Outfit
 import com.habitrpg.android.habitica.models.user.Preferences
@@ -30,11 +31,14 @@ open class UserStyles : RealmObject(), Avatar {
     override val equipped: Outfit?
         get() = items?.gear?.equipped
 
-    override fun hasClass(): Boolean {
-        return false
-    }
+    override val hasClass: Boolean
+        get() {
+            return false
+        }
 
     override var stats: Stats? = null
     override var preferences: Preferences? = null
+    override val flags: AvatarFlags?
+        get() = null
     private var items: Items? = null
 }

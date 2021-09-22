@@ -6,6 +6,7 @@ apply plugin: 'com.google.firebase.crashlytics'
 apply plugin: 'realm-android'
 apply plugin: 'androidx.navigation.safeargs'
 apply plugin: 'com.google.firebase.firebase-perf'
+apply plugin: 'jacoco'
 
 buildscript {
     repositories {
@@ -90,6 +91,7 @@ dependencies {
     testImplementation "io.mockk:mockk:1.12.0"
     testImplementation "io.mockk:mockk-android:1.12.0"
     testImplementation 'io.kotest:kotest-assertions-core:4.6.2'
+    testImplementation 'io.kotest:kotest-framework-datatest:4.6.2'
 
     //Leak Detection
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.7'
@@ -111,8 +113,8 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
     implementation "androidx.paging:paging-runtime-ktx:3.0.1"
     implementation 'com.plattysoft.leonids:LeonidsLib:1.3.2'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2'
 
     implementation 'com.willowtreeapps:signinwithapplebutton:0.3'
 
@@ -262,6 +264,7 @@ android {
 android.testOptions {
     unitTests.all {
         useJUnitPlatform()
+        unitTests.returnDefaultValues = true
     }
 }
 
@@ -336,6 +339,38 @@ gradle.projectsEvaluated {
 }
 
 apply plugin: 'com.google.gms.google-services'
+
+jacoco {
+    toolVersion = "0.8.7"
+}
+
+// packages to exclude for example generated classes, R class and models package, add all packages that you wish to exclude from test coverage
+def fileFilter = [
+        '**/*$ViewInjector*.*','**/*$ViewBinder*.*', '**/HabiticaIcons*.*', '**/DeviceName.*', '**/databinding/*Binding.*',
+        '**/R.class', '**/R.styleable', '**/R$*.class', '**/BuildConfig.*', '**/EmojiMap.*',
+        '**/Manifest*.*', 'android/**/*.*', '**/*RealmProxy*.*', '**/io/realm/*']
+def debugTree = fileTree(dir: "${buildDir}/intermediates/asm_instrumented_project_classes/prodDebug", excludes: fileFilter)
+def mainSrc = "${project.projectDir}/src/main/java"
+
+// override jacocTestReport task
+task jacocoTestReport(type: JacocoReport, dependsOn: 'testProdDebugUnitTest') {
+    group = "Reporting"
+    reports {
+        html.enabled = true
+        xml.enabled = true
+        //html.destination = "${buildDir}/reports/jacoco"
+    }
+
+    sourceDirectories.from(files([mainSrc]))
+    classDirectories.from(files([debugTree]))
+    executionData.from(files("${buildDir}/jacoco/testProdDebugUnitTest.exec"))
+
+    afterEvaluate {
+        classDirectories.from(files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: fileFilter)
+        }))
+    }
+}
 
 task ktlint(type: JavaExec, group: "verification") {
     description = "Check Kotlin code style."

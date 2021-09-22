@@ -96,7 +96,7 @@ class SubscriptionDetailsView : LinearLayout {
         } else {
             binding.monthsSubscribedTextView.text = resources.getString(R.string.x_months, plan.consecutive?.count ?: 0)
         }
-        binding.gemCapTextView.text = plan.totalNumberOfGems().toString()
+        binding.gemCapTextView.text = plan.totalNumberOfGems.toString()
         binding.currentHourglassesTextView.text = plan.consecutive?.trinkets.toString()
 
         binding.changeSubscriptionButton.visibility = View.VISIBLE

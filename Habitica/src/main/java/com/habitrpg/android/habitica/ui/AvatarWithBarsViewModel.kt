@@ -59,7 +59,7 @@ class AvatarWithBarsViewModel(private val context: Context, private val binding:
 
         binding.mpBar.visibility = if (stats.habitClass == null || stats.lvl ?: 0 < 10 || user.preferences?.disableClasses == true) View.GONE else View.VISIBLE
 
-        if (!user.hasClass()) {
+        if (!user.hasClass) {
             setUserLevel(context, binding.lvlTv, stats.lvl)
         } else {
             setUserLevelWithClass(

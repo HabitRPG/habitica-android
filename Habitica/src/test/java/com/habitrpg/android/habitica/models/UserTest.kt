@@ -8,7 +8,7 @@ import com.habitrpg.android.habitica.models.user.User
 import io.kotest.matchers.shouldBe
 import io.realm.RealmList
 
-class UserTest: BaseAnnotationTestCase() {
+class UserTest : BaseAnnotationTestCase() {
     private var user: User? = null
     @BeforeEach
     fun setup() {
@@ -33,7 +33,7 @@ class UserTest: BaseAnnotationTestCase() {
     @get:Test
     val petsFoundCount_onNoPetCollectionAvailable_shouldReturnZero: Unit
         get() {
-            user?.petsFoundCount shouldBe  0
+            user?.petsFoundCount shouldBe 0
         }
 
     @get:Test
@@ -52,6 +52,6 @@ class UserTest: BaseAnnotationTestCase() {
     @get:Test
     val mountsTamedCount_onNoMountCollectionAvailable_shouldReturnZero: Unit
         get() {
-            user?.mountsTamedCount shouldBe  0
+            user?.mountsTamedCount shouldBe 0
         }
 }

@@ -13,7 +13,8 @@ open class SpecialItems : RealmObject(), BaseObject {
     var snowball: Int = 0
     var spookySparkles: Int = 0
 
-    fun hasSpecialItems(): Boolean {
-        return seafoam > 0 || shinySeed > 0 || snowball > 0 || spookySparkles > 0
-    }
+    val hasSpecialItems: Boolean
+        get() {
+            return seafoam > 0 || shinySeed > 0 || snowball > 0 || spookySparkles > 0
+        }
 }

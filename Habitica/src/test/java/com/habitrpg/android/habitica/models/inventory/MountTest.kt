@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica.models.inventory
 
-import android.content.Context
 import com.habitrpg.android.habitica.BaseAnnotationTestCase
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.getTranslatedType
@@ -10,7 +9,7 @@ import io.mockk.every
 private const val FAKE_STANDARD = "Standard"
 private const val FAKE_PREMIUM = "premium"
 
-class MountTest: BaseAnnotationTestCase() {
+class MountTest : BaseAnnotationTestCase() {
     private var mount: Mount = Mount()
 
     @Test

@@ -8,10 +8,9 @@ import com.habitrpg.android.habitica.models.inventory.Equipment
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.user.Stats
 import io.kotest.matchers.shouldBe
-
 import java.util.ArrayList
 
-class UserStatComputerTest: BaseAnnotationTestCase() {
+class UserStatComputerTest : BaseAnnotationTestCase() {
     private val userStatComputer: UserStatComputer = UserStatComputer()
     private val user: Member = Member()
     private val equipment: Equipment
@@ -44,6 +43,42 @@ class UserStatComputerTest: BaseAnnotationTestCase() {
         (per * 0.5f).toDouble() shouldBe attributeRow.perVal.toDouble()
         attributeRow.roundDown shouldBe false
         attributeRow.summary shouldBe false
+    }
+
+    @Test
+    fun shouldReturnClassBonusForHealer() {
+        user.stats!!.habitClass = Stats.HEALER
+        equipment.klass = Stats.HEALER
+        val statsRows = userStatComputer.computeClassBonus(equipmentList, user)
+        val attributeRow = statsRows[2] as AttributeRow
+        (str * 0.0f).toDouble() shouldBe attributeRow.strVal.toDouble()
+        (intStat * 0.5f).toDouble() shouldBe attributeRow.intVal.toDouble()
+        (con * 0.5f).toDouble() shouldBe attributeRow.conVal.toDouble()
+        (per * 0.0f).toDouble() shouldBe attributeRow.perVal.toDouble()
+    }
+
+    @Test
+    fun shouldReturnClassBonusForWarrior() {
+        user.stats!!.habitClass = Stats.WARRIOR
+        equipment.klass = Stats.WARRIOR
+        val statsRows = userStatComputer.computeClassBonus(equipmentList, user)
+        val attributeRow = statsRows[2] as AttributeRow
+        (str * 0.5f).toDouble() shouldBe attributeRow.strVal.toDouble()
+        (intStat * 0.0f).toDouble() shouldBe attributeRow.intVal.toDouble()
+        (con * 0.5f).toDouble() shouldBe attributeRow.conVal.toDouble()
+        (per * 0.0f).toDouble() shouldBe attributeRow.perVal.toDouble()
+    }
+
+    @Test
+    fun shouldReturnClassBonusForMage() {
+        user.stats!!.habitClass = Stats.MAGE
+        equipment.klass = Stats.MAGE
+        val statsRows = userStatComputer.computeClassBonus(equipmentList, user)
+        val attributeRow = statsRows[2] as AttributeRow
+        (str * 0.0f).toDouble() shouldBe attributeRow.strVal.toDouble()
+        (intStat * 0.5f).toDouble() shouldBe attributeRow.intVal.toDouble()
+        (con * 0.0f).toDouble() shouldBe attributeRow.conVal.toDouble()
+        (per * 0.5f).toDouble() shouldBe attributeRow.perVal.toDouble()
     }
 
     @Test

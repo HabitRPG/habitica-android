@@ -34,15 +34,17 @@ open class SubscriptionPlan : RealmObject(), BaseObject {
             return customerId != null && (dateTerminated == null || dateTerminated!!.after(today))
         }
 
-    fun totalNumberOfGems(): Int {
-        return if (customerId == null || consecutive == null) {
-            0
-        } else 25 + consecutive!!.gemCapExtra
-    }
+    val totalNumberOfGems: Int
+        get() {
+            return if (isActive) {
+                25 + (consecutive?.gemCapExtra ?: 0)
+            } else 0
+        }
 
-    fun numberOfGemsLeft(): Int {
-        return totalNumberOfGems() - gemsBought!!
-    }
+    val numberOfGemsLeft: Int
+        get() {
+            return totalNumberOfGems - (gemsBought ?: 0)
+        }
 
     companion object {
         var PLANID_BASIC = "basic"

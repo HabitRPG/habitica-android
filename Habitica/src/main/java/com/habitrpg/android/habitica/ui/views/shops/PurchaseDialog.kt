@@ -255,8 +255,8 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
         currencyView.hourglasses = user.hourglassCount.toDouble()
 
         if ("gems" == shopItem.purchaseType) {
-            val maxGems = user.purchased?.plan?.totalNumberOfGems() ?: 0
-            val gemsLeft = user.purchased?.plan?.numberOfGemsLeft()
+            val maxGems = user.purchased?.plan?.totalNumberOfGems ?: 0
+            val gemsLeft = user.purchased?.plan?.numberOfGemsLeft
             if (maxGems > 0) {
                 limitedTextView.text = context.getString(R.string.gems_left_max, gemsLeft, maxGems)
             } else {
@@ -269,7 +269,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
                 limitedTextView.setBackgroundColor(ContextCompat.getColor(context, R.color.green_10))
             }
             val gemContent = additionalContentView as? PurchaseDialogGemsContent
-            gemContent?.binding?.stepperView?.maxValue = (user.purchased?.plan?.numberOfGemsLeft() ?: 1).toDouble()
+            gemContent?.binding?.stepperView?.maxValue = (user.purchased?.plan?.numberOfGemsLeft ?: 1).toDouble()
         }
 
         buyButton.elevation = 0f

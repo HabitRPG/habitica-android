@@ -79,7 +79,7 @@ constructor(
                     displayType = SnackbarDisplayType.FAILURE
                 }
             }
-            if (mp != null && mp > 0 && user?.hasClass() == true) {
+            if (mp != null && mp > 0 && user?.hasClass == true) {
                 container.addView(createTextView(context, mp, HabiticaIconsHelper.imageOfMagic()))
             }
             if (questDamage != null && questDamage > 0) {

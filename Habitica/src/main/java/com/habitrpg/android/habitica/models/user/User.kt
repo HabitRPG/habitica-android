@@ -42,7 +42,7 @@ open class User : RealmObject(), BaseMainObject, Avatar, VersionedObject {
     var items: Items? = null
     @SerializedName("auth")
     var authentication: Authentication? = null
-    var flags: Flags? = null
+    override var flags: Flags? = null
     var contributor: ContributorInfo? = null
     var backer: Backer? = null
     var invitations: Invitations? = null
@@ -98,9 +98,10 @@ open class User : RealmObject(), BaseMainObject, Avatar, VersionedObject {
     override val equipped: Outfit?
         get() = items?.gear?.equipped
 
-    override fun hasClass(): Boolean {
-        return preferences?.disableClasses != true && flags?.classSelected == true && stats?.habitClass?.isNotEmpty() == true
-    }
+    override val hasClass: Boolean
+        get() {
+            return preferences?.disableClasses != true && flags?.classSelected == true && stats?.habitClass?.isNotEmpty() == true
+        }
 
     override val currentMount: String?
         get() = items?.currentMount ?: ""
@@ -110,20 +111,14 @@ open class User : RealmObject(), BaseMainObject, Avatar, VersionedObject {
     override val sleep: Boolean
         get() = preferences?.sleep ?: false
 
-    fun hasParty(): Boolean {
-        return this.party?.id?.length ?: 0 > 0
-    }
+    val hasParty: Boolean
+        get() {
+            return this.party?.id?.length ?: 0 > 0
+        }
 
     val isSubscribed: Boolean
         get() {
-            val plan = purchased?.plan
-            var isSubscribed = false
-            if (plan != null) {
-                if (plan.isActive) {
-                    isSubscribed = true
-                }
-            }
-            return isSubscribed
+            return purchased?.plan?.isActive == true
         }
 
     val onboardingAchievements: List<UserAchievement>

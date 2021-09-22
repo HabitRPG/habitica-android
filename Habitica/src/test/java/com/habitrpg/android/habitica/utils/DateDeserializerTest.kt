@@ -2,7 +2,6 @@ package com.habitrpg.android.habitica.utils
 
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonElement
-import com.google.gson.JsonParseException
 import com.google.gson.JsonPrimitive
 import com.google.gson.JsonSerializationContext
 import com.habitrpg.android.habitica.BaseAnnotationTestCase
@@ -10,7 +9,7 @@ import io.kotest.matchers.shouldBe
 import java.lang.reflect.Type
 import java.util.Date
 
-class DateDeserializerTest: BaseAnnotationTestCase() {
+class DateDeserializerTest : BaseAnnotationTestCase() {
     var deserializer = DateDeserializer()
     lateinit var deserializationContext: JsonDeserializationContext
     lateinit var serializationContext: JsonSerializationContext
@@ -66,7 +65,8 @@ class DateDeserializerTest: BaseAnnotationTestCase() {
         val dateElement: JsonElement = deserializer!!.serialize(
             Date(
                 referenceTimestamp!!
-            ), Date::class.java, serializationContext
+            ),
+            Date::class.java, serializationContext
         )
         dateElement.asString shouldBe "2015-09-28T13:00:00.000Z"
     }

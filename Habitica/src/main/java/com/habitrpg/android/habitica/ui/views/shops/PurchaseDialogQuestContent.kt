@@ -28,7 +28,7 @@ class PurchaseDialogQuestContent(context: Context) : PurchaseDialogContent(conte
             binding.questTypeTextView.setText(R.string.boss_quest)
             binding.questCollectView.visibility = View.GONE
             binding.bossHealthText.text = questContent.boss?.hp.toString()
-            if (questContent.boss?.hasRage() == true) {
+            if (questContent.boss?.hasRage == true) {
                 binding.rageMeterView.visibility = View.VISIBLE
             }
             binding.questDifficultyView.rating = questContent.boss?.str ?: 1f

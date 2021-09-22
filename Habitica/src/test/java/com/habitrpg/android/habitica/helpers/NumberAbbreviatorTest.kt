@@ -9,7 +9,7 @@ import io.mockk.clearMocks
 import io.mockk.every
 import io.mockk.mockk
 
-class NumberAbbreviatorTest: StringSpec({
+class NumberAbbreviatorTest : StringSpec({
     val mockContext = mockk<Context>()
     beforeEach {
         every { mockContext.getString(R.string.thousand_abbrev) } returns "k"
@@ -35,9 +35,14 @@ class NumberAbbreviatorTest: StringSpec({
         abbreviate(mockContext, 1990000000.0, 2) shouldBe "1.99b"
     }
 
+    "it abbreviates trillions" {
+        abbreviate(mockContext, 1990000000000.0, 2) shouldBe "1.99t"
+    }
+
     "it abbreviates thousands without additional decimals" {
         abbreviate(mockContext, 1000.0, 2) shouldBe "1k"
         abbreviate(mockContext, 1500.0, 2) shouldBe "1.5k"
+        abbreviate(mockContext, 1500.0, 0) shouldBe "1k"
     }
 
     "it rounds correctly" {

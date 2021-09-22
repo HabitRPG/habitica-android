@@ -248,7 +248,7 @@ class NavigationDrawerFragment : DialogFragment() {
                     .distinctUntilChanged { firstTeams, secondTeams -> firstTeams == secondTeams }
                     .subscribe(
                         {
-                            getItemWithIdentifier(SIDEBAR_TEAMS)?.isVisible = it.size != 0
+                            getItemWithIdentifier(SIDEBAR_TEAMS)?.isVisible = it.isNotEmpty()
                             adapter.setTeams(it)
                         },
                         RxErrorHandler.handleEmptyError()
@@ -281,7 +281,6 @@ class NavigationDrawerFragment : DialogFragment() {
             market.pillText = null
             market.subtitle = null
         }
-        adapter.notifyDataSetChanged()
 
         val shop = getItemWithIdentifier(SIDEBAR_SHOPS_SEASONAL) ?: return
         shop.pillText = context?.getString(R.string.open)
@@ -313,11 +312,11 @@ class NavigationDrawerFragment : DialogFragment() {
         val specialItems = user.items?.special
         var hasSpecialItems = false
         if (specialItems != null) {
-            hasSpecialItems = specialItems.hasSpecialItems()
+            hasSpecialItems = specialItems.hasSpecialItems
         }
         val item = getItemWithIdentifier(SIDEBAR_SKILLS)
         if (item != null) {
-            if (!user.hasClass() && !hasSpecialItems) {
+            if (!user.hasClass && !hasSpecialItems) {
                 item.isVisible = false
             } else {
                 if (user.stats?.lvl ?: 0 < HabiticaSnackbar.MIN_LEVEL_FOR_SKILLS && (!hasSpecialItems)) {
@@ -378,10 +377,10 @@ class NavigationDrawerFragment : DialogFragment() {
         }
 
         val partyMenuItem = getItemWithIdentifier(SIDEBAR_PARTY)
-        if (user.hasParty() && partyMenuItem?.bundle == null) {
+        if (user.hasParty && partyMenuItem?.bundle == null) {
             partyMenuItem?.transitionId = R.id.partyFragment
             partyMenuItem?.bundle = bundleOf(Pair("partyID", user.party?.id))
-        } else if (!user.hasParty()) {
+        } else if (!user.hasParty) {
             partyMenuItem?.transitionId = R.id.noPartyFragment
             partyMenuItem?.bundle = null
         }
