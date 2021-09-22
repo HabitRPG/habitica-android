@@ -79,7 +79,11 @@ class TaskFilterHelper {
     }
 
     fun getActiveFilter(type: String): String? {
-        return activeFilters[type]
+        if (activeFilters.containsKey(type)) {
+            return activeFilters[type]
+        } else {
+            return null
+        }
     }
 
     fun createQuery(unfilteredData: OrderedRealmCollection<Task>): RealmQuery<Task>? {

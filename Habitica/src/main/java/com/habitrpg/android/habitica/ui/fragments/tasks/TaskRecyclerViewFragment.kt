@@ -418,12 +418,14 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
 
     override fun onStart() {
         super.onStart()
-        when (taskType) {
-            Task.TYPE_TODO -> taskFilterHelper.setActiveFilter(Task.TYPE_TODO, Task.FILTER_ACTIVE)
-            Task.TYPE_DAILY -> {
-                val user = (activity as? MainActivity)?.user
-                if (user?.isValid == true && user.preferences?.dailyDueDefaultView == true) {
-                    taskFilterHelper.setActiveFilter(Task.TYPE_DAILY, Task.FILTER_ACTIVE)
+        if (taskFilterHelper.getActiveFilter(taskType) == null) {
+            when (taskType) {
+                Task.TYPE_TODO -> taskFilterHelper.setActiveFilter(Task.TYPE_TODO, Task.FILTER_ACTIVE)
+                Task.TYPE_DAILY -> {
+                    val user = (activity as? MainActivity)?.user
+                    if (user?.isValid == true && user.preferences?.dailyDueDefaultView == true) {
+                        taskFilterHelper.setActiveFilter(Task.TYPE_DAILY, Task.FILTER_ACTIVE)
+                    }
                 }
             }
         }
