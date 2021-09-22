@@ -549,7 +549,7 @@ class TaskFormActivity : BaseActivity() {
                             compositeSubscription.add(
                                 challengeRepository.leaveChallenge(it, "keep-all")
                                     .flatMap { taskRepository.deleteTask(task?.id ?: "") }
-                                    .flatMap { userRepository.retrieveUser(true) }
+                                    .flatMap { userRepository.retrieveUser(true, true) }
                                     .subscribe(
                                         {
                                             finish()
@@ -563,7 +563,7 @@ class TaskFormActivity : BaseActivity() {
                         challenge?.let {
                             compositeSubscription.add(
                                 challengeRepository.leaveChallenge(it, "remove-all")
-                                    .flatMap { userRepository.retrieveUser(true) }
+                                    .flatMap { userRepository.retrieveUser(true, true) }
                                     .subscribe(
                                         {
                                             finish()
@@ -594,7 +594,9 @@ class TaskFormActivity : BaseActivity() {
                     dialog.setTitle(R.string.broken_challenge)
                     dialog.setMessage(this.getString(R.string.broken_challenge_description, taskCount))
                     dialog.addButton(this.getString(R.string.keep_x_tasks, taskCount), true) { _, _ ->
-                        taskRepository.unlinkAllTasks(task.challengeID, "keep-all").subscribe(
+                        taskRepository.unlinkAllTasks(task.challengeID, "keep-all")
+                            .flatMap { userRepository.retrieveUser(true, true) }
+                            .subscribe(
                             {
                                 finish()
                             },
@@ -602,7 +604,9 @@ class TaskFormActivity : BaseActivity() {
                         )
                     }
                     dialog.addButton(this.getString(R.string.delete_x_tasks, taskCount), false, true) { _, _ ->
-                        taskRepository.unlinkAllTasks(task.challengeID, "remove-all").subscribe(
+                        taskRepository.unlinkAllTasks(task.challengeID, "remove-all")
+                            .flatMap { userRepository.retrieveUser(true, true) }
+                            .subscribe(
                             {
                                 finish()
                             },
