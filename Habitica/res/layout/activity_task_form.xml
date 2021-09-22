@@ -132,7 +132,7 @@
                     android:id="@+id/habit_reset_streak_title_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/reset_streak"
+                    android:text="@string/reset_counter"
                     style="@style/TaskFormSectionheader"/>
                 <com.habitrpg.android.habitica.ui.views.tasks.form.HabitResetStreakButtons
                     android:id="@+id/habit_reset_streak_buttons"
@@ -152,7 +152,7 @@
                     android:id="@+id/adjust_streak_title_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/adjust_streak"
+                    android:text="@string/adjust_counter"
                     style="@style/TaskFormSectionheader"/>
                 <LinearLayout
                     android:id="@+id/adjust_streak_wrapper"

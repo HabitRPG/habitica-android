@@ -721,6 +721,7 @@
     <string name="expand_notes">Read More</string>
     <string name="collapse_notes">Show Less</string>
     <string name="reset_streak">Reset Streak</string>
+    <string name="reset_counter">Reset Counter</string>
     <string name="week_reminder_title">Getting things done?</string>
     <string name="week_reminder_text">Check them off in Habitica now for rewards and XP!</string>
     <string name="month_reminder_title">Need a change of routine?</string>
@@ -791,6 +792,7 @@
     <string name="new_password">New Password</string>
     <string name="new_password_repeat">Repeat new Password</string>
     <string name="adjust_streak">Adjust Streak</string>
+    <string name="adjust_counter">Adjust Counter</string>
     <string name="password_changed">Password successfully changed</string>
     <string name="assigned_stat">Assigned Stat</string>
     <string name="monthly">Monthly</string>
