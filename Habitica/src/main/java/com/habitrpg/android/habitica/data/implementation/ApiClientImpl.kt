@@ -12,6 +12,7 @@ import com.habitrpg.android.habitica.api.GSonFactoryCreator
 import com.habitrpg.android.habitica.api.HostConfig
 import com.habitrpg.android.habitica.api.Server
 import com.habitrpg.android.habitica.data.ApiClient
+import com.habitrpg.android.habitica.events.ConsumablePurchasedEvent
 import com.habitrpg.android.habitica.events.ShowConnectionProblemEvent
 import com.habitrpg.android.habitica.helpers.NotificationsManager
 import com.habitrpg.android.habitica.models.*
@@ -195,6 +196,9 @@ class ApiClientImpl // private OnHabitsAPIResult mResultListener;
             val res = getErrorResponse(error)
             val status = error.code()
 
+            if (res.message != null && res.message == "RECEIPT_ALREADY_USED") {
+                return
+            }
             if (status == 404 || error.response()?.raw()?.request?.url?.toString()?.endsWith("/user/push-devices") == true) {
                 // workaround for an error that sometimes displays that the user already has this push device
                 return
