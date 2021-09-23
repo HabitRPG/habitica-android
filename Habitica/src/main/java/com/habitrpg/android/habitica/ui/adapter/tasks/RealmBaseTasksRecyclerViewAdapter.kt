@@ -77,8 +77,4 @@ abstract class RealmBaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(
             data = unfilteredData
         }
     }
-
-    override fun getTaskIDAt(position: Int): String {
-        return data[position].id ?: ""
-    }
 }

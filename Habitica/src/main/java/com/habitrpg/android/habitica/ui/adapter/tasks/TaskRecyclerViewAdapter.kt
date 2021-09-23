@@ -18,7 +18,6 @@ interface TaskRecyclerViewAdapter {
     fun notifyItemMoved(adapterPosition: Int, adapterPosition1: Int)
     fun notifyDataSetChanged()
     fun getItemViewType(position: Int): Int
-    fun getTaskIDAt(position: Int): String?
 
     fun updateUnfilteredData(data: List<Task>?)
 

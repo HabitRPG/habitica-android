@@ -241,9 +241,17 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
 
             private fun updateTaskInRepository(validTaskId: String?, viewHolder: RecyclerView.ViewHolder) {
                 if (validTaskId != null) {
+                    var newPosition = viewHolder.absoluteAdapterPosition
+                    if (taskFilterHelper.howMany(taskType) > 0) {
+                        newPosition = if ((newPosition + 1) == recyclerAdapter?.data?.size) {
+                            recyclerAdapter?.data?.get(newPosition - 1)?.position ?: newPosition
+                        } else {
+                            (recyclerAdapter?.data?.get(newPosition + 1)?.position ?: newPosition) - 1
+                        }
+                    }
                     compositeSubscription.add(
                         taskRepository.updateTaskPosition(
-                            taskType, validTaskId, viewHolder.absoluteAdapterPosition
+                            taskType, validTaskId, newPosition
                         )
                             .delay(1, TimeUnit.SECONDS)
                             .observeOn(AndroidSchedulers.mainThread())

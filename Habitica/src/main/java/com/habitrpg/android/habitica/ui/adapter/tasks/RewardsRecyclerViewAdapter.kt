@@ -144,10 +144,6 @@ class RewardsRecyclerViewAdapter(private var customRewards: List<Task>?, private
 
     override fun filter() { /* no-on */ }
 
-    override fun getTaskIDAt(position: Int): String? {
-        return customRewards?.get(position)?.id
-    }
-
     companion object {
         private const val VIEWTYPE_CUSTOM_REWARD = 0
         private const val VIEWTYPE_IN_APP_REWARD = 2
