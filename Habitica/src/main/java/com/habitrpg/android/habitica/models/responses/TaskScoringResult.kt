@@ -1,6 +1,24 @@
 package com.habitrpg.android.habitica.models.responses
 
-class TaskScoringResult {
+import com.habitrpg.android.habitica.models.user.Stats
+
+class TaskScoringResult() {
+    constructor(data: TaskDirectionData, stats: Stats?) : this() {
+        hasLeveledUp = data.lvl > stats?.lvl ?: 0
+        healthDelta = data.hp - (stats?.hp ?: 0.0)
+        if (hasLeveledUp) {
+            experienceDelta = (stats?.toNextLevel ?: 0).toDouble() - (stats?.exp ?: 0.0) + data.exp
+        } else {
+            experienceDelta = data.exp - (stats?.exp ?: 0.0)
+        }
+        manaDelta = data.mp - (stats?.mp ?: 0.0)
+        goldDelta = data.gp - (stats?.gp ?: 0.0)
+        level = data.lvl
+        questDamage = data._tmp?.quest?.progressDelta
+        questItemsFound = data._tmp?.quest?.collection
+        drop = data._tmp?.drop
+    }
+
     var drop: TaskDirectionDataDrop? = null
     var experienceDelta: Double? = null
     var healthDelta: Double? = null

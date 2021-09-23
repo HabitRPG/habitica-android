@@ -58,17 +58,7 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
         } else null
         if (user != null && localData != null) {
             val stats = user.stats
-            val result = TaskScoringResult()
-
-            result.healthDelta = localData.hp - (stats?.hp ?: 0.0)
-            result.experienceDelta = localData.exp - (stats?.exp ?: 0.0)
-            result.manaDelta = localData.mp - (stats?.mp ?: 0.0)
-            result.goldDelta = localData.gp - (stats?.gp ?: 0.0)
-            result.hasLeveledUp = localData.lvl > stats?.lvl ?: 0
-            result.level = localData.lvl
-            result.questDamage = localData._tmp?.quest?.progressDelta
-            result.questItemsFound = localData._tmp?.quest?.collection
-            result.drop = localData._tmp?.drop
+            val result = TaskScoringResult(localData, stats)
             notifyFunc?.invoke(result)
 
             handleTaskResponse(user, localData, task, up, 0f)
@@ -100,22 +90,11 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
                         Pair("value", task.value)
                     )
                 )
-                val result = TaskScoringResult()
                 if (res.lvl == 0) {
                     // Team tasks that require approval have weird data that we should just ignore.
-                    return@map result
+                    return@map TaskScoringResult()
                 }
-                val stats = user.stats
-
-                result.healthDelta = res.hp - (stats?.hp ?: 0.0)
-                result.experienceDelta = res.exp - (stats?.exp ?: 0.0)
-                result.manaDelta = res.mp - (stats?.mp ?: 0.0)
-                result.goldDelta = res.gp - (stats?.gp ?: 0.0)
-                result.hasLeveledUp = res.lvl > stats?.lvl ?: 0
-                result.level = res.lvl
-                result.questDamage = res._tmp?.quest?.progressDelta
-                result.questItemsFound = res._tmp?.quest?.collection
-                result.drop = res._tmp?.drop
+                val result = TaskScoringResult(res, user.stats)
                 if (localData == null) {
                     notifyFunc?.invoke(result)
                 }

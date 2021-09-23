@@ -11,13 +11,8 @@ open class Tag : RealmObject(), BaseObject {
     var id: String = ""
 
     var userId: String? = null
-    var tasks: RealmList<Task>? = null
     var name: String = ""
     internal var challenge: Boolean = false
-
-    fun getTasks(): List<Task>? {
-        return tasks
-    }
 
     override fun equals(other: Any?): Boolean {
         if (other is Tag) {
