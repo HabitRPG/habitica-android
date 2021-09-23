@@ -16,9 +16,9 @@ class CheckClassSelectionUseCase @Inject constructor(postExecutionThread: PostEx
             val user = requestValues.user
 
             if (requestValues.currentClass == null) {
-                if (user?.stats?.lvl ?: 0 >= 10 &&
-                    user?.preferences?.disableClasses == false &&
-                    user.flags?.classSelected == false
+                if (user?.stats?.lvl ?: 0 >= 9 &&
+                    user?.preferences?.disableClasses != true &&
+                    user?.flags?.classSelected != true
                 ) {
                     displayClassSelectionActivity(true, null, requestValues.activity)
                 }
