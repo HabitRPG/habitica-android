@@ -17,6 +17,9 @@ import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.PurchaseHandler
 import com.habitrpg.android.habitica.helpers.PurchaseTypes
 import com.habitrpg.android.habitica.proxy.AnalyticsManager
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import javax.inject.Inject
@@ -66,8 +69,11 @@ class InsufficientGemsDialog(context: Context, var gemPrice: Int) : Insufficient
                     } else {
                         PurchaseTypes.Purchase4Gems
                     }
-                    purchaseHandler?.getInAppPurchaseSKU(PurchaseTypes.Purchase4Gems) { sku ->
-                        val purchaseTextView = contentView.findViewById<TextView>(R.id.purchase_textview)
+                    CoroutineScope(Dispatchers.IO).launch {
+                        val sku = purchaseHandler?.getInAppPurchaseSKU(PurchaseTypes.Purchase4Gems)
+                            ?: return@launch
+                        val purchaseTextView =
+                            contentView.findViewById<TextView>(R.id.purchase_textview)
                         purchaseTextView.text = sku.displayTitle
                         purchaseButton?.text = sku.price
                     }

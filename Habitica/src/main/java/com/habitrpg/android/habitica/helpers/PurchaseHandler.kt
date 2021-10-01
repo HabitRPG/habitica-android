@@ -6,8 +6,11 @@ import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import org.solovyev.android.checkout.*
 import java.util.*
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
+import kotlin.coroutines.suspendCoroutine
 
-class PurchaseHandler(activity: Activity, val analyticsManager: AnalyticsManager) {
+open class PurchaseHandler(activity: Activity, val analyticsManager: AnalyticsManager) {
     private val billing = HabiticaBaseApplication.getInstance(activity.applicationContext)?.billing
     private val checkout = billing?.let { Checkout.forActivity(activity, it) }
     private val inventory = checkout?.makeInventory()
@@ -48,60 +51,39 @@ class PurchaseHandler(activity: Activity, val analyticsManager: AnalyticsManager
     fun onResult(requestCode: Int, resultCode: Int, data: Intent?) {
         checkout?.onActivityResult(requestCode, resultCode, data)
     }
+    suspend fun getAllGemSKUs(): List<Sku> = getSKUs(ProductTypes.IN_APP, PurchaseTypes.allGemTypes)
+    suspend fun getAllSubscriptionProducts() = getProduct(ProductTypes.SUBSCRIPTION, PurchaseTypes.allSubscriptionTypes)
+    suspend fun getAllGiftSubscriptionProducts() = getProduct(ProductTypes.IN_APP, PurchaseTypes.allSubscriptionNoRenewTypes)
+    suspend fun getInAppPurchaseSKU(identifier: String) = getSKU(ProductTypes.IN_APP, identifier)
 
-    fun getAllGemSKUs(onSuccess: ((List<Sku>) -> Unit)) {
-        getSKUs(ProductTypes.IN_APP, PurchaseTypes.allGemTypes, onSuccess)
+    private suspend fun getSKUs(type: String, identifiers: List<String>): List<Sku> {
+        return getProduct(type, identifiers)?.skus ?: emptyList()
     }
 
-    fun getAllSubscriptionProducts(onSuccess: ((Inventory.Product) -> Unit)) {
-        getProduct(ProductTypes.SUBSCRIPTION, PurchaseTypes.allSubscriptionTypes, onSuccess)
+    private suspend fun getProduct(type: String, identifiers: List<String>): Inventory.Product? {
+        val inventory = loadInventory(type, identifiers)
+        val purchases = inventory?.get(type) ?: return null
+        if (!purchases.supported) return null
+        return purchases
     }
 
-    fun getAllGiftSubscriptionProducts(onSuccess: ((Inventory.Product) -> Unit)) {
-        getProduct(ProductTypes.IN_APP, PurchaseTypes.allSubscriptionNoRenewTypes, onSuccess)
+    private suspend fun getSKU(type: String, identifier: String): Sku? {
+        val inventory = loadInventory(type, listOf(identifier))
+        val purchases = inventory?.get(type) ?: return null
+        if (!purchases.supported) return null
+        return purchases.skus.firstOrNull()
     }
 
-    fun getInAppPurchaseSKU(identifier: String, onSuccess: ((Sku) -> Unit)) {
-        getSKU(ProductTypes.IN_APP, identifier, onSuccess)
-    }
-
-    private fun getSKUs(type: String, identifiers: List<String>, onSuccess: ((List<Sku>) -> Unit)) {
-        getProduct(type, identifiers) {
-            onSuccess(it.skus)
-        }
-    }
-
-    private fun getProduct(type: String, identifiers: List<String>, onSuccess: ((Inventory.Product) -> Unit)) {
-        loadInventory(
-            type, identifiers,
-            Inventory.Callback { products ->
-                val purchases = products.get(type)
-                if (!purchases.supported) return@Callback
-                onSuccess(purchases)
-            }
-        )
-    }
-
-    private fun getSKU(type: String, identifier: String, onSuccess: ((Sku) -> Unit)) {
-        loadInventory(
-            type, listOf(identifier),
-            Inventory.Callback { products ->
-                val purchases = products.get(type)
-                if (!purchases.supported) return@Callback
-                purchases.skus.firstOrNull()?.let { onSuccess(it) }
-            }
-        )
-    }
-
-    private fun loadInventory(type: String, skus: List<String>, callback: Inventory.Callback) {
+    private suspend fun loadInventory(type: String, skus: List<String>): Inventory.Products? = suspendCoroutine { cont ->
         val request = Inventory.Request.create().loadAllPurchases().loadSkus(type, skus)
-        if (request != null) {
-            try {
-                inventory?.load(request, callback)
-            } catch (e: NullPointerException) {
-                return
+        try {
+            inventory?.load(request) {
+                cont.resume(it)
             }
+        } catch (e: NullPointerException) {
+            cont.resumeWithException(e)
         }
+        if (inventory == null) cont.resume(null)
     }
 
     fun purchaseSubscription(sku: Sku, onSuccess: (() -> Unit)) {

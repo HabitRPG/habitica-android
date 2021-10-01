@@ -35,13 +35,20 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
 
     protected var compositeSubscription: CompositeDisposable = CompositeDisposable()
 
+    var shouldInitializeComponent = true
+
     open val displayedClassName: String?
         get() = this.javaClass.simpleName
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    fun initializeComponent() {
+        if (!shouldInitializeComponent) return
         HabiticaBaseApplication.userComponent?.let {
             injectFragment(it)
         }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        initializeComponent()
         super.onCreate(savedInstanceState)
     }
 

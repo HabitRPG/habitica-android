@@ -12,7 +12,7 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import javax.inject.Inject
 
-abstract class BaseViewModel : ViewModel() {
+abstract class BaseViewModel(initializeComponent: Boolean = true) : ViewModel() {
 
     @Inject
     lateinit var userRepository: UserRepository
@@ -23,7 +23,9 @@ abstract class BaseViewModel : ViewModel() {
     }
 
     init {
-        HabiticaBaseApplication.userComponent?.let { inject(it) }
+        if (initializeComponent) {
+            HabiticaBaseApplication.userComponent?.let { inject(it) }
+        }
     }
 
     abstract fun inject(component: UserComponent)

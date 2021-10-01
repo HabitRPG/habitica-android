@@ -20,6 +20,9 @@ import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.Subscribe
 import org.solovyev.android.checkout.Inventory
 import org.solovyev.android.checkout.Sku
@@ -103,11 +106,11 @@ class GiftSubscriptionActivity : BaseActivity() {
         super.onStart()
         purchaseHandler = PurchaseHandler(this, analyticsManager)
         purchaseHandler?.startListening()
-
-        purchaseHandler?.getAllGiftSubscriptionProducts {
-            skus = it.skus
-            for (sku in it.skus) {
-                updateButtonLabel(sku, sku.price, it)
+        CoroutineScope(Dispatchers.IO).launch {
+            val subscriptions = purchaseHandler?.getAllGiftSubscriptionProducts()
+            skus = subscriptions?.skus ?: return@launch
+            for (sku in skus) {
+                updateButtonLabel(sku, sku.price, subscriptions)
             }
         }
     }

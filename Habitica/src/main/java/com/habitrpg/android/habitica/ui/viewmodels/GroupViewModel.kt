@@ -30,7 +30,8 @@ enum class GroupViewType(internal val order: String) {
     TAVERN("tavern")
 }
 
-open class GroupViewModel : BaseViewModel() {
+open class GroupViewModel(initializeComponent: Boolean) : BaseViewModel(initializeComponent) {
+    constructor() : this(true)
 
     @Inject
     lateinit var challengeRepository: ChallengeRepository

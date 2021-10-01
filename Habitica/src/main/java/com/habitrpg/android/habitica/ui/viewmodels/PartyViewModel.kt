@@ -12,7 +12,8 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import org.greenrobot.eventbus.EventBus
 
-class PartyViewModel : GroupViewModel() {
+class PartyViewModel(initializeComponent: Boolean) : GroupViewModel(initializeComponent) {
+    constructor() : this(true)
 
     internal val isQuestActive: Boolean
         get() = getGroupData().value?.quest?.active == true

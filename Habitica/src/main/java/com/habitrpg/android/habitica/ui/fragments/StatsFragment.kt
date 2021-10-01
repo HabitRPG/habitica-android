@@ -17,13 +17,11 @@ import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.UserStatComputer
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
-import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.stats.BulkAllocateStatsDialog
 import java.util.*
 import javax.inject.Inject
-import javax.inject.Named
 import kotlin.math.min
 
 class StatsFragment : BaseMainFragment<FragmentStatsBinding>() {
@@ -35,8 +33,6 @@ class StatsFragment : BaseMainFragment<FragmentStatsBinding>() {
     }
 
     private var canAllocatePoints: Boolean = false
-    @field:[Inject Named(AppModule.NAMED_USER_ID)]
-    lateinit var userId: String
 
     @Inject
     lateinit var inventoryRepository: InventoryRepository
@@ -89,7 +85,7 @@ class StatsFragment : BaseMainFragment<FragmentStatsBinding>() {
         compositeSubscription.add(
             userRepository.getUser().subscribe(
                 { user ->
-                    canAllocatePoints = user?.stats?.lvl ?: 0 >= 10 && user?.stats?.points ?: 0 > 0
+                    canAllocatePoints = user.stats?.lvl ?: 0 >= 10 && user.stats?.points ?: 0 > 0
                     binding?.unlockAtLevel?.visibility = if (user.stats?.lvl ?: 0 < 10) View.VISIBLE else View.GONE
                     updateStats(user)
                     updateAttributePoints(user)

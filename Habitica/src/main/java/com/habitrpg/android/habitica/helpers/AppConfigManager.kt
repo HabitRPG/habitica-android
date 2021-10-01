@@ -118,8 +118,9 @@ class AppConfigManager(contentRepository: ContentRepository?) {
         var promo: HabiticaPromotion? = null
         for (event in worldState?.events ?: listOf(worldState?.currentEvent)) {
             if (event == null) return null
-            if (event.promo != null) {
-                promo = getHabiticaPromotionFromKey(event.promo ?: "", event.start, event.end)
+            val thisPromo = getHabiticaPromotionFromKey(event.promo ?: event.eventKey ?: "", event.start, event.end)
+            if (thisPromo != null) {
+                promo = thisPromo
             }
         }
         if (promo == null && remoteConfig.getString("activePromo").isNotBlank()) {
