@@ -10,7 +10,8 @@
         android:layout_height="match_parent" />
     <RelativeLayout
         android:orientation="vertical" android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
         <com.viewpagerindicator.IconPageIndicator
             android:id="@+id/view_pager_indicator"
             android:layout_height="wrap_content"
@@ -27,7 +28,7 @@
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="6dp"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="@dimen/spacing_small"
             android:textColor="@android:color/white"
             android:background="@color/transparent" />
 

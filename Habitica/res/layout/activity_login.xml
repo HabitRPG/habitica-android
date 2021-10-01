@@ -253,13 +253,15 @@
 
         </LinearLayout>
 
-        <Button
+        <ImageButton
             android:id="@+id/back_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_arrow_back_white_36dp"
+            android:src="@drawable/ic_arrow_back_white_36dp"
             android:background="@color/transparent"
             android:paddingStart="12dp"
+            android:paddingEnd="0dp"
+            android:layout_marginTop="@dimen/spacing_small"
             android:alpha="0" />
     </FrameLayout>
 
