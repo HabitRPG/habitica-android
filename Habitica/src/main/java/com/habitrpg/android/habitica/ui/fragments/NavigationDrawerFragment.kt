@@ -270,8 +270,9 @@ class NavigationDrawerFragment : DialogFragment() {
                 .doOnNext {
                     updateUser(it)
                 }
+                .filter { it.party?.quest?.key != null }
                 .flatMap { socialRepository.getGroup(it.party?.id ?: "") }
-                .filter { it.quest?.key != null }
+                .filter { it.quest?.active == true }
                 .map {
                     quest = it.quest
                     it.quest?.key ?: ""
@@ -674,7 +675,7 @@ class NavigationDrawerFragment : DialogFragment() {
                 val diff = activePromo.endDate.time - Date().time
                 if (diff < (Duration.hours(1).inWholeMilliseconds)) Duration.seconds(1) else Duration.minutes(1)
             }) {
-                promotedItem.subtitle = context?.getString(R.string.open_for, activePromo.endDate.getShortRemainingString())
+                promotedItem.subtitle = context?.getString(R.string.x_remaining, activePromo.endDate.getShortRemainingString())
                 updateItem(promotedItem)
             }
         } ?: run {

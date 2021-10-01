@@ -1,61 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    tools:parentTag="android.widget.LinearLayout"
     android:clipChildren="true">
-    <ImageView
-        android:id="@+id/bossArtView"
-        android:layout_width="wrap_content"
-        android:layout_height="120dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:background="@color/red_10"
-        android:layout_marginTop="-30dp"
-        />
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true">
         <LinearLayout
             android:id="@+id/topView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="40dp"
-            android:orientation="vertical"
-            android:paddingStart="@dimen/spacing_large"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/spacing_medium"
             android:paddingEnd="@dimen/spacing_large"
-            android:paddingTop="@dimen/spacing_medium"
-            android:paddingBottom="@dimen/spacing_medium">
-            <ImageButton
-                android:id="@+id/closeButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_close_white_24dp"
-                android:background="@color/transparent"
-                android:contentDescription="@string/hide_boss_art"
-                android:layout_gravity="end"/>
+            android:paddingTop="@dimen/spacing_medium">
             <TextView
                 android:id="@+id/bossNameView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="end"
                 android:textColor="@color/white"
                 android:textSize="14sp"
                 android:textStyle="bold"
                 tools:text="Boss Name"
                 />
+            <Space
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content" />
             <TextView
                 android:id="@+id/typeTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/world_boss"
-                android:layout_gravity="end|center_vertical"
                 android:textColor="@color/white"
                 android:textSize="12sp"/>
         </LinearLayout>
@@ -63,8 +39,8 @@
             android:id="@+id/bottomView"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:gravity="center_vertical"
             android:orientation="horizontal"
+            android:gravity="center_vertical"
             tools:background="?colorPrimaryDark"
             android:paddingStart="@dimen/spacing_medium"
             android:paddingEnd="@dimen/spacing_large">
@@ -97,6 +73,4 @@
                 tools:text="+1"
                 />
         </LinearLayout>
-    </LinearLayout>
-
-</RelativeLayout>
+</merge>
