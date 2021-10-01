@@ -276,7 +276,7 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
                 binding.password.setAutofillHints("newPassword")
             }
             binding.password.imeOptions = EditorInfo.IME_ACTION_NEXT
-            binding.fbLoginButton.setText(R.string.register_btn_fb)
+            binding.fbLoginButton.visibility = View.GONE
             binding.googleLoginButton.setText(R.string.register_btn_google)
         } else {
             binding.loginBtn.text = getString(R.string.login_btn)
@@ -287,6 +287,7 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
             }
             binding.password.imeOptions = EditorInfo.IME_ACTION_DONE
             binding.fbLoginButton.setText(R.string.login_btn_fb)
+            binding.fbLoginButton.visibility = View.VISIBLE
             binding.googleLoginButton.setText(R.string.login_btn_google)
         }
         this.resetLayout()
