@@ -159,7 +159,7 @@ class SubscriptionDetailsView : LinearLayout {
     }
 
     private fun changeSubscriptionButtonTapped() {
-        if (plan?.paymentMethod != null) {
+        if (plan?.paymentMethod != null && plan?.dateTerminated == null) {
             val url = if (plan?.paymentMethod == "Google") {
                 "https://play.google.com/store/account/subscriptions"
             } else {

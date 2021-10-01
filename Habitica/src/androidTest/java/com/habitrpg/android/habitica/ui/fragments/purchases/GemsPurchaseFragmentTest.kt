@@ -81,7 +81,6 @@ class GemsPurchaseFragmentTest :
             "",
             0
         )
-
     }
 
     override fun makeFragment() {
