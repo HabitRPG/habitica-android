@@ -49,10 +49,8 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import kotlin.collections.ArrayList
+import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
-import kotlin.time.hours
-import kotlin.time.minutes
-import kotlin.time.seconds
 
 class NavigationDrawerFragment : DialogFragment() {
 
@@ -110,22 +108,22 @@ class NavigationDrawerFragment : DialogFragment() {
                     adapter.backgroundTintColor = it.getThemeColor(R.attr.colorPrimary)
                 }
             }
-            adapter.items.filter { it.identifier == SIDEBAR_TAVERN }.forEach {
-                it.subtitle = null
+            getItemWithIdentifier(SIDEBAR_TAVERN)?.let { tavern ->
+                tavern.subtitle = context?.getString(R.string.active_world_boss)
+                adapter.updateItem(tavern)
             }
             return
         }
         binding?.questMenuView?.visibility = View.VISIBLE
 
-        binding?.menuHeaderView?.setBackgroundColor(questContent.colors?.darkColor ?: 0)
         binding?.questMenuView?.configure(quest)
         binding?.questMenuView?.configure(questContent)
-        adapter.tintColor = questContent.colors?.extraLightColor ?: 0
-        adapter.backgroundTintColor = questContent.colors?.darkColor ?: 0
-
-        binding?.messagesBadge?.visibility = View.GONE
-        binding?.settingsBadge?.visibility = View.GONE
-        binding?.notificationsBadge?.visibility = View.GONE
+        questContent.colors?.let { colors ->
+            binding?.menuHeaderView?.setBackgroundColor(colors.darkColor)
+            adapter.tintColor = colors.extraLightColor
+            adapter.backgroundTintColor = colors.darkColor
+        }
+        binding?.questMenuView?.setBackgroundColor(context?.getThemeColor(R.attr.colorPrimaryDark) ?: 0)
 
         /* Reenable this once the boss art can be displayed correctly.
 
@@ -135,18 +133,18 @@ class NavigationDrawerFragment : DialogFragment() {
         } else {
             questMenuView.showBossArt()
         }*/
-        binding?.questMenuView?.hideBossArt()
+        //binding?.questMenuView?.hideBossArt()
 
-        adapter.items.filter { it.identifier == SIDEBAR_TAVERN }.forEach {
-            it.subtitle = context?.getString(R.string.active_world_boss)
-        }
-        adapter.notifyDataSetChanged()
-
+        /*getItemWithIdentifier(SIDEBAR_TAVERN)?.let { tavern ->
+            tavern.subtitle = context?.getString(R.string.active_world_boss)
+            adapter.updateItem(tavern)
+        }*/
         binding?.questMenuView?.setOnClickListener {
-            val context = this.context
+            setSelection(R.id.partyFragment)
+            /*val context = this.context
             if (context != null) {
                 TavernDetailFragment.showWorldBossInfoDialog(context, questContent)
-            }
+            }*/
         }
     }
 
@@ -174,7 +172,7 @@ class NavigationDrawerFragment : DialogFragment() {
         savedInstanceState: Bundle?
     ): View? = inflater.inflate(R.layout.drawer_main, container, false) as? ViewGroup
 
-    private var seasonalShopJob: Job? = null
+    private var updatingJobs = mutableMapOf<String, Job>()
 
     @OptIn(ExperimentalTime::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -200,7 +198,6 @@ class NavigationDrawerFragment : DialogFragment() {
                         putBoolean("hide$it", true)
                     }
                     updatePromo()
-                    adapter.notifyDataSetChanged()
                 },
                 RxErrorHandler.handleEmptyError()
             )
@@ -211,10 +208,21 @@ class NavigationDrawerFragment : DialogFragment() {
                 .doOnNext { quest = it.quest }
                 .filter { it.hasActiveQuest }
                 .flatMapMaybe { inventoryRepository.getQuestContent(it.quest?.key ?: "").firstElement() }
-                .subscribe(
-                    {
+                .subscribe({
                         questContent = it
                     },
+                    RxErrorHandler.handleEmptyError()
+                )
+        )
+
+        subscriptions?.add(
+            socialRepository.getGroup(Group.TAVERN_ID)
+                .doOnNext { quest = it.quest }
+                .filter { it.hasActiveQuest }
+                .flatMapMaybe { inventoryRepository.getQuestContent(it.quest?.key ?: "").firstElement() }
+                .subscribe({
+                    questContent = it
+                },
                     RxErrorHandler.handleEmptyError()
                 )
         )
@@ -227,15 +235,14 @@ class NavigationDrawerFragment : DialogFragment() {
                 }
             ).subscribe(
                 { pair ->
-                    updateSeasonalMenuEntries(pair.first, pair.second)
-                    seasonalShopJob?.cancel()
-                    seasonalShopJob = lifecycleScope.launch(Dispatchers.Main) {
-                        val gearEvent = pair.first.events.firstOrNull { it.gear }
-                        while (gearEvent?.end?.after(Date()) == true || pair.second.isNotEmpty()) {
-                            updateSeasonalMenuEntries(pair.first, pair.second)
-                            val diff = (gearEvent?.end?.time ?: 0) - Date().time
-                            delay(if (diff < (1.hours.inMilliseconds)) 1.seconds else 1.minutes)
-                        }
+                    val gearEvent = pair.first.events.firstOrNull { it.gear }
+                    createUpdatingJob("seasonal", {
+                        gearEvent?.end?.after(Date()) == true || pair.second.isNotEmpty()
+                    }, {
+                        val diff = (gearEvent?.end?.time ?: 0) - Date().time
+                        if (diff < (Duration.hours(1).inWholeMilliseconds)) Duration.seconds(1) else Duration.minutes(1)
+                    }) {
+                        updateSeasonalMenuEntries(pair.first, pair.second)
                     }
                 },
                 RxErrorHandler.handleEmptyError()
@@ -259,9 +266,20 @@ class NavigationDrawerFragment : DialogFragment() {
         }
 
         subscriptions?.add(
-            userRepository.getUser().subscribe(
-                {
+            userRepository.getUser()
+                .doOnNext {
                     updateUser(it)
+                }
+                .flatMap { socialRepository.getGroup(it.party?.id ?: "") }
+                .filter { it.quest?.key != null }
+                .map {
+                    quest = it.quest
+                    it.quest?.key ?: ""
+                }
+                .flatMapMaybe { inventoryRepository.getQuestContent(it).firstElement() }
+                .subscribe(
+                {
+                    questContent = it
                 },
                 RxErrorHandler.handleEmptyError()
             )
@@ -270,6 +288,25 @@ class NavigationDrawerFragment : DialogFragment() {
         binding?.messagesButtonWrapper?.setOnClickListener { setSelection(R.id.inboxFragment, null, true, preventReselection = false) }
         binding?.settingsButtonWrapper?.setOnClickListener { setSelection(R.id.prefsActivity, null, true, preventReselection = false) }
         binding?.notificationsButtonWrapper?.setOnClickListener { startNotificationsActivity() }
+    }
+
+    @OptIn(ExperimentalTime::class)
+    private fun createUpdatingJob(
+        key: String,
+        endingCondition: () -> Boolean,
+        delayFunc: () -> Duration,
+        function: () -> Unit
+    ) {
+        function()
+        if (updatingJobs[key]?.isActive == true) {
+            updatingJobs[key]?.cancel()
+        }
+        updatingJobs[key] = lifecycleScope.launch(Dispatchers.Main) {
+            while (endingCondition()) {
+                function()
+                delay(delayFunc())
+            }
+        }
     }
 
     private fun updateSeasonalMenuEntries(worldState: WorldState, items: List<Item>) {
@@ -281,6 +318,7 @@ class NavigationDrawerFragment : DialogFragment() {
             market.pillText = null
             market.subtitle = null
         }
+        adapter.updateItem(market)
 
         val shop = getItemWithIdentifier(SIDEBAR_SHOPS_SEASONAL) ?: return
         shop.pillText = context?.getString(R.string.open)
@@ -291,7 +329,7 @@ class NavigationDrawerFragment : DialogFragment() {
         } else {
             shop.isVisible = false
         }
-        adapter.notifyDataSetChanged()
+        adapter.updateItem(shop)
     }
 
     private fun updateUser(user: User) {
@@ -399,6 +437,8 @@ class NavigationDrawerFragment : DialogFragment() {
         socialRepository.close()
         inventoryRepository.close()
         userRepository.close()
+        updatingJobs.forEach { it.value.cancel() }
+        updatingJobs.clear()
         super.onDestroy()
     }
 
@@ -606,24 +646,38 @@ class NavigationDrawerFragment : DialogFragment() {
         }
     }
 
+    @OptIn(ExperimentalTime::class)
     fun updatePromo() {
         activePromo = configManager.activePromo()
         val promoItem = getItemWithIdentifier(SIDEBAR_PROMO) ?: return
-        if (activePromo != null && !sharedPreferences.getBoolean("hide${activePromo?.identifier}", false)) {
-            promoItem.isVisible = true
-            adapter.activePromo = activePromo
+        activePromo?.let { activePromo ->
+            if (sharedPreferences.getBoolean("hide${activePromo.identifier}", false)) {
+                promoItem.isVisible = true
+                adapter.activePromo = activePromo
+            } else {
+                promoItem.isVisible = false
+            }
 
             var promotedItem: HabiticaDrawerItem? = null
-            if (activePromo?.promoType == PromoType.GEMS_AMOUNT || activePromo?.promoType == PromoType.GEMS_PRICE) {
+            if (activePromo.promoType == PromoType.GEMS_AMOUNT || activePromo.promoType == PromoType.GEMS_PRICE) {
                 promotedItem = getItemWithIdentifier(SIDEBAR_GEMS)
             }
-            if (activePromo?.promoType == PromoType.SUBSCRIPTION) {
+            if (activePromo.promoType == PromoType.SUBSCRIPTION) {
                 promotedItem = getItemWithIdentifier(SIDEBAR_SUBSCRIPTION)
             }
-            promotedItem?.pillText = context?.getString(R.string.sale)
-            promotedItem?.pillBackground = context?.let { activePromo?.pillBackgroundDrawable(it) }
-            promotedItem?.let { updateItem(it) }
-        } else {
+            if (promotedItem == null) return@let
+            promotedItem.pillText = context?.getString(R.string.sale)
+            promotedItem.pillBackground = context?.let { activePromo.pillBackgroundDrawable(it) }
+            createUpdatingJob(activePromo.promoType.name, {
+                activePromo.endDate.after(Date())
+            }, {
+                val diff = activePromo.endDate.time - Date().time
+                if (diff < (Duration.hours(1).inWholeMilliseconds)) Duration.seconds(1) else Duration.minutes(1)
+            }) {
+                promotedItem.subtitle = context?.getString(R.string.open_for, activePromo.endDate.getShortRemainingString())
+                updateItem(promotedItem)
+            }
+        } ?: run {
             promoItem.isVisible = false
         }
         updateItem(promoItem)
@@ -653,7 +707,6 @@ class NavigationDrawerFragment : DialogFragment() {
         const val SIDEBAR_GEMS = "gems"
         const val SIDEBAR_SUBSCRIPTION = "subscription"
         const val SIDEBAR_SUBSCRIPTION_PROMO = "subscriptionpromo"
-        const val SIDEBAR_G1G1_PROMO = "g1g1promo"
         const val SIDEBAR_PROMO = "promo"
         const val SIDEBAR_ADVENTURE_GUIDE = "adventureguide"
         const val SIDEBAR_ABOUT_HEADER = "about_header"

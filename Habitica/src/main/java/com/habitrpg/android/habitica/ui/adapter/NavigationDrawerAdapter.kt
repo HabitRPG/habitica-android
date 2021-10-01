@@ -33,7 +33,11 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int) : Recycl
     var backgroundTintColor: Int = backgroundTintColor
         set(value) {
             field = value
-            notifyDataSetChanged()
+            for (item in items) {
+                if (item.isHeader) {
+                    notifyItemChanged(getVisibleItemPosition(item.identifier))
+                }
+            }
         }
 
     internal val items: MutableList<HabiticaDrawerItem> = ArrayList()
@@ -56,11 +60,18 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int) : Recycl
 
     private fun getItemPosition(identifier: String): Int =
         items.indexOfFirst { it.identifier == identifier }
+    private fun getVisibleItemPosition(identifier: String): Int =
+        items.filter { it.isVisible }.indexOfFirst { it.identifier == identifier }
 
     fun updateItem(item: HabiticaDrawerItem) {
         val position = getItemPosition(item.identifier)
-        items[position] = item
-        notifyDataSetChanged()
+        if (position == -1) {
+            items.add(item)
+            notifyItemInserted(items.size - 1)
+        } else {
+            items[position] = item
+            notifyItemChanged(getVisibleItemPosition(item.identifier))
+        }
     }
 
     fun updateItems(newItems: List<HabiticaDrawerItem>) {
@@ -83,14 +94,16 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int) : Recycl
         if (teamHeaderIndex != -1 && nextHeaderIndex != -1) {
             for (x in nextHeaderIndex - 1 downTo teamHeaderIndex + 1) {
                 items.removeAt(x)
+                notifyItemRemoved(x)
             }
             for ((index, team) in teams.withIndex()) {
                 val item = HabiticaDrawerItem(R.id.teamBoardFragment, team.id, team.summary)
                 item.bundle = bundleOf(Pair("teamID", team.id))
-                items.add(teamHeaderIndex + index + 1, item)
+                val newIndex = teamHeaderIndex + index + 1
+                items.add(newIndex, item)
+                notifyItemInserted(newIndex)
             }
         }
-        notifyDataSetChanged()
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -99,7 +112,6 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int) : Recycl
             getItemViewType(position) == 0 -> {
                 val itemHolder = holder as? DrawerItemViewHolder
                 itemHolder?.tintColor = tintColor
-                itemHolder?.backgroundTintColor = backgroundTintColor
                 itemHolder?.bind(drawerItem, drawerItem.transitionId == selectedItem)
                 itemHolder?.itemView?.setOnClickListener { itemSelectedEvents.onNext(drawerItem) }
             }
@@ -168,7 +180,6 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int) : Recycl
     class DrawerItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         var tintColor: Int = 0
-        var backgroundTintColor: Int = 0
 
         private val titleTextView: TextView? = itemView.findViewById(R.id.titleTextView)
         private val pillView: TextView? = itemView.findViewById(R.id.pillView)
