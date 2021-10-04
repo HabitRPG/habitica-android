@@ -280,6 +280,7 @@ class NavigationDrawerFragment : DialogFragment() {
                     it.quest?.key ?: ""
                 }
                 .flatMapMaybe { inventoryRepository.getQuestContent(it).firstElement() }
+                .filter { (it.boss?.hp ?: 0) > 0 }
                 .subscribe(
                 {
                     questContent = it

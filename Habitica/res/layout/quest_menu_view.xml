@@ -36,9 +36,8 @@
                 android:textSize="12sp"/>
         </LinearLayout>
         <LinearLayout
-            android:id="@+id/bottomView"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="28dp"
             android:orientation="horizontal"
             android:gravity="center_vertical"
             tools:background="?colorPrimaryDark"
@@ -73,4 +72,28 @@
                 tools:text="+1"
                 />
         </LinearLayout>
+    <LinearLayout
+        android:id="@+id/rage_view"
+        android:layout_width="match_parent"
+        android:layout_height="28dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        tools:background="?colorPrimaryDark"
+        android:paddingStart="@dimen/spacing_medium"
+        android:paddingEnd="@dimen/spacing_large">
+        <ImageView
+            android:id="@+id/rageIconView"
+            android:layout_width="@dimen/icon_size"
+            android:layout_height="@dimen/icon_size"
+            android:layout_marginEnd="@dimen/spacing_small"/>
+        <com.habitrpg.android.habitica.ui.views.HabiticaProgressBar
+            android:id="@+id/rageBarView"
+            android:layout_width="0dp"
+            android:layout_height="8dp"
+            android:layout_weight="1"
+            android:paddingTop="@dimen/spacing_medium"
+            android:paddingBottom="@dimen/spacing_small"
+            app:barForegroundColor="@color/yellow_50"
+            app:barBackgroundColor="@color/content_15_alpha"/>
+    </LinearLayout>
 </merge>

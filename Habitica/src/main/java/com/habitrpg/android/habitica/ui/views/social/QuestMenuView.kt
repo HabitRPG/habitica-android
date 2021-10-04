@@ -36,6 +36,7 @@ class QuestMenuView : LinearLayout {
         orientation = VERTICAL
 
         binding.heartIconView.setImageBitmap(HabiticaIconsHelper.imageOfHeartDarkBg())
+        binding.rageIconView.setImageBitmap(HabiticaIconsHelper.imageOfRage())
 
         binding.pendingDamageIconView.setImageBitmap(HabiticaIconsHelper.imageOfDamage())
 
@@ -50,16 +51,21 @@ class QuestMenuView : LinearLayout {
 
     fun configure(quest: Quest) {
         binding.healthBarView.setCurrentValue(quest.progress?.hp ?: 0.0)
+        binding.rageBarView.setCurrentValue(quest.progress?.rage ?: 0.0)
     }
 
     fun configure(questContent: QuestContent) {
         this.questContent = questContent
         binding.healthBarView.setMaxValue(questContent.boss?.hp?.toDouble() ?: 0.0)
-        binding.bottomView.setBackgroundColor(questContent.colors?.darkColor ?: 0)
-        //binding.bossArtView.setBackgroundColor(questContent.colors?.mediumColor ?: 0)
-        //DataBindingUtils.loadImage(binding.bossArtView, "quest_" + questContent.key)
         binding.bossNameView.text = questContent.boss?.name
         binding.typeTextView.text = context.getString(R.string.boss_quest)
+
+        if (questContent.boss?.hasRage == true) {
+            binding.rageView.visibility = View.VISIBLE
+            binding.rageBarView.setMaxValue(questContent.boss?.rage?.value ?: 0.0)
+        } else {
+            binding.rageView.visibility = View.GONE
+        }
     }
 
     fun configure(user: User) {

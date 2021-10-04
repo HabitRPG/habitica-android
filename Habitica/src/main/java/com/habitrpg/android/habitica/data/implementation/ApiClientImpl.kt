@@ -554,7 +554,7 @@ class ApiClientImpl // private OnHabitsAPIResult mResultListener;
         return apiService.seenMessages(groupId).compose(configureApiCallObserver())
     }
 
-    override fun inviteToGroup(groupId: String, inviteData: Map<String, Any>): Flowable<Void> {
+    override fun inviteToGroup(groupId: String, inviteData: Map<String, Any>): Flowable<List<Void>> {
         return apiService.inviteToGroup(groupId, inviteData).compose(configureApiCallObserver())
     }
 

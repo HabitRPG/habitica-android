@@ -51,7 +51,7 @@ interface SocialRepository : BaseRepository {
     fun getGroupMembers(id: String): Flowable<out List<Member>>
     fun retrieveGroupMembers(id: String, includeAllPublicFields: Boolean): Flowable<List<Member>>
 
-    fun inviteToGroup(id: String, inviteData: Map<String, Any>): Flowable<Void>
+    fun inviteToGroup(id: String, inviteData: Map<String, Any>): Flowable<List<Void>>
 
     fun getMember(userId: String?): Flowable<Member>
     fun getMemberWithUsername(username: String?): Flowable<Member>
