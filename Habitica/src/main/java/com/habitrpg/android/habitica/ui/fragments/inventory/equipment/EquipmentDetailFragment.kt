@@ -33,7 +33,6 @@ class EquipmentDetailFragment :
     }
 
     var type: String? = null
-    var typeText: String? = null
     var equippedGear: String? = null
     var isCostume: Boolean? = null
 

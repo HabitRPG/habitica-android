@@ -111,7 +111,7 @@ class GuildDetailFragment : BaseFragment<FragmentGuildDetailBinding>() {
     private val sendInvitesResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if (it.resultCode == Activity.RESULT_OK) {
             val inviteData = HashMap<String, Any>()
-            inviteData["inviter"] = viewModel?.getUserData()?.value?.profile?.name ?: ""
+            inviteData["inviter"] = viewModel?.user?.value?.profile?.name ?: ""
             if (it.data?.getBooleanExtra(GroupInviteActivity.IS_EMAIL_KEY, false) == true) {
                 val emails = it.data?.getStringArrayExtra(GroupInviteActivity.EMAILS_KEY)
                 val invites = ArrayList<HashMap<String, String>>()

@@ -1183,4 +1183,5 @@
     <string name="terms_of_service">Terms of Service</string>
     <string name="damage_pending">%.01f dmg pending</string>
     <string name="x_remaining">%s remaining</string>
+    <string name="sale_ends_in">Sale ends in %s</string>
 </resources>

@@ -16,6 +16,7 @@ import androidx.core.os.bundleOf
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.SimpleItemAnimator
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.ContentRepository
@@ -181,6 +182,7 @@ class NavigationDrawerFragment : DialogFragment() {
 
         binding?.recyclerView?.adapter = adapter
         binding?.recyclerView?.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
+        (binding?.recyclerView?.itemAnimator as? SimpleItemAnimator)?.supportsChangeAnimations = false
         initializeMenuItems()
 
         subscriptions?.add(
@@ -675,7 +677,7 @@ class NavigationDrawerFragment : DialogFragment() {
                 val diff = activePromo.endDate.time - Date().time
                 if (diff < (Duration.hours(1).inWholeMilliseconds)) Duration.seconds(1) else Duration.minutes(1)
             }) {
-                promotedItem.subtitle = context?.getString(R.string.x_remaining, activePromo.endDate.getShortRemainingString())
+                promotedItem.subtitle = context?.getString(R.string.sale_ends_in, activePromo.endDate.getShortRemainingString())
                 updateItem(promotedItem)
             }
         } ?: run {
