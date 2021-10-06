@@ -129,7 +129,7 @@ class GuildDetailFragment : BaseFragment<FragmentGuildDetailBinding>() {
                 userIDs.forEach { invites.add(it) }
                 inviteData["usernames"] = invites
             }
-            viewModel.inviteToGroup(inviteData)
+            viewModel?.inviteToGroup(inviteData)
         }
     }
 

@@ -12,7 +12,6 @@ import com.habitrpg.android.habitica.api.GSonFactoryCreator
 import com.habitrpg.android.habitica.api.HostConfig
 import com.habitrpg.android.habitica.api.Server
 import com.habitrpg.android.habitica.data.ApiClient
-import com.habitrpg.android.habitica.events.ConsumablePurchasedEvent
 import com.habitrpg.android.habitica.events.ShowConnectionProblemEvent
 import com.habitrpg.android.habitica.helpers.NotificationsManager
 import com.habitrpg.android.habitica.models.*

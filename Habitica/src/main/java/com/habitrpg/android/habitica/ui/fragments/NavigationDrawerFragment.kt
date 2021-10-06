@@ -29,6 +29,7 @@ import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.WorldState
+import com.habitrpg.android.habitica.models.WorldStateEvent
 import com.habitrpg.android.habitica.models.inventory.Item
 import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.inventory.QuestContent
@@ -99,6 +100,7 @@ class NavigationDrawerFragment : DialogFragment() {
     private fun updateQuestDisplay() {
         val quest = this.quest
         val questContent = this.questContent
+        return
         if (quest == null || questContent == null || !quest.active) {
             binding?.questMenuView?.visibility = View.GONE
             context?.let {
@@ -126,20 +128,6 @@ class NavigationDrawerFragment : DialogFragment() {
         }
         binding?.questMenuView?.setBackgroundColor(context?.getThemeColor(R.attr.colorPrimaryDark) ?: 0)
 
-        /* Reenable this once the boss art can be displayed correctly.
-
-        val preferences = context?.getSharedPreferences("collapsible_sections", 0)
-        if (preferences?.getBoolean("boss_art_collapsed", false) == true) {
-            questMenuView.hideBossArt()
-        } else {
-            questMenuView.showBossArt()
-        }*/
-        //binding?.questMenuView?.hideBossArt()
-
-        /*getItemWithIdentifier(SIDEBAR_TAVERN)?.let { tavern ->
-            tavern.subtitle = context?.getString(R.string.active_world_boss)
-            adapter.updateItem(tavern)
-        }*/
         binding?.questMenuView?.setOnClickListener {
             setSelection(R.id.partyFragment)
             /*val context = this.context
@@ -239,12 +227,12 @@ class NavigationDrawerFragment : DialogFragment() {
                 { pair ->
                     val gearEvent = pair.first.events.firstOrNull { it.gear }
                     createUpdatingJob("seasonal", {
-                        gearEvent?.end?.after(Date()) == true || pair.second.isNotEmpty()
+                        gearEvent?.isCurrentlyActive == true || pair.second.isNotEmpty()
                     }, {
                         val diff = (gearEvent?.end?.time ?: 0) - Date().time
                         if (diff < (Duration.hours(1).inWholeMilliseconds)) Duration.seconds(1) else Duration.minutes(1)
                     }) {
-                        updateSeasonalMenuEntries(pair.first, pair.second)
+                        updateSeasonalMenuEntries(gearEvent, pair.second)
                     }
                 },
                 RxErrorHandler.handleEmptyError()
@@ -313,7 +301,7 @@ class NavigationDrawerFragment : DialogFragment() {
         }
     }
 
-    private fun updateSeasonalMenuEntries(worldState: WorldState, items: List<Item>) {
+    private fun updateSeasonalMenuEntries(gearEvent: WorldStateEvent?, items: List<Item>) {
         val market = getItemWithIdentifier(SIDEBAR_SHOPS_MARKET) ?: return
         if (items.isNotEmpty() && items.firstOrNull()?.event?.end?.after(Date()) == true) {
             market.pillText = context?.getString(R.string.something_new)
@@ -326,8 +314,7 @@ class NavigationDrawerFragment : DialogFragment() {
 
         val shop = getItemWithIdentifier(SIDEBAR_SHOPS_SEASONAL) ?: return
         shop.pillText = context?.getString(R.string.open)
-        val gearEvent = worldState.events.firstOrNull { it.gear }
-        if (gearEvent?.end?.after(Date()) == true) {
+        if (gearEvent?.isCurrentlyActive == true) {
             shop.isVisible = true
             shop.subtitle = context?.getString(R.string.open_for, gearEvent.end?.getShortRemainingString())
         } else {
@@ -673,13 +660,18 @@ class NavigationDrawerFragment : DialogFragment() {
             promotedItem.pillText = context?.getString(R.string.sale)
             promotedItem.pillBackground = context?.let { activePromo.pillBackgroundDrawable(it) }
             createUpdatingJob(activePromo.promoType.name, {
-                activePromo.endDate.after(Date())
+                activePromo.isActive
             }, {
                 val diff = activePromo.endDate.time - Date().time
                 if (diff < (Duration.hours(1).inWholeMilliseconds)) Duration.seconds(1) else Duration.minutes(1)
             }) {
-                promotedItem.subtitle = context?.getString(R.string.sale_ends_in, activePromo.endDate.getShortRemainingString())
-                updateItem(promotedItem)
+                if (activePromo.isActive) {
+                    promotedItem.subtitle = context?.getString(R.string.sale_ends_in, activePromo.endDate.getShortRemainingString())
+                    updateItem(promotedItem)
+                } else {
+                    promotedItem.subtitle = null
+                    updateItem(promotedItem)
+                }
             }
         } ?: run {
             promoItem.isVisible = false
