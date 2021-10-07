@@ -35,6 +35,7 @@ import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionVi
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.greenrobot.eventbus.Subscribe
 import org.solovyev.android.checkout.Inventory
 import org.solovyev.android.checkout.Purchase
@@ -145,12 +146,15 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>(), GemPur
     override fun setupCheckout() {
         CoroutineScope(Dispatchers.IO).launch {
             val subscriptions = purchaseHandler?.getAllSubscriptionProducts() ?: return@launch
-            for (sku in subscriptions.skus) {
-                updateButtonLabel(sku, sku.price, subscriptions)
+            skus = subscriptions.skus
+            withContext(Dispatchers.Main) {
+                for (sku in subscriptions.skus) {
+                    updateButtonLabel(sku, sku.price, subscriptions)
+                }
+                selectSubscription(PurchaseTypes.Subscription1Month)
+                hasLoadedSubscriptionOptions = true
+                updateSubscriptionInfo()
             }
-            selectSubscription(PurchaseTypes.Subscription1Month)
-            hasLoadedSubscriptionOptions = true
-            updateSubscriptionInfo()
         }
     }
 

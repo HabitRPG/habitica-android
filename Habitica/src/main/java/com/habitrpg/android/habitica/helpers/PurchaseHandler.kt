@@ -4,6 +4,8 @@ import android.app.Activity
 import android.content.Intent
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.proxy.AnalyticsManager
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.solovyev.android.checkout.*
 import java.util.*
 import kotlin.coroutines.resume
@@ -74,16 +76,18 @@ open class PurchaseHandler(activity: Activity, val analyticsManager: AnalyticsMa
         return purchases.skus.firstOrNull()
     }
 
-    private suspend fun loadInventory(type: String, skus: List<String>): Inventory.Products? = suspendCoroutine { cont ->
-        val request = Inventory.Request.create().loadAllPurchases().loadSkus(type, skus)
-        try {
-            inventory?.load(request) {
-                cont.resume(it)
+    private suspend fun loadInventory(type: String, skus: List<String>): Inventory.Products? = withContext(Dispatchers.Main) {
+        suspendCoroutine { cont ->
+            val request = Inventory.Request.create().loadAllPurchases().loadSkus(type, skus)
+            try {
+                inventory?.load(request) {
+                    cont.resume(it)
+                }
+            } catch (e: NullPointerException) {
+                cont.resumeWithException(e)
             }
-        } catch (e: NullPointerException) {
-            cont.resumeWithException(e)
+            if (inventory == null) cont.resume(null)
         }
-        if (inventory == null) cont.resume(null)
     }
 
     fun purchaseSubscription(sku: Sku, onSuccess: (() -> Unit)) {

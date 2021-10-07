@@ -12,6 +12,7 @@ import com.habitrpg.android.habitica.models.user.Gear
 import com.habitrpg.android.habitica.models.user.Outfit
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.viewmodels.inventory.equipment.EquipmentOverviewViewModel
+import com.habitrpg.android.habitica.ui.views.equipment.EquipmentOverviewView
 
 class EquipmentOverviewFragment : BaseMainFragment<FragmentEquipmentOverviewBinding>() {
 
@@ -47,13 +48,7 @@ class EquipmentOverviewFragment : BaseMainFragment<FragmentEquipmentOverviewBind
             binding?.autoEquipSwitch?.isChecked = user?.preferences?.autoEquip ?: false
             binding?.costumeSwitch?.isChecked = user?.preferences?.costume ?: false
 
-            if (user?.preferences?.costume == true) {
-                binding?.costumeView?.alpha = 1.0f
-                binding?.costumeView?.isEnabled = true
-            } else {
-                binding?.costumeView?.alpha = 0.6f
-                binding?.costumeView?.isEnabled = false
-            }
+            binding?.costumeView?.isEnabled = user?.preferences?.costume == true
         }
     }
 
@@ -66,17 +61,17 @@ class EquipmentOverviewFragment : BaseMainFragment<FragmentEquipmentOverviewBind
     }
 
     private fun updateGearData(gear: Gear) {
-        updateOutfit(gear.equipped)
-        updateOutfit(gear.costume)
+        updateOutfit(binding?.battlegearView, gear.equipped)
+        updateOutfit(binding?.costumeView, gear.costume)
     }
 
-    private fun updateOutfit(outfit: Outfit?) {
+    private fun updateOutfit(view: EquipmentOverviewView?, outfit: Outfit?) {
         if (outfit?.weapon?.isNotEmpty() == true) {
             viewModel.getGear(outfit.weapon) {
-                binding?.battlegearView?.updateData(outfit, it.twoHanded)
+                view?.updateData(outfit, it.twoHanded)
             }
         } else {
-            binding?.battlegearView?.updateData(outfit)
+            view?.updateData(outfit)
         }
     }
 }

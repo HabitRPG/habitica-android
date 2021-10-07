@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica
 
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.core.content.edit
 import androidx.preference.PreferenceManager
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
@@ -76,10 +77,9 @@ class HabiticaPurchaseVerifier(context: Context, apiClient: ApiClient) : BasePur
                 }
             }
         }
-        val edit = preferences?.edit()
-        edit?.putStringSet(PURCHASED_PRODUCTS_KEY, purchasedOrderList)
-        edit?.apply()
-        savePendingGifts()
+        preferences?.edit {
+            edit?.putStringSet(PURCHASED_PRODUCTS_KEY, purchasedOrderList)
+        }
     }
 
     private fun processedPurchase(
@@ -154,6 +154,7 @@ class HabiticaPurchaseVerifier(context: Context, apiClient: ApiClient) : BasePur
         private const val PENDING_GIFTS_KEY = "PENDING_GIFTS"
         private var pendingGifts: MutableMap<String?, String?> = HashMap()
         private var preferences: SharedPreferences? = null
+
         fun addGift(sku: String?, userID: String?) {
             pendingGifts[sku] = userID
             savePendingGifts()
@@ -168,10 +169,9 @@ class HabiticaPurchaseVerifier(context: Context, apiClient: ApiClient) : BasePur
         private fun savePendingGifts() {
             val jsonObject = JSONObject(pendingGifts as Map<*, *>)
             val jsonString = jsonObject.toString()
-            val editor = preferences?.edit()
-            editor?.remove(PENDING_GIFTS_KEY)
-            editor?.putString(PENDING_GIFTS_KEY, jsonString)
-            editor?.apply()
+            preferences?.edit {
+                putString(PENDING_GIFTS_KEY, jsonString)
+            }
         }
     }
 

@@ -26,6 +26,7 @@ import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class GemsPurchaseFragment : BaseFragment<FragmentGemPurchaseBinding>(), GemPurchaseActivity.CheckoutFragment {
@@ -98,8 +99,10 @@ class GemsPurchaseFragment : BaseFragment<FragmentGemPurchaseBinding>(), GemPurc
     override fun setupCheckout() {
         CoroutineScope(Dispatchers.IO).launch {
             val skus = purchaseHandler?.getAllGemSKUs()
-            for (sku in skus ?: emptyList()) {
-                updateButtonLabel(sku.id.code, sku.price)
+            withContext(Dispatchers.Main) {
+                for (sku in skus ?: emptyList()) {
+                    updateButtonLabel(sku.id.code, sku.price)
+                }
             }
         }
     }

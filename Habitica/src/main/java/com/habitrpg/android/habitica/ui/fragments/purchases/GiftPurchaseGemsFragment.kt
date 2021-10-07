@@ -18,6 +18,7 @@ import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class GiftPurchaseGemsFragment : BaseFragment<FragmentGiftGemPurchaseBinding>() {
@@ -63,8 +64,10 @@ class GiftPurchaseGemsFragment : BaseFragment<FragmentGiftGemPurchaseBinding>() 
     fun setupCheckout() {
         CoroutineScope(Dispatchers.IO).launch {
             val skus = purchaseHandler?.getAllGemSKUs()
-            for (sku in skus ?: emptyList()) {
-                updateButtonLabel(sku.id.code, sku.price)
+            withContext(Dispatchers.Main) {
+                for (sku in skus ?: emptyList()) {
+                    updateButtonLabel(sku.id.code, sku.price)
+                }
             }
         }
     }
