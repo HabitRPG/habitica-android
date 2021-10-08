@@ -316,8 +316,6 @@
     <string name="gem_purchase_subtitle">Dragulji ti omogućuju kupovinu zabavnih dodataka za svoj račun, uključujući:</string>
     <string name="gem_purchase_listitem1">Kul kostime za svog avatara</string>
     <string name="gem_purchase_listitem2">Zakon pozadine</string>
-    <string name="gem_purchase.listitem3">Pustolovine koje te nagrađuju jajima ljubimaca</string>
-    <string name="gem_purchase.listitem4">Mogućnost promjene klase prije levela 100</string>
     <string name="support_habitica">Podrži Habiticu</string>
     <string name="skill_transformation_use">koristi</string>
     <string name="hatching_market_info">Ne dobivaš prave poklone? Poviri u Tržnicu!</string>
@@ -341,10 +339,6 @@
     <string name="subscription_duration">Ponavlja se svaku %s</string>
     <string name="subscription_duration_norenew">Za %s</string>
     <string name="subscribe">Pretplati se</string>
-    <string name="subscribe_listitem1.description">Trgovac Aleksandar će ti sada prodavati dragulje po cijeni od 20 zlatnika po dragulju!\n\nNjegove mjesečne pošiljke su ispočetka ograničene na 25 Dragulja po mjesecu, ali se ovaj broj može povećati na osnovu duljine tvoje pretplate.\n\nLimit se povećava za 5 Dragulja za svaka tri mjeseca uzastopne pretplate i tako sve do maksimuma od 50 Dragulja po mjesecu!</string>
-    <string name="subscribe_listitem2.description">Svaki mjesec ćeš dobiti jedinstveni kozmetički predmet za svog avatara!n\nUz to, za svaka tri mjeseca uzastopne pretplate, Mistični Vremenski Putnici će ti dozvoliti pristup povijesnim (i futurističkim) kozmetičkim predmetima.</string>
-    <string name="subscribe_listitem3.description">Čini izvršene Zadatke i povijest zadataka duže dostupnima.</string>
-    <string name="subscribe_listitem4.description">Udvostručeni limit poklona će ti omogućiti da dobivaš više predmeta za zadatke koje izvršiš svaki dan, što će ti pomoći upotpuniti tvoju štalu prije!</string>
     <string name="subscribe1month_gemcap">Limit od 25 Dragulja</string>
     <string name="subscribe3month_gemcap">Limit od 30 Dragulja</string>
     <string name="subscribe6month_gemcap">Limit od 35 Dragulja</string>
@@ -355,8 +349,6 @@
     <string name="active">Aktivno</string>
     <string name="due">Rok</string>
     <string name="cancel_subscription">Otkaži pretplatu</string>
-    <string name="cancel_subscription_google.description">Više ne želiš biti pretplaćen/a? Možeš pronaći opciju za otkazivanje pretplate u sekciji \"Moje aplikacije\" Google Play trgovine.</string>
-    <string name="cancel_subscription_notgoogle.description">Više ne želiš biti pretplaćen/a? Zbog tvog odabranog načina plaćanja, možeš otkazati pretplatu samo na našoj web stranici. Klikni na gumb ispod za otvoriti stranicu u svom pregledniku!</string>
     <string name="visit_habitica_website">Posjeti web stranicu Habitice</string>
     <string name="current_bonuses">Trenutni broj bonusa</string>
     <string name="months_subscribed">Broj mjeseci pretplate</string>
@@ -372,9 +364,6 @@
     <string name="subscribe_prompt_thanks">Za Pretplatu dobivaš ove korisne prednosti:</string>
     <string name="subscription_status">Status Pretplate</string>
     <string name="challenge_leave_title">Napusti Izazov</string>
-    <string name="challenge_leave_text">Jesi li siguran/na da želiš napustiti Izazov \"%s\"?</string>
-    <string name="challenge_remove_tasks_title">Ukloni zadatke</string>
-    <string name="challenge_remove_tasks_text">Želiš li ukloniti zadatke?</string>
     <string name="remove_tasks">Ukloni</string>
     <string name="keep_tasks">Zadrži</string>
     <string name="my_challenges">Moji Izazovi</string>
@@ -669,8 +658,6 @@
     <string name="send_gift">Pošalji poklon</string>
     <string name="server">Server</string>
     <string name="gift_confirmation_title">Tvoj poklon je poslan!</string>
-    <string name="gift_confirmation_text_g1g1">Tvoj poklon je poslan i tvoja pretplata je aktivirana na tvom računu.</string>
-    <string name="gift_confirmation_text">Tvoj poklon je poslan i tvoja pretplata je aktivirana na tvom računu.</string>
     <string name="discover">Otkrij</string>
     <string name="damage_paused">Šteta je pauzirana</string>
 </resources>

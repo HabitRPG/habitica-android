@@ -1,2 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="tutorial_todos_1">Využij úkolníček k zaznamenávání úkolů, které potřebuješ udělat jen jednou.</string>
+    <string name="tutorial_habits_1">První jsou zvyky. Můžou to být pozitivní zvyky, které chceš zlepšit, nebo negativní návyky, se kterými chceš přestat.</string>
+    <string name="tutorial_dailies_2">Dávej si pozor —když úkol nesplníš, tvá postava přes noc utrpí zranění. Konzistentní plnění ale přináší skvělé odměny!</string>
+    <string name="tutorial_tasks_complete">To je pro teď vše. Pokud si budeš potřebovat něco připomenout, podívej se do sekce FAQ.</string>
+    <string name="tutorial_habits_2">Vždy, když uděláš pozitivní návyk, klikni na + a získáš zkušenosti a zlato!</string>
+    <string name="tutorial_todos_2">Pokud musí být tvé úkoly hotovy do určité doby, nastav jim konečný termín. Vypadá to, že můžeš jeden úkol rovnou splnit — jdi na to!</string>
+    <string name="tutorial_habits_4">Zkus to! Další typy úkolů můžeš procházet skrze spodní lištu.</string>
+    <string name="tutorial_rewards_1">Pro nákup vybavení pro tvou postavu použij získané zlato!</string>
+    <string name="tutorial_overview">A je to! Přidal jsem ti nějaké úkoly podle tvých zájmů. Zkus si přidat nějaké vlastní. Úkoly můžeš upravit poklepáním na jejich název.</string>
+    <string name="tutorial_dailies_1">Vytvoř si každodenní úkoly pro časově omezené úkoly, které musíš dělat pravidelně.</string>
+    <string name="tutorial_skills">Schopnosti jsou speciální dovednosti, které mají silné účinky! Klikni na schopnost abys ji použil. Bude tě to stát manu (modrý proužek), kterou můžeš získat tím, že se každý den připojíš, nebo plněním úkolů. Pro více informací se podívej do sekce FAQ!</string>
+    <string name="tutorial_party">Zde se můžete s přáteli vzájemně motivovat k plnění svých cílů a společně porážet nestvůry vašimi úkoly!</string>
+    <string name="tutorial_tavern">Vítej v Hostinci, veřejném chatu pro všechny! Zde se můžeš bavit o produktivitě a ptát se na otázky. Bav se!</string>
+</resources>

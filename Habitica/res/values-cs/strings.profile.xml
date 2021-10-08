@@ -1,2 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="profile_loading_data">Načítám data člena…</string>
+    <string name="profile_send_message_to">Poslat zprávu hráči %s</string>
+    <string name="profile_message_sent_to">Zpráva poslána hráči %s</string>
+    <string name="profile_level">Level:</string>
+</resources>

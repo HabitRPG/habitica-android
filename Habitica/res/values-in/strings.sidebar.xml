@@ -1,19 +1,21 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="sidebar_tasks">Tugas</string>
-  <string name="sidebar_skills">Kemampuan</string>
-  <string name="sidebar_section_social">Sosial</string>
-  <string name="sidebar_inbox">Pesan</string>
-  <string name="sidebar_tavern">Kedai Minuman</string>
-  <string name="sidebar_party">Party</string>
-  <string name="sidebar_guilds">Guild</string>
-  <string name="sidebar_challenges">Tantangan</string>
-  <string name="sidebar_section_inventory">Inventori</string>
-  <string name="sidebar_avatar">Avatar</string>
-  <string name="sidebar_equipment">Perlengkapan</string>
-  <string name="sidebar_stable">Istal</string>
-  <string name="sidebar_news">Berita</string>
+    <string name="sidebar_tasks">Tugas</string>
+    <string name="sidebar_skills">Kemampuan</string>
+    <string name="sidebar_section_social">Sosial</string>
+    <string name="sidebar_inbox">Pesan</string>
+    <string name="sidebar_tavern">Kedai Minuman</string>
+    <string name="sidebar_party">Party</string>
+    <string name="sidebar_guilds">Guild</string>
+    <string name="sidebar_challenges">Tantangan</string>
+    <string name="sidebar_section_inventory">Inventori</string>
+    <string name="sidebar_avatar">Avatar</string>
+    <string name="sidebar_equipment">Perlengkapan</string>
+    <string name="sidebar_stable">Kandang Hewan</string>
+    <string name="sidebar_news">Berita</string>
     <string name="sidebar_about">Tentang Kami</string>
-  <string name="sidebar_shops">Toko</string>
-  <string name="sidebar_stats">Status</string>
+    <string name="sidebar_shops">Toko</string>
+    <string name="sidebar_stats">Status</string>
+    <string name="sidebar_subscription">Berlangganan</string>
+    <string name="sidebar_gems">Membeli Permata</string>
 </resources>

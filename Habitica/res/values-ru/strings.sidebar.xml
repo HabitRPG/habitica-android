@@ -15,7 +15,7 @@
     <string name="sidebar_news">Новости</string>
     <string name="sidebar_about">О приложении</string>
     <string name="sidebar_shops">Магазины</string>
-    <string name="sidebar_stats">Статистика</string>
+    <string name="sidebar_stats">Характеристики</string>
     <string name="sidebar_subscription">Подписка</string>
     <string name="sidebar_gems">Приобрести самоцветы</string>
 </resources>

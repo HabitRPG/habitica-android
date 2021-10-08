@@ -1,2 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="profile_achievements">Pencapaian</string>
+    <string name="profile_allocated">Alokasi:</string>
+    <string name="profile_class_bonus">Bonus-Kelas:</string>
+    <string name="profile_level">Level:</string>
+    <string name="profile_message_sent_to">Pesan terkirim ke %s</string>
+    <string name="profile_send_message_to">Mengirim pesan ke %s</string>
+    <string name="profile_loading_data">Memuat data anggota…</string>
+    <string name="profile_mounts_tamed">Tunggangan telah Dijinakkan</string>
+    <string name="profile_pets_found">Peliharaan telah Ditemukan</string>
+    <string name="profile_pets_and_mounts">Peliharaan &amp; Tunggangan</string>
+</resources>

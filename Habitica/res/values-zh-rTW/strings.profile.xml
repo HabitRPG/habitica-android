@@ -1,9 +1,9 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="profile_pets_and_mounts">寵物 &amp; 座騎</string>
     <string name="profile_pets_found">已找到寵物</string>
     <string name="profile_mounts_tamed">已馴養的坐騎</string>
-    <string name="profile_loading_data">讀取數據資料中。</string>
+    <string name="profile_loading_data">數據資料讀取中…</string>
     <string name="profile_send_message_to">發送訊息到 %s</string>
     <string name="profile_message_sent_to">訊息發送至 %s</string>
     <string name="profile_level">等級：</string>
@@ -11,5 +11,4 @@
     <string name="profile_allocated">已分配：</string>
     <string name="profile_private_message">私人訊息</string>
     <string name="profile_achievements">成就</string>
-
 </resources>

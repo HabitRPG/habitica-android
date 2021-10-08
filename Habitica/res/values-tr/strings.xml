@@ -371,9 +371,6 @@
     <string name="subscribe_prompt_thanks">Abone olarak şunlardan faydalanırsın</string>
     <string name="subscription_status">Abonelik Durumu</string>
     <string name="challenge_leave_title">Mücadeleden Ayrıl</string>
-    <string name="challenge_leave_text">\"%s\" Mücadelesinden ayrılmak istediğine emin misin\?</string>
-    <string name="challenge_remove_tasks_title">İşleri sil</string>
-    <string name="challenge_remove_tasks_text">İşleri silmek istiyor musun\?</string>
     <string name="remove_tasks">Sil</string>
     <string name="keep_tasks">Tut</string>
     <string name="my_challenges">Benim Mücadelelerim</string>
@@ -761,7 +758,6 @@
     <string name="register_btn_fb">Facebook ile Kaydol</string>
     <string name="login_btn_apple">Apple Hesabı ile Giriş Yap</string>
     <string name="special_items">Özel eşyalar</string>
-    <string name="leave_delte_tasks">Ayrıl &amp; Görevleri Sil</string>
     <string name="leave_keep_tasks">Ayrıl &amp; Görevleri Koru</string>
     <string name="create_task_title">Bir Görev Oluştur</string>
     <string name="percent_completed">%%d% Tamamlandı</string>
@@ -997,10 +993,8 @@
     <string name="assigned_stat">Atanan İstatistik</string>
     <string name="join_party_description_guild">Aşağıdaki kullanıcı adını bir arkadaşınıza verin veya potansiyel yoldaşlarla tanışmak için %s gidin!</string>
     <string name="spooky_promo_info_prompt">Değerli Taş Satışı, bu yılki Sonbahar Galasının en sonunda tekrar gündeme geldi! Bu, her zamankinden daha fazla Mücevher almak için son bir şans, bu yüzden bu süre boyunca stok yapın!</string>
-    <string name="spooky_promo_info_limitations">Bu promosyon yalnızca sınırlı süreli etkinlik sırasında geçerlidir. Bu etkinlik 29 Ekim\'de 08:00 EDT\'de (12:00 UTC) başlayacak ve 2 Kasım 20:00 EDT\'de (00:00 UTC) sona erecek. Promosyon teklifi yalnızca kendiniz için Mücevher satın alırken geçerlidir.</string>
     <string name="spooky_promo_info_instructions">29 Ekim ile 2 Kasım arasında, her zamanki gibi herhangi bir Mücevher paketi satın alın ve hesabınıza promosyon miktarda Mücevher yatırılacaktır. Gelecek sürümler için harcayabileceğiniz, paylaşabileceğiniz veya saklayabileceğiniz daha fazla Mücevher!</string>
     <string name="fall_promo_info_prompt">Sonbahar Galası tüm hızıyla devam ediyor, bu yüzden ilk Mücevher Satışımızı sunmak için mükemmel bir zaman olduğunu düşündük! Artık her satın alma işleminde her zamankinden daha fazla Mücevher kazanacaksınız.</string>
-    <string name="fall_promo_info_limitations">Bu promosyon yalnızca sınırlı süreli etkinlik sırasında geçerlidir. Bu etkinlik 22 Eylül 08:00 EDT\'de (12:00 UTC) başlayacak ve 30 Eylül 20:00 EDT (00:00 UTC) itibarıyla sona erecektir. Promosyon teklifi yalnızca kendiniz için Mücevher satın alırken geçerlidir.</string>
     <string name="fall_promo_info_instructions">22 ve 30 Eylül arasında, her zamanki gibi herhangi bir Gem paketi satın alın ve hesabınıza promosyon miktarda Mücevher kredisi aktarılacaktır. Gelecek sürümler için harcayabileceğiniz, paylaşabileceğiniz veya saklayabileceğiniz daha fazla Mücevher!</string>
     <string name="how_it_works">Nasıl çalışır</string>
     <string name="x_to_y">%s - %s</string>

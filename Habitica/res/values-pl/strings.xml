@@ -699,7 +699,6 @@
     <string name="register_btn_fb">Zapisz się poprzez Facebook</string>
     <string name="login_btn_apple">Zapisz się poprzez Apple</string>
     <string name="special_items">Przedmioty specjalne</string>
-    <string name="leave_delte_tasks">Zrezygnuj i Usuń Zadania</string>
     <string name="leave_keep_tasks">Zrezygnuj i Pozostaw Zadania</string>
     <string name="challenge_leave_description">Możesz wybrać, czy chcesz zostawić zadania z Wyzwania na swojej tablicy, czy też usunąć je, gdy opuścisz Wyzwanie</string>
     <string name="created_challenge">Utworzono wyzwanie</string>

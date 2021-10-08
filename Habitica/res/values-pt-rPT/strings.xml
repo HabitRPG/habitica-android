@@ -671,7 +671,6 @@
     <string name="quest_reward_count">%1$s x%2$d</string>
     <string name="rage_meter">Medidor de fúria</string>
     <string name="dailyDueDefaultView">Marcar Diárias na aba \"Por fazer\", por padrão</string>
-    <string name="leave_delte_tasks">Sair e Eliminar as tarefas</string>
     <string name="leave_keep_tasks">Sair e Manter as tarefas</string>
     <string name="challenge_leave_description">Podes escolher manter as tarefas deste Desafio no teu quadro de tarefas pessoal ou eliminá-las quando saíres.</string>
     <string name="buffs">Impulsionadores</string>

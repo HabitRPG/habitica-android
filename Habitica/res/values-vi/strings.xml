@@ -488,7 +488,7 @@
     <string name="no_billing_gems">Thiết bị của bạn không có bất kì phương thức hỗ trợ thanh toán nào. Vui lòng sử dụng trang habitica nếu bạn muốn mua gem.</string>
     <string name="dailyDueDefaultViewDescription">Với tùy chọn này được đặt, Việc hằng ngày sẽ được đặt mặc định ở mục \'thời hạn\' thay vì \'tất cả\'</string>
     <string name="pending">Đang chờ</string>
-    <string name="leave_party_confirmation">Bạn có muốn rời tổ đội của mình và giữ hoặc rời những thử thách\?</string>
+    <string name="leave_party_confirmation">Bạn có chắc muốn rời khỏi Tổ đội này không\?</string>
     <string name="start_day">Bắt đầu ngày mới</string>
     <string name="yesterdaililes_prompt">Đánh dấu bất kỳ Việc hằng ngày nào bạn đã làm hôm qua:</string>
     <string name="welcome_back">Chào mừng quay trở lại</string>
@@ -513,7 +513,7 @@
     <string name="million_abbrev">m</string>
     <string name="thousand_abbrev">k</string>
     <string name="reloading_content">Đang tải lại Nội dung</string>
-    <string name="quest_abort_message">Bạn có chắc là muốn hủy nhiệm vụ này chứ\? Nhiệm vụ sẽ bị hủy đối với tất cả mọi người trong Tổ đội của bạn và toàn bộ tiến trình sẽ bị mất. Cuộn Nhiệm vụ sẽ được trả lời người sở hữu.</string>
+    <string name="quest_abort_message">Bạn có chắc bạn muốn hủy Nhiệm vụ này không\? Tất cả quá trình sẽ bị mất. Nhiệm vụ sẽ được trả lại Hành trang của người sở hữu.</string>
     <string name="quest_leader_header">Đã bắt đầu bởi %s</string>
     <string name="invitations">Những lời mời</string>
     <string name="participants">Những người tham gia</string>
@@ -524,8 +524,8 @@
     <string name="danger_zone">Khu Vực Nguy Hiểm</string>
     <string name="delete_account_confirmation">Xóa Tài khoản của tôi</string>
     <string name="reset_account_confirmation">Đặt lại Tài khoản của tôi</string>
-    <string name="delete_oauth_account_description">Điều này sẽ xóa tài khoản của bạn vĩnh viễn, và sẽ không bao giờ khôi phục lại được! Gem đã mua hay đã dùng cũng sẽ không được hoàn lại tiền. Nếu bạn chắc chắn muốn làm thế, nhập DELETE vào ô dưới đây.</string>
-    <string name="delete_account_description">Điều này sẽ xóa tài khoản của bạn vĩnh viễn, và sẽ không bao giờ khôi phục lại được! Gem đã mua hay đã dùng cũng sẽ không được hoàn lại tiền. Nếu bạn chắc chắn muốn làm thế, nhập mật khẩu của bạn vào ô dưới đây.</string>
+    <string name="delete_oauth_account_description">Tài khoản đã bị xóa vĩnh viễn và không thể khôi phục lại. Gem không thể hoàn tiền. Nếu bạn vẫn muốn xóa, nhập DELETE ở dưới.</string>
+    <string name="delete_account_description">Tài khoản đã bị xóa vĩnh viễn và không thể khôi phục lại. Gem không thể hoàn tiền. Nếu bạn vẫn muốn xóa, nhập mật khẩu ở dưới.</string>
     <string name="delete_account">Xóa Tài khoản</string>
     <string name="reset_account_description">CẢNH BÁO! Rất nhiều phần trong tài khoản của bạn sẽ bị đặt lại. Điều này không được khuyến khích, nhưng một vài người sẽ thấy nó có ích lúc đầu sau khi sử dụng trang trong thời gian ngắn.
 \n
@@ -677,8 +677,8 @@
     <string name="two_handed">Hai tay</string>
     <string name="total_checkins">Tổng số lần Điểm danh</string>
     <string name="last_login">Lần Điểm danh gần nhất</string>
-    <string name="week_reminder_text">Nghỉ giải lao thì rất lành mạnh, nhưng bạn vẫn có thể kiếm điểm cho những hoạt động đơn giản để lên cấp và có trang bị ngầu lòi!</string>
-    <string name="week_reminder_title">Công việc của bạn thế nào rồi\?</string>
+    <string name="week_reminder_text">Đánh dấu hoàn thành trên Habitica bây giờ để nhận Phần thưởng và XP!</string>
+    <string name="week_reminder_title">Hoàn thành công việc rồi chứ\?</string>
     <string name="reset_streak">Đặt lại Chuỗi liên tục</string>
     <string name="collapse_notes">Thu lại</string>
     <string name="guild_description">Mô tả Bang hội</string>
@@ -786,7 +786,7 @@
     <string name="remove_member">Xóa Thành viên</string>
     <string name="transfer_ownership">Chuyển quyền Lãnh đạo</string>
     <string name="remove">Xóa</string>
-    <string name="inbox_messages_title_nosender">Bạn đã nhận %d tin nhắn</string>
+    <string name="inbox_messages_title_nosender">%d tin nhắn mới</string>
     <string name="inbox_messages_title">Bạn đã nhận %1$d tin nhắn từ %2$s</string>
     <string name="sent_card">Bạn đã gửi một %s</string>
     <string name="app_theme">Chủ đề Ứng dụng</string>
@@ -820,7 +820,7 @@
     <string name="cost">Giá</string>
     <string name="joined_guild">Bạn đã tham gia Bang hội</string>
     <string name="left_guild">Bạn đã rời Bang hội</string>
-    <string name="leave_guild_confirmation">Bạn có muốn rời Bang hội và giữ hoặc rời những Thử thách\?</string>
+    <string name="leave_guild_confirmation">Bạn có chắc chắn muốn rời khỏi Bang hội này không\?</string>
     <string name="leave_guild">Rời Bang hội</string>
     <string name="trillion_abbrev">t</string>
     <string name="report_violation">Báo cáo Vi phạm</string>
@@ -917,7 +917,7 @@
     <string name="keep_challenges">Giữ Thử thách</string>
     <string name="inviteFriendDescription">Bạn đã mời một người bạn (hoặc nhiều người bạn) tham gia cùng trong chuyến phiêu lưu của mình!</string>
     <string name="inviteFriendTitle">Mời một Người bạn</string>
-    <string name="joinedChallengeDescription">Bạn đặt bản thân vào bài khảo thí bằng cách tham gia một Thử thách!</string>
+    <string name="joinedChallengeDescription">Bạn đã đặt bản thân vào bài kiểm tra bằng việc tham gia một Thử thách!</string>
     <string name="joinedChallengeTitle">Đã tham gia một Thử thách</string>
     <string name="joinedGuildDescription">Mạo hiểm vào mặt xã hội của Habitica bằng cách tham gia một Bang hội!</string>
     <string name="joinedGuildTitle">Đã tham gia một Bang hội</string>
@@ -1082,7 +1082,6 @@
     <string name="task_display">Hiển thị danh sách công việc</string>
     <string name="pet_ownership_fraction">%1$d / %2$d</string>
     <string name="special_items">Vật phẩm đặc biệt</string>
-    <string name="leave_delte_tasks">Rời &amp; Xóa Công việc</string>
     <string name="leave_keep_tasks">Rời &amp; Giữ Công việc</string>
     <string name="challenge_leave_description">Bạn có thể chọn giữ những công việc của Thử thách này trong bảng công việc cá nhân của bạn hoặc xóa chúng khi bạn rời</string>
     <string name="pms_disabled_description">Bạn vẫn có thể gửi tin nhắn, nhưng không ai có thể gửi lại cho bạn. Bạn có thể kích hoạt lại từ Cài đặt.</string>
@@ -1093,15 +1092,34 @@
     <string name="block_user_title">Chặn %s\?</string>
     <string name="unblock_user">Gỡ chặn người dùng</string>
     <string name="block_user">Chặn người dùng</string>
-    <string name="fall_promo_info_instructions">Ở giữa ngày 22 tới 30 tháng Chín, đơn giản là mua bất kỳ gói Gem nào như thường lệ và tài khoản của bạn sẽ cộng được thêm một khoảng Gem. Thêm nhiều Gem để xài, chia sẻ hay để dành cho những lần ra mắt trong tương lai!</string>
+    <string name="fall_promo_info_instructions">Ở giữa %s và %s, đơn giản là mua bất kỳ gói Gem nào như thường lệ và tài khoản của bạn sẽ cộng được thêm một khoảng Gem. Thêm nhiều Gem để xài, chia sẻ hay để dành cho những lần ra mắt trong tương lai!</string>
     <string name="limitations">Những giới hạn</string>
     <string name="how_it_works">Nó hoạt động như thế nào</string>
     <string name="x_to_y">%s tới %s</string>
     <string name="usually_x_gems">Thường là %d Gem</string>
-    <string name="fall_promo_info_limitations">Khuyến mãi này chỉ áp dụng trong thời gian giới hạn của sự kiện. Sự kiện này bắt đầu vào ngày 22 Tháng Chín lúc 8:00 AM EDT (12:00 UTC) và sẽ kết thúc vào ngày 30 Tháng Chín vào lúc 8:00 PM EDT (00:00 UTC). Khuyến mãi chỉ áp dụng khi mua Gem cho bản thân bạn.</string>
     <string name="view_gem_bundles">Xem các gói Gem</string>
     <string name="fall_promo_info_prompt">Dạ Tiệc Mùa Thu đang diễn ra rất sôi nổi nên chúng tôi nghĩ đây là thời điểm hoàn hảo để giới thiệu chương trình Giảm Giá Gem đầu tiên của chúng tôi! Giờ đây, bạn sẽ nhận được nhiều Gem hơn khi mua Gem hơn bao giờ hết.</string>
-    <string name="spooky_promo_info_limitations">Khuyến mãi này chỉ áp dụng trong thời gian giới hạn của sự kiện. Sự kiện này bắt đầu vào ngày 29 tháng Mười lúc 8:00 AM EDT (12:00 UTC) và sẽ kết thúc vào ngày 2 tháng Mười Một vào lúc 8:00 PM EDT (00:00 UTC). Khuyến mãi chỉ áp dụng khi mua Gem cho bản thân bạn.</string>
-    <string name="spooky_promo_info_instructions">Từ ngày 29 tháng 10 đến ngày 2 tháng 11, đơn giản là mua bất kỳ gói Gem nào như thường lệ và tài khoản của bạn sẽ cộng được thêm một khoảng Gem. Thêm nhiều Gem để xài, chia sẻ hay để dành cho những lần ra mắt trong tương lai!</string>
+    <string name="spooky_promo_info_instructions">Từ ngày %s đến %s, đơn giản là mua bất kỳ gói Gem nào như thường lệ và tài khoản của bạn sẽ cộng được thêm một khoảng Gem. Thêm nhiều Gem để xài, chia sẻ hay để dành cho những lần ra mắt trong tương lai!</string>
     <string name="spooky_promo_info_prompt">Chương trình giảm giá Gem trở lại và tiếp diễn đến khi kết thúc Dạ tiệc Mùa Thu! Đây là cơ hội cuối cùng để nhận nhiều Gem hơn bao giờ hết, vì thế hãy mua dự trữ khi chương trình đang diễn ra!</string>
+    <string name="leave_challenges_delete_tasks">Rời Thử thách &amp; Xóa Công việc</string>
+    <string name="inbox_messages_title_single">Tin nhắn mới từ %1$s</string>
+    <string name="rejoin_guild">Bạn có thể quay lại Bang hội này từ trang Bang hội: Khám phá</string>
+    <string name="leave_guild_challenges_confirmation">Bạn có muốn tiếp tục tham gia vào Thử thách khi rời khỏi Bang hội\?</string>
+    <string name="month_reminder_text">Đôi khi bắt đầu hoàn toàn mới là lựa chọn tốt nhất, Habitica có thể giúp!</string>
+    <string name="month_reminder_title">Cần sự thay đổi cho công việc hàng ngày\?</string>
+    <string name="available_for">Tồn tại cho %s</string>
+    <string name="reloaded_content">Đã tải lại Nội dung</string>
+    <string name="rejoin_party">Bạn sẽ không thể quay lại Tổ đội này trừ khi được mời lại.</string>
+    <string name="leave_party_challenges_confirmation">Bạn có muốn tiếp tục tham gia vào Thử thhachs khi rời khỏi Tổ đội không\?</string>
+    <string name="is_open">Mở</string>
+    <string name="party_challenges">Bạn đang tham gia một Thử thách Tổ đội</string>
+    <string name="guild_challenges">Bạn đang tham gia vào một Thử thách Bang hội</string>
+    <string name="leave_delete_tasks">Rời khỏi &amp; Xóa Công việc</string>
+    <string name="quest_items_found">Bạn đã tìm được %d vật phẩm nhiệm vụ</string>
+    <string name="submit_feedback">Gửi Phản hồi</string>
+    <string name="user_is_blocked">Bạn đã chặn người dùng này</string>
+    <string name="gems_promo_info_limitations">Khuyến mại này chỉ áp dụng trong sự kiện giới hạn. Sự kiện này bắt đầu vào %s (12:00 UTC) và sẽ kết thúc vào %s (00:00 UTC). Khuyến mãi chỉ áp dụng khi mua Gem cho bản thân.</string>
+    <string name="dark_mode">Chế độ Ban đêm</string>
+    <string name="user_is_blocked_explanation">Một người dùng bị chặn không thể gửi bạn Tin nhắn Riêng tư nhưng bạn vẫn sẽ thấy bài đăng của họ ở Quán rượu hay Bang hội.</string>
+    <string name="finish">Hoàn thành</string>
 </resources>

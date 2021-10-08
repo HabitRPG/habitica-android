@@ -34,7 +34,7 @@
     <!--Adding tasks-->
     <string name="action_edit">编辑</string>
     <string name="action_cancel">取消</string>
-    <string name="login_btn">登陆</string>
+    <string name="login_btn">登录</string>
     <string name="register_btn">注册</string>
     <string name="username">用户名</string>
     <string name="email_username">电子邮件或用户名</string>
@@ -100,7 +100,7 @@
     <string name="tavern_inn_checkOut">重启每日任务</string>
     <string name="tavern_inn_rest">暂停每日任务</string>
     <string name="reward_dialog_buy">购买</string>
-    <string name="reward_dialog_dismiss">解散</string>
+    <string name="reward_dialog_dismiss">取消</string>
     <string name="party">队伍</string>
     <string name="chat">聊天</string>
     <string name="members">成员</string>
@@ -253,10 +253,10 @@
     <string name="warrior">战士</string>
     <string name="rogue">盗贼</string>
     <string name="mage">法师</string>
-    <string name="healer">医师</string>
+    <string name="healer">医者</string>
     <string name="mage_description">法师相比其他职业，拥有可以通过快速学习来更快的获得经验和等级提升的优势。他们在使用特殊技能时也会获得大量的法力。如果你热衷于Habitica游戏里策略性部分，或者是如果升级和解锁高级功能为你提供强大动力的话，那就来当个法师吧！法师可以从较高的智力属性中受益。</string>
     <string name="rogue_description">盗贼热衷于积累财富，比其他人获得更多的金币，还擅长寻找随机物品。他们标志性的潜行技能使得他们能够躲避未完成的日常带来的伤害。如果你希望获得更多的奖励，成就，掉落以及徽章，来玩盗贼吧！盗贼可以从较高的感知属性中受益。</string>
-    <string name="healer_description">医师们对伤害的抗性很强，也可以保护其他的人。错过的日常任务和坏习惯无法伤害他们太多，而且他们有很多回血的技能。如果你热衷于辅助其他的队友，或者是享受那种从死神手里夺取生命的快感，那就成为一名医师吧！医师可以从较高的体质属性中受益。</string>
+    <string name="healer_description">医者们对伤害的抗性很强，也可以保护其他人。错过的每日任务和坏习惯无法给予他们太多伤害，而且他们有很多回血技能。如果你热衷于辅助其他队友，或是享受从死神手里夺取生命的快感，那就成为一名医者吧！医者受益于较高的体质属性。</string>
     <string name="select_class">选择职业</string>
     <string name="opt_out_class">退出</string>
     <string name="class_confirmation">你确定想要成为%s吗？</string>
@@ -286,8 +286,8 @@
     <string name="change_class_equipment_warning">提示：你无法再购买%s职业的装备了。</string>
     <string name="confirm">确认</string>
     <string name="market">市场</string>
-    <string name="timeTravelers">时光旅行</string>
-    <string name="seasonalShop">四季商店</string>
+    <string name="timeTravelers">时空旅行者</string>
+    <string name="seasonalShop">季度商店</string>
     <string name="empty_inbox">你没有任何新消息。你可以从玩家们的公开聊天窗口中给他们发送新消息！</string>
     <string name="party_invite">通过邀请朋友来解锁</string>
     <string name="login_incentive">定期登录Habitica可解锁</string>
@@ -314,12 +314,12 @@
     <string name="widget_todo_list">Habitica待办事项</string>
     <string name="google_services_missing">没有找到Google play服务。</string>
     <string name="gem_purchase_toolbartitle">购买</string>
-    <string name="gem_purchase_title">购买宝石来支持开发者们和帮助保证Habitica的日常运营</string>
-    <string name="gem_purchase_subtitle">你可以通过宝石给你的账户购买更多有趣的额外物品，包括：</string>
+    <string name="gem_purchase_title">购买宝石支持开发者们，帮助我们维持Habitica的运营</string>
+    <string name="gem_purchase_subtitle">你可以使用宝石给自己购买有趣的额外物品，包括：</string>
     <string name="gem_purchase_listitem1">角色形象的炫酷装扮</string>
     <string name="gem_purchase_listitem2">超棒的背景</string>
-    <string name="gem_purchase_listitem3">副本会奖励你宠物蛋</string>
-    <string name="gem_purchase_listitem4">100级前改变你职业的能力</string>
+    <string name="gem_purchase_listitem3">会奖励宠物蛋的副本</string>
+    <string name="gem_purchase_listitem4">能在100级前改变你的职业</string>
     <string name="support_habitica">支持Habitica</string>
     <string name="skill_transformation_use">使用</string>
     <string name="hatching_market_info">没有得到想要的掉落物品？来市场瞧瞧！</string>
@@ -333,8 +333,8 @@
     <string name="belongs_to_challenge">来自挑战</string>
     <string name="has_reminder">有任务提示</string>
     <string name="has_tag">有标签</string>
-    <string name="subscribe_title">购买订阅支持开发者，并帮助维持Habitica运行</string>
-    <string name="subscribe_prompt">成为订阅者你会得到这些优势的好处！</string>
+    <string name="subscribe_title">购买订阅支持开发者们，帮助我们维持Habitica的运营</string>
+    <string name="subscribe_prompt">成为订阅者来获得这些独家奖励！</string>
     <string name="subscribe_listitem1">用金币购买宝石</string>
     <string name="subscribe_listitem2">神秘沙漏</string>
     <string name="subscribe_listitem3">每月神秘物品</string>
@@ -342,8 +342,8 @@
     <string name="subscriptions">订阅</string>
     <string name="subscription_duration">每 %s 重复出现</string>
     <string name="subscribe">订阅</string>
-    <string name="subscribe_listitem1_description">您将可以从市场上以每枚20金币的价格购买宝石！</string>
-    <string name="subscribe_listitem2_description">获得神秘沙漏在时空穿越者的商店购买物品！</string>
+    <string name="subscribe_listitem1_description">你将可以在市场上以每枚20金币的价格购买宝石！</string>
+    <string name="subscribe_listitem2_description">使用神秘沙漏来购买时空旅行者商店中的物品！</string>
     <string name="subscribe_listitem4_description">如果您变成订阅者，您可以获得紫御鹿角兔宠物。</string>
     <string name="subscribe1month_gemcap">25 宝石</string>
     <string name="subscribe3month_gemcap">30 宝石</string>
@@ -368,7 +368,7 @@
     <string name="three_months">3个月</string>
     <string name="six_months">6个月</string>
     <string name="twelve_months">12个月</string>
-    <string name="subscribe_prompt_thanks">成为订阅者你会得到这些好处</string>
+    <string name="subscribe_prompt_thanks">成为订阅者，你会得到以下好处</string>
     <string name="subscription_status">订阅状态</string>
     <string name="challenge_leave_title">放弃挑战</string>
     <string name="remove_tasks">删除</string>
@@ -457,7 +457,7 @@
     <string name="welcome_back">欢迎回来</string>
     <string name="yesterdaililes_prompt">勾选你昨天做过的每日任务：</string>
     <string name="start_day">开始我的一天</string>
-    <string name="leave_party_confirmation">你确定你想要离开队伍和保留或留挑战？</string>
+    <string name="leave_party_confirmation">你确定要离开队伍吗？</string>
     <string name="pending">等待中</string>
     <string name="accepted">已接受</string>
     <string name="declined">已拒绝</string>
@@ -500,7 +500,7 @@
     <string name="seasonal_closed_description">盛典会在春分，夏至，秋分，冬至前后举行，到时再来看看各种各样的特殊季节物品吧！</string>
     <string name="come_back_soon">稍后回来！</string>
     <string name="level">属性等级</string>
-    <string name="streak_label">21天连续登陆</string>
+    <string name="streak_label">21天连续登录</string>
     <string name="stats">属性</string>
     <string name="fix_character_description">如果您遇到Bug或不小心變更到您的角色，您可以在這里手動更正這些值。</string>
     <string name="fix_character_values">修复角色数值</string>
@@ -524,7 +524,7 @@
     <string name="auto_allocate_points">自动分配点数</string>
     <string name="stat_guide">属性概要</string>
     <string name="character_build">角色属性</string>
-    <string name="character_build_description">等级100以内的玩家，每次升级可以获得1点可以自由分配的属性。在10级解锁属性分配之後，可以手动配点；或者使用“自动分配点数”。</string>
+    <string name="character_build_description">等级100以内的玩家，每次升级可以获得1点可以自由分配的属性。在10级解锁属性分配之后，可以手动配点；或者使用“自动分配点数”。</string>
     <string name="strength">力量</string>
     <string name="strength_description">这个属性增加玩家完成任务时触发暴击的几率，并且增加通过暴击获得的额外奖励的数量和对Boss造成的伤害。</string>
     <string name="intelligence">智力</string>
@@ -548,7 +548,7 @@
     <string name="classless">无职业</string>
     <string name="class_equipment_shop_dialog">这个物品只对特定职业开放。\n你可以在设置改变你的职业。</string>
     <string name="class_gear_disclaimer">你只能购买当前职业的装备</string>
-    <string name="tavern_description">欢迎来到客栈！ 拉张凳子坐下聊天，或者暂停任务休息一下。</string>
+    <string name="tavern_description">欢迎来到客栈！拉张凳子坐下聊天，或者暂停任务休息一下。</string>
     <string name="check_into_inn">入住客栈</string>
     <string name="community_guidelines">社区守则</string>
     <string name="view_community_guidelines">查看社区守则</string>
@@ -723,9 +723,9 @@
     <string name="from_balance">从余额</string>
     <string name="purchase">购买</string>
     <string name="preference_push_party_mention">来自队伍的提醒</string>
-    <string name="more_out_of_habitica">从Habitica中得到更多</string>
+    <string name="more_out_of_habitica">在Habitica中得到更多物品</string>
     <string name="gift_gems_disclaimer">Habitica决不会要求你将宝石赠送给其他玩家。向别人讨要宝石是一种 违反社区指南的行为，所有这类情况应该报告给admin@habitica.com。</string>
-    <string name="gems_gift_description">是否想送闪闪发光的宝石给别人？</string>
+    <string name="gems_gift_description">想赠送闪闪发光的宝石给别人吗？</string>
     <string name="profile_gift_subscription">赠送
 \n订阅</string>
     <string name="profile_gift_gems">赠送
@@ -734,7 +734,7 @@
 \n信息</string>
     <string name="gift_gems">赠送宝石</string>
     <string name="see_other_options">查看其他选项</string>
-    <string name="promo_subscription_buy_gems_description">如果您成为订阅者、您可以用金币买宝石、每月可得到神秘物品、增加掉落顶线和更多好处！</string>
+    <string name="promo_subscription_buy_gems_description">成为订阅者，你将可以用金币购买宝石，每月获得神秘物品，增加每日掉落上限…… 还有更多福利等着你！</string>
     <string name="promo_subscription_buy_gems_prompt">需要宝石吗？</string>
     <string name="preference_push_party_activity">队伍活动</string>
     <string name="search_hint">搜索任务</string>
@@ -773,7 +773,7 @@
     <string name="transfer_ownership_confirm">转让所有权？</string>
     <string name="transferred_ownership">领导权已转移到%s</string>
     <string name="send_message">发送私信</string>
-    <string name="remove_member">删除会员</string>
+    <string name="remove_member">移除成员</string>
     <string name="transfer_ownership">转让所有权</string>
     <string name="remove">去掉</string>
     <string name="inbox_messages_title_nosender">你收到了 %d 条消息</string>
@@ -810,7 +810,7 @@
     <string name="cost">价格</string>
     <string name="joined_guild">你加入了公会</string>
     <string name="left_guild">你离开了公会</string>
-    <string name="leave_guild_confirmation">您想退出公会吗？退出后可以留在已加入的挑战中，也可以离开挑战。</string>
+    <string name="leave_guild_confirmation">你确定要退出公会吗？</string>
     <string name="leave_guild">退出公会</string>
     <string name="report_violation">举报违规</string>
     <string name="trillion_abbrev">兆</string>
@@ -875,7 +875,7 @@
     <string name="limited_event">限量事件</string>
     <string name="g1g1_duration">12月17日至1月6日</string>
     <string name="learn_more">了解更多</string>
-    <string name="purchase_from_timetravel_shop">你可以在时空穿越者的商店买这个定制</string>
+    <string name="purchase_from_timetravel_shop">你可以在时空旅行者的商店买这个定制</string>
     <string name="go_shopping">去购买东西</string>
     <string name="emails">电邮通知</string>
     <string name="pref_emails_checkbox">用电邮通知</string>
@@ -897,7 +897,7 @@
     <string name="register_btn_fb">Facebook登录</string>
     <string name="login_btn_apple">Apple登录</string>
     <string name="subscribe_listitem5_description">在Habitica发现更多的物品，每天享受双倍的物品掉落上限。</string>
-    <string name="subscribe_listitem3_description_new">现在订阅，可以得到%s和每月得到新的物品！</string>
+    <string name="subscribe_listitem3_description_new">现在订阅，你将马上获得%s。每月都能收到新的物品！</string>
     <string name="subscribe_listitem5">双倍掉落</string>
     <string name="create_account_short">创建一个帐户</string>
     <string name="login_incentive_short_count">签到%d次</string>
@@ -921,25 +921,25 @@
     <string name="skill_progress_title">使用技能</string>
     <string name="authentication_error_body">你的用户名和/或密码不正确。</string>
     <string name="network_error_no_network_body">未连接到互联网。</string>
-    <string name="stat_description">所有Habitica角色都有四个会影响Habitica游戏玩法的属性。
-\n
-\n**力量**增加“暴击”的几率。暴击时，金币、经验值、和物品掉落的机会都会有所增长。它也能帮助你伤害boss。战士和盗贼从他们的职业装备获得力量。
-\n
-\n**体质**值越高，你从每日任务和坏习惯中所受到的伤害会越少。医师和战士从他们的职业装备获得体质。
-\n
-\n**智力**能提高你的经验值，解锁职业系统后，决定了你的最大魔法值。法师和医师从他们的职业装备获得智力。
-\n
-\n**感知**值增加你每次获得的金币量。当你解锁市场后，物品掉落的几率也会增加。法师和盗贼从他们的职业装备获得感知。
-\n
+    <string name="stat_description">所有Habitica角色都有四个会影响Habitica游戏玩法的属性。 
+\n 
+\n**力量**增加“暴击”的几率。暴击时，金币、经验值、和物品掉落的机会都会有所增长。它也能帮助你伤害boss。战士和盗贼从他们的职业装备获得力量。 
+\n 
+\n**体质**值越高，你从每日任务和坏习惯中所受到的伤害会越少。医者和战士从他们的职业装备获得体质。 
+\n 
+\n**智力**能提高你的经验值，解锁职业系统后，决定了你的最大魔法值。法师和医者从他们的职业装备获得智力。 
+\n 
+\n**感知**值增加你每次获得的金币量。当你解锁市场后，物品掉落的几率也会增加。法师和盗贼从他们的职业装备获得感知。 
+\n 
 \n你达到10级后，等级赚取1点属性。你还可以用具有不同属性提升组合的装备。</string>
     <string name="mana_description">魔法值在10级的班级系统中被解锁。一旦你在11级，你开始学习它们，便可以**使用技能**。
 \n
 \n每天重置时，某些**魔法值会恢复**，但是你可以通过完成任务或使用法师的技能来恢复更多。</string>
-    <string name="gems_description">宝石是使用真钱购买的货币，可以让你在Habitica中购买更多内容，并且是Habitica团队与订阅一起获得财务支持的主要来源之一。
-\n
-\n所有通过宝石购买的内容只改变外貌，或者可以随时间免费获得的。
-\n
-\n你还可以通过其他玩家的礼物，挑战奖，为Habitica捐款或订阅来获得宝石。</string>
+    <string name="gems_description">宝石是使用真钱购买的货币，可以让你在Habitica中购买更多内容，并且是Habitica团队与订阅一起获得财务支持的主要来源之一。 
+\n 
+\n所有通过宝石购买的内容只改变外貌，或者可以随时间免费获得的。 
+\n 
+\n你还可以通过收到其他玩家赠送的礼物、赢得挑战奖励、对Habitica做出贡献或订阅来获得宝石。</string>
     <string name="gold_description">金币是Habitica中的**主要货币**，可以让您购买某些装备、副本、物品，甚至是自定义奖励。
 \n
 \n通过完成任务或副本，或通过一些职业技能来**获得金币**。更高的**感知属性**提高了您赚取的金币数量。
@@ -958,8 +958,8 @@
 \n难度较高的任务或红色任务将为您提供**更多的经验**。**智力属性**也可以提高你的经验获取率。</string>
     <string name="experience_points">经验值</string>
     <string name="manual_sync_restart_description">有时，应用不会自动更新内容。尝试拉动刷新或强制关闭该应用程序并重新打开它。</string>
-    <string name="hourglasses_description">神秘沙漏是一种极为罕见的货币。你只能在连续三个月或更长时间内订阅Habitica才能获得它。它们在时空穿越者的商店中用于购买过去的装备，宠物，坐骑，动画背景，甚至是特殊副本。
-\n
+    <string name="hourglasses_description">神秘沙漏是一种极为罕见的货币。你只能在连续三个月或更长时间内订阅Habitica才能获得它。它们在时空旅行者的商店中用于购买过去的装备、宠物、坐骑、动画背景，甚至是特殊副本。 
+\n 
 \n一年最多可以收到四个神秘沙漏。获得奖励的时间取决于你的订阅续订时间表。它们会在你的最后一次订阅付款（使你有资格获得沙漏）之后的新月的第一天发送。有关更多详细信息，请参见[订阅]页面。</string>
     <string name="mystic_hourglasses">神秘沙漏</string>
     <string name="clear_cache_description">要清除缓存，请打开手机的“设置”应用。去Storage &gt; Apps &gt; Habitica，然后点击清除缓存。</string>
@@ -1011,7 +1011,6 @@
     <string name="on">开</string>
     <string name="user_level_with_class_unabbreviated">%1$d级%2$s</string>
     <string name="special_items">特殊物品</string>
-    <string name="leave_delte_tasks">退出挑战，并删除挑战任务</string>
     <string name="leave_keep_tasks">退出挑战，并保留挑战任务</string>
     <string name="challenge_leave_description">在退出挑战之后，你可以在自己的任务列表里保留参加挑战时的任务，也可以删除它们</string>
     <string name="suggest_pet_hatch_missing_potion">你还需要一个%s孵化药水来孵化这个宠物</string>
@@ -1092,14 +1091,91 @@
     <string name="unblock_user">解除屏蔽该用户</string>
     <string name="pms_disabled_description">你依旧能正常发送私信给他人，但没人能发送私信给你。在设置中可重启接收私信功能。</string>
     <string name="spooky_promo_info_prompt">今年在秋季庆典的宝石特卖会步入尾声！这是最后一次获得更多宝石的机会，请趁早囤货！</string>
-    <string name="spooky_promo_info_limitations">本促销活动仅适用于限时活动期间。本次活动从美国东部时间9月22日上午8:00(12:00UTC)开始，将于美国东部时间9月30日晚上8:00(00:00UTC)结束。该优惠活动仅适用于个人购买宝石。</string>
     <string name="spooky_promo_info_instructions">在9月22日至30日期间，只需像往常一样购买任何宝石捆绑包，你的账户就会记入促销金额赠送的宝石数。获得的更多宝石可以用来消费、赠送或未来使用！</string>
     <string name="view_gem_bundles">查看宝石捆绑包</string>
     <string name="fall_promo_info_prompt">秋季盛典正在如火如荼的进行中，所以我们认为这是我们首次推出宝石特卖会的最佳时机！现在你每次购买都会获得比以往更多的宝石。现在你每次购买都将获得比以往更多的宝石。</string>
-    <string name="fall_promo_info_limitations">本促销活动仅适用于限时活动期间。本次活动从美国东部时间9月22日上午8:00(12:00UTC)开始，将于美国东部时间9月30日晚上8:00(00:00UTC)结束。该优惠活动仅适用于个人购买宝石。</string>
     <string name="fall_promo_info_instructions">在9月22日至30日期间，只需像往常一样购买任何宝石捆绑包，你的账户就会记入促销金额赠送的宝石数。获得的更多宝石可以用来消费、赠送或未来使用！</string>
     <string name="limitations">限制</string>
     <string name="how_it_works">如何工作</string>
     <string name="x_to_y">%s到%s</string>
     <string name="usually_x_gems">通常%d颗宝石</string>
+    <string name="congratulations">恭喜你！</string>
+    <string name="you_won_challenge">你赢得了一项挑战</string>
+    <string name="hurray">万岁！</string>
+    <string name="end_challenge_description">要结束挑战，请先登录Habitica网页版，然后点击挑战页面右侧的 \"结束挑战 \"按钮。</string>
+    <string name="action_end_challenge">结束挑战</string>
+    <string name="open_website">打开网页版</string>
+    <string name="create_guild_description">要创建一个公会，请先登录Habitica网页版，然后在 \"我的公会 \"页面上点击 \"创建 \"按钮。</string>
+    <string name="create_guild">创建公会</string>
+    <string name="purchase_immediately_description">将在购买后立即生效！</string>
+    <string name="fortify_shop_description">将所有任务恢复至中性状态（黄色），并补满的生命值</string>
+    <string name="fortify_shop">稳固药剂</string>
+    <string name="invitation_title_no_leader">你被邀请加入一个队伍</string>
+    <string name="you">你</string>
+    <string name="login_disclaimer">点击注册，即表示你已经阅读并同意<a href="https://habitica.com/static/terms">《使用条款》</a>和<a href="https://habitica.com/static/privacy">《隐私策略》。</a></string>
+    <string name="finish">结束</string>
+    <string name="user_is_blocked_explanation">被阻止的用户无法向你发送私人消息，但你仍会在酒馆或公会中看到他们的帖子。</string>
+    <string name="user_is_blocked">你屏蔽了该用户</string>
+    <string name="submit_feedback">提交反馈</string>
+    <string name="theme_color">主题颜色</string>
+    <string name="theme_mode">主题模式</string>
+    <string name="dark_mode">深色模式</string>
+    <string name="gems_promo_info_limitations">此促销活动为限时活动。该活动开始于%s（12:00 UTC），结束于%s（00:00 UTC）。仅在给自己购买宝石时提供促销优惠。</string>
+    <string name="leave_challenges_delete_tasks">离开挑战并删除任务</string>
+    <string name="inbox_messages_title_single">来自%1$s的新消息</string>
+    <string name="rejoin_guild">你可以重新加入该公会：在公会页面的查找公会</string>
+    <string name="leave_guild_challenges_confirmation">离开公会后，你还想保留已加入的挑战吗？</string>
+    <string name="leave_party_challenges_confirmation">离开队伍后，你还想保留已加入的挑战吗？</string>
+    <string name="month_reminder_text">有时，重新开始是最好的选择，Habitica可以提供帮助！</string>
+    <string name="month_reminder_title">需要改变常规吗？</string>
+    <string name="available_for">结束于%s</string>
+    <string name="reloaded_content">已重新加载内容</string>
+    <string name="rejoin_party">除非再次收到邀请，否则你将不能重新加入该队伍。</string>
+    <string name="is_open">营业中</string>
+    <string name="party_challenges">你加入了一个队伍挑战</string>
+    <string name="guild_challenges">你加入了一个公会挑战</string>
+    <string name="leave_delete_tasks">退出挑战并删除%d个任务</string>
+    <string name="subscribe_listitem3_description">现在订阅即可获得独家套装，每月还可获得新物品！</string>
+    <string name="quest_items_found">你已找到%d个副本物品</string>
+    <string name="g1g1_promo_info_prompt">为了纪念奉献的季节，我们带来了一个非常特别的促销活动。现在，当你送给别人一份订阅时，你可以为自己免费获得同样的订阅！</string>
+    <string name="g1g1_promo_info_limitations">该限时活动从%s (13:00 UTC)开始，于%s (1:00 UTC)结束。该促销活动只允许你将订阅赠送给另一位Habitica居民。如果你或你的礼物接受者当前的订阅尚未到期或取消，赠送所获得的订阅时长将进行顺延。</string>
+    <string name="g1g1_promo_info_instructions">请先点击 \"赠送订阅\"，输入你想赠送账户的用户名。你需要选择赠送的时长并结账。此时，你的账户将自动获得与赠送的订阅级别相同的奖励。</string>
+    <string name="claim_x_gems">获得 %d颗宝石</string>
+    <string name="won_achievement_description_noname">恭喜你赢得了一项挑战！你的胜利已记录在成就中。</string>
+    <string name="won_achievement_description">恭喜你赢得了<b>%s</b> 挑战！你的胜利已记录在成就中。</string>
+    <string name="empty_challenge_list">你不是任何挑战的一员。</string>
+    <string name="empty_discover_description">去发现页面来找到一些来加入！</string>
+    <string name="empty_guilds_list">你不是任何工会的一员。</string>
+    <string name="open_shop">开店</string>
+    <string name="todo_item_checkbox">要干打勾</string>
+    <string name="empty_equipment_description">你还没有这个种类的物品。你可以用自己挣的金币从商场购买物品。</string>
+    <string name="empty_title">这里还没有东西</string>
+    <string name="retry">重试</string>
+    <string name="daily_item_checkbox">每日打勾</string>
+    <string name="failed">加载失败</string>
+    <string name="avatar_style">风格</string>
+    <string name="caused_damage">你伤害了boss</string>
+    <string name="locked_equipment_shop_dialog">你必须购买这个系列的前置物品来解锁</string>
+    <string name="survey_menu_description">填写这个问卷来帮我们成长以及获得一个成就！</string>
+    <string name="survey_title">Habitica 用户问卷</string>
+    <string name="go_to_survey">去填写问卷</string>
+    <string name="no_longer_available">不再可用</string>
+    <string name="open_for">开放到%s</string>
+    <string name="limited_potions_available">季节性商品可购买</string>
+    <string name="something_new">新</string>
+    <string name="launch_screen">开启页面</string>
+    <string name="quest_leave_message_nostart">你确定你要离开任务吗？你不能再参与这个任务了。</string>
+    <string name="quest_leave_message">你确定你要离开这个任务吗？你的进程会丢失哦</string>
+    <string name="cant_like_own_message">不能赞你自己的信息</string>
+    <string name="mystery_item_title">你打开神秘盒后找到…</string>
+    <string name="team_information">队伍信息</string>
+    <string name="sidebar_teams">队伍</string>
+    <string name="twelve_months_one_time">十二个月一次性订阅</string>
+    <string name="six_months_one_time">六个月一次性订阅</string>
+    <string name="three_months_one_time">三个月一次性订阅</string>
+    <string name="one_month_one_time">一个月一次性订阅</string>
+    <string name="gift_one_get_one_purchase_banner">送一个订阅得一个免费的订阅直到%s</string>
+    <string name="terms_of_service">服务条款</string>
+    <string name="privacy_policy">隐私政策</string>
+    <string name="all_tasks_completed">你完成了所有任务。干得漂亮！</string>
 </resources>

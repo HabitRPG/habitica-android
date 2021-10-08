@@ -465,7 +465,7 @@
     <string name="welcome_back">돌아온 것을 환영합니다</string>
     <string name="yesterdaililes_prompt">일일과제 중 어제 완료한 일을 체크하세요:</string>
     <string name="start_day">오늘 하루 시작하기</string>
-    <string name="leave_party_confirmation">정말로 파티에서 탈퇴하시겠습니까\?</string>
+    <string name="leave_party_confirmation">정말로 이파티에서 탈퇴하시겠습니까\?</string>
     <string name="pending">대기중</string>
     <string name="accepted">수락함</string>
     <string name="declined">거절함</string>
@@ -818,7 +818,6 @@
     <string name="login_btn_apple">애플 계정으로 로그인하기</string>
     <string name="register_btn_google">구글 계정으로 가입</string>
     <string name="special_items">스페셜 아이템</string>
-    <string name="leave_delte_tasks">나가기 &amp; 과제 지우기</string>
     <string name="leave_keep_tasks">나가기 &amp; 과제 킵하기</string>
     <string name="challenge_leave_description">이 도전의 과제들을 본인의 목록에 그대로 남기셔도 되고 나가면서 지우셔도 됩니다</string>
     <string name="subscribe_listitem5_description">매일 두 배의 아이템 획득 제한으로 해비티카에서 더 많은 아이템을 발견하세요.</string>
@@ -970,4 +969,54 @@
 \n**HP가 0에 도달하는 경우** 레벨이 하락하고, 모든 골드와 장비 하나를 잃습니다. 잃은 장비는 다시 구입할 수 있습니다.</string>
     <string name="mana_points">마나</string>
     <string name="experience_points">경험치</string>
+    <string name="buy_all">전체 구매</string>
+    <string name="create_task_title">과제 만들기</string>
+    <string name="first_drop_explanation1">과제를 완수하면 알, 부화 포션, 또는 음식을 찾을수도 있습니다</string>
+    <string name="party_challenges">당신은 현재 파티 도전에 참가중입니다</string>
+    <string name="purchase_equipment_title">장비 사기</string>
+    <string name="feedPet_description">과제를 완수해서 음식을 받으세요! 팻한테 음식을 먹일수 있습니다</string>
+    <string name="manual_sync_restart">수동 계정 연계 또는 다시 시작</string>
+    <string name="hatch_pet_description">과제를 완수하고 부화 포션이나 알을 받고 팻을 부화 하세요!</string>
+    <string name="createdTaskTitle">첫번째 과제를 만드세요</string>
+    <string name="hatch_pet">팻 부화하기</string>
+    <string name="purchasedEquipmentTitle">장비를 샀습니다</string>
+    <string name="complete_task_title">과제 끝내기</string>
+    <string name="your_progress">현재 진행률</string>
+    <string name="guild_challenges">당신은 현재 길드 도전에 참가중입니다</string>
+    <string name="hatch_pet_title">새로운 팻 부화시키기</string>
+    <string name="still_questions">아직도 궁금증이 있나요\?</string>
+    <string name="hatchedPetDescription">많은 팻들이 존재하고, 아마 당신은 한 팻에 꽂칠수도 있습니다. 아마도 팻에게 음식을 먹이면 자랄수도 있을겁니다.…</string>
+    <string name="rejoin_party">초대받지 않는이상 당신은 이파티에 재가입할수 없습니다.</string>
+    <string name="completedTaskTitle">과제를 완수했습니다</string>
+    <string name="available_for">%s 동안 사용가능</string>
+    <string name="percent_completed">%d%%완수함</string>
+    <string name="purchase_amount_error">그많큼 살수 없습니다.</string>
+    <string name="create_task_description">이번주에 끝내고 싶은 과제를 만드세요</string>
+    <string name="purchase_equipment_description">장비는 자신의 아바타를 꾸미고 능력치를 올릴수있습니다</string>
+    <string name="fedPetTitle">팻에게 음식을 먹였습니다</string>
+    <string name="complete_for_gold">완수하고 &lt;font color=#EE9109&gt;&lt;b&gt;100 골드&lt;/b&gt;&lt;/font&gt;를 수령하세요!</string>
+    <string name="leave_delete_tasks">과제 지우기 &amp; 나가기</string>
+    <string name="feedPet_title">팻 먹이기</string>
+    <string name="delete_checklist_entry">지우기…</string>
+    <string name="month_reminder_text">가끔은 새롭게 시작하는것도 좋은 방법이지요, 하비티카가 도울수 있습니다!</string>
+    <string name="fedPetDescription">모든 팻은 자신이 좋아하는 음식이 있습니다!
+\n여러번 실험을 해서 팻을 가장 빨리 키우는 음식을 알아내세요</string>
+    <string name="getting_started">시작하기</string>
+    <string name="update_app">업데이트 하기</string>
+    <string name="manual_sync_restart_description">가끔은 앱이 스스로 자동 업데이트를 안할때도 있습니다. 새로고침을 하거나 강제 종료를 하고 다시 열면 됩니다.</string>
+    <string name="could_not_find_user">유저를 찾을수 없습니다</string>
+    <string name="reloaded_content">새로고침</string>
+    <string name="createdTaskDescription">계속하세요! 만약 어떤 과제를 만들지 고민이 되면, 하루중 특정한 시간에 무엇을 하면 좋을것 같은지 생각해 보세요</string>
+    <string name="lets_get_started">시작합시다</string>
+    <string name="animal_tail">동물 꼬리</string>
+    <string name="purchasedEquipmentDescription">장비는 그저 장식용일수도 있고</string>
+    <string name="adventure_guide_description">5개의 과제를 완수하고 &lt;b&gt;5개의 업적&lt;/b&gt; 과 &lt;font color=#EE9109&gt;&lt;b&gt;100 골드&lt;/b&gt;&lt;/font&gt; 를 수령하세요!</string>
+    <string name="complete_task_description">완수한 과제를 체크하고 보상을 수령하세요</string>
+    <string name="completedTaskDescription">과제는 습관이나 일과, 또는 할일이 될수도 있습니다.
+\n계속 완수하고 여러가지 보상을 수령하세요!</string>
+    <string name="avatar_headband">머리띠</string>
+    <string name="hatchedPetTitle">팻을 부화했습니다</string>
+    <string name="is_open">열기</string>
+    <string name="animal_ears">동물 귀</string>
+    <string name="leave_party_challenges_confirmation">파티에 떠나더라도 계속 도전에 참여하시겠습니까\?</string>
 </resources>

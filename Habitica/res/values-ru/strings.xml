@@ -451,7 +451,7 @@
     <string name="welcome_back">C возвращением</string>
     <string name="yesterdaililes_prompt">Отметьте все ежедневные дела, которые вы сделали вчера:</string>
     <string name="start_day">Начать новый день</string>
-    <string name="leave_party_confirmation">Хотели бы вы оставить или удалить испытания после выхода из команды\?</string>
+    <string name="leave_party_confirmation">Вы уверены, что хотите покинуть команду\?</string>
     <string name="pending">Ожидает</string>
     <string name="accepted">Принято</string>
     <string name="declined">Отклонено</string>
@@ -500,7 +500,7 @@
     <string name="come_back_soon">Возвращайся скорее!</string>
     <string name="level">Уровень</string>
     <string name="streak_label">21-дневная серия подряд</string>
-    <string name="stats">Статистика</string>
+    <string name="stats">Характеристики</string>
     <string name="fix_character_description">Если вы столкнулись с багом или допустили ошибку, которая несправедливо изменила характеристики вашего персонажа, вы можете вручную исправить эти значения здесь.</string>
     <string name="fix_character_values">Исправить параметры персонажа</string>
     <string name="saving">Сохранение</string>
@@ -621,8 +621,8 @@
     <string name="expand_notes">Читать подробнее</string>
     <string name="collapse_notes">Свернуть</string>
     <string name="reset_streak">Сбросить счетчик</string>
-    <string name="week_reminder_title">Как поживают ваши задачи?</string>
-    <string name="week_reminder_text">Отдых полезен, но вы все еще можете зарабатывать очки опыта за выполнение заданий, чтобы поднять уровень и получить крутой комплект брони!</string>
+    <string name="week_reminder_title">Выполняете свои задачи\?</string>
+    <string name="week_reminder_text">Посетите Хабитику сейчас, чтобы получить награды и опыт!</string>
     <string name="last_login">Последнее посещение</string>
     <string name="total_checkins">Всего посещений</string>
     <string name="two_handed">Двуручное</string>
@@ -668,7 +668,7 @@
     <string name="send_gift">Отправить подарок</string>
     <string name="server">Сервер</string>
     <string name="gift_confirmation_title">Ваш подарок отправлен!</string>
-    <string name="discover">Обнаруживать</string>
+    <string name="discover">Найти</string>
     <string name="due">Сегодня</string>
     <string name="gift_one_get_one_description">Подарите подписку и получите такую же бесплатно прямо сейчас!</string>
     <string name="damage_paused">Урон остановлен</string>
@@ -796,7 +796,7 @@
     <string name="ago_months">%d мес. назад</string>
     <string name="ago_1month">1 месяц назад</string>
     <string name="authentication_error_body">Введённые данные некорректны.</string>
-    <string name="inbox_messages_title_nosender">Вы получили %d сообщений</string>
+    <string name="inbox_messages_title_nosender">%d новых сообщений</string>
     <string name="gold_capitalized">Золото</string>
     <string name="user_level_with_class_unabbreviated">Уровень %1$d %2$s</string>
     <string name="preference_email_kicked_group">Исключен из группы</string>
@@ -905,16 +905,15 @@
     <string name="complete_for_gold">Выполните, чтобы получить &lt;font color=#EE9109&gt;&lt;b&gt;100 золота&lt;/b&gt;&lt;/font&gt;!</string>
     <string name="onboarding_tasks">Первые задания</string>
     <string name="special_items">Особые предметы</string>
-    <string name="leave_keep_tasks">Покинуть &amp; оставить задания</string>
-    <string name="leave_delte_tasks">Покинуть &amp; удалить задания</string>
+    <string name="leave_keep_tasks">Покинуть и оставить задания</string>
     <string name="leave_delete_task">Покинуть &amp; удалить задание</string>
     <string name="delete_challenge_task_title">Удалить задание испытания\?</string>
     <string name="hatch">Вылупить</string>
     <string name="magic_potion">Волшебный эликсир</string>
     <string name="magic_potions">Волшебные эликсиры</string>
     <string name="view_onboarding_tasks">Посмотреть первые задания</string>
-    <string name="equip">Надеть</string>
-    <string name="unequip">Необорудовать</string>
+    <string name="equip">Применить</string>
+    <string name="unequip">Отменить выбор</string>
     <string name="purchaseX">Купить: %d</string>
     <string name="excess_items">Лишние предметы</string>
     <string name="onboardingComplete_achievement_title">Вы выполнили свои первые задания!</string>
@@ -970,4 +969,212 @@
     <string name="inbox_messages_title">Вы получили %1$d сообщений от %2$s</string>
     <string name="delete_reminder">Удалить напоминание</string>
     <string name="remove">Удалить</string>
+    <string name="empty_challenge_list">Вы не являетесь участником каких-либо испытаний.</string>
+    <string name="empty_guilds_list">Вы не состоите в гильдиях.</string>
+    <string name="hatchedPetDescription">Так много питомцев, которых нужно собрать, у вас обязательно будет любимый. Если их покормить, они могут просто вырасти …</string>
+    <string name="challenge_leave_description">Вы можете оставить задания данного испытания на личной доске задач или удалить их при выходе</string>
+    <string name="empty_title">Здесь пока ничего нет</string>
+    <string name="avatar_style">Прическа</string>
+    <string name="caused_damage">Вы нанесли боссу урон</string>
+    <string name="survey_menu_description">Заполните этот 5-минутный опрос, чтобы помочь нам развиваться, и получить достижение!</string>
+    <string name="survey_title">Опрос игроков Habitica</string>
+    <string name="go_to_survey">Перейти к опросу</string>
+    <string name="no_longer_available">Больше недоступно</string>
+    <string name="limited_potions_available">Сезонные предметы доступны</string>
+    <string name="launch_screen">Загрузочный экран</string>
+    <string name="quest_leave_message_nostart">Вы уверены, что хотите покинуть квест\? У вас не будет возможности участвовать в нем.</string>
+    <string name="quest_leave_message">Вы уверены, что хотите покинуть квест\? Весь прогресс будет потерян.</string>
+    <string name="cant_like_own_message">Вы не можете поставить «Нравится» на свои сообщения</string>
+    <string name="mystery_item_title">Вы открываете таинственную коробку и находите…</string>
+    <string name="team_information">Информация о команде</string>
+    <string name="sidebar_teams">Команды</string>
+    <string name="twelve_months_one_time">Одноразовая подписка на 12 месяцев</string>
+    <string name="six_months_one_time">Одноразовая подписка на 6 месяцев</string>
+    <string name="three_months_one_time">Одноразовая подписка на 3 месяца</string>
+    <string name="one_month_one_time">Одноразовая подписка на 1 месяц</string>
+    <string name="gift_one_get_one_purchase_banner">Подарите подписку и получите вторую бесплатно до %s</string>
+    <string name="g1g1_promo_info_limitations">Это ограниченное по времени событие начнется в %s (13:00 UTC) и закончится в %s (01:00 UTC). Акция действует только в том случае, если вы дарите подписку другому пользователю. Если вы или получатель уже имеете подписку, то вам добавятся месяцы подаренной подписки, которой можно будет воспользоваться при условии отмены или окончания текущей.</string>
+    <string name="g1g1_promo_info_instructions">Нажмите на «Подарить подписку» и введите имя пользователя другой учетной записи, которому вы хотите сделать подарок. Дальше, выберите длительность подписки и оплатите её. Ваша учетная запись будет автоматически вознаграждена тем же уровнем подписки.</string>
+    <string name="g1g1_promo_info_prompt">В честь сезона подарков возвращаем особую акцию. Теперь, когда вы дарите кому-нибудь подписку, вы получаете такую же для себя бесплатно!</string>
+    <string name="claim_x_gems">Потребовать %d самоцветов</string>
+    <string name="won_achievement_description_noname">Вы выиграли испытание! Ваша победа записана в Достижения.</string>
+    <string name="won_achievement_description">Вы выиграли в испытании <b>%s</b>! Ваша победа записана в Достижения.</string>
+    <string name="congratulations">Поздравляем!</string>
+    <string name="you_won_challenge">Вы выиграли испытание!</string>
+    <string name="hurray">Ура!</string>
+    <string name="action_end_challenge">Закончить испытание</string>
+    <string name="end_challenge_description">Чтобы закончить испытание, зайдите на сайт Habitica и нажмите на кнопку «Закончить испытание» справа от экрана испытания.</string>
+    <string name="open_website">Открыть страницу</string>
+    <string name="create_guild_description">Чтобы создать гильдию, зайдите на сайт Habitica и, открыв страницу «Мои гильдии», нажмите на кнопку «Создать».</string>
+    <string name="create_guild">Создать гильдию</string>
+    <string name="purchase_immediately_description">Это вступит в силу немедленно после покупки!</string>
+    <string name="fortify_shop_description">Вернуть все задания в нейтральное состояние (желтый цвет) и восстановить все здоровье</string>
+    <string name="fortify_shop">Эликсир укрепления</string>
+    <string name="invitation_title_no_leader">Вас пригласили в команду</string>
+    <string name="you">Вы</string>
+    <string name="login_disclaimer">Регистрируясь, вы подтверждаете, что прочитали и согласны с <a href="https://habitica.com/static/terms">Условиями предоставления услуг</a> and <a href="https://habitica.com/static/privacy">Политикой конфиденциальности.</a></string>
+    <string name="finish">Завершить</string>
+    <string name="user_is_blocked_explanation">Заблокированный пользователь не может отправлять вам личные сообщение, но вы все еще будете видеть его сообщения в Таверне или гильдиях.</string>
+    <string name="user_is_blocked">Вы заблокировали этого пользователя</string>
+    <string name="submit_feedback">Отправить отзыв</string>
+    <string name="theme_color">Цветовая схема</string>
+    <string name="theme_mode">Режим (Темный/Светлый)</string>
+    <string name="dark_mode">Темная тема</string>
+    <string name="spooky_promo_info_prompt">Распродажа самоцветов возвращается до конца Осеннего фестиваля этого года! Это последний шанс, чтобы получить больше самоцветов, чем когда-либо, так что запасайтесь пока не поздно!</string>
+    <string name="gems_promo_info_limitations">Данная акция действует во время ограниченного по времени события. Событие начинается в %s (12:00 UTC) и закончится в %s (00:00 UTC). Это предложение действительно только при покупке самоцветов для себя.</string>
+    <string name="spooky_promo_info_instructions">Между %s и %s, выберете как обычно любой набор самоцветов, и на вашу учетную запись будет зачислена их акционная сумма. Больше самоцветов, чтобы потратить их, поделиться с кем-то или сохранить для любых будущих обновлений!</string>
+    <string name="view_gem_bundles">Посмотреть наборы самоцветов</string>
+    <string name="fall_promo_info_prompt">Осенний фестиваль идет полным ходом, так что мы подумали, что это идеальное время, чтобы представить нашу первую в истории распродажу самоцветов! Теперь вы можете получить больше самоцветов с каждой покупки, чем когда-либо прежде.</string>
+    <string name="fall_promo_info_instructions">Между %s и %s, выберете как обычно любой набор самоцветов, и на вашу учетную запись будет зачислена их акционная сумма. Больше самоцветов, чтобы потратить их, поделиться с кем-то или сохранить для любых будущих обновлений!</string>
+    <string name="pms_disabled_description">Вы всё ещё можете отправлять сообщения, но никто не может отправлять их вам. Вы можете изменить это в настройках.</string>
+    <string name="block_user_description">Заблокированный пользователь не может отправлять вам личные сообщения, но вы все равно будете видеть их сообщения в Таверне или Гильдиях. Это не повлияет на то, является ли человек модератором сейчас или в будущем.</string>
+    <string name="challenge_task_name">%s задание испытания</string>
+    <string name="broken_challenge_description">Это одна из %d задач, что является частью Испытания которого больше не существует. Что бы вы хотели сделать с этими оставшимися задачами\?</string>
+    <string name="delete_challenge_task_description">Это одна из %1$d задач, которая является частью испытания «%2$s». Что бы удалить эту задачу, вы должны покинуть это испытание.</string>
+    <string name="hatch_your_pet">Вырастить вашего питомца</string>
+    <string name="use_saddle">Использовать седло</string>
+    <string name="hatch_pet_again">Вырастите питомца снова</string>
+    <string name="unhatched_pet">Невылупившийся Питомец</string>
+    <string name="can_hatch_pet">Соедините ваши %s яйцо и %s эликсир, чтобы вырастить этого питомца!</string>
+    <string name="suggest_pet_hatch_again_missing_both">Вам нужны %s и %s эликсир, чтобы вырастить этого питомца снова</string>
+    <string name="suggest_pet_hatch_again_missing_potion">Вам все еще нужен %s эликсир, чтобы вырастить этого питомца снова</string>
+    <string name="suggest_pet_hatch_again_missing_egg">Вам все еще нужно %s яйцо, чтобы вырастить этого питомца снова</string>
+    <string name="suggest_pet_hatch_missing_both">Вам нужны %s и %s эликсир, чтобы вырастить питомца</string>
+    <string name="suggest_pet_hatch_missing_potion">Вам все еще нужен %s эликсир, чтобы вырастить этого питомца</string>
+    <string name="suggest_pet_hatch_missing_egg">Вам все еще нужно %s яйцо, чтобы вырастить питомца</string>
+    <string name="excessItemsNoneLeft">У вас уже есть всё, что нужно для всех %1$s питомцев. Вы уверены, что хотите приобрести %2$d %3$ss\?</string>
+    <string name="excessItemsXLeft">Вам всего лишь нужно %1$d %2$s, чтобы вывести всех возможных питомцев. Вы уверены, что хотите приобрести %3$d\?</string>
+    <string name="go_to_items">Перейти к предметам</string>
+    <string name="first_drop_explanation2">Загляните в свои предметы и попробуйте объединить ваш новый инкубационный эликсир и яйцо!</string>
+    <string name="first_drop_explanation1">За выполнение заданий вы можете получить яйца, инкубационные эликсиры или корм для питомцев.</string>
+    <string name="purchasedEquipmentDescription">Снаряжение может быть практичным или просто модным. Повышайте свои характеристики, чтобы получить всевозможные преимущества для своего аватара</string>
+    <string name="fedPetDescription">У каждого питомца есть особая еда, которая ему нравится! Поэкспериментируйте, чтобы узнать, какой из ваших Питомцев вырастет быстрее всего</string>
+    <string name="completedTaskDescription">Задача может быть в виде Привычки, Ежедневного Дела, или Задания. Продолжайте их выполнять, чтобы получать всевозможные награды!</string>
+    <string name="createdTaskDescription">Так держать! Если вам нужна помощь в планировании задач, попробуйте подумать о том, чем вы бы хотели заниматься в определенное время дня</string>
+    <string name="purchase_equipment_description">Снаряжение - это способ персонализировать свой аватар и улучшить свои характеристики</string>
+    <string name="create_task_description">Добавить задачу для чего-то, что вы хотели бы выполнить на этой неделе</string>
+    <string name="task_display">Список задач</string>
+    <string name="purchase_amount_error">Вы не можете купить это количество самоцветов</string>
+    <string name="update_app_description">Мы постоянно выпускаем новые исправления, поэтому обязательно загляните в Play Store, чтобы узнать, доступны ли какие-либо обновления.</string>
+    <string name="manual_sync_restart_description">Иногда приложение автоматически не обновляет контент. Попробуйте потянуть, чтобы обновить, или принудительно закройте приложение и снова откройте его.</string>
+    <string name="manual_sync_restart">Ручная синхронизация или перезапуск</string>
+    <string name="clear_cache_description">Чтобы очистить кэш, откройте настройки вашего телефона. Хранилище &gt; Приложения &gt; Habitica, затем нажмите «Очистить кэш».</string>
+    <string name="hourglasses_description">Мистические песочные часы - это чрезвычайно редкая формы валюты, которую вы можете получить за подписку на Habitica в течение трех или более месяцев подряд. Они используются в магазине Путешественников во времени для покупки прошлых наборов экипировки, питомцев, скакунов, анимированных фонов или даже специальных квестов.
+\n
+\nВы можете получить до четырех Мистических песочных часов в год. Время, в течение которого вы будете вознаграждены, зависит от вашего графика продления подписки. Песочные часы будут разосланы в первый день нового месяца после последнего платежа за подписку, что позволяет вам получить их. Более подробную информацию смотрите на странице [Подписка].</string>
+    <string name="gems_description">Самоцветы - это валюта, покупаемая через реальные деньги, что позволяет покупать дополнительный контент в Habitica и является одним из основных источников финансовой поддержки команды Habitica наряду с подписками.
+\n
+\nВесь контент, покупаемый через самоцветы - чисто косметический или может быть получен в бесплатно со временем.
+\n
+\nВы также можете получить самоцветы в качестве подарков от других игроков, призов за испытания, за вклад в развитие или подписку на Habitica.</string>
+    <string name="stat_description">Все персонажи Habitica имеют четыре характеристики, которые влияют на игровые аспекты Habitica.
+\n
+\n**Сила (СИЛ)** влияет на критические удары и увеличивает урон, наносимый квестовому боссу. Воины и разбойники получают больше СИЛ из своего классового снаряжения.
+\n
+\n**Телосложение (ТЕЛ)** увеличивает очки здоровья и уменьшает получаемый урон. Целители и воины получают больше ТЕЛ из своего классового снаряжения.
+\n
+\n**Интеллект (ИНТ)** повышает количество получаемого опыта и дает больше маны. Маги и целители получают больше ИНТ из своего классового снаряжения.
+\n
+\n**Восприятие (ВОС)** увеличивает количество получаемого золота и шанс выпадения предметов. Разбойники и маги получают больше ВОС из своего классового снаряжения.
+\n
+\nПосле 10 уровня, вы получаете 1 очко характеристик за каждый новый уровень и можете распределить его в любую желаемую характеристику. Вы также можете надевать экипировку с различными комбинациями повышаемых характеристик.</string>
+    <string name="mana_description">Очки маны будут доступны вместе с классовой системой на 10 уровне и дают вам возможность **использовать навыки**, как только вы начнете их изучать на 11 уровне.
+\n
+\nНекоторое **количество очков восстанавливается** в начале каждого дня, но вы можете восполнить еще больше, выполняя задания или используя классовый навык Мага.</string>
+    <string name="gold_description">Золото - это **основная форма валюты** в Habitica, что позволяет вам покупать определенное снаряжение, квесты, предметы или даже пользовательские награды, которые вы можете создать для себя.
+\n
+\n**Заработать золото** можно через выполнение заданий или квестов, или же через использование некоторых классовых навыков. Чем выше **характеристика Восприятие**, тем большее количество золота вы получаете.
+\n
+\nЕсли вы являетесь подписчиком Habitica, вы даже можете использовать золото для покупки некоторого количества самоцветов, определяемого продолжительностью вашей подписки.</string>
+    <string name="experience_description">Очки опыта отражают ваш прогресс и дают возможность поднять уровень. В основном вы будете **получать опыт** от выполнения заданий или квестов, однако, его получить и при использовании некоторых классовых навыков.
+\n
+\nЗадания повышенной сложности или же красного цвета будут давать **больше опыта**. **Характеристика Интеллект** также увеличивает количество получаемого опыта.</string>
+    <string name="health_description">Это показывает жизнь вашего аватара. Отсутствие ежедневного занятия или негативная привычка ** снижает ваш HP **
+\n
+\n** Восстанавливайте HP **, повышая уровень, используя зелье здоровья или классовый навык с лечебной способностью
+\n
+\nЕсли ваш ** HP достигнет 0 **, вы потеряете уровень, все золото и одно из ваших снаряжений. Утерянное снаряжение можно выкупить повторно.</string>
+    <string name="stats_currency">Характеристики и валюта</string>
+    <string name="how_best_habitica">Не уверены, как лучше использовать Habitica\?</string>
+    <string name="send_bug_prompt">Отправьте нам отчет, и мы свяжемся с вами!</string>
+    <string name="common_fixes">Общие исправления</string>
+    <string name="support_bug_title">Мы постоянно пытаемся сделать наши приложения лучше, основываясь на отзывы игроков, но иногда появляются некоторые ошибки…</string>
+    <string name="bugs_fixes_description">Что-то пошло не так\? Найдите ответы здесь или обратитесь к нам за помощью.</string>
+    <string name="g1g1_info_2_text">Нажмите на «Подарить подписку» и введите имя пользователя другой учетной записи, которому вы хотите сделать подарок. Дальше, выберите длительность подписки и оплатите её. Ваша учетная запись будет автоматически вознаграждена тем же уровнем подписки.</string>
+    <string name="bugs_fixes">Ошибки и исправления</string>
+    <string name="suggestions_feedback">Предложения и отзывы</string>
+    <string name="suggestions_feedback_description">Знаете, как функции могут работать лучше, или есть идея для чего-то нового\? Расскажите нам!</string>
+    <string name="using_habitica_description">Мы объясним основы и ответим на распространенные вопросы, чтобы ввести вас в курс дела</string>
+    <string name="skill_unlocks_at">Навык разблокируется на %d уровне</string>
+    <string name="preference_email_onboarding">Руководство по настройке учетной записи Habitica.</string>
+    <string name="g1g1_info_3_text">Акция действует только в том случае, если вы дарите подписку другому пользователю. Если вы или получатель уже имеете подписку, то вам добавятся месяцы подаренной подписки, которой можно будет воспользоваться при условии отмены или окончания текущей.</string>
+    <string name="g1g1_info_1">В честь сезона подарков возвращаем особую акцию. Теперь, когда вы дарите кому-нибудь подписку, вы получаете такую же для себя бесплатно!</string>
+    <string name="cancel_subscription_group_plan_owner">У вас бесплатная подписка, потому что вы владелец команды или гильдии с активным групповым тарифом. Если вы отмените групповой тариф, ваша подписка закончится. Все дополнительно оплаченные месяцы подписки будут добавлены по истечении группового тарифа. Вы можете отменить подписку на сайте.</string>
+    <string name="cancel_subscription_group_plan">У вас бесплатная подписка, потому что вы состоите в команде или гильдии с активным групповым тарифом. Если вы покинете группу, или владелец отменит групповой тариф, ваша подписка закончится. Все дополнительно оплаченные месяцы подписки будут добавлены по истечении группового тарифа.</string>
+    <string name="subscription_credit">Оплаченная подписка</string>
+    <string name="resubscribe_description">Хотите продолжать получать преимущества\? Вы можете начать новую подписку до того как закончится предыдущая, что сохранить свои преимущества.</string>
+    <string name="subscribe_options_title">Выберите длину подписки, которая подходит Вам</string>
+    <string name="not_recurring">Без обновления</string>
+    <string name="local">местное</string>
+    <string name="authentication_methods">Способы аутентификации</string>
+    <string name="someone">Кто-то</string>
+    <string name="password_too_short">Длина вашего пароля должна быть не менее %d символов</string>
+    <string name="gems_to_gift">Самоцветы в подарок</string>
+    <string name="gift_gems_balance_subtitle">Укажите, сколько самоцветов вы хотели бы подарить, или переключите вкладку, чтобы купить самоцветы в подарок</string>
+    <string name="more_out_of_habitica">Получите больше от Habitica</string>
+    <string name="gems_gift_description">Хотите подарить блестящую коллекцию самоцветов кому-то еще\?</string>
+    <string name="promo_subscription_buy_gems_description">Станьте подписчиком, чтобы получать самоцветы за золото, ежемесячно получать таинственные предметы, больше добычи с монстров и многое другое!</string>
+    <string name="search_hint">Поиск заданий</string>
+    <string name="leave_challenges_delete_tasks">Покинуть испытания и удалить задания</string>
+    <string name="inviteFriendDescription">Вы пригласили друга (или друзей), который присоединился к вам в вашем приключении!</string>
+    <string name="joinedChallengeDescription">Вы решаете опробовать свои силы, присоединившись к испытанию!</string>
+    <string name="partyOnTitle">Время вечеринок</string>
+    <string name="partyUpTitle">Зажигаем</string>
+    <string name="mystery_item_received">Вы открываете коробку и получаете %s</string>
+    <string name="removed_member">%s был удален из группы</string>
+    <string name="transfer">Перенести</string>
+    <string name="remove_member_confirm">Вы точно хотите изгнать %@ из Группы\?</string>
+    <string name="transfer_ownership_confirm_message">После этого %@ станет новым лидером Команды</string>
+    <string name="transfer_ownership_confirm">Передать лидерство\?</string>
+    <string name="transferred_ownership">Лидерство передано %s</string>
+    <string name="transfer_ownership">Передать лидерство</string>
+    <string name="inbox_messages_title_single">Новое сообщение от %1$s</string>
+    <string name="app_theme">Тема приложения</string>
+    <string name="levelup_detail_10">Выберите класс, который подходит вашему стилю игры, и откройте специальные навыки и броню, которые помогут вам в вашем путешествии</string>
+    <string name="setup_task_habit_2_notes">Или удалите с экрана редактирования</string>
+    <string name="setup_task_habit_2">Кликните, чтобы сделать это плохой привычкой, от которой Вам бы хотелось отказаться</string>
+    <string name="leave_guild_challenges_confirmation">Вы хотите продолжить участвовать в испытании, покинув команду\?</string>
+    <string name="leave_guild_confirmation">Вы уверены, что хотите покинуть команду\?</string>
+    <string name="report_explanation">Жалуйтесь ** только ** на те публикации, которые нарушают [Принципы сообщества] (https://habitica.com/static/community-guidelines) и / или [Условия предоставления услуг] (https://habitica.com/static/terms ). Ложное сообщение о нарушении может привести к наказанию.</string>
+    <string name="gift_gems_subtitle">Выберите ниже набор самоцветов, который хотите подарить!</string>
+    <string name="available_for">Доступно для %@</string>
+    <string name="reloaded_content">Обновить содержимое</string>
+    <string name="rejoin_party">Вы не сможете снова присоединиться к этой команде, пока вас не пригласят.</string>
+    <string name="leave_party_challenges_confirmation">Вы хотите продолжить участвовать в испытании, покинув команду\?</string>
+    <string name="is_open">Открыто</string>
+    <string name="party_challenges">Вы участвуете в испытании команды</string>
+    <string name="guild_challenges">Вы участвуете в испытании гильдии</string>
+    <string name="leave_delete_tasks">Покинуть и удалить задания</string>
+    <string name="subscribe_listitem3_description_new">Купите подписку сейчас, чтобы получить %s,а также новые предметы каждый месяц!</string>
+    <string name="quest_items_found">Вы нашли %d квестовых предметов</string>
+    <string name="subscribe_listitem5_description">Найдите больше предметов в Habitica для x2 бонуса к дневному выпадению.</string>
+    <string name="empty_discover_description">Перейдите на вкладку Найти, чтобы присоединиться к какой-нибудь гильдии!</string>
+    <string name="open_shop">Открыть магазин</string>
+    <string name="empty_equipment_description">У вас все еще нет снаряжения данного типа. Вы можете приобрести его в рынке, используя заработанное золото.</string>
+    <string name="retry">Повторить попытку</string>
+    <string name="locked_equipment_shop_dialog">Вы должны приобрести предыдущие предметы в этой последовательности для разблокировки</string>
+    <string name="rejoin_guild">Вы можете заново присоединиться к этой гильдии через страницу Гильдии: Найти</string>
+    <string name="month_reminder_text">Иногда лучшее решение - это начать все сначала, Хабитика может помочь!</string>
+    <string name="month_reminder_title">Нужна смена распорядка дня\?</string>
+    <string name="open_for">Открыто для %s</string>
+    <string name="daily_item_checkbox">Чекбокс для ежедневного задания</string>
+    <string name="todo_item_checkbox">Чекбокс для задачи</string>
+    <string name="failed">Ошибка загрузки</string>
+    <string name="something_new">Новый</string>
+    <string name="terms_of_service">Условия Использования</string>
+    <string name="privacy_policy">Политика Конфиденциальности</string>
+    <string name="all_tasks_completed">Вы завершили все ваши задания. Отлично!</string>
+    <string name="damage_pending">%.01f ожидаемого урона</string>
+    <string name="reset_counter">Сбросить счётчик</string>
+    <string name="adjust_counter">Настроить счётчик</string>
 </resources>
