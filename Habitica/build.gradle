@@ -47,8 +47,8 @@ dependencies {
     implementation 'com.squareup.retrofit2:adapter-rxjava3:2.9.0'
 
     //Dependency Injection
-    implementation 'com.google.dagger:dagger:2.38'
-    kapt 'com.google.dagger:dagger-compiler:2.38'
+    implementation 'com.google.dagger:dagger:2.39.1'
+    kapt 'com.google.dagger:dagger-compiler:2.39.1'
     compileOnly 'javax.annotation:javax.annotation-api:1.3.2'
     compileOnly 'com.github.pengrad:jdk9-deps:1.0'
     //App Compatibility and Material Design
@@ -82,8 +82,8 @@ dependencies {
     //Analytics
     implementation 'com.amplitude:android-sdk:2.30.0'
     // Image Management Library
-    implementation("io.coil-kt:coil:1.2.2")
-    implementation("io.coil-kt:coil-gif:1.2.2")
+    implementation("io.coil-kt:coil:1.4.0")
+    implementation("io.coil-kt:coil-gif:1.4.0")
 
     //Tests
     testImplementation 'io.kotest:kotest-runner-junit5:4.6.2'
@@ -156,7 +156,7 @@ android {
         resConfigs "en", "bg", "de", "en-rGB", "es", "fr", "hr-rHR", "in", "it", "iw", "ja", "ko", "lt", "nl", "pl", "pt-rBR", "pt-rPT", "ru", "tr", "zh", "zh-rTW"
 
         versionCode 3067
-        versionName "3.4.0.2"
+        versionName "3.4.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
