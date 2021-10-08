@@ -109,28 +109,28 @@ constructor(
             return textView
         }
 
-        fun getNotificationAndAddStatsToUserAsText(xp: Double, hp: Double, gold: Double, mp: Double): Pair<SpannableStringBuilder, SnackbarDisplayType> {
+        fun getNotificationAndAddStatsToUserAsText(xp: Double?, hp: Double?, gold: Double?, mp: Double?): Pair<SpannableStringBuilder, SnackbarDisplayType> {
             val builder = SpannableStringBuilder()
             var displayType = SnackbarDisplayType.NORMAL
 
-            if (xp > 0) {
-                builder.append(" + ").append(xp.round(2).toString()).append(" Exp")
+            if ((xp ?: 0.0) > 0) {
+                builder.append(" + ").append(xp?.round(2).toString()).append(" Exp")
             }
             if (hp != 0.0) {
                 displayType = SnackbarDisplayType.FAILURE
-                builder.append(" - ").append(abs(hp.round(2)).toString()).append(" Health")
+                builder.append(" - ").append(abs(hp?.round(2) ?: 0.0).toString()).append(" Health")
             }
             if (gold != 0.0) {
-                if (gold > 0) {
-                    builder.append(" + ").append(gold.round(2).toString())
-                } else if (gold < 0) {
+                if ((gold ?: 0.0) > 0) {
+                    builder.append(" + ").append(gold?.round(2).toString())
+                } else if ((gold ?: 0.0) < 0) {
                     displayType = SnackbarDisplayType.FAILURE
-                    builder.append(" - ").append(abs(gold.round(2)).toString())
+                    builder.append(" - ").append(abs(gold?.round(2) ?: 0.0).toString())
                 }
                 builder.append(" Gold")
             }
-            if (mp > 0) {
-                builder.append(" + ").append(mp.round(2).toString()).append(" Mana")
+            if ((mp ?: 0.0) > 0) {
+                builder.append(" + ").append(mp?.round(2).toString()).append(" Mana")
             }
 
             return Pair(builder, displayType)

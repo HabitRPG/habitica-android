@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.helpers.notifications
 
+import android.app.Notification
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
@@ -40,6 +41,7 @@ class GroupActivityNotification(context: Context, identifier: String?) : Habitic
         oldMessages.add(data)
         return super.configureNotificationBuilder(data)
             .setStyle(style)
+            .setCategory(Notification.CATEGORY_MESSAGE)
             .setExtras(bundleOf(Pair("messages", bundleOf(Pair("messages", oldMessages)))))
     }
 
@@ -55,8 +57,8 @@ class GroupActivityNotification(context: Context, identifier: String?) : Habitic
         )
     }
 
-    override fun setNotificationActions(data: Map<String, String>) {
-        super.setNotificationActions(data)
+    override fun setNotificationActions(notificationId: Int, data: Map<String, String>) {
+        super.setNotificationActions(notificationId, data)
         val groupID = data["groupID"] ?: return
 
         val actionName = context.getString(R.string.group_message_reply)
@@ -68,6 +70,7 @@ class GroupActivityNotification(context: Context, identifier: String?) : Habitic
         val intent = Intent(context, LocalNotificationActionReceiver::class.java)
         intent.action = actionName
         intent.putExtra("groupID", groupID)
+        intent.putExtra("NOTIFICATION_ID", notificationId)
         val replyPendingIntent: PendingIntent =
             PendingIntent.getBroadcast(
                 context, groupID.hashCode(),
