@@ -642,13 +642,9 @@ class NavigationDrawerFragment : DialogFragment() {
         activePromo = configManager.activePromo()
         val promoItem = getItemWithIdentifier(SIDEBAR_PROMO) ?: return
         activePromo?.let { activePromo ->
-            if (sharedPreferences.getBoolean("hide${activePromo.identifier}", false)) {
-                promoItem.isVisible = true
-                adapter.activePromo = activePromo
-            } else {
-                promoItem.isVisible = false
-            }
-
+            promoItem.isVisible =
+                !sharedPreferences.getBoolean("hide${activePromo.identifier}", false)
+            adapter.activePromo = activePromo
             var promotedItem: HabiticaDrawerItem? = null
             if (activePromo.promoType == PromoType.GEMS_AMOUNT || activePromo.promoType == PromoType.GEMS_PRICE) {
                 promotedItem = getItemWithIdentifier(SIDEBAR_GEMS)

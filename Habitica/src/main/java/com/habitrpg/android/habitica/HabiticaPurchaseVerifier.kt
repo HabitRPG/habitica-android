@@ -78,7 +78,7 @@ class HabiticaPurchaseVerifier(context: Context, apiClient: ApiClient) : BasePur
             }
         }
         preferences?.edit {
-            edit?.putStringSet(PURCHASED_PRODUCTS_KEY, purchasedOrderList)
+            putStringSet(PURCHASED_PRODUCTS_KEY, purchasedOrderList)
         }
     }
 
