@@ -404,6 +404,8 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         if (binding.toolbarTitle.text?.isNotBlank() != true) {
             navigationController.currentDestination?.let { updateToolbarTitle(it, null) }
         }
+
+        showAchievementDialog(ShowAchievementDialog("", "", ""))
     }
 
     override fun onPause() {
@@ -847,7 +849,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     }
 
     @Subscribe
-    fun showWonAchievementDialog(event: ShowWonChallengeDialog) {
+    fun showWonChallengeDialog(event: ShowWonChallengeDialog) {
         retrieveUser(true)
         lifecycleScope.launch(context = Dispatchers.Main) {
             val dialog = WonChallengeDialog(this@MainActivity)
