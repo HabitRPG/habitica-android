@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.content.res.Resources
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -61,7 +62,7 @@ abstract class BaseActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         val languageHelper = LanguageHelper(sharedPreferences.getString("language", "en"))
-        resources.forceLocale(languageHelper.locale)
+        resources.forceLocale(this, languageHelper.locale)
         delegate.localNightMode = when (sharedPreferences.getString("theme_mode", "system")) {
             "light" -> AppCompatDelegate.MODE_NIGHT_NO
             "dark" -> AppCompatDelegate.MODE_NIGHT_YES
@@ -75,6 +76,13 @@ abstract class BaseActivity : AppCompatActivity() {
         injectActivity(HabiticaBaseApplication.userComponent)
         setContentView(getContentView())
         compositeSubscription = CompositeDisposable()
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        val languageHelper = LanguageHelper(sharedPreferences.getString("language", "en"))
+        resources.forceLocale(this, languageHelper.locale)
     }
 
     override fun onStart() {
@@ -222,9 +230,12 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 }
 
-private fun Resources.forceLocale(locale: Locale) {
+private fun Resources.forceLocale(activity: BaseActivity, locale: Locale) {
     Locale.setDefault(locale)
     val configuration = Configuration()
     configuration.setLocale(locale)
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        activity.createConfigurationContext(configuration)
+    }
     updateConfiguration(configuration, displayMetrics)
 }

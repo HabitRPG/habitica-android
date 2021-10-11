@@ -6,9 +6,11 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
+import android.content.res.Configuration
 import android.content.res.Resources
 import android.database.DatabaseErrorHandler
 import android.database.sqlite.SQLiteDatabase
+import android.os.Build
 import android.os.Build.VERSION.SDK_INT
 import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
@@ -31,6 +33,7 @@ import com.habitrpg.android.habitica.api.HostConfig
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ApiClient
+import com.habitrpg.android.habitica.helpers.LanguageHelper
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
 import com.habitrpg.android.habitica.modules.UserModule
@@ -46,6 +49,7 @@ import org.solovyev.android.checkout.Billing
 import org.solovyev.android.checkout.Cache
 import org.solovyev.android.checkout.Checkout
 import org.solovyev.android.checkout.PurchaseVerifier
+import java.util.Locale
 import javax.inject.Inject
 
 // contains all HabiticaApplicationLogic except dagger componentInitialisation
@@ -78,6 +82,7 @@ abstract class HabiticaBaseApplication : Application() {
         super.onCreate()
         setupRealm()
         setupDagger()
+        setLocale()
         setupRemoteConfig()
         setupNotifications()
         createBillingAndCheckout()
@@ -115,6 +120,21 @@ abstract class HabiticaBaseApplication : Application() {
         FirebaseAnalytics.getInstance(this).setUserProperty("app_testing_level", BuildConfig.TESTING_LEVEL)
 
         checkIfNewVersion()
+    }
+
+    private fun setLocale() {
+        val resources = resources
+        val configuration: Configuration = resources.configuration
+        val languageHelper = LanguageHelper(sharedPrefs.getString("language", "en"))
+        if (if (SDK_INT >= Build.VERSION_CODES.N) {
+                configuration.locales.isEmpty || configuration.locales[0] != languageHelper.locale
+            } else {
+                configuration.locale != languageHelper.locale
+            }
+        ) {
+            configuration.setLocale(languageHelper.locale)
+            resources.updateConfiguration(configuration, null)
+        }
     }
 
     protected open fun setupRealm() {
