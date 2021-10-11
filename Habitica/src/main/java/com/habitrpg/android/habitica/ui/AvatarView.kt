@@ -12,6 +12,7 @@ import androidx.core.view.marginStart
 import androidx.core.view.marginTop
 import coil.clear
 import coil.load
+import coil.target.ImageViewTarget
 import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.dpToPx
@@ -143,17 +144,15 @@ class AvatarView : FrameLayout {
 
             imageView.load(DataBindingUtils.BASE_IMAGE_URL + DataBindingUtils.getFullFilename(layerName)) {
                 allowHardware(false)
-                target(
-                    {},
-                    {
+                target(object : ImageViewTarget(imageView) {
+                    override fun onError(error: Drawable?) {
+                        super.onError(error)
                         onLayerComplete()
-                    },
-                    {
-                        if (imageView.tag != layerName) {
-                            return@target
-                        }
-                        val bounds = getLayerBounds(layerKey, layerName, it)
-                        imageView.setImageDrawable(it)
+                    }
+
+                    override fun onSuccess(result: Drawable) {
+                        super.onSuccess(result)
+                        val bounds = getLayerBounds(layerKey, layerName, result)
                         imageView.imageMatrix = avatarMatrix
                         val layoutParams = imageView.layoutParams as? LayoutParams
                         layoutParams?.topMargin = bounds.top
@@ -163,7 +162,7 @@ class AvatarView : FrameLayout {
                         imageView.layoutParams = layoutParams
                         onLayerComplete()
                     }
-                )
+                })
             }
         }
         while (i < (imageViewHolder.size)) {

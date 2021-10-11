@@ -404,8 +404,6 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         if (binding.toolbarTitle.text?.isNotBlank() != true) {
             navigationController.currentDestination?.let { updateToolbarTitle(it, null) }
         }
-
-        showAchievementDialog(ShowAchievementDialog("", "", ""))
     }
 
     override fun onPause() {
