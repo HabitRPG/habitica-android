@@ -267,7 +267,6 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
         if (user?.isManaged == true) {
             localRepository.modify(user) {
                 it.inbox?.hasUserSeenInbox = true
-                //it.inbox?.newMessages = 0
             }
         }
         return apiClient.markPrivateMessagesRead()
