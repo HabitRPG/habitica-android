@@ -60,6 +60,8 @@ interface SocialRepository : BaseRepository {
 
     fun markPrivateMessagesRead(user: User?): Flowable<Void>
 
+    fun markSomePrivateMessagesAsRead(user: User?, messages: List<ChatMessage>)
+
     fun transferGroupOwnership(groupID: String, userID: String): Flowable<Group>
     fun removeMemberFromGroup(groupID: String, userID: String): Flowable<List<Member>>
 

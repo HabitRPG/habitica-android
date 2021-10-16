@@ -36,6 +36,7 @@ import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.promotions.HabiticaPromotion
 import com.habitrpg.android.habitica.models.promotions.PromoType
 import com.habitrpg.android.habitica.models.social.Group
+import com.habitrpg.android.habitica.models.user.Inbox
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.activities.NotificationsActivity
@@ -324,7 +325,7 @@ class NavigationDrawerFragment : DialogFragment() {
     }
 
     private fun updateUser(user: User) {
-        setMessagesCount(user.inbox?.newMessages ?: 0)
+        setMessagesCount(user.inbox)
         setSettingsCount(if (user.flags?.verifiedUsername != true) 1 else 0)
         setDisplayName(user.profile?.name)
         setUsername(user.formattedUsername)
@@ -619,12 +620,23 @@ class NavigationDrawerFragment : DialogFragment() {
         }
     }
 
-    private fun setMessagesCount(unreadMessages: Int) {
-        if (unreadMessages == 0) {
-            binding?.messagesBadge?.visibility = View.GONE
-        } else {
+    private fun setMessagesCount(inbox: Inbox?) {
+        val numOfUnreadMessages = inbox?.newMessages ?: 0
+        if (numOfUnreadMessages != 0) {
             binding?.messagesBadge?.visibility = View.VISIBLE
-            binding?.messagesBadge?.text = unreadMessages.toString()
+            binding?.messagesBadge?.text = numOfUnreadMessages.toString()
+            context?.let {
+                val color = if (inbox?.hasUserSeenInbox != true) {
+                    it.getThemeColor(R.attr.colorAccent)
+                } else {
+                    ContextCompat.getColor(it, R.color.gray_200)
+                }
+                val background = binding?.messagesBadge?.background as? GradientDrawable
+                background?.color = ColorStateList.valueOf(color)
+                binding?.messagesBadge?.setTextColor(ContextCompat.getColor(it, R.color.white))
+            }
+        } else {
+            binding?.messagesBadge?.visibility = View.GONE
         }
     }
 

@@ -58,6 +58,8 @@ open class ChatMessage : RealmObject(), BaseMainObject {
     val formattedUsername: String?
         get() = if (username != null) "@$username" else null
 
+    var isSeen: Boolean = true
+
     fun userLikesMessage(userId: String?): Boolean {
         return likes?.any { userId == it.id } ?: false
     }
