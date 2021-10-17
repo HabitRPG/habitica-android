@@ -61,7 +61,7 @@ open class NotificationsViewModel : BaseViewModel() {
                         var notifications = convertInvitationsToNotifications(it)
                         if (it.flags?.newStuff == true) {
                             val notification = Notification()
-                            notification.id = "new-stuff-notification"
+                            notification.id = "custom-new-stuff-notification"
                             notification.type = Notification.Type.NEW_STUFF.type
                             val data = NewStuffData()
                             notification.data = data
@@ -179,11 +179,19 @@ open class NotificationsViewModel : BaseViewModel() {
      * instead of one of the ones coming from server.
      */
     private fun isCustomNotification(notification: Notification): Boolean {
-        return notification.id.startsWith("custom-") || notification.id == "new-stuff-notification"
+        return notification.id.startsWith("custom-")
     }
+
+    private fun isCustomNewStuffNotification(notification: Notification) =
+            notification.id == "custom-new-stuff-notification"
 
     fun dismissNotification(notification: Notification) {
         if (isCustomNotification(notification)) {
+            if (isCustomNewStuffNotification(notification)) {
+                customNotifications.onNext(
+                        customNotifications.value?.filterNot { it.id == notification.id }
+                )
+            }
             return
         }
 
@@ -198,6 +206,13 @@ open class NotificationsViewModel : BaseViewModel() {
             .filter { !isCustomNotification(it) }
             .filter { !actionableNotificationTypes.contains(it.type) }
             .map { it.id }
+
+        val customNewStuffNotification = notifications
+                .firstOrNull { isCustomNewStuffNotification(it) }
+
+        if (customNewStuffNotification != null) {
+            dismissNotification(customNewStuffNotification)
+        }
 
         if (dismissableIds.isEmpty()) {
             return
