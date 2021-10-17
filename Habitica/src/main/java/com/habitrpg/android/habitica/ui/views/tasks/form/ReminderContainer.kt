@@ -55,6 +55,12 @@ class ReminderContainer @JvmOverloads constructor(
         }
 
     var firstDayOfWeek: Int? = null
+        set(value) {
+            children
+                    .filterIsInstance<ReminderItemFormView>()
+                    .forEach { it.firstDayOfWeek = value }
+            field = value
+        }
 
     init {
         orientation = VERTICAL
