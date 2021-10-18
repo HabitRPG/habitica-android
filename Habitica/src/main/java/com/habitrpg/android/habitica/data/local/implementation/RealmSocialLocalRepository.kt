@@ -64,6 +64,13 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
 
     override fun saveInboxMessages(userID: String, recipientID: String, messages: List<ChatMessage>, page: Int) {
         messages.forEach { it.userID = userID }
+        for (message in messages) {
+            val existingMessage = realm.where(ChatMessage::class.java)
+                    .equalTo("id", message.id)
+                    .findAll()
+                    .firstOrNull()
+            message.isSeen = existingMessage != null
+        }
         save(messages)
         if (page != 0) return
         val existingMessages = realm.where(ChatMessage::class.java).equalTo("isInboxMessage", true).equalTo("uuid", recipientID).findAll()

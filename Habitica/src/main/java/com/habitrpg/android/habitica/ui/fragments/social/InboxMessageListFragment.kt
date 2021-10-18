@@ -88,7 +88,12 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
                     setReceivingUser(member.username, member.id)
                     activity?.title = member.displayName
                     chatAdapter = InboxAdapter(user, member)
-                    viewModel?.messages?.observe(this.viewLifecycleOwner, { chatAdapter?.submitList(it) })
+                    viewModel?.messages?.observe(
+                            this.viewLifecycleOwner
+                    ) {
+                        markMessagesAsRead(it)
+                        chatAdapter?.submitList(it)
+                    }
 
                     binding?.recyclerView?.adapter = chatAdapter
                     binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
@@ -163,6 +168,10 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
 
     override fun injectFragment(component: UserComponent) {
         component.inject(this)
+    }
+
+    private fun markMessagesAsRead(messages: List<ChatMessage>) {
+        socialRepository.markSomePrivateMessagesAsRead(user, messages)
     }
 
     private fun startAutoRefreshing() {
