@@ -103,6 +103,7 @@ abstract class HabiticaBaseApplication : Application() {
         }
         var builder = ImageLoader.Builder(this)
             .transition(CrossfadeTransition())
+            .allowHardware(false)
             .componentRegistry {
                 if (SDK_INT >= 28) {
                     add(ImageDecoderDecoder(this@HabiticaBaseApplication))

@@ -91,7 +91,9 @@ class GiftPurchaseGemsFragment : BaseFragment<FragmentGiftGemPurchaseBinding>() 
     }
 
     private fun purchaseGems(identifier: String) {
-        HabiticaPurchaseVerifier.addGift(identifier, giftedMember?.id)
-        purchaseHandler?.purchaseGems(identifier)
+        giftedMember?.id?.let {
+            HabiticaPurchaseVerifier.addGift(identifier, it)
+            purchaseHandler?.purchaseGems(identifier)
+        }
     }
 }

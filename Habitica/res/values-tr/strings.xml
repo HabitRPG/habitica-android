@@ -1096,6 +1096,6 @@
     <string name="sent_card">%s gönderdin</string>
     <string name="take_me_back">Beni geri al</string>
     <string name="not_now">Şimdi olmaz</string>
-    <string name="need_help_header_description">Sorularınızın bir başka oyuncu tarafından cevaplanması için% s içinde bir mesaj gönderin.</string>
+    <string name="need_help_header_description">Sorularınızın bir başka oyuncu tarafından cevaplanması için%s içinde bir mesaj gönderin.</string>
     <string name="setup_task_habit_1_notes">Bir Alışkanlık, Günlük İş veya Yapılacak İş</string>
 </resources>

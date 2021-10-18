@@ -84,7 +84,7 @@ open class PurchaseHandler(activity: Activity, val analyticsManager: AnalyticsMa
                     cont.resume(it)
                 }
             } catch (e: NullPointerException) {
-                cont.resumeWithException(e)
+                cont.resume(null)
             }
             if (inventory == null) cont.resume(null)
         }

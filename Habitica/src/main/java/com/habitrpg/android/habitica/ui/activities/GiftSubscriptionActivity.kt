@@ -185,11 +185,13 @@ class GiftSubscriptionActivity : BaseActivity() {
     }
 
     private fun purchaseSubscription(sku: Sku) {
-        if (giftedUserID?.isNotEmpty() != true) {
-            return
+        giftedUserID?.let { id ->
+            if (id.isEmpty()) {
+                return
+            }
+            HabiticaPurchaseVerifier.addGift(sku.id.code, id)
+            purchaseHandler?.purchaseNoRenewSubscription(sku)
         }
-        HabiticaPurchaseVerifier.addGift(sku.id.code, giftedUserID)
-        purchaseHandler?.purchaseNoRenewSubscription(sku)
     }
 
     @Subscribe

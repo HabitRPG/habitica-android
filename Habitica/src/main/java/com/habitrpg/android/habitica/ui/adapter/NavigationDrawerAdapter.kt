@@ -35,7 +35,10 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int) : Recycl
             field = value
             for (item in items) {
                 if (item.isHeader) {
-                    notifyItemChanged(getVisibleItemPosition(item.identifier))
+                    val visiblePosition = getVisibleItemPosition(item.identifier)
+                    if (visiblePosition >= 0) {
+                        notifyItemChanged(visiblePosition)
+                    }
                 }
             }
         }
@@ -70,7 +73,10 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int) : Recycl
             notifyItemInserted(items.size - 1)
         } else {
             items[position] = item
-            notifyItemChanged(getVisibleItemPosition(item.identifier))
+            val visiblePosition = getVisibleItemPosition(item.identifier)
+            if (visiblePosition in 0 until itemCount) {
+                notifyItemChanged(visiblePosition)
+            }
         }
     }
 

@@ -5,10 +5,10 @@ import android.media.AudioManager
 import android.media.MediaPlayer
 import java.io.File
 
-class SoundFile(val theme: String, private val fileName: String) : MediaPlayer.OnCompletionListener {
+class SoundFile(val theme: String, private val fileName: String) {
+    private var player: MediaPlayer? = null
     var file: File? = null
     private var playerPrepared: Boolean = false
-    private var isPlaying: Boolean = false
 
     val webUrl: String
         get() = "https://s3.amazonaws.com/habitica-assets/mobileApp/sounds/$theme/$fileName.mp3"
@@ -17,37 +17,37 @@ class SoundFile(val theme: String, private val fileName: String) : MediaPlayer.O
         get() = theme + "_" + fileName + ".mp3"
 
     fun play() {
-        if (isPlaying || file?.path == null) {
+        if (player?.isPlaying == true || file?.path == null) {
             return
         }
 
-        val m = MediaPlayer()
+        if (player?.isPlaying == false) {
+            player?.release()
+            player = null
+        }
 
-        m.setOnCompletionListener { mp ->
-            isPlaying = false
+        player = MediaPlayer()
+
+        player?.setOnCompletionListener { mp ->
             mp.release()
+            player = null
         }
 
         try {
-            m.setDataSource(file?.path)
+            player?.setDataSource(file?.path)
             val attributes = AudioAttributes.Builder()
                 .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
                 .setLegacyStreamType(AudioManager.STREAM_NOTIFICATION)
                 .build()
-            m.setAudioAttributes(attributes)
-            m.prepare()
+            player?.setAudioAttributes(attributes)
+            player?.prepare()
 
             playerPrepared = true
-            m.setVolume(100f, 100f)
-            m.isLooping = false
-            isPlaying = true
-            m.start()
+            player?.setVolume(100f, 100f)
+            player?.isLooping = false
+            player?.start()
         } catch (e: Exception) {
             RxErrorHandler.reportError(e)
         }
-    }
-
-    override fun onCompletion(mediaPlayer: MediaPlayer) {
-        isPlaying = false
     }
 }

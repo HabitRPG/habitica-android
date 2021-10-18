@@ -18,6 +18,7 @@ import com.habitrpg.android.habitica.extensions.addOkButton
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.PurchaseHandler
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import com.habitrpg.android.habitica.ui.fragments.purchases.GiftBalanceGemsFragment
 import com.habitrpg.android.habitica.ui.fragments.purchases.GiftPurchaseGemsFragment
@@ -48,6 +49,7 @@ class GiftGemsActivity : BaseActivity() {
 
     private var giftedUsername: String? = null
     private var giftedUserID: String? = null
+    private var giftedMember: Member? = null
 
     private var purchaseFragment: GiftPurchaseGemsFragment? = null
     private var balanceFragment: GiftBalanceGemsFragment? = null
@@ -89,6 +91,7 @@ class GiftGemsActivity : BaseActivity() {
         compositeSubscription.add(
             socialRepository.getMember(giftedUsername ?: giftedUserID).firstElement().subscribe(
                 {
+                    giftedMember = it
                     giftedUserID = it.id
                     giftedUsername = it.username
                     purchaseFragment?.giftedMember = it
@@ -139,6 +142,7 @@ class GiftGemsActivity : BaseActivity() {
                     fragment.setPurchaseHandler(purchaseHandler)
                     fragment.setupCheckout()
                     purchaseFragment = fragment
+                    purchaseFragment?.giftedMember = giftedMember
                     fragment
                 } else {
                     val fragment = GiftBalanceGemsFragment()
@@ -146,6 +150,7 @@ class GiftGemsActivity : BaseActivity() {
                         displayConfirmationDialog()
                     }
                     balanceFragment = fragment
+                    balanceFragment?.giftedMember = giftedMember
                     fragment
                 }
             }

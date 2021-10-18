@@ -25,12 +25,12 @@ import javax.security.cert.CertificateException
 
 // https://stackoverflow.com/a/42716982
 class KeyHelper @Throws(NoSuchPaddingException::class, NoSuchProviderException::class, NoSuchAlgorithmException::class, InvalidAlgorithmParameterException::class, KeyStoreException::class, CertificateException::class, IOException::class)
-constructor(ctx: Context, var sharedPreferences: SharedPreferences, var keyStore: KeyStore) {
+constructor(ctx: Context, var sharedPreferences: SharedPreferences, var keyStore: KeyStore?) {
 
     private val aesKeyFromKS: Key?
         @Throws(NoSuchProviderException::class, NoSuchAlgorithmException::class, InvalidAlgorithmParameterException::class, KeyStoreException::class, CertificateException::class, IOException::class, UnrecoverableKeyException::class)
         get() {
-            return keyStore.getKey(KEY_ALIAS, null) as? SecretKey
+            return keyStore?.getKey(KEY_ALIAS, null) as? SecretKey
         }
 
     init {
@@ -48,10 +48,10 @@ constructor(ctx: Context, var sharedPreferences: SharedPreferences, var keyStore
 
     @Throws(NoSuchProviderException::class, NoSuchAlgorithmException::class, InvalidAlgorithmParameterException::class, KeyStoreException::class, CertificateException::class, IOException::class)
     private fun generateEncryptKey(ctx: Context) {
-        keyStore.load(null)
+        keyStore?.load(null)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (!keyStore.containsAlias(KEY_ALIAS)) {
+            if (keyStore?.containsAlias(KEY_ALIAS) == false) {
                 val keyGenerator = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, AndroidKeyStore)
                 keyGenerator.init(
                     KeyGenParameterSpec.Builder(
@@ -66,7 +66,7 @@ constructor(ctx: Context, var sharedPreferences: SharedPreferences, var keyStore
                 keyGenerator.generateKey()
             }
         } else {
-            if (!keyStore.containsAlias(KEY_ALIAS)) {
+            if (keyStore?.containsAlias(KEY_ALIAS) == false) {
                 // Generate a key pair for encryption
                 val start = Calendar.getInstance()
                 val end = Calendar.getInstance()
@@ -87,7 +87,7 @@ constructor(ctx: Context, var sharedPreferences: SharedPreferences, var keyStore
 
     @Throws(Exception::class)
     private fun rsaEncrypt(secret: ByteArray): ByteArray {
-        val privateKeyEntry = keyStore.getEntry(KEY_ALIAS, null) as? KeyStore.PrivateKeyEntry
+        val privateKeyEntry = keyStore?.getEntry(KEY_ALIAS, null) as? KeyStore.PrivateKeyEntry
         // Encrypt the text
         val inputCipher = Cipher.getInstance(RSA_MODE, "AndroidOpenSSL")
         inputCipher.init(Cipher.ENCRYPT_MODE, privateKeyEntry?.certificate?.publicKey)
@@ -102,7 +102,7 @@ constructor(ctx: Context, var sharedPreferences: SharedPreferences, var keyStore
 
     @Throws(Exception::class)
     private fun rsaDecrypt(encrypted: ByteArray): ByteArray {
-        val privateKeyEntry = keyStore.getEntry(KEY_ALIAS, null) as? KeyStore.PrivateKeyEntry
+        val privateKeyEntry = keyStore?.getEntry(KEY_ALIAS, null) as? KeyStore.PrivateKeyEntry
         val output = Cipher.getInstance(RSA_MODE, "AndroidOpenSSL")
         output.init(Cipher.DECRYPT_MODE, privateKeyEntry?.privateKey)
         val cipherInputStream = CipherInputStream(

@@ -34,7 +34,7 @@ class TimePreferenceDialogFragment : PreferenceDialogFragmentCompat() {
         }
 
     override fun onCreateDialogView(context: Context?): View {
-        picker = TimePicker(getContext())
+        picker = TimePicker(context)
         return picker
     }
 

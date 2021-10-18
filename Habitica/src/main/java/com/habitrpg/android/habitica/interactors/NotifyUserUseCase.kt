@@ -70,7 +70,9 @@ constructor(
                 container.addView(createTextView(context, xp, HabiticaIconsHelper.imageOfExperience()))
             }
             if (hp != null && hp != 0.0) {
-                displayType = SnackbarDisplayType.FAILURE
+                if (hp < 0) {
+                    displayType = SnackbarDisplayType.FAILURE
+                }
                 container.addView(createTextView(context, hp, HabiticaIconsHelper.imageOfHeartDarkBg()))
             }
             if (gold != null && gold != 0.0) {

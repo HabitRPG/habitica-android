@@ -16,6 +16,7 @@ import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.schedulers.Schedulers
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -63,7 +64,9 @@ class SupportMainFragment : BaseMainFragment<FragmentSupportMainBinding>() {
         compositeSubscription.add(
             Completable.fromAction {
                 deviceInfo = context?.let { DeviceName.getDeviceInfo(it) }
-            }.subscribe()
+            }
+                .subscribeOn(Schedulers.io())
+                .subscribe()
         )
 
         binding?.resetTutorialButton?.setOnClickListener {
