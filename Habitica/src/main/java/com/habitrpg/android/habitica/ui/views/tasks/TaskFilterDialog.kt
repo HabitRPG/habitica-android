@@ -224,6 +224,7 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : HabiticaAl
             if (editedTags.containsKey(tag.id)) {
                 editedTags.remove(tag.id)
             }
+            activeTags.remove(tag.id)
             tags.remove(tag)
             tagsList.removeView(wrapper)
         }
