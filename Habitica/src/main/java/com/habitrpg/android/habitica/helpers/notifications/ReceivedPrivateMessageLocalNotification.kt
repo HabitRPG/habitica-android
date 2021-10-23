@@ -14,6 +14,7 @@ import com.habitrpg.android.habitica.receivers.LocalNotificationActionReceiver
 import com.habitrpg.android.habitica.ui.helpers.EmojiParser
 
 class ReceivedPrivateMessageLocalNotification(context: Context, identifier: String?) : HabiticaLocalNotification(context, identifier) {
+
     override fun configureNotificationBuilder(data: MutableMap<String, String>): NotificationCompat.Builder {
         val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as? NotificationManager
         val existingNotifications = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -48,6 +49,12 @@ class ReceivedPrivateMessageLocalNotification(context: Context, identifier: Stri
 
     override fun getNotificationID(data: MutableMap<String, String>): Int {
         return data["senderName"].hashCode()
+    }
+
+    override fun configureMainIntent(intent: Intent) {
+        super.configureMainIntent(intent)
+        intent.putExtra("replyToUUID", data?.get("replyTo"))
+        intent.putExtra("replyToUsername", data?.get("senderName"))
     }
 
     override fun setNotificationActions(notificationId: Int, data: Map<String, String>) {
