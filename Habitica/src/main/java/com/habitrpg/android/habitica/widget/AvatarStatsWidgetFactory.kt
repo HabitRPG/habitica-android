@@ -118,9 +118,10 @@ class AvatarStatsWidgetFactory(
             val layoutParams = ViewGroup.LayoutParams(140.dpToPx(context), 147.dpToPx(context))
             avatarView.layoutParams = layoutParams
             avatarView.setAvatar(user)
-            avatarView.createAvatarImage()
-            val bitmap = avatarView.avatarImageObservable().firstElement().blockingGet()
-            remoteViews.setImageViewBitmap(R.id.avatar_view, bitmap)
+            avatarView.createAvatarImage()?.let { bitmap ->
+                remoteViews.setImageViewBitmap(R.id.avatar_view, bitmap)
+            }
+
         }
 
         if (showAvatar) {

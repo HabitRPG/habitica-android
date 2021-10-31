@@ -118,8 +118,6 @@ class AvatarView : FrameLayout {
         setWillNotDraw(false)
     }
 
-    fun avatarImageObservable(): Observable<Bitmap> = avatarBitmapSubject.hide()
-
     private fun showLayers(layerMap: Map<LayerType, String>) {
         var i = 0
 
@@ -420,7 +418,7 @@ class AvatarView : FrameLayout {
         }
     }
 
-    fun createAvatarImage() {
+    fun createAvatarImage(): Bitmap? {
         if (imageViewHolder.size > 0 && numberLayersInProcess.get() == 0) {
             avatarImageConsumer?.accept(avatarImage)
             avatarImage?.let { avatarBitmapSubject.onNext(it) }
@@ -428,6 +426,7 @@ class AvatarView : FrameLayout {
             initAvatarRectMatrix()
             showLayers(layerMap)
         }
+        return avatarBitmapSubject.hide().firstElement().blockingGet()
     }
 
     fun setAvatar(avatar: Avatar) {
