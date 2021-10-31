@@ -19,7 +19,9 @@ import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.models.Avatar
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.functions.Consumer
+import io.reactivex.rxjava3.subjects.PublishSubject
 import java.util.*
 import java.util.concurrent.atomic.AtomicInteger
 
@@ -38,6 +40,7 @@ class AvatarView : FrameLayout {
     private val avatarMatrix = Matrix()
     private val numberLayersInProcess = AtomicInteger(0)
     private var avatarImageConsumer: Consumer<Bitmap?>? = null
+    private var avatarBitmapSubject: PublishSubject<Bitmap> = PublishSubject.create()
     private var avatarBitmap: Bitmap? = null
     private var avatarCanvas: Canvas? = null
     private var currentLayers: Map<LayerType, String>? = null
@@ -114,6 +117,8 @@ class AvatarView : FrameLayout {
 
         setWillNotDraw(false)
     }
+
+    fun avatarImageObservable(): Observable<Bitmap> = avatarBitmapSubject.hide()
 
     private fun showLayers(layerMap: Map<LayerType, String>) {
         var i = 0
@@ -400,6 +405,7 @@ class AvatarView : FrameLayout {
     private fun onLayerComplete() {
         if (numberLayersInProcess.decrementAndGet() == 0) {
             avatarImageConsumer?.accept(avatarImage)
+            avatarImage?.let { avatarBitmapSubject.onNext(it) }
         }
     }
 
@@ -407,6 +413,17 @@ class AvatarView : FrameLayout {
         avatarImageConsumer = consumer
         if (imageViewHolder.size > 0 && numberLayersInProcess.get() == 0) {
             avatarImageConsumer?.accept(avatarImage)
+            avatarImage?.let { avatarBitmapSubject.onNext(it) }
+        } else {
+            initAvatarRectMatrix()
+            showLayers(layerMap)
+        }
+    }
+
+    fun createAvatarImage() {
+        if (imageViewHolder.size > 0 && numberLayersInProcess.get() == 0) {
+            avatarImageConsumer?.accept(avatarImage)
+            avatarImage?.let { avatarBitmapSubject.onNext(it) }
         } else {
             initAvatarRectMatrix()
             showLayers(layerMap)

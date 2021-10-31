@@ -5,11 +5,8 @@
     android:id="@+id/widget_main_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:focusable="true"
-    android:focusableInTouchMode="true"
     android:background="@drawable/widget_background"
     android:padding="8dp"
-    android:elevation="2dp"
     android:orientation="vertical">
     <LinearLayout
         android:orientation="horizontal"

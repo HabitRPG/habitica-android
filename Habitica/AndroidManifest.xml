@@ -286,6 +286,9 @@
         <service
             android:name=".widget.TodosWidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
+        <service
+            android:name=".widget.AvatarStatsWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS"/>
         <service android:name=".widget.HabitButtonWidgetService"/>
     </application>
 
