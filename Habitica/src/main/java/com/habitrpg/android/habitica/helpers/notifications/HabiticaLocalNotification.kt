@@ -44,19 +44,21 @@ abstract class HabiticaLocalNotification(protected var context: Context, protect
             notificationBuilder = notificationBuilder.setContentText(message)
         }
 
-        this.setNotificationActions(data)
+        val notificationId = getNotificationID(data)
+        this.setNotificationActions(notificationId, data)
 
         val notificationManager = NotificationManagerCompat.from(context)
-        notificationManager.notify(getNotificationID(data), notificationBuilder.build())
+        notificationManager.notify(notificationId, notificationBuilder.build())
     }
 
     fun setExtras(data: Map<String, String>) {
         this.data = data
     }
 
-    protected open fun setNotificationActions(data: Map<String, String>) {
+    protected open fun setNotificationActions(notificationId: Int, data: Map<String, String>) {
         val intent = Intent(context, MainActivity::class.java)
         configureMainIntent(intent)
+        intent.putExtra("NOTIFICATION_ID", notificationId)
         val pendingIntent = PendingIntent.getActivity(
             context,
             3000,

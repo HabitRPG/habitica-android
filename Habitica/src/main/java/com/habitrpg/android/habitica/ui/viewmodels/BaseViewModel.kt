@@ -7,6 +7,7 @@ import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.models.inventory.Equipment
 import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -17,9 +18,12 @@ abstract class BaseViewModel(initializeComponent: Boolean = true) : ViewModel() 
     @Inject
     lateinit var userRepository: UserRepository
 
-    private val user: MutableLiveData<User?> by lazy {
+    private val _user: MutableLiveData<User?> by lazy {
         loadUserFromLocal()
         MutableLiveData<User?>()
+    }
+    val user: LiveData<User?> by lazy {
+        _user
     }
 
     init {
@@ -38,13 +42,13 @@ abstract class BaseViewModel(initializeComponent: Boolean = true) : ViewModel() 
 
     internal val disposable = CompositeDisposable()
 
-    fun getUserData(): LiveData<User?> = user
-
     private fun loadUserFromLocal() {
-        disposable.add(userRepository.getUser().observeOn(AndroidSchedulers.mainThread()).subscribe({ user.value = it }, RxErrorHandler.handleEmptyError()))
+        disposable.add(userRepository.getUser().observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ _user.value = it }, RxErrorHandler.handleEmptyError()))
     }
 
     fun updateUser(path: String, value: Any) {
-        disposable.add(userRepository.updateUser(path, value).subscribe({ }, RxErrorHandler.handleEmptyError()))
+        disposable.add(userRepository.updateUser(path, value)
+            .subscribe({ }, RxErrorHandler.handleEmptyError()))
     }
 }

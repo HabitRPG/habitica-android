@@ -17,6 +17,11 @@ enum class PromoType {
 }
 
 abstract class HabiticaPromotion {
+    val isActive: Boolean
+    get() {
+        val now = Date()
+        return startDate.before(now) && endDate.after(now)
+    }
     abstract val identifier: String
     abstract val promoType: PromoType
 

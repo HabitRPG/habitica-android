@@ -16,6 +16,7 @@ import androidx.core.os.bundleOf
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.SimpleItemAnimator
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.ContentRepository
@@ -28,12 +29,14 @@ import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.WorldState
+import com.habitrpg.android.habitica.models.WorldStateEvent
 import com.habitrpg.android.habitica.models.inventory.Item
 import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.promotions.HabiticaPromotion
 import com.habitrpg.android.habitica.models.promotions.PromoType
 import com.habitrpg.android.habitica.models.social.Group
+import com.habitrpg.android.habitica.models.user.Inbox
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.activities.NotificationsActivity
@@ -98,6 +101,7 @@ class NavigationDrawerFragment : DialogFragment() {
     private fun updateQuestDisplay() {
         val quest = this.quest
         val questContent = this.questContent
+        return
         if (quest == null || questContent == null || !quest.active) {
             binding?.questMenuView?.visibility = View.GONE
             context?.let {
@@ -125,20 +129,6 @@ class NavigationDrawerFragment : DialogFragment() {
         }
         binding?.questMenuView?.setBackgroundColor(context?.getThemeColor(R.attr.colorPrimaryDark) ?: 0)
 
-        /* Reenable this once the boss art can be displayed correctly.
-
-        val preferences = context?.getSharedPreferences("collapsible_sections", 0)
-        if (preferences?.getBoolean("boss_art_collapsed", false) == true) {
-            questMenuView.hideBossArt()
-        } else {
-            questMenuView.showBossArt()
-        }*/
-        //binding?.questMenuView?.hideBossArt()
-
-        /*getItemWithIdentifier(SIDEBAR_TAVERN)?.let { tavern ->
-            tavern.subtitle = context?.getString(R.string.active_world_boss)
-            adapter.updateItem(tavern)
-        }*/
         binding?.questMenuView?.setOnClickListener {
             setSelection(R.id.partyFragment)
             /*val context = this.context
@@ -181,6 +171,7 @@ class NavigationDrawerFragment : DialogFragment() {
 
         binding?.recyclerView?.adapter = adapter
         binding?.recyclerView?.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
+        (binding?.recyclerView?.itemAnimator as? SimpleItemAnimator)?.supportsChangeAnimations = false
         initializeMenuItems()
 
         subscriptions?.add(
@@ -237,12 +228,12 @@ class NavigationDrawerFragment : DialogFragment() {
                 { pair ->
                     val gearEvent = pair.first.events.firstOrNull { it.gear }
                     createUpdatingJob("seasonal", {
-                        gearEvent?.end?.after(Date()) == true || pair.second.isNotEmpty()
+                        gearEvent?.isCurrentlyActive == true || pair.second.isNotEmpty()
                     }, {
                         val diff = (gearEvent?.end?.time ?: 0) - Date().time
                         if (diff < (Duration.hours(1).inWholeMilliseconds)) Duration.seconds(1) else Duration.minutes(1)
                     }) {
-                        updateSeasonalMenuEntries(pair.first, pair.second)
+                        updateSeasonalMenuEntries(gearEvent, pair.second)
                     }
                 },
                 RxErrorHandler.handleEmptyError()
@@ -278,6 +269,7 @@ class NavigationDrawerFragment : DialogFragment() {
                     it.quest?.key ?: ""
                 }
                 .flatMapMaybe { inventoryRepository.getQuestContent(it).firstElement() }
+                .filter { (it.boss?.hp ?: 0) > 0 }
                 .subscribe(
                 {
                     questContent = it
@@ -310,7 +302,7 @@ class NavigationDrawerFragment : DialogFragment() {
         }
     }
 
-    private fun updateSeasonalMenuEntries(worldState: WorldState, items: List<Item>) {
+    private fun updateSeasonalMenuEntries(gearEvent: WorldStateEvent?, items: List<Item>) {
         val market = getItemWithIdentifier(SIDEBAR_SHOPS_MARKET) ?: return
         if (items.isNotEmpty() && items.firstOrNull()?.event?.end?.after(Date()) == true) {
             market.pillText = context?.getString(R.string.something_new)
@@ -323,8 +315,7 @@ class NavigationDrawerFragment : DialogFragment() {
 
         val shop = getItemWithIdentifier(SIDEBAR_SHOPS_SEASONAL) ?: return
         shop.pillText = context?.getString(R.string.open)
-        val gearEvent = worldState.events.firstOrNull { it.gear }
-        if (gearEvent?.end?.after(Date()) == true) {
+        if (gearEvent?.isCurrentlyActive == true) {
             shop.isVisible = true
             shop.subtitle = context?.getString(R.string.open_for, gearEvent.end?.getShortRemainingString())
         } else {
@@ -334,7 +325,7 @@ class NavigationDrawerFragment : DialogFragment() {
     }
 
     private fun updateUser(user: User) {
-        setMessagesCount(user.inbox?.newMessages ?: 0)
+        setMessagesCount(user.inbox)
         setSettingsCount(if (user.flags?.verifiedUsername != true) 1 else 0)
         setDisplayName(user.profile?.name)
         setUsername(user.formattedUsername)
@@ -629,12 +620,23 @@ class NavigationDrawerFragment : DialogFragment() {
         }
     }
 
-    private fun setMessagesCount(unreadMessages: Int) {
-        if (unreadMessages == 0) {
-            binding?.messagesBadge?.visibility = View.GONE
-        } else {
+    private fun setMessagesCount(inbox: Inbox?) {
+        val numOfUnreadMessages = inbox?.newMessages ?: 0
+        if (numOfUnreadMessages != 0) {
             binding?.messagesBadge?.visibility = View.VISIBLE
-            binding?.messagesBadge?.text = unreadMessages.toString()
+            binding?.messagesBadge?.text = numOfUnreadMessages.toString()
+            context?.let {
+                val color = if (inbox?.hasUserSeenInbox != true) {
+                    it.getThemeColor(R.attr.colorAccent)
+                } else {
+                    ContextCompat.getColor(it, R.color.gray_200)
+                }
+                val background = binding?.messagesBadge?.background as? GradientDrawable
+                background?.color = ColorStateList.valueOf(color)
+                binding?.messagesBadge?.setTextColor(ContextCompat.getColor(it, R.color.white))
+            }
+        } else {
+            binding?.messagesBadge?.visibility = View.GONE
         }
     }
 
@@ -652,13 +654,9 @@ class NavigationDrawerFragment : DialogFragment() {
         activePromo = configManager.activePromo()
         val promoItem = getItemWithIdentifier(SIDEBAR_PROMO) ?: return
         activePromo?.let { activePromo ->
-            if (sharedPreferences.getBoolean("hide${activePromo.identifier}", false)) {
-                promoItem.isVisible = true
-                adapter.activePromo = activePromo
-            } else {
-                promoItem.isVisible = false
-            }
-
+            promoItem.isVisible =
+                !sharedPreferences.getBoolean("hide${activePromo.identifier}", false)
+            adapter.activePromo = activePromo
             var promotedItem: HabiticaDrawerItem? = null
             if (activePromo.promoType == PromoType.GEMS_AMOUNT || activePromo.promoType == PromoType.GEMS_PRICE) {
                 promotedItem = getItemWithIdentifier(SIDEBAR_GEMS)
@@ -670,13 +668,18 @@ class NavigationDrawerFragment : DialogFragment() {
             promotedItem.pillText = context?.getString(R.string.sale)
             promotedItem.pillBackground = context?.let { activePromo.pillBackgroundDrawable(it) }
             createUpdatingJob(activePromo.promoType.name, {
-                activePromo.endDate.after(Date())
+                activePromo.isActive
             }, {
                 val diff = activePromo.endDate.time - Date().time
                 if (diff < (Duration.hours(1).inWholeMilliseconds)) Duration.seconds(1) else Duration.minutes(1)
             }) {
-                promotedItem.subtitle = context?.getString(R.string.x_remaining, activePromo.endDate.getShortRemainingString())
-                updateItem(promotedItem)
+                if (activePromo.isActive) {
+                    promotedItem.subtitle = context?.getString(R.string.sale_ends_in, activePromo.endDate.getShortRemainingString())
+                    updateItem(promotedItem)
+                } else {
+                    promotedItem.subtitle = null
+                    updateItem(promotedItem)
+                }
             }
         } ?: run {
             promoItem.isVisible = false

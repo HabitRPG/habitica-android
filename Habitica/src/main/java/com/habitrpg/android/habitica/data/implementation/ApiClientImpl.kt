@@ -12,7 +12,6 @@ import com.habitrpg.android.habitica.api.GSonFactoryCreator
 import com.habitrpg.android.habitica.api.HostConfig
 import com.habitrpg.android.habitica.api.Server
 import com.habitrpg.android.habitica.data.ApiClient
-import com.habitrpg.android.habitica.events.ConsumablePurchasedEvent
 import com.habitrpg.android.habitica.events.ShowConnectionProblemEvent
 import com.habitrpg.android.habitica.helpers.NotificationsManager
 import com.habitrpg.android.habitica.models.*
@@ -554,7 +553,7 @@ class ApiClientImpl // private OnHabitsAPIResult mResultListener;
         return apiService.seenMessages(groupId).compose(configureApiCallObserver())
     }
 
-    override fun inviteToGroup(groupId: String, inviteData: Map<String, Any>): Flowable<Void> {
+    override fun inviteToGroup(groupId: String, inviteData: Map<String, Any>): Flowable<List<Void>> {
         return apiService.inviteToGroup(groupId, inviteData).compose(configureApiCallObserver())
     }
 

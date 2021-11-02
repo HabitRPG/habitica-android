@@ -10,4 +10,5 @@ open class Inbox : RealmObject(), BaseObject {
     var optOut: Boolean = false
     var blocks: RealmList<String> = RealmList()
     var newMessages: Int = 0
+    var hasUserSeenInbox: Boolean = false
 }

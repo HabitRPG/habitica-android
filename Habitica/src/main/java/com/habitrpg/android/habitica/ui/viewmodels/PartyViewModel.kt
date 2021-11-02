@@ -20,7 +20,7 @@ class PartyViewModel(initializeComponent: Boolean) : GroupViewModel(initializeCo
 
     internal val isUserOnQuest: Boolean
         get() = !(
-            getGroupData().value?.quest?.members?.none { it.key == getUserData().value?.id }
+            getGroupData().value?.quest?.members?.none { it.key == user.value?.id }
                 ?: true
             )
 
@@ -88,7 +88,7 @@ class PartyViewModel(initializeComponent: Boolean) : GroupViewModel(initializeCo
     }
 
     fun showParticipantButtons(): Boolean {
-        val user = getUserData().value
+        val user = user.value
         return !(user?.party == null || user.party?.quest == null) && !isQuestActive && user.party?.quest?.RSVPNeeded == true
     }
 

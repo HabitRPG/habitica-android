@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica
 
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.core.content.edit
 import androidx.preference.PreferenceManager
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
@@ -26,32 +27,35 @@ class HabiticaPurchaseVerifier(context: Context, apiClient: ApiClient) : BasePur
     private val context: Context
     override fun doVerify(purchases: List<Purchase>, requestListener: RequestListener<List<Purchase>>) {
         val verifiedPurchases: MutableList<Purchase> = ArrayList(purchases.size)
+        val allPurchases = purchases.toMutableList()
         for (purchase in purchases) {
             if (purchasedOrderList.contains(purchase.orderId)) {
                 verifiedPurchases.add(purchase)
-                requestListener.onSuccess(verifiedPurchases)
+                processedPurchase(purchase, allPurchases, verifiedPurchases, requestListener)
             } else {
                 when {
                     PurchaseTypes.allGemTypes.contains(purchase.sku) -> {
                         val validationRequest = buildValidationRequest(purchase)
                         apiClient.validatePurchase(validationRequest).subscribe({
                             purchasedOrderList.add(purchase.orderId)
-                            requestListener.onSuccess(verifiedPurchases)
+                            verifiedPurchases.add(purchase)
+                            processedPurchase(purchase, allPurchases, verifiedPurchases, requestListener)
                             val giftedID = removeGift(purchase.sku)
                             EventBus.getDefault().post(ConsumablePurchasedEvent(purchase, giftedID))
                         }) { throwable: Throwable ->
-                            handleError(throwable, purchase, requestListener, verifiedPurchases)
+                            handleError(throwable, purchase, allPurchases, requestListener, verifiedPurchases)
                         }
                     }
                     PurchaseTypes.allSubscriptionNoRenewTypes.contains(purchase.sku) -> {
                         val validationRequest = buildValidationRequest(purchase)
                         apiClient.validateNoRenewSubscription(validationRequest).subscribe({
                             purchasedOrderList.add(purchase.orderId)
-                            requestListener.onSuccess(verifiedPurchases)
+                            verifiedPurchases.add(purchase)
+                            processedPurchase(purchase, allPurchases, verifiedPurchases, requestListener)
                             val giftedID = removeGift(purchase.sku)
                             EventBus.getDefault().post(ConsumablePurchasedEvent(purchase, giftedID))
                         }) { throwable: Throwable ->
-                            handleError(throwable, purchase, requestListener, verifiedPurchases)
+                            handleError(throwable, purchase, allPurchases, requestListener, verifiedPurchases)
                         }
                     }
                     PurchaseTypes.allSubscriptionTypes.contains(purchase.sku) -> {
@@ -63,20 +67,35 @@ class HabiticaPurchaseVerifier(context: Context, apiClient: ApiClient) : BasePur
                         apiClient.validateSubscription(validationRequest).subscribe({
                             purchasedOrderList.add(purchase.orderId)
                             verifiedPurchases.add(purchase)
-                            requestListener.onSuccess(verifiedPurchases)
+                            processedPurchase(purchase, allPurchases, verifiedPurchases, requestListener)
                             FirebaseAnalytics.getInstance(context).logEvent("user_subscribed", null)
                             EventBus.getDefault().post(UserSubscribedEvent())
                         }) { throwable: Throwable ->
-                            handleError(throwable, purchase, requestListener, verifiedPurchases)
+                            handleError(throwable, purchase, allPurchases, requestListener, verifiedPurchases)
                         }
                     }
                 }
             }
         }
-        val edit = preferences?.edit()
-        edit?.putStringSet(PURCHASED_PRODUCTS_KEY, purchasedOrderList)
-        edit?.apply()
-        savePendingGifts()
+        preferences?.edit {
+            putStringSet(PURCHASED_PRODUCTS_KEY, purchasedOrderList)
+        }
+    }
+
+    private fun processedPurchase(
+        purchase: Purchase,
+        allPurchases: MutableList<Purchase>,
+        verifiedPurchases: MutableList<Purchase>,
+        requestListener: RequestListener<List<Purchase>>
+    ) {
+        allPurchases.remove(purchase)
+        if (allPurchases.isEmpty()) {
+            if (verifiedPurchases.isEmpty()) {
+                requestListener.onError(ResponseCodes.ERROR, Exception())
+            } else {
+                requestListener.onSuccess(verifiedPurchases)
+            }
+        }
     }
 
     private fun buildValidationRequest(purchase: Purchase): PurchaseValidationRequest {
@@ -92,13 +111,17 @@ class HabiticaPurchaseVerifier(context: Context, apiClient: ApiClient) : BasePur
         return validationRequest
     }
 
-    private fun handleError(throwable: Throwable, purchase: Purchase, requestListener: RequestListener<List<Purchase>>, verifiedPurchases: MutableList<Purchase>) {
+    private fun handleError(throwable: Throwable, purchase: Purchase,
+                            allPurchases: MutableList<Purchase>,
+                            requestListener: RequestListener<List<Purchase>>,
+                            verifiedPurchases: MutableList<Purchase>) {
         (throwable as? HttpException)?.let { error ->
             if (error.code() == 401) {
                 val res = apiClient.getErrorResponse(throwable)
                 if (res.message != null && res.message == "RECEIPT_ALREADY_USED") {
                     purchasedOrderList.add(purchase.orderId)
-                    requestListener.onSuccess(verifiedPurchases)
+                    verifiedPurchases.add(purchase)
+                    processedPurchase(purchase, allPurchases, verifiedPurchases, requestListener)
                     EventBus.getDefault().post(ConsumablePurchasedEvent(purchase))
                     removeGift(purchase.sku)
                     return
@@ -106,7 +129,7 @@ class HabiticaPurchaseVerifier(context: Context, apiClient: ApiClient) : BasePur
             }
         }
         FirebaseCrashlytics.getInstance().recordException(throwable)
-        requestListener.onError(ResponseCodes.ERROR, Exception())
+        processedPurchase(purchase, allPurchases, verifiedPurchases, requestListener)
     }
 
     private fun loadPendingGifts(): MutableMap<String?, String?> {
@@ -131,6 +154,7 @@ class HabiticaPurchaseVerifier(context: Context, apiClient: ApiClient) : BasePur
         private const val PENDING_GIFTS_KEY = "PENDING_GIFTS"
         private var pendingGifts: MutableMap<String?, String?> = HashMap()
         private var preferences: SharedPreferences? = null
+
         fun addGift(sku: String?, userID: String?) {
             pendingGifts[sku] = userID
             savePendingGifts()
@@ -145,10 +169,9 @@ class HabiticaPurchaseVerifier(context: Context, apiClient: ApiClient) : BasePur
         private fun savePendingGifts() {
             val jsonObject = JSONObject(pendingGifts as Map<*, *>)
             val jsonString = jsonObject.toString()
-            val editor = preferences?.edit()
-            editor?.remove(PENDING_GIFTS_KEY)
-            editor?.putString(PENDING_GIFTS_KEY, jsonString)
-            editor?.apply()
+            preferences?.edit {
+                putString(PENDING_GIFTS_KEY, jsonString)
+            }
         }
     }
 

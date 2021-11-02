@@ -1,10 +1,12 @@
 package com.habitrpg.android.habitica.receivers
 
+import android.app.Notification
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.media.RingtoneManager
+import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.habitrpg.android.habitica.HabiticaBaseApplication
@@ -62,21 +64,29 @@ class TaskReceiver : BroadcastReceiver() {
         val pendingIntent = PendingIntent.getActivity(context, System.currentTimeMillis().toInt(), intent, 0)
         val soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
 
-        val notificationBuilder = NotificationCompat.Builder(context, "default")
+        var notificationBuilder = NotificationCompat.Builder(context, "default")
             .setSmallIcon(R.drawable.ic_gryphon_white)
             .setContentTitle(task.text)
+            .setStyle(NotificationCompat.BigTextStyle()
+                .bigText(task.notes))
             .setPriority(NotificationCompat.PRIORITY_MAX)
             .setSound(soundUri)
             .setAutoCancel(true)
             .setContentIntent(pendingIntent)
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            notificationBuilder = notificationBuilder.setCategory(Notification.CATEGORY_REMINDER)
+        }
+
         if (task.type == Task.TYPE_DAILY || task.type == Task.TYPE_TODO) {
-            val completeIntent = Intent(context, LocalNotificationActionReceiver::class.java)
-            completeIntent.action = context.getString(R.string.complete_task_action)
-            completeIntent.putExtra("taskID", task.id)
+            val completeIntent = Intent(context, LocalNotificationActionReceiver::class.java).apply {
+                action = context.getString(R.string.complete_task_action)
+                putExtra("taskID", task.id)
+                putExtra("NOTIFICATION_ID", task.id.hashCode())
+            }
             val pendingIntentComplete = PendingIntent.getBroadcast(
                 context,
-                3000,
+                task.id.hashCode(),
                 completeIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT
             )

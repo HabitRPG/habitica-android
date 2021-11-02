@@ -8,11 +8,13 @@ import io.realm.Realm
 
 class RealmTagLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), TagLocalRepository {
     override fun deleteTag(tagID: String) {
-        val tag = realm.where(Tag::class.java).equalTo("id", tagID).findFirst()
-        executeTransaction { tag?.deleteFromRealm() }
+        val tags = realm.where(Tag::class.java).equalTo("id", tagID).findAll()
+        executeTransaction { tags.deleteAllFromRealm() }
     }
 
     override fun getTags(userId: String): Flowable<out List<Tag>> {
-        return RxJavaBridge.toV3Flowable(realm.where(Tag::class.java).equalTo("userId", userId).findAll().asFlowable())
+        return RxJavaBridge.toV3Flowable(
+            realm.where(Tag::class.java).equalTo("userId", userId).findAll().asFlowable()
+        )
     }
 }

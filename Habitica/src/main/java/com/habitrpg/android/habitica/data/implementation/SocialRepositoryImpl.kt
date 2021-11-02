@@ -241,7 +241,7 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
             .doOnNext { members -> localRepository.saveGroupMembers(id, members) }
     }
 
-    override fun inviteToGroup(id: String, inviteData: Map<String, Any>): Flowable<Void> = apiClient.inviteToGroup(id, inviteData)
+    override fun inviteToGroup(id: String, inviteData: Map<String, Any>): Flowable<List<Void>> = apiClient.inviteToGroup(id, inviteData)
 
     override fun getMember(userId: String?): Flowable<Member> {
         return if (userId == null) {
@@ -264,12 +264,31 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
     }
 
     override fun markPrivateMessagesRead(user: User?): Flowable<Void> {
+        if (user?.isManaged == true) {
+            localRepository.modify(user) {
+                it.inbox?.hasUserSeenInbox = true
+            }
+        }
         return apiClient.markPrivateMessagesRead()
-            .doOnNext {
-                if (user?.isManaged == true) {
-                    localRepository.modify(user) { it.inbox?.newMessages = 0 }
+    }
+
+    override fun markSomePrivateMessagesAsRead(user: User?, messages: List<ChatMessage>) {
+        if (user?.isManaged == true) {
+            val numOfUnseenMessages = messages.count { !it.isSeen }
+            localRepository.modify(user) {
+                val numOfNewMessagesFromInbox = it.inbox?.newMessages ?: 0
+                if (numOfNewMessagesFromInbox > numOfUnseenMessages) {
+                    it.inbox?.newMessages = numOfNewMessagesFromInbox - numOfUnseenMessages
+                } else {
+                    it.inbox?.newMessages = 0
                 }
             }
+        }
+        for (message in messages.filter { it.isManaged && !it.isSeen }) {
+            localRepository.modify(message) {
+                it.isSeen = true
+            }
+        }
     }
 
     override fun getUserGroups(type: String?): Flowable<out List<Group>> = localRepository.getUserGroups(userID, type)

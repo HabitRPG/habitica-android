@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.helpers.notifications
 
+import android.app.Notification
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
@@ -36,6 +37,7 @@ class ReceivedPrivateMessageLocalNotification(context: Context, identifier: Stri
             }
             notification = notification
                 .setContentTitle(notificationTitle)
+                .setCategory(Notification.CATEGORY_MESSAGE)
                 .setStyle(style)
             title = null
         } else {
@@ -48,8 +50,8 @@ class ReceivedPrivateMessageLocalNotification(context: Context, identifier: Stri
         return data["senderName"].hashCode()
     }
 
-    override fun setNotificationActions(data: Map<String, String>) {
-        super.setNotificationActions(data)
+    override fun setNotificationActions(notificationId: Int, data: Map<String, String>) {
+        super.setNotificationActions(notificationId, data)
         val senderID = data["replyTo"] ?: return
 
         val actionName = context.getString(R.string.inbox_message_reply)
@@ -61,6 +63,7 @@ class ReceivedPrivateMessageLocalNotification(context: Context, identifier: Stri
         val intent = Intent(context, LocalNotificationActionReceiver::class.java)
         intent.action = actionName
         intent.putExtra("senderID", senderID)
+        intent.putExtra("NOTIFICATION_ID", notificationId)
         val replyPendingIntent: PendingIntent =
             PendingIntent.getBroadcast(
                 context, senderID.hashCode(),

@@ -11,16 +11,18 @@ import com.habitrpg.android.habitica.receivers.LocalNotificationActionReceiver
  */
 class PartyInviteLocalNotification(context: Context, identifier: String?) : HabiticaLocalNotification(context, identifier) {
 
-    override fun setNotificationActions(data: Map<String, String>) {
-        super.setNotificationActions(data)
+    override fun setNotificationActions(notificationId: Int, data: Map<String, String>) {
+        super.setNotificationActions(notificationId, data)
         val res = context.resources
 
         val acceptInviteIntent = Intent(context, LocalNotificationActionReceiver::class.java)
         acceptInviteIntent.action = res.getString(R.string.accept_party_invite)
-        acceptInviteIntent.putExtra("groupID", this.data?.get("groupID"))
+        val groupID = data.get("groupID")
+        acceptInviteIntent.putExtra("groupID", groupID)
+        acceptInviteIntent.putExtra("NOTIFICATION_ID", notificationId)
         val pendingIntentAccept = PendingIntent.getBroadcast(
             context,
-            3000,
+            groupID.hashCode(),
             acceptInviteIntent,
             PendingIntent.FLAG_UPDATE_CURRENT
         )
@@ -28,10 +30,11 @@ class PartyInviteLocalNotification(context: Context, identifier: String?) : Habi
 
         val rejectInviteIntent = Intent(context, LocalNotificationActionReceiver::class.java)
         rejectInviteIntent.action = res.getString(R.string.reject_party_invite)
-        rejectInviteIntent.putExtra("groupID", this.data?.get("groupID"))
+        rejectInviteIntent.putExtra("groupID", groupID)
+        rejectInviteIntent.putExtra("NOTIFICATION_ID", notificationId)
         val pendingIntentReject = PendingIntent.getBroadcast(
             context,
-            2000,
+            groupID.hashCode() + 1,
             rejectInviteIntent,
             PendingIntent.FLAG_UPDATE_CURRENT
         )

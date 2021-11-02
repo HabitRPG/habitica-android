@@ -312,12 +312,12 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
 
         private fun checkIfQueueAvailable(): Boolean {
             val currentDialog = dialogQueue.firstOrNull() ?: return true
-            if (currentDialog.isShowing) {
-                return false
+            return if (currentDialog.isShowing && currentDialog.getActivity()?.isFinishing != true) {
+                false
             } else {
                 // The Dialog was probably dismissed in a weird way. Clear it out so that the queue doesn't get stuck
                 dialogQueue.removeAt(0)
-                return true
+                true
             }
         }
     }

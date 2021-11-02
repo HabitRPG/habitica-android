@@ -114,7 +114,7 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
         }
 
         viewModel?.getGroupData()?.observe(viewLifecycleOwner, { updateParty(it) })
-        viewModel?.getUserData()?.observe(viewLifecycleOwner, { updateUser(it) })
+        viewModel?.user?.observe(viewLifecycleOwner, { updateUser(it) })
         viewModel?.getMembersData()?.observe(viewLifecycleOwner, { updateMembersList(it) })
     }
 
@@ -269,7 +269,7 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
                 }
                 ) ?: return@forEachIndexed
             val viewHolder = GroupMemberViewHolder(memberView)
-            viewHolder.bind(member, leaderID ?: "", viewModel?.getUserData()?.value?.id)
+            viewHolder.bind(member, leaderID ?: "", viewModel?.user?.value?.id)
             viewHolder.onClickEvent = {
                 FullProfileActivity.open(member.id ?: "")
             }

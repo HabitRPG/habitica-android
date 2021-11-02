@@ -20,7 +20,7 @@ class PrefsActivity : BaseActivity(), PreferenceFragmentCompat.OnPreferenceStart
         setupToolbar(findViewById(R.id.toolbar))
 
         supportFragmentManager.beginTransaction()
-            .add(R.id.fragment_container, PreferencesFragment())
+            .replace(R.id.fragment_container, PreferencesFragment())
             .commit()
     }
 

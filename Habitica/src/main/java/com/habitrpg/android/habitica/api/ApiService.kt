@@ -218,7 +218,7 @@ interface ApiService {
     fun seenMessages(@Path("gid") groupId: String): Flowable<HabitResponse<Void>>
 
     @POST("groups/{gid}/invite")
-    fun inviteToGroup(@Path("gid") groupId: String, @Body inviteData: Map<String, Any>): Flowable<HabitResponse<Void>>
+    fun inviteToGroup(@Path("gid") groupId: String, @Body inviteData: Map<String, Any>): Flowable<HabitResponse<List<Void>>>
 
     @POST("groups/{gid}/reject-invite")
     fun rejectGroupInvite(@Path("gid") groupId: String): Flowable<HabitResponse<Void>>

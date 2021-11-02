@@ -15,15 +15,16 @@ class QuestInviteLocalNotification(context: Context, identifier: String?) : Habi
         return 1000
     }
 
-    override fun setNotificationActions(data: Map<String, String>) {
-        super.setNotificationActions(data)
+    override fun setNotificationActions(notificationId: Int, data: Map<String, String>) {
+        super.setNotificationActions(notificationId, data)
         val res = context.resources
 
         val acceptInviteIntent = Intent(context, LocalNotificationActionReceiver::class.java)
         acceptInviteIntent.action = res.getString(R.string.accept_quest_invite)
+        acceptInviteIntent.putExtra("NOTIFICATION_ID", notificationId)
         val pendingIntentAccept = PendingIntent.getBroadcast(
             context,
-            3000,
+            3001,
             acceptInviteIntent,
             PendingIntent.FLAG_UPDATE_CURRENT
         )
@@ -31,9 +32,10 @@ class QuestInviteLocalNotification(context: Context, identifier: String?) : Habi
 
         val rejectInviteIntent = Intent(context, LocalNotificationActionReceiver::class.java)
         rejectInviteIntent.action = res.getString(R.string.reject_quest_invite)
+        rejectInviteIntent.putExtra("NOTIFICATION_ID", notificationId)
         val pendingIntentReject = PendingIntent.getBroadcast(
             context,
-            2000,
+            2001,
             rejectInviteIntent,
             PendingIntent.FLAG_UPDATE_CURRENT
         )

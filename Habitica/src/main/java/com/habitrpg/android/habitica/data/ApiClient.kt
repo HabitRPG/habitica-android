@@ -153,7 +153,7 @@ interface ApiClient {
 
     fun seenMessages(groupId: String): Flowable<Void>
 
-    fun inviteToGroup(groupId: String, inviteData: Map<String, Any>): Flowable<Void>
+    fun inviteToGroup(groupId: String, inviteData: Map<String, Any>): Flowable<List<Void>>
 
     fun rejectGroupInvite(groupId: String): Flowable<Void>
 
