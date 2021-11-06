@@ -23,6 +23,12 @@ class HabitScoringButtonsView @JvmOverloads constructor(
     var tintColor: Int = ContextCompat.getColor(context, R.color.brand_300)
     var textTintColor: Int? = null
 
+    override fun setEnabled(isEnabled: Boolean) {
+        super.setEnabled(isEnabled)
+        binding.positiveView.isEnabled = isEnabled
+        binding.negativeView.isEnabled = isEnabled
+    }
+
     var isPositive = true
         set(value) {
             field = value

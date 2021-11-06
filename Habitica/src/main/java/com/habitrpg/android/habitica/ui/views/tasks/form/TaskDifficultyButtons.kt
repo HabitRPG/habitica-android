@@ -10,6 +10,7 @@ import android.widget.LinearLayout
 import android.widget.Space
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.view.children
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.asDrawable
 import com.habitrpg.android.habitica.extensions.inflate
@@ -32,6 +33,13 @@ class TaskDifficultyButtons @JvmOverloads constructor(
             selectedButton.sendAccessibilityEvent(AccessibilityEvent.CONTENT_CHANGE_TYPE_CONTENT_DESCRIPTION)
         }
     private lateinit var selectedButton: View
+
+    override fun setEnabled(isEnabled: Boolean) {
+        super.setEnabled(isEnabled)
+        for (child in this.children) {
+            child.isEnabled = isEnabled
+        }
+    }
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
