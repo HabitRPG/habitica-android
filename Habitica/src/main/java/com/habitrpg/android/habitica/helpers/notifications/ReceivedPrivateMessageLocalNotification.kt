@@ -50,6 +50,12 @@ class ReceivedPrivateMessageLocalNotification(context: Context, identifier: Stri
         return data["senderName"].hashCode()
     }
 
+    override fun configureMainIntent(intent: Intent) {
+        super.configureMainIntent(intent)
+        intent.putExtra("replyToUUID", data?.get("replyTo"))
+        intent.putExtra("replyToUsername", data?.get("senderName"))
+    }
+
     override fun setNotificationActions(notificationId: Int, data: Map<String, String>) {
         super.setNotificationActions(notificationId, data)
         val senderID = data["replyTo"] ?: return
