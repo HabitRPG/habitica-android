@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:title="@string/PS_contact_title">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <PreferenceCategory
         android:title="@string/pref_account_header"
@@ -10,109 +9,112 @@
         android:layout="@layout/preference_category">
 
         <PreferenceScreen
-            android:key="profile"
+            android:key="my_account"
             android:layout="@layout/preference_child_summary"
-            android:summary="@string/profile_summary"
-            android:title="@string/profile">
-            <EditTextPreference
-                android:key="display_name"
-                android:layout="@layout/preference_child_summary"
-                android:negativeButtonText="@string/cancel"
-                android:positiveButtonText="@string/save"
-                android:title="@string/display_name" />
-            <EditTextPreference
-                android:key="photo_url"
-                android:layout="@layout/preference_child_summary"
-                android:negativeButtonText="@string/cancel"
-                android:positiveButtonText="@string/save"
-                android:title="@string/photo_url" />
-            <EditTextPreference
-                android:key="about"
-                android:layout="@layout/preference_child_summary"
-                android:negativeButtonText="@string/cancel"
-                android:positiveButtonText="@string/save"
-                android:title="@string/about" />
-        </PreferenceScreen>
+            android:title="@string/my_account">
+            <PreferenceCategory
+                android:title="@string/account_info"
+                android:key="account_info"
+                android:layout="@layout/preference_category">
+                <Preference
+                    android:key="username"
+                    android:title="@string/username"
+                    android:selectable="true"
+                    android:persistent="false"
+                    android:shouldDisableView="false"
+                    android:layout="@layout/preference_child_summary" />
+                <Preference android:title="@string/confirm_username"
+                    android:key="confirm_username"
+                    app:isPreferenceVisible="false"
+                    android:layout="@layout/preference_child_summary" />
+                <Preference
+                    android:key="email"
+                    android:title="@string/email"
+                    android:selectable="true"
+                    android:persistent="false"
+                    android:shouldDisableView="false"
+                    android:layout="@layout/preference_child_summary"/>
+            </PreferenceCategory>
 
-        <PreferenceScreen
-            android:key="authentication"
-            android:title="@string/authentication"
-            android:summary="@string/authentication_summary"
-            app:key="authentication"
-            android:layout="@layout/preference_child_summary">
-            <Preference
-                android:key="login_name"
-                android:title="@string/login_name"
-                android:selectable="true"
-                android:persistent="false"
-                android:shouldDisableView="false"
-                android:layout="@layout/preference_child_summary" />
-            <Preference android:title="@string/confirm_username"
-                android:key="confirm_username"
-                android:layout="@layout/preference_child_summary" />
+            <PreferenceCategory
+                android:title="@string/login_methods"
+                android:key="account_info"
+                android:layout="@layout/preference_category">
+                <com.habitrpg.android.habitica.ui.views.ExtraLabelPreference
+                    android:title="@string/password"
+                    android:key="password"
+                    android:layout="@layout/preference_button"
+                    />
+                <com.habitrpg.android.habitica.ui.views.ExtraLabelPreference
+                    android:title="@string/google"
+                    android:key="google_auth"
+                    android:layout="@layout/preference_button"
+                    />
+                <com.habitrpg.android.habitica.ui.views.ExtraLabelPreference
+                    android:title="@string/facebook"
+                    android:key="facebook_auth"
+                    />
+                <com.habitrpg.android.habitica.ui.views.ExtraLabelPreference
+                    android:title="@string/apple"
+                    android:key="apple_auth"
+                    />
+            </PreferenceCategory>
+            <PreferenceCategory
+                android:title="@string/public_profile"
+                android:key="public_profile"
+                android:layout="@layout/preference_category">
+                <EditTextPreference
+                    android:key="display_name"
+                    android:layout="@layout/preference_child_summary"
+                    android:negativeButtonText="@string/cancel"
+                    android:positiveButtonText="@string/save"
+                    android:title="@string/display_name" />
+                <EditTextPreference
+                    android:key="about"
+                    android:layout="@layout/preference_child_summary"
+                    android:negativeButtonText="@string/cancel"
+                    android:positiveButtonText="@string/save"
+                    android:title="@string/about_me" />
+                <EditTextPreference
+                    android:key="photo_url"
+                    android:layout="@layout/preference_child_summary"
+                    android:negativeButtonText="@string/cancel"
+                    android:positiveButtonText="@string/save"
+                    android:title="@string/photo_url" />
+            </PreferenceCategory>
+            <PreferenceCategory
+                android:title="@string/api"
+                android:key="api"
+                android:layout="@layout/preference_category">
+                <Preference
+                    android:key="user_id"
+                    android:title="@string/SP_userID_title"
+                    android:selectable="true"
+                    android:persistent="false"
+                    android:shouldDisableView="false"
+                    android:summary="@string/SP_userID_summary"
+                    android:layout="@layout/preference_child_summary"/>
 
-            <Preference android:title="@string/change_password"
-                android:key="change_password"
-                android:layout="@layout/preference_child_summary" />
-            <Preference
-                android:key="email"
-                android:title="@string/email"
-                android:selectable="true"
-                android:persistent="false"
-                android:shouldDisableView="false"
-                android:layout="@layout/preference_child_summary"/>
-            <Preference
-                android:key="add_local_auth"
-                android:title="@string/add_local_authentication"
-                android:selectable="true"
-                android:persistent="false"
-                android:shouldDisableView="false"
-                android:layout="@layout/preference_child_summary"/>
-            <Preference
-                android:key="authentication_methods"
-                android:title="@string/authentication_methods"
-                android:selectable="false"
-                android:persistent="false"
-                android:shouldDisableView="false"
-                android:layout="@layout/preference_child_summary"/>
-            <Preference
-                android:key="subscription_status"
-                android:title="@string/subscription_status"
-                android:selectable="true"
-                android:persistent="false"
-                android:shouldDisableView="false"
-                android:layout="@layout/preference_child_summary"/>
+                <Preference
+                    android:key="api_token"
+                    android:title="@string/SP_APIToken_title"
+                    android:selectable="true"
+                    android:persistent="false"
+                    android:shouldDisableView="false"
+                    android:summary="@string/SP_APIToken_summary"
+                    android:layout="@layout/preference_child_summary"/>
+            </PreferenceCategory>
             <PreferenceCategory android:title="@string/danger_zone"
                 android:layout="@layout/preference_category">
                 <Preference android:title="@string/reset_account"
+                    android:persistent="false"
                     android:key="reset_account"
                     android:layout="@layout/preference_child_summary" />
                 <Preference android:title="@string/delete_account"
+                    android:persistent="false"
                     android:key="delete_account"
                     android:layout="@layout/preference_child_summary" />
             </PreferenceCategory>
-        </PreferenceScreen>
-
-        <PreferenceScreen android:title="API"
-            android:key="api"
-            android:layout="@layout/preference_child_summary">
-            <Preference
-                android:key="@string/SP_userID"
-                android:title="@string/SP_userID_title"
-                android:selectable="true"
-                android:persistent="false"
-                android:shouldDisableView="false"
-                android:summary="@string/SP_userID_summary"
-                android:layout="@layout/preference_child_summary"/>
-
-            <Preference
-                android:key="@string/SP_APIToken"
-                android:title="@string/SP_APIToken_title"
-                android:selectable="true"
-                android:persistent="false"
-                android:shouldDisableView="false"
-                android:summary="@string/SP_APIToken_summary"
-                android:layout="@layout/preference_child_summary"/>
         </PreferenceScreen>
 
         <Preference

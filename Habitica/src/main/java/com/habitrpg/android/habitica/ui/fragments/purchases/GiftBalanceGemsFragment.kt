@@ -34,12 +34,17 @@ class GiftBalanceGemsFragment : BaseFragment<FragmentGiftGemBalanceBinding>() {
         set(value) {
             field = value
             field?.let {
-                binding?.avatarView?.setAvatar(it)
-                binding?.displayNameTextview?.username = it.profile?.name
-                binding?.displayNameTextview?.tier = it.contributor?.level ?: 0
-                binding?.usernameTextview?.text = "@${it.username}"
+                updateMemberViews()
             }
         }
+
+    private fun updateMemberViews() {
+        val it = giftedMember ?: return
+        binding?.avatarView?.setAvatar(it)
+        binding?.displayNameTextview?.username = it.profile?.name
+        binding?.displayNameTextview?.tier = it.contributor?.level ?: 0
+        binding?.usernameTextview?.text = it.formattedUsername
+    }
 
     var onCompleted: (() -> Unit)? = null
 
@@ -50,6 +55,7 @@ class GiftBalanceGemsFragment : BaseFragment<FragmentGiftGemBalanceBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding?.giftButton?.setOnClickListener { sendGift() }
+        updateMemberViews()
     }
 
     private fun sendGift() {

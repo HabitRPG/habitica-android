@@ -176,6 +176,10 @@ class ApiClientImpl // private OnHabitsAPIResult mResultListener;
         return this.apiService.connectSocial(auth).compose(configureApiCallObserver())
     }
 
+    override fun disconnectSocial(network: String): Flowable<Void> {
+        return this.apiService.disconnectSocial(network).compose(configureApiCallObserver())
+    }
+
     override fun loginApple(authToken: String): Flowable<UserAuthResponse> {
         return apiService.loginApple(mapOf(Pair("code", authToken))).compose(configureApiCallObserver())
     }

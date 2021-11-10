@@ -34,7 +34,8 @@
             android:label="@string/app_name"
             android:theme="@style/LaunchAppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize"
-            android:configChanges="orientation|screenSize">
+            android:configChanges="orientation|screenSize"
+            android:exported="true">
             <nav-graph android:value="@navigation/navigation" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -54,7 +55,8 @@
             android:name=".ui.activities.PrefsActivity"
             android:parentActivityName=".ui.activities.MainActivity"
             android:label="@string/PS_settings_title"
-            tools:ignore="UnusedAttribute">
+            tools:ignore="UnusedAttribute"
+            android:exported="true">
             <intent-filter android:label="@string/app_name">
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -160,7 +162,8 @@
             android:name=".ui.activities.FullProfileActivity"
             android:parentActivityName=".ui.activities.MainActivity"
             android:theme="@style/MainAppTheme"
-            tools:ignore="UnusedAttribute">
+            tools:ignore="UnusedAttribute"
+            android:exported="true">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.activities.MainActivity" />
@@ -209,18 +212,21 @@
                 <action android:name="REJECT_QUEST_INVITE"/>
             </intent-filter>
         </receiver>
-        <receiver android:name=".receivers.TaskAlarmBootReceiver" android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
+        <receiver android:name=".receivers.TaskAlarmBootReceiver" android:permission="android.permission.RECEIVE_BOOT_COMPLETED"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>
         </receiver>
 
-        <activity android:name=".ui.activities.AddTaskWidgetActivity">
+        <activity android:name=".ui.activities.AddTaskWidgetActivity"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activities.HabitButtonWidgetActivity">
+        <activity android:name=".ui.activities.HabitButtonWidgetActivity"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
             </intent-filter>
@@ -248,7 +254,8 @@
         </provider>
 
         <receiver android:name=".widget.AvatarStatsWidgetProvider"
-            android:label="@string/stats_widget_label">
+            android:label="@string/stats_widget_label"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -256,7 +263,8 @@
                        android:resource="@xml/avatar_widget_info" />
         </receiver>
         <receiver android:name=".widget.DailiesWidgetProvider"
-            android:label="@string/widget_dailies">
+            android:label="@string/widget_dailies"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -264,7 +272,8 @@
                 android:resource="@xml/daily_list_widget_info" />
         </receiver>
         <receiver android:name=".widget.TodoListWidgetProvider"
-            android:label="@string/widget_todo_list">
+            android:label="@string/widget_todo_list"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -272,7 +281,8 @@
                 android:resource="@xml/todo_list_widget_info" />
         </receiver>
         <receiver android:name=".widget.HabitButtonWidgetProvider"
-            android:label="@string/widget_habit_button">
+            android:label="@string/widget_habit_button"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>

@@ -1184,4 +1184,16 @@
     <string name="damage_pending">%.01f dmg pending</string>
     <string name="x_remaining">%s remaining</string>
     <string name="sale_ends_in">Sale ends in %s</string>
+    <string name="my_account">My Account</string>
+    <string name="public_profile">Public Profile</string>
+    <string name="about_me">About Me</string>
+    <string name="api">API</string>
+    <string name="account_info">Account Info</string>
+    <string name="login_methods">Login Methods</string>
+    <string name="apple">Apple</string>
+    <string name="not_connected">Not connected</string>
+    <string name="add_password">Add password</string>
+    <string name="connect">Connect</string>
+    <string name="disconnect">Disconnect</string>
+    <string name="add">Add</string>
 </resources>

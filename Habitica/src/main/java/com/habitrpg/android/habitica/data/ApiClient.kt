@@ -102,6 +102,8 @@ interface ApiClient {
     fun connectUser(username: String, password: String): Flowable<UserAuthResponse>
 
     fun connectSocial(network: String, userId: String, accessToken: String): Flowable<UserAuthResponse>
+    fun disconnectSocial(network: String): Flowable<Void>
+
     fun loginApple(authToken: String): Flowable<UserAuthResponse>
 
     fun sleep(): Flowable<Boolean>

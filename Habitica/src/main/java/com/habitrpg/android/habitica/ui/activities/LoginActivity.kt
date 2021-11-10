@@ -3,7 +3,6 @@ package com.habitrpg.android.habitica.ui.activities
 import android.accounts.AccountManager
 import android.animation.*
 import android.app.Activity
-import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Build
@@ -21,48 +20,27 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
-import androidx.core.content.edit
 import androidx.preference.PreferenceManager
-import com.facebook.AccessToken
-import com.facebook.CallbackManager
-import com.facebook.FacebookCallback
-import com.facebook.FacebookException
-import com.facebook.FacebookSdk
-import com.facebook.login.LoginManager
-import com.facebook.login.LoginResult
-import com.google.android.gms.auth.GoogleAuthException
-import com.google.android.gms.auth.GoogleAuthUtil
-import com.google.android.gms.auth.GooglePlayServicesAvailabilityException
-import com.google.android.gms.auth.UserRecoverableAuthException
 import com.google.android.gms.common.*
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.habitrpg.android.habitica.BuildConfig
-import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.api.HostConfig
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.ActivityLoginBinding
 import com.habitrpg.android.habitica.extensions.addCancelButton
-import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.extensions.addOkButton
 import com.habitrpg.android.habitica.extensions.updateStatusBarColor
 import com.habitrpg.android.habitica.helpers.*
 import com.habitrpg.android.habitica.models.auth.UserAuthResponse
-import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
+import com.habitrpg.android.habitica.ui.viewmodels.AuthenticationViewModel
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
-import com.willowtreeapps.signinwithapplebutton.SignInWithAppleConfiguration
-import io.reactivex.rxjava3.core.Flowable
-import io.reactivex.rxjava3.exceptions.Exceptions
-import io.reactivex.rxjava3.functions.Consumer
-import io.reactivex.rxjava3.schedulers.Schedulers
-import java.io.IOException
 import javax.inject.Inject
 
-class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
+class LoginActivity : BaseActivity() {
 
+    private lateinit var viewModel: AuthenticationViewModel
     private lateinit var binding: ActivityLoginBinding
 
     @Inject
@@ -70,23 +48,13 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
     @Inject
     lateinit var sharedPrefs: SharedPreferences
     @Inject
-    lateinit var hostConfig: HostConfig
-    @Inject
     internal lateinit var userRepository: UserRepository
-    @Inject
-    @JvmField
-    var keyHelper: KeyHelper? = null
-    @Inject
-    lateinit var analyticsManager: AnalyticsManager
     @Inject
     lateinit var configManager: AppConfigManager
 
     private var isRegistering: Boolean = false
     private var isShowingForm: Boolean = false
 
-    private var callbackManager = CallbackManager.Factory.create()
-    private var googleEmail: String? = null
-    private var loginManager = LoginManager.getInstance()
 
     private val loginClick = View.OnClickListener {
         binding.PBAsyncTask.visibility = View.VISIBLE
@@ -105,7 +73,7 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
             }
             apiClient.registerUser(username, email, password, confirmPassword)
                 .subscribe(
-                    this@LoginActivity,
+                    { handleAuthResponse(it) },
                     {
                         hideProgress()
                         RxErrorHandler.reportError(it)
@@ -119,7 +87,7 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
                 return@OnClickListener
             }
             apiClient.connectUser(username, password).subscribe(
-                this@LoginActivity,
+                { handleAuthResponse(it) },
                 {
                     hideProgress()
                     RxErrorHandler.reportError(it)
@@ -140,11 +108,14 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel = AuthenticationViewModel()
         supportActionBar?.hide()
         // Set default values to avoid null-responses when requesting unedited settings
         PreferenceManager.setDefaultValues(this, R.xml.preferences_fragment, false)
 
-        setupFacebookLogin()
+        viewModel.setupFacebookLogin {
+            handleAuthResponse(it)
+        }
 
         binding.loginBtn.setOnClickListener(loginClick)
 
@@ -168,54 +139,18 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
         binding.showLoginButton.setOnClickListener { showLoginButtonClicked() }
         binding.backButton.setOnClickListener { backButtonClicked() }
         binding.forgotPassword.setOnClickListener { onForgotPasswordClicked() }
-        binding.fbLoginButton.setOnClickListener { handleFacebookLogin() }
-        binding.googleLoginButton.setOnClickListener { handleGoogleLogin() }
+        binding.fbLoginButton.setOnClickListener { viewModel.handleFacebookLogin(this) }
+        binding.googleLoginButton.setOnClickListener { viewModel.handleGoogleLogin(this, pickAccountResult) }
         binding.appleLoginButton.setOnClickListener {
-            val configuration = SignInWithAppleConfiguration(
-                clientId = BuildConfig.APPLE_AUTH_CLIENT_ID,
-                redirectUri = "${hostConfig.address}/api/v4/user/auth/apple",
-                scope = "name email"
-            )
-            val fragmentTag = "SignInWithAppleButton-SignInWebViewDialogFragment"
-
-            SignInWithAppleService(supportFragmentManager, fragmentTag, configuration) { result ->
-                when (result) {
-                    is SignInWithAppleResult.Success -> {
-                        val response = UserAuthResponse()
-                        response.id = result.userID
-                        response.apiToken = result.apiKey
-                        response.newUser = result.newUser
-                    }
-                }
-            }.show()
+            viewModel.connectApple(supportFragmentManager) {
+                handleAuthResponse(it)
+            }
         }
     }
 
     override fun loadTheme(sharedPreferences: SharedPreferences, forced: Boolean) {
         super.loadTheme(sharedPreferences, forced)
         window.updateStatusBarColor(R.color.black_20_alpha, false)
-    }
-
-    private fun setupFacebookLogin() {
-        callbackManager = CallbackManager.Factory.create()
-        loginManager.registerCallback(
-            callbackManager,
-            object : FacebookCallback<LoginResult> {
-                override fun onSuccess(loginResult: LoginResult) {
-                    val accessToken = AccessToken.getCurrentAccessToken()
-                    compositeSubscription.add(
-                        apiClient.connectSocial("facebook", accessToken?.userId ?: "", accessToken?.token ?: "")
-                            .subscribe(this@LoginActivity, RxErrorHandler.handleEmptyError())
-                    )
-                }
-
-                override fun onCancel() { /* no-on */ }
-
-                override fun onError(exception: FacebookException) {
-                    RxErrorHandler.reportError(exception)
-                }
-            }
-        )
     }
 
     override fun onBackPressed() {
@@ -293,19 +228,34 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
         this.resetLayout()
     }
 
+    private fun handleAuthResponse(response: UserAuthResponse) {
+        hideProgress()
+        dismissKeyboard()
+        viewModel.handleAuthResponse(response)
+
+        if (isRegistering) {
+            FirebaseAnalytics.getInstance(this).logEvent("user_registered", null)
+        }
+        compositeSubscription.add(
+            userRepository.retrieveUser(withTasks = true, forced = true)
+                .subscribe(
+                    {
+                        if (response.newUser) {
+                            this.startSetupActivity()
+                        } else {
+                            this.startMainActivity()
+                            AmplitudeManager.sendEvent("login", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT)
+                        }
+                    },
+                    RxErrorHandler.handleEmptyError()
+                )
+        )
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        callbackManager.onActivityResult(requestCode, resultCode, data)
-
-        if (requestCode == FacebookSdk.getCallbackRequestCodeOffset()) {
-            // This is necessary because the regular login callback is not called for some reason
-            val accessToken = AccessToken.getCurrentAccessToken()
-            if (accessToken != null && accessToken.token != null) {
-                compositeSubscription.add(
-                    apiClient.connectSocial("facebook", accessToken.userId, accessToken.token)
-                        .subscribe(this@LoginActivity, { hideProgress() })
-                )
-            }
+        viewModel.onActivityResult(requestCode, resultCode, data) {
+            handleAuthResponse(it)
         }
     }
 
@@ -314,27 +264,6 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
             R.id.action_toggleRegistering -> toggleRegistering()
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    @Throws(Exception::class)
-    private fun saveTokens(api: String, user: String) {
-        this.apiClient.updateAuthenticationCredentials(user, api)
-        sharedPrefs.edit {
-            putString(getString(R.string.SP_userID), user)
-            val encryptedKey = if (keyHelper != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                try {
-                    keyHelper?.encrypt(api)
-                } catch (e: Exception) {
-                    null
-                }
-            } else null
-            if (encryptedKey?.length ?: 0 > 5) {
-                putString(user, encryptedKey)
-            } else {
-                // Something might have gone wrong with encryption, so fall back to this.
-                putString(getString(R.string.SP_APIToken), api)
-            }
-        }
     }
 
     private fun hideProgress() {
@@ -356,141 +285,22 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
         alert.show()
     }
 
-    override fun accept(userAuthResponse: UserAuthResponse) {
-        hideProgress()
-        dismissKeyboard()
-        try {
-            saveTokens(userAuthResponse.apiToken, userAuthResponse.id)
-        } catch (e: Exception) {
-            analyticsManager.logException(e)
-        }
-
-        HabiticaBaseApplication.reloadUserComponent()
-
-        if (isRegistering) {
-            FirebaseAnalytics.getInstance(this).logEvent("user_registered", null)
-        }
-
-        compositeSubscription.add(
-            userRepository.retrieveUser(withTasks = true, forced = true)
-                .subscribe(
-                    {
-                        if (userAuthResponse.newUser) {
-                            this.startSetupActivity()
-                        } else {
-                            this.startMainActivity()
-                            AmplitudeManager.sendEvent("login", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT)
-                        }
-                    },
-                    RxErrorHandler.handleEmptyError()
-                )
-        )
-    }
-
-    private fun handleFacebookLogin() {
-        loginManager.logInWithReadPermissions(this, listOf("user_friends"))
-    }
-
-    private fun handleGoogleLogin() {
-        if (!checkPlayServices()) {
-            return
-        }
-        val accountTypes = arrayOf("com.google")
-        val intent = AccountManager.newChooseAccountIntent(
-            null, null,
-            accountTypes, true, null, null, null, null
-        )
-        try {
-            pickAccountResult.launch(intent)
-        } catch (e: ActivityNotFoundException) {
-            val alert = HabiticaAlertDialog(this)
-            alert.setTitle(R.string.authentication_error_title)
-            alert.setMessage(R.string.google_services_missing)
-            alert.addCloseButton()
-            alert.show()
-        }
-    }
-
     private val pickAccountResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if (it.resultCode == Activity.RESULT_OK) {
-            googleEmail = it?.data?.getStringExtra(AccountManager.KEY_ACCOUNT_NAME)
-            handleGoogleLoginResult()
+            viewModel.googleEmail = it?.data?.getStringExtra(AccountManager.KEY_ACCOUNT_NAME)
+            viewModel.handleGoogleLoginResult(this, recoverFromPlayServicesErrorResult) {
+                handleAuthResponse(it)
+            }
         }
     }
 
-    private fun handleGoogleLoginResult() {
-        val scopesString = Scopes.PROFILE + " " + Scopes.EMAIL
-        val scopes = "oauth2:$scopesString"
-        compositeSubscription.add(
-            Flowable.defer {
-                try {
-                    @Suppress("Deprecation")
-                    return@defer Flowable.just(GoogleAuthUtil.getToken(this, googleEmail, scopes))
-                } catch (e: IOException) {
-                    throw Exceptions.propagate(e)
-                } catch (e: GoogleAuthException) {
-                    throw Exceptions.propagate(e)
-                } catch (e: UserRecoverableException) {
-                    return@defer Flowable.empty()
-                }
-            }
-                .subscribeOn(Schedulers.io())
-                .flatMap { token -> apiClient.connectSocial("google", googleEmail ?: "", token) }
-                .subscribe(
-                    this@LoginActivity,
-                    { throwable ->
-                        hideProgress()
-                        throwable.cause?.let {
-                            if (GoogleAuthException::class.java.isAssignableFrom(it.javaClass)) {
-                                handleGoogleAuthException(throwable.cause as GoogleAuthException)
-                            }
-                        }
-                    }
-                )
-        )
-    }
-
-    private fun handleGoogleAuthException(e: Exception) {
-        if (e is GooglePlayServicesAvailabilityException) {
-            // The Google Play services APK is old, disabled, or not present.
-            // Show a dialog created by Google Play services that allows
-            // the user to update the APK
-            val statusCode = e
-                .connectionStatusCode
-            GoogleApiAvailability.getInstance()
-            @Suppress("DEPRECATION")
-            GooglePlayServicesUtil.showErrorDialogFragment(
-                statusCode,
-                this@LoginActivity,
-                REQUEST_CODE_RECOVER_FROM_PLAY_SERVICES_ERROR
-            ) {
-            }
-        } else if (e is UserRecoverableAuthException) {
-            // Unable to authenticate, such as when the user has not yet granted
-            // the app access to the account, but the user can fix this.
-            // Forward the user to an activity in Google Play services.
-            val intent = e.intent
-            recoverFromPlayServicesErrorResult.launch(intent)
-        }
-    }
-
-    private val recoverFromPlayServicesErrorResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+    private val recoverFromPlayServicesErrorResult = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()) {
         if (it.resultCode != Activity.RESULT_CANCELED) {
-            handleGoogleLoginResult()
-        }
-    }
-
-    private fun checkPlayServices(): Boolean {
-        val googleAPI = GoogleApiAvailability.getInstance()
-        val result = googleAPI.isGooglePlayServicesAvailable(this)
-        if (result != ConnectionResult.SUCCESS) {
-            if (googleAPI.isUserResolvableError(result)) {
-                googleAPI.getErrorDialog(this, result, PLAY_SERVICES_RESOLUTION_REQUEST).show()
+            viewModel.handleGoogleLoginResult(this, null) {
+                handleAuthResponse(it)
             }
-            return false
         }
-
-        return true
     }
 
     private fun newGameButtonClicked() {
@@ -629,8 +439,6 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
 
     companion object {
         internal const val REQUEST_CODE_PICK_ACCOUNT = 1000
-        private const val REQUEST_CODE_RECOVER_FROM_PLAY_SERVICES_ERROR = 1001
-        private const val PLAY_SERVICES_RESOLUTION_REQUEST = 9000
 
         fun show(v: View) {
             v.visibility = View.VISIBLE

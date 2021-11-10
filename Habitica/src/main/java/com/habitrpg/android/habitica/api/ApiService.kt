@@ -139,6 +139,9 @@ interface ApiService {
     @POST("user/auth/social")
     fun connectSocial(@Body auth: UserAuthSocial): Flowable<HabitResponse<UserAuthResponse>>
 
+    @DELETE("user/auth/social/{network}")
+    fun disconnectSocial(@Path("network") network: String): Flowable<HabitResponse<Void>>
+
     @POST("user/auth/apple")
     fun loginApple(@Body auth: Map<String, Any>): Flowable<HabitResponse<UserAuthResponse>>
 

@@ -61,9 +61,7 @@ class PrefsActivity : BaseActivity(), PreferenceFragmentCompat.OnPreferenceStart
 
     private fun createNextPage(preferenceScreen: PreferenceScreen): PreferenceFragmentCompat? =
         when (preferenceScreen.key) {
-            "profile" -> ProfilePreferencesFragment()
-            "authentication" -> AuthenticationPreferenceFragment()
-            "api" -> APIPreferenceFragment()
+            "my_account" -> AccountPreferenceFragment()
             "pushNotifications" -> PushNotificationsPreferencesFragment()
             "emailNotifications" -> EmailNotificationsPreferencesFragment()
             else -> null

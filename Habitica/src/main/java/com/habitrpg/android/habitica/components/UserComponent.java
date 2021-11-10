@@ -60,11 +60,9 @@ import com.habitrpg.android.habitica.ui.fragments.inventory.stable.MountDetailRe
 import com.habitrpg.android.habitica.ui.fragments.inventory.stable.PetDetailRecyclerFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.stable.StableFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.stable.StableRecyclerFragment;
-import com.habitrpg.android.habitica.ui.fragments.preferences.APIPreferenceFragment;
-import com.habitrpg.android.habitica.ui.fragments.preferences.AuthenticationPreferenceFragment;
+import com.habitrpg.android.habitica.ui.fragments.preferences.AccountPreferenceFragment;
 import com.habitrpg.android.habitica.ui.fragments.preferences.EmailNotificationsPreferencesFragment;
 import com.habitrpg.android.habitica.ui.fragments.preferences.PreferencesFragment;
-import com.habitrpg.android.habitica.ui.fragments.preferences.ProfilePreferencesFragment;
 import com.habitrpg.android.habitica.ui.fragments.preferences.PushNotificationsPreferencesFragment;
 import com.habitrpg.android.habitica.ui.fragments.purchases.GemsPurchaseFragment;
 import com.habitrpg.android.habitica.ui.fragments.purchases.GiftBalanceGemsFragment;
@@ -100,6 +98,7 @@ import com.habitrpg.android.habitica.ui.fragments.support.SupportMainFragment;
 import com.habitrpg.android.habitica.ui.fragments.tasks.TaskRecyclerViewFragment;
 import com.habitrpg.android.habitica.ui.fragments.tasks.TasksFragment;
 import com.habitrpg.android.habitica.ui.fragments.tasks.TeamBoardFragment;
+import com.habitrpg.android.habitica.ui.viewmodels.AuthenticationViewModel;
 import com.habitrpg.android.habitica.ui.viewmodels.GroupViewModel;
 import com.habitrpg.android.habitica.ui.viewmodels.InboxViewModel;
 import com.habitrpg.android.habitica.ui.viewmodels.NotificationsViewModel;
@@ -277,12 +276,6 @@ public interface UserComponent {
 
     void inject(FixCharacterValuesActivity fixCharacterValuesActivity);
 
-    void inject(AuthenticationPreferenceFragment authenticationPreferenceFragment);
-
-    void inject(ProfilePreferencesFragment profilePreferencesFragment);
-
-    void inject(APIPreferenceFragment apiPreferenceFragment);
-
     void inject(StatsFragment statsFragment);
 
     void inject(BulkAllocateStatsDialog bulkAllocateStatsDialog);
@@ -352,4 +345,7 @@ public interface UserComponent {
     void inject(@NotNull EquipmentOverviewViewModel equipmentOverviewViewModel);
 
     void inject(@NotNull AvatarStatsWidgetFactory avatarStatsWidgetFactory);
+    void inject(@NotNull AccountPreferenceFragment accountPreferenceFragment);
+
+    void inject(@NotNull AuthenticationViewModel authenticationViewModel);
 }

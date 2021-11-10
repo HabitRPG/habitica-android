@@ -23,6 +23,7 @@ import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionVi
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.greenrobot.eventbus.Subscribe
 import org.solovyev.android.checkout.Inventory
 import org.solovyev.android.checkout.Sku
@@ -109,8 +110,10 @@ class GiftSubscriptionActivity : BaseActivity() {
         CoroutineScope(Dispatchers.IO).launch {
             val subscriptions = purchaseHandler?.getAllGiftSubscriptionProducts()
             skus = subscriptions?.skus ?: return@launch
-            for (sku in skus) {
-                updateButtonLabel(sku, sku.price, subscriptions)
+            withContext(Dispatchers.Main) {
+                for (sku in skus) {
+                    updateButtonLabel(sku, sku.price, subscriptions)
+                }
             }
         }
     }

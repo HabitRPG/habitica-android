@@ -105,15 +105,6 @@ class UserDeserializer : JsonDeserializer<User> {
         }
         if (obj.has("auth")) {
             user.authentication = context.deserialize(obj.get("auth"), Authentication::class.java)
-            if (obj.getAsJsonObject("auth").has("facebook") && obj.getAsJsonObject("auth").getAsJsonObject("facebook").has("emails")) {
-                user.authentication?.hasFacebookAuth = true
-            }
-            if (obj.getAsJsonObject("auth").has("google") && obj.getAsJsonObject("auth").getAsJsonObject("google").has("emails")) {
-                user.authentication?.hasGoogleAuth = true
-            }
-            if (obj.getAsJsonObject("auth").has("apple") && obj.getAsJsonObject("auth").getAsJsonObject("apple").has("email")) {
-                user.authentication?.hasAppleAuth = true
-            }
         }
         if (obj.has("flags")) {
             user.flags = context.deserialize(obj.get("flags"), Flags::class.java)

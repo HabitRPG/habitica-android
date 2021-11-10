@@ -68,16 +68,8 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int) : Recycl
 
     fun updateItem(item: HabiticaDrawerItem) {
         val position = getItemPosition(item.identifier)
-        if (position == -1) {
-            items.add(item)
-            notifyItemInserted(items.size - 1)
-        } else {
-            items[position] = item
-            val visiblePosition = getVisibleItemPosition(item.identifier)
-            if (visiblePosition in 0 until itemCount) {
-                notifyItemChanged(visiblePosition)
-            }
-        }
+        items[position] = item
+        notifyDataSetChanged()
     }
 
     fun updateItems(newItems: List<HabiticaDrawerItem>) {
