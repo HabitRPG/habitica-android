@@ -39,6 +39,7 @@ class MountViewHolder(parent: ViewGroup, private val equipEvents: PublishSubject
             binding.imageView.alpha = 0.2f
         }
         binding.imageView.background = null
+        binding.activeIndicator.visibility = if (user?.currentMount.equals(animal?.key)) View.VISIBLE else View.GONE
         DataBindingUtils.loadImage(itemView.context, imageName) {
             val drawable = if (owned) it else BitmapDrawable(itemView.context.resources, it.toBitmap().extractAlpha())
             binding.imageView.background = drawable

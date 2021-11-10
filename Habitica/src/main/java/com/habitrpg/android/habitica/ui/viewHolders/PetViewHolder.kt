@@ -96,6 +96,7 @@ class PetViewHolder(parent: ViewGroup, private val equipEvents: PublishSubject<S
             binding.trainedProgressBar.progressBackgroundTintMode = PorterDuff.Mode.SRC_OVER
         }
         binding.imageView.background = null
+        binding.activeIndicator.visibility = if (user?.currentPet.equals(animal?.key)) View.VISIBLE else View.GONE
         DataBindingUtils.loadImage(itemView.context, imageName) {
             val resources = itemView.context.resources ?: return@loadImage
             val drawable = if (trained == 0) BitmapDrawable(resources, it.toBitmap().extractAlpha()) else it

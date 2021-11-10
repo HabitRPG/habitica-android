@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:clickable="true"
     android:focusable="true">
 
@@ -46,4 +47,16 @@
             android:gravity="center"
             android:textSize="12sp" />
     </LinearLayout>
+    <ImageView
+        android:id="@+id/active_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/shopitem_status_size"
+        android:layout_gravity="end"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@id/card_view"
+        android:layout_marginStart="-4dp"
+        android:src="@drawable/star"
+        style="@style/ActiveLabel"/>
 </RelativeLayout>
