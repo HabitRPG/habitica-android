@@ -208,6 +208,7 @@ class TaskFormActivity : BaseActivity() {
                                                 this.challenge = challenge
                                                 binding.challengeNameView.text = getString(R.string.challenge_task_name, challenge.name)
                                                 binding.challengeNameView.visibility = View.VISIBLE
+                                                disableEditingForUneditableFieldsInChallengeTask()
                                             },
                                             RxErrorHandler.handleEmptyError()
                                         )
@@ -619,6 +620,13 @@ class TaskFormActivity : BaseActivity() {
                 RxErrorHandler.handleEmptyError()
             )
         )
+    }
+
+    private fun disableEditingForUneditableFieldsInChallengeTask() {
+        binding.textEditText.isEnabled = false
+        binding.taskDifficultyButtons.isEnabled = false
+        binding.taskSchedulingControls.isEnabled = false
+        binding.habitScoringButtons.isEnabled = false
     }
 
     override fun finish() {

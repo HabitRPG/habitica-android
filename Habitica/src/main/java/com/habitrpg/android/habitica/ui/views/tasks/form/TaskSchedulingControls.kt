@@ -11,6 +11,7 @@ import android.view.View
 import android.view.accessibility.AccessibilityEvent
 import android.widget.*
 import androidx.core.content.ContextCompat
+import androidx.core.view.children
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.TaskFormTaskSchedulingBinding
 import com.habitrpg.android.habitica.extensions.dpToPx
@@ -176,6 +177,16 @@ class TaskSchedulingControls @JvmOverloads constructor(
         orientation = VERTICAL
         configureViewsForType()
         configureViewsForFrequency()
+    }
+
+    override fun setEnabled(isEnabled: Boolean) {
+        super.setEnabled(isEnabled)
+        for (button in binding.weeklyRepeatWrapper.children) {
+            button.isEnabled = isEnabled
+        }
+        binding.startDateWrapper.isEnabled = isEnabled
+        binding.monthlyRepeatDays.isEnabled = isEnabled
+        binding.monthlyRepeatWeeks.isEnabled = isEnabled
     }
 
     private fun configureViewsForType() {
