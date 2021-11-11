@@ -100,8 +100,7 @@ class AccountPreferenceFragment: BasePreferencesFragment(),
             applePref?.extraText = getString(R.string.disconnect)
             applePref?.extraTextColor = context?.let { ContextCompat.getColor(it, R.color.text_red) }
         } else {
-            applePref?.summary = getString(R.string.not_connected)
-            applePref?.extraText = getString(R.string.connect)
+            applePref?.isVisible = false
         }
         val facebookPref = findPreference<ExtraLabelPreference>("facebook_auth")
         if (user.authentication?.hasFacebookAuth == true) {
@@ -109,8 +108,7 @@ class AccountPreferenceFragment: BasePreferencesFragment(),
             facebookPref?.extraText = getString(R.string.disconnect)
             facebookPref?.extraTextColor = context?.let { ContextCompat.getColor(it, R.color.text_red) }
         } else {
-            facebookPref?.summary = getString(R.string.not_connected)
-            facebookPref?.extraText = getString(R.string.connect)
+            facebookPref?.isVisible = false
         }
 
         configurePreference(findPreference("display_name"), user.profile?.name)
