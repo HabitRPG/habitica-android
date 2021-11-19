@@ -10,6 +10,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.RemoteInput
 import androidx.core.os.bundleOf
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.extensions.withImmutableFlag
 import com.habitrpg.android.habitica.receivers.LocalNotificationActionReceiver
 import com.habitrpg.android.habitica.ui.helpers.EmojiParser
 
@@ -74,7 +75,7 @@ class ReceivedPrivateMessageLocalNotification(context: Context, identifier: Stri
             PendingIntent.getBroadcast(
                 context, senderID.hashCode(),
                 intent,
-                PendingIntent.FLAG_UPDATE_CURRENT
+                withImmutableFlag(PendingIntent.FLAG_UPDATE_CURRENT)
             )
 
         val action: NotificationCompat.Action =

@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.widget.RemoteViews
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.extensions.withImmutableFlag
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 
 class AvatarStatsWidgetProvider : BaseWidgetProvider() {
@@ -37,7 +38,7 @@ class AvatarStatsWidgetProvider : BaseWidgetProvider() {
             intent.data = Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME))
 
             val openAppIntent = Intent(context.applicationContext, MainActivity::class.java)
-            val openApp = PendingIntent.getActivity(context, 0, openAppIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+            val openApp = PendingIntent.getActivity(context, 0, openAppIntent, withImmutableFlag(PendingIntent.FLAG_UPDATE_CURRENT))
 
             val remoteViews = RemoteViews(context.packageName, R.layout.widget_main_avatar_stats)
             remoteViews.setRemoteAdapter(R.id.widget_avatar_list, intent)

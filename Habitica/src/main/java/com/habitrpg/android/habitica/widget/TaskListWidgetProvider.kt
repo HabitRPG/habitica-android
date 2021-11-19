@@ -10,6 +10,7 @@ import android.widget.RemoteViews
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.TaskRepository
+import com.habitrpg.android.habitica.extensions.withImmutableFlag
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import javax.inject.Inject
@@ -80,7 +81,7 @@ abstract class TaskListWidgetProvider : BaseWidgetProvider() {
 
             // if the user click on the title: open App
             val openAppIntent = Intent(context.applicationContext, MainActivity::class.java)
-            val openApp = PendingIntent.getActivity(context, 0, openAppIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+            val openApp = PendingIntent.getActivity(context, 0, openAppIntent, withImmutableFlag(PendingIntent.FLAG_UPDATE_CURRENT))
             rv.setOnClickPendingIntent(R.id.widget_title, openApp)
 
             val taskIntent = Intent(context, providerClass)
@@ -89,7 +90,7 @@ abstract class TaskListWidgetProvider : BaseWidgetProvider() {
             intent.data = Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME))
             val toastPendingIntent = PendingIntent.getBroadcast(
                 context, 0, taskIntent,
-                PendingIntent.FLAG_UPDATE_CURRENT
+                withImmutableFlag(PendingIntent.FLAG_UPDATE_CURRENT)
             )
             rv.setPendingIntentTemplate(R.id.list_view, toastPendingIntent)
 

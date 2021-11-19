@@ -33,6 +33,7 @@ import com.habitrpg.android.habitica.extensions.addOkButton
 import com.habitrpg.android.habitica.extensions.updateStatusBarColor
 import com.habitrpg.android.habitica.helpers.*
 import com.habitrpg.android.habitica.models.auth.UserAuthResponse
+import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
 import com.habitrpg.android.habitica.ui.viewmodels.AuthenticationViewModel
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
@@ -229,9 +230,17 @@ class LoginActivity : BaseActivity() {
     }
 
     private fun handleAuthResponse(response: UserAuthResponse) {
+        viewModel.handleAuthResponse(response)
+        compositeSubscription.add(userRepository.retrieveUser(true)
+            .subscribe({
+                handleAuthResponse(it, response.newUser)
+            }, RxErrorHandler.handleEmptyError())
+        )
+    }
+
+    private fun handleAuthResponse(user: User, isNew: Boolean) {
         hideProgress()
         dismissKeyboard()
-        viewModel.handleAuthResponse(response)
 
         if (isRegistering) {
             FirebaseAnalytics.getInstance(this).logEvent("user_registered", null)
@@ -240,7 +249,7 @@ class LoginActivity : BaseActivity() {
             userRepository.retrieveUser(withTasks = true, forced = true)
                 .subscribe(
                     {
-                        if (response.newUser) {
+                        if (isNew) {
                             this.startSetupActivity()
                         } else {
                             this.startMainActivity()
@@ -288,8 +297,8 @@ class LoginActivity : BaseActivity() {
     private val pickAccountResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if (it.resultCode == Activity.RESULT_OK) {
             viewModel.googleEmail = it?.data?.getStringExtra(AccountManager.KEY_ACCOUNT_NAME)
-            viewModel.handleGoogleLoginResult(this, recoverFromPlayServicesErrorResult) {
-                handleAuthResponse(it)
+            viewModel.handleGoogleLoginResult(this, recoverFromPlayServicesErrorResult) { user, isNew ->
+                handleAuthResponse(user, isNew)
             }
         }
     }
@@ -297,8 +306,8 @@ class LoginActivity : BaseActivity() {
     private val recoverFromPlayServicesErrorResult = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()) {
         if (it.resultCode != Activity.RESULT_CANCELED) {
-            viewModel.handleGoogleLoginResult(this, null) {
-                handleAuthResponse(it)
+            viewModel.handleGoogleLoginResult(this, null) { user, isNew ->
+                handleAuthResponse(user, isNew)
             }
         }
     }

@@ -1147,7 +1147,7 @@
     <string name="leave_guild_confirmation">Вы уверены, что хотите покинуть команду\?</string>
     <string name="report_explanation">Жалуйтесь ** только ** на те публикации, которые нарушают [Принципы сообщества] (https://habitica.com/static/community-guidelines) и / или [Условия предоставления услуг] (https://habitica.com/static/terms ). Ложное сообщение о нарушении может привести к наказанию.</string>
     <string name="gift_gems_subtitle">Выберите ниже набор самоцветов, который хотите подарить!</string>
-    <string name="available_for">Доступно для %@</string>
+    <string name="available_for">Доступно для %s</string>
     <string name="reloaded_content">Обновить содержимое</string>
     <string name="rejoin_party">Вы не сможете снова присоединиться к этой команде, пока вас не пригласят.</string>
     <string name="leave_party_challenges_confirmation">Вы хотите продолжить участвовать в испытании, покинув команду\?</string>

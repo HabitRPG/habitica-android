@@ -17,6 +17,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.ContentRepository
 import com.habitrpg.android.habitica.events.ShowSnackbarEvent
+import com.habitrpg.android.habitica.extensions.addCancelButton
 import com.habitrpg.android.habitica.helpers.*
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
 import com.habitrpg.android.habitica.models.user.User
@@ -26,6 +27,7 @@ import com.habitrpg.android.habitica.ui.activities.FixCharacterValuesActivity
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.activities.PrefsActivity
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
+import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import org.greenrobot.eventbus.EventBus
 import java.util.*
 import javax.inject.Inject
@@ -109,8 +111,7 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
     override fun onPreferenceTreeClick(preference: Preference): Boolean {
         when (preference.key) {
             "logout" -> {
-                context?.let { HabiticaBaseApplication.logout(it) }
-                activity?.finish()
+                logout()
             }
             "choose_class" -> {
                 val bundle = Bundle()
@@ -148,19 +149,28 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                     RxErrorHandler.handleEmptyError()
                 )
             }
-            "fixCharacterValues" -> {
-                val intent = Intent(activity, FixCharacterValuesActivity::class.java)
-                activity?.startActivity(intent)
-            }
         }
         return super.onPreferenceTreeClick(preference)
+    }
+
+    private fun logout() {
+        context?.let { context ->
+            val dialog = HabiticaAlertDialog(context)
+            dialog.setTitle(R.string.are_you_sure)
+            dialog.addButton(R.string.logout, true) { _, _ ->
+                HabiticaBaseApplication.logout(context)
+                activity?.finish()
+            }
+            dialog.addCancelButton()
+            dialog.show()
+        }
     }
 
     private val classSelectionResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         userRepository.retrieveUser(true, forced = true)
     }
 
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String?) {
         when (key) {
             "use_reminder" -> {
                 val useReminder = sharedPreferences.getBoolean(key, false)

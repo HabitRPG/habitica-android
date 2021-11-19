@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.helpers.notifications
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.receivers.LocalNotificationActionReceiver
 
@@ -22,11 +23,16 @@ class QuestInviteLocalNotification(context: Context, identifier: String?) : Habi
         val acceptInviteIntent = Intent(context, LocalNotificationActionReceiver::class.java)
         acceptInviteIntent.action = res.getString(R.string.accept_quest_invite)
         acceptInviteIntent.putExtra("NOTIFICATION_ID", notificationId)
+        val flags = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            PendingIntent.FLAG_UPDATE_CURRENT + PendingIntent.FLAG_IMMUTABLE
+        } else {
+            PendingIntent.FLAG_UPDATE_CURRENT
+        }
         val pendingIntentAccept = PendingIntent.getBroadcast(
             context,
             3001,
             acceptInviteIntent,
-            PendingIntent.FLAG_UPDATE_CURRENT
+            flags
         )
         notificationBuilder.addAction(0, "Accept", pendingIntentAccept)
 
@@ -37,7 +43,7 @@ class QuestInviteLocalNotification(context: Context, identifier: String?) : Habi
             context,
             2001,
             rejectInviteIntent,
-            PendingIntent.FLAG_UPDATE_CURRENT
+            flags
         )
         notificationBuilder.addAction(0, "Reject", pendingIntentReject)
     }

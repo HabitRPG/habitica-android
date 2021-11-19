@@ -14,6 +14,7 @@ import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
+import com.habitrpg.android.habitica.extensions.withImmutableFlag
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager
 import com.habitrpg.android.habitica.models.tasks.Task
@@ -126,7 +127,7 @@ class NotificationPublisher : BroadcastReceiver() {
 
         val intent = PendingIntent.getActivity(
             thisContext, 0,
-            notificationIntent, 0
+            notificationIntent, withImmutableFlag(0)
         )
         builder.setContentIntent(intent)
 

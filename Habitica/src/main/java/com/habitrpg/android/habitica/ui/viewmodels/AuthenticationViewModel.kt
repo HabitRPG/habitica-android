@@ -9,7 +9,6 @@ import android.os.Build
 import androidx.activity.result.ActivityResultLauncher
 import androidx.core.content.edit
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import com.facebook.AccessToken
 import com.facebook.CallbackManager
@@ -32,12 +31,14 @@ import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.api.HostConfig
 import com.habitrpg.android.habitica.data.ApiClient
+import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.helpers.KeyHelper
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.SignInWithAppleResult
 import com.habitrpg.android.habitica.helpers.SignInWithAppleService
 import com.habitrpg.android.habitica.models.auth.UserAuthResponse
+import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.willowtreeapps.signinwithapplebutton.SignInWithAppleConfiguration
@@ -51,6 +52,8 @@ import javax.inject.Inject
 class AuthenticationViewModel() {
     @Inject
     internal lateinit var apiClient: ApiClient
+    @Inject
+    internal lateinit var userRepository: UserRepository
     @Inject
     internal lateinit var sharedPrefs: SharedPreferences
     @Inject
@@ -168,10 +171,11 @@ class AuthenticationViewModel() {
     fun handleGoogleLoginResult(
         activity: Activity,
         recoverFromPlayServicesErrorResult: ActivityResultLauncher<Intent>?,
-    onSuccess: (UserAuthResponse) -> Unit
+    onSuccess: (User, Boolean) -> Unit
     ) {
         val scopesString = Scopes.PROFILE + " " + Scopes.EMAIL
         val scopes = "oauth2:$scopesString"
+        var newUser = false
         compositeSubscription.add(
             Flowable.defer {
                 try {
@@ -187,9 +191,14 @@ class AuthenticationViewModel() {
             }
                 .subscribeOn(Schedulers.io())
                 .flatMap { token -> apiClient.connectSocial("google", googleEmail ?: "", token) }
+                .doOnNext {
+                    newUser = it.newUser
+                    handleAuthResponse(it)
+                }
+                .flatMap { userRepository.retrieveUser(true, true) }
                 .subscribe(
                     {
-                    onSuccess(it)
+                    onSuccess(it, newUser)
                     },
                     { throwable ->
                         if (recoverFromPlayServicesErrorResult == null) return@subscribe
@@ -211,26 +220,24 @@ class AuthenticationViewModel() {
         recoverFromPlayServicesErrorResult: ActivityResultLauncher<Intent>
     ) {
         if (e is GooglePlayServicesAvailabilityException) {
-            // The Google Play services APK is old, disabled, or not present.
-            // Show a dialog created by Google Play services that allows
-            // the user to update the APK
-            val statusCode = e
-                .connectionStatusCode
             GoogleApiAvailability.getInstance()
-            @Suppress("DEPRECATION")
             GooglePlayServicesUtil.showErrorDialogFragment(
-                statusCode,
+                e.connectionStatusCode,
                 activity,
+                null,
                 AuthenticationViewModel.REQUEST_CODE_RECOVER_FROM_PLAY_SERVICES_ERROR
             ) {
             }
+            return
         } else if (e is UserRecoverableAuthException) {
             // Unable to authenticate, such as when the user has not yet granted
             // the app access to the account, but the user can fix this.
             // Forward the user to an activity in Google Play services.
             val intent = e.intent
             recoverFromPlayServicesErrorResult.launch(intent)
+            return
         }
+
     }
 
 
@@ -257,7 +264,6 @@ class AuthenticationViewModel() {
         }
 
         HabiticaBaseApplication.reloadUserComponent()
-
     }
 
     @Throws(Exception::class)
@@ -276,7 +282,7 @@ class AuthenticationViewModel() {
                 putString(user, encryptedKey)
             } else {
                 // Something might have gone wrong with encryption, so fall back to this.
-                putString("ApiToken", api)
+                putString("APIToken", api)
             }
         }
     }

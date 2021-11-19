@@ -4,6 +4,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.extensions.withImmutableFlag
 import com.habitrpg.android.habitica.receivers.LocalNotificationActionReceiver
 
 /**
@@ -24,7 +25,7 @@ class PartyInviteLocalNotification(context: Context, identifier: String?) : Habi
             context,
             groupID.hashCode(),
             acceptInviteIntent,
-            PendingIntent.FLAG_UPDATE_CURRENT
+            withImmutableFlag(PendingIntent.FLAG_UPDATE_CURRENT)
         )
         notificationBuilder.addAction(0, context.getString(R.string.accept), pendingIntentAccept)
 
@@ -36,7 +37,7 @@ class PartyInviteLocalNotification(context: Context, identifier: String?) : Habi
             context,
             groupID.hashCode() + 1,
             rejectInviteIntent,
-            PendingIntent.FLAG_UPDATE_CURRENT
+            withImmutableFlag(PendingIntent.FLAG_UPDATE_CURRENT)
         )
         notificationBuilder.addAction(0, context.getString(R.string.reject), pendingIntentReject)
     }

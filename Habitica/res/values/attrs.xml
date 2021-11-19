@@ -147,4 +147,8 @@
         <attr name="dayTextColor" format="color" />
         <attr name="nightTextColor" format="color" />
     </declare-styleable>
+    <declare-styleable name="ValidatingEditText">
+        <attr name="hint" format="string" />
+        <attr name="android:inputType" />
+    </declare-styleable>
 </resources>

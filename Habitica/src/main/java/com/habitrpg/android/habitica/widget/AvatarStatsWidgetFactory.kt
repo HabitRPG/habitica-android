@@ -169,7 +169,6 @@ class AvatarStatsWidgetFactory(
         }
     }
 
-
     override fun getLoadingView() = RemoteViews(context.packageName, R.layout.widget_avatar_stats)
 
     override fun getViewTypeCount(): Int {

@@ -8,6 +8,7 @@ import androidx.annotation.CallSuper
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.extensions.withImmutableFlag
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import java.util.*
 
@@ -63,7 +64,7 @@ abstract class HabiticaLocalNotification(protected var context: Context, protect
             context,
             3000,
             intent,
-            PendingIntent.FLAG_UPDATE_CURRENT
+            withImmutableFlag(PendingIntent.FLAG_UPDATE_CURRENT)
         )
         notificationBuilder.setContentIntent(pendingIntent)
     }

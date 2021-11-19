@@ -30,11 +30,11 @@ open class Authentication : RealmObject(), BaseObject {
     var facebookAuthentication: SocialAuthentication? = null
 
     val hasGoogleAuth: Boolean
-        get() = googleAuthentication?.emails?.isEmpty() == false
+        get() = googleAuthentication?.emails?.isEmpty() != true
     val hasAppleAuth: Boolean
-        get() = appleAuthentication?.emails?.isEmpty() == false
+        get() = appleAuthentication?.emails?.isEmpty() != true
     val hasFacebookAuth: Boolean
-        get() = facebookAuthentication?.emails?.isEmpty() == false
+        get() = facebookAuthentication?.emails?.isEmpty() != true
 
     var timestamps: AuthenticationTimestamps? = null
 }

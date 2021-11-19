@@ -28,6 +28,7 @@ import com.habitrpg.android.habitica.models.user.OwnedMount;
 import com.habitrpg.android.habitica.models.user.OwnedPet;
 import com.habitrpg.android.habitica.models.user.Purchases;
 import com.habitrpg.android.habitica.models.user.User;
+import com.habitrpg.android.habitica.models.user.auth.SocialAuthentication;
 import com.habitrpg.android.habitica.utils.AchievementListDeserializer;
 import com.habitrpg.android.habitica.utils.BooleanAsIntAdapter;
 import com.habitrpg.android.habitica.utils.ChallengeDeserializer;
@@ -51,6 +52,7 @@ import com.habitrpg.android.habitica.utils.QuestCollectDeserializer;
 import com.habitrpg.android.habitica.utils.QuestDeserializer;
 import com.habitrpg.android.habitica.utils.QuestDropItemsListSerialization;
 import com.habitrpg.android.habitica.utils.SkillDeserializer;
+import com.habitrpg.android.habitica.utils.SocialAuthenticationDeserializer;
 import com.habitrpg.android.habitica.utils.TaskListDeserializer;
 import com.habitrpg.android.habitica.utils.TaskSerializer;
 import com.habitrpg.android.habitica.utils.TaskTagDeserializer;
@@ -84,7 +86,6 @@ public class GSonFactoryCreator {
         Type ownedMountListType = new TypeToken<RealmList<OwnedMount>>() {}.getType();
         Type achievementsListType = new TypeToken<List<Achievement>>() {}.getType();
 
-
         Gson gson = new GsonBuilder()
                 .registerTypeAdapter(taskTagClassListType, new TaskTagDeserializer())
                 .registerTypeAdapter(Boolean.class, new BooleanAsIntAdapter())
@@ -117,6 +118,7 @@ public class GSonFactoryCreator {
                 .registerTypeAdapter(WorldState.class, new WorldStateSerialization())
                 .registerTypeAdapter(FindUsernameResult.class, new FindUsernameResultDeserializer())
                 .registerTypeAdapter(Notification.class, new NotificationDeserializer())
+                .registerTypeAdapter(SocialAuthentication.class, new SocialAuthenticationDeserializer())
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
                 .create();
         return GsonConverterFactory.create(gson);

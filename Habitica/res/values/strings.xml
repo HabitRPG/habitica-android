@@ -1196,4 +1196,12 @@
     <string name="connect">Connect</string>
     <string name="disconnect">Disconnect</string>
     <string name="add">Add</string>
+    <string name="apitoken_summary">Copy Token. Be careful, this is a password!</string>
+    <string name="added_social_auth">Added %s authentication</string>
+    <string name="copied_to_clipboard">Copied %s to clipboard</string>
+    <string name="removed_social_auth">Disconnected %s</string>
+    <string name="password_added">Password saved</string>
+    <string name="add_email_and_password">Add Email and Password</string>
+    <string name="password_not_matching">Password needs to be typed correctly twice</string>
+    <string name="email_invalid">Invalid Email address</string>
 </resources>

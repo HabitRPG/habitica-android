@@ -12,6 +12,7 @@ import androidx.core.app.NotificationManagerCompat
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.TaskRepository
+import com.habitrpg.android.habitica.extensions.withImmutableFlag
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager
 import com.habitrpg.android.habitica.models.tasks.Task
@@ -61,7 +62,7 @@ class TaskReceiver : BroadcastReceiver() {
         HLogger.log(LogLevel.INFO, this::javaClass.name, "Create Notification")
 
         intent.putExtra("notificationIdentifier", "task_reminder")
-        val pendingIntent = PendingIntent.getActivity(context, System.currentTimeMillis().toInt(), intent, 0)
+        val pendingIntent = PendingIntent.getActivity(context, System.currentTimeMillis().toInt(), intent, withImmutableFlag(0))
         val soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
 
         var notificationBuilder = NotificationCompat.Builder(context, "default")
@@ -88,7 +89,7 @@ class TaskReceiver : BroadcastReceiver() {
                 context,
                 task.id.hashCode(),
                 completeIntent,
-                PendingIntent.FLAG_UPDATE_CURRENT
+                withImmutableFlag(PendingIntent.FLAG_UPDATE_CURRENT)
             )
             notificationBuilder.addAction(0, context.getString(R.string.complete), pendingIntentComplete)
         }

@@ -15,6 +15,7 @@ import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.TaskRepository
+import com.habitrpg.android.habitica.extensions.withImmutableFlag
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.responses.TaskDirection
 import com.habitrpg.android.habitica.models.tasks.Task
@@ -107,7 +108,7 @@ class HabitButtonWidgetService : Service() {
         taskIntent.putExtra(HabitButtonWidgetProvider.TASK_DIRECTION, direction)
         return PendingIntent.getBroadcast(
             context, widgetId + direction.hashCode(), taskIntent,
-            PendingIntent.FLAG_UPDATE_CURRENT
+            withImmutableFlag(PendingIntent.FLAG_UPDATE_CURRENT)
         )
     }
 }

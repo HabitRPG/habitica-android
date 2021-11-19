@@ -39,8 +39,6 @@ abstract class BaseWidgetProvider : AppWidgetProvider() {
 
     protected var context: Context? = null
 
-
-
     override fun onAppWidgetOptionsChanged(context: Context, appWidgetManager: AppWidgetManager, appWidgetId: Int, newOptions: Bundle) {
         this.context = context
         val options = appWidgetManager.getAppWidgetOptions(appWidgetId)
