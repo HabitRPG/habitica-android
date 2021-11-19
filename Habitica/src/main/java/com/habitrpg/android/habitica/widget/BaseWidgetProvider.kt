@@ -15,29 +15,27 @@ import javax.inject.Inject
 
 abstract class BaseWidgetProvider : AppWidgetProvider() {
 
-    companion object {
-        /**
-         * Returns number of cells needed for given size of the widget.<br></br>
-         * see http://stackoverflow.com/questions/14270138/dynamically-adjusting-widgets-content-and-layout-to-the-size-the-user-defined-t
-         *
-         * @param size Widget size in dp.
-         * @return Size in number of cells.
-         */
-        fun getCellsForSize(size: Int): Int {
-            var n = 2
-            while (70 * n - 30 < size) {
-                ++n
-            }
-            return n - 1
-        }
-    }
-
     @Inject
     lateinit var userRepository: UserRepository
 
     var hasInjected = false
 
     protected var context: Context? = null
+
+    /**
+     * Returns number of cells needed for given size of the widget.<br></br>
+     * see http://stackoverflow.com/questions/14270138/dynamically-adjusting-widgets-content-and-layout-to-the-size-the-user-defined-t
+     *
+     * @param size Widget size in dp.
+     * @return Size in number of cells.
+     */
+    private fun getCellsForSize(size: Int): Int {
+        var n = 2
+        while (70 * n - 30 < size) {
+            ++n
+        }
+        return n - 1
+    }
 
     override fun onAppWidgetOptionsChanged(context: Context, appWidgetManager: AppWidgetManager, appWidgetId: Int, newOptions: Bundle) {
         this.context = context
