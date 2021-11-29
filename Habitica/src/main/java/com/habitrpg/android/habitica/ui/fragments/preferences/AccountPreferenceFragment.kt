@@ -86,7 +86,7 @@ class AccountPreferenceFragment: BasePreferencesFragment(),
 
         val passwordPref = findPreference<ExtraLabelPreference>("password")
         if (user.authentication?.hasPassword == true) {
-            passwordPref?.summary = "✴✴✴✴✴✴✴✴✴✴✴"
+            passwordPref?.summary = "···········"
             passwordPref?.extraText = getString(R.string.change_password)
         } else {
             passwordPref?.summary = getString(R.string.not_set)
@@ -350,8 +350,8 @@ class AccountPreferenceFragment: BasePreferencesFragment(),
             dialog.setTitle(R.string.change_email)
             dialog.addButton(R.string.change, true, false, false) { dialog, _ ->
                 KeyboardUtil.dismissKeyboard(activity)
-                if (passwordEditText?.isValid != true || emailEditText?.isValid != true) return@addButton
-                userRepository.updateEmail(emailEditText.text.toString(), passwordEditText.text.toString())
+                if (emailEditText?.isValid != true) return@addButton
+                userRepository.updateEmail(emailEditText.text.toString(), passwordEditText?.text.toString())
                     .flatMap { userRepository.retrieveUser(true, true) }
                     .subscribe(
                         {

@@ -11,6 +11,7 @@ import android.widget.RemoteViews
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.dpToPx
+import com.habitrpg.android.habitica.extensions.withImmutableFlag
 import com.habitrpg.android.habitica.helpers.HealthFormatter
 import com.habitrpg.android.habitica.helpers.NumberAbbreviator
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
@@ -21,6 +22,7 @@ import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 
 class AvatarStatsWidgetProvider : BaseWidgetProvider() {
 
+    private var user: User? = null
     private var appWidgetManager: AppWidgetManager? = null
 
     private var showManaBar: Boolean = true
@@ -37,13 +39,28 @@ class AvatarStatsWidgetProvider : BaseWidgetProvider() {
         }
     }
 
+    override fun onEnabled(context: Context) {
+        super.onEnabled(context)
+        userRepository.getUser().subscribe({
+            user = it
+            updateData()
+        }, RxErrorHandler.handleEmptyError())
+    }
+
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
         super.onUpdate(context, appWidgetManager, appWidgetIds)
         this.setUp()
         this.appWidgetManager = appWidgetManager
         this.context = context
 
-        userRepository.getUser().firstElement()?.subscribe({ this.updateData(it) }, RxErrorHandler.handleEmptyError())
+        if (user == null) {
+            userRepository.getUser().firstElement()?.subscribe({
+                user = it
+                updateData(appWidgetIds)
+            }, RxErrorHandler.handleEmptyError())
+        } else {
+            updateData()
+        }
     }
 
     override fun configureRemoteViews(remoteViews: RemoteViews, widgetId: Int, columns: Int, rows: Int): RemoteViews {
@@ -64,15 +81,16 @@ class AvatarStatsWidgetProvider : BaseWidgetProvider() {
         return remoteViews
     }
 
-    private fun updateData(user: User?) {
+    private fun updateData(widgetIds: IntArray? = null) {
         val context = context
         val appWidgetManager = appWidgetManager
+        val user = user
         val stats = user?.stats
         if (user == null || stats == null || context == null || appWidgetManager == null) {
             return
         }
         val thisWidget = ComponentName(context, AvatarStatsWidgetProvider::class.java)
-        val allWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget)
+        val allWidgetIds = widgetIds ?: appWidgetManager.getAppWidgetIds(thisWidget)
         val currentHealth = HealthFormatter.format(stats.hp ?: 0.0)
         val currentHealthString = HealthFormatter.formatToString(stats.hp ?: 0.0)
         val healthValueString = currentHealthString + "/" + stats.maxHealth
@@ -125,8 +143,8 @@ class AvatarStatsWidgetProvider : BaseWidgetProvider() {
             }
 
             val openAppIntent = Intent(context.applicationContext, MainActivity::class.java)
-            val openApp = PendingIntent.getActivity(context, 0, openAppIntent, PendingIntent.FLAG_UPDATE_CURRENT)
-            remoteViews.setOnClickPendingIntent(R.id.widget_main_view, openApp)
+            val openApp = PendingIntent.getActivity(context, 0, openAppIntent, withImmutableFlag(PendingIntent.FLAG_UPDATE_CURRENT))
+            remoteViews.setOnClickPendingIntent(android.R.id.background, openApp)
 
             val options = appWidgetManager.getAppWidgetOptions(widgetId)
             remoteViews = sizeRemoteViews(context, options, widgetId)

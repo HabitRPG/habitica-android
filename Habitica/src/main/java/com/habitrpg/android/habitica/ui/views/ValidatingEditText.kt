@@ -28,7 +28,7 @@ class ValidatingEditText @JvmOverloads constructor(
     var validator: ((String?) -> Boolean)? = null
 
     val isValid: Boolean
-    get() = validator?.invoke(text) == true
+    get() = validator?.invoke(text) != false
 
     init {
         orientation = VERTICAL

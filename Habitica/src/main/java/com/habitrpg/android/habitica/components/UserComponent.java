@@ -108,7 +108,6 @@ import com.habitrpg.android.habitica.ui.views.shops.PurchaseDialog;
 import com.habitrpg.android.habitica.ui.views.social.ChatBarView;
 import com.habitrpg.android.habitica.ui.views.stats.BulkAllocateStatsDialog;
 import com.habitrpg.android.habitica.ui.views.tasks.TaskFilterDialog;
-import com.habitrpg.android.habitica.widget.AvatarStatsWidgetFactory;
 import com.habitrpg.android.habitica.widget.AvatarStatsWidgetProvider;
 import com.habitrpg.android.habitica.widget.BaseWidgetProvider;
 import com.habitrpg.android.habitica.widget.DailiesWidgetProvider;
@@ -344,7 +343,6 @@ public interface UserComponent {
 
     void inject(@NotNull EquipmentOverviewViewModel equipmentOverviewViewModel);
 
-    void inject(@NotNull AvatarStatsWidgetFactory avatarStatsWidgetFactory);
     void inject(@NotNull AccountPreferenceFragment accountPreferenceFragment);
 
     void inject(@NotNull AuthenticationViewModel authenticationViewModel);

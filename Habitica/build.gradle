@@ -50,6 +50,7 @@ dependencies {
     implementation 'com.google.dagger:dagger:2.39.1'
     kapt 'com.google.dagger:dagger-compiler:2.39.1'
     compileOnly 'javax.annotation:javax.annotation-api:1.3.2'
+    compileOnly 'com.github.pengrad:jdk9-deps:1.0'
     //App Compatibility and Material Design
     implementation 'androidx.appcompat:appcompat:1.4.0'
     implementation 'com.google.android.material:material:1.4.0'
@@ -151,7 +152,7 @@ android {
         buildConfigField "String", "TESTING_LEVEL", "\"production\""
         resConfigs "en", "bg", "de", "en-rGB", "es", "fr", "hr-rHR", "in", "it", "iw", "ja", "ko", "lt", "nl", "pl", "pt-rBR", "pt-rPT", "ru", "tr", "zh", "zh-rTW"
 
-        versionCode 3102
+        versionCode 3109
         versionName "3.4.2"
 
         targetSdkVersion 31

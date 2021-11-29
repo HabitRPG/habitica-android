@@ -26,6 +26,7 @@
     <attr name="headerBackgroundColor" format="color" />
     <attr name="headerOffsetColor" format="color" />
     <attr name="headerTextColor" format="color" />
+    <attr name="widgetBackgroundRadius" format="dimension" />
     <declare-styleable name="AvatarView">
         <attr name="showBackground" format="boolean" />
         <attr name="showMount" format="boolean" />

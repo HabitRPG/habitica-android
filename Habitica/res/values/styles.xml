@@ -253,6 +253,13 @@
         <item name="toolbarContentColor">@color/blue_100</item>
     </style>
 
+    <style name="MyWidgetTheme">
+        <item name="widgetBackgroundRadius">@dimen/my_background_radius_dimen</item>
+        <item name="android:textColorPrimary">@color/text_primary</item>
+        <item name="android:textColorSecondary">@color/text_secondary</item>
+        <item name="android:colorBackground">@color/widget_background</item>
+    </style>
+
     <style name="BottomSheetTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowIsTranslucent">false</item>
         <item name="android:windowBackground">@android:color/transparent</item>
@@ -832,4 +839,6 @@
         <item name="android:textSize">12sp</item>
         <item name="android:textStyle">bold</item>
     </style>
+
+    <dimen name="my_background_radius_dimen">12dp</dimen>
 </resources>

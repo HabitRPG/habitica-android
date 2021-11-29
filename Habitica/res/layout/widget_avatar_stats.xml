@@ -2,15 +2,17 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/widget_main_view"
+    android:id="@android:id/background"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:focusable="true"
     android:focusableInTouchMode="true"
     android:background="@drawable/widget_background"
-    android:padding="8dp"
+    android:paddingVertical="8dp"
+    android:paddingHorizontal="?widgetBackgroundRadius"
     android:elevation="2dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:theme="@style/MyWidgetTheme">
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -64,7 +66,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:textColor="@color/text_primary"
+                        android:textColor="?android:attr/textColorPrimary"
                         android:textSize="11sp"/>
                     <TextView
                         android:layout_width="0dp"
@@ -72,7 +74,7 @@
                         android:gravity="center|end"
                         android:layout_weight="1"
                         android:text="@string/HP_default"
-                        android:textColor="@color/text_primary"
+                        android:textColor="?android:attr/textColorPrimary"
                         android:textSize="11sp"/>
                 </LinearLayout></LinearLayout>
             </LinearLayout>
@@ -109,7 +111,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:textColor="@color/text_primary"
+                        android:textColor="?android:attr/textColorPrimary"
                         android:textSize="11sp"/>
                     <TextView
                         android:layout_width="0dp"
@@ -117,7 +119,7 @@
                         android:gravity="center|end"
                         android:layout_weight="1"
                         android:text="@string/XP_default"
-                        android:textColor="@color/text_primary"
+                        android:textColor="?android:attr/textColorPrimary"
                         android:textSize="11sp"/>
                 </LinearLayout>
                 </LinearLayout>
@@ -158,7 +160,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:textColor="@color/text_primary"
+                        android:textColor="?android:attr/textColorPrimary"
                         android:textSize="11sp"/>
                     <TextView
                         android:layout_width="0dp"
@@ -166,7 +168,7 @@
                         android:gravity="center|end"
                         android:layout_weight="1"
                         android:text="@string/MP_default"
-                        android:textColor="@color/text_primary"
+                        android:textColor="?android:attr/textColorPrimary"
                         android:textSize="11sp"/>
                 </LinearLayout>
             </LinearLayout></LinearLayout>
@@ -184,7 +186,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textSize="14sp"
-            android:textColor="@color/text_secondary" />
+            android:textColor="?android:attr/textColorSecondary" />
         <TextView
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -202,7 +204,7 @@
                 android:id="@+id/hourglasses_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/text_secondary"
+                android:textColor="?android:attr/textColorSecondary"
                 style="@style/CurrencyTextView"
                 />
 
@@ -216,7 +218,7 @@
                 android:id="@+id/gems_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/text_secondary"
+                android:textColor="?android:attr/textColorSecondary"
                 style="@style/CurrencyTextView"
                 />
 
@@ -230,7 +232,7 @@
                 android:id="@+id/gold_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/text_secondary"
+                android:textColor="?android:attr/textColorSecondary"
                 style="@style/CurrencyTextView"
                 />
         </LinearLayout>
