@@ -11,3 +11,11 @@ fun withImmutableFlag(flags: Int): Int {
         flags
     }
 }
+
+fun withMutableFlag(flags: Int): Int {
+    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+        flags + PendingIntent.FLAG_MUTABLE
+    } else {
+        flags
+    }
+}

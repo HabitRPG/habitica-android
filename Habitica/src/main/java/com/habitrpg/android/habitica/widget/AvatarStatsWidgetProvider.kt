@@ -78,6 +78,8 @@ class AvatarStatsWidgetProvider : BaseWidgetProvider() {
             remoteViews.setViewVisibility(R.id.detail_info_view, View.GONE)
         }
 
+
+
         return remoteViews
     }
 
@@ -98,7 +100,8 @@ class AvatarStatsWidgetProvider : BaseWidgetProvider() {
         val mpValueString = "" + stats.mp?.toInt() + "/" + stats.maxMP
 
         for (widgetId in allWidgetIds) {
-            var remoteViews = RemoteViews(context.packageName, R.layout.widget_avatar_stats)
+            val options = appWidgetManager.getAppWidgetOptions(widgetId)
+            val remoteViews = sizeRemoteViews(context, options, widgetId)
 
             remoteViews.setTextViewText(R.id.TV_hp_value, healthValueString)
             remoteViews.setTextViewText(R.id.exp_TV_value, expValueString)
@@ -146,10 +149,7 @@ class AvatarStatsWidgetProvider : BaseWidgetProvider() {
             val openApp = PendingIntent.getActivity(context, 0, openAppIntent, withImmutableFlag(PendingIntent.FLAG_UPDATE_CURRENT))
             remoteViews.setOnClickPendingIntent(android.R.id.background, openApp)
 
-            val options = appWidgetManager.getAppWidgetOptions(widgetId)
-            remoteViews = sizeRemoteViews(context, options, widgetId)
-
-            appWidgetManager.updateAppWidget(widgetId, remoteViews)
+            appWidgetManager.updateAppWidget(allWidgetIds, remoteViews)
         }
     }
 }

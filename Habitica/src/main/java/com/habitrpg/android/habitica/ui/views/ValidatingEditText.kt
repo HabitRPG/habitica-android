@@ -6,6 +6,7 @@ import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import androidx.core.widget.doOnTextChanged
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ValidatingEditTextBinding
 import com.habitrpg.android.habitica.extensions.layoutInflater
@@ -50,6 +51,14 @@ class ValidatingEditText @JvmOverloads constructor(
                 binding.errorText.visibility = View.VISIBLE
             }
             (this.parent as? ViewGroup)?.forceLayout()
+        }
+        binding.editText.doOnTextChanged { text, start, before, count ->
+            if (binding.errorText.visibility == View.VISIBLE) {
+                if (validator?.invoke(text.toString()) == true) {
+                    binding.errorText.visibility = View.GONE
+                    (this.parent as? ViewGroup)?.forceLayout()
+                }
+            }
         }
     }
 }

@@ -678,6 +678,7 @@ class NavigationDrawerFragment : DialogFragment() {
                     updateItem(promotedItem)
                 } else {
                     promotedItem.subtitle = null
+                    promotedItem.pillText = null
                     updateItem(promotedItem)
                 }
             }
