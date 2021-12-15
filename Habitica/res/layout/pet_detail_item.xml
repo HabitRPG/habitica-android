@@ -13,8 +13,7 @@
         android:layout_width="76dp"
         android:background="@drawable/layout_rounded_bg_window"
         android:orientation="vertical"
-        android:layout_centerInParent="true"
-        android:padding="8dp">
+        android:layout_centerInParent="true">
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="68dp"
