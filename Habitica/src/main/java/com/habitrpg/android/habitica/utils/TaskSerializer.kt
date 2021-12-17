@@ -8,11 +8,14 @@ import com.google.gson.JsonObject
 import com.google.gson.JsonSerializationContext
 import com.google.gson.JsonSerializer
 import com.habitrpg.android.habitica.extensions.getAsString
+import com.habitrpg.android.habitica.models.tasks.Attribute
 import com.habitrpg.android.habitica.models.tasks.ChecklistItem
 import com.habitrpg.android.habitica.models.tasks.Days
+import com.habitrpg.android.habitica.models.tasks.Frequency
 import com.habitrpg.android.habitica.models.tasks.RemindersItem
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.tasks.TaskGroupPlan
+import com.habitrpg.android.habitica.models.tasks.TaskType
 import io.realm.RealmList
 import java.lang.reflect.Type
 import java.util.ArrayList
@@ -49,9 +52,9 @@ class TaskSerializer : JsonSerializer<Task>, JsonDeserializer<Task> {
         task.notes = obj.getAsString("notes")
         task.userId = obj.getAsString("userId")
         task.value = obj.get("value")?.asDouble ?: 0.0
-        task.type = obj.getAsString("type")
-        task.frequency = obj.getAsString("frequency")
-        task.attribute = obj.getAsString("attribute")
+        task.type = TaskType.from(obj.getAsString("type")) ?: TaskType.HABIT
+        task.frequency = Frequency.from(obj.getAsString("frequency"))
+        task.attribute = Attribute.from(obj.getAsString("attribute"))
         task.everyX = obj.get("everyX")?.asInt
         task.priority = obj.get("priority")?.asFloat ?: 1.0f
         task.completed = obj.get("completed")?.asBoolean ?: false
@@ -132,23 +135,23 @@ class TaskSerializer : JsonSerializer<Task>, JsonDeserializer<Task> {
         obj.addProperty("notes", task.notes)
         obj.addProperty("value", task.value)
         obj.addProperty("priority", task.priority)
-        obj.addProperty("attribute", task.attribute)
-        obj.addProperty("type", task.type)
+        obj.addProperty("attribute", task.attribute?.value)
+        obj.addProperty("type", task.type?.value)
         val tagsList = JsonArray()
         task.tags?.forEach { tag ->
             tagsList.add(tag.id)
         }
         obj.add("tags", tagsList)
         when (task.type) {
-            "habit" -> {
+            TaskType.HABIT -> {
                 obj.addProperty("up", task.up)
                 obj.addProperty("down", task.down)
-                obj.addProperty("frequency", task.frequency)
+                obj.addProperty("frequency", task.frequency?.value)
                 obj.addProperty("counterUp", task.counterUp)
                 obj.addProperty("counterDown", task.counterDown)
             }
-            "daily" -> {
-                obj.addProperty("frequency", task.frequency)
+            TaskType.DAILY -> {
+                obj.addProperty("frequency", task.frequency?.value)
                 obj.addProperty("everyX", task.everyX)
                 obj.add("repeat", context.serialize(task.repeat))
                 obj.add("startDate", context.serialize(task.startDate))
@@ -164,7 +167,7 @@ class TaskSerializer : JsonSerializer<Task>, JsonDeserializer<Task> {
                 obj.add("weeksOfMonth", context.serialize(task.getWeeksOfMonth()))
                 obj.addProperty("completed", task.completed)
             }
-            "todo" -> {
+            TaskType.TODO -> {
                 if (task.dueDate == null) {
                     obj.addProperty("date", "")
                 } else {

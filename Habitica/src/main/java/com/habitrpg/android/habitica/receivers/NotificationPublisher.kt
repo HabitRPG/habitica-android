@@ -18,6 +18,7 @@ import com.habitrpg.android.habitica.extensions.withImmutableFlag
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager
 import com.habitrpg.android.habitica.models.tasks.Task
+import com.habitrpg.android.habitica.models.tasks.TaskType
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import io.reactivex.rxjava3.functions.BiFunction
@@ -55,7 +56,7 @@ class NotificationPublisher : BroadcastReceiver() {
         }
         val checkDailies = intent.getBooleanExtra(CHECK_DAILIES, false)
         if (checkDailies) {
-            taskRepository.getTasks(Task.TYPE_DAILY).firstElement().zipWith(
+            taskRepository.getTasks(TaskType.DAILY).firstElement().zipWith(
                 userRepository.getUser().firstElement(),
                 BiFunction<List<Task>, User, Pair<List<Task>, User>> { tasks, user ->
                     return@BiFunction Pair(tasks, user)

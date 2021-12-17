@@ -78,7 +78,6 @@ class MountDetailRecyclerFragment :
             }
         }
         binding?.recyclerView?.layoutManager = layoutManager
-        binding?.recyclerView?.addItemDecoration(MarginDecoration(activity))
 
         adapter = binding?.recyclerView?.adapter as? MountDetailRecyclerAdapter
         if (adapter == null) {

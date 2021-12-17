@@ -275,6 +275,8 @@ class AccountPreferenceFragment: BasePreferencesFragment(),
             dialog.setTitle(R.string.change_password)
             dialog.addButton(R.string.change, true, false, false) { dialog, _ ->
                 KeyboardUtil.dismissKeyboard(activity)
+                passwordEditText?.showErrorIfNecessary()
+                passwordRepeatEditText?.showErrorIfNecessary()
                 if (passwordEditText?.isValid != true || passwordRepeatEditText?.isValid != true) return@addButton
                 userRepository.updatePassword(oldPasswordEditText?.text ?: "",
                     passwordEditText.text ?: "",
@@ -317,6 +319,9 @@ class AccountPreferenceFragment: BasePreferencesFragment(),
             }
             dialog.addButton(R.string.add, true, false, false) { dialog, _ ->
                 KeyboardUtil.dismissKeyboard(activity)
+                emailEditText?.showErrorIfNecessary()
+                passwordEditText?.showErrorIfNecessary()
+                passwordRepeatEditText?.showErrorIfNecessary()
                 if (emailEditText?.isValid != true || passwordEditText?.isValid != true || passwordRepeatEditText?.isValid != true) return@addButton
                 val email = if (showEmail) emailEditText.text else user?.authentication?.findFirstSocialEmail()
                 apiClient.registerUser(user?.username ?: "", email ?: "", passwordEditText.text ?: "", passwordRepeatEditText?.text ?: "")
@@ -350,6 +355,7 @@ class AccountPreferenceFragment: BasePreferencesFragment(),
             dialog.setTitle(R.string.change_email)
             dialog.addButton(R.string.change, true, false, false) { dialog, _ ->
                 KeyboardUtil.dismissKeyboard(activity)
+                emailEditText?.showErrorIfNecessary()
                 if (emailEditText?.isValid != true) return@addButton
                 userRepository.updateEmail(emailEditText.text.toString(), passwordEditText?.text.toString())
                     .flatMap { userRepository.retrieveUser(true, true) }
@@ -380,6 +386,7 @@ class AccountPreferenceFragment: BasePreferencesFragment(),
         val view = inflater?.inflate(R.layout.dialog_edittext, null)
         val editText = view?.findViewById<EditText>(R.id.editText)
         editText?.setText(value)
+        editText?.maxLines = 15
         view?.findViewById<TextInputLayout>(R.id.input_layout)?.hint = title
         context?.let { context ->
             val dialog = HabiticaAlertDialog(context)
@@ -390,6 +397,7 @@ class AccountPreferenceFragment: BasePreferencesFragment(),
             dialog.addCancelButton()
             dialog.setAdditionalContentView(view)
             dialog.setAdditionalContentSidePadding(12.dpToPx(context))
+            dialog.scrollView.isScrollable = false
             dialog.show()
         }
     }

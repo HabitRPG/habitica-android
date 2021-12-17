@@ -5,6 +5,7 @@ import com.habitrpg.android.habitica.models.responses.BulkTaskScoringData
 import com.habitrpg.android.habitica.models.responses.TaskScoringResult
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.tasks.TaskList
+import com.habitrpg.android.habitica.models.tasks.TaskType
 import com.habitrpg.android.habitica.models.tasks.TasksOrder
 import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.rxjava3.core.Flowable
@@ -13,7 +14,7 @@ import io.reactivex.rxjava3.core.Single
 import java.util.*
 
 interface TaskRepository : BaseRepository {
-    fun getTasks(taskType: String, userID: String? = null): Flowable<out List<Task>>
+    fun getTasks(taskType: TaskType, userID: String? = null): Flowable<out List<Task>>
     fun saveTasks(userId: String, order: TasksOrder, tasks: TaskList)
 
     fun retrieveTasks(userId: String, tasksOrder: TasksOrder): Flowable<TaskList>
@@ -38,7 +39,7 @@ interface TaskRepository : BaseRepository {
 
     fun swapTaskPosition(firstPosition: Int, secondPosition: Int)
 
-    fun updateTaskPosition(taskType: String, taskID: String, newPosition: Int): Maybe<List<String>>
+    fun updateTaskPosition(taskType: TaskType, taskID: String, newPosition: Int): Maybe<List<String>>
 
     fun getUnmanagedTask(taskid: String): Flowable<Task>
 

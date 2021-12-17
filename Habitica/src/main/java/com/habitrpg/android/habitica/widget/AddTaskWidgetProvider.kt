@@ -6,7 +6,7 @@ import android.content.Context
 import android.widget.RemoteViews
 import androidx.preference.PreferenceManager
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.models.tasks.Task
+import com.habitrpg.android.habitica.models.tasks.TaskType
 
 class AddTaskWidgetProvider : BaseWidgetProvider() {
 
@@ -38,19 +38,19 @@ class AddTaskWidgetProvider : BaseWidgetProvider() {
         var addText: String? = ""
         var backgroundResource = R.drawable.widget_add_habit_background
         when (selectedTaskType) {
-            Task.TYPE_HABIT -> {
+            TaskType.HABIT -> {
                 addText = context?.resources?.getString(R.string.add_habit)
                 backgroundResource = R.drawable.widget_add_habit_background
             }
-            Task.TYPE_DAILY -> {
+            TaskType.DAILY -> {
                 addText = context?.resources?.getString(R.string.add_daily)
                 backgroundResource = R.drawable.widget_add_daily_background
             }
-            Task.TYPE_TODO -> {
+            TaskType.TODO -> {
                 addText = context?.resources?.getString(R.string.add_todo)
                 backgroundResource = R.drawable.widget_add_todo_background
             }
-            Task.TYPE_REWARD -> {
+            TaskType.REWARD -> {
                 addText = context?.resources?.getString(R.string.add_reward)
                 backgroundResource = R.drawable.widget_add_reward_background
             }
@@ -60,8 +60,8 @@ class AddTaskWidgetProvider : BaseWidgetProvider() {
         return remoteViews
     }
 
-    private fun getSelectedTaskType(widgetId: Int): String {
+    private fun getSelectedTaskType(widgetId: Int): TaskType {
         val preferences = PreferenceManager.getDefaultSharedPreferences(this.context)
-        return preferences.getString("add_task_widget_$widgetId", Task.TYPE_HABIT) ?: ""
+        return TaskType.from(preferences.getString("add_task_widget_$widgetId", TaskType.HABIT.value)) ?: TaskType.HABIT
     }
 }

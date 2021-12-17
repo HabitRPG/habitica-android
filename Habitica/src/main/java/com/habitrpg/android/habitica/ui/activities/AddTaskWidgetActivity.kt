@@ -9,6 +9,7 @@ import androidx.core.content.edit
 import androidx.preference.PreferenceManager
 import com.habitrpg.android.habitica.databinding.WidgetConfigureAddTaskBinding
 import com.habitrpg.android.habitica.models.tasks.Task
+import com.habitrpg.android.habitica.models.tasks.TaskType
 import com.habitrpg.android.habitica.widget.AddTaskWidgetProvider
 
 class AddTaskWidgetActivity : AppCompatActivity() {
@@ -42,22 +43,22 @@ class AddTaskWidgetActivity : AppCompatActivity() {
     }
 
     private fun addHabitSelected() {
-        finishWithSelection(Task.TYPE_HABIT)
+        finishWithSelection(TaskType.HABIT)
     }
 
     private fun addDailySelected() {
-        finishWithSelection(Task.TYPE_DAILY)
+        finishWithSelection(TaskType.DAILY)
     }
 
     private fun addToDoSelected() {
-        finishWithSelection(Task.TYPE_TODO)
+        finishWithSelection(TaskType.TODO)
     }
 
     private fun addRewardSelected() {
-        finishWithSelection(Task.TYPE_REWARD)
+        finishWithSelection(TaskType.REWARD)
     }
 
-    private fun finishWithSelection(selectedTaskType: String) {
+    private fun finishWithSelection(selectedTaskType: TaskType) {
         storeSelectedTaskType(selectedTaskType)
 
         val resultValue = Intent()
@@ -70,9 +71,9 @@ class AddTaskWidgetActivity : AppCompatActivity() {
         sendBroadcast(intent)
     }
 
-    private fun storeSelectedTaskType(selectedTaskType: String) {
+    private fun storeSelectedTaskType(selectedTaskType: TaskType) {
         PreferenceManager.getDefaultSharedPreferences(this).edit {
-            putString("add_task_widget_$widgetId", selectedTaskType)
+            putString("add_task_widget_$widgetId", selectedTaskType.value)
         }
     }
 }

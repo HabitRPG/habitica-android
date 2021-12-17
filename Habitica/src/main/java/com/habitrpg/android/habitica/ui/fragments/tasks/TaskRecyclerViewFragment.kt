@@ -27,6 +27,7 @@ import com.habitrpg.android.habitica.helpers.*
 import com.habitrpg.android.habitica.models.responses.TaskDirection
 import com.habitrpg.android.habitica.models.responses.TaskScoringResult
 import com.habitrpg.android.habitica.models.tasks.Task
+import com.habitrpg.android.habitica.models.tasks.TaskType
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.activities.TaskFormActivity
 import com.habitrpg.android.habitica.ui.adapter.BaseRecyclerViewAdapter
@@ -75,12 +76,12 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
 
     internal var layoutManager: RecyclerView.LayoutManager? = null
 
-    internal var taskType: String = Task.TYPE_HABIT
+    internal var taskType: TaskType = TaskType.HABIT
     private var itemTouchCallback: ItemTouchHelper.Callback? = null
 
     var refreshAction: ((() -> Unit) -> Unit)? = null
 
-    internal val className: String
+    internal val className: TaskType
         get() = this.taskType
 
     private fun setInnerAdapter() {
@@ -92,10 +93,10 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
         }
         recyclerSubscription = CompositeDisposable()
         val adapter: BaseRecyclerViewAdapter<*, *>? = when (this.taskType) {
-            Task.TYPE_HABIT -> HabitsRecyclerViewAdapter(R.layout.habit_item_card, taskFilterHelper)
-            Task.TYPE_DAILY -> DailiesRecyclerViewHolder(R.layout.daily_item_card, taskFilterHelper)
-            Task.TYPE_TODO -> TodosRecyclerViewAdapter(R.layout.todo_item_card, taskFilterHelper)
-            Task.TYPE_REWARD -> RewardsRecyclerViewAdapter(null, R.layout.reward_item_card)
+            TaskType.HABIT -> HabitsRecyclerViewAdapter(R.layout.habit_item_card, taskFilterHelper)
+            TaskType.DAILY -> DailiesRecyclerViewHolder(R.layout.daily_item_card, taskFilterHelper)
+            TaskType.TODO -> TodosRecyclerViewAdapter(R.layout.todo_item_card, taskFilterHelper)
+            TaskType.REWARD -> RewardsRecyclerViewAdapter(null, R.layout.reward_item_card)
             else -> null
         }
 
@@ -134,7 +135,7 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
     }
 
     private fun handleTaskResult(result: TaskScoringResult, value: Int) {
-        if (taskType == Task.TYPE_REWARD) {
+        if (taskType == TaskType.REWARD) {
             (activity as? MainActivity)?.let { activity ->
                 HabiticaSnackbar.showSnackbar(
                     activity.snackbarContainer, null, getString(R.string.notification_purchase_reward),
@@ -152,10 +153,10 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
     private fun playSound(direction: TaskDirection) {
         HapticFeedbackManager.tap(requireView())
         val soundName = when (taskType) {
-            Task.TYPE_HABIT -> if (direction == TaskDirection.UP) SoundManager.SoundPlusHabit else SoundManager.SoundMinusHabit
-            Task.TYPE_DAILY -> SoundManager.SoundDaily
-            Task.TYPE_TODO -> SoundManager.SoundTodo
-            Task.TYPE_REWARD -> SoundManager.SoundReward
+            TaskType.HABIT -> if (direction == TaskDirection.UP) SoundManager.SoundPlusHabit else SoundManager.SoundMinusHabit
+            TaskType.DAILY -> SoundManager.SoundDaily
+            TaskType.TODO -> SoundManager.SoundTodo
+            TaskType.REWARD -> SoundManager.SoundReward
             else -> null
         }
         soundName?.let { soundManager.loadAndPlayAudio(it) }
@@ -187,7 +188,7 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        savedInstanceState?.let { this.taskType = savedInstanceState.getString(CLASS_TYPE_KEY, "") }
+        savedInstanceState?.let { this.taskType = TaskType.from(savedInstanceState.getString(CLASS_TYPE_KEY, "")) ?: TaskType.HABIT }
 
         this.setInnerAdapter()
         recyclerAdapter?.filter()
@@ -326,28 +327,28 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
     private fun setEmptyLabels() {
         binding?.recyclerView?.emptyItem = if (taskFilterHelper.howMany(taskType) > 0) {
             when (this.taskType) {
-                Task.TYPE_HABIT -> {
+                TaskType.HABIT -> {
                     EmptyItem(
                         getString(R.string.empty_title_habits_filtered),
                         getString(R.string.empty_description_habits_filtered),
                         R.drawable.icon_habits
                     )
                 }
-                Task.TYPE_DAILY -> {
+                TaskType.DAILY -> {
                     EmptyItem(
                         getString(R.string.empty_title_dailies_filtered),
                         getString(R.string.empty_description_dailies_filtered),
                         R.drawable.icon_dailies
                     )
                 }
-                Task.TYPE_TODO -> {
+                TaskType.TODO -> {
                     EmptyItem(
                         getString(R.string.empty_title_todos_filtered),
                         getString(R.string.empty_description_todos_filtered),
                         R.drawable.icon_todos
                     )
                 }
-                Task.TYPE_REWARD -> {
+                TaskType.REWARD -> {
                     EmptyItem(
                         getString(R.string.empty_title_rewards_filtered),
                         null,
@@ -358,28 +359,28 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
             }
         } else {
             when (this.taskType) {
-                Task.TYPE_HABIT -> {
+                TaskType.HABIT -> {
                     EmptyItem(
                         getString(R.string.empty_title_habits),
                         getString(R.string.empty_description_habits),
                         R.drawable.icon_habits
                     )
                 }
-                Task.TYPE_DAILY -> {
+                TaskType.DAILY -> {
                     EmptyItem(
                         getString(R.string.empty_title_dailies),
                         getString(R.string.empty_description_dailies),
                         R.drawable.icon_dailies
                     )
                 }
-                Task.TYPE_TODO -> {
+                TaskType.TODO -> {
                     EmptyItem(
                         getString(R.string.empty_title_todos),
                         getString(R.string.empty_description_todos),
                         R.drawable.icon_todos
                     )
                 }
-                Task.TYPE_REWARD -> {
+                TaskType.REWARD -> {
                     EmptyItem(
                         getString(R.string.empty_title_rewards),
                         null,
@@ -411,11 +412,11 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putString(CLASS_TYPE_KEY, this.taskType)
+        outState.putString(CLASS_TYPE_KEY, this.taskType.value)
     }
 
     override val displayedClassName: String?
-        get() = this.taskType + super.displayedClassName
+        get() = this.taskType.value + super.displayedClassName
 
     override fun onRefresh() {
         binding?.refreshLayout?.isRefreshing = true
@@ -428,11 +429,11 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
         super.onStart()
         if (taskFilterHelper.getActiveFilter(taskType) == null) {
             when (taskType) {
-                Task.TYPE_TODO -> taskFilterHelper.setActiveFilter(Task.TYPE_TODO, Task.FILTER_ACTIVE)
-                Task.TYPE_DAILY -> {
+                TaskType.TODO -> taskFilterHelper.setActiveFilter(TaskType.TODO, Task.FILTER_ACTIVE)
+                TaskType.DAILY -> {
                     val user = (activity as? MainActivity)?.user
                     if (user?.isValid == true && user.preferences?.dailyDueDefaultView == true) {
-                        taskFilterHelper.setActiveFilter(Task.TYPE_DAILY, Task.FILTER_ACTIVE)
+                        taskFilterHelper.setActiveFilter(TaskType.DAILY, Task.FILTER_ACTIVE)
                     }
                 }
             }
@@ -463,7 +464,7 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
         }
 
         val bundle = Bundle()
-        bundle.putString(TaskFormActivity.TASK_TYPE_KEY, task.type)
+        bundle.putString(TaskFormActivity.TASK_TYPE_KEY, task.type?.value)
         bundle.putString(TaskFormActivity.TASK_ID_KEY, task.id)
         bundle.putDouble(TaskFormActivity.TASK_VALUE_KEY, task.value)
 
@@ -478,21 +479,21 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
     companion object {
         private const val CLASS_TYPE_KEY = "CLASS_TYPE_KEY"
 
-        fun newInstance(context: Context?, classType: String): TaskRecyclerViewFragment {
+        fun newInstance(context: Context?, classType: TaskType): TaskRecyclerViewFragment {
             val fragment = TaskRecyclerViewFragment()
             fragment.taskType = classType
             var tutorialTexts: List<String>? = null
             if (context != null) {
                 when (fragment.taskType) {
-                    Task.TYPE_HABIT -> {
+                    TaskType.HABIT -> {
                         fragment.tutorialStepIdentifier = "habits"
                         tutorialTexts = listOf(context.getString(R.string.tutorial_overview), context.getString(R.string.tutorial_habits_1), context.getString(R.string.tutorial_habits_2), context.getString(R.string.tutorial_habits_3), context.getString(R.string.tutorial_habits_4))
                     }
-                    Task.FREQUENCY_DAILY -> {
+                    TaskType.DAILY -> {
                         fragment.tutorialStepIdentifier = "dailies"
                         tutorialTexts = listOf(context.getString(R.string.tutorial_dailies_1), context.getString(R.string.tutorial_dailies_2))
                     }
-                    Task.TYPE_TODO -> {
+                    TaskType.TODO -> {
                         fragment.tutorialStepIdentifier = "todos"
                         tutorialTexts = listOf(context.getString(R.string.tutorial_todos_1), context.getString(R.string.tutorial_todos_2))
                     }

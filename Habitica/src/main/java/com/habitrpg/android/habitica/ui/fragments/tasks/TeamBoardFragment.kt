@@ -29,6 +29,7 @@ import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.TaskFilterHelper
 import com.habitrpg.android.habitica.models.tasks.Task
+import com.habitrpg.android.habitica.models.tasks.TaskType
 import com.habitrpg.android.habitica.ui.activities.TaskFormActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.views.navigation.HabiticaBottomNavigationViewListener
@@ -109,11 +110,11 @@ class TeamBoardFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchVi
     override fun onResume() {
         super.onResume()
         bottomNavigation?.activeTaskType = when (binding?.viewPager?.currentItem) {
-            0 -> Task.TYPE_HABIT
-            1 -> Task.TYPE_DAILY
-            2 -> Task.TYPE_TODO
-            3 -> Task.TYPE_REWARD
-            else -> Task.TYPE_HABIT
+            0 -> TaskType.HABIT
+            1 -> TaskType.DAILY
+            2 -> TaskType.TODO
+            3 -> TaskType.REWARD
+            else -> TaskType.HABIT
         }
         bottomNavigation?.listener = this
         bottomNavigation?.canAddTasks = false
@@ -235,10 +236,10 @@ class TeamBoardFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchVi
 
             override fun createFragment(position: Int): androidx.fragment.app.Fragment {
                 val fragment: TaskRecyclerViewFragment = when (position) {
-                    0 -> TaskRecyclerViewFragment.newInstance(context, Task.TYPE_HABIT)
-                    1 -> TaskRecyclerViewFragment.newInstance(context, Task.TYPE_DAILY)
-                    3 -> RewardsRecyclerviewFragment.newInstance(context, Task.TYPE_REWARD, false)
-                    else -> TaskRecyclerViewFragment.newInstance(context, Task.TYPE_TODO)
+                    0 -> TaskRecyclerViewFragment.newInstance(context, TaskType.HABIT)
+                    1 -> TaskRecyclerViewFragment.newInstance(context, TaskType.DAILY)
+                    3 -> RewardsRecyclerviewFragment.newInstance(context, TaskType.REWARD, false)
+                    else -> TaskRecyclerViewFragment.newInstance(context, TaskType.TODO)
                 }
                 fragment.canEditTasks = false
                 fragment.canScoreTaks = false
@@ -299,27 +300,27 @@ class TeamBoardFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchVi
         compositeSubscription.add(
             tutorialRepository.getTutorialSteps(listOf("habits", "dailies", "todos", "rewards")).subscribe(
                 { tutorialSteps ->
-                    val activeTutorialFragments = ArrayList<String>()
+                    val activeTutorialFragments = ArrayList<TaskType>()
                     for (step in tutorialSteps) {
                         var id = -1
                         val taskType = when (step.identifier) {
                             "habits" -> {
                                 id = R.id.habits_tab
-                                Task.TYPE_HABIT
+                                TaskType.HABIT
                             }
                             "dailies" -> {
                                 id = R.id.dailies_tab
-                                Task.TYPE_DAILY
+                                TaskType.DAILY
                             }
                             "todos" -> {
                                 id = R.id.todos_tab
-                                Task.TYPE_TODO
+                                TaskType.TODO
                             }
                             "rewards" -> {
                                 id = R.id.rewards_tab
-                                Task.TYPE_REWARD
+                                TaskType.REWARD
                             }
-                            else -> ""
+                            else -> TaskType.HABIT
                         }
                         val tab = bottomNavigation?.tabWithId(id)
                         if (step.shouldDisplay()) {
@@ -345,7 +346,7 @@ class TeamBoardFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchVi
     }
     // endregion
 
-    private fun openNewTaskActivity(type: String) {
+    private fun openNewTaskActivity(type: TaskType) {
         if (Date().time - (lastTaskFormOpen?.time ?: 0) < 2000) {
             return
         }
@@ -353,16 +354,16 @@ class TeamBoardFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchVi
         val additionalData = HashMap<String, Any>()
         additionalData["created task type"] = type
         additionalData["viewed task type"] = when (binding?.viewPager?.currentItem) {
-            0 -> Task.TYPE_HABIT
-            1 -> Task.TYPE_DAILY
-            2 -> Task.TYPE_TODO
-            3 -> Task.TYPE_REWARD
+            0 -> TaskType.HABIT
+            1 -> TaskType.DAILY
+            2 -> TaskType.TODO
+            3 -> TaskType.REWARD
             else -> ""
         }
         AmplitudeManager.sendEvent("open create task form", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT, additionalData)
 
         val bundle = Bundle()
-        bundle.putString(TaskFormActivity.TASK_TYPE_KEY, type)
+        bundle.putString(TaskFormActivity.TASK_TYPE_KEY, type.value)
         bundle.putStringArrayList(TaskFormActivity.SELECTED_TAGS_KEY, ArrayList(taskFilterHelper.tags))
 
         val intent = Intent(activity, TaskFormActivity::class.java)
@@ -382,8 +383,9 @@ class TeamBoardFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchVi
 
     private fun onTaskCreatedResult(resultCode: Int, data: Intent?) {
         if (resultCode == Activity.RESULT_OK) {
-            val taskType = data?.getStringExtra(TaskFormActivity.TASK_TYPE_KEY)
-            if (taskType != null) {
+            val taskTypeValue = data?.getStringExtra(TaskFormActivity.TASK_TYPE_KEY)
+            if (taskTypeValue != null) {
+                val taskType = TaskType.from(taskTypeValue)
                 switchToTaskTab(taskType)
 
                 val index = indexForTaskType(taskType)
@@ -395,7 +397,7 @@ class TeamBoardFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchVi
         }
     }
 
-    private fun switchToTaskTab(taskType: String) {
+    private fun switchToTaskTab(taskType: TaskType?) {
         val index = indexForTaskType(taskType)
         if (binding?.viewPager != null && index != -1) {
             binding?.viewPager?.currentItem = index
@@ -403,7 +405,7 @@ class TeamBoardFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchVi
         }
     }
 
-    private fun indexForTaskType(taskType: String?): Int {
+    private fun indexForTaskType(taskType: TaskType?): Int {
         if (taskType != null) {
             for (index in 0 until (viewFragmentsDictionary?.size ?: 0)) {
                 val fragment = viewFragmentsDictionary?.get(index)
@@ -424,19 +426,19 @@ class TeamBoardFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchVi
         var lastTaskFormOpen: Date? = null
     }
 
-    override fun onTabSelected(taskType: String, smooth: Boolean) {
+    override fun onTabSelected(taskType: TaskType, smooth: Boolean) {
         val newItem = when (taskType) {
-            Task.TYPE_HABIT -> 0
-            Task.TYPE_DAILY -> 1
-            Task.TYPE_TODO -> 2
-            Task.TYPE_REWARD -> 3
+            TaskType.HABIT -> 0
+            TaskType.DAILY -> 1
+            TaskType.TODO -> 2
+            TaskType.REWARD -> 3
             else -> 0
         }
         binding?.viewPager?.setCurrentItem(newItem, smooth)
         updateBottomBarBadges()
     }
 
-    override fun onAdd(taskType: String) {
+    override fun onAdd(taskType: TaskType) {
         openNewTaskActivity(taskType)
     }
 }

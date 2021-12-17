@@ -15,6 +15,7 @@ import com.habitrpg.android.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.extensions.setScaledPadding
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.UserStatComputer
+import com.habitrpg.android.habitica.models.tasks.Attribute
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
@@ -114,10 +115,10 @@ class StatsFragment : BaseMainFragment<FragmentStatsBinding>() {
             userRepository.updateUser("preferences.automaticAllocation", isChecked).subscribe({}, RxErrorHandler.handleEmptyError())
         }
 
-        binding?.strengthStatsView?.allocateAction = { allocatePoint(Stats.STRENGTH) }
-        binding?.intelligenceStatsView?.allocateAction = { allocatePoint(Stats.INTELLIGENCE) }
-        binding?.constitutionStatsView?.allocateAction = { allocatePoint(Stats.CONSTITUTION) }
-        binding?.perceptionStatsView?.allocateAction = { allocatePoint(Stats.PERCEPTION) }
+        binding?.strengthStatsView?.allocateAction = { allocatePoint(Attribute.STRENGTH) }
+        binding?.intelligenceStatsView?.allocateAction = { allocatePoint(Attribute.INTELLIGENCE) }
+        binding?.constitutionStatsView?.allocateAction = { allocatePoint(Attribute.CONSTITUTION) }
+        binding?.perceptionStatsView?.allocateAction = { allocatePoint(Attribute.PERCEPTION) }
 
         binding?.distributeEvenlyHelpButton?.setOnClickListener { showHelpAlert(R.string.distribute_evenly_help) }
         binding?.distributeClassHelpButton?.setOnClickListener { showHelpAlert(R.string.distribute_class_help) }
@@ -151,7 +152,7 @@ class StatsFragment : BaseMainFragment<FragmentStatsBinding>() {
         alert?.show()
     }
 
-    private fun allocatePoint(stat: String) {
+    private fun allocatePoint(stat: Attribute) {
         compositeSubscription.add(userRepository.allocatePoint(stat).subscribe({ }, RxErrorHandler.handleEmptyError()))
     }
 

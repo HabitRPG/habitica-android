@@ -3,13 +3,11 @@ package com.habitrpg.android.habitica.models.tasks
 import android.os.Parcel
 import android.os.Parcelable
 import android.text.Spanned
-import androidx.annotation.StringDef
 import com.google.gson.annotations.SerializedName
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.BaseMainObject
 import com.habitrpg.android.habitica.models.Tag
-import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
 import io.realm.RealmList
 import io.realm.RealmObject
@@ -17,7 +15,10 @@ import io.realm.annotations.Ignore
 import io.realm.annotations.PrimaryKey
 import org.json.JSONArray
 import org.json.JSONException
-import java.util.*
+import java.util.ArrayList
+import java.util.Calendar
+import java.util.Date
+import java.util.GregorianCalendar
 
 open class Task : RealmObject, BaseMainObject, Parcelable {
 
@@ -35,11 +36,16 @@ open class Task : RealmObject, BaseMainObject, Parcelable {
     var priority: Float = 0.0f
     var text: String = ""
     var notes: String? = null
-    @TaskTypes
-    var type: String = TYPE_HABIT
+    var type: TaskType?
+        get() = TaskType.from(typeValue)
+        set(value) { typeValue = value?.value }
+    private var typeValue: String? = null
     var challengeID: String? = null
     var challengeBroken: String? = null
-    var attribute: String? = Stats.STRENGTH
+    var attribute: Attribute?
+        get() = Attribute.from(attributeValue)
+        set(value) { attributeValue = value?.value }
+    var attributeValue: String? = Attribute.STRENGTH.value
     var value: Double = 0.0
     var tags: RealmList<Tag>? = RealmList()
     var dateCreated: Date? = null
@@ -55,7 +61,10 @@ open class Task : RealmObject, BaseMainObject, Parcelable {
     var checklist: RealmList<ChecklistItem>? = RealmList()
     var reminders: RealmList<RemindersItem>? = RealmList()
     // dailies
-    var frequency: String? = null
+    var frequency: Frequency?
+        get() = Frequency.from(frequencyValue)
+        set(value) { frequencyValue = value?.value }
+    var frequencyValue: String? = null
     var everyX: Int? = 0
     var streak: Int? = 0
     var startDate: Date? = null
@@ -158,7 +167,7 @@ open class Task : RealmObject, BaseMainObject, Parcelable {
         }
 
     val isDisplayedActive: Boolean
-        get() = ((isDue == true && type == TYPE_DAILY) || type == TYPE_TODO) && !completed
+        get() = ((isDue == true && type == TaskType.DAILY) || type == TaskType.TODO) && !completed
 
     val isChecklistDisplayActive: Boolean
         get() = this.checklist?.size != this.completedChecklistCount
@@ -168,10 +177,6 @@ open class Task : RealmObject, BaseMainObject, Parcelable {
 
     val isPendingApproval: Boolean
         get() = (group?.approvalRequired == true && group?.approvalRequested == true && group?.approvalApproved == false)
-
-    @StringDef(TYPE_HABIT, TYPE_DAILY, TYPE_TODO, TYPE_REWARD)
-    @Retention(AnnotationRetention.SOURCE)
-    annotation class TaskTypes
 
     fun containsAllTagIds(tagIdList: List<String>): Boolean = tags?.mapTo(ArrayList()) { it.id }?.containsAll(tagIdList) ?: false
 
@@ -262,8 +267,8 @@ open class Task : RealmObject, BaseMainObject, Parcelable {
         dest.writeValue(this.priority)
         dest.writeString(this.text)
         dest.writeString(this.notes)
-        dest.writeString(this.attribute)
-        dest.writeString(this.type)
+        dest.writeString(this.attribute?.value)
+        dest.writeString(this.type?.value)
         dest.writeDouble(this.value)
         dest.writeList(this.tags as? List<*>)
         dest.writeLong(this.dateCreated?.time ?: -1)
@@ -273,7 +278,7 @@ open class Task : RealmObject, BaseMainObject, Parcelable {
         dest.writeByte(if (this.completed) 1.toByte() else 0.toByte())
         dest.writeList(this.checklist as? List<*>)
         dest.writeList(this.reminders as? List<*>)
-        dest.writeString(this.frequency)
+        dest.writeString(this.frequency?.value)
         dest.writeValue(this.everyX)
         dest.writeString(this.daysOfMonthString)
         dest.writeString(this.weeksOfMonthString)
@@ -294,8 +299,8 @@ open class Task : RealmObject, BaseMainObject, Parcelable {
         this.priority = `in`.readValue(Float::class.java.classLoader) as? Float ?: 0f
         this.text = `in`.readString() ?: ""
         this.notes = `in`.readString()
-        this.attribute = `in`.readString()
-        this.type = `in`.readString() ?: ""
+        this.attribute = Attribute.from(`in`.readString() ?: "")
+        this.type = TaskType.from(`in`.readString() ?: "")
         this.value = `in`.readDouble()
         this.tags = RealmList()
         `in`.readList(this.tags as List<*>, TaskTag::class.java.classLoader)
@@ -309,7 +314,7 @@ open class Task : RealmObject, BaseMainObject, Parcelable {
         `in`.readList(this.checklist as List<*>, ChecklistItem::class.java.classLoader)
         this.reminders = RealmList()
         `in`.readList(this.reminders as MutableList<Any?>, RemindersItem::class.java.classLoader)
-        this.frequency = `in`.readString()
+        this.frequency = Frequency.from(`in`.readString() ?: "")
         this.everyX = `in`.readValue(Int::class.java.classLoader) as? Int ?: 1
         this.daysOfMonthString = `in`.readString()
         this.weeksOfMonthString = `in`.readString()
@@ -389,11 +394,6 @@ open class Task : RealmObject, BaseMainObject, Parcelable {
 
         override fun newArray(size: Int): Array<Task?> = arrayOfNulls(size)
 
-        const val TYPE_HABIT = "habit"
-        const val TYPE_TODO = "todo"
-        const val TYPE_DAILY = "daily"
-        const val TYPE_REWARD = "reward"
-
         const val FILTER_ALL = "all"
         const val FILTER_WEAK = "weak"
         const val FILTER_STRONG = "strong"
@@ -401,10 +401,6 @@ open class Task : RealmObject, BaseMainObject, Parcelable {
         const val FILTER_GRAY = "gray"
         const val FILTER_DATED = "dated"
         const val FILTER_COMPLETED = "completed"
-        const val FREQUENCY_WEEKLY = "weekly"
-        const val FREQUENCY_DAILY = "daily"
-        const val FREQUENCY_MONTHLY = "monthly"
-        const val FREQUENCY_YEARLY = "yearly"
 
         @JvmField
         val CREATOR: Parcelable.Creator<Task> = object : Parcelable.Creator<Task> {

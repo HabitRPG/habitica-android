@@ -10,6 +10,7 @@ import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.databinding.FragmentRecyclerviewBinding
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.tasks.Task
+import com.habitrpg.android.habitica.models.tasks.TaskType
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.adapter.SkillTasksRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
@@ -24,7 +25,7 @@ class SkillTasksRecyclerViewFragment : BaseFragment<FragmentRecyclerviewBinding>
     lateinit var taskRepository: TaskRepository
     @field:[Inject Named(AppModule.NAMED_USER_ID)]
     lateinit var userId: String
-    var taskType: String? = null
+    var taskType: TaskType? = null
 
     override var binding: FragmentRecyclerviewBinding? = null
 
@@ -66,9 +67,9 @@ class SkillTasksRecyclerViewFragment : BaseFragment<FragmentRecyclerviewBinding>
     override fun onResume() {
         super.onResume()
 
-        var tasks = taskRepository.getTasks(taskType ?: "")
+        var tasks = taskRepository.getTasks(taskType ?: TaskType.HABIT)
             .map { it.filter { it.challengeID == null && it.group == null } }
-        if (taskType == Task.TYPE_TODO) {
+        if (taskType == TaskType.TODO) {
             tasks = tasks.map { it.filter { !it.completed } }
         }
         compositeSubscription.add(

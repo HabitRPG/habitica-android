@@ -12,13 +12,13 @@ import io.realm.Sort
 
 class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), TaskLocalRepository {
 
-    override fun getTasks(taskType: String, userID: String): Flowable<out List<Task>> {
+    override fun getTasks(taskType: TaskType, userID: String): Flowable<out List<Task>> {
         if (realm.isClosed) {
             return Flowable.empty()
         }
         return RxJavaBridge.toV3Flowable(
             realm.where(Task::class.java)
-                .equalTo("type", taskType)
+                .equalTo("typeValue", taskType.value)
                 .equalTo("userId", userID)
                 .sort("position", Sort.ASCENDING, "dateCreated", Sort.DESCENDING)
                 .findAll()
@@ -112,11 +112,11 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
             .equalTo("userId", userID)
             .beginGroup()
             .beginGroup()
-            .equalTo("type", Task.TYPE_TODO)
+            .equalTo("typeValue", TaskType.TODO.value)
             .equalTo("completed", false)
             .endGroup()
             .or()
-            .notEqualTo("type", Task.TYPE_TODO)
+            .notEqualTo("typeValue", TaskType.TODO.value)
             .endGroup()
             .findAll()
             .createSnapshot()
@@ -131,7 +131,7 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
     private fun removeCompletedTodos(userID: String, onlineTaskList: MutableCollection<Task>) {
         val localTasks = realm.where(Task::class.java)
             .equalTo("userId", userID)
-            .equalTo("type", Task.TYPE_TODO)
+            .equalTo("typeValue", TaskType.TODO.value)
             .equalTo("completed", true)
             .findAll()
             .createSnapshot()
@@ -192,14 +192,14 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
 
     override fun getTaskAtPosition(taskType: String, position: Int): Flowable<Task> {
         return RxJavaBridge.toV3Flowable(
-            realm.where(Task::class.java).equalTo("type", taskType).equalTo("position", position).findFirstAsync().asFlowable<RealmObject>()
+            realm.where(Task::class.java).equalTo("typeValue", taskType).equalTo("position", position).findFirstAsync().asFlowable<RealmObject>()
                 .filter { realmObject -> realmObject.isLoaded }
                 .cast(Task::class.java)
         )
     }
 
     override fun updateIsdue(daily: TaskList): Maybe<TaskList> {
-        return Flowable.just(realm.where(Task::class.java).equalTo("type", "daily").findAll())
+        return Flowable.just(realm.where(Task::class.java).equalTo("typeValue", TaskType.DAILY.value).findAll())
             .firstElement()
             .map { tasks ->
                 realm.beginTransaction()

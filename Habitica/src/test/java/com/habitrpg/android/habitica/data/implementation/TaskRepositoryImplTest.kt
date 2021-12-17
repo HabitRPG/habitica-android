@@ -136,7 +136,7 @@ class TaskRepositoryImplTest : WordSpec({
             val data = TaskDirectionData()
             data.delta = 1.0f
             data.lvl = 1
-            task.type = Task.TYPE_DAILY
+            task.type = TaskType.DAILY
             task.value = 0.0
             every { apiClient.postTaskDirection(any(), "up") } returns Flowable.just(data)
             repository.taskChecked(user, task, true, false, null).subscribe(subscriber)
@@ -150,7 +150,7 @@ class TaskRepositoryImplTest : WordSpec({
             val data = TaskDirectionData()
             data.delta = 1.0f
             data.lvl = 1
-            task.type = Task.TYPE_HABIT
+            task.type = TaskType.HABIT
             task.value = 0.0
             every { apiClient.postTaskDirection(any(), "up") } returns Flowable.just(data)
             repository.taskChecked(user, task, true, false, null).subscribe(subscriber)

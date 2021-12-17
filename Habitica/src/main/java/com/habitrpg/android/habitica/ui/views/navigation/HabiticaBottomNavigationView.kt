@@ -19,11 +19,11 @@ import com.habitrpg.android.habitica.databinding.MainNavigationViewBinding
 import com.habitrpg.android.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.extensions.setTintWith
-import com.habitrpg.android.habitica.models.tasks.Task
+import com.habitrpg.android.habitica.models.tasks.TaskType
 
 interface HabiticaBottomNavigationViewListener {
-    fun onTabSelected(taskType: String, smooth: Boolean)
-    fun onAdd(taskType: String)
+    fun onTabSelected(taskType: TaskType, smooth: Boolean)
+    fun onAdd(taskType: TaskType)
 }
 
 class HabiticaBottomNavigationView @JvmOverloads constructor(
@@ -37,22 +37,22 @@ class HabiticaBottomNavigationView @JvmOverloads constructor(
     var selectedPosition: Int
         get() {
             return when (activeTaskType) {
-                Task.TYPE_DAILY -> 1
-                Task.TYPE_REWARD -> 2
-                Task.TYPE_TODO -> 3
+                TaskType.DAILY -> 1
+                TaskType.REWARD -> 2
+                TaskType.TODO -> 3
                 else -> 0
             }
         }
         set(value) {
             activeTaskType = when (value) {
-                1 -> Task.TYPE_DAILY
-                2 -> Task.TYPE_TODO
-                3 -> Task.TYPE_REWARD
-                else -> Task.TYPE_HABIT
+                1 -> TaskType.DAILY
+                2 -> TaskType.TODO
+                3 -> TaskType.REWARD
+                else -> TaskType.HABIT
             }
         }
     var listener: HabiticaBottomNavigationViewListener? = null
-    var activeTaskType: String = Task.TYPE_HABIT
+    var activeTaskType: TaskType = TaskType.HABIT
         set(value) {
             val wasChanged = field != value
             field = value
@@ -80,10 +80,10 @@ class HabiticaBottomNavigationView @JvmOverloads constructor(
         get() = binding.itemWrapper.measuredHeight
 
     init {
-        binding.habitsTab.setOnClickListener { activeTaskType = Task.TYPE_HABIT }
-        binding.dailiesTab.setOnClickListener { activeTaskType = Task.TYPE_DAILY }
-        binding.todosTab.setOnClickListener { activeTaskType = Task.TYPE_TODO }
-        binding.rewardsTab.setOnClickListener { activeTaskType = Task.TYPE_REWARD }
+        binding.habitsTab.setOnClickListener { activeTaskType = TaskType.HABIT }
+        binding.dailiesTab.setOnClickListener { activeTaskType = TaskType.DAILY }
+        binding.todosTab.setOnClickListener { activeTaskType = TaskType.TODO }
+        binding.rewardsTab.setOnClickListener { activeTaskType = TaskType.REWARD }
         binding.addButton.setOnClickListener {
             if (isShowingSubmenu) {
                 hideSubmenu()
@@ -160,22 +160,22 @@ class HabiticaBottomNavigationView @JvmOverloads constructor(
 
         var pos = 4
         binding.submenuWrapper.removeAllViews()
-        for (taskType in listOf(Task.TYPE_HABIT, Task.TYPE_DAILY, Task.TYPE_TODO, Task.TYPE_REWARD)) {
+        for (taskType in listOf(TaskType.HABIT, TaskType.DAILY, TaskType.TODO, TaskType.REWARD)) {
             val view = BottomNavigationSubmenuItem(context)
             when (taskType) {
-                Task.TYPE_HABIT -> {
+                TaskType.HABIT -> {
                     view.icon = ContextCompat.getDrawable(context, R.drawable.add_habit)
                     view.title = context.getString(R.string.habit)
                 }
-                Task.TYPE_DAILY -> {
+                TaskType.DAILY -> {
                     view.icon = ContextCompat.getDrawable(context, R.drawable.add_daily)
                     view.title = context.getString(R.string.daily)
                 }
-                Task.TYPE_TODO -> {
+                TaskType.TODO -> {
                     view.icon = ContextCompat.getDrawable(context, R.drawable.add_todo)
                     view.title = context.getString(R.string.todo)
                 }
-                Task.TYPE_REWARD -> {
+                TaskType.REWARD -> {
                     view.icon = ContextCompat.getDrawable(context, R.drawable.add_rewards)
                     view.title = context.getString(R.string.reward)
                 }
@@ -237,9 +237,9 @@ class HabiticaBottomNavigationView @JvmOverloads constructor(
     }
 
     private fun updateItemSelection() {
-        binding.habitsTab.isActive = activeTaskType == Task.TYPE_HABIT
-        binding.dailiesTab.isActive = activeTaskType == Task.TYPE_DAILY
-        binding.todosTab.isActive = activeTaskType == Task.TYPE_TODO
-        binding.rewardsTab.isActive = activeTaskType == Task.TYPE_REWARD
+        binding.habitsTab.isActive = activeTaskType == TaskType.HABIT
+        binding.dailiesTab.isActive = activeTaskType == TaskType.DAILY
+        binding.todosTab.isActive = activeTaskType == TaskType.TODO
+        binding.rewardsTab.isActive = activeTaskType == TaskType.REWARD
     }
 }

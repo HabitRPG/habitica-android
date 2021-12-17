@@ -21,6 +21,7 @@ import com.habitrpg.android.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.models.tasks.RemindersItem
 import com.habitrpg.android.habitica.models.tasks.Task
+import com.habitrpg.android.habitica.models.tasks.TaskType
 import java.text.DateFormat
 import java.util.*
 
@@ -42,14 +43,14 @@ class ReminderItemFormView @JvmOverloads constructor(
 
     private val formatter: DateFormat
         get() {
-            return if (taskType == Task.TYPE_DAILY) {
+            return if (taskType == TaskType.DAILY) {
                 DateFormat.getTimeInstance(DateFormat.SHORT)
             } else {
                 DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT)
             }
         }
 
-    var taskType = Task.TYPE_DAILY
+    var taskType = TaskType.DAILY
     var item: RemindersItem = RemindersItem()
         set(value) {
             field = value
@@ -103,7 +104,7 @@ class ReminderItemFormView @JvmOverloads constructor(
         binding.textView.setOnClickListener {
             val calendar = Calendar.getInstance()
             item.time?.let { calendar.time = it }
-            if (taskType == Task.TYPE_DAILY) {
+            if (taskType == TaskType.DAILY) {
                 val timePickerDialog = TimePickerDialog(
                     context, this,
                     calendar.get(Calendar.HOUR_OF_DAY),

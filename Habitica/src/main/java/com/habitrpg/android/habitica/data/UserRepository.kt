@@ -11,6 +11,7 @@ import com.habitrpg.android.habitica.models.responses.SkillResponse
 import com.habitrpg.android.habitica.models.responses.UnlockResponse
 import com.habitrpg.android.habitica.models.responses.VerifyUsernameResponse
 import com.habitrpg.android.habitica.models.social.Group
+import com.habitrpg.android.habitica.models.tasks.Attribute
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
@@ -70,7 +71,7 @@ interface UserRepository : BaseRepository {
     fun updatePassword(oldPassword: String, newPassword: String, newPasswordConfirmation: String): Flowable<Void>
     fun verifyUsername(username: String): Flowable<VerifyUsernameResponse>
 
-    fun allocatePoint(stat: String): Flowable<Stats>
+    fun allocatePoint(stat: Attribute): Flowable<Stats>
     fun bulkAllocatePoints(strength: Int, intelligence: Int, constitution: Int, perception: Int): Flowable<Stats>
 
     fun useCustomization(type: String, category: String?, identifier: String): Flowable<User>

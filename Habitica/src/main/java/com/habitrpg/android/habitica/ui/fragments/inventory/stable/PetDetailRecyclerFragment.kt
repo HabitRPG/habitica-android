@@ -89,7 +89,6 @@ class PetDetailRecyclerFragment :
             }
         }
         binding?.recyclerView?.layoutManager = layoutManager
-        binding?.recyclerView?.addItemDecoration(MarginDecoration(getActivity()))
         adapter.animalIngredientsRetriever = { animal, callback ->
             Maybe.zip(
                 inventoryRepository.getItems(Egg::class.java, arrayOf(animal.animal)).firstElement(),

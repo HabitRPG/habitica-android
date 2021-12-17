@@ -10,6 +10,7 @@ import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.extensions.withImmutableFlag
 import com.habitrpg.android.habitica.models.tasks.RemindersItem
 import com.habitrpg.android.habitica.models.tasks.Task
+import com.habitrpg.android.habitica.models.tasks.TaskType
 import com.habitrpg.android.habitica.receivers.NotificationPublisher
 import com.habitrpg.android.habitica.receivers.TaskReceiver
 import com.habitrpg.shared.habitica.HLogger
@@ -24,7 +25,7 @@ class TaskAlarmManager(private var context: Context, private var taskRepository:
         task.reminders?.let {
             for (reminder in it) {
                 var currentReminder = reminder
-                if (task.type == Task.TYPE_DAILY) {
+                if (task.type == TaskType.DAILY) {
                     // Ensure that we set to the next available time
                     currentReminder = this.setTimeForDailyReminder(currentReminder, task)
                 }
@@ -46,7 +47,7 @@ class TaskAlarmManager(private var context: Context, private var taskRepository:
     // We may be able to use repeating alarms instead of this in the future
     fun addAlarmForTaskId(taskId: String) {
         taskRepository.getTaskCopy(taskId)
-            .filter { task -> task.isValid && task.isManaged && Task.TYPE_DAILY == task.type }
+            .filter { task -> task.isValid && task.isManaged && TaskType.DAILY == task.type }
             .firstElement()
             .subscribe({ this.setAlarmsForTask(it) }, RxErrorHandler.handleEmptyError())
     }

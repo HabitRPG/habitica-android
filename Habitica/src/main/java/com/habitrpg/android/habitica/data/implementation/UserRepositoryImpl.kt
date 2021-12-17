@@ -19,6 +19,7 @@ import com.habitrpg.android.habitica.models.responses.TaskDirection
 import com.habitrpg.android.habitica.models.responses.UnlockResponse
 import com.habitrpg.android.habitica.models.responses.VerifyUsernameResponse
 import com.habitrpg.android.habitica.models.social.Group
+import com.habitrpg.android.habitica.models.tasks.Attribute
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
@@ -257,22 +258,22 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
     override fun updatePassword(oldPassword: String, newPassword: String, newPasswordConfirmation: String): Flowable<Void> =
         apiClient.updatePassword(oldPassword.trim(), newPassword.trim(), newPasswordConfirmation.trim())
 
-    override fun allocatePoint(stat: String): Flowable<Stats> {
+    override fun allocatePoint(stat: Attribute): Flowable<Stats> {
         getLiveUser().firstElement().subscribe(
             { liveUser ->
                 localRepository.executeTransaction {
                     when (stat) {
-                        Stats.STRENGTH -> liveUser.stats?.strength = liveUser.stats?.strength?.inc()
-                        Stats.INTELLIGENCE -> liveUser.stats?.intelligence = liveUser.stats?.intelligence?.inc()
-                        Stats.CONSTITUTION -> liveUser.stats?.constitution = liveUser.stats?.constitution?.inc()
-                        Stats.PERCEPTION -> liveUser.stats?.per = liveUser.stats?.per?.inc()
+                        Attribute.STRENGTH -> liveUser.stats?.strength = liveUser.stats?.strength?.inc()
+                        Attribute.INTELLIGENCE -> liveUser.stats?.intelligence = liveUser.stats?.intelligence?.inc()
+                        Attribute.CONSTITUTION -> liveUser.stats?.constitution = liveUser.stats?.constitution?.inc()
+                        Attribute.PERCEPTION -> liveUser.stats?.per = liveUser.stats?.per?.inc()
                     }
                     liveUser.stats?.points = liveUser.stats?.points?.dec()
                 }
             },
             RxErrorHandler.handleEmptyError()
         )
-        return zipWithLiveUser(apiClient.allocatePoint(stat)) { stats, user ->
+        return zipWithLiveUser(apiClient.allocatePoint(stat.value)) { stats, user ->
             localRepository.modify(user) { liveUser ->
                 liveUser.stats?.strength = stats.strength
                 liveUser.stats?.constitution = stats.constitution

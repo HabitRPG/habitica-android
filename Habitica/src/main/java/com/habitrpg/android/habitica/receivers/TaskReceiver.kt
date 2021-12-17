@@ -16,6 +16,7 @@ import com.habitrpg.android.habitica.extensions.withImmutableFlag
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager
 import com.habitrpg.android.habitica.models.tasks.Task
+import com.habitrpg.android.habitica.models.tasks.TaskType
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.shared.habitica.HLogger
 import com.habitrpg.shared.habitica.LogLevel
@@ -79,7 +80,7 @@ class TaskReceiver : BroadcastReceiver() {
             notificationBuilder = notificationBuilder.setCategory(Notification.CATEGORY_REMINDER)
         }
 
-        if (task.type == Task.TYPE_DAILY || task.type == Task.TYPE_TODO) {
+        if (task.type == TaskType.DAILY || task.type == TaskType.TODO) {
             val completeIntent = Intent(context, LocalNotificationActionReceiver::class.java).apply {
                 action = context.getString(R.string.complete_task_action)
                 putExtra("taskID", task.id)

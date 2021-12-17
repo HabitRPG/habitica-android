@@ -18,6 +18,7 @@ import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.tasks.ChecklistItem
 import com.habitrpg.android.habitica.models.tasks.Task
+import com.habitrpg.android.habitica.models.tasks.TaskType
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
@@ -186,7 +187,7 @@ class YesterdailyDialog private constructor(context: Context, private val userRe
                     }
                     .map {
                         it.tasks.values.filter { task ->
-                            return@filter task.type == Task.TYPE_DAILY && task.isDue == true && !task.completed && task.yesterDaily
+                            return@filter task.type == TaskType.DAILY && task.isDue == true && !task.completed && task.yesterDaily
                         }
                     }
                     .retry(1)
@@ -203,7 +204,7 @@ class YesterdailyDialog private constructor(context: Context, private val userRe
                     }
                     .firstElement()
                     .zipWith(
-                        taskRepository.getTasks(Task.TYPE_DAILY).firstElement()
+                        taskRepository.getTasks(TaskType.DAILY).firstElement()
                             .map {
                                 val taskMap = mutableMapOf<String, Int>()
                                 it.forEachIndexed { index, task -> taskMap[task.id ?: ""] = index }

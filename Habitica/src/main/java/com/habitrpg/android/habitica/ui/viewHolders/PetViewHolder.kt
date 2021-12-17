@@ -71,7 +71,6 @@ class PetViewHolder(parent: ViewGroup, private val equipEvents: PublishSubject<S
         binding.titleTextView.visibility = View.GONE
 
         val imageName = "stable_Pet-${item.animal}-${item.color}"
-        itemView.setBackgroundResource(R.drawable.layout_rounded_bg_window)
         if (trained > 0) {
             if (this.canRaiseToMount) {
                 binding.trainedProgressBar.visibility = View.VISIBLE

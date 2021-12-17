@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.helpers
 
 import com.habitrpg.android.habitica.models.tasks.Task
+import com.habitrpg.android.habitica.models.tasks.TaskType
 import io.realm.Case
 import io.realm.OrderedRealmCollection
 import io.realm.RealmQuery
@@ -10,7 +11,7 @@ import java.util.*
 class TaskFilterHelper {
     var searchQuery: String? = null
     private var tagsId: MutableList<String> = ArrayList()
-    private val activeFilters = HashMap<String, String>()
+    private val activeFilters = HashMap<TaskType, String>()
 
     var tags: MutableList<String>
         get() = this.tagsId
@@ -18,15 +19,15 @@ class TaskFilterHelper {
             this.tagsId = tagsId
         }
 
-    fun howMany(type: String?): Int {
+    fun howMany(type: TaskType?): Int {
         return this.tagsId.size + if (isTaskFilterActive(type)) 1 else 0
     }
 
-    private fun isTaskFilterActive(type: String?): Boolean {
+    private fun isTaskFilterActive(type: TaskType?): Boolean {
         if (activeFilters[type] == null) {
             return false
         }
-        return if (Task.TYPE_TODO == type) {
+        return if (TaskType.TODO == type) {
             Task.FILTER_ACTIVE != activeFilters[type]
         } else {
             Task.FILTER_ALL != activeFilters[type]
@@ -57,7 +58,7 @@ class TaskFilterHelper {
         }
         return if (activeFilter != null && activeFilter != Task.FILTER_ALL) {
             when (activeFilter) {
-                Task.FILTER_ACTIVE -> if (task.type == Task.TYPE_DAILY) {
+                Task.FILTER_ACTIVE -> if (task.type == TaskType.DAILY) {
                     task.isDisplayedActive
                 } else {
                     !task.completed
@@ -74,15 +75,15 @@ class TaskFilterHelper {
         }
     }
 
-    fun setActiveFilter(type: String, activeFilter: String) {
+    fun setActiveFilter(type: TaskType, activeFilter: String) {
         activeFilters[type] = activeFilter
     }
 
-    fun getActiveFilter(type: String): String? {
-        if (activeFilters.containsKey(type)) {
-            return activeFilters[type]
+    fun getActiveFilter(type: TaskType?): String? {
+        return if (activeFilters.containsKey(type)) {
+            activeFilters[type]
         } else {
-            return null
+            null
         }
     }
 
@@ -109,7 +110,7 @@ class TaskFilterHelper {
             }
             if (activeFilter != null && activeFilter != Task.FILTER_ALL) {
                 when (activeFilter) {
-                    Task.FILTER_ACTIVE -> query = if (Task.TYPE_DAILY == taskType) {
+                    Task.FILTER_ACTIVE -> query = if (TaskType.DAILY == taskType) {
                         query.equalTo("completed", false).equalTo("isDue", true)
                     } else {
                         query.equalTo("completed", false)

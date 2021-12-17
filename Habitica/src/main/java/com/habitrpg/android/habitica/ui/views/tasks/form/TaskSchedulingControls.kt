@@ -17,7 +17,9 @@ import com.habitrpg.android.habitica.databinding.TaskFormTaskSchedulingBinding
 import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.models.tasks.Days
+import com.habitrpg.android.habitica.models.tasks.Frequency
 import com.habitrpg.android.habitica.models.tasks.Task
+import com.habitrpg.android.habitica.models.tasks.TaskType
 import com.habitrpg.android.habitica.ui.adapter.SimpleSpinnerAdapter
 import java.text.DateFormat
 import java.text.DateFormatSymbols
@@ -34,11 +36,11 @@ class TaskSchedulingControls @JvmOverloads constructor(
     private val dateFormatter = DateFormat.getDateInstance(DateFormat.MEDIUM)
     private val frequencyAdapter = SimpleSpinnerAdapter(context, R.array.repeatables_frequencies)
 
-    var taskType = Task.TYPE_DAILY
+    var taskType = TaskType.DAILY
         set(value) {
             field = value
             configureViewsForType()
-            if (value == Task.TYPE_TODO) {
+            if (value == TaskType.TODO) {
                 dueDate = null
             }
         }
@@ -59,14 +61,14 @@ class TaskSchedulingControls @JvmOverloads constructor(
                 binding.startDateTextview.text = null
             }
         }
-    var frequency = Task.FREQUENCY_DAILY
+    var frequency = Frequency.DAILY
         set(value) {
             field = value
             binding.repeatsEverySpinner.setSelection(
                 when (value) {
-                    Task.FREQUENCY_WEEKLY -> 1
-                    Task.FREQUENCY_MONTHLY -> 2
-                    Task.FREQUENCY_YEARLY -> 3
+                    Frequency.WEEKLY -> 1
+                    Frequency.MONTHLY -> 2
+                    Frequency.YEARLY -> 3
                     else -> 0
                 }
             )
@@ -117,7 +119,7 @@ class TaskSchedulingControls @JvmOverloads constructor(
     init {
         binding.repeatsEverySpinner.adapter = frequencyAdapter
 
-        frequency = Task.FREQUENCY_WEEKLY
+        frequency = Frequency.WEEKLY
         startDate = Date()
         everyX = 1
         weeklyRepeat = Days()
@@ -129,10 +131,10 @@ class TaskSchedulingControls @JvmOverloads constructor(
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 frequency = when (position) {
-                    1 -> Task.FREQUENCY_WEEKLY
-                    2 -> Task.FREQUENCY_MONTHLY
-                    3 -> Task.FREQUENCY_YEARLY
-                    else -> Task.FREQUENCY_DAILY
+                    1 -> Frequency.WEEKLY
+                    2 -> Frequency.MONTHLY
+                    3 -> Frequency.YEARLY
+                    else -> Frequency.DAILY
                 }
             }
         }
@@ -145,7 +147,7 @@ class TaskSchedulingControls @JvmOverloads constructor(
                 startDateCalendar.get(Calendar.DAY_OF_MONTH)
             )
             datePickerDialog.setButton(DialogInterface.BUTTON_NEUTRAL, resources.getString(R.string.today)) { _, _ ->
-                if (taskType == Task.TYPE_TODO) {
+                if (taskType == TaskType.TODO) {
                     dueDate = Date()
                 } else {
                     startDate = Date()
@@ -155,7 +157,7 @@ class TaskSchedulingControls @JvmOverloads constructor(
             if ((firstDayOfWeek ?: -1) >= 0) {
                 datePickerDialog.datePicker.firstDayOfWeek = firstDayOfWeek ?: 0
             }
-            if (taskType == Task.TYPE_TODO) {
+            if (taskType == TaskType.TODO) {
                 datePickerDialog.setButton(DialogInterface.BUTTON_NEUTRAL, resources.getString(R.string.clear)) { _, _ ->
                     dueDate = null
                 }
@@ -190,15 +192,15 @@ class TaskSchedulingControls @JvmOverloads constructor(
     }
 
     private fun configureViewsForType() {
-        binding.startDateTitle.text = context.getString(if (taskType == Task.TYPE_DAILY) R.string.start_date else R.string.due_date)
-        binding.repeatsEveryWrapper.visibility = if (taskType == Task.TYPE_DAILY) View.VISIBLE else View.GONE
-        binding.summaryTextview.visibility = if (taskType == Task.TYPE_DAILY) View.VISIBLE else View.GONE
-        binding.weeklyRepeatWrapper.visibility = if (taskType == Task.TYPE_DAILY) View.VISIBLE else View.GONE
+        binding.startDateTitle.text = context.getString(if (taskType == TaskType.DAILY) R.string.start_date else R.string.due_date)
+        binding.repeatsEveryWrapper.visibility = if (taskType == TaskType.DAILY) View.VISIBLE else View.GONE
+        binding.summaryTextview.visibility = if (taskType == TaskType.DAILY) View.VISIBLE else View.GONE
+        binding.weeklyRepeatWrapper.visibility = if (taskType == TaskType.DAILY) View.VISIBLE else View.GONE
     }
 
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
         startDateCalendar.set(year, month, dayOfMonth)
-        if (taskType == Task.TYPE_TODO) {
+        if (taskType == TaskType.TODO) {
             dueDate = startDateCalendar.time
         } else {
             startDate = startDateCalendar.time
@@ -208,17 +210,17 @@ class TaskSchedulingControls @JvmOverloads constructor(
     private fun configureViewsForFrequency() {
         binding.repeatsEveryTitle.text = context.getText(
             when (frequency) {
-                Task.FREQUENCY_WEEKLY -> R.string.weeks
-                Task.FREQUENCY_MONTHLY -> R.string.months
-                Task.FREQUENCY_YEARLY -> R.string.years
+                Frequency.WEEKLY -> R.string.weeks
+                Frequency.MONTHLY -> R.string.months
+                Frequency.YEARLY -> R.string.years
                 else -> R.string.days
             }
         )
-        binding.weeklyRepeatWrapper.visibility = if (frequency == Task.FREQUENCY_WEEKLY && taskType == Task.TYPE_DAILY) View.VISIBLE else View.GONE
-        binding.monthlyRepeatWrapper.visibility = if (frequency == Task.FREQUENCY_MONTHLY && taskType == Task.TYPE_DAILY) View.VISIBLE else View.GONE
-        if (frequency == Task.FREQUENCY_WEEKLY) {
+        binding.weeklyRepeatWrapper.visibility = if (frequency == Frequency.WEEKLY && taskType == TaskType.DAILY) View.VISIBLE else View.GONE
+        binding.monthlyRepeatWrapper.visibility = if (frequency == Frequency.MONTHLY && taskType == TaskType.DAILY) View.VISIBLE else View.GONE
+        if (frequency == Frequency.WEEKLY) {
             createWeeklyRepeatViews()
-        } else if (frequency == Task.FREQUENCY_MONTHLY) {
+        } else if (frequency == Frequency.MONTHLY) {
             if (weeksOfMonth?.isNotEmpty() != true && daysOfMonth?.isNotEmpty() != true) {
                 daysOfMonth = listOf(startDateCalendar.get(Calendar.DATE))
             }
@@ -325,13 +327,13 @@ class TaskSchedulingControls @JvmOverloads constructor(
         var frequencyQualifier = ""
 
         when (frequency) {
-            "daily" -> frequencyQualifier = if (everyX == 1) "day" else "days"
-            "weekly" -> frequencyQualifier = if (everyX == 1) "week" else "weeks"
-            "monthly" -> frequencyQualifier = if (everyX == 1) "month" else "months"
-            "yearly" -> frequencyQualifier = if (everyX == 1) "year" else "years"
+            Frequency.DAILY -> frequencyQualifier = if (everyX == 1) "day" else "days"
+            Frequency.WEEKLY -> frequencyQualifier = if (everyX == 1) "week" else "weeks"
+            Frequency.MONTHLY -> frequencyQualifier = if (everyX == 1) "month" else "months"
+            Frequency.YEARLY -> frequencyQualifier = if (everyX == 1) "year" else "years"
         }
 
-        var weekdays = if (frequency == "weekly") {
+        var weekdays = if (frequency == Frequency.WEEKLY) {
             val weekdayStrings = ArrayList<String>()
             if (weeklyRepeat.m) {
                 weekdayStrings.add("Monday")
@@ -359,7 +361,7 @@ class TaskSchedulingControls @JvmOverloads constructor(
             ""
         }
 
-        if (frequency == "monthly") {
+        if (frequency == Frequency.MONTHLY) {
             weekdays = if (daysOfMonth?.isNotEmpty() == true) {
                 val date = startDateCalendar.get(Calendar.DATE)
                 val formattedDate = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {

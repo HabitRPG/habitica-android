@@ -27,6 +27,7 @@ import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.models.tasks.Task
+import com.habitrpg.android.habitica.models.tasks.TaskType
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.adapter.social.challenges.ChallengeTasksRecyclerViewAdapter
@@ -399,10 +400,10 @@ class ChallengeFormActivity : BaseActivity() {
             challengeTasks.addItemObservable().subscribe(
                 { t ->
                     when (t) {
-                        addHabit -> openNewTaskActivity(Task.TYPE_HABIT, null)
-                        addDaily -> openNewTaskActivity(Task.TYPE_DAILY, null)
-                        addTodo -> openNewTaskActivity(Task.TYPE_TODO, null)
-                        addReward -> openNewTaskActivity(Task.TYPE_REWARD, null)
+                        addHabit -> openNewTaskActivity(TaskType.HABIT, null)
+                        addDaily -> openNewTaskActivity(TaskType.DAILY, null)
+                        addTodo -> openNewTaskActivity(TaskType.TODO, null)
+                        addReward -> openNewTaskActivity(TaskType.REWARD, null)
                     }
                 },
                 RxErrorHandler.handleEmptyError()
@@ -454,10 +455,10 @@ class ChallengeFormActivity : BaseActivity() {
         }
     }
 
-    private fun openNewTaskActivity(type: String?, task: Task?) {
+    private fun openNewTaskActivity(type: TaskType?, task: Task?) {
         val bundle = Bundle()
 
-        bundle.putString(TaskFormActivity.TASK_TYPE_KEY, type)
+        bundle.putString(TaskFormActivity.TASK_TYPE_KEY, type?.value ?: "")
         if (task != null) {
             bundle.putParcelable(TaskFormActivity.PARCELABLE_TASK, task)
         }
@@ -512,9 +513,9 @@ class ChallengeFormActivity : BaseActivity() {
     private fun addOrUpdateTaskInList(task: Task, isExistingTask: Boolean = false) {
         if (!challengeTasks.replaceTask(task)) {
             val taskAbove: Task? = when (task.type) {
-                Task.TYPE_HABIT -> addHabit
-                Task.TYPE_DAILY -> addDaily
-                Task.TYPE_TODO -> addTodo
+                TaskType.HABIT -> addHabit
+                TaskType.DAILY -> addDaily
+                TaskType.TODO -> addTodo
                 else -> addReward
             }
             if (!isExistingTask) {
@@ -562,7 +563,7 @@ class ChallengeFormActivity : BaseActivity() {
             val t = Task()
 
             t.id = UUID.randomUUID().toString()
-            t.type = ChallengeTasksRecyclerViewAdapter.TASK_TYPE_ADD_ITEM
+            t.type = TaskType.ADD_ITEM
             t.text = taskName
 
             return t

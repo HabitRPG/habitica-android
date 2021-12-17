@@ -31,9 +31,11 @@ import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager
 import com.habitrpg.android.habitica.models.Tag
 import com.habitrpg.android.habitica.models.social.Challenge
+import com.habitrpg.android.habitica.models.tasks.Attribute
+import com.habitrpg.android.habitica.models.tasks.Frequency
 import com.habitrpg.android.habitica.models.tasks.HabitResetOption
 import com.habitrpg.android.habitica.models.tasks.Task
-import com.habitrpg.android.habitica.models.user.Stats
+import com.habitrpg.android.habitica.models.tasks.TaskType
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import io.realm.RealmList
@@ -64,11 +66,11 @@ class TaskFormActivity : BaseActivity() {
     private var isChallengeTask = false
     private var usesTaskAttributeStats = false
     private var task: Task? = null
-    private var taskType: String = ""
+    private var taskType: TaskType = TaskType.HABIT
     private var tags = listOf<Tag>()
     private var preselectedTags: ArrayList<String>? = null
     private var hasPreselectedTags = false
-    private var selectedStat = Stats.STRENGTH
+    private var selectedStat = Attribute.STRENGTH
         set(value) {
             field = value
             setSelectedAttribute(value)
@@ -139,7 +141,7 @@ class TaskFormActivity : BaseActivity() {
 
         isChallengeTask = bundle.getBoolean(IS_CHALLENGE_TASK, false)
 
-        taskType = bundle.getString(TASK_TYPE_KEY) ?: Task.TYPE_HABIT
+        taskType = TaskType.from(bundle.getString(TASK_TYPE_KEY)) ?: TaskType.HABIT
         preselectedTags = bundle.getStringArrayList(SELECTED_TAGS_KEY)
 
         compositeSubscription.add(
@@ -175,10 +177,10 @@ class TaskFormActivity : BaseActivity() {
         binding.notesEditText.onFocusChangeListener = View.OnFocusChangeListener { _, isFocused ->
             binding.notesInputLayout.alpha = if (isFocused) 0.8f else 0.6f
         }
-        binding.statStrengthButton.setOnClickListener { selectedStat = Stats.STRENGTH }
-        binding.statIntelligenceButton.setOnClickListener { selectedStat = Stats.INTELLIGENCE }
-        binding.statConstitutionButton.setOnClickListener { selectedStat = Stats.CONSTITUTION }
-        binding.statPerceptionButton.setOnClickListener { selectedStat = Stats.PERCEPTION }
+        binding.statStrengthButton.setOnClickListener { selectedStat = Attribute.STRENGTH }
+        binding.statIntelligenceButton.setOnClickListener { selectedStat = Attribute.INTELLIGENCE }
+        binding.statConstitutionButton.setOnClickListener { selectedStat = Attribute.CONSTITUTION }
+        binding.statPerceptionButton.setOnClickListener { selectedStat = Attribute.PERCEPTION }
         binding.scrollView.setOnTouchListener { view, event ->
             userScrolled = view == binding.scrollView && (event.action == MotionEvent.ACTION_SCROLL || event.action == MotionEvent.ACTION_MOVE)
             return@setOnTouchListener false
@@ -228,9 +230,9 @@ class TaskFormActivity : BaseActivity() {
                 R.string.create_task,
                 getString(
                     when (taskType) {
-                        Task.TYPE_DAILY -> R.string.daily
-                        Task.TYPE_TODO -> R.string.todo
-                        Task.TYPE_REWARD -> R.string.reward
+                        TaskType.DAILY -> R.string.daily
+                        TaskType.TODO -> R.string.todo
+                        TaskType.REWARD -> R.string.reward
                         else -> R.string.habit
                     }
                 )
@@ -280,26 +282,26 @@ class TaskFormActivity : BaseActivity() {
 
     private fun configureForm() {
         val firstDayOfWeek = sharedPreferences.getString("FirstDayOfTheWeek", "-1")?.toInt() ?: -1
-        val habitViewsVisibility = if (taskType == Task.TYPE_HABIT) View.VISIBLE else View.GONE
+        val habitViewsVisibility = if (taskType == TaskType.HABIT) View.VISIBLE else View.GONE
         binding.habitScoringButtons.visibility = habitViewsVisibility
         binding.habitResetStreakTitleView.visibility = habitViewsVisibility
         binding.habitResetStreakButtons.visibility = habitViewsVisibility
         binding.habitAdjustNegativeStreakView.visibility = habitViewsVisibility
-        if (taskType == Task.TYPE_HABIT) {
+        if (taskType == TaskType.HABIT) {
             binding.habitScoringButtons.isPositive = true
             binding.habitScoringButtons.isNegative = false
         }
 
-        val habitDailyVisibility = if (taskType == Task.TYPE_DAILY || taskType == Task.TYPE_HABIT) View.VISIBLE else View.GONE
+        val habitDailyVisibility = if (taskType == TaskType.DAILY || taskType == TaskType.HABIT) View.VISIBLE else View.GONE
         binding.adjustStreakTitleView.visibility = habitDailyVisibility
         binding.adjustStreakWrapper.visibility = habitDailyVisibility
-        if (taskType == Task.TYPE_HABIT) {
+        if (taskType == TaskType.HABIT) {
             binding.habitAdjustPositiveStreakView.hint = getString(R.string.positive_habit_form)
         } else {
             binding.habitAdjustPositiveStreakView.hint = getString(R.string.streak)
         }
 
-        val todoDailyViewsVisibility = if (taskType == Task.TYPE_DAILY || taskType == Task.TYPE_TODO) View.VISIBLE else View.GONE
+        val todoDailyViewsVisibility = if (taskType == TaskType.DAILY || taskType == TaskType.TODO) View.VISIBLE else View.GONE
 
         binding.checklistTitleView.visibility = if (isChallengeTask) View.GONE else todoDailyViewsVisibility
         binding.checklistContainer.visibility = if (isChallengeTask) View.GONE else todoDailyViewsVisibility
@@ -314,11 +316,11 @@ class TaskFormActivity : BaseActivity() {
         binding.taskSchedulingControls.taskType = taskType
         binding.taskSchedulingControls.firstDayOfWeek = firstDayOfWeek
 
-        val rewardHideViews = if (taskType == Task.TYPE_REWARD) View.GONE else View.VISIBLE
+        val rewardHideViews = if (taskType == TaskType.REWARD) View.GONE else View.VISIBLE
         binding.taskDifficultyTitleView.visibility = rewardHideViews
         binding.taskDifficultyButtons.visibility = rewardHideViews
 
-        val rewardViewsVisibility = if (taskType == Task.TYPE_REWARD) View.VISIBLE else View.GONE
+        val rewardViewsVisibility = if (taskType == TaskType.REWARD) View.VISIBLE else View.GONE
         binding.rewardValueTitleView.visibility = rewardViewsVisibility
         binding.rewardValue.visibility = rewardViewsVisibility
 
@@ -368,13 +370,11 @@ class TaskFormActivity : BaseActivity() {
         binding.notesEditText.setText(task.notes)
         binding.taskDifficultyButtons.selectedDifficulty = task.priority
         when (taskType) {
-            Task.TYPE_HABIT -> {
+            TaskType.HABIT -> {
                 binding.habitScoringButtons.isPositive = task.up ?: false
                 binding.habitScoringButtons.isNegative = task.down ?: false
                 task.frequency?.let {
-                    if (it.isNotBlank()) {
-                        binding.habitResetStreakButtons.selectedResetOption = HabitResetOption.valueOf(it.toUpperCase(Locale.US))
-                    }
+                    binding.habitResetStreakButtons.selectedResetOption = HabitResetOption.from(it) ?: HabitResetOption.DAILY
                 }
                 binding.habitAdjustPositiveStreakView.setText((task.counterUp ?: 0).toString())
                 binding.habitAdjustNegativeStreakView.setText((task.counterDown ?: 0).toString())
@@ -385,19 +385,19 @@ class TaskFormActivity : BaseActivity() {
                     binding.adjustStreakWrapper.visibility = View.GONE
                 }
             }
-            Task.TYPE_DAILY -> {
+            TaskType.DAILY -> {
                 binding.taskSchedulingControls.startDate = task.startDate ?: Date()
                 binding.taskSchedulingControls.everyX = task.everyX ?: 1
                 task.repeat?.let { binding.taskSchedulingControls.weeklyRepeat = it }
                 binding.taskSchedulingControls.daysOfMonth = task.getDaysOfMonth()
                 binding.taskSchedulingControls.weeksOfMonth = task.getWeeksOfMonth()
                 binding.habitAdjustPositiveStreakView.setText((task.streak ?: 0).toString())
-                binding.taskSchedulingControls.frequency = task.frequency ?: Task.FREQUENCY_DAILY
+                binding.taskSchedulingControls.frequency = task.frequency ?: Frequency.DAILY
             }
-            Task.TYPE_TODO -> binding.taskSchedulingControls.dueDate = task.dueDate
-            Task.TYPE_REWARD -> binding.rewardValue.value = task.value
+            TaskType.TODO -> binding.taskSchedulingControls.dueDate = task.dueDate
+            TaskType.REWARD -> binding.rewardValue.value = task.value
         }
-        if (taskType == Task.TYPE_DAILY || taskType == Task.TYPE_TODO) {
+        if (taskType == TaskType.DAILY || taskType == TaskType.TODO) {
             task.checklist?.let { binding.checklistContainer.checklistItems = it }
             binding.remindersContainer.taskType = taskType
             task.reminders?.let { binding.remindersContainer.reminders = it }
@@ -406,12 +406,12 @@ class TaskFormActivity : BaseActivity() {
         setAllTagSelections()
     }
 
-    private fun setSelectedAttribute(attributeName: String) {
+    private fun setSelectedAttribute(attributeName: Attribute) {
         if (!usesTaskAttributeStats) return
-        configureStatsButton(binding.statStrengthButton, attributeName == Stats.STRENGTH)
-        configureStatsButton(binding.statIntelligenceButton, attributeName == Stats.INTELLIGENCE)
-        configureStatsButton(binding.statConstitutionButton, attributeName == Stats.CONSTITUTION)
-        configureStatsButton(binding.statPerceptionButton, attributeName == Stats.PERCEPTION)
+        configureStatsButton(binding.statStrengthButton, attributeName == Attribute.STRENGTH)
+        configureStatsButton(binding.statIntelligenceButton, attributeName == Attribute.INTELLIGENCE)
+        configureStatsButton(binding.statConstitutionButton, attributeName == Attribute.CONSTITUTION)
+        configureStatsButton(binding.statPerceptionButton, attributeName == Attribute.PERCEPTION)
     }
 
     private fun configureStatsButton(button: TextView, isSelected: Boolean) {
@@ -458,13 +458,13 @@ class TaskFormActivity : BaseActivity() {
         if (usesTaskAttributeStats) {
             thisTask.attribute = selectedStat
         }
-        if (taskType == Task.TYPE_HABIT) {
+        if (taskType == TaskType.HABIT) {
             thisTask.up = binding.habitScoringButtons.isPositive
             thisTask.down = binding.habitScoringButtons.isNegative
             thisTask.frequency = binding.habitResetStreakButtons.selectedResetOption.value
             if (binding.habitAdjustPositiveStreakView.text?.isNotEmpty() == true) thisTask.counterUp = binding.habitAdjustPositiveStreakView.text.toString().toIntCatchOverflow()
             if (binding.habitAdjustNegativeStreakView.text?.isNotEmpty() == true) thisTask.counterDown = binding.habitAdjustNegativeStreakView.text.toString().toIntCatchOverflow()
-        } else if (taskType == Task.TYPE_DAILY) {
+        } else if (taskType == TaskType.DAILY) {
             thisTask.startDate = binding.taskSchedulingControls.startDate
             thisTask.everyX = binding.taskSchedulingControls.everyX
             thisTask.frequency = binding.taskSchedulingControls.frequency
@@ -472,16 +472,16 @@ class TaskFormActivity : BaseActivity() {
             thisTask.setDaysOfMonth(binding.taskSchedulingControls.daysOfMonth)
             thisTask.setWeeksOfMonth(binding.taskSchedulingControls.weeksOfMonth)
             if (binding.habitAdjustPositiveStreakView.text?.isNotEmpty() == true) thisTask.streak = binding.habitAdjustPositiveStreakView.text.toString().toIntCatchOverflow()
-        } else if (taskType == Task.TYPE_TODO) {
+        } else if (taskType == TaskType.TODO) {
             thisTask.dueDate = binding.taskSchedulingControls.dueDate
-        } else if (taskType == Task.TYPE_REWARD) {
+        } else if (taskType == TaskType.REWARD) {
             thisTask.value = binding.rewardValue.value
         }
 
         val resultIntent = Intent()
         resultIntent.putExtra(TASK_TYPE_KEY, taskType)
         if (!isChallengeTask) {
-            if (taskType == Task.TYPE_DAILY || taskType == Task.TYPE_TODO) {
+            if (taskType == TaskType.DAILY || taskType == TaskType.TODO) {
                 thisTask.checklist = RealmList()
                 thisTask.checklist?.addAll(binding.checklistContainer.checklistItems)
                 thisTask.reminders = RealmList()
@@ -501,7 +501,7 @@ class TaskFormActivity : BaseActivity() {
                 taskRepository.updateTaskInBackground(thisTask)
             }
 
-            if (thisTask.type == Task.TYPE_DAILY || thisTask.type == Task.TYPE_TODO) {
+            if (thisTask.type == TaskType.DAILY || thisTask.type == TaskType.TODO) {
                 taskAlarmManager.scheduleAlarmsForTask(thisTask)
             }
         } else {

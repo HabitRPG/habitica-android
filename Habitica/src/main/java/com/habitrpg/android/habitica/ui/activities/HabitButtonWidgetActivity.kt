@@ -13,7 +13,7 @@ import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.databinding.WidgetConfigureHabitButtonBinding
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.android.habitica.models.tasks.Task
+import com.habitrpg.android.habitica.models.tasks.TaskType
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.adapter.SkillTasksRecyclerViewAdapter
 import com.habitrpg.android.habitica.widget.HabitButtonWidgetProvider
@@ -76,7 +76,7 @@ class HabitButtonWidgetActivity : BaseActivity() {
             ?.let { compositeSubscription.add(it) }
         binding.recyclerView.adapter = adapter
 
-        compositeSubscription.add(taskRepository.getTasks(Task.TYPE_HABIT, userId).subscribe({ adapter?.data = it }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(taskRepository.getTasks(TaskType.HABIT, userId).subscribe({ adapter?.data = it }, RxErrorHandler.handleEmptyError()))
     }
 
     private fun taskSelected(taskId: String?) {

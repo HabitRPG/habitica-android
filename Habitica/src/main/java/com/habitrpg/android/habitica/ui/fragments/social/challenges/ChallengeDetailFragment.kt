@@ -18,6 +18,7 @@ import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.tasks.Task
+import com.habitrpg.android.habitica.models.tasks.TaskType
 import com.habitrpg.android.habitica.ui.activities.ChallengeFormActivity
 import com.habitrpg.android.habitica.ui.activities.FullProfileActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
@@ -104,10 +105,10 @@ class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>
 
                         for (entry in taskList) {
                             when (entry.type) {
-                                Task.TYPE_TODO -> todos.add(entry)
-                                Task.TYPE_HABIT -> habits.add(entry)
-                                Task.TYPE_DAILY -> dailies.add(entry)
-                                Task.TYPE_REWARD -> rewards.add(entry)
+                                TaskType.TODO -> todos.add(entry)
+                                TaskType.HABIT -> habits.add(entry)
+                                TaskType.DAILY -> dailies.add(entry)
+                                TaskType.REWARD -> rewards.add(entry)
                             }
                         }
 

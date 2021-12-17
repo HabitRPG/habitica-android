@@ -9,6 +9,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.helpers.TaskFilterHelper
 import com.habitrpg.android.habitica.models.tasks.Task
+import com.habitrpg.android.habitica.models.tasks.TaskType
 import com.habitrpg.android.habitica.ui.adapter.tasks.BaseTasksRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.viewHolders.BindableViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.*
@@ -23,7 +24,7 @@ class ChallengeTasksRecyclerViewAdapter(
     userID: String,
     private val openTaskDisabled: Boolean,
     private val taskActionsDisabled: Boolean
-) : BaseTasksRecyclerViewAdapter<BindableViewHolder<Task>>("", taskFilterHelper, layoutResource, newContext, userID) {
+) : BaseTasksRecyclerViewAdapter<BindableViewHolder<Task>>(TaskType.HABIT, taskFilterHelper, layoutResource, newContext, userID) {
 
     private val addItemSubject = PublishSubject.create<Task>()
 
@@ -41,11 +42,11 @@ class ChallengeTasksRecyclerViewAdapter(
         val task = this.filteredContent?.get(position)
 
         return when (task?.type) {
-            Task.TYPE_HABIT -> TYPE_HABIT
-            Task.TYPE_DAILY -> TYPE_DAILY
-            Task.TYPE_TODO -> TYPE_TODO
-            Task.TYPE_REWARD -> TYPE_REWARD
-            else -> if (addItemSubject.hasObservers() && task?.type == TASK_TYPE_ADD_ITEM) TYPE_ADD_ITEM else TYPE_HEADER
+            TaskType.HABIT -> TYPE_HABIT
+            TaskType.DAILY -> TYPE_DAILY
+            TaskType.TODO -> TYPE_TODO
+            TaskType.REWARD -> TYPE_REWARD
+            else -> if (addItemSubject.hasObservers() && task?.type == TaskType.ADD_ITEM) TYPE_ADD_ITEM else TYPE_HEADER
         }
     }
 
@@ -132,8 +133,6 @@ class ChallengeTasksRecyclerViewAdapter(
     }
 
     companion object {
-        const val TASK_TYPE_ADD_ITEM = "ADD_ITEM"
-
         private const val TYPE_HEADER = 0
         private const val TYPE_HABIT = 1
         private const val TYPE_DAILY = 2

@@ -89,11 +89,6 @@ open class Stats : RealmObject(), BaseObject {
     }
 
     companion object {
-        const val STRENGTH = "str"
-        const val INTELLIGENCE = "int"
-        const val CONSTITUTION = "con"
-        const val PERCEPTION = "per"
-
         const val WARRIOR = "warrior"
         const val MAGE = "wizard"
         const val HEALER = "healer"

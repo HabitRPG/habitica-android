@@ -151,5 +151,6 @@
     <declare-styleable name="ValidatingEditText">
         <attr name="hint" format="string" />
         <attr name="android:inputType" />
+        <attr name="android:maxLines" />
     </declare-styleable>
 </resources>

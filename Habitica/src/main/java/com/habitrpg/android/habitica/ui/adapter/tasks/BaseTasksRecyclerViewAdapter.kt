@@ -9,6 +9,7 @@ import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.helpers.TaskFilterHelper
 import com.habitrpg.android.habitica.models.tasks.Task
+import com.habitrpg.android.habitica.models.tasks.TaskType
 import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import com.habitrpg.android.habitica.ui.adapter.BaseRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.viewHolders.BindableViewHolder
@@ -16,7 +17,7 @@ import java.util.*
 import javax.inject.Inject
 
 abstract class BaseTasksRecyclerViewAdapter<VH : BindableViewHolder<Task>>(
-    var taskType: String,
+    var taskType: TaskType,
     private val taskFilterHelper: TaskFilterHelper?,
     private val layoutResource: Int,
     newContext: Context,

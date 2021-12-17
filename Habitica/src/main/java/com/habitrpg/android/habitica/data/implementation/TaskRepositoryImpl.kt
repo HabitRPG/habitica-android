@@ -25,7 +25,7 @@ import java.util.*
 class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiClient, userID: String, val appConfigManager: AppConfigManager, val analyticsManager: AnalyticsManager) : BaseRepositoryImpl<TaskLocalRepository>(localRepository, apiClient, userID), TaskRepository {
     private var lastTaskAction: Long = 0
 
-    override fun getTasks(taskType: String, userID: String?): Flowable<out List<Task>> =
+    override fun getTasks(taskType: TaskType, userID: String?): Flowable<out List<Task>> =
         this.localRepository.getTasks(taskType, userID ?: this.userID)
 
     override fun saveTasks(userId: String, order: TasksOrder, tasks: TaskList) {
@@ -111,14 +111,14 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
         this.localRepository.executeTransaction {
             val bgTask = localRepository.getLiveObject(task) ?: return@executeTransaction
             val bgUser = localRepository.getLiveObject(user) ?: return@executeTransaction
-            if (bgTask.type != "reward" && (bgTask.value - localDelta) + res.delta != bgTask.value) {
+            if (bgTask.type != TaskType.REWARD && (bgTask.value - localDelta) + res.delta != bgTask.value) {
                 bgTask.value = (bgTask.value - localDelta) + res.delta
-                if (Task.TYPE_DAILY == bgTask.type || Task.TYPE_TODO == bgTask.type) {
+                if (TaskType.DAILY == bgTask.type || TaskType.TODO == bgTask.type) {
                     bgTask.completed = up
-                    if (Task.TYPE_DAILY == bgTask.type && up) {
+                    if (TaskType.DAILY == bgTask.type && up) {
                         bgTask.streak = (bgTask.streak ?: 0) + 1
                     }
-                } else if (Task.TYPE_HABIT == bgTask.type) {
+                } else if (TaskType.HABIT == bgTask.type) {
                     if (up) {
                         bgTask.counterUp = (bgTask.counterUp ?: 0) + 1
                     } else {
@@ -265,7 +265,7 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
         localRepository.swapTaskPosition(firstPosition, secondPosition)
     }
 
-    override fun updateTaskPosition(taskType: String, taskID: String, newPosition: Int): Maybe<List<String>> {
+    override fun updateTaskPosition(taskType: TaskType, taskID: String, newPosition: Int): Maybe<List<String>> {
         return apiClient.postTaskNewPosition(taskID, newPosition).firstElement()
             .doOnSuccess { localRepository.updateTaskPositions(it) }
     }

@@ -21,6 +21,7 @@ import com.habitrpg.android.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.Tag
 import com.habitrpg.android.habitica.models.tasks.Task
+import com.habitrpg.android.habitica.models.tasks.TaskType
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import io.reactivex.rxjava3.core.Observable
 import java.util.*
@@ -41,7 +42,7 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : HabiticaAl
     private var tagsEditButton: Button
     private var tagsList: LinearLayout
 
-    private var taskType: String? = null
+    private var taskType: TaskType? = null
     private var listener: OnFilterCompletedListener? = null
 
     private var filterType: String? = null
@@ -258,22 +259,22 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : HabiticaAl
         return -1
     }
 
-    fun setTaskType(taskType: String, activeFilter: String?) {
+    fun setTaskType(taskType: TaskType, activeFilter: String?) {
         this.taskType = taskType
         when (taskType) {
-            Task.TYPE_HABIT -> {
+            TaskType.HABIT -> {
                 taskTypeTitle.setText(R.string.habits)
                 allTaskFilter.setText(R.string.all)
                 secondTaskFilter.setText(R.string.weak)
                 thirdTaskFilter.setText(R.string.strong)
             }
-            Task.TYPE_DAILY -> {
+            TaskType.DAILY -> {
                 taskTypeTitle.setText(R.string.dailies)
                 allTaskFilter.setText(R.string.all)
                 secondTaskFilter.setText(R.string.due)
                 thirdTaskFilter.setText(R.string.gray)
             }
-            Task.TYPE_TODO -> {
+            TaskType.TODO -> {
                 taskTypeTitle.setText(R.string.todos)
                 allTaskFilter.setText(R.string.active)
                 secondTaskFilter.setText(R.string.dated)
@@ -293,7 +294,7 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : HabiticaAl
                 Task.FILTER_ALL -> checkedId = R.id.all_task_filter
                 Task.FILTER_WEAK, Task.FILTER_DATED -> checkedId = R.id.second_task_filter
                 Task.FILTER_STRONG, Task.FILTER_GRAY, Task.FILTER_COMPLETED -> checkedId = R.id.third_task_filter
-                Task.FILTER_ACTIVE -> checkedId = if (taskType == Task.TYPE_DAILY) {
+                Task.FILTER_ACTIVE -> checkedId = if (taskType == TaskType.DAILY) {
                     R.id.second_task_filter
                 } else {
                     R.id.all_task_filter
@@ -309,20 +310,20 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : HabiticaAl
             return
         }
         when (checkedId) {
-            R.id.all_task_filter -> filterType = if (taskType != Task.TYPE_TODO) {
+            R.id.all_task_filter -> filterType = if (taskType != TaskType.TODO) {
                 Task.FILTER_ALL
             } else {
                 Task.FILTER_ACTIVE
             }
             R.id.second_task_filter -> when (taskType) {
-                Task.TYPE_HABIT -> filterType = Task.FILTER_WEAK
-                Task.FREQUENCY_DAILY -> filterType = Task.FILTER_ACTIVE
-                Task.TYPE_TODO -> filterType = Task.FILTER_DATED
+                TaskType.HABIT -> filterType = Task.FILTER_WEAK
+                TaskType.DAILY -> filterType = Task.FILTER_ACTIVE
+                TaskType.TODO -> filterType = Task.FILTER_DATED
             }
             R.id.third_task_filter -> when (taskType) {
-                Task.TYPE_HABIT -> filterType = Task.FILTER_STRONG
-                Task.FREQUENCY_DAILY -> filterType = Task.FILTER_GRAY
-                Task.TYPE_TODO -> filterType = Task.FILTER_COMPLETED
+                TaskType.HABIT -> filterType = Task.FILTER_STRONG
+                TaskType.DAILY -> filterType = Task.FILTER_GRAY
+                TaskType.TODO -> filterType = Task.FILTER_COMPLETED
             }
         }
         filtersChanged()
