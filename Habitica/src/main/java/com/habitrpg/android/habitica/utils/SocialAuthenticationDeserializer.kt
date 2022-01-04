@@ -14,7 +14,7 @@ class SocialAuthenticationDeserializer : JsonDeserializer<SocialAuthentication> 
     override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): SocialAuthentication {
         val authentication = SocialAuthentication()
         val obj = json.asJsonObject
-        if (obj.has("emails")) {
+        if (obj.has("emails") && obj.get("emails").isJsonArray) {
             val emailJson = obj.getAsJsonArray("emails")
             for (entry in emailJson) {
                 if (entry.isJsonPrimitive) {
