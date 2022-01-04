@@ -11,6 +11,7 @@ import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.extensions.withImmutableFlag
+import com.habitrpg.android.habitica.extensions.withMutableFlag
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import javax.inject.Inject
@@ -90,7 +91,7 @@ abstract class TaskListWidgetProvider : BaseWidgetProvider() {
             intent.data = Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME))
             val toastPendingIntent = PendingIntent.getBroadcast(
                 context, 0, taskIntent,
-                withImmutableFlag(PendingIntent.FLAG_UPDATE_CURRENT)
+                withMutableFlag(PendingIntent.FLAG_UPDATE_CURRENT)
             )
             rv.setPendingIntentTemplate(R.id.list_view, toastPendingIntent)
 
