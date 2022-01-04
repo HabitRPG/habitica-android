@@ -1133,8 +1133,8 @@
     <string name="mystery_item_received">Вы открываете коробку и получаете %s</string>
     <string name="removed_member">%s был удален из группы</string>
     <string name="transfer">Перенести</string>
-    <string name="remove_member_confirm">Вы точно хотите изгнать %@ из Группы\?</string>
-    <string name="transfer_ownership_confirm_message">После этого %@ станет новым лидером Команды</string>
+    <string name="remove_member_confirm">Вы точно хотите изгнать %s из Группы\?</string>
+    <string name="transfer_ownership_confirm_message">После этого %s станет новым лидером Команды</string>
     <string name="transfer_ownership_confirm">Передать лидерство\?</string>
     <string name="transferred_ownership">Лидерство передано %s</string>
     <string name="transfer_ownership">Передать лидерство</string>

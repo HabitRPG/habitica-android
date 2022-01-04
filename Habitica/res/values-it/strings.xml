@@ -1149,7 +1149,7 @@
     <string name="survey_title">Indagine sui giocatori di Habitica</string>
     <string name="go_to_survey">Vai al sondaggio</string>
     <string name="no_longer_available">Non più disponibile</string>
-    <string name="open_for">Apri per %@</string>
+    <string name="open_for">Apri per %s</string>
     <string name="limited_potions_available">Oggetti stagionali disponibili</string>
     <string name="launch_screen">Schermata iniziale</string>
     <string name="something_new">Nuovo</string>
@@ -1163,8 +1163,8 @@
     <string name="six_months_one_time">6 mesi di abbonamento una tantum</string>
     <string name="three_months_one_time">3 mesi di abbonamento una tantum</string>
     <string name="one_month_one_time">1 mese di abbonamento una tantum</string>
-    <string name="gift_one_get_one_purchase_banner">Regala un abbonamento e ne riceverai uno gratis fino a %@</string>
-    <string name="g1g1_promo_info_limitations">Questo è un evento a tempo limitato che inizia il %@ alle 14:00 ora italiana (13:00 UTC) e terminerà il %@ alle 2:00 ora italiana (1:00 UTC). Questa promozione si applica solo quando fai un regalo a un altro Habitante. Se tu o il destinatario del regalo avete già un abbonamento, l\'abbonamento in regalo aggiungerà mesi di credito che verranno utilizzati solo dopo l\'annullamento o la scadenza dell\'abbonamento corrente.</string>
+    <string name="gift_one_get_one_purchase_banner">Regala un abbonamento e ne riceverai uno gratis fino a %s</string>
+    <string name="g1g1_promo_info_limitations">Questo è un evento a tempo limitato che inizia il %s alle 14:00 ora italiana (13:00 UTC) e terminerà il %@ alle 2:00 ora italiana (1:00 UTC). Questa promozione si applica solo quando fai un regalo a un altro Habitante. Se tu o il destinatario del regalo avete già un abbonamento, l\'abbonamento in regalo aggiungerà mesi di credito che verranno utilizzati solo dopo l\'annullamento o la scadenza dell\'abbonamento corrente.</string>
     <string name="g1g1_promo_info_instructions">Tocca \"Regala un abbonamento\" e digita il nome utente dell\'account a cui lo desideri regalare. Da lì, scegli la durata che desideri regalare e prosegui. Il tuo account verrà automaticamente ricompensato con lo stesso livello di abbonamento che hai appena regalato.</string>
     <string name="todo_item_checkbox">Checkbox della cosa da fare</string>
     <string name="daily_item_checkbox">Checkbox della attività giornaliera</string>

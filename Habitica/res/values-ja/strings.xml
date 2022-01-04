@@ -1162,7 +1162,7 @@
     <string name="caused_damage">ボスにダメージを与えました</string>
     <string name="go_to_survey">調査へ</string>
     <string name="no_longer_available">販売終了しました</string>
-    <string name="open_for">開店している期間は残り%@です</string>
+    <string name="open_for">開店している期間は残り%sです</string>
     <string name="limited_potions_available">季節のアイテムが購入可能です</string>
     <string name="launch_screen">起動画面</string>
     <string name="quest_leave_message_nostart">本当にクエストを抜けますか？一度抜けると同じクエストには参加できません。</string>

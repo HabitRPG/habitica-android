@@ -41,6 +41,7 @@ class AvatarStatsWidgetProvider : BaseWidgetProvider() {
 
     override fun onEnabled(context: Context) {
         super.onEnabled(context)
+        this.setUp()
         userRepository.getUser().subscribe({
             user = it
             updateData()

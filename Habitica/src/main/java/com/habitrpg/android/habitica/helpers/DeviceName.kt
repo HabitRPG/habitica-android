@@ -424,7 +424,7 @@ object DeviceName {
         if (isConnectedToNetwork) {
             try {
                 // Get the device name from the generated JSON files created from Google's device list.
-                val url = String.format(DEVICE_JSON_URL, codename!!.toLowerCase(Locale.ENGLISH))
+                val url = String.format(DEVICE_JSON_URL, codename!!.lowercase())
                 val jsonString = downloadJson(url)
                 val jsonArray = JSONArray(jsonString)
                 var i = 0
@@ -433,7 +433,10 @@ object DeviceName {
                     val json = jsonArray.getJSONObject(i)
                     val info = DeviceInfo(json)
                     if (codename.equals(info.codename, ignoreCase = true) && model == null ||
-                        codename.equals(info.codename, ignoreCase = true) && model.equals(info.model, ignoreCase = true)
+                        codename.equals(
+                            info.codename,
+                            ignoreCase = true
+                        ) && model.equals(info.model, ignoreCase = true)
                     ) {
                         // Save to SharedPreferences so we don't need to make another request.
                         val editor = prefs.edit()
@@ -443,6 +446,8 @@ object DeviceName {
                     }
                     i++
                 }
+            } catch (e: JSONException) {
+                return DeviceInfo(null, null, codename, model)
             } catch (e: Exception) {
                 RxErrorHandler.reportError(e)
             }

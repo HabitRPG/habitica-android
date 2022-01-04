@@ -12,6 +12,7 @@ import androidx.core.app.RemoteInput
 import androidx.core.os.bundleOf
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.withImmutableFlag
+import com.habitrpg.android.habitica.extensions.withMutableFlag
 import com.habitrpg.android.habitica.receivers.LocalNotificationActionReceiver
 import com.habitrpg.android.habitica.ui.helpers.EmojiParser
 import java.text.SimpleDateFormat
@@ -76,7 +77,7 @@ class GroupActivityNotification(context: Context, identifier: String?) : Habitic
             PendingIntent.getBroadcast(
                 context, groupID.hashCode(),
                 intent,
-                withImmutableFlag(PendingIntent.FLAG_UPDATE_CURRENT)
+                withMutableFlag(PendingIntent.FLAG_UPDATE_CURRENT)
             )
 
         val action: NotificationCompat.Action =
