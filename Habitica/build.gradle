@@ -16,7 +16,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.0.3'
+        classpath 'com.android.tools.build:gradle:7.0.4'
         classpath 'net.sourceforge.pmd:pmd-java:5.5.3'
     }
 }
@@ -152,7 +152,7 @@ android {
         buildConfigField "String", "TESTING_LEVEL", "\"production\""
         resConfigs "en", "bg", "de", "en-rGB", "es", "fr", "hr-rHR", "in", "it", "iw", "ja", "ko", "lt", "nl", "pl", "pt-rBR", "pt-rPT", "ru", "tr", "zh", "zh-rTW"
 
-        versionCode 3119
+        versionCode 3124
         versionName "3.4.2"
 
         targetSdkVersion 31

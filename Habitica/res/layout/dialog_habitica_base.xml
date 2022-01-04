@@ -4,11 +4,11 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <RelativeLayout
         android:id="@+id/confetti_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </RelativeLayout>
+        android:layout_height="match_parent"></RelativeLayout>
 <LinearLayout
     android:id="@+id/dialog_wrapper"
     android:orientation="vertical"
