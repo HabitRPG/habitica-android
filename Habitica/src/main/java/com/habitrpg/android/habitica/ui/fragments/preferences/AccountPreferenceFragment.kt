@@ -1,10 +1,8 @@
 package com.habitrpg.android.habitica.ui.fragments.preferences
 
+import android.R.attr
 import android.accounts.AccountManager
 import android.app.Activity
-import android.content.ClipData
-import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.InputType
 import android.view.View
@@ -40,6 +38,13 @@ import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaProgressDialog
 import org.greenrobot.eventbus.EventBus
 import javax.inject.Inject
+import android.R.attr.label
+import android.content.*
+
+import androidx.core.content.ContextCompat.getSystemService
+
+
+
 
 class AccountPreferenceFragment: BasePreferencesFragment(),
     SharedPreferences.OnSharedPreferenceChangeListener {
@@ -480,7 +485,8 @@ class AccountPreferenceFragment: BasePreferencesFragment(),
     }
 
     private fun copyValue(name: String, value: CharSequence?) {
-        ClipData.newPlainText(name, value)
+        val clipboard: ClipboardManager? = context?.let { getSystemService(it, ClipboardManager::class.java) }
+        clipboard?.setPrimaryClip(ClipData.newPlainText(name, value))
         val event = ShowSnackbarEvent()
         event.text = context?.getString(R.string.copied_to_clipboard, name)
         event.type = HabiticaSnackbar.SnackbarDisplayType.SUCCESS
