@@ -9,7 +9,6 @@ import androidx.core.os.bundleOf
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.AvatarWithBarsBinding
-import com.habitrpg.android.habitica.events.BoughtGemsEvent
 import com.habitrpg.android.habitica.helpers.HealthFormatter
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.Avatar
@@ -17,7 +16,6 @@ import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import io.reactivex.rxjava3.disposables.Disposable
-import org.greenrobot.eventbus.Subscribe
 import java.util.*
 import kotlin.math.floor
 
@@ -109,13 +107,6 @@ class AvatarWithBarsViewModel(private val context: Context, private val binding:
             cachedMaxMana = valueMax
         }
         binding.mpBar.set(floor(value.toDouble()), cachedMaxMana.toDouble())
-    }
-
-    @Subscribe
-    fun onEvent(gemsEvent: BoughtGemsEvent) {
-        var gems = userObject?.gemCount ?: 0
-        gems += gemsEvent.NewGemsToAdd
-        binding.currencyView.gems = gems.toDouble()
     }
 
     companion object {

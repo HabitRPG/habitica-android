@@ -156,7 +156,6 @@ open class PurchaseHandler(activity: Activity, val analyticsManager: AnalyticsMa
                                 purchase.token,
                                 object : RequestListener<Any> {
                                     override fun onSuccess(o: Any) {
-                                        // EventBus.getDefault().post(new BoughtGemsEvent(GEMS_TO_ADD));
                                     }
 
                                     override fun onError(i: Int, e: Exception) {

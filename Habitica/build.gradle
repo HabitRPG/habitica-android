@@ -13,7 +13,6 @@ buildscript {
         mavenLocal()
         google()
         mavenCentral()
-        jcenter()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:7.0.4'
@@ -47,8 +46,8 @@ dependencies {
     implementation 'com.squareup.retrofit2:adapter-rxjava3:2.9.0'
 
     //Dependency Injection
-    implementation 'com.google.dagger:dagger:2.39.1'
-    kapt 'com.google.dagger:dagger-compiler:2.39.1'
+    implementation 'com.google.dagger:dagger:2.40.5'
+    kapt 'com.google.dagger:dagger-compiler:2.40.5'
     compileOnly 'javax.annotation:javax.annotation-api:1.3.2'
     compileOnly 'com.github.pengrad:jdk9-deps:1.0'
     //App Compatibility and Material Design
@@ -64,44 +63,51 @@ dependencies {
     implementation "io.noties.markwon:image:4.6.2"
     implementation "io.noties.markwon:recycler:4.6.2"
     //Eventbus
-    implementation 'org.greenrobot:eventbus:3.2.0'
+    implementation 'org.greenrobot:eventbus:3.3.1'
     // IAP Handling / Verification
     implementation 'org.solovyev.android:checkout:1.2.3'
     //Facebook
-    implementation('com.facebook.android:facebook-android-sdk:11.3.0') {
+    implementation('com.facebook.android:facebook-android-sdk:12.2.0') {
         transitive = true
     }
     implementation 'fr.avianey.com.viewpagerindicator:library:2.4.1@aar'
     //RxJava
     implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
-    implementation 'io.reactivex.rxjava3:rxjava:3.1.1'
+    implementation 'io.reactivex.rxjava3:rxjava:3.1.3'
     implementation 'io.reactivex.rxjava3:rxkotlin:3.0.1'
     implementation 'io.reactivex.rxjava2:rxjava:2.2.21'
-    implementation "com.github.akarnokd:rxjava3-bridge:3.0.0"
+    implementation "com.github.akarnokd:rxjava3-bridge:3.0.2"
 
     //Analytics
-    implementation 'com.amplitude:android-sdk:2.30.0'
+    implementation 'com.amplitude:android-sdk:3.35.1'
     // Image Management Library
     implementation("io.coil-kt:coil:1.4.0")
     implementation("io.coil-kt:coil-gif:1.4.0")
 
     //Tests
-    testImplementation 'io.kotest:kotest-runner-junit5:4.6.2'
+    testImplementation 'io.kotest:kotest-runner-junit5:5.0.3'
     testImplementation 'androidx.test:core:1.4.0'
-    testImplementation "io.mockk:mockk:1.12.0"
-    testImplementation "io.mockk:mockk-android:1.12.0"
-    testImplementation 'io.kotest:kotest-assertions-core:4.6.2'
+    testImplementation "io.mockk:mockk:1.12.2"
+    testImplementation "io.mockk:mockk-android:1.12.2"
+    testImplementation 'io.kotest:kotest-assertions-core:5.0.3'
     testImplementation 'io.kotest:kotest-framework-datatest:4.6.2'
-    androidTestImplementation 'com.kaspersky.android-components:kaspresso:1.2.1'
+    androidTestImplementation 'com.kaspersky.android-components:kaspresso:1.4.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     androidTestImplementation 'androidx.test:runner:1.4.0'
     androidTestImplementation 'androidx.test:rules:1.4.0'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation "io.mockk:mockk-android:1.12.0"
+    androidTestImplementation "io.mockk:mockk-android:1.12.2"
+
+    implementation 'androidx.activity:activity-compose:1.4.0'
+    implementation 'androidx.compose.material:material:1.0.5'
+    implementation 'androidx.compose.animation:animation:1.0.5'
+    implementation 'androidx.compose.ui:ui-tooling:1.0.5'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.4.0'
+    implementation "com.google.accompanist:accompanist-appcompat-theme:0.16.0"
 
 
     //Leak Detection
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.7'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.8'
     //Push Notifications
     implementation platform('com.google.firebase:firebase-bom:29.0.0')
     implementation 'com.google.firebase:firebase-crashlytics-ktx'
@@ -109,7 +115,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging-ktx'
     implementation 'com.google.firebase:firebase-config-ktx'
     implementation 'com.google.firebase:firebase-perf-ktx'
-    implementation 'com.google.android.gms:play-services-auth:19.2.0'
+    implementation 'com.google.android.gms:play-services-auth:20.0.0'
     implementation 'com.nex3z:flow-layout:1.2.2'
 
     implementation 'androidx.core:core-ktx:1.7.0'
@@ -121,14 +127,14 @@ dependencies {
     implementation 'com.plattysoft.leonids:LeonidsLib:1.3.2'
     implementation "androidx.fragment:fragment-ktx:1.4.0"
     implementation "androidx.paging:paging-runtime-ktx:3.1.0"
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0'
 
     implementation 'com.willowtreeapps:signinwithapplebutton:0.3'
 
     implementation project(':shared')
 
-    ktlint("com.pinterest:ktlint:0.42.1") {
+    ktlint("com.pinterest:ktlint:0.43.2") {
         attributes {
             attribute(Bundling.BUNDLING_ATTRIBUTE, getObjects().named(Bundling, Bundling.EXTERNAL))
         }
@@ -136,7 +142,7 @@ dependencies {
 }
 
 android {
-    compileSdkVersion 31
+    compileSdkVersion 32
     buildToolsVersion '30.0.2'
     testOptions {
         unitTests {
@@ -153,9 +159,9 @@ android {
         resConfigs "en", "bg", "de", "en-rGB", "es", "fr", "hr-rHR", "in", "it", "iw", "ja", "ko", "lt", "nl", "pl", "pt-rBR", "pt-rPT", "ru", "tr", "zh", "zh-rTW"
 
         versionCode 3128
-        versionName "3.4.2"
+        versionName "3.5"
 
-        targetSdkVersion 31
+        targetSdkVersion 32
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceManager
 import com.habitrpg.android.habitica.HabiticaApplication
 import com.habitrpg.android.habitica.HabiticaBaseApplication
@@ -24,14 +25,21 @@ import com.habitrpg.android.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.extensions.isUsingNightModeResources
 import com.habitrpg.android.habitica.extensions.updateStatusBarColor
 import com.habitrpg.android.habitica.helpers.LanguageHelper
+import com.habitrpg.android.habitica.helpers.NotificationsManager
+import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.interactors.ShowNotificationInteractor
 import com.habitrpg.android.habitica.ui.helpers.ToolbarColorHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import java.util.*
+import javax.inject.Inject
 
 abstract class BaseActivity : AppCompatActivity() {
+    @Inject
+    lateinit var notificationsManager: NotificationsManager
+
     private var currentTheme: String? = null
     private var isNightMode: Boolean = false
     internal var forcedTheme: String? = null
@@ -76,6 +84,12 @@ abstract class BaseActivity : AppCompatActivity() {
         injectActivity(HabiticaBaseApplication.userComponent)
         setContentView(getContentView())
         compositeSubscription = CompositeDisposable()
+        compositeSubscription.add(notificationsManager.displayNotificationEvents.subscribe(
+            {
+            ShowNotificationInteractor(this, lifecycleScope).handleNotification(it)
+            },
+            RxErrorHandler.handleEmptyError()
+        ))
     }
 
     override fun onRestart() {

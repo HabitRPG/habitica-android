@@ -8,7 +8,6 @@ import android.content.SharedPreferences
 import android.os.Build
 import androidx.activity.result.ActivityResultLauncher
 import androidx.core.content.edit
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.facebook.AccessToken
 import com.facebook.CallbackManager
@@ -92,6 +91,9 @@ class AuthenticationViewModel() {
                     response.newUser = result.newUser
                     onSuccess(response)
                 }
+                else -> {
+
+                }
             }
         }.show()
     }
@@ -101,7 +103,7 @@ class AuthenticationViewModel() {
         loginManager.registerCallback(
             callbackManager,
             object : FacebookCallback<LoginResult> {
-                override fun onSuccess(loginResult: LoginResult) {
+                override fun onSuccess(result: LoginResult) {
                     val accessToken = AccessToken.getCurrentAccessToken()
                     compositeSubscription.add(
                         apiClient.connectSocial("facebook", accessToken?.userId ?: "", accessToken?.token ?: "")
@@ -113,8 +115,8 @@ class AuthenticationViewModel() {
 
                 override fun onCancel() { /* no-on */ }
 
-                override fun onError(exception: FacebookException) {
-                    RxErrorHandler.reportError(exception)
+                override fun onError(error: FacebookException) {
+                    RxErrorHandler.reportError(error)
                 }
             }
         )
@@ -122,10 +124,6 @@ class AuthenticationViewModel() {
 
     fun handleFacebookLogin(activity: Activity) {
         loginManager.logInWithReadPermissions(activity, listOf("user_friends"))
-    }
-
-    fun handleFacebookLogin(fragment: Fragment) {
-        loginManager.logInWithReadPermissions(fragment, listOf("user_friends"))
     }
 
     fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?, onSuccess: (UserAuthResponse) -> Unit) {
@@ -180,7 +178,7 @@ class AuthenticationViewModel() {
             Flowable.defer {
                 try {
                     @Suppress("Deprecation")
-                    return@defer Flowable.just(GoogleAuthUtil.getToken(activity, googleEmail, scopes))
+                    return@defer Flowable.just(GoogleAuthUtil.getToken(activity, googleEmail ?: "", scopes))
                 } catch (e: IOException) {
                     throw Exceptions.propagate(e)
                 } catch (e: GoogleAuthException) {
@@ -225,7 +223,7 @@ class AuthenticationViewModel() {
                 e.connectionStatusCode,
                 activity,
                 null,
-                AuthenticationViewModel.REQUEST_CODE_RECOVER_FROM_PLAY_SERVICES_ERROR
+                REQUEST_CODE_RECOVER_FROM_PLAY_SERVICES_ERROR
             ) {
             }
             return
@@ -247,8 +245,8 @@ class AuthenticationViewModel() {
         if (result != ConnectionResult.SUCCESS) {
             if (googleAPI.isUserResolvableError(result)) {
                 googleAPI.getErrorDialog(activity, result,
-                    AuthenticationViewModel.PLAY_SERVICES_RESOLUTION_REQUEST
-                ).show()
+                    PLAY_SERVICES_RESOLUTION_REQUEST
+                )?.show()
             }
             return false
         }

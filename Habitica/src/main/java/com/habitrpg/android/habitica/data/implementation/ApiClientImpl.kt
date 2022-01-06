@@ -80,8 +80,6 @@ class ApiClientImpl // private OnHabitsAPIResult mResultListener;
     private var lastAPICallURL: String? = null
 
     init {
-        this.notificationsManager.setApiClient(this)
-
         HabiticaBaseApplication.userComponent?.inject(this)
         analyticsManager.setUserIdentifier(this.hostConfig.userID)
         buildRetrofit()
