@@ -2,8 +2,11 @@ package com.habitrpg.android.habitica.ui.menu
 
 import android.content.Context
 import android.view.View
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.habitrpg.android.habitica.databinding.MenuBottomSheetBinding
+import android.view.ViewTreeObserver.OnGlobalLayoutListener
+
 
 class BottomSheetMenu(context: Context) : BottomSheetDialog(context), View.OnClickListener {
     private var binding = MenuBottomSheetBinding.inflate(layoutInflater)
@@ -12,6 +15,10 @@ class BottomSheetMenu(context: Context) : BottomSheetDialog(context), View.OnCli
     init {
         setContentView(binding.root)
         binding.titleView.visibility = View.GONE
+
+        val behavior = BottomSheetBehavior.from(binding.root.parent as View)
+        behavior.state = BottomSheetBehavior.STATE_EXPANDED
+        behavior.peekHeight = 0
     }
 
     fun setSelectionRunnable(runnable: (Int) -> Unit) {
