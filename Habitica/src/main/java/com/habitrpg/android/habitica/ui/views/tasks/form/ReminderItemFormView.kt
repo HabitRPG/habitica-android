@@ -44,9 +44,9 @@ class ReminderItemFormView @JvmOverloads constructor(
     private val formatter: DateFormat
         get() {
             return if (taskType == TaskType.DAILY) {
-                DateFormat.getTimeInstance(DateFormat.SHORT)
+                DateFormat.getTimeInstance(DateFormat.SHORT, Locale.getDefault())
             } else {
-                DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT)
+                DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, Locale.getDefault())
             }
         }
 

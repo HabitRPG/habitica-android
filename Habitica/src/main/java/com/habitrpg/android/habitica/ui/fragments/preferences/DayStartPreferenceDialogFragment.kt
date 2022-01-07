@@ -37,6 +37,7 @@ class DayStartPreferenceDialogFragment : PreferenceDialogFragmentCompat() {
         val wrapper = LinearLayout(context)
         wrapper.orientation = LinearLayout.VERTICAL
         picker = TimePicker(context)
+        picker?.setIs24HourView(android.text.format.DateFormat.is24HourFormat(context))
         descriptionTextView = TextView(context)
         @Suppress("DEPRECATION")
         descriptionTextView?.setTextColor(resources.getColor(R.color.text_primary))

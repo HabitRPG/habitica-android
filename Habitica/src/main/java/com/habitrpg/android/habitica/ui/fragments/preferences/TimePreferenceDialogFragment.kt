@@ -8,6 +8,7 @@ import android.widget.TimePicker
 import androidx.preference.PreferenceDialogFragmentCompat
 import androidx.preference.PreferenceFragmentCompat
 import com.habitrpg.android.habitica.prefs.TimePreference
+import java.text.DateFormat
 import java.util.*
 
 class TimePreferenceDialogFragment : PreferenceDialogFragmentCompat() {
@@ -35,6 +36,7 @@ class TimePreferenceDialogFragment : PreferenceDialogFragmentCompat() {
 
     override fun onCreateDialogView(context: Context?): View {
         picker = TimePicker(context)
+        picker.setIs24HourView(android.text.format.DateFormat.is24HourFormat(context))
         return picker
     }
 
