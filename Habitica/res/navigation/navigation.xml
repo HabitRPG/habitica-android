@@ -450,7 +450,9 @@
     <fragment
         android:id="@+id/promoInfoFragment"
         android:name="com.habitrpg.android.habitica.ui.fragments.PromoInfoFragment"
-        android:label="" />
+        android:label="">
+        <deepLink app:uri="habitica.com/promo/info" />
+    </fragment>
     <fragment
         android:id="@+id/promoWebFragment"
         android:name="com.habitrpg.android.habitica.ui.fragments.PromoWebFragment"
@@ -458,6 +460,7 @@
         <argument
             android:name="url"
             app:argType="string" />
+        <deepLink app:uri="habitica.com/promo/web" />
     </fragment>
     <fragment
         android:id="@+id/teamBoardFragment"
