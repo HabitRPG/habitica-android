@@ -60,7 +60,6 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
                 chatMessage
             }
             .toList()
-            .doOnSuccess { localRepository.saveChatMessages(groupId, it) }
     }
 
     override fun getGroupChat(groupId: String): Flowable<out List<ChatMessage>> {
@@ -94,7 +93,6 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
         val liked = chatMessage.userLikesMessage(userID)
         localRepository.likeMessage(chatMessage, userID, !liked)
         return apiClient.likeMessage(chatMessage.groupId ?: "", chatMessage.id)
-            .doOnError { localRepository.likeMessage(chatMessage, userID, liked) }
     }
 
     override fun deleteMessage(chatMessage: ChatMessage): Flowable<Void> {
@@ -110,11 +108,6 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
             .map { postChatMessageResult ->
                 postChatMessageResult.message.groupId = groupId
                 postChatMessageResult
-            }
-            .doOnNext { postChatMessageResult ->
-                if (postChatMessageResult != null) {
-                    localRepository.save(postChatMessageResult.message)
-                }
             }
     }
 

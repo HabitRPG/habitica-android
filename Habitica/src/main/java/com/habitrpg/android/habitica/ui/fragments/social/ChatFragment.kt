@@ -95,7 +95,12 @@ class ChatFragment : BaseFragment<FragmentChatBinding>() {
             }
         })
 
-        viewModel?.getChatMessages()?.subscribe({ this.setChatMessages(it) }, RxErrorHandler.handleEmptyError())?.let { compositeSubscription.add(it) }
+        viewModel?.chatmessages?.observe(
+            viewLifecycleOwner,
+            {
+                setChatMessages(it)
+            }
+        )
 
         binding?.chatBarView?.onCommunityGuidelinesAccepted = {
             viewModel?.updateUser("flags.communityGuidelinesAccepted", true)
@@ -204,7 +209,7 @@ class ChatFragment : BaseFragment<FragmentChatBinding>() {
 
     private fun setChatMessages(chatMessages: List<ChatMessage>) {
         chatAdapter?.data = chatMessages
-        viewModel?.socialRepository?.getUnmanagedCopy(chatMessages)?.let { binding?.chatBarView?.chatMessages = it }
+        binding?.chatBarView?.chatMessages = chatMessages
 
         viewModel?.gotNewMessages = true
 

@@ -50,7 +50,7 @@ class ChatRecyclerIntroViewHolder(itemView: View, replyToUUID: String) : ChatRec
     }
 }
 
-class ChatRecyclerMessageViewHolder(itemView: View, private var userId: String, private val isTavern: Boolean) : ChatRecyclerViewHolder(itemView) {
+class ChatRecyclerMessageViewHolder(itemView: View, private var userId: String, private val isGroupChat: Boolean) : ChatRecyclerViewHolder(itemView) {
     val binding = ChatItemBinding.bind(itemView)
 
     val context: Context = itemView.context
@@ -216,7 +216,7 @@ class ChatRecyclerMessageViewHolder(itemView: View, private var userId: String, 
     }
 
     private fun setLikeProperties() {
-        binding.likeBackgroundLayout.visibility = if (isTavern) View.VISIBLE else View.INVISIBLE
+        binding.likeBackgroundLayout.visibility = if (isGroupChat) View.VISIBLE else View.INVISIBLE
         @SuppressLint("SetTextI18n")
         binding.tvLikes.text = "+" + chatMessage?.likeCount
 

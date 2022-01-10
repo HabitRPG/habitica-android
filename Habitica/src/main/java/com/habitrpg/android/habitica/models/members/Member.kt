@@ -2,13 +2,15 @@ package com.habitrpg.android.habitica.models.members
 
 import com.google.gson.annotations.SerializedName
 import com.habitrpg.android.habitica.models.Avatar
+import com.habitrpg.android.habitica.models.BaseMainObject
 import com.habitrpg.android.habitica.models.BaseObject
 import com.habitrpg.android.habitica.models.social.UserParty
 import com.habitrpg.android.habitica.models.user.*
+import io.realm.RealmModel
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
-open class Member : RealmObject(), Avatar, BaseObject {
+open class Member : RealmObject(), Avatar, BaseMainObject {
 
     @PrimaryKey
     @SerializedName("_id")
@@ -58,4 +60,10 @@ open class Member : RealmObject(), Avatar, BaseObject {
 
     override val sleep: Boolean
         get() = preferences?.sleep ?: false
+    override val realmClass: Class<out RealmModel>
+        get() = Member::class.java
+    override val primaryIdentifier: String?
+        get() = id
+    override val primaryIdentifierName: String
+        get() = "id"
 }

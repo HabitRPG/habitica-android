@@ -54,6 +54,13 @@ open class GroupViewModel(initializeComponent: Boolean) : BaseViewModel(initiali
         MutableLiveData<Boolean?>()
     }
 
+    private val _chatMessages: MutableLiveData<List<ChatMessage>> by lazy {
+        MutableLiveData<List<ChatMessage>>(listOf())
+    }
+    val chatmessages: LiveData<List<ChatMessage>> by lazy {
+        _chatMessages
+    }
+
     protected val groupIDSubject = BehaviorSubject.create<Optional<String>>()
     val groupIDFlowable: Flowable<Optional<String>> = groupIDSubject.toFlowable(BackpressureStrategy.BUFFER)
     var gotNewMessages: Boolean = false
@@ -141,12 +148,6 @@ open class GroupViewModel(initializeComponent: Boolean) : BaseViewModel(initiali
                     RxErrorHandler.handleEmptyError()
                 )
         )
-    }
-
-    fun getChatMessages(): Flowable<List<ChatMessage>> {
-        return groupIDFlowable
-            .filterMapEmpty()
-            .flatMap { socialRepository.getGroupChat(it) }
     }
 
     fun retrieveGroup(function: (() -> Unit)?) {
@@ -237,17 +238,35 @@ open class GroupViewModel(initializeComponent: Boolean) : BaseViewModel(initiali
     }
 
     fun likeMessage(message: ChatMessage) {
-        disposable.add(socialRepository.likeMessage(message).subscribe({ }, RxErrorHandler.handleEmptyError()))
+        val index = _chatMessages.value?.indexOf(message) ?: return
+        disposable.add(socialRepository.likeMessage(message).subscribe(
+            {
+                val list = _chatMessages.value?.toMutableList()
+                list?.set(index, it)
+                _chatMessages.postValue(list)
+        }, RxErrorHandler.handleEmptyError()))
     }
 
     fun deleteMessage(chatMessage: ChatMessage) {
-        disposable.add(socialRepository.deleteMessage(chatMessage).subscribe({ }, RxErrorHandler.handleEmptyError()))
+        val oldIndex = _chatMessages.value?.indexOf(chatMessage) ?: return
+        val list = _chatMessages.value?.toMutableList()
+        list?.remove(chatMessage)
+        _chatMessages.postValue(list)
+        disposable.add(socialRepository.deleteMessage(chatMessage).subscribe({
+        }, {
+            list?.add(oldIndex, chatMessage)
+            _chatMessages.postValue(list)
+            RxErrorHandler.reportError(it)
+        }))
     }
 
     fun postGroupChat(chatText: String, onComplete: () -> Unit, onError: () -> Unit) {
-        groupIDSubject.value?.value?.let {
-            socialRepository.postGroupChat(it, chatText).subscribe(
+        groupIDSubject.value?.value?.let { groupID ->
+            socialRepository.postGroupChat(groupID, chatText).subscribe(
                 {
+                    val list = _chatMessages.value?.toMutableList()
+                    list?.add(0, it.message)
+                    _chatMessages.postValue(list)
                     onComplete()
                 },
                 { error ->
@@ -270,6 +289,7 @@ open class GroupViewModel(initializeComponent: Boolean) : BaseViewModel(initiali
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     {
+                        _chatMessages.postValue(it)
                         onComplete()
                     },
                     RxErrorHandler.handleEmptyError()

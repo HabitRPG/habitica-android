@@ -1,14 +1,16 @@
 package com.habitrpg.android.habitica.models.social
 
+import com.habitrpg.android.habitica.models.BaseMainObject
 import com.habitrpg.android.habitica.models.BaseObject
 import com.habitrpg.android.habitica.models.tasks.TasksOrder
 import com.habitrpg.android.habitica.models.user.User
+import io.realm.RealmModel
 import io.realm.RealmObject
 import io.realm.annotations.Ignore
 import io.realm.annotations.PrimaryKey
 import java.util.*
 
-open class Challenge : RealmObject(), BaseObject {
+open class Challenge : RealmObject(), BaseMainObject {
 
     @PrimaryKey
     var id: String? = null
@@ -57,6 +59,13 @@ open class Challenge : RealmObject(), BaseObject {
 
         return map
     }
+
+    override val realmClass: Class<out RealmModel>
+        get() = Challenge::class.java
+    override val primaryIdentifier: String?
+        get() = id
+    override val primaryIdentifierName: String
+        get() = "id"
 
     override fun equals(other: Any?): Boolean {
         return if (other?.javaClass == Challenge::class.java && this.id != null) {

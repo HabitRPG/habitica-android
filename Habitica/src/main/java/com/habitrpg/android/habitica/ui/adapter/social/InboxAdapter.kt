@@ -20,7 +20,6 @@ class InboxAdapter(private var user: User?, private var replyToUser: Member) : P
     private val NORMAL_MESSAGE = 1
 
     private var expandedMessageId: String? = null
-    private val likeMessageEvents = PublishSubject.create<ChatMessage>()
     private val userLabelClickEvents = PublishSubject.create<String>()
     private val deleteMessageEvents = PublishSubject.create<ChatMessage>()
     private val flagMessageEvents = PublishSubject.create<ChatMessage>()
@@ -64,7 +63,6 @@ class InboxAdapter(private var user: User?, private var replyToUser: Member) : P
                 expandedMessageId == message.id
             )
             messageHolder.onShouldExpand = { expandMessage(message.id, position) }
-            messageHolder.onLikeMessage = { likeMessageEvents.onNext(it) }
             messageHolder.onOpenProfile = { userLabelClickEvents.onNext(it) }
             messageHolder.onReply = { replyMessageEvents.onNext(it) }
             messageHolder.onCopyMessage = { copyMessageEvents.onNext(it) }

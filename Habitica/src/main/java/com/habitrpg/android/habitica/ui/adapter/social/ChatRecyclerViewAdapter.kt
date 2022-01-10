@@ -7,13 +7,30 @@ import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.SystemChatMessageBinding
 import com.habitrpg.android.habitica.extensions.inflate
+import com.habitrpg.android.habitica.models.BaseMainObject
+import com.habitrpg.android.habitica.models.BaseObject
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.adapter.BaseRecyclerViewAdapter
+import com.habitrpg.android.habitica.ui.adapter.DiffCallback
 import com.habitrpg.android.habitica.ui.viewHolders.ChatRecyclerMessageViewHolder
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.subjects.PublishSubject
+
+class ChatDiffCallback(oldList: List<BaseMainObject>, newList: List<BaseMainObject>) :
+    DiffCallback<ChatMessage>(oldList, newList) {
+    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        return oldList[oldItemPosition].primaryIdentifier == newList[newItemPosition].primaryIdentifier
+    }
+
+    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        val oldItem = oldList[oldItemPosition] as ChatMessage
+        val newItem = newList[newItemPosition] as ChatMessage
+        return oldItem.likeCount == newItem.likeCount && oldItem.id == newItem.id
+    }
+    }
+
 
 class ChatRecyclerViewAdapter(user: User?, private val isTavern: Boolean) : BaseRecyclerViewAdapter<ChatMessage, RecyclerView.ViewHolder>() {
     internal var user = user
@@ -30,6 +47,13 @@ class ChatRecyclerViewAdapter(user: User?, private val isTavern: Boolean) : Base
     private val flagMessageEvents = PublishSubject.create<ChatMessage>()
     private val replyMessageEvents = PublishSubject.create<String>()
     private val copyMessageEvents = PublishSubject.create<ChatMessage>()
+
+    override fun getDiffCallback(
+        oldList: List<ChatMessage>,
+        newList: List<ChatMessage>
+    ): DiffCallback<ChatMessage> {
+        return ChatDiffCallback(oldList, newList)
+    }
 
     init {
         this.uuid = user?.id ?: ""

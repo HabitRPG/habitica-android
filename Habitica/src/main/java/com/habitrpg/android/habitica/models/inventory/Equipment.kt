@@ -1,11 +1,13 @@
 package com.habitrpg.android.habitica.models.inventory
 
 import com.google.gson.annotations.SerializedName
+import com.habitrpg.android.habitica.models.BaseMainObject
 import com.habitrpg.android.habitica.models.BaseObject
+import io.realm.RealmModel
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
-open class Equipment : RealmObject(), BaseObject {
+open class Equipment : RealmObject(), BaseMainObject {
 
     var value: Double = 0.toDouble()
     var type: String? = ""
@@ -25,4 +27,11 @@ open class Equipment : RealmObject(), BaseObject {
     var twoHanded = false
     var mystery = ""
     var gearSet = ""
+
+    override val realmClass: Class<out RealmModel>
+        get() = Equipment::class.java
+    override val primaryIdentifier: String?
+        get() = key
+    override val primaryIdentifierName: String
+        get() = "key"
 }
