@@ -65,4 +65,8 @@ object MainNavigationController {
     fun handle(deeplink: Intent) {
         navController?.handleDeepLink(deeplink)
     }
+
+    fun navigateBack() {
+        navController?.navigateUp()
+    }
 }

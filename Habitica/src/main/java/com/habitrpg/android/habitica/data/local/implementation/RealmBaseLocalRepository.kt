@@ -8,6 +8,7 @@ import hu.akarnokd.rxjava3.bridge.RxJavaBridge
 import io.reactivex.rxjava3.core.Flowable
 import io.realm.Realm
 import io.realm.RealmObject
+import io.realm.kotlin.deleteFromRealm
 
 abstract class RealmBaseLocalRepository internal constructor(override var realm: Realm) : BaseLocalRepository {
 
@@ -76,9 +77,17 @@ abstract class RealmBaseLocalRepository internal constructor(override var realm:
         }
     }
 
+    override fun <T : BaseMainObject> delete(obj: T) {
+        if (isClosed) { return }
+        val liveObject = getLiveObject(obj) ?: return
+        realm.executeTransaction {
+            liveObject.deleteFromRealm()
+        }
+    }
+
     override fun <T : BaseObject> getLiveObject(obj: T): T? {
         if (isClosed) return null
-        if (!(obj is RealmObject) || !obj.isManaged) return obj
+        if (obj !is RealmObject || !obj.isManaged) return obj
         val baseObject = obj as? BaseMainObject ?: return null
         return realm.where(baseObject.realmClass).equalTo(baseObject.primaryIdentifierName, baseObject.primaryIdentifier).findFirst() as? T
     }

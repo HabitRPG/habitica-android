@@ -14,6 +14,7 @@ import com.habitrpg.android.habitica.databinding.DialogChallengeDetailTaskGroupB
 import com.habitrpg.android.habitica.databinding.FragmentChallengeDetailBinding
 import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.extensions.inflate
+import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.Challenge
@@ -30,6 +31,7 @@ import com.habitrpg.android.habitica.ui.viewHolders.tasks.RewardViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.TodoViewHolder
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
+import retrofit2.HttpException
 import java.util.*
 import javax.inject.Inject
 
@@ -211,7 +213,12 @@ class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>
         challengeID?.let { id ->
             challengeRepository.retrieveChallenge(id)
                 .flatMap { challengeRepository.retrieveChallengeTasks(id) }
-                .subscribe({ }, RxErrorHandler.handleEmptyError(), { })
+                .subscribe({ }, {
+                    if (it is HttpException && it.code() == 404) {
+                        MainNavigationController.navigateBack()
+                    }
+                    RxErrorHandler.reportError(it)
+                })
         }
     }
 

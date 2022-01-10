@@ -197,7 +197,8 @@
             android:paddingStart="@dimen/spacing_large"
             android:paddingEnd="@dimen/spacing_large"
             android:paddingTop="@dimen/spacing_medium"
-            android:paddingBottom="@dimen/spacing_large">
+            android:paddingBottom="@dimen/spacing_large"
+            android:visibility="gone">
             <Button
                 android:id="@+id/leave_button"
                 android:layout_width="match_parent"

@@ -11,6 +11,7 @@ import com.habitrpg.android.habitica.models.tasks.TaskList
 import com.habitrpg.android.habitica.models.tasks.TaskType
 import com.habitrpg.android.habitica.models.tasks.TasksOrder
 import io.reactivex.rxjava3.core.Flowable
+import retrofit2.HttpException
 
 class ChallengeRepositoryImpl(localRepository: ChallengeLocalRepository, apiClient: ApiClient, userID: String) : BaseRepositoryImpl<ChallengeLocalRepository>(localRepository, apiClient, userID), ChallengeRepository {
 
@@ -38,6 +39,13 @@ class ChallengeRepositoryImpl(localRepository: ChallengeLocalRepository, apiClie
         return apiClient.getChallenge(challengeID).doOnNext {
             localRepository.save(it)
         }
+            .doOnError {
+                if (it is HttpException && it.code() == 404) {
+                    localRepository.getChallenge(challengeID).firstElement().subscribe { challenge ->
+                        localRepository.delete(challenge)
+                    }
+                }
+            }
     }
 
     override fun retrieveChallengeTasks(challengeID: String): Flowable<TaskList> {

@@ -10,6 +10,7 @@ import com.habitrpg.android.habitica.extensions.Optional
 import com.habitrpg.android.habitica.extensions.asOptional
 import com.habitrpg.android.habitica.extensions.filterMapEmpty
 import com.habitrpg.android.habitica.extensions.filterOptionalDoOnEmpty
+import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.NotificationsManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.members.Member
@@ -21,6 +22,7 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.subjects.BehaviorSubject
+import retrofit2.HttpException
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -159,7 +161,12 @@ open class GroupViewModel(initializeComponent: Boolean) : BaseViewModel(initiali
                         socialRepository.retrieveGroupMembers(group1.id, true)
                     }
                     .doOnComplete { function?.invoke() }
-                    .subscribe({ }, RxErrorHandler.handleEmptyError())
+                    .subscribe({ }, {
+                        if (it is HttpException && it.code() == 404) {
+                            MainNavigationController.navigateBack()
+                        }
+                        RxErrorHandler.reportError(it)
+                    })
             )
         }
     }

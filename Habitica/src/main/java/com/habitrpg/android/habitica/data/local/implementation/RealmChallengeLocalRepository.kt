@@ -109,7 +109,7 @@ class RealmChallengeLocalRepository(realm: Realm) : RealmBaseLocalRepository(rea
     }
 
     override fun saveChallenges(challenges: List<Challenge>, clearChallenges: Boolean, memberOnly: Boolean, userID: String) {
-        if (clearChallenges && !memberOnly) {
+        if (clearChallenges || memberOnly) {
             val localChallenges = realm.where(Challenge::class.java).findAll().createSnapshot()
             val memberships = realm.where(ChallengeMembership::class.java).findAll()
             val challengesToDelete = ArrayList<Challenge>()

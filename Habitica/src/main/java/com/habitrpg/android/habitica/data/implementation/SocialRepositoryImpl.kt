@@ -13,6 +13,7 @@ import com.habitrpg.android.habitica.models.social.*
 import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Single
+import retrofit2.HttpException
 import java.util.*
 import kotlin.collections.HashMap
 
@@ -125,7 +126,13 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
             { group, _ ->
                 group
             }
-        )
+        ).doOnError {
+            if (it is HttpException && it.code() == 404) {
+                localRepository.getGroup(id).firstElement().subscribe { group ->
+                    localRepository.delete(group)
+                }
+            }
+        }
     }
 
     override fun getGroup(id: String?): Flowable<Group> {

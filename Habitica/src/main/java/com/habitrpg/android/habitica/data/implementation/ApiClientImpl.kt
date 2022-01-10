@@ -200,7 +200,7 @@ class ApiClientImpl // private OnHabitsAPIResult mResultListener;
             if (res.message != null && res.message == "RECEIPT_ALREADY_USED") {
                 return
             }
-            if (status == 404 || error.response()?.raw()?.request?.url?.toString()?.endsWith("/user/push-devices") == true) {
+            if (error.response()?.raw()?.request?.url?.toString()?.endsWith("/user/push-devices") == true) {
                 // workaround for an error that sometimes displays that the user already has this push device
                 return
             }
