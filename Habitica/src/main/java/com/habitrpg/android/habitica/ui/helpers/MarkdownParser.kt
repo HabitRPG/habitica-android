@@ -83,7 +83,8 @@ object MarkdownParser {
             return SpannableString("")
         }
         val text = EmojiParser.parseEmojis(input) ?: input
-        return markwon?.toMarkdown(text) ?: SpannableString(text)
+        // Adding this space here bc for some reason some markdown is not rendered correctly when the whole string is supposed to be formatted
+        return markwon?.toMarkdown("$text ") ?: SpannableString(text)
     }
 
     fun parseMarkdownAsync(input: String?, onSuccess: Consumer<Spanned>) {
