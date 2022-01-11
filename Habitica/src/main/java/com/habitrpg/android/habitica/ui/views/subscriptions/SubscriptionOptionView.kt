@@ -58,7 +58,7 @@ class SubscriptionOptionView(context: Context, attrs: AttributeSet) : FrameLayou
         }
     }
 
-    fun setIsPurchased(purchased: Boolean) {
+    fun setIsSelected(purchased: Boolean) {
         if (purchased) {
             binding.wrapper.setBackgroundResource(R.drawable.subscription_box_bg_selected)
             binding.subscriptionSelectedView.setBackgroundResource(R.drawable.subscription_selected)

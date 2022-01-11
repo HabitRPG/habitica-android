@@ -8,13 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import androidx.fragment.app.Fragment
+import com.android.billingclient.api.Purchase
+import com.android.billingclient.api.SkuDetails
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
-import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentSubscriptionBinding
-import com.habitrpg.android.habitica.events.UserSubscribedEvent
 import com.habitrpg.android.habitica.extensions.addCancelButton
 import com.habitrpg.android.habitica.extensions.isUsingNightModeResources
 import com.habitrpg.android.habitica.extensions.layoutInflater
@@ -25,7 +25,6 @@ import com.habitrpg.android.habitica.helpers.PurchaseTypes
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.proxy.AnalyticsManager
-import com.habitrpg.android.habitica.ui.activities.GemPurchaseActivity
 import com.habitrpg.android.habitica.ui.activities.GiftSubscriptionActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.fragments.PromoInfoFragment
@@ -36,13 +35,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.greenrobot.eventbus.Subscribe
-import org.solovyev.android.checkout.Inventory
-import org.solovyev.android.checkout.Purchase
-import org.solovyev.android.checkout.Sku
 import javax.inject.Inject
 
-class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>(), GemPurchaseActivity.CheckoutFragment {
+class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
 
     override var binding: FragmentSubscriptionBinding? = null
 
@@ -59,21 +54,14 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>(), GemPur
     @Inject
     lateinit var inventoryRepository: InventoryRepository
     @Inject
-    lateinit var apiClient: ApiClient
+    lateinit var purchaseHandler: PurchaseHandler
 
-    private var selectedSubscriptionSku: Sku? = null
-    private var skus: List<Sku> = emptyList()
-
-    private var purchaseHandler: PurchaseHandler? = null
+    private var selectedSubscriptionSku: SkuDetails? = null
+    private var skus: List<SkuDetails> = emptyList()
 
     private var user: User? = null
     private var hasLoadedSubscriptionOptions: Boolean = false
     private var purchasedSubscription: Purchase? = null
-
-    @Subscribe
-    fun fetchUser(event: UserSubscribedEvent?) {
-        refresh()
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -84,12 +72,7 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>(), GemPur
 
         binding?.giftSubscriptionButton?.setOnClickListener { context?.let { context -> showGiftSubscriptionDialog(context, appConfigManager.activePromo()?.identifier == "g1g1") } }
 
-        binding?.subscription1month?.setOnPurchaseClickListener { selectSubscription(PurchaseTypes.Subscription1Month) }
-        binding?.subscription3month?.setOnPurchaseClickListener { selectSubscription(PurchaseTypes.Subscription3Month) }
-        binding?.subscription6month?.setOnPurchaseClickListener { selectSubscription(PurchaseTypes.Subscription6Month) }
-        binding?.subscription12month?.setOnPurchaseClickListener { selectSubscription(PurchaseTypes.Subscription12Month) }
-
-        binding?.subscribeButton?.setOnClickListener { subscribeUser() }
+        binding?.subscribeButton?.setOnClickListener { purchaseSubscription() }
 
         val promo = appConfigManager.activePromo()
         if (promo != null) {
@@ -125,6 +108,7 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>(), GemPur
     override fun onResume() {
         super.onResume()
         refresh()
+        loadInventory()
     }
 
     private fun refresh() {
@@ -143,54 +127,47 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>(), GemPur
         component.inject(this)
     }
 
-    override fun setupCheckout() {
+    fun loadInventory() {
         CoroutineScope(Dispatchers.IO).launch {
-            val subscriptions = purchaseHandler?.getAllSubscriptionProducts() ?: return@launch
-            skus = subscriptions.skus
+            val subscriptions = purchaseHandler.getAllSubscriptionProducts()
+            skus = subscriptions
             withContext(Dispatchers.Main) {
-                for (sku in subscriptions.skus) {
-                    updateButtonLabel(sku, sku.price, subscriptions)
+                for (sku in subscriptions) {
+                    updateButtonLabel(sku, sku.price)
                 }
-                selectSubscription(PurchaseTypes.Subscription1Month)
+                subscriptions.firstOrNull()?.let { selectSubscription(it) }
                 hasLoadedSubscriptionOptions = true
                 updateSubscriptionInfo()
             }
         }
     }
 
-    private fun updateButtonLabel(sku: Sku, price: String, subscriptions: Inventory.Product) {
+    private fun updateButtonLabel(sku: SkuDetails, price: String) {
         val matchingView = buttonForSku(sku)
         if (matchingView != null) {
             matchingView.setPriceText(price)
-            matchingView.sku = sku.id.code
-            matchingView.setIsPurchased(subscriptions.isPurchased(sku))
-        }
-    }
-
-    private fun selectSubscription(sku: String) {
-        for (thisSku in skus) {
-            if (thisSku.id.code == sku) {
-                selectSubscription(thisSku)
-                return
+            matchingView.sku = sku.sku
+            matchingView.setOnPurchaseClickListener {
+                selectSubscription(sku)
             }
         }
     }
 
-    private fun selectSubscription(sku: Sku) {
+    private fun selectSubscription(sku: SkuDetails) {
         if (this.selectedSubscriptionSku != null) {
             val oldButton = buttonForSku(this.selectedSubscriptionSku)
-            oldButton?.setIsPurchased(false)
+            oldButton?.setIsSelected(false)
         }
         this.selectedSubscriptionSku = sku
         val subscriptionOptionButton = buttonForSku(this.selectedSubscriptionSku)
-        subscriptionOptionButton?.setIsPurchased(true)
+        subscriptionOptionButton?.setIsSelected(true)
         if (binding?.subscribeButton != null) {
             binding?.subscribeButton?.isEnabled = true
         }
     }
 
-    private fun buttonForSku(sku: Sku?): SubscriptionOptionView? {
-        return buttonForSku(sku?.id?.code)
+    private fun buttonForSku(sku: SkuDetails?): SubscriptionOptionView? {
+        return buttonForSku(sku?.sku)
     }
 
     private fun buttonForSku(sku: String?): SubscriptionOptionView? {
@@ -203,20 +180,10 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>(), GemPur
         }
     }
 
-    override fun setPurchaseHandler(handler: PurchaseHandler?) {
-        this.purchaseHandler = handler
-
-        handler?.checkForSubscription {
-            purchasedSubscription = it
-            checkIfNeedsCancellation()
-        }
-    }
-
     private fun purchaseSubscription() {
         selectedSubscriptionSku?.let { sku ->
-            purchaseHandler?.purchaseSubscription(sku) {
-                fetchUser(null)
-                binding?.scrollView?.smoothScrollTo(0, 0)
+            activity?.let {
+                purchaseHandler.purchase(it, sku)
             }
         }
     }
@@ -224,10 +191,7 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>(), GemPur
     fun setUser(newUser: User) {
         user = newUser
         this.updateSubscriptionInfo()
-        purchaseHandler?.checkForSubscription {
-            purchasedSubscription = it
-            checkIfNeedsCancellation()
-        }
+        checkIfNeedsCancellation()
     }
 
     private fun updateSubscriptionInfo() {
@@ -270,17 +234,11 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>(), GemPur
         if (user?.purchased?.plan?.paymentMethod == "Google" &&
             user?.purchased?.plan?.isActive == true &&
             user?.purchased?.plan?.dateTerminated == null &&
-            (purchasedSubscription?.autoRenewing == false || purchasedSubscription == null)
+            (purchasedSubscription?.isAutoRenewing == false || purchasedSubscription == null)
         ) {
             compositeSubscription.add(
-                apiClient.cancelSubscription()
-                    .flatMap { userRepository.retrieveUser(false, true) }
-                    .subscribe(
-                        {
-                            refresh()
-                        },
-                        RxErrorHandler.handleEmptyError()
-                    )
+                purchaseHandler.cancelSubscription()
+                    .subscribe({ }, RxErrorHandler.handleEmptyError())
             )
         }
     }
@@ -293,10 +251,6 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>(), GemPur
             },
             500
         )
-    }
-
-    private fun subscribeUser() {
-        purchaseSubscription()
     }
 
     companion object {

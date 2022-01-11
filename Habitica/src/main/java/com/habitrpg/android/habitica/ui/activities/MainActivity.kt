@@ -509,11 +509,6 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         }
     }
 
-    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        PurchaseHandler.findForActivity(this)?.onResult(requestCode, resultCode, data)
-    }
-
     // region Events
 
     public override fun onDestroy() {
@@ -835,11 +830,5 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                 dialog.enqueue()
             }.subscribe({ }, RxErrorHandler.handleEmptyError())
         )
-    }
-
-    @Suppress("UNUSED_PARAMETER")
-    @Subscribe
-    fun onConsumablePurchased(event: ConsumablePurchasedEvent) {
-        compositeSubscription.add(userRepository.retrieveUser(withTasks = false, forced = true).subscribe({}, RxErrorHandler.handleEmptyError()))
     }
 }

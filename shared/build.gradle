@@ -12,6 +12,9 @@ android {
     buildTypes {
         release {
         }
+        debugIAP {
+
+        }
     }
     sourceSets{
         main.java.srcDirs += 'src/androidMain/kotlin'

@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica
 
+import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.content.Intent
@@ -12,6 +13,7 @@ import android.database.DatabaseErrorHandler
 import android.database.sqlite.SQLiteDatabase
 import android.os.Build
 import android.os.Build.VERSION.SDK_INT
+import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.edit
@@ -45,15 +47,12 @@ import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import io.realm.Realm
 import io.realm.RealmConfiguration
-import org.solovyev.android.checkout.Billing
-import org.solovyev.android.checkout.Cache
-import org.solovyev.android.checkout.Checkout
-import org.solovyev.android.checkout.PurchaseVerifier
+import java.lang.ref.WeakReference
 import java.util.Locale
 import javax.inject.Inject
 
 // contains all HabiticaApplicationLogic except dagger componentInitialisation
-abstract class HabiticaBaseApplication : Application() {
+abstract class HabiticaBaseApplication : Application(), Application.ActivityLifecycleCallbacks {
     @Inject
     internal lateinit var lazyApiHelper: ApiClient
     @Inject
@@ -67,25 +66,15 @@ abstract class HabiticaBaseApplication : Application() {
      */
     // endregion
 
-    var billing: Billing? = null
-        private set
-    /**
-     * Application wide [Checkout] instance (can be used
-     * anywhere in the app).
-     * This instance contains all available products in the app.
-     */
-    var checkout: Checkout? = null
-        private set
-
     @OptIn(ExperimentalCoilApi::class)
     override fun onCreate() {
         super.onCreate()
+        registerActivityLifecycleCallbacks(this)
         setupRealm()
         setupDagger()
         setLocale()
         setupRemoteConfig()
         setupNotifications()
-        createBillingAndCheckout()
         HabiticaIconsHelper.init(this)
         MarkdownParser.setup(this)
 
@@ -217,27 +206,6 @@ abstract class HabiticaBaseApplication : Application() {
         return true
     }
 
-    private fun createBillingAndCheckout() {
-        billing = Billing(
-            this,
-            object : Billing.DefaultConfiguration() {
-                override fun getPublicKey(): String {
-                    return "DONT-NEED-IT"
-                }
-
-                override fun getCache(): Cache {
-                    return Billing.newCache()
-                }
-
-                override fun getPurchaseVerifier(): PurchaseVerifier {
-                    return HabiticaPurchaseVerifier(this@HabiticaBaseApplication, lazyApiHelper)
-                }
-            }
-        )
-
-        billing?.let { checkout = Checkout.forApplication(it) }
-    }
-
     private fun setupRemoteConfig() {
         val remoteConfig = FirebaseRemoteConfig.getInstance()
         val configSettings = FirebaseRemoteConfigSettings.Builder()
@@ -259,6 +227,34 @@ abstract class HabiticaBaseApplication : Application() {
                 Log.d("Token", "Firebase Notification Token: $token")
             }
         }
+    }
+
+    var currentActivity: WeakReference<Activity>? = null
+
+    override fun onActivityResumed(activity: Activity) {
+        currentActivity = WeakReference(activity)
+    }
+
+    override fun onActivityStarted(activity: Activity) {
+        currentActivity = WeakReference(activity)
+    }
+
+    override fun onActivityPaused(activity: Activity) {
+        if (currentActivity?.get() == activity) {
+            currentActivity = null
+        }
+    }
+
+    override fun onActivityCreated(p0: Activity, p1: Bundle?) {
+    }
+
+    override fun onActivityDestroyed(p0: Activity) {
+    }
+
+    override fun onActivitySaveInstanceState(p0: Activity, p1: Bundle) {
+    }
+
+    override fun onActivityStopped(p0: Activity) {
     }
 
     companion object {

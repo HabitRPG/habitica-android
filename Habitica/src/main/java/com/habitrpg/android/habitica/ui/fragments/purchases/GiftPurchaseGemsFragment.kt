@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.habitrpg.android.habitica.HabiticaPurchaseVerifier
+import com.android.billingclient.api.SkuDetails
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.FragmentGiftGemPurchaseBinding
@@ -54,11 +54,6 @@ class GiftPurchaseGemsFragment : BaseFragment<FragmentGiftGemPurchaseBinding>() 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        binding?.gems4View?.setOnPurchaseClickListener { purchaseGems(PurchaseTypes.Purchase4Gems) }
-        binding?.gems21View?.setOnPurchaseClickListener { purchaseGems(PurchaseTypes.Purchase21Gems) }
-        binding?.gems42View?.setOnPurchaseClickListener { purchaseGems(PurchaseTypes.Purchase42Gems) }
-        binding?.gems84View?.setOnPurchaseClickListener { purchaseGems(PurchaseTypes.Purchase84Gems) }
     }
 
     fun setupCheckout() {
@@ -66,7 +61,7 @@ class GiftPurchaseGemsFragment : BaseFragment<FragmentGiftGemPurchaseBinding>() 
             val skus = purchaseHandler?.getAllGemSKUs()
             withContext(Dispatchers.Main) {
                 for (sku in skus ?: emptyList()) {
-                    updateButtonLabel(sku.id.code, sku.price)
+                    updateButtonLabel(sku, sku.price)
                 }
             }
         }
@@ -76,8 +71,8 @@ class GiftPurchaseGemsFragment : BaseFragment<FragmentGiftGemPurchaseBinding>() 
         this.purchaseHandler = handler
     }
 
-    private fun updateButtonLabel(sku: String, price: String) {
-        val matchingView: GemPurchaseOptionsView? = when (sku) {
+    private fun updateButtonLabel(sku: SkuDetails, price: String) {
+        val matchingView: GemPurchaseOptionsView? = when (sku.sku) {
             PurchaseTypes.Purchase4Gems -> binding?.gems4View
             PurchaseTypes.Purchase21Gems -> binding?.gems21View
             PurchaseTypes.Purchase42Gems -> binding?.gems42View
@@ -86,14 +81,16 @@ class GiftPurchaseGemsFragment : BaseFragment<FragmentGiftGemPurchaseBinding>() 
         }
         if (matchingView != null) {
             matchingView.setPurchaseButtonText(price)
+            matchingView.setOnPurchaseClickListener {
+                purchaseGems(sku)
+            }
             matchingView.sku = sku
         }
     }
 
-    private fun purchaseGems(identifier: String) {
+    private fun purchaseGems(sku: SkuDetails) {
         giftedMember?.id?.let {
-            HabiticaPurchaseVerifier.addGift(identifier, it)
-            purchaseHandler?.purchaseGems(identifier)
+            activity?.let { it1 -> purchaseHandler?.purchase(it1, sku, it) }
         }
     }
 }

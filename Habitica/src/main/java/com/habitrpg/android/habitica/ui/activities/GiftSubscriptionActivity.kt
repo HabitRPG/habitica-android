@@ -1,17 +1,14 @@
 package com.habitrpg.android.habitica.ui.activities
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.os.Bundle
-import android.view.MenuItem
 import android.view.View
 import androidx.navigation.navArgs
-import com.habitrpg.android.habitica.HabiticaPurchaseVerifier
+import com.android.billingclient.api.SkuDetails
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.ActivityGiftSubscriptionBinding
-import com.habitrpg.android.habitica.events.ConsumablePurchasedEvent
 import com.habitrpg.android.habitica.extensions.addOkButton
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.PurchaseHandler
@@ -24,12 +21,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.greenrobot.eventbus.Subscribe
-import org.solovyev.android.checkout.Inventory
-import org.solovyev.android.checkout.Sku
 import javax.inject.Inject
 
-class GiftSubscriptionActivity : BaseActivity() {
+class GiftSubscriptionActivity : PurchaseActivity() {
 
     private lateinit var binding: ActivityGiftSubscriptionBinding
 
@@ -39,14 +33,14 @@ class GiftSubscriptionActivity : BaseActivity() {
     lateinit var socialRepository: SocialRepository
     @Inject
     lateinit var appConfigManager: AppConfigManager
-
-    private var purchaseHandler: PurchaseHandler? = null
+    @Inject
+    lateinit var purchaseHandler: PurchaseHandler
 
     private var giftedUsername: String? = null
     private var giftedUserID: String? = null
 
-    private var selectedSubscriptionSku: Sku? = null
-    private var skus: List<Sku> = emptyList()
+    private var selectedSubscriptionSku: SkuDetails? = null
+    private var skus: List<SkuDetails> = emptyList()
 
     override fun getLayoutResId(): Int {
         return R.layout.activity_gift_subscription
@@ -105,76 +99,37 @@ class GiftSubscriptionActivity : BaseActivity() {
 
     override fun onStart() {
         super.onStart()
-        purchaseHandler = PurchaseHandler(this, analyticsManager)
-        purchaseHandler?.startListening()
         CoroutineScope(Dispatchers.IO).launch {
-            val subscriptions = purchaseHandler?.getAllGiftSubscriptionProducts()
-            skus = subscriptions?.skus ?: return@launch
+            val subscriptions = purchaseHandler.getAllGiftSubscriptionProducts()
+            skus = subscriptions
             withContext(Dispatchers.Main) {
                 for (sku in skus) {
-                    updateButtonLabel(sku, sku.price, subscriptions)
+                    updateButtonLabel(sku)
                 }
             }
         }
     }
-
-    override fun onResume() {
-        super.onResume()
-
-        binding.subscription1MonthView.setOnPurchaseClickListener { selectSubscription(PurchaseTypes.Subscription1MonthNoRenew) }
-        binding.subscription3MonthView.setOnPurchaseClickListener { selectSubscription(PurchaseTypes.Subscription3MonthNoRenew) }
-        binding.subscription6MonthView.setOnPurchaseClickListener { selectSubscription(PurchaseTypes.Subscription6MonthNoRenew) }
-        binding.subscription12MonthView.setOnPurchaseClickListener { selectSubscription(PurchaseTypes.Subscription12MonthNoRenew) }
-    }
-
-    override fun onStop() {
-        purchaseHandler?.stopListening()
-        super.onStop()
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        purchaseHandler?.onResult(requestCode, resultCode, data)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) {
-            finish()
-        }
-
-        return super.onOptionsItemSelected(item)
-    }
-
-    private fun updateButtonLabel(sku: Sku, price: String, subscriptions: Inventory.Product) {
+    private fun updateButtonLabel(sku: SkuDetails) {
         val matchingView = buttonForSku(sku)
         if (matchingView != null) {
-            matchingView.setPriceText(price)
-            matchingView.sku = sku.id.code
-            matchingView.setIsPurchased(subscriptions.isPurchased(sku))
+            matchingView.setPriceText(sku.price)
+            matchingView.sku = sku.sku
+            binding.subscription1MonthView.setOnPurchaseClickListener { selectSubscription(sku) }
         }
     }
 
-    private fun selectSubscription(sku: String) {
+    private fun selectSubscription(sku: SkuDetails) {
         for (thisSku in skus) {
-            if (thisSku.id.code == sku) {
-                selectSubscription(thisSku)
-                return
-            }
-        }
-    }
-
-    private fun selectSubscription(sku: Sku) {
-        for (thisSku in skus) {
-            buttonForSku(thisSku)?.setIsPurchased(false)
+            buttonForSku(thisSku)?.setIsSelected(false)
         }
         this.selectedSubscriptionSku = sku
         val subscriptionOptionButton = buttonForSku(this.selectedSubscriptionSku)
-        subscriptionOptionButton?.setIsPurchased(true)
+        subscriptionOptionButton?.setIsSelected(true)
         binding.subscriptionButton.isEnabled = true
     }
 
-    private fun buttonForSku(sku: Sku?): SubscriptionOptionView? {
-        return buttonForSku(sku?.id?.code)
+    private fun buttonForSku(sku: SkuDetails?): SubscriptionOptionView? {
+        return buttonForSku(sku?.sku)
     }
 
     private fun buttonForSku(sku: String?): SubscriptionOptionView? {
@@ -187,50 +142,14 @@ class GiftSubscriptionActivity : BaseActivity() {
         }
     }
 
-    private fun purchaseSubscription(sku: Sku) {
+    private fun purchaseSubscription(sku: SkuDetails) {
         giftedUserID?.let { id ->
             if (id.isEmpty()) {
                 return
             }
-            HabiticaPurchaseVerifier.addGift(sku.id.code, id)
-            purchaseHandler?.purchaseNoRenewSubscription(sku)
+            PurchaseHandler.addGift(sku.sku, id)
+            purchaseHandler.purchase(this, sku)
         }
     }
 
-    @Subscribe
-    fun onConsumablePurchased(event: ConsumablePurchasedEvent) {
-        purchaseHandler?.consumePurchase(event.purchase)
-        runOnUiThread {
-            displayConfirmationDialog()
-        }
-    }
-
-    private fun selectedDurationString(): String {
-        return when (selectedSubscriptionSku?.id?.code) {
-            PurchaseTypes.Subscription1MonthNoRenew -> "1"
-            PurchaseTypes.Subscription3MonthNoRenew -> "3"
-            PurchaseTypes.Subscription6MonthNoRenew -> "6"
-            PurchaseTypes.Subscription12MonthNoRenew -> "12"
-            else -> ""
-        }
-    }
-
-    private fun displayConfirmationDialog() {
-        val message = getString(
-            if (appConfigManager.activePromo()?.identifier == "g1g1") {
-                R.string.gift_confirmation_text_sub_g1g1
-            } else {
-                R.string.gift_confirmation_text_sub
-            },
-            giftedUsername, selectedDurationString()
-        )
-        val alert = HabiticaAlertDialog(this)
-        alert.setTitle(R.string.gift_confirmation_title)
-        alert.setMessage(message)
-        alert.addOkButton { dialog, _ ->
-            dialog.dismiss()
-            finish()
-        }
-        alert.enqueue()
-    }
 }

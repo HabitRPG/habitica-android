@@ -65,7 +65,7 @@ dependencies {
     //Eventbus
     implementation 'org.greenrobot:eventbus:3.3.1'
     // IAP Handling / Verification
-    implementation 'org.solovyev.android:checkout:1.2.3'
+    implementation "com.android.billingclient:billing-ktx:4.0.0"
     //Facebook
     implementation('com.facebook.android:facebook-android-sdk:12.2.0') {
         transitive = true
@@ -158,7 +158,7 @@ android {
         buildConfigField "String", "TESTING_LEVEL", "\"production\""
         resConfigs "en", "bg", "de", "en-rGB", "es", "fr", "hr-rHR", "in", "it", "iw", "ja", "ko", "lt", "nl", "pl", "pt-rBR", "pt-rPT", "ru", "tr", "zh", "zh-rTW"
 
-        versionCode 3128
+        versionCode 3200
         versionName "3.5"
 
         targetSdkVersion 32
@@ -192,9 +192,21 @@ android {
             resValue "string", "content_provider", "com.habitrpg.android.habitica.debug.fileprovider"
             resValue "string", "app_name", "Habitica Debug"
         }
+        debugIAP {
+            signingConfig signingConfigs.release
+            debuggable true
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            // Disable fabric build ID generation for debug builds
+            ext.enableCrashlytics = false
+            ext.alwaysUpdateBuildId = false
+            testCoverageEnabled = true
+            resValue "string", "content_provider", "com.habitrpg.android.habitica.fileprovider"
+            resValue "string", "app_name", "Habitica Debug"
+        }
         release {
             signingConfig signingConfigs.release
-            debuggable false
+            debuggable true
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -247,6 +259,7 @@ android {
             res.srcDirs = ['res']
         }*/
         //instrumentTest.setRoot('tests')
+        debugIAP { java.srcDirs = ['src/debug/java'] }
         release { java.srcDirs = ['src/release/java'] }
     }
 

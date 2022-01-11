@@ -46,8 +46,6 @@ class GiftBalanceGemsFragment : BaseFragment<FragmentGiftGemBalanceBinding>() {
         binding?.usernameTextview?.text = it.formattedUsername
     }
 
-    var onCompleted: (() -> Unit)? = null
-
     override fun injectFragment(component: UserComponent) {
         component.inject(this)
     }
@@ -72,9 +70,8 @@ class GiftBalanceGemsFragment : BaseFragment<FragmentGiftGemBalanceBinding>() {
                         }
                         .subscribe(
                             {
-                                onCompleted?.invoke()
-                            },
-                            RxErrorHandler.handleEmptyError()
+                            activity?.finish()
+                            }, RxErrorHandler.handleEmptyError()
                         )
                 )
             }

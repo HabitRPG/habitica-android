@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.ui
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.FrameLayout
+import com.android.billingclient.api.SkuDetails
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.PurchaseGemViewBinding
 import com.habitrpg.android.habitica.extensions.layoutInflater
@@ -10,7 +11,7 @@ import com.habitrpg.android.habitica.extensions.layoutInflater
 class GemPurchaseOptionsView(context: Context, attrs: AttributeSet) : FrameLayout(context, attrs) {
 
     var binding: PurchaseGemViewBinding = PurchaseGemViewBinding.inflate(context.layoutInflater, this, true)
-    var sku: String? = null
+    var sku: SkuDetails? = null
 
     init {
         val a = context.theme.obtainStyledAttributes(

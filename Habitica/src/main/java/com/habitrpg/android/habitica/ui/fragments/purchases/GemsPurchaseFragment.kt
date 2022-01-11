@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import androidx.fragment.app.Fragment
+import com.android.billingclient.api.SkuDetails
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.UserRepository
@@ -16,20 +17,16 @@ import com.habitrpg.android.habitica.extensions.isUsingNightModeResources
 import com.habitrpg.android.habitica.helpers.*
 import com.habitrpg.android.habitica.models.promotions.PromoType
 import com.habitrpg.android.habitica.ui.GemPurchaseOptionsView
-import com.habitrpg.android.habitica.ui.activities.GemPurchaseActivity
 import com.habitrpg.android.habitica.ui.activities.GiftGemsActivity
 import com.habitrpg.android.habitica.ui.activities.GiftSubscriptionActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.fragments.PromoInfoFragment
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import javax.inject.Inject
 
-class GemsPurchaseFragment : BaseFragment<FragmentGemPurchaseBinding>(), GemPurchaseActivity.CheckoutFragment {
+class GemsPurchaseFragment : BaseFragment<FragmentGemPurchaseBinding>() {
 
     override var binding: FragmentGemPurchaseBinding? = null
 
@@ -41,8 +38,8 @@ class GemsPurchaseFragment : BaseFragment<FragmentGemPurchaseBinding>(), GemPurc
     lateinit var userRepository: UserRepository
     @Inject
     lateinit var appConfigManager: AppConfigManager
-
-    private var purchaseHandler: PurchaseHandler? = null
+    @Inject
+    lateinit var purchaseHandler: PurchaseHandler
 
     override fun injectFragment(component: UserComponent) {
         component.inject(this)
@@ -96,23 +93,24 @@ class GemsPurchaseFragment : BaseFragment<FragmentGemPurchaseBinding>(), GemPurc
         AmplitudeManager.sendNavigationEvent("gem screen")
     }
 
-    override fun setupCheckout() {
+    override fun onResume() {
+        super.onResume()
+        loadInventory()
+    }
+
+    private fun loadInventory() {
         CoroutineScope(Dispatchers.IO).launch {
-            val skus = purchaseHandler?.getAllGemSKUs()
+            val skus = purchaseHandler.getAllGemSKUs()
             withContext(Dispatchers.Main) {
-                for (sku in skus ?: emptyList()) {
-                    updateButtonLabel(sku.id.code, sku.price)
+                for (sku in skus) {
+                    updateButtonLabel(sku)
                 }
             }
         }
     }
 
-    override fun setPurchaseHandler(handler: PurchaseHandler?) {
-        this.purchaseHandler = handler
-    }
-
-    private fun updateButtonLabel(sku: String, price: String) {
-        val matchingView: GemPurchaseOptionsView? = when (sku) {
+    private fun updateButtonLabel(sku: SkuDetails) {
+        val matchingView: GemPurchaseOptionsView? = when (sku.sku) {
             PurchaseTypes.Purchase4Gems -> binding?.gems4View
             PurchaseTypes.Purchase21Gems -> binding?.gems21View
             PurchaseTypes.Purchase42Gems -> binding?.gems42View
@@ -120,14 +118,14 @@ class GemsPurchaseFragment : BaseFragment<FragmentGemPurchaseBinding>(), GemPurc
             else -> return
         }
         if (matchingView != null) {
-            matchingView.setPurchaseButtonText(price)
+            matchingView.setPurchaseButtonText(sku.price)
             matchingView.sku = sku
         }
     }
 
     private fun purchaseGems(view: GemPurchaseOptionsView?) {
         val identifier = view?.sku ?: return
-        purchaseHandler?.purchaseGems(identifier)
+        activity?.let { purchaseHandler.purchase(it, identifier) }
     }
 
     private fun showGiftGemsDialog() {

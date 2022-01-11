@@ -8,18 +8,9 @@ import com.google.firebase.crashlytics.FirebaseCrashlytics
 
 class AnalyticsManagerImpl(context: Context) : AnalyticsManager {
 
-    private val firebaseAnalytics: com.google.firebase.analytics.FirebaseAnalytics
-
-    init {
-        firebaseAnalytics = FirebaseAnalytics.getInstance(context)
-    }
+    private val firebaseAnalytics = FirebaseAnalytics.getInstance(context)
 
     override fun logException(t: Throwable) {
-        if (t is org.solovyev.android.checkout.BillingException) {
-            if (t.response == org.solovyev.android.checkout.ResponseCodes.USER_CANCELED) {
-                return
-            }
-        }
         FirebaseCrashlytics.getInstance().recordException(t)
     }
 
