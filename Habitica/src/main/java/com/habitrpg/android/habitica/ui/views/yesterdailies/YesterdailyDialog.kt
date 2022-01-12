@@ -22,6 +22,7 @@ import com.habitrpg.android.habitica.models.tasks.TaskType
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
+import java.lang.ref.WeakReference
 import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.math.abs
@@ -57,7 +58,12 @@ class YesterdailyDialog private constructor(context: Context, private val userRe
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
-        isDisplaying = true
+        displayedDialog = WeakReference(this)
+    }
+
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        displayedDialog = null
     }
 
     private fun runCron() {
@@ -69,7 +75,7 @@ class YesterdailyDialog private constructor(context: Context, private val userRe
         }
         lastCronRun = Date()
         userRepository.runCron(completedTasks)
-        isDisplaying = false
+        displayedDialog = null
     }
 
     private fun createTaskViews(inflater: LayoutInflater) {
@@ -174,7 +180,7 @@ class YesterdailyDialog private constructor(context: Context, private val userRe
 
     companion object {
 
-        internal var isDisplaying = false
+        private var displayedDialog: WeakReference<YesterdailyDialog>? = null
         internal var lastCronRun: Date? = null
 
         fun showDialogIfNeeded(activity: Activity, userId: String?, userRepository: UserRepository?, taskRepository: TaskRepository) {
@@ -197,7 +203,7 @@ class YesterdailyDialog private constructor(context: Context, private val userRe
                     .retry(1)
                     .throttleFirst(2, TimeUnit.SECONDS)
                     .filter {
-                        if (isDisplaying) {
+                        if (displayedDialog?.get()?.isShowing == true) {
                             return@filter false
                         }
 
@@ -224,8 +230,7 @@ class YesterdailyDialog private constructor(context: Context, private val userRe
                             AmplitudeManager.sendEvent("show cron", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT, additionalData)
 
                             if (tasks.isNotEmpty()) {
-                                isDisplaying = true
-                                showDialog(activity, userRepository, taskRepository, tasks)
+                                displayedDialog = WeakReference(showDialog(activity, userRepository, taskRepository, tasks))
                             } else {
                                 lastCronRun = Date()
                                 userRepository.runCron()
@@ -236,13 +241,14 @@ class YesterdailyDialog private constructor(context: Context, private val userRe
             }
         }
 
-        private fun showDialog(activity: Activity, userRepository: UserRepository, taskRepository: TaskRepository, tasks: List<Task>) {
+        private fun showDialog(activity: Activity, userRepository: UserRepository, taskRepository: TaskRepository, tasks: List<Task>): YesterdailyDialog {
             val dialog = YesterdailyDialog(activity, userRepository, taskRepository, tasks)
             dialog.setCancelable(false)
             dialog.setCanceledOnTouchOutside(false)
             if (!activity.isFinishing) {
                 dialog.enqueue()
             }
+            return dialog
         }
     }
 }
