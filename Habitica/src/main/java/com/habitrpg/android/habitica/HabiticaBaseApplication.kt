@@ -41,6 +41,7 @@ import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManag
 import com.habitrpg.android.habitica.modules.UserModule
 import com.habitrpg.android.habitica.modules.UserRepositoryModule
 import com.habitrpg.android.habitica.proxy.AnalyticsManager
+import com.habitrpg.android.habitica.ui.activities.BaseActivity
 import com.habitrpg.android.habitica.ui.activities.IntroActivity
 import com.habitrpg.android.habitica.ui.activities.LoginActivity
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
@@ -229,14 +230,14 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
         }
     }
 
-    var currentActivity: WeakReference<Activity>? = null
+    var currentActivity: WeakReference<BaseActivity>? = null
 
     override fun onActivityResumed(activity: Activity) {
-        currentActivity = WeakReference(activity)
+        currentActivity = WeakReference(activity as? BaseActivity)
     }
 
     override fun onActivityStarted(activity: Activity) {
-        currentActivity = WeakReference(activity)
+        currentActivity = WeakReference(activity as? BaseActivity)
     }
 
     override fun onActivityPaused(activity: Activity) {

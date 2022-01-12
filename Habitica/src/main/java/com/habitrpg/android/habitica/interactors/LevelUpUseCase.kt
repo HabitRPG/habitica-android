@@ -1,21 +1,20 @@
 package com.habitrpg.android.habitica.interactors
 
+import android.graphics.Bitmap
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.DialogLevelup10Binding
-import com.habitrpg.android.habitica.events.ShareEvent
 import com.habitrpg.android.habitica.executors.PostExecutionThread
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.SoundManager
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.AvatarView
+import com.habitrpg.android.habitica.ui.activities.BaseActivity
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import io.reactivex.rxjava3.core.Flowable
-import org.greenrobot.eventbus.EventBus
 import javax.inject.Inject
 
 class LevelUpUseCase @Inject
@@ -65,12 +64,13 @@ constructor(
                     dialogAvatarView.setAvatar(requestValues.user)
                 }
 
-                val event = ShareEvent()
-                event.identifier = "levelup"
-                event.sharedMessage = requestValues.activity.getString(R.string.share_levelup, requestValues.newLevel)
+                val message = requestValues.activity.getString(R.string.share_levelup, requestValues.newLevel)
                 val avatarView = AvatarView(requestValues.activity, showBackground = true, showMount = true, showPet = true)
                 avatarView.setAvatar(requestValues.user)
-                avatarView.onAvatarImageReady { t -> event.shareImage = t }
+                var sharedImage: Bitmap? = null
+                avatarView.onAvatarImageReady { image ->
+                    sharedImage = image
+                }
 
                 val alert = HabiticaAlertDialog(requestValues.activity)
                 alert.setTitle(requestValues.activity.getString(R.string.levelup_header, requestValues.newLevel))
@@ -79,7 +79,7 @@ constructor(
                     showClassSelection(requestValues)
                 }
                 alert.addButton(R.string.share, false) { _, _ ->
-                    EventBus.getDefault().post(event)
+                    requestValues.activity.shareContent("levelup", message, sharedImage)
                 }
                 alert.isCelebratory = true
 
@@ -97,7 +97,7 @@ constructor(
             .subscribe({ }, RxErrorHandler.handleEmptyError())
     }
 
-    class RequestValues(val user: User, val level: Int?, val activity: AppCompatActivity, val snackbarTargetView: ViewGroup) : UseCase.RequestValues {
+    class RequestValues(val user: User, val level: Int?, val activity: BaseActivity, val snackbarTargetView: ViewGroup) : UseCase.RequestValues {
         val newLevel: Int = level ?: 0
     }
 }

@@ -76,6 +76,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
     private var purchaseQuantity = 1
 
     var purchaseCardAction: ((ShopItem) -> Unit)? = null
+    var onGearPurchased: ((ShopItem) -> Unit)? = null
 
     private var shopItem: ShopItem = item
         set(value) {
@@ -389,7 +390,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
             .flatMap { inventoryRepository.retrieveInAppRewards() }
             .subscribe({
                 if (item.isTypeGear || item.currency == "hourglasses") {
-                    EventBus.getDefault().post(GearPurchasedEvent(item))
+                    onGearPurchased?.invoke(item)
                 }
             }) { throwable ->
                 if (throwable.javaClass.isAssignableFrom(retrofit2.HttpException::class.java)) {

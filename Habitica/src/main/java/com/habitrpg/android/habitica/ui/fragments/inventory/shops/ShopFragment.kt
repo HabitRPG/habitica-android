@@ -298,15 +298,6 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
         private const val SHOP_IDENTIFIER_KEY = "SHOP_IDENTIFIER_KEY"
     }
 
-    @Subscribe
-    fun onItemPurchased(event: GearPurchasedEvent) {
-        if (Shop.MARKET == shopIdentifier) {
-            loadMarketGear()
-        } else {
-            loadShopInventory()
-        }
-    }
-
     private fun updateCurrencyView(user: User) {
         currencyView.gold = user.stats?.gp ?: 0.0
         currencyView.gems = user.gemCount.toDouble()

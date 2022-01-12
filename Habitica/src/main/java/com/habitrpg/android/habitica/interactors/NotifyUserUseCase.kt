@@ -18,6 +18,7 @@ import com.habitrpg.android.habitica.executors.PostExecutionThread
 import com.habitrpg.android.habitica.extensions.round
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.android.habitica.ui.activities.BaseActivity
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.SnackbarDisplayType
@@ -55,7 +56,7 @@ constructor(
         }
     }
 
-    class RequestValues(val context: AppCompatActivity, val snackbarTargetView: ViewGroup, val user: User?, val xp: Double?, val hp: Double?, val gold: Double?, val mp: Double?, val questDamage: Double?, val hasLeveledUp: Boolean?, val level: Int?) : UseCase.RequestValues
+    class RequestValues(val context: BaseActivity, val snackbarTargetView: ViewGroup, val user: User?, val xp: Double?, val hp: Double?, val gold: Double?, val mp: Double?, val questDamage: Double?, val hasLeveledUp: Boolean?, val level: Int?) : UseCase.RequestValues
 
     companion object {
 

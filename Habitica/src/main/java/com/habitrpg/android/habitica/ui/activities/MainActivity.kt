@@ -16,14 +16,12 @@ import android.util.Log
 import android.view.*
 import android.widget.FrameLayout
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.content.FileProvider
 import androidx.core.content.edit
 import androidx.core.os.bundleOf
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -48,7 +46,6 @@ import com.habitrpg.android.habitica.interactors.NotifyUserUseCase
 import com.habitrpg.android.habitica.models.TutorialStep
 import com.habitrpg.android.habitica.models.inventory.Egg
 import com.habitrpg.android.habitica.models.inventory.HatchingPotion
-import com.habitrpg.android.habitica.models.notifications.LoginIncentiveData
 import com.habitrpg.android.habitica.models.responses.MaintenanceResponse
 import com.habitrpg.android.habitica.models.responses.TaskScoringResult
 import com.habitrpg.android.habitica.models.user.User
@@ -76,8 +73,6 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.functions.Consumer
 import io.reactivex.rxjava3.schedulers.Schedulers
 import io.realm.kotlin.isValid
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import java.util.*
@@ -98,8 +93,6 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     internal lateinit var hostConfig: HostConfig
     @Inject
     internal lateinit var sharedPreferences: SharedPreferences
-    @Inject
-    internal lateinit var analyticsManager: AnalyticsManager
     @Inject
     internal lateinit var pushNotificationManager: PushNotificationManager
     @Inject
@@ -538,16 +531,13 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                             dialog.setAdditionalContentView(mountWrapper)
                             dialog.addButton(R.string.onwards, true)
                             dialog.addButton(R.string.share, false) { hatchingDialog, _ ->
-                                val event1 = ShareEvent()
-                                event1.identifier = "raisedPet"
-                                event1.sharedMessage = getString(R.string.share_raised, pet.text)
+                                val message = getString(R.string.share_raised, pet.text)
                                 val mountImageSideLength = 99
                                 val sharedImage = Bitmap.createBitmap(mountImageSideLength, mountImageSideLength, Bitmap.Config.ARGB_8888)
                                 val canvas = Canvas(sharedImage)
                                 mountImageView?.drawable?.setBounds(0, 0, mountImageSideLength, mountImageSideLength)
                                 mountImageView?.drawable?.draw(canvas)
-                                event1.shareImage = sharedImage
-                                EventBus.getDefault().post(event1)
+                                shareContent("raisedPet", message, sharedImage)
                                 hatchingDialog.dismiss()
                             }
                             dialog.enqueue()
@@ -704,31 +694,6 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         }
     }
 
-    @Subscribe
-    fun shareEvent(event: ShareEvent) {
-        analyticsManager.logEvent("shared", bundleOf(Pair("identifier", event.identifier)))
-        val sharingIntent = Intent(Intent.ACTION_SEND)
-        sharingIntent.type = "*/*"
-        sharingIntent.putExtra(Intent.EXTRA_TEXT, event.sharedMessage)
-        BitmapUtils.clearDirectoryContent("$filesDir/shared_images")
-        val f = event.shareImage?.let {
-            BitmapUtils.saveToShareableFile(
-                "$filesDir/shared_images", "${Date()}.png",
-                it
-            )
-        }
-        val fileUri = f?.let { FileProvider.getUriForFile(this, getString(R.string.content_provider), it) }
-        if (fileUri != null) {
-            sharingIntent.putExtra(Intent.EXTRA_STREAM, fileUri)
-            val resInfoList = this.packageManager.queryIntentActivities(sharingIntent, PackageManager.MATCH_DEFAULT_ONLY)
-            for (resolveInfo in resInfoList) {
-                val packageName = resolveInfo.activityInfo.packageName
-                this.grantUriPermission(packageName, fileUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION)
-            }
-        }
-        startActivity(Intent.createChooser(sharingIntent, getString(R.string.share_using)))
-    }
-
     private fun checkMaintenance() {
         compositeSubscription.add(
             this.maintenanceService.maintenanceStatus
@@ -778,12 +743,12 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         HabiticaSnackbar.showSnackbar(snackbarContainer, event.leftImage, event.title, event.text, event.specialView, event.rightIcon, event.rightTextColor, event.rightText, event.type)
     }
 
-    override fun onEvent(event: ShowConnectionProblemEvent) {
-        if (event.title != null) {
-            super.onEvent(event)
+    override fun showConnectionProblem(title: String?, message: String) {
+        if (title != null) {
+            super.showConnectionProblem(title, message)
         } else {
             binding.connectionIssueTextview.visibility = View.VISIBLE
-            binding.connectionIssueTextview.text = event.message
+            binding.connectionIssueTextview.text = message
             compositeSubscription.add(
                 Observable.just("")
                     .delay(500, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
@@ -814,16 +779,13 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                         .subscribe({}, RxErrorHandler.handleEmptyError())
                 }
                 dialog.addButton(R.string.share, false) { hatchingDialog, _ ->
-                    val event1 = ShareEvent()
-                    event1.sharedMessage = getString(R.string.share_hatched, potionName, eggName)
-                    event1.identifier = "hatchedPet"
+                    val message = getString(R.string.share_hatched, potionName, eggName)
                     val petImageSideLength = 140
                     val sharedImage = Bitmap.createBitmap(petImageSideLength, petImageSideLength, Bitmap.Config.ARGB_8888)
                     val canvas = Canvas(sharedImage)
                     petImageView?.drawable?.setBounds(0, 0, petImageSideLength, petImageSideLength)
                     petImageView?.drawable?.draw(canvas)
-                    event1.shareImage = sharedImage
-                    EventBus.getDefault().post(event1)
+                    shareContent("hatchedPet", message, sharedImage)
                     hatchingDialog.dismiss()
                 }
                 dialog.setExtraCloseButtonVisibility(View.VISIBLE)

@@ -28,8 +28,6 @@ class GiftSubscriptionActivity : PurchaseActivity() {
     private lateinit var binding: ActivityGiftSubscriptionBinding
 
     @Inject
-    lateinit var analyticsManager: AnalyticsManager
-    @Inject
     lateinit var socialRepository: SocialRepository
     @Inject
     lateinit var appConfigManager: AppConfigManager

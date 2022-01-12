@@ -12,7 +12,6 @@ import com.habitrpg.android.habitica.api.GSonFactoryCreator
 import com.habitrpg.android.habitica.api.HostConfig
 import com.habitrpg.android.habitica.api.Server
 import com.habitrpg.android.habitica.data.ApiClient
-import com.habitrpg.android.habitica.events.ShowConnectionProblemEvent
 import com.habitrpg.android.habitica.helpers.NotificationsManager
 import com.habitrpg.android.habitica.models.*
 import com.habitrpg.android.habitica.models.auth.UserAuth
@@ -54,9 +53,7 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.net.ssl.SSLException
 
-class ApiClientImpl // private OnHabitsAPIResult mResultListener;
-// private HostConfig mConfig;
-(private val gsonConverter: GsonConverterFactory, override val hostConfig: HostConfig, private val analyticsManager: AnalyticsManager, private val notificationsManager: NotificationsManager, private val context: Context) : Consumer<Throwable>, ApiClient {
+class ApiClientImpl(private val gsonConverter: GsonConverterFactory, override val hostConfig: HostConfig, private val analyticsManager: AnalyticsManager, private val notificationsManager: NotificationsManager, private val context: Context) : Consumer<Throwable>, ApiClient {
 
     private lateinit var retrofitAdapter: Retrofit
 
@@ -274,8 +271,10 @@ class ApiClientImpl // private OnHabitsAPIResult mResultListener;
     }
 
     private fun showConnectionProblemDialog(resourceTitleString: String?, resourceMessageString: String) {
-        val event = ShowConnectionProblemEvent(resourceTitleString, resourceMessageString)
-        EventBus.getDefault().post(event)
+        val application = (context as? HabiticaBaseApplication)
+            ?: (context.applicationContext as? HabiticaBaseApplication)
+        application?.currentActivity?.get()
+            ?.showConnectionProblem(resourceTitleString, resourceMessageString)
     }
 
     /*

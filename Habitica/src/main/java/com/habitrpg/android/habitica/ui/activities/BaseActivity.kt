@@ -1,9 +1,12 @@
 package com.habitrpg.android.habitica.ui.activities
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
+import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.content.res.Resources
+import android.graphics.Bitmap
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,13 +17,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
+import androidx.core.os.bundleOf
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceManager
 import com.habitrpg.android.habitica.HabiticaApplication
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
-import com.habitrpg.android.habitica.events.ShowConnectionProblemEvent
 import com.habitrpg.android.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.extensions.isUsingNightModeResources
 import com.habitrpg.android.habitica.extensions.updateStatusBarColor
@@ -28,17 +32,20 @@ import com.habitrpg.android.habitica.helpers.LanguageHelper
 import com.habitrpg.android.habitica.helpers.NotificationsManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.interactors.ShowNotificationInteractor
+import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import com.habitrpg.android.habitica.ui.helpers.ToolbarColorHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
+import com.habitrpg.android.habitica.userpicture.BitmapUtils
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
 import java.util.*
 import javax.inject.Inject
 
 abstract class BaseActivity : AppCompatActivity() {
     @Inject
     lateinit var notificationsManager: NotificationsManager
+    @Inject
+    internal lateinit var analyticsManager: AnalyticsManager
 
     private var currentTheme: String? = null
     private var isNightMode: Boolean = false
@@ -228,13 +235,36 @@ abstract class BaseActivity : AppCompatActivity() {
         }
     }
 
-    @Subscribe
-    open fun onEvent(event: ShowConnectionProblemEvent) {
+    open fun showConnectionProblem(title: String?, message: String) {
         val alert = HabiticaAlertDialog(this)
-        alert.setTitle(event.title)
-        alert.setMessage(event.message)
+        alert.setTitle(title)
+        alert.setMessage(message)
         alert.addButton(android.R.string.ok, isPrimary = true, isDestructive = false, function = null)
         alert.enqueue()
+    }
+
+    fun shareContent(identifier: String, message: String, image: Bitmap? = null) {
+        analyticsManager.logEvent("shared", bundleOf(Pair("identifier", identifier)))
+        val sharingIntent = Intent(Intent.ACTION_SEND)
+        sharingIntent.type = "*/*"
+        sharingIntent.putExtra(Intent.EXTRA_TEXT, message)
+        BitmapUtils.clearDirectoryContent("$filesDir/shared_images")
+        val f = image?.let {
+            BitmapUtils.saveToShareableFile(
+                "$filesDir/shared_images", "${Date()}.png",
+                it
+            )
+        }
+        val fileUri = f?.let { FileProvider.getUriForFile(this, getString(R.string.content_provider), it) }
+        if (fileUri != null) {
+            sharingIntent.putExtra(Intent.EXTRA_STREAM, fileUri)
+            val resInfoList = this.packageManager.queryIntentActivities(sharingIntent, PackageManager.MATCH_DEFAULT_ONLY)
+            for (resolveInfo in resInfoList) {
+                val packageName = resolveInfo.activityInfo.packageName
+                this.grantUriPermission(packageName, fileUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            }
+        }
+        startActivity(Intent.createChooser(sharingIntent, getString(R.string.share_using)))
     }
 
     fun reload() {
