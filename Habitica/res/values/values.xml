@@ -62,6 +62,7 @@
         <item>Português</item>
         <item>Português Brasileiro</item>
         <item>Русский</item>
+        <item>Українська</item>
         <item>Türk</item>
         <item>中文（简体）</item>
         <item>中文（正體）</item>
@@ -85,6 +86,7 @@
         <item>pt</item>
         <item>pt_BR</item>
         <item>ru</item>
+        <item>uk</item>
         <item>tr</item>
         <item>zh</item>
         <item>zh_TW</item>
