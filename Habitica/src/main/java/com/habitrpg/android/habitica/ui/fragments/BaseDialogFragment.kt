@@ -15,8 +15,6 @@ import com.habitrpg.android.habitica.ui.activities.MainActivity
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.functions.Consumer
-import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.EventBusException
 import java.util.ArrayList
 import java.util.HashMap
 import java.util.concurrent.TimeUnit
@@ -51,12 +49,6 @@ abstract class BaseDialogFragment<VB : ViewBinding> : DialogFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         compositeSubscription = CompositeDisposable()
-
-        // Receive Events
-        try {
-            EventBus.getDefault().register(this)
-        } catch (ignored: EventBusException) {
-        }
 
         val additionalData = HashMap<String, Any>()
         additionalData["page"] = this.javaClass.simpleName
@@ -100,9 +92,6 @@ abstract class BaseDialogFragment<VB : ViewBinding> : DialogFragment() {
 
     override fun onDestroyView() {
         binding = null
-        if (EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().unregister(this)
-        }
         if (!compositeSubscription.isDisposed) {
             compositeSubscription.dispose()
         }

@@ -16,19 +16,17 @@ import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.ContentRepository
-import com.habitrpg.android.habitica.events.ShowSnackbarEvent
 import com.habitrpg.android.habitica.extensions.addCancelButton
 import com.habitrpg.android.habitica.helpers.*
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.prefs.TimePreference
 import com.habitrpg.android.habitica.ui.activities.ClassSelectionActivity
-import com.habitrpg.android.habitica.ui.activities.FixCharacterValuesActivity
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.activities.PrefsActivity
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
+import com.habitrpg.android.habitica.ui.views.SnackbarActivity
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
-import org.greenrobot.eventbus.EventBus
 import java.util.*
 import javax.inject.Inject
 
@@ -135,16 +133,15 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                 return true
             }
             "reload_content" -> {
-                val event = ShowSnackbarEvent()
-                event.text = context?.getString(R.string.reloading_content)
-                event.type = HabiticaSnackbar.SnackbarDisplayType.NORMAL
-                EventBus.getDefault().post(event)
+                (activity as? SnackbarActivity)?.showSnackbar(
+                    content = context?.getString(R.string.reloading_content)
+                )
                 contentRepository.retrieveContent(context, true).subscribe(
                     {
-                        val completedEvent = ShowSnackbarEvent()
-                        completedEvent.text = context?.getString(R.string.reloaded_content)
-                        completedEvent.type = HabiticaSnackbar.SnackbarDisplayType.SUCCESS
-                        EventBus.getDefault().post(completedEvent)
+                        (activity as? SnackbarActivity)?.showSnackbar(
+                            content = context?.getString(R.string.reloaded_content),
+                            displayType = HabiticaSnackbar.SnackbarDisplayType.SUCCESS
+                        )
                     },
                     RxErrorHandler.handleEmptyError()
                 )

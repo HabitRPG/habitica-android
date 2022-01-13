@@ -19,6 +19,7 @@ class PetDetailRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapt
     private var ownedItems: Map<String, OwnedItem>? = null
     private var user: User? = null
     private val equipEvents = PublishSubject.create<String>()
+    private val feedEvents = PublishSubject.create<Pair<Pet, Food?>>()
     private var ownsSaddles: Boolean = false
 
     private var itemList: List<Any> = ArrayList()
@@ -36,6 +37,8 @@ class PetDetailRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapt
     fun getEquipFlowable(): Flowable<String> {
         return equipEvents.toFlowable(BackpressureStrategy.DROP)
     }
+
+    var feedFlowable: Flowable<Pair<Pet, Food?>> = feedEvents.toFlowable(BackpressureStrategy.DROP)
 
     var animalIngredientsRetriever: ((Animal, ((Pair<Egg?, HatchingPotion?>) -> Unit)) -> Unit)? = null
 
@@ -59,7 +62,7 @@ class PetDetailRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapt
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder =
         when (viewType) {
             1 -> SectionViewHolder(parent)
-            else -> PetViewHolder(parent, equipEvents, animalIngredientsRetriever)
+            else -> PetViewHolder(parent, equipEvents, feedEvents, animalIngredientsRetriever)
         }
 
     override fun onBindViewHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder, position: Int) {

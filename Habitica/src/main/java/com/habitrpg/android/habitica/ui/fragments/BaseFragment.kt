@@ -14,8 +14,6 @@ import com.habitrpg.android.habitica.ui.activities.MainActivity
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.functions.Consumer
-import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.EventBusException
 import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -57,12 +55,6 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         compositeSubscription = CompositeDisposable()
 
-        // Receive Events
-        try {
-            EventBus.getDefault().register(this)
-        } catch (ignored: EventBusException) {
-        }
-
         binding = createBinding(inflater, container)
         return binding?.root
     }
@@ -101,9 +93,6 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
 
     override fun onDestroyView() {
         binding = null
-        if (EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().unregister(this)
-        }
         if (!compositeSubscription.isDisposed) {
             compositeSubscription.dispose()
         }

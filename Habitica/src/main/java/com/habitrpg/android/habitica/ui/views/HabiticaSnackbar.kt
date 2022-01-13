@@ -125,7 +125,7 @@ private constructor(parent: ViewGroup, content: View, callback: ContentViewCallb
             showSnackbar(container, leftImage, title, content, null, null, 0, null, displayType, isCelebratory)
         }
 
-        fun showSnackbar(container: ViewGroup, title: CharSequence?, content: CharSequence?, rightIcon: Drawable, rightTextColor: Int, rightText: String, displayType: SnackbarDisplayType, isCelebratory: Boolean = false) {
+        fun showSnackbar(container: ViewGroup, title: CharSequence?, content: CharSequence?, rightIcon: Drawable, rightTextColor: Int?, rightText: String, displayType: SnackbarDisplayType, isCelebratory: Boolean = false) {
             showSnackbar(container, null, title, content, null, rightIcon, rightTextColor, rightText, displayType, isCelebratory)
         }
 
@@ -133,13 +133,15 @@ private constructor(parent: ViewGroup, content: View, callback: ContentViewCallb
             showSnackbar(container, null, title, content, specialView, null, 0, null, displayType, isCelebratory)
         }
 
-        fun showSnackbar(container: ViewGroup, leftImage: Drawable?, title: CharSequence?, content: CharSequence?, specialView: View?, rightIcon: Drawable?, rightTextColor: Int, rightText: String?, displayType: SnackbarDisplayType, isCelebratory: Boolean = false) {
+        fun showSnackbar(container: ViewGroup, leftImage: Drawable?, title: CharSequence?, content: CharSequence?, specialView: View?, rightIcon: Drawable?, rightTextColor: Int?, rightText: String?, displayType: SnackbarDisplayType, isCelebratory: Boolean = false) {
             val snackbar = make(container, Snackbar.LENGTH_LONG)
                 .setTitle(title)
                 .setText(content)
                 .setSpecialView(specialView)
                 .setLeftIcon(leftImage)
-                .setRightDiff(rightIcon, rightTextColor, rightText)
+            rightTextColor?.let {
+                snackbar.setRightDiff(rightIcon, rightTextColor, rightText)
+            }
 
             when (displayType) {
                 SnackbarDisplayType.FAILURE -> snackbar.setBackgroundResource(R.drawable.snackbar_background_red)
@@ -182,5 +184,24 @@ private constructor(parent: ViewGroup, content: View, callback: ContentViewCallb
                 )
             }
         }
+    }
+}
+
+interface SnackbarActivity {
+
+    fun snackbarContainer(): ViewGroup
+
+    fun showSnackbar(
+        leftImage: Drawable? = null,
+        title: CharSequence? = null,
+        content: CharSequence? = null,
+        specialView: View? = null,
+        rightIcon: Drawable? = null,
+        rightTextColor: Int? = null,
+        rightText: String? = null,
+        displayType: HabiticaSnackbar.SnackbarDisplayType = HabiticaSnackbar.SnackbarDisplayType.NORMAL,
+        isCelebratory: Boolean = false
+    ) {
+        HabiticaSnackbar.showSnackbar(snackbarContainer(), leftImage, title, content, specialView, rightIcon, rightTextColor, rightText, displayType, isCelebratory)
     }
 }

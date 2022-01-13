@@ -8,7 +8,6 @@ import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ItemItemBinding
-import com.habitrpg.android.habitica.events.commands.FeedCommand
 import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.models.inventory.*
 import com.habitrpg.android.habitica.models.user.OwnedItem
@@ -21,7 +20,6 @@ import com.habitrpg.android.habitica.ui.views.dialogs.DetailDialog
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.subjects.PublishSubject
-import org.greenrobot.eventbus.EventBus
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -45,6 +43,7 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<OwnedI
     private val openMysteryItemEvents = PublishSubject.create<Item>()
     private val startHatchingSubject = PublishSubject.create<Item>()
     private val hatchPetSubject = PublishSubject.create<Pair<HatchingPotion, Egg>>()
+    private val feedPetSubject = PublishSubject.create<Food>()
 
     fun getSellItemFlowable(): Flowable<OwnedItem> {
         return sellItemEvents.toFlowable(BackpressureStrategy.DROP)
@@ -59,6 +58,7 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<OwnedI
 
     val startHatchingEvents: Flowable<Item> = startHatchingSubject.toFlowable(BackpressureStrategy.DROP)
     val hatchPetEvents: Flowable<Pair<HatchingPotion, Egg>> = hatchPetSubject.toFlowable(BackpressureStrategy.DROP)
+    val feedPetEvents: Flowable<Food> = feedPetSubject.toFlowable(BackpressureStrategy.DROP)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         return ItemViewHolder(ItemItemBinding.inflate(context.layoutInflater, parent, false))
@@ -166,9 +166,6 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<OwnedI
                         }
                         when (selectedItem) {
                             is Egg -> item?.let { startHatchingSubject.onNext(it) }
-                            is Food -> {
-                                EventBus.getDefault().post(FeedCommand(null, selectedItem))
-                            }
                             is HatchingPotion -> startHatchingSubject.onNext(selectedItem)
                             is QuestContent -> {
                                 if (index == 0) {
@@ -201,7 +198,7 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<OwnedI
                     return@let
                 }
             } else if (isFeeding) {
-                EventBus.getDefault().post(FeedCommand(feedingPet, item as? Food))
+                feedPetSubject.onNext(item as Food?)
                 fragment?.dismiss()
             }
         }

@@ -15,8 +15,6 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.UserRepository
-import com.habitrpg.android.habitica.events.GearPurchasedEvent
-import com.habitrpg.android.habitica.events.ShowSnackbarEvent
 import com.habitrpg.android.habitica.extensions.addCancelButton
 import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.extensions.getShortRemainingString
@@ -28,10 +26,7 @@ import com.habitrpg.android.habitica.models.shops.Shop
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.User
-import com.habitrpg.android.habitica.ui.views.CurrencyView
-import com.habitrpg.android.habitica.ui.views.CurrencyViews
-import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
-import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
+import com.habitrpg.android.habitica.ui.views.*
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientGemsDialog
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientGoldDialog
@@ -42,14 +37,11 @@ import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import kotlinx.coroutines.*
-import org.greenrobot.eventbus.EventBus
 import java.util.*
 import javax.inject.Inject
 import kotlin.math.max
 import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
-import kotlin.time.minutes
-import kotlin.time.seconds
 
 class PurchaseDialog(context: Context, component: UserComponent?, val item: ShopItem) : HabiticaAlertDialog(context) {
 
@@ -370,21 +362,23 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
         }
         val subscription = observable
             .doOnNext {
-                val event = ShowSnackbarEvent()
-                if (snackbarText[0].isNotEmpty()) {
-                    event.text = snackbarText[0]
+                val text = if (snackbarText[0].isNotEmpty()) {
+                    snackbarText[0]
                 } else {
-                    event.text = context.getString(R.string.successful_purchase, shopItem.text)
+                    context.getString(R.string.successful_purchase, shopItem.text)
                 }
-                event.type = HabiticaSnackbar.SnackbarDisplayType.NORMAL
-                event.rightIcon = priceLabel.compoundDrawables[0]
-                when (item.currency) {
-                    "gold" -> event.rightTextColor = ContextCompat.getColor(context, R.color.text_yellow)
-                    "gems" -> event.rightTextColor = ContextCompat.getColor(context, R.color.text_green)
-                    "hourglasses" -> event.rightTextColor = ContextCompat.getColor(context, R.color.text_brand)
+                val rightTextColor = when (item.currency) {
+                    "gold" -> ContextCompat.getColor(context, R.color.text_yellow)
+                    "gems" -> ContextCompat.getColor(context, R.color.text_green)
+                    "hourglasses" -> ContextCompat.getColor(context, R.color.text_brand)
+                    else -> 0
                 }
-                event.rightText = "-" + priceLabel.text
-                EventBus.getDefault().post(event)
+                (ownerActivity as? SnackbarActivity)?.showSnackbar(
+                    content = text,
+                    rightIcon = priceLabel.compoundDrawables[0],
+                    rightTextColor = rightTextColor,
+                    rightText = "-" + priceLabel.text
+                )
             }
             .flatMap { userRepository.retrieveUser(withTasks = false, forced = true) }
             .flatMap { inventoryRepository.retrieveInAppRewards() }

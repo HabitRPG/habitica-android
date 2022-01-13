@@ -6,11 +6,8 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.lifecycle.LifecycleCoroutineScope
-import androidx.lifecycle.lifecycleScope
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.events.*
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.Notification
 import com.habitrpg.android.habitica.models.notifications.AchievementData
 import com.habitrpg.android.habitica.models.notifications.ChallengeWonData
@@ -19,17 +16,14 @@ import com.habitrpg.android.habitica.models.notifications.LoginIncentiveData
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
+import com.habitrpg.android.habitica.ui.views.SnackbarActivity
 import com.habitrpg.android.habitica.ui.views.dialogs.AchievementDialog
 import com.habitrpg.android.habitica.ui.views.dialogs.FirstDropDialog
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.dialogs.WonChallengeDialog
-import io.reactivex.rxjava3.core.Completable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
-import java.util.concurrent.TimeUnit
 
 class ShowNotificationInteractor(private val activity: Activity, private val lifecycleScope: LifecycleCoroutineScope) {
 
@@ -77,7 +71,6 @@ class ShowNotificationInteractor(private val activity: Activity, private val lif
         }
     }
 
-    @Subscribe
     fun showCheckinDialog(notification: Notification) {
         val notificationData = notification.data as? LoginIncentiveData
         val nextUnlockText = activity.getString(R.string.nextPrizeUnlocks, notificationData?.nextRewardAt)
@@ -113,15 +106,14 @@ class ShowNotificationInteractor(private val activity: Activity, private val lif
                 alert.show()
             }
         } else {
-            val event = ShowSnackbarEvent()
-            event.title = notificationData?.message
-            event.text = nextUnlockText
-            event.type = HabiticaSnackbar.SnackbarDisplayType.BLUE
-            EventBus.getDefault().post(event)
+            (activity as? SnackbarActivity)?.showSnackbar(
+                title = notificationData?.message,
+                content = nextUnlockText,
+                displayType = HabiticaSnackbar.SnackbarDisplayType.BLUE
+            )
         }
     }
 
-    @Subscribe
     fun showAchievementDialog(notification: Notification) {
         val data = (notification.data as? AchievementData) ?: return
         val achievement = data.achievement ?: notification.type ?: ""

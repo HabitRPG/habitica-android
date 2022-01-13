@@ -1,16 +1,15 @@
 package com.habitrpg.android.habitica.ui.activities
 
 import android.os.Bundle
+import android.view.ViewGroup
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceScreen
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
-import com.habitrpg.android.habitica.events.ShowSnackbarEvent
 import com.habitrpg.android.habitica.ui.fragments.preferences.*
-import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
-import org.greenrobot.eventbus.Subscribe
+import com.habitrpg.android.habitica.ui.views.SnackbarActivity
 
-class PrefsActivity : BaseActivity(), PreferenceFragmentCompat.OnPreferenceStartScreenCallback {
+class PrefsActivity : BaseActivity(), PreferenceFragmentCompat.OnPreferenceStartScreenCallback, SnackbarActivity {
 
     override fun getLayoutResId(): Int = R.layout.activity_prefs
 
@@ -54,11 +53,6 @@ class PrefsActivity : BaseActivity(), PreferenceFragmentCompat.OnPreferenceStart
         return false
     }
 
-    @Subscribe
-    fun showSnackBarEvent(event: ShowSnackbarEvent) {
-        HabiticaSnackbar.showSnackbar(findViewById(R.id.snackbar_container), event.leftImage, event.title, event.text, event.specialView, event.rightIcon, event.rightTextColor, event.rightText, event.type)
-    }
-
     private fun createNextPage(preferenceScreen: PreferenceScreen): PreferenceFragmentCompat? =
         when (preferenceScreen.key) {
             "my_account" -> AccountPreferenceFragment()
@@ -66,4 +60,9 @@ class PrefsActivity : BaseActivity(), PreferenceFragmentCompat.OnPreferenceStart
             "emailNotifications" -> EmailNotificationsPreferencesFragment()
             else -> null
         }
+
+    override fun snackbarContainer(): ViewGroup {
+        val v = findViewById<ViewGroup>(R.id.snackbar_container)
+        return v
+    }
 }

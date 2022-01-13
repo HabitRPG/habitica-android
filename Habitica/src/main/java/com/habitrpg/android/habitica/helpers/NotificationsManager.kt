@@ -1,32 +1,13 @@
 package com.habitrpg.android.habitica.helpers
 
-import android.content.Context
-import androidx.lifecycle.MutableLiveData
-import com.google.firebase.analytics.FirebaseAnalytics
-import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.ApiClient
-import com.habitrpg.android.habitica.events.*
 import com.habitrpg.android.habitica.models.Notification
-import com.habitrpg.android.habitica.models.notifications.AchievementData
-import com.habitrpg.android.habitica.models.notifications.ChallengeWonData
-import com.habitrpg.android.habitica.models.notifications.FirstDropData
-import com.habitrpg.android.habitica.models.notifications.LoginIncentiveData
-import com.habitrpg.android.habitica.models.user.User
-import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
-import com.habitrpg.android.habitica.ui.views.dialogs.WonChallengeDialog
 import io.reactivex.rxjava3.core.BackpressureStrategy
-import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.reactivex.rxjava3.subjects.PublishSubject
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import org.greenrobot.eventbus.EventBus
 import java.lang.ref.WeakReference
 import java.util.*
-import java.util.concurrent.TimeUnit
-import kotlin.coroutines.CoroutineContext
 
 class NotificationsManager {
     private val displayNotificationSubject = PublishSubject.create<Notification>()

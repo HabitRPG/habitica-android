@@ -29,6 +29,7 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var shopSpriteSuffix: String? = null
     private var eggs: Map<String, Egg> = mapOf()
     var animalIngredientsRetriever: ((Animal, ((Pair<Egg?, HatchingPotion?>) -> Unit)) -> Unit)? = null
+    private val feedEvents = PublishSubject.create<Pair<Pet, Food?>>()
     var itemType: String? = null
     private var user: User? = null
     private val equipEvents = PublishSubject.create<String>()
@@ -91,7 +92,7 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             1 -> SectionViewHolder(parent)
             4 -> StableViewHolder(parent.inflate(R.layout.pet_overview_item))
             5 -> StableViewHolder(parent.inflate(R.layout.mount_overview_item))
-            2 -> PetViewHolder(parent, equipEvents, animalIngredientsRetriever)
+            2 -> PetViewHolder(parent, equipEvents, feedEvents, animalIngredientsRetriever)
             3 -> MountViewHolder(parent, equipEvents)
             else -> StableHeaderViewHolder(parent)
         }

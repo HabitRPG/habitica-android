@@ -37,7 +37,6 @@ import com.habitrpg.android.habitica.ui.helpers.ToolbarColorHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.userpicture.BitmapUtils
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import org.greenrobot.eventbus.EventBus
 import java.util.*
 import javax.inject.Inject
 
@@ -106,11 +105,6 @@ abstract class BaseActivity : AppCompatActivity() {
         resources.forceLocale(this, languageHelper.locale)
     }
 
-    override fun onStart() {
-        super.onStart()
-        EventBus.getDefault().register(this)
-    }
-
     override fun onResume() {
         super.onResume()
         isActivityVisible = true
@@ -120,13 +114,6 @@ abstract class BaseActivity : AppCompatActivity() {
     override fun onPause() {
         isActivityVisible = false
         super.onPause()
-    }
-
-    override fun onStop() {
-        if (EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().unregister(this)
-        }
-        super.onStop()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

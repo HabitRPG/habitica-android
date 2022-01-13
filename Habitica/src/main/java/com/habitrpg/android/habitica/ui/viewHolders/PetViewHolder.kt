@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.core.graphics.drawable.toBitmap
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.PetDetailItemBinding
-import com.habitrpg.android.habitica.events.commands.FeedCommand
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.models.inventory.*
 import com.habitrpg.android.habitica.models.user.User
@@ -16,9 +15,8 @@ import com.habitrpg.android.habitica.ui.menu.BottomSheetMenu
 import com.habitrpg.android.habitica.ui.menu.BottomSheetMenuItem
 import com.habitrpg.android.habitica.ui.views.dialogs.PetSuggestHatchDialog
 import io.reactivex.rxjava3.subjects.PublishSubject
-import org.greenrobot.eventbus.EventBus
 
-class PetViewHolder(parent: ViewGroup, private val equipEvents: PublishSubject<String>, private val animalIngredientsRetriever: ((Animal, ((Pair<Egg?, HatchingPotion?>) -> Unit)) -> Unit)?) : androidx.recyclerview.widget.RecyclerView.ViewHolder(parent.inflate(R.layout.pet_detail_item)), View.OnClickListener {
+class PetViewHolder(parent: ViewGroup, private val equipEvents: PublishSubject<String>, private val feedEvents: PublishSubject<Pair<Pet, Food?>>, private val animalIngredientsRetriever: ((Animal, ((Pair<Egg?, HatchingPotion?>) -> Unit)) -> Unit)?) : androidx.recyclerview.widget.RecyclerView.ViewHolder(parent.inflate(R.layout.pet_detail_item)), View.OnClickListener {
     private var hasMount: Boolean = false
     private var hasUnlockedPotion: Boolean = false
     private var hasUnlockedEgg: Boolean = false
@@ -123,6 +121,7 @@ class PetViewHolder(parent: ViewGroup, private val equipEvents: PublishSubject<S
             }
         }
         menu.setSelectionRunnable { index ->
+            val pet = animal as? Pet ?: return@setSelectionRunnable
             when (index) {
                 0 -> {
                     animal?.let {
@@ -130,12 +129,12 @@ class PetViewHolder(parent: ViewGroup, private val equipEvents: PublishSubject<S
                     }
                 }
                 1 -> {
-                    EventBus.getDefault().post(FeedCommand(animal, null))
+                    feedEvents.onNext(Pair(pet, null))
                 }
                 2 -> {
                     val saddle = Food()
                     saddle.key = "Saddle"
-                    EventBus.getDefault().post(FeedCommand(animal, saddle))
+                    feedEvents.onNext(Pair(pet, saddle))
                 }
             }
         }

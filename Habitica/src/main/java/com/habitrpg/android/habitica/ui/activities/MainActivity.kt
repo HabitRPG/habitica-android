@@ -17,9 +17,7 @@ import android.view.*
 import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.core.content.FileProvider
 import androidx.core.content.edit
-import androidx.core.os.bundleOf
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavDestination
@@ -35,8 +33,6 @@ import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.*
 import com.habitrpg.android.habitica.data.local.UserQuestStatus
 import com.habitrpg.android.habitica.databinding.ActivityMainBinding
-import com.habitrpg.android.habitica.events.*
-import com.habitrpg.android.habitica.events.commands.FeedCommand
 import com.habitrpg.android.habitica.extensions.*
 import com.habitrpg.android.habitica.helpers.*
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
@@ -45,25 +41,22 @@ import com.habitrpg.android.habitica.interactors.DisplayItemDropUseCase
 import com.habitrpg.android.habitica.interactors.NotifyUserUseCase
 import com.habitrpg.android.habitica.models.TutorialStep
 import com.habitrpg.android.habitica.models.inventory.Egg
+import com.habitrpg.android.habitica.models.inventory.Food
 import com.habitrpg.android.habitica.models.inventory.HatchingPotion
+import com.habitrpg.android.habitica.models.inventory.Pet
 import com.habitrpg.android.habitica.models.responses.MaintenanceResponse
 import com.habitrpg.android.habitica.models.responses.TaskScoringResult
 import com.habitrpg.android.habitica.models.user.User
-import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import com.habitrpg.android.habitica.ui.AvatarView
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel
 import com.habitrpg.android.habitica.ui.TutorialView
 import com.habitrpg.android.habitica.ui.fragments.NavigationDrawerFragment
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.viewmodels.NotificationsViewModel
-import com.habitrpg.android.habitica.ui.views.AdventureGuideDrawerArrowDrawable
-import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
-import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
+import com.habitrpg.android.habitica.ui.views.*
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.SnackbarDisplayType
-import com.habitrpg.android.habitica.ui.views.ValueBar
 import com.habitrpg.android.habitica.ui.views.dialogs.*
 import com.habitrpg.android.habitica.ui.views.yesterdailies.YesterdailyDialog
-import com.habitrpg.android.habitica.userpicture.BitmapUtils
 import com.habitrpg.android.habitica.widget.AvatarStatsWidgetProvider
 import com.habitrpg.android.habitica.widget.DailiesWidgetProvider
 import com.habitrpg.android.habitica.widget.HabitButtonWidgetProvider
@@ -73,13 +66,11 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.functions.Consumer
 import io.reactivex.rxjava3.schedulers.Schedulers
 import io.realm.kotlin.isValid
-import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
 import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
+open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction, SnackbarActivity {
     private var launchScreen: String? = null
     private lateinit var drawerIcon: AdventureGuideDrawerArrowDrawable
 
@@ -510,14 +501,9 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         super.onDestroy()
     }
 
-    @Subscribe
-    fun onEvent(event: FeedCommand) {
-        if (event.usingFood == null || event.usingPet == null) {
-            return
-        }
-        val pet = event.usingPet
+    fun feedPet(pet: Pet, food: Food) {
         compositeSubscription.add(
-            this.inventoryRepository.feedPet(event.usingPet, event.usingFood)
+            this.inventoryRepository.feedPet(pet, food)
                 .subscribe(
                     { feedResponse ->
                         HabiticaSnackbar.showSnackbar(snackbarContainer, feedResponse.message, SnackbarDisplayType.NORMAL)
@@ -525,7 +511,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                             val mountWrapper = View.inflate(this, R.layout.pet_imageview, null) as? FrameLayout
                             val mountImageView = mountWrapper?.findViewById(R.id.pet_imageview) as? ImageView
 
-                            DataBindingUtils.loadImage(mountImageView, "Mount_Icon_" + event.usingPet.key)
+                            DataBindingUtils.loadImage(mountImageView, "Mount_Icon_" + pet.key)
                             val dialog = HabiticaAlertDialog(this@MainActivity)
                             dialog.setTitle(getString(R.string.evolved_pet_title, pet.text))
                             dialog.setAdditionalContentView(mountWrapper)
@@ -738,9 +724,8 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         return intent
     }
 
-    @Subscribe
-    fun showSnackBarEvent(event: ShowSnackbarEvent) {
-        HabiticaSnackbar.showSnackbar(snackbarContainer, event.leftImage, event.title, event.text, event.specialView, event.rightIcon, event.rightTextColor, event.rightText, event.type)
+    override fun snackbarContainer(): ViewGroup {
+        return snackbarContainer
     }
 
     override fun showConnectionProblem(title: String?, message: String) {

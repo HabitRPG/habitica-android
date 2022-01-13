@@ -9,23 +9,17 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBinding
-import com.habitrpg.android.habitica.events.commands.FeedCommand
 import com.habitrpg.android.habitica.extensions.getTranslatedType
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.android.habitica.models.inventory.Egg
-import com.habitrpg.android.habitica.models.inventory.HatchingPotion
-import com.habitrpg.android.habitica.models.inventory.Pet
-import com.habitrpg.android.habitica.models.inventory.StableSection
+import com.habitrpg.android.habitica.models.inventory.*
 import com.habitrpg.android.habitica.models.user.OwnedMount
 import com.habitrpg.android.habitica.models.user.OwnedPet
 import com.habitrpg.android.habitica.ui.adapter.inventory.PetDetailRecyclerAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemDialogFragment
-import com.habitrpg.android.habitica.ui.helpers.MarginDecoration
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.kotlin.Flowables
-import org.greenrobot.eventbus.Subscribe
 import javax.inject.Inject
 
 class PetDetailRecyclerFragment :
@@ -117,6 +111,7 @@ class PetDetailRecyclerFragment :
                     RxErrorHandler.handleEmptyError()
                 )
         )
+        compositeSubscription.add(adapter.feedFlowable.subscribe({ showFeedingDialog(it.first, it.second) }, RxErrorHandler.handleEmptyError()))
 
         view.post { setGridSpanCount(view.width) }
     }
@@ -195,17 +190,18 @@ class PetDetailRecyclerFragment :
         }
     }
 
-    @Subscribe
-    fun showFeedingDialog(event: FeedCommand) {
-        if (event.usingPet == null || event.usingFood == null) {
-            val fragment = ItemDialogFragment()
-            fragment.feedingPet = event.usingPet
-            fragment.isFeeding = true
-            fragment.isHatching = false
-            fragment.itemType = "food"
-            fragment.itemTypeText = getString(R.string.food)
-            parentFragmentManager.let { fragment.show(it, "feedDialog") }
+    private fun showFeedingDialog(pet: Pet, food: Food?) {
+        if (food != null) {
+            activity?.feedPet(pet, food)
+            return
         }
+        val fragment = ItemDialogFragment()
+        fragment.feedingPet = pet
+        fragment.isFeeding = true
+        fragment.isHatching = false
+        fragment.itemType = "food"
+        fragment.itemTypeText = getString(R.string.food)
+        parentFragmentManager.let { fragment.show(it, "feedDialog") }
     }
 
     companion object {

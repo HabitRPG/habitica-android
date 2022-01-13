@@ -3,14 +3,11 @@ package com.habitrpg.android.habitica.ui.viewmodels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.habitrpg.android.habitica.components.UserComponent
-import com.habitrpg.android.habitica.events.ShowSnackbarEvent
 import com.habitrpg.android.habitica.extensions.filterOptionalDoOnEmpty
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.members.Member
-import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.BackpressureStrategy
-import org.greenrobot.eventbus.EventBus
 
 class PartyViewModel(initializeComponent: Boolean) : GroupViewModel(initializeComponent) {
     constructor() : this(true)
@@ -56,12 +53,7 @@ class PartyViewModel(initializeComponent: Boolean) : GroupViewModel(initializeCo
                     .flatMap { userRepository.retrieveUser() }
                     .flatMap { socialRepository.retrieveGroup(groupID) }
                     .subscribe(
-                        {
-                            val event = ShowSnackbarEvent()
-                            event.type = HabiticaSnackbar.SnackbarDisplayType.SUCCESS
-                            event.text = "Quest invitation accepted"
-                            EventBus.getDefault().post(event)
-                        },
+                        {},
                         RxErrorHandler.handleEmptyError()
                     )
             )
@@ -75,12 +67,7 @@ class PartyViewModel(initializeComponent: Boolean) : GroupViewModel(initializeCo
                     .flatMap { userRepository.retrieveUser() }
                     .flatMap { socialRepository.retrieveGroup(groupID) }
                     .subscribe(
-                        {
-                            val event = ShowSnackbarEvent()
-                            event.type = HabiticaSnackbar.SnackbarDisplayType.FAILURE
-                            event.text = "Quest invitation rejected"
-                            EventBus.getDefault().post(event)
-                        },
+                        {},
                         RxErrorHandler.handleEmptyError()
                     )
             )

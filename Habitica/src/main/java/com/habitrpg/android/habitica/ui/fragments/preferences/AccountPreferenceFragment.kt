@@ -1,20 +1,17 @@
 package com.habitrpg.android.habitica.ui.fragments.preferences
 
-import android.R.attr
 import android.accounts.AccountManager
 import android.app.Activity
+import android.content.*
 import android.os.Bundle
 import android.text.InputType
 import android.view.View
-import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.util.PatternsCompat
-import androidx.core.widget.addTextChangedListener
-import androidx.core.widget.doAfterTextChanged
 import androidx.preference.EditTextPreference
 import androidx.preference.Preference
 import com.google.android.material.textfield.TextInputLayout
@@ -22,7 +19,6 @@ import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.api.HostConfig
 import com.habitrpg.android.habitica.data.ApiClient
-import com.habitrpg.android.habitica.events.ShowSnackbarEvent
 import com.habitrpg.android.habitica.extensions.addCancelButton
 import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.extensions.layoutInflater
@@ -33,17 +29,11 @@ import com.habitrpg.android.habitica.ui.helpers.KeyboardUtil
 import com.habitrpg.android.habitica.ui.viewmodels.AuthenticationViewModel
 import com.habitrpg.android.habitica.ui.views.ExtraLabelPreference
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
+import com.habitrpg.android.habitica.ui.views.SnackbarActivity
 import com.habitrpg.android.habitica.ui.views.ValidatingEditText
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaProgressDialog
-import org.greenrobot.eventbus.EventBus
 import javax.inject.Inject
-import android.R.attr.label
-import android.content.*
-
-import androidx.core.content.ContextCompat.getSystemService
-
-
 
 
 class AccountPreferenceFragment: BasePreferencesFragment(),
@@ -235,14 +225,17 @@ class AccountPreferenceFragment: BasePreferencesFragment(),
     }
 
     private fun displayAuthenticationSuccess(network: String) {
-        ShowSnackbarEvent(null, context?.getString(R.string.added_social_auth, network), HabiticaSnackbar.SnackbarDisplayType.SUCCESS).post()
+        (activity as? SnackbarActivity)?.showSnackbar(
+            content = context?.getString(R.string.added_social_auth, network),
+            displayType = HabiticaSnackbar.SnackbarDisplayType.SUCCESS
+        )
     }
 
     private fun displayDisconnectSuccess(network: String) {
-        val event = ShowSnackbarEvent()
-        event.text = context?.getString(R.string.removed_social_auth, network)
-        event.type = HabiticaSnackbar.SnackbarDisplayType.SUCCESS
-        EventBus.getDefault().post(event)
+        (activity as? SnackbarActivity)?.showSnackbar(
+            content = context?.getString(R.string.removed_social_auth, network),
+            displayType = HabiticaSnackbar.SnackbarDisplayType.SUCCESS
+        )
     }
 
     private val recoverFromPlayServicesErrorResult = registerForActivityResult(
@@ -289,7 +282,10 @@ class AccountPreferenceFragment: BasePreferencesFragment(),
                     .flatMap { userRepository.retrieveUser(true, true) }
                     .subscribe(
                         {
-                            ShowSnackbarEvent(null, context.getString(R.string.password_changed), HabiticaSnackbar.SnackbarDisplayType.SUCCESS).post()
+                            (activity as? SnackbarActivity)?.showSnackbar(
+                                content = context.getString(R.string.password_changed),
+                                displayType = HabiticaSnackbar.SnackbarDisplayType.SUCCESS
+                            )
                         },
                         RxErrorHandler.handleEmptyError()
                     )
@@ -333,7 +329,10 @@ class AccountPreferenceFragment: BasePreferencesFragment(),
                     .flatMap { userRepository.retrieveUser(true, true) }
                     .subscribe(
                         {
-                            ShowSnackbarEvent(null, context.getString(R.string.password_added), HabiticaSnackbar.SnackbarDisplayType.SUCCESS).post()
+                            (activity as? SnackbarActivity)?.showSnackbar(
+                                content = context.getString(R.string.password_added),
+                                displayType = HabiticaSnackbar.SnackbarDisplayType.SUCCESS
+                            )
                         },
                         RxErrorHandler.handleEmptyError()
                     )
@@ -487,10 +486,10 @@ class AccountPreferenceFragment: BasePreferencesFragment(),
     private fun copyValue(name: String, value: CharSequence?) {
         val clipboard: ClipboardManager? = context?.let { getSystemService(it, ClipboardManager::class.java) }
         clipboard?.setPrimaryClip(ClipData.newPlainText(name, value))
-        val event = ShowSnackbarEvent()
-        event.text = context?.getString(R.string.copied_to_clipboard, name)
-        event.type = HabiticaSnackbar.SnackbarDisplayType.SUCCESS
-        EventBus.getDefault().post(event)
+        (activity as? SnackbarActivity)?.showSnackbar(
+            content = context?.getString(R.string.copied_to_clipboard),
+            displayType = HabiticaSnackbar.SnackbarDisplayType.SUCCESS
+        )
     }
 
     override fun onSharedPreferenceChanged(p0: SharedPreferences?, p1: String?) {

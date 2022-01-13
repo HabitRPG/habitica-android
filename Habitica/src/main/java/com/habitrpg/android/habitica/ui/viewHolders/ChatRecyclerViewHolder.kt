@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ChatItemBinding
 import com.habitrpg.android.habitica.databinding.TavernChatIntroItemBinding
-import com.habitrpg.android.habitica.events.ShowSnackbarEvent
 import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.extensions.getAgoString
 import com.habitrpg.android.habitica.extensions.setScaledPadding
@@ -24,10 +23,10 @@ import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
 import com.habitrpg.android.habitica.ui.helpers.setParsedMarkdown
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
+import com.habitrpg.android.habitica.ui.views.SnackbarActivity
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.schedulers.Schedulers
-import org.greenrobot.eventbus.EventBus
 
 open class ChatRecyclerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
@@ -75,10 +74,10 @@ class ChatRecyclerMessageViewHolder(itemView: View, private var userId: String, 
                 if (it.uuid != userId) {
                     onLikeMessage?.invoke(it)
                 } else {
-                    val event = ShowSnackbarEvent()
-                    event.text = context.getString(R.string.cant_like_own_message)
-                    event.type = HabiticaSnackbar.SnackbarDisplayType.FAILURE
-                    EventBus.getDefault().post(event)
+                    (context as? SnackbarActivity)?.showSnackbar(
+                        content = context.getString(R.string.cant_like_own_message),
+                        displayType = HabiticaSnackbar.SnackbarDisplayType.FAILURE
+                    )
                 }
             }
         }

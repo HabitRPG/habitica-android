@@ -19,7 +19,6 @@ import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import org.greenrobot.eventbus.EventBus
 import javax.inject.Inject
 
 /**
@@ -86,13 +85,5 @@ class InsufficientGemsDialog(context: Context, var gemPrice: Int) : Insufficient
                 addButton(R.string.purchase_gems, false) { _, _ -> MainNavigationController.navigate(R.id.gemPurchaseActivity, bundleOf(Pair("openSubscription", false))) }
             }
         }
-        EventBus.getDefault().register(this)
-    }
-
-    override fun onDetachedFromWindow() {
-        if (EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().unregister(this)
-        }
-        super.onDetachedFromWindow()
     }
 }

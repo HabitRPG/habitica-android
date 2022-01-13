@@ -151,6 +151,7 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsBinding>(), SwipeRefr
                         .subscribe({ }, RxErrorHandler.handleEmptyError())
                 )
                 compositeSubscription.add(adapter.hatchPetEvents.subscribeWithErrorHandler { hatchPet(it.first, it.second) })
+                compositeSubscription.add(adapter.feedPetEvents.subscribeWithErrorHandler { feedPet(it) })
             }
         }
         activity?.let {
@@ -192,6 +193,10 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsBinding>(), SwipeRefr
         // binding?.openEmptyMarketButton?.setOnClickListener { openMarket() }
 
         this.loadItems()
+    }
+
+    private fun feedPet(food: Food) {
+        feedingPet?.let { (activity as? MainActivity)?.feedPet(it, food) }
     }
 
     override fun onResume() {
