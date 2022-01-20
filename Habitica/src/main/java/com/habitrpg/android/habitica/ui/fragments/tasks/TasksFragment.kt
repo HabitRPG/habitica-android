@@ -185,11 +185,13 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
             val dialog = TaskFilterDialog(it, HabiticaBaseApplication.userComponent)
             disposable = tagRepository.getTags().subscribe({ tagsList -> dialog.setTags(tagsList) }, RxErrorHandler.handleEmptyError())
             dialog.setActiveTags(taskFilterHelper.tags)
-            if (activeFragment != null) {
-                val taskType = activeFragment?.taskType
-                if (taskType != null) {
-                    dialog.setTaskType(taskType, taskFilterHelper.getActiveFilter(taskType))
-                }
+
+            // There are some cases where these things might not be correctly set after the app resumes. This is just to catch that as best as possible
+            val navigation = bottomNavigation ?: activity?.binding?.bottomNavigation
+            val taskType = navigation?.activeTaskType ?: activeFragment?.taskType
+
+            if (taskType != null) {
+                dialog.setTaskType(taskType, taskFilterHelper.getActiveFilter(taskType))
             }
             dialog.setListener(object : TaskFilterDialog.OnFilterCompletedListener {
                 override fun onFilterCompleted(activeTaskFilter: String?, activeTags: MutableList<String>) {
