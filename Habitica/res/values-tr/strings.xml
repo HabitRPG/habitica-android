@@ -738,7 +738,6 @@
     <string name="task_title">Görev Başlığı</string>
     <string name="add_local_authentication">Yerel Kimlik Doğrulama Ekle</string>
     <string name="defeat">Yenilgi</string>
-    <string name="gift_confirmation_text_gems">%s elmas gönderdin.</string>
     <string name="gift_confirmation_text_sub_g1g1">%s kullanıcısına %s-month aylık Habitica üyeliği hediye ettin ve 1 alana 1 bedava kampanyamızla aynı üyeliği sen de kazandın!</string>
     <string name="gift_confirmation_text_sub">%s kullanıcısına %s aylık Habitica üyeliği hediye ettin.</string>
     <string name="gift_gems_subtitle">Hediye etmek istediğin elmas paketini seç!</string>
@@ -1029,7 +1028,6 @@
     <string name="hatchedPetTitle">Bir evcil hayvan yumurtadan çıktı</string>
     <string name="feedPet_description">Yiyecek almak için görevleri tamamlayın! Evcil hayvanınızı Evcil Hayvanlar ve Binekler bölümünden besleyebilirsiniz</string>
     <string name="hatch_pet_title">Yeni bir evcil hayvan yumurtadan çıkarttı</string>
-    <string name="adventure_guide_description">Bu işe alım görevlerini tamamladığınızda, işiniz bittiğinde &lt;b&gt;5 Başarı&lt;/b&gt; ve &lt;font color = # EE9109&gt; &lt;b&gt;100 Altın&lt;/b&gt;&lt;/font&gt; kazanacaksınız!</string>
     <string name="getting_started">Başlangıç</string>
     <string name="onboarding_tasks">İlk Katılım Görevleri</string>
     <string name="task_display">Görev listesi ekranı</string>

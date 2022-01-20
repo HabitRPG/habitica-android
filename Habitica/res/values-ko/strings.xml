@@ -802,7 +802,6 @@
     <string name="subscribe_listitem5">아이템 드롭이 두 배</string>
     <string name="subscribe_listitem3_description_new">지금 %s를 받고 매달 새로운 아이템을 받으려면 구독하세요!</string>
     <string name="leave_guild_confirmation">길드를 탈퇴하고 도전을 계속하거나 그만두시겠습니까\?</string>
-    <string name="gift_confirmation_text_gems">%s 에게 보석을 선물했습니다.</string>
     <string name="gift_confirmation_text_sub">%s 에게 %s-개월 해비티카 구독권을 선물했습니다.</string>
     <string name="gift_confirmation_text_sub_g1g1">원 플러스 원 프로모션을 통해 %s 에게 %s-개월 해비티카 구독권을 선물하고 동일한 구독 기간이 본인의 계정에도 적용되었습니다!</string>
     <string name="gift_gems_subtitle">선물하고 싶은 보석 꾸러미를 선택하세요!</string>
@@ -1010,7 +1009,6 @@
     <string name="lets_get_started">시작합시다</string>
     <string name="animal_tail">동물 꼬리</string>
     <string name="purchasedEquipmentDescription">장비는 그저 장식용일수도 있고</string>
-    <string name="adventure_guide_description">5개의 과제를 완수하고 &lt;b&gt;5개의 업적&lt;/b&gt; 과 &lt;font color=#EE9109&gt;&lt;b&gt;100 골드&lt;/b&gt;&lt;/font&gt; 를 수령하세요!</string>
     <string name="complete_task_description">완수한 과제를 체크하고 보상을 수령하세요</string>
     <string name="completedTaskDescription">과제는 습관이나 일과, 또는 할일이 될수도 있습니다.
 \n계속 완수하고 여러가지 보상을 수령하세요!</string>

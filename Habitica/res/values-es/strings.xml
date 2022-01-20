@@ -875,7 +875,6 @@
     <string name="view_gem_bundles">Ver paquetes de Gemas</string>
     <string name="fall_promo_info_prompt">La Gala de Otoño está en pleno apogeo, así que pensamos que era el momento perfecto para presentar nuestra primera Venta de Gemas! Ahora obtendrás más gemas con cada compra como nunca antes.</string>
     <string name="defeat">Derrotar</string>
-    <string name="gift_confirmation_text_gems">Has enviado algunas gemas a %s.</string>
     <string name="special_items">Artículos especiales</string>
     <string name="leave_keep_tasks">Abandonar y mantener Tareas</string>
     <string name="challenge_leave_description">Puedes elegir mantener las tareas de este desafío en tu tablero personal o eliminarlas cuando lo abandones</string>
@@ -1087,7 +1086,6 @@
     <string name="could_not_find_user">No se pudo encontrar al usuario</string>
     <string name="lets_get_started">Comencemos</string>
     <string name="animal_tail">Cola de animal</string>
-    <string name="adventure_guide_description">Completa estas tareas de iniciación y ganarás &lt;b&gt;5 logros&lt;/b&gt; y &lt;font color=#EE9109&gt;&lt;b&gt;100 piezas de oro &lt;/b&gt;&lt;/font&gt; una vez terminadas!</string>
     <string name="subscriber_currency">Divisa de subscripción</string>
     <string name="avatar_headband">Cinta de cabeza</string>
     <string name="quest_items_found">Has encontrado %d Artículos de Misión</string>

@@ -33,15 +33,33 @@
             tools:visibility="visible"
             />
     </LinearLayout>
-    <TextView
-        android:id="@+id/headerNotesView"
+    <LinearLayout
+        android:id="@+id/header_notes_wrapper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:layout_marginBottom="12dp"
-        android:textSize="12sp"
-        android:textColor="@color/text_quad"
+        android:layout_marginHorizontal="12dp"
         android:visibility="gone"
         tools:visibility="visible"
-        tools:text="@string/class_gear_disclaimer"/>
+        android:gravity="center">
+        <TextView
+            android:id="@+id/headerNotesView"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="12sp"
+            android:textColor="@color/text_quad"
+            tools:text="@string/class_gear_disclaimer"/>
+        <Button
+            android:id="@+id/switch_class_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/switch_class"
+            android:textSize="12sp"
+            android:backgroundTint="@color/brand_400"
+            android:layout_marginStart="6dp"
+            android:minWidth="40dp"/>
+    </LinearLayout>
+
 </LinearLayout>

@@ -63,7 +63,7 @@ class AdventureGuideActivity : BaseActivity() {
             Pair("purchasedEquipment", getString(R.string.purchase_equipment_description))
         )
 
-        val descriptionText = getString(R.string.adventure_guide_description)
+        val descriptionText = getString(R.string.adventure_guide_description_new)
         binding.descriptionView.setText(descriptionText.fromHtml(), TextView.BufferType.SPANNABLE)
 
         AmplitudeManager.sendNavigationEvent("adventure guide screen")

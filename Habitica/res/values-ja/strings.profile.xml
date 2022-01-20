@@ -9,7 +9,6 @@
     <string name="profile_level">レベル : </string>
     <string name="profile_class_bonus">クラスボーナス : </string>
     <string name="profile_allocated">割当済み : </string>
-    <string name="profile_private_message">プライベートメッセージ</string>
     <string name="profile_achievements">実績</string>
 
 </resources>

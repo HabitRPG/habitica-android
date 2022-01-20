@@ -859,7 +859,6 @@
     <string name="add_local_authentication">Adicionar autenticação local</string>
     <string name="defeat">Derrotar</string>
     <string name="gift_confirmation_text_sub_g1g1">Você enviou para %s uma assinatura por %s mês/meses no Habitica e a mesma assinatura foi aplicada à sua conta para a nossa promoção \"Presenteie com uma e ganhe outra\"!</string>
-    <string name="gift_confirmation_text_gems">Você enviou algumas gemas para %s.</string>
     <string name="gift_confirmation_text_sub">Você enviou para %s uma assinatura por %s mês/meses no Habitica.</string>
     <string name="gift_gems_subtitle">Selecione abaixo o pacote de gemas que você deseja presentear!</string>
     <string name="join_party_description_guild">Dê o nome de usuário abaixo a um amigo ou vá para %s para conhecer potenciais camaradas!</string>
@@ -1072,7 +1071,6 @@
     <string name="percent_completed">%d%% Completo</string>
     <string name="lets_get_started">Vamos começar</string>
     <string name="your_progress">Seu Progresso</string>
-    <string name="adventure_guide_description">Complete essas tarefas iniciais e você vai ganhar &lt;b&gt;5 Conquistas&lt;/b&gt; e &lt;font color=#EE9109&gt;&lt;b&gt;100 Ouro&lt;/b&gt;&lt;/font&gt; quando terminar!</string>
     <string name="onboarding_tasks">Tarefas Iniciais</string>
     <string name="getting_started">Começando</string>
     <string name="complete_for_gold">Complete para ganhar &lt;font color=#EE9109&gt;&lt;b&gt;100 Ouro&lt;/b&gt;&lt;/font&gt;!</string>

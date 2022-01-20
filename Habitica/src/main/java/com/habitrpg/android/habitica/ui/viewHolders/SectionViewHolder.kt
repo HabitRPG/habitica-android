@@ -3,10 +3,7 @@ package com.habitrpg.android.habitica.ui.viewHolders
 import android.content.Context
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Spinner
-import android.widget.TextView
+import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.inflate
@@ -16,6 +13,8 @@ class SectionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     private val label: TextView = itemView.findViewById(R.id.label)
     private val selectionSpinner: Spinner? = itemView.findViewById(R.id.classSelectionSpinner)
+    val switchClassButton: Button? = itemView.findViewById(R.id.switch_class_button)
+    internal val notesWrapper: LinearLayout? = itemView.findViewById(R.id.header_notes_wrapper)
     internal val notesView: TextView? = itemView.findViewById(R.id.headerNotesView)
     private val countPill: TextView? = itemView.findViewById(R.id.count_pill)
     var context: Context = itemView.context

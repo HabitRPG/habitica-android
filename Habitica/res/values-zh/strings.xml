@@ -848,7 +848,6 @@
     <string name="resubscribe_description">要继续用您的订阅增值？您可以在现在的订阅结束前开始新的订阅，就能继续使用。</string>
     <string name="save_20">节省20%</string>
     <string name="gifted">赠送了</string>
-    <string name="gift_confirmation_text_gems">你送给%s一些宝石。</string>
     <string name="gift_confirmation_text_sub">你送给%s一个%s个月的Habitica订阅。</string>
     <string name="gift_confirmation_text_sub_g1g1">你送给%s一个%s个月的Habitica订阅，由于买一赠一促销活动，你也获得了同样时长的订阅！</string>
     <string name="gift_gems_subtitle">在下面选择你要赠送的宝石包！</string>
@@ -1053,7 +1052,6 @@
     <string name="lets_get_started">我们开始吧</string>
     <string name="your_progress">你的进展</string>
     <string name="onboarding_tasks">新手任务</string>
-    <string name="adventure_guide_description">完成这些新手入门任务，立即获得&lt;b&gt;5项成就&lt;/b&gt;和&lt;font color=#EE9109&gt;&lt;b&gt;100金币&lt;/b&gt;&lt;/font&gt;！</string>
     <string name="getting_started">起步</string>
     <string name="complete_for_gold">完成可挣得&lt;font color=#EE9109&gt;&lt;b&gt;100金币&lt;/b&gt;&lt;/font&gt;！</string>
     <string name="task_display">展示任务列表</string>

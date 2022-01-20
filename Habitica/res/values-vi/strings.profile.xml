@@ -6,7 +6,6 @@
     <string name="profile_send_message_to">Gửi tin nhắn tới %s</string>
     <string name="profile_message_sent_to">Tin nhắn đã gửi tới %s</string>
     <string name="profile_level">Cấp độ:</string>
-    <string name="profile_private_message">Tin nhắn riêng tư</string>
     <string name="profile_achievements">Những thành tựu</string>
     <string name="profile_allocated">Phân Bố:</string>
     <string name="profile_class_bonus">Hiệu ứng Chức nghiệp:</string>

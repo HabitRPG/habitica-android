@@ -847,7 +847,6 @@
     <string name="promo_subscription_buy_gems_description">Abonnez-vous pour acheter des gemmes avec de l\'or, obtenir des objets mystères tous les mois, augmenter le taux de butin et plus encore !</string>
     <string name="promo_subscription_buy_gems_prompt">Besoin de gemmes \?</string>
     <string name="transfer_ownership_confirm_message">Cela fera de %s le nouveau responsable de l\'équipe</string>
-    <string name="gift_confirmation_text_gems">Vous avez envoyé des gemmes à %s.</string>
     <string name="gift_confirmation_text_sub">Vous avez envoyé à %s un abonnement de %s mois.</string>
     <string name="gift_confirmation_text_sub_g1g1">Vous avez envoyé à %s un abonnement de %s mois et le même abonnement vous a été accordé pour notre promotion Un en cadeau, un reçu !</string>
     <string name="gift_gems_subtitle">Choisissez le paquet de gemmes que vous voudriez offrir ci-dessous !</string>
@@ -1078,7 +1077,6 @@
     <string name="percent_completed">%d%% Complété</string>
     <string name="lets_get_started">Commençons</string>
     <string name="your_progress">Votre progression</string>
-    <string name="adventure_guide_description">Remplissez ces tâches d\'initiation et vous gagnerez &lt;b&gt;5 succès&lt;/b&gt; et &lt;font color=#EE9109&gt;&lt;b&gt;100 pièces d\'or&lt;/b&gt;&lt;/font&gt; une fois terminé !</string>
     <string name="getting_started">Pour commencer</string>
     <string name="complete_for_gold">Remplissez cette tâche pour gagner &lt;font color=#EE9109&gt;&lt;b&gt;100 or&lt;/b&gt;&lt;/font&gt; !</string>
     <string name="onboarding_tasks">Tâches d\'Intégration</string>

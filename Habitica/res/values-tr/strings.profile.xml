@@ -9,7 +9,6 @@
     <string name="profile_level">Seviye:</string>
     <string name="profile_class_bonus">Sınıf-Bonusu:</string>
     <string name="profile_allocated">Dağıtılmış:</string>
-    <string name="profile_private_message">Özel Mesaj</string>
     <string name="profile_achievements">Başarılar</string>
 
 </resources>

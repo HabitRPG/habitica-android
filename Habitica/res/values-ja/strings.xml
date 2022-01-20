@@ -739,7 +739,6 @@
     <string name="sale">セール</string>
     <string name="new_password">新しいパスワード</string>
     <string name="add_local_authentication">ローカル認証を追加する</string>
-    <string name="gift_confirmation_text_gems">%sにジェムを送りました。</string>
     <string name="need_more_help">もっと助けが必要ですか？</string>
     <string name="adjust_streak">連続実行を調整する</string>
     <string name="old_password">古いパスワード</string>
@@ -1020,7 +1019,6 @@
     <string name="purchase_equipment_title">装備を買う</string>
     <string name="lets_get_started">はじめましょう</string>
     <string name="your_progress">進捗</string>
-    <string name="adventure_guide_description">これらの初心者入門のタスクを完了して、&lt;b&gt;5つの実績バッジ&lt;/b&gt;と&lt;font color=#EE9109&gt;&lt;b&gt;100ゴールド&lt;/b&gt;&lt;/font&gt;をゲットしましょう！</string>
     <string name="getting_started">はじめよう</string>
     <string name="complete_for_gold">完了して&lt;font color=#EE9109&gt;&lt;b&gt;100ゴールド&lt;/b&gt;&lt;/font&gt;をゲットしましょう！</string>
     <string name="onboarding_tasks">初心者入門のタスク</string>

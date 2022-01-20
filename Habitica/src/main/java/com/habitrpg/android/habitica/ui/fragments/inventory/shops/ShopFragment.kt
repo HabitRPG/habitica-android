@@ -12,6 +12,7 @@ import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBinding
+import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.shops.Shop
@@ -24,6 +25,7 @@ import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.helpers.RecyclerViewState
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.views.CurrencyViews
+import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import javax.inject.Inject
 
 open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>() {
@@ -81,6 +83,9 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
             adapter?.context = context
             binding?.recyclerView?.adapter = adapter
             binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
+            adapter?.changeClassEvents?.subscribe {
+                showClassChangeDialog(it)
+            }?.let { compositeSubscription.add(it) }
         }
 
         if (binding?.recyclerView?.layoutManager == null) {
@@ -145,6 +150,20 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
         currencyView.hourglassVisibility = View.GONE
 
         context?.let { FirebaseAnalytics.getInstance(it).logEvent("open_shop", bundleOf(Pair("shopIdentifier", shopIdentifier))) }
+    }
+
+    private fun showClassChangeDialog(classIdentifier: String) {
+        context?.let { context ->
+            val alert = HabiticaAlertDialog(context)
+            alert.setTitle(getString(R.string.class_confirmation_price, classIdentifier, 3))
+            alert.addButton(R.string.choose_class, true) { _, _ ->
+                userRepository.changeClass(classIdentifier).subscribeWithErrorHandler {
+
+                }
+            }
+            alert.addButton(R.string.dialog_go_back, false)
+            alert.show()
+        }
     }
 
     override fun onResume() {

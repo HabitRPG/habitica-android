@@ -730,7 +730,6 @@
     <string name="preference_push_important_announcements">Thông báo Quan trọng</string>
     <string name="damage_paused">Sát thương đã tạm dừng</string>
     <string name="discover">Khám phá</string>
-    <string name="gift_confirmation_text_gems">Bạn đã tặng %s một vài Gem.</string>
     <string name="gift_confirmation_text_sub">Bạn đã tặng %s một gói đăng ký Habitica %s-month.</string>
     <string name="gift_confirmation_text_sub_g1g1">Bạn đã gửi cho %s một gói đăng ký Habitica %s-month và gói đăng ký tương tự đã được kích hoạt cho tài khoản của bạn với chương trình khuyến mãi Tặng Một Có Một của chúng tôi!</string>
     <string name="gift_confirmation_title">Quà của bạn đã được gửi!</string>
@@ -1075,7 +1074,6 @@
     <string name="percent_completed">Hoàn thành %d%%</string>
     <string name="lets_get_started">Bắt đầu nào</string>
     <string name="your_progress">Tiến trình của bạn</string>
-    <string name="adventure_guide_description">Hoàn thành những công việc nhập môn và bạn sẽ kiếm &lt;b&gt;5 Thành tựu&lt;/b&gt; và &lt;font color=#EE9109&gt;&lt;b&gt;100 Vàng&lt;/b&gt;&lt;/font&gt; khi bạn hoàn thành!</string>
     <string name="getting_started">Bắt đầu nào</string>
     <string name="complete_for_gold">Hoàn thành để kiếm &lt;font color=#EE9109&gt;&lt;b&gt;100 Vàng&lt;/b&gt;&lt;/font&gt;!</string>
     <string name="onboarding_tasks">Công việc Nhập môn</string>

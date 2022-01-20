@@ -18,12 +18,18 @@ import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.viewHolders.SectionViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.ShopItemViewHolder
+import io.reactivex.rxjava3.core.BackpressureStrategy
+import io.reactivex.rxjava3.core.Flowable
+import io.reactivex.rxjava3.subjects.BehaviorSubject
 
 class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
 
     private val items: MutableList<Any> = ArrayList()
     private var shopIdentifier: String? = null
     private var ownedItems: Map<String, OwnedItem> = HashMap()
+
+    private val changeClassSubject = BehaviorSubject.create<String>()
+    val changeClassEvents: Flowable<String> = changeClassSubject.toFlowable(BackpressureStrategy.DROP)
 
     var shopSpriteSuffix: String = ""
         set(value) {
@@ -117,14 +123,23 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<an
                             }
                             if (user?.stats?.habitClass != category?.identifier && category?.identifier != "none") {
                                 sectionHolder.notesView?.text = context.getString(R.string.class_gear_disclaimer)
-                                sectionHolder.notesView?.visibility = View.VISIBLE
+                                if (user?.hasClass == true) {
+                                    sectionHolder.switchClassButton?.setOnClickListener {
+                                        changeClassSubject.onNext(selectedGearCategory)
+                                    }
+                                    // TODO: Enable this again when we have a nicer design
+                                    sectionHolder.switchClassButton?.visibility = View.GONE
+                                } else {
+                                    sectionHolder.switchClassButton?.visibility = View.GONE
+                                }
+                                sectionHolder.notesWrapper?.visibility = View.VISIBLE
                             } else {
-                                sectionHolder.notesView?.visibility = View.GONE
+                                sectionHolder.notesWrapper?.visibility = View.GONE
                             }
                         }
                     } else {
                         sectionHolder.spinnerAdapter = null
-                        sectionHolder.notesView?.visibility = View.GONE
+                        sectionHolder.notesWrapper?.visibility = View.GONE
                     }
                 }
                 ShopItem::class.java -> {

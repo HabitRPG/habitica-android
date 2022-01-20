@@ -881,7 +881,6 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="task_title">Aufgaben-Titel</string>
     <string name="add_local_authentication">Lokale Authentifizierung hinzufügen</string>
     <string name="defeat">Niederlage</string>
-    <string name="gift_confirmation_text_gems">Du hast %s einige Edelsteine geschickt.</string>
     <string name="gift_confirmation_text_sub">Du hast %s ein %s-monatiges Abo für Habitica geschickt.</string>
     <string name="gift_confirmation_text_sub_g1g1">Du hast %s ein %s-monatiges Abo für Habitica geschickt und das gleiche Abo wurde Deinem Konto gutgeschrieben, dank unserer \"Verschenke ein Abo und erhalte eins gratis\"-Aktion!</string>
     <string name="join_party_description_guild">Gib den untenstehenden Benutzernamen einem Freund, oder geh zur %s um potenzielle Verbündete zu treffen!</string>
@@ -1058,7 +1057,6 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="percent_completed">%d%% Abgeschlossen</string>
     <string name="lets_get_started">Los geht\'s</string>
     <string name="your_progress">Dein Fortschritt</string>
-    <string name="adventure_guide_description">Erledige diese Einstiegsaufgaben und Du wirst &lt;b&gt;5 Erfolge&lt;/b&gt; freischalten und &lt;font color=#EE9109&gt;&lt;b&gt;100 Goldstücke&lt;/b&gt;&lt;/font&gt; erhalten, sobald Du fertig bist!</string>
     <string name="getting_started">Zu Beginn</string>
     <string name="complete_for_gold">Abschließen, um &lt;font color=#EE9109&gt;&lt;b&gt;100 Gold&lt;/b&gt;&lt;/font&gt; zu erhalten!</string>
     <string name="onboarding_tasks">Einstiegsaufgaben</string>

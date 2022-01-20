@@ -5,79 +5,38 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/layout_rounded_bg_window"
+    android:background="@drawable/layout_rounded_bg_brand_400"
     android:gravity="center"
-    android:padding="14dp">
+    android:padding="12dp">
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="65dp"
+        android:layout_height="81dp"
         android:scaleType="center"
         android:id="@+id/gem_image"
         tools:src="@drawable/gems_21"
         android:contentDescription="@string/gems"
         android:layout_marginTop="20dp"/>
 
-    <LinearLayout
-        android:id="@+id/amount_text_wrapper"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center">
-        <FrameLayout
-            android:layout_width="30dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginEnd="8dp"
-            android:clipChildren="true"
-            android:clipToPadding="true">
-            <ImageView
-                android:id="@+id/amount_background_left"
-                android:layout_width="132dp"
-                android:layout_height="35dp"
-                android:layout_gravity="start"
-                />
-        </FrameLayout>
     <com.habitrpg.android.habitica.ui.views.DayNightTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/gem_amount"
-        app:dayTextColor="@color/blue_10"
+        app:dayTextColor="@color/white"
         app:nightTextColor="@color/white"
         android:gravity="center"
         android:layout_gravity="center"
-        android:textSize="36sp"
-        tools:text="21" />
-        <FrameLayout
-            android:layout_width="30dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginStart="8dp"
-            android:clipChildren="true"
-            android:clipToPadding="true">
-            <ImageView
-                android:id="@+id/amount_background_right"
-                android:layout_width="132dp"
-                android:layout_height="35dp"
-                android:layout_gravity="end"
-                />
-        </FrameLayout>
-    </LinearLayout>
-
-    <com.habitrpg.android.habitica.ui.views.DayNightTextView
-        android:id="@+id/gems_text_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/gems"
-        app:dayTextColor="@color/blue_10"
-        app:nightTextColor="@color/white"
-        android:gravity="center"
-        android:layout_marginBottom="14dp" />
+        android:textSize="16sp"
+        android:letterSpacing="0.027"
+        android:fontFamily="@string/font_family_medium"
+        android:layout_margin="10dp"
+        tools:text="21 GEMS" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="38dp"
         android:id="@+id/purchase_button"
         android:background="@drawable/purchase_button_background"
-        android:textColor="@color/white"
+        android:textColor="@color/brand_400"
         android:gravity="center"
         android:textSize="16sp"
         android:letterSpacing="0.02"

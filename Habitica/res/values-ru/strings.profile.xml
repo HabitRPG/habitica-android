@@ -9,6 +9,5 @@
     <string name="profile_level">Уровень:</string>
     <string name="profile_class_bonus">Класс-Бонус:</string>
     <string name="profile_allocated">Выделено:</string>
-    <string name="profile_private_message">Личное сообщение</string>
     <string name="profile_achievements">Достижения</string>
 </resources>

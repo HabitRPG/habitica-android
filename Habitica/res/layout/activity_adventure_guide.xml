@@ -48,7 +48,7 @@
                 android:layout_marginStart="30dp"
                 android:layout_marginEnd="30dp"
                 android:layout_marginBottom="@dimen/spacing_medium"
-                android:text="@string/getting_started"
+                android:text="@string/starting_objectives"
                 android:textColor="@color/text_primary" />
 
             <TextView
@@ -59,7 +59,7 @@
                 android:layout_marginStart="30dp"
                 android:layout_marginEnd="30dp"
                 android:gravity="center_horizontal"
-                android:text="@string/adventure_guide_description"
+                android:text="@string/adventure_guide_description_new"
                 android:textColor="@color/text_primary" />
 
             <LinearLayout
@@ -87,7 +87,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/lets_get_started"
-                    android:textColor="@color/text_quad" />
+                    android:textColor="@color/text_brand_neon" />
             </LinearLayout>
 
             <ProgressBar
@@ -99,7 +99,7 @@
                 android:layout_marginEnd="30dp"
                 android:layout_marginBottom="@dimen/spacing_medium"
                 android:progressBackgroundTint="@color/offset_background"
-                android:progressTint="@color/yellow_50" />
+                android:progressTint="@color/brand_400" />
 
             <LinearLayout
                 android:id="@+id/achievement_container"

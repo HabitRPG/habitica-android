@@ -93,21 +93,14 @@ class SpookyExtraGemsHabiticaPromotion(startDate: Date?, endDate: Date?) : Habit
         val context = binding.root.context
         binding.root.background = promoBackgroundDrawable(context)
         binding.purchaseButton.background = buttonDrawable(context)
-        val drawable = BitmapDrawable(
-            context.resources,
-            HabiticaIconsHelper.imageOfSpookyGemPromoBG()
-        )
-        binding.amountBackgroundLeft.background = drawable
-        binding.amountBackgroundRight.background = drawable
         binding.gemAmount.setTextColor(Color.parseColor("#FEE2B6"))
-        binding.gemsTextView.setTextColor(Color.parseColor("#FEE2B6"))
         binding.footerTextView.visibility = View.VISIBLE
         binding.footerTextView.text = context.getString(R.string.usually_x_gems, regularAmount)
         binding.gemAmount.text = when (regularAmount) {
-            4 -> "5"
-            21 -> "30"
-            42 -> "60"
-            84 -> "125"
+            4 -> "5 GEMS"
+            21 -> "30 GEMS"
+            42 -> "60 GEMS"
+            84 -> "125 GEMS"
             else -> regularAmount.toString()
         }
     }

@@ -404,7 +404,6 @@
     <string name="preference_push_important_announcements">Важливі оголошення</string>
     <string name="damage_paused">Шкоду зупинено</string>
     <string name="discover">Відкрити</string>
-    <string name="gift_confirmation_text_gems">Ви надіслали %s певних самоцвітів.</string>
     <string name="gift_confirmation_title">Ваш подарунок відправлено!</string>
     <string name="server">Сервер</string>
     <string name="gift_one_get_one">Подаруй, Отримай!</string>
@@ -990,7 +989,6 @@
     <string name="percent_completed">%d%% завершено</string>
     <string name="lets_get_started">Приступаємо</string>
     <string name="your_progress">Ваш прогрес</string>
-    <string name="adventure_guide_description">Виконайте ці завдання і в результаті отримайте &lt;b&gt;5 досягнень&lt;/b&gt; і &lt;font color=#EE9109&gt;&lt;b&gt;100 золота&lt;/b&gt;&lt;/font&gt;!</string>
     <string name="complete_for_gold">Виконайте, щоб отримати &lt;font color=#EE9109&gt;&lt;b&gt;100 золота&lt;/b&gt;&lt;/font&gt;!</string>
     <string name="onboarding_tasks">Перші завдання</string>
     <string name="task_display">Відображення списку завдань</string>

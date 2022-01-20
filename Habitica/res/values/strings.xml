@@ -311,6 +311,7 @@
     <string name="opt_out_class">Opt Out</string>
     <string name="opting_out_progress">Opting Out</string>
     <string name="class_confirmation">Are you sure you want to be a %s?</string>
+    <string name="class_confirmation_price">Do you want to change your class to %s for %d gems?</string>
     <string name="class_changed">You are now a %s!</string>
     <string name="class_changed_description">You have new default Battle Gear that you can change under Equipment!</string>
     <string name="choose_class">Choose Class</string>
@@ -1040,7 +1041,7 @@
     <string name="complete_for_gold"><![CDATA[Complete to earn <font color="#EE9109"><b>100 Gold</b></font>!]]></string>
     <string name="delete_checklist_entry">Delete…</string>
     <string name="getting_started">Getting Started</string>
-    <string name="adventure_guide_description"><![CDATA[Complete these onboarding tasks and you’ll earn <b>5 Achievements</b> and <font color="#EE9109"><b>100 Gold</b></font> once you’re done!]]></string>
+    <string name="adventure_guide_description_new"><![CDATA[Complete these objectives and you’ll earn <b>5 Achievements</b> and <font color="#EE9109"><b>100 Gold</b></font> once you’re done!]]></string>
     <string name="your_progress">Your Progress</string>
     <string name="lets_get_started">Let\'s get started</string>
     <string name="percent_completed">%d%% Complete</string>
@@ -1208,4 +1209,6 @@
     <string name="password_not_matching">Password needs to be typed correctly twice</string>
     <string name="email_invalid">Invalid Email address</string>
     <string name="successful_purchase_generic">Purchase successful</string>
+    <string name="starting_objectives">Starting Objectives</string>
+    <string name="switch_class">Switch Class</string>
 </resources>

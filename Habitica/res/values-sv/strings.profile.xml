@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="profile_achievements">Prestationer</string>
-    <string name="profile_private_message">Privat Meddelande</string>
     <string name="profile_class_bonus">Klassbonus:</string>
     <string name="profile_level">Level:</string>
     <string name="profile_message_sent_to">Meddelande skickat till %s</string>

@@ -93,32 +93,14 @@ class FallExtraGemsHabiticaPromotion(startDate: Date?, endDate: Date?) : Habitic
         val context = binding.root.context
         binding.root.background = promoBackgroundDrawable(context)
         binding.purchaseButton.background = buttonDrawable(context)
-        val colors = listOf(
-            ContextCompat.getColor(context, R.color.red_10),
-            ContextCompat.getColor(context, R.color.blue_50),
-            ContextCompat.getColor(context, R.color.green_50),
-            ContextCompat.getColor(context, R.color.brand_300)
-        ).shuffled()
-        val drawable = BitmapDrawable(
-            context.resources,
-            HabiticaIconsHelper.imageOfFallGemPromoBG(
-                colors[0],
-                colors[1],
-                colors[2],
-                colors[3]
-            )
-        )
-        binding.amountBackgroundLeft.background = drawable
-        binding.amountBackgroundRight.background = drawable
         binding.gemAmount.setTextColor(Color.parseColor("#FEE2B6"))
-        binding.gemsTextView.setTextColor(Color.parseColor("#FEE2B6"))
         binding.footerTextView.visibility = View.VISIBLE
         binding.footerTextView.text = context.getString(R.string.usually_x_gems, regularAmount)
         binding.gemAmount.text = when (regularAmount) {
-            4 -> "5"
-            21 -> "30"
-            42 -> "60"
-            84 -> "125"
+            4 -> "5 GEMS"
+            21 -> "30 GEMS"
+            42 -> "60 GEMS"
+            84 -> "125 GEMS"
             else -> regularAmount.toString()
         }
     }

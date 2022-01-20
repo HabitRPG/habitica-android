@@ -8,7 +8,6 @@
     <string name="profile_level">레벨:</string>
     <string name="profile_class_bonus">직업 보너스:</string>
     <string name="profile_allocated">할당된 포인트:</string>
-    <string name="profile_private_message">개인 메시지</string>
     <string name="profile_achievements">업적</string>
     <string name="profile_loading_data">회원 정보를 불러오는 중입니다…</string>
 </resources>

@@ -9,7 +9,6 @@
     <string name="profile_level">Poziom:</string>
     <string name="profile_class_bonus">Premia klasowa:</string>
     <string name="profile_allocated">Umieszczone:</string>
-    <string name="profile_private_message">Wiadomość prywatna</string>
     <string name="profile_achievements">Osiągnięcia</string>
 
 </resources>

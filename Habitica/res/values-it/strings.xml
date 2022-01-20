@@ -999,7 +999,6 @@
     <string name="switch_to_list_view">Passa alla vista elenco</string>
     <string name="delete_reminder">Elimina Promemoria</string>
     <string name="leave_guild_confirmation">Sei sicuro di voler abbandonare questa gilda\?</string>
-    <string name="gift_confirmation_text_gems">Hai inviato alcune gemme a %s.</string>
     <string name="gift_confirmation_text_sub">Hai inviato a %s un abbonamento Habitica per %s mesi.</string>
     <string name="gift_confirmation_text_sub_g1g1">Hai inviato a %s un abbonamento Habitica per %s mesi e lo stesso abbonamento è stato aggiunto al tuo account per la nostra promozione Regalane uno Prendine Uno!</string>
     <string name="gift_gems_subtitle">Scegli qui di seguito il pacchetto di gemme che vuoi regalare!</string>
@@ -1037,7 +1036,6 @@
     <string name="percent_completed">%d%% completato</string>
     <string name="lets_get_started">Iniziamo</string>
     <string name="your_progress">I tuoi progressi</string>
-    <string name="adventure_guide_description">Completa queste attività introduttive ed otterrai &lt;b&gt;5 Medaglie&lt;/b&gt; e &lt;font color=#EE9109&gt;&lt;b&gt;100 oro&lt;/b&gt;&lt;/font&gt; una volta completate!</string>
     <string name="onboarding_tasks">Attività introduttive</string>
     <string name="task_display">Visualizzazione dell\'elenco delle attività</string>
     <string name="special_items">Oggetti speciali</string>

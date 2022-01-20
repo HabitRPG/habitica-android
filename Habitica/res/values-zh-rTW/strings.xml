@@ -915,7 +915,6 @@
     <string name="task_title">任務標題</string>
     <string name="add_local_authentication">新增地區性驗證</string>
     <string name="defeat">擊退</string>
-    <string name="gift_confirmation_text_gems">你送給%s一些寶石。</string>
     <string name="gift_confirmation_text_sub">你送給%s一個%s個月的Habitica訂閱。</string>
     <string name="gift_confirmation_text_sub_g1g1">你送給%s一個%s個月的Habitica訂閱，由於買一贈一促銷活動，你也獲得了同樣時長的訂閱！</string>
     <string name="gift_gems_subtitle">在下面選擇你要贈送的寶石包！</string>
@@ -1077,7 +1076,6 @@
     <string name="percent_completed">%d%%已完成</string>
     <string name="lets_get_started">我們開始吧</string>
     <string name="your_progress">你的進展</string>
-    <string name="adventure_guide_description">完成這些新手入門任務，立即獲得&lt;b&gt;5項成就&lt;/b&gt;和&lt;font color=#EE9109&gt;&lt;b&gt;100金幣&lt;/b&gt;&lt;/font&gt;！</string>
     <string name="getting_started">起步</string>
     <string name="complete_for_gold">完成可掙得&lt;font color=#EE9109&gt;&lt;b&gt;100金幣&lt;/b&gt;&lt;/font&gt;！</string>
     <string name="onboarding_tasks">新手任務</string>

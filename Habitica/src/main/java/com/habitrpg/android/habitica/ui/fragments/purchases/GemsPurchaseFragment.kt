@@ -53,15 +53,6 @@ class GemsPurchaseFragment : BaseFragment<FragmentGemPurchaseBinding>() {
         binding?.gems42View?.setOnPurchaseClickListener { purchaseGems(binding?.gems42View) }
         binding?.gems84View?.setOnPurchaseClickListener { purchaseGems(binding?.gems84View) }
 
-        compositeSubscription.add(
-            userRepository.getUser().subscribe(
-                {
-                    binding?.subscriptionPromo?.visibility = if (it.isSubscribed) View.GONE else View.VISIBLE
-                },
-                RxErrorHandler.handleEmptyError()
-            )
-        )
-
         binding?.giftGemsButton?.setOnClickListener { showGiftGemsDialog() }
 
         if (context?.isUsingNightModeResources() == true) {
@@ -137,27 +128,6 @@ class GemsPurchaseFragment : BaseFragment<FragmentGemPurchaseBinding>() {
             alert.addButton(getString(R.string.action_continue), true) { _, _ ->
                 val usernameEditText = chooseRecipientDialogView?.findViewById<View>(R.id.uuidEditText) as? EditText
                 val intent = Intent(thisActivity, GiftGemsActivity::class.java).apply {
-                    putExtra("username", usernameEditText?.text.toString())
-                }
-                startActivity(intent)
-            }
-            alert.addCancelButton { _, _ ->
-                thisActivity.dismissKeyboard()
-            }
-            alert.setAdditionalContentView(chooseRecipientDialogView)
-            alert.show()
-        }
-    }
-
-    private fun showGiftSubscriptionDialog() {
-        val chooseRecipientDialogView = this.activity?.layoutInflater?.inflate(R.layout.dialog_choose_message_recipient, null)
-
-        this.activity?.let { thisActivity ->
-            val alert = HabiticaAlertDialog(thisActivity)
-            alert.setTitle(getString(R.string.gift_title))
-            alert.addButton(getString(R.string.action_continue), true) { _, _ ->
-                val usernameEditText = chooseRecipientDialogView?.findViewById<View>(R.id.uuidEditText) as? EditText
-                val intent = Intent(thisActivity, GiftSubscriptionActivity::class.java).apply {
                     putExtra("username", usernameEditText?.text.toString())
                 }
                 startActivity(intent)

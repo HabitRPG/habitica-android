@@ -189,9 +189,7 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsBinding>(), SwipeRefr
             dismiss()
             openMarket()
         }
-
-        // binding?.openEmptyMarketButton?.setOnClickListener { openMarket() }
-
+        
         this.loadItems()
     }
 

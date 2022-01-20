@@ -9,7 +9,6 @@
     <string name="profile_level">级别：</string>
     <string name="profile_class_bonus">职业的额外奖励：</string>
     <string name="profile_allocated">已分配：</string>
-    <string name="profile_private_message">私信</string>
     <string name="profile_achievements">成就</string>
 
 </resources>

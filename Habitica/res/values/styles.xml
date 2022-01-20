@@ -436,7 +436,7 @@
     </style>
 
     <style name="GemPurchaseListItem">
-        <item name="dayTextColor">@color/text_brand</item>
+        <item name="dayTextColor">@color/brand_200</item>
         <item name="nightTextColor">@color/gray_400</item>
         <item name="android:gravity">center_horizontal</item>
         <item name="android:textSize">12sp</item>

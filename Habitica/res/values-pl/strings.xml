@@ -778,7 +778,6 @@
     <string name="need_more_help">Potrzebujesz więcej wsparcia\?</string>
     <string name="create_party">Stwórz drużynę</string>
     <string name="create">Stwórz</string>
-    <string name="gift_confirmation_text_gems">Wysłałeś %s trochę klejnotów.</string>
     <string name="gift_confirmation_text_sub">Wysłałeś %s %s-miesięczną subskrypcję Habitica.</string>
     <string name="gift_confirmation_text_sub_g1g1">Wysłałeś %s %s-miesięczną subskrypcję Habitica i taka sama subskrypcja zasiliła Twoje konto w ramach promocji Dajesz - Dostajesz!</string>
     <string name="gift_gems_subtitle">Wybierz pakiet klejnotów do podarowania poniżej!</string>

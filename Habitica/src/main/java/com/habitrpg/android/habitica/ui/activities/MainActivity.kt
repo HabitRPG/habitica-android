@@ -72,7 +72,6 @@ import javax.inject.Inject
 
 open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction, SnackbarActivity {
     private var launchScreen: String? = null
-    private lateinit var drawerIcon: AdventureGuideDrawerArrowDrawable
 
     @Inject
     internal lateinit var apiClient: ApiClient
@@ -153,7 +152,6 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction, Snack
         }
 
         setupToolbar(binding.toolbar)
-        drawerIcon = AdventureGuideDrawerArrowDrawable(supportActionBar?.themedContext)
 
         avatarInHeader = AvatarWithBarsViewModel(this, binding.avatarWithBars, userRepository)
         sideAvatarView = AvatarView(this, showBackground = true, showMount = false, showPet = false)
@@ -189,7 +187,6 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction, Snack
             R.string.navigation_drawer_open, /* "open drawer" description */
             R.string.navigation_drawer_close /* "close drawer" description */
         ) {}
-        drawerToggle?.drawerArrowDrawable = drawerIcon
         // Set the drawer toggle as the DrawerListener
         drawerToggle?.let { drawerLayout.addDrawerListener(it) }
         drawerLayout.addDrawerListener(object : DrawerLayout.DrawerListener {
@@ -460,12 +457,6 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction, Snack
 
             if (user?.flags?.welcomed == false) {
                 compositeSubscription.add(userRepository.updateUser("flags.welcomed", true).subscribe({}, RxErrorHandler.handleEmptyError()))
-            }
-
-            if (appConfigManager.enableAdventureGuide()) {
-                drawerIcon.setEnabled(user?.hasCompletedOnboarding == false)
-            } else {
-                drawerIcon.setEnabled(false)
             }
 
             try {

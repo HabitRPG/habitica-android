@@ -17,7 +17,6 @@
             android:background="@drawable/g1g1_box"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
-            android:layout_marginTop="10dp"
             android:clipChildren="true"
             android:clipToPadding="true"
             android:clickable="true"
@@ -79,10 +78,20 @@
                 android:layout_marginBottom="12dp"
                 android:layout_centerInParent="true"/>
         </RelativeLayout>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/gem_footer"
+                android:layout_gravity="bottom"
+                android:scaleType="fitXY"
+                tools:ignore="ContentDescription" />
         <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
             android:orientation="vertical" android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="20dp">
+            android:paddingHorizontal="20dp">
 
             <ImageView
                 android:id="@+id/header_image_view"
@@ -102,8 +111,8 @@
                 android:lineSpacingExtra="4dp"
                 android:layout_marginTop="23dp"
                 android:layout_marginBottom="12dp"
-                android:layout_marginStart="@dimen/spacing_large"
-                android:layout_marginEnd="@dimen/spacing_large" />
+                android:layout_marginStart="@dimen/spacing_xlarge"
+                android:layout_marginEnd="@dimen/spacing_xlarge" />
 
             <com.habitrpg.android.habitica.ui.views.DayNightTextView
                 android:text="@string/gem_purchase_listitem1"
@@ -209,8 +218,8 @@
                 android:textColor="@color/text_quad"
                 android:text="@string/gems_gift_description"
                 android:gravity="center_horizontal"
-                android:layout_marginStart="@dimen/spacing_large"
-                android:layout_marginEnd="@dimen/spacing_large"/>
+                android:layout_marginStart="@dimen/spacing_xlarge"
+                android:layout_marginEnd="@dimen/spacing_xlarge"/>
             <Button
                 android:id="@+id/gift_gems_button"
                 android:layout_width="match_parent"
@@ -219,27 +228,21 @@
                 android:background="@color/transparent"
                 android:textColor="?colorAccent"
                 android:textAllCaps="false"/>
-
+            <TextView android:id="@+id/supportTextView"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:paddingStart="41dp"
+                android:paddingEnd="41dp"
+                android:paddingBottom="20dp"
+                android:paddingTop="70dp"
+                android:text="@string/gem_purchase_title"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:lineSpacingExtra="4dp"
+                android:drawablePadding="@dimen/spacing_medium"/>
         </LinearLayout>
-        <TextView android:id="@+id/supportTextView"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:paddingStart="41dp"
-            android:paddingEnd="41dp"
-            android:paddingBottom="20dp"
-            android:paddingTop="20dp"
-            android:text="@string/gem_purchase_title"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center"
-            android:textColor="@color/text_ternary"
-            android:textSize="14sp"
-            android:lineSpacingExtra="4dp"
-            android:background="@color/window_background"
-            android:drawablePadding="@dimen/spacing_medium"/>
-
-        <com.habitrpg.android.habitica.ui.views.promo.SubscriptionBuyGemsPromoView
-            android:id="@+id/subscription_promo"
-            android:layout_width="match_parent"
-            android:layout_height="148dp" />
+        </FrameLayout>
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

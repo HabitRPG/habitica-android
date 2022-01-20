@@ -940,7 +940,6 @@
     <string name="leave_delete_x_tasks">Покинуть &amp; удалить задания: %d</string>
     <string name="hatchedPetTitle">Вырастил(-а) питомца</string>
     <string name="hatch_pet">Вырастить питомца</string>
-    <string name="adventure_guide_description">Выполните эти задания и в итоге получите &lt;b&gt;5 достижений&lt;/b&gt; и &lt;font color=#EE9109&gt;&lt;b&gt;100 золота&lt;/b&gt;&lt;/font&gt;!</string>
     <string name="pet_ownership_fraction">%1$d / %2$d</string>
     <string name="subscribe_listitem5">Удвойте количество выпадающих предметов</string>
     <string name="pms_disabled">Личные сообщения заблокированы</string>
@@ -964,7 +963,6 @@
     <string name="empty_description_todos_filtered">Нет Задач для отображения по текущим фильтрам.</string>
     <string name="empty_description_dailies_filtered">Нет Ежедневных дел для отображения по текущим фильтрам.</string>
     <string name="empty_description_habits_filtered">Нет Привычек для отображения по текущим фильтрам.</string>
-    <string name="gift_confirmation_text_gems">Вы отправили %s несколько самоцветов.</string>
     <string name="remove_member">Удалить участника</string>
     <string name="inbox_messages_title">Вы получили %1$d сообщений от %2$s</string>
     <string name="delete_reminder">Удалить напоминание</string>

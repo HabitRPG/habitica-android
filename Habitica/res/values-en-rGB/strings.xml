@@ -879,7 +879,6 @@
     <string name="unlock_previous_short">Finish Quest %d</string>
     <string name="not_participating">You are not participating</string>
     <string name="quest_completed">Quest completed!</string>
-    <string name="gift_confirmation_text_gems">You sent %s some gems.</string>
     <string name="gift_confirmation_text_sub">You sent %s a %s-month Habitica subscription.</string>
     <string name="gift_confirmation_text_sub_g1g1">You sent %s a %s-month Habitica subscription and the same subscription was applied to your account for our Gift One Get One promotion!</string>
     <string name="gift_gems_subtitle">Choose the gem packet you’d like to gift below!</string>
@@ -1076,7 +1075,6 @@
     <string name="percent_completed">%d%% Complete</string>
     <string name="lets_get_started">Let\'s get started</string>
     <string name="your_progress">Your Progress</string>
-    <string name="adventure_guide_description">Complete these onboarding tasks and you’ll earn &lt;b&gt;5 Achievements&lt;/b&gt; and &lt;font color=#EE9109&gt;&lt;b&gt;100 Gold&lt;/b&gt;&lt;/font&gt; once you’re done!</string>
     <string name="getting_started">Getting Started</string>
     <string name="complete_for_gold">Complete to earn &lt;font color=#EE9109&gt;&lt;b&gt;100 Gold&lt;/b&gt;&lt;/font&gt;!</string>
     <string name="task_display">Task list display</string>

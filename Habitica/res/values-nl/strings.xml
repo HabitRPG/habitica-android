@@ -864,7 +864,6 @@
     <string name="preference_push_important_announcements">Belangrijke mededelingen</string>
     <string name="damage_paused">Schade is onderbroken</string>
     <string name="discover">Ontdekken</string>
-    <string name="gift_confirmation_text_gems">Je hebt %s enkele edelstenen gestuurd.</string>
     <string name="gift_confirmation_text_sub">Je hebt %s een %s-maand Habitica abonnement gestuurd.</string>
     <string name="task_title">Taaktitel</string>
     <string name="create_party">Gezelschap aanmaken</string>
@@ -994,7 +993,6 @@
     <string name="complete_for_gold">Rond deze af om &lt;font color=#EE9109&gt;&lt;b&gt;100 Goud&lt;/b&gt;&lt;/font&gt; te verdienen!</string>
     <string name="onboarding_tasks">Onboarding Taken</string>
     <string name="your_progress">Jouw Vooruitgang</string>
-    <string name="adventure_guide_description">Rond deze Onboarding Taken af en je verdient &lt;b&gt;5 Prestaties&lt;/b&gt; en &lt;font color=#EE9109&gt;&lt;b&gt;100 Goud&lt;/b&gt;&lt;/font&gt; wanneer je klaar bent!</string>
     <string name="onboardingComplete_achievement_title">Je hebt je Onboarding Taken afgerond!</string>
     <string name="view_onboarding_tasks">Bekijk Onboarding Taken</string>
     <string name="equip">Aantrekken</string>
