@@ -82,7 +82,6 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
         closeButton.setOnClickListener { dismiss() }
         dialogContainer.clipChildren = true
         dialogContainer.clipToOutline = true
-
     }
 
     override fun setTitle(title: CharSequence?) {

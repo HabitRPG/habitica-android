@@ -188,4 +188,15 @@
         <item>https://habitrpg-delta.herokuapp.com</item>
     </string-array>
 
+    <string-array name="task_list_modes">
+        <item>@string/standard</item>
+        <item>@string/compact</item>
+        <item>@string/minimal</item>
+    </string-array>
+
+    <string-array name="task_list_modes_values">
+        <item>standard</item>
+        <item>compact</item>
+        <item>minimal</item>
+    </string-array>
 </resources>

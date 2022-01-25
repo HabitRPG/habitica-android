@@ -1,6 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape
-    xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
-            <solid android:color="?attr/colorContentBackground" />
+<layer-list
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <gradient android:startColor="@color/blue_500" android:centerColor="@color/brand_400" android:endColor="@color/red_500" />
             <corners android:radius="8dp" />
         </shape>
+    </item>
+    <item android:top="3dp"
+        android:left="3dp"
+        android:right="3dp"
+        android:bottom="3dp">
+    <shape android:shape="rectangle">
+        <solid android:color="?attr/colorWindowBackground" />
+        <corners android:radius="6dp" />
+    </shape>
+    </item>
+    <item android:right="3dp">
+        <bitmap android:gravity="right" android:tileMode="disabled" android:src="@drawable/adventure_guide_right" />
+    </item>
+</layer-list>
+

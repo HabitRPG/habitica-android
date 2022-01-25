@@ -9,8 +9,10 @@ import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.edit
+import androidx.core.util.Pair
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.NO_POSITION
@@ -113,7 +115,7 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
             RxErrorHandler.handleEmptyError()
         )?.let { recyclerSubscription.add(it) }
         recyclerAdapter?.taskOpenEvents?.subscribeWithErrorHandler {
-            openTaskForm(it)
+            openTaskForm(it.first, it.second)
         }?.let { recyclerSubscription.add(it) }
         recyclerAdapter?.taskScoreEvents
             ?.doOnNext { playSound(it.second) }
@@ -123,6 +125,7 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
                 taskRepository.scoreChecklistItem(it.first.id ?: "", it.second.id ?: "")
             }?.subscribeWithErrorHandler {}?.let { recyclerSubscription.add(it) }
         recyclerAdapter?.brokenTaskEvents?.subscribeWithErrorHandler { showBrokenChallengeDialog(it) }?.let { recyclerSubscription.add(it) }
+        recyclerAdapter?.adventureGuideOpenEvents?.subscribeWithErrorHandler { MainNavigationController.navigate(R.id.adventureGuideActivity) }?.let { recyclerSubscription.add(it) }
 
         recyclerSubscription.add(
             taskRepository.getTasks(this.taskType).subscribe(
@@ -213,7 +216,7 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
 
             // defines the enabled move directions in each state (idle, swiping, dragging).
             override fun getMovementFlags(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int {
-                return if (recyclerAdapter?.getItemViewType(viewHolder.absoluteAdapterPosition) ?: 0 == 2) {
+                return if (recyclerAdapter?.getItemViewType(viewHolder.absoluteAdapterPosition) ?: 0 != 0) {
                     makeFlag(ItemTouchHelper.ACTION_STATE_IDLE, 0)
                 } else {
                     makeFlag(
@@ -287,6 +290,11 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
                 }
             }
         })
+
+        compositeSubscription.add(userRepository.getUser()
+            .doOnNext { recyclerAdapter?.showAdventureGuide = !it.hasCompletedOnboarding }
+            .takeUntil { it.hasCompletedOnboarding }
+            .subscribe( { recyclerAdapter?.user = it }, RxErrorHandler.handleEmptyError()))
     }
 
     protected fun showBrokenChallengeDialog(task: Task) {
@@ -458,7 +466,7 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
         }
     }
 
-    private fun openTaskForm(task: Task) {
+    private fun openTaskForm(task: Task, containerView: View) {
         if (Date().time - (TasksFragment.lastTaskFormOpen?.time ?: 0) < 2000 || !task.isValid || !canEditTasks) {
             return
         }

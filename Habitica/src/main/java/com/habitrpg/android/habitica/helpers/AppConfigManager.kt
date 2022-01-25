@@ -90,7 +90,7 @@ class AppConfigManager(contentRepository: ContentRepository?) {
     }
 
     fun enableTaskDisplayMode(): Boolean {
-        return remoteConfig.getBoolean("enableTaskDisplayMode")
+        return remoteConfig.getBoolean("enableTaskDisplayMode") || testingLevel() == AppTestingLevel.STAFF || BuildConfig.DEBUG
     }
 
     fun feedbackURL(): String {
@@ -102,16 +102,12 @@ class AppConfigManager(contentRepository: ContentRepository?) {
     }
 
     fun taskDisplayMode(context: Context): String {
-        return if (remoteConfig.getBoolean("enableTaskDisplayMode")) {
+        return if (enableTaskDisplayMode()) {
             val preferences = PreferenceManager.getDefaultSharedPreferences(context)
             preferences.getString("task_display", "standard") ?: "standard"
         } else {
             "standard"
         }
-    }
-
-    fun enableAdventureGuide(): Boolean {
-        return remoteConfig.getBoolean("enableAdventureGuide")
     }
 
     fun activePromo(): HabiticaPromotion? {

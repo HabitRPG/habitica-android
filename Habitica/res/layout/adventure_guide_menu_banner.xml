@@ -1,81 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/adventure_guide_menu_bg"
-    tools:parentTag="android.widget.FrameLayout">
-
+    android:layout_height="wrap_content">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="66dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="12dp"
-        android:background="@drawable/adventure_guide_menu_card_bg">
-
+        android:background="@drawable/adventure_guide_menu_card_bg"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/adventure_guide_left"
+            android:layout_marginStart="9dp"/>
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="12dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="9dp"
             android:layout_marginBottom="12dp"
-            android:layout_weight="1"
+            android:gravity="center_vertical"
             android:orientation="vertical">
-
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/onboarding_tasks"
+                android:text="@string/onboarding_objectives"
                 style="@style/Body1"
                 android:textColor="@color/text_primary"/>
-
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/gold_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/pill_bg_gray"
+                    android:textColor="@color/text_primary"
+                    android:paddingVertical="3dp"
+                    android:paddingHorizontal="6dp"
+                    android:textStyle="bold"
+                    android:text="100"/>
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp">
+                android:gravity="center">
 
-                <TextView
-                    android:id="@+id/description_view"
+                <ProgressBar
+                    android:id="@+id/progress_bar"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textColor="@color/text_primary"
-                    android:textSize="12sp" />
+                    android:layout_height="4dp"
+                    android:progressTint="@color/brand_400"
+                    style="@android:style/Widget.ProgressBar.Horizontal"
+                    android:progressBackgroundTint="@color/offset_background"
+                    android:layout_marginEnd="@dimen/spacing_medium"
+                    tools:progress="2"
+                    android:max="5"/>
 
                 <TextView
                     android:id="@+id/count_view"
-                    style="@style/Subheader1"
+                    style="@style/Body1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/yellow_5"
+                    android:textColor="@color/text_brand_neon"
+                    android:textStyle="bold"
                     tools:text="2/5" />
             </LinearLayout>
-
-            <ProgressBar
-                android:id="@+id/progress_bar"
-                android:layout_width="match_parent"
-                android:layout_height="4dp"
-                android:progressTint="@color/yellow_50"
-                style="@android:style/Widget.ProgressBar.Horizontal"
-                android:progressBackgroundTint="@color/offset_background"
-                tools:progress="2"
-                android:max="5"/>
         </LinearLayout>
-        <FrameLayout
-            android:layout_width="24dp"
-            android:layout_height="match_parent"
-            android:background="@drawable/adventure_guide_menu_card_gray">
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="match_parent"
-                android:background="@drawable/adventure_guide_menu_card_gray"
-                android:src="@drawable/ic_keyboard_arrow_right"
-                android:scaleType="center"
-                android:alpha="0.4"
-                />
-        </FrameLayout>
     </LinearLayout>
-</merge>
+</FrameLayout>

@@ -48,6 +48,7 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
     private var emailNotificationsPreference: PreferenceScreen? = null
     private var classSelectionPreference: Preference? = null
     private var serverUrlPreference: ListPreference? = null
+    private var taskListPreference: ListPreference? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         HabiticaBaseApplication.userComponent?.inject(this)
@@ -80,6 +81,7 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
         serverUrlPreference = findPreference("server_url") as? ListPreference
         serverUrlPreference?.isVisible = false
         serverUrlPreference?.summary = preferenceManager.sharedPreferences.getString("server_url", "")
+
         val themePreference = findPreference("theme_name") as? ListPreference
         themePreference?.summary = themePreference?.entry ?: "Default"
         val themeModePreference = findPreference("theme_mode") as? ListPreference
@@ -90,6 +92,7 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
 
         val taskDisplayPreference = findPreference("task_display") as? ListPreference
         if (configManager.enableTaskDisplayMode()) {
+            taskDisplayPreference?.isVisible = true
             taskDisplayPreference?.summary = taskDisplayPreference?.entry
         } else {
             taskDisplayPreference?.isVisible = false
@@ -339,6 +342,7 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
 
         if (configManager.testingLevel() == AppTestingLevel.STAFF || BuildConfig.DEBUG) {
             serverUrlPreference?.isVisible = true
+            taskListPreference?.isVisible = true
         }
     }
 }

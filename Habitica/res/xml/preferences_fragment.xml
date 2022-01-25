@@ -393,6 +393,5 @@
             android:entries="@array/server_urls"
             android:entryValues="@array/server_urls"
             android:layout="@layout/preference_child_summary" />
-
     </PreferenceCategory>
 </PreferenceScreen>

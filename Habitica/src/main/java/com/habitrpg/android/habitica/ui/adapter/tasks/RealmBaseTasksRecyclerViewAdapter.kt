@@ -1,26 +1,51 @@
 package com.habitrpg.android.habitica.ui.adapter.tasks
 
+import android.graphics.drawable.BitmapDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
+import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
+import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.databinding.AdventureGuideMenuBannerBinding
+import com.habitrpg.android.habitica.extensions.dpToPx
+import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.helpers.TaskFilterHelper
 import com.habitrpg.android.habitica.models.responses.TaskDirection
 import com.habitrpg.android.habitica.models.tasks.ChecklistItem
 import com.habitrpg.android.habitica.models.tasks.Task
+import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.adapter.BaseRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.BaseTaskViewHolder
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.functions.Action
 import io.reactivex.rxjava3.subjects.PublishSubject
 import io.realm.OrderedRealmCollection
 
-abstract class RealmBaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(
+abstract class RealmBaseTasksRecyclerViewAdapter(
     private val layoutResource: Int,
     private val taskFilterHelper: TaskFilterHelper?
-) : BaseRecyclerViewAdapter<Task, VH>(), TaskRecyclerViewAdapter {
+) : BaseRecyclerViewAdapter<Task, RecyclerView.ViewHolder>(), TaskRecyclerViewAdapter {
     override var canScoreTasks = true
     private var unfilteredData: List<Task>? = null
+    override var showAdventureGuide = false
+    set(value) {
+        if (field == value) return
+        field = value
+        if (value) {
+            notifyItemInserted(0)
+        } else {
+            notifyItemRemoved(0)
+        }
+    }
+    override var user: User? = null
+    set(value) {
+        field = value
+        notifyItemChanged(0)
+    }
 
     override var taskDisplayMode: String = "standard"
         set(value) {
@@ -36,10 +61,12 @@ abstract class RealmBaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(
     override val taskScoreEvents: Flowable<Pair<Task, TaskDirection>> = taskScoreEventsSubject.toFlowable(BackpressureStrategy.DROP)
     protected var checklistItemScoreSubject: PublishSubject<Pair<Task, ChecklistItem>> = PublishSubject.create()
     override val checklistItemScoreEvents: Flowable<Pair<Task, ChecklistItem>> = checklistItemScoreSubject.toFlowable(BackpressureStrategy.DROP)
-    protected var taskOpenEventsSubject: PublishSubject<Task> = PublishSubject.create()
-    override val taskOpenEvents: Flowable<Task> = taskOpenEventsSubject.toFlowable(BackpressureStrategy.DROP)
+    protected var taskOpenEventsSubject: PublishSubject<Pair<Task, View>> = PublishSubject.create()
+    override val taskOpenEvents: Flowable<Pair<Task, View>> = taskOpenEventsSubject.toFlowable(BackpressureStrategy.DROP)
     protected var brokenTaskEventsSubject: PublishSubject<Task> = PublishSubject.create()
     override val brokenTaskEvents: Flowable<Task> = brokenTaskEventsSubject.toFlowable(BackpressureStrategy.DROP)
+    protected var adventureGuideOpenSubject: PublishSubject<Boolean> = PublishSubject.create()
+    override val adventureGuideOpenEvents: Flowable<Boolean> = adventureGuideOpenSubject.toFlowable(BackpressureStrategy.DROP)
 
     override fun getItemId(index: Int): Long = index.toLong()
 
@@ -49,15 +76,40 @@ abstract class RealmBaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(
         filter()
     }
 
-    override fun onBindViewHolder(holder: VH, position: Int) {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        val binding = AdventureGuideMenuBannerBinding.inflate(parent.context.layoutInflater, parent, false)
+        return AdventureGuideViewHolder(binding.root)
+    }
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val item = getItem(position)
-        if (item != null) {
+        if (item != null && holder is BaseTaskViewHolder) {
             holder.isLocked = !canScoreTasks
             holder.bind(item, position, taskDisplayMode)
             holder.errorButtonClicked = Action {
                 errorButtonEventsSubject.onNext("")
             }
+        } else if (holder is AdventureGuideViewHolder) {
+            holder.itemView.setOnClickListener { adventureGuideOpenSubject.onNext(true) }
+            user?.let { holder.update(it) }
         }
+    }
+
+    override fun getItemCount(): Int {
+        return data.size + if (showAdventureGuide) 1 else 0
+    }
+
+    override fun getItem(position: Int): Task? {
+        return if (showAdventureGuide) {
+            super.getItem(position - 1)
+        } else {
+            super.getItem(position)
+        }
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        if (showAdventureGuide && position == 0) return 1
+        return super.getItemViewType(position)
     }
 
     internal fun getContentView(parent: ViewGroup): View = getContentView(parent, layoutResource)
@@ -76,5 +128,29 @@ abstract class RealmBaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(
         } else {
             data = unfilteredData
         }
+    }
+}
+
+class AdventureGuideViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+    private var progressBar: ProgressBar = itemView.findViewById(R.id.progress_bar)
+    private var countView: TextView = itemView.findViewById(R.id.count_view)
+
+    init {
+        itemView.findViewById<TextView>(R.id.gold_textview).setCompoundDrawablesWithIntrinsicBounds(
+            BitmapDrawable(itemView.resources, HabiticaIconsHelper.imageOfGold()),
+            null,
+            null,
+            null
+        )
+        itemView.findViewById<TextView>(R.id.gold_textview).compoundDrawablePadding = 4.dpToPx(itemView.context)
+    }
+
+    fun update(user: User) {
+         val achievements = user.onboardingAchievements
+        val completed = achievements.count { it.earned }
+        progressBar.max = achievements.size
+        progressBar.progress = completed
+        countView.text = "$completed / ${achievements.size}"
     }
 }

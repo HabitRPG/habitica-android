@@ -414,14 +414,6 @@ class NavigationDrawerFragment : DialogFragment() {
             partyMenuItem?.transitionId = R.id.noPartyFragment
             partyMenuItem?.bundle = null
         }
-
-        val adventureGuideItem = getItemWithIdentifier(SIDEBAR_ADVENTURE_GUIDE)
-        if (configManager.enableAdventureGuide()) {
-            adventureGuideItem?.isVisible = !user.hasCompletedOnboarding
-            adventureGuideItem?.user = user
-        } else {
-            adventureGuideItem?.isVisible = false
-        }
     }
 
     override fun onDestroy() {
@@ -437,9 +429,6 @@ class NavigationDrawerFragment : DialogFragment() {
     private fun initializeMenuItems() {
         val items = ArrayList<HabiticaDrawerItem>()
         context?.let { context ->
-            val adventureItem = HabiticaDrawerItem(R.id.adventureGuideActivity, SIDEBAR_ADVENTURE_GUIDE)
-            adventureItem.itemViewType = 4
-            items.add(adventureItem)
             items.add(HabiticaDrawerItem(R.id.tasksFragment, SIDEBAR_TASKS, context.getString(R.string.sidebar_tasks)))
             items.add(HabiticaDrawerItem(R.id.skillsFragment, SIDEBAR_SKILLS, context.getString(R.string.sidebar_skills)))
             items.add(HabiticaDrawerItem(R.id.statsFragment, SIDEBAR_STATS, context.getString(R.string.sidebar_stats)))
@@ -713,7 +702,6 @@ class NavigationDrawerFragment : DialogFragment() {
         const val SIDEBAR_SUBSCRIPTION = "subscription"
         const val SIDEBAR_SUBSCRIPTION_PROMO = "subscriptionpromo"
         const val SIDEBAR_PROMO = "promo"
-        const val SIDEBAR_ADVENTURE_GUIDE = "adventureguide"
         const val SIDEBAR_ABOUT_HEADER = "about_header"
         const val SIDEBAR_NEWS = "news"
         const val SIDEBAR_HELP = "help"

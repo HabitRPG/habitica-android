@@ -13,7 +13,6 @@ import com.habitrpg.android.habitica.models.TeamPlan
 import com.habitrpg.android.habitica.models.promotions.HabiticaPromotion
 import com.habitrpg.android.habitica.ui.fragments.NavigationDrawerFragment
 import com.habitrpg.android.habitica.ui.menu.HabiticaDrawerItem
-import com.habitrpg.android.habitica.ui.views.adventureGuide.AdventureGuideMenuBanner
 import com.habitrpg.android.habitica.ui.views.promo.PromoMenuView
 import com.habitrpg.android.habitica.ui.views.promo.PromoMenuViewHolder
 import com.habitrpg.android.habitica.ui.views.promo.SubscriptionBuyGemsPromoView
@@ -117,10 +116,6 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int) : Recycl
                 (holder as? SectionHeaderViewHolder)?.backgroundTintColor = backgroundTintColor
                 (holder as? SectionHeaderViewHolder)?.bind(drawerItem)
             }
-            getItemViewType(position) == 4 -> {
-                drawerItem.user?.let { (holder.itemView as? AdventureGuideMenuBanner)?.updateData(it) }
-                holder.itemView.setOnClickListener { itemSelectedEvents.onNext(drawerItem) }
-            }
             getItemViewType(position) == 5 -> {
                 activePromo?.let { promo ->
                     (holder as? PromoMenuViewHolder)?.bind(promo)
@@ -151,14 +146,6 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int) : Recycl
                 itemView.layoutParams = ViewGroup.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     148.dpToPx(parent.context)
-                )
-                SubscriptionBuyGemsPromoViewHolder(itemView)
-            }
-            4 -> {
-                val itemView = AdventureGuideMenuBanner(parent.context)
-                itemView.layoutParams = ViewGroup.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    104.dpToPx(parent.context)
                 )
                 SubscriptionBuyGemsPromoViewHolder(itemView)
             }
