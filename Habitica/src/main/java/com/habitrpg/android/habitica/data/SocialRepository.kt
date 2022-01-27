@@ -19,7 +19,7 @@ interface SocialRepository : BaseRepository {
 
     fun markMessagesSeen(seenGroupId: String)
 
-    fun flagMessage(chatMessage: ChatMessage, additionalInfo: String): Flowable<Void>
+    fun flagMessage(chatMessageID: String, additionalInfo: String, groupID: String? = null): Flowable<Void>
 
     fun likeMessage(chatMessage: ChatMessage): Flowable<ChatMessage>
 

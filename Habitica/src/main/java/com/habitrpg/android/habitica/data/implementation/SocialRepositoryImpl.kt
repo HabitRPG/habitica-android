@@ -71,17 +71,17 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
         apiClient.seenMessages(seenGroupId).subscribe({ }, RxErrorHandler.handleEmptyError())
     }
 
-    override fun flagMessage(chatMessage: ChatMessage, additionalInfo: String): Flowable<Void> {
+    override fun flagMessage(chatMessageID: String, additionalInfo: String, groupID: String?): Flowable<Void> {
         return when {
-            chatMessage.id.isBlank() -> Flowable.empty()
+            chatMessageID.isBlank() -> Flowable.empty()
             userID == BuildConfig.ANDROID_TESTING_UUID -> Flowable.empty()
             else -> {
                 val data = mutableMapOf<String, String>()
                 data["comment"] = additionalInfo
-                if (chatMessage.isInboxMessage) {
-                    apiClient.flagInboxMessage(chatMessage.id, data)
+                if (groupID?.isNotBlank() != true) {
+                    apiClient.flagInboxMessage(chatMessageID, data)
                 } else {
-                    apiClient.flagMessage(chatMessage.groupId ?: "", chatMessage.id, data)
+                    apiClient.flagMessage(groupID, chatMessageID, data)
                 }
             }
         }

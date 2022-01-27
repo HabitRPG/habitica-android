@@ -31,6 +31,7 @@ class ReportMessageActivity : BaseActivity() {
     private var raisedElevation = 0f
 
     private var messageID: String? = null
+    private var groupID: String? = null
     private var isReporting: Boolean = false
 
     override fun getLayoutResId(): Int {
@@ -45,8 +46,6 @@ class ReportMessageActivity : BaseActivity() {
         binding = ActivityReportMessageBinding.inflate(layoutInflater)
         return binding.root
     }
-
-    private var chatMessage: ChatMessage? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,19 +76,9 @@ class ReportMessageActivity : BaseActivity() {
 
         val args = navArgs<ReportMessageActivityArgs>().value
         messageID = args.messageID
+        groupID = args.groupID
         binding.titleTextView.text = getString(R.string.report_message_title, args.profileName)
         binding.messageTextView.text = args.text
-
-        messageID?.let { messageID ->
-            compositeSubscription.add(
-                socialRepository.getChatmessage(messageID).subscribe(
-                    {
-                        chatMessage = it
-                    },
-                    RxErrorHandler.handleEmptyError()
-                )
-            )
-        }
 
         binding.reportButton.setOnClickListener { reportMessage() }
         binding.closeButton.setOnClickListener { finish() }
@@ -101,17 +90,15 @@ class ReportMessageActivity : BaseActivity() {
     }
 
     private fun reportMessage() {
-        if (isReporting) {
+        if (isReporting ) {
             return
         }
-        chatMessage?.let {
-            isReporting = true
-            socialRepository.flagMessage(it, binding.additionalInfoEdittext.text.toString())
+        isReporting = true
+        messageID?.let {
+            socialRepository.flagMessage(it, binding.additionalInfoEdittext.text.toString(), groupID)
                 .doOnError { isReporting = false }
                 .subscribe(
-                    {
-                        finish()
-                    },
+                    { finish() },
                     RxErrorHandler.handleEmptyError()
                 )
         }

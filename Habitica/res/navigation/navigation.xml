@@ -385,6 +385,11 @@
         <argument
             android:name="messageID"
             app:argType="string" />
+        <argument
+            android:name="groupID"
+            app:nullable="true"
+            android:defaultValue=""
+            app:argType="string" />
     </activity>
     <action
         android:id="@+id/action_global_reportMessageActivity"
