@@ -15,9 +15,12 @@ import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.interactors.HatchPetUseCase
+import com.habitrpg.android.habitica.interactors.NotifyUserUseCase
 import com.habitrpg.android.habitica.models.inventory.*
 import com.habitrpg.android.habitica.models.user.OwnedPet
 import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.android.habitica.ui.activities.BaseActivity
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.adapter.inventory.ItemRecyclerAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
@@ -35,6 +38,9 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
     lateinit var socialRepository: SocialRepository
     @Inject
     lateinit var userRepository: UserRepository
+    @Inject
+    internal lateinit var hatchPetUseCase: HatchPetUseCase
+
     var adapter: ItemRecyclerAdapter? = null
     var itemType: String? = null
     var itemTypeText: String? = null
@@ -178,7 +184,13 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
     }
 
     private fun hatchPet(potion: HatchingPotion, egg: Egg) {
-        (activity as? MainActivity)?.hatchPet(potion, egg)
+        (activity as? BaseActivity)?.let {
+            compositeSubscription.add(hatchPetUseCase.observable(
+                HatchPetUseCase.RequestValues(
+                    potion, egg,
+                    it
+                )).subscribeWithErrorHandler {})
+        }
     }
 
     private fun loadItems() {

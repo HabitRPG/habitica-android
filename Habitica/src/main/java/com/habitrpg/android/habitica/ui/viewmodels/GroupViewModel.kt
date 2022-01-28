@@ -109,6 +109,10 @@ open class GroupViewModel(initializeComponent: Boolean) : BaseViewModel(initiali
         get() = isMemberData.value ?: false
     val leaderID: String?
         get() = group.value?.leaderID
+    val isLeader: Boolean
+        get() = user.value?.id == leaderID
+    val isPublicGuild: Boolean
+        get() = group.value?.privacy == "public"
 
     fun getGroupData(): LiveData<Group?> = group
     fun getLeaderData(): LiveData<Member?> = leader

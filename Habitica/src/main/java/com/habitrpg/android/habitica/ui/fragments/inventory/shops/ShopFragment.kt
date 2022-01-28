@@ -149,7 +149,7 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
 
         currencyView.hourglassVisibility = View.GONE
 
-        context?.let { FirebaseAnalytics.getInstance(it).logEvent("open_shop", bundleOf(Pair("shopIdentifier", shopIdentifier))) }
+        context?.let { analyticsManager.logEvent("open_shop", bundleOf(Pair("shopIdentifier", shopIdentifier))) }
     }
 
     private fun showClassChangeDialog(classIdentifier: String) {

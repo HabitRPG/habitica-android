@@ -439,7 +439,7 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
             when (taskType) {
                 TaskType.TODO -> taskFilterHelper.setActiveFilter(TaskType.TODO, Task.FILTER_ACTIVE)
                 TaskType.DAILY -> {
-                    val user = (activity as? MainActivity)?.user
+                    val user = (activity as? MainActivity)?.viewModel?.user?.value
                     if (user?.isValid == true && user.preferences?.dailyDueDefaultView == true) {
                         taskFilterHelper.setActiveFilter(TaskType.DAILY, Task.FILTER_ACTIVE)
                     }

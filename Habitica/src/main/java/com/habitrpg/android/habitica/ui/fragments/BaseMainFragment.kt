@@ -44,8 +44,8 @@ abstract class BaseMainFragment<VB : ViewBinding> : BaseFragment<VB>() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
-        if (getActivity()?.javaClass == MainActivity::class.java) {
-            user = activity?.user
+        if (activity is MainActivity) {
+            user = activity?.viewModel?.user?.value
         }
     }
 

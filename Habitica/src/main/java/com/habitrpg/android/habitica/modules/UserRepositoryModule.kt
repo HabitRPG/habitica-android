@@ -65,15 +65,15 @@ class UserRepositoryModule {
 
     @Provides
     fun providesTaskRepository(
-        localRepository: TaskLocalRepository?,
-        apiClient: ApiClient?,
-        @Named(AppModule.NAMED_USER_ID) userId: String?,
-        appConfigManager: AppConfigManager?,
-        analyticsManager: AnalyticsManager?
+        localRepository: TaskLocalRepository,
+        apiClient: ApiClient,
+        @Named(AppModule.NAMED_USER_ID) userId: String,
+        appConfigManager: AppConfigManager,
+        analyticsManager: AnalyticsManager
     ): TaskRepository {
         return TaskRepositoryImpl(
-            localRepository!!,
-            apiClient!!,
+            localRepository,
+            apiClient,
             userId!!,
             appConfigManager!!,
             analyticsManager!!

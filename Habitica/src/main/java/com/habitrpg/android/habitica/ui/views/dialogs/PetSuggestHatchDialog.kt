@@ -8,11 +8,14 @@ import android.widget.LinearLayout
 import androidx.core.graphics.drawable.toBitmap
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.DialogPetSuggestHatchBinding
+import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.interactors.HatchPetUseCase
 import com.habitrpg.android.habitica.models.inventory.Animal
 import com.habitrpg.android.habitica.models.inventory.Egg
 import com.habitrpg.android.habitica.models.inventory.HatchingPotion
 import com.habitrpg.android.habitica.models.inventory.Item
+import com.habitrpg.android.habitica.ui.activities.BaseActivity
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.views.CurrencyView
@@ -20,8 +23,12 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Observable
 import java.util.*
+import javax.inject.Inject
 
 class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
+
+    @Inject
+    lateinit var hatchPetUseCase: HatchPetUseCase
 
     private lateinit var binding: DialogPetSuggestHatchBinding
 
@@ -75,7 +82,7 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
             addButton(R.string.hatch, true, false) { _, _ ->
                 val thisPotion = potion ?: return@addButton
                 val thisEgg = egg ?: return@addButton
-                (getActivity() as? MainActivity)?.hatchPet(thisPotion, thisEgg)
+                hatchPet(thisPotion, thisEgg)
             }
             if (hasMount) {
                 setTitle(R.string.hatch_your_pet)
@@ -134,7 +141,7 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
                         .flatMap { activity.userRepository.retrieveUser(true, forced = true) }
                         .subscribe(
                             {
-                                (getActivity() as? MainActivity)?.hatchPet(thisPotion, thisEgg)
+                                hatchPet(thisPotion, thisEgg)
                             },
                             RxErrorHandler.handleEmptyError()
                         )
@@ -156,6 +163,16 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
                     },
                     RxErrorHandler.handleEmptyError()
                 )
+        }
+    }
+
+    private fun hatchPet(potion: HatchingPotion, egg: Egg) {
+        (getActivity() as? BaseActivity)?.let {
+            hatchPetUseCase.observable(
+                HatchPetUseCase.RequestValues(
+                    potion, egg,
+                    it
+                )).subscribeWithErrorHandler {}
         }
     }
 

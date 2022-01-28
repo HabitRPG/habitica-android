@@ -101,6 +101,7 @@ import com.habitrpg.android.habitica.ui.fragments.tasks.TeamBoardFragment;
 import com.habitrpg.android.habitica.ui.viewmodels.AuthenticationViewModel;
 import com.habitrpg.android.habitica.ui.viewmodels.GroupViewModel;
 import com.habitrpg.android.habitica.ui.viewmodels.InboxViewModel;
+import com.habitrpg.android.habitica.ui.viewmodels.MainActivityViewModel;
 import com.habitrpg.android.habitica.ui.viewmodels.NotificationsViewModel;
 import com.habitrpg.android.habitica.ui.viewmodels.inventory.equipment.EquipmentOverviewViewModel;
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientGemsDialog;
@@ -346,4 +347,6 @@ public interface UserComponent {
     void inject(@NotNull AccountPreferenceFragment accountPreferenceFragment);
 
     void inject(@NotNull AuthenticationViewModel authenticationViewModel);
+
+    void inject(@NotNull MainActivityViewModel mainActivityViewModel);
 }

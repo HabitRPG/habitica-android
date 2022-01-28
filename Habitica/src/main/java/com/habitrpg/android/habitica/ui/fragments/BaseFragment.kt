@@ -10,6 +10,7 @@ import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.TutorialRepository
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -25,6 +26,8 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
 
     @Inject
     lateinit var tutorialRepository: TutorialRepository
+    @Inject
+    lateinit var analyticsManager: AnalyticsManager
 
     var tutorialStepIdentifier: String? = null
     var tutorialText: String? = null

@@ -139,7 +139,7 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                 (activity as? SnackbarActivity)?.showSnackbar(
                     content = context?.getString(R.string.reloading_content)
                 )
-                contentRepository.retrieveContent(context, true).subscribe(
+                contentRepository.retrieveContent(true).subscribe(
                     {
                         (activity as? SnackbarActivity)?.showSnackbar(
                             content = context?.getString(R.string.reloaded_content),
@@ -220,7 +220,7 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                 }
 
                 userRepository.updateLanguage(languageHelper.languageCode ?: "en")
-                    .flatMap { contentRepository.retrieveContent(context, true) }
+                    .flatMap { contentRepository.retrieveContent(true) }
                     .subscribe({ }, RxErrorHandler.handleEmptyError())
 
                 val intent = Intent(activity, MainActivity::class.java)

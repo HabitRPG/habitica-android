@@ -31,7 +31,11 @@ import io.reactivex.rxjava3.disposables.Disposable
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class ChatFragment : BaseFragment<FragmentChatBinding>() {
+class ChatFragment() : BaseFragment<FragmentChatBinding>() {
+
+    constructor(viewModel: GroupViewModel) : this() {
+        this.viewModel = viewModel
+    }
 
     override var binding: FragmentChatBinding? = null
 
@@ -67,9 +71,7 @@ class ChatFragment : BaseFragment<FragmentChatBinding>() {
         chatAdapter?.let { adapter ->
             compositeSubscription.add(
                 adapter.getUserLabelClickFlowable().subscribe(
-                    { userId ->
-                        FullProfileActivity.open(userId)
-                    },
+                    { userId -> FullProfileActivity.open(userId) },
                     RxErrorHandler.handleEmptyError()
                 )
             )
@@ -95,12 +97,7 @@ class ChatFragment : BaseFragment<FragmentChatBinding>() {
             }
         })
 
-        viewModel?.chatmessages?.observe(
-            viewLifecycleOwner,
-            {
-                setChatMessages(it)
-            }
-        )
+        viewModel?.chatmessages?.observe(viewLifecycleOwner, { setChatMessages(it) })
 
         binding?.chatBarView?.onCommunityGuidelinesAccepted = {
             viewModel?.updateUser("flags.communityGuidelinesAccepted", true)
@@ -131,7 +128,7 @@ class ChatFragment : BaseFragment<FragmentChatBinding>() {
     }
 
     private fun startAutoRefreshing() {
-        if (refreshDisposable != null && refreshDisposable?.isDisposed != true) {
+        if (refreshDisposable?.isDisposed != true) {
             refreshDisposable?.dispose()
         }
         refreshDisposable = Observable.interval(30, TimeUnit.SECONDS)
@@ -219,11 +216,7 @@ class ChatFragment : BaseFragment<FragmentChatBinding>() {
     private fun sendChatMessage(chatText: String) {
         viewModel?.postGroupChat(
             chatText,
-            {
-                binding?.recyclerView?.scrollToPosition(0)
-            }
-        ) {
-            binding?.chatBarView?.message = chatText
-        }
+            { binding?.recyclerView?.scrollToPosition(0) }
+        ) { binding?.chatBarView?.message = chatText }
     }
 }

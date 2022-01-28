@@ -94,9 +94,10 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
         }
     }
 
-    override fun revive(user: User): Flowable<User> =
-        apiClient.revive().map { newUser -> mergeUser(user, newUser) }
-            .flatMap { retrieveUser(false, true) }
+    override fun revive(): Flowable<User> = zipWithLiveUser(apiClient.revive()) { newUser, user ->
+        mergeUser(user, newUser)
+    }
+        .flatMap { retrieveUser(false, true) }
 
     override fun resetTutorial() {
         localRepository.getTutorialSteps()

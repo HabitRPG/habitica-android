@@ -128,7 +128,6 @@ abstract class BaseActivity : AppCompatActivity() {
 
     internal open fun loadTheme(sharedPreferences: SharedPreferences, forced: Boolean = false) {
         val theme = forcedTheme ?: sharedPreferences.getString("theme_name", "purple")
-        val modernHeaderStyle = overrideModernHeader ?: sharedPreferences.getBoolean("modern_header_style", true)
         if (theme != currentTheme || forced) {
             if (forcedIsNight ?: isNightMode) {
                 setTheme(
@@ -165,10 +164,8 @@ abstract class BaseActivity : AppCompatActivity() {
         } else {
             getThemeColor(R.attr.colorPrimaryDark)
         }
-        if (!(forcedIsNight ?: isNightMode) && modernHeaderStyle) {
+        if (!(forcedIsNight ?: isNightMode)) {
             window.updateStatusBarColor(getThemeColor(R.attr.headerBackgroundColor), true)
-        } else {
-            window.updateStatusBarColor(getThemeColor(R.attr.statusBarBackground), false)
         }
 
         if (currentTheme != null && theme != currentTheme) {

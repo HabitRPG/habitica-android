@@ -6,7 +6,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AlertDialog
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import com.habitrpg.android.habitica.MainNavDirections
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
@@ -51,7 +51,9 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
     private var chatRoomUser: String? = null
     private var replyToUserUUID: String? = null
 
-    private var viewModel: InboxViewModel? = null
+    private val viewModel: InboxViewModel by viewModels(factoryProducer = {
+        InboxViewModelFactory(replyToUserUUID, chatRoomUser)
+    })
     private var refreshDisposable: Disposable? = null
 
     override fun onCreateView(
@@ -71,7 +73,6 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
             val args = InboxMessageListFragmentArgs.fromBundle(it)
             setReceivingUser(args.username, args.userID)
         }
-        viewModel = ViewModelProvider(this, InboxViewModelFactory(replyToUserUUID, chatRoomUser)).get(InboxViewModel::class.java)
 
         val layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this.getActivity())
         layoutManager.reverseLayout = true
@@ -88,9 +89,7 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
                     setReceivingUser(member.username, member.id)
                     activity?.title = member.displayName
                     chatAdapter = InboxAdapter(user, member)
-                    viewModel?.messages?.observe(
-                            this.viewLifecycleOwner
-                    ) {
+                    viewModel.messages.observe(this.viewLifecycleOwner) {
                         markMessagesAsRead(it)
                         chatAdapter?.submitList(it)
                     }
@@ -197,32 +196,32 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
     }
 
     private fun refreshConversation() {
-        if (viewModel?.memberID?.isNotBlank() != true) { return }
+        if (viewModel.memberID?.isNotBlank() != true) { return }
         compositeSubscription.add(
             this.socialRepository.retrieveInboxMessages(replyToUserUUID ?: "", 0)
                 .subscribe(
                     {}, RxErrorHandler.handleEmptyError(),
                         {
-                            viewModel?.invalidateDataSource()
+                            viewModel.invalidateDataSource()
                         }
                     )
             )
         }
 
         private fun sendMessage(chatText: String) {
-            viewModel?.memberID?.let { userID ->
+            viewModel.memberID?.let { userID ->
                 socialRepository.postPrivateMessage(userID, chatText)
                     .delay(200, TimeUnit.MILLISECONDS)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
                         {
                             binding?.recyclerView?.scrollToPosition(0)
-                            viewModel?.invalidateDataSource()
+                            viewModel.invalidateDataSource()
                         },
                         { error ->
                             RxErrorHandler.reportError(error)
-                            if (binding != null) {
-                                val alert = HabiticaAlertDialog(binding!!.chatBarView.context)
+                            binding?.let {
+                                val alert = HabiticaAlertDialog(it.chatBarView.context)
                                 alert.setTitle("You cannot reply to this conversation")
                                 alert.setMessage("This user is unable to receive your private message")
                                 alert.addOkButton()

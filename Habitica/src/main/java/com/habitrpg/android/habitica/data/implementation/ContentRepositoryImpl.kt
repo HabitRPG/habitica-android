@@ -12,24 +12,20 @@ import io.reactivex.rxjava3.core.Flowable
 import io.realm.RealmList
 import java.util.*
 
-abstract class ContentRepositoryImpl<T : ContentLocalRepository>(localRepository: T, apiClient: ApiClient) : BaseRepositoryImpl<T>(localRepository, apiClient), ContentRepository {
+class ContentRepositoryImpl<T : ContentLocalRepository>(localRepository: T, apiClient: ApiClient, context: Context) : BaseRepositoryImpl<T>(localRepository, apiClient), ContentRepository {
+
+    private val mysteryItem = SpecialItem.makeMysteryItem(context)
 
     private var lastContentSync = 0L
     private var lastWorldStateSync = 0L
 
-    override fun retrieveContent(context: Context?): Flowable<ContentResult> {
-        return retrieveContent(context, false)
-    }
-
-    override fun retrieveContent(context: Context?, forced: Boolean): Flowable<ContentResult> {
+    override fun retrieveContent(forced: Boolean): Flowable<ContentResult> {
         val now = Date().time
         return if (forced || now - this.lastContentSync > 300000) {
             lastContentSync = now
             apiClient.content.doOnNext {
-                context?.let { context ->
-                    it.special = RealmList()
-                    it.special.add(SpecialItem.makeMysteryItem(context))
-                }
+                it.special = RealmList()
+                it.special.add(mysteryItem)
                 localRepository.saveContent(it)
             }
         } else {
@@ -37,7 +33,7 @@ abstract class ContentRepositoryImpl<T : ContentLocalRepository>(localRepository
         }
     }
 
-    override fun retrieveWorldState(context: Context?): Flowable<WorldState> {
+    override fun retrieveWorldState(): Flowable<WorldState> {
         val now = Date().time
         return if (now - this.lastWorldStateSync > 3600000) {
             lastWorldStateSync = now

@@ -7,8 +7,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
+import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.ViewModelProvider
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
@@ -30,7 +30,7 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
     @Inject
     lateinit var socialRepository: SocialRepository
 
-    lateinit var viewModel: NotificationsViewModel
+    val viewModel: NotificationsViewModel by viewModels()
 
     var inflater: LayoutInflater? = null
 
@@ -49,8 +49,6 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         setupToolbar(binding.toolbar)
 
         inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as? LayoutInflater
-
-        viewModel = ViewModelProvider(this).get(NotificationsViewModel::class.java)
 
         compositeSubscription.add(
             viewModel.getNotifications().subscribe(

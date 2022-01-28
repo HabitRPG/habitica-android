@@ -16,9 +16,12 @@ import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.interactors.FeedPetUseCase
+import com.habitrpg.android.habitica.interactors.HatchPetUseCase
 import com.habitrpg.android.habitica.models.inventory.*
 import com.habitrpg.android.habitica.models.user.OwnedPet
 import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.android.habitica.ui.activities.BaseActivity
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.adapter.inventory.ItemRecyclerAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseDialogFragment
@@ -36,6 +39,11 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsBinding>(), SwipeRefr
     lateinit var socialRepository: SocialRepository
     @Inject
     lateinit var userRepository: UserRepository
+    @Inject
+    lateinit var hatchPetUseCase: HatchPetUseCase
+    @Inject
+    lateinit var feedPetUseCase: FeedPetUseCase
+
     var adapter: ItemRecyclerAdapter? = null
     var itemType: String? = null
     var itemTypeText: String? = null
@@ -194,7 +202,14 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsBinding>(), SwipeRefr
     }
 
     private fun feedPet(food: Food) {
-        feedingPet?.let { (activity as? MainActivity)?.feedPet(it, food) }
+        val pet = feedingPet ?: return
+        (activity as? BaseActivity)?.let {
+            compositeSubscription.add(feedPetUseCase.observable(
+                FeedPetUseCase.RequestValues(
+                    pet, food,
+                    it
+                )).subscribeWithErrorHandler {})
+        }
     }
 
     override fun onResume() {
@@ -225,7 +240,13 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsBinding>(), SwipeRefr
 
     private fun hatchPet(potion: HatchingPotion, egg: Egg) {
         dismiss()
-        (activity as? MainActivity)?.hatchPet(potion, egg)
+        (activity as? BaseActivity)?.let {
+            compositeSubscription.add(hatchPetUseCase.observable(
+                HatchPetUseCase.RequestValues(
+                    potion, egg,
+                    it
+                )).subscribeWithErrorHandler {})
+        }
     }
 
     private fun loadItems() {

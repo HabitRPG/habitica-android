@@ -46,8 +46,6 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
     }
 
     @Inject
-    lateinit var analyticsManager: AnalyticsManager
-    @Inject
     lateinit var userRepository: UserRepository
     @Inject
     lateinit var appConfigManager: AppConfigManager

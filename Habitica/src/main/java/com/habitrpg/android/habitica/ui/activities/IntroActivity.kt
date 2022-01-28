@@ -44,7 +44,7 @@ class IntroActivity : BaseActivity(), View.OnClickListener, ViewPager.OnPageChan
         binding.skipButton.setOnClickListener(this)
         binding.finishButton.setOnClickListener(this)
 
-        compositeSubscription.add(contentRepository.retrieveContent(this).subscribe({ }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(contentRepository.retrieveContent().subscribe({ }, RxErrorHandler.handleEmptyError()))
 
         window.statusBarColor = ContextCompat.getColor(this, R.color.black_20_alpha)
         window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)

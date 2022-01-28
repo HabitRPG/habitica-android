@@ -3,7 +3,7 @@ package com.habitrpg.android.habitica.ui.fragments.social
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import com.habitrpg.android.habitica.R
@@ -27,10 +27,7 @@ class TavernFragment : BaseMainFragment<FragmentViewpagerBinding>() {
         return FragmentViewpagerBinding.inflate(inflater, container, false)
     }
 
-    internal lateinit var viewModel: GroupViewModel
-
-    internal var tavernDetailFragment = TavernDetailFragment()
-    private var chatFragment: ChatFragment? = null
+    internal val viewModel: GroupViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,7 +45,6 @@ class TavernFragment : BaseMainFragment<FragmentViewpagerBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProvider(this).get(GroupViewModel::class.java)
         viewModel.groupViewType = GroupViewType.GUILD
         viewModel.setGroupID(Group.TAVERN_ID)
 
@@ -90,9 +86,7 @@ class TavernFragment : BaseMainFragment<FragmentViewpagerBinding>() {
                         TavernDetailFragment()
                     }
                     1 -> {
-                        chatFragment = ChatFragment()
-                        chatFragment?.viewModel = viewModel
-                        chatFragment ?: Fragment()
+                        ChatFragment(viewModel)
                     }
                     else -> Fragment()
                 }

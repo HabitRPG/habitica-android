@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.view.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
@@ -23,7 +23,7 @@ import com.habitrpg.android.habitica.ui.viewmodels.GroupViewType
 
 class GuildFragment : BaseMainFragment<FragmentViewpagerBinding>() {
 
-    internal lateinit var viewModel: GroupViewModel
+    internal val viewModel: GroupViewModel by viewModels()
     private var guildInformationFragment: GuildDetailFragment? = null
     private var chatFragment: ChatFragment? = null
 
@@ -51,7 +51,6 @@ class GuildFragment : BaseMainFragment<FragmentViewpagerBinding>() {
         showsBackButton = true
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProvider(this).get(GroupViewModel::class.java)
         viewModel.groupViewType = GroupViewType.GUILD
         viewModel.getGroupData().observe(viewLifecycleOwner, { setGroup(it) })
         viewModel.getIsMemberData().observe(viewLifecycleOwner, { activity?.invalidateOptionsMenu() })
@@ -95,10 +94,9 @@ class GuildFragment : BaseMainFragment<FragmentViewpagerBinding>() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        val guild = viewModel.getGroupData().value
-        if (this.activity != null && guild != null) {
+        if (this.activity != null) {
             if (viewModel.isMember) {
-                if (this.user != null && this.user?.id == guild.leaderID) {
+                if (viewModel.isLeader) {
                     this.activity?.menuInflater?.inflate(R.menu.guild_admin, menu)
                 } else {
                     this.activity?.menuInflater?.inflate(R.menu.guild_member, menu)
@@ -219,7 +217,7 @@ class GuildFragment : BaseMainFragment<FragmentViewpagerBinding>() {
     private fun setGroup(group: Group?) {
         this.activity?.invalidateOptionsMenu()
 
-        if (group?.privacy == "public") {
+        if (viewModel.isPublicGuild) {
             chatFragment?.autocompleteContext = "publicGuild"
         } else {
             chatFragment?.autocompleteContext = "privateGuild"

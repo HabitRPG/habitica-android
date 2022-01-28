@@ -5,11 +5,15 @@ import com.habitrpg.android.habitica.proxy.AnalyticsManager
 
 class EmptyAnalyticsManager : AnalyticsManager {
 
-    override fun logException(e: Throwable) {
+    override fun logException(t: Throwable) {
         // pass
     }
 
     override fun setUserIdentifier(identifier: String) {
+        // pass
+    }
+
+    override fun setUserProperty(identifier: String, value: String) {
         // pass
     }
 

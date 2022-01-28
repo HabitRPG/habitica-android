@@ -1,15 +1,12 @@
 package com.habitrpg.android.habitica.data
 
-import android.content.Context
 import com.habitrpg.android.habitica.models.ContentResult
 import com.habitrpg.android.habitica.models.WorldState
 import io.reactivex.rxjava3.core.Flowable
 
-interface ContentRepository {
+interface ContentRepository: BaseRepository {
+    fun retrieveContent(forced: Boolean = false): Flowable<ContentResult>
 
-    fun retrieveContent(context: Context?): Flowable<ContentResult>
-    fun retrieveContent(context: Context?, forced: Boolean): Flowable<ContentResult>
-
-    fun retrieveWorldState(context: Context?): Flowable<WorldState>
+    fun retrieveWorldState(): Flowable<WorldState>
     fun getWorldState(): Flowable<WorldState>
 }

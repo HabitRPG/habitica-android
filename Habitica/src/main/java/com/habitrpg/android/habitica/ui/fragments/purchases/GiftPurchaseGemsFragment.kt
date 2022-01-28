@@ -24,8 +24,6 @@ import javax.inject.Inject
 class GiftPurchaseGemsFragment : BaseFragment<FragmentGiftGemPurchaseBinding>() {
 
     @Inject
-    lateinit var analyticsManager: AnalyticsManager
-    @Inject
     lateinit var socialRepository: SocialRepository
 
     override var binding: FragmentGiftGemPurchaseBinding? = null

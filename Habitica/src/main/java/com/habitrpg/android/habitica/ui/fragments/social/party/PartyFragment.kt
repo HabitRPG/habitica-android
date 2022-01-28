@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.view.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
@@ -28,7 +28,7 @@ class PartyFragment : BaseMainFragment<FragmentViewpagerBinding>() {
     private var chatFragment: ChatFragment? = null
     private var viewPagerAdapter: FragmentStateAdapter? = null
 
-    internal lateinit var viewModel: PartyViewModel
+    internal val viewModel: PartyViewModel by viewModels()
 
     override var binding: FragmentViewpagerBinding? = null
 
@@ -49,8 +49,6 @@ class PartyFragment : BaseMainFragment<FragmentViewpagerBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProvider(this)
-            .get(PartyViewModel::class.java)
         viewModel.groupViewType = GroupViewType.PARTY
 
         viewModel.getGroupData().observe(

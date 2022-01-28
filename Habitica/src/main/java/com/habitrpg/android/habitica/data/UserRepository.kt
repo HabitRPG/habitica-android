@@ -28,7 +28,7 @@ interface UserRepository : BaseRepository {
     fun retrieveUser(withTasks: Boolean): Flowable<User>
     fun retrieveUser(withTasks: Boolean = false, forced: Boolean = false, overrideExisting: Boolean = false): Flowable<User>
 
-    fun revive(user: User): Flowable<User>
+    fun revive(): Flowable<User>
 
     fun resetTutorial()
 

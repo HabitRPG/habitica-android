@@ -31,7 +31,6 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.installations.FirebaseInstallations
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
-import com.habitrpg.android.habitica.api.HostConfig
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ApiClient
@@ -42,14 +41,12 @@ import com.habitrpg.android.habitica.modules.UserModule
 import com.habitrpg.android.habitica.modules.UserRepositoryModule
 import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import com.habitrpg.android.habitica.ui.activities.BaseActivity
-import com.habitrpg.android.habitica.ui.activities.IntroActivity
 import com.habitrpg.android.habitica.ui.activities.LoginActivity
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import java.lang.ref.WeakReference
-import java.util.Locale
 import javax.inject.Inject
 
 // contains all HabiticaApplicationLogic except dagger componentInitialisation
@@ -293,15 +290,6 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
 
         fun reloadUserComponent() {
             userComponent = component?.plus(UserModule(), UserRepositoryModule())
-        }
-
-        fun checkUserAuthentication(context: Context, hostConfig: HostConfig?): Boolean {
-            if (hostConfig?.apiKey == null || hostConfig.apiKey == "" || hostConfig.userID == "") {
-                startActivity(IntroActivity::class.java, context)
-                return false
-            }
-
-            return true
         }
 
         private fun startActivity(activityClass: Class<*>, context: Context) {

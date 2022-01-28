@@ -28,7 +28,7 @@ import com.habitrpg.android.habitica.ui.helpers.setMarkdown
 import com.habitrpg.android.habitica.ui.viewmodels.GroupViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaIcons
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
-import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
+import com.habitrpg.android.habitica.ui.views.SnackbarActivity
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -75,10 +75,7 @@ class GuildDetailFragment : BaseFragment<FragmentGuildDetailBinding>() {
         }
         binding?.joinButton?.setOnClickListener {
             viewModel?.joinGroup {
-                val activity = activity as? MainActivity
-                if (activity != null) {
-                    HabiticaSnackbar.showSnackbar(activity.snackbarContainer, getString(R.string.joined_guild), HabiticaSnackbar.SnackbarDisplayType.NORMAL)
-                }
+                (this.activity as? SnackbarActivity)?.showSnackbar(title = getString(R.string.joined_guild))
             }
         }
         binding?.inviteButton?.setOnClickListener {
@@ -86,7 +83,7 @@ class GuildDetailFragment : BaseFragment<FragmentGuildDetailBinding>() {
             sendInvitesResult.launch(intent)
         }
         binding?.leaderWrapper?.setOnClickListener {
-            viewModel?.getGroupData()?.value?.leaderID?.let { leaderID ->
+            viewModel?.leaderID?.let { leaderID ->
                 val profileDirections = MainNavDirections.openProfileActivity(leaderID)
                 MainNavigationController.navigate(profileDirections)
             }
@@ -98,7 +95,7 @@ class GuildDetailFragment : BaseFragment<FragmentGuildDetailBinding>() {
             return
         }
         binding?.leaderAvatarView?.setAvatar(leader)
-        binding?.leaderProfileName?.username = leader.profile?.name
+        binding?.leaderProfileName?.username = leader.displayName
         binding?.leaderProfileName?.tier = leader.contributor?.level ?: 0
         binding?.leaderUsername?.text = leader.formattedUsername
     }
@@ -140,7 +137,7 @@ class GuildDetailFragment : BaseFragment<FragmentGuildDetailBinding>() {
     }
 
     private fun getGroupChallenges(): List<Challenge> {
-        var groupChallenges = mutableListOf<Challenge>()
+        val groupChallenges = mutableListOf<Challenge>()
         userRepository.getUser(userId).forEach {
             it.challenges?.forEach {
                 challengeRepository.getChallenge(it.challengeID).forEach {
@@ -156,7 +153,7 @@ class GuildDetailFragment : BaseFragment<FragmentGuildDetailBinding>() {
     internal fun leaveGuild() {
         val context = context
         if (context != null) {
-            var groupChallenges = getGroupChallenges()
+            val groupChallenges = getGroupChallenges()
             lifecycleScope.launch(Dispatchers.Main) {
                 delay(500)
                 if (groupChallenges.isNotEmpty()) {
@@ -188,10 +185,7 @@ class GuildDetailFragment : BaseFragment<FragmentGuildDetailBinding>() {
     }
 
     private fun showLeaveSnackbar() {
-        val activity = activity as? MainActivity
-        if (activity != null) {
-            HabiticaSnackbar.showSnackbar(activity.snackbarContainer, getString(R.string.left_guild), HabiticaSnackbar.SnackbarDisplayType.NORMAL)
-        }
+        (this.activity as? MainActivity)?.showSnackbar(title = getString(R.string.left_guild))
     }
 
     override fun injectFragment(component: UserComponent) {

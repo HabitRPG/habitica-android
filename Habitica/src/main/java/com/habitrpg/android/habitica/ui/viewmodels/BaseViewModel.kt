@@ -15,6 +15,11 @@ import javax.inject.Inject
 
 abstract class BaseViewModel(initializeComponent: Boolean = true) : ViewModel() {
 
+    val isUserFainted: Boolean
+        get() = (user.value?.stats?.hp ?: 1.0) == 0.0
+    val isUserInParty: Boolean
+        get() = user.value?.hasParty == true
+
     @Inject
     lateinit var userRepository: UserRepository
 
@@ -42,7 +47,7 @@ abstract class BaseViewModel(initializeComponent: Boolean = true) : ViewModel() 
 
     internal val disposable = CompositeDisposable()
 
-    private fun loadUserFromLocal() {
+    internal fun loadUserFromLocal() {
         disposable.add(userRepository.getUser().observeOn(AndroidSchedulers.mainThread())
             .subscribe({ _user.value = it }, RxErrorHandler.handleEmptyError()))
     }

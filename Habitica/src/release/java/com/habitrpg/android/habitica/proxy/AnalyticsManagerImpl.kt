@@ -19,6 +19,10 @@ class AnalyticsManagerImpl(context: Context) : AnalyticsManager {
         Amplitude.getInstance().userId = identifier
     }
 
+    override fun setUserProperty(identifier: String, value: String) {
+        firebaseAnalytics.setUserProperty(identifier, value)
+    }
+
     override fun logError(msg: String) {
         FirebaseCrashlytics.getInstance().log(msg)
     }

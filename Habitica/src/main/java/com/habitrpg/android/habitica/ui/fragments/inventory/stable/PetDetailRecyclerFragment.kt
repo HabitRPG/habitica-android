@@ -10,10 +10,14 @@ import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBinding
 import com.habitrpg.android.habitica.extensions.getTranslatedType
+import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.interactors.FeedPetUseCase
+import com.habitrpg.android.habitica.interactors.HatchPetUseCase
 import com.habitrpg.android.habitica.models.inventory.*
 import com.habitrpg.android.habitica.models.user.OwnedMount
 import com.habitrpg.android.habitica.models.user.OwnedPet
+import com.habitrpg.android.habitica.ui.activities.BaseActivity
 import com.habitrpg.android.habitica.ui.adapter.inventory.PetDetailRecyclerAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemDialogFragment
@@ -28,6 +32,8 @@ class PetDetailRecyclerFragment :
 
     @Inject
     lateinit var inventoryRepository: InventoryRepository
+    @Inject
+    lateinit var feedPetUseCase: FeedPetUseCase
 
     var adapter: PetDetailRecyclerAdapter = PetDetailRecyclerAdapter()
     private var animalType: String? = null
@@ -192,7 +198,13 @@ class PetDetailRecyclerFragment :
 
     private fun showFeedingDialog(pet: Pet, food: Food?) {
         if (food != null) {
-            activity?.feedPet(pet, food)
+            (activity as? BaseActivity)?.let {
+                compositeSubscription.add(feedPetUseCase.observable(
+                    FeedPetUseCase.RequestValues(
+                        pet, food,
+                        it
+                    )).subscribeWithErrorHandler {})
+            }
             return
         }
         val fragment = ItemDialogFragment()
