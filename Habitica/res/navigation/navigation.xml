@@ -388,7 +388,6 @@
         <argument
             android:name="groupID"
             app:nullable="true"
-            android:defaultValue=""
             app:argType="string" />
     </activity>
     <action

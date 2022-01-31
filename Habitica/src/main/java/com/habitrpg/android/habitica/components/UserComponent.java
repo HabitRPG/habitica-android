@@ -22,6 +22,7 @@ import com.habitrpg.android.habitica.ui.activities.GiftGemsActivity;
 import com.habitrpg.android.habitica.ui.activities.GiftSubscriptionActivity;
 import com.habitrpg.android.habitica.ui.activities.GroupFormActivity;
 import com.habitrpg.android.habitica.ui.activities.GroupInviteActivity;
+import com.habitrpg.android.habitica.ui.activities.GuidelinesActivity;
 import com.habitrpg.android.habitica.ui.activities.HabitButtonWidgetActivity;
 import com.habitrpg.android.habitica.ui.activities.IntroActivity;
 import com.habitrpg.android.habitica.ui.activities.LoginActivity;
@@ -349,4 +350,6 @@ public interface UserComponent {
     void inject(@NotNull AuthenticationViewModel authenticationViewModel);
 
     void inject(@NotNull MainActivityViewModel mainActivityViewModel);
+
+    void inject(@NotNull GuidelinesActivity guidelinesActivity);
 }

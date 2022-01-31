@@ -15,7 +15,9 @@ import java.io.InputStreamReader
 class GuidelinesActivity : BaseActivity() {
     override fun getLayoutResId(): Int = R.layout.activity_guidelines
 
-    override fun injectActivity(component: UserComponent?) { /* no-on */ }
+    override fun injectActivity(component: UserComponent?) {
+        component?.inject(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

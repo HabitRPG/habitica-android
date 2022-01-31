@@ -46,9 +46,6 @@ class ClassSelectionActivity : BaseActivity(), Consumer<User> {
     private var classWasUnset: Boolean? = false
     private var shouldFinish: Boolean? = false
 
-    @Inject
-    lateinit var userRepository: UserRepository
-
     private var progressDialog: HabiticaProgressDialog? = null
 
     override fun getLayoutResId(): Int {

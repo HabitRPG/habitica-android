@@ -27,7 +27,7 @@ import kotlinx.coroutines.launch
 
 class ShowNotificationInteractor(private val activity: Activity, private val lifecycleScope: LifecycleCoroutineScope) {
 
-    fun handleNotification(notification: Notification) {
+    fun handleNotification(notification: Notification): Boolean {
         when (notification.type) {
             Notification.Type.LOGIN_INCENTIVE.type -> showCheckinDialog(notification)
             Notification.Type.ACHIEVEMENT_PARTY_UP.type -> showAchievementDialog(notification)
@@ -67,8 +67,9 @@ class ShowNotificationInteractor(private val activity: Activity, private val lif
             Notification.Type.ACHIEVEMENT_GENERIC.type -> showAchievementDialog(notification)
             Notification.Type.ACHIEVEMENT_ONBOARDING_COMPLETE.type -> showAchievementDialog(notification)
             Notification.Type.FIRST_DROP.type -> showFirstDropDialog(notification)
-            else -> false
+            else -> return false
         }
+        return true
     }
 
     fun showCheckinDialog(notification: Notification) {
@@ -122,7 +123,7 @@ class ShowNotificationInteractor(private val activity: Activity, private val lif
         } else {
             200
         }
-        lifecycleScope.launch() {
+        lifecycleScope.launch {
             delay(delayTime)
             lifecycleScope.launch(context = Dispatchers.Main) {
                 val dialog = AchievementDialog(activity)

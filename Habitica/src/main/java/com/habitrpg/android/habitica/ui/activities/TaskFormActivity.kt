@@ -48,8 +48,6 @@ class TaskFormActivity : BaseActivity() {
     private var userScrolled: Boolean = false
     private var isSaving: Boolean = false
     @Inject
-    lateinit var userRepository: UserRepository
-    @Inject
     lateinit var taskRepository: TaskRepository
     @Inject
     lateinit var tagRepository: TagRepository

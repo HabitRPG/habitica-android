@@ -24,9 +24,6 @@ import javax.inject.Inject
 class VerifyUsernameActivity : BaseActivity() {
     private lateinit var binding: ActivityVerifyUsernameBinding
 
-    @Inject
-    lateinit var userRepository: UserRepository
-
     private val displayNameVerificationEvents = PublishSubject.create<String>()
     private val usernameVerificationEvents = PublishSubject.create<String>()
 

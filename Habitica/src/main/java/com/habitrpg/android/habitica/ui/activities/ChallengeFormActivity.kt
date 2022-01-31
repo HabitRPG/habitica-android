@@ -53,8 +53,6 @@ class ChallengeFormActivity : BaseActivity() {
     internal lateinit var challengeRepository: ChallengeRepository
     @Inject
     internal lateinit var socialRepository: SocialRepository
-    @Inject
-    internal lateinit var userRepository: UserRepository
     @field:[Inject Named(AppModule.NAMED_USER_ID)]
     internal lateinit var userId: String
 

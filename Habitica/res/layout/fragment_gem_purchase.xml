@@ -239,8 +239,7 @@
                 android:layout_gravity="center_horizontal"
                 android:gravity="center"
                 android:textColor="@color/white"
-                android:textSize="14sp"
-                android:lineSpacingExtra="4dp"
+                style="@style/Caption2"
                 android:drawablePadding="@dimen/spacing_medium"/>
         </LinearLayout>
         </FrameLayout>

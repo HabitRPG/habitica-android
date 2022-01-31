@@ -374,7 +374,7 @@
     <string name="google_services_missing">Google play services could not be found.</string>
     <string name="gem_purchase_toolbartitle">Purchase</string>
     <string name="gem_purchase_title">Buying gems supports the developers and helps keep Habitica running</string>
-    <string name="gem_purchase_subtitle">Gems allow you to buy fun extras for your account, including:</string>
+    <string name="gem_purchase_subtitle">Gems allow you to buy fun extras for your account:</string>
     <string name="gem_purchase_listitem1">Cool costumes for your avatar</string>
     <string name="gem_purchase_listitem2">Awesome backgrounds</string>
     <string name="gem_purchase_listitem3">Quests that reward you with pet eggs</string>

@@ -32,8 +32,6 @@ class GroupInviteActivity : BaseActivity() {
     lateinit var userId: String
     @Inject
     lateinit var socialRepository: SocialRepository
-    @Inject
-    lateinit var userRepository: UserRepository
 
     internal var fragments: MutableList<PartyInviteFragment> = ArrayList()
 

@@ -188,7 +188,7 @@ class ChatFragment() : BaseFragment<FragmentChatBinding>() {
     }
 
     private fun showFlagConfirmationDialog(chatMessage: ChatMessage) {
-        val directions = MainNavDirections.actionGlobalReportMessageActivity(chatMessage.text ?: "", chatMessage.user ?: "", chatMessage.id)
+        val directions = MainNavDirections.actionGlobalReportMessageActivity(chatMessage.text ?: "", chatMessage.user ?: "", chatMessage.id, chatMessage.groupId)
         MainNavigationController.navigate(directions)
     }
 

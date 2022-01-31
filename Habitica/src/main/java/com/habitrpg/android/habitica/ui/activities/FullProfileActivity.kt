@@ -53,8 +53,6 @@ class FullProfileActivity : BaseActivity() {
     lateinit var apiClient: ApiClient
     @Inject
     lateinit var socialRepository: SocialRepository
-    @Inject
-    lateinit var userRepository: UserRepository
 
     private var userID = ""
     private var username: String? = null

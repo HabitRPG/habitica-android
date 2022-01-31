@@ -25,8 +25,10 @@ import com.habitrpg.android.habitica.HabiticaApplication
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
+import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.extensions.isUsingNightModeResources
+import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.extensions.updateStatusBarColor
 import com.habitrpg.android.habitica.helpers.LanguageHelper
 import com.habitrpg.android.habitica.helpers.NotificationsManager
@@ -43,6 +45,8 @@ import javax.inject.Inject
 abstract class BaseActivity : AppCompatActivity() {
     @Inject
     lateinit var notificationsManager: NotificationsManager
+    @Inject
+    lateinit var userRepository: UserRepository
     @Inject
     internal lateinit var analyticsManager: AnalyticsManager
 
@@ -92,7 +96,9 @@ abstract class BaseActivity : AppCompatActivity() {
         compositeSubscription = CompositeDisposable()
         compositeSubscription.add(notificationsManager.displayNotificationEvents.subscribe(
             {
-            ShowNotificationInteractor(this, lifecycleScope).handleNotification(it)
+                if (ShowNotificationInteractor(this, lifecycleScope).handleNotification(it)) {
+                    compositeSubscription.add(userRepository.retrieveUser(false, true).subscribeWithErrorHandler {})
+                }
             },
             RxErrorHandler.handleEmptyError()
         ))

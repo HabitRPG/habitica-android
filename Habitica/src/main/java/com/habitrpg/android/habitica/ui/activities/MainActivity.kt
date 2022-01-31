@@ -77,8 +77,6 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction, Snack
     @Inject
     internal lateinit var taskRepository: TaskRepository
     @Inject
-    internal lateinit var userRepository: UserRepository
-    @Inject
     internal lateinit var inventoryRepository: InventoryRepository
     @Inject
     internal lateinit var appConfigManager: AppConfigManager

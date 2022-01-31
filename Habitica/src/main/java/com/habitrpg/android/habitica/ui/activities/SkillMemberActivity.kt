@@ -20,8 +20,6 @@ class SkillMemberActivity : BaseActivity() {
 
     @Inject
     lateinit var socialRepository: SocialRepository
-    @Inject
-    lateinit var userRepository: UserRepository
 
     override fun getLayoutResId(): Int {
         return R.layout.activity_skill_members

@@ -27,9 +27,6 @@ class AdventureGuideActivity : BaseActivity() {
     private lateinit var achievementTitles: Map<String, String>
     private lateinit var achievementDescriptions: Map<String, String>
 
-    @Inject
-    internal lateinit var userRepository: UserRepository
-
     override fun getLayoutResId(): Int {
         return R.layout.activity_main
     }
@@ -99,7 +96,6 @@ class AdventureGuideActivity : BaseActivity() {
 
         if (completed > 0) {
             binding.progressTextview.text = getString(R.string.percent_completed, ((completed / achievements.size.toFloat()) * 100).toInt())
-            binding.progressTextview.setTextColor(ContextCompat.getColor(this, R.color.yellow_5))
         }
 
         binding.achievementContainer.removeAllViews()

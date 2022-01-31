@@ -49,8 +49,6 @@ class LoginActivity : BaseActivity() {
     @Inject
     lateinit var sharedPrefs: SharedPreferences
     @Inject
-    internal lateinit var userRepository: UserRepository
-    @Inject
     lateinit var configManager: AppConfigManager
 
     private var isRegistering: Boolean = false
