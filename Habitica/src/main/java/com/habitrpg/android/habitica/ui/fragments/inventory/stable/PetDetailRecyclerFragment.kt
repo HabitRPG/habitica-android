@@ -22,6 +22,7 @@ import com.habitrpg.android.habitica.ui.adapter.inventory.PetDetailRecyclerAdapt
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemDialogFragment
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
+import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.kotlin.Flowables
 import javax.inject.Inject
@@ -34,6 +35,8 @@ class PetDetailRecyclerFragment :
     lateinit var inventoryRepository: InventoryRepository
     @Inject
     lateinit var feedPetUseCase: FeedPetUseCase
+    @Inject
+    lateinit var userViewModel: MainUserViewModel
 
     var adapter: PetDetailRecyclerAdapter = PetDetailRecyclerAdapter()
     private var animalType: String? = null
@@ -109,14 +112,15 @@ class PetDetailRecyclerFragment :
 
         compositeSubscription.add(
             adapter.getEquipFlowable()
-                .flatMap { key -> inventoryRepository.equip(user, "pet", key) }
+                .flatMap { key -> inventoryRepository.equip(null, "pet", key) }
                 .subscribe(
                     {
-                        user?.let { updatedUser -> adapter.setUser(updatedUser) }
+                        adapter.currentPet = it.currentPet
                     },
                     RxErrorHandler.handleEmptyError()
                 )
         )
+        userViewModel.user.observe(viewLifecycleOwner) { adapter.currentPet = it?.currentPet }
         compositeSubscription.add(adapter.feedFlowable.subscribe({ showFeedingDialog(it.first, it.second) }, RxErrorHandler.handleEmptyError()))
 
         view.post { setGridSpanCount(view.width) }
@@ -168,7 +172,6 @@ class PetDetailRecyclerFragment :
                             return@map petMap
                         }.doOnNext {
                             adapter.setOwnedPets(it)
-                            user?.let { updatedUser -> adapter.setUser(updatedUser) }
                         }
                 ).map {
                     val items = mutableListOf<Any>()

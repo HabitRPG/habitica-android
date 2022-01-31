@@ -103,6 +103,7 @@ import com.habitrpg.android.habitica.ui.viewmodels.AuthenticationViewModel;
 import com.habitrpg.android.habitica.ui.viewmodels.GroupViewModel;
 import com.habitrpg.android.habitica.ui.viewmodels.InboxViewModel;
 import com.habitrpg.android.habitica.ui.viewmodels.MainActivityViewModel;
+import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel;
 import com.habitrpg.android.habitica.ui.viewmodels.NotificationsViewModel;
 import com.habitrpg.android.habitica.ui.viewmodels.inventory.equipment.EquipmentOverviewViewModel;
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientGemsDialog;
@@ -352,4 +353,6 @@ public interface UserComponent {
     void inject(@NotNull MainActivityViewModel mainActivityViewModel);
 
     void inject(@NotNull GuidelinesActivity guidelinesActivity);
+
+    void inject(@NotNull MainUserViewModel mainUserViewModel);
 }

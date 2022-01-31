@@ -30,6 +30,7 @@ import com.habitrpg.android.habitica.ui.activities.GroupFormActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.helpers.setMarkdown
+import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import javax.inject.Inject
 import kotlin.math.roundToInt
@@ -40,6 +41,8 @@ class NoPartyFragmentFragment : BaseMainFragment<FragmentNoPartyBinding>() {
     lateinit var socialRepository: SocialRepository
     @Inject
     lateinit var configManager: AppConfigManager
+    @Inject
+    lateinit var userViewModel: MainUserViewModel
 
     override var binding: FragmentNoPartyBinding? = null
 
@@ -65,7 +68,7 @@ class NoPartyFragmentFragment : BaseMainFragment<FragmentNoPartyBinding>() {
                         parentFragmentManager.popBackStack()
                         MainNavigationController.navigate(
                             R.id.partyFragment,
-                            bundleOf(Pair("partyID", user?.party?.id))
+                            bundleOf(Pair("partyID", userViewModel.partyID))
                         )
                     },
                     RxErrorHandler.handleEmptyError()
@@ -92,7 +95,7 @@ class NoPartyFragmentFragment : BaseMainFragment<FragmentNoPartyBinding>() {
 
         binding?.usernameTextview?.setOnClickListener {
             val clipboard = context?.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
-            val clip = ClipData.newPlainText(context?.getString(R.string.username), user?.username)
+            val clip = ClipData.newPlainText(context?.getString(R.string.username), userViewModel.username)
             clipboard?.setPrimaryClip(clip)
             val activity = activity
             if (activity != null) {
@@ -103,7 +106,7 @@ class NoPartyFragmentFragment : BaseMainFragment<FragmentNoPartyBinding>() {
         binding?.createPartyButton?.setOnClickListener {
             val bundle = Bundle()
             bundle.putString("groupType", "party")
-            bundle.putString("leader", user?.id)
+            bundle.putString("leader", userViewModel.userID)
             val intent = Intent(activity, GroupFormActivity::class.java)
             intent.putExtras(bundle)
             intent.flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
@@ -132,14 +135,15 @@ class NoPartyFragmentFragment : BaseMainFragment<FragmentNoPartyBinding>() {
             }
         }
 
-        if ((user?.invitations?.parties?.count() ?: 0) > 0) {
+        val partyInvitations = userViewModel.partyInvitations
+        if (partyInvitations.size > 0) {
             binding?.invitationWrapper?.visibility = View.VISIBLE
-            user?.invitations?.parties?.let { binding?.invitationsView?.setInvitations(it) }
+            binding?.invitationsView?.setInvitations(partyInvitations)
         } else {
             binding?.invitationWrapper?.visibility = View.GONE
         }
 
-        binding?.usernameTextview?.text = user?.formattedUsername
+        binding?.usernameTextview?.text = userViewModel.formattedUsername
     }
 
     private val groupFormResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -164,7 +168,7 @@ class NoPartyFragmentFragment : BaseMainFragment<FragmentNoPartyBinding>() {
                             }
                             MainNavigationController.navigate(
                                 R.id.partyFragment,
-                                bundleOf(Pair("partyID", user?.party?.id))
+                                bundleOf(Pair("partyID", userViewModel.partyID))
                             )
                         },
                         RxErrorHandler.handleEmptyError()
@@ -196,12 +200,11 @@ class NoPartyFragmentFragment : BaseMainFragment<FragmentNoPartyBinding>() {
 
     companion object {
 
-        fun newInstance(user: User?): NoPartyFragmentFragment {
+        fun newInstance(): NoPartyFragmentFragment {
             val args = Bundle()
 
             val fragment = NoPartyFragmentFragment()
             fragment.arguments = args
-            fragment.user = user
             return fragment
         }
     }

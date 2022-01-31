@@ -88,7 +88,7 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
                 { member ->
                     setReceivingUser(member.username, member.id)
                     activity?.title = member.displayName
-                    chatAdapter = InboxAdapter(user, member)
+                    chatAdapter = InboxAdapter(viewModel.user.value, member)
                     viewModel.messages.observe(this.viewLifecycleOwner) {
                         markMessagesAsRead(it)
                         chatAdapter?.submitList(it)
@@ -170,7 +170,7 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
     }
 
     private fun markMessagesAsRead(messages: List<ChatMessage>) {
-        socialRepository.markSomePrivateMessagesAsRead(user, messages)
+        socialRepository.markSomePrivateMessagesAsRead(viewModel.user.value, messages)
     }
 
     private fun startAutoRefreshing() {

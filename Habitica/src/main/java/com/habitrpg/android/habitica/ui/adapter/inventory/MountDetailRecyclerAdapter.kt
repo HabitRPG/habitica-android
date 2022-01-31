@@ -15,7 +15,11 @@ class MountDetailRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Ada
     private var ownedMounts: Map<String, OwnedMount>? = null
 
     private val equipEvents = PublishSubject.create<String>()
-    private var user: User? = null
+    var currentMount: String? = null
+    set(value) {
+        field = value
+        notifyDataSetChanged()
+    }
 
     private var itemList: List<Any> = ArrayList()
 
@@ -37,7 +41,7 @@ class MountDetailRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Ada
     override fun onBindViewHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder, position: Int) {
         when (val obj = this.itemList[position]) {
             is StableSection -> (holder as? SectionViewHolder)?.bind(obj)
-            is Mount -> (holder as? MountViewHolder)?.bind(obj, ownedMounts?.get(obj.key ?: "")?.owned == true, user)
+            is Mount -> (holder as? MountViewHolder)?.bind(obj, ownedMounts?.get(obj.key ?: "")?.owned == true, currentMount)
         }
     }
 
@@ -47,11 +51,6 @@ class MountDetailRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Ada
 
     fun setOwnedMounts(ownedMounts: Map<String, OwnedMount>) {
         this.ownedMounts = ownedMounts
-        notifyDataSetChanged()
-    }
-
-    fun setUser(user: User) {
-        this.user = user
         notifyDataSetChanged()
     }
 }

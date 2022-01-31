@@ -18,6 +18,7 @@ import com.habitrpg.android.habitica.ui.adapter.CustomizationEquipmentRecyclerVi
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.helpers.MarginDecoration
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
+import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import io.reactivex.rxjava3.core.Flowable
 import javax.inject.Inject
 
@@ -27,6 +28,8 @@ class AvatarEquipmentFragment :
 
     @Inject
     lateinit var inventoryRepository: InventoryRepository
+    @Inject
+    lateinit var userViewModel: MainUserViewModel
 
     override var binding: FragmentRefreshRecyclerviewBinding? = null
 
@@ -51,7 +54,7 @@ class AvatarEquipmentFragment :
             adapter.getSelectCustomizationEvents()
                 .flatMap { equipment ->
                     val key = (if (equipment.key?.isNotBlank() != true) activeEquipment else equipment.key) ?: ""
-                    inventoryRepository.equip(user, if (user?.preferences?.costume == true) "costume" else "equipped", key)
+                    inventoryRepository.equip(userViewModel.user.value, if (userViewModel.user.value?.preferences?.costume == true) "costume" else "equipped", key)
                 }
                 .subscribe({ }, RxErrorHandler.handleEmptyError())
         )
@@ -143,7 +146,7 @@ class AvatarEquipmentFragment :
         if (this.type == null || user.preferences == null) {
             return
         }
-        val outfit = if (user.preferences?.costume == true) this.user?.items?.gear?.costume else this.user?.items?.gear?.equipped
+        val outfit = if (user.preferences?.costume == true) user.items?.gear?.costume else user.items?.gear?.equipped
         val activeEquipment = when (this.type) {
             "headAccessory" -> outfit?.headAccessory
             "back" -> outfit?.back

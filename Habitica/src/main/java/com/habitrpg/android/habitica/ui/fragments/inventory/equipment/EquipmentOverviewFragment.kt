@@ -45,10 +45,10 @@ class EquipmentOverviewFragment : BaseMainFragment<FragmentEquipmentOverviewBind
             it?.items?.gear?.let {
                 updateGearData(it)
             }
-            binding?.autoEquipSwitch?.isChecked = user?.preferences?.autoEquip ?: false
-            binding?.costumeSwitch?.isChecked = user?.preferences?.costume ?: false
+            binding?.autoEquipSwitch?.isChecked = viewModel.usesAutoEquip
+            binding?.costumeSwitch?.isChecked = viewModel.usesCostume
 
-            binding?.costumeView?.isEnabled = user?.preferences?.costume == true
+            binding?.costumeView?.isEnabled = viewModel.usesCostume
         }
     }
 

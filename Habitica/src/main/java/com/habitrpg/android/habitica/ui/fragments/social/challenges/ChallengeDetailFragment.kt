@@ -29,6 +29,7 @@ import com.habitrpg.android.habitica.ui.viewHolders.tasks.DailyViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.HabitViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.RewardViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.TodoViewHolder
+import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import retrofit2.HttpException
@@ -41,6 +42,9 @@ class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>
     lateinit var challengeRepository: ChallengeRepository
     @Inject
     lateinit var socialRepository: SocialRepository
+    @Inject
+    lateinit var userViewModel: MainUserViewModel
+
 
     override var binding: FragmentChallengeDetailBinding? = null
 
@@ -236,7 +240,7 @@ class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>
         binding?.creatorAvatarview?.setAvatar(creator)
         binding?.creatorLabel?.tier = creator.contributor?.level ?: 0
         binding?.creatorLabel?.username = creator.displayName
-        isCreator = creator.id == user?.id
+        isCreator = creator.id == userViewModel.userID
         this.activity?.invalidateOptionsMenu()
     }
 
