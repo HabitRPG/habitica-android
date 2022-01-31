@@ -215,8 +215,8 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
                         {
-                            binding?.recyclerView?.scrollToPosition(0)
                             viewModel.invalidateDataSource()
+                            binding?.recyclerView?.scrollToPosition(0)
                         },
                         { error ->
                             RxErrorHandler.reportError(error)
