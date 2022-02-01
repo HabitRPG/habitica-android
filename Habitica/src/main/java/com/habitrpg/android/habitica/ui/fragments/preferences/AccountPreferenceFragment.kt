@@ -64,11 +64,11 @@ class AccountPreferenceFragment: BasePreferencesFragment(),
 
     override fun onResume() {
         super.onResume()
-        preferenceManager.sharedPreferences.registerOnSharedPreferenceChangeListener(this)
+        preferenceManager.sharedPreferences?.registerOnSharedPreferenceChangeListener(this)
     }
 
     override fun onPause() {
-        preferenceManager.sharedPreferences.unregisterOnSharedPreferenceChangeListener(this)
+        preferenceManager.sharedPreferences?.unregisterOnSharedPreferenceChangeListener(this)
         super.onPause()
     }
 
@@ -130,8 +130,8 @@ class AccountPreferenceFragment: BasePreferencesFragment(),
         preference?.summary = value
     }
 
-    override fun onPreferenceTreeClick(preference: Preference?): Boolean {
-        when(preference?.key) {
+    override fun onPreferenceTreeClick(preference: Preference): Boolean {
+        when(preference.key) {
             "username" -> showLoginNameDialog()
             "confirm_username" -> showConfirmUsernameDialog()
             "email" -> {

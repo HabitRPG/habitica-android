@@ -121,6 +121,7 @@ class TaskAlarmManager(private var context: Context, private var taskRepository:
         const val TASK_NAME_INTENT_KEY = "TASK_NAME"
 
         fun scheduleDailyReminder(context: Context?) {
+            if (context == null) return
             val prefs = PreferenceManager.getDefaultSharedPreferences(context)
             if (prefs.getBoolean("use_reminder", false)) {
                 val timeval = prefs.getString("reminder_time", "19:00")

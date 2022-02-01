@@ -61,7 +61,7 @@ class AddTaskWidgetProvider : BaseWidgetProvider() {
     }
 
     private fun getSelectedTaskType(widgetId: Int): TaskType {
-        val preferences = PreferenceManager.getDefaultSharedPreferences(this.context)
-        return TaskType.from(preferences.getString("add_task_widget_$widgetId", TaskType.HABIT.value)) ?: TaskType.HABIT
+        val preferences = context?.let { PreferenceManager.getDefaultSharedPreferences(it) }
+        return TaskType.from(preferences?.getString("add_task_widget_$widgetId", TaskType.HABIT.value)) ?: TaskType.HABIT
     }
 }

@@ -33,7 +33,7 @@ class DayStartPreferenceDialogFragment : PreferenceDialogFragmentCompat() {
             return lastHour.toString() + ":00"
         }
 
-    override fun onCreateDialogView(context: Context?): View {
+    override fun onCreateDialogView(context: Context): View {
         val wrapper = LinearLayout(context)
         wrapper.orientation = LinearLayout.VERTICAL
         picker = TimePicker(context)

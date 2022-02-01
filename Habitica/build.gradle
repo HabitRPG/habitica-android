@@ -51,10 +51,10 @@ dependencies {
     compileOnly 'javax.annotation:javax.annotation-api:1.3.2'
     compileOnly 'com.github.pengrad:jdk9-deps:1.0'
     //App Compatibility and Material Design
-    implementation 'androidx.appcompat:appcompat:1.4.0'
-    implementation 'com.google.android.material:material:1.4.0'
+    implementation 'androidx.appcompat:appcompat:1.4.1'
+    implementation 'com.google.android.material:material:1.5.0'
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
-    implementation "androidx.preference:preference-ktx:1.1.1"
+    implementation "androidx.preference:preference-ktx:1.2.0"
 
 
     // Markdown
@@ -121,10 +121,10 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.4.0"
     implementation "androidx.lifecycle:lifecycle-common-java8:2.4.0"
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.4.0'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.4.0'
     implementation 'com.plattysoft.leonids:LeonidsLib:1.3.2'
-    implementation "androidx.fragment:fragment-ktx:1.4.0"
+    implementation "androidx.fragment:fragment-ktx:1.4.1"
     implementation "androidx.paging:paging-runtime-ktx:3.1.0"
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0'
@@ -142,7 +142,7 @@ dependencies {
 
 android {
     compileSdkVersion 32
-    buildToolsVersion '30.0.2'
+    buildToolsVersion '30.0.3'
     testOptions {
         unitTests {
             includeAndroidResources = true
@@ -157,7 +157,7 @@ android {
         buildConfigField "String", "TESTING_LEVEL", "\"production\""
         resConfigs "en", "bg", "de", "en-rGB", "es", "fr", "hr-rHR", "in", "it", "iw", "ja", "ko", "lt", "nl", "pl", "pt-rBR", "pt-rPT", "ru", "tr", "zh", "zh-rTW"
 
-        versionCode 3218
+        versionCode 3221
         versionName "3.5"
 
         targetSdkVersion 32
@@ -382,8 +382,8 @@ def mainSrc = "${project.projectDir}/src/main/java"
 task jacocoTestReport(type: JacocoReport, dependsOn: 'testProdDebugUnitTest') {
     group = "Reporting"
     reports {
-        html.enabled = true
-        xml.enabled = true
+        html.required.set(true)
+        xml.required.set(true)
         //html.destination = "${buildDir}/reports/jacoco"
     }
 
@@ -404,7 +404,6 @@ task jacocoTestReport(type: JacocoReport, dependsOn: 'testProdDebugUnitTest') {
 task ktlint(type: JavaExec, group: "verification") {
     description = "Check Kotlin code style."
     classpath = configurations.ktlint
-    main = "com.pinterest.ktlint.Main"
     args "--disabled_rules=no-wildcard-imports", "--reporter=plain?group_by_file", "src/**/*.kt"
     // to generate report in checkstyle format prepend following args:
     // "--reporter=plain", "--reporter=checkstyle,output=${buildDir}/ktlint.xml"
@@ -417,6 +416,5 @@ check.dependsOn ktlint
 task ktlintFormat(type: JavaExec, group: "formatting") {
     description = "Fix Kotlin code style deviations."
     classpath = configurations.ktlint
-    main = "com.pinterest.ktlint.Main"
     args "--disabled_rules=no-wildcard-imports", "-F", "src/**/*.kt"
 }
