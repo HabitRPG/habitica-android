@@ -84,6 +84,5 @@ interface SocialRepository : BaseRepository {
 
     fun getGroupMembership(id: String): Flowable<GroupMembership>
     fun getGroupMemberships(): Flowable<out List<GroupMembership>>
-    fun getChatmessage(messageID: String): Flowable<ChatMessage>
     fun blockMember(userID: String): Flowable<List<String>>
 }
