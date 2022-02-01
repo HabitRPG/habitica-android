@@ -88,7 +88,9 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
             return Flowable.empty()
         }
         val liked = chatMessage.userLikesMessage(userID)
-        localRepository.likeMessage(chatMessage, userID, !liked)
+        if (chatMessage.isManaged) {
+            localRepository.likeMessage(chatMessage, userID, !liked)
+        }
         return apiClient.likeMessage(chatMessage.groupId ?: "", chatMessage.id)
     }
 

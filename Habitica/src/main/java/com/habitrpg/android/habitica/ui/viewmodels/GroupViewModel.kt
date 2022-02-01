@@ -249,7 +249,8 @@ open class GroupViewModel(initializeComponent: Boolean) : BaseViewModel(initiali
     }
 
     fun likeMessage(message: ChatMessage) {
-        val index = _chatMessages.value?.indexOf(message) ?: return
+        val index = _chatMessages.value?.indexOf(message)
+        if (index == null || index < 0) return
         disposable.add(socialRepository.likeMessage(message).subscribe(
             {
                 val list = _chatMessages.value?.toMutableList()
