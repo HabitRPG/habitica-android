@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.MainNavDirections
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
@@ -89,6 +90,13 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
                     setReceivingUser(member.username, member.id)
                     activity?.title = member.displayName
                     chatAdapter = InboxAdapter(user, member)
+                    chatAdapter?.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+                        override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                            if (positionStart == 0) {
+                                binding?.recyclerView?.scrollToPosition(0)
+                            }
+                        }
+                    })
                     viewModel.messages.observe(this.viewLifecycleOwner) {
                         markMessagesAsRead(it)
                         chatAdapter?.submitList(it)
@@ -215,7 +223,6 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
                         {
-                            binding?.recyclerView?.scrollToPosition(0)
                             viewModel.invalidateDataSource()
                         },
                         { error ->
