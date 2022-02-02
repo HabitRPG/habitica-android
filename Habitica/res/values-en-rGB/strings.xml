@@ -471,7 +471,7 @@
 \n • Tasks won’t lose streaks or decay in colour
 \n • Bosses won’t do damage for your missed Dailies
 \n • Your boss damage or collection quest items will stay pending until check-out</string>
-    <string name="warrior_description">Warriors score more critical hits and deal heavy damage to Bosses. Play a Warrior if you want to defeat monsters easily! Warrior benefit from a high Strength stat.</string>
+    <string name="warrior_description">Warriors score more critical hits and deal heavy damage to Bosses. Play a Warrior if you want to defeat monsters easily! Warriors benefit from a high Strength stat.</string>
     <string name="opting_out_progress">Opting Out</string>
     <string name="change_class_description">Change your class and refund your stat points for 3 gems.</string>
     <string name="invite_username_description">If you have friends already using Habitica, invite them by username here.</string>
