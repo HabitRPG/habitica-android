@@ -13,6 +13,7 @@ import android.widget.CheckBox
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatCheckBox
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.core.view.children
 import androidx.core.view.forEachIndexed
 import androidx.core.widget.NestedScrollView
@@ -21,7 +22,6 @@ import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ChallengeRepository
 import com.habitrpg.android.habitica.data.TagRepository
 import com.habitrpg.android.habitica.data.TaskRepository
-import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.ActivityTaskFormBinding
 import com.habitrpg.android.habitica.extensions.OnChangeTextWatcher
 import com.habitrpg.android.habitica.extensions.addCancelButton
@@ -249,6 +249,30 @@ class TaskFormActivity : BaseActivity() {
         super.onStart()
         if (isCreating) {
             binding.textEditText.requestFocus()
+        }
+    }
+
+    override fun onBackPressed() {
+        var thisTask = task
+        if (thisTask == null) {
+                thisTask = Task()
+                thisTask.type = taskType
+                thisTask.dateCreated = Date()
+        }
+        if (thisTask.isBeingEdited(binding)){
+            val alert = HabiticaAlertDialog(this)
+            alert.setTitle(R.string.unsaved_changes)
+            alert.setMessage(R.string.discard_changes_to_task_message)
+            alert.addButton(R.string.discard, true, true) { _, _ ->
+                analyticsManager.logEvent("discard_task", bundleOf(Pair("is_creating", isCreating)))
+                super.onBackPressed()
+            }
+            alert.addButton(R.string.cancel, false){ _, _ ->
+                alert.dismiss()
+            }
+            alert.show()
+        }else{
+            super.onBackPressed()
         }
     }
 
