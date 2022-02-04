@@ -1,11 +1,8 @@
 package com.habitrpg.android.habitica.models.tasks
 
-import android.content.Intent
 import android.os.Parcel
 import android.os.Parcelable
 import android.text.Spanned
-import android.widget.CheckBox
-import androidx.core.view.forEachIndexed
 import com.google.gson.annotations.SerializedName
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
@@ -259,61 +256,61 @@ open class Task : RealmObject, BaseMainObject, Parcelable {
         }
     }
 
-    fun isBeingEdited(emptyTask: Task): Boolean {
+    fun isBeingEdited(task: Task): Boolean {
         if (type == TaskType.HABIT) {
             when {
-                up != emptyTask.up -> return true
-                down != emptyTask.down -> return true
-                frequency != emptyTask.frequency -> return true
-                counterUp != emptyTask.counterUp -> return true
-                counterDown != emptyTask.counterDown -> return true
-                text != emptyTask.text -> return true
-                notes != emptyTask.notes -> return true
-                priority != emptyTask.priority -> return true
-                attribute != emptyTask.attribute && attribute != null -> return true
-                tags != emptyTask.tags -> return true
+                up != task.up -> return true
+                down != task.down -> return true
+                frequency != task.frequency -> return true
+                counterUp != task.counterUp -> return true
+                counterDown != task.counterDown -> return true
+                text != task.text -> return true
+                notes != task.notes -> return true
+                priority != task.priority -> return true
+                attribute != task.attribute && attribute != null -> return true
+                tags != task.tags -> return true
                 else -> return false
             }
 
         } else if (type == TaskType.DAILY) {
             when {
-                startDate != emptyTask.startDate -> return true
-                everyX != emptyTask.everyX -> return true
-                frequency != emptyTask.frequency -> return true
-                repeat != emptyTask.repeat -> return true
-                streak != emptyTask.streak -> return true
-                checklist != emptyTask.checklist -> return true
-                reminders != emptyTask.reminders -> return true
-                text != emptyTask.text -> return true
-                notes != emptyTask.notes -> return true
-                priority != emptyTask.priority -> return true
-                attribute != emptyTask.attribute && attribute != null -> return true
-                tags != emptyTask.tags -> return true
+                startDate != task.startDate -> return true
+                everyX != task.everyX -> return true
+                frequency != task.frequency -> return true
+                repeat != task.repeat -> return true
+                streak != task.streak -> return true
+                checklist != task.checklist -> return true
+                reminders != task.reminders -> return true
+                text != task.text -> return true
+                notes != task.notes -> return true
+                priority != task.priority -> return true
+                attribute != task.attribute && attribute != null -> return true
+                tags != task.tags -> return true
                 else -> return false
             }
 
         } else if (type == TaskType.TODO) {
             when {
-                dueDate != emptyTask.dueDate -> return true
-                checklist != emptyTask.checklist -> return true
-                reminders != emptyTask.reminders -> return true
-                text != emptyTask.text -> return true
-                notes != emptyTask.notes -> return true
-                priority != emptyTask.priority -> return true
-                attribute != emptyTask.attribute && attribute != null -> return true
-                tags != emptyTask.tags -> return true
+                dueDate != task.dueDate -> return true
+                checklist != task.checklist -> return true
+                reminders != task.reminders -> return true
+                text != task.text -> return true
+                notes != task.notes -> return true
+                priority != task.priority -> return true
+                attribute != task.attribute && attribute != null -> return true
+                tags != task.tags -> return true
                 else -> return false
 
             }
 
         } else if (type == TaskType.REWARD) {
             when {
-                value != emptyTask.value -> return true
-                text != emptyTask.text -> return true
-                notes != emptyTask.notes -> return true
-                priority != emptyTask.priority -> return true
-                attribute != emptyTask.attribute && attribute != null -> return true
-                tags != emptyTask.tags -> return true
+                value != task.value -> return true
+                text != task.text -> return true
+                notes != task.notes -> return true
+                priority != task.priority -> return true
+                attribute != task.attribute && attribute != null -> return true
+                tags != task.tags -> return true
                 else -> return false
             }
 

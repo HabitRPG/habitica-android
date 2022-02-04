@@ -75,6 +75,7 @@ class TaskFormActivity : BaseActivity() {
             setSelectedAttribute(value)
         }
 
+    private var isDiscardCancelled: Boolean = false
     private var canSave: Boolean = false
 
     private var tintColor: Int = 0
@@ -269,6 +270,7 @@ class TaskFormActivity : BaseActivity() {
                 super.onBackPressed()
             }
             alert.addButton(R.string.cancel, false) { _, _ ->
+                isDiscardCancelled = true
                 alert.dismiss()
             }
             alert.show()
@@ -571,8 +573,15 @@ class TaskFormActivity : BaseActivity() {
             }
 
             if (isCreating) {
+                if (isDiscardCancelled){
+                    analyticsManager.logEvent("back_to_task", bundleOf(Pair("is_creating", isCreating)))
+                }
                 taskRepository.createTaskInBackground(thisTask)
+
             } else {
+                if (isDiscardCancelled){
+                    analyticsManager.logEvent("back_to_task", bundleOf(Pair("is_creating", isCreating)))
+                }
                 taskRepository.updateTaskInBackground(thisTask)
             }
 
