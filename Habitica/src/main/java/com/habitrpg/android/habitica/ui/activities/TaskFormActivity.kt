@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.activities
 
 import android.app.Activity
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.ColorStateList
@@ -273,6 +274,9 @@ class TaskFormActivity : BaseActivity() {
                 isDiscardCancelled = true
                 alert.dismiss()
             }
+            alert.setOnDismissListener(DialogInterface.OnDismissListener {
+                isDiscardCancelled = true
+            })
             alert.show()
         } else {
             super.onBackPressed()
