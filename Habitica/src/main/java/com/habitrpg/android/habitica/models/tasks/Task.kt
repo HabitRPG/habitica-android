@@ -8,7 +8,6 @@ import android.widget.CheckBox
 import androidx.core.view.forEachIndexed
 import com.google.gson.annotations.SerializedName
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.databinding.ActivityTaskFormBinding
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.BaseMainObject
 import com.habitrpg.android.habitica.models.Tag
@@ -260,31 +259,66 @@ open class Task : RealmObject, BaseMainObject, Parcelable {
         }
     }
 
-    fun isBeingEdited(taskFormBinding: ActivityTaskFormBinding, isCreating: Boolean): Boolean {
-        when {
-            text != taskFormBinding.textEditText.text.toString() -> return true
-            notes != taskFormBinding.notesEditText.text.toString() && notes != null -> return true
-            priority != taskFormBinding.taskDifficultyButtons.selectedDifficulty-> return true
-            up != taskFormBinding.habitScoringButtons.isPositive && (type == TaskType.HABIT) -> return true
-            down != taskFormBinding.habitScoringButtons.isNegative && (type == TaskType.HABIT)-> return true
-            frequency != taskFormBinding.habitResetStreakButtons.selectedResetOption.value && frequency != null && (type == TaskType.HABIT) -> return true
-            frequency != taskFormBinding.taskSchedulingControls.frequency && frequency != null && (type == TaskType.DAILY) -> return true
-            counterUp != taskFormBinding.habitAdjustPositiveStreakView.text.toString().toIntCatchOverflow() && (type == TaskType.HABIT) -> return true
-            counterDown != taskFormBinding.habitAdjustNegativeStreakView.text.toString().toIntCatchOverflow() && (type == TaskType.HABIT) -> return true
-            startDate != taskFormBinding.taskSchedulingControls.startDate && startDate != null-> return true
-            everyX != taskFormBinding.taskSchedulingControls.everyX && everyX != null-> return true
-            repeat != taskFormBinding.taskSchedulingControls.weeklyRepeat && repeat != null-> return true
-            streak != taskFormBinding.habitAdjustPositiveStreakView.text.toString().toIntCatchOverflow() && streak != null && (type == TaskType.DAILY)-> return true
-            dueDate != taskFormBinding.taskSchedulingControls.dueDate && dueDate != null-> return true
-            value != taskFormBinding.rewardValue.value && (type == TaskType.REWARD)-> return true
-            checklist != taskFormBinding.checklistContainer.checklistItems -> return true
-            repeat != taskFormBinding.taskSchedulingControls.weeklyRepeat && repeat != null -> return true
-            daysOfMonthString != taskFormBinding.taskSchedulingControls.daysOfMonth.toString() && daysOfMonthString != null -> return true
-            weeksOfMonthString != taskFormBinding.taskSchedulingControls.weeksOfMonth.toString() && weeksOfMonthString != null-> return true
-            reminders != taskFormBinding.remindersContainer.reminders -> return true
-            else -> {
-                return false
+    fun isBeingEdited(emptyTask: Task): Boolean {
+        if (type == TaskType.HABIT) {
+            when {
+                up != emptyTask.up -> return true
+                down != emptyTask.down -> return true
+                frequency != emptyTask.frequency -> return true
+                counterUp != emptyTask.counterUp -> return true
+                counterDown != emptyTask.counterDown -> return true
+                text != emptyTask.text -> return true
+                notes != emptyTask.notes -> return true
+                priority != emptyTask.priority -> return true
+                attribute != emptyTask.attribute && attribute != null -> return true
+                tags != emptyTask.tags -> return true
+                else -> return false
             }
+
+        } else if (type == TaskType.DAILY) {
+            when {
+                startDate != emptyTask.startDate -> return true
+                everyX != emptyTask.everyX -> return true
+                frequency != emptyTask.frequency -> return true
+                repeat != emptyTask.repeat -> return true
+                streak != emptyTask.streak -> return true
+                checklist != emptyTask.checklist -> return true
+                reminders != emptyTask.reminders -> return true
+                text != emptyTask.text -> return true
+                notes != emptyTask.notes -> return true
+                priority != emptyTask.priority -> return true
+                attribute != emptyTask.attribute && attribute != null -> return true
+                tags != emptyTask.tags -> return true
+                else -> return false
+            }
+
+        } else if (type == TaskType.TODO) {
+            when {
+                dueDate != emptyTask.dueDate -> return true
+                checklist != emptyTask.checklist -> return true
+                reminders != emptyTask.reminders -> return true
+                text != emptyTask.text -> return true
+                notes != emptyTask.notes -> return true
+                priority != emptyTask.priority -> return true
+                attribute != emptyTask.attribute && attribute != null -> return true
+                tags != emptyTask.tags -> return true
+                else -> return false
+
+            }
+
+        } else if (type == TaskType.REWARD) {
+            when {
+                value != emptyTask.value -> return true
+                text != emptyTask.text -> return true
+                notes != emptyTask.notes -> return true
+                priority != emptyTask.priority -> return true
+                attribute != emptyTask.attribute && attribute != null -> return true
+                tags != emptyTask.tags -> return true
+                else -> return false
+            }
+
+        } else {
+            return false
         }
     }
 
@@ -440,13 +474,5 @@ open class Task : RealmObject, BaseMainObject, Parcelable {
 
             override fun newArray(size: Int): Array<Task?> = arrayOfNulls(size)
         }
-    }
-}
-
-private fun String.toIntCatchOverflow(): Int? {
-    return try {
-        toInt()
-    } catch (e: NumberFormatException) {
-        0
     }
 }

@@ -64,6 +64,7 @@ class TaskFormActivity : BaseActivity() {
     private var isChallengeTask = false
     private var usesTaskAttributeStats = false
     private var task: Task? = null
+    private var initialTaskInstance: Task? = null
     private var taskType: TaskType = TaskType.HABIT
     private var tags = listOf<Tag>()
     private var preselectedTags: ArrayList<String>? = null
@@ -198,6 +199,7 @@ class TaskFormActivity : BaseActivity() {
                         {
                             if (!it.isValid) return@subscribe
                             task = it
+                            initialTaskInstance = it
                             // tintColor = ContextCompat.getColor(this, it.mediumTaskColor)
                             fillForm(it)
                             it.challengeID?.let { challengeID ->
@@ -224,17 +226,21 @@ class TaskFormActivity : BaseActivity() {
                 task = bundle.getParcelable(PARCELABLE_TASK)
                 task?.let { fillForm(it) }
             }
-            else -> title = getString(
-                R.string.create_task,
-                getString(
-                    when (taskType) {
-                        TaskType.DAILY -> R.string.daily
-                        TaskType.TODO -> R.string.todo
-                        TaskType.REWARD -> R.string.reward
-                        else -> R.string.habit
-                    }
+            else -> {
+                title = getString(
+                    R.string.create_task,
+                    getString(
+                        when (taskType) {
+                            TaskType.DAILY -> R.string.daily
+                            TaskType.TODO -> R.string.todo
+                            TaskType.REWARD -> R.string.reward
+                            else -> R.string.habit
+                        }
+                    )
                 )
-            )
+                initialTaskInstance = createTaskForCompare()
+            }
+
         }
         configureForm()
     }
@@ -253,13 +259,8 @@ class TaskFormActivity : BaseActivity() {
     }
 
     override fun onBackPressed() {
-        var thisTask = task
-        if (thisTask == null) {
-                thisTask = Task()
-                thisTask.type = taskType
-                thisTask.dateCreated = Date()
-        }
-        if (thisTask.isBeingEdited(binding)){
+        var currentTaskInstance = createTaskForCompare()
+        if (initialTaskInstance!!.isBeingEdited(currentTaskInstance)) {
             val alert = HabiticaAlertDialog(this)
             alert.setTitle(R.string.unsaved_changes)
             alert.setMessage(R.string.discard_changes_to_task_message)
@@ -267,11 +268,11 @@ class TaskFormActivity : BaseActivity() {
                 analyticsManager.logEvent("discard_task", bundleOf(Pair("is_creating", isCreating)))
                 super.onBackPressed()
             }
-            alert.addButton(R.string.cancel, false){ _, _ ->
+            alert.addButton(R.string.cancel, false) { _, _ ->
                 alert.dismiss()
             }
             alert.show()
-        }else{
+        } else {
             super.onBackPressed()
         }
     }
@@ -459,6 +460,58 @@ class TaskFormActivity : BaseActivity() {
             )
             tagView?.buttonTintList = colorStateList
         }
+    }
+
+    private fun createTaskForCompare(): Task {
+        var thisTask = Task()
+        thisTask.type = taskType
+        thisTask.dateCreated = Date()
+
+        thisTask.text = binding.textEditText.text.toString()
+        thisTask.notes = binding.notesEditText.text.toString()
+        thisTask.priority = binding.taskDifficultyButtons.selectedDifficulty
+        if (usesTaskAttributeStats) {
+            thisTask.attribute = selectedStat
+        }
+        if (taskType == TaskType.HABIT) {
+            thisTask.up = binding.habitScoringButtons.isPositive
+            thisTask.down = binding.habitScoringButtons.isNegative
+            thisTask.frequency = binding.habitResetStreakButtons.selectedResetOption.value
+            if (binding.habitAdjustPositiveStreakView.text?.isNotEmpty() == true) thisTask.counterUp =
+                binding.habitAdjustPositiveStreakView.text.toString().toIntCatchOverflow()
+            if (binding.habitAdjustNegativeStreakView.text?.isNotEmpty() == true) thisTask.counterDown =
+                binding.habitAdjustNegativeStreakView.text.toString().toIntCatchOverflow()
+        } else if (taskType == TaskType.DAILY) {
+            thisTask.startDate = binding.taskSchedulingControls.startDate
+            thisTask.everyX = binding.taskSchedulingControls.everyX
+            thisTask.frequency = binding.taskSchedulingControls.frequency
+            thisTask.repeat = binding.taskSchedulingControls.weeklyRepeat
+            thisTask.setDaysOfMonth(binding.taskSchedulingControls.daysOfMonth)
+            thisTask.setWeeksOfMonth(binding.taskSchedulingControls.weeksOfMonth)
+            if (binding.habitAdjustPositiveStreakView.text?.isNotEmpty() == true) thisTask.streak =
+                binding.habitAdjustPositiveStreakView.text.toString().toIntCatchOverflow()
+        } else if (taskType == TaskType.TODO) {
+            thisTask.dueDate = binding.taskSchedulingControls.dueDate
+        } else if (taskType == TaskType.REWARD) {
+            thisTask.value = binding.rewardValue.value
+        }
+        if (!isChallengeTask) {
+            if (taskType == TaskType.DAILY || taskType == TaskType.TODO) {
+                thisTask.checklist = RealmList()
+                thisTask.checklist?.addAll(binding.checklistContainer.checklistItems)
+                thisTask.reminders = RealmList()
+                thisTask.reminders?.addAll(binding.remindersContainer.reminders)
+            }
+            thisTask.tags = RealmList()
+            binding.tagsWrapper.forEachIndexed { index, view ->
+                val tagView = view as? CheckBox
+                if (tagView?.isChecked == true) {
+                    thisTask.tags?.add(tags[index])
+                }
+            }
+        }
+
+        return thisTask
     }
 
     private fun saveTask() {
