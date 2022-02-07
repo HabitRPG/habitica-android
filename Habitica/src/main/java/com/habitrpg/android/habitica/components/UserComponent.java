@@ -106,6 +106,7 @@ import com.habitrpg.android.habitica.ui.viewmodels.MainActivityViewModel;
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel;
 import com.habitrpg.android.habitica.ui.viewmodels.NotificationsViewModel;
 import com.habitrpg.android.habitica.ui.viewmodels.inventory.equipment.EquipmentOverviewViewModel;
+import com.habitrpg.android.habitica.ui.views.dialogs.PetSuggestHatchDialog;
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientGemsDialog;
 import com.habitrpg.android.habitica.ui.views.shops.PurchaseDialog;
 import com.habitrpg.android.habitica.ui.views.social.ChatBarView;
@@ -355,4 +356,6 @@ public interface UserComponent {
     void inject(@NotNull GuidelinesActivity guidelinesActivity);
 
     void inject(@NotNull MainUserViewModel mainUserViewModel);
+
+    void inject(@NotNull PetSuggestHatchDialog petSuggestHatchDialog);
 }

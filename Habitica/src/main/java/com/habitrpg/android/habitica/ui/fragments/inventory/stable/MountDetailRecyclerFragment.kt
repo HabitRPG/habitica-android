@@ -89,7 +89,7 @@ class MountDetailRecyclerFragment :
             binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
             this.loadItems()
 
-            adapter?.getEquipFlowable()?.flatMap { key -> inventoryRepository.equip(null, "mount", key) }
+            adapter?.getEquipFlowable()?.flatMap { key -> inventoryRepository.equip("mount", key) }
                 ?.subscribe(
                     {
                         adapter?.currentMount = it.currentMount

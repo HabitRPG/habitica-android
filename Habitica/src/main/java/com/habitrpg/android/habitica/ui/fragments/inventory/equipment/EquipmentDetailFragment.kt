@@ -44,7 +44,7 @@ class EquipmentDetailFragment :
         savedInstanceState: Bundle?
     ): View? {
         compositeSubscription.add(
-            this.adapter.equipEvents.flatMapMaybe { key -> inventoryRepository.equipGear(null, key, isCostume ?: false).firstElement() }
+            this.adapter.equipEvents.flatMapMaybe { key -> inventoryRepository.equipGear(key, isCostume ?: false).firstElement() }
                 .subscribe({ }, RxErrorHandler.handleEmptyError())
         )
         return super.onCreateView(inflater, container, savedInstanceState)
