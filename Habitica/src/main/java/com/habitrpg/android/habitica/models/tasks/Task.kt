@@ -257,62 +257,40 @@ open class Task : RealmObject, BaseMainObject, Parcelable {
     }
 
     fun isBeingEdited(task: Task): Boolean {
-        if (type == TaskType.HABIT) {
-            when {
-                up != task.up -> return true
-                down != task.down -> return true
-                frequency != task.frequency -> return true
-                counterUp != task.counterUp -> return true
-                counterDown != task.counterDown -> return true
-                text != task.text -> return true
-                notes != task.notes -> return true
-                priority != task.priority -> return true
-                attribute != task.attribute && attribute != null -> return true
-                tags != task.tags -> return true
-                else -> return false
-            }
 
+        when {
+            text != task.text -> return true
+            notes != task.notes -> return true
+            reminders != task.reminders -> return true
+            checklist != task.checklist -> return true
+            priority != task.priority -> return true
+            attribute != task.attribute && attribute != null -> return true
+            tags != task.tags -> return true
+        }
+        if (type == TaskType.HABIT) {
+            return when {
+                up != task.up -> true
+                down != task.down -> true
+                frequency != task.frequency -> true
+                counterUp != task.counterUp -> true
+                counterDown != task.counterDown -> true
+                else -> false
+            }
         } else if (type == TaskType.DAILY) {
-            when {
-                startDate != task.startDate -> return true
-                everyX != task.everyX -> return true
-                frequency != task.frequency -> return true
-                repeat != task.repeat -> return true
-                streak != task.streak -> return true
-                checklist != task.checklist -> return true
-                reminders != task.reminders -> return true
-                text != task.text -> return true
-                notes != task.notes -> return true
-                priority != task.priority -> return true
-                attribute != task.attribute && attribute != null -> return true
-                tags != task.tags -> return true
-                else -> return false
+            return when {
+                startDate != task.startDate -> true
+                everyX != task.everyX -> true
+                frequency != task.frequency -> true
+                repeat != task.repeat -> true
+                streak != task.streak -> true
+                else -> false
             }
 
         } else if (type == TaskType.TODO) {
-            when {
-                dueDate != task.dueDate -> return true
-                checklist != task.checklist -> return true
-                reminders != task.reminders -> return true
-                text != task.text -> return true
-                notes != task.notes -> return true
-                priority != task.priority -> return true
-                attribute != task.attribute && attribute != null -> return true
-                tags != task.tags -> return true
-                else -> return false
-
-            }
-
+                return dueDate != task.dueDate
+            
         } else if (type == TaskType.REWARD) {
-            when {
-                value != task.value -> return true
-                text != task.text -> return true
-                notes != task.notes -> return true
-                priority != task.priority -> return true
-                attribute != task.attribute && attribute != null -> return true
-                tags != task.tags -> return true
-                else -> return false
-            }
+                return value != task.value
 
         } else {
             return false
