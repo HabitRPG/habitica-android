@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.activities
 
 import android.app.Activity
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.ColorStateList
@@ -13,6 +14,7 @@ import android.widget.CheckBox
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatCheckBox
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.core.view.children
 import androidx.core.view.forEachIndexed
 import androidx.core.widget.NestedScrollView
@@ -21,7 +23,6 @@ import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ChallengeRepository
 import com.habitrpg.android.habitica.data.TagRepository
 import com.habitrpg.android.habitica.data.TaskRepository
-import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.ActivityTaskFormBinding
 import com.habitrpg.android.habitica.extensions.OnChangeTextWatcher
 import com.habitrpg.android.habitica.extensions.addCancelButton
@@ -64,6 +65,7 @@ class TaskFormActivity : BaseActivity() {
     private var isChallengeTask = false
     private var usesTaskAttributeStats = false
     private var task: Task? = null
+    private var initialTaskInstance: Task? = null
     private var taskType: TaskType = TaskType.HABIT
     private var tags = listOf<Tag>()
     private var preselectedTags: ArrayList<String>? = null
@@ -74,6 +76,7 @@ class TaskFormActivity : BaseActivity() {
             setSelectedAttribute(value)
         }
 
+    private var isDiscardCancelled: Boolean = false
     private var canSave: Boolean = false
 
     private var tintColor: Int = 0
@@ -198,6 +201,7 @@ class TaskFormActivity : BaseActivity() {
                         {
                             if (!it.isValid) return@subscribe
                             task = it
+                            initialTaskInstance = it
                             // tintColor = ContextCompat.getColor(this, it.mediumTaskColor)
                             fillForm(it)
                             it.challengeID?.let { challengeID ->
@@ -224,17 +228,21 @@ class TaskFormActivity : BaseActivity() {
                 task = bundle.getParcelable(PARCELABLE_TASK)
                 task?.let { fillForm(it) }
             }
-            else -> title = getString(
-                R.string.create_task,
-                getString(
-                    when (taskType) {
-                        TaskType.DAILY -> R.string.daily
-                        TaskType.TODO -> R.string.todo
-                        TaskType.REWARD -> R.string.reward
-                        else -> R.string.habit
-                    }
+            else -> {
+                title = getString(
+                    R.string.create_task,
+                    getString(
+                        when (taskType) {
+                            TaskType.DAILY -> R.string.daily
+                            TaskType.TODO -> R.string.todo
+                            TaskType.REWARD -> R.string.reward
+                            else -> R.string.habit
+                        }
+                    )
                 )
-            )
+                initialTaskInstance = configureTask(Task())
+            }
+
         }
         configureForm()
     }
@@ -249,6 +257,29 @@ class TaskFormActivity : BaseActivity() {
         super.onStart()
         if (isCreating) {
             binding.textEditText.requestFocus()
+        }
+    }
+
+    override fun onBackPressed() {
+        val currentTaskInstance = configureTask(Task())
+        if (initialTaskInstance?.isBeingEdited(currentTaskInstance) == true) {
+            val alert = HabiticaAlertDialog(this)
+            alert.setTitle(R.string.unsaved_changes)
+            alert.setMessage(R.string.discard_changes_to_task_message)
+            alert.addButton(R.string.discard, true, true) { _, _ ->
+                analyticsManager.logEvent("discard_task", bundleOf(Pair("is_creating", isCreating)))
+                super.onBackPressed()
+            }
+            alert.addButton(R.string.cancel, false) { _, _ ->
+                isDiscardCancelled = true
+                alert.dismiss()
+            }
+            alert.setOnDismissListener(DialogInterface.OnDismissListener {
+                isDiscardCancelled = true
+            })
+            alert.show()
+        } else {
+            super.onBackPressed()
         }
     }
 
@@ -437,19 +468,10 @@ class TaskFormActivity : BaseActivity() {
         }
     }
 
-    private fun saveTask() {
-        if (isSaving) {
-            return
-        }
-        isSaving = true
-        var thisTask = task
-        if (thisTask == null) {
-            thisTask = Task()
-            thisTask.type = taskType
-            thisTask.dateCreated = Date()
-        } else {
-            if (!thisTask.isValid) return
-        }
+    private fun configureTask(thisTask: Task): Task {
+        thisTask.type = taskType
+        thisTask.dateCreated = Date()
+
         thisTask.text = binding.textEditText.text.toString()
         thisTask.notes = binding.notesEditText.text.toString()
         thisTask.priority = binding.taskDifficultyButtons.selectedDifficulty
@@ -460,8 +482,10 @@ class TaskFormActivity : BaseActivity() {
             thisTask.up = binding.habitScoringButtons.isPositive
             thisTask.down = binding.habitScoringButtons.isNegative
             thisTask.frequency = binding.habitResetStreakButtons.selectedResetOption.value
-            if (binding.habitAdjustPositiveStreakView.text?.isNotEmpty() == true) thisTask.counterUp = binding.habitAdjustPositiveStreakView.text.toString().toIntCatchOverflow()
-            if (binding.habitAdjustNegativeStreakView.text?.isNotEmpty() == true) thisTask.counterDown = binding.habitAdjustNegativeStreakView.text.toString().toIntCatchOverflow()
+            if (binding.habitAdjustPositiveStreakView.text?.isNotEmpty() == true) thisTask.counterUp =
+                binding.habitAdjustPositiveStreakView.text.toString().toIntCatchOverflow()
+            if (binding.habitAdjustNegativeStreakView.text?.isNotEmpty() == true) thisTask.counterDown =
+                binding.habitAdjustNegativeStreakView.text.toString().toIntCatchOverflow()
         } else if (taskType == TaskType.DAILY) {
             thisTask.startDate = binding.taskSchedulingControls.startDate
             thisTask.everyX = binding.taskSchedulingControls.everyX
@@ -469,15 +493,13 @@ class TaskFormActivity : BaseActivity() {
             thisTask.repeat = binding.taskSchedulingControls.weeklyRepeat
             thisTask.setDaysOfMonth(binding.taskSchedulingControls.daysOfMonth)
             thisTask.setWeeksOfMonth(binding.taskSchedulingControls.weeksOfMonth)
-            if (binding.habitAdjustPositiveStreakView.text?.isNotEmpty() == true) thisTask.streak = binding.habitAdjustPositiveStreakView.text.toString().toIntCatchOverflow()
+            if (binding.habitAdjustPositiveStreakView.text?.isNotEmpty() == true) thisTask.streak =
+                binding.habitAdjustPositiveStreakView.text.toString().toIntCatchOverflow()
         } else if (taskType == TaskType.TODO) {
             thisTask.dueDate = binding.taskSchedulingControls.dueDate
         } else if (taskType == TaskType.REWARD) {
             thisTask.value = binding.rewardValue.value
         }
-
-        val resultIntent = Intent()
-        resultIntent.putExtra(TASK_TYPE_KEY, taskType)
         if (!isChallengeTask) {
             if (taskType == TaskType.DAILY || taskType == TaskType.TODO) {
                 thisTask.checklist = RealmList()
@@ -492,10 +514,40 @@ class TaskFormActivity : BaseActivity() {
                     thisTask.tags?.add(tags[index])
                 }
             }
+        }
 
+        return thisTask
+    }
+
+    private fun saveTask() {
+        if (isSaving) {
+            return
+        }
+        isSaving = true
+        var thisTask = task
+        if (thisTask == null) {
+            thisTask = Task()
+            thisTask.type = taskType
+            thisTask.dateCreated = Date()
+        } else {
+            if (!thisTask.isValid) return
+        }
+
+        thisTask = configureTask(thisTask)
+
+        val resultIntent = Intent()
+        resultIntent.putExtra(TASK_TYPE_KEY, taskType)
+        if (!isChallengeTask) {
             if (isCreating) {
+                if (isDiscardCancelled){
+                    analyticsManager.logEvent("back_to_task", bundleOf(Pair("is_creating", isCreating)))
+                }
                 taskRepository.createTaskInBackground(thisTask)
+
             } else {
+                if (isDiscardCancelled){
+                    analyticsManager.logEvent("back_to_task", bundleOf(Pair("is_creating", isCreating)))
+                }
                 taskRepository.updateTaskInBackground(thisTask)
             }
 

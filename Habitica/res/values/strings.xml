@@ -142,6 +142,7 @@
     <string name="rewards">Rewards</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="discard">Discard</string>
     <string name="quest">Quest</string>
     <string name="avatar_body">Body</string>
     <string name="avatar_hair">Hair</string>
@@ -523,6 +524,7 @@
     <string name="no_billing_gems">Your device does not have any of the supported payment methods. Please use the habitica website if you want to purchase gems.</string>
     <string name="no_billing_subscriptions">Your device does not have any of the supported payment methods. Please use the habitica website if you want to purchase a subscription.</string>
     <string name="save">Save</string>
+    <string name="unsaved_changes">Unsaved Changes</string>
     <string name="location">Location</string>
     <string name="gem_reward">Gem prize</string>
     <string name="tasks">Tasks</string>
@@ -547,6 +549,7 @@
     <string name="start_day">Start My Day</string>
     <string name="leave_party_confirmation">Are you sure you want to leave this party?</string>
     <string name="leave_party_challenges_confirmation">Do you want to keep participating in the Challenge when leaving the Party?</string>
+    <string name="discard_changes_to_task_message">Are you sure you want to discard changes to this task</string>
     <string name="rejoin_party">You will not be able to rejoin this party unless invited.</string>
     <string name="pending">Pending</string>
     <string name="accepted">Accepted</string>
