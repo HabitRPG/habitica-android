@@ -150,7 +150,7 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsBinding>(), SwipeRefr
                                 dialog.binding.titleView.text = it.text
                                 dialog.binding.descriptionView.text = it.notes
                                 dialog.addButton(R.string.equip, true) { _, _ ->
-                                    inventoryRepository.equip(user, "equipped", it.key ?: "").subscribe({}, RxErrorHandler.handleEmptyError())
+                                    inventoryRepository.equip("equipped", it.key ?: "").subscribe({}, RxErrorHandler.handleEmptyError())
                                 }
                                 dialog.addCloseButton()
                                 dialog.enqueue()
@@ -204,7 +204,7 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsBinding>(), SwipeRefr
     private fun feedPet(food: Food) {
         val pet = feedingPet ?: return
         (activity as? BaseActivity)?.let {
-            compositeSubscription.add(feedPetUseCase.observable(
+            it.compositeSubscription.add(feedPetUseCase.observable(
                 FeedPetUseCase.RequestValues(
                     pet, food,
                     it

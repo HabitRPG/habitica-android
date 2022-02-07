@@ -32,7 +32,7 @@ constructor(private val inventoryRepository: InventoryRepository, postExecutionT
             dialog.setTitle(requestValues.context.getString(R.string.hatched_pet_title, potionName, eggName))
             dialog.setAdditionalContentView(petWrapper)
             dialog.addButton(R.string.equip, true) { _, _ ->
-                inventoryRepository.equip(null, "pet", requestValues.egg.key + "-" + requestValues.potion.key)
+                inventoryRepository.equip("pet", requestValues.egg.key + "-" + requestValues.potion.key)
                     .subscribe({}, RxErrorHandler.handleEmptyError())
             }
             dialog.addButton(R.string.share, false) { hatchingDialog, _ ->

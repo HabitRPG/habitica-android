@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.data.local
 
 import com.habitrpg.android.habitica.models.BaseMainObject
 import com.habitrpg.android.habitica.models.BaseObject
+import com.habitrpg.android.habitica.models.user.User
 import io.realm.Realm
 
 interface BaseLocalRepository {
@@ -24,4 +25,6 @@ interface BaseLocalRepository {
     fun <T : BaseObject> save(`object`: T)
     fun <T : BaseObject> saveSyncronous(`object`: T)
     fun <T : BaseMainObject> delete(obj: T)
+
+    fun getLiveUser(id: String): User?
 }

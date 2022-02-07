@@ -66,7 +66,7 @@ abstract class BaseActivity : AppCompatActivity() {
         return (getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater).inflate(getLayoutResId(), null)
     }
 
-    protected var compositeSubscription = CompositeDisposable()
+    var compositeSubscription = CompositeDisposable()
 
     private val habiticaApplication: HabiticaApplication
         get() = application as HabiticaApplication

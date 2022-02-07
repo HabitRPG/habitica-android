@@ -49,8 +49,8 @@ interface InventoryRepository : BaseRepository {
     fun sellItem(type: String, key: String): Flowable<User>
     fun sellItem(item: OwnedItem): Flowable<User>
 
-    fun equipGear(user: User?, equipment: String, asCostume: Boolean): Flowable<Items>
-    fun equip(user: User?, type: String, key: String): Flowable<Items>
+    fun equipGear(equipment: String, asCostume: Boolean): Flowable<Items>
+    fun equip(type: String, key: String): Flowable<Items>
 
     fun feedPet(pet: Pet, food: Food): Flowable<FeedResponse>
 

@@ -54,7 +54,7 @@ class AvatarEquipmentFragment :
             adapter.getSelectCustomizationEvents()
                 .flatMap { equipment ->
                     val key = (if (equipment.key?.isNotBlank() != true) activeEquipment else equipment.key) ?: ""
-                    inventoryRepository.equip(userViewModel.user.value, if (userViewModel.user.value?.preferences?.costume == true) "costume" else "equipped", key)
+                    inventoryRepository.equip(if (userViewModel.user.value?.preferences?.costume == true) "costume" else "equipped", key)
                 }
                 .subscribe({ }, RxErrorHandler.handleEmptyError())
         )

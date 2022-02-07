@@ -146,13 +146,15 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
             }
     }
 
-    override fun equipGear(user: User?, equipment: String, asCostume: Boolean): Flowable<Items> {
-        return equip(user, if (asCostume) "costume" else "equipped", equipment)
+    override fun equipGear(equipment: String, asCostume: Boolean): Flowable<Items> {
+        return equip(if (asCostume) "costume" else "equipped", equipment)
     }
 
-    override fun equip(user: User?, type: String, key: String): Flowable<Items> {
-        if (user != null) {
-            localRepository.modify(user) { liveUser ->
+    override fun equip(type: String, key: String): Flowable<Items> {
+        val liveUser = localRepository.getLiveUser(userID)
+
+        if (liveUser != null) {
+            localRepository.modify(liveUser) { liveUser ->
                 if (type == "mount") {
                     liveUser.items?.currentMount = key
                 } else if (type == "pet") {
@@ -177,10 +179,8 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
         }
         return apiClient.equipItem(type, key)
             .doOnNext { items ->
-                if (user == null) {
-                    return@doOnNext
-                }
-                localRepository.modify(user) { liveUser ->
+                if (liveUser == null) return@doOnNext
+                localRepository.modify(liveUser) { liveUser ->
                     val newEquipped = items.gear?.equipped
                     val oldEquipped = liveUser.items?.gear?.equipped
                     val newCostume = items.gear?.costume

@@ -386,12 +386,10 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
 
     override fun retrieveTeamPlan(teamID: String): Flowable<Group> {
         return Flowable.zip(
-            apiClient.getGroup(teamID), apiClient.getTeamPlanTasks(teamID),
-            { team, tasks ->
-                team.tasks = tasks
-                team
-            }
-        )
+            apiClient.getGroup(teamID), apiClient.getTeamPlanTasks(teamID)) { team, tasks ->
+            team.tasks = tasks
+            team
+        }
             .doOnNext { localRepository.save(it) }
             .doOnNext { team ->
                 val id = team.id

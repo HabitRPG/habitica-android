@@ -136,7 +136,7 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
                                 dialog.binding.titleView.text = it.text
                                 dialog.binding.descriptionView.text = it.notes
                                 dialog.addButton(R.string.equip, true) { _, _ ->
-                                    inventoryRepository.equip(userViewModel.user.value, "equipped", it.key ?: "").subscribe({}, RxErrorHandler.handleEmptyError())
+                                    inventoryRepository.equip("equipped", it.key ?: "").subscribe({}, RxErrorHandler.handleEmptyError())
                                 }
                                 dialog.addCloseButton()
                                 dialog.enqueue()

@@ -379,6 +379,13 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction, Snack
             if (user.flags?.welcomed == false) {
                 viewModel.updateUser("flags.welcomed", true)
             }
+
+            val title = binding.toolbarTitle.text
+            if (title.isBlank()) {
+                viewModel.getToolbarTitle(0, null, null) { newTitle ->
+                    this.title = newTitle
+                }
+            }
         }
     }
 

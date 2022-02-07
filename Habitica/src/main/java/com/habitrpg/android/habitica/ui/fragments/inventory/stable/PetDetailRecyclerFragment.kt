@@ -112,7 +112,7 @@ class PetDetailRecyclerFragment :
 
         compositeSubscription.add(
             adapter.getEquipFlowable()
-                .flatMap { key -> inventoryRepository.equip(null, "pet", key) }
+                .flatMap { key -> inventoryRepository.equip("pet", key) }
                 .subscribe(
                     {
                         adapter.currentPet = it.currentPet

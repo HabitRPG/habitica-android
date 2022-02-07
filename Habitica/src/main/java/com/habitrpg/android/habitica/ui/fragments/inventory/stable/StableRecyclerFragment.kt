@@ -120,7 +120,7 @@ class StableRecyclerFragment :
             adapter?.let {
                 compositeSubscription.add(
                     it.getEquipFlowable()
-                        .flatMap { key -> inventoryRepository.equip(null, if (itemType == "pets") "pet" else "mount", key) }
+                        .flatMap { key -> inventoryRepository.equip(if (itemType == "pets") "pet" else "mount", key) }
                         .subscribe({ }, RxErrorHandler.handleEmptyError())
                 )
             }
