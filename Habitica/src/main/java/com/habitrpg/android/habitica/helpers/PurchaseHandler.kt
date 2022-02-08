@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.core.content.edit
+import androidx.core.os.bundleOf
 import com.android.billingclient.api.*
 import com.android.billingclient.api.BillingClient.ConnectionState.DISCONNECTED
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -23,6 +24,7 @@ import com.habitrpg.android.habitica.models.Transaction
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import com.habitrpg.android.habitica.ui.activities.PurchaseActivity
+import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import io.reactivex.rxjava3.core.Flowable
 import kotlinx.coroutines.*
@@ -36,7 +38,7 @@ open class PurchaseHandler(
     private val context: Context,
     private val analyticsManager: AnalyticsManager,
     private val apiClient: ApiClient,
-    private val userRepository: UserRepository
+    private val userViewModel: MainUserViewModel
 ) :
     PurchasesUpdatedListener, PurchasesResponseListener {
     private val billingClient = BillingClient
@@ -171,7 +173,7 @@ open class PurchaseHandler(
     }
 
     private fun handle(purchase: Purchase) {
-        if (purchase.purchaseState != Purchase.PurchaseState.PURCHASED || purchase.isAutoRenewing) {
+        if (purchase.purchaseState != Purchase.PurchaseState.PURCHASED) {
             return
         }
         val sku = purchase.skus.firstOrNull()
@@ -203,6 +205,9 @@ open class PurchaseHandler(
                 }
             }
             PurchaseTypes.allSubscriptionTypes.contains(sku) -> {
+                if (userViewModel.user.value?.purchased?.plan?.isActive == true) {
+                    return
+                }
                 val validationRequest = SubscriptionValidationRequest()
                 validationRequest.sku = sku
                 validationRequest.transaction = Transaction()
@@ -210,7 +215,7 @@ open class PurchaseHandler(
                 validationRequest.transaction?.signature = purchase.signature
                 apiClient.validateSubscription(validationRequest).subscribe({
                     processedPurchase(purchase)
-                    FirebaseAnalytics.getInstance(context).logEvent("user_subscribed", null)
+                    analyticsManager.logEvent("user_subscribed", bundleOf(Pair("sku", sku)))
                     acknowledgePurchase(purchase)
                     displayConfirmationDialog(purchase)
                 }) { throwable: Throwable ->
@@ -228,7 +233,7 @@ open class PurchaseHandler(
     }
 
     private fun processedPurchase(purchase: Purchase) {
-        userRepository.retrieveUser(false, true).subscribeWithErrorHandler {}
+        userViewModel.userRepository.retrieveUser(false, true).subscribeWithErrorHandler {}
     }
 
     private fun buildValidationRequest(purchase: Purchase): PurchaseValidationRequest {
@@ -268,7 +273,7 @@ open class PurchaseHandler(
 
     fun cancelSubscription(): Flowable<User> {
         return apiClient.cancelSubscription()
-            .flatMap { userRepository.retrieveUser(false, true) }
+            .flatMap { userViewModel.userRepository.retrieveUser(false, true) }
     }
 
 

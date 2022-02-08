@@ -45,6 +45,7 @@ import com.habitrpg.android.habitica.data.CustomizationRepository
 import com.habitrpg.android.habitica.data.implementation.CustomizationRepositoryImpl
 import com.habitrpg.android.habitica.helpers.PurchaseHandler
 import com.habitrpg.android.habitica.helpers.UserScope
+import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import dagger.Module
 import dagger.Provides
 import io.realm.Realm
@@ -206,7 +207,7 @@ class UserRepositoryModule {
 
     @Provides
     @UserScope
-    fun providesPurchaseHandler(context: Context, analyticsManager: AnalyticsManager, apiClient: ApiClient, userRepository: UserRepository): PurchaseHandler {
-        return PurchaseHandler(context, analyticsManager, apiClient, userRepository)
+    fun providesPurchaseHandler(context: Context, analyticsManager: AnalyticsManager, apiClient: ApiClient, userViewModel: MainUserViewModel): PurchaseHandler {
+        return PurchaseHandler(context, analyticsManager, apiClient, userViewModel)
     }
 }
