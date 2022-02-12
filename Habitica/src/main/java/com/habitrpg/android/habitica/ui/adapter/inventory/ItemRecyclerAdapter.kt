@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ItemItemBinding
 import com.habitrpg.android.habitica.extensions.layoutInflater
+import com.habitrpg.android.habitica.models.Skill
 import com.habitrpg.android.habitica.models.inventory.*
 import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.OwnedPet
@@ -110,10 +111,14 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<OwnedI
             val imageName: String?
             if (item is QuestContent) {
                 imageName = "inventory_quest_scroll_" + ownedItem.key
-            } else if (item is SpecialItem) {
-                val sdf = SimpleDateFormat("MM", Locale.getDefault())
-                val month = sdf.format(Date())
-                imageName = "inventory_present_$month"
+            } else if (ownedItem.itemType == "special") {
+                if (item is SpecialItem){
+                    val sdf = SimpleDateFormat("MM", Locale.getDefault())
+                    val month = sdf.format(Date())
+                    imageName = "inventory_present_$month"
+                }else{
+                    imageName = "shop_" + ownedItem.key
+                }
             } else {
                 val type = when (ownedItem.itemType) {
                     "eggs" -> "Egg"
@@ -202,5 +207,18 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<OwnedI
                 fragment?.dismiss()
             }
         }
+    }
+
+    fun setSpecialItems(skillItems: List<Skill>, ownedItems: MutableList<OwnedItem>){
+        val transformationItems: MutableList<OwnedItem> = mutableListOf()
+        for (item in skillItems){
+            val ownedTransformationItem = OwnedItem()
+            ownedTransformationItem.key = item.key
+            ownedTransformationItem.itemType = item.habitClass
+            ownedTransformationItem.numberOwned = 5 //Test
+            transformationItems.add(ownedTransformationItem)
+        }
+        data = ownedItems + transformationItems
+        notifyDataSetChanged()
     }
 }

@@ -26,6 +26,7 @@ interface UserLocalRepository : BaseLocalRepository {
     fun getSkills(user: User): Flowable<out List<Skill>>
 
     fun getSpecialItems(user: User): Flowable<out List<Skill>>
+    fun getTransformationItems(): Flowable<out List<Skill>>
     fun getAchievements(): Flowable<out List<Achievement>>
     fun getQuestAchievements(userID: String): Flowable<out List<QuestAchievement>>
     fun getUserQuestStatus(userID: String): Flowable<UserQuestStatus>

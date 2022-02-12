@@ -171,4 +171,15 @@ class RealmUserLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
                 .filter { it.isLoaded }
         )
     }
+
+    override fun getTransformationItems(): Flowable<out List<Skill>> {
+        val habitClass = "special"
+        return RxJavaBridge.toV3Flowable(
+            realm.where(Skill::class.java)
+                .equalTo("habitClass", habitClass)
+                .findAll()
+                .asFlowable()
+                .filter { it.isLoaded }
+        )
+    }
 }

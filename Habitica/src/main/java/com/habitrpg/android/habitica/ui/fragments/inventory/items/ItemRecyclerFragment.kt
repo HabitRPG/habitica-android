@@ -16,8 +16,8 @@ import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.interactors.HatchPetUseCase
-import com.habitrpg.android.habitica.interactors.NotifyUserUseCase
 import com.habitrpg.android.habitica.models.inventory.*
+import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.OwnedPet
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.BaseActivity
@@ -43,6 +43,7 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
 
     var adapter: ItemRecyclerAdapter? = null
     var itemType: String? = null
+    var transformationItems: MutableList<OwnedItem> = mutableListOf()
     var itemTypeText: String? = null
     var user: User? = null
     internal var layoutManager: androidx.recyclerview.widget.LinearLayoutManager? = null
@@ -208,9 +209,16 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
                     .map { it.distinctBy { it.key } }
                     .doOnNext { items ->
                         adapter?.data = items
+                        if (itemType == "special") {
+                            transformationItems = items.toMutableList()
+                            userRepository.getTransformationItems()
+                                .subscribe { skillItems -> adapter?.setSpecialItems(skillItems, transformationItems) }
+                        }
                     }
                     .map { items -> items.mapNotNull { it.key } }
-                    .flatMap { inventoryRepository.getItems(itemClass, it.toTypedArray()) }
+                    .flatMap {
+                        inventoryRepository.getItems(itemClass, it.toTypedArray())
+                    }
                     .map {
                         val itemMap = mutableMapOf<String, Item>()
                         for (item in it) {
