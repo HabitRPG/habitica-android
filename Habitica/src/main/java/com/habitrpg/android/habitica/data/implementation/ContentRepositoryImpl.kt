@@ -24,7 +24,6 @@ class ContentRepositoryImpl<T : ContentLocalRepository>(localRepository: T, apiC
         return if (forced || now - this.lastContentSync > 300000) {
             lastContentSync = now
             apiClient.content.doOnNext {
-                it.special = RealmList()
                 it.special.add(mysteryItem)
                 localRepository.saveContent(it)
             }

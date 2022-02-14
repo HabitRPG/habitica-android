@@ -13,6 +13,7 @@ import com.habitrpg.android.habitica.models.Skill
 import com.habitrpg.android.habitica.models.inventory.*
 import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.OwnedPet
+import com.habitrpg.android.habitica.models.user.SpecialItems
 import com.habitrpg.android.habitica.ui.adapter.BaseRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.menu.BottomSheetMenu
@@ -38,6 +39,11 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<OwnedI
             field = value
             notifyDataSetChanged()
         }
+    var specialItems: SpecialItems? = null
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
 
     private val sellItemEvents = PublishSubject.create<OwnedItem>()
     private val questInvitationEvents = PublishSubject.create<QuestContent>()
@@ -45,6 +51,8 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<OwnedI
     private val startHatchingSubject = PublishSubject.create<Item>()
     private val hatchPetSubject = PublishSubject.create<Pair<HatchingPotion, Egg>>()
     private val feedPetSubject = PublishSubject.create<Food>()
+    private val useSpecialSubject = PublishSubject.create<SpecialItem>()
+
 
     fun getSellItemFlowable(): Flowable<OwnedItem> {
         return sellItemEvents.toFlowable(BackpressureStrategy.DROP)
@@ -60,6 +68,7 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<OwnedI
     val startHatchingEvents: Flowable<Item> = startHatchingSubject.toFlowable(BackpressureStrategy.DROP)
     val hatchPetEvents: Flowable<Pair<HatchingPotion, Egg>> = hatchPetSubject.toFlowable(BackpressureStrategy.DROP)
     val feedPetEvents: Flowable<Food> = feedPetSubject.toFlowable(BackpressureStrategy.DROP)
+    val useSpecialEvents: Flowable<SpecialItem> = useSpecialSubject.toFlowable(BackpressureStrategy.DROP)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         return ItemViewHolder(ItemItemBinding.inflate(context.layoutInflater, parent, false))
@@ -111,14 +120,15 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<OwnedI
             val imageName: String?
             if (item is QuestContent) {
                 imageName = "inventory_quest_scroll_" + ownedItem.key
-            } else if (ownedItem.itemType == "special") {
-                if (item is SpecialItem){
+            } else if (item is SpecialItem) {
+                if (item.key == "inventory_present") {
                     val sdf = SimpleDateFormat("MM", Locale.getDefault())
                     val month = sdf.format(Date())
                     imageName = "inventory_present_$month"
-                }else{
+                } else {
                     imageName = "shop_" + ownedItem.key
                 }
+
             } else {
                 val type = when (ownedItem.itemType) {
                     "eggs" -> "Egg"
@@ -161,7 +171,10 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<OwnedI
                     val specialItem = item as SpecialItem
                     if (specialItem.isMysteryItem && ownedItem?.numberOwned ?: 0 > 0) {
                         menu.addMenuItem(BottomSheetMenuItem(resources.getString(R.string.open)))
+                    } else if (ownedItem?.numberOwned ?: 0 > 0){
+                        menu.addMenuItem(BottomSheetMenuItem(resources.getString(R.string.use_item)))
                     }
+
                 }
                 menu.setSelectionRunnable { index ->
                     item?.let { selectedItem ->
@@ -181,7 +194,7 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<OwnedI
                                     questInvitationEvents.onNext(selectedItem)
                                 }
                             }
-                            is SpecialItem -> openMysteryItemEvents.onNext(selectedItem)
+                            is SpecialItem -> useSpecialSubject.onNext(selectedItem)
                         }
                     }
                 }
@@ -209,16 +222,16 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<OwnedI
         }
     }
 
-    fun setSpecialItems(skillItems: List<Skill>, ownedItems: MutableList<OwnedItem>){
+    fun setSpecialItems(skillItems: List<Item>){
         val transformationItems: MutableList<OwnedItem> = mutableListOf()
         for (item in skillItems){
             val ownedTransformationItem = OwnedItem()
             ownedTransformationItem.key = item.key
-            ownedTransformationItem.itemType = item.habitClass
-            ownedTransformationItem.numberOwned = 5 //Test
+            ownedTransformationItem.itemType = "special"
+            ownedTransformationItem.numberOwned = specialItems?.getSpecialItemCount(item.key) ?: 0
             transformationItems.add(ownedTransformationItem)
         }
-        data = ownedItems + transformationItems
+        data = transformationItems
         notifyDataSetChanged()
     }
 }
