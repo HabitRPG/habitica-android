@@ -35,7 +35,6 @@ import com.habitrpg.android.habitica.ui.helpers.loadImage
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.dialogs.OpenedMysteryitemDialog
 import io.reactivex.rxjava3.core.Flowable
-import java.util.ArrayList
 import javax.inject.Inject
 
 class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshLayout.OnRefreshListener {

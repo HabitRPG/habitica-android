@@ -95,7 +95,7 @@ class ContentDeserializer : JsonDeserializer<ContentResult> {
             }
         }
 
-        if (obj.has("special")) {//ToDo add special
+        if (obj.has("special")) {
             for ((classname, value) in obj.getAsJsonObject("special").entrySet()) {
                 val skillItem = value.asJsonObject
                 val special = SpecialItem()

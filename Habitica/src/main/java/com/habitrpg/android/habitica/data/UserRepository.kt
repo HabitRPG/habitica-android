@@ -35,7 +35,6 @@ interface UserRepository : BaseRepository {
     fun sleep(user: User): Flowable<User>
 
     fun getSkills(user: User): Flowable<out List<Skill>>
-    fun getTransformationItems(): Flowable<out List<Skill>>
 
     fun getSpecialItems(user: User): Flowable<out List<Skill>>
 

@@ -124,9 +124,6 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
     override fun getSpecialItems(user: User): Flowable<out List<Skill>> =
         localRepository.getSpecialItems(user)
 
-    override fun getTransformationItems(): Flowable<out List<Skill>> =
-        localRepository.getTransformationItems()
-
     override fun useSkill(key: String, target: String?, taskId: String): Flowable<SkillResponse> {
         return zipWithLiveUser(apiClient.useSkill(key, target ?: "", taskId)) { response, user ->
             response.hpDiff = response.user?.stats?.hp ?: 0 - (user.stats?.hp ?: 0.0)
