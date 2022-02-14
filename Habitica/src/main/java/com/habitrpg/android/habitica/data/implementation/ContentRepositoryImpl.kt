@@ -9,7 +9,6 @@ import com.habitrpg.android.habitica.models.ContentResult
 import com.habitrpg.android.habitica.models.WorldState
 import com.habitrpg.android.habitica.models.inventory.SpecialItem
 import io.reactivex.rxjava3.core.Flowable
-import io.realm.RealmList
 import java.util.*
 
 class ContentRepositoryImpl<T : ContentLocalRepository>(localRepository: T, apiClient: ApiClient, context: Context) : BaseRepositoryImpl<T>(localRepository, apiClient), ContentRepository {

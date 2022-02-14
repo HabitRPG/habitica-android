@@ -99,7 +99,6 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
                 adapter = ItemRecyclerAdapter(context)
             }
             binding?.recyclerView?.adapter = adapter
-            adapter?.specialItems = this.user?.items?.special
             adapter?.useSpecialEvents?.subscribeWithErrorHandler { onSpecialItemSelected(it) }?.let { compositeSubscription.add(it) }
             adapter?.let { adapter ->
                 compositeSubscription.add(
@@ -213,46 +212,30 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
             else -> Egg::class.java
         }
         itemType?.let { type ->
-            if (type != "special"){
-                compositeSubscription.add(
-                    inventoryRepository.getOwnedItems(type)
-                        .map { it.distinctBy { it.key } }
-                        .doOnNext { items ->
-                            adapter?.data = items
+            compositeSubscription.add(
+                inventoryRepository.getOwnedItems(type)
+                    .map { it.distinctBy { it.key } }
+                    .doOnNext { items ->
+                        adapter?.data = items
+                    }
+                    .map { items -> items.mapNotNull { it.key } }
+                    .flatMap {
+                        inventoryRepository.getItems(itemClass, it.toTypedArray())
+                    }
+                    .map {
+                        val itemMap = mutableMapOf<String, Item>()
+                        for (item in it) {
+                            itemMap[item.key] = item
                         }
-                        .map { items -> items.mapNotNull { it.key } }
-                        .flatMap {
-                            inventoryRepository.getItems(itemClass, it.toTypedArray())
-                        }
-                        .map {
-                            val itemMap = mutableMapOf<String, Item>()
-                            for (item in it) {
-                                itemMap[item.key] = item
-                            }
-                            itemMap
-                        }
-                        .subscribe(
-                            { items ->
-                                adapter?.items = items
-                            },
-                            RxErrorHandler.handleEmptyError()
-                        )
-                )
-            } else {
-                compositeSubscription.add(
-                    inventoryRepository.getItems(SpecialItem::class.java, user?.items?.special?.getOwnedItemsToTypedArray() ?: arrayOf())
-                        .map { it.distinctBy { it.key } }
-                        .doOnNext { items ->
-                            adapter?.setSpecialItems(items)
-                            val itemMap = mutableMapOf<String, Item>()
-                            for (item in items) {
-                                itemMap[item.key] = item
-                            }
-                            adapter?.items = itemMap
-                        }
-                        .subscribe()
-                )
-            }
+                        itemMap
+                    }
+                    .subscribe(
+                        { items ->
+                            adapter?.items = items
+                        },
+                        RxErrorHandler.handleEmptyError()
+                    )
+            )
 
         }
 
@@ -313,24 +296,8 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
             )
         }
 
-        compositeSubscription.add(
-            userRepository.retrieveUser(false)
-                .flatMap {
-                    adapter?.specialItems = it.items?.special
-                    inventoryRepository.getItems(SpecialItem::class.java, user?.items?.special?.getOwnedItemsToTypedArray() ?: arrayOf())
-                        .map { it.distinctBy { it.key } }
-                        .doOnNext { items ->
-                            adapter?.setSpecialItems(items)
-                            val itemMap = mutableMapOf<String, Item>()
-                            for (item in items) {
-                                itemMap[item.key] = item
-                            }
-                            adapter?.items = itemMap
-                        }
+        loadItems()
 
-                }
-                .subscribe({}, RxErrorHandler.handleEmptyError())
-        )
     }
 
     companion object {

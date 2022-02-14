@@ -147,16 +147,16 @@ class RealmUserLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
         val specialItems = user.items?.special
         val ownedItems = ArrayList<String>()
         if (specialItems != null) {
-            if (specialItems.snowball > 0) {
+            if (specialItems.firstOrNull() { it.key == "snowball" }?.numberOwned ?: 0 > 0) {
                 ownedItems.add("snowball")
             }
-            if (specialItems.shinySeed > 0) {
+            if (specialItems.firstOrNull() { it.key == "shinySeed" }?.numberOwned ?: 0 > 0) {
                 ownedItems.add("shinySeed")
             }
-            if (specialItems.seafoam > 0) {
+            if (specialItems.firstOrNull() { it.key == "seafoam" }?.numberOwned ?: 0 > 0) {
                 ownedItems.add("seafoam")
             }
-            if (specialItems.spookySparkles > 0) {
+            if (specialItems.firstOrNull() { it.key == "spookySparkles" }?.numberOwned ?: 0 > 0) {
                 ownedItems.add("spookySparkles")
             }
         }

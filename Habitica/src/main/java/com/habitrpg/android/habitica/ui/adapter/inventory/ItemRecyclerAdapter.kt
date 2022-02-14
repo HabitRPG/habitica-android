@@ -9,11 +9,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ItemItemBinding
 import com.habitrpg.android.habitica.extensions.layoutInflater
-import com.habitrpg.android.habitica.models.Skill
 import com.habitrpg.android.habitica.models.inventory.*
 import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.OwnedPet
-import com.habitrpg.android.habitica.models.user.SpecialItems
 import com.habitrpg.android.habitica.ui.adapter.BaseRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.menu.BottomSheetMenu
@@ -35,11 +33,6 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<OwnedI
     private var existingPets: List<Pet>? = null
     private var ownedPets: Map<String, OwnedPet>? = null
     var items: Map<String, Item>? = null
-        set(value) {
-            field = value
-            notifyDataSetChanged()
-        }
-    var specialItems: SpecialItems? = null
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -225,18 +218,5 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<OwnedI
                 fragment?.dismiss()
             }
         }
-    }
-
-    fun setSpecialItems(skillItems: List<Item>){
-        val transformationItems: MutableList<OwnedItem> = mutableListOf()
-        for (item in skillItems){
-            val ownedTransformationItem = OwnedItem()
-            ownedTransformationItem.key = item.key
-            ownedTransformationItem.itemType = "special"
-            ownedTransformationItem.numberOwned = specialItems?.getSpecialItemCount(item.key) ?: 0
-            transformationItems.add(ownedTransformationItem)
-        }
-        data = transformationItems
-        notifyDataSetChanged()
     }
 }

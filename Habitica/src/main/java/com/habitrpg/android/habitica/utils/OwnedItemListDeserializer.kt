@@ -13,10 +13,12 @@ class OwnedItemListDeserializer : JsonDeserializer<List<OwnedItem>> {
         val entrySet = json?.asJsonObject?.entrySet()
         if (entrySet != null) {
             for (entry in entrySet) {
-                val item = OwnedItem()
-                item.key = entry.key
-                item.numberOwned = entry.value.asInt
-                ownedItems.add(item)
+                if (entry.value.isJsonPrimitive){
+                    val item = OwnedItem()
+                    item.key = entry.key
+                    item.numberOwned = entry.value.asInt
+                    ownedItems.add(item)
+                }
             }
         }
         return ownedItems

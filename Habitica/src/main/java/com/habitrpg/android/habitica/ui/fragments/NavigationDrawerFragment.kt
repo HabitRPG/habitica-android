@@ -342,7 +342,7 @@ class NavigationDrawerFragment : DialogFragment() {
         val specialItems = user.items?.special
         var hasSpecialItems = false
         if (specialItems != null) {
-            hasSpecialItems = specialItems.hasSpecialItems
+            hasSpecialItems = true
         }
         val item = getItemWithIdentifier(SIDEBAR_SKILLS)
         if (item != null) {
