@@ -194,7 +194,12 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<OwnedI
                                     questInvitationEvents.onNext(selectedItem)
                                 }
                             }
-                            is SpecialItem -> useSpecialSubject.onNext(selectedItem)
+                            is SpecialItem ->
+                                if (item?.key != "inventory_present") {
+                                    useSpecialSubject.onNext(selectedItem)
+                                } else {
+                                    openMysteryItemEvents.onNext(selectedItem)
+                                }
                         }
                     }
                 }

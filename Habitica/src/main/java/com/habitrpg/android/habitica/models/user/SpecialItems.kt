@@ -4,6 +4,7 @@ import com.habitrpg.android.habitica.models.BaseObject
 import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.RealmClass
+import java.util.ArrayList
 
 @RealmClass(embedded = true)
 open class SpecialItems : RealmObject(), BaseObject {
@@ -30,6 +31,28 @@ open class SpecialItems : RealmObject(), BaseObject {
             "inventory_present" -> count = inventoryPresent.numberOwned
         }
         return count
+    }
 
+    fun getOwnedItemsToTypedArray(): Array<String> {
+        val ownedSpecialItems = ArrayList<String>()
+        ownedSpecialItems.add("inventory_present")
+        if (snowball > 0) {
+            ownedSpecialItems.add("snowball")
+        }
+        if (shinySeed > 0) {
+            ownedSpecialItems.add("shinySeed")
+        }
+        if (seafoam > 0) {
+            ownedSpecialItems.add("seafoam")
+        }
+        if (spookySparkles > 0) {
+            ownedSpecialItems.add("spookySparkles")
+        }
+
+        if (ownedSpecialItems.size == 0) {
+            ownedSpecialItems.add("")
+        }
+
+        return ownedSpecialItems.toTypedArray()
     }
 }

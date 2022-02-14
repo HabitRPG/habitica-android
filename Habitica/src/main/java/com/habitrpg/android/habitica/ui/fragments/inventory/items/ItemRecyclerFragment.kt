@@ -2,14 +2,11 @@ package com.habitrpg.android.habitica.ui.fragments.inventory.items
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.ContextCompat
-import androidx.lifecycle.lifecycleScope
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
@@ -22,7 +19,6 @@ import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.interactors.HatchPetUseCase
-import com.habitrpg.android.habitica.models.Skill
 import com.habitrpg.android.habitica.models.inventory.*
 import com.habitrpg.android.habitica.models.responses.SkillResponse
 import com.habitrpg.android.habitica.models.user.OwnedItem
@@ -31,18 +27,14 @@ import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.BaseActivity
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.activities.SkillMemberActivity
-import com.habitrpg.android.habitica.ui.activities.SkillTasksActivity
 import com.habitrpg.android.habitica.ui.adapter.inventory.ItemRecyclerAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.helpers.EmptyItem
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.helpers.loadImage
-import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.dialogs.OpenedMysteryitemDialog
 import io.reactivex.rxjava3.core.Flowable
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import java.util.ArrayList
 import javax.inject.Inject
 
@@ -228,11 +220,6 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
                         .map { it.distinctBy { it.key } }
                         .doOnNext { items ->
                             adapter?.data = items
-//                        if (itemType == "special") {
-//                            transformationItems = items.toMutableList()
-//                            userRepository.getTransformationItems() //Get from RealmInventoryLocalRepository
-//                                .subscribe { skillItems -> adapter?.setSpecialItems(skillItems, transformationItems) }
-//                        }
                         }
                         .map { items -> items.mapNotNull { it.key } }
                         .flatMap {
@@ -253,28 +240,8 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
                         )
                 )
             } else {
-                val specialItems = user?.items?.special
-                val ownedItems = ArrayList<String>()
-                if (specialItems != null) {
-                    ownedItems.add("inventory_present")
-                    if (specialItems.snowball > 0) {
-                        ownedItems.add("snowball")
-                    }
-                    if (specialItems.shinySeed > 0) {
-                        ownedItems.add("shinySeed")
-                    }
-                    if (specialItems.seafoam > 0) {
-                        ownedItems.add("seafoam")
-                    }
-                    if (specialItems.spookySparkles > 0) {
-                        ownedItems.add("spookySparkles")
-                    }
-                }
-                if (ownedItems.size == 0) {
-                    ownedItems.add("")
-                }
                 compositeSubscription.add(
-                    inventoryRepository.getItems(SpecialItem::class.java, ownedItems.toTypedArray())
+                    inventoryRepository.getItems(SpecialItem::class.java, user?.items?.special?.getOwnedItemsToTypedArray() ?: arrayOf())
                         .map { it.distinctBy { it.key } }
                         .doOnNext { items ->
                             adapter?.setSpecialItems(items)
@@ -307,13 +274,13 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
     }
 
     private fun onSpecialItemSelected(specialItem: SpecialItem) {
-         selectedSpecialItem = specialItem
+        selectedSpecialItem = specialItem
         val intent = Intent(activity, SkillMemberActivity::class.java)
         memberSelectionResult.launch(intent)
-
     }
 
-    private val memberSelectionResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+    private val memberSelectionResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == Activity.RESULT_OK) {
                 useSpecialItem(selectedSpecialItem, it.data?.getStringExtra("member_id"))
             }
@@ -324,17 +291,18 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
             return
         }
 
-        val observable: Flowable<SkillResponse> = userRepository.useSkill(specialItem.key, specialItem.target, memberID)
+        val observable: Flowable<SkillResponse> =
+            userRepository.useSkill(specialItem.key, specialItem.target, memberID)
 
         compositeSubscription.add(
             observable.subscribe(
-                { skillResponse -> this.displaySkillResult(specialItem) },
+                { skillResponse -> this.displaySpecialItemResult(specialItem) },
                 RxErrorHandler.handleEmptyError()
             )
         )
     }
 
-    private fun displaySkillResult(specialItem: SpecialItem?) {
+    private fun displaySpecialItemResult(specialItem: SpecialItem?) {
         if (!isAdded) return
 
         val activity = activity as? MainActivity
@@ -347,7 +315,22 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
         }
 
         compositeSubscription.add(
-            userRepository.retrieveUser(false).subscribe({ }, RxErrorHandler.handleEmptyError())
+            userRepository.retrieveUser(false)
+                .flatMap {
+                    adapter?.specialItems = it.items?.special
+                    inventoryRepository.getItems(SpecialItem::class.java, user?.items?.special?.getOwnedItemsToTypedArray() ?: arrayOf())
+                        .map { it.distinctBy { it.key } }
+                        .doOnNext { items ->
+                            adapter?.setSpecialItems(items)
+                            val itemMap = mutableMapOf<String, Item>()
+                            for (item in items) {
+                                itemMap[item.key] = item
+                            }
+                            adapter?.items = itemMap
+                        }
+
+                }
+                .subscribe({}, RxErrorHandler.handleEmptyError())
         )
     }
 
