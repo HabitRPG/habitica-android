@@ -155,13 +155,9 @@ class AvatarCustomizationFragment :
     fun updateUser(user: User?) {
         if (user == null) return
         this.updateActiveCustomization(user)
-        if (adapter.customizationList.size != 0) {
-            val ownedCustomizations = ArrayList<String>()
-            user.purchased?.customizations?.filter { it.type == this.type && it.purchased }?.mapTo(ownedCustomizations) { it.key + "_" + it.type + "_" + it.category }
-            adapter.updateOwnership(ownedCustomizations)
-        } else {
-            this.loadCustomizations()
-        }
+        val ownedCustomizations = ArrayList<String>()
+        user.purchased?.customizations?.filter { it.type == this.type && it.purchased }?.mapTo(ownedCustomizations) { it.key + "_" + it.type + "_" + it.category }
+        adapter.updateOwnership(ownedCustomizations)
         this.adapter.userSize = user.preferences?.size
         this.adapter.hairColor = user.preferences?.hair?.color
         this.adapter.gemBalance = user.gemCount
