@@ -241,7 +241,7 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsBinding>(), SwipeRefr
     private fun hatchPet(potion: HatchingPotion, egg: Egg) {
         dismiss()
         (activity as? BaseActivity)?.let {
-            compositeSubscription.add(hatchPetUseCase.observable(
+            it.compositeSubscription.add(hatchPetUseCase.observable(
                 HatchPetUseCase.RequestValues(
                     potion, egg,
                     it
