@@ -146,22 +146,10 @@ class RealmUserLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
     override fun getSpecialItems(user: User): Flowable<out List<Skill>> {
         val specialItems = user.items?.special
         val ownedItems = ArrayList<String>()
-        if (specialItems != null) {
-            if (specialItems.firstOrNull() { it.key == "snowball" }?.numberOwned ?: 0 > 0) {
-                ownedItems.add("snowball")
+        for (key in listOf("snowball", "shinySeed", "seafoam", "spookySparkles")) {
+            if (specialItems?.firstOrNull() { it.key == key }?.numberOwned ?: 0 > 0) {
+                ownedItems.add(key)
             }
-            if (specialItems.firstOrNull() { it.key == "shinySeed" }?.numberOwned ?: 0 > 0) {
-                ownedItems.add("shinySeed")
-            }
-            if (specialItems.firstOrNull() { it.key == "seafoam" }?.numberOwned ?: 0 > 0) {
-                ownedItems.add("seafoam")
-            }
-            if (specialItems.firstOrNull() { it.key == "spookySparkles" }?.numberOwned ?: 0 > 0) {
-                ownedItems.add("spookySparkles")
-            }
-        }
-        if (ownedItems.size == 0) {
-            ownedItems.add("")
         }
         return RxJavaBridge.toV3Flowable(
             realm.where(Skill::class.java)

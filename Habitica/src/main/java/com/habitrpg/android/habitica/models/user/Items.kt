@@ -41,6 +41,7 @@ open class Items : RealmObject, BaseObject {
             field = value
             field?.forEach { it.itemType = "special" }
         }
+
     var pets: RealmList<OwnedPet>? = null
     var mounts: RealmList<OwnedMount>? = null
     var currentMount: String? = null
@@ -59,4 +60,14 @@ open class Items : RealmObject, BaseObject {
     }
 
     constructor()
+
+    val hasTransformationItems: Boolean
+        get() {
+            return special?.any { transformationItem ->
+                        transformationItem.key == ("seafoam") && transformationItem.numberOwned > 0||
+                        transformationItem.key == ("shinySeed") && transformationItem.numberOwned > 0||
+                        transformationItem.key == ("snowball") && transformationItem.numberOwned > 0||
+                        transformationItem.key == ("spookySparkles") && transformationItem.numberOwned > 0
+            } ?: false
+        }
 }

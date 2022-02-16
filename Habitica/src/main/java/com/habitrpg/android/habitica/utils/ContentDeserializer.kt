@@ -96,15 +96,8 @@ class ContentDeserializer : JsonDeserializer<ContentResult> {
         }
 
         if (obj.has("special")) {
-            for ((classname, value) in obj.getAsJsonObject("special").entrySet()) {
-                val skillItem = value.asJsonObject
-                val special = SpecialItem()
-                special.key = skillItem.get("key").asString
-                special.text = skillItem.get("text").asString
-                special.notes = skillItem.get("notes").asString
-                special.target = skillItem.get("target").asString
-                special.value = skillItem.get("value").asInt
-                result.special.add(special)
+            for (entry in obj.get("special").asJsonObject.entrySet()) {
+                result.special.add(context.deserialize(entry.value, SpecialItem::class.java))
             }
         }
 
