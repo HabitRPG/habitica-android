@@ -273,7 +273,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction, Snack
         navigationController.addOnDestinationChangedListener { _, destination, arguments -> updateToolbarTitle(destination, arguments) }
 
         if (launchScreen == "/party") {
-            if (viewModel.isUserInParty) {
+            if (viewModel.userViewModel.isUserInParty) {
                 MainNavigationController.navigate(R.id.partyFragment)
             }
         }
@@ -430,7 +430,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction, Snack
     }
 
     private fun displayDeathDialogIfNeeded() {
-        if (!viewModel.isUserFainted) {
+        if (!viewModel.userViewModel.isUserFainted) {
             return
         }
 

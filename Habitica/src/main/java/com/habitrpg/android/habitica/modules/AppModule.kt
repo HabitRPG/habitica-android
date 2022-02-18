@@ -34,7 +34,7 @@ class AppModule(private val application: Application) {
 
     @Provides
     @Singleton
-    fun provideSharedPreferences(context: Context?): SharedPreferences {
+    fun provideSharedPreferences(context: Context): SharedPreferences {
         return PreferenceManager.getDefaultSharedPreferences(context)
     }
 

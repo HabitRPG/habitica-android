@@ -96,15 +96,11 @@ class PartyFragment : BaseMainFragment<FragmentViewpagerBinding>() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         val group = viewModel.getGroupData().value
-        if (group != null && this.user != null) {
-            if (group.leaderID == this.user?.id) {
-                inflater.inflate(R.menu.menu_party_admin, menu)
-                if (group.memberCount > 1) {
-                    menu.findItem(R.id.menu_guild_leave).isVisible = false
-                }
-            } else {
-                inflater.inflate(R.menu.menu_party, menu)
-            }
+        if (viewModel.isLeader) {
+            inflater.inflate(R.menu.menu_party_admin, menu)
+            menu.findItem(R.id.menu_guild_leave).isVisible = group?.memberCount != 1
+        } else {
+            inflater.inflate(R.menu.menu_party, menu)
         }
     }
 
@@ -159,7 +155,7 @@ class PartyFragment : BaseMainFragment<FragmentViewpagerBinding>() {
     private val sendInvitesResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if (it.resultCode == Activity.RESULT_OK) {
             val inviteData = HashMap<String, Any>()
-            inviteData["inviter"] = user?.profile?.name ?: ""
+            inviteData["inviter"] = viewModel.user.value?.profile?.name ?: ""
             val emails = it.data?.getStringArrayExtra(GroupInviteActivity.EMAILS_KEY)
             if (emails != null && emails.isNotEmpty()) {
                 val invites = ArrayList<HashMap<String, String>>()

@@ -47,5 +47,4 @@ interface SocialLocalRepository : BaseLocalRepository {
     fun saveGroupMemberships(userID: String?, memberships: List<GroupMembership>)
     fun saveInboxMessages(userID: String, recipientID: String, messages: List<ChatMessage>, page: Int)
     fun saveInboxConversations(userID: String, conversations: List<InboxConversation>)
-    fun getChatMessage(messageID: String): Flowable<ChatMessage>
 }

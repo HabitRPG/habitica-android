@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toDrawable
 import androidx.core.os.bundleOf
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
@@ -319,6 +320,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
     }
 
     private fun buyItem(quantity: Int) {
+        val application = ownerActivity?.application as? HabiticaBaseApplication
         FirebaseAnalytics.getInstance(context).logEvent(
             "item_purchased",
             bundleOf(
@@ -373,7 +375,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
                     "hourglasses" -> ContextCompat.getColor(context, R.color.text_brand)
                     else -> 0
                 }
-                (ownerActivity as? SnackbarActivity)?.showSnackbar(
+                ((application?.currentActivity?.get() ?: getActivity() ?: ownerActivity) as? SnackbarActivity)?.showSnackbar(
                     content = text,
                     rightIcon = priceLabel.compoundDrawables[0],
                     rightTextColor = rightTextColor,

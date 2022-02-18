@@ -56,8 +56,7 @@ class StableFragment : BaseMainFragment<FragmentViewpagerBinding>() {
                         fragment.itemType = "mounts"
                     }
                 }
-                fragment.user = this@StableFragment.user
-                fragment.itemTypeText = getPageTitle(position).toString()
+                fragment.itemTypeText = getPageTitle(position)
 
                 return fragment
             }

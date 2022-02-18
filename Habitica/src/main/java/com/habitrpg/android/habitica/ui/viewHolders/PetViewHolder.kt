@@ -24,7 +24,7 @@ class PetViewHolder(parent: ViewGroup, private val equipEvents: PublishSubject<S
     private var potionCount: Int = 0
     private var ownsSaddles = false
     private var animal: Pet? = null
-    private var user: User? = null
+    private var currentPet: String? = null
 
     private var binding: PetDetailItemBinding = PetDetailItemBinding.bind(itemView)
 
@@ -49,7 +49,7 @@ class PetViewHolder(parent: ViewGroup, private val equipEvents: PublishSubject<S
         hasUnlockedEgg: Boolean,
         hasUnlockedPotion: Boolean,
         hasMount: Boolean,
-        user: User?
+        currentPet: String?
     ) {
         this.animal = item
         isOwned = trained > 0
@@ -61,7 +61,7 @@ class PetViewHolder(parent: ViewGroup, private val equipEvents: PublishSubject<S
         this.hasUnlockedEgg = hasUnlockedEgg
         this.hasUnlockedPotion = hasUnlockedPotion
         this.hasMount = hasMount
-        this.user = user
+        this.currentPet = currentPet
         binding.imageView.visibility = View.VISIBLE
         binding.itemWrapper.visibility = View.GONE
         binding.checkmarkView.visibility = View.GONE
@@ -93,7 +93,7 @@ class PetViewHolder(parent: ViewGroup, private val equipEvents: PublishSubject<S
             binding.trainedProgressBar.progressBackgroundTintMode = PorterDuff.Mode.SRC_OVER
         }
         binding.imageView.background = null
-        binding.activeIndicator.visibility = if (user?.currentPet.equals(animal?.key)) View.VISIBLE else View.GONE
+        binding.activeIndicator.visibility = if (currentPet.equals(animal?.key)) View.VISIBLE else View.GONE
         DataBindingUtils.loadImage(itemView.context, imageName) {
             val resources = itemView.context.resources ?: return@loadImage
             val drawable = if (trained == 0) BitmapDrawable(resources, it.toBitmap().extractAlpha()) else it
@@ -110,7 +110,7 @@ class PetViewHolder(parent: ViewGroup, private val equipEvents: PublishSubject<S
         val menu = BottomSheetMenu(context)
         menu.setTitle(animal?.text)
 
-        val hasCurrentPet = user?.currentPet.equals(animal?.key)
+        val hasCurrentPet = currentPet.equals(animal?.key)
         val labelId = if (hasCurrentPet) R.string.unequip else R.string.equip
         menu.addMenuItem(BottomSheetMenuItem(itemView.resources.getString(labelId)))
 

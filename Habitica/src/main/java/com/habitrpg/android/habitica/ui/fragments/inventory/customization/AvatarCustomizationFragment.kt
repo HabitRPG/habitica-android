@@ -18,6 +18,7 @@ import com.habitrpg.android.habitica.ui.adapter.CustomizationRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.helpers.MarginDecoration
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
+import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import javax.inject.Inject
 
 class AvatarCustomizationFragment :
@@ -34,6 +35,8 @@ class AvatarCustomizationFragment :
     lateinit var customizationRepository: CustomizationRepository
     @Inject
     lateinit var inventoryRepository: InventoryRepository
+    @Inject
+    lateinit var userViewModel: MainUserViewModel
 
     var type: String? = null
     var category: String? = null
@@ -52,7 +55,7 @@ class AvatarCustomizationFragment :
             adapter.getSelectCustomizationEvents()
                 .flatMap { customization ->
                     if (customization.type == "background") {
-                        userRepository.unlockPath(user, customization)
+                        userRepository.unlockPath(userViewModel.user.value, customization)
                             .flatMap { userRepository.retrieveUser(false, true, true) }
                     } else {
                         userRepository.useCustomization(customization.type ?: "", customization.category, customization.identifier ?: "")
@@ -63,7 +66,7 @@ class AvatarCustomizationFragment :
         compositeSubscription.add(
             adapter.getUnlockCustomizationEvents()
                 .flatMap { customization ->
-                    userRepository.unlockPath(user, customization)
+                    userRepository.unlockPath(userViewModel.user.value, customization)
                 }
                 .flatMap { userRepository.retrieveUser(withTasks = false, forced = true) }
                 .flatMap { inventoryRepository.retrieveInAppRewards() }
@@ -112,11 +115,7 @@ class AvatarCustomizationFragment :
         binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
         this.loadCustomizations()
 
-        compositeSubscription.add(
-            userRepository.getUser().subscribeWithErrorHandler {
-                updateUser(it)
-            }
-        )
+        userViewModel.user.observe(viewLifecycleOwner) { updateUser(it) }
     }
 
     override fun onDestroy() {
@@ -153,7 +152,8 @@ class AvatarCustomizationFragment :
         layoutManager.spanCount = spanCount
     }
 
-    fun updateUser(user: User) {
+    fun updateUser(user: User?) {
+        if (user == null) return
         this.updateActiveCustomization(user)
         if (adapter.customizationList.size != 0) {
             val ownedCustomizations = ArrayList<String>()
@@ -162,8 +162,8 @@ class AvatarCustomizationFragment :
         } else {
             this.loadCustomizations()
         }
-        this.adapter.userSize = this.user?.preferences?.size
-        this.adapter.hairColor = this.user?.preferences?.hair?.color
+        this.adapter.userSize = user.preferences?.size
+        this.adapter.hairColor = user.preferences?.hair?.color
         this.adapter.gemBalance = user.gemCount
         adapter.notifyDataSetChanged()
     }

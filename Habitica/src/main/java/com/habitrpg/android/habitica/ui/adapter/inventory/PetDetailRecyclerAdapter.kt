@@ -17,7 +17,11 @@ class PetDetailRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapt
     private var ownedPets: Map<String, OwnedPet>? = null
     private var ownedMounts: Map<String, OwnedMount>? = null
     private var ownedItems: Map<String, OwnedItem>? = null
-    private var user: User? = null
+    var currentPet: String? = null
+    set(value) {
+        field = value
+        notifyDataSetChanged()
+    }
     private val equipEvents = PublishSubject.create<String>()
     private val feedEvents = PublishSubject.create<Pair<Pet, Food?>>()
     private var ownsSaddles: Boolean = false
@@ -27,11 +31,6 @@ class PetDetailRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapt
     fun setItemList(itemList: List<Any>) {
         this.itemList = itemList
         this.notifyDataSetChanged()
-    }
-
-    fun setUser(user: User) {
-        this.user = user
-        notifyDataSetChanged()
     }
 
     fun getEquipFlowable(): Flowable<String> {
@@ -81,7 +80,7 @@ class PetDetailRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapt
                     ownedItems?.get(obj.animal + "-eggs") != null,
                     ownedItems?.get(obj.color + "-hatchingPotions") != null,
                     ownedMounts?.containsKey(obj.key) == true,
-                    user
+                    currentPet
                 )
             }
         }

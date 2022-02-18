@@ -20,6 +20,7 @@ import com.habitrpg.android.habitica.helpers.DeviceName
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
+import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import javax.inject.Inject
@@ -42,6 +43,8 @@ class BugFixFragment : BaseMainFragment<FragmentSupportBugFixBinding>() {
 
     @Inject
     lateinit var appConfigManager: AppConfigManager
+    @Inject
+    lateinit var userViewModel: MainUserViewModel
 
     override fun injectFragment(component: UserComponent) {
         component.inject(this)
@@ -124,8 +127,7 @@ class BugFixFragment : BaseMainFragment<FragmentSupportBugFixBinding>() {
         }
         bodyOfEmail += newLine + Uri.encode("User ID: $userId")
 
-        val user = this.user
-        if (user != null) {
+        userViewModel.user.value?.let { user ->
             bodyOfEmail += newLine + Uri.encode("Level: " + (user.stats?.lvl ?: 0)) +
                     newLine + Uri.encode(
                 "Class: " + (if (user.preferences?.disableClasses == true) "Disabled" else (user.stats?.habitClass

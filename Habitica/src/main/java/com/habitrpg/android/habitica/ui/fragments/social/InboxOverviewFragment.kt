@@ -41,7 +41,7 @@ class InboxOverviewFragment : BaseMainFragment<FragmentInboxBinding>(), androidx
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         this.hidesToolbar = true
-        compositeSubscription.add(this.socialRepository.markPrivateMessagesRead(user).subscribe({ }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(this.socialRepository.markPrivateMessagesRead(null).subscribe({ }, RxErrorHandler.handleEmptyError()))
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 

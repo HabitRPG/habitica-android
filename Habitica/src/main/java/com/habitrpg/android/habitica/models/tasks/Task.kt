@@ -256,6 +256,47 @@ open class Task : RealmObject, BaseMainObject, Parcelable {
         }
     }
 
+    fun isBeingEdited(task: Task): Boolean {
+
+        when {
+            text != task.text -> return true
+            notes != task.notes -> return true
+            reminders != task.reminders -> return true
+            checklist != task.checklist -> return true
+            priority != task.priority -> return true
+            attribute != task.attribute && attribute != null -> return true
+            tags != task.tags -> return true
+        }
+        if (type == TaskType.HABIT) {
+            return when {
+                up != task.up -> true
+                down != task.down -> true
+                frequency != task.frequency -> true
+                counterUp != task.counterUp -> true
+                counterDown != task.counterDown -> true
+                else -> false
+            }
+        } else if (type == TaskType.DAILY) {
+            return when {
+                startDate != task.startDate -> true
+                everyX != task.everyX -> true
+                frequency != task.frequency -> true
+                repeat != task.repeat -> true
+                streak != task.streak -> true
+                else -> false
+            }
+
+        } else if (type == TaskType.TODO) {
+                return dueDate != task.dueDate
+            
+        } else if (type == TaskType.REWARD) {
+                return value != task.value
+
+        } else {
+            return false
+        }
+    }
+
     override fun hashCode(): Int {
         return id?.hashCode() ?: 0
     }

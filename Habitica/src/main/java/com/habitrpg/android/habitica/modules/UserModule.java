@@ -4,8 +4,10 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.habitrpg.android.habitica.data.TaskRepository;
+import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager;
 import com.habitrpg.android.habitica.helpers.UserScope;
+import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel;
 
 import javax.inject.Named;
 
@@ -27,5 +29,11 @@ public class UserModule {
     @UserScope
     public String providesUserID(SharedPreferences sharedPreferences) {
         return sharedPreferences.getString("UserID", "");
+    }
+
+    @Provides
+    @UserScope
+    MainUserViewModel providesUserViewModel(UserRepository userRepository) {
+        return new MainUserViewModel(userRepository);
     }
 }

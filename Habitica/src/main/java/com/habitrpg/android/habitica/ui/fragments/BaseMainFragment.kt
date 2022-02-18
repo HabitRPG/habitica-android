@@ -39,23 +39,12 @@ abstract class BaseMainFragment<VB : ViewBinding> : BaseFragment<VB>() {
     var usesTabLayout: Boolean = false
     var hidesToolbar: Boolean = false
     var usesBottomNavigation = false
-    open var user: User? = null
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-
-        if (activity is MainActivity) {
-            user = activity?.viewModel?.user?.value
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        compositeSubscription.add(userRepository.getUser().subscribe({ user = it }, RxErrorHandler.handleEmptyError()))
-
         if (this.usesBottomNavigation) {
             bottomNavigation?.visibility = View.VISIBLE
         } else {

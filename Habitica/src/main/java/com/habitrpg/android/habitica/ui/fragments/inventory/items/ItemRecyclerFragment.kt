@@ -33,6 +33,7 @@ import com.habitrpg.android.habitica.ui.helpers.EmptyItem
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.helpers.loadImage
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
+import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.dialogs.OpenedMysteryitemDialog
 import io.reactivex.rxjava3.core.Flowable
 import javax.inject.Inject
@@ -47,6 +48,8 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
     lateinit var userRepository: UserRepository
     @Inject
     internal lateinit var hatchPetUseCase: HatchPetUseCase
+    @Inject
+    lateinit var userViewModel: MainUserViewModel
 
     var adapter: ItemRecyclerAdapter? = null
     var itemType: String? = null
@@ -120,7 +123,7 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
                 )
                 compositeSubscription.add(
                     adapter.getOpenMysteryItemFlowable()
-                        .flatMap { inventoryRepository.openMysteryItem(user) }
+                        .flatMap { inventoryRepository.openMysteryItem(userViewModel.user.value) }
                         .doOnNext {
                             val activity = activity as? MainActivity
                             if (activity != null) {
@@ -131,7 +134,7 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
                                 dialog.binding.titleView.text = it.text
                                 dialog.binding.descriptionView.text = it.notes
                                 dialog.addButton(R.string.equip, true) { _, _ ->
-                                    inventoryRepository.equip(user, "equipped", it.key ?: "").subscribe({}, RxErrorHandler.handleEmptyError())
+                                    inventoryRepository.equip(userViewModel.user.value, "equipped", it.key ?: "").subscribe({}, RxErrorHandler.handleEmptyError())
                                 }
                                 dialog.addCloseButton()
                                 dialog.enqueue()
