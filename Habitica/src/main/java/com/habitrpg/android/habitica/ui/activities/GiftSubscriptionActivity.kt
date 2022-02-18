@@ -104,6 +104,7 @@ class GiftSubscriptionActivity : PurchaseActivity() {
                 for (sku in skus) {
                     updateButtonLabel(sku)
                 }
+                skus.minByOrNull { it.priceAmountMicros }?.let { selectSubscription(it) }
             }
         }
     }
@@ -112,7 +113,7 @@ class GiftSubscriptionActivity : PurchaseActivity() {
         if (matchingView != null) {
             matchingView.setPriceText(sku.price)
             matchingView.sku = sku.sku
-            binding.subscription1MonthView.setOnPurchaseClickListener { selectSubscription(sku) }
+            matchingView.setOnPurchaseClickListener { selectSubscription(sku) }
         }
     }
 

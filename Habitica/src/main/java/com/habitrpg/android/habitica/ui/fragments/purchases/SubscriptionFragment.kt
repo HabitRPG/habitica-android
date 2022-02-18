@@ -133,7 +133,7 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
                 for (sku in subscriptions) {
                     updateButtonLabel(sku, sku.price)
                 }
-                subscriptions.firstOrNull()?.let { selectSubscription(it) }
+                subscriptions.minByOrNull { it.priceAmountMicros }?.let { selectSubscription(it) }
                 hasLoadedSubscriptionOptions = true
                 updateSubscriptionInfo()
             }
