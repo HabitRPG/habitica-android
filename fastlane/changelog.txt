@@ -1,1 +1,11 @@
-In this update we’ve fixed some bugs, added more seasonal event support, and made a few quality of life improvements! Sending Guild and Party invites through email should work more reliably. We’ve improved task drag and drop logic when filters are applied to make the order more consistent. Habit streak is now referred to as ‘Habit Counter’ to better reflect the actual behavior. Issues with subscriptions not cancelling fully or getting errors when buying multiple Gem packages should be resolved.
+- New unsaved changes warning for tasks
+- New design for the Gem screen
+- New design for Starting Objectives
+- New private messages will show without needing to scroll
+- Purchased Backgrounds show correctly
+- Fixes Armoire error when you don’t have enough Gold
+- Fixes issue where the wrong task filters would show sometimes
+- Gift subs can be properly selected
+- Ended Challenges will go away properly
+- External links work in Guilds
+- Proper 12h/24h support
