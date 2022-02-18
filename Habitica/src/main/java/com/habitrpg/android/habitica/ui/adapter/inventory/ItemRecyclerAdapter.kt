@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.ui.adapter.inventory
 
 import android.content.Context
 import android.content.res.Resources
+import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
@@ -12,6 +13,7 @@ import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.models.inventory.*
 import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.OwnedPet
+import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.adapter.BaseRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.menu.BottomSheetMenu
@@ -23,7 +25,7 @@ import io.reactivex.rxjava3.subjects.PublishSubject
 import java.text.SimpleDateFormat
 import java.util.*
 
-class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<OwnedItem, ItemRecyclerAdapter.ItemViewHolder>() {
+class ItemRecyclerAdapter(val context: Context, val user: User?) : BaseRecyclerViewAdapter<OwnedItem, ItemRecyclerAdapter.ItemViewHolder>() {
 
     var isHatching: Boolean = false
     var isFeeding: Boolean = false
@@ -44,6 +46,7 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<OwnedI
     private val startHatchingSubject = PublishSubject.create<Item>()
     private val hatchPetSubject = PublishSubject.create<Pair<HatchingPotion, Egg>>()
     private val feedPetSubject = PublishSubject.create<Food>()
+    private val createNewPartySubject = PublishSubject.create<Bundle>()
 
     fun getSellItemFlowable(): Flowable<OwnedItem> {
         return sellItemEvents.toFlowable(BackpressureStrategy.DROP)
@@ -59,6 +62,7 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<OwnedI
     val startHatchingEvents: Flowable<Item> = startHatchingSubject.toFlowable(BackpressureStrategy.DROP)
     val hatchPetEvents: Flowable<Pair<HatchingPotion, Egg>> = hatchPetSubject.toFlowable(BackpressureStrategy.DROP)
     val feedPetEvents: Flowable<Food> = feedPetSubject.toFlowable(BackpressureStrategy.DROP)
+    val startNewPartyEvents: Flowable<Bundle> = createNewPartySubject.toFlowable(BackpressureStrategy.DROP)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         return ItemViewHolder(ItemItemBinding.inflate(context.layoutInflater, parent, false))
@@ -173,7 +177,18 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<OwnedI
                                     dialog.quest = selectedItem
                                     dialog.show()
                                 } else {
-                                    questInvitationEvents.onNext(selectedItem)
+                                    if (user?.hasParty == true) {
+                                        questInvitationEvents.onNext(selectedItem)
+                                    } else {
+                                        val bundle = Bundle()
+                                        bundle.putString("groupType", "party")
+                                        bundle.putString("leader", user?.id)//Check null values
+                                        bundle.putString("name", user?.username)
+                                        bundle.putString("description", "")
+                                        bundle.putBoolean("leaderOnlyChallenges", false)
+                                        createNewPartySubject.onNext(bundle)
+                                    }
+
                                 }
                             }
                             is SpecialItem -> openMysteryItemEvents.onNext(selectedItem)

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
@@ -16,7 +17,6 @@ import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.interactors.HatchPetUseCase
-import com.habitrpg.android.habitica.interactors.NotifyUserUseCase
 import com.habitrpg.android.habitica.models.inventory.*
 import com.habitrpg.android.habitica.models.user.OwnedPet
 import com.habitrpg.android.habitica.models.user.User
@@ -27,6 +27,7 @@ import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.helpers.EmptyItem
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.helpers.loadImage
+import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.dialogs.OpenedMysteryitemDialog
 import javax.inject.Inject
 
@@ -87,7 +88,7 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
         adapter = binding?.recyclerView?.adapter as? ItemRecyclerAdapter
         if (adapter == null) {
             context?.let {
-                adapter = ItemRecyclerAdapter(context)
+                adapter = ItemRecyclerAdapter(context, user)
             }
             binding?.recyclerView?.adapter = adapter
 
@@ -132,6 +133,7 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
                 )
                 compositeSubscription.add(adapter.startHatchingEvents.subscribeWithErrorHandler { showHatchingDialog(it) })
                 compositeSubscription.add(adapter.hatchPetEvents.subscribeWithErrorHandler { hatchPet(it.first, it.second) })
+                compositeSubscription.addAll(adapter.startNewPartyEvents.subscribeWithErrorHandler { createNewParty(it) })
             }
         }
         activity?.let {
@@ -191,6 +193,44 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
                     it
                 )).subscribeWithErrorHandler {})
         }
+    }
+
+    private fun createNewParty(bundle: Bundle) {
+        val alert = context?.let { HabiticaAlertDialog(it) }//Context results?
+        alert?.setTitle(R.string.quest_party_required_title)
+        alert?.setMessage(R.string.quest_party_required_description)
+        alert?.addButton(R.string.create_a_party, true, false) { _, _ ->
+            socialRepository.createGroup(
+                bundle.getString("name"),
+                bundle.getString("description"),
+                bundle.getString("leader"),
+                "party",
+                bundle.getString("privacy"),
+                bundle.getBoolean("leaderCreateChallenge")
+            )
+                .flatMap {
+                    userRepository.retrieveUser(false)
+                }
+                .subscribe(
+                    {
+                        if (isAdded) {
+                            parentFragmentManager.popBackStack()//Needed?
+                        }
+                        MainNavigationController.navigate(//Same nav?
+                            R.id.partyFragment,
+                            bundleOf(Pair("partyID", user?.party?.id))
+                        )
+                    },
+                    RxErrorHandler.handleEmptyError()
+                )
+
+        }
+        alert?.addButton(R.string.close, false) { _, _ ->
+            alert.dismiss()
+        }
+        alert?.show()
+
+
     }
 
     private fun loadItems() {
