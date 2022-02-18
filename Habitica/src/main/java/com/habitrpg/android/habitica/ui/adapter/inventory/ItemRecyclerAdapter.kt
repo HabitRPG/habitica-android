@@ -155,7 +155,7 @@ class ItemRecyclerAdapter(val context: Context, val user: User?) : BaseRecyclerV
                     menu.addMenuItem(BottomSheetMenuItem(resources.getString(R.string.hatch_egg)))
                 } else if (item is QuestContent) {
                     menu.addMenuItem(BottomSheetMenuItem(resources.getString(R.string.details)))
-                    if (user?.hasParty == true){
+                    if (user?.hasParty == true || user == null){
                         menu.addMenuItem(BottomSheetMenuItem(resources.getString(R.string.invite_party)))
                     } else {
                         menu.addMenuItem(BottomSheetMenuItem(resources.getString(R.string.create_new_party)))
