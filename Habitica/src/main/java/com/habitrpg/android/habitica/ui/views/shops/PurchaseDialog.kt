@@ -162,7 +162,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
     @OptIn(ExperimentalTime::class)
     private fun setLimitedTextView() {
         if (user == null) return
-        if (shopItem.habitClass != null && shopItem.habitClass != "special" && user?.stats?.habitClass != shopItem.habitClass) {
+        if (shopItem.habitClass != null && shopItem.habitClass != "special" && shopItem.habitClass != "armoire" && user?.stats?.habitClass != shopItem.habitClass) {
             limitedTextView.text = context.getString(R.string.class_equipment_shop_dialog)
             limitedTextView.visibility = View.VISIBLE
             limitedTextView.setBackgroundColor(ContextCompat.getColor(context, R.color.inverted_background))

@@ -304,7 +304,7 @@
     <string name="rogue">Rogue</string>
     <string name="mage">Mage</string>
     <string name="healer">Healer</string>
-    <string name="warrior_description">Warriors score more critical hits and deal heavy damage to Bosses. Play a Warrior if you want to defeat monsters easily! Warrior benefit from a high Strength stat.</string>
+    <string name="warrior_description">Warriors score more critical hits and deal heavy damage to Bosses. Play a Warrior if you want to defeat monsters easily! Warriors benefit from a high Strength stat.</string>
     <string name="mage_description">Mages learn Skills that damage Bosses and boost EXP and Mana. Play a Mage if you’re motivated by leveling up quickly! Mages benefit from a high Intelligence stat.</string>
     <string name="rogue_description">Rogues learn Skills that let them and their Party find more Gold and random drops. Play a Rogue if you want lots of items and Gold! Rogues benefit from a high Perception stat.</string>
     <string name="healer_description">Healers learn Skills that can heal and protect themselves and their Party. Play a Healer if you enjoy assisting others or avoiding damage! Healers benefit from a high Constitution stat.</string>
@@ -1195,10 +1195,10 @@
     <string name="my_account">My Account</string>
     <string name="public_profile">Public Profile</string>
     <string name="about_me">About Me</string>
-    <string name="api">API</string>
+    <string name="api" translatable="false">API</string>
     <string name="account_info">Account Info</string>
     <string name="login_methods">Login Methods</string>
-    <string name="apple">Apple</string>
+    <string name="apple" translatable="false">Apple</string>
     <string name="not_connected">Not connected</string>
     <string name="add_password">Add password</string>
     <string name="connect">Connect</string>
