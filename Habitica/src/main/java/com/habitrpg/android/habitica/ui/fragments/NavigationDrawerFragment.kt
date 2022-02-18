@@ -28,7 +28,6 @@ import com.habitrpg.android.habitica.extensions.*
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.android.habitica.models.WorldState
 import com.habitrpg.android.habitica.models.WorldStateEvent
 import com.habitrpg.android.habitica.models.inventory.Item
 import com.habitrpg.android.habitica.models.inventory.Quest
@@ -41,7 +40,6 @@ import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.activities.NotificationsActivity
 import com.habitrpg.android.habitica.ui.adapter.NavigationDrawerAdapter
-import com.habitrpg.android.habitica.ui.fragments.social.TavernDetailFragment
 import com.habitrpg.android.habitica.ui.menu.HabiticaDrawerItem
 import com.habitrpg.android.habitica.ui.viewmodels.NotificationsViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
@@ -339,10 +337,10 @@ class NavigationDrawerFragment : DialogFragment() {
             tavernItem?.subtitle = null
         }
 
-        val specialItems = user.items?.special
+        val userItems = user.items
         var hasSpecialItems = false
-        if (specialItems != null) {
-            hasSpecialItems = specialItems.hasSpecialItems
+        if (userItems != null) {
+            hasSpecialItems = userItems.hasTransformationItems
         }
         val item = getItemWithIdentifier(SIDEBAR_SKILLS)
         if (item != null) {

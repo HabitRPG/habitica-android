@@ -96,7 +96,7 @@ class RealmInventoryLocalRepository(realm: Realm) : RealmContentLocalRepository(
                 "hatchingPotions" -> it.items?.hatchingPotions
                 "food" -> it.items?.food
                 "quests" -> it.items?.quests
-                "special" -> it.items?.special?.ownedItems
+                "special" -> it.items?.special
                 else -> emptyList()
             } ?: emptyList()
             if (includeZero) {
@@ -286,7 +286,7 @@ class RealmInventoryLocalRepository(realm: Realm) : RealmContentLocalRepository(
             return
         }
         val liveUser = getLiveObject(user)
-        val ownedItems = liveUser?.items?.special?.ownedItems
+        val ownedItems = liveUser?.items?.special
         val item = ownedItems?.firstOrNull() { it.key == "inventory_present" }
         executeTransaction {
             if (item != null && item.isValid) {

@@ -60,11 +60,9 @@ class SkillsFragment : BaseMainFragment<FragmentSkillsBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         userViewModel.user.observe(viewLifecycleOwner) { user ->
             user?.let { checkUserLoadSkills(it) }
         }
-
         binding?.recyclerView?.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(activity)
         binding?.recyclerView?.adapter = adapter
         binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
