@@ -44,6 +44,8 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<OwnedI
     private val startHatchingSubject = PublishSubject.create<Item>()
     private val hatchPetSubject = PublishSubject.create<Pair<HatchingPotion, Egg>>()
     private val feedPetSubject = PublishSubject.create<Food>()
+    private val useSpecialSubject = PublishSubject.create<SpecialItem>()
+
 
     fun getSellItemFlowable(): Flowable<OwnedItem> {
         return sellItemEvents.toFlowable(BackpressureStrategy.DROP)
@@ -59,6 +61,7 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<OwnedI
     val startHatchingEvents: Flowable<Item> = startHatchingSubject.toFlowable(BackpressureStrategy.DROP)
     val hatchPetEvents: Flowable<Pair<HatchingPotion, Egg>> = hatchPetSubject.toFlowable(BackpressureStrategy.DROP)
     val feedPetEvents: Flowable<Food> = feedPetSubject.toFlowable(BackpressureStrategy.DROP)
+    val useSpecialEvents: Flowable<SpecialItem> = useSpecialSubject.toFlowable(BackpressureStrategy.DROP)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         return ItemViewHolder(ItemItemBinding.inflate(context.layoutInflater, parent, false))
@@ -111,9 +114,14 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<OwnedI
             if (item is QuestContent) {
                 imageName = "inventory_quest_scroll_" + ownedItem.key
             } else if (item is SpecialItem) {
-                val sdf = SimpleDateFormat("MM", Locale.getDefault())
-                val month = sdf.format(Date())
-                imageName = "inventory_present_$month"
+                if (item.key == "inventory_present") {
+                    val sdf = SimpleDateFormat("MM", Locale.getDefault())
+                    val month = sdf.format(Date())
+                    imageName = "inventory_present_$month"
+                } else {
+                    imageName = "shop_" + ownedItem.key
+                }
+
             } else {
                 val type = when (ownedItem.itemType) {
                     "eggs" -> "Egg"
@@ -156,7 +164,10 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<OwnedI
                     val specialItem = item as SpecialItem
                     if (specialItem.isMysteryItem && ownedItem?.numberOwned ?: 0 > 0) {
                         menu.addMenuItem(BottomSheetMenuItem(resources.getString(R.string.open)))
+                    } else if (ownedItem?.numberOwned ?: 0 > 0){
+                        menu.addMenuItem(BottomSheetMenuItem(resources.getString(R.string.use_item)))
                     }
+
                 }
                 menu.setSelectionRunnable { index ->
                     item?.let { selectedItem ->
@@ -176,7 +187,12 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<OwnedI
                                     questInvitationEvents.onNext(selectedItem)
                                 }
                             }
-                            is SpecialItem -> openMysteryItemEvents.onNext(selectedItem)
+                            is SpecialItem ->
+                                if (item?.key != "inventory_present") {
+                                    useSpecialSubject.onNext(selectedItem)
+                                } else {
+                                    openMysteryItemEvents.onNext(selectedItem)
+                                }
                         }
                     }
                 }

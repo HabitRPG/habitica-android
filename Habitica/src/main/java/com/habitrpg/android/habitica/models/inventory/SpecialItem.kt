@@ -15,6 +15,7 @@ open class SpecialItem : RealmObject(), Item {
     internal var notes: String = ""
     override var value: Int = 0
     override var event: ItemEvent? = null
+    var target: String? = null
     var isMysteryItem: Boolean = false
 
     companion object {

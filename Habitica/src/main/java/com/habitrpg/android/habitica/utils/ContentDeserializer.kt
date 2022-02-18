@@ -11,14 +11,7 @@ import com.habitrpg.android.habitica.models.ContentGear
 import com.habitrpg.android.habitica.models.ContentResult
 import com.habitrpg.android.habitica.models.FAQArticle
 import com.habitrpg.android.habitica.models.Skill
-import com.habitrpg.android.habitica.models.inventory.Customization
-import com.habitrpg.android.habitica.models.inventory.Egg
-import com.habitrpg.android.habitica.models.inventory.Equipment
-import com.habitrpg.android.habitica.models.inventory.Food
-import com.habitrpg.android.habitica.models.inventory.HatchingPotion
-import com.habitrpg.android.habitica.models.inventory.Mount
-import com.habitrpg.android.habitica.models.inventory.Pet
-import com.habitrpg.android.habitica.models.inventory.QuestContent
+import com.habitrpg.android.habitica.models.inventory.*
 import io.realm.RealmList
 import java.lang.reflect.Type
 
@@ -101,6 +94,13 @@ class ContentDeserializer : JsonDeserializer<ContentResult> {
                 result.spells.add(skill)
             }
         }
+
+        if (obj.has("special")) {
+            for (entry in obj.get("special").asJsonObject.entrySet()) {
+                result.special.add(context.deserialize(entry.value, SpecialItem::class.java))
+            }
+        }
+
         result.appearances = context.deserialize(obj.get("appearances"), object : TypeToken<RealmList<Customization>>() {}.type)
         result.backgrounds = context.deserialize(obj.get("backgrounds"), object : TypeToken<RealmList<Customization>>() {}.type)
         val noBackground = Customization()
