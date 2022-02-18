@@ -187,7 +187,7 @@ class ItemRecyclerAdapter(val context: Context, val user: User?) : BaseRecyclerV
                                         val bundle = Bundle()
                                         bundle.putString("groupType", "party")
                                         bundle.putString("leader", user.id)//Check null values
-                                        bundle.putString("name", user.username)
+                                        bundle.putString("name", user.profile?.name + "'s " + "Party")
                                         bundle.putString("description", "")
                                         bundle.putBoolean("leaderOnlyChallenges", false)
                                         createNewPartySubject.onNext(bundle)
