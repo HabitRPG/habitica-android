@@ -209,7 +209,10 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
                 bundle.getBoolean("leaderCreateChallenge")
             )
                 .flatMap {
-                    userRepository.retrieveUser(false)
+                    userRepository.retrieveUser(false, true)
+                        .filter { it.hasParty }
+                        .flatMap { socialRepository.retrieveGroup("party") }
+                        .flatMap { group1 -> socialRepository.retrieveGroupMembers(group1.id, true) }
                 }
                 .subscribe(
                     {

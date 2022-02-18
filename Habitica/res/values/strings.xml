@@ -281,6 +281,7 @@
     <string name="hatch_with_potion">Hatch with potion</string>
     <string name="hatch_egg">Hatch with egg</string>
     <string name="invite_party">Invite party</string>
+    <string name="create_new_party">Create new party</string>
     <string name="dialog_feeding">Feed %s with:</string>
     <string name="use_animal">Use</string>
     <string name="feed">Feed</string>

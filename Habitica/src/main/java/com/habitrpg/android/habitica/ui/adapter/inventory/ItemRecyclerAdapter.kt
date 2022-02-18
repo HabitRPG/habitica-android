@@ -155,7 +155,11 @@ class ItemRecyclerAdapter(val context: Context, val user: User?) : BaseRecyclerV
                     menu.addMenuItem(BottomSheetMenuItem(resources.getString(R.string.hatch_egg)))
                 } else if (item is QuestContent) {
                     menu.addMenuItem(BottomSheetMenuItem(resources.getString(R.string.details)))
-                    menu.addMenuItem(BottomSheetMenuItem(resources.getString(R.string.invite_party)))
+                    if (user?.hasParty == true){
+                        menu.addMenuItem(BottomSheetMenuItem(resources.getString(R.string.invite_party)))
+                    } else {
+                        menu.addMenuItem(BottomSheetMenuItem(resources.getString(R.string.create_new_party)))
+                    }
                 } else if (item is SpecialItem) {
                     val specialItem = item as SpecialItem
                     if (specialItem.isMysteryItem && ownedItem?.numberOwned ?: 0 > 0) {
@@ -177,13 +181,13 @@ class ItemRecyclerAdapter(val context: Context, val user: User?) : BaseRecyclerV
                                     dialog.quest = selectedItem
                                     dialog.show()
                                 } else {
-                                    if (user?.hasParty == true) {
+                                    if (user?.hasParty == true || user == null) {
                                         questInvitationEvents.onNext(selectedItem)
                                     } else {
                                         val bundle = Bundle()
                                         bundle.putString("groupType", "party")
-                                        bundle.putString("leader", user?.id)//Check null values
-                                        bundle.putString("name", user?.username)
+                                        bundle.putString("leader", user.id)//Check null values
+                                        bundle.putString("name", user.username)
                                         bundle.putString("description", "")
                                         bundle.putBoolean("leaderOnlyChallenges", false)
                                         createNewPartySubject.onNext(bundle)
