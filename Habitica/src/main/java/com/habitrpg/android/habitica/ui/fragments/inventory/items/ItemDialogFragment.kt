@@ -88,7 +88,7 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsBinding>(), SwipeRefr
 
         binding?.refreshLayout?.setOnRefreshListener(this)
         binding?.recyclerView?.emptyItem = EmptyItem(
-            getString(R.string.empty_items, itemTypeText),
+            getString(R.string.empty_items, itemTypeText ?: itemType),
             getString(R.string.open_market)
         ) {
             openMarket()
