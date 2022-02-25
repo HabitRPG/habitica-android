@@ -75,7 +75,7 @@ class StableRecyclerFragment :
         super.onViewCreated(view, savedInstanceState)
 
         binding?.recyclerView?.emptyItem = EmptyItem(
-            getString(R.string.empty_items, itemTypeText)
+            getString(R.string.empty_items, itemTypeText ?: itemType)
         )
         binding?.refreshLayout?.setOnRefreshListener(this)
 
