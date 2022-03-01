@@ -59,7 +59,6 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
 
     private var user: User? = null
     private var hasLoadedSubscriptionOptions: Boolean = false
-    private var purchasedSubscription: Purchase? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -229,15 +228,18 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
     }
 
     private fun checkIfNeedsCancellation() {
-        if (user?.purchased?.plan?.paymentMethod == "Google" &&
-            user?.purchased?.plan?.isActive == true &&
-            user?.purchased?.plan?.dateTerminated == null &&
-            (purchasedSubscription?.isAutoRenewing == false || purchasedSubscription == null)
-        ) {
-            compositeSubscription.add(
-                purchaseHandler.cancelSubscription()
-                    .subscribe({ }, RxErrorHandler.handleEmptyError())
-            )
+        CoroutineScope(Dispatchers.IO).launch {
+            val newestSubscription = purchaseHandler.checkForSubscription()
+            if (user?.purchased?.plan?.paymentMethod == "Google" &&
+                user?.purchased?.plan?.isActive == true &&
+                user?.purchased?.plan?.dateTerminated == null &&
+                (newestSubscription?.isAutoRenewing == false)
+            ) {
+                compositeSubscription.add(
+                    purchaseHandler.cancelSubscription()
+                        .subscribe({ }, RxErrorHandler.handleEmptyError())
+                )
+            }
         }
     }
 

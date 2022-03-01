@@ -9,6 +9,7 @@ import androidx.core.content.edit
 import androidx.core.os.bundleOf
 import com.android.billingclient.api.*
 import com.android.billingclient.api.BillingClient.ConnectionState.DISCONNECTED
+import com.google.api.Billing
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.habitrpg.android.habitica.HabiticaBaseApplication
@@ -269,6 +270,16 @@ open class PurchaseHandler(
             }
         }
         FirebaseCrashlytics.getInstance().recordException(throwable)
+    }
+
+    suspend fun checkForSubscription(): Purchase? {
+        val result = withContext(Dispatchers.IO) {
+            billingClient.queryPurchasesAsync(BillingClient.SkuType.SUBS)
+        }
+        if (result.billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
+            return result.purchasesList.sortedByDescending { it.purchaseTime }.firstOrNull { it.isAcknowledged }
+        }
+        return null
     }
 
     fun cancelSubscription(): Flowable<User> {
