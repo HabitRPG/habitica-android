@@ -195,31 +195,33 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
         }
     }
 
-    private fun createNewParty(bundle: Bundle) {
-        val alert = context?.let { HabiticaAlertDialog(it) }//Context results?
+    private fun createNewParty(isCreateNewParty: Boolean) {
+        val alert = context?.let { HabiticaAlertDialog(it) }
         alert?.setTitle(R.string.quest_party_required_title)
         alert?.setMessage(R.string.quest_party_required_description)
-        alert?.addButton(R.string.create_a_party, true, false) { _, _ ->
+        alert?.addButton(R.string.create_new_party, true, false) { _, _ ->
             socialRepository.createGroup(
-                bundle.getString("name"),
-                bundle.getString("description"),
-                bundle.getString("leader"),
+                getString(R.string.usernames_party, user?.profile?.name),
+                "",
+                user?.id,
                 "party",
-                bundle.getString("privacy"),
-                bundle.getBoolean("leaderCreateChallenge")
+                "",
+                false
             )
                 .flatMap {
                     userRepository.retrieveUser(false, true)
                         .filter { it.hasParty }
                         .flatMap { socialRepository.retrieveGroup("party") }
-                        .flatMap { group1 -> socialRepository.retrieveGroupMembers(group1.id, true) }
+                        .flatMap { group1 ->
+                            socialRepository.retrieveGroupMembers(
+                                group1.id,
+                                true
+                            )
+                        }
                 }
                 .subscribe(
                     {
-                        if (isAdded) {
-                            parentFragmentManager.popBackStack()//Needed?
-                        }
-                        MainNavigationController.navigate(//Same nav?
+                        MainNavigationController.navigate(
                             R.id.partyFragment,
                             bundleOf(Pair("partyID", user?.party?.id))
                         )
@@ -232,8 +234,6 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
             alert.dismiss()
         }
         alert?.show()
-
-
     }
 
     private fun loadItems() {

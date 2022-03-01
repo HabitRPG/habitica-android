@@ -134,6 +134,7 @@
     <string name="reward_dialog_buy">Buy</string>
     <string name="reward_dialog_dismiss">Dismiss</string>
     <string name="party">Party</string>
+    <string name="usernames_party">%s\'s Party</string>
     <string name="chat">Chat</string>
     <string name="members">Members</string>
     <string name="habits">Habits</string>
@@ -792,7 +793,6 @@
     <string name="create">Create</string>
     <string name="only_leader_create_challenge">Only leader can create Challenges</string>
     <string name="create_party">Create Party</string>
-    <string name="create_a_party">Create a Party</string>
     <string name="add_local_authentication">Add Local Authentication</string>
     <string name="task_title">Task Title</string>
 

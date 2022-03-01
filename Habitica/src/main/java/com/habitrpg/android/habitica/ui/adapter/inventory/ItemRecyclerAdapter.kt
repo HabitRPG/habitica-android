@@ -46,7 +46,7 @@ class ItemRecyclerAdapter(val context: Context, val user: User?) : BaseRecyclerV
     private val startHatchingSubject = PublishSubject.create<Item>()
     private val hatchPetSubject = PublishSubject.create<Pair<HatchingPotion, Egg>>()
     private val feedPetSubject = PublishSubject.create<Food>()
-    private val createNewPartySubject = PublishSubject.create<Bundle>()
+    private val createNewPartySubject = PublishSubject.create<Boolean>()
 
     fun getSellItemFlowable(): Flowable<OwnedItem> {
         return sellItemEvents.toFlowable(BackpressureStrategy.DROP)
@@ -62,7 +62,7 @@ class ItemRecyclerAdapter(val context: Context, val user: User?) : BaseRecyclerV
     val startHatchingEvents: Flowable<Item> = startHatchingSubject.toFlowable(BackpressureStrategy.DROP)
     val hatchPetEvents: Flowable<Pair<HatchingPotion, Egg>> = hatchPetSubject.toFlowable(BackpressureStrategy.DROP)
     val feedPetEvents: Flowable<Food> = feedPetSubject.toFlowable(BackpressureStrategy.DROP)
-    val startNewPartyEvents: Flowable<Bundle> = createNewPartySubject.toFlowable(BackpressureStrategy.DROP)
+    val startNewPartyEvents: Flowable<Boolean> = createNewPartySubject.toFlowable(BackpressureStrategy.DROP)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         return ItemViewHolder(ItemItemBinding.inflate(context.layoutInflater, parent, false))
@@ -155,7 +155,7 @@ class ItemRecyclerAdapter(val context: Context, val user: User?) : BaseRecyclerV
                     menu.addMenuItem(BottomSheetMenuItem(resources.getString(R.string.hatch_egg)))
                 } else if (item is QuestContent) {
                     menu.addMenuItem(BottomSheetMenuItem(resources.getString(R.string.details)))
-                    if (user?.hasParty == true || user == null){
+                    if (user?.hasParty == true){
                         menu.addMenuItem(BottomSheetMenuItem(resources.getString(R.string.invite_party)))
                     } else {
                         menu.addMenuItem(BottomSheetMenuItem(resources.getString(R.string.create_new_party)))
@@ -181,16 +181,10 @@ class ItemRecyclerAdapter(val context: Context, val user: User?) : BaseRecyclerV
                                     dialog.quest = selectedItem
                                     dialog.show()
                                 } else {
-                                    if (user?.hasParty == true || user == null) {
+                                    if (user?.hasParty == true) {
                                         questInvitationEvents.onNext(selectedItem)
                                     } else {
-                                        val bundle = Bundle()
-                                        bundle.putString("groupType", "party")
-                                        bundle.putString("leader", user.id)//Check null values
-                                        bundle.putString("name", user.profile?.name + "'s " + "Party")
-                                        bundle.putString("description", "")
-                                        bundle.putBoolean("leaderOnlyChallenges", false)
-                                        createNewPartySubject.onNext(bundle)
+                                        createNewPartySubject.onNext(true)
                                     }
 
                                 }
