@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.helpers
 
 import android.app.AlarmManager
+import android.app.AlarmManager.AlarmClockInfo
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
@@ -174,7 +175,7 @@ class TaskAlarmManager(private var context: Context, private var taskRepository:
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
                 alarmManager?.setWindow(AlarmManager.RTC_WAKEUP, time, 60000, pendingIntent)
             } else {
-                alarmManager?.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, time, pendingIntent)
+                alarmManager?.setAlarmClock(AlarmClockInfo(time, pendingIntent), pendingIntent)
             }
         }
     }
