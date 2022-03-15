@@ -88,6 +88,7 @@ class NotificationsManager {
 
                     Notification.Type.ACHIEVEMENT_GENERIC.type -> true
                     Notification.Type.ACHIEVEMENT_ONBOARDING_COMPLETE.type -> true
+                    Notification.Type.LOGIN_INCENTIVE.type -> true
                     else -> false
                 }
 

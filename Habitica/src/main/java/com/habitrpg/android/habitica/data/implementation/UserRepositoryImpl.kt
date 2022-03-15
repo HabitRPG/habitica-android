@@ -312,13 +312,7 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
                 user
             }
         if (tasks.isNotEmpty()) {
-            val scoringList = mutableListOf<Map<String, String>>()
-            for (task in tasks) {
-                val map = mutableMapOf<String, String>()
-                map["id"] = task.id ?: ""
-                map["direction"] = TaskDirection.UP.text
-                scoringList.add(map)
-            }
+            val scoringList = tasks.map { mapOf(Pair("id", it.id ?: ""), Pair("direction", TaskDirection.UP.text)) }
             observable = observable.flatMap { taskRepository.bulkScoreTasks(scoringList).firstElement() }
         }
         observable.flatMap { apiClient.runCron().firstElement() }

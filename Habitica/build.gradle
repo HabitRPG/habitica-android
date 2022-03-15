@@ -15,7 +15,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.1.0'
+        classpath 'com.android.tools.build:gradle:7.1.2'
         classpath 'net.sourceforge.pmd:pmd-java:5.5.3'
     }
 }
@@ -103,7 +103,7 @@ dependencies {
     implementation 'androidx.compose.material:material:1.0.5'
     implementation 'androidx.compose.animation:animation:1.0.5'
     implementation 'androidx.compose.ui:ui-tooling:1.0.5'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.4.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.4.1'
     implementation "com.google.accompanist:accompanist-appcompat-theme:0.16.0"
 
 
@@ -116,15 +116,15 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging-ktx'
     implementation 'com.google.firebase:firebase-config-ktx'
     implementation 'com.google.firebase:firebase-perf-ktx'
-    implementation 'com.google.android.gms:play-services-auth:20.0.1'
+    implementation 'com.google.android.gms:play-services-auth:20.1.0'
     implementation 'com.nex3z:flow-layout:1.2.2'
 
     implementation 'androidx.core:core-ktx:1.7.0'
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0"
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.4.0"
-    implementation "androidx.lifecycle:lifecycle-common-java8:2.4.0"
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.4.0'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.4.0'
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.4.1"
+    implementation "androidx.lifecycle:lifecycle-common-java8:2.4.1"
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.4.1'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.4.1'
     implementation 'com.plattysoft.leonids:LeonidsLib:1.3.2'
     implementation "androidx.fragment:fragment-ktx:1.4.1"
     implementation "androidx.paging:paging-runtime-ktx:3.1.0"
@@ -159,8 +159,8 @@ android {
         buildConfigField "String", "TESTING_LEVEL", "\"production\""
         resConfigs 'en', 'bg', 'de', 'en-rGB', 'es', 'fr', 'hr-rHR', 'in', 'it', 'iw', 'ja', 'ko', 'lt', 'nl', 'pl', 'pt-rBR', 'pt-rPT', 'ru', 'tr', 'zh', 'zh-rTW'
 
-        versionCode 3262
-        versionName "3.5.1.2"
+        versionCode 3270
+        versionName "3.5.1.3"
 
         targetSdkVersion 32
 
