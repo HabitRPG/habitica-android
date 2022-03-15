@@ -206,8 +206,12 @@ open class PurchaseHandler(
                 }
             }
             PurchaseTypes.allSubscriptionTypes.contains(sku) -> {
-                if (userViewModel.user.value?.purchased?.plan?.isActive == true) {
-                    return
+                val plan = userViewModel.user.value?.purchased?.plan
+                if (plan?.isActive == true) {
+                    if (plan.additionalData?.data?.orderId == purchase.orderId &&
+                        (plan.dateTerminated != null == purchase.isAutoRenewing)) {
+                        return
+                    }
                 }
                 val validationRequest = SubscriptionValidationRequest()
                 validationRequest.sku = sku
