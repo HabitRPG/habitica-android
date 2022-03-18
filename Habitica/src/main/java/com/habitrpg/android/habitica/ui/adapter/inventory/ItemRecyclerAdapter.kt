@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.ui.adapter.inventory
 
 import android.content.Context
 import android.content.res.Resources
+import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
@@ -12,6 +13,7 @@ import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.models.inventory.*
 import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.OwnedPet
+import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.adapter.BaseRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.menu.BottomSheetMenu
@@ -23,7 +25,7 @@ import io.reactivex.rxjava3.subjects.PublishSubject
 import java.text.SimpleDateFormat
 import java.util.*
 
-class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<OwnedItem, ItemRecyclerAdapter.ItemViewHolder>() {
+class ItemRecyclerAdapter(val context: Context, val user: User?) : BaseRecyclerViewAdapter<OwnedItem, ItemRecyclerAdapter.ItemViewHolder>() {
 
     var isHatching: Boolean = false
     var isFeeding: Boolean = false
@@ -44,8 +46,8 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<OwnedI
     private val startHatchingSubject = PublishSubject.create<Item>()
     private val hatchPetSubject = PublishSubject.create<Pair<HatchingPotion, Egg>>()
     private val feedPetSubject = PublishSubject.create<Food>()
+    private val createNewPartySubject = PublishSubject.create<Boolean>()
     private val useSpecialSubject = PublishSubject.create<SpecialItem>()
-
 
     fun getSellItemFlowable(): Flowable<OwnedItem> {
         return sellItemEvents.toFlowable(BackpressureStrategy.DROP)
@@ -61,6 +63,7 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<OwnedI
     val startHatchingEvents: Flowable<Item> = startHatchingSubject.toFlowable(BackpressureStrategy.DROP)
     val hatchPetEvents: Flowable<Pair<HatchingPotion, Egg>> = hatchPetSubject.toFlowable(BackpressureStrategy.DROP)
     val feedPetEvents: Flowable<Food> = feedPetSubject.toFlowable(BackpressureStrategy.DROP)
+    val startNewPartyEvents: Flowable<Boolean> = createNewPartySubject.toFlowable(BackpressureStrategy.DROP)
     val useSpecialEvents: Flowable<SpecialItem> = useSpecialSubject.toFlowable(BackpressureStrategy.DROP)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
@@ -159,7 +162,11 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<OwnedI
                     menu.addMenuItem(BottomSheetMenuItem(resources.getString(R.string.hatch_egg)))
                 } else if (item is QuestContent) {
                     menu.addMenuItem(BottomSheetMenuItem(resources.getString(R.string.details)))
-                    menu.addMenuItem(BottomSheetMenuItem(resources.getString(R.string.invite_party)))
+                    if (user?.hasParty == true){
+                        menu.addMenuItem(BottomSheetMenuItem(resources.getString(R.string.invite_party)))
+                    } else {
+                        menu.addMenuItem(BottomSheetMenuItem(resources.getString(R.string.create_new_party)))
+                    }
                 } else if (item is SpecialItem) {
                     val specialItem = item as SpecialItem
                     if (specialItem.isMysteryItem && ownedItem?.numberOwned ?: 0 > 0) {
@@ -184,7 +191,12 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<OwnedI
                                     dialog.quest = selectedItem
                                     dialog.show()
                                 } else {
-                                    questInvitationEvents.onNext(selectedItem)
+                                    if (user?.hasParty == true) {
+                                        questInvitationEvents.onNext(selectedItem)
+                                    } else {
+                                        createNewPartySubject.onNext(true)
+                                    }
+
                                 }
                             }
                             is SpecialItem ->

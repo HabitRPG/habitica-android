@@ -134,6 +134,7 @@
     <string name="reward_dialog_buy">Buy</string>
     <string name="reward_dialog_dismiss">Dismiss</string>
     <string name="party">Party</string>
+    <string name="usernames_party">%s\'s Party</string>
     <string name="chat">Chat</string>
     <string name="members">Members</string>
     <string name="habits">Habits</string>
@@ -243,6 +244,8 @@
     <string name="equipped">Equipped</string>
     <string name="quest_cancel_message">Are you sure you want to cancel this Quest? Canceling the Quest will cancel all accepted and pending invitations. The Quest will be returned to the owner’s inventory.</string>
     <string name="quest_begin_message">Are you sure? Only %1$d of your %2$d party members have joined this quest! Quests start automatically when all players have joined or rejected the invitation.</string>
+    <string name="quest_party_required_title">You have to be in a Party before starting a Quest</string>
+    <string name="quest_party_required_description">Once in a Party, you can take on Quests by yourself or invite friends to Quest with them too!</string>
     <string name="ago_1month">1 month ago</string>
     <string name="ago_months">%d months ago</string>
     <string name="ago_1week">1w ago</string>
@@ -280,6 +283,7 @@
     <string name="hatch_with_potion">Hatch with potion</string>
     <string name="hatch_egg">Hatch with egg</string>
     <string name="invite_party">Invite party</string>
+    <string name="create_new_party">Create new party</string>
     <string name="dialog_feeding">Feed %s with:</string>
     <string name="use_animal">Use</string>
     <string name="feed">Feed</string>

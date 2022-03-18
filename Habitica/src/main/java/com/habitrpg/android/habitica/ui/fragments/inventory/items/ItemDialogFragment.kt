@@ -102,7 +102,7 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsBinding>(), SwipeRefr
         adapter = binding?.recyclerView?.adapter as? ItemRecyclerAdapter
         if (adapter == null) {
             context?.let {
-                adapter = ItemRecyclerAdapter(context)
+                adapter = ItemRecyclerAdapter(context, user)
                 adapter?.isHatching = this.isHatching
                 adapter?.isFeeding = this.isFeeding
                 adapter?.fragment = this
