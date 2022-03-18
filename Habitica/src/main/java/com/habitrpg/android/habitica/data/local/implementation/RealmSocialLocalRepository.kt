@@ -12,14 +12,6 @@ import io.realm.Sort
 import java.util.*
 
 class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), SocialLocalRepository {
-    override fun getChatMessage(messageID: String): Flowable<ChatMessage> = RxJavaBridge.toV3Flowable(
-        realm.where(ChatMessage::class.java)
-            .equalTo("id", messageID)
-            .findAll()
-            .asFlowable()
-            .filter { it.isLoaded && it.isNotEmpty() }
-            .map { it.first() }
-    )
 
     override fun getGroupMembership(userId: String, id: String): Flowable<GroupMembership> = RxJavaBridge.toV3Flowable(
         realm.where(GroupMembership::class.java)

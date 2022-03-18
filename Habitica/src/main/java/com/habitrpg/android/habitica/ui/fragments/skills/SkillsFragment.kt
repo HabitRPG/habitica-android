@@ -23,12 +23,14 @@ import com.habitrpg.android.habitica.ui.activities.SkillTasksActivity
 import com.habitrpg.android.habitica.ui.adapter.SkillsRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
+import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.Companion.showSnackbar
 import io.reactivex.rxjava3.core.Flowable
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 class SkillsFragment : BaseMainFragment<FragmentSkillsBinding>() {
     internal var adapter: SkillsRecyclerViewAdapter? = null
@@ -36,20 +38,16 @@ class SkillsFragment : BaseMainFragment<FragmentSkillsBinding>() {
 
     override var binding: FragmentSkillsBinding? = null
 
+    @Inject
+    lateinit var userViewModel: MainUserViewModel
+
     override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentSkillsBinding {
         return FragmentSkillsBinding.inflate(inflater, container, false)
     }
 
-    override var user: User? = null
-        set(value) {
-            field = value
-            checkUserLoadSkills()
-        }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         adapter = SkillsRecyclerViewAdapter()
         adapter?.useSkillEvents?.subscribeWithErrorHandler { onSkillSelected(it) }?.let { compositeSubscription.add(it) }
-        checkUserLoadSkills()
 
         this.tutorialStepIdentifier = "skills"
         this.tutorialText = getString(R.string.tutorial_skills)
@@ -62,20 +60,21 @@ class SkillsFragment : BaseMainFragment<FragmentSkillsBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        userViewModel.user.observe(viewLifecycleOwner) { user ->
+            user?.let { checkUserLoadSkills(it) }
+        }
         binding?.recyclerView?.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(activity)
         binding?.recyclerView?.adapter = adapter
         binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
     }
 
-    private fun checkUserLoadSkills() {
-        if (user == null || adapter == null) {
+    private fun checkUserLoadSkills(user: User) {
+        if (adapter == null) {
             return
         }
-        adapter?.mana = this.user?.stats?.mp ?: 0.0
-        adapter?.level = this.user?.stats?.lvl ?: 0
-        adapter?.specialItems = this.user?.items?.special
-        user?.let { user ->
+        adapter?.mana = user.stats?.mp ?: 0.0
+        adapter?.level = user.stats?.lvl ?: 0
+        adapter?.specialItems = user.items?.special
             Flowable.combineLatest(
                 userRepository.getSkills(user),
                 userRepository.getSpecialItems(user),
@@ -89,9 +88,7 @@ class SkillsFragment : BaseMainFragment<FragmentSkillsBinding>() {
                     }
                     return@combineLatest allEntries
                 }
-            )
-                .subscribe({ skills -> adapter?.setSkillList(skills) }, RxErrorHandler.handleEmptyError())
-        }
+            ).subscribe({ skills -> adapter?.setSkillList(skills) }, RxErrorHandler.handleEmptyError())
     }
 
     private fun onSkillSelected(skill: Skill) {

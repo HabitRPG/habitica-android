@@ -23,6 +23,7 @@ import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.helpers.EmptyItem
 import com.habitrpg.android.habitica.ui.helpers.MarginDecoration
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
+import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.kotlin.combineLatest
@@ -39,11 +40,12 @@ class StableRecyclerFragment :
     lateinit var userRepository: UserRepository
     @Inject
     lateinit var configManager: AppConfigManager
+    @Inject
+    lateinit var userViewModel: MainUserViewModel
 
     var adapter: StableRecyclerAdapter? = null
     var itemType: String? = null
     var itemTypeText: String? = null
-    var user: User? = null
     internal var layoutManager: androidx.recyclerview.widget.GridLayoutManager? = null
 
     override var binding: FragmentRefreshRecyclerviewBinding? = null
@@ -96,7 +98,6 @@ class StableRecyclerFragment :
         adapter = binding?.recyclerView?.adapter as? StableRecyclerAdapter
         if (adapter == null) {
             adapter = StableRecyclerAdapter()
-            user?.let { adapter?.setUser(it) }
             adapter?.animalIngredientsRetriever = { animal, callback ->
                 Maybe.zip(
                     inventoryRepository.getItems(Egg::class.java, arrayOf(animal.animal)).firstElement(),
@@ -119,10 +120,14 @@ class StableRecyclerFragment :
             adapter?.let {
                 compositeSubscription.add(
                     it.getEquipFlowable()
-                        .flatMap { key -> inventoryRepository.equip(user, if (itemType == "pets") "pet" else "mount", key) }
+                        .flatMap { key -> inventoryRepository.equip(null, if (itemType == "pets") "pet" else "mount", key) }
                         .subscribe({ }, RxErrorHandler.handleEmptyError())
                 )
             }
+        }
+        userViewModel.user.observe(viewLifecycleOwner) {
+            adapter?.currentPet = it?.currentPet
+            adapter?.currentMount = it?.currentMount
         }
 
         this.loadItems()

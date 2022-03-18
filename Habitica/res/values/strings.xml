@@ -143,6 +143,7 @@
     <string name="rewards">Rewards</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="discard">Discard</string>
     <string name="quest">Quest</string>
     <string name="avatar_body">Body</string>
     <string name="avatar_hair">Hair</string>
@@ -378,7 +379,7 @@
     <string name="google_services_missing">Google play services could not be found.</string>
     <string name="gem_purchase_toolbartitle">Purchase</string>
     <string name="gem_purchase_title">Buying gems supports the developers and helps keep Habitica running</string>
-    <string name="gem_purchase_subtitle">Gems allow you to buy fun extras for your account:</string>
+    <string name="gem_purchase_subtitle">Gems allow you to buy fun extras for your account</string>
     <string name="gem_purchase_listitem1">Cool costumes for your avatar</string>
     <string name="gem_purchase_listitem2">Awesome backgrounds</string>
     <string name="gem_purchase_listitem3">Quests that reward you with pet eggs</string>
@@ -470,6 +471,7 @@
     <string name="myster_item_notes">Each month, subscribers will receive a mystery item. This is usually released about one week before the end of the month.</string>
     <string name="open">Open</string>>
     <string name="is_open">Open</string>
+    <string name="use_item">Use Item on party member</string>>
     <string name="checkInRewardEarned">You earned a %1$s as a reward for your devotion to improving your life.</string>
     <string name="nextPrizeUnlocks" tools:ignore="PluralsCandidate">Next prize in %1$d Check-Ins</string>
     <string name="pending_approval">pending approval</string>
@@ -527,6 +529,7 @@
     <string name="no_billing_gems">Your device does not have any of the supported payment methods. Please use the habitica website if you want to purchase gems.</string>
     <string name="no_billing_subscriptions">Your device does not have any of the supported payment methods. Please use the habitica website if you want to purchase a subscription.</string>
     <string name="save">Save</string>
+    <string name="unsaved_changes">Unsaved Changes</string>
     <string name="location">Location</string>
     <string name="gem_reward">Gem prize</string>
     <string name="tasks">Tasks</string>
@@ -551,6 +554,7 @@
     <string name="start_day">Start My Day</string>
     <string name="leave_party_confirmation">Are you sure you want to leave this party?</string>
     <string name="leave_party_challenges_confirmation">Do you want to keep participating in the Challenge when leaving the Party?</string>
+    <string name="discard_changes_to_task_message">Are you sure you want to discard changes to this task?</string>
     <string name="rejoin_party">You will not be able to rejoin this party unless invited.</string>
     <string name="pending">Pending</string>
     <string name="accepted">Accepted</string>

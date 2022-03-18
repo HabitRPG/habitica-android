@@ -19,7 +19,7 @@ class MountViewHolder(parent: ViewGroup, private val equipEvents: PublishSubject
     private var binding: MountOverviewItemBinding = MountOverviewItemBinding.bind(itemView)
     private var owned: Boolean = false
     var animal: Mount? = null
-    private var user: User? = null
+    private var currentMount: String? = null
 
     var resources: Resources = itemView.resources
 
@@ -27,10 +27,10 @@ class MountViewHolder(parent: ViewGroup, private val equipEvents: PublishSubject
         itemView.setOnClickListener(this)
     }
 
-    fun bind(item: Mount, owned: Boolean, user: User?) {
+    fun bind(item: Mount, owned: Boolean, currentMount: String?) {
         animal = item
         this.owned = owned
-        this.user = user
+        this.currentMount = currentMount
         binding.titleTextView.visibility = View.GONE
         binding.ownedTextView.visibility = View.GONE
         val imageName = "stable_Mount_Icon_" + item.animal + "-" + item.color
@@ -39,7 +39,7 @@ class MountViewHolder(parent: ViewGroup, private val equipEvents: PublishSubject
             binding.imageView.alpha = 0.2f
         }
         binding.imageView.background = null
-        binding.activeIndicator.visibility = if (user?.currentMount.equals(animal?.key)) View.VISIBLE else View.GONE
+        binding.activeIndicator.visibility = if (currentMount.equals(animal?.key)) View.VISIBLE else View.GONE
         DataBindingUtils.loadImage(itemView.context, imageName) {
             val drawable = if (owned) it else BitmapDrawable(itemView.context.resources, it.toBitmap().extractAlpha())
             binding.imageView.background = drawable
@@ -53,7 +53,7 @@ class MountViewHolder(parent: ViewGroup, private val equipEvents: PublishSubject
         val menu = BottomSheetMenu(itemView.context)
         menu.setTitle(animal?.text)
 
-        val hasCurrentMount = user?.currentMount.equals(animal?.key)
+        val hasCurrentMount = currentMount.equals(animal?.key)
         val labelId = if (hasCurrentMount) R.string.unequip else R.string.equip
         menu.addMenuItem(BottomSheetMenuItem(resources.getString(labelId)))
         menu.setSelectionRunnable {

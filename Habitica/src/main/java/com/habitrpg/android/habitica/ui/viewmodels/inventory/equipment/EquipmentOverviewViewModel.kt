@@ -9,6 +9,10 @@ import com.habitrpg.android.habitica.ui.viewmodels.BaseViewModel
 import javax.inject.Inject
 
 class EquipmentOverviewViewModel(savedStateHandle: SavedStateHandle): BaseViewModel() {
+    val usesAutoEquip: Boolean
+        get() = user.value?.preferences?.autoEquip == true
+    val usesCostume: Boolean
+        get() = user.value?.preferences?.costume == true
 
     @Inject
     lateinit var inventoryRepository: InventoryRepository

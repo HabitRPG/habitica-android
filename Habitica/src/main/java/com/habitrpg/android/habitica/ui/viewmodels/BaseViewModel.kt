@@ -15,20 +15,13 @@ import javax.inject.Inject
 
 abstract class BaseViewModel(initializeComponent: Boolean = true) : ViewModel() {
 
-    val isUserFainted: Boolean
-        get() = (user.value?.stats?.hp ?: 1.0) == 0.0
-    val isUserInParty: Boolean
-        get() = user.value?.hasParty == true
-
     @Inject
     lateinit var userRepository: UserRepository
+    @Inject
+    lateinit var userViewModel: MainUserViewModel
 
-    private val _user: MutableLiveData<User?> by lazy {
-        loadUserFromLocal()
-        MutableLiveData<User?>()
-    }
     val user: LiveData<User?> by lazy {
-        _user
+        userViewModel.user
     }
 
     init {
@@ -46,11 +39,6 @@ abstract class BaseViewModel(initializeComponent: Boolean = true) : ViewModel() 
     }
 
     internal val disposable = CompositeDisposable()
-
-    internal fun loadUserFromLocal() {
-        disposable.add(userRepository.getUser().observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ _user.value = it }, RxErrorHandler.handleEmptyError()))
-    }
 
     fun updateUser(path: String, value: Any) {
         disposable.add(userRepository.updateUser(path, value)

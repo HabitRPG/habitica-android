@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.helpers
 
 import android.app.AlarmManager
+import android.app.AlarmManager.AlarmClockInfo
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
@@ -121,6 +122,7 @@ class TaskAlarmManager(private var context: Context, private var taskRepository:
         const val TASK_NAME_INTENT_KEY = "TASK_NAME"
 
         fun scheduleDailyReminder(context: Context?) {
+            if (context == null) return
             val prefs = PreferenceManager.getDefaultSharedPreferences(context)
             if (prefs.getBoolean("use_reminder", false)) {
                 val timeval = prefs.getString("reminder_time", "19:00")
@@ -174,7 +176,7 @@ class TaskAlarmManager(private var context: Context, private var taskRepository:
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
                 alarmManager?.setWindow(AlarmManager.RTC_WAKEUP, time, 60000, pendingIntent)
             } else {
-                alarmManager?.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, time, pendingIntent)
+                alarmManager?.setAlarmClock(AlarmClockInfo(time, pendingIntent), pendingIntent)
             }
         }
     }

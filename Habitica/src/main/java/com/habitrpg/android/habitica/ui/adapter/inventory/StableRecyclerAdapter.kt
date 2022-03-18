@@ -31,7 +31,16 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var animalIngredientsRetriever: ((Animal, ((Pair<Egg?, HatchingPotion?>) -> Unit)) -> Unit)? = null
     private val feedEvents = PublishSubject.create<Pair<Pet, Food?>>()
     var itemType: String? = null
-    private var user: User? = null
+    var currentPet: String? = null
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
+    var currentMount: String? = null
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
     private val equipEvents = PublishSubject.create<String>()
     private var existingMounts: List<Mount>? = null
     private var ownedMounts: Map<String, OwnedMount>? = null
@@ -41,11 +50,6 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     fun getEquipFlowable(): Flowable<String> {
         return equipEvents.toFlowable(BackpressureStrategy.DROP)
-    }
-
-    fun setUser(user: User) {
-        this.user = user
-        notifyDataSetChanged()
     }
 
     private fun canRaiseToMount(pet: Pet): Boolean {
@@ -122,10 +126,10 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                             hasUnlockedEgg = ownedItems?.get(item.animal + "-eggs") != null,
                             hasUnlockedPotion = ownedItems?.get(item.color + "-hatchingPotions") != null,
                             hasMount = ownedMounts?.containsKey(item.key) == true,
-                            user = user
+                            currentPet = currentPet
                         )
                     } else if (item is Mount) {
-                        (holder as? MountViewHolder)?.bind(item, item.numberOwned > 0, user)
+                        (holder as? MountViewHolder)?.bind(item, item.numberOwned > 0, currentMount)
                     }
                     return
                 }

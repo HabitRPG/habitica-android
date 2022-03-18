@@ -34,7 +34,7 @@ class TimePreferenceDialogFragment : PreferenceDialogFragmentCompat() {
             return lastHour.toString() + ":" + String.format(Locale.UK, "%02d", lastMinute)
         }
 
-    override fun onCreateDialogView(context: Context?): View {
+    override fun onCreateDialogView(context: Context): View {
         picker = TimePicker(context)
         picker.setIs24HourView(android.text.format.DateFormat.is24HourFormat(context))
         return picker

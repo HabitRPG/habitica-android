@@ -68,7 +68,6 @@ class ItemsFragment : BaseMainFragment<FragmentViewpagerBinding>() {
                     4 -> "special"
                     else -> ""
                 }
-                fragment.user = this@ItemsFragment.user
                 fragment.itemTypeText =
                     if (position == 4 && isAdded) getString(R.string.special_items)
                     else getPageTitle(position)

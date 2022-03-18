@@ -99,8 +99,7 @@ class UserDeserializer : JsonDeserializer<User> {
             item.key = "inventory_present"
             item.userID = user.id
             item.numberOwned = user.purchased?.plan?.mysteryItemCount ?: 0
-            user.items?.special?.ownedItems = RealmList()
-            user.items?.special?.ownedItems?.add(item)
+            user.items?.special?.add(item)
             user.items?.setItemTypes()
         }
         if (obj.has("auth")) {

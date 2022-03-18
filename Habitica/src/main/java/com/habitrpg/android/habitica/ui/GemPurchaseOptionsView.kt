@@ -20,7 +20,7 @@ class GemPurchaseOptionsView(context: Context, attrs: AttributeSet) : FrameLayou
             0, 0
         )
 
-        binding.gemAmount.text = "${a.getText(R.styleable.GemPurchaseOptionsView_gemAmount)} GEMS"
+        binding.gemAmount.text = a.getText(R.styleable.GemPurchaseOptionsView_gemAmount)
 
         val iconRes = a.getDrawable(R.styleable.GemPurchaseOptionsView_gemDrawable)
         if (iconRes != null) {

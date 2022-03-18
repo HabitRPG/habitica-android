@@ -62,16 +62,16 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
 
     override fun setupPreferences() {
         timePreference = findPreference("reminder_time") as? TimePreference
-        val useReminder = preferenceManager.sharedPreferences.getBoolean("use_reminder", false)
-        timePreference?.isEnabled = useReminder
+        val useReminder = preferenceManager.sharedPreferences?.getBoolean("use_reminder", false)
+        timePreference?.isEnabled = useReminder ?: false
 
         pushNotificationsPreference = findPreference("pushNotifications") as? PreferenceScreen
-        val usePushNotifications = preferenceManager.sharedPreferences.getBoolean("usePushNotifications", true)
-        pushNotificationsPreference?.isEnabled = usePushNotifications
+        val usePushNotifications = preferenceManager.sharedPreferences?.getBoolean("usePushNotifications", true)
+        pushNotificationsPreference?.isEnabled = usePushNotifications ?: false
 
         emailNotificationsPreference = findPreference("emailNotifications") as? PreferenceScreen
-        val useEmailNotifications = preferenceManager.sharedPreferences.getBoolean("useEmailNotifications", true)
-        emailNotificationsPreference?.isEnabled = useEmailNotifications
+        val useEmailNotifications = preferenceManager.sharedPreferences?.getBoolean("useEmailNotifications", true)
+        emailNotificationsPreference?.isEnabled = useEmailNotifications ?: false
 
         classSelectionPreference = findPreference("choose_class")
 
@@ -80,7 +80,7 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
 
         serverUrlPreference = findPreference("server_url") as? ListPreference
         serverUrlPreference?.isVisible = false
-        serverUrlPreference?.summary = preferenceManager.sharedPreferences.getString("server_url", "")
+        serverUrlPreference?.summary = preferenceManager.sharedPreferences?.getString("server_url", "")
 
         val themePreference = findPreference("theme_name") as? ListPreference
         themePreference?.summary = themePreference?.entry ?: "Default"
@@ -101,11 +101,11 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
 
     override fun onResume() {
         super.onResume()
-        preferenceManager.sharedPreferences.registerOnSharedPreferenceChangeListener(this)
+        preferenceManager.sharedPreferences?.registerOnSharedPreferenceChangeListener(this)
     }
 
     override fun onPause() {
-        preferenceManager.sharedPreferences.unregisterOnSharedPreferenceChangeListener(this)
+        preferenceManager.sharedPreferences?.unregisterOnSharedPreferenceChangeListener(this)
         super.onPause()
     }
 

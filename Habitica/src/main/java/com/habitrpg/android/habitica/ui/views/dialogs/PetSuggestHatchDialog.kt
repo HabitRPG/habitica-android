@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
 import androidx.core.graphics.drawable.toBitmap
+import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.DialogPetSuggestHatchBinding
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
@@ -36,6 +37,7 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as? LayoutInflater
         inflater?.let { binding = DialogPetSuggestHatchBinding.inflate(it) }
         setAdditionalContentView(binding.root)
+        HabiticaBaseApplication.userComponent?.inject(this)
     }
 
     fun configure(pet: Animal, egg: Egg?, potion: HatchingPotion?, eggCount: Int, potionCount: Int, hasUnlockedEgg: Boolean, hasUnlockedPotion: Boolean, hasMount: Boolean) {

@@ -13,6 +13,7 @@ open class Items : RealmObject, BaseObject {
         eggs?.forEach { it.itemType = "eggs" }
         food?.forEach { it.itemType = "food" }
         quests?.forEach { it.itemType = "quests" }
+        special?.forEach { it.itemType = "special" }
     }
 
     var eggs: RealmList<OwnedItem>? = null
@@ -35,6 +36,12 @@ open class Items : RealmObject, BaseObject {
             field = value
             field?.forEach { it.itemType = "quests" }
         }
+    var special: RealmList<OwnedItem>? = null
+        set(value) {
+            field = value
+            field?.forEach { it.itemType = "special" }
+        }
+
     var pets: RealmList<OwnedPet>? = null
     var mounts: RealmList<OwnedMount>? = null
     var currentMount: String? = null
@@ -44,7 +51,6 @@ open class Items : RealmObject, BaseObject {
 
     // private QuestContent quest;
     var gear: Gear? = null
-    var special: SpecialItems? = null
 
     constructor(currentMount: String, currentPet: String, lastDropCount: Int, lastDropDate: Date) {
         this.currentMount = currentMount
@@ -54,4 +60,14 @@ open class Items : RealmObject, BaseObject {
     }
 
     constructor()
+
+    val hasTransformationItems: Boolean
+        get() {
+            return special?.any { transformationItem ->
+                        transformationItem.key == ("seafoam") && transformationItem.numberOwned > 0||
+                        transformationItem.key == ("shinySeed") && transformationItem.numberOwned > 0||
+                        transformationItem.key == ("snowball") && transformationItem.numberOwned > 0||
+                        transformationItem.key == ("spookySparkles") && transformationItem.numberOwned > 0
+            } ?: false
+        }
 }

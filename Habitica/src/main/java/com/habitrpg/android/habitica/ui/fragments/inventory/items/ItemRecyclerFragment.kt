@@ -1,10 +1,13 @@
 package com.habitrpg.android.habitica.ui.fragments.inventory.items
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
@@ -18,17 +21,23 @@ import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.interactors.HatchPetUseCase
 import com.habitrpg.android.habitica.models.inventory.*
+import com.habitrpg.android.habitica.models.responses.SkillResponse
+import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.OwnedPet
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.BaseActivity
 import com.habitrpg.android.habitica.ui.activities.MainActivity
+import com.habitrpg.android.habitica.ui.activities.SkillMemberActivity
 import com.habitrpg.android.habitica.ui.adapter.inventory.ItemRecyclerAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.helpers.EmptyItem
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.helpers.loadImage
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
+import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
+import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.dialogs.OpenedMysteryitemDialog
+import io.reactivex.rxjava3.core.Flowable
 import javax.inject.Inject
 
 class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshLayout.OnRefreshListener {
@@ -41,11 +50,15 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
     lateinit var userRepository: UserRepository
     @Inject
     internal lateinit var hatchPetUseCase: HatchPetUseCase
+    @Inject
+    lateinit var userViewModel: MainUserViewModel
 
     var adapter: ItemRecyclerAdapter? = null
     var itemType: String? = null
+    var transformationItems: MutableList<OwnedItem> = mutableListOf()
     var itemTypeText: String? = null
     var user: User? = null
+    private var selectedSpecialItem: SpecialItem? = null
     internal var layoutManager: androidx.recyclerview.widget.LinearLayoutManager? = null
 
     override var binding: FragmentItemsBinding? = null
@@ -91,7 +104,7 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
                 adapter = ItemRecyclerAdapter(context, user)
             }
             binding?.recyclerView?.adapter = adapter
-
+            adapter?.useSpecialEvents?.subscribeWithErrorHandler { onSpecialItemSelected(it) }?.let { compositeSubscription.add(it) }
             adapter?.let { adapter ->
                 compositeSubscription.add(
                     adapter.getSellItemFlowable()
@@ -112,7 +125,7 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
                 )
                 compositeSubscription.add(
                     adapter.getOpenMysteryItemFlowable()
-                        .flatMap { inventoryRepository.openMysteryItem(user) }
+                        .flatMap { inventoryRepository.openMysteryItem(userViewModel.user.value) }
                         .doOnNext {
                             val activity = activity as? MainActivity
                             if (activity != null) {
@@ -123,7 +136,7 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
                                 dialog.binding.titleView.text = it.text
                                 dialog.binding.descriptionView.text = it.notes
                                 dialog.addButton(R.string.equip, true) { _, _ ->
-                                    inventoryRepository.equip(user, "equipped", it.key ?: "").subscribe({}, RxErrorHandler.handleEmptyError())
+                                    inventoryRepository.equip(userViewModel.user.value, "equipped", it.key ?: "").subscribe({}, RxErrorHandler.handleEmptyError())
                                 }
                                 dialog.addCloseButton()
                                 dialog.enqueue()
@@ -253,7 +266,9 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
                         adapter?.data = items
                     }
                     .map { items -> items.mapNotNull { it.key } }
-                    .flatMap { inventoryRepository.getItems(itemClass, it.toTypedArray()) }
+                    .flatMap {
+                        inventoryRepository.getItems(itemClass, it.toTypedArray())
+                    }
                     .map {
                         val itemMap = mutableMapOf<String, Item>()
                         for (item in it) {
@@ -268,6 +283,7 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
                         RxErrorHandler.handleEmptyError()
                     )
             )
+
         }
 
         compositeSubscription.add(inventoryRepository.getPets().subscribe({ adapter?.setExistingPets(it) }, RxErrorHandler.handleEmptyError()))
@@ -284,6 +300,51 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
 
     private fun openMarket() {
         MainNavigationController.navigate(R.id.marketFragment)
+    }
+
+    private fun onSpecialItemSelected(specialItem: SpecialItem) {
+        selectedSpecialItem = specialItem
+        val intent = Intent(activity, SkillMemberActivity::class.java)
+        memberSelectionResult.launch(intent)
+    }
+
+    private val memberSelectionResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                useSpecialItem(selectedSpecialItem, it.data?.getStringExtra("member_id"))
+            }
+        }
+
+    private fun useSpecialItem(specialItem: SpecialItem?, memberID: String? = null) {
+        if (specialItem == null || memberID == null) {
+            return
+        }
+
+        val observable: Flowable<SkillResponse> =
+            userRepository.useSkill(specialItem.key, specialItem.target, memberID)
+
+        compositeSubscription.add(
+            observable.subscribe(
+                { skillResponse -> this.displaySpecialItemResult(specialItem) },
+                RxErrorHandler.handleEmptyError()
+            )
+        )
+    }
+
+    private fun displaySpecialItemResult(specialItem: SpecialItem?) {
+        if (!isAdded) return
+
+        val activity = activity as? MainActivity
+        activity?.let {
+            HabiticaSnackbar.showSnackbar(
+                it.snackbarContainer,
+                context?.getString(R.string.used_skill_without_mana, specialItem?.text),
+                HabiticaSnackbar.SnackbarDisplayType.BLUE
+            )
+        }
+
+        loadItems()
+
     }
 
     companion object {
