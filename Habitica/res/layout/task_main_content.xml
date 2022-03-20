@@ -25,6 +25,7 @@
         <com.habitrpg.android.habitica.ui.views.EllipsisTextView
             android:id="@+id/notesTextView"
             style="@style/Caption2.Regular"
+            android:autoLink="web"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/text_ternary"
