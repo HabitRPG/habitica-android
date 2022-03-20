@@ -25,13 +25,13 @@
         <com.habitrpg.android.habitica.ui.views.EllipsisTextView
             android:id="@+id/notesTextView"
             style="@style/Caption2.Regular"
-            android:autoLink="web"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/text_ternary"
             android:maxLines="3"
             android:ellipsize="end"
             android:textSize="13sp"
+            android:autoLink="web"
             tools:text="Notes"
             android:layout_marginTop="1dp"
             android:layout_marginBottom="7dp"/>
