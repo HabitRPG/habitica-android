@@ -181,6 +181,7 @@
                     <TextView
                         android:id="@+id/guild_summary"
                         android:layout_width="match_parent"
+                        android:autoLink="web"
                         android:layout_height="wrap_content"
                         tools:text="@string/inn_description"
                         android:layout_marginTop="@dimen/spacing_large" />
@@ -194,6 +195,7 @@
                         android:id="@+id/guild_description"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:autoLink="web"
                         tools:text="@string/inn_description"
                         android:layout_marginTop="@dimen/spacing_large" />
                 </com.habitrpg.android.habitica.ui.views.CollapsibleSectionView>
