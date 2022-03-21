@@ -11,7 +11,8 @@ import com.habitrpg.android.habitica.databinding.ValidatingEditTextBinding
 import com.habitrpg.android.habitica.extensions.layoutInflater
 
 class ValidatingEditText @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null
+    context: Context,
+    attrs: AttributeSet? = null
 ) : LinearLayout(context, attrs) {
 
     private var binding: ValidatingEditTextBinding = ValidatingEditTextBinding.inflate(context.layoutInflater, this)
@@ -28,7 +29,7 @@ class ValidatingEditText @JvmOverloads constructor(
     var validator: ((String?) -> Boolean)? = null
 
     val isValid: Boolean
-    get() = validator?.invoke(text) != false
+        get() = validator?.invoke(text) != false
 
     init {
         orientation = VERTICAL
@@ -41,7 +42,6 @@ class ValidatingEditText @JvmOverloads constructor(
             binding.editText.maxLines = attributes.getInt(R.styleable.ValidatingEditText_android_maxLines, 20)
             binding.editText.inputType = attributes.getInt(R.styleable.ValidatingEditText_android_inputType, InputType.TYPE_CLASS_TEXT)
         }
-
 
         binding.editText.setOnFocusChangeListener { _, isEditing ->
             if (isEditing) return@setOnFocusChangeListener

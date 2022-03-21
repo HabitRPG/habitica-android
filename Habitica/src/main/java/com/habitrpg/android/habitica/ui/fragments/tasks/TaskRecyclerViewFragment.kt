@@ -9,10 +9,8 @@ import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.edit
-import androidx.core.util.Pair
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.NO_POSITION
@@ -25,7 +23,13 @@ import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBinding
 import com.habitrpg.android.habitica.extensions.setScaledPadding
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
-import com.habitrpg.android.habitica.helpers.*
+import com.habitrpg.android.habitica.helpers.AmplitudeManager
+import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.HapticFeedbackManager
+import com.habitrpg.android.habitica.helpers.MainNavigationController
+import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.SoundManager
+import com.habitrpg.android.habitica.helpers.TaskFilterHelper
 import com.habitrpg.android.habitica.models.responses.TaskDirection
 import com.habitrpg.android.habitica.models.responses.TaskScoringResult
 import com.habitrpg.android.habitica.models.tasks.Task
@@ -33,7 +37,11 @@ import com.habitrpg.android.habitica.models.tasks.TaskType
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.activities.TaskFormActivity
 import com.habitrpg.android.habitica.ui.adapter.BaseRecyclerViewAdapter
-import com.habitrpg.android.habitica.ui.adapter.tasks.*
+import com.habitrpg.android.habitica.ui.adapter.tasks.DailiesRecyclerViewHolder
+import com.habitrpg.android.habitica.ui.adapter.tasks.HabitsRecyclerViewAdapter
+import com.habitrpg.android.habitica.ui.adapter.tasks.RewardsRecyclerViewAdapter
+import com.habitrpg.android.habitica.ui.adapter.tasks.TaskRecyclerViewAdapter
+import com.habitrpg.android.habitica.ui.adapter.tasks.TodosRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.helpers.EmptyItem
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
@@ -43,7 +51,7 @@ import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import java.util.*
+import java.util.Date
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -291,10 +299,12 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
             }
         })
 
-        compositeSubscription.add(userRepository.getUser()
-            .doOnNext { recyclerAdapter?.showAdventureGuide = !it.hasCompletedOnboarding }
-            .takeUntil { it.hasCompletedOnboarding }
-            .subscribe( { recyclerAdapter?.user = it }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(
+            userRepository.getUser()
+                .doOnNext { recyclerAdapter?.showAdventureGuide = !it.hasCompletedOnboarding }
+                .takeUntil { it.hasCompletedOnboarding }
+                .subscribe({ recyclerAdapter?.user = it }, RxErrorHandler.handleEmptyError())
+        )
     }
 
     protected fun showBrokenChallengeDialog(task: Task) {

@@ -113,8 +113,8 @@ class BugFixFragment : BaseMainFragment<FragmentSupportBugFixBinding>() {
         val manufacturer = deviceInfo?.manufacturer ?: Build.MANUFACTURER
         val newLine = "%0D%0A"
         var bodyOfEmail = Uri.encode("Device: $manufacturer $deviceName") +
-                newLine + Uri.encode("Android Version: $version") +
-                newLine + Uri.encode(
+            newLine + Uri.encode("Android Version: $version") +
+            newLine + Uri.encode(
             "AppVersion: " + getString(
                 R.string.version_info,
                 versionName,
@@ -129,14 +129,18 @@ class BugFixFragment : BaseMainFragment<FragmentSupportBugFixBinding>() {
 
         userViewModel.user.value?.let { user ->
             bodyOfEmail += newLine + Uri.encode("Level: " + (user.stats?.lvl ?: 0)) +
-                    newLine + Uri.encode(
-                "Class: " + (if (user.preferences?.disableClasses == true) "Disabled" else (user.stats?.habitClass
-                    ?: "None"))
+                newLine + Uri.encode(
+                "Class: " + (
+                    if (user.preferences?.disableClasses == true) "Disabled" else (
+                        user.stats?.habitClass
+                            ?: "None"
+                        )
+                    )
             ) +
-                    newLine + Uri.encode("Is in Inn: " + (user.preferences?.sleep ?: false)) +
-                    newLine + Uri.encode("Uses Costume: " + (user.preferences?.costume ?: false)) +
-                    newLine + Uri.encode("Custom Day Start: " + (user.preferences?.dayStart ?: 0)) +
-                    newLine + Uri.encode(
+                newLine + Uri.encode("Is in Inn: " + (user.preferences?.sleep ?: false)) +
+                newLine + Uri.encode("Uses Costume: " + (user.preferences?.costume ?: false)) +
+                newLine + Uri.encode("Custom Day Start: " + (user.preferences?.dayStart ?: 0)) +
+                newLine + Uri.encode(
                 "Timezone Offset: " + (user.preferences?.timezoneOffset ?: 0)
             )
         }
@@ -146,8 +150,8 @@ class BugFixFragment : BaseMainFragment<FragmentSupportBugFixBinding>() {
         activity?.let {
             val emailIntent = Intent(Intent.ACTION_SENDTO)
             val mailto = "mailto:" + appConfigManager.supportEmail() +
-                    "?subject=" + Uri.encode(subject) +
-                    "&body=" + bodyOfEmail
+                "?subject=" + Uri.encode(subject) +
+                "&body=" + bodyOfEmail
             emailIntent.data = Uri.parse(mailto)
 
             startActivity(Intent.createChooser(emailIntent, "Choose an Email client:"))

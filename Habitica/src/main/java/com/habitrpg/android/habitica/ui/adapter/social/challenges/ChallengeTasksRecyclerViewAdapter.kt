@@ -12,7 +12,11 @@ import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.tasks.TaskType
 import com.habitrpg.android.habitica.ui.adapter.tasks.BaseTasksRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.viewHolders.BindableViewHolder
-import com.habitrpg.android.habitica.ui.viewHolders.tasks.*
+import com.habitrpg.android.habitica.ui.viewHolders.tasks.BaseTaskViewHolder
+import com.habitrpg.android.habitica.ui.viewHolders.tasks.DailyViewHolder
+import com.habitrpg.android.habitica.ui.viewHolders.tasks.HabitViewHolder
+import com.habitrpg.android.habitica.ui.viewHolders.tasks.RewardViewHolder
+import com.habitrpg.android.habitica.ui.viewHolders.tasks.TodoViewHolder
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.subjects.PublishSubject

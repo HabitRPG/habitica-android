@@ -8,7 +8,6 @@ import com.habitrpg.android.habitica.models.Tag
 import io.realm.Realm
 import io.realm.RealmList
 import java.lang.reflect.Type
-import java.util.ArrayList
 
 class TaskTagDeserializer : JsonDeserializer<List<Tag>> {
     @Throws(JsonParseException::class)

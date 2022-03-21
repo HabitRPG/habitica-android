@@ -16,7 +16,6 @@ import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.ActivityReportMessageBinding
 import com.habitrpg.android.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
 import com.habitrpg.android.habitica.ui.helpers.setMarkdown
 import javax.inject.Inject
@@ -90,7 +89,7 @@ class ReportMessageActivity : BaseActivity() {
     }
 
     private fun reportMessage() {
-        if (isReporting ) {
+        if (isReporting) {
             return
         }
         isReporting = true

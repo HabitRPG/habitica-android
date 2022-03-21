@@ -13,8 +13,11 @@ import com.habitrpg.android.habitica.extensions.getTranslatedType
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.interactors.FeedPetUseCase
-import com.habitrpg.android.habitica.interactors.HatchPetUseCase
-import com.habitrpg.android.habitica.models.inventory.*
+import com.habitrpg.android.habitica.models.inventory.Egg
+import com.habitrpg.android.habitica.models.inventory.Food
+import com.habitrpg.android.habitica.models.inventory.HatchingPotion
+import com.habitrpg.android.habitica.models.inventory.Pet
+import com.habitrpg.android.habitica.models.inventory.StableSection
 import com.habitrpg.android.habitica.models.user.OwnedMount
 import com.habitrpg.android.habitica.models.user.OwnedPet
 import com.habitrpg.android.habitica.ui.activities.BaseActivity
@@ -202,11 +205,14 @@ class PetDetailRecyclerFragment :
     private fun showFeedingDialog(pet: Pet, food: Food?) {
         if (food != null) {
             (activity as? BaseActivity)?.let {
-                compositeSubscription.add(feedPetUseCase.observable(
-                    FeedPetUseCase.RequestValues(
-                        pet, food,
-                        it
-                    )).subscribeWithErrorHandler {})
+                compositeSubscription.add(
+                    feedPetUseCase.observable(
+                        FeedPetUseCase.RequestValues(
+                            pet, food,
+                            it
+                        )
+                    ).subscribeWithErrorHandler {}
+                )
             }
             return
         }

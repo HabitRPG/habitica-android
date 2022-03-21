@@ -12,7 +12,6 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
-import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.ActivityPartyInviteBinding
 import com.habitrpg.android.habitica.extensions.runDelayed
 import com.habitrpg.android.habitica.modules.AppModule

@@ -8,8 +8,11 @@ import androidx.core.graphics.drawable.toBitmap
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.PetDetailItemBinding
 import com.habitrpg.android.habitica.extensions.inflate
-import com.habitrpg.android.habitica.models.inventory.*
-import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.android.habitica.models.inventory.Animal
+import com.habitrpg.android.habitica.models.inventory.Egg
+import com.habitrpg.android.habitica.models.inventory.Food
+import com.habitrpg.android.habitica.models.inventory.HatchingPotion
+import com.habitrpg.android.habitica.models.inventory.Pet
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.menu.BottomSheetMenu
 import com.habitrpg.android.habitica.ui.menu.BottomSheetMenuItem

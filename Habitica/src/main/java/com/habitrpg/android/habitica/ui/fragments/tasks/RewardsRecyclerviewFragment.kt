@@ -22,7 +22,6 @@ import com.habitrpg.android.habitica.ui.adapter.tasks.RewardsRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import io.reactivex.rxjava3.functions.Consumer
-import java.util.*
 
 class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
 

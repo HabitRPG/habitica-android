@@ -6,7 +6,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.*
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.RatingBar
+import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
@@ -18,7 +22,15 @@ import com.habitrpg.android.habitica.extensions.fromHtml
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.Notification
 import com.habitrpg.android.habitica.models.inventory.QuestContent
-import com.habitrpg.android.habitica.models.notifications.*
+import com.habitrpg.android.habitica.models.notifications.GroupTaskApprovedData
+import com.habitrpg.android.habitica.models.notifications.GroupTaskNeedsWorkData
+import com.habitrpg.android.habitica.models.notifications.GroupTaskRequiresApprovalData
+import com.habitrpg.android.habitica.models.notifications.GuildInvitationData
+import com.habitrpg.android.habitica.models.notifications.NewChatMessageData
+import com.habitrpg.android.habitica.models.notifications.NewStuffData
+import com.habitrpg.android.habitica.models.notifications.PartyInvitationData
+import com.habitrpg.android.habitica.models.notifications.QuestInvitationData
+import com.habitrpg.android.habitica.models.notifications.UnallocatedPointsData
 import com.habitrpg.android.habitica.ui.viewmodels.NotificationsViewModel
 import javax.inject.Inject
 

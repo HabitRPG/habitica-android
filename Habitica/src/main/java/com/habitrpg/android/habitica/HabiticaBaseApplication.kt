@@ -115,8 +115,8 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
         val configuration: Configuration = resources.configuration
         val languageHelper = LanguageHelper(sharedPrefs.getString("language", "en"))
         if (if (SDK_INT >= Build.VERSION_CODES.N) {
-                configuration.locales.isEmpty || configuration.locales[0] != languageHelper.locale
-            } else {
+            configuration.locales.isEmpty || configuration.locales[0] != languageHelper.locale
+        } else {
                 configuration.locale != languageHelper.locale
             }
         ) {

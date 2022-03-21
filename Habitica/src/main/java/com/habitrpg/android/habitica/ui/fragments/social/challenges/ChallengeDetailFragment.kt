@@ -4,7 +4,12 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import androidx.core.net.toUri
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
@@ -33,7 +38,6 @@ import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import retrofit2.HttpException
-import java.util.*
 import javax.inject.Inject
 
 class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>() {
@@ -44,7 +48,6 @@ class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>
     lateinit var socialRepository: SocialRepository
     @Inject
     lateinit var userViewModel: MainUserViewModel
-
 
     override var binding: FragmentChallengeDetailBinding? = null
 

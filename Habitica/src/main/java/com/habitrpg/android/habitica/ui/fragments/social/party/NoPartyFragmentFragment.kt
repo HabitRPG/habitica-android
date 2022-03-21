@@ -24,7 +24,6 @@ import com.habitrpg.android.habitica.databinding.FragmentNoPartyBinding
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.AvatarView
 import com.habitrpg.android.habitica.ui.activities.GroupFormActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment

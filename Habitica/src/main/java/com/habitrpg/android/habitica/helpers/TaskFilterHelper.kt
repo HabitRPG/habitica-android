@@ -6,7 +6,6 @@ import io.realm.Case
 import io.realm.OrderedRealmCollection
 import io.realm.RealmQuery
 import io.realm.Sort
-import java.util.*
 
 class TaskFilterHelper {
     var searchQuery: String? = null

@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import androidx.fragment.app.Fragment
-import com.android.billingclient.api.Purchase
 import com.android.billingclient.api.SkuDetails
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
@@ -24,7 +23,6 @@ import com.habitrpg.android.habitica.helpers.PurchaseHandler
 import com.habitrpg.android.habitica.helpers.PurchaseTypes
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.User
-import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import com.habitrpg.android.habitica.ui.activities.GiftSubscriptionActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.fragments.PromoInfoFragment

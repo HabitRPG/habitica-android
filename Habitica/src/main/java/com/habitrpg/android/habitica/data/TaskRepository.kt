@@ -11,7 +11,7 @@ import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Single
-import java.util.*
+import java.util.Date
 
 interface TaskRepository : BaseRepository {
     fun getTasks(taskType: TaskType, userID: String? = null): Flowable<out List<Task>>

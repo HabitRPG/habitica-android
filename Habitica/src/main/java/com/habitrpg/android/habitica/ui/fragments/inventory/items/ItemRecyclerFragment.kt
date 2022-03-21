@@ -19,7 +19,12 @@ import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.interactors.HatchPetUseCase
-import com.habitrpg.android.habitica.models.inventory.*
+import com.habitrpg.android.habitica.models.inventory.Egg
+import com.habitrpg.android.habitica.models.inventory.Food
+import com.habitrpg.android.habitica.models.inventory.HatchingPotion
+import com.habitrpg.android.habitica.models.inventory.Item
+import com.habitrpg.android.habitica.models.inventory.QuestContent
+import com.habitrpg.android.habitica.models.inventory.SpecialItem
 import com.habitrpg.android.habitica.models.responses.SkillResponse
 import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.OwnedPet
@@ -32,8 +37,8 @@ import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.helpers.EmptyItem
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.helpers.loadImage
-import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
+import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.dialogs.OpenedMysteryitemDialog
 import io.reactivex.rxjava3.core.Flowable
 import javax.inject.Inject
@@ -197,11 +202,14 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
 
     private fun hatchPet(potion: HatchingPotion, egg: Egg) {
         (activity as? BaseActivity)?.let {
-            compositeSubscription.add(hatchPetUseCase.observable(
-                HatchPetUseCase.RequestValues(
-                    potion, egg,
-                    it
-                )).subscribeWithErrorHandler {})
+            compositeSubscription.add(
+                hatchPetUseCase.observable(
+                    HatchPetUseCase.RequestValues(
+                        potion, egg,
+                        it
+                    )
+                ).subscribeWithErrorHandler {}
+            )
         }
     }
 
@@ -239,7 +247,6 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
                         RxErrorHandler.handleEmptyError()
                     )
             )
-
         }
 
         compositeSubscription.add(inventoryRepository.getPets().subscribe({ adapter?.setExistingPets(it) }, RxErrorHandler.handleEmptyError()))
@@ -300,7 +307,6 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
         }
 
         loadItems()
-
     }
 
     companion object {

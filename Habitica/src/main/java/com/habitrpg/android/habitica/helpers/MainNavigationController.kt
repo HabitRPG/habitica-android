@@ -8,7 +8,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavDeepLinkRequest
 import androidx.navigation.NavDirections
 import java.lang.ref.WeakReference
-import java.util.*
+import java.util.Date
 import kotlin.math.abs
 
 object MainNavigationController {

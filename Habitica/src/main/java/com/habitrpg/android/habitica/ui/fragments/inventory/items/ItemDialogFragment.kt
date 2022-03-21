@@ -18,7 +18,13 @@ import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.interactors.FeedPetUseCase
 import com.habitrpg.android.habitica.interactors.HatchPetUseCase
-import com.habitrpg.android.habitica.models.inventory.*
+import com.habitrpg.android.habitica.models.inventory.Egg
+import com.habitrpg.android.habitica.models.inventory.Food
+import com.habitrpg.android.habitica.models.inventory.HatchingPotion
+import com.habitrpg.android.habitica.models.inventory.Item
+import com.habitrpg.android.habitica.models.inventory.Pet
+import com.habitrpg.android.habitica.models.inventory.QuestContent
+import com.habitrpg.android.habitica.models.inventory.SpecialItem
 import com.habitrpg.android.habitica.models.user.OwnedPet
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.BaseActivity
@@ -197,18 +203,21 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsBinding>(), SwipeRefr
             dismiss()
             openMarket()
         }
-        
+
         this.loadItems()
     }
 
     private fun feedPet(food: Food) {
         val pet = feedingPet ?: return
         (activity as? BaseActivity)?.let {
-            it.compositeSubscription.add(feedPetUseCase.observable(
-                FeedPetUseCase.RequestValues(
-                    pet, food,
-                    it
-                )).subscribeWithErrorHandler {})
+            it.compositeSubscription.add(
+                feedPetUseCase.observable(
+                    FeedPetUseCase.RequestValues(
+                        pet, food,
+                        it
+                    )
+                ).subscribeWithErrorHandler {}
+            )
         }
     }
 
@@ -241,11 +250,14 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsBinding>(), SwipeRefr
     private fun hatchPet(potion: HatchingPotion, egg: Egg) {
         dismiss()
         (activity as? BaseActivity)?.let {
-            it.compositeSubscription.add(hatchPetUseCase.observable(
-                HatchPetUseCase.RequestValues(
-                    potion, egg,
-                    it
-                )).subscribeWithErrorHandler {})
+            it.compositeSubscription.add(
+                hatchPetUseCase.observable(
+                    HatchPetUseCase.RequestValues(
+                        potion, egg,
+                        it
+                    )
+                ).subscribeWithErrorHandler {}
+            )
         }
     }
 

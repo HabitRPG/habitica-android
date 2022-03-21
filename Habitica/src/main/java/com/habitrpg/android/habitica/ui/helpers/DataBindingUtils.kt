@@ -15,8 +15,8 @@ import coil.request.ImageRequest
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.setTintWith
 import com.habitrpg.android.habitica.helpers.AppConfigManager
-import java.util.*
-import kotlin.collections.HashMap
+import java.util.Collections
+import java.util.Date
 
 fun ImageView.loadImage(imageName: String?, imageFormat: String? = null) {
     DataBindingUtils.loadImage(this, imageName, imageFormat)

@@ -135,7 +135,7 @@ class SkillsRecyclerViewAdapter : RecyclerView.Adapter<SkillsRecyclerViewAdapter
         }
 
         private fun getOwnedCount(key: String): Int {
-            return specialItems?.firstOrNull() { it.key == key  }?.numberOwned ?: 0
+            return specialItems?.firstOrNull() { it.key == key }?.numberOwned ?: 0
         }
     }
 }

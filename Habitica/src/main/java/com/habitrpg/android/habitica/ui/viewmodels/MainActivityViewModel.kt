@@ -20,10 +20,10 @@ import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
 import io.realm.kotlin.isValid
-import java.util.*
+import java.util.Date
 import javax.inject.Inject
 
-class MainActivityViewModel: BaseViewModel() {
+class MainActivityViewModel : BaseViewModel() {
     @Inject
     internal lateinit var hostConfig: HostConfig
     @Inject
@@ -53,11 +53,11 @@ class MainActivityViewModel: BaseViewModel() {
         get() = sharedPreferences.getString("launch_screen", "")
     var preferenceLanguage: String?
         get() = sharedPreferences.getString("language", "en")
-    set(value) {
-        sharedPreferences.edit {
-            putString("language", value)
+        set(value) {
+            sharedPreferences.edit {
+                putString("language", value)
+            }
         }
-    }
 
     override fun onCleared() {
         taskRepository.close()
@@ -102,7 +102,6 @@ class MainActivityViewModel: BaseViewModel() {
         }
     }
 
-
     fun logTutorialStatus(step: TutorialStep, complete: Boolean) {
         val additionalData = HashMap<String, Any>()
         additionalData["eventLabel"] = step.identifier + "-android"
@@ -121,11 +120,12 @@ class MainActivityViewModel: BaseViewModel() {
             this.maintenanceService.maintenanceStatus
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe( { maintenanceResponse ->
+                .subscribe(
+                    { maintenanceResponse ->
                         if (maintenanceResponse == null) {
                             return@subscribe
                         }
-                    onResult(maintenanceResponse)
+                        onResult(maintenanceResponse)
                     },
                     RxErrorHandler.handleEmptyError()
                 )

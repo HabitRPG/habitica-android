@@ -11,7 +11,7 @@ import com.habitrpg.android.habitica.models.tasks.Task
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.subjects.PublishSubject
-import java.util.*
+import java.util.UUID
 
 class SkillTasksRecyclerViewAdapter : BaseRecyclerViewAdapter<Task, SkillTasksRecyclerViewAdapter.TaskViewHolder>() {
 

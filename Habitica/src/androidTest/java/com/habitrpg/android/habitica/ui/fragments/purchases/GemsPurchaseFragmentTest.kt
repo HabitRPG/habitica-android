@@ -1,27 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments.purchases
 
-import androidx.fragment.app.testing.launchFragmentInContainer
-import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.filters.LargeTest
-import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.databinding.FragmentGemPurchaseBinding
-import com.habitrpg.android.habitica.helpers.PurchaseHandler
-import com.habitrpg.android.habitica.helpers.PurchaseTypes
-import com.habitrpg.android.habitica.models.user.Purchases
-import com.habitrpg.android.habitica.models.user.SubscriptionPlan
-import com.habitrpg.android.habitica.ui.fragments.FragmentTestCase
-import io.github.kakaocup.kakao.common.views.KView
-import io.github.kakaocup.kakao.screen.Screen
-import io.github.kakaocup.kakao.text.KTextView
-import io.mockk.MockKAdditionalAnswerScope
-import io.mockk.coEvery
-import io.mockk.mockk
-import io.mockk.spyk
-import io.mockk.verify
-import org.junit.Test
-import org.junit.runner.RunWith
-import org.solovyev.android.checkout.Sku
-
+/*
 class GemPurchaseScreen: Screen<GemPurchaseScreen>() {
     val gems4View = KView { withId(R.id.gems_4_view) }
     val gems4Button = KTextView {
@@ -42,11 +21,6 @@ class GemPurchaseScreen: Screen<GemPurchaseScreen>() {
     val gems84Button = KTextView {
         withId(R.id.purchase_button)
         isDescendantOfA {  withId(R.id.gems_84_view) }
-    }
-
-    val subscriptionPromo = KView { withId(R.id.subscription_promo) }
-    val subscriptionPromoButton = KView { withId(R.id.button)
-        isDescendantOfA { withId(R.id.subscription_promo) }
     }
 }
 
@@ -166,4 +140,4 @@ class GemsPurchaseFragmentTest :
             subscriptionPromo.isGone()
         }
     }
-}
+}*/

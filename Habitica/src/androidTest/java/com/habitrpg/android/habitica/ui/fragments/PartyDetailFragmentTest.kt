@@ -20,7 +20,7 @@ import io.reactivex.rxjava3.core.Flowable
 import org.junit.Test
 import org.junit.runner.RunWith
 
-class PartyDetailScreen: Screen<PartyDetailScreen>() {
+class PartyDetailScreen : Screen<PartyDetailScreen>() {
     val titleView = KTextView { withId(R.id.title_view) }
     val newQuestButton = KButton { withId(R.id.new_quest_button) }
     val questDetailButton = KButton { withId(R.id.quest_detail_button) }
@@ -30,7 +30,7 @@ class PartyDetailScreen: Screen<PartyDetailScreen>() {
 
 @LargeTest
 @RunWith(AndroidJUnit4::class)
-class PartyDetailFragmentTest: FragmentTestCase<PartyDetailFragment, FragmentPartyDetailBinding, PartyDetailScreen>() {
+class PartyDetailFragmentTest : FragmentTestCase<PartyDetailFragment, FragmentPartyDetailBinding, PartyDetailScreen>() {
     private lateinit var viewModel: PartyViewModel
     override val screen = PartyDetailScreen()
 
@@ -41,7 +41,7 @@ class PartyDetailFragmentTest: FragmentTestCase<PartyDetailFragment, FragmentPar
         viewModel = PartyViewModel(false)
         viewModel.socialRepository = socialRepository
         viewModel.userRepository = userRepository
-        viewModel.notificationsManager= mockk(relaxed = true)
+        viewModel.notificationsManager = mockk(relaxed = true)
         scenario = launchFragmentInContainer(null, R.style.MainAppTheme) {
             fragment = spyk()
             fragment.shouldInitializeComponent = false

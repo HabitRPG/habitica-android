@@ -5,7 +5,7 @@ import android.content.Context
 import android.content.res.Configuration
 import android.util.TypedValue
 import android.view.LayoutInflater
-import java.util.*
+import java.util.Locale
 
 val Context.layoutInflater: LayoutInflater
     get() = this.getSystemService(Service.LAYOUT_INFLATER_SERVICE) as LayoutInflater

@@ -10,7 +10,7 @@ import androidx.core.app.NotificationManagerCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.withImmutableFlag
 import com.habitrpg.android.habitica.ui.activities.MainActivity
-import java.util.*
+import java.util.Date
 
 /**
  * Created by keithholliday on 6/28/16.

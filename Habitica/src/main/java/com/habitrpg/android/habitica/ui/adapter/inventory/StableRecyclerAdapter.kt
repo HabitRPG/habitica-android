@@ -11,10 +11,15 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ShopHeaderBinding
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.helpers.MainNavigationController
-import com.habitrpg.android.habitica.models.inventory.*
+import com.habitrpg.android.habitica.models.inventory.Animal
+import com.habitrpg.android.habitica.models.inventory.Egg
+import com.habitrpg.android.habitica.models.inventory.Food
+import com.habitrpg.android.habitica.models.inventory.HatchingPotion
+import com.habitrpg.android.habitica.models.inventory.Mount
+import com.habitrpg.android.habitica.models.inventory.Pet
+import com.habitrpg.android.habitica.models.inventory.StableSection
 import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.OwnedMount
-import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.fragments.inventory.stable.StableFragmentDirections
 import com.habitrpg.android.habitica.ui.helpers.loadImage
 import com.habitrpg.android.habitica.ui.viewHolders.MountViewHolder
@@ -77,7 +82,7 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     fun setOwnedItems(ownedItems: Map<String, OwnedItem>) {
         this.ownedItems = ownedItems
-        ownsSaddles = if (ownedItems.containsKey("Saddle-food")) (ownedItems["Saddle-food"]?.numberOwned ?: 0)> 0 else false
+        ownsSaddles = if (ownedItems.containsKey("Saddle-food")) (ownedItems["Saddle-food"]?.numberOwned ?: 0) > 0 else false
         notifyDataSetChanged()
     }
 

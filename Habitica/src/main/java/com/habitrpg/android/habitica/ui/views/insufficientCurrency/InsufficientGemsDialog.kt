@@ -78,7 +78,6 @@ class InsufficientGemsDialog(context: Context, var gemPrice: Int) : Insufficient
                     }
                 }
 
-
                 addButton(R.string.see_other_options, false) { _, _ -> MainNavigationController.navigate(R.id.gemPurchaseActivity, bundleOf(Pair("openSubscription", false))) }
             } else {
                 contentView.findViewById<LinearLayout>(R.id.purchase_wrapper).visibility = View.GONE

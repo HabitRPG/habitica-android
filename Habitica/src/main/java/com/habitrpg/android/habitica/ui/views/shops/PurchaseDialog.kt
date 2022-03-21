@@ -27,7 +27,10 @@ import com.habitrpg.android.habitica.models.shops.Shop
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.User
-import com.habitrpg.android.habitica.ui.views.*
+import com.habitrpg.android.habitica.ui.views.CurrencyView
+import com.habitrpg.android.habitica.ui.views.CurrencyViews
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
+import com.habitrpg.android.habitica.ui.views.SnackbarActivity
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientGemsDialog
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientGoldDialog
@@ -37,7 +40,11 @@ import com.habitrpg.android.habitica.ui.views.tasks.form.StepperValueFormView
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
 import kotlin.math.max

@@ -1,7 +1,5 @@
 package com.habitrpg.android.habitica.models
 
-import com.habitrpg.android.habitica.models.tasks.Task
-import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 

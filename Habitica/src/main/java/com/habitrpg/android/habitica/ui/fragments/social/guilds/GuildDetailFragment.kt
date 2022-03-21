@@ -33,7 +33,6 @@ import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import java.util.*
 import javax.inject.Inject
 import javax.inject.Named
 

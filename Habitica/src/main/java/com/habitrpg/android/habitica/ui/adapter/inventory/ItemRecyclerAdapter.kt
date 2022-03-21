@@ -9,7 +9,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ItemItemBinding
 import com.habitrpg.android.habitica.extensions.layoutInflater
-import com.habitrpg.android.habitica.models.inventory.*
+import com.habitrpg.android.habitica.models.inventory.Egg
+import com.habitrpg.android.habitica.models.inventory.Food
+import com.habitrpg.android.habitica.models.inventory.HatchingPotion
+import com.habitrpg.android.habitica.models.inventory.Item
+import com.habitrpg.android.habitica.models.inventory.Pet
+import com.habitrpg.android.habitica.models.inventory.QuestContent
+import com.habitrpg.android.habitica.models.inventory.SpecialItem
 import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.OwnedPet
 import com.habitrpg.android.habitica.ui.adapter.BaseRecyclerViewAdapter
@@ -21,7 +27,8 @@ import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.subjects.PublishSubject
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
+import java.util.Locale
 
 class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<OwnedItem, ItemRecyclerAdapter.ItemViewHolder>() {
 
@@ -45,7 +52,6 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<OwnedI
     private val hatchPetSubject = PublishSubject.create<Pair<HatchingPotion, Egg>>()
     private val feedPetSubject = PublishSubject.create<Food>()
     private val useSpecialSubject = PublishSubject.create<SpecialItem>()
-
 
     fun getSellItemFlowable(): Flowable<OwnedItem> {
         return sellItemEvents.toFlowable(BackpressureStrategy.DROP)
@@ -121,7 +127,6 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<OwnedI
                 } else {
                     imageName = "shop_" + ownedItem.key
                 }
-
             } else {
                 val type = when (ownedItem.itemType) {
                     "eggs" -> "Egg"
@@ -164,10 +169,9 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<OwnedI
                     val specialItem = item as SpecialItem
                     if (specialItem.isMysteryItem && ownedItem?.numberOwned ?: 0 > 0) {
                         menu.addMenuItem(BottomSheetMenuItem(resources.getString(R.string.open)))
-                    } else if (ownedItem?.numberOwned ?: 0 > 0){
+                    } else if (ownedItem?.numberOwned ?: 0 > 0) {
                         menu.addMenuItem(BottomSheetMenuItem(resources.getString(R.string.use_item)))
                     }
-
                 }
                 menu.setSelectionRunnable { index ->
                     item?.let { selectedItem ->

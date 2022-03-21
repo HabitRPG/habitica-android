@@ -75,20 +75,20 @@ class SkillsFragment : BaseMainFragment<FragmentSkillsBinding>() {
         adapter?.mana = user.stats?.mp ?: 0.0
         adapter?.level = user.stats?.lvl ?: 0
         adapter?.specialItems = user.items?.special
-            Flowable.combineLatest(
-                userRepository.getSkills(user),
-                userRepository.getSpecialItems(user),
-                { skills, items ->
-                    val allEntries = mutableListOf<Skill>()
-                    for (skill in skills) {
-                        allEntries.add(skill)
-                    }
-                    for (item in items) {
-                        allEntries.add(item)
-                    }
-                    return@combineLatest allEntries
+        Flowable.combineLatest(
+            userRepository.getSkills(user),
+            userRepository.getSpecialItems(user),
+            { skills, items ->
+                val allEntries = mutableListOf<Skill>()
+                for (skill in skills) {
+                    allEntries.add(skill)
                 }
-            ).subscribe({ skills -> adapter?.setSkillList(skills) }, RxErrorHandler.handleEmptyError())
+                for (item in items) {
+                    allEntries.add(item)
+                }
+                return@combineLatest allEntries
+            }
+        ).subscribe({ skills -> adapter?.setSkillList(skills) }, RxErrorHandler.handleEmptyError())
     }
 
     private fun onSkillSelected(skill: Skill) {

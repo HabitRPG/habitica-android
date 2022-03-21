@@ -6,7 +6,12 @@ import android.content.SharedPreferences
 import android.graphics.PorterDuff
 import android.os.Bundle
 import android.text.format.DateUtils
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
@@ -21,7 +26,10 @@ import com.habitrpg.android.habitica.data.TagRepository
 import com.habitrpg.android.habitica.databinding.FragmentViewpagerBinding
 import com.habitrpg.android.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.extensions.setTintWith
-import com.habitrpg.android.habitica.helpers.*
+import com.habitrpg.android.habitica.helpers.AmplitudeManager
+import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.TaskFilterHelper
 import com.habitrpg.android.habitica.models.tasks.TaskType
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.activities.TaskFormActivity
@@ -29,10 +37,10 @@ import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.views.navigation.HabiticaBottomNavigationViewListener
 import com.habitrpg.android.habitica.ui.views.tasks.TaskFilterDialog
 import io.reactivex.rxjava3.disposables.Disposable
-import java.util.*
+import java.util.Date
+import java.util.WeakHashMap
 import javax.inject.Inject
 import javax.inject.Named
-import kotlin.collections.ArrayList
 
 class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.OnQueryTextListener, HabiticaBottomNavigationViewListener {
 

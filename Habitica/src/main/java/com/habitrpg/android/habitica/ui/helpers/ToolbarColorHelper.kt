@@ -29,7 +29,6 @@ import androidx.preference.PreferenceManager
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.extensions.waitForLayout
-import java.util.*
 
 /**
  * Helper class that iterates through Toolbar views, and sets dynamically icons and texts color

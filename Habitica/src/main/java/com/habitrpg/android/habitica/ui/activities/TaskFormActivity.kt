@@ -9,7 +9,11 @@ import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
-import android.view.*
+import android.view.Menu
+import android.view.MenuItem
+import android.view.MotionEvent
+import android.view.View
+import android.view.WindowManager
 import android.widget.CheckBox
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatCheckBox
@@ -40,7 +44,7 @@ import com.habitrpg.android.habitica.models.tasks.TaskType
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import io.realm.RealmList
-import java.util.*
+import java.util.Date
 import javax.inject.Inject
 
 class TaskFormActivity : BaseActivity() {
@@ -242,7 +246,6 @@ class TaskFormActivity : BaseActivity() {
                 )
                 initialTaskInstance = configureTask(Task())
             }
-
         }
         configureForm()
     }
@@ -274,9 +277,11 @@ class TaskFormActivity : BaseActivity() {
                 isDiscardCancelled = true
                 alert.dismiss()
             }
-            alert.setOnDismissListener(DialogInterface.OnDismissListener {
-                isDiscardCancelled = true
-            })
+            alert.setOnDismissListener(
+                DialogInterface.OnDismissListener {
+                    isDiscardCancelled = true
+                }
+            )
             alert.show()
         } else {
             super.onBackPressed()
@@ -539,13 +544,12 @@ class TaskFormActivity : BaseActivity() {
         resultIntent.putExtra(TASK_TYPE_KEY, taskType)
         if (!isChallengeTask) {
             if (isCreating) {
-                if (isDiscardCancelled){
+                if (isDiscardCancelled) {
                     analyticsManager.logEvent("back_to_task", bundleOf(Pair("is_creating", isCreating)))
                 }
                 taskRepository.createTaskInBackground(thisTask)
-
             } else {
-                if (isDiscardCancelled){
+                if (isDiscardCancelled) {
                     analyticsManager.logEvent("back_to_task", bundleOf(Pair("is_creating", isCreating)))
                 }
                 taskRepository.updateTaskInBackground(thisTask)
@@ -648,21 +652,21 @@ class TaskFormActivity : BaseActivity() {
                         taskRepository.unlinkAllTasks(task.challengeID, "keep-all")
                             .flatMap { userRepository.retrieveUser(true, true) }
                             .subscribe(
-                            {
-                                finish()
-                            },
-                            RxErrorHandler.handleEmptyError()
-                        )
+                                {
+                                    finish()
+                                },
+                                RxErrorHandler.handleEmptyError()
+                            )
                     }
                     dialog.addButton(this.getString(R.string.delete_x_tasks, taskCount), false, true) { _, _ ->
                         taskRepository.unlinkAllTasks(task.challengeID, "remove-all")
                             .flatMap { userRepository.retrieveUser(true, true) }
                             .subscribe(
-                            {
-                                finish()
-                            },
-                            RxErrorHandler.handleEmptyError()
-                        )
+                                {
+                                    finish()
+                                },
+                                RxErrorHandler.handleEmptyError()
+                            )
                     }
                     dialog.setExtraCloseButtonVisibility(View.VISIBLE)
                     dialog.show()

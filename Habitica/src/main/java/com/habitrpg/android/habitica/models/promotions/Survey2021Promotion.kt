@@ -12,7 +12,7 @@ import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.ui.fragments.PromoInfoFragment
 import com.habitrpg.android.habitica.ui.fragments.PromoWebFragmentArgs
 import com.habitrpg.android.habitica.ui.views.promo.PromoMenuView
-import java.util.*
+import java.util.Date
 
 class Survey2021Promotion : HabiticaPromotion(), HabiticaWebPromotion {
     override val identifier: String

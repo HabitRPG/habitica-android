@@ -16,7 +16,6 @@ import com.habitrpg.android.habitica.models.inventory.StableSection
 import com.habitrpg.android.habitica.models.user.OwnedMount
 import com.habitrpg.android.habitica.ui.adapter.inventory.MountDetailRecyclerAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
-import com.habitrpg.android.habitica.ui.helpers.MarginDecoration
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import javax.inject.Inject

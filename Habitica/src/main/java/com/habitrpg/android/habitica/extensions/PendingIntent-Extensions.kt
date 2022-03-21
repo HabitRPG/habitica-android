@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.extensions
 
 import android.app.PendingIntent
-import android.content.Context
 import android.os.Build
 
 fun withImmutableFlag(flags: Int): Int {

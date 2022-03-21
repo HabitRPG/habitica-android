@@ -4,7 +4,6 @@ import com.amplitude.api.Amplitude
 import com.habitrpg.android.habitica.BuildConfig
 import org.json.JSONException
 import org.json.JSONObject
-import java.util.HashMap
 
 object AmplitudeManager {
     var EVENT_CATEGORY_BEHAVIOUR = "behaviour"

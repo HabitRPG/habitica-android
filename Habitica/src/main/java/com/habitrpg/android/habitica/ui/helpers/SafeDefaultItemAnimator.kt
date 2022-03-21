@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.habitrpg.shared.habitica.HLogger
 import com.habitrpg.shared.habitica.LogLevel
-import java.util.*
 
 /**
  * Created by phillip on 02.10.17.

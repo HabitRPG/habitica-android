@@ -11,7 +11,6 @@ import com.habitrpg.android.habitica.models.WorldState
 import com.habitrpg.android.habitica.models.promotions.HabiticaPromotion
 import com.habitrpg.android.habitica.models.promotions.HabiticaWebPromotion
 import com.habitrpg.android.habitica.models.promotions.getHabiticaPromotionFromKey
-import java.util.*
 
 class AppConfigManager(contentRepository: ContentRepository?) {
 

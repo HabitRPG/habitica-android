@@ -10,7 +10,6 @@ import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.interactors.NotifyUserUseCase
 import com.habitrpg.android.habitica.models.responses.TaskScoringResult
-import java.util.*
 import javax.inject.Inject
 
 abstract class BaseWidgetProvider : AppWidgetProvider() {

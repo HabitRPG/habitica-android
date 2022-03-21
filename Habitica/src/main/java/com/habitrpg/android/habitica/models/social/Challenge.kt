@@ -1,14 +1,13 @@
 package com.habitrpg.android.habitica.models.social
 
 import com.habitrpg.android.habitica.models.BaseMainObject
-import com.habitrpg.android.habitica.models.BaseObject
 import com.habitrpg.android.habitica.models.tasks.TasksOrder
 import com.habitrpg.android.habitica.models.user.User
 import io.realm.RealmModel
 import io.realm.RealmObject
 import io.realm.annotations.Ignore
 import io.realm.annotations.PrimaryKey
-import java.util.*
+import java.util.Date
 
 open class Challenge : RealmObject(), BaseMainObject {
 

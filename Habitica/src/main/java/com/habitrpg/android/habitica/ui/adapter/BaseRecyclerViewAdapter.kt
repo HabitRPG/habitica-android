@@ -1,12 +1,10 @@
 package com.habitrpg.android.habitica.ui.adapter
 
-import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.models.BaseMainObject
-import com.habitrpg.android.habitica.models.BaseObject
 
-
-open class DiffCallback<T: BaseMainObject>(protected val oldList: List<BaseMainObject>, protected val newList: List<BaseMainObject>) :
+open class DiffCallback<T : BaseMainObject>(protected val oldList: List<BaseMainObject>, protected val newList: List<BaseMainObject>) :
     DiffUtil.Callback() {
 
     override fun getOldListSize(): Int {
@@ -28,7 +26,7 @@ open class DiffCallback<T: BaseMainObject>(protected val oldList: List<BaseMainO
     }
 }
 
-abstract class BaseRecyclerViewAdapter<T: BaseMainObject, VH: RecyclerView.ViewHolder> : RecyclerView.Adapter<VH>() {
+abstract class BaseRecyclerViewAdapter<T : BaseMainObject, VH : RecyclerView.ViewHolder> : RecyclerView.Adapter<VH>() {
 
     open fun getDiffCallback(oldList: List<T>, newList: List<T>): DiffCallback<T>? {
         return null

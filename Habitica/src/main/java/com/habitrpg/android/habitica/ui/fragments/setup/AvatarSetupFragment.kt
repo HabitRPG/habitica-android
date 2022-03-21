@@ -21,7 +21,7 @@ import com.habitrpg.android.habitica.ui.activities.SetupActivity
 import com.habitrpg.android.habitica.ui.adapter.setup.CustomizationSetupAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.views.setup.AvatarCategoryView
-import java.util.*
+import java.util.Random
 import javax.inject.Inject
 
 class AvatarSetupFragment : BaseFragment<FragmentSetupAvatarBinding>() {

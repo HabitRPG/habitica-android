@@ -2,14 +2,12 @@ name: Android CI
 
 on:
   push:
-    branches: [ develop ]
+    branches: [ develop, release ]
   pull_request:
-    branches: [ develop ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
     - name: set up JDK 11
@@ -18,29 +16,17 @@ jobs:
         java-version: '11'
         distribution: 'adopt'
         cache: gradle
+    - name: Prepare
+      run: ./.github/actions/prepare-run
+    - name: Validate Gradle wrapper
+      uses: gradle/wrapper-validation-action
+    - name: Run with Gradle
+      uses: gradle/gradle-build-action
+      with:
+        arguments: assembleProdDebug -PdisablePreDex
 
-    - name: Grant execute permission for gradlew
-      run: chmod +x gradlew
-    - name: copy properties file
-      uses: canastro/copy-file-action@master
-      with:
-        source: "habitica.properties.example"
-        target: "habitica.properties"
-    - name: copy resources file
-      uses: canastro/copy-file-action@master
-      with:
-        source: "habitica.resources.example"
-        target: "habitica.resources"
-    - name: copy google services file
-      uses: canastro/copy-file-action@master
-      with:
-        source: "Habitica/google-services.json.example"
-        target: "Habitica/google-services.json"
-    - name: Build with Gradle
-      run: ./gradlew assembleProdDebug -PdisablePreDex
-  test:
+  unit-test:
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
     - name: set up JDK 11
@@ -49,28 +35,36 @@ jobs:
         java-version: '11'
         distribution: 'adopt'
         cache: gradle
-    - name: Grant execute permission for gradlew
-      run: chmod +x gradlew
-    - name: copy properties file
-      uses: canastro/copy-file-action@master
+    - name: Prepare
+      run: ./.github/actions/prepare-run
+    - name: Validate Gradle wrapper
+      uses: gradle/wrapper-validation-action
+    - name: Run with Gradle
+      uses: gradle/gradle-build-action
       with:
-        source: "habitica.properties.example"
-        target: "habitica.properties"
-    - name: copy resources file
-      uses: canastro/copy-file-action@master
+        arguments: testProdDebugUnitTest
+
+  ui-test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: set up JDK 11
+      uses: actions/setup-java@v2
       with:
-        source: "habitica.resources.example"
-        target: "habitica.resources"
-    - name: copy google services file
-      uses: canastro/copy-file-action@master
+        java-version: '11'
+        distribution: 'adopt'
+        cache: gradle
+    - name: Prepare
+      run: ./.github/actions/prepare-run
+    - name: Validate Gradle wrapper
+      uses: gradle/wrapper-validation-action
+    - name: Run with Gradle
+      uses: gradle/gradle-build-action
       with:
-        source: "Habitica/google-services.json.example"
-        target: "Habitica/google-services.json"
-    - name: Run Tests
-      run: ./gradlew testProdDebugUnitTest
+        arguments: testProdDebugUnitTest
+
   lint:
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
     - name: set up JDK 11
@@ -79,28 +73,17 @@ jobs:
         java-version: '11'
         distribution: 'adopt'
         cache: gradle
-    - name: copy properties file
-      uses: canastro/copy-file-action@master
+    - name: Prepare
+      run: ./.github/actions/prepare-run
+    - name: Validate Gradle wrapper
+      uses: gradle/wrapper-validation-action
+    - name: Run with Gradle
+      uses: gradle/gradle-build-action
       with:
-        source: "habitica.properties.example"
-        target: "habitica.properties"
-    - name: copy resources file
-      uses: canastro/copy-file-action@master
-      with:
-        source: "habitica.resources.example"
-        target: "habitica.resources"
-    - name: copy google services file
-      uses: canastro/copy-file-action@master
-      with:
-        source: "Habitica/google-services.json.example"
-        target: "Habitica/google-services.json"
-    - name: Grant execute permission for gradlew
-      run: chmod +x gradlew
-    - name: Run Ktlint
-      run: ./gradlew ktlint
+        arguments: ktlint
+
   detekt:
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
     - name: set up JDK 11
@@ -109,25 +92,14 @@ jobs:
         java-version: '11'
         distribution: 'adopt'
         cache: gradle
-    - name: copy properties file
-      uses: canastro/copy-file-action@master
+    - name: Prepare
+      run: ./.github/actions/prepare-run
+    - name: Validate Gradle wrapper
+      uses: gradle/wrapper-validation-action
+    - name: Run with Gradle
+      uses: gradle/gradle-build-action
       with:
-        source: "habitica.properties.example"
-        target: "habitica.properties"
-    - name: copy resources file
-      uses: canastro/copy-file-action@master
-      with:
-        source: "habitica.resources.example"
-        target: "habitica.resources"
-    - name: copy google services file
-      uses: canastro/copy-file-action@master
-      with:
-        source: "Habitica/google-services.json.example"
-        target: "Habitica/google-services.json"
-    - name: Grant execute permission for gradlew
-      run: chmod +x gradlew
-    - name: Run detekt
-      run: ./gradlew detekt
+        arguments: detekt
     - name: Upload SARIF to Github using the upload-sarif action
       uses: github/codeql-action/upload-sarif@v1
       if: ${{ always() }}

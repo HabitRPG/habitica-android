@@ -2,18 +2,29 @@ package com.habitrpg.android.habitica.data.local.implementation
 
 import com.habitrpg.android.habitica.data.local.InventoryLocalRepository
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.android.habitica.models.inventory.*
+import com.habitrpg.android.habitica.models.inventory.Egg
+import com.habitrpg.android.habitica.models.inventory.Equipment
+import com.habitrpg.android.habitica.models.inventory.Food
+import com.habitrpg.android.habitica.models.inventory.HatchingPotion
+import com.habitrpg.android.habitica.models.inventory.Item
+import com.habitrpg.android.habitica.models.inventory.Mount
+import com.habitrpg.android.habitica.models.inventory.Pet
+import com.habitrpg.android.habitica.models.inventory.QuestContent
+import com.habitrpg.android.habitica.models.inventory.SpecialItem
 import com.habitrpg.android.habitica.models.shops.ShopItem
-import com.habitrpg.android.habitica.models.user.*
+import com.habitrpg.android.habitica.models.user.Items
+import com.habitrpg.android.habitica.models.user.OwnedItem
+import com.habitrpg.android.habitica.models.user.OwnedMount
+import com.habitrpg.android.habitica.models.user.OwnedPet
+import com.habitrpg.android.habitica.models.user.User
 import hu.akarnokd.rxjava3.bridge.RxJavaBridge
 import io.reactivex.rxjava3.core.Flowable
 import io.realm.Realm
 import io.realm.RealmObject
 import io.realm.Sort
-import io.realm.kotlin.isManaged
 import java.text.SimpleDateFormat
-import java.util.*
-import kotlin.collections.HashMap
+import java.util.Date
+import java.util.Locale
 
 class RealmInventoryLocalRepository(realm: Realm) : RealmContentLocalRepository(realm), InventoryLocalRepository {
     override fun getQuestContent(keys: List<String>): Flowable<out List<QuestContent>> {

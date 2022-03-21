@@ -11,7 +11,15 @@ import com.habitrpg.android.habitica.models.ContentGear
 import com.habitrpg.android.habitica.models.ContentResult
 import com.habitrpg.android.habitica.models.FAQArticle
 import com.habitrpg.android.habitica.models.Skill
-import com.habitrpg.android.habitica.models.inventory.*
+import com.habitrpg.android.habitica.models.inventory.Customization
+import com.habitrpg.android.habitica.models.inventory.Egg
+import com.habitrpg.android.habitica.models.inventory.Equipment
+import com.habitrpg.android.habitica.models.inventory.Food
+import com.habitrpg.android.habitica.models.inventory.HatchingPotion
+import com.habitrpg.android.habitica.models.inventory.Mount
+import com.habitrpg.android.habitica.models.inventory.Pet
+import com.habitrpg.android.habitica.models.inventory.QuestContent
+import com.habitrpg.android.habitica.models.inventory.SpecialItem
 import io.realm.RealmList
 import java.lang.reflect.Type
 

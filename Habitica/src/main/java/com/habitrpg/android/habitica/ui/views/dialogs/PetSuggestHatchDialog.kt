@@ -23,7 +23,7 @@ import com.habitrpg.android.habitica.ui.views.CurrencyView
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Observable
-import java.util.*
+import java.util.Locale
 import javax.inject.Inject
 
 class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
@@ -174,7 +174,8 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
                 HatchPetUseCase.RequestValues(
                     potion, egg,
                     it
-                )).subscribeWithErrorHandler {}
+                )
+            ).subscribeWithErrorHandler {}
         }
     }
 

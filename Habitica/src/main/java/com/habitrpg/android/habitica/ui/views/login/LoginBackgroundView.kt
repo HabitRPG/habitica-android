@@ -11,7 +11,7 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import com.habitrpg.android.habitica.R
-import java.util.*
+import java.util.Random
 
 class LoginBackgroundView(context: Context, attrs: AttributeSet?) : RelativeLayout(context, attrs) {
     private val random: Random = Random()

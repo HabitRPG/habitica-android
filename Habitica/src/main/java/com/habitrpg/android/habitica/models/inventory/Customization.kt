@@ -3,7 +3,7 @@ package com.habitrpg.android.habitica.models.inventory
 import com.habitrpg.android.habitica.models.BaseObject
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
-import java.util.*
+import java.util.Date
 
 open class Customization : RealmObject(), BaseObject {
     @PrimaryKey

@@ -6,7 +6,6 @@ import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.tasks.TaskType
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
-import java.util.*
 import kotlin.math.min
 import kotlin.math.pow
 import kotlin.math.roundToLong

@@ -5,7 +5,11 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.view.*
+import android.view.Menu
+import android.view.MenuItem
+import android.view.MotionEvent
+import android.view.View
+import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
@@ -18,7 +22,6 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ChallengeRepository
 import com.habitrpg.android.habitica.data.SocialRepository
-import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.ActivityCreateChallengeBinding
 import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.extensions.getThemeColor
@@ -40,8 +43,7 @@ import io.reactivex.rxjava3.core.Flowable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import java.lang.NumberFormatException
-import java.util.*
+import java.util.UUID
 import javax.inject.Inject
 import javax.inject.Named
 

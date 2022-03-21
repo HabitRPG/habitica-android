@@ -24,5 +24,4 @@ class TodosRecyclerViewAdapter(layoutResource: Int, taskFilterHelper: TaskFilter
             super.onCreateViewHolder(parent, viewType)
         }
     }
-
 }

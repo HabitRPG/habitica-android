@@ -22,7 +22,7 @@ import com.habitrpg.android.habitica.ui.helpers.EmojiParser
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import io.realm.Case
 import io.realm.OrderedRealmCollection
-import java.util.*
+import java.util.Locale
 
 class GuildListAdapter : BaseRecyclerViewAdapter<Group, RecyclerView.ViewHolder>(), Filterable {
 

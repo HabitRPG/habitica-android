@@ -22,7 +22,9 @@ import com.habitrpg.android.habitica.models.tasks.TaskType
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import io.reactivex.rxjava3.functions.BiFunction
-import java.util.*
+import java.util.Calendar
+import java.util.Date
+import java.util.Random
 import javax.inject.Inject
 
 @Suppress("DEPRECATION")

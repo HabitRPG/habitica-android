@@ -1,21 +1,27 @@
 package com.habitrpg.android.habitica.helpers
 
 import android.app.Activity
-import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
-import android.os.Bundle
 import androidx.core.content.edit
 import androidx.core.os.bundleOf
-import com.android.billingclient.api.*
-import com.android.billingclient.api.BillingClient.ConnectionState.DISCONNECTED
-import com.google.api.Billing
-import com.google.firebase.analytics.FirebaseAnalytics
+import com.android.billingclient.api.AcknowledgePurchaseParams
+import com.android.billingclient.api.BillingClient
+import com.android.billingclient.api.BillingClientStateListener
+import com.android.billingclient.api.BillingFlowParams
+import com.android.billingclient.api.BillingResult
+import com.android.billingclient.api.ConsumeParams
+import com.android.billingclient.api.Purchase
+import com.android.billingclient.api.PurchasesResponseListener
+import com.android.billingclient.api.PurchasesUpdatedListener
+import com.android.billingclient.api.SkuDetails
+import com.android.billingclient.api.SkuDetailsParams
+import com.android.billingclient.api.queryPurchasesAsync
+import com.android.billingclient.api.querySkuDetails
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.ApiClient
-import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.addOkButton
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.models.IAPGift
@@ -28,12 +34,14 @@ import com.habitrpg.android.habitica.ui.activities.PurchaseActivity
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import io.reactivex.rxjava3.core.Flowable
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import retrofit2.HttpException
-
-import java.util.*
-
+import java.util.Date
 
 open class PurchaseHandler(
     private val context: Context,
@@ -72,7 +80,6 @@ open class PurchaseHandler(
         }
     }
 
-
     init {
         startListening()
     }
@@ -86,9 +93,9 @@ open class PurchaseHandler(
         DISCONNECTED;
 
         val canMaybePurchase: Boolean
-        get() {
-            return this == UNITITIALIZED || this == READY
-        }
+            get() {
+                return this == UNITITIALIZED || this == READY
+            }
     }
 
     fun startListening() {
@@ -169,7 +176,6 @@ open class PurchaseHandler(
             .setPurchaseToken(purchase.purchaseToken)
             .build()
         billingClient.consumeAsync(params) { result, message ->
-
         }
     }
 
@@ -209,7 +215,8 @@ open class PurchaseHandler(
                 val plan = userViewModel.user.value?.purchased?.plan
                 if (plan?.isActive == true) {
                     if (plan.additionalData?.data?.orderId == purchase.orderId &&
-                        (plan.dateTerminated != null == purchase.isAutoRenewing)) {
+                        (plan.dateTerminated != null == purchase.isAutoRenewing)
+                    ) {
                         return
                     }
                 }
@@ -290,7 +297,6 @@ open class PurchaseHandler(
         return apiClient.cancelSubscription()
             .flatMap { userViewModel.userRepository.retrieveUser(false, true) }
     }
-
 
     private fun durationString(sku: String): String {
         return when (sku) {
@@ -383,7 +389,7 @@ open class PurchaseHandler(
 suspend fun retryUntil(
     times: Int = Int.MAX_VALUE,
     initialDelay: Long = 100, // 0.1 second
-    maxDelay: Long = 1000,    // 1 second
+    maxDelay: Long = 1000, // 1 second
     factor: Double = 2.0,
     block: suspend () -> Boolean
 ) {

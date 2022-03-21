@@ -11,7 +11,6 @@ import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.databinding.FragmentPartyInviteBinding
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
-import java.util.*
 import javax.inject.Inject
 
 class PartyInviteFragment : BaseFragment<FragmentPartyInviteBinding>() {

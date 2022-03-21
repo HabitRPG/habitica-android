@@ -15,8 +15,6 @@ import com.habitrpg.android.habitica.ui.activities.MainActivity
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.functions.Consumer
-import java.util.ArrayList
-import java.util.HashMap
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 

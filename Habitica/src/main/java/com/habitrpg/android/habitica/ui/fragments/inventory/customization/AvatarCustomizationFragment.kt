@@ -11,7 +11,6 @@ import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.CustomizationRepository
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBinding
-import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.adapter.CustomizationRecyclerViewAdapter

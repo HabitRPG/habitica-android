@@ -9,13 +9,16 @@ import com.habitrpg.android.habitica.models.Achievement
 import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.responses.PostChatMessageResult
-import com.habitrpg.android.habitica.models.social.*
+import com.habitrpg.android.habitica.models.social.ChatMessage
+import com.habitrpg.android.habitica.models.social.FindUsernameResult
+import com.habitrpg.android.habitica.models.social.Group
+import com.habitrpg.android.habitica.models.social.GroupMembership
+import com.habitrpg.android.habitica.models.social.InboxConversation
 import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Single
 import retrofit2.HttpException
-import java.util.*
-import kotlin.collections.HashMap
+import java.util.UUID
 
 class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: ApiClient, userID: String) : BaseRepositoryImpl<SocialLocalRepository>(localRepository, apiClient, userID), SocialRepository {
     override fun transferGroupOwnership(groupID: String, userID: String): Flowable<Group> {
