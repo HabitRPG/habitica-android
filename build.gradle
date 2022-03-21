@@ -30,7 +30,7 @@ allprojects {
 }
 
 detekt {
-    input = files("Habitica/src/main/java")
+    source = files("Habitica/src/main/java")
     config = files("detekt.yml")
     baseline = file("${rootProject.projectDir}/detekt_baseline.xml")
     reports {
@@ -46,5 +46,16 @@ detekt {
             enabled = true
             destination = file("build/reports/detekt.sarif")
         }
+    }
+}
+
+tasks.named("detekt").configure {
+    reports {
+        xml.required.set(false)
+        html.required.set(true)
+        html.outputLocation.set(file("build/reports/detekt.html"))
+        txt.required.set(false)
+        sarif.required.set(true)
+        sarif.outputLocation.set(file("build/reports/detekt.sarif"))
     }
 }
