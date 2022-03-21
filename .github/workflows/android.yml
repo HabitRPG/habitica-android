@@ -61,7 +61,7 @@ jobs:
     - name: Run with Gradle
       uses: gradle/gradle-build-action
       with:
-        arguments: testProdDebugUnitTest
+        arguments: connectedProdDebugAndroidTest
 
   lint:
     runs-on: ubuntu-latest

@@ -21,6 +21,7 @@ import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.stats.BulkAllocateStatsDialog
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import javax.inject.Inject
 import kotlin.math.min
 
@@ -83,7 +84,9 @@ class StatsFragment : BaseMainFragment<FragmentStatsBinding>() {
         }
 
         compositeSubscription.add(
-            userRepository.getUser().subscribe(
+            userRepository.getUser()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
                 { user ->
                     canAllocatePoints = user.stats?.lvl ?: 0 >= 10 && user.stats?.points ?: 0 > 0
                     binding?.unlockAtLevel?.visibility = if (user.stats?.lvl ?: 0 < 10) View.VISIBLE else View.GONE

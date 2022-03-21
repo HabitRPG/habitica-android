@@ -41,6 +41,7 @@ class PartyDetailFragmentTest : FragmentTestCase<PartyDetailFragment, FragmentPa
         viewModel = PartyViewModel(false)
         viewModel.socialRepository = socialRepository
         viewModel.userRepository = userRepository
+        viewModel.userViewModel = userViewModel
         viewModel.notificationsManager = mockk(relaxed = true)
         scenario = launchFragmentInContainer(null, R.style.MainAppTheme) {
             fragment = spyk()

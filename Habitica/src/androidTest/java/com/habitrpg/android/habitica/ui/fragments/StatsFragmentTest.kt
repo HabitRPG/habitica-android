@@ -9,8 +9,10 @@ import com.habitrpg.android.habitica.models.tasks.Attribute
 import io.github.kakaocup.kakao.common.views.KView
 import io.github.kakaocup.kakao.screen.Screen
 import io.github.kakaocup.kakao.text.KButton
+import io.mockk.every
 import io.mockk.spyk
 import io.mockk.verify
+import io.reactivex.rxjava3.core.Flowable
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -61,6 +63,8 @@ class StatsFragmentTest : FragmentTestCase<StatsFragment, FragmentStatsBinding, 
         user.stats?.lvl = 20
         user.stats?.points = 30
         userSubject.onNext(user)
+
+        every { inventoryRepository.getEquipment(listOf()) } returns Flowable.just(listOf())
     }
 
     @Test

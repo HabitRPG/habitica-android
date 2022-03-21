@@ -89,7 +89,9 @@ dependencies {
     testImplementation "io.mockk:mockk-android:1.12.2"
     testImplementation 'io.kotest:kotest-assertions-core:5.0.3'
     testImplementation 'io.kotest:kotest-framework-datatest:4.6.2'
-    androidTestImplementation 'com.kaspersky.android-components:kaspresso:1.4.0'
+    androidTestImplementation ('com.kaspersky.android-components:kaspresso:1.4.0') {
+        exclude module: "protobuf-lite"
+    }
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     androidTestImplementation 'androidx.test:runner:1.4.0'
     androidTestImplementation 'androidx.test:rules:1.4.0'
@@ -184,7 +186,7 @@ android {
             // Disable fabric build ID generation for debug builds
             ext.enableCrashlytics = false
             ext.alwaysUpdateBuildId = false
-            testCoverageEnabled = true
+            testCoverageEnabled = false
             resValue "string", "content_provider", "com.habitrpg.android.habitica.debug.fileprovider"
             resValue "string", "app_name", "Habitica Debug"
         }
@@ -248,6 +250,9 @@ android {
             res.srcDirs = ['res']
             assets.srcDirs = ['assets']
         }
+        test {
+            java.srcDir("src/test/java")
+        }
         debugIAP { java.srcDirs = ['src/debug/java'] }
         release { java.srcDirs = ['src/release/java'] }
     }
@@ -281,11 +286,21 @@ android {
 android.testOptions {
     unitTests.all {
         useJUnitPlatform()
-        unitTests.returnDefaultValues = true
+        testLogging {
+            events "passed", "skipped", "failed", "standardError"
+            outputs.upToDateWhen {false}
+
+            afterSuite { desc, result ->
+                if (!desc.parent) { // will match the outermost suite
+                    def output = "Results: ${result.resultType} (${result.testCount} tests, ${result.successfulTestCount} passed, ${result.failedTestCount} failed, ${result.skippedTestCount} skipped)"
+                    def startItem = '|  ', endItem = '  |'
+                    def repeatLength = startItem.length() + output.length() + endItem.length()
+                    println('\n' + ('-' * repeatLength) + '\n' + startItem + output + endItem + '\n' + ('-' * repeatLength))
+                }
+            }
+        }
     }
     unitTests.returnDefaultValues = true
-
-    execution 'ANDROIDX_TEST_ORCHESTRATOR'
 }
 
 Properties props = new Properties()
