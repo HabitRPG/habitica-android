@@ -46,6 +46,9 @@ jobs:
 
   ui-test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        api-level: [21, 23, 29, 30, 31, 32]
     steps:
     - uses: actions/checkout@v2
     - name: set up JDK 11
@@ -58,10 +61,13 @@ jobs:
       run: ./.github/prepare-workflow
     - name: Validate Gradle wrapper
       uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
-    - name: Run with Gradle
-      uses: gradle/gradle-build-action@v2
+    - name: run tests
+      uses: reactivecircus/android-emulator-runner@v2
       with:
-        arguments: connectedProdDebugAndroid
+        api-level: ${{ matrix.api-level }}
+        arch: x86_64
+        profile: Nexus 6
+        script: ./gradlew connectedProdDebugAndroidTest
 
   lint:
     runs-on: ubuntu-latest
