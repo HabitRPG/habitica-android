@@ -14,7 +14,6 @@ import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.kaspersky.kaspresso.testcases.api.testcase.TestCase
 import io.github.kakaocup.kakao.screen.Screen
-import io.mockk.called
 import io.mockk.clearAllMocks
 import io.mockk.every
 import io.mockk.mockk
@@ -23,8 +22,6 @@ import io.mockk.slot
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.subjects.PublishSubject
-import io.realm.RealmObject
-import org.junit.After
 import org.junit.Before
 
 abstract class FragmentTestCase<F : BaseFragment<VB>, VB : ViewBinding, S : Screen<S>> : TestCase() {
