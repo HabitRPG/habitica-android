@@ -62,6 +62,8 @@ dependencies {
     implementation "io.noties.markwon:ext-strikethrough:4.6.2"
     implementation "io.noties.markwon:image:4.6.2"
     implementation "io.noties.markwon:recycler:4.6.2"
+    implementation "io.noties.markwon:linkify:4.6.2"
+
 
     // IAP Handling / Verification
     implementation "com.android.billingclient:billing-ktx:4.0.0"

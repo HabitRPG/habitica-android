@@ -7,6 +7,7 @@ import android.net.Uri
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.method.LinkMovementMethod
+import android.text.util.Linkify
 import android.widget.TextView
 import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.extensions.handleUrlClicks
@@ -21,6 +22,7 @@ import io.noties.markwon.image.ImageSizeResolverDef
 import io.noties.markwon.image.ImagesPlugin
 import io.noties.markwon.image.file.FileSchemeHandler
 import io.noties.markwon.image.network.OkHttpNetworkSchemeHandler
+import io.noties.markwon.linkify.LinkifyPlugin
 import io.noties.markwon.movement.MovementMethodPlugin
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Single
@@ -42,6 +44,8 @@ object MarkdownParser {
             )
             .usePlugin(this.createImageSizeResolverScaleDpiPlugin(context))
             .usePlugin(MovementMethodPlugin.create(LinkMovementMethod.getInstance()))
+            // will autolink all supported types
+            .usePlugin(LinkifyPlugin.create())
             .build()
     }
 
