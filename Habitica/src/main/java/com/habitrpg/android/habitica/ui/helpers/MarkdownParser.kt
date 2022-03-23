@@ -44,8 +44,7 @@ object MarkdownParser {
             )
             .usePlugin(this.createImageSizeResolverScaleDpiPlugin(context))
             .usePlugin(MovementMethodPlugin.create(LinkMovementMethod.getInstance()))
-            // will autolink all supported types
-            .usePlugin(LinkifyPlugin.create())
+            .usePlugin(LinkifyPlugin.create(Linkify.WEB_URLS))
             .build()
     }
 
