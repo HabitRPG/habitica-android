@@ -29,7 +29,6 @@ import com.habitrpg.android.habitica.models.inventory.SpecialItem
 import com.habitrpg.android.habitica.models.responses.SkillResponse
 import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.OwnedPet
-import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.BaseActivity
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.activities.SkillMemberActivity
@@ -63,7 +62,6 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
     var itemType: String? = null
     var transformationItems: MutableList<OwnedItem> = mutableListOf()
     var itemTypeText: String? = null
-    var user: User? = null
     private var selectedSpecialItem: SpecialItem? = null
     internal var layoutManager: androidx.recyclerview.widget.LinearLayoutManager? = null
 

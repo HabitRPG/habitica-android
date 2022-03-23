@@ -70,24 +70,39 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class GSonFactoryCreator {
 
-    public static GsonConverterFactory create() {
-        Type skillListType = new TypeToken<List<Skill>>() {}.getType();
-        Type taskTagClassListType = new TypeToken<RealmList<Tag>>() {}.getType();
-        Type customizationListType = new TypeToken<RealmList<Customization>>() {}.getType();
-        Type tutorialStepListType = new TypeToken<RealmList<TutorialStep>>() {}.getType();
-        Type faqArticleListType = new TypeToken<RealmList<FAQArticle>>() {}.getType();
-        Type itemDataListType = new TypeToken<RealmList<Equipment>>() {}.getType();
-        Type questCollectListType = new TypeToken<RealmList<QuestCollect>>() {}.getType();
-        Type chatMessageListType = new TypeToken<RealmList<ChatMessage>>() {}.getType();
-        Type challengeListType = new TypeToken<List<Challenge>>() {}.getType();
-        Type challengeRealmListType = new TypeToken<RealmList<Challenge>>() {}.getType();
-        Type questDropItemListType = new TypeToken<RealmList<QuestDropItem>>() {}.getType();
-        Type ownedItemListType = new TypeToken<RealmList<OwnedItem>>() {}.getType();
-        Type ownedPetListType = new TypeToken<RealmList<OwnedPet>>() {}.getType();
-        Type ownedMountListType = new TypeToken<RealmList<OwnedMount>>() {}.getType();
-        Type achievementsListType = new TypeToken<List<Achievement>>() {}.getType();
+    public static Gson createGson() {
+        Type skillListType = new TypeToken<List<Skill>>() {
+        }.getType();
+        Type taskTagClassListType = new TypeToken<RealmList<Tag>>() {
+        }.getType();
+        Type customizationListType = new TypeToken<RealmList<Customization>>() {
+        }.getType();
+        Type tutorialStepListType = new TypeToken<RealmList<TutorialStep>>() {
+        }.getType();
+        Type faqArticleListType = new TypeToken<RealmList<FAQArticle>>() {
+        }.getType();
+        Type itemDataListType = new TypeToken<RealmList<Equipment>>() {
+        }.getType();
+        Type questCollectListType = new TypeToken<RealmList<QuestCollect>>() {
+        }.getType();
+        Type chatMessageListType = new TypeToken<RealmList<ChatMessage>>() {
+        }.getType();
+        Type challengeListType = new TypeToken<List<Challenge>>() {
+        }.getType();
+        Type challengeRealmListType = new TypeToken<RealmList<Challenge>>() {
+        }.getType();
+        Type questDropItemListType = new TypeToken<RealmList<QuestDropItem>>() {
+        }.getType();
+        Type ownedItemListType = new TypeToken<RealmList<OwnedItem>>() {
+        }.getType();
+        Type ownedPetListType = new TypeToken<RealmList<OwnedPet>>() {
+        }.getType();
+        Type ownedMountListType = new TypeToken<RealmList<OwnedMount>>() {
+        }.getType();
+        Type achievementsListType = new TypeToken<List<Achievement>>() {
+        }.getType();
 
-        Gson gson = new GsonBuilder()
+        return new GsonBuilder()
                 .registerTypeAdapter(taskTagClassListType, new TaskTagDeserializer())
                 .registerTypeAdapter(Boolean.class, new BooleanAsIntAdapter())
                 .registerTypeAdapter(boolean.class, new BooleanAsIntAdapter())
@@ -122,6 +137,8 @@ public class GSonFactoryCreator {
                 .registerTypeAdapter(SocialAuthentication.class, new SocialAuthenticationDeserializer())
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
                 .create();
-        return GsonConverterFactory.create(gson);
+    }
+        public static GsonConverterFactory create() {
+            return GsonConverterFactory.create(createGson());
     }
 }
