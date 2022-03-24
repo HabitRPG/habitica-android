@@ -8,7 +8,7 @@ import android.text.SpannableString
 import android.text.Spanned
 import android.text.method.LinkMovementMethod
 import android.widget.TextView
-import com.habitrpg.android.habitica.BuildConfig
+import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.handleUrlClicks
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import io.noties.markwon.AbstractMarkwonPlugin
@@ -126,7 +126,7 @@ fun TextView.setParsedMarkdown(input: Spanned?) {
 
 private fun handleUrlClicks(context: Context, url: String) {
     val webpage = if (url.startsWith("/")) {
-        Uri.parse("${BuildConfig.BASE_URL}$url")
+        Uri.parse("${context.getString(R.string.base_url)}$url")
     } else {
         Uri.parse(url)
     }
