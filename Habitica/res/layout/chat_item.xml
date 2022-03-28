@@ -92,7 +92,6 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
                 android:lineSpacingMultiplier="1.0"
-                android:autoLink="web"
                 tools:text="This is the chat message"
                 android:textColor="@color/text_primary" />
             <com.nex3z.flowlayout.FlowLayout

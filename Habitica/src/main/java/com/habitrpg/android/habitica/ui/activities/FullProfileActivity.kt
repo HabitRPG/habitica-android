@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.ui.activities
 import android.content.Context
 import android.graphics.Typeface
 import android.os.Bundle
+import android.text.method.LinkMovementMethod
 import android.view.*
 import android.widget.*
 import androidx.core.content.ContextCompat
@@ -213,6 +214,7 @@ class FullProfileActivity : BaseActivity() {
         val blurbText = profile.blurb
         if (blurbText != null && blurbText.isNotEmpty()) {
             binding.blurbTextView.setMarkdown(blurbText)
+            binding.blurbTextView.movementMethod = LinkMovementMethod.getInstance()
         }
 
         user.authentication?.timestamps?.createdAt?.let { binding.joinedView.text = dateFormatter.format(it) }

@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.ui.viewHolders.tasks
 
 import android.content.Context
 import android.text.TextUtils
+import android.text.method.LinkMovementMethod
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
@@ -88,9 +89,8 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
         notesTextView?.setOnClickListener { onTouch(it, null) }
         errorIconView?.setOnClickListener { errorButtonClicked?.run() }
 
-        // Re enable when we find a way to only react when a link is tapped.
-        // notesTextView.movementMethod = LinkMovementMethod.getInstance()
-        // titleTextView.movementMethod = LinkMovementMethod.getInstance()
+        notesTextView?.movementMethod = LinkMovementMethod.getInstance()
+        titleTextView.movementMethod = LinkMovementMethod.getInstance()
 
         expandNotesButton?.setOnClickListener { expandTask() }
         iconViewChallenge?.setOnClickListener {

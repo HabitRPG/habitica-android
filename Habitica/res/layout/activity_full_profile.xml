@@ -81,7 +81,6 @@
                     <TextView
                         android:id="@+id/blurb_text_view"
                         android:layout_width="wrap_content"
-                        android:autoLink="web"
                         android:layout_height="wrap_content"
                         android:textIsSelectable="true"
                         tools:text="Blurb" />

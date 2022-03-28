@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.adapter.social
 
+import android.text.method.LinkMovementMethod
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -91,6 +92,7 @@ class ChallengesListViewAdapter(private val viewUserChallengesOnly: Boolean, pri
 
             binding.challengeName.text = EmojiParser.parseEmojis(challenge.name?.trim { it <= ' ' })
             binding.challengeShorttext.text = challenge.summary
+            binding.challengeShorttext.movementMethod = LinkMovementMethod.getInstance()
 
             binding.officialChallengeView.visibility = if (challenge.official) View.VISIBLE else View.GONE
 

@@ -69,6 +69,7 @@ class GuildDetailFragment : BaseFragment<FragmentGuildDetailBinding>() {
         viewModel?.getIsMemberData()?.observe(viewLifecycleOwner, { updateMembership(it) })
 
         binding?.guildDescription?.movementMethod = LinkMovementMethod.getInstance()
+        binding?.guildSummary?.movementMethod = LinkMovementMethod.getInstance()
         binding?.guildBankIcon?.setImageBitmap(HabiticaIconsHelper.imageOfGem())
         binding?.leaveButton?.setOnClickListener {
             leaveGuild()

@@ -61,7 +61,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/text_ternary"
-            android:autoLink="web"
             android:textSize="12sp"
             tools:text="Description"
             android:layout_marginTop="@dimen/spacing_small"

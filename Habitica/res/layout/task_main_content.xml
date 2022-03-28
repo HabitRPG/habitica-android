@@ -31,7 +31,6 @@
             android:maxLines="3"
             android:ellipsize="end"
             android:textSize="13sp"
-            android:autoLink="web"
             tools:text="Notes"
             android:layout_marginTop="1dp"
             android:layout_marginBottom="7dp"/>
