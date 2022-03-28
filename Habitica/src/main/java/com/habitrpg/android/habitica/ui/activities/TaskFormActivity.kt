@@ -294,9 +294,11 @@ class TaskFormActivity : BaseActivity() {
         binding.adjustStreakTitleView.visibility = habitDailyVisibility
         binding.adjustStreakWrapper.visibility = habitDailyVisibility
         if (taskType == TaskType.HABIT) {
-            binding.habitAdjustPositiveStreakView.hint = getString(R.string.positive_habit_form)
+            binding.habitAdjustPositiveInputLayout.hint = getString(R.string.positive_habit_form)
+            binding.adjustStreakTitleView.text = getString(R.string.adjust_counter)
         } else {
-            binding.habitAdjustPositiveStreakView.hint = getString(R.string.streak)
+            binding.habitAdjustPositiveInputLayout.hint = getString(R.string.streak)
+            binding.adjustStreakTitleView.text = getString(R.string.adjust_streak)
         }
 
         val todoDailyViewsVisibility = if (taskType == TaskType.DAILY || taskType == TaskType.TODO) View.VISIBLE else View.GONE
