@@ -160,6 +160,7 @@
                     android:layout_height="wrap_content">
                     <com.google.android.material.textfield.TextInputLayout
                         style="@style/TextInputLayoutAppearance"
+                        android:id="@+id/habit_adjust_positive_input_layout"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:hint="@string/positive_habit_form"
