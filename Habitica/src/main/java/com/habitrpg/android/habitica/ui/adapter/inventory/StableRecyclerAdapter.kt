@@ -232,6 +232,9 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 this.ownedTextView.background = ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_animalitem_complete)
                 this.ownedTextView.setTextColor(ContextCompat.getColor(context, R.color.white))
             }
+
+
+            itemView.contentDescription = "${titleView.text} ${ownedTextView.text}"
         }
 
         override fun onClick(v: View) {

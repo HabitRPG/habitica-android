@@ -12,7 +12,6 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
-import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.dpToPx
@@ -45,7 +44,7 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
     protected val calendarIconView: ImageView? = itemView.findViewById(R.id.iconViewCalendar)
     protected val iconViewTeam: ImageView? = itemView.findViewById(R.id.iconViewTeamTask)
     protected val specialTaskTextView: TextView? = itemView.findViewById(R.id.specialTaskText)
-    private val iconViewChallenge: AppCompatImageView? = itemView.findViewById(R.id.iconviewChallenge)
+    private val iconViewChallenge: ImageView? = itemView.findViewById(R.id.iconviewChallenge)
     private val iconViewReminder: ImageView? = itemView.findViewById(R.id.iconviewReminder)
     private val taskIconWrapper: LinearLayout? = itemView.findViewById(R.id.taskIconWrapper)
     private val approvalRequiredTextView: TextView? = itemView.findViewById(R.id.approvalRequiredTextField)

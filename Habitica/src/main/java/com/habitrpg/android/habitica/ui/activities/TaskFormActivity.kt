@@ -13,6 +13,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.MotionEvent
 import android.view.View
+import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.CheckBox
 import android.widget.TextView
@@ -320,7 +321,7 @@ class TaskFormActivity : BaseActivity() {
         binding.habitScoringButtons.visibility = habitViewsVisibility
         binding.habitResetStreakTitleView.visibility = habitViewsVisibility
         binding.habitResetStreakButtons.visibility = habitViewsVisibility
-        binding.habitAdjustNegativeStreakView.visibility = habitViewsVisibility
+        (binding.habitAdjustNegativeStreakView.parent as ViewGroup).visibility = habitViewsVisibility
         if (taskType == TaskType.HABIT) {
             binding.habitScoringButtons.isPositive = true
             binding.habitScoringButtons.isNegative = false
@@ -414,8 +415,8 @@ class TaskFormActivity : BaseActivity() {
                 }
                 binding.habitAdjustPositiveStreakView.setText((task.counterUp ?: 0).toString())
                 binding.habitAdjustNegativeStreakView.setText((task.counterDown ?: 0).toString())
-                binding.habitAdjustPositiveStreakView.visibility = if (task.up == true) View.VISIBLE else View.GONE
-                binding.habitAdjustNegativeStreakView.visibility = if (task.down == true) View.VISIBLE else View.GONE
+                (binding.habitAdjustPositiveStreakView.parent as ViewGroup).visibility = if (task.up == true) View.VISIBLE else View.GONE
+                (binding.habitAdjustNegativeStreakView.parent as ViewGroup).visibility = if (task.down == true) View.VISIBLE else View.GONE
                 if (task.up != true && task.down != true) {
                     binding.adjustStreakTitleView.visibility = View.GONE
                     binding.adjustStreakWrapper.visibility = View.GONE

@@ -43,14 +43,13 @@ class PartyDetailFragmentTest : FragmentTestCase<PartyDetailFragment, FragmentPa
         viewModel.userRepository = userRepository
         viewModel.userViewModel = userViewModel
         viewModel.notificationsManager = mockk(relaxed = true)
+        fragment = spyk()
+        fragment.shouldInitializeComponent = false
+        fragment.viewModel = viewModel
+    }
+
+    override fun launchFragment() {
         scenario = launchFragmentInContainer(null, R.style.MainAppTheme) {
-            fragment = spyk()
-            fragment.shouldInitializeComponent = false
-            fragment.userRepository = userRepository
-            fragment.inventoryRepository = inventoryRepository
-            fragment.tutorialRepository = tutorialRepository
-            fragment.socialRepository = socialRepository
-            fragment.viewModel = viewModel
             return@launchFragmentInContainer fragment
         }
     }
