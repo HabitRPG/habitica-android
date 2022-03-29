@@ -70,6 +70,7 @@ class PetViewHolder(parent: ViewGroup, private val equipEvents: PublishSubject<S
         binding.checkmarkView.visibility = View.GONE
 
         binding.titleTextView.visibility = View.GONE
+        binding.root.contentDescription = item.text
 
         val imageName = "stable_Pet-${item.animal}-${item.color}"
         if (trained > 0) {

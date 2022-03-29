@@ -48,18 +48,18 @@ class StatsFragmentTest : FragmentTestCase<StatsFragment, FragmentStatsBinding, 
     override val screen = StatsScreen()
 
     override fun makeFragment() {
+        fragment = spyk()
+        fragment.shouldInitializeComponent = false
+    }
+
+    override fun launchFragment() {
         scenario = launchFragmentInContainer(null, R.style.MainAppTheme) {
-            fragment = spyk()
-            fragment.shouldInitializeComponent = false
-            fragment.userRepository = userRepository
-            fragment.inventoryRepository = inventoryRepository
-            fragment.tutorialRepository = tutorialRepository
             return@launchFragmentInContainer fragment
         }
     }
 
     @Before
-    fun setUp() {
+    fun setUpUser() {
         user.stats?.lvl = 20
         user.stats?.points = 30
         userSubject.onNext(user)

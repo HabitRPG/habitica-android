@@ -412,7 +412,7 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
 
     private fun scoreTask(task: Task, direction: TaskDirection) {
         compositeSubscription.add(
-            taskRepository.taskChecked(null, task, direction == TaskDirection.UP, false) { result ->
+            taskRepository.taskChecked(null, task.id ?: "", direction == TaskDirection.UP, false) { result ->
                 handleTaskResult(result, task.value.toInt())
                 if (!DateUtils.isToday(sharedPreferences.getLong("last_task_reporting", 0))) {
                     AmplitudeManager.sendEvent(
@@ -424,7 +424,7 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
                         putLong("last_task_reporting", Date().time)
                     }
                 }
-            }.subscribeWithErrorHandler {}
+            }.subscribe()
         )
     }
 

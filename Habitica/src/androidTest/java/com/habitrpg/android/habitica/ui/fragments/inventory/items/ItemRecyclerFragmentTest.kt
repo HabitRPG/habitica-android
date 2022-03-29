@@ -33,14 +33,13 @@ internal class ItemRecyclerFragmentTest : FragmentTestCase<ItemRecyclerFragment,
         every { inventoryRepository.getOwnedItems("eggs") } answers {
             Flowable.just(user.items?.eggs!!.filter { it.numberOwned > 0 })
         }
+        fragment = spyk()
+        fragment.shouldInitializeComponent = false
+        fragment.itemType = "eggs"
+    }
+
+    override fun launchFragment() {
         scenario = launchFragmentInContainer(null, R.style.MainAppTheme) {
-            fragment = spyk()
-            fragment.shouldInitializeComponent = false
-            fragment.userRepository = userRepository
-            fragment.inventoryRepository = inventoryRepository
-            fragment.socialRepository = socialRepository
-            fragment.userViewModel = userViewModel
-            fragment.itemType = "eggs"
             return@launchFragmentInContainer fragment
         }
     }

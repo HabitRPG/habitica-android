@@ -48,7 +48,7 @@ class MainActivityViewModel : BaseViewModel() {
     }
 
     val isAuthenticated: Boolean
-        get() = hostConfig.apiKey.isNotBlank() && hostConfig.userID.isNotBlank()
+        get() = hostConfig.hasAuthentication()
     val launchScreen: String?
         get() = sharedPreferences.getString("launch_screen", "")
     var preferenceLanguage: String?

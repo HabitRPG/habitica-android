@@ -33,13 +33,11 @@ class NavigationDrawerScreen : Screen<NavigationDrawerScreen>() {
 @LargeTest
 internal class NavigationDrawerFragmentTest : FragmentTestCase<NavigationDrawerFragment, DrawerMainBinding, NavigationDrawerScreen>() {
     override fun makeFragment() {
+        fragment = spyk()
+    }
+
+    override fun launchFragment() {
         scenario = launchFragmentInContainer(null, R.style.MainAppTheme) {
-            fragment = spyk()
-            fragment.userRepository = userRepository
-            fragment.inventoryRepository = inventoryRepository
-            fragment.socialRepository = socialRepository
-            fragment.contentRepository = contentRepository
-            fragment.configManager = appConfigManager
             return@launchFragmentInContainer fragment
         }
     }
