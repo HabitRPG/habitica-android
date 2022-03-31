@@ -1199,10 +1199,10 @@
     <string name="my_account">My Account</string>
     <string name="public_profile">Public Profile</string>
     <string name="about_me">About Me</string>
-    <string name="api">API</string>
+    <string name="api" translatable="false">API</string>
     <string name="account_info">Account Info</string>
     <string name="login_methods">Login Methods</string>
-    <string name="apple">Apple</string>
+    <string name="apple" translatable="false">Apple</string>
     <string name="not_connected">Not connected</string>
     <string name="add_password">Add password</string>
     <string name="connect">Connect</string>
