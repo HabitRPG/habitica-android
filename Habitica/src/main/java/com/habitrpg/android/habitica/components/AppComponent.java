@@ -5,10 +5,8 @@ import com.habitrpg.android.habitica.modules.ApiModule;
 import com.habitrpg.android.habitica.modules.AppModule;
 import com.habitrpg.android.habitica.modules.DeveloperModule;
 import com.habitrpg.android.habitica.modules.RepositoryModule;
-import com.habitrpg.android.habitica.modules.UserRepositoryModule;
 import com.habitrpg.android.habitica.modules.UserModule;
-
-import org.jetbrains.annotations.NotNull;
+import com.habitrpg.android.habitica.modules.UserRepositoryModule;
 
 import javax.inject.Singleton;
 

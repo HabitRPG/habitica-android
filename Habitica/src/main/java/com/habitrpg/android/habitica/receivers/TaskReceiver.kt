@@ -21,7 +21,6 @@ import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.shared.habitica.HLogger
 import com.habitrpg.shared.habitica.LogLevel
 import io.reactivex.rxjava3.functions.Consumer
-import java.util.*
 import javax.inject.Inject
 
 class TaskReceiver : BroadcastReceiver() {
@@ -69,8 +68,10 @@ class TaskReceiver : BroadcastReceiver() {
         var notificationBuilder = NotificationCompat.Builder(context, "default")
             .setSmallIcon(R.drawable.ic_gryphon_white)
             .setContentTitle(task.text)
-            .setStyle(NotificationCompat.BigTextStyle()
-                .bigText(task.notes))
+            .setStyle(
+                NotificationCompat.BigTextStyle()
+                    .bigText(task.notes)
+            )
             .setPriority(NotificationCompat.PRIORITY_MAX)
             .setSound(soundUri)
             .setAutoCancel(true)

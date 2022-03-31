@@ -16,7 +16,7 @@ import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import io.reactivex.rxjava3.disposables.Disposable
-import java.util.*
+import java.util.Locale
 import kotlin.math.floor
 
 class AvatarWithBarsViewModel(private val context: Context, private val binding: AvatarWithBarsBinding, userRepository: UserRepository? = null) {

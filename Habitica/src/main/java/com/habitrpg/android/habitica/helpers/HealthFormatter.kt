@@ -2,7 +2,7 @@ package com.habitrpg.android.habitica.helpers
 
 import android.os.Build
 import java.text.NumberFormat
-import java.util.*
+import java.util.Locale
 import kotlin.math.ceil
 import kotlin.math.floor
 

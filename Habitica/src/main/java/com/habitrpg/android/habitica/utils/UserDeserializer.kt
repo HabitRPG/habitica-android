@@ -32,7 +32,6 @@ import com.habitrpg.android.habitica.models.user.UserAchievement
 import io.realm.Realm
 import io.realm.RealmList
 import java.lang.reflect.Type
-import java.util.ArrayList
 import java.util.Date
 
 class UserDeserializer : JsonDeserializer<User> {

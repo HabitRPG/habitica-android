@@ -5,7 +5,8 @@ import android.content.res.TypedArray
 import android.util.AttributeSet
 import androidx.preference.DialogPreference
 import java.text.DateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Locale
 
 class TimePreference(ctxt: Context, attrs: AttributeSet?) : DialogPreference(ctxt, attrs) {
     private var timeval: String? = null
@@ -54,7 +55,6 @@ class TimePreference(ctxt: Context, attrs: AttributeSet?) : DialogPreference(ctx
 
         fun getMinute(timeval: String?): Int {
             return timeval?.split(":")?.get(1)?.toInt() ?: 0
-
         }
     }
 

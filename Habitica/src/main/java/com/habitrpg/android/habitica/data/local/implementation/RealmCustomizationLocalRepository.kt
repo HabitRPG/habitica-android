@@ -5,7 +5,7 @@ import com.habitrpg.android.habitica.models.inventory.Customization
 import hu.akarnokd.rxjava3.bridge.RxJavaBridge
 import io.reactivex.rxjava3.core.Flowable
 import io.realm.Realm
-import java.util.*
+import java.util.Date
 
 class RealmCustomizationLocalRepository(realm: Realm) : RealmContentLocalRepository(realm), CustomizationLocalRepository {
 

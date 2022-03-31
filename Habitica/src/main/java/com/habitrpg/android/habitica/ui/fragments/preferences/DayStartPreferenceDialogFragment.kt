@@ -12,7 +12,8 @@ import androidx.preference.PreferenceFragmentCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.prefs.TimePreference
 import java.text.DateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.GregorianCalendar
 
 class DayStartPreferenceDialogFragment : PreferenceDialogFragmentCompat() {
 

@@ -7,7 +7,7 @@ import com.habitrpg.android.habitica.databinding.FragmentSubscriptionBinding
 import com.habitrpg.android.habitica.databinding.PurchaseGemViewBinding
 import com.habitrpg.android.habitica.ui.fragments.PromoInfoFragment
 import com.habitrpg.android.habitica.ui.views.promo.PromoMenuView
-import java.util.*
+import java.util.Date
 
 enum class PromoType {
     GEMS_AMOUNT,
@@ -18,10 +18,10 @@ enum class PromoType {
 
 abstract class HabiticaPromotion {
     val isActive: Boolean
-    get() {
-        val now = Date()
-        return startDate.before(now) && endDate.after(now)
-    }
+        get() {
+            val now = Date()
+            return startDate.before(now) && endDate.after(now)
+        }
     abstract val identifier: String
     abstract val promoType: PromoType
 

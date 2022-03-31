@@ -7,7 +7,6 @@ import android.widget.CheckBox
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.models.social.Group
-import java.util.*
 
 class ChallengesFilterRecyclerViewAdapter(entries: List<Group>) : RecyclerView.Adapter<ChallengesFilterRecyclerViewAdapter.ChallengeViewHolder>() {
 

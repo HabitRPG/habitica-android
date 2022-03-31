@@ -15,7 +15,6 @@ import io.realm.annotations.Ignore
 import io.realm.annotations.PrimaryKey
 import org.json.JSONArray
 import org.json.JSONException
-import java.util.ArrayList
 import java.util.Calendar
 import java.util.Date
 import java.util.GregorianCalendar
@@ -285,13 +284,10 @@ open class Task : RealmObject, BaseMainObject, Parcelable {
                 streak != task.streak -> true
                 else -> false
             }
-
         } else if (type == TaskType.TODO) {
-                return dueDate != task.dueDate
-            
+            return dueDate != task.dueDate
         } else if (type == TaskType.REWARD) {
-                return value != task.value
-
+            return value != task.value
         } else {
             return false
         }

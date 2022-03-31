@@ -11,15 +11,17 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.navArgs
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
-import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.ActivityClassSelectionBinding
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.android.habitica.models.user.*
+import com.habitrpg.android.habitica.models.user.Gear
+import com.habitrpg.android.habitica.models.user.Items
+import com.habitrpg.android.habitica.models.user.Outfit
+import com.habitrpg.android.habitica.models.user.Preferences
+import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaProgressDialog
 import io.reactivex.rxjava3.functions.Consumer
-import javax.inject.Inject
 
 class ClassSelectionActivity : BaseActivity(), Consumer<User> {
 

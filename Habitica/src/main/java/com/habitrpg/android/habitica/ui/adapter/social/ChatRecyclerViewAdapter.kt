@@ -8,7 +8,6 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.SystemChatMessageBinding
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.models.BaseMainObject
-import com.habitrpg.android.habitica.models.BaseObject
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.adapter.BaseRecyclerViewAdapter
@@ -29,8 +28,7 @@ class ChatDiffCallback(oldList: List<BaseMainObject>, newList: List<BaseMainObje
         val newItem = newList[newItemPosition] as ChatMessage
         return oldItem.likeCount == newItem.likeCount && oldItem.id == newItem.id
     }
-    }
-
+}
 
 class ChatRecyclerViewAdapter(user: User?, private val isTavern: Boolean) : BaseRecyclerViewAdapter<ChatMessage, RecyclerView.ViewHolder>() {
     internal var user = user

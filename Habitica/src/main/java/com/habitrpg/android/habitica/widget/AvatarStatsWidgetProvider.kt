@@ -79,8 +79,6 @@ class AvatarStatsWidgetProvider : BaseWidgetProvider() {
             remoteViews.setViewVisibility(R.id.detail_info_view, View.GONE)
         }
 
-
-
         return remoteViews
     }
 

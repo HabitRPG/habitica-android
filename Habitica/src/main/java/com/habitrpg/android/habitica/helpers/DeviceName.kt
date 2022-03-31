@@ -19,7 +19,7 @@ import java.io.IOException
 import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
-import java.util.*
+import java.util.Locale
 
 /*
 * Copyright (C) 2017 Jared Rummler
@@ -434,9 +434,9 @@ object DeviceName {
                     val info = DeviceInfo(json)
                     if (codename.equals(info.codename, ignoreCase = true) && model == null ||
                         codename.equals(
-                            info.codename,
-                            ignoreCase = true
-                        ) && model.equals(info.model, ignoreCase = true)
+                                info.codename,
+                                ignoreCase = true
+                            ) && model.equals(info.model, ignoreCase = true)
                     ) {
                         // Save to SharedPreferences so we don't need to make another request.
                         val editor = prefs.edit()

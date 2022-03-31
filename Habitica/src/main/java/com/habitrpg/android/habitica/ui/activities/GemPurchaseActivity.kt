@@ -1,17 +1,12 @@
 package com.habitrpg.android.habitica.ui.activities
 
 import android.os.Bundle
-import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
-import com.habitrpg.android.habitica.data.UserRepository
-import com.habitrpg.android.habitica.helpers.PurchaseHandler
-import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import com.habitrpg.android.habitica.ui.fragments.purchases.GemsPurchaseFragment
 import com.habitrpg.android.habitica.ui.fragments.purchases.SubscriptionFragment
-import javax.inject.Inject
 
 class GemPurchaseActivity : PurchaseActivity() {
 

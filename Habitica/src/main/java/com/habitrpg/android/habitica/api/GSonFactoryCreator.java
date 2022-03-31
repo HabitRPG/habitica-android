@@ -1,4 +1,5 @@
 package com.habitrpg.android.habitica.api;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -43,9 +44,9 @@ import com.habitrpg.android.habitica.utils.FeedResponseDeserializer;
 import com.habitrpg.android.habitica.utils.FindUsernameResultDeserializer;
 import com.habitrpg.android.habitica.utils.GroupSerialization;
 import com.habitrpg.android.habitica.utils.MemberSerialization;
+import com.habitrpg.android.habitica.utils.NotificationDeserializer;
 import com.habitrpg.android.habitica.utils.OwnedItemListDeserializer;
 import com.habitrpg.android.habitica.utils.OwnedMountListDeserializer;
-import com.habitrpg.android.habitica.utils.NotificationDeserializer;
 import com.habitrpg.android.habitica.utils.OwnedPetListDeserializer;
 import com.habitrpg.android.habitica.utils.PurchasedDeserializer;
 import com.habitrpg.android.habitica.utils.QuestCollectDeserializer;

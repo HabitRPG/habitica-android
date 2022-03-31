@@ -1,25 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments.purchases
 
-import androidx.fragment.app.testing.launchFragmentInContainer
-import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.filters.LargeTest
-import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.databinding.FragmentGemPurchaseBinding
-import com.habitrpg.android.habitica.databinding.FragmentSubscriptionBinding
-import com.habitrpg.android.habitica.helpers.PurchaseHandler
-import com.habitrpg.android.habitica.helpers.PurchaseTypes
-import com.habitrpg.android.habitica.ui.fragments.FragmentTestCase
-import io.github.kakaocup.kakao.common.views.KView
-import io.github.kakaocup.kakao.screen.Screen
-import io.mockk.MockKAdditionalAnswerScope
-import io.mockk.coEvery
-import io.mockk.every
-import io.mockk.mockk
-import io.mockk.spyk
-import org.junit.Test
-import org.junit.runner.RunWith
-import org.solovyev.android.checkout.Inventory
-import org.solovyev.android.checkout.Sku
+/*
 
 class SubscriptionScreen: Screen<SubscriptionScreen>() {
     val sub1MonthView = KView { withId(R.id.subscription1month) }
@@ -100,4 +81,4 @@ class SubscriptionFragmentTest :
             sub12MonthView.hasDescendant { withText("12 Months") }
         }
     }
-}
+}*/

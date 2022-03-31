@@ -32,20 +32,20 @@ abstract class RealmBaseTasksRecyclerViewAdapter(
     override var canScoreTasks = true
     private var unfilteredData: List<Task>? = null
     override var showAdventureGuide = false
-    set(value) {
-        if (field == value) return
-        field = value
-        if (value) {
-            notifyItemInserted(0)
-        } else {
-            notifyItemRemoved(0)
+        set(value) {
+            if (field == value) return
+            field = value
+            if (value) {
+                notifyItemInserted(0)
+            } else {
+                notifyItemRemoved(0)
+            }
         }
-    }
     override var user: User? = null
-    set(value) {
-        field = value
-        notifyItemChanged(0)
-    }
+        set(value) {
+            field = value
+            notifyItemChanged(0)
+        }
 
     override var taskDisplayMode: String = "standard"
         set(value) {
@@ -147,7 +147,7 @@ class AdventureGuideViewHolder(itemView: View) : RecyclerView.ViewHolder(itemVie
     }
 
     fun update(user: User) {
-         val achievements = user.onboardingAchievements
+        val achievements = user.onboardingAchievements
         val completed = achievements.count { it.earned }
         progressBar.max = achievements.size
         progressBar.progress = completed

@@ -2,7 +2,12 @@ package com.habitrpg.android.habitica.ui.fragments
 
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
@@ -24,7 +29,7 @@ class AchievementsFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding
     @Inject
     lateinit var inventoryRepository: InventoryRepository
     @Inject
-    lateinit var  userViewModel: MainUserViewModel
+    lateinit var userViewModel: MainUserViewModel
 
     override var binding: FragmentRefreshRecyclerviewBinding? = null
 

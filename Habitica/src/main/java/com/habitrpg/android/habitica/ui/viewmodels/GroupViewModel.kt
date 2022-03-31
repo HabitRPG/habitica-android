@@ -8,7 +8,6 @@ import com.habitrpg.android.habitica.data.ChallengeRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.extensions.Optional
 import com.habitrpg.android.habitica.extensions.asOptional
-import com.habitrpg.android.habitica.extensions.filterMapEmpty
 import com.habitrpg.android.habitica.extensions.filterOptionalDoOnEmpty
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.NotificationsManager
@@ -251,12 +250,15 @@ open class GroupViewModel(initializeComponent: Boolean) : BaseViewModel(initiali
     fun likeMessage(message: ChatMessage) {
         val index = _chatMessages.value?.indexOf(message)
         if (index == null || index < 0) return
-        disposable.add(socialRepository.likeMessage(message).subscribe(
-            {
-                val list = _chatMessages.value?.toMutableList()
-                list?.set(index, it)
-                _chatMessages.postValue(list)
-        }, RxErrorHandler.handleEmptyError()))
+        disposable.add(
+            socialRepository.likeMessage(message).subscribe(
+                {
+                    val list = _chatMessages.value?.toMutableList()
+                    list?.set(index, it)
+                    _chatMessages.postValue(list)
+                }, RxErrorHandler.handleEmptyError()
+            )
+        )
     }
 
     fun deleteMessage(chatMessage: ChatMessage) {
@@ -264,12 +266,14 @@ open class GroupViewModel(initializeComponent: Boolean) : BaseViewModel(initiali
         val list = _chatMessages.value?.toMutableList()
         list?.remove(chatMessage)
         _chatMessages.postValue(list)
-        disposable.add(socialRepository.deleteMessage(chatMessage).subscribe({
-        }, {
-            list?.add(oldIndex, chatMessage)
-            _chatMessages.postValue(list)
-            RxErrorHandler.reportError(it)
-        }))
+        disposable.add(
+            socialRepository.deleteMessage(chatMessage).subscribe({
+            }, {
+                list?.add(oldIndex, chatMessage)
+                _chatMessages.postValue(list)
+                RxErrorHandler.reportError(it)
+            })
+        )
     }
 
     fun postGroupChat(chatText: String, onComplete: () -> Unit, onError: () -> Unit) {

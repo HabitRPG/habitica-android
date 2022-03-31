@@ -6,7 +6,6 @@ import com.google.gson.JsonElement
 import com.google.gson.JsonParseException
 import com.habitrpg.android.habitica.models.Skill
 import java.lang.reflect.Type
-import java.util.ArrayList
 
 /**
  * Created by viirus on 25/11/15.

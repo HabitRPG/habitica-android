@@ -18,7 +18,6 @@ import com.habitrpg.android.habitica.models.tasks.TaskGroupPlan
 import com.habitrpg.android.habitica.models.tasks.TaskType
 import io.realm.RealmList
 import java.lang.reflect.Type
-import java.util.ArrayList
 import java.util.Date
 
 class TaskSerializer : JsonSerializer<Task>, JsonDeserializer<Task> {

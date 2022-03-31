@@ -10,14 +10,14 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
-class IntroActivityScreen: Screen<IntroActivityScreen>() {
+class IntroActivityScreen : Screen<IntroActivityScreen>() {
     val skipButton = KButton { withId(R.id.skipButton) }
-    val finishButton = KButton { withId(R.id.finishButton )}
+    val finishButton = KButton { withId(R.id.finishButton) }
 }
 
 @LargeTest
 @RunWith(AndroidJUnit4::class)
-class IntroActivityTest: TestCase() {
+class IntroActivityTest : TestCase() {
 
     @Rule
     @JvmField

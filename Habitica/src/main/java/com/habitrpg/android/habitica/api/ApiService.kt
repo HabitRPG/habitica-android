@@ -1,24 +1,52 @@
 package com.habitrpg.android.habitica.api
 
-import com.habitrpg.android.habitica.models.*
+import com.habitrpg.android.habitica.models.Achievement
+import com.habitrpg.android.habitica.models.ContentResult
+import com.habitrpg.android.habitica.models.LeaveChallengeBody
+import com.habitrpg.android.habitica.models.PurchaseValidationRequest
+import com.habitrpg.android.habitica.models.PurchaseValidationResult
+import com.habitrpg.android.habitica.models.SubscriptionValidationRequest
 import com.habitrpg.android.habitica.models.Tag
+import com.habitrpg.android.habitica.models.TeamPlan
+import com.habitrpg.android.habitica.models.WorldState
 import com.habitrpg.android.habitica.models.auth.UserAuth
 import com.habitrpg.android.habitica.models.auth.UserAuthResponse
 import com.habitrpg.android.habitica.models.auth.UserAuthSocial
 import com.habitrpg.android.habitica.models.inventory.Equipment
 import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.members.Member
-import com.habitrpg.android.habitica.models.responses.*
+import com.habitrpg.android.habitica.models.responses.BulkTaskScoringData
+import com.habitrpg.android.habitica.models.responses.BuyResponse
+import com.habitrpg.android.habitica.models.responses.FeedResponse
+import com.habitrpg.android.habitica.models.responses.HabitResponse
+import com.habitrpg.android.habitica.models.responses.PostChatMessageResult
+import com.habitrpg.android.habitica.models.responses.SkillResponse
+import com.habitrpg.android.habitica.models.responses.Status
+import com.habitrpg.android.habitica.models.responses.TaskDirectionData
+import com.habitrpg.android.habitica.models.responses.UnlockResponse
+import com.habitrpg.android.habitica.models.responses.VerifyUsernameResponse
 import com.habitrpg.android.habitica.models.shops.Shop
 import com.habitrpg.android.habitica.models.shops.ShopItem
-import com.habitrpg.android.habitica.models.social.*
+import com.habitrpg.android.habitica.models.social.Challenge
+import com.habitrpg.android.habitica.models.social.ChatMessage
+import com.habitrpg.android.habitica.models.social.FindUsernameResult
+import com.habitrpg.android.habitica.models.social.Group
+import com.habitrpg.android.habitica.models.social.InboxConversation
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.tasks.TaskList
 import com.habitrpg.android.habitica.models.user.Items
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.rxjava3.core.Flowable
-import retrofit2.http.*
+import retrofit2.http.Body
+import retrofit2.http.DELETE
+import retrofit2.http.GET
+import retrofit2.http.HTTP
+import retrofit2.http.Header
+import retrofit2.http.POST
+import retrofit2.http.PUT
+import retrofit2.http.Path
+import retrofit2.http.Query
 
 @JvmSuppressWildcards
 interface ApiService {

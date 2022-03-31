@@ -26,7 +26,8 @@ import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.functions.BiFunction
-import java.util.*
+import java.util.Date
+import java.util.GregorianCalendar
 import java.util.concurrent.TimeUnit
 
 class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiClient, userID: String, private val taskRepository: TaskRepository, var appConfigManager: AppConfigManager) : BaseRepositoryImpl<UserLocalRepository>(localRepository, apiClient, userID), UserRepository {
@@ -380,7 +381,8 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
 
     override fun retrieveTeamPlan(teamID: String): Flowable<Group> {
         return Flowable.zip(
-            apiClient.getGroup(teamID), apiClient.getTeamPlanTasks(teamID)) { team, tasks ->
+            apiClient.getGroup(teamID), apiClient.getTeamPlanTasks(teamID)
+        ) { team, tasks ->
             team.tasks = tasks
             team
         }

@@ -7,10 +7,8 @@ import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.TutorialRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.helpers.AppConfigManager
-import com.habitrpg.android.habitica.models.Skill
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
-import com.habitrpg.android.habitica.ui.fragments.social.party.PartyDetailFragment
 import com.kaspersky.kaspresso.testcases.api.testcase.TestCase
 import io.github.kakaocup.kakao.screen.Screen
 import io.mockk.clearAllMocks
@@ -21,7 +19,7 @@ import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.subjects.PublishSubject
 import org.junit.Before
 
-abstract class FragmentTestCase<F: BaseFragment<VB>, VB: ViewBinding, S: Screen<S>>: TestCase() {
+abstract class FragmentTestCase<F : BaseFragment<VB>, VB : ViewBinding, S : Screen<S>> : TestCase() {
 
     lateinit var scenario: FragmentScenario<F>
     lateinit var fragment: F

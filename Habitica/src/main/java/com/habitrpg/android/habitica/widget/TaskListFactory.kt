@@ -17,7 +17,6 @@ import com.habitrpg.android.habitica.models.tasks.TaskType
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
-import java.util.*
 import javax.inject.Inject
 
 abstract class TaskListFactory internal constructor(val context: Context, intent: Intent, private val taskType: TaskType, private val listItemResId: Int, private val listItemTextResId: Int) : RemoteViewsService.RemoteViewsFactory {

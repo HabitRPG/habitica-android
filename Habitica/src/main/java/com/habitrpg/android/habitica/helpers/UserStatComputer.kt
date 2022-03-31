@@ -4,7 +4,6 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.models.Avatar
 import com.habitrpg.android.habitica.models.inventory.Equipment
 import com.habitrpg.android.habitica.models.user.Stats
-import java.util.*
 
 class UserStatComputer {
 

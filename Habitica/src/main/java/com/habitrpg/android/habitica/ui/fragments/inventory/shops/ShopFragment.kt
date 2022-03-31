@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.GridLayoutManager
-import com.google.firebase.analytics.FirebaseAnalytics
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
@@ -156,7 +155,6 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
             alert.setTitle(getString(R.string.class_confirmation_price, classIdentifier, 3))
             alert.addButton(R.string.choose_class, true) { _, _ ->
                 userRepository.changeClass(classIdentifier).subscribeWithErrorHandler {
-
                 }
             }
             alert.addButton(R.string.dialog_go_back, false)

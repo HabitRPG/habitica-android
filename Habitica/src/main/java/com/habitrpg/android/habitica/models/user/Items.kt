@@ -4,7 +4,7 @@ import com.habitrpg.android.habitica.models.BaseObject
 import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.RealmClass
-import java.util.*
+import java.util.Date
 
 @RealmClass(embedded = true)
 open class Items : RealmObject, BaseObject {
@@ -64,10 +64,10 @@ open class Items : RealmObject, BaseObject {
     val hasTransformationItems: Boolean
         get() {
             return special?.any { transformationItem ->
-                        transformationItem.key == ("seafoam") && transformationItem.numberOwned > 0||
-                        transformationItem.key == ("shinySeed") && transformationItem.numberOwned > 0||
-                        transformationItem.key == ("snowball") && transformationItem.numberOwned > 0||
-                        transformationItem.key == ("spookySparkles") && transformationItem.numberOwned > 0
+                transformationItem.key == ("seafoam") && transformationItem.numberOwned > 0 ||
+                    transformationItem.key == ("shinySeed") && transformationItem.numberOwned > 0 ||
+                    transformationItem.key == ("snowball") && transformationItem.numberOwned > 0 ||
+                    transformationItem.key == ("spookySparkles") && transformationItem.numberOwned > 0
             } ?: false
         }
 }

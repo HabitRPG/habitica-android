@@ -3,7 +3,7 @@ package com.habitrpg.android.habitica.models
 import io.realm.RealmModel
 import io.realm.RealmObject
 import io.realm.annotations.RealmClass
-import java.util.*
+import java.util.Date
 
 @RealmClass(embedded = true)
 open class TutorialStep : RealmObject(), BaseMainObject {

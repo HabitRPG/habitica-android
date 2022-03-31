@@ -12,7 +12,6 @@ import com.habitrpg.android.habitica.databinding.FragmentGiftGemPurchaseBinding
 import com.habitrpg.android.habitica.helpers.PurchaseHandler
 import com.habitrpg.android.habitica.helpers.PurchaseTypes
 import com.habitrpg.android.habitica.models.members.Member
-import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import com.habitrpg.android.habitica.ui.GemPurchaseOptionsView
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import kotlinx.coroutines.CoroutineScope

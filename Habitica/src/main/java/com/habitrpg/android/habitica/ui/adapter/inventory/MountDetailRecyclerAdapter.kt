@@ -4,7 +4,6 @@ import android.view.ViewGroup
 import com.habitrpg.android.habitica.models.inventory.Mount
 import com.habitrpg.android.habitica.models.inventory.StableSection
 import com.habitrpg.android.habitica.models.user.OwnedMount
-import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.viewHolders.MountViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.SectionViewHolder
 import io.reactivex.rxjava3.core.BackpressureStrategy
@@ -16,10 +15,10 @@ class MountDetailRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Ada
 
     private val equipEvents = PublishSubject.create<String>()
     var currentMount: String? = null
-    set(value) {
-        field = value
-        notifyDataSetChanged()
-    }
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
 
     private var itemList: List<Any> = ArrayList()
 
