@@ -242,6 +242,28 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
                 .subscribe(
                     {
                         MainNavigationController.navigate(
+    private fun createNewParty(bundle: Bundle) {
+        val alert = context?.let { HabiticaAlertDialog(it) }//Context results?
+        alert?.setTitle(R.string.quest_party_required_title)
+        alert?.setMessage(R.string.quest_party_required_description)
+        alert?.addButton(R.string.create_a_party, true, false) { _, _ ->
+            socialRepository.createGroup(
+                bundle.getString("name"),
+                bundle.getString("description"),
+                bundle.getString("leader"),
+                "party",
+                bundle.getString("privacy"),
+                bundle.getBoolean("leaderCreateChallenge")
+            )
+                .flatMap {
+                    userRepository.retrieveUser(false)
+                }
+                .subscribe(
+                    {
+                        if (isAdded) {
+                            parentFragmentManager.popBackStack()//Needed?
+                        }
+                        MainNavigationController.navigate(//Same nav?
                             R.id.partyFragment,
                             bundleOf(Pair("partyID", user?.party?.id))
                         )
