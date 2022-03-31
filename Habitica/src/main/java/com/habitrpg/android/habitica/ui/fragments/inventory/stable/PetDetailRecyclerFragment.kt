@@ -75,7 +75,7 @@ class PetDetailRecyclerFragment :
         super.onViewCreated(view, savedInstanceState)
 
         arguments?.let {
-            val args = MountDetailRecyclerFragmentArgs.fromBundle(it)
+            val args = PetDetailRecyclerFragmentArgs.fromBundle(it)
             if (args.group != "drop") {
                 animalGroup = args.group
             }

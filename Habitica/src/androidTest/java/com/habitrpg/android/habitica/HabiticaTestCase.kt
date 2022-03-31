@@ -69,6 +69,7 @@ open class HabiticaTestCase: TestCase() {
     val userSubject = PublishSubject.create<User>()
     val userEvents: Flowable<User> = userSubject.toFlowable(BackpressureStrategy.DROP)
     var user = User()
+    lateinit var content: ContentResult
 
     val errorSlot = slot<Throwable>()
     val unmanagedSlot = slot<BaseObject>()
@@ -89,7 +90,7 @@ open class HabiticaTestCase: TestCase() {
             throw errorSlot.captured
         }
         every { socialRepository.getUnmanagedCopy(capture(unmanagedSlot)) } answers { unmanagedSlot.captured }
-        val content: ContentResult = loadJsonFile("content", ContentResult::class.java)
+        content = loadJsonFile("content", ContentResult::class.java)
         every { inventoryRepository.getPets() } returns Flowable.just(content.pets)
         every { inventoryRepository.getMounts() } returns Flowable.just(content.mounts)
         every { inventoryRepository.getItems(Food::class.java) } returns Flowable.just(content.food)
