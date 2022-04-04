@@ -73,7 +73,7 @@ class AvatarWithBarsViewModel(private val context: Context, private val binding:
         if (!stats.isBuffed) {
             binding.buffImageView.visibility = View.GONE
         }
-        
+
         if (user is User) {
             binding.currencyView.gold = stats.gp ?: 0.0
             binding.currencyView.hourglasses = user.hourglassCount.toDouble()

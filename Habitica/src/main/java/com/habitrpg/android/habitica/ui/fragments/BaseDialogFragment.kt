@@ -71,7 +71,7 @@ abstract class BaseDialogFragment<VB : ViewBinding> : DialogFragment() {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(
                             Consumer { step ->
-                                if (step.isValid && step.isManaged && step.shouldDisplay()) {
+                                if (step.isValid && step.isManaged && step.shouldDisplay) {
                                     val mainActivity = activity as? MainActivity ?: return@Consumer
                                     mainActivity.displayTutorialStep(step, tutorialTexts, tutorialCanBeDeferred)
                                 }

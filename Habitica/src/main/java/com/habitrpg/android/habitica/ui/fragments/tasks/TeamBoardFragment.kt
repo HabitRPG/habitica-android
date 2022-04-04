@@ -290,49 +290,6 @@ class TeamBoardFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchVi
             }
         }
     }
-
-    private fun updateBottomBarBadges() {
-        if (bottomNavigation == null) {
-            return
-        }
-        compositeSubscription.add(
-            tutorialRepository.getTutorialSteps(listOf("habits", "dailies", "todos", "rewards")).subscribe(
-                { tutorialSteps ->
-                    val activeTutorialFragments = ArrayList<TaskType>()
-                    for (step in tutorialSteps) {
-                        var id = -1
-                        val taskType = when (step.identifier) {
-                            "habits" -> {
-                                id = R.id.habits_tab
-                                TaskType.HABIT
-                            }
-                            "dailies" -> {
-                                id = R.id.dailies_tab
-                                TaskType.DAILY
-                            }
-                            "todos" -> {
-                                id = R.id.todos_tab
-                                TaskType.TODO
-                            }
-                            "rewards" -> {
-                                id = R.id.rewards_tab
-                                TaskType.REWARD
-                            }
-                            else -> TaskType.HABIT
-                        }
-                        val tab = bottomNavigation?.tabWithId(id)
-                        if (step.shouldDisplay()) {
-                            tab?.badgeCount = 1
-                            activeTutorialFragments.add(taskType)
-                        } else {
-                            tab?.badgeCount = 0
-                        }
-                    }
-                },
-                RxErrorHandler.handleEmptyError()
-            )
-        )
-    }
     // endregion
 
     private fun openNewTaskActivity(type: TaskType) {
@@ -390,7 +347,6 @@ class TeamBoardFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchVi
         val index = indexForTaskType(taskType)
         if (binding?.viewPager != null && index != -1) {
             binding?.viewPager?.currentItem = index
-            updateBottomBarBadges()
         }
     }
 
@@ -424,7 +380,6 @@ class TeamBoardFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchVi
             else -> 0
         }
         binding?.viewPager?.setCurrentItem(newItem, smooth)
-        updateBottomBarBadges()
     }
 
     override fun onAdd(taskType: TaskType) {

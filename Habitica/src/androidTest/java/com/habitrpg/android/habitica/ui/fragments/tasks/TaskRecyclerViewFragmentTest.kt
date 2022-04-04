@@ -21,7 +21,6 @@ import io.reactivex.rxjava3.core.Flowable
 import org.hamcrest.Matcher
 import org.junit.Test
 
-
 open class TaskItem(val parent: Matcher<View>) : KRecyclerItem<TaskItem>(parent) {
     val title = KTextView(parent) { withId(R.id.checkedTextView) }
     val notes = KTextView(parent) { withId(R.id.notesTextView) }
@@ -31,8 +30,8 @@ class TaskListScreen : Screen<TaskListScreen>() {
     val recycler: KRecyclerView = KRecyclerView({
         withId(R.id.recyclerView)
     }, itemTypeBuilder = {
-        itemType(::TaskItem)
-    })
+            itemType(::TaskItem)
+        })
 }
 
 internal class TaskRecyclerViewFragmentTest : FragmentTestCase<TaskRecyclerViewFragment, FragmentRefreshRecyclerviewBinding, TaskListScreen>(false) {
@@ -218,7 +217,6 @@ internal class TaskRecyclerViewFragmentTest : FragmentTestCase<TaskRecyclerViewF
             }
         }
     }
-
 
     @Test
     fun completeDaily() {

@@ -177,7 +177,6 @@ class ChatRecyclerMessageViewHolder(itemView: View, private var userId: String, 
             itemView.setPadding(16.dpToPx(context), itemView.paddingTop, itemView.paddingRight, itemView.paddingBottom)
         }
 
-
         binding.messageText.setParsedMarkdown(chatMessage?.parsedText)
         if (msg.parsedText == null) {
             binding.messageText.text = chatMessage?.text

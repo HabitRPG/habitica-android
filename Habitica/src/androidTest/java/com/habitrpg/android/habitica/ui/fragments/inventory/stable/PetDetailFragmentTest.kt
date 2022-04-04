@@ -14,9 +14,9 @@ class PetDetailScreen : Screen<PetDetailScreen>() {
     val recycler: KRecyclerView = KRecyclerView({
         withId(R.id.recyclerView)
     }, itemTypeBuilder = {
-        itemType(::SectionItem)
-        itemType(::PetItem)
-    })
+            itemType(::SectionItem)
+            itemType(::PetItem)
+        })
 }
 
 internal class PetDetailRecyclerFragmentTest : FragmentTestCase<PetDetailRecyclerFragment, FragmentRecyclerviewBinding, PetDetailScreen>(false) {

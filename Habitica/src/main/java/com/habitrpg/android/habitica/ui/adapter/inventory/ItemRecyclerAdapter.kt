@@ -2,7 +2,6 @@ package com.habitrpg.android.habitica.ui.adapter.inventory
 
 import android.content.Context
 import android.content.res.Resources
-import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
@@ -168,7 +167,7 @@ class ItemRecyclerAdapter(val context: Context, val user: User?) : BaseRecyclerV
                     menu.addMenuItem(BottomSheetMenuItem(resources.getString(R.string.hatch_egg)))
                 } else if (item is QuestContent) {
                     menu.addMenuItem(BottomSheetMenuItem(resources.getString(R.string.details)))
-                    if (user?.hasParty == true){
+                    if (user?.hasParty == true) {
                         menu.addMenuItem(BottomSheetMenuItem(resources.getString(R.string.invite_party)))
                     } else {
                         menu.addMenuItem(BottomSheetMenuItem(resources.getString(R.string.create_new_party)))
@@ -201,7 +200,6 @@ class ItemRecyclerAdapter(val context: Context, val user: User?) : BaseRecyclerV
                                     } else {
                                         createNewPartySubject.onNext(true)
                                     }
-
                                 }
                             }
                             is SpecialItem ->

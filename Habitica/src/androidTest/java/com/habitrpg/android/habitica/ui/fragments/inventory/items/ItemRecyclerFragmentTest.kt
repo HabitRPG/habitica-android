@@ -24,21 +24,22 @@ import org.junit.Test
 private val KTextView.text: CharSequence?
     get() {
         var string: CharSequence? = null
-        (this.view.perform(object : ViewAction {
-            override fun getConstraints(): Matcher<View> {
-                return isA(TextView::class.java)
-            }
+        (
+            this.view.perform(object : ViewAction {
+                override fun getConstraints(): Matcher<View> {
+                    return isA(TextView::class.java)
+                }
 
-            override fun getDescription(): String {
-                return "getting text from a TextView";
-            }
+                override fun getDescription(): String {
+                    return "getting text from a TextView"
+                }
 
-            override fun perform(uiController: UiController?, view: View?) {
-                val tv = view as TextView
-                string = tv.text
-            }
-
-        }))
+                override fun perform(uiController: UiController?, view: View?) {
+                    val tv = view as TextView
+                    string = tv.text
+                }
+            })
+            )
         return string
     }
 
@@ -51,8 +52,8 @@ class ItemScreen : Screen<ItemScreen>() {
     val recycler: KRecyclerView = KRecyclerView({
         withId(R.id.recyclerView)
     }, itemTypeBuilder = {
-        itemType(::ItemItem)
-    })
+            itemType(::ItemItem)
+        })
 }
 
 internal class ItemRecyclerFragmentTest : FragmentTestCase<ItemRecyclerFragment, FragmentRecyclerviewBinding, ItemScreen>(false) {
@@ -91,7 +92,7 @@ internal class ItemRecyclerFragmentTest : FragmentTestCase<ItemRecyclerFragment,
     fun doesNotHaveDuplicates() {
         clearMocks(inventoryRepository)
         every { inventoryRepository.getOwnedItems("food") } answers {
-            var items =  user.items?.food!!.filter { it.numberOwned > 0 }
+            var items = user.items?.food!!.filter { it.numberOwned > 0 }
             items = (items + items).sortedBy { it.key }
             Flowable.just(items)
         }

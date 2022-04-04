@@ -317,7 +317,7 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
                             else -> TaskType.HABIT
                         }
                         val tab = bottomNavigation?.tabWithId(id)
-                        if (step.shouldDisplay()) {
+                        if (step.shouldDisplay) {
                             tab?.badgeCount = 1
                             activeTutorialFragments.add(taskType)
                         } else {

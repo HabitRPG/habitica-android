@@ -15,7 +15,6 @@ import io.reactivex.rxjava3.core.Flowable
 import org.hamcrest.Description
 import org.hamcrest.TypeSafeMatcher
 
-
 class Capture<T : View>(val klass: Class<T>) : TypeSafeMatcher<View>(View::class.java) {
 
     companion object {
@@ -105,7 +104,6 @@ class Capture<T : View>(val klass: Class<T>) : TypeSafeMatcher<View>(View::class
     var view: T? = null
 
     override fun describeTo(desc: Description) {
-
     }
 
     override fun matchesSafely(v: View): Boolean {

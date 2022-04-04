@@ -247,7 +247,6 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
                     },
                     RxErrorHandler.handleEmptyError()
                 )
-
         }
         alert?.addButton(R.string.close, false) { _, _ ->
             alert.dismiss()
@@ -290,7 +289,6 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
                     )
             )
         }
-                                
 
         compositeSubscription.add(inventoryRepository.getPets().subscribe({ adapter?.setExistingPets(it) }, RxErrorHandler.handleEmptyError()))
         compositeSubscription.add(

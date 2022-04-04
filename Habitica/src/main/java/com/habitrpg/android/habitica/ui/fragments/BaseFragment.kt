@@ -73,7 +73,8 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
                     .firstElement()
                     .delay(1, TimeUnit.SECONDS)
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({ step ->
+                    .subscribe(
+                        { step ->
                             if (step.isValid && step.isManaged && step.shouldDisplay) {
                                 val mainActivity = activity as? MainActivity ?: return@subscribe
                                 mainActivity.displayTutorialStep(step, tutorialTexts, tutorialCanBeDeferred)

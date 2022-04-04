@@ -45,7 +45,7 @@ import kotlin.reflect.KMutableProperty1
 import kotlin.reflect.full.starProjectedType
 import kotlin.reflect.jvm.javaField
 
-open class HabiticaTestCase: TestCase() {
+open class HabiticaTestCase : TestCase() {
     val gson = GSonFactoryCreator.createGson()
 
     val apiClient: ApiClient = mockk(relaxed = true)
@@ -107,7 +107,7 @@ open class HabiticaTestCase: TestCase() {
     }
 
     internal fun <T> loadJsonFile(s: String, type: Type): T {
-        val userStream = javaClass.classLoader?.getResourceAsStream("${s}.json")
+        val userStream = javaClass.classLoader?.getResourceAsStream("$s.json")
         return gson.fromJson(gson.newJsonReader(InputStreamReader(userStream)), type)
     }
 

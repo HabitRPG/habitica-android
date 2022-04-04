@@ -24,8 +24,12 @@ open class TutorialStep : RealmObject(), BaseMainObject {
 
     val shouldDisplay: Boolean
         get() {
-            return !this.wasCompleted && (this.displayedOn == null || Date().time - (displayedOn?.time
-                ?: 0) > 86400000)
+            return !this.wasCompleted && (
+                this.displayedOn == null || Date().time - (
+                    displayedOn?.time
+                        ?: 0
+                    ) > 86400000
+                )
         }
     override val realmClass: Class<out RealmModel>
         get() = TutorialStep::class.java
@@ -35,5 +39,5 @@ open class TutorialStep : RealmObject(), BaseMainObject {
         get() = "key"
 
     val flagPath: String
-    get() = "flags.tutorial.$tutorialGroup.$identifier"
+        get() = "flags.tutorial.$tutorialGroup.$identifier"
 }

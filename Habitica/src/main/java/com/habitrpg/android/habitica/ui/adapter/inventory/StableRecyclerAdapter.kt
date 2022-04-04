@@ -233,7 +233,6 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 this.ownedTextView.setTextColor(ContextCompat.getColor(context, R.color.white))
             }
 
-
             itemView.contentDescription = "${titleView.text} ${ownedTextView.text}"
         }
 

@@ -38,11 +38,10 @@ import org.junit.runner.RunWith
 import java.util.Date
 import java.util.UUID
 
-
 class TaskFormScreen : Screen<TaskFormScreen>() {
     val toolbar = KToolbar { withId(R.id.toolbar) }
-    val textEditText = KEditText { withId(R.id.text_edit_text)}
-    val notesEditText = KEditText { withId(R.id.notes_edit_text)}
+    val textEditText = KEditText { withId(R.id.text_edit_text) }
+    val notesEditText = KEditText { withId(R.id.notes_edit_text) }
     val taskDifficultyButtons = KView { withId(R.id.task_difficulty_buttons) }
     val tagsWrapper = KView { withId(R.id.tags_wrapper) }
 }
@@ -162,7 +161,7 @@ class TaskFormActivityTest : ActivityTestCase() {
         screen {
             device.activities.isCurrent(TaskFormActivity::class.java)
             textEditText.typeText("New Habit")
-            KButton { withId(R.id.action_save)}.click()
+            KButton { withId(R.id.action_save) }.click()
             verify(exactly = 1) { taskRepository.createTaskInBackground(any()) }
         }
     }
@@ -208,8 +207,8 @@ class TaskFormActivityTest : ActivityTestCase() {
         scenario = launchActivity(intent)
         screen {
             device.activities.isCurrent(TaskFormActivity::class.java)
-            KButton { withId(R.id.action_delete)}.click()
-            KButton {  withText(R.string.delete_task) }.click()
+            KButton { withId(R.id.action_delete) }.click()
+            KButton { withText(R.string.delete_task) }.click()
             verify(exactly = 1) { taskRepository.deleteTask(task.id!!) }
         }
     }
@@ -295,8 +294,8 @@ class TaskFormActivityTest : ActivityTestCase() {
         intent.putExtras(bundle)
         scenario = launchActivity(intent)
         screen {
-            KView { withId(R.id.start_date_wrapper)}.click()
-            KDatePickerDialog() perform  {
+            KView { withId(R.id.start_date_wrapper) }.click()
+            KDatePickerDialog() perform {
                 datePicker.setDate(2021, 10, 2)
                 okButton.click()
             }

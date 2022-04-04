@@ -66,12 +66,12 @@ class MainActivityTest : ActivityTestCase() {
             screen.pressBack()
             screen.pressBack()
             KButton { withText("Discard") }.click()
-            KView { withId(R.id.dailies_tab)}.click()
+            KView { withId(R.id.dailies_tab) }.click()
             KView { withId(R.id.add_button) }.click()
             KView { withText("Create Daily") }.isVisible()
             screen.pressBack()
             screen.pressBack()
-            KView { withId(R.id.todos_tab)}.click()
+            KView { withId(R.id.todos_tab) }.click()
             KView { withId(R.id.add_button) }.click()
             KView { withText("Create To Do") }.isVisible()
         }
@@ -85,7 +85,7 @@ class MainActivityTest : ActivityTestCase() {
                 KView { withId(R.id.action_filter) }.click()
                 KView { withText(R.string.filters) }.isVisible()
                 screen.pressBack()
-                KView { withText(R.string.filters)}.doesNotExist()
+                KView { withText(R.string.filters) }.doesNotExist()
             }
         }
     }
