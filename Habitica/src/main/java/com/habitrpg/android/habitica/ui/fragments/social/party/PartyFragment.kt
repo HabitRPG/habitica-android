@@ -77,7 +77,7 @@ class PartyFragment : BaseMainFragment<FragmentViewpagerBinding>() {
         viewModel.loadPartyID()
 
         this.tutorialStepIdentifier = "party"
-        this.tutorialText = getString(R.string.tutorial_party)
+        this.tutorialTexts = listOf(getString(R.string.tutorial_party))
 
         viewModel.retrieveGroup {}
     }

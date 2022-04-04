@@ -17,13 +17,14 @@ import com.habitrpg.android.habitica.models.TutorialStep
 import com.habitrpg.android.habitica.models.inventory.Egg
 import com.habitrpg.android.habitica.models.responses.MaintenanceResponse
 import com.habitrpg.android.habitica.proxy.AnalyticsManager
+import com.habitrpg.android.habitica.ui.TutorialView
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
 import io.realm.kotlin.isValid
 import java.util.Date
 import javax.inject.Inject
 
-class MainActivityViewModel : BaseViewModel() {
+class MainActivityViewModel : BaseViewModel(), TutorialView.OnTutorialReaction {
     @Inject
     internal lateinit var hostConfig: HostConfig
     @Inject
@@ -100,6 +101,15 @@ class MainActivityViewModel : BaseViewModel() {
                     .subscribe({ }, RxErrorHandler.handleEmptyError())
             )
         }
+    }
+
+    override fun onTutorialCompleted(step: TutorialStep) {
+        updateUser("flags.tutorial." + step.tutorialGroup + "." + step.identifier, true)
+        logTutorialStatus(step, true)
+    }
+
+    override fun onTutorialDeferred(step: TutorialStep) {
+        taskRepository.modify(step) { it.displayedOn = Date() }
     }
 
     fun logTutorialStatus(step: TutorialStep, complete: Boolean) {

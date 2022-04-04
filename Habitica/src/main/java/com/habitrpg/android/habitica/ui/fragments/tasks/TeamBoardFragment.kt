@@ -328,15 +328,6 @@ class TeamBoardFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchVi
                             tab?.badgeCount = 0
                         }
                     }
-                    if (activeTutorialFragments.size == 1) {
-                        val fragment = viewFragmentsDictionary?.get(indexForTaskType(activeTutorialFragments[0]))
-                        if (fragment?.tutorialTexts != null && context != null) {
-                            val finalText = context?.getString(R.string.tutorial_tasks_complete)
-                            if (!fragment.tutorialTexts.contains(finalText) && finalText != null) {
-                                fragment.tutorialTexts.add(finalText)
-                            }
-                        }
-                    }
                 },
                 RxErrorHandler.handleEmptyError()
             )

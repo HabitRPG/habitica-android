@@ -15,17 +15,6 @@ class RealmTutorialLocalRepository(realm: Realm) : RealmBaseLocalRepository(real
                 .findAll()
                 .asFlowable()
                 .filter { realmObject -> realmObject.isLoaded && realmObject.isValid && realmObject.isNotEmpty() }
-                .map { steps ->
-                    return@map if (steps.isEmpty()) {
-                        val step = TutorialStep()
-                        step.identifier = key
-                        val list = ArrayList<TutorialStep>()
-                        list.add(step)
-                        list
-                    } else {
-                        steps
-                    }
-                }
                 .map { steps -> steps.first() }
         )
     }

@@ -68,7 +68,7 @@ class StatsFragment : BaseMainFragment<FragmentStatsBinding>() {
         savedInstanceState: Bundle?
     ): View? {
         tutorialStepIdentifier = "stats"
-        tutorialText = getString(R.string.tutorial_stats)
+        tutorialTexts = listOf(getString(R.string.tutorial_stats))
         this.hidesToolbar = true
         return super.onCreateView(inflater, container, savedInstanceState)
     }

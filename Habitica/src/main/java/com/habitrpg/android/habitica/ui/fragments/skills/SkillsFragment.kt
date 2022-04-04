@@ -50,7 +50,7 @@ class SkillsFragment : BaseMainFragment<FragmentSkillsBinding>() {
         adapter?.useSkillEvents?.subscribeWithErrorHandler { onSkillSelected(it) }?.let { compositeSubscription.add(it) }
 
         this.tutorialStepIdentifier = "skills"
-        this.tutorialText = getString(R.string.tutorial_skills)
+        this.tutorialTexts = listOf(getString(R.string.tutorial_skills))
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 

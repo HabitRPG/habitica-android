@@ -329,7 +329,7 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
                         if (fragment?.tutorialTexts != null && context != null) {
                             val finalText = context?.getString(R.string.tutorial_tasks_complete)
                             if (!fragment.tutorialTexts.contains(finalText) && finalText != null) {
-                                fragment.tutorialTexts.add(finalText)
+                                fragment.tutorialTexts = fragment.tutorialTexts + finalText
                             }
                         }
                     }

@@ -27,7 +27,6 @@ abstract class BaseDialogFragment<VB : ViewBinding> : DialogFragment() {
     lateinit var tutorialRepository: TutorialRepository
 
     var tutorialStepIdentifier: String? = null
-    var tutorialText: String? = null
     protected var tutorialCanBeDeferred = true
     var tutorialTexts: MutableList<String> = ArrayList()
 
@@ -72,13 +71,9 @@ abstract class BaseDialogFragment<VB : ViewBinding> : DialogFragment() {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(
                             Consumer { step ->
-                                if (step != null && step.isValid && step.isManaged && step.shouldDisplay()) {
+                                if (step.isValid && step.isManaged && step.shouldDisplay()) {
                                     val mainActivity = activity as? MainActivity ?: return@Consumer
-                                    if (tutorialText != null) {
-                                        mainActivity.displayTutorialStep(step, tutorialText ?: "", tutorialCanBeDeferred)
-                                    } else {
-                                        mainActivity.displayTutorialStep(step, tutorialTexts, tutorialCanBeDeferred)
-                                    }
+                                    mainActivity.displayTutorialStep(step, tutorialTexts, tutorialCanBeDeferred)
                                 }
                             },
                             RxErrorHandler.handleEmptyError()

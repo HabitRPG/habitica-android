@@ -15,6 +15,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.core.view.children
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
@@ -64,11 +65,10 @@ import com.habitrpg.android.habitica.widget.HabitButtonWidgetProvider
 import com.habitrpg.android.habitica.widget.TodoListWidgetProvider
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
-import java.util.Date
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction, SnackbarActivity {
+open class MainActivity : BaseActivity(), SnackbarActivity {
     private var launchScreen: String? = null
 
     @Inject
@@ -98,7 +98,6 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction, Snack
     val viewModel: MainActivityViewModel by viewModels()
     private var faintDialog: HabiticaAlertDialog? = null
     private var sideAvatarView: AvatarView? = null
-    private var activeTutorialView: TutorialView? = null
     private var drawerFragment: NavigationDrawerFragment? = null
     var drawerToggle: ActionBarDrawerToggle? = null
     private var resumeFromActivity = false
@@ -397,9 +396,6 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction, Snack
     }
 
     override fun onBackPressed() {
-        if (this.activeTutorialView != null) {
-            this.removeActiveTutorialView()
-        }
         if (drawerFragment?.isDrawerOpen == true) {
             drawerFragment?.closeDrawer()
         } else {
@@ -479,45 +475,17 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction, Snack
         viewModel.retrieveUser(forced)
     }
 
-    fun displayTutorialStep(step: TutorialStep, text: String, canBeDeferred: Boolean) {
-        removeActiveTutorialView()
-        val view = TutorialView(this, step, this)
-        this.activeTutorialView = view
-        view.setTutorialText(text)
-        view.onReaction = this
-        view.setCanBeDeferred(canBeDeferred)
-        binding.overlayFrameLayout.addView(view)
-        viewModel.logTutorialStatus(step, false)
-    }
-
     fun displayTutorialStep(step: TutorialStep, texts: List<String>, canBeDeferred: Boolean) {
-        removeActiveTutorialView()
-        val view = TutorialView(this, step, this)
-        this.activeTutorialView = view
+        val view = TutorialView(this, step, viewModel)
         view.setTutorialTexts(texts)
-        view.onReaction = this
         view.setCanBeDeferred(canBeDeferred)
+        binding.overlayFrameLayout.children.forEach {
+            if (it is TutorialView) {
+                binding.overlayFrameLayout.removeView(it)
+            }
+        }
         binding.overlayFrameLayout.addView(view)
         viewModel.logTutorialStatus(step, false)
-    }
-
-    override fun onTutorialCompleted(step: TutorialStep) {
-        viewModel.updateUser("flags.tutorial." + step.tutorialGroup + "." + step.identifier, true)
-        binding.overlayFrameLayout.removeView(this.activeTutorialView)
-        this.removeActiveTutorialView()
-        viewModel.logTutorialStatus(step, true)
-    }
-
-    override fun onTutorialDeferred(step: TutorialStep) {
-        taskRepository.modify(step) { it.displayedOn = Date() }
-        this.removeActiveTutorialView()
-    }
-
-    private fun removeActiveTutorialView() {
-        if (this.activeTutorialView != null) {
-            binding.overlayFrameLayout.removeView(this.activeTutorialView)
-            this.activeTutorialView = null
-        }
     }
 
     private fun checkMaintenance() {

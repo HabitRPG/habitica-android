@@ -106,7 +106,7 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
             .map<Map<String, Any>> { tutorialSteps ->
                 val updateData = HashMap<String, Any>()
                 for (step in tutorialSteps) {
-                    updateData["flags.tutorial." + step.tutorialGroup + "." + step.identifier] = false
+                    updateData[step.flagPath] = false
                 }
                 updateData
             }

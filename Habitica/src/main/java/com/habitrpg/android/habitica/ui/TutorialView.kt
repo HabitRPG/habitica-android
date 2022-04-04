@@ -8,7 +8,7 @@ import com.habitrpg.android.habitica.databinding.OverlayTutorialBinding
 import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.models.TutorialStep
 
-class TutorialView(context: Context, var step: TutorialStep, var onReaction: OnTutorialReaction?) : FrameLayout(context) {
+class TutorialView(context: Context, val step: TutorialStep, private val onReaction: OnTutorialReaction) : FrameLayout(context) {
     private val binding = OverlayTutorialBinding.inflate(context.layoutInflater, this, true)
     private var tutorialTexts: List<String> = emptyList()
     private var currentTextIndex: Int = 0
@@ -35,6 +35,10 @@ class TutorialView(context: Context, var step: TutorialStep, var onReaction: OnT
     }
 
     fun setTutorialTexts(texts: List<String>) {
+        if (texts.size == 1) {
+            setTutorialText(texts.first())
+            return
+        }
         tutorialTexts = texts
         currentTextIndex = -1
         displayNextTutorialText()
@@ -55,17 +59,17 @@ class TutorialView(context: Context, var step: TutorialStep, var onReaction: OnT
                 binding.speechBubbleView.setHasMoreContent(true)
             }
         } else {
-            this.onReaction?.onTutorialCompleted(this.step)
+            onReaction.onTutorialCompleted(step)
         }
     }
 
     private fun completeButtonClicked() {
-        this.onReaction?.onTutorialCompleted(this.step)
+        onReaction.onTutorialCompleted(step)
         (parent as? ViewGroup)?.removeView(this)
     }
 
     private fun dismissButtonClicked() {
-        this.onReaction?.onTutorialDeferred(this.step)
+        onReaction.onTutorialDeferred(step)
         (parent as? ViewGroup)?.removeView(this)
     }
 
@@ -75,7 +79,6 @@ class TutorialView(context: Context, var step: TutorialStep, var onReaction: OnT
 
     interface OnTutorialReaction {
         fun onTutorialCompleted(step: TutorialStep)
-
         fun onTutorialDeferred(step: TutorialStep)
     }
 }
