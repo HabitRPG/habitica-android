@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.ui.activities
 import android.content.Context
 import android.graphics.Typeface
 import android.os.Bundle
+import android.text.method.LinkMovementMethod
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View

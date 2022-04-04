@@ -6,8 +6,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.os.bundleOf
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
@@ -37,10 +37,9 @@ import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.helpers.EmptyItem
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.helpers.loadImage
-import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
-import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
+import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.dialogs.OpenedMysteryitemDialog
 import io.reactivex.rxjava3.core.Flowable
 import javax.inject.Inject
@@ -105,7 +104,7 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
         adapter = binding?.recyclerView?.adapter as? ItemRecyclerAdapter
         if (adapter == null) {
             context?.let {
-                adapter = ItemRecyclerAdapter(context, user)
+                adapter = ItemRecyclerAdapter(context, userViewModel.user.value)
             }
             binding?.recyclerView?.adapter = adapter
             adapter?.useSpecialEvents?.subscribeWithErrorHandler { onSpecialItemSelected(it) }?.let { compositeSubscription.add(it) }
@@ -221,9 +220,9 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
         alert?.setMessage(R.string.quest_party_required_description)
         alert?.addButton(R.string.create_new_party, true, false) { _, _ ->
             socialRepository.createGroup(
-                getString(R.string.usernames_party, user?.profile?.name),
+                getString(R.string.usernames_party, userViewModel.user.value?.profile?.name),
                 "",
-                user?.id,
+                userViewModel.user.value?.id,
                 "party",
                 "",
                 false
@@ -243,7 +242,7 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
                     {
                         MainNavigationController.navigate(
                             R.id.partyFragment,
-                            bundleOf(Pair("partyID", user?.party?.id))
+                            bundleOf(Pair("partyID", userViewModel.user.value?.party?.id))
                         )
                     },
                     RxErrorHandler.handleEmptyError()
