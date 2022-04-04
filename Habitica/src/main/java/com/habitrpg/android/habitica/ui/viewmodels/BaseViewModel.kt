@@ -1,8 +1,6 @@
 package com.habitrpg.android.habitica.ui.viewmodels
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.UserRepository
@@ -55,5 +53,14 @@ abstract class BaseViewModel(initializeComponent: Boolean = true) : ViewModel() 
     fun updateUser(path: String, value: Any) {
         disposable.add(userRepository.updateUser(path, value)
             .subscribe({ }, RxErrorHandler.handleEmptyError()))
+    }
+
+    fun <T> LiveData<T>.observeOnce(lifecycleOwner: LifecycleOwner, observer: Observer<T>) {
+        observe(lifecycleOwner, object : Observer<T> {
+            override fun onChanged(t: T?) {
+                observer.onChanged(t)
+                removeObserver(this)
+            }
+        })
     }
 }
