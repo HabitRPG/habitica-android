@@ -20,7 +20,6 @@ import com.habitrpg.android.habitica.models.inventory.Pet
 import com.habitrpg.android.habitica.models.inventory.StableSection
 import com.habitrpg.android.habitica.models.user.OwnedMount
 import com.habitrpg.android.habitica.models.user.OwnedPet
-import com.habitrpg.android.habitica.ui.activities.BaseActivity
 import com.habitrpg.android.habitica.ui.adapter.inventory.PetDetailRecyclerAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemDialogFragment
@@ -204,16 +203,15 @@ class PetDetailRecyclerFragment :
 
     private fun showFeedingDialog(pet: Pet, food: Food?) {
         if (food != null) {
-            (activity as? BaseActivity)?.let {
-                compositeSubscription.add(
-                    feedPetUseCase.observable(
-                        FeedPetUseCase.RequestValues(
-                            pet, food,
-                            it
-                        )
-                    ).subscribeWithErrorHandler {}
-                )
-            }
+            val context = activity ?: context ?: return
+            compositeSubscription.add(
+                feedPetUseCase.observable(
+                    FeedPetUseCase.RequestValues(
+                        pet, food,
+                        context
+                    )
+                ).subscribeWithErrorHandler {}
+            )
             return
         }
         val fragment = ItemDialogFragment()
@@ -222,6 +220,7 @@ class PetDetailRecyclerFragment :
         fragment.isHatching = false
         fragment.itemType = "food"
         fragment.itemTypeText = getString(R.string.food)
+        fragment.parentSubscription = compositeSubscription
         parentFragmentManager.let { fragment.show(it, "feedDialog") }
     }
 

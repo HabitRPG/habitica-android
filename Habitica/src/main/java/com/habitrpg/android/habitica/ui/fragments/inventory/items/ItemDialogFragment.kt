@@ -27,7 +27,6 @@ import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.inventory.SpecialItem
 import com.habitrpg.android.habitica.models.user.OwnedPet
 import com.habitrpg.android.habitica.models.user.User
-import com.habitrpg.android.habitica.ui.activities.BaseActivity
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.adapter.inventory.ItemRecyclerAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseDialogFragment
@@ -35,9 +34,12 @@ import com.habitrpg.android.habitica.ui.helpers.EmptyItem
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.helpers.loadImage
 import com.habitrpg.android.habitica.ui.views.dialogs.OpenedMysteryitemDialog
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 import javax.inject.Inject
 
 class ItemDialogFragment : BaseDialogFragment<FragmentItemsBinding>(), SwipeRefreshLayout.OnRefreshListener {
+
+    var parentSubscription: CompositeDisposable? = null
 
     @Inject
     lateinit var inventoryRepository: InventoryRepository
@@ -209,16 +211,15 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsBinding>(), SwipeRefr
 
     private fun feedPet(food: Food) {
         val pet = feedingPet ?: return
-        (activity as? BaseActivity)?.let {
-            it.compositeSubscription.add(
-                feedPetUseCase.observable(
-                    FeedPetUseCase.RequestValues(
-                        pet, food,
-                        it
-                    )
-                ).subscribeWithErrorHandler {}
-            )
-        }
+        val activity = activity ?: return
+        parentSubscription?.add(
+            feedPetUseCase.observable(
+                FeedPetUseCase.RequestValues(
+                    pet, food,
+                    activity
+                )
+            ).subscribeWithErrorHandler {}
+        )
     }
 
     override fun onResume() {
@@ -249,16 +250,15 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsBinding>(), SwipeRefr
 
     private fun hatchPet(potion: HatchingPotion, egg: Egg) {
         dismiss()
-        (activity as? BaseActivity)?.let {
-            it.compositeSubscription.add(
-                hatchPetUseCase.observable(
-                    HatchPetUseCase.RequestValues(
-                        potion, egg,
-                        it
-                    )
-                ).subscribeWithErrorHandler {}
-            )
-        }
+        val activity = activity ?: return
+        parentSubscription?.add(
+            hatchPetUseCase.observable(
+                HatchPetUseCase.RequestValues(
+                    potion, egg,
+                    activity
+                )
+            ).subscribeWithErrorHandler {}
+        )
     }
 
     private fun loadItems() {

@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.interactors
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.view.View
@@ -42,7 +43,7 @@ constructor(private val inventoryRepository: InventoryRepository, postExecutionT
                 val canvas = Canvas(sharedImage)
                 petImageView?.drawable?.setBounds(0, 0, petImageSideLength, petImageSideLength)
                 petImageView?.drawable?.draw(canvas)
-                requestValues.context.shareContent("hatchedPet", message, sharedImage)
+                (requestValues.context as? BaseActivity)?.shareContent("hatchedPet", message, sharedImage)
                 hatchingDialog.dismiss()
             }
             dialog.setExtraCloseButtonVisibility(View.VISIBLE)
@@ -50,5 +51,5 @@ constructor(private val inventoryRepository: InventoryRepository, postExecutionT
         }
     }
 
-    class RequestValues(val potion: HatchingPotion, val egg: Egg, val context: BaseActivity) : UseCase.RequestValues
+    class RequestValues(val potion: HatchingPotion, val egg: Egg, val context: Context) : UseCase.RequestValues
 }

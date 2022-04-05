@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments
 
+import android.os.Bundle
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
@@ -52,8 +53,8 @@ class StatsFragmentTest : FragmentTestCase<StatsFragment, FragmentStatsBinding, 
         fragment.shouldInitializeComponent = false
     }
 
-    override fun launchFragment() {
-        scenario = launchFragmentInContainer(null, R.style.MainAppTheme) {
+    override fun launchFragment(args: Bundle?) {
+        scenario = launchFragmentInContainer(args, R.style.MainAppTheme) {
             return@launchFragmentInContainer fragment
         }
     }

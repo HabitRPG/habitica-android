@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments.tasks
 
+import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.testing.launchFragmentInContainer
 import com.habitrpg.android.habitica.R
@@ -45,8 +46,8 @@ internal class TaskRecyclerViewFragmentTest : FragmentTestCase<TaskRecyclerViewF
         fragment.taskFilterHelper = TaskFilterHelper()
     }
 
-    override fun launchFragment() {
-        scenario = launchFragmentInContainer(null, R.style.MainAppTheme) {
+    override fun launchFragment(args: Bundle?) {
+        scenario = launchFragmentInContainer(args, R.style.MainAppTheme) {
             return@launchFragmentInContainer fragment
         }
     }

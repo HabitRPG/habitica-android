@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments.inventory.stable
 
+import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.testing.launchFragmentInContainer
 import com.habitrpg.android.habitica.R
@@ -46,8 +47,8 @@ internal class StableRecyclerFragmentTest : FragmentTestCase<StableRecyclerFragm
         fragment.itemType = "pets"
     }
 
-    override fun launchFragment() {
-        scenario = launchFragmentInContainer(null, R.style.MainAppTheme) {
+    override fun launchFragment(args: Bundle?) {
+        scenario = launchFragmentInContainer(args, R.style.MainAppTheme) {
             return@launchFragmentInContainer fragment
         }
     }
