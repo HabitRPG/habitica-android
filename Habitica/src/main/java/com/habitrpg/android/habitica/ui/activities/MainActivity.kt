@@ -9,6 +9,7 @@ import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.KeyEvent
 import android.view.MenuItem
 import android.view.View
@@ -35,6 +36,7 @@ import com.habitrpg.android.habitica.extensions.hideKeyboard
 import com.habitrpg.android.habitica.extensions.isUsingNightModeResources
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.extensions.updateStatusBarColor
+import com.habitrpg.android.habitica.helpers.AdHandler
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
@@ -445,6 +447,11 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         }
 
         if (this.faintDialog == null && !this.isFinishing) {
+            val handler = AdHandler(this) {
+                Log.d("AdHandler", "Reviving user")
+                compositeSubscription.add(userRepository.updateUser("stats.hp", 50).subscribe({}, RxErrorHandler.handleEmptyError()))
+            }
+            handler.prepare()
             val binding = DialogFaintBinding.inflate(this.layoutInflater)
             binding.hpBar.setLightBackground(true)
             binding.hpBar.setIcon(HabiticaIconsHelper.imageOfHeartLightBg())
@@ -456,6 +463,10 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
             faintDialog?.addButton(R.string.faint_button, true) { _, _ ->
                 faintDialog = null
                 userRepository.revive().subscribe({ }, RxErrorHandler.handleEmptyError())
+            }
+            faintDialog?.addButton(R.string.watch_ad, true) { _, _ ->
+                faintDialog = null
+                handler.show()
             }
             soundManager.loadAndPlayAudio(SoundManager.SoundDeath)
             this.faintDialog?.enqueue()
