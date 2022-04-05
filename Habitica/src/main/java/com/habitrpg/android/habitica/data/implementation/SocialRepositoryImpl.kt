@@ -95,6 +95,10 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
             localRepository.likeMessage(chatMessage, userID, !liked)
         }
         return apiClient.likeMessage(chatMessage.groupId ?: "", chatMessage.id)
+            .map {
+                it.groupId = chatMessage.groupId
+                it
+            }
     }
 
     override fun deleteMessage(chatMessage: ChatMessage): Flowable<Void> {
