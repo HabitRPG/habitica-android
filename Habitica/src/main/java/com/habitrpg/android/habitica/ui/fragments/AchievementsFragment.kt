@@ -50,7 +50,11 @@ class AchievementsFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding
         component.inject(this)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         hidesToolbar = true
         adapter = AchievementsAdapter()
         onRefresh()

@@ -97,7 +97,12 @@ constructor(
             .subscribe({ }, RxErrorHandler.handleEmptyError())
     }
 
-    class RequestValues(val user: User, val level: Int?, val activity: BaseActivity, val snackbarTargetView: ViewGroup) : UseCase.RequestValues {
+    class RequestValues(
+        val user: User,
+        val level: Int?,
+        val activity: BaseActivity,
+        val snackbarTargetView: ViewGroup
+    ) : UseCase.RequestValues {
         val newLevel: Int = level ?: 0
     }
 }

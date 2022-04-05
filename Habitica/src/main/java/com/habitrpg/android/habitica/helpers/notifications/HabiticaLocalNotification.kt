@@ -15,7 +15,10 @@ import java.util.Date
 /**
  * Created by keithholliday on 6/28/16.
  */
-abstract class HabiticaLocalNotification(protected var context: Context, protected var identifier: String?) {
+abstract class HabiticaLocalNotification(
+    protected var context: Context,
+    protected var identifier: String?
+) {
 
     protected var data: Map<String, String>? = null
     protected var title: String? = null

@@ -8,7 +8,9 @@ import com.habitrpg.android.habitica.HabiticaTestCase
 import io.github.kakaocup.kakao.screen.Screen
 import org.junit.Before
 
-abstract class FragmentTestCase<F : Fragment, VB : ViewBinding, S : Screen<S>>(val shouldLaunchFragment: Boolean = true) : HabiticaTestCase() {
+abstract class FragmentTestCase<F : Fragment, VB : ViewBinding, S : Screen<S>>(
+    val shouldLaunchFragment: Boolean = true
+) : HabiticaTestCase() {
     lateinit var scenario: FragmentScenario<F>
     lateinit var fragment: F
 

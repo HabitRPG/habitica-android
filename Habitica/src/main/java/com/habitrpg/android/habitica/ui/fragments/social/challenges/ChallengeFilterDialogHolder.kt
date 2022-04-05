@@ -10,7 +10,10 @@ import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.ui.adapter.social.challenges.ChallengesFilterRecyclerViewAdapter
 import com.habitrpg.android.habitica.utils.Action1
 
-internal class ChallengeFilterDialogHolder private constructor(view: View, private val context: Activity) {
+internal class ChallengeFilterDialogHolder private constructor(
+    view: View,
+    private val context: Activity
+) {
     private val binding = DialogChallengeFilterBinding.bind(view)
 
     private var dialog: AlertDialog? = null

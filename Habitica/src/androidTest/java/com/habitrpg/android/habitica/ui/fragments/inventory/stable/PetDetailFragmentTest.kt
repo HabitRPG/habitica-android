@@ -32,14 +32,22 @@ class PetDetailScreen : Screen<PetDetailScreen>() {
         })
 }
 
-internal class PetDetailRecyclerFragmentTest : FragmentTestCase<PetDetailRecyclerFragment, FragmentRecyclerviewBinding, PetDetailScreen>(false) {
+internal class PetDetailRecyclerFragmentTest :
+    FragmentTestCase<PetDetailRecyclerFragment, FragmentRecyclerviewBinding, PetDetailScreen>(false) {
     override fun makeFragment() {
         every { inventoryRepository.getOwnedPets() } returns Flowable.just(user.items?.pets!!)
         every { inventoryRepository.getOwnedMounts() } returns Flowable.just(user.items?.mounts!!)
         every { inventoryRepository.getOwnedItems("food") } returns Flowable.just(user.items?.food!!.filter { it.numberOwned > 0 })
         val saddle = OwnedItem()
         saddle.numberOwned = 1
-        every { inventoryRepository.getOwnedItems(true) } returns Flowable.just(mapOf(Pair("Saddle-food", saddle)))
+        every { inventoryRepository.getOwnedItems(true) } returns Flowable.just(
+            mapOf(
+                Pair(
+                    "Saddle-food",
+                    saddle
+                )
+            )
+        )
 
         fragment = spyk()
         fragment.shouldInitializeComponent = false
@@ -62,14 +70,28 @@ internal class PetDetailRecyclerFragmentTest : FragmentTestCase<PetDetailRecycle
     fun canFeedPet() {
         val slot = CapturingSlot<FeedPetUseCase.RequestValues>()
         every { feedPetUseCase.observable(capture(slot)) } returns mockk(relaxed = true)
-        every { inventoryRepository.getPets(any(), any(), any()) } returns Flowable.just(content.pets.filter { it.animal == "Cactus" })
-        every { inventoryRepository.getMounts(any(), any(), any()) } returns Flowable.just(content.mounts.filter { it.animal == "Cactus" })
-        launchFragment(PetDetailRecyclerFragmentArgs.Builder("cactus", "drop", "").build().toBundle())
+        every {
+            inventoryRepository.getPets(
+                any(),
+                any(),
+                any()
+            )
+        } returns Flowable.just(content.pets.filter { it.animal == "Cactus" })
+        every {
+            inventoryRepository.getMounts(
+                any(),
+                any(),
+                any()
+            )
+        } returns Flowable.just(content.mounts.filter { it.animal == "Cactus" })
+        launchFragment(
+            PetDetailRecyclerFragmentArgs.Builder("cactus", "drop", "").build().toBundle()
+        )
         screen {
             recycler {
-                childWith<PetItem> { withContentDescription("Skeleton Cactus")}.click()
+                childWith<PetItem> { withContentDescription("Skeleton Cactus") }.click()
                 KView { withText(R.string.feed) }.click()
-                KView { withText("Meat")}.click()
+                KView { withText("Meat") }.click()
                 verify { feedPetUseCase.observable(any()) }
                 slot.captured.pet.key shouldBe "Cactus-Skeleton"
                 slot.captured.food.key shouldBe "Meat"
@@ -81,12 +103,24 @@ internal class PetDetailRecyclerFragmentTest : FragmentTestCase<PetDetailRecycle
     fun canUseSaddle() {
         val slot = CapturingSlot<FeedPetUseCase.RequestValues>()
         every { feedPetUseCase.observable(capture(slot)) } returns mockk(relaxed = true)
-        every { inventoryRepository.getPets(any(), any(), any()) } returns Flowable.just(content.pets.filter { it.animal == "Fox" })
-        every { inventoryRepository.getMounts(any(), any(), any()) } returns Flowable.just(content.mounts.filter { it.animal == "Fox" })
+        every {
+            inventoryRepository.getPets(
+                any(),
+                any(),
+                any()
+            )
+        } returns Flowable.just(content.pets.filter { it.animal == "Fox" })
+        every {
+            inventoryRepository.getMounts(
+                any(),
+                any(),
+                any()
+            )
+        } returns Flowable.just(content.mounts.filter { it.animal == "Fox" })
         launchFragment(PetDetailRecyclerFragmentArgs.Builder("fox", "drop", "").build().toBundle())
         screen {
             recycler {
-                childWith<PetItem> { withContentDescription("Shade Fox")}.click()
+                childWith<PetItem> { withContentDescription("Shade Fox") }.click()
                 KView { withText(R.string.use_saddle) }.click()
                 verify { feedPetUseCase.observable(any()) }
                 slot.captured.pet.key shouldBe "Fox-Shade"

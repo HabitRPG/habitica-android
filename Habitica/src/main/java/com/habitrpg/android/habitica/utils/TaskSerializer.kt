@@ -44,7 +44,11 @@ class TaskSerializer : JsonSerializer<Task>, JsonDeserializer<Task> {
         }
     }
 
-    override fun deserialize(json: JsonElement?, typeOfT: Type?, context: JsonDeserializationContext): Task {
+    override fun deserialize(
+        json: JsonElement?,
+        typeOfT: Type?,
+        context: JsonDeserializationContext
+    ): Task {
         val task = Task()
         val obj = json as? JsonObject ?: return task
         task.text = obj.getAsString("text")

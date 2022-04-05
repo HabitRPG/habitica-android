@@ -15,7 +15,12 @@ object AmplitudeManager {
     var EVENT_HITTYPE_UPDATE_WIDGET = "update"
 
     @JvmOverloads
-    fun sendEvent(eventAction: String?, eventCategory: String?, hitType: String?, additionalData: Map<String, Any>? = null) {
+    fun sendEvent(
+        eventAction: String?,
+        eventCategory: String?,
+        hitType: String?,
+        additionalData: Map<String, Any>? = null
+    ) {
         if (BuildConfig.DEBUG) {
             return
         }

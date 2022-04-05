@@ -28,9 +28,9 @@ import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.Companion.showSnackbar
 import io.reactivex.rxjava3.core.Flowable
+import javax.inject.Inject
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 class SkillsFragment : BaseMainFragment<FragmentSkillsBinding>() {
     internal var adapter: SkillsRecyclerViewAdapter? = null
@@ -45,7 +45,11 @@ class SkillsFragment : BaseMainFragment<FragmentSkillsBinding>() {
         return FragmentSkillsBinding.inflate(inflater, container, false)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         adapter = SkillsRecyclerViewAdapter()
         adapter?.useSkillEvents?.subscribeWithErrorHandler { onSkillSelected(it) }?.let { compositeSubscription.add(it) }
 

@@ -28,7 +28,13 @@ import java.util.Date
 import java.util.Locale
 import java.util.UUID
 
-class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiClient, userID: String, val appConfigManager: AppConfigManager, val analyticsManager: AnalyticsManager) : BaseRepositoryImpl<TaskLocalRepository>(localRepository, apiClient, userID), TaskRepository {
+class TaskRepositoryImpl(
+    localRepository: TaskLocalRepository,
+    apiClient: ApiClient,
+    userID: String,
+    val appConfigManager: AppConfigManager,
+    val analyticsManager: AnalyticsManager
+) : BaseRepositoryImpl<TaskLocalRepository>(localRepository, apiClient, userID), TaskRepository {
     private var lastTaskAction: Long = 0
 
     override fun getTasks(taskType: TaskType, userID: String?): Flowable<out List<Task>> =
@@ -58,7 +64,13 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
     }
 
     @Suppress("ReturnCount")
-    override fun taskChecked(user: User?, task: Task, up: Boolean, force: Boolean, notifyFunc: ((TaskScoringResult) -> Unit)?): Flowable<TaskScoringResult> {
+    override fun taskChecked(
+        user: User?,
+        task: Task,
+        up: Boolean,
+        force: Boolean,
+        notifyFunc: ((TaskScoringResult) -> Unit)?
+    ): Flowable<TaskScoringResult> {
         val localData = if (user != null && appConfigManager.enableLocalTaskScoring()) {
             ScoreTaskLocallyInteractor.score(user, task, if (up) TaskDirection.UP else TaskDirection.DOWN)
         } else null
@@ -113,7 +125,13 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
         return apiClient.bulkScoreTasks(data)
     }
 
-    private fun handleTaskResponse(user: User, res: TaskDirectionData, task: Task, up: Boolean, localDelta: Float) {
+    private fun handleTaskResponse(
+        user: User,
+        res: TaskDirectionData,
+        task: Task,
+        up: Boolean,
+        localDelta: Float
+    ) {
         this.localRepository.executeTransaction {
             val bgTask = localRepository.getLiveObject(task) ?: return@executeTransaction
             val bgUser = localRepository.getLiveObject(user) ?: return@executeTransaction
@@ -167,7 +185,13 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
         }
     }
 
-    override fun taskChecked(user: User?, taskId: String, up: Boolean, force: Boolean, notifyFunc: ((TaskScoringResult) -> Unit)?): Maybe<TaskScoringResult?> {
+    override fun taskChecked(
+        user: User?,
+        taskId: String,
+        up: Boolean,
+        force: Boolean,
+        notifyFunc: ((TaskScoringResult) -> Unit)?
+    ): Maybe<TaskScoringResult?> {
         return localRepository.getTask(taskId).firstElement()
             .flatMap { task -> taskChecked(user, task, up, force, notifyFunc).singleElement() }
     }

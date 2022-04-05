@@ -49,7 +49,11 @@ class ChatRecyclerIntroViewHolder(itemView: View, replyToUUID: String) : ChatRec
     }
 }
 
-class ChatRecyclerMessageViewHolder(itemView: View, private var userId: String, private val isGroupChat: Boolean) : ChatRecyclerViewHolder(itemView) {
+class ChatRecyclerMessageViewHolder(
+    itemView: View,
+    private var userId: String,
+    private val isGroupChat: Boolean
+) : ChatRecyclerViewHolder(itemView) {
     val binding = ChatItemBinding.bind(itemView)
 
     val context: Context = itemView.context

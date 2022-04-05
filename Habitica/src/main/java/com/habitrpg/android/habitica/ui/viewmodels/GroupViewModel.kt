@@ -21,9 +21,9 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.subjects.BehaviorSubject
-import retrofit2.HttpException
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
+import retrofit2.HttpException
 
 enum class GroupViewType(internal val order: String) {
     PARTY("party"),
@@ -204,7 +204,11 @@ open class GroupViewModel(initializeComponent: Boolean) : BaseViewModel(initiali
         }
     }
 
-    fun leaveGroup(groupChallenges: List<Challenge>, keepChallenges: Boolean = true, function: (() -> Unit)? = null) {
+    fun leaveGroup(
+        groupChallenges: List<Challenge>,
+        keepChallenges: Boolean = true,
+        function: (() -> Unit)? = null
+    ) {
         if (!keepChallenges) {
             for (challenge in groupChallenges) {
                 challengeRepository.leaveChallenge(challenge, "remove-all").subscribe({}, RxErrorHandler.handleEmptyError())

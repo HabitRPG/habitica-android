@@ -209,7 +209,11 @@ class PartyFragment : BaseMainFragment<FragmentViewpagerBinding>() {
         binding?.viewPager?.adapter = viewPagerAdapter
 
         binding?.viewPager?.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) {
                 if (position == 1) {
                     chatFragment?.setNavigatedToFragment()
                 }

@@ -13,7 +13,11 @@ import java.lang.reflect.Type
 
 class WorldStateSerialization : JsonDeserializer<WorldState> {
 
-    override fun deserialize(json: JsonElement?, typeOfT: Type?, context: JsonDeserializationContext?): WorldState {
+    override fun deserialize(
+        json: JsonElement?,
+        typeOfT: Type?,
+        context: JsonDeserializationContext?
+    ): WorldState {
         val state = WorldState()
         val obj = json?.asJsonObject ?: return state
         val worldBossObject = obj.get("worldBoss")?.asJsonObject

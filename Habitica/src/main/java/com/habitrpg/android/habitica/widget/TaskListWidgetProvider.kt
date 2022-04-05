@@ -57,7 +57,11 @@ abstract class TaskListWidgetProvider : BaseWidgetProvider() {
         super.onReceive(context, intent)
     }
 
-    override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
+    override fun onUpdate(
+        context: Context,
+        appWidgetManager: AppWidgetManager,
+        appWidgetIds: IntArray
+    ) {
         super.onUpdate(context, appWidgetManager, appWidgetIds)
         setUp()
         val thisWidget = ComponentName(context, providerClass)
@@ -107,7 +111,12 @@ abstract class TaskListWidgetProvider : BaseWidgetProvider() {
         return R.layout.widget_task_list
     }
 
-    override fun configureRemoteViews(remoteViews: RemoteViews, widgetId: Int, columns: Int, rows: Int): RemoteViews {
+    override fun configureRemoteViews(
+        remoteViews: RemoteViews,
+        widgetId: Int,
+        columns: Int,
+        rows: Int
+    ): RemoteViews {
         return remoteViews
     }
 

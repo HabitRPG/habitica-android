@@ -111,7 +111,10 @@ class ChallengeTasksRecyclerViewAdapter(
         return false
     }
 
-    inner class AddItemViewHolder internal constructor(itemView: View, private val callback: PublishSubject<Task>) : BindableViewHolder<Task>(itemView) {
+    inner class AddItemViewHolder internal constructor(
+        itemView: View,
+        private val callback: PublishSubject<Task>
+    ) : BindableViewHolder<Task>(itemView) {
 
         private val addBtn: Button = itemView.findViewById(R.id.btn_add_task)
         private var newTask: Task? = null

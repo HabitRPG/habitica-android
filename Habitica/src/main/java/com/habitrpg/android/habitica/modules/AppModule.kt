@@ -59,7 +59,11 @@ class AppModule(private val application: Application) {
     }
 
     @Provides
-    fun provideKeyHelper(context: Context, sharedPreferences: SharedPreferences, keyStore: KeyStore?): KeyHelper? {
+    fun provideKeyHelper(
+        context: Context,
+        sharedPreferences: SharedPreferences,
+        keyStore: KeyStore?
+    ): KeyHelper? {
         return if (keyStore == null) {
             null
         } else getInstance(context, sharedPreferences, keyStore)
@@ -95,7 +99,11 @@ class AppModule(private val application: Application) {
 
     @Provides
     @Singleton
-    fun pushNotificationManager(apiClient: ApiClient, sharedPreferences: SharedPreferences, context: Context): PushNotificationManager {
+    fun pushNotificationManager(
+        apiClient: ApiClient,
+        sharedPreferences: SharedPreferences,
+        context: Context
+    ): PushNotificationManager {
         return PushNotificationManager(apiClient, sharedPreferences, context)
     }
 

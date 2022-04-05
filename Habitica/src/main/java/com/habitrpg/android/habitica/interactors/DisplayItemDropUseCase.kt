@@ -8,11 +8,11 @@ import com.habitrpg.android.habitica.helpers.SoundManager
 import com.habitrpg.android.habitica.models.responses.TaskScoringResult
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import io.reactivex.rxjava3.core.Flowable
+import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 class DisplayItemDropUseCase @Inject
 constructor(private val soundManager: SoundManager, postExecutionThread: PostExecutionThread) : UseCase<DisplayItemDropUseCase.RequestValues, Void>(postExecutionThread) {
@@ -43,5 +43,10 @@ constructor(private val soundManager: SoundManager, postExecutionThread: PostExe
         }
     }
 
-    class RequestValues(val data: TaskScoringResult?, val context: AppCompatActivity, val snackbarTargetView: ViewGroup, val showQuestItems: Boolean) : UseCase.RequestValues
+    class RequestValues(
+        val data: TaskScoringResult?,
+        val context: AppCompatActivity,
+        val snackbarTargetView: ViewGroup,
+        val showQuestItems: Boolean
+    ) : UseCase.RequestValues
 }

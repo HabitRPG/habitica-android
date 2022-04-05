@@ -394,28 +394,11 @@ def fileFilter = [
 def debugTree = fileTree(dir: "${buildDir}/intermediates/asm_instrumented_project_classes/prodDebug", excludes: fileFilter)
 def mainSrc = "${project.projectDir}/src/main/java"
 
-// override jacocTestReport task
-task jacocoTestReport(type: JacocoReport, dependsOn: ['testProdDebugUnitTest', 'createProdDebugCoverageReport']) {
-    group = "Reporting"
-
-    reports {
-        xml.enabled = true
-        html.enabled = true
-    }
-
-    sourceDirectories.from(files([mainSrc]))
-    classDirectories.from(files([debugTree]))
-    executionData.from(fileTree(dir: project.buildDir, includes: [
-            "jacoco/testProdDebugUnitTest.exec",
-            "outputs/code-coverage/prodDebugAndroidTest/connected/*coverage.ec"
-    ]))
-}
-
 task ktlint(type: JavaExec, group: "verification") {
     description = "Check Kotlin code style."
     classpath = configurations.ktlint
     mainClass.set("com.pinterest.ktlint.Main")
-    args "--disabled_rules=no-wildcard-imports", "--reporter=plain?group_by_file", "src/**/*.kt"
+    args "--disabled_rules=max-line-length", "--android", "--reporter=plain?group_by_file", "src/**/*.kt"
     // to generate report in checkstyle format prepend following args:
     // "--reporter=plain", "--reporter=checkstyle,output=${buildDir}/ktlint.xml"
     // to add a baseline to check against prepend following args:
@@ -428,5 +411,5 @@ task ktlintFormat(type: JavaExec, group: "formatting") {
     description = "Fix Kotlin code style deviations."
     classpath = configurations.ktlint
     mainClass.set("com.pinterest.ktlint.Main")
-    args "-F", "src/**/*.kt"
+    args "--disabled_rules=max-lint-length", "--android", "-F", "src/**/*.kt"
 }

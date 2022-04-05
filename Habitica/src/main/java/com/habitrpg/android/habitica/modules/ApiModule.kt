@@ -12,11 +12,11 @@ import com.habitrpg.android.habitica.helpers.NotificationsManager
 import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import dagger.Module
 import dagger.Provides
+import java.lang.ref.WeakReference
+import javax.inject.Singleton
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-import java.lang.ref.WeakReference
-import javax.inject.Singleton
 
 @Module
 open class ApiModule {

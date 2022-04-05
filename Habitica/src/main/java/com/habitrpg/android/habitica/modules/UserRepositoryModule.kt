@@ -205,7 +205,12 @@ class UserRepositoryModule {
 
     @Provides
     @UserScope
-    fun providesPurchaseHandler(context: Context, analyticsManager: AnalyticsManager, apiClient: ApiClient, userViewModel: MainUserViewModel): PurchaseHandler {
+    fun providesPurchaseHandler(
+        context: Context,
+        analyticsManager: AnalyticsManager,
+        apiClient: ApiClient,
+        userViewModel: MainUserViewModel
+    ): PurchaseHandler {
         return PurchaseHandler(context, analyticsManager, apiClient, userViewModel)
     }
 }

@@ -139,9 +139,9 @@ internal class ItemRecyclerFragmentTest : FragmentTestCase<ItemRecyclerFragment,
         launchFragment()
         screen {
             recycler {
-                childWith<ItemItem> { withDescendant { withText("Wolf")  }}.click()
+                childWith<ItemItem> { withDescendant { withText("Wolf") } }.click()
                 KView { withText(R.string.hatch_with_potion) }.click()
-                KView { withText("Shade")}.click()
+                KView { withText("Shade") }.click()
                 verify { hatchPetUseCase.observable(any()) }
                 slot.captured.egg.key shouldBe "Wolf"
                 slot.captured.potion.key shouldBe "Shade"
@@ -157,9 +157,9 @@ internal class ItemRecyclerFragmentTest : FragmentTestCase<ItemRecyclerFragment,
         launchFragment()
         screen {
             recycler {
-                childWith<ItemItem> { withDescendant { withText("Shade")  }}.click()
+                childWith<ItemItem> { withDescendant { withText("Shade") } }.click()
                 KView { withText(R.string.hatch_egg) }.click()
-                KView { withText("Wolf")}.click()
+                KView { withText("Wolf") }.click()
                 verify { hatchPetUseCase.observable(any()) }
                 slot.captured.egg.key shouldBe "Wolf"
                 slot.captured.potion.key shouldBe "Shade"
@@ -175,12 +175,12 @@ internal class ItemRecyclerFragmentTest : FragmentTestCase<ItemRecyclerFragment,
         launchFragment()
         screen {
             recycler {
-                childWith<ItemItem> { withDescendant { withText("Cactus")  }}.click()
+                childWith<ItemItem> { withDescendant { withText("Cactus") } }.click()
                 KView { withText("Sell (3 Gold)") }.click()
                 verify { inventoryRepository.sellItem(any()) }
                 slot.captured.key shouldBe "Cactus"
 
-                childWith<ItemItem> { withDescendant { withText("Panda Cub")  }}.click()
+                childWith<ItemItem> { withDescendant { withText("Panda Cub") } }.click()
                 KView { withText("Sell (3 Gold)") }.click()
                 verify { inventoryRepository.sellItem(any()) }
                 slot.captured.key shouldBe "PandaCub"

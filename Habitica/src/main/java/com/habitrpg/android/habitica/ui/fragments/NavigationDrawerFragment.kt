@@ -49,16 +49,16 @@ import com.habitrpg.android.habitica.ui.viewmodels.NotificationsViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import java.util.Calendar
 import java.util.Date
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class NavigationDrawerFragment : DialogFragment() {
 
@@ -484,7 +484,12 @@ class NavigationDrawerFragment : DialogFragment() {
         adapter.updateItems(items)
     }
 
-    fun setSelection(transitionId: Int?, bundle: Bundle? = null, openSelection: Boolean = true, preventReselection: Boolean = true) {
+    fun setSelection(
+        transitionId: Int?,
+        bundle: Bundle? = null,
+        openSelection: Boolean = true,
+        preventReselection: Boolean = true
+    ) {
         closeDrawer()
         if (adapter.selectedItem != null && adapter.selectedItem == transitionId && bundle == null && preventReselection) return
         adapter.selectedItem = transitionId
@@ -529,7 +534,11 @@ class NavigationDrawerFragment : DialogFragment() {
      * @param fragmentId   The android:id of this fragment in its activity's layout.
      * @param drawerLayout The DrawerLayout containing this fragment's UI.
      */
-    fun setUp(fragmentId: Int, drawerLayout: androidx.drawerlayout.widget.DrawerLayout, viewModel: NotificationsViewModel) {
+    fun setUp(
+        fragmentId: Int,
+        drawerLayout: androidx.drawerlayout.widget.DrawerLayout,
+        viewModel: NotificationsViewModel
+    ) {
         fragmentContainerView = activity?.findViewById(fragmentId)
         this.drawerLayout = drawerLayout
 

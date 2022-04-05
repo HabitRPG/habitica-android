@@ -41,7 +41,11 @@ class MountDetailRecyclerFragment :
         return FragmentRefreshRecyclerviewBinding.inflate(inflater, container, false)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         this.usesTabLayout = false
         return super.onCreateView(inflater, container, savedInstanceState)
     }

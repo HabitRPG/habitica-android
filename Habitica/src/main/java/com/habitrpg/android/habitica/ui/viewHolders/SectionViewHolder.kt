@@ -35,7 +35,12 @@ class SectionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                 spinnerSelectionChanged?.invoke()
             }
 
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
                 spinnerSelectionChanged?.invoke()
             }
         }

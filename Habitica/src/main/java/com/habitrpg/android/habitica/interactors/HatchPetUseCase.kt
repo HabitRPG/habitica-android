@@ -20,7 +20,10 @@ import io.reactivex.rxjava3.core.Flowable
 import javax.inject.Inject
 
 class HatchPetUseCase @Inject
-constructor(private val inventoryRepository: InventoryRepository, postExecutionThread: PostExecutionThread) : UseCase<HatchPetUseCase.RequestValues, Items>(postExecutionThread) {
+constructor(
+    private val inventoryRepository: InventoryRepository,
+    postExecutionThread: PostExecutionThread
+) : UseCase<HatchPetUseCase.RequestValues, Items>(postExecutionThread) {
     override fun buildUseCaseObservable(requestValues: RequestValues): Flowable<Items> {
         return inventoryRepository.hatchPet(requestValues.egg, requestValues.potion) {
             val petWrapper = View.inflate(requestValues.context, R.layout.pet_imageview, null) as? FrameLayout

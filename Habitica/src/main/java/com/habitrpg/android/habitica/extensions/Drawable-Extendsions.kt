@@ -6,7 +6,11 @@ import android.graphics.drawable.Drawable
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 
-public fun Drawable.setTintWith(context: Context, colorResource: Int, tintMode: PorterDuff.Mode = PorterDuff.Mode.MULTIPLY) {
+public fun Drawable.setTintWith(
+    context: Context,
+    colorResource: Int,
+    tintMode: PorterDuff.Mode = PorterDuff.Mode.MULTIPLY
+) {
     DrawableCompat.setTintMode(this, tintMode)
     DrawableCompat.setTint(this, ContextCompat.getColor(context, colorResource))
 }

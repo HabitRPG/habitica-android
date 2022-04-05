@@ -202,7 +202,10 @@ class TeamBoardFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchVi
                 }
             }
             dialog.setListener(object : TaskFilterDialog.OnFilterCompletedListener {
-                override fun onFilterCompleted(activeTaskFilter: String?, activeTags: MutableList<String>) {
+                override fun onFilterCompleted(
+                    activeTaskFilter: String?,
+                    activeTags: MutableList<String>
+                ) {
                     if (viewFragmentsDictionary == null) {
                         return
                     }

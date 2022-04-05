@@ -10,7 +10,12 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.models.responses.TaskDirection
 import com.habitrpg.android.habitica.models.tasks.Task
 
-class HabitViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> Unit), openTaskFunc: ((Pair<Task, View>) -> Unit), brokenTaskFunc: ((Task) -> Unit)) : BaseTaskViewHolder(itemView, scoreTaskFunc, openTaskFunc, brokenTaskFunc) {
+class HabitViewHolder(
+    itemView: View,
+    scoreTaskFunc: ((Task, TaskDirection) -> Unit),
+    openTaskFunc: ((Pair<Task, View>) -> Unit),
+    brokenTaskFunc: ((Task) -> Unit)
+) : BaseTaskViewHolder(itemView, scoreTaskFunc, openTaskFunc, brokenTaskFunc) {
 
     private val btnPlusWrapper: FrameLayout = itemView.findViewById(R.id.btnPlusWrapper)
     private val btnPlusIconView: ImageView = itemView.findViewById(R.id.btnPlusIconView)

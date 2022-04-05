@@ -30,7 +30,13 @@ import java.util.Date
 import java.util.GregorianCalendar
 import java.util.concurrent.TimeUnit
 
-class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiClient, userID: String, private val taskRepository: TaskRepository, var appConfigManager: AppConfigManager) : BaseRepositoryImpl<UserLocalRepository>(localRepository, apiClient, userID), UserRepository {
+class UserRepositoryImpl(
+    localRepository: UserLocalRepository,
+    apiClient: ApiClient,
+    userID: String,
+    private val taskRepository: TaskRepository,
+    var appConfigManager: AppConfigManager
+) : BaseRepositoryImpl<UserLocalRepository>(localRepository, apiClient, userID), UserRepository {
 
     private var lastSync: Date? = null
 
@@ -258,7 +264,11 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
     override fun updateEmail(newEmail: String, password: String): Flowable<Void> =
         apiClient.updateEmail(newEmail.trim(), password)
 
-    override fun updatePassword(oldPassword: String, newPassword: String, newPasswordConfirmation: String): Flowable<Void> =
+    override fun updatePassword(
+        oldPassword: String,
+        newPassword: String,
+        newPasswordConfirmation: String
+    ): Flowable<Void> =
         apiClient.updatePassword(oldPassword.trim(), newPassword.trim(), newPasswordConfirmation.trim())
 
     override fun allocatePoint(stat: Attribute): Flowable<Stats> {
@@ -289,7 +299,12 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
         }
     }
 
-    override fun bulkAllocatePoints(strength: Int, intelligence: Int, constitution: Int, perception: Int): Flowable<Stats> =
+    override fun bulkAllocatePoints(
+        strength: Int,
+        intelligence: Int,
+        constitution: Int,
+        perception: Int
+    ): Flowable<Stats> =
         zipWithLiveUser(apiClient.bulkAllocatePoints(strength, intelligence, constitution, perception)) { stats, user ->
             localRepository.modify(user) { liveUser ->
                 liveUser.stats?.strength = stats.strength

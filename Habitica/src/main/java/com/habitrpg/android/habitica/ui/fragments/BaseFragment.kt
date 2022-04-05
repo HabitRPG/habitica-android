@@ -52,7 +52,11 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
 
     abstract fun createBinding(inflater: LayoutInflater, container: ViewGroup?): VB
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         compositeSubscription = CompositeDisposable()
 
         binding = createBinding(inflater, container)

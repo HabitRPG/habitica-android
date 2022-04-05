@@ -24,7 +24,12 @@ import com.habitrpg.android.habitica.models.user.OwnedPet
 import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.rxjava3.core.Flowable
 
-class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClient: ApiClient, userID: String, var appConfigManager: AppConfigManager) : BaseRepositoryImpl<InventoryLocalRepository>(localRepository, apiClient, userID), InventoryRepository {
+class InventoryRepositoryImpl(
+    localRepository: InventoryLocalRepository,
+    apiClient: ApiClient,
+    userID: String,
+    var appConfigManager: AppConfigManager
+) : BaseRepositoryImpl<InventoryLocalRepository>(localRepository, apiClient, userID), InventoryRepository {
     override fun getQuestContent(keys: List<String>): Flowable<out List<QuestContent>> {
         return localRepository.getQuestContent(keys)
     }

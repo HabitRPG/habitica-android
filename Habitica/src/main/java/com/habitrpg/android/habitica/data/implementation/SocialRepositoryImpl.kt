@@ -17,10 +17,14 @@ import com.habitrpg.android.habitica.models.social.InboxConversation
 import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Single
-import retrofit2.HttpException
 import java.util.UUID
+import retrofit2.HttpException
 
-class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: ApiClient, userID: String) : BaseRepositoryImpl<SocialLocalRepository>(localRepository, apiClient, userID), SocialRepository {
+class SocialRepositoryImpl(
+    localRepository: SocialLocalRepository,
+    apiClient: ApiClient,
+    userID: String
+) : BaseRepositoryImpl<SocialLocalRepository>(localRepository, apiClient, userID), SocialRepository {
     override fun transferGroupOwnership(groupID: String, userID: String): Flowable<Group> {
         return localRepository.getGroup(groupID)
             .map {
@@ -167,7 +171,14 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
             }
     }
 
-    override fun createGroup(name: String?, description: String?, leader: String?, type: String?, privacy: String?, leaderCreateChallenge: Boolean?): Flowable<Group> {
+    override fun createGroup(
+        name: String?,
+        description: String?,
+        leader: String?,
+        type: String?,
+        privacy: String?,
+        leaderCreateChallenge: Boolean?
+    ): Flowable<Group> {
         val group = Group()
         group.name = name
         group.description = description
@@ -179,7 +190,13 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
         }
     }
 
-    override fun updateGroup(group: Group?, name: String?, description: String?, leader: String?, leaderCreateChallenge: Boolean?): Flowable<Group> {
+    override fun updateGroup(
+        group: Group?,
+        name: String?,
+        description: String?,
+        leader: String?,
+        leaderCreateChallenge: Boolean?
+    ): Flowable<Group> {
         if (group == null) {
             return Flowable.empty()
         }

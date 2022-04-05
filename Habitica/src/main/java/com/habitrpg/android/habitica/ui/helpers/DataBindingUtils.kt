@@ -43,7 +43,12 @@ object DataBindingUtils {
         loadImage(context, imageName, null, imageResult)
     }
 
-    fun loadImage(context: Context, imageName: String, imageFormat: String?, imageResult: (Drawable) -> Unit) {
+    fun loadImage(
+        context: Context,
+        imageName: String,
+        imageFormat: String?,
+        imageResult: (Drawable) -> Unit
+    ) {
         val request = ImageRequest.Builder(context)
             .data(BASE_IMAGE_URL + getFullFilename(imageName, imageFormat))
             .target {

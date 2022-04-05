@@ -11,7 +11,11 @@ import com.habitrpg.android.habitica.models.inventory.SpecialItem
 import io.reactivex.rxjava3.core.Flowable
 import java.util.Date
 
-class ContentRepositoryImpl<T : ContentLocalRepository>(localRepository: T, apiClient: ApiClient, context: Context) : BaseRepositoryImpl<T>(localRepository, apiClient), ContentRepository {
+class ContentRepositoryImpl<T : ContentLocalRepository>(
+    localRepository: T,
+    apiClient: ApiClient,
+    context: Context
+) : BaseRepositoryImpl<T>(localRepository, apiClient), ContentRepository {
 
     private val mysteryItem = SpecialItem.makeMysteryItem(context)
 

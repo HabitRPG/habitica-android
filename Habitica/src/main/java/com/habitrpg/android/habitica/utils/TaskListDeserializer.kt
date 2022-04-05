@@ -47,7 +47,11 @@ class TaskListDeserializer : JsonDeserializer<TaskList> {
         return tasks
     }
 
-    private fun handleTags(databaseTags: List<Tag>, json: JsonArray?, context: JsonDeserializationContext): RealmList<Tag> {
+    private fun handleTags(
+        databaseTags: List<Tag>,
+        json: JsonArray?,
+        context: JsonDeserializationContext
+    ): RealmList<Tag> {
         val tags = RealmList<Tag>()
         for (tagElement in json ?: listOf<JsonElement>()) {
             if (tagElement.isJsonObject) {

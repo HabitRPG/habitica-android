@@ -28,7 +28,11 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
     private var showCustomRewards: Boolean = true
     private var selectedCard: ShopItem? = null
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         compositeSubscription.add(inventoryRepository.retrieveInAppRewards().subscribe({ }, RxErrorHandler.handleEmptyError()))
         return super.onCreateView(inflater, container, savedInstanceState)
     }

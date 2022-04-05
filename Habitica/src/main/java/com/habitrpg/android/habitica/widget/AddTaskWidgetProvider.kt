@@ -14,7 +14,11 @@ class AddTaskWidgetProvider : BaseWidgetProvider() {
         return R.layout.widget_add_task
     }
 
-    override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
+    override fun onUpdate(
+        context: Context,
+        appWidgetManager: AppWidgetManager,
+        appWidgetIds: IntArray
+    ) {
         super.onUpdate(context, appWidgetManager, appWidgetIds)
         // Get all ids
         val thisWidget = ComponentName(
@@ -32,7 +36,12 @@ class AddTaskWidgetProvider : BaseWidgetProvider() {
         }
     }
 
-    override fun configureRemoteViews(remoteViews: RemoteViews, widgetId: Int, columns: Int, rows: Int): RemoteViews {
+    override fun configureRemoteViews(
+        remoteViews: RemoteViews,
+        widgetId: Int,
+        columns: Int,
+        rows: Int
+    ): RemoteViews {
 
         val selectedTaskType = getSelectedTaskType(widgetId)
         var addText: String? = ""

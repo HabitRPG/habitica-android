@@ -91,7 +91,11 @@ interface ApiService {
     fun buyItem(@Path("key") itemKey: String, @Body quantity: Map<String, Int>): Flowable<HabitResponse<BuyResponse>>
 
     @POST("user/purchase/{type}/{key}")
-    fun purchaseItem(@Path("type") type: String, @Path("key") itemKey: String, @Body quantity: Map<String, Int>): Flowable<HabitResponse<Void>>
+    fun purchaseItem(
+        @Path("type") type: String,
+        @Path("key") itemKey: String,
+        @Body quantity: Map<String, Int>
+    ): Flowable<HabitResponse<Void>>
 
     @POST("user/purchase-hourglass/{type}/{key}")
     fun purchaseHourglassItem(@Path("type") type: String, @Path("key") itemKey: String): Flowable<HabitResponse<Void>>
@@ -180,7 +184,11 @@ interface ApiService {
     fun revive(): Flowable<HabitResponse<User>>
 
     @POST("user/class/cast/{skill}")
-    fun useSkill(@Path("skill") skillName: String, @Query("targetType") targetType: String, @Query("targetId") targetId: String): Flowable<HabitResponse<SkillResponse>>
+    fun useSkill(
+        @Path("skill") skillName: String,
+        @Query("targetType") targetType: String,
+        @Query("targetId") targetId: String
+    ): Flowable<HabitResponse<SkillResponse>>
 
     @POST("user/class/cast/{skill}")
     fun useSkill(@Path("skill") skillName: String, @Query("targetType") targetType: String): Flowable<HabitResponse<SkillResponse>>
@@ -233,17 +241,28 @@ interface ApiService {
     fun deleteInboxMessage(@Path("messageId") messageId: String): Flowable<HabitResponse<Void>>
 
     @GET("groups/{gid}/members")
-    fun getGroupMembers(@Path("gid") groupId: String, @Query("includeAllPublicFields") includeAllPublicFields: Boolean?): Flowable<HabitResponse<List<Member>>>
+    fun getGroupMembers(
+        @Path("gid") groupId: String,
+        @Query("includeAllPublicFields") includeAllPublicFields: Boolean?
+    ): Flowable<HabitResponse<List<Member>>>
 
     @GET("groups/{gid}/members")
-    fun getGroupMembers(@Path("gid") groupId: String, @Query("includeAllPublicFields") includeAllPublicFields: Boolean?, @Query("lastId") lastId: String): Flowable<HabitResponse<List<Member>>>
+    fun getGroupMembers(
+        @Path("gid") groupId: String,
+        @Query("includeAllPublicFields") includeAllPublicFields: Boolean?,
+        @Query("lastId") lastId: String
+    ): Flowable<HabitResponse<List<Member>>>
 
     // Like returns the full chat list
     @POST("groups/{gid}/chat/{mid}/like")
     fun likeMessage(@Path("gid") groupId: String, @Path("mid") mid: String): Flowable<HabitResponse<ChatMessage>>
 
     @POST("groups/{gid}/chat/{mid}/flag")
-    fun flagMessage(@Path("gid") groupId: String, @Path("mid") mid: String, @Body data: Map<String, String>): Flowable<HabitResponse<Void>>
+    fun flagMessage(
+        @Path("gid") groupId: String,
+        @Path("mid") mid: String,
+        @Body data: Map<String, String>
+    ): Flowable<HabitResponse<Void>>
 
     @POST("groups/{gid}/chat/seen")
     fun seenMessages(@Path("gid") groupId: String): Flowable<HabitResponse<Void>>
@@ -304,7 +323,11 @@ interface ApiService {
     fun postPrivateMessage(@Body messageDetails: Map<String, String>): Flowable<HabitResponse<PostChatMessageResult>>
 
     @GET("members/find/{username}")
-    fun findUsernames(@Path("username") username: String, @Query("context") context: String?, @Query("id") id: String?): Flowable<HabitResponse<List<FindUsernameResult>>>
+    fun findUsernames(
+        @Path("username") username: String,
+        @Query("context") context: String?,
+        @Query("id") id: String?
+    ): Flowable<HabitResponse<List<FindUsernameResult>>>
 
     @POST("members/flag-private-message/{mid}")
     fun flagInboxMessage(@Path("mid") mid: String, @Body data: Map<String, String>): Flowable<HabitResponse<Void>>

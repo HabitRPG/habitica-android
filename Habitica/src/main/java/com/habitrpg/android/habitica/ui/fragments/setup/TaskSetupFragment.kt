@@ -117,7 +117,13 @@ class TaskSetupFragment : BaseFragment<FragmentSetupTasksBinding>() {
         return tasks
     }
 
-    private fun makeTaskObject(type: TaskType?, text: String?, up: Boolean?, down: Boolean?, notes: String? = null): Task {
+    private fun makeTaskObject(
+        type: TaskType?,
+        text: String?,
+        up: Boolean?,
+        down: Boolean?,
+        notes: String? = null
+    ): Task {
         val task = Task()
         task.text = text ?: ""
         task.notes = notes

@@ -13,11 +13,11 @@ import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.Ignore
 import io.realm.annotations.PrimaryKey
-import org.json.JSONArray
-import org.json.JSONException
 import java.util.Calendar
 import java.util.Date
 import java.util.GregorianCalendar
+import org.json.JSONArray
+import org.json.JSONException
 
 open class Task : RealmObject, BaseMainObject, Parcelable {
 

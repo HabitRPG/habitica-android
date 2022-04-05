@@ -124,7 +124,12 @@ class AuthenticationViewModel() {
         loginManager.logInWithReadPermissions(activity, listOf("user_friends"))
     }
 
-    fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?, onSuccess: (UserAuthResponse) -> Unit) {
+    fun onActivityResult(
+        requestCode: Int,
+        resultCode: Int,
+        data: Intent?,
+        onSuccess: (UserAuthResponse) -> Unit
+    ) {
         callbackManager.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == FacebookSdk.getCallbackRequestCodeOffset()) {

@@ -8,7 +8,11 @@ import com.habitrpg.android.habitica.databinding.OverlayTutorialBinding
 import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.models.TutorialStep
 
-class TutorialView(context: Context, val step: TutorialStep, private val onReaction: OnTutorialReaction) : FrameLayout(context) {
+class TutorialView(
+    context: Context,
+    val step: TutorialStep,
+    private val onReaction: OnTutorialReaction
+) : FrameLayout(context) {
     private val binding = OverlayTutorialBinding.inflate(context.layoutInflater, this, true)
     private var tutorialTexts: List<String> = emptyList()
     private var currentTextIndex: Int = 0

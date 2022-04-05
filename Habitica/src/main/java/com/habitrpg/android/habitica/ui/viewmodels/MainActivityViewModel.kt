@@ -142,7 +142,12 @@ class MainActivityViewModel : BaseViewModel(), TutorialView.OnTutorialReaction {
         )
     }
 
-    fun getToolbarTitle(id: Int, label: CharSequence?, eggType: String?, onSuccess: ((CharSequence?) -> Unit)) {
+    fun getToolbarTitle(
+        id: Int,
+        label: CharSequence?,
+        eggType: String?,
+        onSuccess: ((CharSequence?) -> Unit)
+    ) {
         if (id == R.id.petDetailRecyclerFragment || id == R.id.mountDetailRecyclerFragment) {
             disposable.add(
                 inventoryRepository.getItem("egg", eggType ?: "").firstElement().subscribe(

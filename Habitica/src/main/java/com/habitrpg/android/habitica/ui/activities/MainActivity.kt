@@ -510,7 +510,10 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         }
     }
 
-    private fun createMaintenanceIntent(maintenanceResponse: MaintenanceResponse, isDeprecationNotice: Boolean): Intent {
+    private fun createMaintenanceIntent(
+        maintenanceResponse: MaintenanceResponse,
+        isDeprecationNotice: Boolean
+    ): Intent {
         val intent = Intent(this, MaintenanceActivity::class.java)
         val data = Bundle()
         data.putString("title", maintenanceResponse.title)

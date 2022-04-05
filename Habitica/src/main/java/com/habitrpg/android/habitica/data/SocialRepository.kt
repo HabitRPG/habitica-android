@@ -22,13 +22,21 @@ interface SocialRepository : BaseRepository {
 
     fun markMessagesSeen(seenGroupId: String)
 
-    fun flagMessage(chatMessageID: String, additionalInfo: String, groupID: String? = null): Flowable<Void>
+    fun flagMessage(
+        chatMessageID: String,
+        additionalInfo: String,
+        groupID: String? = null
+    ): Flowable<Void>
 
     fun likeMessage(chatMessage: ChatMessage): Flowable<ChatMessage>
 
     fun deleteMessage(chatMessage: ChatMessage): Flowable<Void>
 
-    fun postGroupChat(groupId: String, messageObject: HashMap<String, String>): Flowable<PostChatMessageResult>
+    fun postGroupChat(
+        groupId: String,
+        messageObject: HashMap<String, String>
+    ): Flowable<PostChatMessageResult>
+
     fun postGroupChat(groupId: String, message: String): Flowable<PostChatMessageResult>
 
     fun retrieveGroup(id: String): Flowable<Group>
@@ -38,8 +46,22 @@ interface SocialRepository : BaseRepository {
 
     fun joinGroup(id: String?): Flowable<Group>
 
-    fun createGroup(name: String?, description: String?, leader: String?, type: String?, privacy: String?, leaderCreateChallenge: Boolean?): Flowable<Group>
-    fun updateGroup(group: Group?, name: String?, description: String?, leader: String?, leaderCreateChallenge: Boolean?): Flowable<Group>
+    fun createGroup(
+        name: String?,
+        description: String?,
+        leader: String?,
+        type: String?,
+        privacy: String?,
+        leaderCreateChallenge: Boolean?
+    ): Flowable<Group>
+
+    fun updateGroup(
+        group: Group?,
+        name: String?,
+        description: String?,
+        leader: String?,
+        leaderCreateChallenge: Boolean?
+    ): Flowable<Group>
 
     fun retrieveGroups(type: String): Flowable<List<Group>>
     fun getGroups(type: String): Flowable<out List<Group>>
@@ -48,7 +70,11 @@ interface SocialRepository : BaseRepository {
     fun retrieveInboxMessages(uuid: String, page: Int): Flowable<List<ChatMessage>>
     fun retrieveInboxConversations(): Flowable<List<InboxConversation>>
     fun getInboxConversations(): Flowable<out List<InboxConversation>>
-    fun postPrivateMessage(recipientId: String, messageObject: HashMap<String, String>): Flowable<List<ChatMessage>>
+    fun postPrivateMessage(
+        recipientId: String,
+        messageObject: HashMap<String, String>
+    ): Flowable<List<ChatMessage>>
+
     fun postPrivateMessage(recipientId: String, message: String): Flowable<List<ChatMessage>>
 
     fun getGroupMembers(id: String): Flowable<out List<Member>>
@@ -59,7 +85,11 @@ interface SocialRepository : BaseRepository {
     fun getMember(userId: String?): Flowable<Member>
     fun getMemberWithUsername(username: String?): Flowable<Member>
 
-    fun findUsernames(username: String, context: String? = null, id: String? = null): Flowable<List<FindUsernameResult>>
+    fun findUsernames(
+        username: String,
+        context: String? = null,
+        id: String? = null
+    ): Flowable<List<FindUsernameResult>>
 
     fun markPrivateMessagesRead(user: User?): Flowable<Void>
 

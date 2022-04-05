@@ -55,7 +55,12 @@ object MarkdownParser {
         return object : AbstractMarkwonPlugin() {
             override fun configureConfiguration(builder: MarkwonConfiguration.Builder) {
                 builder.imageSizeResolver(object : ImageSizeResolverDef() {
-                    override fun resolveImageSize(imageSize: ImageSize?, imageBounds: Rect, canvasWidth: Int, textSize: Float): Rect {
+                    override fun resolveImageSize(
+                        imageSize: ImageSize?,
+                        imageBounds: Rect,
+                        canvasWidth: Int,
+                        textSize: Float
+                    ): Rect {
                         val dpi = context.resources.displayMetrics.density
                         var width = imageBounds.width()
                         if (dpi > 1) {

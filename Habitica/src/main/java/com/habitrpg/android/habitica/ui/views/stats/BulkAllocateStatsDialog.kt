@@ -126,7 +126,10 @@ class BulkAllocateStatsDialog(context: Context, component: UserComponent?) : Ale
         }
     }
 
-    private fun getSliderWithHigherValue(firstSlider: StatsSliderView?, secondSlider: StatsSliderView?): StatsSliderView? {
+    private fun getSliderWithHigherValue(
+        firstSlider: StatsSliderView?,
+        secondSlider: StatsSliderView?
+    ): StatsSliderView? {
         return if (firstSlider?.currentValue ?: 0 > secondSlider?.currentValue ?: 0) {
             firstSlider
         } else {

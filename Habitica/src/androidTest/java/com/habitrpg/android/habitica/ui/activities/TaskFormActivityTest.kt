@@ -31,12 +31,12 @@ import io.mockk.mockkObject
 import io.mockk.slot
 import io.mockk.verify
 import io.reactivex.rxjava3.core.Flowable
+import java.util.Date
+import java.util.UUID
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import java.util.Date
-import java.util.UUID
 
 class TaskFormScreen : Screen<TaskFormScreen>() {
     val toolbar = KToolbar { withId(R.id.toolbar) }

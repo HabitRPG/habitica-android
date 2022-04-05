@@ -30,7 +30,11 @@ class CheckClassSelectionUseCase @Inject constructor(postExecutionThread: PostEx
         }
     }
 
-    private fun displayClassSelectionActivity(isInitialSelection: Boolean, currentClass: String?, activity: Activity) {
+    private fun displayClassSelectionActivity(
+        isInitialSelection: Boolean,
+        currentClass: String?,
+        activity: Activity
+    ) {
         val bundle = Bundle()
         bundle.putBoolean("isInitialSelection", isInitialSelection)
         bundle.putString("currentClass", currentClass)
@@ -40,5 +44,10 @@ class CheckClassSelectionUseCase @Inject constructor(postExecutionThread: PostEx
         activity.startActivity(intent)
     }
 
-    class RequestValues(val user: User?, val isInitialSelection: Boolean, val currentClass: String?, val activity: Activity) : UseCase.RequestValues
+    class RequestValues(
+        val user: User?,
+        val isInitialSelection: Boolean,
+        val currentClass: String?,
+        val activity: Activity
+    ) : UseCase.RequestValues
 }

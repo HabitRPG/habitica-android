@@ -73,7 +73,10 @@ class CustomizationRecyclerViewAdapter() : androidx.recyclerview.widget.Recycler
         }
     }
 
-    override fun onBindViewHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: androidx.recyclerview.widget.RecyclerView.ViewHolder,
+        position: Int
+    ) {
         val obj = customizationList[position]
         if (obj.javaClass == CustomizationSet::class.java) {
             (holder as SectionViewHolder).bind(obj as CustomizationSet)

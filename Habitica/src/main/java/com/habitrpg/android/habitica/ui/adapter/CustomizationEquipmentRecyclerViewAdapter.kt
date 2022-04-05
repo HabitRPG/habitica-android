@@ -46,7 +46,10 @@ class CustomizationEquipmentRecyclerViewAdapter : androidx.recyclerview.widget.R
         return EquipmentViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: androidx.recyclerview.widget.RecyclerView.ViewHolder,
+        position: Int
+    ) {
         (holder as EquipmentViewHolder).bind(equipmentList[position])
     }
 

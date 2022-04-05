@@ -39,13 +39,13 @@ import io.mockk.slot
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.subjects.PublishSubject
-import org.junit.Before
 import java.io.InputStreamReader
 import java.lang.reflect.Type
 import kotlin.reflect.KCallable
 import kotlin.reflect.KMutableProperty1
 import kotlin.reflect.full.starProjectedType
 import kotlin.reflect.jvm.javaField
+import org.junit.Before
 
 open class HabiticaTestCase : TestCase() {
     val gson = GSonFactoryCreator.createGson()

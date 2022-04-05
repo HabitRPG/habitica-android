@@ -86,7 +86,13 @@ class ScoreTaskLocallyInteractor {
             }
         }
 
-        private fun subtractPoints(result: TaskDirectionData, delta: Double, stats: Stats, computedStats: Stats, task: Task) {
+        private fun subtractPoints(
+            result: TaskDirectionData,
+            delta: Double,
+            stats: Stats,
+            computedStats: Stats,
+            task: Task
+        ) {
             var conBonus = 1f - ((computedStats.constitution?.toFloat() ?: 0f) / 250f)
             if (conBonus < 0.1) {
                 conBonus = 0.1f
@@ -95,7 +101,14 @@ class ScoreTaskLocallyInteractor {
             result.hp = (stats.hp ?: 0.0) + (hpMod * 10).roundToLong() / 10.0
         }
 
-        private fun addPoints(result: TaskDirectionData, delta: Double, stats: Stats, computedStats: Stats, task: Task, direction: TaskDirection) {
+        private fun addPoints(
+            result: TaskDirectionData,
+            delta: Double,
+            stats: Stats,
+            computedStats: Stats,
+            task: Task,
+            direction: TaskDirection
+        ) {
             val intBonus = 1f + ((computedStats.intelligence?.toFloat() ?: 0f) * 0.025f)
             result.exp = (
                 stats.exp

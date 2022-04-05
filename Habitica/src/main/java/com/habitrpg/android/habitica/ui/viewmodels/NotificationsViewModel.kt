@@ -273,7 +273,10 @@ open class NotificationsViewModel : BaseViewModel() {
         }
     }
 
-    private fun clickNewChatMessage(notification: Notification, navController: MainNavigationController) {
+    private fun clickNewChatMessage(
+        notification: Notification,
+        navController: MainNavigationController
+    ) {
         val data = notification.data as? NewChatMessageData
         if (isPartyMessage(data)) {
             val bundle = Bundle()
@@ -288,7 +291,10 @@ open class NotificationsViewModel : BaseViewModel() {
         }
     }
 
-    private fun clickGroupInvitation(notification: Notification, navController: MainNavigationController) {
+    private fun clickGroupInvitation(
+        notification: Notification,
+        navController: MainNavigationController
+    ) {
         when (notification.type) {
             Notification.Type.GUILD_INVITATION.type -> {
                 val bundle = Bundle()

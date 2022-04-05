@@ -69,7 +69,10 @@ class PetDetailRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapt
             else -> PetViewHolder(parent, equipEvents, feedEvents, animalIngredientsRetriever)
         }
 
-    override fun onBindViewHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: androidx.recyclerview.widget.RecyclerView.ViewHolder,
+        position: Int
+    ) {
         when (val obj = this.itemList[position]) {
             is StableSection -> {
                 (holder as? SectionViewHolder)?.bind(obj)

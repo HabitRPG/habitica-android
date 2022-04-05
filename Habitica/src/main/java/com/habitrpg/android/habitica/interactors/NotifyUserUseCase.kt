@@ -55,11 +55,30 @@ constructor(
         }
     }
 
-    class RequestValues(val context: BaseActivity, val snackbarTargetView: ViewGroup, val user: User?, val xp: Double?, val hp: Double?, val gold: Double?, val mp: Double?, val questDamage: Double?, val hasLeveledUp: Boolean?, val level: Int?) : UseCase.RequestValues
+    class RequestValues(
+        val context: BaseActivity,
+        val snackbarTargetView: ViewGroup,
+        val user: User?,
+        val xp: Double?,
+        val hp: Double?,
+        val gold: Double?,
+        val mp: Double?,
+        val questDamage: Double?,
+        val hasLeveledUp: Boolean?,
+        val level: Int?
+    ) : UseCase.RequestValues
 
     companion object {
 
-        fun getNotificationAndAddStatsToUser(context: Context, xp: Double?, hp: Double?, gold: Double?, mp: Double?, questDamage: Double?, user: User?): Pair<View, SnackbarDisplayType> {
+        fun getNotificationAndAddStatsToUser(
+            context: Context,
+            xp: Double?,
+            hp: Double?,
+            gold: Double?,
+            mp: Double?,
+            questDamage: Double?,
+            user: User?
+        ): Pair<View, SnackbarDisplayType> {
 
             var displayType = SnackbarDisplayType.SUCCESS
 
@@ -111,7 +130,12 @@ constructor(
             return textView
         }
 
-        fun getNotificationAndAddStatsToUserAsText(xp: Double?, hp: Double?, gold: Double?, mp: Double?): Pair<SpannableStringBuilder, SnackbarDisplayType> {
+        fun getNotificationAndAddStatsToUserAsText(
+            xp: Double?,
+            hp: Double?,
+            gold: Double?,
+            mp: Double?
+        ): Pair<SpannableStringBuilder, SnackbarDisplayType> {
             val builder = SpannableStringBuilder()
             var displayType = SnackbarDisplayType.NORMAL
 

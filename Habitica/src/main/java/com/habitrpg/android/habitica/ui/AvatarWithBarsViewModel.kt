@@ -19,7 +19,11 @@ import io.reactivex.rxjava3.disposables.Disposable
 import java.util.Locale
 import kotlin.math.floor
 
-class AvatarWithBarsViewModel(private val context: Context, private val binding: AvatarWithBarsBinding, userRepository: UserRepository? = null) {
+class AvatarWithBarsViewModel(
+    private val context: Context,
+    private val binding: AvatarWithBarsBinding,
+    userRepository: UserRepository? = null
+) {
     private var userObject: Avatar? = null
 
     private var cachedMaxHealth: Int = 0
@@ -116,7 +120,13 @@ class AvatarWithBarsViewModel(private val context: Context, private val binding:
             textView.setCompoundDrawables(null, null, null, null)
         }
 
-        private fun setUserLevelWithClass(context: Context, textView: TextView, level: Int?, userClassString: String, habitClass: String?) {
+        private fun setUserLevelWithClass(
+            context: Context,
+            textView: TextView,
+            level: Int?,
+            userClassString: String,
+            habitClass: String?
+        ) {
             textView.text = context.getString(R.string.user_level_with_class, level, userClassString)
             textView.contentDescription = context.getString(R.string.user_level_with_class_unabbreviated, level, userClassString)
             var drawable: Drawable? = null

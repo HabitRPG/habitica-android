@@ -32,7 +32,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc: ((Task, TaskDirection) -> Unit), var openTaskFunc: ((Pair<Task, View>) -> Unit), var brokenTaskFunc: ((Task) -> Unit)) : BindableViewHolder<Task>(itemView), View.OnTouchListener {
+abstract class BaseTaskViewHolder constructor(
+    itemView: View,
+    var scoreTaskFunc: ((Task, TaskDirection) -> Unit),
+    var openTaskFunc: ((Pair<Task, View>) -> Unit),
+    var brokenTaskFunc: ((Task) -> Unit)
+) : BindableViewHolder<Task>(itemView), View.OnTouchListener {
     var task: Task? = null
     var movingFromPosition: Int? = null
     var errorButtonClicked: Action? = null

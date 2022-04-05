@@ -40,14 +40,14 @@ import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.SnackbarDisplayType
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import io.reactivex.rxjava3.core.Flowable
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import javax.inject.Inject
 import kotlin.math.floor
 import kotlin.math.min
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class FullProfileActivity : BaseActivity() {
     private var blocks: List<String> = listOf()
@@ -280,7 +280,11 @@ class FullProfileActivity : BaseActivity() {
         binding.achievementGroupList.state = RecyclerViewState.DISPLAYING_DATA
     }
 
-    private fun fillAchievements(labelID: Int, achievements: List<Achievement>, targetList: MutableList<Any>) {
+    private fun fillAchievements(
+        labelID: Int,
+        achievements: List<Achievement>,
+        targetList: MutableList<Any>
+    ) {
         // Order by ID first
         val achievementList = ArrayList(achievements)
         achievementList.sortWith { achievement, t1 -> achievement.index.toDouble().compareTo(t1.index.toDouble()) }
@@ -403,7 +407,15 @@ class FullProfileActivity : BaseActivity() {
         addAttributeRow("", attributeStrSum, attributeIntSum, attributeConSum, attributePerSum, roundDown = false, isSummary = true)
     }
 
-    private fun addAttributeRow(label: String, strVal: Float, intVal: Float, conVal: Float, perVal: Float, roundDown: Boolean, isSummary: Boolean) {
+    private fun addAttributeRow(
+        label: String,
+        strVal: Float,
+        intVal: Float,
+        conVal: Float,
+        perVal: Float,
+        roundDown: Boolean,
+        isSummary: Boolean
+    ) {
         val tableRow = layoutInflater.inflate(R.layout.profile_attributetablerow, binding.attributesTableLayout, false) as? TableRow ?: return
         val keyTextView = tableRow.findViewById<TextView>(R.id.tv_attribute_type)
         keyTextView?.text = label

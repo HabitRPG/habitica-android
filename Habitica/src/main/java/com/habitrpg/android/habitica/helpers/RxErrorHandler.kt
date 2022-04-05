@@ -4,10 +4,10 @@ import android.util.Log
 import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import io.reactivex.rxjava3.functions.Consumer
-import okhttp3.internal.http2.ConnectionShutdownException
-import retrofit2.HttpException
 import java.io.EOFException
 import java.io.IOException
+import okhttp3.internal.http2.ConnectionShutdownException
+import retrofit2.HttpException
 
 class RxErrorHandler {
     private var analyticsManager: AnalyticsManager? = null

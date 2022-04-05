@@ -202,7 +202,10 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
                 dialog.setTaskType(taskType, taskFilterHelper.getActiveFilter(taskType))
             }
             dialog.setListener(object : TaskFilterDialog.OnFilterCompletedListener {
-                override fun onFilterCompleted(activeTaskFilter: String?, activeTags: MutableList<String>) {
+                override fun onFilterCompleted(
+                    activeTaskFilter: String?,
+                    activeTags: MutableList<String>
+                ) {
                     if (viewFragmentsDictionary == null) {
                         return
                     }

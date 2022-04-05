@@ -18,7 +18,10 @@ import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.subjects.PublishSubject
 import io.realm.OrderedRealmCollection
 
-class ChallengesListViewAdapter(private val viewUserChallengesOnly: Boolean, private val userId: String) : BaseRecyclerViewAdapter<Challenge, ChallengesListViewAdapter.ChallengeViewHolder>() {
+class ChallengesListViewAdapter(
+    private val viewUserChallengesOnly: Boolean,
+    private val userId: String
+) : BaseRecyclerViewAdapter<Challenge, ChallengesListViewAdapter.ChallengeViewHolder>() {
     private var unfilteredData: List<Challenge>? = null
     private var challengeMemberships: List<ChallengeMembership>? = null
 
@@ -78,7 +81,10 @@ class ChallengesListViewAdapter(private val viewUserChallengesOnly: Boolean, pri
         return openChallengeFragmentEvents.toFlowable(BackpressureStrategy.DROP)
     }
 
-    class ChallengeViewHolder internal constructor(itemView: View, private val viewUserChallengesOnly: Boolean) : RecyclerView.ViewHolder(itemView) {
+    class ChallengeViewHolder internal constructor(
+        itemView: View,
+        private val viewUserChallengesOnly: Boolean
+    ) : RecyclerView.ViewHolder(itemView) {
         private val binding = ChallengeItemBinding.bind(itemView)
 
         private var challenge: Challenge? = null

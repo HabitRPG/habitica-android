@@ -40,7 +40,16 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
         HabiticaBaseApplication.userComponent?.inject(this)
     }
 
-    fun configure(pet: Animal, egg: Egg?, potion: HatchingPotion?, eggCount: Int, potionCount: Int, hasUnlockedEgg: Boolean, hasUnlockedPotion: Boolean, hasMount: Boolean) {
+    fun configure(
+        pet: Animal,
+        egg: Egg?,
+        potion: HatchingPotion?,
+        eggCount: Int,
+        potionCount: Int,
+        hasUnlockedEgg: Boolean,
+        hasUnlockedPotion: Boolean,
+        hasMount: Boolean
+    ) {
         DataBindingUtils.loadImage(binding.eggView, "Pet_Egg_${pet.animal}")
         DataBindingUtils.loadImage(binding.hatchingPotionView, "Pet_HatchingPotion_${pet.color}")
         binding.petTitleView.text = pet.text

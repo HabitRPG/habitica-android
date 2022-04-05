@@ -44,7 +44,11 @@ abstract class BaseDialogFragment<VB : ViewBinding> : DialogFragment() {
 
     abstract fun createBinding(inflater: LayoutInflater, container: ViewGroup?): VB
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         compositeSubscription = CompositeDisposable()
 
         val additionalData = HashMap<String, Any>()

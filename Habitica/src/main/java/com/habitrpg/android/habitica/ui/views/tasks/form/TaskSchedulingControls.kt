@@ -135,7 +135,12 @@ class TaskSchedulingControls @JvmOverloads constructor(
                 frequency = frequency
             }
 
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
                 frequency = when (position) {
                     1 -> Frequency.WEEKLY
                     2 -> Frequency.MONTHLY

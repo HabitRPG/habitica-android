@@ -20,7 +20,11 @@ import io.reactivex.rxjava3.core.Flowable
 import java.util.Calendar
 import java.util.Date
 
-class TaskAlarmManager(private var context: Context, private var taskRepository: TaskRepository, private var userId: String) {
+class TaskAlarmManager(
+    private var context: Context,
+    private var taskRepository: TaskRepository,
+    private var userId: String
+) {
     private val am: AlarmManager? = context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
 
     private fun setAlarmsForTask(task: Task) {
@@ -76,7 +80,14 @@ class TaskAlarmManager(private var context: Context, private var taskRepository:
         val calendar = Calendar.getInstance()
         calendar.time = newTime
         @Suppress("DEPRECATION")
-        calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DATE), oldTime?.hours ?: 0, oldTime?.minutes ?: 0, 0)
+        calendar.set(
+            calendar.get(Calendar.YEAR),
+            calendar.get(Calendar.MONTH),
+            calendar.get(Calendar.DATE),
+            oldTime?.hours ?: 0,
+            oldTime?.minutes ?: 0,
+            0
+        )
         remindersItem?.time = calendar.time
         return remindersItem
     }
@@ -97,13 +108,23 @@ class TaskAlarmManager(private var context: Context, private var taskRepository:
 
         val intentId = remindersItem.id?.hashCode() ?: 0 and 0xfffffff
         // Cancel alarm if already exists
-        val previousSender = PendingIntent.getBroadcast(context, intentId, intent, withImmutableFlag(PendingIntent.FLAG_NO_CREATE))
+        val previousSender = PendingIntent.getBroadcast(
+            context,
+            intentId,
+            intent,
+            withImmutableFlag(PendingIntent.FLAG_NO_CREATE)
+        )
         if (previousSender != null) {
             previousSender.cancel()
             am?.cancel(previousSender)
         }
 
-        val sender = PendingIntent.getBroadcast(context, intentId, intent, withImmutableFlag(PendingIntent.FLAG_CANCEL_CURRENT))
+        val sender = PendingIntent.getBroadcast(
+            context,
+            intentId,
+            intent,
+            withImmutableFlag(PendingIntent.FLAG_CANCEL_CURRENT)
+        )
 
         setAlarm(context, cal.timeInMillis, sender)
     }
@@ -112,7 +133,12 @@ class TaskAlarmManager(private var context: Context, private var taskRepository:
         val intent = Intent(context, TaskReceiver::class.java)
         intent.action = remindersItem.id
         val intentId = remindersItem.id?.hashCode() ?: 0 and 0xfffffff
-        val sender = PendingIntent.getBroadcast(context, intentId, intent, withImmutableFlag(PendingIntent.FLAG_UPDATE_CURRENT))
+        val sender = PendingIntent.getBroadcast(
+            context,
+            intentId,
+            intent,
+            withImmutableFlag(PendingIntent.FLAG_UPDATE_CURRENT)
+        )
         val am = context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
         sender.cancel()
         am?.cancel(sender)
@@ -128,7 +154,9 @@ class TaskAlarmManager(private var context: Context, private var taskRepository:
             if (prefs.getBoolean("use_reminder", false)) {
                 val timeval = prefs.getString("reminder_time", "19:00")
 
-                val pieces = timeval?.split(":".toRegex())?.dropLastWhile { it.isEmpty() }?.toTypedArray() ?: return
+                val pieces =
+                    timeval?.split(":".toRegex())?.dropLastWhile { it.isEmpty() }?.toTypedArray()
+                        ?: return
                 val hour = Integer.parseInt(pieces[0])
                 val minute = Integer.parseInt(pieces[1])
                 val cal = Calendar.getInstance()
@@ -145,13 +173,23 @@ class TaskAlarmManager(private var context: Context, private var taskRepository:
                 notificationIntent.putExtra(NotificationPublisher.CHECK_DAILIES, false)
 
                 val alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
-                val previousSender = PendingIntent.getBroadcast(context, 0, notificationIntent, withImmutableFlag(PendingIntent.FLAG_NO_CREATE))
+                val previousSender = PendingIntent.getBroadcast(
+                    context,
+                    0,
+                    notificationIntent,
+                    withImmutableFlag(PendingIntent.FLAG_NO_CREATE)
+                )
                 if (previousSender != null) {
                     previousSender.cancel()
                     alarmManager?.cancel(previousSender)
                 }
 
-                val pendingIntent = PendingIntent.getBroadcast(context, 0, notificationIntent, withImmutableFlag(PendingIntent.FLAG_UPDATE_CURRENT))
+                val pendingIntent = PendingIntent.getBroadcast(
+                    context,
+                    0,
+                    notificationIntent,
+                    withImmutableFlag(PendingIntent.FLAG_UPDATE_CURRENT)
+                )
 
                 if (context != null) {
                     setAlarm(context, triggerTime, pendingIntent)
@@ -162,7 +200,8 @@ class TaskAlarmManager(private var context: Context, private var taskRepository:
         fun removeDailyReminder(context: Context?) {
             val notificationIntent = Intent(context, NotificationPublisher::class.java)
             val alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
-            val displayIntent = PendingIntent.getBroadcast(context, 0, notificationIntent, withImmutableFlag(0))
+            val displayIntent =
+                PendingIntent.getBroadcast(context, 0, notificationIntent, withImmutableFlag(0))
             alarmManager?.cancel(displayIntent)
         }
 

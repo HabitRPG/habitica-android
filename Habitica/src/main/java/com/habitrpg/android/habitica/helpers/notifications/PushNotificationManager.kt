@@ -10,7 +10,11 @@ import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.User
 
-class PushNotificationManager(var apiClient: ApiClient, private val sharedPreferences: SharedPreferences, private val context: Context) {
+class PushNotificationManager(
+    var apiClient: ApiClient,
+    private val sharedPreferences: SharedPreferences,
+    private val context: Context
+) {
 
     var refreshedToken: String = ""
         set(value) {

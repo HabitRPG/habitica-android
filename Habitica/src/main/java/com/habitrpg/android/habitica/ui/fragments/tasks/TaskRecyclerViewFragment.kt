@@ -215,7 +215,11 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
                 binding?.refreshLayout?.isEnabled = false
             }
 
-            override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
                 recyclerAdapter?.notifyItemMoved(viewHolder.absoluteAdapterPosition, target.absoluteAdapterPosition)
                 return true
             }
@@ -223,7 +227,10 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) { /* no-on */ }
 
             // defines the enabled move directions in each state (idle, swiping, dragging).
-            override fun getMovementFlags(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int {
+            override fun getMovementFlags(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder
+            ): Int {
                 return if (recyclerAdapter?.getItemViewType(viewHolder.absoluteAdapterPosition) ?: 0 != 0) {
                     makeFlag(ItemTouchHelper.ACTION_STATE_IDLE, 0)
                 } else {
@@ -251,7 +258,10 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
                 }
             }
 
-            private fun updateTaskInRepository(validTaskId: String?, viewHolder: RecyclerView.ViewHolder) {
+            private fun updateTaskInRepository(
+                validTaskId: String?,
+                viewHolder: RecyclerView.ViewHolder
+            ) {
                 if (validTaskId != null) {
                     var newPosition = viewHolder.absoluteAdapterPosition
                     if (taskFilterHelper.howMany(taskType) > 0) {

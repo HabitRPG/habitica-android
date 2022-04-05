@@ -49,7 +49,11 @@ class NoPartyFragmentFragment : BaseMainFragment<FragmentNoPartyBinding>() {
         return FragmentNoPartyBinding.inflate(inflater, container, false)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         hidesToolbar = true
         return super.onCreateView(inflater, container, savedInstanceState)
     }

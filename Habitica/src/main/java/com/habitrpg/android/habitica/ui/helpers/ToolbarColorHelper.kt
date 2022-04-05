@@ -40,7 +40,11 @@ object ToolbarColorHelper {
      * @param toolbar toolbar view being colored
      * @param activity reference to activity needed to register observers
      */
-    fun colorizeToolbar(toolbar: Toolbar, activity: Activity?, overrideModernHeader: Boolean? = null) {
+    fun colorizeToolbar(
+        toolbar: Toolbar,
+        activity: Activity?,
+        overrideModernHeader: Boolean? = null
+    ) {
         if (activity == null) return
         val modernHeaderStyle = overrideModernHeader ?: PreferenceManager.getDefaultSharedPreferences(activity).getBoolean("modern_header_style", true)
         val toolbarIconsColor = if (modernHeaderStyle) {
