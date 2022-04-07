@@ -16,6 +16,7 @@ import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentItemsBinding
 import com.habitrpg.android.habitica.extensions.addCloseButton
+import com.habitrpg.android.habitica.extensions.observeOnce
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
@@ -29,6 +30,7 @@ import com.habitrpg.android.habitica.models.inventory.SpecialItem
 import com.habitrpg.android.habitica.models.responses.SkillResponse
 import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.OwnedPet
+import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.BaseActivity
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.activities.SkillMemberActivity
@@ -57,6 +59,7 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
     @Inject
     lateinit var userViewModel: MainUserViewModel
 
+    var user: User? = null
     var adapter: ItemRecyclerAdapter? = null
     var itemType: String? = null
     var transformationItems: MutableList<OwnedItem> = mutableListOf()
@@ -96,15 +99,42 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
             }
         }
 
-        val context = activity
-
         layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
         binding?.recyclerView?.layoutManager = layoutManager
+        activity?.let {
+            binding?.recyclerView?.addItemDecoration(androidx.recyclerview.widget.DividerItemDecoration(it, androidx.recyclerview.widget.DividerItemDecoration.VERTICAL))
+        }
+        binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
+
+        userViewModel.user.observeOnce(this) {
+            if (it != null){
+                user = it
+                setAdapter()
+            }
+        }
+
+        if (savedInstanceState != null) {
+            this.itemType = savedInstanceState.getString(ITEM_TYPE_KEY, "")
+        }
+
+        binding?.titleTextView?.visibility = View.GONE
+        binding?.footerTextView?.visibility = View.GONE
+        binding?.openMarketButton?.visibility = View.GONE
+
+        binding?.openMarketButton?.setOnClickListener {
+            openMarket()
+        }
+
+        this.loadItems()
+    }
+
+    private fun setAdapter(){
+        val context = activity
 
         adapter = binding?.recyclerView?.adapter as? ItemRecyclerAdapter
         if (adapter == null) {
             context?.let {
-                adapter = ItemRecyclerAdapter(context, userViewModel.user.value)
+                adapter = ItemRecyclerAdapter(context, user)
             }
             binding?.recyclerView?.adapter = adapter
             adapter?.useSpecialEvents?.subscribeWithErrorHandler { onSpecialItemSelected(it) }?.let { compositeSubscription.add(it) }
@@ -128,7 +158,7 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
                 )
                 compositeSubscription.add(
                     adapter.getOpenMysteryItemFlowable()
-                        .flatMap { inventoryRepository.openMysteryItem(userViewModel.user.value) }
+                        .flatMap { inventoryRepository.openMysteryItem(user) }
                         .doOnNext {
                             val activity = activity as? MainActivity
                             if (activity != null) {
@@ -152,24 +182,6 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
                 compositeSubscription.addAll(adapter.startNewPartyEvents.subscribeWithErrorHandler { createNewParty(it) })
             }
         }
-        activity?.let {
-            binding?.recyclerView?.addItemDecoration(androidx.recyclerview.widget.DividerItemDecoration(it, androidx.recyclerview.widget.DividerItemDecoration.VERTICAL))
-        }
-        binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
-
-        if (savedInstanceState != null) {
-            this.itemType = savedInstanceState.getString(ITEM_TYPE_KEY, "")
-        }
-
-        binding?.titleTextView?.visibility = View.GONE
-        binding?.footerTextView?.visibility = View.GONE
-        binding?.openMarketButton?.visibility = View.GONE
-
-        binding?.openMarketButton?.setOnClickListener {
-            openMarket()
-        }
-
-        this.loadItems()
     }
 
     private fun showHatchingDialog(item: Item) {
@@ -221,9 +233,9 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
         alert?.setMessage(R.string.quest_party_required_description)
         alert?.addButton(R.string.create_new_party, true, false) { _, _ ->
             socialRepository.createGroup(
-                getString(R.string.usernames_party, userViewModel.user.value?.profile?.name),
+                getString(R.string.usernames_party, user?.profile?.name),
                 "",
-                userViewModel.user.value?.id,
+                user?.id,
                 "party",
                 "",
                 false
@@ -243,7 +255,7 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
                     {
                         MainNavigationController.navigate(
                             R.id.partyFragment,
-                            bundleOf(Pair("partyID", userViewModel.user.value?.party?.id))
+                            bundleOf(Pair("partyID", user?.party?.id))
                         )
                     },
                     RxErrorHandler.handleEmptyError()
