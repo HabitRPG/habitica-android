@@ -13,6 +13,7 @@ import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentItemsBinding
 import com.habitrpg.android.habitica.extensions.addCloseButton
+import com.habitrpg.android.habitica.extensions.observeOnce
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
@@ -33,6 +34,7 @@ import com.habitrpg.android.habitica.ui.fragments.BaseDialogFragment
 import com.habitrpg.android.habitica.ui.helpers.EmptyItem
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.helpers.loadImage
+import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.dialogs.OpenedMysteryitemDialog
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import javax.inject.Inject
@@ -51,6 +53,8 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsBinding>(), SwipeRefr
     lateinit var hatchPetUseCase: HatchPetUseCase
     @Inject
     lateinit var feedPetUseCase: FeedPetUseCase
+    @Inject
+    lateinit var userViewModel: MainUserViewModel
 
     var adapter: ItemRecyclerAdapter? = null
     var itemType: String? = null
@@ -106,10 +110,56 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsBinding>(), SwipeRefr
             openMarket()
         }
 
-        val context = activity
-
         layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
         binding?.recyclerView?.layoutManager = layoutManager
+        activity?.let {
+            binding?.recyclerView?.addItemDecoration(androidx.recyclerview.widget.DividerItemDecoration(it, androidx.recyclerview.widget.DividerItemDecoration.VERTICAL))
+        }
+        binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
+
+        userViewModel.user.observeOnce(this) {
+            if (it != null){
+                user = it
+                setAdapter()
+            }
+        }
+
+        if (savedInstanceState != null) {
+            this.itemType = savedInstanceState.getString(ITEM_TYPE_KEY, "")
+        }
+
+        when {
+            this.isHatching -> {
+                binding?.titleTextView?.text = getString(R.string.hatch_with, this.hatchingItem?.text)
+                binding?.titleTextView?.visibility = View.VISIBLE
+                binding?.footerTextView?.text = getString(R.string.hatching_market_info)
+                binding?.footerTextView?.visibility = View.VISIBLE
+                binding?.openMarketButton?.visibility = View.VISIBLE
+            }
+            this.isFeeding -> {
+                binding?.titleTextView?.text = getString(R.string.dialog_feeding, this.feedingPet?.text)
+                binding?.titleTextView?.visibility = View.VISIBLE
+                binding?.footerTextView?.text = getString(R.string.feeding_market_info)
+                binding?.footerTextView?.visibility = View.VISIBLE
+                binding?.openMarketButton?.visibility = View.VISIBLE
+            }
+            else -> {
+                binding?.titleTextView?.visibility = View.GONE
+                binding?.footerTextView?.visibility = View.GONE
+                binding?.openMarketButton?.visibility = View.GONE
+            }
+        }
+
+        binding?.openMarketButton?.setOnClickListener {
+            dismiss()
+            openMarket()
+        }
+
+        this.loadItems()
+    }
+
+    private fun setAdapter(){
+        val context = activity
 
         adapter = binding?.recyclerView?.adapter as? ItemRecyclerAdapter
         if (adapter == null) {
@@ -174,43 +224,6 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsBinding>(), SwipeRefr
                 compositeSubscription.add(adapter.feedPetEvents.subscribeWithErrorHandler { feedPet(it) })
             }
         }
-        activity?.let {
-            binding?.recyclerView?.addItemDecoration(androidx.recyclerview.widget.DividerItemDecoration(it, androidx.recyclerview.widget.DividerItemDecoration.VERTICAL))
-        }
-        binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
-
-        if (savedInstanceState != null) {
-            this.itemType = savedInstanceState.getString(ITEM_TYPE_KEY, "")
-        }
-
-        when {
-            this.isHatching -> {
-                binding?.titleTextView?.text = getString(R.string.hatch_with, this.hatchingItem?.text)
-                binding?.titleTextView?.visibility = View.VISIBLE
-                binding?.footerTextView?.text = getString(R.string.hatching_market_info)
-                binding?.footerTextView?.visibility = View.VISIBLE
-                binding?.openMarketButton?.visibility = View.VISIBLE
-            }
-            this.isFeeding -> {
-                binding?.titleTextView?.text = getString(R.string.dialog_feeding, this.feedingPet?.text)
-                binding?.titleTextView?.visibility = View.VISIBLE
-                binding?.footerTextView?.text = getString(R.string.feeding_market_info)
-                binding?.footerTextView?.visibility = View.VISIBLE
-                binding?.openMarketButton?.visibility = View.VISIBLE
-            }
-            else -> {
-                binding?.titleTextView?.visibility = View.GONE
-                binding?.footerTextView?.visibility = View.GONE
-                binding?.openMarketButton?.visibility = View.GONE
-            }
-        }
-
-        binding?.openMarketButton?.setOnClickListener {
-            dismiss()
-            openMarket()
-        }
-
-        this.loadItems()
     }
 
     private fun feedPet(food: Food) {
