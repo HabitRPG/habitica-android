@@ -21,7 +21,7 @@ import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.stats.BulkAllocateStatsDialog
-import java.util.*
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import javax.inject.Inject
 import kotlin.math.min
 
@@ -29,7 +29,10 @@ class StatsFragment : BaseMainFragment<FragmentStatsBinding>() {
 
     override var binding: FragmentStatsBinding? = null
 
-    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentStatsBinding {
+    override fun createBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentStatsBinding {
         return FragmentStatsBinding.inflate(inflater, container, false)
     }
 
@@ -59,9 +62,13 @@ class StatsFragment : BaseMainFragment<FragmentStatsBinding>() {
             binding?.perceptionStatsView?.totalValue = value
         }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         tutorialStepIdentifier = "stats"
-        tutorialText = getString(R.string.tutorial_stats)
+        tutorialTexts = listOf(getString(R.string.tutorial_stats))
         this.hidesToolbar = true
         return super.onCreateView(inflater, container, savedInstanceState)
     }
@@ -78,21 +85,37 @@ class StatsFragment : BaseMainFragment<FragmentStatsBinding>() {
         binding?.rightSparklesView?.setImageBitmap(HabiticaIconsHelper.imageOfAttributeSparklesRight())
         context?.let {
             val color = it.getThemeColor(R.attr.colorPrimaryOffset)
-            binding?.distributeEvenlyHelpButton?.setImageBitmap(HabiticaIconsHelper.imageOfInfoIcon(color))
-            binding?. distributeClassHelpButton?.setImageBitmap(HabiticaIconsHelper.imageOfInfoIcon(color))
-            binding?.distributeTaskHelpButton?.setImageBitmap(HabiticaIconsHelper.imageOfInfoIcon(color))
+            binding?.distributeEvenlyHelpButton?.setImageBitmap(
+                HabiticaIconsHelper.imageOfInfoIcon(
+                    color
+                )
+            )
+            binding?.distributeClassHelpButton?.setImageBitmap(
+                HabiticaIconsHelper.imageOfInfoIcon(
+                    color
+                )
+            )
+            binding?.distributeTaskHelpButton?.setImageBitmap(
+                HabiticaIconsHelper.imageOfInfoIcon(
+                    color
+                )
+            )
         }
 
         compositeSubscription.add(
-            userRepository.getUser().subscribe(
-                { user ->
-                    canAllocatePoints = user.stats?.lvl ?: 0 >= 10 && user.stats?.points ?: 0 > 0
-                    binding?.unlockAtLevel?.visibility = if (user.stats?.lvl ?: 0 < 10) View.VISIBLE else View.GONE
-                    updateStats(user)
-                    updateAttributePoints(user)
-                },
-                RxErrorHandler.handleEmptyError()
-            )
+            userRepository.getUser()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    { user ->
+                        canAllocatePoints =
+                            user.stats?.lvl ?: 0 >= 10 && user.stats?.points ?: 0 > 0
+                        binding?.unlockAtLevel?.visibility =
+                            if (user.stats?.lvl ?: 0 < 10) View.VISIBLE else View.GONE
+                        updateStats(user)
+                        updateAttributePoints(user)
+                    },
+                    RxErrorHandler.handleEmptyError()
+                )
         )
 
         binding?.distributeEvenlyButton?.setOnCheckedChangeListener { _, isChecked ->
@@ -112,7 +135,8 @@ class StatsFragment : BaseMainFragment<FragmentStatsBinding>() {
         }
 
         binding?.automaticAllocationSwitch?.setOnCheckedChangeListener { _, isChecked ->
-            userRepository.updateUser("preferences.automaticAllocation", isChecked).subscribe({}, RxErrorHandler.handleEmptyError())
+            userRepository.updateUser("preferences.automaticAllocation", isChecked)
+                .subscribe({}, RxErrorHandler.handleEmptyError())
         }
 
         binding?.strengthStatsView?.allocateAction = { allocatePoint(Attribute.STRENGTH) }
@@ -139,7 +163,12 @@ class StatsFragment : BaseMainFragment<FragmentStatsBinding>() {
     }
 
     private fun changeAutoAllocationMode(allocationMode: String) {
-        compositeSubscription.add(userRepository.updateUser("preferences.allocationMode", allocationMode).subscribe({}, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(
+            userRepository.updateUser(
+                "preferences.allocationMode",
+                allocationMode
+            ).subscribe({}, RxErrorHandler.handleEmptyError())
+        )
         binding?.distributeEvenlyButton?.isChecked = allocationMode == Stats.AUTO_ALLOCATE_FLAT
         binding?.distributeClassButton?.isChecked = allocationMode == Stats.AUTO_ALLOCATE_CLASSBASED
         binding?.distributeTaskButton?.isChecked = allocationMode == Stats.AUTO_ALLOCATE_TASKBASED
@@ -153,13 +182,16 @@ class StatsFragment : BaseMainFragment<FragmentStatsBinding>() {
     }
 
     private fun allocatePoint(stat: Attribute) {
-        compositeSubscription.add(userRepository.allocatePoint(stat).subscribe({ }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(
+            userRepository.allocatePoint(stat).subscribe({ }, RxErrorHandler.handleEmptyError())
+        )
     }
 
     private fun updateAttributePoints(user: User) {
         val automaticAllocation = user.preferences?.automaticAllocation ?: false
         binding?.automaticAllocationSwitch?.isChecked = automaticAllocation
-        binding?.autoAllocationModeWrapper?.visibility = if (automaticAllocation) View.VISIBLE else View.GONE
+        binding?.autoAllocationModeWrapper?.visibility =
+            if (automaticAllocation) View.VISIBLE else View.GONE
 
         val allocationMode = user.preferences?.allocationMode ?: ""
         binding?.distributeEvenlyButton?.isChecked = allocationMode == Stats.AUTO_ALLOCATE_FLAT
@@ -181,15 +213,32 @@ class StatsFragment : BaseMainFragment<FragmentStatsBinding>() {
         context?.let { context ->
             if (canDistributePoints) {
                 val points = user.stats?.points ?: 0
-                binding?.numberOfPointsTextView?.text = getString(R.string.points_to_allocate, points)
-                binding?.numberOfPointsTextView?.setTextColor(ContextCompat.getColor(context, R.color.white))
-                binding?.numberOfPointsTextView?.background = ContextCompat.getDrawable(context, R.drawable.button_gray_100)
+                binding?.numberOfPointsTextView?.text =
+                    getString(R.string.points_to_allocate, points)
+                binding?.numberOfPointsTextView?.setTextColor(
+                    ContextCompat.getColor(
+                        context,
+                        R.color.white
+                    )
+                )
+                binding?.numberOfPointsTextView?.background =
+                    ContextCompat.getDrawable(context, R.drawable.button_gray_100)
                 binding?.leftSparklesView?.visibility = View.VISIBLE
                 binding?.rightSparklesView?.visibility = View.VISIBLE
             } else {
                 binding?.numberOfPointsTextView?.text = getString(R.string.no_points_to_allocate)
-                binding?.numberOfPointsTextView?.setTextColor(ContextCompat.getColor(context, R.color.text_quad))
-                binding?.numberOfPointsTextView?.setBackgroundColor(ContextCompat.getColor(context, R.color.transparent))
+                binding?.numberOfPointsTextView?.setTextColor(
+                    ContextCompat.getColor(
+                        context,
+                        R.color.text_quad
+                    )
+                )
+                binding?.numberOfPointsTextView?.setBackgroundColor(
+                    ContextCompat.getColor(
+                        context,
+                        R.color.transparent
+                    )
+                )
                 binding?.leftSparklesView?.visibility = View.GONE
                 binding?.rightSparklesView?.visibility = View.GONE
             }
@@ -237,17 +286,22 @@ class StatsFragment : BaseMainFragment<FragmentStatsBinding>() {
                         totalConstitution += user.stats?.buffs?.con?.toInt() ?: 0
                         totalPerception += user.stats?.buffs?.per?.toInt() ?: 0
                         binding?.strengthStatsView?.buffValue = user.stats?.buffs?.str?.toInt() ?: 0
-                        binding?.intelligenceStatsView?.buffValue = user.stats?.buffs?._int?.toInt() ?: 0
-                        binding?.constitutionStatsView?.buffValue = user.stats?.buffs?.con?.toInt() ?: 0
-                        binding?.perceptionStatsView?.buffValue = user.stats?.buffs?.per?.toInt() ?: 0
+                        binding?.intelligenceStatsView?.buffValue =
+                            user.stats?.buffs?._int?.toInt() ?: 0
+                        binding?.constitutionStatsView?.buffValue =
+                            user.stats?.buffs?.con?.toInt() ?: 0
+                        binding?.perceptionStatsView?.buffValue =
+                            user.stats?.buffs?.per?.toInt() ?: 0
 
                         totalStrength += user.stats?.strength ?: 0
                         totalIntelligence += user.stats?.intelligence ?: 0
                         totalConstitution += user.stats?.constitution ?: 0
                         totalPerception += user.stats?.per ?: 0
                         binding?.strengthStatsView?.allocatedValue = user.stats?.strength ?: 0
-                        binding?.intelligenceStatsView?.allocatedValue = user.stats?.intelligence ?: 0
-                        binding?.constitutionStatsView?.allocatedValue = user.stats?.constitution ?: 0
+                        binding?.intelligenceStatsView?.allocatedValue =
+                            user.stats?.intelligence ?: 0
+                        binding?.constitutionStatsView?.allocatedValue =
+                            user.stats?.constitution ?: 0
                         binding?.perceptionStatsView?.allocatedValue = user.stats?.per ?: 0
                         val userStatComputer = UserStatComputer()
                         val statsRows = userStatComputer.computeClassBonus(it, user)

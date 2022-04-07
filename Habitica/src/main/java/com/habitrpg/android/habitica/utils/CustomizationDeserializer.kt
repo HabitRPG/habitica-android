@@ -74,7 +74,13 @@ class CustomizationDeserializer : JsonDeserializer<List<Customization>> {
         return customizations
     }
 
-    private fun parseCustomization(existingCustomizaion: Customization?, type: String?, category: String?, key: String?, entry: JsonObject): Customization {
+    private fun parseCustomization(
+        existingCustomizaion: Customization?,
+        type: String?,
+        category: String?,
+        key: String?,
+        entry: JsonObject
+    ): Customization {
         var customization = existingCustomizaion
         if (customization == null) {
             customization = Customization()
@@ -113,7 +119,12 @@ class CustomizationDeserializer : JsonDeserializer<List<Customization>> {
         return customization
     }
 
-    private fun parseBackground(existingCustomization: Customization?, setName: String, key: String?, entry: JsonObject): Customization {
+    private fun parseBackground(
+        existingCustomization: Customization?,
+        setName: String,
+        key: String?,
+        entry: JsonObject
+    ): Customization {
         var customization = existingCustomization
 
         if (customization == null) {

@@ -6,7 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AccelerateInterpolator
-import android.widget.*
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
@@ -117,23 +119,62 @@ private constructor(parent: ViewGroup, content: View, callback: ContentViewCallb
             return customSnackbar
         }
 
-        fun showSnackbar(container: ViewGroup, content: CharSequence?, displayType: SnackbarDisplayType, isCelebratory: Boolean = false) {
+        fun showSnackbar(
+            container: ViewGroup,
+            content: CharSequence?,
+            displayType: SnackbarDisplayType,
+            isCelebratory: Boolean = false
+        ) {
             showSnackbar(container, null, null, content, null, null, 0, null, displayType, isCelebratory)
         }
 
-        fun showSnackbar(container: ViewGroup, leftImage: Drawable, title: CharSequence?, content: CharSequence?, displayType: SnackbarDisplayType, isCelebratory: Boolean = false) {
+        fun showSnackbar(
+            container: ViewGroup,
+            leftImage: Drawable,
+            title: CharSequence?,
+            content: CharSequence?,
+            displayType: SnackbarDisplayType,
+            isCelebratory: Boolean = false
+        ) {
             showSnackbar(container, leftImage, title, content, null, null, 0, null, displayType, isCelebratory)
         }
 
-        fun showSnackbar(container: ViewGroup, title: CharSequence?, content: CharSequence?, rightIcon: Drawable, rightTextColor: Int?, rightText: String, displayType: SnackbarDisplayType, isCelebratory: Boolean = false) {
+        fun showSnackbar(
+            container: ViewGroup,
+            title: CharSequence?,
+            content: CharSequence?,
+            rightIcon: Drawable,
+            rightTextColor: Int?,
+            rightText: String,
+            displayType: SnackbarDisplayType,
+            isCelebratory: Boolean = false
+        ) {
             showSnackbar(container, null, title, content, null, rightIcon, rightTextColor, rightText, displayType, isCelebratory)
         }
 
-        fun showSnackbar(container: ViewGroup, title: CharSequence?, content: CharSequence?, specialView: View?, displayType: SnackbarDisplayType, isCelebratory: Boolean = false) {
+        fun showSnackbar(
+            container: ViewGroup,
+            title: CharSequence?,
+            content: CharSequence?,
+            specialView: View?,
+            displayType: SnackbarDisplayType,
+            isCelebratory: Boolean = false
+        ) {
             showSnackbar(container, null, title, content, specialView, null, 0, null, displayType, isCelebratory)
         }
 
-        fun showSnackbar(container: ViewGroup, leftImage: Drawable?, title: CharSequence?, content: CharSequence?, specialView: View?, rightIcon: Drawable?, rightTextColor: Int?, rightText: String?, displayType: SnackbarDisplayType, isCelebratory: Boolean = false) {
+        fun showSnackbar(
+            container: ViewGroup,
+            leftImage: Drawable?,
+            title: CharSequence?,
+            content: CharSequence?,
+            specialView: View?,
+            rightIcon: Drawable?,
+            rightTextColor: Int?,
+            rightText: String?,
+            displayType: SnackbarDisplayType,
+            isCelebratory: Boolean = false
+        ) {
             val snackbar = make(container, Snackbar.LENGTH_LONG)
                 .setTitle(title)
                 .setText(content)

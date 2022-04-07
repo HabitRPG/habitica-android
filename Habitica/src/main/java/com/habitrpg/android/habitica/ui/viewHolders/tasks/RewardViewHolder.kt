@@ -12,7 +12,12 @@ import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.ItemDetailDialog
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 
-class RewardViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> Unit), openTaskFunc: ((Pair<Task, View>) -> Unit), brokenTaskFunc: ((Task) -> Unit)) : BaseTaskViewHolder(itemView, scoreTaskFunc, openTaskFunc, brokenTaskFunc) {
+class RewardViewHolder(
+    itemView: View,
+    scoreTaskFunc: ((Task, TaskDirection) -> Unit),
+    openTaskFunc: ((Pair<Task, View>) -> Unit),
+    brokenTaskFunc: ((Task) -> Unit)
+) : BaseTaskViewHolder(itemView, scoreTaskFunc, openTaskFunc, brokenTaskFunc) {
     private val binding = RewardItemCardBinding.bind(itemView)
 
     private val isItem: Boolean

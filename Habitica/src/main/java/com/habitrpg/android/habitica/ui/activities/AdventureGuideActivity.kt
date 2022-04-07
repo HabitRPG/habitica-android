@@ -11,7 +11,6 @@ import androidx.core.app.NavUtils
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
-import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.ActivityAdventureGuideBinding
 import com.habitrpg.android.habitica.databinding.AdventureGuideItemBinding
 import com.habitrpg.android.habitica.extensions.fromHtml
@@ -19,7 +18,6 @@ import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
-import javax.inject.Inject
 
 class AdventureGuideActivity : BaseActivity() {
     private lateinit var binding: ActivityAdventureGuideBinding

@@ -7,7 +7,11 @@ import android.text.style.ForegroundColorSpan
 import android.util.AttributeSet
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 // http://stackoverflow.com/a/6700718/1315039
 class Typewriter : androidx.appcompat.widget.AppCompatTextView {

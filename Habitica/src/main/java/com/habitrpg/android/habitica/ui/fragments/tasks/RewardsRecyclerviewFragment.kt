@@ -22,14 +22,17 @@ import com.habitrpg.android.habitica.ui.adapter.tasks.RewardsRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import io.reactivex.rxjava3.functions.Consumer
-import java.util.*
 
 class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
 
     private var showCustomRewards: Boolean = true
     private var selectedCard: ShopItem? = null
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         compositeSubscription.add(inventoryRepository.retrieveInAppRewards().subscribe({ }, RxErrorHandler.handleEmptyError()))
         return super.onCreateView(inflater, container, savedInstanceState)
     }

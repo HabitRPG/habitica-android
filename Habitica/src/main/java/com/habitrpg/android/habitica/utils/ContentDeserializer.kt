@@ -19,6 +19,7 @@ import com.habitrpg.android.habitica.models.inventory.HatchingPotion
 import com.habitrpg.android.habitica.models.inventory.Mount
 import com.habitrpg.android.habitica.models.inventory.Pet
 import com.habitrpg.android.habitica.models.inventory.QuestContent
+import com.habitrpg.android.habitica.models.inventory.SpecialItem
 import io.realm.RealmList
 import java.lang.reflect.Type
 
@@ -101,6 +102,13 @@ class ContentDeserializer : JsonDeserializer<ContentResult> {
                 result.spells.add(skill)
             }
         }
+
+        if (obj.has("special")) {
+            for (entry in obj.get("special").asJsonObject.entrySet()) {
+                result.special.add(context.deserialize(entry.value, SpecialItem::class.java))
+            }
+        }
+
         result.appearances = context.deserialize(obj.get("appearances"), object : TypeToken<RealmList<Customization>>() {}.type)
         result.backgrounds = context.deserialize(obj.get("backgrounds"), object : TypeToken<RealmList<Customization>>() {}.type)
         val noBackground = Customization()

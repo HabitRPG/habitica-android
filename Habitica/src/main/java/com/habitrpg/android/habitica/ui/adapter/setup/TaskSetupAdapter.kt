@@ -12,7 +12,6 @@ import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.extensions.setTintWith
-import java.util.*
 
 class TaskSetupAdapter : RecyclerView.Adapter<TaskSetupAdapter.TaskViewHolder>() {
 

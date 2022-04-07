@@ -5,7 +5,11 @@ import com.habitrpg.android.habitica.data.BaseRepository
 import com.habitrpg.android.habitica.data.local.BaseLocalRepository
 import com.habitrpg.android.habitica.models.BaseObject
 
-abstract class BaseRepositoryImpl<T : BaseLocalRepository>(protected val localRepository: T, protected val apiClient: ApiClient, protected val userID: String = "") : BaseRepository {
+abstract class BaseRepositoryImpl<T : BaseLocalRepository>(
+    protected val localRepository: T,
+    protected val apiClient: ApiClient,
+    protected val userID: String = ""
+) : BaseRepository {
 
     override fun close() {
         this.localRepository.close()

@@ -7,7 +7,11 @@ import android.view.ViewGroup
 import com.habitrpg.android.habitica.models.shops.Shop
 
 class QuestShopFragment : ShopFragment() {
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         shopIdentifier = Shop.QUEST_SHOP
         return super.onCreateView(inflater, container, savedInstanceState)
     }

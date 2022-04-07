@@ -8,15 +8,15 @@ buildscript {
         maven { url "https://plugins.gradle.org/m2/" }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.0.4'
+        classpath 'com.android.tools.build:gradle:7.1.2'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
         classpath 'com.google.gms:google-services:4.3.10'
         classpath 'com.google.firebase:firebase-crashlytics-gradle:2.8.1'
         classpath "io.realm:realm-gradle-plugin:10.8.1"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.19.0"
-        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.3.5"
-        classpath 'com.google.firebase:perf-plugin:1.4.0'
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.5.0-alpha03"
+        classpath 'com.google.firebase:perf-plugin:1.4.1'
     }
 }
 
@@ -25,12 +25,12 @@ apply plugin: 'io.gitlab.arturbosch.detekt'
 allprojects {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
 }
 
 detekt {
-    input = files("Habitica/src/main/java")
+    source = files("Habitica/src/main/java")
     config = files("detekt.yml")
     baseline = file("${rootProject.projectDir}/detekt_baseline.xml")
     reports {
@@ -46,5 +46,16 @@ detekt {
             enabled = true
             destination = file("build/reports/detekt.sarif")
         }
+    }
+}
+
+tasks.named("detekt").configure {
+    reports {
+        xml.required.set(false)
+        html.required.set(true)
+        html.outputLocation.set(file("build/reports/detekt.html"))
+        txt.required.set(false)
+        sarif.required.set(true)
+        sarif.outputLocation.set(file("build/reports/detekt.sarif"))
     }
 }

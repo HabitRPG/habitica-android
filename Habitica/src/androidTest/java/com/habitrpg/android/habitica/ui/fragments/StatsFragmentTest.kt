@@ -1,37 +1,40 @@
 package com.habitrpg.android.habitica.ui.fragments
 
+import android.os.Bundle
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.FragmentStatsBinding
-import com.habitrpg.android.habitica.models.user.Stats
+import com.habitrpg.android.habitica.models.tasks.Attribute
 import io.github.kakaocup.kakao.common.views.KView
 import io.github.kakaocup.kakao.screen.Screen
 import io.github.kakaocup.kakao.text.KButton
+import io.mockk.every
 import io.mockk.spyk
 import io.mockk.verify
+import io.reactivex.rxjava3.core.Flowable
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 
-class StatsScreen: Screen<StatsScreen>() {
-    val strengthStatsView = KView { withId(R.id.strengthStatsView)}
+class StatsScreen : Screen<StatsScreen>() {
+    val strengthStatsView = KView { withId(R.id.strengthStatsView) }
     val strengthAllocateButton = KButton {
         withId(R.id.allocateButton)
         isDescendantOfA { withId(R.id.strengthStatsView) }
     }
-    val intelligenceStatsView = KView { withId(R.id.intelligenceStatsView)}
+    val intelligenceStatsView = KView { withId(R.id.intelligenceStatsView) }
     val intelligenceAllocateButton = KButton {
         withId(R.id.allocateButton)
         isDescendantOfA { withId(R.id.intelligenceStatsView) }
     }
-    val constitutionStatsView = KView { withId(R.id.constitutionStatsView)}
+    val constitutionStatsView = KView { withId(R.id.constitutionStatsView) }
     val constitutionAllocateButton = KButton {
         withId(R.id.allocateButton)
         isDescendantOfA { withId(R.id.constitutionStatsView) }
     }
-    val perceptionStatsView = KView { withId(R.id.perceptionStatsView)}
+    val perceptionStatsView = KView { withId(R.id.perceptionStatsView) }
     val perceptionAllocateButton = KButton {
         withId(R.id.allocateButton)
         isDescendantOfA { withId(R.id.perceptionStatsView) }
@@ -41,27 +44,28 @@ class StatsScreen: Screen<StatsScreen>() {
 
 @LargeTest
 @RunWith(AndroidJUnit4::class)
-class StatsFragmentTest: FragmentTestCase<StatsFragment, FragmentStatsBinding, StatsScreen>() {
-
+class StatsFragmentTest : FragmentTestCase<StatsFragment, FragmentStatsBinding, StatsScreen>() {
 
     override val screen = StatsScreen()
 
     override fun makeFragment() {
-        scenario = launchFragmentInContainer(null, R.style.MainAppTheme) {
-            fragment = spyk()
-            fragment.shouldInitializeComponent = false
-            fragment.userRepository = userRepository
-            fragment.inventoryRepository = inventoryRepository
-            fragment.tutorialRepository = tutorialRepository
+        fragment = spyk()
+        fragment.shouldInitializeComponent = false
+    }
+
+    override fun launchFragment(args: Bundle?) {
+        scenario = launchFragmentInContainer(args, R.style.MainAppTheme) {
             return@launchFragmentInContainer fragment
         }
     }
 
     @Before
-    fun setUp() {
+    fun setUpUser() {
         user.stats?.lvl = 20
         user.stats?.points = 30
         userSubject.onNext(user)
+
+        every { inventoryRepository.getEquipment(listOf()) } returns Flowable.just(listOf())
     }
 
     @Test
@@ -92,13 +96,13 @@ class StatsFragmentTest: FragmentTestCase<StatsFragment, FragmentStatsBinding, S
     fun allocatesOnClick() {
         screen {
             strengthAllocateButton.click()
-            verify { userRepository.allocatePoint(Stats.STRENGTH) }
+            verify { userRepository.allocatePoint(Attribute.STRENGTH) }
             intelligenceAllocateButton.click()
-            verify { userRepository.allocatePoint(Stats.INTELLIGENCE) }
+            verify { userRepository.allocatePoint(Attribute.INTELLIGENCE) }
             constitutionAllocateButton.click()
-            verify { userRepository.allocatePoint(Stats.CONSTITUTION) }
+            verify { userRepository.allocatePoint(Attribute.CONSTITUTION) }
             perceptionAllocateButton.click()
-            verify { userRepository.allocatePoint(Stats.PERCEPTION) }
+            verify { userRepository.allocatePoint(Attribute.PERCEPTION) }
         }
     }
 }

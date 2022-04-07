@@ -2,9 +2,13 @@ package com.habitrpg.android.habitica.extensions
 
 import android.content.res.Resources
 import com.habitrpg.android.habitica.R
-import java.util.*
+import java.util.Calendar
+import java.util.Date
 import kotlin.math.round
-import kotlin.time.*
+import kotlin.time.Duration
+import kotlin.time.DurationUnit
+import kotlin.time.ExperimentalTime
+import kotlin.time.milliseconds
 
 class DateUtils {
 

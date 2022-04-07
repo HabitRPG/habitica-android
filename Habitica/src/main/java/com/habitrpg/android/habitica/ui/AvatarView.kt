@@ -1,7 +1,12 @@
 package com.habitrpg.android.habitica.ui
 
 import android.content.Context
-import android.graphics.*
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Matrix
+import android.graphics.PointF
+import android.graphics.Rect
+import android.graphics.RectF
 import android.graphics.drawable.Drawable
 import android.text.TextUtils
 import android.util.AttributeSet
@@ -20,7 +25,8 @@ import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.models.Avatar
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import io.reactivex.rxjava3.functions.Consumer
-import java.util.*
+import java.util.Date
+import java.util.EnumMap
 import java.util.concurrent.atomic.AtomicInteger
 
 class AvatarView : FrameLayout {

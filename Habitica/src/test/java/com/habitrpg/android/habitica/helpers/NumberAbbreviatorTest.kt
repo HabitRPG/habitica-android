@@ -8,10 +8,12 @@ import io.kotest.matchers.shouldBe
 import io.mockk.clearMocks
 import io.mockk.every
 import io.mockk.mockk
+import java.util.*
 
 class NumberAbbreviatorTest : StringSpec({
     val mockContext = mockk<Context>()
     beforeEach {
+        Locale.setDefault(Locale.US)
         every { mockContext.getString(R.string.thousand_abbrev) } returns "k"
         every { mockContext.getString(R.string.million_abbrev) } returns "m"
         every { mockContext.getString(R.string.billion_abbrev) } returns "b"

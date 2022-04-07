@@ -16,10 +16,14 @@ import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import io.reactivex.rxjava3.disposables.Disposable
-import java.util.*
+import java.util.Locale
 import kotlin.math.floor
 
-class AvatarWithBarsViewModel(private val context: Context, private val binding: AvatarWithBarsBinding, userRepository: UserRepository? = null) {
+class AvatarWithBarsViewModel(
+    private val context: Context,
+    private val binding: AvatarWithBarsBinding,
+    userRepository: UserRepository? = null
+) {
     private var userObject: Avatar? = null
 
     private var cachedMaxHealth: Int = 0
@@ -74,8 +78,8 @@ class AvatarWithBarsViewModel(private val context: Context, private val binding:
             binding.buffImageView.visibility = View.GONE
         }
 
-        binding.currencyView.gold = stats.gp ?: 0.0
         if (user is User) {
+            binding.currencyView.gold = stats.gp ?: 0.0
             binding.currencyView.hourglasses = user.hourglassCount.toDouble()
             binding.currencyView.gems = user.gemCount.toDouble()
         }
@@ -116,7 +120,13 @@ class AvatarWithBarsViewModel(private val context: Context, private val binding:
             textView.setCompoundDrawables(null, null, null, null)
         }
 
-        private fun setUserLevelWithClass(context: Context, textView: TextView, level: Int?, userClassString: String, habitClass: String?) {
+        private fun setUserLevelWithClass(
+            context: Context,
+            textView: TextView,
+            level: Int?,
+            userClassString: String,
+            habitClass: String?
+        ) {
             textView.text = context.getString(R.string.user_level_with_class, level, userClassString)
             textView.contentDescription = context.getString(R.string.user_level_with_class_unabbreviated, level, userClassString)
             var drawable: Drawable? = null

@@ -14,8 +14,6 @@ import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import io.reactivex.rxjava3.functions.Consumer
-import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -30,9 +28,8 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
     lateinit var analyticsManager: AnalyticsManager
 
     var tutorialStepIdentifier: String? = null
-    var tutorialText: String? = null
     protected var tutorialCanBeDeferred = true
-    var tutorialTexts: MutableList<String> = ArrayList()
+    var tutorialTexts: List<String> = ArrayList()
 
     protected var compositeSubscription: CompositeDisposable = CompositeDisposable()
 
@@ -55,7 +52,11 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
 
     abstract fun createBinding(inflater: LayoutInflater, container: ViewGroup?): VB
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         compositeSubscription = CompositeDisposable()
 
         binding = createBinding(inflater, container)
@@ -70,27 +71,22 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
     }
 
     private fun showTutorialIfNeeded() {
-        if (view != null) {
-            if (this.tutorialStepIdentifier != null) {
-                compositeSubscription.add(
-                    tutorialRepository.getTutorialStep(this.tutorialStepIdentifier ?: "").firstElement()
-                        .delay(1, TimeUnit.SECONDS)
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(
-                            Consumer { step ->
-                                if (step != null && step.isValid && step.isManaged && step.shouldDisplay()) {
-                                    val mainActivity = activity as? MainActivity ?: return@Consumer
-                                    if (tutorialText != null) {
-                                        mainActivity.displayTutorialStep(step, tutorialText ?: "", tutorialCanBeDeferred)
-                                    } else {
-                                        mainActivity.displayTutorialStep(step, tutorialTexts, tutorialCanBeDeferred)
-                                    }
-                                }
-                            },
-                            RxErrorHandler.handleEmptyError()
-                        )
-                )
-            }
+        tutorialStepIdentifier?.let { identifier ->
+            compositeSubscription.add(
+                tutorialRepository.getTutorialStep(identifier)
+                    .firstElement()
+                    .delay(1, TimeUnit.SECONDS)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                        { step ->
+                            if (step.isValid && step.isManaged && step.shouldDisplay) {
+                                val mainActivity = activity as? MainActivity ?: return@subscribe
+                                mainActivity.displayTutorialStep(step, tutorialTexts, tutorialCanBeDeferred)
+                            }
+                        },
+                        RxErrorHandler.handleEmptyError()
+                    )
+            )
         }
     }
 

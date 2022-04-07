@@ -11,10 +11,15 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ShopHeaderBinding
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.helpers.MainNavigationController
-import com.habitrpg.android.habitica.models.inventory.*
+import com.habitrpg.android.habitica.models.inventory.Animal
+import com.habitrpg.android.habitica.models.inventory.Egg
+import com.habitrpg.android.habitica.models.inventory.Food
+import com.habitrpg.android.habitica.models.inventory.HatchingPotion
+import com.habitrpg.android.habitica.models.inventory.Mount
+import com.habitrpg.android.habitica.models.inventory.Pet
+import com.habitrpg.android.habitica.models.inventory.StableSection
 import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.OwnedMount
-import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.fragments.inventory.stable.StableFragmentDirections
 import com.habitrpg.android.habitica.ui.helpers.loadImage
 import com.habitrpg.android.habitica.ui.viewHolders.MountViewHolder
@@ -31,7 +36,16 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var animalIngredientsRetriever: ((Animal, ((Pair<Egg?, HatchingPotion?>) -> Unit)) -> Unit)? = null
     private val feedEvents = PublishSubject.create<Pair<Pet, Food?>>()
     var itemType: String? = null
-    private var user: User? = null
+    var currentPet: String? = null
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
+    var currentMount: String? = null
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
     private val equipEvents = PublishSubject.create<String>()
     private var existingMounts: List<Mount>? = null
     private var ownedMounts: Map<String, OwnedMount>? = null
@@ -41,11 +55,6 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     fun getEquipFlowable(): Flowable<String> {
         return equipEvents.toFlowable(BackpressureStrategy.DROP)
-    }
-
-    fun setUser(user: User) {
-        this.user = user
-        notifyDataSetChanged()
     }
 
     private fun canRaiseToMount(pet: Pet): Boolean {
@@ -73,7 +82,7 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     fun setOwnedItems(ownedItems: Map<String, OwnedItem>) {
         this.ownedItems = ownedItems
-        ownsSaddles = if (ownedItems.containsKey("Saddle-food")) (ownedItems["Saddle-food"]?.numberOwned ?: 0)> 0 else false
+        ownsSaddles = if (ownedItems.containsKey("Saddle-food")) (ownedItems["Saddle-food"]?.numberOwned ?: 0) > 0 else false
         notifyDataSetChanged()
     }
 
@@ -122,10 +131,10 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                             hasUnlockedEgg = ownedItems?.get(item.animal + "-eggs") != null,
                             hasUnlockedPotion = ownedItems?.get(item.color + "-hatchingPotions") != null,
                             hasMount = ownedMounts?.containsKey(item.key) == true,
-                            user = user
+                            currentPet = currentPet
                         )
                     } else if (item is Mount) {
-                        (holder as? MountViewHolder)?.bind(item, item.numberOwned > 0, user)
+                        (holder as? MountViewHolder)?.bind(item, item.numberOwned > 0, currentMount)
                     }
                     return
                 }
@@ -223,6 +232,8 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 this.ownedTextView.background = ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_animalitem_complete)
                 this.ownedTextView.setTextColor(ContextCompat.getColor(context, R.color.white))
             }
+
+            itemView.contentDescription = "${titleView.text} ${ownedTextView.text}"
         }
 
         override fun onClick(v: View) {

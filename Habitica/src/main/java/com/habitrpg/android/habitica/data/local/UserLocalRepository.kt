@@ -1,6 +1,10 @@
 package com.habitrpg.android.habitica.data.local
 
-import com.habitrpg.android.habitica.models.*
+import com.habitrpg.android.habitica.models.Achievement
+import com.habitrpg.android.habitica.models.QuestAchievement
+import com.habitrpg.android.habitica.models.Skill
+import com.habitrpg.android.habitica.models.TeamPlan
+import com.habitrpg.android.habitica.models.TutorialStep
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.models.user.User

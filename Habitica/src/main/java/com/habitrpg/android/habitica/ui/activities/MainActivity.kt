@@ -7,15 +7,15 @@ import android.content.ComponentName
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Configuration
-import android.graphics.Bitmap
-import android.graphics.Canvas
 import android.os.Build
 import android.os.Bundle
-import android.view.*
-import android.widget.FrameLayout
-import android.widget.ImageView
+import android.view.KeyEvent
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.core.view.children
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
@@ -23,20 +23,28 @@ import androidx.navigation.fragment.NavHostFragment
 import com.google.firebase.perf.FirebasePerformance
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
-import com.habitrpg.android.habitica.data.*
+import com.habitrpg.android.habitica.data.ApiClient
+import com.habitrpg.android.habitica.data.InventoryRepository
+import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.local.UserQuestStatus
 import com.habitrpg.android.habitica.databinding.ActivityMainBinding
 import com.habitrpg.android.habitica.databinding.DialogFaintBinding
-import com.habitrpg.android.habitica.extensions.*
-import com.habitrpg.android.habitica.helpers.*
+import com.habitrpg.android.habitica.extensions.dpToPx
+import com.habitrpg.android.habitica.extensions.getThemeColor
+import com.habitrpg.android.habitica.extensions.hideKeyboard
+import com.habitrpg.android.habitica.extensions.isUsingNightModeResources
+import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
+import com.habitrpg.android.habitica.extensions.updateStatusBarColor
+import com.habitrpg.android.habitica.helpers.AmplitudeManager
+import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.MainNavigationController
+import com.habitrpg.android.habitica.helpers.NotificationOpenHandler
+import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.SoundManager
 import com.habitrpg.android.habitica.interactors.CheckClassSelectionUseCase
 import com.habitrpg.android.habitica.interactors.DisplayItemDropUseCase
 import com.habitrpg.android.habitica.interactors.NotifyUserUseCase
 import com.habitrpg.android.habitica.models.TutorialStep
-import com.habitrpg.android.habitica.models.inventory.Egg
-import com.habitrpg.android.habitica.models.inventory.Food
-import com.habitrpg.android.habitica.models.inventory.HatchingPotion
-import com.habitrpg.android.habitica.models.inventory.Pet
 import com.habitrpg.android.habitica.models.responses.MaintenanceResponse
 import com.habitrpg.android.habitica.models.responses.TaskScoringResult
 import com.habitrpg.android.habitica.models.user.User
@@ -44,12 +52,12 @@ import com.habitrpg.android.habitica.ui.AvatarView
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel
 import com.habitrpg.android.habitica.ui.TutorialView
 import com.habitrpg.android.habitica.ui.fragments.NavigationDrawerFragment
-import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.viewmodels.MainActivityViewModel
 import com.habitrpg.android.habitica.ui.viewmodels.NotificationsViewModel
-import com.habitrpg.android.habitica.ui.views.*
-import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.SnackbarDisplayType
-import com.habitrpg.android.habitica.ui.views.dialogs.*
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
+import com.habitrpg.android.habitica.ui.views.SnackbarActivity
+import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
+import com.habitrpg.android.habitica.ui.views.dialogs.QuestCompletedDialog
 import com.habitrpg.android.habitica.ui.views.yesterdailies.YesterdailyDialog
 import com.habitrpg.android.habitica.widget.AvatarStatsWidgetProvider
 import com.habitrpg.android.habitica.widget.DailiesWidgetProvider
@@ -57,11 +65,10 @@ import com.habitrpg.android.habitica.widget.HabitButtonWidgetProvider
 import com.habitrpg.android.habitica.widget.TodoListWidgetProvider
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
-import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction, SnackbarActivity {
+open class MainActivity : BaseActivity(), SnackbarActivity {
     private var launchScreen: String? = null
 
     @Inject
@@ -91,7 +98,6 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction, Snack
     val viewModel: MainActivityViewModel by viewModels()
     private var faintDialog: HabiticaAlertDialog? = null
     private var sideAvatarView: AvatarView? = null
-    private var activeTutorialView: TutorialView? = null
     private var drawerFragment: NavigationDrawerFragment? = null
     var drawerToggle: ActionBarDrawerToggle? = null
     private var resumeFromActivity = false
@@ -273,7 +279,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction, Snack
         navigationController.addOnDestinationChangedListener { _, destination, arguments -> updateToolbarTitle(destination, arguments) }
 
         if (launchScreen == "/party") {
-            if (viewModel.isUserInParty) {
+            if (viewModel.userViewModel.isUserInParty) {
                 MainNavigationController.navigate(R.id.partyFragment)
             }
         }
@@ -379,13 +385,17 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction, Snack
             if (user.flags?.welcomed == false) {
                 viewModel.updateUser("flags.welcomed", true)
             }
+
+            val title = binding.toolbarTitle.text
+            if (title.isBlank()) {
+                viewModel.getToolbarTitle(0, null, null) { newTitle ->
+                    this.title = newTitle
+                }
+            }
         }
     }
 
     override fun onBackPressed() {
-        if (this.activeTutorialView != null) {
-            this.removeActiveTutorialView()
-        }
         if (drawerFragment?.isDrawerOpen == true) {
             drawerFragment?.closeDrawer()
         } else {
@@ -430,7 +440,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction, Snack
     }
 
     private fun displayDeathDialogIfNeeded() {
-        if (!viewModel.isUserFainted) {
+        if (!viewModel.userViewModel.isUserFainted) {
             return
         }
 
@@ -465,46 +475,17 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction, Snack
         viewModel.retrieveUser(forced)
     }
 
-    fun displayTutorialStep(step: TutorialStep, text: String, canBeDeferred: Boolean) {
-        removeActiveTutorialView()
-        val view = TutorialView(this, step, this)
-        this.activeTutorialView = view
-        view.setTutorialText(text)
-        view.onReaction = this
-        view.setCanBeDeferred(canBeDeferred)
-        binding.overlayFrameLayout.addView(view)
-        viewModel.logTutorialStatus(step, false)
-    }
-
     fun displayTutorialStep(step: TutorialStep, texts: List<String>, canBeDeferred: Boolean) {
-        removeActiveTutorialView()
-        val view = TutorialView(this, step, this)
-        this.activeTutorialView = view
+        val view = TutorialView(this, step, viewModel)
         view.setTutorialTexts(texts)
-        view.onReaction = this
         view.setCanBeDeferred(canBeDeferred)
+        binding.overlayFrameLayout.children.forEach {
+            if (it is TutorialView) {
+                binding.overlayFrameLayout.removeView(it)
+            }
+        }
         binding.overlayFrameLayout.addView(view)
         viewModel.logTutorialStatus(step, false)
-    }
-
-
-    override fun onTutorialCompleted(step: TutorialStep) {
-        viewModel.updateUser("flags.tutorial." + step.tutorialGroup + "." + step.identifier, true)
-        binding.overlayFrameLayout.removeView(this.activeTutorialView)
-        this.removeActiveTutorialView()
-        viewModel.logTutorialStatus(step, true)
-    }
-
-    override fun onTutorialDeferred(step: TutorialStep) {
-        taskRepository.modify(step) { it.displayedOn = Date() }
-        this.removeActiveTutorialView()
-    }
-
-    private fun removeActiveTutorialView() {
-        if (this.activeTutorialView != null) {
-            binding.overlayFrameLayout.removeView(this.activeTutorialView)
-            this.activeTutorialView = null
-        }
     }
 
     private fun checkMaintenance() {
@@ -529,7 +510,10 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction, Snack
         }
     }
 
-    private fun createMaintenanceIntent(maintenanceResponse: MaintenanceResponse, isDeprecationNotice: Boolean): Intent {
+    private fun createMaintenanceIntent(
+        maintenanceResponse: MaintenanceResponse,
+        isDeprecationNotice: Boolean
+    ): Intent {
         val intent = Intent(this, MaintenanceActivity::class.java)
         val data = Bundle()
         data.putString("title", maintenanceResponse.title)

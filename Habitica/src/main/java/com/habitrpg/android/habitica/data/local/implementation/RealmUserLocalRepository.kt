@@ -2,7 +2,12 @@ package com.habitrpg.android.habitica.data.local.implementation
 
 import com.habitrpg.android.habitica.data.local.UserLocalRepository
 import com.habitrpg.android.habitica.data.local.UserQuestStatus
-import com.habitrpg.android.habitica.models.*
+import com.habitrpg.android.habitica.models.Achievement
+import com.habitrpg.android.habitica.models.QuestAchievement
+import com.habitrpg.android.habitica.models.Skill
+import com.habitrpg.android.habitica.models.Tag
+import com.habitrpg.android.habitica.models.TeamPlan
+import com.habitrpg.android.habitica.models.TutorialStep
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.models.user.User
@@ -146,22 +151,10 @@ class RealmUserLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
     override fun getSpecialItems(user: User): Flowable<out List<Skill>> {
         val specialItems = user.items?.special
         val ownedItems = ArrayList<String>()
-        if (specialItems != null) {
-            if (specialItems.snowball > 0) {
-                ownedItems.add("snowball")
+        for (key in listOf("snowball", "shinySeed", "seafoam", "spookySparkles")) {
+            if (specialItems?.firstOrNull() { it.key == key }?.numberOwned ?: 0 > 0) {
+                ownedItems.add(key)
             }
-            if (specialItems.shinySeed > 0) {
-                ownedItems.add("shinySeed")
-            }
-            if (specialItems.seafoam > 0) {
-                ownedItems.add("seafoam")
-            }
-            if (specialItems.spookySparkles > 0) {
-                ownedItems.add("spookySparkles")
-            }
-        }
-        if (ownedItems.size == 0) {
-            ownedItems.add("")
         }
         return RxJavaBridge.toV3Flowable(
             realm.where(Skill::class.java)

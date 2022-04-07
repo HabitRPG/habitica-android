@@ -13,7 +13,11 @@ import com.habitrpg.android.habitica.models.tasks.TasksOrder
 import io.reactivex.rxjava3.core.Flowable
 import retrofit2.HttpException
 
-class ChallengeRepositoryImpl(localRepository: ChallengeLocalRepository, apiClient: ApiClient, userID: String) : BaseRepositoryImpl<ChallengeLocalRepository>(localRepository, apiClient, userID), ChallengeRepository {
+class ChallengeRepositoryImpl(
+    localRepository: ChallengeLocalRepository,
+    apiClient: ApiClient,
+    userID: String
+) : BaseRepositoryImpl<ChallengeLocalRepository>(localRepository, apiClient, userID), ChallengeRepository {
 
     override fun isChallengeMember(challengeID: String): Flowable<Boolean> {
         return localRepository.isChallengeMember(userID, challengeID)

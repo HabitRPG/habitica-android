@@ -2,11 +2,16 @@ package com.habitrpg.android.habitica.ui.viewHolders.tasks
 
 import android.content.Context
 import android.text.TextUtils
+import android.text.method.LinkMovementMethod
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
-import androidx.appcompat.widget.AppCompatImageView
+import android.widget.Button
+import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.dpToPx
@@ -14,7 +19,8 @@ import com.habitrpg.android.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.responses.TaskDirection
 import com.habitrpg.android.habitica.models.tasks.Task
-import com.habitrpg.android.habitica.ui.helpers.*
+import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
+import com.habitrpg.android.habitica.ui.helpers.setParsedMarkdown
 import com.habitrpg.android.habitica.ui.viewHolders.BindableViewHolder
 import com.habitrpg.android.habitica.ui.views.EllipsisTextView
 import io.noties.markwon.utils.NoCopySpannableFactory
@@ -26,7 +32,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc: ((Task, TaskDirection) -> Unit), var openTaskFunc: ((Pair<Task, View>) -> Unit), var brokenTaskFunc: ((Task) -> Unit)) : BindableViewHolder<Task>(itemView), View.OnTouchListener {
+abstract class BaseTaskViewHolder constructor(
+    itemView: View,
+    var scoreTaskFunc: ((Task, TaskDirection) -> Unit),
+    var openTaskFunc: ((Pair<Task, View>) -> Unit),
+    var brokenTaskFunc: ((Task) -> Unit)
+) : BindableViewHolder<Task>(itemView), View.OnTouchListener {
     var task: Task? = null
     var movingFromPosition: Int? = null
     var errorButtonClicked: Action? = null
@@ -38,7 +49,7 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
     protected val calendarIconView: ImageView? = itemView.findViewById(R.id.iconViewCalendar)
     protected val iconViewTeam: ImageView? = itemView.findViewById(R.id.iconViewTeamTask)
     protected val specialTaskTextView: TextView? = itemView.findViewById(R.id.specialTaskText)
-    private val iconViewChallenge: AppCompatImageView? = itemView.findViewById(R.id.iconviewChallenge)
+    private val iconViewChallenge: ImageView? = itemView.findViewById(R.id.iconviewChallenge)
     private val iconViewReminder: ImageView? = itemView.findViewById(R.id.iconviewReminder)
     private val taskIconWrapper: LinearLayout? = itemView.findViewById(R.id.taskIconWrapper)
     private val approvalRequiredTextView: TextView? = itemView.findViewById(R.id.approvalRequiredTextField)
@@ -88,9 +99,8 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
         notesTextView?.setOnClickListener { onTouch(it, null) }
         errorIconView?.setOnClickListener { errorButtonClicked?.run() }
 
-        // Re enable when we find a way to only react when a link is tapped.
-        // notesTextView.movementMethod = LinkMovementMethod.getInstance()
-        // titleTextView.movementMethod = LinkMovementMethod.getInstance()
+        notesTextView?.movementMethod = LinkMovementMethod.getInstance()
+        titleTextView.movementMethod = LinkMovementMethod.getInstance()
 
         expandNotesButton?.setOnClickListener { expandTask() }
         iconViewChallenge?.setOnClickListener {

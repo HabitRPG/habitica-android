@@ -2,8 +2,12 @@ package com.habitrpg.android.habitica.ui.viewHolders.tasks
 
 import android.content.Context
 import android.graphics.PorterDuff
-import android.view.*
-import android.widget.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -21,7 +25,13 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.schedulers.Schedulers
 
-abstract class ChecklistedViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> Unit), var scoreChecklistItemFunc: ((Task, ChecklistItem) -> Unit), openTaskFunc: ((Pair<Task, View>) -> Unit), brokenTaskFunc: ((Task) -> Unit)) : BaseTaskViewHolder(itemView, scoreTaskFunc, openTaskFunc, brokenTaskFunc) {
+abstract class ChecklistedViewHolder(
+    itemView: View,
+    scoreTaskFunc: ((Task, TaskDirection) -> Unit),
+    var scoreChecklistItemFunc: ((Task, ChecklistItem) -> Unit),
+    openTaskFunc: ((Pair<Task, View>) -> Unit),
+    brokenTaskFunc: ((Task) -> Unit)
+) : BaseTaskViewHolder(itemView, scoreTaskFunc, openTaskFunc, brokenTaskFunc) {
 
     private val checkboxHolder: ViewGroup = itemView.findViewById(R.id.checkBoxHolder)
     private val checkmarkView: ImageView = itemView.findViewById(R.id.checkmark)

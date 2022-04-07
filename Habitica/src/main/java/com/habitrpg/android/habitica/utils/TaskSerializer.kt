@@ -18,7 +18,6 @@ import com.habitrpg.android.habitica.models.tasks.TaskGroupPlan
 import com.habitrpg.android.habitica.models.tasks.TaskType
 import io.realm.RealmList
 import java.lang.reflect.Type
-import java.util.ArrayList
 import java.util.Date
 
 class TaskSerializer : JsonSerializer<Task>, JsonDeserializer<Task> {
@@ -45,7 +44,11 @@ class TaskSerializer : JsonSerializer<Task>, JsonDeserializer<Task> {
         }
     }
 
-    override fun deserialize(json: JsonElement?, typeOfT: Type?, context: JsonDeserializationContext): Task {
+    override fun deserialize(
+        json: JsonElement?,
+        typeOfT: Type?,
+        context: JsonDeserializationContext
+    ): Task {
         val task = Task()
         val obj = json as? JsonObject ?: return task
         task.text = obj.getAsString("text")

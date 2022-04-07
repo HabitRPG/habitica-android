@@ -22,7 +22,11 @@ class PromoWebFragment : BaseMainFragment<FragmentNewsBinding>() {
         return FragmentNewsBinding.inflate(inflater, container, false)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         this.hidesToolbar = true
         return super.onCreateView(inflater, container, savedInstanceState)
     }

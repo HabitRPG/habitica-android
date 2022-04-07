@@ -15,8 +15,8 @@ import coil.request.ImageRequest
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.setTintWith
 import com.habitrpg.android.habitica.helpers.AppConfigManager
-import java.util.*
-import kotlin.collections.HashMap
+import java.util.Collections
+import java.util.Date
 
 fun ImageView.loadImage(imageName: String?, imageFormat: String? = null) {
     DataBindingUtils.loadImage(this, imageName, imageFormat)
@@ -43,7 +43,12 @@ object DataBindingUtils {
         loadImage(context, imageName, null, imageResult)
     }
 
-    fun loadImage(context: Context, imageName: String, imageFormat: String?, imageResult: (Drawable) -> Unit) {
+    fun loadImage(
+        context: Context,
+        imageName: String,
+        imageFormat: String?,
+        imageResult: (Drawable) -> Unit
+    ) {
         val request = ImageRequest.Builder(context)
             .data(BASE_IMAGE_URL + getFullFilename(imageName, imageFormat))
             .target {
@@ -137,6 +142,8 @@ object DataBindingUtils {
         tempMap["Pet-HatchingPotion_Windup"] = "gif"
         tempMap["Pet_HatchingPotion_Windup"] = "gif"
         tempMap["quest_solarSystem"] = "gif"
+        tempMap["quest_virtualpet"] = "gif"
+        tempMap["Pet_HatchingPotion_VirtualPet"] = "gif"
         FILEFORMAT_MAP = Collections.unmodifiableMap(tempMap)
 
         val tempNameMap = HashMap<String, String>()

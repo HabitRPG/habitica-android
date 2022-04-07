@@ -40,7 +40,11 @@ class DateDeserializer : JsonDeserializer<Date>, JsonSerializer<Date> {
 
     @Synchronized
     @Suppress("ReturnCount")
-    override fun deserialize(jsonElement: JsonElement, type: Type, jsonDeserializationContext: JsonDeserializationContext): Date? {
+    override fun deserialize(
+        jsonElement: JsonElement,
+        type: Type,
+        jsonDeserializationContext: JsonDeserializationContext
+    ): Date? {
         var element = jsonElement
         if (element.isJsonArray) {
             if (element.asJsonArray.size() == 0) {

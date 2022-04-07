@@ -21,7 +21,7 @@ import com.habitrpg.android.habitica.ui.activities.SetupActivity
 import com.habitrpg.android.habitica.ui.adapter.setup.CustomizationSetupAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.views.setup.AvatarCategoryView
-import java.util.*
+import java.util.Random
 import javax.inject.Inject
 
 class AvatarSetupFragment : BaseFragment<FragmentSetupAvatarBinding>() {
@@ -57,7 +57,7 @@ class AvatarSetupFragment : BaseFragment<FragmentSetupAvatarBinding>() {
         this.adapter = CustomizationSetupAdapter()
         this.adapter?.userSize = this.user?.preferences?.size ?: "slim"
         adapter?.updateUserEvents?.flatMap { userRepository.updateUser(it) }?.subscribeWithErrorHandler {}?.let { compositeSubscription.add(it) }
-        adapter?.equipGearEvents?.flatMap { inventoryRepository.equip(user, "equipped", it) }?.subscribeWithErrorHandler {}?.let { compositeSubscription.add(it) }
+        adapter?.equipGearEvents?.flatMap { inventoryRepository.equip("equipped", it) }?.subscribeWithErrorHandler {}?.let { compositeSubscription.add(it) }
 
         this.adapter?.user = this.user
         val layoutManager = LinearLayoutManager(activity)

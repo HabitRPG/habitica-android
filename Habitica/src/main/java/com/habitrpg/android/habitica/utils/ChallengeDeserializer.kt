@@ -94,7 +94,11 @@ class ChallengeDeserializer : JsonDeserializer<Challenge>, JsonSerializer<Challe
         return challenge
     }
 
-    private fun getTaskArrayAsString(context: JsonDeserializationContext, tasksOrderObj: JsonObject, taskType: String): String {
+    private fun getTaskArrayAsString(
+        context: JsonDeserializationContext,
+        tasksOrderObj: JsonObject,
+        taskType: String
+    ): String {
 
         if (tasksOrderObj.has(taskType)) {
             val jsonElement = tasksOrderObj.get(taskType)

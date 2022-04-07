@@ -70,7 +70,7 @@ class GiftBalanceGemsFragment : BaseFragment<FragmentGiftGemBalanceBinding>() {
                         }
                         .subscribe(
                             {
-                            activity?.finish()
+                                activity?.finish()
                             }, RxErrorHandler.handleEmptyError()
                         )
                 )

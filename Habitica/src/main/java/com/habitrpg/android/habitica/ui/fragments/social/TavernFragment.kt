@@ -1,7 +1,12 @@
 package com.habitrpg.android.habitica.ui.fragments.social
 
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -37,7 +42,7 @@ class TavernFragment : BaseMainFragment<FragmentViewpagerBinding>() {
         this.usesTabLayout = true
         this.hidesToolbar = true
         this.tutorialStepIdentifier = "tavern"
-        this.tutorialText = getString(R.string.tutorial_tavern)
+        this.tutorialTexts = listOf(getString(R.string.tutorial_tavern))
 
         return super.onCreateView(inflater, container, savedInstanceState)
     }

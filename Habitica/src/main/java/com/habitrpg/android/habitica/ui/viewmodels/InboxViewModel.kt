@@ -20,11 +20,11 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.subjects.BehaviorSubject
+import javax.inject.Inject
+import kotlin.math.ceil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import javax.inject.Inject
-import kotlin.math.ceil
 
 class InboxViewModel(recipientID: String?, recipientUsername: String?) : BaseViewModel() {
     @Inject
@@ -89,7 +89,11 @@ class InboxViewModel(recipientID: String?, recipientUsername: String?) : BaseVie
     }
 }
 
-class MessagesDataSource(val socialRepository: SocialRepository, var recipientID: String?, var footer: ChatMessage?) :
+class MessagesDataSource(
+    val socialRepository: SocialRepository,
+    var recipientID: String?,
+    var footer: ChatMessage?
+) :
     PositionalDataSource<ChatMessage>() {
     private var lastFetchWasEnd = false
     override fun loadRange(params: LoadRangeParams, callback: LoadRangeCallback<ChatMessage>) {
@@ -146,7 +150,11 @@ class MessagesDataSource(val socialRepository: SocialRepository, var recipientID
     }
 }
 
-class MessagesDataSourceFactory(val socialRepository: SocialRepository, var recipientID: String?, val footer: ChatMessage?) :
+class MessagesDataSourceFactory(
+    val socialRepository: SocialRepository,
+    var recipientID: String?,
+    val footer: ChatMessage?
+) :
     DataSource.Factory<Int, ChatMessage>() {
     val sourceLiveData = MutableLiveData<MessagesDataSource>()
     var latestSource: MessagesDataSource = MessagesDataSource(socialRepository, recipientID, footer)
@@ -163,7 +171,10 @@ class MessagesDataSourceFactory(val socialRepository: SocialRepository, var reci
     }
 }
 
-class InboxViewModelFactory(private val recipientID: String?, private val recipientUsername: String?) : ViewModelProvider.Factory {
+class InboxViewModelFactory(
+    private val recipientID: String?,
+    private val recipientUsername: String?
+) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return InboxViewModel(recipientID, recipientUsername) as T

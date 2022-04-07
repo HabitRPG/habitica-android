@@ -7,8 +7,9 @@ import android.net.Uri
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.method.LinkMovementMethod
+import android.text.util.Linkify
 import android.widget.TextView
-import com.habitrpg.android.habitica.BuildConfig
+import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.handleUrlClicks
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import io.noties.markwon.AbstractMarkwonPlugin
@@ -21,6 +22,7 @@ import io.noties.markwon.image.ImageSizeResolverDef
 import io.noties.markwon.image.ImagesPlugin
 import io.noties.markwon.image.file.FileSchemeHandler
 import io.noties.markwon.image.network.OkHttpNetworkSchemeHandler
+import io.noties.markwon.linkify.LinkifyPlugin
 import io.noties.markwon.movement.MovementMethodPlugin
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Single
@@ -42,6 +44,7 @@ object MarkdownParser {
             )
             .usePlugin(this.createImageSizeResolverScaleDpiPlugin(context))
             .usePlugin(MovementMethodPlugin.create(LinkMovementMethod.getInstance()))
+            .usePlugin(LinkifyPlugin.create(Linkify.WEB_URLS))
             .build()
     }
 
@@ -52,7 +55,12 @@ object MarkdownParser {
         return object : AbstractMarkwonPlugin() {
             override fun configureConfiguration(builder: MarkwonConfiguration.Builder) {
                 builder.imageSizeResolver(object : ImageSizeResolverDef() {
-                    override fun resolveImageSize(imageSize: ImageSize?, imageBounds: Rect, canvasWidth: Int, textSize: Float): Rect {
+                    override fun resolveImageSize(
+                        imageSize: ImageSize?,
+                        imageBounds: Rect,
+                        canvasWidth: Int,
+                        textSize: Float
+                    ): Rect {
                         val dpi = context.resources.displayMetrics.density
                         var width = imageBounds.width()
                         if (dpi > 1) {
@@ -126,7 +134,7 @@ fun TextView.setParsedMarkdown(input: Spanned?) {
 
 private fun handleUrlClicks(context: Context, url: String) {
     val webpage = if (url.startsWith("/")) {
-        Uri.parse("${BuildConfig.BASE_URL}$url")
+        Uri.parse("${context.getString(R.string.base_url)}$url")
     } else {
         Uri.parse(url)
     }

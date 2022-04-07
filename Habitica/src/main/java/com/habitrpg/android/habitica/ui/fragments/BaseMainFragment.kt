@@ -1,9 +1,13 @@
 package com.habitrpg.android.habitica.ui.fragments
 
-import android.content.Context
 import android.graphics.PorterDuff
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.appbar.AppBarLayout
@@ -13,9 +17,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.getThemeColor
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.SoundManager
-import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.helpers.ToolbarColorHelper
 import javax.inject.Inject
@@ -39,23 +41,12 @@ abstract class BaseMainFragment<VB : ViewBinding> : BaseFragment<VB>() {
     var usesTabLayout: Boolean = false
     var hidesToolbar: Boolean = false
     var usesBottomNavigation = false
-    open var user: User? = null
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-
-        if (activity is MainActivity) {
-            user = activity?.viewModel?.user?.value
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        compositeSubscription.add(userRepository.getUser().subscribe({ user = it }, RxErrorHandler.handleEmptyError()))
-
         if (this.usesBottomNavigation) {
             bottomNavigation?.visibility = View.VISIBLE
         } else {

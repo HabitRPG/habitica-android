@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import androidx.fragment.app.Fragment
-import com.android.billingclient.api.Purchase
 import com.android.billingclient.api.SkuDetails
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
@@ -24,18 +23,17 @@ import com.habitrpg.android.habitica.helpers.PurchaseHandler
 import com.habitrpg.android.habitica.helpers.PurchaseTypes
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.User
-import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import com.habitrpg.android.habitica.ui.activities.GiftSubscriptionActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.fragments.PromoInfoFragment
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView
+import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
 
 class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
 
@@ -59,7 +57,6 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
 
     private var user: User? = null
     private var hasLoadedSubscriptionOptions: Boolean = false
-    private var purchasedSubscription: Purchase? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -133,7 +130,7 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
                 for (sku in subscriptions) {
                     updateButtonLabel(sku, sku.price)
                 }
-                subscriptions.firstOrNull()?.let { selectSubscription(it) }
+                subscriptions.minByOrNull { it.priceAmountMicros }?.let { selectSubscription(it) }
                 hasLoadedSubscriptionOptions = true
                 updateSubscriptionInfo()
             }
@@ -229,15 +226,18 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
     }
 
     private fun checkIfNeedsCancellation() {
-        if (user?.purchased?.plan?.paymentMethod == "Google" &&
-            user?.purchased?.plan?.isActive == true &&
-            user?.purchased?.plan?.dateTerminated == null &&
-            (purchasedSubscription?.isAutoRenewing == false || purchasedSubscription == null)
-        ) {
-            compositeSubscription.add(
-                purchaseHandler.cancelSubscription()
-                    .subscribe({ }, RxErrorHandler.handleEmptyError())
-            )
+        CoroutineScope(Dispatchers.IO).launch {
+            val newestSubscription = purchaseHandler.checkForSubscription()
+            if (user?.purchased?.plan?.paymentMethod == "Google" &&
+                user?.purchased?.plan?.isActive == true &&
+                user?.purchased?.plan?.dateTerminated == null &&
+                (newestSubscription?.isAutoRenewing == false)
+            ) {
+                compositeSubscription.add(
+                    purchaseHandler.cancelSubscription()
+                        .subscribe({ }, RxErrorHandler.handleEmptyError())
+                )
+            }
         }
     }
 

@@ -15,8 +15,6 @@ import com.habitrpg.android.habitica.ui.activities.MainActivity
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.functions.Consumer
-import java.util.ArrayList
-import java.util.HashMap
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -29,7 +27,6 @@ abstract class BaseDialogFragment<VB : ViewBinding> : DialogFragment() {
     lateinit var tutorialRepository: TutorialRepository
 
     var tutorialStepIdentifier: String? = null
-    var tutorialText: String? = null
     protected var tutorialCanBeDeferred = true
     var tutorialTexts: MutableList<String> = ArrayList()
 
@@ -47,7 +44,11 @@ abstract class BaseDialogFragment<VB : ViewBinding> : DialogFragment() {
 
     abstract fun createBinding(inflater: LayoutInflater, container: ViewGroup?): VB
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         compositeSubscription = CompositeDisposable()
 
         val additionalData = HashMap<String, Any>()
@@ -74,13 +75,9 @@ abstract class BaseDialogFragment<VB : ViewBinding> : DialogFragment() {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(
                             Consumer { step ->
-                                if (step != null && step.isValid && step.isManaged && step.shouldDisplay()) {
+                                if (step.isValid && step.isManaged && step.shouldDisplay) {
                                     val mainActivity = activity as? MainActivity ?: return@Consumer
-                                    if (tutorialText != null) {
-                                        mainActivity.displayTutorialStep(step, tutorialText ?: "", tutorialCanBeDeferred)
-                                    } else {
-                                        mainActivity.displayTutorialStep(step, tutorialTexts, tutorialCanBeDeferred)
-                                    }
+                                    mainActivity.displayTutorialStep(step, tutorialTexts, tutorialCanBeDeferred)
                                 }
                             },
                             RxErrorHandler.handleEmptyError()

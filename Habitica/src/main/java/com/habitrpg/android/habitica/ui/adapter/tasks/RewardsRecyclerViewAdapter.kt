@@ -17,7 +17,10 @@ import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.subjects.PublishSubject
 
-class RewardsRecyclerViewAdapter(private var customRewards: List<Task>?, private val layoutResource: Int) : BaseRecyclerViewAdapter<Task, RecyclerView.ViewHolder>(), TaskRecyclerViewAdapter {
+class RewardsRecyclerViewAdapter(
+    private var customRewards: List<Task>?,
+    private val layoutResource: Int
+) : BaseRecyclerViewAdapter<Task, RecyclerView.ViewHolder>(), TaskRecyclerViewAdapter {
     override var user: User? = null
         set(value) {
             if (field?.versionNumber == value?.versionNumber) {

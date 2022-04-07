@@ -9,10 +9,8 @@ import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.edit
-import androidx.core.util.Pair
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.NO_POSITION
@@ -26,7 +24,13 @@ import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBind
 import com.habitrpg.android.habitica.extensions.observeOnce
 import com.habitrpg.android.habitica.extensions.setScaledPadding
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
-import com.habitrpg.android.habitica.helpers.*
+import com.habitrpg.android.habitica.helpers.AmplitudeManager
+import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.HapticFeedbackManager
+import com.habitrpg.android.habitica.helpers.MainNavigationController
+import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.SoundManager
+import com.habitrpg.android.habitica.helpers.TaskFilterHelper
 import com.habitrpg.android.habitica.models.responses.TaskDirection
 import com.habitrpg.android.habitica.models.responses.TaskScoringResult
 import com.habitrpg.android.habitica.models.tasks.Task
@@ -34,7 +38,11 @@ import com.habitrpg.android.habitica.models.tasks.TaskType
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.activities.TaskFormActivity
 import com.habitrpg.android.habitica.ui.adapter.BaseRecyclerViewAdapter
-import com.habitrpg.android.habitica.ui.adapter.tasks.*
+import com.habitrpg.android.habitica.ui.adapter.tasks.DailiesRecyclerViewHolder
+import com.habitrpg.android.habitica.ui.adapter.tasks.HabitsRecyclerViewAdapter
+import com.habitrpg.android.habitica.ui.adapter.tasks.RewardsRecyclerViewAdapter
+import com.habitrpg.android.habitica.ui.adapter.tasks.TaskRecyclerViewAdapter
+import com.habitrpg.android.habitica.ui.adapter.tasks.TodosRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.helpers.EmptyItem
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
@@ -44,7 +52,7 @@ import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import java.util.*
+import java.util.Date
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -208,7 +216,11 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
                 binding?.refreshLayout?.isEnabled = false
             }
 
-            override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
                 recyclerAdapter?.notifyItemMoved(viewHolder.absoluteAdapterPosition, target.absoluteAdapterPosition)
                 return true
             }
@@ -216,7 +228,10 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) { /* no-on */ }
 
             // defines the enabled move directions in each state (idle, swiping, dragging).
-            override fun getMovementFlags(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int {
+            override fun getMovementFlags(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder
+            ): Int {
                 return if (recyclerAdapter?.getItemViewType(viewHolder.absoluteAdapterPosition) ?: 0 != 0) {
                     makeFlag(ItemTouchHelper.ACTION_STATE_IDLE, 0)
                 } else {
@@ -244,7 +259,10 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
                 }
             }
 
-            private fun updateTaskInRepository(validTaskId: String?, viewHolder: RecyclerView.ViewHolder) {
+            private fun updateTaskInRepository(
+                validTaskId: String?,
+                viewHolder: RecyclerView.ViewHolder
+            ) {
                 if (validTaskId != null) {
                     var newPosition = viewHolder.absoluteAdapterPosition
                     if (taskFilterHelper.howMany(taskType) > 0) {
@@ -292,10 +310,12 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
             }
         })
 
-        compositeSubscription.add(userRepository.getUser()
-            .doOnNext { recyclerAdapter?.showAdventureGuide = !it.hasCompletedOnboarding }
-            .takeUntil { it.hasCompletedOnboarding }
-            .subscribe( { recyclerAdapter?.user = it }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(
+            userRepository.getUser()
+                .doOnNext { recyclerAdapter?.showAdventureGuide = !it.hasCompletedOnboarding }
+                .takeUntil { it.hasCompletedOnboarding }
+                .subscribe({ recyclerAdapter?.user = it }, RxErrorHandler.handleEmptyError())
+        )
     }
 
     protected fun showBrokenChallengeDialog(task: Task) {
@@ -403,7 +423,7 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
 
     private fun scoreTask(task: Task, direction: TaskDirection) {
         compositeSubscription.add(
-            taskRepository.taskChecked(null, task, direction == TaskDirection.UP, false) { result ->
+            taskRepository.taskChecked(null, task.id ?: "", direction == TaskDirection.UP, false) { result ->
                 handleTaskResult(result, task.value.toInt())
                 if (!DateUtils.isToday(sharedPreferences.getLong("last_task_reporting", 0))) {
                     AmplitudeManager.sendEvent(
@@ -415,7 +435,7 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
                         putLong("last_task_reporting", Date().time)
                     }
                 }
-            }.subscribeWithErrorHandler {}
+            }.subscribe()
         )
     }
 

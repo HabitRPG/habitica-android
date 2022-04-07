@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments
 
+import android.os.Bundle
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
@@ -20,7 +21,7 @@ import io.reactivex.rxjava3.core.Flowable
 import org.junit.Test
 import org.junit.runner.RunWith
 
-class PartyDetailScreen: Screen<PartyDetailScreen>() {
+class PartyDetailScreen : Screen<PartyDetailScreen>() {
     val titleView = KTextView { withId(R.id.title_view) }
     val newQuestButton = KButton { withId(R.id.new_quest_button) }
     val questDetailButton = KButton { withId(R.id.quest_detail_button) }
@@ -30,7 +31,7 @@ class PartyDetailScreen: Screen<PartyDetailScreen>() {
 
 @LargeTest
 @RunWith(AndroidJUnit4::class)
-class PartyDetailFragmentTest: FragmentTestCase<PartyDetailFragment, FragmentPartyDetailBinding, PartyDetailScreen>() {
+class PartyDetailFragmentTest : FragmentTestCase<PartyDetailFragment, FragmentPartyDetailBinding, PartyDetailScreen>() {
     private lateinit var viewModel: PartyViewModel
     override val screen = PartyDetailScreen()
 
@@ -41,15 +42,15 @@ class PartyDetailFragmentTest: FragmentTestCase<PartyDetailFragment, FragmentPar
         viewModel = PartyViewModel(false)
         viewModel.socialRepository = socialRepository
         viewModel.userRepository = userRepository
-        viewModel.notificationsManager= mockk(relaxed = true)
-        scenario = launchFragmentInContainer(null, R.style.MainAppTheme) {
-            fragment = spyk()
-            fragment.shouldInitializeComponent = false
-            fragment.userRepository = userRepository
-            fragment.inventoryRepository = inventoryRepository
-            fragment.tutorialRepository = tutorialRepository
-            fragment.socialRepository = socialRepository
-            fragment.viewModel = viewModel
+        viewModel.userViewModel = userViewModel
+        viewModel.notificationsManager = mockk(relaxed = true)
+        fragment = spyk()
+        fragment.shouldInitializeComponent = false
+        fragment.viewModel = viewModel
+    }
+
+    override fun launchFragment(args: Bundle?) {
+        scenario = launchFragmentInContainer(args, R.style.MainAppTheme) {
             return@launchFragmentInContainer fragment
         }
     }

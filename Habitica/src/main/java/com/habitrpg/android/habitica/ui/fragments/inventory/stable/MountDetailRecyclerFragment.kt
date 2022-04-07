@@ -16,8 +16,8 @@ import com.habitrpg.android.habitica.models.inventory.StableSection
 import com.habitrpg.android.habitica.models.user.OwnedMount
 import com.habitrpg.android.habitica.ui.adapter.inventory.MountDetailRecyclerAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
-import com.habitrpg.android.habitica.ui.helpers.MarginDecoration
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
+import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import javax.inject.Inject
 
 class MountDetailRecyclerFragment :
@@ -26,6 +26,8 @@ class MountDetailRecyclerFragment :
 
     @Inject
     internal lateinit var inventoryRepository: InventoryRepository
+    @Inject
+    lateinit var userViewModel: MainUserViewModel
 
     var adapter: MountDetailRecyclerAdapter? = null
     var animalType: String? = null
@@ -39,7 +41,11 @@ class MountDetailRecyclerFragment :
         return FragmentRefreshRecyclerviewBinding.inflate(inflater, container, false)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         this.usesTabLayout = false
         return super.onCreateView(inflater, container, savedInstanceState)
     }
@@ -86,14 +92,15 @@ class MountDetailRecyclerFragment :
             binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
             this.loadItems()
 
-            adapter?.getEquipFlowable()?.flatMap { key -> inventoryRepository.equip(user, "mount", key) }
+            adapter?.getEquipFlowable()?.flatMap { key -> inventoryRepository.equip("mount", key) }
                 ?.subscribe(
                     {
-                        user?.let { updatedUser -> adapter?.setUser(updatedUser) }
+                        adapter?.currentMount = it.currentMount
                     },
                     RxErrorHandler.handleEmptyError()
                 )?.let { compositeSubscription.add(it) }
         }
+        userViewModel.user.observe(viewLifecycleOwner) { adapter?.currentMount = it?.currentMount }
 
         if (savedInstanceState != null) {
             this.animalType = savedInstanceState.getString(ANIMAL_TYPE_KEY, "")
@@ -134,7 +141,6 @@ class MountDetailRecyclerFragment :
                                 return@map mountMap
                             }.doOnNext {
                                 adapter?.setOwnedMounts(it)
-                                user?.let { updatedUser -> adapter?.setUser(updatedUser) }
                             },
                         { unsortedAnimals, ownedAnimals ->
                             val items = mutableListOf<Any>()

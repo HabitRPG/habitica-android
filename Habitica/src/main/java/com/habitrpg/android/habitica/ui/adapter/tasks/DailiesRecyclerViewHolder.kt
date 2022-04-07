@@ -2,7 +2,6 @@ package com.habitrpg.android.habitica.ui.adapter.tasks
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.internal.ViewUtils.getContentView
 import com.habitrpg.android.habitica.helpers.TaskFilterHelper
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.DailyViewHolder
 

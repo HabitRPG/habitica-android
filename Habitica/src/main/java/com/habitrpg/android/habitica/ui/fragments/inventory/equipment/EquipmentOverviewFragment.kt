@@ -36,19 +36,21 @@ class EquipmentOverviewFragment : BaseMainFragment<FragmentEquipmentOverviewBind
 
         binding?.autoEquipSwitch?.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked == viewModel.user.value?.preferences?.autoEquip) return@setOnCheckedChangeListener
-            viewModel.updateUser("preferences.autoEquip", isChecked) }
+            viewModel.updateUser("preferences.autoEquip", isChecked)
+        }
         binding?.costumeSwitch?.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked == viewModel.user.value?.preferences?.costume) return@setOnCheckedChangeListener
-            viewModel.updateUser("preferences.costume", isChecked) }
+            viewModel.updateUser("preferences.costume", isChecked)
+        }
 
         viewModel.user.observe(viewLifecycleOwner) {
             it?.items?.gear?.let {
                 updateGearData(it)
             }
-            binding?.autoEquipSwitch?.isChecked = user?.preferences?.autoEquip ?: false
-            binding?.costumeSwitch?.isChecked = user?.preferences?.costume ?: false
+            binding?.autoEquipSwitch?.isChecked = viewModel.usesAutoEquip
+            binding?.costumeSwitch?.isChecked = viewModel.usesCostume
 
-            binding?.costumeView?.isEnabled = user?.preferences?.costume == true
+            binding?.costumeView?.isEnabled = viewModel.usesCostume
         }
     }
 

@@ -91,7 +91,11 @@ class ChatFragment() : BaseFragment<FragmentChatBinding>() {
         binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
 
         binding?.recyclerView?.addOnScrollListener(object : androidx.recyclerview.widget.RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: androidx.recyclerview.widget.RecyclerView, dx: Int, dy: Int) {
+            override fun onScrolled(
+                recyclerView: androidx.recyclerview.widget.RecyclerView,
+                dx: Int,
+                dy: Int
+            ) {
                 super.onScrolled(recyclerView, dx, dy)
                 isScrolledToBottom = layoutManager.findFirstVisibleItemPosition() == 0
             }

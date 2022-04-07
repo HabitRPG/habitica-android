@@ -9,10 +9,13 @@ import com.habitrpg.android.habitica.models.ContentResult
 import com.habitrpg.android.habitica.models.WorldState
 import com.habitrpg.android.habitica.models.inventory.SpecialItem
 import io.reactivex.rxjava3.core.Flowable
-import io.realm.RealmList
-import java.util.*
+import java.util.Date
 
-class ContentRepositoryImpl<T : ContentLocalRepository>(localRepository: T, apiClient: ApiClient, context: Context) : BaseRepositoryImpl<T>(localRepository, apiClient), ContentRepository {
+class ContentRepositoryImpl<T : ContentLocalRepository>(
+    localRepository: T,
+    apiClient: ApiClient,
+    context: Context
+) : BaseRepositoryImpl<T>(localRepository, apiClient), ContentRepository {
 
     private val mysteryItem = SpecialItem.makeMysteryItem(context)
 
@@ -24,7 +27,6 @@ class ContentRepositoryImpl<T : ContentLocalRepository>(localRepository: T, apiC
         return if (forced || now - this.lastContentSync > 300000) {
             lastContentSync = now
             apiClient.content.doOnNext {
-                it.special = RealmList()
                 it.special.add(mysteryItem)
                 localRepository.saveContent(it)
             }

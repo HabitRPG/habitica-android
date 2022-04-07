@@ -8,7 +8,6 @@ import com.habitrpg.android.habitica.data.ChallengeRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.extensions.Optional
 import com.habitrpg.android.habitica.extensions.asOptional
-import com.habitrpg.android.habitica.extensions.filterMapEmpty
 import com.habitrpg.android.habitica.extensions.filterOptionalDoOnEmpty
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.NotificationsManager
@@ -22,9 +21,9 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.subjects.BehaviorSubject
-import retrofit2.HttpException
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
+import retrofit2.HttpException
 
 enum class GroupViewType(internal val order: String) {
     PARTY("party"),
@@ -205,7 +204,11 @@ open class GroupViewModel(initializeComponent: Boolean) : BaseViewModel(initiali
         }
     }
 
-    fun leaveGroup(groupChallenges: List<Challenge>, keepChallenges: Boolean = true, function: (() -> Unit)? = null) {
+    fun leaveGroup(
+        groupChallenges: List<Challenge>,
+        keepChallenges: Boolean = true,
+        function: (() -> Unit)? = null
+    ) {
         if (!keepChallenges) {
             for (challenge in groupChallenges) {
                 challengeRepository.leaveChallenge(challenge, "remove-all").subscribe({}, RxErrorHandler.handleEmptyError())
@@ -249,13 +252,17 @@ open class GroupViewModel(initializeComponent: Boolean) : BaseViewModel(initiali
     }
 
     fun likeMessage(message: ChatMessage) {
-        val index = _chatMessages.value?.indexOf(message) ?: return
-        disposable.add(socialRepository.likeMessage(message).subscribe(
-            {
-                val list = _chatMessages.value?.toMutableList()
-                list?.set(index, it)
-                _chatMessages.postValue(list)
-        }, RxErrorHandler.handleEmptyError()))
+        val index = _chatMessages.value?.indexOf(message)
+        if (index == null || index < 0) return
+        disposable.add(
+            socialRepository.likeMessage(message).subscribe(
+                {
+                    val list = _chatMessages.value?.toMutableList()
+                    list?.set(index, it)
+                    _chatMessages.postValue(list)
+                }, RxErrorHandler.handleEmptyError()
+            )
+        )
     }
 
     fun deleteMessage(chatMessage: ChatMessage) {
@@ -263,12 +270,14 @@ open class GroupViewModel(initializeComponent: Boolean) : BaseViewModel(initiali
         val list = _chatMessages.value?.toMutableList()
         list?.remove(chatMessage)
         _chatMessages.postValue(list)
-        disposable.add(socialRepository.deleteMessage(chatMessage).subscribe({
-        }, {
-            list?.add(oldIndex, chatMessage)
-            _chatMessages.postValue(list)
-            RxErrorHandler.reportError(it)
-        }))
+        disposable.add(
+            socialRepository.deleteMessage(chatMessage).subscribe({
+            }, {
+                list?.add(oldIndex, chatMessage)
+                _chatMessages.postValue(list)
+                RxErrorHandler.reportError(it)
+            })
+        )
     }
 
     fun postGroupChat(chatText: String, onComplete: () -> Unit, onError: () -> Unit) {

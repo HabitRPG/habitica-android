@@ -13,7 +13,15 @@ import com.habitrpg.android.habitica.api.HostConfig
 import com.habitrpg.android.habitica.api.Server
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.helpers.NotificationsManager
-import com.habitrpg.android.habitica.models.*
+import com.habitrpg.android.habitica.models.Achievement
+import com.habitrpg.android.habitica.models.ContentResult
+import com.habitrpg.android.habitica.models.LeaveChallengeBody
+import com.habitrpg.android.habitica.models.PurchaseValidationRequest
+import com.habitrpg.android.habitica.models.PurchaseValidationResult
+import com.habitrpg.android.habitica.models.SubscriptionValidationRequest
+import com.habitrpg.android.habitica.models.Tag
+import com.habitrpg.android.habitica.models.TeamPlan
+import com.habitrpg.android.habitica.models.WorldState
 import com.habitrpg.android.habitica.models.auth.UserAuth
 import com.habitrpg.android.habitica.models.auth.UserAuthResponse
 import com.habitrpg.android.habitica.models.auth.UserAuthSocial
@@ -21,10 +29,24 @@ import com.habitrpg.android.habitica.models.auth.UserAuthSocialTokens
 import com.habitrpg.android.habitica.models.inventory.Equipment
 import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.members.Member
-import com.habitrpg.android.habitica.models.responses.*
+import com.habitrpg.android.habitica.models.responses.BulkTaskScoringData
+import com.habitrpg.android.habitica.models.responses.BuyResponse
+import com.habitrpg.android.habitica.models.responses.ErrorResponse
+import com.habitrpg.android.habitica.models.responses.FeedResponse
+import com.habitrpg.android.habitica.models.responses.HabitResponse
+import com.habitrpg.android.habitica.models.responses.PostChatMessageResult
+import com.habitrpg.android.habitica.models.responses.SkillResponse
+import com.habitrpg.android.habitica.models.responses.Status
+import com.habitrpg.android.habitica.models.responses.TaskDirectionData
+import com.habitrpg.android.habitica.models.responses.UnlockResponse
+import com.habitrpg.android.habitica.models.responses.VerifyUsernameResponse
 import com.habitrpg.android.habitica.models.shops.Shop
 import com.habitrpg.android.habitica.models.shops.ShopItem
-import com.habitrpg.android.habitica.models.social.*
+import com.habitrpg.android.habitica.models.social.Challenge
+import com.habitrpg.android.habitica.models.social.ChatMessage
+import com.habitrpg.android.habitica.models.social.FindUsernameResult
+import com.habitrpg.android.habitica.models.social.Group
+import com.habitrpg.android.habitica.models.social.InboxConversation
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.tasks.TaskList
 import com.habitrpg.android.habitica.models.user.Items
@@ -36,6 +58,13 @@ import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.FlowableTransformer
 import io.reactivex.rxjava3.functions.Consumer
 import io.reactivex.rxjava3.schedulers.Schedulers
+import java.io.IOException
+import java.net.SocketException
+import java.net.SocketTimeoutException
+import java.net.UnknownHostException
+import java.util.GregorianCalendar
+import java.util.concurrent.TimeUnit
+import javax.net.ssl.SSLException
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -44,15 +73,14 @@ import retrofit2.HttpException
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-import java.io.IOException
-import java.net.SocketException
-import java.net.SocketTimeoutException
-import java.net.UnknownHostException
-import java.util.*
-import java.util.concurrent.TimeUnit
-import javax.net.ssl.SSLException
 
-class ApiClientImpl(private val gsonConverter: GsonConverterFactory, override val hostConfig: HostConfig, private val analyticsManager: AnalyticsManager, private val notificationsManager: NotificationsManager, private val context: Context) : Consumer<Throwable>, ApiClient {
+class ApiClientImpl(
+    private val gsonConverter: GsonConverterFactory,
+    override val hostConfig: HostConfig,
+    private val analyticsManager: AnalyticsManager,
+    private val notificationsManager: NotificationsManager,
+    private val context: Context
+) : Consumer<Throwable>, ApiClient {
 
     private lateinit var retrofitAdapter: Retrofit
 
@@ -143,7 +171,12 @@ class ApiClientImpl(private val gsonConverter: GsonConverterFactory, override va
         }
     }
 
-    override fun registerUser(username: String, email: String, password: String, confirmPassword: String): Flowable<UserAuthResponse> {
+    override fun registerUser(
+        username: String,
+        email: String,
+        password: String,
+        confirmPassword: String
+    ): Flowable<UserAuthResponse> {
         val auth = UserAuth()
         auth.username = username
         auth.password = password
@@ -269,7 +302,10 @@ class ApiClientImpl(private val gsonConverter: GsonConverterFactory, override va
         showConnectionProblemDialog(context.getString(resourceTitleString), context.getString(resourceMessageString))
     }
 
-    private fun showConnectionProblemDialog(resourceTitleString: String?, resourceMessageString: String) {
+    private fun showConnectionProblemDialog(
+        resourceTitleString: String?,
+        resourceMessageString: String
+    ) {
         val application = (context as? HabiticaBaseApplication)
             ?: (context.applicationContext as? HabiticaBaseApplication)
         application?.currentActivity?.get()
@@ -750,7 +786,11 @@ class ApiClientImpl(private val gsonConverter: GsonConverterFactory, override va
         return apiService.updateEmail(updateObject).compose(configureApiCallObserver())
     }
 
-    override fun updatePassword(oldPassword: String, newPassword: String, newPasswordConfirmation: String): Flowable<Void> {
+    override fun updatePassword(
+        oldPassword: String,
+        newPassword: String,
+        newPasswordConfirmation: String
+    ): Flowable<Void> {
         val updateObject = HashMap<String, String>()
         updateObject["password"] = oldPassword
         updateObject["newPassword"] = newPassword
@@ -774,7 +814,12 @@ class ApiClientImpl(private val gsonConverter: GsonConverterFactory, override va
         return apiService.getTeamPlanTasks(teamID).compose(configureApiCallObserver())
     }
 
-    override fun bulkAllocatePoints(strength: Int, intelligence: Int, constitution: Int, perception: Int): Flowable<Stats> {
+    override fun bulkAllocatePoints(
+        strength: Int,
+        intelligence: Int,
+        constitution: Int,
+        perception: Int
+    ): Flowable<Stats> {
         val body = HashMap<String, Map<String, Int>>()
         val stats = HashMap<String, Int>()
         stats["str"] = strength

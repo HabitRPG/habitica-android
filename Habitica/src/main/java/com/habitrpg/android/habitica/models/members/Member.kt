@@ -3,9 +3,15 @@ package com.habitrpg.android.habitica.models.members
 import com.google.gson.annotations.SerializedName
 import com.habitrpg.android.habitica.models.Avatar
 import com.habitrpg.android.habitica.models.BaseMainObject
-import com.habitrpg.android.habitica.models.BaseObject
 import com.habitrpg.android.habitica.models.social.UserParty
-import com.habitrpg.android.habitica.models.user.*
+import com.habitrpg.android.habitica.models.user.Authentication
+import com.habitrpg.android.habitica.models.user.Backer
+import com.habitrpg.android.habitica.models.user.ContributorInfo
+import com.habitrpg.android.habitica.models.user.Inbox
+import com.habitrpg.android.habitica.models.user.Items
+import com.habitrpg.android.habitica.models.user.Outfit
+import com.habitrpg.android.habitica.models.user.Profile
+import com.habitrpg.android.habitica.models.user.Stats
 import io.realm.RealmModel
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey

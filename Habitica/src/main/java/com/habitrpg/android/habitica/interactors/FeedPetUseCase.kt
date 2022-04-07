@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.interactors
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.view.View
@@ -70,7 +71,7 @@ constructor(
                             mountImageSideLength
                         )
                         mountImageView?.drawable?.draw(canvas)
-                        requestValues.context.shareContent("raisedPet", message, sharedImage)
+                        (requestValues.context as? BaseActivity)?.shareContent("raisedPet", message, sharedImage)
                         hatchingDialog.dismiss()
                     }
                     dialog.enqueue()
@@ -78,6 +79,6 @@ constructor(
             }
     }
 
-    class RequestValues(val pet: Pet, val food: Food, val context: BaseActivity) :
+    class RequestValues(val pet: Pet, val food: Food, val context: Context) :
         UseCase.RequestValues
 }

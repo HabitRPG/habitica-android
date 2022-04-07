@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toDrawable
 import androidx.core.os.bundleOf
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
@@ -26,7 +27,10 @@ import com.habitrpg.android.habitica.models.shops.Shop
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.User
-import com.habitrpg.android.habitica.ui.views.*
+import com.habitrpg.android.habitica.ui.views.CurrencyView
+import com.habitrpg.android.habitica.ui.views.CurrencyViews
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
+import com.habitrpg.android.habitica.ui.views.SnackbarActivity
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientGemsDialog
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientGoldDialog
@@ -36,12 +40,16 @@ import com.habitrpg.android.habitica.ui.views.tasks.form.StepperValueFormView
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import kotlinx.coroutines.*
 import java.util.*
 import javax.inject.Inject
 import kotlin.math.max
 import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class PurchaseDialog(context: Context, component: UserComponent?, val item: ShopItem) : HabiticaAlertDialog(context) {
 
@@ -161,7 +169,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
     @OptIn(ExperimentalTime::class)
     private fun setLimitedTextView() {
         if (user == null) return
-        if (shopItem.habitClass != null && shopItem.habitClass != "special" && user?.stats?.habitClass != shopItem.habitClass) {
+        if (shopItem.habitClass != null && shopItem.habitClass != "special" && shopItem.habitClass != "armoire" && user?.stats?.habitClass != shopItem.habitClass) {
             limitedTextView.text = context.getString(R.string.class_equipment_shop_dialog)
             limitedTextView.visibility = View.VISIBLE
             limitedTextView.setBackgroundColor(ContextCompat.getColor(context, R.color.inverted_background))
@@ -319,6 +327,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
     }
 
     private fun buyItem(quantity: Int) {
+        val application = ownerActivity?.application as? HabiticaBaseApplication
         FirebaseAnalytics.getInstance(context).logEvent(
             "item_purchased",
             bundleOf(
@@ -373,7 +382,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
                     "hourglasses" -> ContextCompat.getColor(context, R.color.text_brand)
                     else -> 0
                 }
-                (ownerActivity as? SnackbarActivity)?.showSnackbar(
+                ((application?.currentActivity?.get() ?: getActivity() ?: ownerActivity) as? SnackbarActivity)?.showSnackbar(
                     content = text,
                     rightIcon = priceLabel.compoundDrawables[0],
                     rightTextColor = rightTextColor,

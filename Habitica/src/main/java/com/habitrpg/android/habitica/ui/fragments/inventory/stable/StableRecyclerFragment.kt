@@ -17,16 +17,18 @@ import com.habitrpg.android.habitica.models.inventory.Animal
 import com.habitrpg.android.habitica.models.inventory.Egg
 import com.habitrpg.android.habitica.models.inventory.HatchingPotion
 import com.habitrpg.android.habitica.models.inventory.StableSection
-import com.habitrpg.android.habitica.models.user.*
+import com.habitrpg.android.habitica.models.user.OwnedMount
+import com.habitrpg.android.habitica.models.user.OwnedObject
+import com.habitrpg.android.habitica.models.user.OwnedPet
 import com.habitrpg.android.habitica.ui.adapter.inventory.StableRecyclerAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.helpers.EmptyItem
 import com.habitrpg.android.habitica.ui.helpers.MarginDecoration
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
+import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.kotlin.combineLatest
-import java.util.*
 import javax.inject.Inject
 
 class StableRecyclerFragment :
@@ -39,11 +41,12 @@ class StableRecyclerFragment :
     lateinit var userRepository: UserRepository
     @Inject
     lateinit var configManager: AppConfigManager
+    @Inject
+    lateinit var userViewModel: MainUserViewModel
 
     var adapter: StableRecyclerAdapter? = null
     var itemType: String? = null
     var itemTypeText: String? = null
-    var user: User? = null
     internal var layoutManager: androidx.recyclerview.widget.GridLayoutManager? = null
 
     override var binding: FragmentRefreshRecyclerviewBinding? = null
@@ -52,7 +55,11 @@ class StableRecyclerFragment :
         return FragmentRefreshRecyclerviewBinding.inflate(inflater, container, false)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         if (savedInstanceState != null) {
             this.itemType = savedInstanceState.getString(ITEM_TYPE_KEY, "")
         }
@@ -73,7 +80,7 @@ class StableRecyclerFragment :
         super.onViewCreated(view, savedInstanceState)
 
         binding?.recyclerView?.emptyItem = EmptyItem(
-            getString(R.string.empty_items, itemTypeText)
+            getString(R.string.empty_items, itemTypeText ?: itemType)
         )
         binding?.refreshLayout?.setOnRefreshListener(this)
 
@@ -96,7 +103,6 @@ class StableRecyclerFragment :
         adapter = binding?.recyclerView?.adapter as? StableRecyclerAdapter
         if (adapter == null) {
             adapter = StableRecyclerAdapter()
-            user?.let { adapter?.setUser(it) }
             adapter?.animalIngredientsRetriever = { animal, callback ->
                 Maybe.zip(
                     inventoryRepository.getItems(Egg::class.java, arrayOf(animal.animal)).firstElement(),
@@ -119,10 +125,14 @@ class StableRecyclerFragment :
             adapter?.let {
                 compositeSubscription.add(
                     it.getEquipFlowable()
-                        .flatMap { key -> inventoryRepository.equip(user, if (itemType == "pets") "pet" else "mount", key) }
+                        .flatMap { key -> inventoryRepository.equip(if (itemType == "pets") "pet" else "mount", key) }
                         .subscribe({ }, RxErrorHandler.handleEmptyError())
                 )
             }
+        }
+        userViewModel.user.observe(viewLifecycleOwner) {
+            adapter?.currentPet = it?.currentPet
+            adapter?.currentMount = it?.currentMount
         }
 
         this.loadItems()

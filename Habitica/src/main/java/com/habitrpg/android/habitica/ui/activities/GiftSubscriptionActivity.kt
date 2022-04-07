@@ -9,19 +9,16 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.ActivityGiftSubscriptionBinding
-import com.habitrpg.android.habitica.extensions.addOkButton
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.PurchaseHandler
 import com.habitrpg.android.habitica.helpers.PurchaseTypes
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.android.habitica.proxy.AnalyticsManager
-import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView
+import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
 
 class GiftSubscriptionActivity : PurchaseActivity() {
 
@@ -104,6 +101,7 @@ class GiftSubscriptionActivity : PurchaseActivity() {
                 for (sku in skus) {
                     updateButtonLabel(sku)
                 }
+                skus.minByOrNull { it.priceAmountMicros }?.let { selectSubscription(it) }
             }
         }
     }
@@ -112,7 +110,7 @@ class GiftSubscriptionActivity : PurchaseActivity() {
         if (matchingView != null) {
             matchingView.setPriceText(sku.price)
             matchingView.sku = sku.sku
-            binding.subscription1MonthView.setOnPurchaseClickListener { selectSubscription(sku) }
+            matchingView.setOnPurchaseClickListener { selectSubscription(sku) }
         }
     }
 
@@ -149,5 +147,4 @@ class GiftSubscriptionActivity : PurchaseActivity() {
             purchaseHandler.purchase(this, sku)
         }
     }
-
 }

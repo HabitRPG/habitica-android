@@ -25,7 +25,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class ShowNotificationInteractor(private val activity: Activity, private val lifecycleScope: LifecycleCoroutineScope) {
+class ShowNotificationInteractor(
+    private val activity: Activity,
+    private val lifecycleScope: LifecycleCoroutineScope
+) {
 
     fun handleNotification(notification: Notification): Boolean {
         when (notification.type) {

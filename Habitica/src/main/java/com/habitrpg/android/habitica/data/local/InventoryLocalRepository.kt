@@ -1,8 +1,16 @@
 package com.habitrpg.android.habitica.data.local
 
-import com.habitrpg.android.habitica.models.inventory.*
+import com.habitrpg.android.habitica.models.inventory.Equipment
+import com.habitrpg.android.habitica.models.inventory.Item
+import com.habitrpg.android.habitica.models.inventory.Mount
+import com.habitrpg.android.habitica.models.inventory.Pet
+import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.shops.ShopItem
-import com.habitrpg.android.habitica.models.user.*
+import com.habitrpg.android.habitica.models.user.Items
+import com.habitrpg.android.habitica.models.user.OwnedItem
+import com.habitrpg.android.habitica.models.user.OwnedMount
+import com.habitrpg.android.habitica.models.user.OwnedPet
+import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.rxjava3.core.Flowable
 
 interface InventoryLocalRepository : ContentLocalRepository {

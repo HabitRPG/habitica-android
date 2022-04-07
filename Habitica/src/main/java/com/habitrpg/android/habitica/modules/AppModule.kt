@@ -7,13 +7,15 @@ import android.content.res.Resources
 import androidx.preference.PreferenceManager
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.ContentRepository
-import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.executors.PostExecutionThread
 import com.habitrpg.android.habitica.executors.UIThread
-import com.habitrpg.android.habitica.helpers.*
+import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.KeyHelper
 import com.habitrpg.android.habitica.helpers.KeyHelper.Companion.getInstance
+import com.habitrpg.android.habitica.helpers.SoundFileLoader
+import com.habitrpg.android.habitica.helpers.SoundManager
+import com.habitrpg.android.habitica.helpers.TaskFilterHelper
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
-import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import com.habitrpg.shared.habitica.HLogger
 import dagger.Module
 import dagger.Provides
@@ -34,7 +36,7 @@ class AppModule(private val application: Application) {
 
     @Provides
     @Singleton
-    fun provideSharedPreferences(context: Context?): SharedPreferences {
+    fun provideSharedPreferences(context: Context): SharedPreferences {
         return PreferenceManager.getDefaultSharedPreferences(context)
     }
 
@@ -57,7 +59,11 @@ class AppModule(private val application: Application) {
     }
 
     @Provides
-    fun provideKeyHelper(context: Context, sharedPreferences: SharedPreferences, keyStore: KeyStore?): KeyHelper? {
+    fun provideKeyHelper(
+        context: Context,
+        sharedPreferences: SharedPreferences,
+        keyStore: KeyStore?
+    ): KeyHelper? {
         return if (keyStore == null) {
             null
         } else getInstance(context, sharedPreferences, keyStore)
@@ -93,7 +99,11 @@ class AppModule(private val application: Application) {
 
     @Provides
     @Singleton
-    fun pushNotificationManager(apiClient: ApiClient, sharedPreferences: SharedPreferences, context: Context): PushNotificationManager {
+    fun pushNotificationManager(
+        apiClient: ApiClient,
+        sharedPreferences: SharedPreferences,
+        context: Context
+    ): PushNotificationManager {
         return PushNotificationManager(apiClient, sharedPreferences, context)
     }
 

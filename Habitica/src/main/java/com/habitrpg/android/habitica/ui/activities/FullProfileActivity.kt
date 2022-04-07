@@ -3,8 +3,15 @@ package com.habitrpg.android.habitica.ui.activities
 import android.content.Context
 import android.graphics.Typeface
 import android.os.Bundle
-import android.view.*
-import android.widget.*
+import android.text.method.LinkMovementMethod
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TableLayout
+import android.widget.TableRow
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import coil.load
@@ -13,7 +20,6 @@ import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SocialRepository
-import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.ActivityFullProfileBinding
 import com.habitrpg.android.habitica.extensions.addCancelButton
 import com.habitrpg.android.habitica.extensions.getThemeColor
@@ -34,15 +40,14 @@ import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.SnackbarDisplayType
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import io.reactivex.rxjava3.core.Flowable
+import java.text.SimpleDateFormat
+import javax.inject.Inject
+import kotlin.math.floor
+import kotlin.math.min
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
-import java.util.*
-import javax.inject.Inject
-import kotlin.math.floor
-import kotlin.math.min
 
 class FullProfileActivity : BaseActivity() {
     private var blocks: List<String> = listOf()
@@ -213,6 +218,7 @@ class FullProfileActivity : BaseActivity() {
         val blurbText = profile.blurb
         if (blurbText != null && blurbText.isNotEmpty()) {
             binding.blurbTextView.setMarkdown(blurbText)
+            binding.blurbTextView.movementMethod = LinkMovementMethod.getInstance()
         }
 
         user.authentication?.timestamps?.createdAt?.let { binding.joinedView.text = dateFormatter.format(it) }
@@ -274,7 +280,11 @@ class FullProfileActivity : BaseActivity() {
         binding.achievementGroupList.state = RecyclerViewState.DISPLAYING_DATA
     }
 
-    private fun fillAchievements(labelID: Int, achievements: List<Achievement>, targetList: MutableList<Any>) {
+    private fun fillAchievements(
+        labelID: Int,
+        achievements: List<Achievement>,
+        targetList: MutableList<Any>
+    ) {
         // Order by ID first
         val achievementList = ArrayList(achievements)
         achievementList.sortWith { achievement, t1 -> achievement.index.toDouble().compareTo(t1.index.toDouble()) }
@@ -397,7 +407,15 @@ class FullProfileActivity : BaseActivity() {
         addAttributeRow("", attributeStrSum, attributeIntSum, attributeConSum, attributePerSum, roundDown = false, isSummary = true)
     }
 
-    private fun addAttributeRow(label: String, strVal: Float, intVal: Float, conVal: Float, perVal: Float, roundDown: Boolean, isSummary: Boolean) {
+    private fun addAttributeRow(
+        label: String,
+        strVal: Float,
+        intVal: Float,
+        conVal: Float,
+        perVal: Float,
+        roundDown: Boolean,
+        isSummary: Boolean
+    ) {
         val tableRow = layoutInflater.inflate(R.layout.profile_attributetablerow, binding.attributesTableLayout, false) as? TableRow ?: return
         val keyTextView = tableRow.findViewById<TextView>(R.id.tv_attribute_type)
         keyTextView?.text = label

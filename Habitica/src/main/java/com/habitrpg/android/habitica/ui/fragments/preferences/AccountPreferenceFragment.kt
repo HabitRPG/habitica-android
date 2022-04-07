@@ -2,7 +2,10 @@ package com.habitrpg.android.habitica.ui.fragments.preferences
 
 import android.accounts.AccountManager
 import android.app.Activity
-import android.content.*
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.InputType
 import android.view.View
@@ -35,8 +38,8 @@ import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaProgressDialog
 import javax.inject.Inject
 
-
-class AccountPreferenceFragment: BasePreferencesFragment(),
+class AccountPreferenceFragment :
+    BasePreferencesFragment(),
     SharedPreferences.OnSharedPreferenceChangeListener {
     @Inject
     lateinit var hostConfig: HostConfig
@@ -64,14 +67,13 @@ class AccountPreferenceFragment: BasePreferencesFragment(),
 
     override fun onResume() {
         super.onResume()
-        preferenceManager.sharedPreferences.registerOnSharedPreferenceChangeListener(this)
+        preferenceManager.sharedPreferences?.registerOnSharedPreferenceChangeListener(this)
     }
 
     override fun onPause() {
-        preferenceManager.sharedPreferences.unregisterOnSharedPreferenceChangeListener(this)
+        preferenceManager.sharedPreferences?.unregisterOnSharedPreferenceChangeListener(this)
         super.onPause()
     }
-
 
     private fun updateUserFields() {
         val user = user ?: return
@@ -121,17 +123,15 @@ class AccountPreferenceFragment: BasePreferencesFragment(),
         configurePreference(findPreference("UserID"), user.id)
     }
 
-
     private fun configurePreference(preference: Preference?, value: String?) {
         (preference as? EditTextPreference)?.let {
             it.text = value
-
         }
         preference?.summary = value
     }
 
-    override fun onPreferenceTreeClick(preference: Preference?): Boolean {
-        when(preference?.key) {
+    override fun onPreferenceTreeClick(preference: Preference): Boolean {
+        when (preference.key) {
             "username" -> showLoginNameDialog()
             "confirm_username" -> showConfirmUsernameDialog()
             "email" -> {
@@ -239,7 +239,8 @@ class AccountPreferenceFragment: BasePreferencesFragment(),
     }
 
     private val recoverFromPlayServicesErrorResult = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()) {
+        ActivityResultContracts.StartActivityForResult()
+    ) {
         if (it.resultCode != Activity.RESULT_CANCELED) {
             activity?.let { it1 ->
                 viewModel.handleGoogleLoginResult(it1, null) { _, _ ->
@@ -276,9 +277,11 @@ class AccountPreferenceFragment: BasePreferencesFragment(),
                 passwordEditText?.showErrorIfNecessary()
                 passwordRepeatEditText?.showErrorIfNecessary()
                 if (passwordEditText?.isValid != true || passwordRepeatEditText?.isValid != true) return@addButton
-                userRepository.updatePassword(oldPasswordEditText?.text ?: "",
+                userRepository.updatePassword(
+                    oldPasswordEditText?.text ?: "",
                     passwordEditText.text ?: "",
-                    passwordRepeatEditText.text ?: "")
+                    passwordRepeatEditText.text ?: ""
+                )
                     .flatMap { userRepository.retrieveUser(true, true) }
                     .subscribe(
                         {

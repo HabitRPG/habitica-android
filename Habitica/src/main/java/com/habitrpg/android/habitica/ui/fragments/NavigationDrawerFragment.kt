@@ -24,11 +24,14 @@ import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.DrawerMainBinding
-import com.habitrpg.android.habitica.extensions.*
+import com.habitrpg.android.habitica.extensions.getRemainingString
+import com.habitrpg.android.habitica.extensions.getShortRemainingString
+import com.habitrpg.android.habitica.extensions.getThemeColor
+import com.habitrpg.android.habitica.extensions.isUsingNightModeResources
+import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.android.habitica.models.WorldState
 import com.habitrpg.android.habitica.models.WorldStateEvent
 import com.habitrpg.android.habitica.models.inventory.Item
 import com.habitrpg.android.habitica.models.inventory.Quest
@@ -41,19 +44,21 @@ import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.activities.NotificationsActivity
 import com.habitrpg.android.habitica.ui.adapter.NavigationDrawerAdapter
-import com.habitrpg.android.habitica.ui.fragments.social.TavernDetailFragment
 import com.habitrpg.android.habitica.ui.menu.HabiticaDrawerItem
 import com.habitrpg.android.habitica.ui.viewmodels.NotificationsViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import kotlinx.coroutines.*
-import java.util.*
+import java.util.Calendar
+import java.util.Date
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
-import kotlin.collections.ArrayList
 import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class NavigationDrawerFragment : DialogFragment() {
 
@@ -199,7 +204,8 @@ class NavigationDrawerFragment : DialogFragment() {
                 .doOnNext { quest = it.quest }
                 .filter { it.hasActiveQuest }
                 .flatMapMaybe { inventoryRepository.getQuestContent(it.quest?.key ?: "").firstElement() }
-                .subscribe({
+                .subscribe(
+                    {
                         questContent = it
                     },
                     RxErrorHandler.handleEmptyError()
@@ -211,9 +217,10 @@ class NavigationDrawerFragment : DialogFragment() {
                 .doOnNext { quest = it.quest }
                 .filter { it.hasActiveQuest }
                 .flatMapMaybe { inventoryRepository.getQuestContent(it.quest?.key ?: "").firstElement() }
-                .subscribe({
-                    questContent = it
-                },
+                .subscribe(
+                    {
+                        questContent = it
+                    },
                     RxErrorHandler.handleEmptyError()
                 )
         )
@@ -271,11 +278,11 @@ class NavigationDrawerFragment : DialogFragment() {
                 .flatMapMaybe { inventoryRepository.getQuestContent(it).firstElement() }
                 .filter { (it.boss?.hp ?: 0) > 0 }
                 .subscribe(
-                {
-                    questContent = it
-                },
-                RxErrorHandler.handleEmptyError()
-            )
+                    {
+                        questContent = it
+                    },
+                    RxErrorHandler.handleEmptyError()
+                )
         )
 
         binding?.messagesButtonWrapper?.setOnClickListener { setSelection(R.id.inboxFragment, null, true, preventReselection = false) }
@@ -339,10 +346,10 @@ class NavigationDrawerFragment : DialogFragment() {
             tavernItem?.subtitle = null
         }
 
-        val specialItems = user.items?.special
+        val userItems = user.items
         var hasSpecialItems = false
-        if (specialItems != null) {
-            hasSpecialItems = specialItems.hasSpecialItems
+        if (userItems != null) {
+            hasSpecialItems = userItems.hasTransformationItems
         }
         val item = getItemWithIdentifier(SIDEBAR_SKILLS)
         if (item != null) {
@@ -477,7 +484,12 @@ class NavigationDrawerFragment : DialogFragment() {
         adapter.updateItems(items)
     }
 
-    fun setSelection(transitionId: Int?, bundle: Bundle? = null, openSelection: Boolean = true, preventReselection: Boolean = true) {
+    fun setSelection(
+        transitionId: Int?,
+        bundle: Bundle? = null,
+        openSelection: Boolean = true,
+        preventReselection: Boolean = true
+    ) {
         closeDrawer()
         if (adapter.selectedItem != null && adapter.selectedItem == transitionId && bundle == null && preventReselection) return
         adapter.selectedItem = transitionId
@@ -522,7 +534,11 @@ class NavigationDrawerFragment : DialogFragment() {
      * @param fragmentId   The android:id of this fragment in its activity's layout.
      * @param drawerLayout The DrawerLayout containing this fragment's UI.
      */
-    fun setUp(fragmentId: Int, drawerLayout: androidx.drawerlayout.widget.DrawerLayout, viewModel: NotificationsViewModel) {
+    fun setUp(
+        fragmentId: Int,
+        drawerLayout: androidx.drawerlayout.widget.DrawerLayout,
+        viewModel: NotificationsViewModel
+    ) {
         fragmentContainerView = activity?.findViewById(fragmentId)
         this.drawerLayout = drawerLayout
 

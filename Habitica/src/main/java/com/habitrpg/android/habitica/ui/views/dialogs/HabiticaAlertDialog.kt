@@ -3,9 +3,18 @@ package com.habitrpg.android.habitica.ui.views.dialogs
 import android.app.Activity
 import android.content.Context
 import android.text.method.ScrollingMovementMethod
-import android.view.*
+import android.view.ContextThemeWrapper
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.view.WindowManager
 import android.view.animation.AccelerateInterpolator
-import android.widget.*
+import android.widget.Button
+import android.widget.FrameLayout
+import android.widget.LinearLayout
+import android.widget.RelativeLayout
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.view.children
@@ -17,10 +26,10 @@ import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.ui.activities.BaseActivity
 import com.habitrpg.android.habitica.ui.views.login.LockableScrollView
 import com.plattysoft.leonids.ParticleSystem
+import java.lang.ref.WeakReference
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import java.lang.ref.WeakReference
 
 open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.HabiticaAlertDialogTheme) {
 
@@ -175,11 +184,23 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
 
     fun getContentView(): View? = additionalContentView
 
-    fun addButton(stringRes: Int, isPrimary: Boolean, isDestructive: Boolean = false, autoDismiss: Boolean = true, function: ((HabiticaAlertDialog, Int) -> Unit)? = null): Button {
+    fun addButton(
+        stringRes: Int,
+        isPrimary: Boolean,
+        isDestructive: Boolean = false,
+        autoDismiss: Boolean = true,
+        function: ((HabiticaAlertDialog, Int) -> Unit)? = null
+    ): Button {
         return addButton(context.getString(stringRes), isPrimary, isDestructive, autoDismiss, function)
     }
 
-    fun addButton(string: String, isPrimary: Boolean, isDestructive: Boolean = false, autoDismiss: Boolean = true, function: ((HabiticaAlertDialog, Int) -> Unit)? = null): Button {
+    fun addButton(
+        string: String,
+        isPrimary: Boolean,
+        isDestructive: Boolean = false,
+        autoDismiss: Boolean = true,
+        function: ((HabiticaAlertDialog, Int) -> Unit)? = null
+    ): Button {
         val button: Button = if (isPrimary) {
             if (isDestructive) {
                 buttonsWrapper.inflate(R.layout.dialog_habitica_primary_destructive_button) as? Button
@@ -197,7 +218,11 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
         return addButton(button, autoDismiss, function) as Button
     }
 
-    fun addButton(buttonView: View, autoDismiss: Boolean = true, function: ((HabiticaAlertDialog, Int) -> Unit)? = null): View {
+    fun addButton(
+        buttonView: View,
+        autoDismiss: Boolean = true,
+        function: ((HabiticaAlertDialog, Int) -> Unit)? = null
+    ): View {
         val weakThis = WeakReference(this)
         val buttonIndex = buttonsWrapper.childCount
         buttonView.setOnClickListener {

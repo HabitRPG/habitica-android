@@ -65,7 +65,6 @@ class AuthenticationViewModel() {
 
     private var compositeSubscription = CompositeDisposable()
 
-
     private var callbackManager = CallbackManager.Factory.create()
     var googleEmail: String? = null
     private var loginManager = LoginManager.getInstance()
@@ -92,7 +91,6 @@ class AuthenticationViewModel() {
                     onSuccess(response)
                 }
                 else -> {
-
                 }
             }
         }.show()
@@ -108,7 +106,7 @@ class AuthenticationViewModel() {
                     compositeSubscription.add(
                         apiClient.connectSocial("facebook", accessToken?.userId ?: "", accessToken?.token ?: "")
                             .subscribe({
-                                       onSuccess(it)
+                                onSuccess(it)
                             }, RxErrorHandler.handleEmptyError())
                     )
                 }
@@ -126,7 +124,12 @@ class AuthenticationViewModel() {
         loginManager.logInWithReadPermissions(activity, listOf("user_friends"))
     }
 
-    fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?, onSuccess: (UserAuthResponse) -> Unit) {
+    fun onActivityResult(
+        requestCode: Int,
+        resultCode: Int,
+        data: Intent?,
+        onSuccess: (UserAuthResponse) -> Unit
+    ) {
         callbackManager.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == FacebookSdk.getCallbackRequestCodeOffset()) {
@@ -136,7 +139,7 @@ class AuthenticationViewModel() {
                 compositeSubscription.add(
                     apiClient.connectSocial("facebook", accessToken.userId, accessToken.token)
                         .subscribe({
-                                   onSuccess(it)
+                            onSuccess(it)
                         }, { })
                 )
             }
@@ -169,7 +172,7 @@ class AuthenticationViewModel() {
     fun handleGoogleLoginResult(
         activity: Activity,
         recoverFromPlayServicesErrorResult: ActivityResultLauncher<Intent>?,
-    onSuccess: (User, Boolean) -> Unit
+        onSuccess: (User, Boolean) -> Unit
     ) {
         val scopesString = Scopes.PROFILE + " " + Scopes.EMAIL
         val scopes = "oauth2:$scopesString"
@@ -196,15 +199,17 @@ class AuthenticationViewModel() {
                 .flatMap { userRepository.retrieveUser(true, true) }
                 .subscribe(
                     {
-                    onSuccess(it, newUser)
+                        onSuccess(it, newUser)
                     },
                     { throwable ->
                         if (recoverFromPlayServicesErrorResult == null) return@subscribe
                         throwable.cause?.let {
                             if (GoogleAuthException::class.java.isAssignableFrom(it.javaClass)) {
-                                handleGoogleAuthException(throwable.cause as GoogleAuthException,
-                                activity,
-                                recoverFromPlayServicesErrorResult)
+                                handleGoogleAuthException(
+                                    throwable.cause as GoogleAuthException,
+                                    activity,
+                                    recoverFromPlayServicesErrorResult
+                                )
                             }
                         }
                     }
@@ -235,16 +240,15 @@ class AuthenticationViewModel() {
             recoverFromPlayServicesErrorResult.launch(intent)
             return
         }
-
     }
-
 
     private fun checkPlayServices(activity: Activity): Boolean {
         val googleAPI = GoogleApiAvailability.getInstance()
         val result = googleAPI.isGooglePlayServicesAvailable(activity)
         if (result != ConnectionResult.SUCCESS) {
             if (googleAPI.isUserResolvableError(result)) {
-                googleAPI.getErrorDialog(activity, result,
+                googleAPI.getErrorDialog(
+                    activity, result,
                     PLAY_SERVICES_RESOLUTION_REQUEST
                 )?.show()
             }

@@ -107,81 +107,80 @@ class FixCharacterValuesActivity : BaseActivity() {
                     .flatMap { repository.retrieveUser(false, true, true) }
                     .subscribe(
                         {}, RxErrorHandler.handleEmptyError(),
-                            {
-                                dialog?.dismiss()
-                                finish()
-                            }
-                        )
+                        {
+                            dialog?.dismiss()
+                            finish()
+                        }
+                    )
+            )
+            return true
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
+
+    private var user: User? = null
+        set(value) {
+            field = value
+            if (value != null) {
+                updateFields(value)
+            }
+        }
+
+    private fun updateFields(user: User) {
+        val stats = user.stats ?: return
+        binding.healthEditText.setText(stats.hp.toString())
+        binding.experienceEditText.setText(stats.exp.toString())
+        binding.goldEditText.setText(stats.gp.toString())
+        binding.manaEditText.setText(stats.mp.toString())
+        binding.levelEditText.setText(stats.lvl.toString())
+        binding.streakEditText.setText(user.streakCount.toString())
+
+        when (stats.habitClass) {
+            Stats.WARRIOR -> {
+                setIconBackground(
+                    binding.levelIconBackgroundView,
+                    ContextCompat.getColor(this, R.color.red_500)
                 )
-                return true
+                binding.levelIconView.setImageBitmap(HabiticaIconsHelper.imageOfWarriorLightBg())
             }
-
-            return super.onOptionsItemSelected(item)
-        }
-
-        private var user: User? = null
-            set(value) {
-                field = value
-                if (value != null) {
-                    updateFields(value)
-                }
+            Stats.MAGE -> {
+                setIconBackground(
+                    binding.levelIconBackgroundView,
+                    ContextCompat.getColor(this, R.color.blue_500)
+                )
+                binding.levelIconView.setImageBitmap(HabiticaIconsHelper.imageOfMageLightBg())
             }
-
-        private fun updateFields(user: User) {
-            val stats = user.stats ?: return
-            binding.healthEditText.setText(stats.hp.toString())
-            binding.experienceEditText.setText(stats.exp.toString())
-            binding.goldEditText.setText(stats.gp.toString())
-            binding.manaEditText.setText(stats.mp.toString())
-            binding.levelEditText.setText(stats.lvl.toString())
-            binding.streakEditText.setText(user.streakCount.toString())
-
-            when (stats.habitClass) {
-                Stats.WARRIOR -> {
-                    setIconBackground(
-                        binding.levelIconBackgroundView,
-                        ContextCompat.getColor(this, R.color.red_500)
-                    )
-                    binding.levelIconView.setImageBitmap(HabiticaIconsHelper.imageOfWarriorLightBg())
-                }
-                Stats.MAGE -> {
-                    setIconBackground(
-                        binding.levelIconBackgroundView,
-                        ContextCompat.getColor(this, R.color.blue_500)
-                    )
-                    binding.levelIconView.setImageBitmap(HabiticaIconsHelper.imageOfMageLightBg())
-                }
-                Stats.HEALER -> {
-                    setIconBackground(
-                        binding.levelIconBackgroundView,
-                        ContextCompat.getColor(this, R.color.yellow_500)
-                    )
-                    binding.levelIconView.setImageBitmap(HabiticaIconsHelper.imageOfHealerLightBg())
-                }
-                Stats.ROGUE -> {
-                    setIconBackground(
-                        binding.levelIconBackgroundView,
-                        ContextCompat.getColor(this, R.color.brand_500)
-                    )
-                    binding.levelIconView.setImageBitmap(HabiticaIconsHelper.imageOfRogueLightBg())
-                }
+            Stats.HEALER -> {
+                setIconBackground(
+                    binding.levelIconBackgroundView,
+                    ContextCompat.getColor(this, R.color.yellow_500)
+                )
+                binding.levelIconView.setImageBitmap(HabiticaIconsHelper.imageOfHealerLightBg())
             }
-        }
-
-        private fun setIconBackground(view: View, color: Int) {
-            val backgroundDrawable = ContextCompat.getDrawable(this, R.drawable.layout_rounded_bg)
-            backgroundDrawable?.setTintWith(color, PorterDuff.Mode.MULTIPLY)
-            backgroundDrawable?.alpha = 50
-            view.background = backgroundDrawable
-        }
-
-        private fun EditText.getDoubleValue(): Double {
-            val stringValue = this.text.toString()
-            return try {
-                stringValue.toDouble()
-            } catch (_: NumberFormatException) {
-                0.0
+            Stats.ROGUE -> {
+                setIconBackground(
+                    binding.levelIconBackgroundView,
+                    ContextCompat.getColor(this, R.color.brand_500)
+                )
+                binding.levelIconView.setImageBitmap(HabiticaIconsHelper.imageOfRogueLightBg())
             }
         }
     }
-    
+
+    private fun setIconBackground(view: View, color: Int) {
+        val backgroundDrawable = ContextCompat.getDrawable(this, R.drawable.layout_rounded_bg)
+        backgroundDrawable?.setTintWith(color, PorterDuff.Mode.MULTIPLY)
+        backgroundDrawable?.alpha = 50
+        view.background = backgroundDrawable
+    }
+
+    private fun EditText.getDoubleValue(): Double {
+        val stringValue = this.text.toString()
+        return try {
+            stringValue.toDouble()
+        } catch (_: NumberFormatException) {
+            0.0
+        }
+    }
+}

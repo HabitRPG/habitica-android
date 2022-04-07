@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 import com.habitrpg.android.habitica.models.BaseObject
 import io.realm.RealmObject
 import io.realm.annotations.RealmClass
-import java.util.*
+import java.util.Date
 
 @RealmClass(embedded = true)
 open class SubscriptionPlan : RealmObject(), BaseObject {
@@ -21,6 +21,7 @@ open class SubscriptionPlan : RealmObject(), BaseObject {
     var quantity: Int? = null
     var consecutive: SubscriptionPlanConsecutive? = null
     var mysteryItemCount = 0
+    var additionalData: AdditionalSubscriptionInfo? = null
 
     @SerializedName("owner")
     var ownerID: String? = null

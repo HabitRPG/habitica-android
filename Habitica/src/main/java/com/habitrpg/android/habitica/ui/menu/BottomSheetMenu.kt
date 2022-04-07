@@ -5,8 +5,6 @@ import android.view.View
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.habitrpg.android.habitica.databinding.MenuBottomSheetBinding
-import android.view.ViewTreeObserver.OnGlobalLayoutListener
-
 
 class BottomSheetMenu(context: Context) : BottomSheetDialog(context), View.OnClickListener {
     private var binding = MenuBottomSheetBinding.inflate(layoutInflater)

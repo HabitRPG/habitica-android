@@ -3,19 +3,16 @@ package com.habitrpg.android.habitica.ui.views.social
 import android.content.Context
 import android.util.AttributeSet
 import android.view.Gravity
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
-import androidx.core.content.edit
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.QuestMenuViewBinding
 import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.user.User
-import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import java.util.Locale
 
@@ -77,9 +74,9 @@ class QuestMenuView : LinearLayout {
         binding.topView.setBackgroundColor(questContent?.colors?.mediumColor ?: 0)
         binding.bossNameView.gravity = Gravity.START
         binding.bossNameView.layoutParams = LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1F)
-        //binding.bossArtView.visibility = View.GONE
+        // binding.bossArtView.visibility = View.GONE
         binding.typeTextView.setTextColor(questContent?.colors?.extraLightColor ?: 0)
-        //binding.closeButton.visibility = View.GONE
+        // binding.closeButton.visibility = View.GONE
     }
 
     fun showBossArt() {
@@ -87,8 +84,8 @@ class QuestMenuView : LinearLayout {
         binding.topView.setBackgroundColor(ContextCompat.getColor(context, R.color.transparent))
         binding.bossNameView.gravity = Gravity.END
         binding.bossNameView.layoutParams = LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-        //binding.bossArtView.visibility = View.VISIBLE
+        // binding.bossArtView.visibility = View.VISIBLE
         binding.typeTextView.setTextColor(ContextCompat.getColor(context, R.color.white))
-        //binding.closeButton.visibility = View.VISIBLE
+        // binding.closeButton.visibility = View.VISIBLE
     }
 }

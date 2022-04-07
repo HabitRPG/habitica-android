@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.GridLayoutManager
-import com.google.firebase.analytics.FirebaseAnalytics
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
@@ -24,6 +23,7 @@ import com.habitrpg.android.habitica.ui.adapter.inventory.ShopRecyclerAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.helpers.RecyclerViewState
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
+import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.CurrencyViews
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import javax.inject.Inject
@@ -44,6 +44,8 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
     lateinit var socialRepository: SocialRepository
     @Inject
     lateinit var configManager: AppConfigManager
+    @Inject
+    lateinit var userViewModel: MainUserViewModel
 
     private var layoutManager: GridLayoutManager? = null
 
@@ -55,7 +57,11 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
         return FragmentRefreshRecyclerviewBinding.inflate(inflater, container, false)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         this.hidesToolbar = true
         return super.onCreateView(inflater, container, savedInstanceState)
     }
@@ -106,7 +112,7 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
             this.shopIdentifier = savedInstanceState.getString(SHOP_IDENTIFIER_KEY, "")
         }
 
-        adapter?.selectedGearCategory = user?.stats?.habitClass ?: ""
+        adapter?.selectedGearCategory = userViewModel.user.value?.stats?.habitClass ?: ""
 
         if (shop != null) {
             adapter?.setShop(shop)
@@ -122,15 +128,10 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
             }
         }
 
-        compositeSubscription.add(
-            userRepository.getUser().subscribe(
-                {
-                    adapter?.user = user
-                    updateCurrencyView(it)
-                },
-                RxErrorHandler.handleEmptyError()
-            )
-        )
+        userViewModel.user.observe(viewLifecycleOwner) {
+            adapter?.user = it
+            updateCurrencyView(it)
+        }
 
         compositeSubscription.add(
             socialRepository.getGroup(Group.TAVERN_ID)
@@ -158,7 +159,6 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
             alert.setTitle(getString(R.string.class_confirmation_price, classIdentifier, 3))
             alert.addButton(R.string.choose_class, true) { _, _ ->
                 userRepository.changeClass(classIdentifier).subscribeWithErrorHandler {
-
                 }
             }
             alert.addButton(R.string.dialog_go_back, false)
@@ -183,7 +183,7 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
             this.inventoryRepository.retrieveShopInventory(shopUrl)
                 .map { shop1 ->
                     if (shop1.identifier == Shop.MARKET) {
-                        val user = user
+                        val user = userViewModel.user.value
                         val specialCategory = ShopCategory()
                         specialCategory.text = getString(R.string.special)
                         if (user?.isValid == true && user.purchased?.plan?.isActive == true) {
@@ -315,9 +315,9 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
         private const val SHOP_IDENTIFIER_KEY = "SHOP_IDENTIFIER_KEY"
     }
 
-    private fun updateCurrencyView(user: User) {
-        currencyView.gold = user.stats?.gp ?: 0.0
-        currencyView.gems = user.gemCount.toDouble()
-        currencyView.hourglasses = user.hourglassCount.toDouble()
+    private fun updateCurrencyView(user: User?) {
+        currencyView.gold = user?.stats?.gp ?: 0.0
+        currencyView.gems = user?.gemCount?.toDouble() ?: 0.0
+        currencyView.hourglasses = user?.hourglassCount?.toDouble() ?: 0.0
     }
 }

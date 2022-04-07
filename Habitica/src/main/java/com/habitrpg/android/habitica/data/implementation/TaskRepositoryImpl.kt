@@ -12,7 +12,11 @@ import com.habitrpg.android.habitica.models.responses.BulkTaskScoringData
 import com.habitrpg.android.habitica.models.responses.TaskDirection
 import com.habitrpg.android.habitica.models.responses.TaskDirectionData
 import com.habitrpg.android.habitica.models.responses.TaskScoringResult
-import com.habitrpg.android.habitica.models.tasks.*
+import com.habitrpg.android.habitica.models.tasks.ChecklistItem
+import com.habitrpg.android.habitica.models.tasks.Task
+import com.habitrpg.android.habitica.models.tasks.TaskList
+import com.habitrpg.android.habitica.models.tasks.TaskType
+import com.habitrpg.android.habitica.models.tasks.TasksOrder
 import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.proxy.AnalyticsManager
@@ -20,9 +24,17 @@ import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Single
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
+import java.util.Locale
+import java.util.UUID
 
-class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiClient, userID: String, val appConfigManager: AppConfigManager, val analyticsManager: AnalyticsManager) : BaseRepositoryImpl<TaskLocalRepository>(localRepository, apiClient, userID), TaskRepository {
+class TaskRepositoryImpl(
+    localRepository: TaskLocalRepository,
+    apiClient: ApiClient,
+    userID: String,
+    val appConfigManager: AppConfigManager,
+    val analyticsManager: AnalyticsManager
+) : BaseRepositoryImpl<TaskLocalRepository>(localRepository, apiClient, userID), TaskRepository {
     private var lastTaskAction: Long = 0
 
     override fun getTasks(taskType: TaskType, userID: String?): Flowable<out List<Task>> =
@@ -52,7 +64,13 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
     }
 
     @Suppress("ReturnCount")
-    override fun taskChecked(user: User?, task: Task, up: Boolean, force: Boolean, notifyFunc: ((TaskScoringResult) -> Unit)?): Flowable<TaskScoringResult> {
+    override fun taskChecked(
+        user: User?,
+        task: Task,
+        up: Boolean,
+        force: Boolean,
+        notifyFunc: ((TaskScoringResult) -> Unit)?
+    ): Flowable<TaskScoringResult> {
         val localData = if (user != null && appConfigManager.enableLocalTaskScoring()) {
             ScoreTaskLocallyInteractor.score(user, task, if (up) TaskDirection.UP else TaskDirection.DOWN)
         } else null
@@ -107,7 +125,13 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
         return apiClient.bulkScoreTasks(data)
     }
 
-    private fun handleTaskResponse(user: User, res: TaskDirectionData, task: Task, up: Boolean, localDelta: Float) {
+    private fun handleTaskResponse(
+        user: User,
+        res: TaskDirectionData,
+        task: Task,
+        up: Boolean,
+        localDelta: Float
+    ) {
         this.localRepository.executeTransaction {
             val bgTask = localRepository.getLiveObject(task) ?: return@executeTransaction
             val bgUser = localRepository.getLiveObject(user) ?: return@executeTransaction
@@ -161,7 +185,13 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
         }
     }
 
-    override fun taskChecked(user: User?, taskId: String, up: Boolean, force: Boolean, notifyFunc: ((TaskScoringResult) -> Unit)?): Maybe<TaskScoringResult?> {
+    override fun taskChecked(
+        user: User?,
+        taskId: String,
+        up: Boolean,
+        force: Boolean,
+        notifyFunc: ((TaskScoringResult) -> Unit)?
+    ): Maybe<TaskScoringResult?> {
         return localRepository.getTask(taskId).firstElement()
             .flatMap { task -> taskChecked(user, task, up, force, notifyFunc).singleElement() }
     }

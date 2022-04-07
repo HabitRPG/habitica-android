@@ -16,10 +16,10 @@ import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.PurchaseHandler
 import com.habitrpg.android.habitica.helpers.PurchaseTypes
 import com.habitrpg.android.habitica.proxy.AnalyticsManager
+import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 /**
  * Created by phillip on 27.09.17.
@@ -77,7 +77,6 @@ class InsufficientGemsDialog(context: Context, var gemPrice: Int) : Insufficient
                         purchaseHandler.purchase(activity, sku)
                     }
                 }
-
 
                 addButton(R.string.see_other_options, false) { _, _ -> MainNavigationController.navigate(R.id.gemPurchaseActivity, bundleOf(Pair("openSubscription", false))) }
             } else {

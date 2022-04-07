@@ -9,7 +9,12 @@ import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.NotificationsManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.Notification
-import com.habitrpg.android.habitica.models.notifications.*
+import com.habitrpg.android.habitica.models.notifications.GroupTaskRequiresApprovalData
+import com.habitrpg.android.habitica.models.notifications.GuildInvitationData
+import com.habitrpg.android.habitica.models.notifications.NewChatMessageData
+import com.habitrpg.android.habitica.models.notifications.NewStuffData
+import com.habitrpg.android.habitica.models.notifications.PartyInvitationData
+import com.habitrpg.android.habitica.models.notifications.QuestInvitationData
 import com.habitrpg.android.habitica.models.social.UserParty
 import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -17,7 +22,6 @@ import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.functions.BiFunction
 import io.reactivex.rxjava3.subjects.BehaviorSubject
-import java.util.*
 import javax.inject.Inject
 
 open class NotificationsViewModel : BaseViewModel() {
@@ -82,7 +86,7 @@ open class NotificationsViewModel : BaseViewModel() {
             serverNotifications,
             customNotifications.toFlowable(BackpressureStrategy.LATEST),
             BiFunction<List<Notification>, List<Notification>, List<Notification>> {
-                serverNotificationsList, customNotificationsList ->
+                    serverNotificationsList, customNotificationsList ->
                 if (serverNotificationsList.firstOrNull { notification -> notification.type == Notification.Type.NEW_STUFF.type } != null) {
                     return@BiFunction serverNotificationsList + customNotificationsList.filter { notification -> notification.type != Notification.Type.NEW_STUFF.type }
                 }
@@ -183,13 +187,13 @@ open class NotificationsViewModel : BaseViewModel() {
     }
 
     private fun isCustomNewStuffNotification(notification: Notification) =
-            notification.id == "custom-new-stuff-notification"
+        notification.id == "custom-new-stuff-notification"
 
     fun dismissNotification(notification: Notification) {
         if (isCustomNotification(notification)) {
             if (isCustomNewStuffNotification(notification)) {
                 customNotifications.onNext(
-                        customNotifications.value?.filterNot { it.id == notification.id }
+                    customNotifications.value?.filterNot { it.id == notification.id }
                 )
             }
             return
@@ -208,7 +212,7 @@ open class NotificationsViewModel : BaseViewModel() {
             .map { it.id }
 
         val customNewStuffNotification = notifications
-                .firstOrNull { isCustomNewStuffNotification(it) }
+            .firstOrNull { isCustomNewStuffNotification(it) }
 
         if (customNewStuffNotification != null) {
             dismissNotification(customNewStuffNotification)
@@ -269,7 +273,10 @@ open class NotificationsViewModel : BaseViewModel() {
         }
     }
 
-    private fun clickNewChatMessage(notification: Notification, navController: MainNavigationController) {
+    private fun clickNewChatMessage(
+        notification: Notification,
+        navController: MainNavigationController
+    ) {
         val data = notification.data as? NewChatMessageData
         if (isPartyMessage(data)) {
             val bundle = Bundle()
@@ -284,7 +291,10 @@ open class NotificationsViewModel : BaseViewModel() {
         }
     }
 
-    private fun clickGroupInvitation(notification: Notification, navController: MainNavigationController) {
+    private fun clickGroupInvitation(
+        notification: Notification,
+        navController: MainNavigationController
+    ) {
         when (notification.type) {
             Notification.Type.GUILD_INVITATION.type -> {
                 val bundle = Bundle()

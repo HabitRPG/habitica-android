@@ -2,7 +2,6 @@ package com.habitrpg.android.habitica.models.promotions
 
 import android.content.Context
 import android.graphics.Color
-import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.ShapeDrawable
 import android.view.View
@@ -14,10 +13,10 @@ import com.habitrpg.android.habitica.databinding.PurchaseGemViewBinding
 import com.habitrpg.android.habitica.extensions.DateUtils
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.ui.fragments.PromoInfoFragment
-import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.promo.PromoMenuView
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
+import java.util.Locale
 
 class SpookyExtraGemsHabiticaPromotion(startDate: Date?, endDate: Date?) : HabiticaPromotion() {
     override val identifier: String

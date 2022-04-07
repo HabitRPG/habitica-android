@@ -12,12 +12,13 @@ import com.habitrpg.android.habitica.databinding.SkillListItemBinding
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.extensions.isUsingNightModeResources
 import com.habitrpg.android.habitica.models.Skill
-import com.habitrpg.android.habitica.models.user.SpecialItems
+import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.subjects.PublishSubject
+import io.realm.RealmList
 
 class SkillsRecyclerViewAdapter : RecyclerView.Adapter<SkillsRecyclerViewAdapter.SkillViewHolder>() {
 
@@ -34,7 +35,7 @@ class SkillsRecyclerViewAdapter : RecyclerView.Adapter<SkillsRecyclerViewAdapter
             field = value
             notifyDataSetChanged()
         }
-    var specialItems: SpecialItems? = null
+    var specialItems: RealmList<OwnedItem>?? = null
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -134,13 +135,7 @@ class SkillsRecyclerViewAdapter : RecyclerView.Adapter<SkillsRecyclerViewAdapter
         }
 
         private fun getOwnedCount(key: String): Int {
-            return when (key) {
-                "snowball" -> specialItems?.snowball
-                "shinySeed" -> specialItems?.shinySeed
-                "seafoam" -> specialItems?.seafoam
-                "spookySparkles" -> specialItems?.spookySparkles
-                else -> 0
-            } ?: 0
+            return specialItems?.firstOrNull() { it.key == key }?.numberOwned ?: 0
         }
     }
 }

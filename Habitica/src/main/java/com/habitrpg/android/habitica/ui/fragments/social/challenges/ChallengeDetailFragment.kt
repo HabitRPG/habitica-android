@@ -4,7 +4,12 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import androidx.core.net.toUri
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
@@ -29,11 +34,11 @@ import com.habitrpg.android.habitica.ui.viewHolders.tasks.DailyViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.HabitViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.RewardViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.TodoViewHolder
+import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
-import retrofit2.HttpException
-import java.util.*
 import javax.inject.Inject
+import retrofit2.HttpException
 
 class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>() {
 
@@ -41,6 +46,8 @@ class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>
     lateinit var challengeRepository: ChallengeRepository
     @Inject
     lateinit var socialRepository: SocialRepository
+    @Inject
+    lateinit var userViewModel: MainUserViewModel
 
     override var binding: FragmentChallengeDetailBinding? = null
 
@@ -56,7 +63,11 @@ class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>
         component.inject(this)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         this.hidesToolbar = true
         return super.onCreateView(inflater, container, savedInstanceState)
     }
@@ -236,7 +247,7 @@ class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>
         binding?.creatorAvatarview?.setAvatar(creator)
         binding?.creatorLabel?.tier = creator.contributor?.level ?: 0
         binding?.creatorLabel?.username = creator.displayName
-        isCreator = creator.id == user?.id
+        isCreator = creator.id == userViewModel.userID
         this.activity?.invalidateOptionsMenu()
     }
 

@@ -10,12 +10,15 @@ import androidx.core.app.NotificationManagerCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.withImmutableFlag
 import com.habitrpg.android.habitica.ui.activities.MainActivity
-import java.util.*
+import java.util.Date
 
 /**
  * Created by keithholliday on 6/28/16.
  */
-abstract class HabiticaLocalNotification(protected var context: Context, protected var identifier: String?) {
+abstract class HabiticaLocalNotification(
+    protected var context: Context,
+    protected var identifier: String?
+) {
 
     protected var data: Map<String, String>? = null
     protected var title: String? = null

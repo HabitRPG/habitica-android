@@ -16,7 +16,8 @@ import com.habitrpg.android.habitica.ui.fragments.PromoInfoFragment
 import com.habitrpg.android.habitica.ui.fragments.purchases.SubscriptionFragment
 import com.habitrpg.android.habitica.ui.views.promo.PromoMenuView
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
+import java.util.Locale
 
 class GiftOneGetOneHabiticaPromotion(startDate: Date?, endDate: Date?) : HabiticaPromotion() {
     override val identifier: String

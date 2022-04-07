@@ -17,13 +17,14 @@ import com.habitrpg.android.habitica.models.TutorialStep
 import com.habitrpg.android.habitica.models.inventory.Egg
 import com.habitrpg.android.habitica.models.responses.MaintenanceResponse
 import com.habitrpg.android.habitica.proxy.AnalyticsManager
+import com.habitrpg.android.habitica.ui.TutorialView
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
 import io.realm.kotlin.isValid
-import java.util.*
+import java.util.Date
 import javax.inject.Inject
 
-class MainActivityViewModel: BaseViewModel() {
+class MainActivityViewModel : BaseViewModel(), TutorialView.OnTutorialReaction {
     @Inject
     internal lateinit var hostConfig: HostConfig
     @Inject
@@ -48,16 +49,16 @@ class MainActivityViewModel: BaseViewModel() {
     }
 
     val isAuthenticated: Boolean
-        get() = hostConfig.apiKey.isNotBlank() && hostConfig.userID.isNotBlank()
+        get() = hostConfig.hasAuthentication()
     val launchScreen: String?
         get() = sharedPreferences.getString("launch_screen", "")
     var preferenceLanguage: String?
         get() = sharedPreferences.getString("language", "en")
-    set(value) {
-        sharedPreferences.edit {
-            putString("language", value)
+        set(value) {
+            sharedPreferences.edit {
+                putString("language", value)
+            }
         }
-    }
 
     override fun onCleared() {
         taskRepository.close()
@@ -102,6 +103,14 @@ class MainActivityViewModel: BaseViewModel() {
         }
     }
 
+    override fun onTutorialCompleted(step: TutorialStep) {
+        updateUser("flags.tutorial." + step.tutorialGroup + "." + step.identifier, true)
+        logTutorialStatus(step, true)
+    }
+
+    override fun onTutorialDeferred(step: TutorialStep) {
+        taskRepository.modify(step) { it.displayedOn = Date() }
+    }
 
     fun logTutorialStatus(step: TutorialStep, complete: Boolean) {
         val additionalData = HashMap<String, Any>()
@@ -121,18 +130,24 @@ class MainActivityViewModel: BaseViewModel() {
             this.maintenanceService.maintenanceStatus
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe( { maintenanceResponse ->
+                .subscribe(
+                    { maintenanceResponse ->
                         if (maintenanceResponse == null) {
                             return@subscribe
                         }
-                    onResult(maintenanceResponse)
+                        onResult(maintenanceResponse)
                     },
                     RxErrorHandler.handleEmptyError()
                 )
         )
     }
 
-    fun getToolbarTitle(id: Int, label: CharSequence?, eggType: String?, onSuccess: ((CharSequence?) -> Unit)) {
+    fun getToolbarTitle(
+        id: Int,
+        label: CharSequence?,
+        eggType: String?,
+        onSuccess: ((CharSequence?) -> Unit)
+    ) {
         if (id == R.id.petDetailRecyclerFragment || id == R.id.mountDetailRecyclerFragment) {
             disposable.add(
                 inventoryRepository.getItem("egg", eggType ?: "").firstElement().subscribe(

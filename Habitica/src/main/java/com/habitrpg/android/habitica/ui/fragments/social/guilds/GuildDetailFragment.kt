@@ -30,12 +30,11 @@ import com.habitrpg.android.habitica.ui.views.HabiticaIcons
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.SnackbarActivity
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
+import javax.inject.Inject
+import javax.inject.Named
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import java.util.*
-import javax.inject.Inject
-import javax.inject.Named
 
 class GuildDetailFragment : BaseFragment<FragmentGuildDetailBinding>() {
 
@@ -69,6 +68,7 @@ class GuildDetailFragment : BaseFragment<FragmentGuildDetailBinding>() {
         viewModel?.getIsMemberData()?.observe(viewLifecycleOwner, { updateMembership(it) })
 
         binding?.guildDescription?.movementMethod = LinkMovementMethod.getInstance()
+        binding?.guildSummary?.movementMethod = LinkMovementMethod.getInstance()
         binding?.guildBankIcon?.setImageBitmap(HabiticaIconsHelper.imageOfGem())
         binding?.leaveButton?.setOnClickListener {
             leaveGuild()

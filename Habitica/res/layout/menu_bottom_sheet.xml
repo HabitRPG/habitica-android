@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     style="@style/BottomMenu"
-    android:clickable="false">
+    android:clickable="false"
+    android:background="@drawable/rounded_avatar_bg">
     <TextView
         android:id="@+id/title_view"
         android:layout_width="match_parent"
@@ -13,7 +14,7 @@
         tools:text="Title"
         android:gravity="center"
         style="@style/Subheader1"
-        android:background="@color/window_background"
+        android:background="@drawable/bottom_sheet_title"
         android:padding="8dp"/>
     <LinearLayout
         android:id="@+id/menu_items"

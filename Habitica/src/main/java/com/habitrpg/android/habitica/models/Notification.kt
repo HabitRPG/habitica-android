@@ -1,6 +1,19 @@
 package com.habitrpg.android.habitica.models
 
-import com.habitrpg.android.habitica.models.notifications.*
+import com.habitrpg.android.habitica.models.notifications.AchievementData
+import com.habitrpg.android.habitica.models.notifications.ChallengeWonData
+import com.habitrpg.android.habitica.models.notifications.FirstDropData
+import com.habitrpg.android.habitica.models.notifications.GroupTaskApprovedData
+import com.habitrpg.android.habitica.models.notifications.GroupTaskNeedsWorkData
+import com.habitrpg.android.habitica.models.notifications.GroupTaskRequiresApprovalData
+import com.habitrpg.android.habitica.models.notifications.GuildInvitationData
+import com.habitrpg.android.habitica.models.notifications.LoginIncentiveData
+import com.habitrpg.android.habitica.models.notifications.NewChatMessageData
+import com.habitrpg.android.habitica.models.notifications.NewStuffData
+import com.habitrpg.android.habitica.models.notifications.NotificationData
+import com.habitrpg.android.habitica.models.notifications.PartyInvitationData
+import com.habitrpg.android.habitica.models.notifications.QuestInvitationData
+import com.habitrpg.android.habitica.models.notifications.UnallocatedPointsData
 
 class Notification {
     enum class Type(val type: String) {

@@ -1,7 +1,13 @@
 package com.habitrpg.android.habitica.ui.views
 
 import android.content.Context
-import android.graphics.*
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffXfermode
+import android.graphics.RectF
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.widget.FrameLayout

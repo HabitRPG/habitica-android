@@ -7,7 +7,7 @@ import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.reactivex.rxjava3.subjects.PublishSubject
 import java.lang.ref.WeakReference
-import java.util.*
+import java.util.Date
 
 class NotificationsManager {
     private val displayNotificationSubject = PublishSubject.create<Notification>()
@@ -19,9 +19,9 @@ class NotificationsManager {
     private var lastNotificationHandling: Date? = null
 
     val displayNotificationEvents: Flowable<Notification>
-    get() {
-        return displayNotificationSubject.toFlowable(BackpressureStrategy.DROP)
-    }
+        get() {
+            return displayNotificationSubject.toFlowable(BackpressureStrategy.DROP)
+        }
 
     init {
         this.seenNotifications = HashMap()
@@ -88,6 +88,7 @@ class NotificationsManager {
 
                     Notification.Type.ACHIEVEMENT_GENERIC.type -> true
                     Notification.Type.ACHIEVEMENT_ONBOARDING_COMPLETE.type -> true
+                    Notification.Type.LOGIN_INCENTIVE.type -> true
                     else -> false
                 }
 

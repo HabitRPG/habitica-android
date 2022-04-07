@@ -3,7 +3,12 @@ package com.habitrpg.android.habitica.ui.fragments.social.party
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -20,7 +25,6 @@ import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.fragments.social.ChatFragment
 import com.habitrpg.android.habitica.ui.viewmodels.GroupViewType
 import com.habitrpg.android.habitica.ui.viewmodels.PartyViewModel
-import java.util.*
 
 class PartyFragment : BaseMainFragment<FragmentViewpagerBinding>() {
 
@@ -73,7 +77,7 @@ class PartyFragment : BaseMainFragment<FragmentViewpagerBinding>() {
         viewModel.loadPartyID()
 
         this.tutorialStepIdentifier = "party"
-        this.tutorialText = getString(R.string.tutorial_party)
+        this.tutorialTexts = listOf(getString(R.string.tutorial_party))
 
         viewModel.retrieveGroup {}
     }
@@ -96,15 +100,11 @@ class PartyFragment : BaseMainFragment<FragmentViewpagerBinding>() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         val group = viewModel.getGroupData().value
-        if (group != null && this.user != null) {
-            if (group.leaderID == this.user?.id) {
-                inflater.inflate(R.menu.menu_party_admin, menu)
-                if (group.memberCount > 1) {
-                    menu.findItem(R.id.menu_guild_leave).isVisible = false
-                }
-            } else {
-                inflater.inflate(R.menu.menu_party, menu)
-            }
+        if (viewModel.isLeader) {
+            inflater.inflate(R.menu.menu_party_admin, menu)
+            menu.findItem(R.id.menu_guild_leave).isVisible = group?.memberCount != 1
+        } else {
+            inflater.inflate(R.menu.menu_party, menu)
         }
     }
 
@@ -159,7 +159,7 @@ class PartyFragment : BaseMainFragment<FragmentViewpagerBinding>() {
     private val sendInvitesResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if (it.resultCode == Activity.RESULT_OK) {
             val inviteData = HashMap<String, Any>()
-            inviteData["inviter"] = user?.profile?.name ?: ""
+            inviteData["inviter"] = viewModel.user.value?.profile?.name ?: ""
             val emails = it.data?.getStringArrayExtra(GroupInviteActivity.EMAILS_KEY)
             if (emails != null && emails.isNotEmpty()) {
                 val invites = ArrayList<HashMap<String, String>>()
@@ -209,7 +209,11 @@ class PartyFragment : BaseMainFragment<FragmentViewpagerBinding>() {
         binding?.viewPager?.adapter = viewPagerAdapter
 
         binding?.viewPager?.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) {
                 if (position == 1) {
                     chatFragment?.setNavigatedToFragment()
                 }

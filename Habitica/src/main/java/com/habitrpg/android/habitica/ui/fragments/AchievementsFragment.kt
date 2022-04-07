@@ -2,7 +2,12 @@ package com.habitrpg.android.habitica.ui.fragments
 
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
@@ -14,6 +19,7 @@ import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBind
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.ui.adapter.AchievementsAdapter
 import com.habitrpg.android.habitica.ui.helpers.ToolbarColorHelper
+import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import io.reactivex.rxjava3.kotlin.Flowables
 import io.reactivex.rxjava3.kotlin.combineLatest
 import javax.inject.Inject
@@ -22,6 +28,8 @@ class AchievementsFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding
 
     @Inject
     lateinit var inventoryRepository: InventoryRepository
+    @Inject
+    lateinit var userViewModel: MainUserViewModel
 
     override var binding: FragmentRefreshRecyclerviewBinding? = null
 
@@ -42,7 +50,11 @@ class AchievementsFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding
         component.inject(this)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         hidesToolbar = true
         adapter = AchievementsAdapter()
         onRefresh()
@@ -125,6 +137,7 @@ class AchievementsFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding
                         }
                     )
 
+                    val user = userViewModel.user.value
                     val challengeAchievementCount = user?.challengeAchievements?.size ?: 0
                     if (challengeAchievementCount > 0) {
                         entries.add(Pair("Challenges won", challengeAchievementCount))

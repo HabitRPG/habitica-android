@@ -8,8 +8,7 @@ import android.widget.TimePicker
 import androidx.preference.PreferenceDialogFragmentCompat
 import androidx.preference.PreferenceFragmentCompat
 import com.habitrpg.android.habitica.prefs.TimePreference
-import java.text.DateFormat
-import java.util.*
+import java.util.Locale
 
 class TimePreferenceDialogFragment : PreferenceDialogFragmentCompat() {
 
@@ -34,7 +33,7 @@ class TimePreferenceDialogFragment : PreferenceDialogFragmentCompat() {
             return lastHour.toString() + ":" + String.format(Locale.UK, "%02d", lastMinute)
         }
 
-    override fun onCreateDialogView(context: Context?): View {
+    override fun onCreateDialogView(context: Context): View {
         picker = TimePicker(context)
         picker.setIs24HourView(android.text.format.DateFormat.is24HourFormat(context))
         return picker

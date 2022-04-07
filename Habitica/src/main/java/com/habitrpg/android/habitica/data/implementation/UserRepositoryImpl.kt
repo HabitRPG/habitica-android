@@ -26,10 +26,17 @@ import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.functions.BiFunction
-import java.util.*
+import java.util.Date
+import java.util.GregorianCalendar
 import java.util.concurrent.TimeUnit
 
-class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiClient, userID: String, private val taskRepository: TaskRepository, var appConfigManager: AppConfigManager) : BaseRepositoryImpl<UserLocalRepository>(localRepository, apiClient, userID), UserRepository {
+class UserRepositoryImpl(
+    localRepository: UserLocalRepository,
+    apiClient: ApiClient,
+    userID: String,
+    private val taskRepository: TaskRepository,
+    var appConfigManager: AppConfigManager
+) : BaseRepositoryImpl<UserLocalRepository>(localRepository, apiClient, userID), UserRepository {
 
     private var lastSync: Date? = null
 
@@ -105,7 +112,7 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
             .map<Map<String, Any>> { tutorialSteps ->
                 val updateData = HashMap<String, Any>()
                 for (step in tutorialSteps) {
-                    updateData["flags.tutorial." + step.tutorialGroup + "." + step.identifier] = false
+                    updateData[step.flagPath] = false
                 }
                 updateData
             }
@@ -257,7 +264,11 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
     override fun updateEmail(newEmail: String, password: String): Flowable<Void> =
         apiClient.updateEmail(newEmail.trim(), password)
 
-    override fun updatePassword(oldPassword: String, newPassword: String, newPasswordConfirmation: String): Flowable<Void> =
+    override fun updatePassword(
+        oldPassword: String,
+        newPassword: String,
+        newPasswordConfirmation: String
+    ): Flowable<Void> =
         apiClient.updatePassword(oldPassword.trim(), newPassword.trim(), newPasswordConfirmation.trim())
 
     override fun allocatePoint(stat: Attribute): Flowable<Stats> {
@@ -288,7 +299,12 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
         }
     }
 
-    override fun bulkAllocatePoints(strength: Int, intelligence: Int, constitution: Int, perception: Int): Flowable<Stats> =
+    override fun bulkAllocatePoints(
+        strength: Int,
+        intelligence: Int,
+        constitution: Int,
+        perception: Int
+    ): Flowable<Stats> =
         zipWithLiveUser(apiClient.bulkAllocatePoints(strength, intelligence, constitution, perception)) { stats, user ->
             localRepository.modify(user) { liveUser ->
                 liveUser.stats?.strength = stats.strength
@@ -312,13 +328,7 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
                 user
             }
         if (tasks.isNotEmpty()) {
-            val scoringList = mutableListOf<Map<String, String>>()
-            for (task in tasks) {
-                val map = mutableMapOf<String, String>()
-                map["id"] = task.id ?: ""
-                map["direction"] = TaskDirection.UP.text
-                scoringList.add(map)
-            }
+            val scoringList = tasks.map { mapOf(Pair("id", it.id ?: ""), Pair("direction", TaskDirection.UP.text)) }
             observable = observable.flatMap { taskRepository.bulkScoreTasks(scoringList).firstElement() }
         }
         observable.flatMap { apiClient.runCron().firstElement() }
@@ -386,12 +396,11 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
 
     override fun retrieveTeamPlan(teamID: String): Flowable<Group> {
         return Flowable.zip(
-            apiClient.getGroup(teamID), apiClient.getTeamPlanTasks(teamID),
-            { team, tasks ->
-                team.tasks = tasks
-                team
-            }
-        )
+            apiClient.getGroup(teamID), apiClient.getTeamPlanTasks(teamID)
+        ) { team, tasks ->
+            team.tasks = tasks
+            team
+        }
             .doOnNext { localRepository.save(it) }
             .doOnNext { team ->
                 val id = team.id

@@ -12,7 +12,8 @@ import androidx.preference.PreferenceFragmentCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.prefs.TimePreference
 import java.text.DateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.GregorianCalendar
 
 class DayStartPreferenceDialogFragment : PreferenceDialogFragmentCompat() {
 
@@ -33,7 +34,7 @@ class DayStartPreferenceDialogFragment : PreferenceDialogFragmentCompat() {
             return lastHour.toString() + ":00"
         }
 
-    override fun onCreateDialogView(context: Context?): View {
+    override fun onCreateDialogView(context: Context): View {
         val wrapper = LinearLayout(context)
         wrapper.orientation = LinearLayout.VERTICAL
         picker = TimePicker(context)

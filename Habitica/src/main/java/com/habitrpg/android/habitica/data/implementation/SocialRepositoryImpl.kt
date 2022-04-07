@@ -9,15 +9,22 @@ import com.habitrpg.android.habitica.models.Achievement
 import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.responses.PostChatMessageResult
-import com.habitrpg.android.habitica.models.social.*
+import com.habitrpg.android.habitica.models.social.ChatMessage
+import com.habitrpg.android.habitica.models.social.FindUsernameResult
+import com.habitrpg.android.habitica.models.social.Group
+import com.habitrpg.android.habitica.models.social.GroupMembership
+import com.habitrpg.android.habitica.models.social.InboxConversation
 import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Single
+import java.util.UUID
 import retrofit2.HttpException
-import java.util.*
-import kotlin.collections.HashMap
 
-class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: ApiClient, userID: String) : BaseRepositoryImpl<SocialLocalRepository>(localRepository, apiClient, userID), SocialRepository {
+class SocialRepositoryImpl(
+    localRepository: SocialLocalRepository,
+    apiClient: ApiClient,
+    userID: String
+) : BaseRepositoryImpl<SocialLocalRepository>(localRepository, apiClient, userID), SocialRepository {
     override fun transferGroupOwnership(groupID: String, userID: String): Flowable<Group> {
         return localRepository.getGroup(groupID)
             .map {
@@ -35,10 +42,6 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
             .flatMap {
                 retrieveGroupMembers(groupID, true)
             }
-    }
-
-    override fun getChatmessage(messageID: String): Flowable<ChatMessage> {
-        return localRepository.getChatMessage(messageID)
     }
 
     override fun blockMember(userID: String): Flowable<List<String>> {
@@ -92,8 +95,14 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
             return Flowable.empty()
         }
         val liked = chatMessage.userLikesMessage(userID)
-        localRepository.likeMessage(chatMessage, userID, !liked)
+        if (chatMessage.isManaged) {
+            localRepository.likeMessage(chatMessage, userID, !liked)
+        }
         return apiClient.likeMessage(chatMessage.groupId ?: "", chatMessage.id)
+            .map {
+                it.groupId = chatMessage.groupId
+                it
+            }
     }
 
     override fun deleteMessage(chatMessage: ChatMessage): Flowable<Void> {
@@ -162,7 +171,14 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
             }
     }
 
-    override fun createGroup(name: String?, description: String?, leader: String?, type: String?, privacy: String?, leaderCreateChallenge: Boolean?): Flowable<Group> {
+    override fun createGroup(
+        name: String?,
+        description: String?,
+        leader: String?,
+        type: String?,
+        privacy: String?,
+        leaderCreateChallenge: Boolean?
+    ): Flowable<Group> {
         val group = Group()
         group.name = name
         group.description = description
@@ -174,7 +190,13 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
         }
     }
 
-    override fun updateGroup(group: Group?, name: String?, description: String?, leader: String?, leaderCreateChallenge: Boolean?): Flowable<Group> {
+    override fun updateGroup(
+        group: Group?,
+        name: String?,
+        description: String?,
+        leader: String?,
+        leaderCreateChallenge: Boolean?
+    ): Flowable<Group> {
         if (group == null) {
             return Flowable.empty()
         }

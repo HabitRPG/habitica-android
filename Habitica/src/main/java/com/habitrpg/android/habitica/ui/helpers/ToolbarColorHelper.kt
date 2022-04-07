@@ -29,7 +29,6 @@ import androidx.preference.PreferenceManager
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.extensions.waitForLayout
-import java.util.*
 
 /**
  * Helper class that iterates through Toolbar views, and sets dynamically icons and texts color
@@ -41,7 +40,11 @@ object ToolbarColorHelper {
      * @param toolbar toolbar view being colored
      * @param activity reference to activity needed to register observers
      */
-    fun colorizeToolbar(toolbar: Toolbar, activity: Activity?, overrideModernHeader: Boolean? = null) {
+    fun colorizeToolbar(
+        toolbar: Toolbar,
+        activity: Activity?,
+        overrideModernHeader: Boolean? = null
+    ) {
         if (activity == null) return
         val modernHeaderStyle = overrideModernHeader ?: PreferenceManager.getDefaultSharedPreferences(activity).getBoolean("modern_header_style", true)
         val toolbarIconsColor = if (modernHeaderStyle) {

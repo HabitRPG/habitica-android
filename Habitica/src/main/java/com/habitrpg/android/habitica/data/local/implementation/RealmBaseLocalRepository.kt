@@ -85,6 +85,10 @@ abstract class RealmBaseLocalRepository internal constructor(override var realm:
         }
     }
 
+    override fun getLiveUser(id: String): User? {
+        return realm.where(User::class.java).equalTo("id", id).findFirst()
+    }
+
     override fun <T : BaseObject> getLiveObject(obj: T): T? {
         if (isClosed) return null
         if (obj !is RealmObject || !obj.isManaged) return obj

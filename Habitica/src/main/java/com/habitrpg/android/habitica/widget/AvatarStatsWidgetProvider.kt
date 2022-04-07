@@ -48,7 +48,11 @@ class AvatarStatsWidgetProvider : BaseWidgetProvider() {
         }, RxErrorHandler.handleEmptyError())
     }
 
-    override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
+    override fun onUpdate(
+        context: Context,
+        appWidgetManager: AppWidgetManager,
+        appWidgetIds: IntArray
+    ) {
         super.onUpdate(context, appWidgetManager, appWidgetIds)
         this.setUp()
         this.appWidgetManager = appWidgetManager
@@ -64,7 +68,12 @@ class AvatarStatsWidgetProvider : BaseWidgetProvider() {
         }
     }
 
-    override fun configureRemoteViews(remoteViews: RemoteViews, widgetId: Int, columns: Int, rows: Int): RemoteViews {
+    override fun configureRemoteViews(
+        remoteViews: RemoteViews,
+        widgetId: Int,
+        columns: Int,
+        rows: Int
+    ): RemoteViews {
         showAvatar = columns > 3
         if (showAvatar) {
             remoteViews.setViewVisibility(R.id.avatar_view, View.VISIBLE)
@@ -78,8 +87,6 @@ class AvatarStatsWidgetProvider : BaseWidgetProvider() {
         } else {
             remoteViews.setViewVisibility(R.id.detail_info_view, View.GONE)
         }
-
-
 
         return remoteViews
     }

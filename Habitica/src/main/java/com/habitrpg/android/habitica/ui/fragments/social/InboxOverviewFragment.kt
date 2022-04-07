@@ -2,7 +2,12 @@ package com.habitrpg.android.habitica.ui.fragments.social
 
 import android.content.Context
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import android.widget.TextView
 import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.R
@@ -39,9 +44,13 @@ class InboxOverviewFragment : BaseMainFragment<FragmentInboxBinding>(), androidx
         return FragmentInboxBinding.inflate(inflater, container, false)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         this.hidesToolbar = true
-        compositeSubscription.add(this.socialRepository.markPrivateMessagesRead(user).subscribe({ }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(this.socialRepository.markPrivateMessagesRead(null).subscribe({ }, RxErrorHandler.handleEmptyError()))
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 

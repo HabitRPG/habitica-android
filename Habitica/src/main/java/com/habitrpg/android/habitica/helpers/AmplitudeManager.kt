@@ -4,7 +4,6 @@ import com.amplitude.api.Amplitude
 import com.habitrpg.android.habitica.BuildConfig
 import org.json.JSONException
 import org.json.JSONObject
-import java.util.HashMap
 
 object AmplitudeManager {
     var EVENT_CATEGORY_BEHAVIOUR = "behaviour"
@@ -16,7 +15,12 @@ object AmplitudeManager {
     var EVENT_HITTYPE_UPDATE_WIDGET = "update"
 
     @JvmOverloads
-    fun sendEvent(eventAction: String?, eventCategory: String?, hitType: String?, additionalData: Map<String, Any>? = null) {
+    fun sendEvent(
+        eventAction: String?,
+        eventCategory: String?,
+        hitType: String?,
+        additionalData: Map<String, Any>? = null
+    ) {
         if (BuildConfig.DEBUG) {
             return
         }

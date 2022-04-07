@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
 import androidx.core.graphics.drawable.toBitmap
+import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.DialogPetSuggestHatchBinding
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
@@ -22,7 +23,7 @@ import com.habitrpg.android.habitica.ui.views.CurrencyView
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Observable
-import java.util.*
+import java.util.Locale
 import javax.inject.Inject
 
 class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
@@ -36,9 +37,19 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as? LayoutInflater
         inflater?.let { binding = DialogPetSuggestHatchBinding.inflate(it) }
         setAdditionalContentView(binding.root)
+        HabiticaBaseApplication.userComponent?.inject(this)
     }
 
-    fun configure(pet: Animal, egg: Egg?, potion: HatchingPotion?, eggCount: Int, potionCount: Int, hasUnlockedEgg: Boolean, hasUnlockedPotion: Boolean, hasMount: Boolean) {
+    fun configure(
+        pet: Animal,
+        egg: Egg?,
+        potion: HatchingPotion?,
+        eggCount: Int,
+        potionCount: Int,
+        hasUnlockedEgg: Boolean,
+        hasUnlockedPotion: Boolean,
+        hasMount: Boolean
+    ) {
         DataBindingUtils.loadImage(binding.eggView, "Pet_Egg_${pet.animal}")
         DataBindingUtils.loadImage(binding.hatchingPotionView, "Pet_HatchingPotion_${pet.color}")
         binding.petTitleView.text = pet.text
@@ -172,7 +183,8 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
                 HatchPetUseCase.RequestValues(
                     potion, egg,
                     it
-                )).subscribeWithErrorHandler {}
+                )
+            ).subscribeWithErrorHandler {}
         }
     }
 

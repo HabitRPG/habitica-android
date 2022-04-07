@@ -28,7 +28,6 @@ import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.TaskFilterHelper
-import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.tasks.TaskType
 import com.habitrpg.android.habitica.ui.activities.TaskFormActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
@@ -36,7 +35,6 @@ import com.habitrpg.android.habitica.ui.views.navigation.HabiticaBottomNavigatio
 import com.habitrpg.android.habitica.ui.views.tasks.TaskFilterDialog
 import io.reactivex.rxjava3.disposables.Disposable
 import java.util.Date
-import java.util.HashMap
 import java.util.WeakHashMap
 import javax.inject.Inject
 
@@ -204,7 +202,10 @@ class TeamBoardFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchVi
                 }
             }
             dialog.setListener(object : TaskFilterDialog.OnFilterCompletedListener {
-                override fun onFilterCompleted(activeTaskFilter: String?, activeTags: MutableList<String>) {
+                override fun onFilterCompleted(
+                    activeTaskFilter: String?,
+                    activeTags: MutableList<String>
+                ) {
                     if (viewFragmentsDictionary == null) {
                         return
                     }
@@ -292,58 +293,6 @@ class TeamBoardFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchVi
             }
         }
     }
-
-    private fun updateBottomBarBadges() {
-        if (bottomNavigation == null) {
-            return
-        }
-        compositeSubscription.add(
-            tutorialRepository.getTutorialSteps(listOf("habits", "dailies", "todos", "rewards")).subscribe(
-                { tutorialSteps ->
-                    val activeTutorialFragments = ArrayList<TaskType>()
-                    for (step in tutorialSteps) {
-                        var id = -1
-                        val taskType = when (step.identifier) {
-                            "habits" -> {
-                                id = R.id.habits_tab
-                                TaskType.HABIT
-                            }
-                            "dailies" -> {
-                                id = R.id.dailies_tab
-                                TaskType.DAILY
-                            }
-                            "todos" -> {
-                                id = R.id.todos_tab
-                                TaskType.TODO
-                            }
-                            "rewards" -> {
-                                id = R.id.rewards_tab
-                                TaskType.REWARD
-                            }
-                            else -> TaskType.HABIT
-                        }
-                        val tab = bottomNavigation?.tabWithId(id)
-                        if (step.shouldDisplay()) {
-                            tab?.badgeCount = 1
-                            activeTutorialFragments.add(taskType)
-                        } else {
-                            tab?.badgeCount = 0
-                        }
-                    }
-                    if (activeTutorialFragments.size == 1) {
-                        val fragment = viewFragmentsDictionary?.get(indexForTaskType(activeTutorialFragments[0]))
-                        if (fragment?.tutorialTexts != null && context != null) {
-                            val finalText = context?.getString(R.string.tutorial_tasks_complete)
-                            if (!fragment.tutorialTexts.contains(finalText) && finalText != null) {
-                                fragment.tutorialTexts.add(finalText)
-                            }
-                        }
-                    }
-                },
-                RxErrorHandler.handleEmptyError()
-            )
-        )
-    }
     // endregion
 
     private fun openNewTaskActivity(type: TaskType) {
@@ -401,7 +350,6 @@ class TeamBoardFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchVi
         val index = indexForTaskType(taskType)
         if (binding?.viewPager != null && index != -1) {
             binding?.viewPager?.currentItem = index
-            updateBottomBarBadges()
         }
     }
 
@@ -435,7 +383,6 @@ class TeamBoardFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchVi
             else -> 0
         }
         binding?.viewPager?.setCurrentItem(newItem, smooth)
-        updateBottomBarBadges()
     }
 
     override fun onAdd(taskType: TaskType) {

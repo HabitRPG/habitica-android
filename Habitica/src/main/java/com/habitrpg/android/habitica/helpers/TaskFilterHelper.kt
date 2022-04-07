@@ -6,21 +6,15 @@ import io.realm.Case
 import io.realm.OrderedRealmCollection
 import io.realm.RealmQuery
 import io.realm.Sort
-import java.util.*
 
 class TaskFilterHelper {
     var searchQuery: String? = null
-    private var tagsId: MutableList<String> = ArrayList()
     private val activeFilters = HashMap<TaskType, String>()
 
-    var tags: MutableList<String>
-        get() = this.tagsId
-        set(tagsId) {
-            this.tagsId = tagsId
-        }
+    var tags: MutableList<String> = mutableListOf()
 
     fun howMany(type: TaskType?): Int {
-        return this.tagsId.size + if (isTaskFilterActive(type)) 1 else 0
+        return this.tags.size + if (isTaskFilterActive(type)) 1 else 0
     }
 
     private fun isTaskFilterActive(type: TaskType?): Boolean {
@@ -53,7 +47,7 @@ class TaskFilterHelper {
     }
 
     private fun isFiltered(task: Task, activeFilter: String?): Boolean {
-        if (!task.containsAllTagIds(tagsId)) {
+        if (!task.containsAllTagIds(tags)) {
             return false
         }
         return if (activeFilter != null && activeFilter != Task.FILTER_ALL) {
@@ -97,8 +91,8 @@ class TaskFilterHelper {
             val taskType = unfilteredData[0].type
             val activeFilter = getActiveFilter(taskType)
 
-            if (tagsId.size > 0) {
-                query = query.`in`("tags.id", tagsId.toTypedArray())
+            if (tags.size > 0) {
+                query = query.`in`("tags.id", tags.toTypedArray())
             }
             if (searchQuery?.isNotEmpty() == true) {
                 query = query

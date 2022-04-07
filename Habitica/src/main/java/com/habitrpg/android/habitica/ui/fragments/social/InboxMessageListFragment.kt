@@ -4,9 +4,15 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.MainNavDirections
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
@@ -88,7 +94,14 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
                 { member ->
                     setReceivingUser(member.username, member.id)
                     activity?.title = member.displayName
-                    chatAdapter = InboxAdapter(user, member)
+                    chatAdapter = InboxAdapter(viewModel.user.value, member)
+                    chatAdapter?.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+                        override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                            if (positionStart == 0) {
+                                binding?.recyclerView?.scrollToPosition(0)
+                            }
+                        }
+                    })
                     viewModel.messages.observe(this.viewLifecycleOwner) {
                         markMessagesAsRead(it)
                         chatAdapter?.submitList(it)
@@ -170,7 +183,7 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
     }
 
     private fun markMessagesAsRead(messages: List<ChatMessage>) {
-        socialRepository.markSomePrivateMessagesAsRead(user, messages)
+        socialRepository.markSomePrivateMessagesAsRead(viewModel.user.value, messages)
     }
 
     private fun startAutoRefreshing() {
@@ -201,74 +214,72 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
             this.socialRepository.retrieveInboxMessages(replyToUserUUID ?: "", 0)
                 .subscribe(
                     {}, RxErrorHandler.handleEmptyError(),
-                        {
-                            viewModel.invalidateDataSource()
+                    {
+                        viewModel.invalidateDataSource()
+                    }
+                )
+        )
+    }
+
+    private fun sendMessage(chatText: String) {
+        viewModel.memberID?.let { userID ->
+            socialRepository.postPrivateMessage(userID, chatText)
+                .delay(200, TimeUnit.MILLISECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        viewModel.invalidateDataSource()
+                    },
+                    { error ->
+                        RxErrorHandler.reportError(error)
+                        binding?.let {
+                            val alert = HabiticaAlertDialog(it.chatBarView.context)
+                            alert.setTitle("You cannot reply to this conversation")
+                            alert.setMessage("This user is unable to receive your private message")
+                            alert.addOkButton()
+                            alert.show()
                         }
-                    )
-            )
-        }
-
-        private fun sendMessage(chatText: String) {
-            viewModel.memberID?.let { userID ->
-                socialRepository.postPrivateMessage(userID, chatText)
-                    .delay(200, TimeUnit.MILLISECONDS)
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(
-                        {
-                            binding?.recyclerView?.scrollToPosition(0)
-                            viewModel.invalidateDataSource()
-                        },
-                        { error ->
-                            RxErrorHandler.reportError(error)
-                            binding?.let {
-                                val alert = HabiticaAlertDialog(it.chatBarView.context)
-                                alert.setTitle("You cannot reply to this conversation")
-                                alert.setMessage("This user is unable to receive your private message")
-                                alert.addOkButton()
-                                alert.show()
-                            }
-                            binding?.chatBarView?.message = chatText
-                        }
-                    )
-                KeyboardUtil.dismissKeyboard(getActivity())
-            }
-        }
-
-        private fun setReceivingUser(chatRoomUser: String?, replyToUserUUID: String?) {
-            this.chatRoomUser = chatRoomUser
-            this.replyToUserUUID = replyToUserUUID
-            activity?.title = chatRoomUser
-        }
-
-        private fun copyMessageToClipboard(chatMessage: ChatMessage) {
-            val clipMan = getActivity()?.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
-            val messageText = ClipData.newPlainText("Chat message", chatMessage.text)
-            clipMan?.setPrimaryClip(messageText)
-            val activity = getActivity() as? MainActivity
-            if (activity != null) {
-                showSnackbar(activity.snackbarContainer, getString(R.string.chat_message_copied), HabiticaSnackbar.SnackbarDisplayType.NORMAL)
-            }
-        }
-
-        private fun showFlagConfirmationDialog(chatMessage: ChatMessage) {
-            val directions = MainNavDirections.actionGlobalReportMessageActivity(chatMessage.text ?: "", chatMessage.user ?: "", chatMessage.id, null)
-            MainNavigationController.navigate(directions)
-        }
-
-        private fun showDeleteConfirmationDialog(chatMessage: ChatMessage) {
-            val context = context
-            if (context != null) {
-                AlertDialog.Builder(context)
-                    .setTitle(R.string.confirm_delete_tag_title)
-                    .setMessage(R.string.confirm_delete_tag_message)
-                    .setIcon(android.R.drawable.ic_dialog_alert)
-                    .setPositiveButton(R.string.yes) { _, _ -> socialRepository.deleteMessage(chatMessage).subscribe({ }, RxErrorHandler.handleEmptyError()) }
-                    .setNegativeButton(R.string.no, null).show()
-            }
-        }
-
-        private fun openProfile() {
-            replyToUserUUID?.let { FullProfileActivity.open(it) }
+                        binding?.chatBarView?.message = chatText
+                    }
+                )
+            KeyboardUtil.dismissKeyboard(getActivity())
         }
     }
-    
+
+    private fun setReceivingUser(chatRoomUser: String?, replyToUserUUID: String?) {
+        this.chatRoomUser = chatRoomUser
+        this.replyToUserUUID = replyToUserUUID
+        activity?.title = chatRoomUser
+    }
+
+    private fun copyMessageToClipboard(chatMessage: ChatMessage) {
+        val clipMan = getActivity()?.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
+        val messageText = ClipData.newPlainText("Chat message", chatMessage.text)
+        clipMan?.setPrimaryClip(messageText)
+        val activity = getActivity() as? MainActivity
+        if (activity != null) {
+            showSnackbar(activity.snackbarContainer, getString(R.string.chat_message_copied), HabiticaSnackbar.SnackbarDisplayType.NORMAL)
+        }
+    }
+
+    private fun showFlagConfirmationDialog(chatMessage: ChatMessage) {
+        val directions = MainNavDirections.actionGlobalReportMessageActivity(chatMessage.text ?: "", chatMessage.user ?: "", chatMessage.id, null)
+        MainNavigationController.navigate(directions)
+    }
+
+    private fun showDeleteConfirmationDialog(chatMessage: ChatMessage) {
+        val context = context
+        if (context != null) {
+            AlertDialog.Builder(context)
+                .setTitle(R.string.confirm_delete_tag_title)
+                .setMessage(R.string.confirm_delete_tag_message)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setPositiveButton(R.string.yes) { _, _ -> socialRepository.deleteMessage(chatMessage).subscribe({ }, RxErrorHandler.handleEmptyError()) }
+                .setNegativeButton(R.string.no, null).show()
+        }
+    }
+
+    private fun openProfile() {
+        replyToUserUUID?.let { FullProfileActivity.open(it) }
+    }
+}

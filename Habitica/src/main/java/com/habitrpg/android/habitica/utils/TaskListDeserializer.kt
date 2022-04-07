@@ -12,8 +12,6 @@ import com.habitrpg.android.habitica.models.tasks.TaskList
 import io.realm.Realm
 import io.realm.RealmList
 import java.lang.reflect.Type
-import java.util.ArrayList
-import java.util.HashMap
 
 class TaskListDeserializer : JsonDeserializer<TaskList> {
     override fun deserialize(json: JsonElement, typeOfT: Type, ctx: JsonDeserializationContext): TaskList {
@@ -49,7 +47,11 @@ class TaskListDeserializer : JsonDeserializer<TaskList> {
         return tasks
     }
 
-    private fun handleTags(databaseTags: List<Tag>, json: JsonArray?, context: JsonDeserializationContext): RealmList<Tag> {
+    private fun handleTags(
+        databaseTags: List<Tag>,
+        json: JsonArray?,
+        context: JsonDeserializationContext
+    ): RealmList<Tag> {
         val tags = RealmList<Tag>()
         for (tagElement in json ?: listOf<JsonElement>()) {
             if (tagElement.isJsonObject) {

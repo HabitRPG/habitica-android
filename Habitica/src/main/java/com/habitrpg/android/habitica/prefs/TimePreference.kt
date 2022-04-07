@@ -5,9 +5,10 @@ import android.content.res.TypedArray
 import android.util.AttributeSet
 import androidx.preference.DialogPreference
 import java.text.DateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Locale
 
-class TimePreference(ctxt: Context?, attrs: AttributeSet?) : DialogPreference(ctxt, attrs) {
+class TimePreference(ctxt: Context, attrs: AttributeSet?) : DialogPreference(ctxt, attrs) {
     private var timeval: String? = null
     override fun onGetDefaultValue(a: TypedArray, index: Int): Any {
         return a.getString(index)!!
@@ -39,7 +40,7 @@ class TimePreference(ctxt: Context?, attrs: AttributeSet?) : DialogPreference(ct
             }
         }
 
-    override fun setSummary(summary: CharSequence) {
+    override fun setSummary(summary: CharSequence?) {
         val calendar = Calendar.getInstance(Locale.getDefault())
         calendar.set(Calendar.HOUR_OF_DAY, getHour(timeval))
         calendar.set(Calendar.MINUTE, getMinute(timeval))
@@ -54,7 +55,6 @@ class TimePreference(ctxt: Context?, attrs: AttributeSet?) : DialogPreference(ct
 
         fun getMinute(timeval: String?): Int {
             return timeval?.split(":")?.get(1)?.toInt() ?: 0
-
         }
     }
 

@@ -39,7 +39,8 @@ import com.habitrpg.android.habitica.ui.helpers.ToolbarColorHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.userpicture.BitmapUtils
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import java.util.*
+import java.util.Date
+import java.util.Locale
 import javax.inject.Inject
 
 abstract class BaseActivity : AppCompatActivity() {
@@ -66,7 +67,7 @@ abstract class BaseActivity : AppCompatActivity() {
         return (getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater).inflate(getLayoutResId(), null)
     }
 
-    protected var compositeSubscription = CompositeDisposable()
+    var compositeSubscription = CompositeDisposable()
 
     private val habiticaApplication: HabiticaApplication
         get() = application as HabiticaApplication
@@ -94,14 +95,16 @@ abstract class BaseActivity : AppCompatActivity() {
         injectActivity(HabiticaBaseApplication.userComponent)
         setContentView(getContentView())
         compositeSubscription = CompositeDisposable()
-        compositeSubscription.add(notificationsManager.displayNotificationEvents.subscribe(
-            {
-                if (ShowNotificationInteractor(this, lifecycleScope).handleNotification(it)) {
-                    compositeSubscription.add(userRepository.retrieveUser(false, true).subscribeWithErrorHandler {})
-                }
-            },
-            RxErrorHandler.handleEmptyError()
-        ))
+        compositeSubscription.add(
+            notificationsManager.displayNotificationEvents.subscribe(
+                {
+                    if (ShowNotificationInteractor(this, lifecycleScope).handleNotification(it)) {
+                        compositeSubscription.add(userRepository.retrieveUser(false, true).subscribeWithErrorHandler {})
+                    }
+                },
+                RxErrorHandler.handleEmptyError()
+            )
+        )
     }
 
     override fun onRestart() {

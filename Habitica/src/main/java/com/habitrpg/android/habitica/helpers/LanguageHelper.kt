@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.helpers
 
-import java.util.*
+import java.util.Locale
 
 class LanguageHelper(languageSharedPref: String?) {
 

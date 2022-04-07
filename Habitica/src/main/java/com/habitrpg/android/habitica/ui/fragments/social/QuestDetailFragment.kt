@@ -26,6 +26,7 @@ import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
+import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import javax.inject.Inject
 import javax.inject.Named
@@ -38,6 +39,8 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
     lateinit var inventoryRepository: InventoryRepository
     @field:[Inject Named(AppModule.NAMED_USER_ID)]
     lateinit var userId: String
+    @Inject
+    lateinit var userViewModel: MainUserViewModel
 
     override var binding: FragmentQuestDetailBinding? = null
 
@@ -52,7 +55,11 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
     private val isQuestActive: Boolean
         get() = quest?.active == true
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         this.hidesToolbar = true
         return super.onCreateView(inflater, container, savedInstanceState)
     }
@@ -101,7 +108,7 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
         compositeSubscription.add(
             socialRepository.getMember(quest?.leader).subscribe(
                 { member ->
-                    if (context != null && binding?.questLeaderView != null && member != null) {
+                    if (context != null && binding?.questLeaderView != null) {
                         binding?.questLeaderView?.text = context?.getString(R.string.quest_leader_header, member.displayName)
                     }
                 },
@@ -109,6 +116,7 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
             )
         )
 
+        val user = userViewModel.user.value
         if (binding?.questResponseWrapper != null) {
             if (userId != party?.quest?.leader && user?.party?.quest?.key == group.quest?.key && user?.party?.quest?.RSVPNeeded == false) {
                 binding?.questLeaveButton?.visibility = View.VISIBLE

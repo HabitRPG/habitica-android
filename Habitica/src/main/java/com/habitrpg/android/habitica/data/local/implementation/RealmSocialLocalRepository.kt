@@ -3,23 +3,18 @@ package com.habitrpg.android.habitica.data.local.implementation
 import com.habitrpg.android.habitica.data.local.SocialLocalRepository
 import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.members.Member
-import com.habitrpg.android.habitica.models.social.*
+import com.habitrpg.android.habitica.models.social.ChatMessage
+import com.habitrpg.android.habitica.models.social.ChatMessageLike
+import com.habitrpg.android.habitica.models.social.Group
+import com.habitrpg.android.habitica.models.social.GroupMembership
+import com.habitrpg.android.habitica.models.social.InboxConversation
 import com.habitrpg.android.habitica.models.user.User
 import hu.akarnokd.rxjava3.bridge.RxJavaBridge
 import io.reactivex.rxjava3.core.Flowable
 import io.realm.Realm
 import io.realm.Sort
-import java.util.*
 
 class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), SocialLocalRepository {
-    override fun getChatMessage(messageID: String): Flowable<ChatMessage> = RxJavaBridge.toV3Flowable(
-        realm.where(ChatMessage::class.java)
-            .equalTo("id", messageID)
-            .findAll()
-            .asFlowable()
-            .filter { it.isLoaded && it.isNotEmpty() }
-            .map { it.first() }
-    )
 
     override fun getGroupMembership(userId: String, id: String): Flowable<GroupMembership> = RxJavaBridge.toV3Flowable(
         realm.where(GroupMembership::class.java)
@@ -62,13 +57,18 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
         }
     }
 
-    override fun saveInboxMessages(userID: String, recipientID: String, messages: List<ChatMessage>, page: Int) {
+    override fun saveInboxMessages(
+        userID: String,
+        recipientID: String,
+        messages: List<ChatMessage>,
+        page: Int
+    ) {
         messages.forEach { it.userID = userID }
         for (message in messages) {
             val existingMessage = realm.where(ChatMessage::class.java)
-                    .equalTo("id", message.id)
-                    .findAll()
-                    .firstOrNull()
+                .equalTo("id", message.id)
+                .findAll()
+                .firstOrNull()
             message.isSeen = existingMessage != null
         }
         save(messages)

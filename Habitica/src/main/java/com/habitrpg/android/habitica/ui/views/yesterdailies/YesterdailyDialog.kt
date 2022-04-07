@@ -23,11 +23,17 @@ import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import java.lang.ref.WeakReference
-import java.util.*
+import java.util.Calendar
+import java.util.Date
 import java.util.concurrent.TimeUnit
 import kotlin.math.abs
 
-class YesterdailyDialog private constructor(context: Context, private val userRepository: UserRepository, private val taskRepository: TaskRepository, private val tasks: List<Task>) : HabiticaAlertDialog(context) {
+class YesterdailyDialog private constructor(
+    context: Context,
+    private val userRepository: UserRepository,
+    private val taskRepository: TaskRepository,
+    private val tasks: List<Task>
+) : HabiticaAlertDialog(context) {
 
     private lateinit var yesterdailiesList: LinearLayout
     init {
@@ -158,7 +164,8 @@ class YesterdailyDialog private constructor(context: Context, private val userRe
 
     private fun configureTaskView(taskView: View, task: Task) {
         val completed = !task.isDisplayedActive
-        val checkmark = taskView.findViewById<View>(R.id.checkmark)
+        val checkmark = taskView.findViewById<ImageView>(R.id.checkmark)
+        checkmark?.drawable?.setTint(ContextCompat.getColor(context, R.color.gray_400))
         val checkboxHolder = taskView.findViewById<View>(R.id.checkBoxHolder)
         val checkboxBackground = taskView.findViewById<View>(R.id.checkbox_background)
         checkmark?.visibility = if (completed) View.VISIBLE else View.GONE
@@ -183,7 +190,12 @@ class YesterdailyDialog private constructor(context: Context, private val userRe
         private var displayedDialog: WeakReference<YesterdailyDialog>? = null
         internal var lastCronRun: Date? = null
 
-        fun showDialogIfNeeded(activity: Activity, userId: String?, userRepository: UserRepository?, taskRepository: TaskRepository) {
+        fun showDialogIfNeeded(
+            activity: Activity,
+            userId: String?,
+            userRepository: UserRepository?,
+            taskRepository: TaskRepository
+        ) {
             if (userRepository != null && userId != null) {
                 Observable.just("")
                     .delay(500, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
@@ -241,7 +253,12 @@ class YesterdailyDialog private constructor(context: Context, private val userRe
             }
         }
 
-        private fun showDialog(activity: Activity, userRepository: UserRepository, taskRepository: TaskRepository, tasks: List<Task>): YesterdailyDialog {
+        private fun showDialog(
+            activity: Activity,
+            userRepository: UserRepository,
+            taskRepository: TaskRepository,
+            tasks: List<Task>
+        ): YesterdailyDialog {
             val dialog = YesterdailyDialog(activity, userRepository, taskRepository, tasks)
             dialog.setCancelable(false)
             dialog.setCanceledOnTouchOutside(false)

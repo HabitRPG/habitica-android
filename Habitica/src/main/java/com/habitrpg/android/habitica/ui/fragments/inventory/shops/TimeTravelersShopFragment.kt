@@ -7,7 +7,11 @@ import android.view.ViewGroup
 import com.habitrpg.android.habitica.models.shops.Shop
 
 class TimeTravelersShopFragment : ShopFragment() {
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         shopIdentifier = Shop.TIME_TRAVELERS_SHOP
         return super.onCreateView(inflater, container, savedInstanceState)
     }

@@ -9,7 +9,11 @@ import android.text.TextUtils
 import android.util.AttributeSet
 import android.view.View
 import android.view.accessibility.AccessibilityEvent
-import android.widget.*
+import android.widget.AdapterView
+import android.widget.DatePicker
+import android.widget.LinearLayout
+import android.widget.Space
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import com.habitrpg.android.habitica.R
@@ -18,12 +22,14 @@ import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.models.tasks.Days
 import com.habitrpg.android.habitica.models.tasks.Frequency
-import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.tasks.TaskType
 import com.habitrpg.android.habitica.ui.adapter.SimpleSpinnerAdapter
 import java.text.DateFormat
 import java.text.DateFormatSymbols
-import java.util.*
+import java.util.Calendar
+import java.util.Collections
+import java.util.Date
+import java.util.Locale
 
 class TaskSchedulingControls @JvmOverloads constructor(
     context: Context,
@@ -129,7 +135,12 @@ class TaskSchedulingControls @JvmOverloads constructor(
                 frequency = frequency
             }
 
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
                 frequency = when (position) {
                     1 -> Frequency.WEEKLY
                     2 -> Frequency.MONTHLY

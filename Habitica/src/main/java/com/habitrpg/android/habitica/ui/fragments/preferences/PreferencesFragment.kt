@@ -17,7 +17,12 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.ContentRepository
 import com.habitrpg.android.habitica.extensions.addCancelButton
-import com.habitrpg.android.habitica.helpers.*
+import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.AppTestingLevel
+import com.habitrpg.android.habitica.helpers.LanguageHelper
+import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.SoundManager
+import com.habitrpg.android.habitica.helpers.TaskAlarmManager
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.prefs.TimePreference
@@ -27,7 +32,7 @@ import com.habitrpg.android.habitica.ui.activities.PrefsActivity
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.SnackbarActivity
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
-import java.util.*
+import java.util.Locale
 import javax.inject.Inject
 
 class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnSharedPreferenceChangeListener {
@@ -62,16 +67,16 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
 
     override fun setupPreferences() {
         timePreference = findPreference("reminder_time") as? TimePreference
-        val useReminder = preferenceManager.sharedPreferences.getBoolean("use_reminder", false)
-        timePreference?.isEnabled = useReminder
+        val useReminder = preferenceManager.sharedPreferences?.getBoolean("use_reminder", false)
+        timePreference?.isEnabled = useReminder ?: false
 
         pushNotificationsPreference = findPreference("pushNotifications") as? PreferenceScreen
-        val usePushNotifications = preferenceManager.sharedPreferences.getBoolean("usePushNotifications", true)
-        pushNotificationsPreference?.isEnabled = usePushNotifications
+        val usePushNotifications = preferenceManager.sharedPreferences?.getBoolean("usePushNotifications", true)
+        pushNotificationsPreference?.isEnabled = usePushNotifications ?: false
 
         emailNotificationsPreference = findPreference("emailNotifications") as? PreferenceScreen
-        val useEmailNotifications = preferenceManager.sharedPreferences.getBoolean("useEmailNotifications", true)
-        emailNotificationsPreference?.isEnabled = useEmailNotifications
+        val useEmailNotifications = preferenceManager.sharedPreferences?.getBoolean("useEmailNotifications", true)
+        emailNotificationsPreference?.isEnabled = useEmailNotifications ?: false
 
         classSelectionPreference = findPreference("choose_class")
 
@@ -80,7 +85,7 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
 
         serverUrlPreference = findPreference("server_url") as? ListPreference
         serverUrlPreference?.isVisible = false
-        serverUrlPreference?.summary = preferenceManager.sharedPreferences.getString("server_url", "")
+        serverUrlPreference?.summary = preferenceManager.sharedPreferences?.getString("server_url", "")
 
         val themePreference = findPreference("theme_name") as? ListPreference
         themePreference?.summary = themePreference?.entry ?: "Default"
@@ -101,11 +106,11 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
 
     override fun onResume() {
         super.onResume()
-        preferenceManager.sharedPreferences.registerOnSharedPreferenceChangeListener(this)
+        preferenceManager.sharedPreferences?.registerOnSharedPreferenceChangeListener(this)
     }
 
     override fun onPause() {
-        preferenceManager.sharedPreferences.unregisterOnSharedPreferenceChangeListener(this)
+        preferenceManager.sharedPreferences?.unregisterOnSharedPreferenceChangeListener(this)
         super.onPause()
     }
 

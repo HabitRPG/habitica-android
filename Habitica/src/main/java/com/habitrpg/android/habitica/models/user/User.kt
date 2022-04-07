@@ -2,7 +2,12 @@ package com.habitrpg.android.habitica.models.user
 
 import com.google.gson.annotations.SerializedName
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.models.*
+import com.habitrpg.android.habitica.models.Avatar
+import com.habitrpg.android.habitica.models.BaseMainObject
+import com.habitrpg.android.habitica.models.PushDevice
+import com.habitrpg.android.habitica.models.QuestAchievement
+import com.habitrpg.android.habitica.models.Tag
+import com.habitrpg.android.habitica.models.VersionedObject
 import com.habitrpg.android.habitica.models.invitations.Invitations
 import com.habitrpg.android.habitica.models.social.ChallengeMembership
 import com.habitrpg.android.habitica.models.social.UserParty
@@ -12,7 +17,7 @@ import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.Ignore
 import io.realm.annotations.PrimaryKey
-import java.util.*
+import java.util.Date
 
 open class User : RealmObject(), BaseMainObject, Avatar, VersionedObject {
 

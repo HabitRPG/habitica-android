@@ -11,12 +11,12 @@ import androidx.core.app.Person
 import androidx.core.app.RemoteInput
 import androidx.core.os.bundleOf
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.extensions.withImmutableFlag
 import com.habitrpg.android.habitica.extensions.withMutableFlag
 import com.habitrpg.android.habitica.receivers.LocalNotificationActionReceiver
 import com.habitrpg.android.habitica.ui.helpers.EmojiParser
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
+import java.util.Locale
 
 class GroupActivityNotification(context: Context, identifier: String?) : HabiticaLocalNotification(context, identifier) {
 

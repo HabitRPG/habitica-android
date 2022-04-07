@@ -76,19 +76,19 @@ import com.habitrpg.android.habitica.ui.fragments.setup.WelcomeFragment;
 import com.habitrpg.android.habitica.ui.fragments.skills.SkillTasksRecyclerViewFragment;
 import com.habitrpg.android.habitica.ui.fragments.skills.SkillsFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.ChatFragment;
-import com.habitrpg.android.habitica.ui.fragments.social.guilds.GuildDetailFragment;
-import com.habitrpg.android.habitica.ui.fragments.social.guilds.GuildFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.InboxMessageListFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.InboxOverviewFragment;
-import com.habitrpg.android.habitica.ui.fragments.social.party.NoPartyFragmentFragment;
-import com.habitrpg.android.habitica.ui.fragments.social.guilds.GuildListFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.QuestDetailFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.TavernDetailFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.TavernFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengeDetailFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengeListFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengesOverviewFragment;
+import com.habitrpg.android.habitica.ui.fragments.social.guilds.GuildDetailFragment;
+import com.habitrpg.android.habitica.ui.fragments.social.guilds.GuildFragment;
+import com.habitrpg.android.habitica.ui.fragments.social.guilds.GuildListFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.guilds.GuildOverviewFragment;
+import com.habitrpg.android.habitica.ui.fragments.social.party.NoPartyFragmentFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.party.PartyDetailFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.party.PartyFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.party.PartyInviteFragment;
@@ -103,8 +103,10 @@ import com.habitrpg.android.habitica.ui.viewmodels.AuthenticationViewModel;
 import com.habitrpg.android.habitica.ui.viewmodels.GroupViewModel;
 import com.habitrpg.android.habitica.ui.viewmodels.InboxViewModel;
 import com.habitrpg.android.habitica.ui.viewmodels.MainActivityViewModel;
+import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel;
 import com.habitrpg.android.habitica.ui.viewmodels.NotificationsViewModel;
 import com.habitrpg.android.habitica.ui.viewmodels.inventory.equipment.EquipmentOverviewViewModel;
+import com.habitrpg.android.habitica.ui.views.dialogs.PetSuggestHatchDialog;
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientGemsDialog;
 import com.habitrpg.android.habitica.ui.views.shops.PurchaseDialog;
 import com.habitrpg.android.habitica.ui.views.social.ChatBarView;
@@ -352,4 +354,8 @@ public interface UserComponent {
     void inject(@NotNull MainActivityViewModel mainActivityViewModel);
 
     void inject(@NotNull GuidelinesActivity guidelinesActivity);
+
+    void inject(@NotNull MainUserViewModel mainUserViewModel);
+
+    void inject(@NotNull PetSuggestHatchDialog petSuggestHatchDialog);
 }

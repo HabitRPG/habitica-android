@@ -10,7 +10,11 @@ import io.reactivex.rxjava3.core.Flowable
 import javax.inject.Inject
 
 class BuyRewardUseCase @Inject
-constructor(private val taskRepository: TaskRepository, private val soundManager: SoundManager, postExecutionThread: PostExecutionThread) : UseCase<BuyRewardUseCase.RequestValues, TaskScoringResult?>(postExecutionThread) {
+constructor(
+    private val taskRepository: TaskRepository,
+    private val soundManager: SoundManager,
+    postExecutionThread: PostExecutionThread
+) : UseCase<BuyRewardUseCase.RequestValues, TaskScoringResult?>(postExecutionThread) {
 
     override fun buildUseCaseObservable(requestValues: RequestValues): Flowable<TaskScoringResult?> {
         return taskRepository
@@ -18,5 +22,9 @@ constructor(private val taskRepository: TaskRepository, private val soundManager
             .doOnNext { soundManager.loadAndPlayAudio(SoundManager.SoundReward) }
     }
 
-    class RequestValues(internal val user: User?, val task: Task, val notifyFunc: (TaskScoringResult) -> Unit) : UseCase.RequestValues
+    class RequestValues(
+        internal val user: User?,
+        val task: Task,
+        val notifyFunc: (TaskScoringResult) -> Unit
+    ) : UseCase.RequestValues
 }

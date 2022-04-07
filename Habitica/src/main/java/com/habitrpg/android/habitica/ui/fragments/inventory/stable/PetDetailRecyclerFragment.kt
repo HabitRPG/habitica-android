@@ -13,15 +13,18 @@ import com.habitrpg.android.habitica.extensions.getTranslatedType
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.interactors.FeedPetUseCase
-import com.habitrpg.android.habitica.interactors.HatchPetUseCase
-import com.habitrpg.android.habitica.models.inventory.*
+import com.habitrpg.android.habitica.models.inventory.Egg
+import com.habitrpg.android.habitica.models.inventory.Food
+import com.habitrpg.android.habitica.models.inventory.HatchingPotion
+import com.habitrpg.android.habitica.models.inventory.Pet
+import com.habitrpg.android.habitica.models.inventory.StableSection
 import com.habitrpg.android.habitica.models.user.OwnedMount
 import com.habitrpg.android.habitica.models.user.OwnedPet
-import com.habitrpg.android.habitica.ui.activities.BaseActivity
 import com.habitrpg.android.habitica.ui.adapter.inventory.PetDetailRecyclerAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemDialogFragment
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
+import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.kotlin.Flowables
 import javax.inject.Inject
@@ -34,6 +37,8 @@ class PetDetailRecyclerFragment :
     lateinit var inventoryRepository: InventoryRepository
     @Inject
     lateinit var feedPetUseCase: FeedPetUseCase
+    @Inject
+    lateinit var userViewModel: MainUserViewModel
 
     var adapter: PetDetailRecyclerAdapter = PetDetailRecyclerAdapter()
     private var animalType: String? = null
@@ -47,7 +52,11 @@ class PetDetailRecyclerFragment :
         return FragmentRefreshRecyclerviewBinding.inflate(inflater, container, false)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         this.usesTabLayout = false
         if (savedInstanceState != null) {
             this.animalType = savedInstanceState.getString(ANIMAL_TYPE_KEY, "")
@@ -69,7 +78,7 @@ class PetDetailRecyclerFragment :
         super.onViewCreated(view, savedInstanceState)
 
         arguments?.let {
-            val args = MountDetailRecyclerFragmentArgs.fromBundle(it)
+            val args = PetDetailRecyclerFragmentArgs.fromBundle(it)
             if (args.group != "drop") {
                 animalGroup = args.group
             }
@@ -109,14 +118,15 @@ class PetDetailRecyclerFragment :
 
         compositeSubscription.add(
             adapter.getEquipFlowable()
-                .flatMap { key -> inventoryRepository.equip(user, "pet", key) }
+                .flatMap { key -> inventoryRepository.equip("pet", key) }
                 .subscribe(
                     {
-                        user?.let { updatedUser -> adapter.setUser(updatedUser) }
+                        adapter.currentPet = it.currentPet
                     },
                     RxErrorHandler.handleEmptyError()
                 )
         )
+        userViewModel.user.observe(viewLifecycleOwner) { adapter.currentPet = it?.currentPet }
         compositeSubscription.add(adapter.feedFlowable.subscribe({ showFeedingDialog(it.first, it.second) }, RxErrorHandler.handleEmptyError()))
 
         view.post { setGridSpanCount(view.width) }
@@ -168,7 +178,6 @@ class PetDetailRecyclerFragment :
                             return@map petMap
                         }.doOnNext {
                             adapter.setOwnedPets(it)
-                            user?.let { updatedUser -> adapter.setUser(updatedUser) }
                         }
                 ).map {
                     val items = mutableListOf<Any>()
@@ -198,13 +207,15 @@ class PetDetailRecyclerFragment :
 
     private fun showFeedingDialog(pet: Pet, food: Food?) {
         if (food != null) {
-            (activity as? BaseActivity)?.let {
-                compositeSubscription.add(feedPetUseCase.observable(
+            val context = activity ?: context ?: return
+            compositeSubscription.add(
+                feedPetUseCase.observable(
                     FeedPetUseCase.RequestValues(
                         pet, food,
-                        it
-                    )).subscribeWithErrorHandler {})
-            }
+                        context
+                    )
+                ).subscribeWithErrorHandler {}
+            )
             return
         }
         val fragment = ItemDialogFragment()
@@ -213,6 +224,7 @@ class PetDetailRecyclerFragment :
         fragment.isHatching = false
         fragment.itemType = "food"
         fragment.itemTypeText = getString(R.string.food)
+        fragment.parentSubscription = compositeSubscription
         parentFragmentManager.let { fragment.show(it, "feedDialog") }
     }
 

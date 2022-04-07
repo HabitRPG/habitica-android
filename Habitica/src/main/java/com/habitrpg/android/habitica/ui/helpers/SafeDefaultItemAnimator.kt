@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.habitrpg.shared.habitica.HLogger
 import com.habitrpg.shared.habitica.LogLevel
-import java.util.*
 
 /**
  * Created by phillip on 02.10.17.
@@ -33,9 +32,18 @@ class SafeDefaultItemAnimator : SimpleItemAnimator() {
 
     var skipAnimations: Boolean = false
 
-    private class MoveInfo(var holder: RecyclerView.ViewHolder?, var fromX: Int, var fromY: Int, var toX: Int, var toY: Int)
+    private class MoveInfo(
+        var holder: RecyclerView.ViewHolder?,
+        var fromX: Int,
+        var fromY: Int,
+        var toX: Int,
+        var toY: Int
+    )
 
-    private class ChangeInfo private constructor(var oldHolder: RecyclerView.ViewHolder?, var newHolder: RecyclerView.ViewHolder?) {
+    private class ChangeInfo private constructor(
+        var oldHolder: RecyclerView.ViewHolder?,
+        var newHolder: RecyclerView.ViewHolder?
+    ) {
         var fromX: Int = 0
         var fromY: Int = 0
         var toX: Int = 0
@@ -249,7 +257,13 @@ class SafeDefaultItemAnimator : SimpleItemAnimator() {
         return true
     }
 
-    private fun animateMoveImpl(holder: RecyclerView.ViewHolder, fromX: Int, fromY: Int, toX: Int, toY: Int) {
+    private fun animateMoveImpl(
+        holder: RecyclerView.ViewHolder,
+        fromX: Int,
+        fromY: Int,
+        toX: Int,
+        toY: Int
+    ) {
         val view = holder.itemView
         val deltaX = toX - fromX
         val deltaY = toY - fromY
@@ -394,7 +408,10 @@ class SafeDefaultItemAnimator : SimpleItemAnimator() {
         }
     }
 
-    private fun endChangeAnimationIfNecessary(changeInfo: ChangeInfo, item: RecyclerView.ViewHolder?): Boolean {
+    private fun endChangeAnimationIfNecessary(
+        changeInfo: ChangeInfo,
+        item: RecyclerView.ViewHolder?
+    ): Boolean {
         var oldItem = false
         when {
             changeInfo.newHolder === item -> changeInfo.newHolder = null

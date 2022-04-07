@@ -10,7 +10,6 @@ import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.interactors.NotifyUserUseCase
 import com.habitrpg.android.habitica.models.responses.TaskScoringResult
-import java.util.*
 import javax.inject.Inject
 
 abstract class BaseWidgetProvider : AppWidgetProvider() {
@@ -37,7 +36,12 @@ abstract class BaseWidgetProvider : AppWidgetProvider() {
         return n - 1
     }
 
-    override fun onAppWidgetOptionsChanged(context: Context, appWidgetManager: AppWidgetManager, appWidgetId: Int, newOptions: Bundle) {
+    override fun onAppWidgetOptionsChanged(
+        context: Context,
+        appWidgetManager: AppWidgetManager,
+        appWidgetId: Int,
+        newOptions: Bundle
+    ) {
         this.context = context
         val options = appWidgetManager.getAppWidgetOptions(appWidgetId)
 
@@ -76,7 +80,12 @@ abstract class BaseWidgetProvider : AppWidgetProvider() {
 
     abstract fun layoutResourceId(): Int
 
-    abstract fun configureRemoteViews(remoteViews: RemoteViews, widgetId: Int, columns: Int, rows: Int): RemoteViews
+    abstract fun configureRemoteViews(
+        remoteViews: RemoteViews,
+        widgetId: Int,
+        columns: Int,
+        rows: Int
+    ): RemoteViews
 
     override fun onEnabled(context: Context) {
         super.onEnabled(context)

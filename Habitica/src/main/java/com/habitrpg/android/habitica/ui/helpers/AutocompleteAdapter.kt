@@ -16,9 +16,15 @@ import com.habitrpg.android.habitica.models.social.FindUsernameResult
 import com.habitrpg.android.habitica.models.user.Authentication
 import com.habitrpg.android.habitica.models.user.Profile
 import com.habitrpg.android.habitica.ui.views.social.UsernameLabel
-import java.util.*
+import java.util.Date
 
-class AutocompleteAdapter(val context: Context, val socialRepository: SocialRepository? = null, var autocompleteContext: String? = null, var groupID: String? = null, val remoteAutocomplete: Boolean = false) : BaseAdapter(), Filterable {
+class AutocompleteAdapter(
+    val context: Context,
+    val socialRepository: SocialRepository? = null,
+    var autocompleteContext: String? = null,
+    var groupID: String? = null,
+    val remoteAutocomplete: Boolean = false
+) : BaseAdapter(), Filterable {
     var chatMessages: List<ChatMessage> = arrayListOf()
     private var userResults: List<FindUsernameResult> = arrayListOf()
     private var emojiResults: List<String> = arrayListOf()

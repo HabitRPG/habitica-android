@@ -28,6 +28,7 @@ open class RealmContentLocalRepository(realm: Realm) : RealmBaseLocalRepository(
             realm1.insertOrUpdate(contentResult.mounts)
 
             realm1.insertOrUpdate(contentResult.spells)
+            realm1.insertOrUpdate(contentResult.special)
             realm1.insertOrUpdate(contentResult.appearances)
             realm1.insertOrUpdate(contentResult.backgrounds)
             realm1.insertOrUpdate(contentResult.faq)

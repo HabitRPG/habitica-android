@@ -1,7 +1,11 @@
 package com.habitrpg.android.habitica.ui.activities
 
 import android.accounts.AccountManager
-import android.animation.*
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
+import android.animation.ValueAnimator
 import android.app.Activity
 import android.content.Intent
 import android.content.SharedPreferences
@@ -21,17 +25,17 @@ import android.widget.LinearLayout
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.preference.PreferenceManager
-import com.google.android.gms.common.*
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ApiClient
-import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.ActivityLoginBinding
 import com.habitrpg.android.habitica.extensions.addCancelButton
 import com.habitrpg.android.habitica.extensions.addOkButton
 import com.habitrpg.android.habitica.extensions.updateStatusBarColor
-import com.habitrpg.android.habitica.helpers.*
+import com.habitrpg.android.habitica.helpers.AmplitudeManager
+import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.auth.UserAuthResponse
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
@@ -53,7 +57,6 @@ class LoginActivity : BaseActivity() {
 
     private var isRegistering: Boolean = false
     private var isShowingForm: Boolean = false
-
 
     private val loginClick = View.OnClickListener {
         binding.PBAsyncTask.visibility = View.VISIBLE
@@ -229,10 +232,11 @@ class LoginActivity : BaseActivity() {
 
     private fun handleAuthResponse(response: UserAuthResponse) {
         viewModel.handleAuthResponse(response)
-        compositeSubscription.add(userRepository.retrieveUser(true)
-            .subscribe({
-                handleAuthResponse(it, response.newUser)
-            }, RxErrorHandler.handleEmptyError())
+        compositeSubscription.add(
+            userRepository.retrieveUser(true)
+                .subscribe({
+                    handleAuthResponse(it, response.newUser)
+                }, RxErrorHandler.handleEmptyError())
         )
     }
 
@@ -302,7 +306,8 @@ class LoginActivity : BaseActivity() {
     }
 
     private val recoverFromPlayServicesErrorResult = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()) {
+        ActivityResultContracts.StartActivityForResult()
+    ) {
         if (it.resultCode != Activity.RESULT_CANCELED) {
             viewModel.handleGoogleLoginResult(this, null) { user, isNew ->
                 handleAuthResponse(user, isNew)

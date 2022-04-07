@@ -8,7 +8,13 @@ import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
-import android.widget.*
+import android.widget.Button
+import android.widget.EditText
+import android.widget.ImageButton
+import android.widget.LinearLayout
+import android.widget.RadioButton
+import android.widget.RadioGroup
+import android.widget.TextView
 import androidx.annotation.IdRes
 import androidx.appcompat.widget.AppCompatCheckBox
 import androidx.core.content.ContextCompat
@@ -24,7 +30,7 @@ import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.tasks.TaskType
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import io.reactivex.rxjava3.core.Observable
-import java.util.*
+import java.util.UUID
 import javax.inject.Inject
 
 class TaskFilterDialog(context: Context, component: UserComponent?) : HabiticaAlertDialog(context), RadioGroup.OnCheckedChangeListener {

@@ -8,15 +8,24 @@ import androidx.core.graphics.drawable.toBitmap
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.PetDetailItemBinding
 import com.habitrpg.android.habitica.extensions.inflate
-import com.habitrpg.android.habitica.models.inventory.*
-import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.android.habitica.models.inventory.Animal
+import com.habitrpg.android.habitica.models.inventory.Egg
+import com.habitrpg.android.habitica.models.inventory.Food
+import com.habitrpg.android.habitica.models.inventory.HatchingPotion
+import com.habitrpg.android.habitica.models.inventory.Pet
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.menu.BottomSheetMenu
 import com.habitrpg.android.habitica.ui.menu.BottomSheetMenuItem
 import com.habitrpg.android.habitica.ui.views.dialogs.PetSuggestHatchDialog
 import io.reactivex.rxjava3.subjects.PublishSubject
 
-class PetViewHolder(parent: ViewGroup, private val equipEvents: PublishSubject<String>, private val feedEvents: PublishSubject<Pair<Pet, Food?>>, private val animalIngredientsRetriever: ((Animal, ((Pair<Egg?, HatchingPotion?>) -> Unit)) -> Unit)?) : androidx.recyclerview.widget.RecyclerView.ViewHolder(parent.inflate(R.layout.pet_detail_item)), View.OnClickListener {
+class PetViewHolder(
+    parent: ViewGroup,
+    private val equipEvents: PublishSubject<String>,
+    private val feedEvents: PublishSubject<Pair<Pet, Food?>>,
+    private val ingredientsReceiver: ((Animal, ((Pair<Egg?, HatchingPotion?>) -> Unit)) -> Unit)?
+) : androidx.recyclerview.widget.RecyclerView.ViewHolder(parent.inflate(R.layout.pet_detail_item)),
+    View.OnClickListener {
     private var hasMount: Boolean = false
     private var hasUnlockedPotion: Boolean = false
     private var hasUnlockedEgg: Boolean = false
@@ -24,7 +33,7 @@ class PetViewHolder(parent: ViewGroup, private val equipEvents: PublishSubject<S
     private var potionCount: Int = 0
     private var ownsSaddles = false
     private var animal: Pet? = null
-    private var user: User? = null
+    private var currentPet: String? = null
 
     private var binding: PetDetailItemBinding = PetDetailItemBinding.bind(itemView)
 
@@ -49,7 +58,7 @@ class PetViewHolder(parent: ViewGroup, private val equipEvents: PublishSubject<S
         hasUnlockedEgg: Boolean,
         hasUnlockedPotion: Boolean,
         hasMount: Boolean,
-        user: User?
+        currentPet: String?
     ) {
         this.animal = item
         isOwned = trained > 0
@@ -61,12 +70,13 @@ class PetViewHolder(parent: ViewGroup, private val equipEvents: PublishSubject<S
         this.hasUnlockedEgg = hasUnlockedEgg
         this.hasUnlockedPotion = hasUnlockedPotion
         this.hasMount = hasMount
-        this.user = user
+        this.currentPet = currentPet
         binding.imageView.visibility = View.VISIBLE
         binding.itemWrapper.visibility = View.GONE
         binding.checkmarkView.visibility = View.GONE
 
         binding.titleTextView.visibility = View.GONE
+        binding.root.contentDescription = item.text
 
         val imageName = "stable_Pet-${item.animal}-${item.color}"
         if (trained > 0) {
@@ -85,7 +95,10 @@ class PetViewHolder(parent: ViewGroup, private val equipEvents: PublishSubject<S
                 binding.checkmarkView.visibility = View.VISIBLE
                 itemView.setBackgroundResource(R.drawable.layout_rounded_bg_window_tint_border)
                 DataBindingUtils.loadImage(binding.eggView, "Pet_Egg_${item.animal}")
-                DataBindingUtils.loadImage(binding.hatchingPotionView, "Pet_HatchingPotion_${item.color}")
+                DataBindingUtils.loadImage(
+                    binding.hatchingPotionView,
+                    "Pet_HatchingPotion_${item.color}"
+                )
             }
         }
 
@@ -93,10 +106,12 @@ class PetViewHolder(parent: ViewGroup, private val equipEvents: PublishSubject<S
             binding.trainedProgressBar.progressBackgroundTintMode = PorterDuff.Mode.SRC_OVER
         }
         binding.imageView.background = null
-        binding.activeIndicator.visibility = if (user?.currentPet.equals(animal?.key)) View.VISIBLE else View.GONE
+        binding.activeIndicator.visibility =
+            if (currentPet.equals(animal?.key)) View.VISIBLE else View.GONE
         DataBindingUtils.loadImage(itemView.context, imageName) {
             val resources = itemView.context.resources ?: return@loadImage
-            val drawable = if (trained == 0) BitmapDrawable(resources, it.toBitmap().extractAlpha()) else it
+            val drawable =
+                if (trained == 0) BitmapDrawable(resources, it.toBitmap().extractAlpha()) else it
             binding.imageView.background = drawable
         }
     }
@@ -110,7 +125,7 @@ class PetViewHolder(parent: ViewGroup, private val equipEvents: PublishSubject<S
         val menu = BottomSheetMenu(context)
         menu.setTitle(animal?.text)
 
-        val hasCurrentPet = user?.currentPet.equals(animal?.key)
+        val hasCurrentPet = currentPet.equals(animal?.key)
         val labelId = if (hasCurrentPet) R.string.unequip else R.string.equip
         menu.addMenuItem(BottomSheetMenuItem(itemView.resources.getString(labelId)))
 
@@ -145,7 +160,7 @@ class PetViewHolder(parent: ViewGroup, private val equipEvents: PublishSubject<S
         val context = itemView.context
         val dialog = PetSuggestHatchDialog(context)
         animal?.let {
-            animalIngredientsRetriever?.invoke(it) { ingredients ->
+            ingredientsReceiver?.invoke(it) { ingredients ->
                 dialog.configure(
                     it,
                     ingredients.first,

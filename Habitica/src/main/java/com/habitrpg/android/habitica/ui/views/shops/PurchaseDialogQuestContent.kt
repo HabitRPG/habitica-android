@@ -85,7 +85,11 @@ class PurchaseDialogQuestContent(context: Context) : PurchaseDialogContent(conte
         }
     }
 
-    private fun addRewardsRow(inflater: LayoutInflater?, item: QuestDropItem, containerView: ViewGroup?) {
+    private fun addRewardsRow(
+        inflater: LayoutInflater?,
+        item: QuestDropItem,
+        containerView: ViewGroup?
+    ) {
         val view = inflater?.inflate(R.layout.row_quest_reward, containerView, false) as? ViewGroup
         val imageView = view?.findViewById(R.id.imageView) as? ImageView
         val titleTextView = view?.findViewById(R.id.titleTextView) as? TextView

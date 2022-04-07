@@ -12,7 +12,10 @@ import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.TaskFormChecklistItemBinding
-import com.habitrpg.android.habitica.extensions.*
+import com.habitrpg.android.habitica.extensions.OnChangeTextWatcher
+import com.habitrpg.android.habitica.extensions.dpToPx
+import com.habitrpg.android.habitica.extensions.getThemeColor
+import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.models.tasks.ChecklistItem
 
 class ChecklistItemFormView @JvmOverloads constructor(
@@ -46,6 +49,7 @@ class ChecklistItemFormView @JvmOverloads constructor(
             field = value
             binding.editText.hint = context.getString(if (value) R.string.new_checklist_item else R.string.checklist_text)
             val rotate = if (value) {
+                contentDescription = context.getString(R.string.new_checklist_item)
                 binding.dragGrip.visibility = View.GONE
                 RotateAnimation(135f, 0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f)
             } else {
@@ -89,6 +93,7 @@ class ChecklistItemFormView @JvmOverloads constructor(
         binding.editText.addTextChangedListener(
             OnChangeTextWatcher { s, _, _, _ ->
                 item.text = s.toString()
+                contentDescription = s
                 textChangedListener?.let { it(s.toString()) }
             }
         )

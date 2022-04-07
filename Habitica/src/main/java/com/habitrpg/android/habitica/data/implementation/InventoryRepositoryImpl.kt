@@ -4,15 +4,32 @@ import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.local.InventoryLocalRepository
 import com.habitrpg.android.habitica.helpers.AppConfigManager
-import com.habitrpg.android.habitica.models.inventory.*
+import com.habitrpg.android.habitica.models.inventory.Egg
+import com.habitrpg.android.habitica.models.inventory.Equipment
+import com.habitrpg.android.habitica.models.inventory.Food
+import com.habitrpg.android.habitica.models.inventory.HatchingPotion
+import com.habitrpg.android.habitica.models.inventory.Item
+import com.habitrpg.android.habitica.models.inventory.Mount
+import com.habitrpg.android.habitica.models.inventory.Pet
+import com.habitrpg.android.habitica.models.inventory.Quest
+import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.responses.BuyResponse
 import com.habitrpg.android.habitica.models.responses.FeedResponse
 import com.habitrpg.android.habitica.models.shops.Shop
 import com.habitrpg.android.habitica.models.shops.ShopItem
-import com.habitrpg.android.habitica.models.user.*
+import com.habitrpg.android.habitica.models.user.Items
+import com.habitrpg.android.habitica.models.user.OwnedItem
+import com.habitrpg.android.habitica.models.user.OwnedMount
+import com.habitrpg.android.habitica.models.user.OwnedPet
+import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.rxjava3.core.Flowable
 
-class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClient: ApiClient, userID: String, var appConfigManager: AppConfigManager) : BaseRepositoryImpl<InventoryLocalRepository>(localRepository, apiClient, userID), InventoryRepository {
+class InventoryRepositoryImpl(
+    localRepository: InventoryLocalRepository,
+    apiClient: ApiClient,
+    userID: String,
+    var appConfigManager: AppConfigManager
+) : BaseRepositoryImpl<InventoryLocalRepository>(localRepository, apiClient, userID), InventoryRepository {
     override fun getQuestContent(keys: List<String>): Flowable<out List<QuestContent>> {
         return localRepository.getQuestContent(keys)
     }
@@ -146,13 +163,15 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
             }
     }
 
-    override fun equipGear(user: User?, equipment: String, asCostume: Boolean): Flowable<Items> {
-        return equip(user, if (asCostume) "costume" else "equipped", equipment)
+    override fun equipGear(equipment: String, asCostume: Boolean): Flowable<Items> {
+        return equip(if (asCostume) "costume" else "equipped", equipment)
     }
 
-    override fun equip(user: User?, type: String, key: String): Flowable<Items> {
-        if (user != null) {
-            localRepository.modify(user) { liveUser ->
+    override fun equip(type: String, key: String): Flowable<Items> {
+        val liveUser = localRepository.getLiveUser(userID)
+
+        if (liveUser != null) {
+            localRepository.modify(liveUser) { liveUser ->
                 if (type == "mount") {
                     liveUser.items?.currentMount = key
                 } else if (type == "pet") {
@@ -177,10 +196,8 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
         }
         return apiClient.equipItem(type, key)
             .doOnNext { items ->
-                if (user == null) {
-                    return@doOnNext
-                }
-                localRepository.modify(user) { liveUser ->
+                if (liveUser == null) return@doOnNext
+                localRepository.modify(liveUser) { liveUser ->
                     val newEquipped = items.gear?.equipped
                     val oldEquipped = liveUser.items?.gear?.equipped
                     val newCostume = items.gear?.costume
