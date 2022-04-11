@@ -91,6 +91,7 @@ class GemsPurchaseFragment : BaseFragment<FragmentGemPurchaseBinding>() {
 
     override fun onResume() {
         super.onResume()
+        purchaseHandler.queryPurchases()
         loadInventory()
     }
 
