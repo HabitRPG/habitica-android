@@ -17,6 +17,7 @@ import com.habitrpg.android.habitica.receivers.TaskReceiver
 import com.habitrpg.shared.habitica.HLogger
 import com.habitrpg.shared.habitica.LogLevel
 import io.reactivex.rxjava3.core.Flowable
+import java.time.Instant
 import java.util.Calendar
 import java.util.Date
 
@@ -84,8 +85,8 @@ class TaskAlarmManager(
             calendar.get(Calendar.YEAR),
             calendar.get(Calendar.MONTH),
             calendar.get(Calendar.DATE),
-            oldTime?.hours ?: 0,
-            oldTime?.minutes ?: 0,
+            oldTime?.hour ?: 0,
+            oldTime?.minute ?: 0,
             0
         )
         remindersItem?.time = calendar.time
@@ -99,7 +100,7 @@ class TaskAlarmManager(
         }
 
         val cal = Calendar.getInstance()
-        cal.time = remindersItem.time
+        cal.time = Instant.now()
 
         val intent = Intent(context, TaskReceiver::class.java)
         intent.action = remindersItem.id

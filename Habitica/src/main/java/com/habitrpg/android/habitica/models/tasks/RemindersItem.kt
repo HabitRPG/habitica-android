@@ -4,13 +4,14 @@ import android.os.Parcel
 import android.os.Parcelable
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
+import java.time.ZonedDateTime
 import java.util.Date
 
 open class RemindersItem : RealmObject, Parcelable {
     @PrimaryKey
     var id: String? = null
-    var startDate: Date? = null
-    var time: Date? = null
+    var startDate: ZonedDateTime? = null
+    var time: ZonedDateTime? = null
 
     // Use to store task type before a task is created
     var type: String? = null
@@ -21,8 +22,8 @@ open class RemindersItem : RealmObject, Parcelable {
 
     override fun writeToParcel(dest: Parcel, flags: Int) {
         dest.writeString(id)
-        dest.writeLong(this.startDate?.time ?: -1)
-        dest.writeLong(this.time?.time ?: -1)
+        dest.writeLong(this.startDate?.toLocalDateTime() ?: -1)
+        dest.writeLong(this.time?.toLocalDateTime() ?: -1)
     }
 
     companion object CREATOR : Parcelable.Creator<RemindersItem> {

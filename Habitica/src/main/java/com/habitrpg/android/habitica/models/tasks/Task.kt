@@ -13,11 +13,21 @@ import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.Ignore
 import io.realm.annotations.PrimaryKey
-import java.util.Calendar
-import java.util.Date
-import java.util.GregorianCalendar
 import org.json.JSONArray
 import org.json.JSONException
+import java.time.ZoneId
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.List
+import kotlin.collections.MutableList
+import kotlin.collections.count
+import kotlin.collections.firstOrNull
+import kotlin.collections.mapTo
+import kotlin.collections.mutableListOf
+import kotlin.collections.toList
 
 open class Task : RealmObject, BaseMainObject, Parcelable {
 
@@ -181,14 +191,18 @@ open class Task : RealmObject, BaseMainObject, Parcelable {
 
     fun checkIfDue(): Boolean = isDue == true
 
-    fun getNextReminderOccurence(oldTime: Date?): Date? {
+    fun getNextReminderOccurence(oldTime: ZonedDateTime?): ZonedDateTime? {
         if (oldTime == null) {
             return null
         }
+        val zoneId: ZoneId = ZoneId.of("UTC")
+        val f: DateTimeFormatter = DateTimeFormatter
+            .withLocale(Locale.getDefault())
+
         val today = Calendar.getInstance()
 
-        val newTime = GregorianCalendar()
-        newTime.time = oldTime
+        val newTime = ZonedDateTime()
+        newTime = oldTime
         newTime.set(today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DAY_OF_MONTH))
         if (today.before(newTime)) {
             today.add(Calendar.DAY_OF_MONTH, -1)
