@@ -49,6 +49,8 @@ class InsufficientGemsDialog(context: Context, var gemPrice: Int) : Insufficient
         addCloseButton()
     }
 
+
+
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
         getActivity()?.let { activity ->
