@@ -4,13 +4,19 @@ import android.os.Parcel
 import android.os.Parcelable
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
+import java.time.format.DateTimeFormatterBuilder
+import java.time.temporal.TemporalAccessor
 import java.util.Date
 
 open class RemindersItem : RealmObject, Parcelable {
     @PrimaryKey
     var id: String? = null
-    var startDate: Date? = null
-    var time: Date? = null
+    var startDate: String? = null
+    var time: String? = null
 
     // Use to store task type before a task is created
     var type: String? = null
@@ -21,8 +27,8 @@ open class RemindersItem : RealmObject, Parcelable {
 
     override fun writeToParcel(dest: Parcel, flags: Int) {
         dest.writeString(id)
-        dest.writeLong(this.startDate?.time ?: -1)
-        dest.writeLong(this.time?.time ?: -1)
+        dest.writeString(startDate)
+        dest.writeString(time)
     }
 
     companion object CREATOR : Parcelable.Creator<RemindersItem> {
@@ -33,8 +39,8 @@ open class RemindersItem : RealmObject, Parcelable {
 
     constructor(source: Parcel) {
         id = source.readString()
-        startDate = Date(source.readLong())
-        time = Date(source.readLong())
+        startDate = source.readString()
+        time = source.readString()
     }
 
     constructor()
@@ -47,5 +53,25 @@ open class RemindersItem : RealmObject, Parcelable {
 
     override fun hashCode(): Int {
         return id?.hashCode() ?: 0
+    }
+
+    fun formatter(): DateTimeFormatter =
+        DateTimeFormatterBuilder().append(DateTimeFormatter.ISO_LOCAL_DATE)
+            .appendPattern("['T'][' ']")
+            .append(DateTimeFormatter.ISO_LOCAL_TIME)
+            .appendPattern("[XX]")
+            .toFormatter()
+
+    fun parse(dateTime: String): ZonedDateTime? {
+        val parsed: TemporalAccessor = formatter().parseBest(
+            dateTime,
+            ZonedDateTime::from, LocalDateTime::from
+        )
+        return if (parsed is ZonedDateTime) {
+            parsed
+        } else {
+            val defaultZone: ZoneId = ZoneId.of("UTC")
+            (parsed as LocalDateTime).atZone(defaultZone)
+        }
     }
 }

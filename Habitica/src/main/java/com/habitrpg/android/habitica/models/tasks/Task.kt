@@ -18,6 +18,12 @@ import java.util.Date
 import java.util.GregorianCalendar
 import org.json.JSONArray
 import org.json.JSONException
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
+import java.time.format.DateTimeFormatterBuilder
+import java.time.temporal.TemporalAccessor
 
 open class Task : RealmObject, BaseMainObject, Parcelable {
 
@@ -181,29 +187,43 @@ open class Task : RealmObject, BaseMainObject, Parcelable {
 
     fun checkIfDue(): Boolean = isDue == true
 
-    fun getNextReminderOccurence(oldTime: Date?): Date? {
+    fun getNextReminderOccurence(oldTime: String?): ZonedDateTime? {
         if (oldTime == null) {
             return null
         }
-        val today = Calendar.getInstance()
-
-        val newTime = GregorianCalendar()
-        newTime.time = oldTime
-        newTime.set(today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DAY_OF_MONTH))
-        if (today.before(newTime)) {
-            today.add(Calendar.DAY_OF_MONTH, -1)
-        }
-
         val nextDate = nextDue?.firstOrNull()
+
         return if (nextDate != null && !isDisplayedActive) {
             val nextDueCalendar = GregorianCalendar()
             nextDueCalendar.time = nextDate
-            newTime.set(nextDueCalendar.get(Calendar.YEAR), nextDueCalendar.get(Calendar.MONTH), nextDueCalendar.get(Calendar.DAY_OF_MONTH))
-            newTime.time
+            parse(oldTime)
+                ?.withYear(nextDueCalendar.get(Calendar.YEAR))
+                ?.withMonth(nextDueCalendar.get(Calendar.MONTH))
+                ?.withDayOfMonth(nextDueCalendar.get(Calendar.DAY_OF_MONTH))
         } else if (isDisplayedActive) {
-            newTime.time
+            parse(oldTime)
         } else {
             null
+        }
+    }
+
+    fun formatter(): DateTimeFormatter =
+        DateTimeFormatterBuilder().append(DateTimeFormatter.ISO_LOCAL_DATE)
+            .appendPattern("['T'][' ']")
+            .append(DateTimeFormatter.ISO_LOCAL_TIME)
+            .appendPattern("[XX]")
+            .toFormatter()
+
+    fun parse(dateTime: String): ZonedDateTime? {
+        val parsed: TemporalAccessor = formatter().parseBest(
+            dateTime,
+            ZonedDateTime::from, LocalDateTime::from
+        )
+        return if (parsed is ZonedDateTime) {
+            parsed
+        } else {
+            val defaultZone: ZoneId = ZoneId.of("UTC")
+            (parsed as LocalDateTime).atZone(defaultZone)
         }
     }
 

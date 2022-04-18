@@ -17,8 +17,14 @@ import com.habitrpg.android.habitica.receivers.TaskReceiver
 import com.habitrpg.shared.habitica.HLogger
 import com.habitrpg.shared.habitica.LogLevel
 import io.reactivex.rxjava3.core.Flowable
-import java.util.Calendar
-import java.util.Date
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
+import java.time.format.DateTimeFormatterBuilder
+import java.time.temporal.TemporalAccessor
+import java.util.*
 
 class TaskAlarmManager(
     private var context: Context,
@@ -76,30 +82,42 @@ class TaskAlarmManager(
 
     private fun setTimeForDailyReminder(remindersItem: RemindersItem?, task: Task): RemindersItem? {
         val oldTime = remindersItem?.time
-        val newTime = task.getNextReminderOccurence(oldTime) ?: return null
-        val calendar = Calendar.getInstance()
-        calendar.time = newTime
-        @Suppress("DEPRECATION")
-        calendar.set(
-            calendar.get(Calendar.YEAR),
-            calendar.get(Calendar.MONTH),
-            calendar.get(Calendar.DATE),
-            oldTime?.hours ?: 0,
-            oldTime?.minutes ?: 0,
-            0
-        )
-        remindersItem?.time = calendar.time
+        val newTime = (task.getNextReminderOccurence(oldTime) ?: return null)
+
+        remindersItem?.time = newTime.withZoneSameLocal(ZoneId.systemDefault()).format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
+
         return remindersItem
     }
 
+    fun formatter(): DateTimeFormatter =
+        DateTimeFormatterBuilder().append(DateTimeFormatter.ISO_LOCAL_DATE)
+            .appendPattern("['T'][' ']")
+            .append(DateTimeFormatter.ISO_LOCAL_TIME)
+            .appendPattern("[XX]")
+            .toFormatter()
+
+    fun parse(dateTime: String?): ZonedDateTime? {
+        val parsed: TemporalAccessor = formatter().parseBest(
+            dateTime,
+            ZonedDateTime::from, LocalDateTime::from
+        )
+        return if (parsed is ZonedDateTime) {
+            parsed
+        } else {
+            val defaultZone: ZoneId = ZoneId.of("UTC")
+            (parsed as LocalDateTime).atZone(defaultZone)
+        }
+    }
+
     private fun setAlarmForRemindersItem(reminderItemTask: Task, remindersItem: RemindersItem?) {
-        val now = Date()
-        if (remindersItem == null || remindersItem.time?.before(now) == true) {
+        val now = ZonedDateTime.now().withZoneSameLocal(ZoneId.systemDefault())?.toInstant()
+        if (remindersItem == null || parse(remindersItem.time)?.withZoneSameLocal(ZoneId.systemDefault())?.toInstant()?.isBefore(now) == true) {
             return
         }
 
+        val time = Date.from(parse(remindersItem.time)?.withZoneSameLocal(ZoneId.systemDefault())?.toInstant())
         val cal = Calendar.getInstance()
-        cal.time = remindersItem.time
+        cal.time = time
 
         val intent = Intent(context, TaskReceiver::class.java)
         intent.action = remindersItem.id
@@ -127,6 +145,7 @@ class TaskAlarmManager(
         )
 
         setAlarm(context, cal.timeInMillis, sender)
+
     }
 
     private fun removeAlarmForRemindersItem(remindersItem: RemindersItem) {
