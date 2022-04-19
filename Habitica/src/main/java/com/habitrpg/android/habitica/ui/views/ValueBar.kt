@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.views
 
+import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
@@ -164,9 +165,23 @@ class ValueBar(context: Context, attrs: AttributeSet?) : FrameLayout(context, at
         binding.descriptionTextView.setTextColor(textColor)
     }
 
+    var animationDuration = 500L
+    var animationDelay = 0L
+
     fun set(value: Double, valueMax: Double) {
         if (currentValue != value || maxValue != valueMax) {
-            currentValue = value
+            if (animationDuration == 0L || binding.valueTextView.text.isEmpty()) {
+                currentValue = value
+            } else {
+                val animator = ValueAnimator.ofInt(currentValue.toInt(), value.toInt())
+                animator.duration = animationDuration
+                animator.startDelay = animationDelay
+                animator.addUpdateListener {
+                    currentValue = (it.animatedValue as Int).toDouble()
+                    updateBar()
+                }
+                animator.start()
+            }
             maxValue = valueMax
             updateBar()
         }

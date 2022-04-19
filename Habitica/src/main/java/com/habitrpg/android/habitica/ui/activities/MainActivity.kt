@@ -203,6 +203,9 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         setupBottomnavigationLayoutListener()
 
         viewModel.onCreate()
+
+        val args = ArmoireActivityDirections.openArmoireActivity("experience", "", "")
+        MainNavigationController.navigate(R.id.armoireActivity, args.arguments)
     }
 
     override fun setTitle(title: CharSequence?) {

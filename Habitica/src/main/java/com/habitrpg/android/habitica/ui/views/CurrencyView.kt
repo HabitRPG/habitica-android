@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.views
 
+import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
@@ -7,6 +8,7 @@ import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
+import androidx.core.animation.doOnEnd
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.isUsingNightModeResources
@@ -40,6 +42,7 @@ class CurrencyView : androidx.appcompat.widget.AppCompatTextView {
         } catch (_: ArrayIndexOutOfBoundsException) {
             !context.isUsingNightModeResources()
         }
+        currency = attributes?.getString(R.styleable.CurrencyView_currency)
         visibility = GONE
     }
 
@@ -105,13 +108,38 @@ class CurrencyView : androidx.appcompat.widget.AppCompatTextView {
             }
         }
 
+    var minForAbbrevation = 0
+    var decimals = 2
+    var animationDuration = 500L
+    var animationDelay = 0L
+
+    private fun update(value: Double) {
+        text = NumberAbbreviator.abbreviate(context, value, decimals, minForAbbrevation = minForAbbrevation)
+    }
+
+    private fun endUpdate() {
+        contentDescription = "$text $currencyContentDescription"
+        updateVisibility()
+    }
+
     var value = 0.0
         set(value) {
+            if (text.isEmpty() || animationDuration == 0L) {
+                update(value)
+                endUpdate()
+            } else {
+                val animator = ValueAnimator.ofFloat(field.toFloat(), value.toFloat())
+                animator.duration = animationDuration
+                animator.startDelay = animationDelay
+                animator.addUpdateListener {
+                    update((it.animatedValue as Float).toDouble())
+                }
+                animator.doOnEnd {
+                    endUpdate()
+                }
+                animator.start()
+            }
             field = value
-            val abbreviatedValue = NumberAbbreviator.abbreviate(context, value)
-            text = abbreviatedValue
-            contentDescription = "$abbreviatedValue $currencyContentDescription"
-            updateVisibility()
         }
 
     var isLocked = false

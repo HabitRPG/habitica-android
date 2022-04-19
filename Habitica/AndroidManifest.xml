@@ -71,6 +71,13 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".ui.activities.ArmoireActivity"
+            android:parentActivityName=".ui.activities.MainActivity"
+            android:label="@string/armoire"
+            android:screenOrientation="unspecified"
+            tools:ignore="UnusedAttribute">
+        </activity>
+        <activity
             android:name=".ui.activities.NotificationsActivity"
             android:parentActivityName=".ui.activities.MainActivity"
             android:label="@string/notifications"

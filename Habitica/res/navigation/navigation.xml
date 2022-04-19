@@ -143,6 +143,20 @@
             app:destination="@id/mountDetailRecyclerFragment" />
     </fragment>
     <activity
+        android:id="@+id/armoireActivity"
+        android:name="com.habitrpg.android.habitica.ui.activities.ArmoireActivity"
+        android:label="@string/armoire" >
+        <argument
+            android:name="type"
+            app:argType="string" />
+        <argument
+            android:name="text"
+            app:argType="string" />
+        <argument
+            android:name="key"
+            app:argType="string" />
+    </activity>
+    <activity
         android:id="@+id/subscriptionPurchaseActivity"
         android:name="com.habitrpg.android.habitica.ui.activities.GemPurchaseActivity"
         android:label="@string/gem_purchase_toolbartitle" >
@@ -399,6 +413,9 @@
     <action
         android:id="@+id/openProfileActivity"
         app:destination="@id/fullProfileActivity" />
+    <action
+        android:id="@+id/openArmoireActivity"
+        app:destination="@id/armoireActivity" />
     <fragment
         android:id="@+id/achievementsFragment"
         android:name="com.habitrpg.android.habitica.ui.fragments.AchievementsFragment"

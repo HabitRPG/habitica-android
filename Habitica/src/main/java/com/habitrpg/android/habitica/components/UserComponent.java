@@ -13,6 +13,7 @@ import com.habitrpg.android.habitica.receivers.NotificationPublisher;
 import com.habitrpg.android.habitica.receivers.TaskAlarmBootReceiver;
 import com.habitrpg.android.habitica.receivers.TaskReceiver;
 import com.habitrpg.android.habitica.ui.activities.AdventureGuideActivity;
+import com.habitrpg.android.habitica.ui.activities.ArmoireActivity;
 import com.habitrpg.android.habitica.ui.activities.ChallengeFormActivity;
 import com.habitrpg.android.habitica.ui.activities.ClassSelectionActivity;
 import com.habitrpg.android.habitica.ui.activities.FixCharacterValuesActivity;
@@ -358,4 +359,6 @@ public interface UserComponent {
     void inject(@NotNull MainUserViewModel mainUserViewModel);
 
     void inject(@NotNull PetSuggestHatchDialog petSuggestHatchDialog);
+
+    void inject(@NotNull ArmoireActivity armoireActivity);
 }

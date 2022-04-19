@@ -276,8 +276,8 @@
     <string name="mounts">Mounts</string>
 
     <string name="quest_items_found">You\'ve found %d quest items</string>
-    <string name="armoireEquipment">You found %s in the Armoire</string>
-    <string name="armoireFood">You rummage in the Armoire and find%1$s %2$s. What\'s that doing in here?</string>
+    <string name="armoireEquipment_new">You find a piece of rare Equipment in the Armoire!</string>
+    <string name="armoireFood_new">You rummage in the Armoire and find food. What\'s that doing in here?</string>
     <string name="armoireExp">You wrestle with the Armoire and gain Experience. Take that!</string>
     <string name="sell">Sell (%d Gold)</string>
     <string name="hatch_with_potion">Hatch with potion</string>
@@ -1225,5 +1225,9 @@
 
     <string name="compact">Compact</string>
     <string name="minimal">Minimal</string>
+    <string name="armoire_drop_rates">Armoire drop rates</string>
+    <string name="armoire">Armoire</string>
+    <string name="equipment_remaining">Equipment Remaining: %d</string>
+    <string name="new_pieces_added_every_month">New pieces added every month</string>
     <string name="watch_ad">Watch Ad</string>
 </resources>

@@ -27,6 +27,8 @@ import com.habitrpg.android.habitica.models.shops.Shop
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.android.habitica.ui.activities.ArmoireActivityArgs
+import com.habitrpg.android.habitica.ui.activities.ArmoireActivityDirections
 import com.habitrpg.android.habitica.ui.views.CurrencyView
 import com.habitrpg.android.habitica.ui.views.CurrencyViews
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
@@ -358,11 +360,9 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
         } else if ("gold" == shopItem.currency && "gem" != shopItem.key) {
             observable = inventoryRepository.buyItem(user, shopItem.key, shopItem.value.toDouble(), quantity).map { buyResponse ->
                 if (shopItem.key == "armoire") {
-                    snackbarText[0] = when {
-                        buyResponse.armoire["type"] == "gear" -> context.getString(R.string.armoireEquipment, buyResponse.armoire["dropText"])
-                        buyResponse.armoire["type"] == "food" -> context.getString(R.string.armoireFood, buyResponse.armoire["dropArticle"] ?: "", buyResponse.armoire["dropText"])
-                        else -> context.getString(R.string.armoireExp)
-                    }
+                    MainNavigationController.navigate(R.id.armoireActivity, ArmoireActivityDirections.openArmoireActivity(buyResponse.armoire["type"] ?: "",
+                        buyResponse.armoire["dropText"] ?: "",
+                        buyResponse.armoire["dropKey"] ?: "").arguments)
                 }
                 buyResponse
             }
