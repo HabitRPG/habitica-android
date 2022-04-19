@@ -21,6 +21,7 @@ import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBinding
+import com.habitrpg.android.habitica.extensions.observeOnce
 import com.habitrpg.android.habitica.extensions.setScaledPadding
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
@@ -455,13 +456,15 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
 
     override fun onStart() {
         super.onStart()
-        val mainActivity = (activity as? MainActivity)
-        if (taskFilterHelper.getActiveFilter(taskType) == null) {
-            when (taskType) {
-                TaskType.TODO -> taskFilterHelper.setActiveFilter(TaskType.TODO, Task.FILTER_ACTIVE)
-                TaskType.DAILY -> {
-                    mainActivity?.viewModel?.user?.observe(mainActivity){
-                        if (it?.isValid == true && it.preferences?.dailyDueDefaultView == true) {
+        (activity as? MainActivity)?.viewModel?.user?.observeOnce(this) {
+            if (it != null) {
+                when (taskType) {
+                    TaskType.TODO -> taskFilterHelper.setActiveFilter(
+                        TaskType.TODO,
+                        Task.FILTER_ACTIVE
+                    )
+                    TaskType.DAILY -> {
+                        if (it.isValid && it.preferences?.dailyDueDefaultView == true) {
                             taskFilterHelper.setActiveFilter(TaskType.DAILY, Task.FILTER_ACTIVE)
                         }
                     }
