@@ -46,15 +46,15 @@ class DailyViewHolder(
                 calendar.set(calendar.get(Calendar.YEAR),
                     calendar.get(Calendar.MONTH),
                     calendar.get(Calendar.DATE),
-                    parse(it.time)?.hour ?: 0,
-                    parse(it.time)?.minute ?: 0,
+                    it.getZonedDateTime()?.hour ?: 0,
+                    it.getZonedDateTime()?.minute ?: 0,
                     0)
                 now < calendar.time
             } ?: data.reminders?.first()
 
             var reminderString = ""
             if (nextReminder?.time != null) {
-                val time = Date.from(parse(nextReminder.time)?.withZoneSameLocal(ZoneId.systemDefault())?.toInstant())
+                val time = Date.from(nextReminder.getLocalZonedDateTimeInstant())
                 reminderString += formatter.format(time)
             }
             if ((data.reminders?.size ?: 0) > 1) {
@@ -64,26 +64,6 @@ class DailyViewHolder(
         }
 
         super.bind(data, position, displayMode)
-    }
-
-    fun formatter(): DateTimeFormatter =
-        DateTimeFormatterBuilder().append(DateTimeFormatter.ISO_LOCAL_DATE)
-            .appendPattern("['T'][' ']")
-            .append(DateTimeFormatter.ISO_LOCAL_TIME)
-            .appendPattern("[XX]")
-            .toFormatter()
-
-    fun parse(dateTime: String?): ZonedDateTime? {
-        val parsed: TemporalAccessor = formatter().parseBest(
-            dateTime,
-            ZonedDateTime::from, LocalDateTime::from
-        )
-        return if (parsed is ZonedDateTime) {
-            parsed
-        } else {
-            val defaultZone: ZoneId = ZoneId.of("UTC")
-            (parsed as LocalDateTime).atZone(defaultZone)
-        }
     }
 
     override fun shouldDisplayAsActive(newTask: Task?): Boolean {

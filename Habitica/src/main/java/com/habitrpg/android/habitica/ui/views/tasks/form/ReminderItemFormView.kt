@@ -22,14 +22,8 @@ import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.models.tasks.RemindersItem
 import com.habitrpg.android.habitica.models.tasks.TaskType
 import java.text.DateFormat
-import java.text.SimpleDateFormat
-import java.time.LocalDateTime
-import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
-import java.time.format.DateTimeFormatterBuilder
-import java.time.temporal.TemporalAccessor
-import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
@@ -41,7 +35,7 @@ class ReminderItemFormView @JvmOverloads constructor(
     private val formattedTime: CharSequence?
         get() {
             return if (item.time != null) {
-                val time = Date.from(parse(item.time)?.withZoneSameLocal(ZoneId.systemDefault())?.toInstant())
+                val time = Date.from(item.getLocalZonedDateTimeInstant())
                 formatter.format(time)
             } else {
                 ""
@@ -136,25 +130,24 @@ class ReminderItemFormView @JvmOverloads constructor(
     }
     override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
         valueChangedListener?.let {
-            val calendar = ZonedDateTime.now()
+            val zonedDateTime = ZonedDateTime.now()
                 .withHour(hourOfDay)
                 .withMinute(minute)
-            item.time = calendar.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
+            item.time = zonedDateTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
             binding.textView.text = formattedTime
-            item.time?.let { date -> it(Date.from(parse(date)?.withZoneSameLocal(ZoneId.systemDefault())?.toInstant())) }
+            it(Date.from(item.getLocalZonedDateTimeInstant()))
         }
     }
 
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
         valueChangedListener?.let {
-//            val calendar = Calendar.getInstance()
-            val calendar = ZonedDateTime.now()
+            val zonedDateTime = ZonedDateTime.now()
                 .withYear(year)
                 .withMonth(month)
                 .withDayOfMonth(dayOfMonth)
-            item.time = calendar.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
+            item.time = zonedDateTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
             binding.textView.text = formattedTime
-            item.time?.let { date -> Date.from(parse(date)?.withZoneSameLocal(ZoneId.systemDefault())?.toInstant()) }
+            it(Date.from(item.getLocalZonedDateTimeInstant()))
 
             val timePickerDialog = TimePickerDialog(
                 context, this,
@@ -166,23 +159,4 @@ class ReminderItemFormView @JvmOverloads constructor(
         }
     }
 
-    fun formatter(): DateTimeFormatter =
-        DateTimeFormatterBuilder().append(DateTimeFormatter.ISO_LOCAL_DATE)
-            .appendPattern("['T'][' ']")
-            .append(DateTimeFormatter.ISO_LOCAL_TIME)
-            .appendPattern("[XX]")
-            .toFormatter()
-
-    fun parse(dateTime: String?): ZonedDateTime? {
-        val parsed: TemporalAccessor = formatter().parseBest(
-            dateTime,
-            ZonedDateTime::from, LocalDateTime::from
-        )
-        return if (parsed is ZonedDateTime) {
-            parsed
-        } else {
-            val defaultZone: ZoneId = ZoneId.of("UTC")
-            (parsed as LocalDateTime).atZone(defaultZone)
-        }
-    }
 }

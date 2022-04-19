@@ -4,13 +4,13 @@ import android.os.Parcel
 import android.os.Parcelable
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
+import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeFormatterBuilder
 import java.time.temporal.TemporalAccessor
-import java.util.Date
 
 open class RemindersItem : RealmObject, Parcelable {
     @PrimaryKey
@@ -55,16 +55,16 @@ open class RemindersItem : RealmObject, Parcelable {
         return id?.hashCode() ?: 0
     }
 
-    fun formatter(): DateTimeFormatter =
+    fun getZonedDateTime(): ZonedDateTime? {
+        val formatter: DateTimeFormatter =
         DateTimeFormatterBuilder().append(DateTimeFormatter.ISO_LOCAL_DATE)
             .appendPattern("['T'][' ']")
             .append(DateTimeFormatter.ISO_LOCAL_TIME)
             .appendPattern("[XX]")
             .toFormatter()
 
-    fun parse(dateTime: String): ZonedDateTime? {
-        val parsed: TemporalAccessor = formatter().parseBest(
-            dateTime,
+        val parsed: TemporalAccessor = formatter.parseBest(
+            time,
             ZonedDateTime::from, LocalDateTime::from
         )
         return if (parsed is ZonedDateTime) {
@@ -72,6 +72,26 @@ open class RemindersItem : RealmObject, Parcelable {
         } else {
             val defaultZone: ZoneId = ZoneId.of("UTC")
             (parsed as LocalDateTime).atZone(defaultZone)
+        }
+    }
+
+    fun getLocalZonedDateTimeInstant(): Instant? {
+        val formatter: DateTimeFormatter =
+            DateTimeFormatterBuilder().append(DateTimeFormatter.ISO_LOCAL_DATE)
+                .appendPattern("['T'][' ']")
+                .append(DateTimeFormatter.ISO_LOCAL_TIME)
+                .appendPattern("[XX]")
+                .toFormatter()
+
+        val parsed: TemporalAccessor = formatter.parseBest(
+            time,
+            ZonedDateTime::from, LocalDateTime::from
+        )
+        return if (parsed is ZonedDateTime) {
+            parsed.withZoneSameLocal(ZoneId.systemDefault())?.toInstant()
+        } else {
+            val defaultZone: ZoneId = ZoneId.of("UTC")
+            (parsed as LocalDateTime).atZone(defaultZone).withZoneSameLocal(ZoneId.systemDefault())?.toInstant()
         }
     }
 }
