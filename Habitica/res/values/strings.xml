@@ -1230,4 +1230,7 @@
     <string name="equipment_remaining">Equipment Remaining: %d</string>
     <string name="new_pieces_added_every_month">New pieces added every month</string>
     <string name="watch_ad">Watch Ad</string>
+    <string name="available_in">Available in %s</string>
+    <string name="watch_ad_to_open">Watch ad to open again</string>
+    <string name="watch_ad_to_revive">Watch Ad to revive</string>
 </resources>

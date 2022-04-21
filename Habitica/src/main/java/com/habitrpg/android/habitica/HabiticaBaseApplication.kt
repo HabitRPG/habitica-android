@@ -34,6 +34,7 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ApiClient
+import com.habitrpg.android.habitica.helpers.AdHandler
 import com.habitrpg.android.habitica.helpers.LanguageHelper
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
@@ -73,6 +74,7 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
         setLocale()
         setupRemoteConfig()
         setupNotifications()
+        setupAdHandler()
         HabiticaIconsHelper.init(this)
         MarkdownParser.setup(this)
 
@@ -108,6 +110,10 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
         FirebaseAnalytics.getInstance(this).setUserProperty("app_testing_level", BuildConfig.TESTING_LEVEL)
 
         checkIfNewVersion()
+    }
+
+    private fun setupAdHandler() {
+        AdHandler.setup(sharedPrefs, analyticsManager)
     }
 
     private fun setLocale() {

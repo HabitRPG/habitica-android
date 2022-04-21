@@ -138,4 +138,20 @@ class AppConfigManager(contentRepository: ContentRepository?) {
     fun enableTeamBoards(): Boolean {
         return remoteConfig.getBoolean("enableTeamBoards")
     }
+
+    fun enableArmoireAds(): Boolean {
+        return remoteConfig.getBoolean("enableArmoireAds")
+    }
+
+    fun enableFaintAds(): Boolean {
+        return remoteConfig.getBoolean("enableFaintAds")
+    }
+
+    fun enableSpellAds(): Boolean {
+        return remoteConfig.getBoolean("enableSpellAds")
+    }
+
+    fun enableNewArmoire(): Boolean {
+        return remoteConfig.getBoolean("enableNewArmoire")
+    }
 }

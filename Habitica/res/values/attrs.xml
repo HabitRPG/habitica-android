@@ -27,6 +27,8 @@
     <attr name="headerOffsetColor" format="color" />
     <attr name="headerTextColor" format="color" />
     <attr name="widgetBackgroundRadius" format="dimension" />
+    <attr name="currency" format="string" />
+
     <declare-styleable name="AvatarView">
         <attr name="showBackground" format="boolean" />
         <attr name="showMount" format="boolean" />
@@ -77,7 +79,7 @@
         <attr name="barBackgroundColor" />
     </declare-styleable>
     <declare-styleable name="CurrencyView">
-        <attr name="currency" format="string" />
+        <attr name="currency" />
         <attr name="hasLightBackground" />
     </declare-styleable>
     <declare-styleable name="CurrencyViews">
@@ -152,5 +154,9 @@
         <attr name="hint" format="string" />
         <attr name="android:inputType" />
         <attr name="android:maxLines" />
+    </declare-styleable>
+    <declare-styleable name="AdButton">
+        <attr name="text" />
+        <attr name="currency" />
     </declare-styleable>
 </resources>

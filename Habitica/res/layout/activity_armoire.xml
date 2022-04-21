@@ -69,7 +69,8 @@
         android:background="@drawable/armoire_background"
         android:orientation="vertical"
         android:gravity="center"
-        android:padding="12dp">
+        android:paddingHorizontal="12dp"
+        android:paddingTop="24dp">
         <TextView
             android:id="@+id/equipment_count_view"
             android:layout_width="wrap_content"
@@ -96,11 +97,8 @@
                 android:layout_height="60dp"
                 android:text="@string/equip"
                 android:textStyle="bold"
-                style="@style/HabiticaButton.White"/>
-            <Space
-                android:id="@+id/button_spacer"
-                android:layout_width="12dp"
-                android:layout_height="wrap_content" />
+                style="@style/HabiticaButton.White"
+                android:layout_marginEnd="12dp"/>
             <Button
                 android:id="@+id/close_button"
                 android:layout_width="0dp"
@@ -110,7 +108,16 @@
                 android:textStyle="bold"
                 style="@style/HabiticaButton.White"/>
         </LinearLayout>
+
+        <com.habitrpg.android.habitica.ui.views.ads.AdButton
+            android:id="@+id/ad_button"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            app:text="@string/watch_ad_to_open"
+            android:layout_marginTop="4dp"
+            app:currency="gold" />
         <TextView
+            android:id="@+id/drop_rate_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/armoire_drop_rates"

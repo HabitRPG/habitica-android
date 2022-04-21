@@ -1,17 +1,22 @@
 package com.habitrpg.android.habitica.ui.activities
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.animation.AccelerateInterpolator
 import android.widget.FrameLayout
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.ActivityArmoireBinding
 import com.habitrpg.android.habitica.extensions.observeOnce
+import com.habitrpg.android.habitica.helpers.AdHandler
+import com.habitrpg.android.habitica.helpers.AdType
 import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.ui.helpers.loadImage
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.plattysoft.leonids.ParticleSystem
@@ -58,12 +63,40 @@ class ArmoireActivity: BaseActivity() {
             binding.noEquipmentView.visibility = if (remaining > 0) View.GONE else View.VISIBLE
         }
 
+        if (appConfigManager.enableArmoireAds()) {
+            val handler = AdHandler(this, AdType.ARMOIRE) {
+                Log.d("AdHandler", "Giving Armoire")
+                val user = userViewModel.user.value ?: return@AdHandler
+                val currentGold = user.stats?.gp ?: return@AdHandler
+                compositeSubscription.add(userRepository.updateUser("stats.gp", currentGold + 100)
+                    .flatMap { inventoryRepository.buyItem(user, "armoire", 100.0, 1) }
+                    .subscribe({
+                               configure(it.armoire["type"] ?: "",
+                                   it.armoire["dropKey"] ?: "",
+                                   it.armoire["dropText"] ?: "")
+                        binding.adButton.updateForAdType(AdType.ARMOIRE, lifecycleScope)
+                        hasAnimatedChanges = false
+                        gold = null
+                    }, RxErrorHandler.handleEmptyError()))
+            }
+            handler.prepare()
+            binding.adButton.updateForAdType(AdType.ARMOIRE, lifecycleScope)
+            binding.adButton.setOnClickListener {
+                handler.show()
+            }
+        } else {
+            binding.adButton.visibility = View.GONE
+        }
+
         binding.closeButton.setOnClickListener {
             finish()
         }
         binding.equipButton.setOnClickListener {
             equipmentKey?.let { it1 -> inventoryRepository.equip("gear", it1).subscribe() }
             finish()
+        }
+        binding.dropRateButton.setOnClickListener {
+
         }
         intent.extras?.let {
             val args = ArmoireActivityArgs.fromBundle(it)
@@ -79,9 +112,11 @@ class ArmoireActivity: BaseActivity() {
 
     private fun startAnimation() {
         val gold = gold?.toInt()
-        if (hasAnimatedChanges || gold == null) return
-        binding.goldView.value = (gold).toDouble()
-        binding.goldView.value = (gold - 100).toDouble()
+        if (hasAnimatedChanges) return
+        if (gold != null) {
+            binding.goldView.value = (gold).toDouble()
+            binding.goldView.value = (gold - 100).toDouble()
+        }
 
         val container = binding.confettiAnchor
         container.postDelayed(

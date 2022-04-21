@@ -359,7 +359,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
             return
         } else if ("gold" == shopItem.currency && "gem" != shopItem.key) {
             observable = inventoryRepository.buyItem(user, shopItem.key, shopItem.value.toDouble(), quantity).map { buyResponse ->
-                if (shopItem.key == "armoire") {
+                if (shopItem.key == "armoire" && configManager.enableNewArmoire()) {
                     MainNavigationController.navigate(R.id.armoireActivity, ArmoireActivityDirections.openArmoireActivity(buyResponse.armoire["type"] ?: "",
                         buyResponse.armoire["dropText"] ?: "",
                         buyResponse.armoire["dropKey"] ?: "").arguments)
