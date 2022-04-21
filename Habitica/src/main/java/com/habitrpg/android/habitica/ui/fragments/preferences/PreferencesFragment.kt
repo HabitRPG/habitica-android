@@ -204,12 +204,11 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                 emailNotificationsPreference?.isEnabled = useEmailNotifications
             }
             "cds_time" -> {
-                val timeval = sharedPreferences.getString("cds_time", "00:00")
-                val pieces = timeval?.split(":".toRegex())?.dropLastWhile { it.isEmpty() }?.toTypedArray()
-                if (pieces != null) {
-                    val hour = Integer.parseInt(pieces[0])
-                    userRepository.changeCustomDayStart(hour).subscribe({ }, RxErrorHandler.handleEmptyError())
-                }
+                val timeval = sharedPreferences.getString("cds_time", "0") ?: "0"
+                val hour = Integer.parseInt(timeval)
+                userRepository.changeCustomDayStart(hour).subscribe({ }, RxErrorHandler.handleEmptyError())
+                val preference = findPreference<ListPreference>(key)
+                preference?.summary = preference?.entry
             }
             "language" -> {
                 val languageHelper = LanguageHelper(sharedPreferences.getString(key, "en"))
@@ -316,8 +315,9 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
         } else {
             classSelectionPreference?.isVisible = false
         }
-        val cdsTimePreference = findPreference("cds_time") as? TimePreference
-        cdsTimePreference?.text = user?.preferences?.dayStart.toString() + ":00"
+        val cdsTimePreference = findPreference("cds_time") as? ListPreference
+        cdsTimePreference?.value = user?.preferences?.dayStart.toString()
+        cdsTimePreference?.summary = cdsTimePreference?.entry
         findPreference<Preference>("dailyDueDefaultView")?.setDefaultValue(user?.preferences?.dailyDueDefaultView)
         val languagePreference = findPreference("language") as? ListPreference
         languagePreference?.value = user?.preferences?.language

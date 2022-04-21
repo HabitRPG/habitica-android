@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_marginHorizontal="@dimen/spacing_xlarge"
+    android:layout_marginVertical="@dimen/spacing_large">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/enchanted_armoire_drop_rates"
+        style="@style/Title1"
+        android:textAlignment="center"
+        android:textColor="@color/text_primary"
+        android:layout_marginBottom="18dp"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_primary"
+        android:text="@string/armoire_rate_equipment_title"
+        style="@style/Subheader1" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_secondary"
+        android:text="@string/armoire_rate_equipment_description"
+        style="@style/Caption2"
+        android:layout_marginBottom="12dp"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_primary"
+        android:text="@string/armoire_rate_food_title"
+        style="@style/Subheader1" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_secondary"
+        android:text="@string/armoire_rate_food_description"
+        style="@style/Caption2"
+        android:layout_marginBottom="12dp"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_primary"
+        android:text="@string/armoire_rate_experience_title"
+        style="@style/Subheader1" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_secondary"
+        android:text="@string/armoire_rate_experience_description"
+        style="@style/Caption2"
+        />
+</LinearLayout>

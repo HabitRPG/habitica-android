@@ -8,6 +8,7 @@ import android.view.animation.AccelerateInterpolator
 import android.widget.FrameLayout
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
@@ -96,7 +97,7 @@ class ArmoireActivity: BaseActivity() {
             finish()
         }
         binding.dropRateButton.setOnClickListener {
-
+            showDropRateDialog()
         }
         intent.extras?.let {
             val args = ArmoireActivityArgs.fromBundle(it)
@@ -162,5 +163,11 @@ class ArmoireActivity: BaseActivity() {
                 binding.iconView.setImageResource(R.drawable.armoire_experience)
             }
         }
+    }
+
+    fun showDropRateDialog() {
+        val dialog = BottomSheetDialog(this)
+        dialog.setContentView(R.layout.armoire_drop_rate_dialog)
+        dialog.show()
     }
 }
