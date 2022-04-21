@@ -70,14 +70,6 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
         val useReminder = preferenceManager.sharedPreferences?.getBoolean("use_reminder", false)
         timePreference?.isEnabled = useReminder ?: false
 
-        pushNotificationsPreference = findPreference("pushNotifications") as? PreferenceScreen
-        val usePushNotifications = preferenceManager.sharedPreferences?.getBoolean("usePushNotifications", true)
-        pushNotificationsPreference?.isEnabled = usePushNotifications ?: false
-
-        emailNotificationsPreference = findPreference("emailNotifications") as? PreferenceScreen
-        val useEmailNotifications = preferenceManager.sharedPreferences?.getBoolean("useEmailNotifications", true)
-        emailNotificationsPreference?.isEnabled = useEmailNotifications ?: false
-
         classSelectionPreference = findPreference("choose_class")
 
         val weekdayPreference = findPreference("FirstDayOfTheWeek") as? ListPreference
@@ -193,15 +185,17 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
             "usePushNotifications" -> {
                 val userPushNotifications = sharedPreferences.getBoolean(key, false)
                 pushNotificationsPreference?.isEnabled = userPushNotifications
+                userRepository.updateUser("preferences.pushNotifications.unsubscribeFromAll", userPushNotifications).subscribe()
                 if (userPushNotifications) {
                     pushNotificationManager.addPushDeviceUsingStoredToken()
                 } else {
                     pushNotificationManager.removePushDeviceUsingStoredToken()
                 }
             }
-            "useEmailNotifications" -> {
+            "useEmails" -> {
                 val useEmailNotifications = sharedPreferences.getBoolean(key, false)
                 emailNotificationsPreference?.isEnabled = useEmailNotifications
+                userRepository.updateUser("preferences.emailNotifications.unsubscribeFromAll", useEmailNotifications).subscribe()
             }
             "cds_time" -> {
                 val timeval = sharedPreferences.getString("cds_time", "0") ?: "0"
@@ -344,6 +338,18 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
         val disablePMsPreference = findPreference("disablePMs") as? CheckBoxPreference
         val inbox = user?.inbox
         disablePMsPreference?.isChecked = inbox?.optOut ?: true
+
+        val usePushPreference = findPreference("usePushNotifications") as? CheckBoxPreference
+        pushNotificationsPreference = findPreference("pushNotifications") as? PreferenceScreen
+        val usePushNotifications = user?.preferences?.pushNotifications?.unsubscribeFromAll ?: false
+        pushNotificationsPreference?.isEnabled = usePushNotifications
+        usePushPreference?.isChecked = usePushNotifications
+
+        val useEmailPreference = findPreference("useEmails") as? CheckBoxPreference
+        emailNotificationsPreference = findPreference("emailNotifications") as? PreferenceScreen
+        val useEmailNotifications = user?.preferences?.emailNotifications?.unsubscribeFromAll ?: false
+        emailNotificationsPreference?.isEnabled = useEmailNotifications
+        useEmailPreference?.isChecked = useEmailNotifications
 
         if (configManager.testingLevel() == AppTestingLevel.STAFF || BuildConfig.DEBUG) {
             serverUrlPreference?.isVisible = true
