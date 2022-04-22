@@ -154,4 +154,8 @@ class AppConfigManager(contentRepository: ContentRepository?) {
     fun enableNewArmoire(): Boolean {
         return remoteConfig.getBoolean("enableNewArmoire")
     }
+
+    fun hideFacebook(): Boolean {
+        return remoteConfig.getBoolean("hideFacebook")
+    }
 }
