@@ -4,7 +4,38 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginBottom="16dp">
+    android:layout_marginBottom="16dp"
+    android:paddingStart="@dimen/bottom_sheet_inset"
+    android:paddingEnd="@dimen/bottom_sheet_inset">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/spacing_large">
+
+        <TextView
+            style="@style/Headline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/filters"
+            android:textColor="@color/text_primary"
+            android:layout_gravity="center_vertical"/>
+        <Space
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/clear_button"
+            style="@style/Body1_Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:text="@string/clear"
+            android:textColor="?colorPrimary"
+            android:textSize="16sp"
+            android:gravity="end|center_vertical"
+            android:paddingEnd="0dp"
+            android:paddingStart="0dp"/>
+    </LinearLayout>
     <TextView
         android:id="@+id/task_type_title"
         style="@style/Caption3"

@@ -1,28 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.habitrpg.android.habitica.ui.MaxHeightLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+<LinearLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
-
-
+    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingStart="@dimen/bottom_sheet_inset"
+    android:paddingEnd="@dimen/bottom_sheet_inset"
     android:orientation="vertical"
-    app:maxHeightMultiplier="0.7">
-
-    <!-- margins can't be at the first LinearLayout, it has to be the inner one -->
-
+    xmlns:android="http://schemas.android.com/apk/res/android">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginEnd="@dimen/dialog_marginLeftRight"
-        android:layout_marginStart="@dimen/dialog_marginLeftRight"
-        android:layout_marginTop="16dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/spacing_large">
 
-        android:orientation="vertical">
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#1f000000" />
+        <TextView
+            style="@style/Headline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/filters"
+            android:textColor="@color/text_primary"
+            android:layout_gravity="center_vertical"/>
+        <Space
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/clear_button"
+            style="@style/Body1_Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:text="@string/clear"
+            android:textColor="?colorPrimary"
+            android:textSize="16sp"
+            android:gravity="end|center_vertical"
+            android:paddingEnd="0dp"
+            android:paddingStart="0dp"
+            android:visibility="invisible"/>
+    </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -84,7 +97,8 @@
                 android:checked="true"
                 android:text="@string/owned"
                 android:textColor="@color/text_primary"
-                android:paddingStart="8dp" />
+                android:paddingStart="8dp"
+                android:paddingEnd="0dp"/>
 
             <CheckBox
                 style="@style/Subheader2"
@@ -94,6 +108,6 @@
                 android:checked="true"
                 android:text="@string/not_owned"
                 android:textColor="@color/text_primary"
-                android:paddingStart="8dp"/>
+                android:paddingStart="8dp"
+                android:paddingEnd="0dp"/>
     </LinearLayout>
-</com.habitrpg.android.habitica.ui.MaxHeightLinearLayout>

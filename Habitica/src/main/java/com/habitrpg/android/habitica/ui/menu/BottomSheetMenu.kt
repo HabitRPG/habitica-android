@@ -2,21 +2,16 @@ package com.habitrpg.android.habitica.ui.menu
 
 import android.content.Context
 import android.view.View
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.habitrpg.android.habitica.databinding.MenuBottomSheetBinding
+import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaBottomSheetDialog
 
-class BottomSheetMenu(context: Context) : BottomSheetDialog(context), View.OnClickListener {
+class BottomSheetMenu(context: Context) : HabiticaBottomSheetDialog(context), View.OnClickListener {
     private var binding = MenuBottomSheetBinding.inflate(layoutInflater)
     private var runnable: ((Int) -> Unit)? = null
 
     init {
         setContentView(binding.root)
         binding.titleView.visibility = View.GONE
-
-        val behavior = BottomSheetBehavior.from(binding.root.parent as View)
-        behavior.state = BottomSheetBehavior.STATE_EXPANDED
-        behavior.peekHeight = 0
     }
 
     fun setSelectionRunnable(runnable: (Int) -> Unit) {
@@ -26,12 +21,14 @@ class BottomSheetMenu(context: Context) : BottomSheetDialog(context), View.OnCli
     override fun setTitle(title: CharSequence?) {
         binding.titleView.text = title
         binding.titleView.visibility = View.VISIBLE
+        grabberVisibility = View.GONE
     }
 
     fun addMenuItem(menuItem: BottomSheetMenuItem) {
         val item = menuItem.inflate(this.context, layoutInflater, this.binding.menuItems)
         item.setOnClickListener(this)
         this.binding.menuItems.addView(item)
+        binding.root.requestLayout()
     }
 
     override fun onClick(v: View) {

@@ -8,7 +8,6 @@ import android.view.animation.AccelerateInterpolator
 import android.widget.FrameLayout
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
@@ -20,6 +19,7 @@ import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.ui.helpers.loadImage
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
+import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaBottomSheetDialog
 import com.plattysoft.leonids.ParticleSystem
 import javax.inject.Inject
 
@@ -166,7 +166,7 @@ class ArmoireActivity: BaseActivity() {
     }
 
     fun showDropRateDialog() {
-        val dialog = BottomSheetDialog(this)
+        val dialog = HabiticaBottomSheetDialog(this)
         dialog.setContentView(R.layout.armoire_drop_rate_dialog)
         dialog.show()
     }
