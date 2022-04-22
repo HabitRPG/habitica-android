@@ -1,0 +1,9 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.habitrpg.android.habitica.ui.activities.MainActivity">
+    <item android:id="@+id/action_filter"
+        android:icon="@drawable/ic_action_filter_list"
+        android:title="@string/filter"
+        app:showAsAction="ifRoom" />
+</menu>

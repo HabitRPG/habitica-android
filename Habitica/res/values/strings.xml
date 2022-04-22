@@ -1241,4 +1241,22 @@
     <string name="armoire_rate_experience_title">20% Experience points</string>
     <string name="armoire_rate_experience_description">The amount gained varies randomly from 10 to 50</string>
     <string name="day_start_adjustment">Day Start Adjustment</string>
+    <string name="purchased">Purchased</string>
+    <string name="show_me">Show Me</string>
+    <string name="background_filters">Background Filters</string>
+    <string name="newest">Newest</string>
+    <string name="oldest">Oldest</string>
+    <string name="sort_by">Sort By</string>
+    <string name="january">January</string>
+    <string name="febuary">Febuary</string>
+    <string name="march">March</string>
+    <string name="april">April</string>
+    <string name="may">May</string>
+    <string name="june">June</string>
+    <string name="july">July</string>
+    <string name="august">August</string>
+    <string name="september">September</string>
+    <string name="october">October</string>
+    <string name="november">November</string>
+    <string name="december">December</string>
 </resources>
