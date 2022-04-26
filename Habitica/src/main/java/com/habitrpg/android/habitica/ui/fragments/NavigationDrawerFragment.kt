@@ -333,6 +333,10 @@ class NavigationDrawerFragment : DialogFragment() {
     }
 
     private fun updateUser(user: User) {
+        binding?.avatarView?.setOnClickListener {
+            MainNavigationController.navigate(R.id.openProfileActivity, bundleOf(Pair("userID", user.id)))
+        }
+
         setMessagesCount(user.inbox)
         setSettingsCount(if (user.flags?.verifiedUsername != true) 1 else 0)
         setDisplayName(user.profile?.name)
