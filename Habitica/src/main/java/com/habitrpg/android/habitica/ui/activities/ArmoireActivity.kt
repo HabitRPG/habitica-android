@@ -19,6 +19,7 @@ import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.ui.helpers.loadImage
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
+import com.habitrpg.android.habitica.ui.views.ads.AdButton
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaBottomSheetDialog
 import com.plattysoft.leonids.ParticleSystem
 import javax.inject.Inject
@@ -66,6 +67,9 @@ class ArmoireActivity: BaseActivity() {
 
         if (appConfigManager.enableArmoireAds()) {
             val handler = AdHandler(this, AdType.ARMOIRE) {
+                if (!it) {
+                    return@AdHandler
+                }
                 Log.d("AdHandler", "Giving Armoire")
                 val user = userViewModel.user.value ?: return@AdHandler
                 val currentGold = user.stats?.gp ?: return@AdHandler
@@ -80,9 +84,16 @@ class ArmoireActivity: BaseActivity() {
                         gold = null
                     }, RxErrorHandler.handleEmptyError()))
             }
-            handler.prepare()
+            handler.prepare {
+                if (it && binding.adButton.state == AdButton.State.EMPTY) {
+                    binding.adButton.state = AdButton.State.READY
+                } else if (!it) {
+                    binding.adButton.visibility = View.INVISIBLE
+                }
+            }
             binding.adButton.updateForAdType(AdType.ARMOIRE, lifecycleScope)
             binding.adButton.setOnClickListener {
+                binding.adButton.state = AdButton.State.LOADING
                 handler.show()
             }
         } else {

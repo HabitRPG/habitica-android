@@ -27,6 +27,10 @@ class LanguageHelper(languageSharedPref: String?) {
                 locale = Locale("pt", "PT")
                 languageCode = "pt"
             }
+            "uk" -> {
+                locale = Locale("uk", "UA")
+                languageCode = "uk"
+            }
             else -> {
                 locale = if (pref.contains("_")) {
                     val languageCodeParts = pref.split("_".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
